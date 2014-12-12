@@ -1,7 +1,7 @@
 require "spec_helper"
 include ApplicationHelper
 
-describe "report/_report_list.html.erb" do
+describe "report/_report_list.html.haml" do
   before do
     rep_details = {
                     "rep 5" => {"id" => 5},
