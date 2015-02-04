@@ -1,10 +1,10 @@
 require "spec_helper"
 include ApplicationHelper
 
-describe "layouts/listnav/_ems_cluster.html.erb" do
+describe "layouts/listnav/_ems_cluster.html.haml" do
   before :each do
     set_controller_for_view("ems_cluster")
-    assign(:panels, {"ems_cluster_prop" => true, "ems_cluster_rel" => true})
+    assign(:panels, "ems_cluster_prop" => true, "ems_cluster_rel" => true)
     view.stub(:trunc_at).and_return(23)
     view.stub(:trunc_to).and_return(20)
     ActionView::Base.any_instance.stub(:role_allows).and_return(true)
