@@ -1,5 +1,5 @@
-class EmsInfraController < ApplicationController
-  include EmsCommon        # common methods for EmsInfra/Cloud controllers
+class EmsContainerController < ApplicationController
+  include EmsCommon        # common methods for EmsInfra/Cloud/Container controllers
 
   before_filter :check_privileges
   before_filter :get_session_data
@@ -7,16 +7,14 @@ class EmsInfraController < ApplicationController
   after_filter :set_session_data
 
   def self.model
-    @model ||= EmsInfra
+    @model ||= EmsContainer
   end
 
   def self.table_name
-    @table_name ||= "ems_infra"
+    @table_name ||= "ems_container"
   end
 
   def index
     redirect_to :action => 'show_list'
   end
-
-  private ############################
 end
