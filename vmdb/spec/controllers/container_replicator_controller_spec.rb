@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe ContainerServiceController do
+describe ContainerReplicatorController do
   render_views
   before(:each) do
     set_user_privileges
@@ -15,17 +15,17 @@ describe ContainerServiceController do
   it "renders show screen" do
     MiqServer.stub(:my_zone).and_return("default")
     ems = FactoryGirl.create(:ems_kubernetes)
-    container_service = ContainerService.create(:ext_management_system => ems, :name => "Test Service")
-    get :show, :id => container_service.id
+    container_replicator = ContainerReplicator.create(:ext_management_system => ems, :name => "Test Replicator")
+    get :show, :id => container_replicator.id
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
-    expect(assigns(:breadcrumbs)).to eq([:name => "Test Service (Summary)",
-                                         :url  => "/container_service/show/#{container_service.id}"])
+    expect(assigns(:breadcrumbs)).to eq([:name => "Test Replicator (Summary)",
+                                         :url  => "/container_replicator/show/#{container_replicator.id}"])
   end
 
   it "renders show_list" do
     session[:settings] = {:default_search => 'foo',
-                          :views          => {:containerservice => 'list'},
+                          :views          => {:containerreplicator => 'list'},
                           :perpage        => {:list => 10}}
     session[:eligible_groups] = []
     session[:userid] = User.current_user.userid
