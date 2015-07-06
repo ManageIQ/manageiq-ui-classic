@@ -1,0 +1,65 @@
+- if @record.try(:name)
+  - host_title = title_for_host
+  #accordion.panel-group
+    = patternfly_accordion_panel(truncate(@record.name, :length => truncate_length), true, "icon") do
+      = render :partial => "layouts/quadicon", :locals => {:mode => :icon, :item => @record, :size => 72, :typ => :listnav}
+
+    = patternfly_accordion_panel(_("Properties"),
+      @panels["resource_pool_prop"].nil? || @panels["resource_pool_prop"] == false, "resource_pool_prop") do
+      %ul.nav.nav-pills.nav-stacked
+        %li
+          = link_to(_('Summary'),
+            {:action => 'show', :id => @record, :display => 'main'},
+            :title => _('Show Summary'))
+
+    = patternfly_accordion_panel(_("Relationships"), false, "resource_pool_rel") do
+      %ul.nav.nav-pills.nav-stacked
+        - if role_allows(:feature => "ems_cluster_show")
+          - if @record.parent_cluster.nil?
+            %li.disabled
+              = link_to(_("Parent %s: None") % title_for_cluster, "#")
+          - else
+            %li
+              = link_to(_("Parent %s: %s") % [title_for_cluster, @record.parent_cluster.name],
+                {:controller => 'ems_cluster', :action => 'show', :id => @record.parent_cluster.id.to_s},
+                :title => _('Show VMs'))
+
+        - if role_allows(:feature => "host_show")
+          - if @record.parent_host.nil?
+            %li.disabled
+              = link_to(_("Parent %s: None") % host_title, "#")
+          - else
+            %li
+              = link_to(_("Parent %s: %s") % [host_title, @record.parent_host.name],
+                {:controller => 'host', :action => 'show', :id => @record.parent_host.id.to_s},
+                :title => _('Show Parent %s') % host_title)
+
+        - if role_allows(:feature => "vm_show_list")
+          - if @record.v_direct_vms == 0
+            %li.disabled
+              = link_to(_("Direct VMs: 0"), "#")
+          - else
+            %li
+              = link_to(_("Direct VMs: %s") % @record.v_direct_vms,
+                {:action => 'show', :display => "vms", :id => @record.id.to_s},
+                :title => _('Show VMs in this Resource Pool, but not in Resource Pools below'))
+
+        - if role_allows(:feature => "vm_show_list")
+          - if @record.total_vms == 0
+            %li.disabled
+              = link_to(_("All VMs: 0"), "#")
+          - else
+            %li
+              = link_to(_("All VMs: %s") % @record.total_vms,
+                {:action => 'show', :display => "all_vms", :id => @record.id.to_s},
+                :title => _('Show all VMs in this Resource Pool'))
+
+        - if role_allows(:feature => "_show_list")
+          - if @record.v_total_vms == 0
+            %li.disabled
+              = link_to(_("Total VMs: 0"), "#")
+          - else
+            %li
+              = link_to(_("All VMs (Tree View): %s") % @record.v_total_vms,
+                {:action => 'show', :display => "descendant_vms", :id => @record.id.to_s},
+                :title => _('Show tree of all VMs in this Resource Pool'))

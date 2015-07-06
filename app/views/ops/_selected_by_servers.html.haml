@@ -1,0 +1,94 @@
+-# tree type is roles by server
+- if rec.class == MiqServer
+  .form-horizontal.static
+    .form-group
+      %label.col-sm-3.control-label= Dictionary.gettext('MiqServer', :type => :model, :notfound => :titleize)
+      .col-sm-9
+        %p.form-control-static
+          = h("#{rec.name}(#{rec.id})")
+          = "PID=#{h(rec[:pid])}"
+    .form-group
+      %label.col-sm-3.control-label= _("Hostname")
+      .col-sm-9
+        %p.form-control-static
+          = h(rec[:hostname])
+    .form-group
+      %label.col-sm-3.control-label= _("IP Address")
+      .col-sm-9
+        %p.form-control-static
+          = h(rec[:ipaddress])
+    .form-group
+      %label.col-sm-3.control-label= _("Status")
+      .col-sm-9
+        %p.form-control-static
+          = h(rec[:status])
+    .form-group
+      %label.col-sm-3.control-label= _("Started On")
+      .col-sm-9
+        %p.form-control-static
+          - t = rec.started_on
+          = h(t.blank? ? "" : format_timezone(t))
+    .form-group
+      %label.col-sm-3.control-label= _("Stopped On")
+      .col-sm-9
+        %p.form-control-static
+          - t = rec.stopped_on
+          = h(t.blank? ? "" : format_timezone(t))
+    .form-group
+      %label.col-sm-3.control-label= _("Memory Usage")
+      .col-sm-9
+        %p.form-control-static
+          = h(rec["memory_usage"])
+    .form-group
+      %label.col-sm-3.control-label= _("Memory Size")
+      .col-sm-9
+        %p.form-control-static
+          = h(rec["memory_size"])
+    .form-group
+      %label.col-sm-3.control-label= _("CPU Time")
+      .col-sm-9
+        %p.form-control-static
+          = h(rec["cpu_time"])
+    .form-group
+      %label.col-sm-3.control-label= _("CPU Percent")
+      .col-sm-9
+        %p.form-control-static
+          = h(rec["percent_cpu"])
+    .form-group
+      %label.col-sm-3.control-label= _("Version / Build")
+      .col-sm-9
+        %p.form-control-static
+          = h(rec["version"])
+- else
+  -# record class is AssignedServerRole
+  %table.style1
+    %tr
+      %label.col-sm-3.control-labelimage{:rowspan => 9}
+        %img{:src => "/images/icons/new/role-#{rec.server_role.name}.png"}/
+      %label.col-sm-3.control-label= _("Role")
+      %td.wide
+        = _("%{role} on %{model}: %{name} [%{id}]") % {:role => rec.server_role.description,   |
+          :model => Dictionary.gettext('MiqServer', :type => :model, :notfound => :titleize),  |
+          :name => rec.miq_server.name,                                                        |
+          :id => rec.miq_server.id}                                                            |
+    %tr
+      %label.col-sm-3.control-label= _("Status")
+      %td.wide
+        - if rec.miq_server.started?
+          = rec.active ? _("active") : _("available")
+        - else
+          = _("unavailable")
+    - if rec.master_supported?
+      %tr
+        %label.col-sm-3.control-label= _("Priority")
+        %td.wide
+          - if rec.priority == 1
+            = _("primary")
+          - elsif rec.priority == 2
+            = _("secondary")
+          - else
+            = _("normal")
+    %tr
+      - max = rec.server_role.max_concurrent
+      %label.col-sm-3.control-label= _("Max Concurrent")
+      %td.wide= h(max == 0 ? _("unlimited") : max)

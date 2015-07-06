@@ -1,0 +1,45 @@
+= stylesheet_link_tag "slick.grid"
+= stylesheet_link_tag "import_policy"
+
+- url = url_for(:action => 'export_field_changed')
+#profile_export_div
+  = render :partial => "layouts/flash_msg"
+  %fieldset
+    %h3 Import
+    - if @sb[:hide]
+
+      #import_grid
+
+      %table{width: "100%"}
+        %tr
+          %td{align: "right"}
+            #buttons
+              - if @sb[:conflict]
+                = button_tag("Commit",
+                             :class => "btn btn-primary btn-disabled",
+                             :title => "Resolve conflicts to import the file",
+                             :alt   => "Resolve conflicts to import the file")
+              - else
+                = link_to('Commit',
+                         {:action => "import",
+                          :commit => "import",
+                          :import_file_upload_id => @import_file_upload_id},
+                         :class                  => "btn btn-primary",
+                         :alt                    => "Commit Import",
+                         "data-miq_sparkle_on"   => true,
+                         "data-miq_sparkle_off"  => true,
+                         :remote                 => true,
+                         :title                  => "Commit Import")
+
+              = link_to('Cancel',
+                        {:action                => "import",
+                         :commit                => "cancel",
+                         :import_file_upload_id => @import_file_upload_id},
+                        :class  => "btn btn-default",
+                        :alt    => "Cancel Changes",
+                        :remote => true,
+                        :title  => "Cancel Import")
+:javascript
+  var import_file_upload_id = "#{@import_file_upload_id}";
+
+= javascript_include_tag "miq_policy/import"

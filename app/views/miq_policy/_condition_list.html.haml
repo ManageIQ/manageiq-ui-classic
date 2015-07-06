@@ -1,0 +1,18 @@
+#condition_list_div{:style => "width: 100%; height: 100%; overflow: auto;"}
+  - if @conditions
+    %div{:style => "padding-top: 10px;"}
+    = render :partial => "layouts/flash_msg"
+    - if @conditions.empty?
+      - t = @search_text.blank? ? "" : _(" that match the entered search string")
+      - msg = _("No %s Conditions are defined %s.") % [ui_lookup(:model => @sb[:folder]), t]
+      = render :partial => 'layouts/info_msg', :locals => {:message => msg}
+    - else
+      %table.table.table-striped.table-bordered.table-hover
+        %tbody
+          - @conditions.each do |c|
+            %tr{:title => _("View this Condition"),
+              :onclick => "cfmeDynatree_activateNode('condition_tree', 'xx-#{c.towhat.downcase}_co-#{to_cid(c.id)}');"}
+              %td.narrow
+                %img{:src => "/images/icons/new/miq_condition.png"}
+              %td
+                = c.description

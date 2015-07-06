@@ -1,0 +1,82 @@
+- url = url_for(:action => 'export_field_changed')
+- observe = {:url => url}.to_json
+#profile_export_div
+  = render :partial => "layouts/flash_msg"
+  %h3=_("Import")
+  - if @sb[:hide]
+    %table{:width => "100%"}
+      %tr
+        %td{:align => "right"}
+          #buttons
+            - if @sb[:conflict]
+              = button_tag(_("Commit"),
+                :class => "btn btn-primary btn-disabled",
+                :title => (t = _("Resolve conflicts to import the file")),
+                :alt   => t)
+            - else
+              = link_to(_('Commit'),
+                {:action => "export", :button => "import", :commit => true},
+                :class                 => "btn btn-primary",
+                :alt                   => (t = _("Commit Import")),
+                "data-miq_sparkle_on"  => true,
+                "data-miq_sparkle_off" => true,
+                :remote                => true,
+                :title                 => t)
+            = link_to(_('Cancel'),
+              {:action => "export", :button => "cancel_import"},
+              :class                 => "btn btn-default",
+              :alt                   => _("Cancel Changes"),
+              "data-miq_sparkle_on"  => true,
+              "data-miq_sparkle_off" => true,
+              :remote                => true,
+              :title                 => _("Cancel Import"))
+  - else
+    #import_div
+      = form_tag({:action => "upload", :type => "import", :dbtype => @sb[:dbtype]}, :multipart => true) do
+        = file_field("upload", "file")
+        = submit_tag(_("Upload"), :id => "upload_tags", :class => "upload")
+
+  - if @sb[:hide] == false
+    %hr
+    %h3=_("Export")
+    - # title = @sb[:dbtype] == "pp" ? "Profiles" : "Policies"
+    - case @sb[:dbtype]
+    - when "pp"
+      - title = "Profiles"
+    - when "p"
+      - title = "Policies"
+    - when "al"
+      - title = "Alerts"
+
+    %table.style1
+      %tr
+        %td.key=_("Export:")
+        %td{:align => "left", :valign => "top"}
+          = select_tag('dbtype',
+            options_for_select([[_("Policy Profiles"), "pp"], [_("Policies"), "p"], [_("Alerts"), "al"]], @sb[:dbtype]),
+            "data-miq_observe" => observe)
+      %tr
+        %td.key{:align => "left", :valign => "top"}=_("Available %s:") % title
+        %td{:align => "left", :valign => "top"}
+          %div{:style => "overflow: auto; width: 400px; border: 1px solid #999999;"}
+            = select_tag('choices_chosen[]',
+              options_for_select(@sb[:new][:choices].sort),
+              :style             => "width:auto; min-width:375px; background-color:#fff; border: 0px;",
+              :size              => 15,
+              :style             => "width: 400px",
+              :multiple          => true,
+              "data-miq_observe" => observe)
+    %table{:width => "100%"}
+      %tr
+        %td{:align => "right"}
+          #buttons
+            - t = _("Export Selected %s") % title
+            = link_to(_('Export'),
+              {:action => "export", :button => "export"},
+              :class                 => "btn btn-primary",
+              :alt                   => t,
+              "data-miq_sparkle_on"  => true,
+              "data-miq_sparkle_off" => true,
+              "data-submit"          => "profile_export_div",
+              :remote                => true,
+              :title                 => t)

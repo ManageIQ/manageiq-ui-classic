@@ -1,0 +1,53 @@
+- if @sb[:active_tab] == "settings_co_categories"
+  = render :partial => "layouts/flash_msg"
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th.narrow
+        %th=_("Name")
+        %th=_("Display Name")
+        %th=_("Show in Console")
+        %th=_("Single Value")
+        %th=_("Capture C & U Data")
+        %th=_("Default")
+    %tbody
+      %tr#new_tr{:onclick => remote_function(:url=>{:action=>'category_edit',:id=>nil}), :title => "Click to add a new category"}
+        %td.narrow
+          %ul.icons.list-unstyled
+            %li
+              %span.glyphicon.glyphicon-plus
+        %td
+          =_("<Click on this row to create a new category>")
+        %td
+        %td
+        %td
+        %td
+        %td
+      - @categories.each do | cat |
+        %tr
+          - if cat[:default] == "t" || cat[:default].to_s == "1"
+            %td.narrow{:title => _("Category '%s' cannot be deleted") % cat[:name]}
+              %ul.icons.list-unstyled
+                %li
+                  %span.pficon.pficon-delete
+          - else
+            %td.narrow{:onclick => remote_function(:url=>{:action=>'category_delete',
+              :id      => cat[:id]},
+              :confirm =>_("Are you sure you want to delete category '%s'?") % cat[:name]),
+              :title   => _("Click to delete this category")}
+              %ul.icons.list-unstyled
+                %li
+                  %span.pficon.pficon-delete
+          %td{:onclick => remote_function(:url=>{:action=>'category_edit', :id=>cat[:id]}), :title => "Click to edit this category"}
+            = h(cat[:name])
+          %td{:onclick => remote_function(:url=>{:action=>'category_edit', :id=>cat[:id]}), :title => "Click to edit this category"}
+            = h(cat[:description])
+          %td{:onclick => remote_function(:url=>{:action=>'category_edit', :id=>cat[:id]}), :title => "Click to edit this category"}
+            = h(cat[:show])
+          %td{:onclick => remote_function(:url=>{:action=>'category_edit', :id=>cat[:id]}), :title => "Click to edit this category"}
+            = h(cat[:single_value] ? true : false)
+          %td{:onclick => remote_function(:url=>{:action=>'category_edit', :id=>cat[:id]}), :title => "Click to edit this category"}
+            = h(cat[:perf_by_tag] ? true : false)
+          %td{:onclick => remote_function(:url=>{:action=>'category_edit', :id=>cat[:id]}), :title => "Click to edit this category"}
+            - default = cat[:default] ? true : false
+            = h(default)

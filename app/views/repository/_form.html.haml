@@ -1,0 +1,28 @@
+%form#form_div(name="repositoryForm" ng-controller="repositoryFormController")
+  = render :partial => "layouts/flash_msg"
+  %fieldset
+    %h3 Basic Information
+    %table.admintable
+      %tbody
+        %tr
+          %td.key Name
+          %td.wide
+            %input(type="text" name="repo_name" ng-model="repoModel.repo_name"  ng-maxlength=10 miqrequired checkchange)
+        %tr
+          %td.key Path
+          %td.wide
+            %input(type="text" name="repo_path" ng-model="repoModel.repo_path" ng-maxlength=100 miqrequired checkpath checkchange)
+  %table{:width => '100%'}
+    %tr
+      %td{:align => 'right'}
+        #buttons_on
+          - if @repo.id.nil?
+            = button_tag("Add", :class => "btn btn-primary", "ng-class" => "{'btn-disabled': !repositoryForm.$valid}", "ng-click" => "addClicked()", "ng-disabled" => "!repositoryForm.$valid")
+          - else
+            = button_tag("Save", :class => "btn btn-primary", "ng-click" => "saveClicked()", "ng-disabled" => "repositoryForm.$pristine || repositoryForm.$invalid", "ng-class" => "{'btn-disabled': repositoryForm.$pristine || repositoryForm.$invalid}")
+            = button_tag("Reset", :class => "btn btn-primary", "ng-click" => "resetClicked()", "ng-disabled" => "repositoryForm.$pristine", "ng-class" => "{'btn-disabled': repositoryForm.$pristine}")
+          = button_tag("Cancel", :class => "btn btn-default", "ng-click" => "cancelClicked()")
+
+:javascript
+  miqAngularApplication.value('repositoryFormId', '#{@repo.id || "new"}');
+  angular.bootstrap(jQuery('#form_div'), ['miqAngularApplication']);

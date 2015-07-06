@@ -1,0 +1,22 @@
+!!! XML
+%html
+  %head
+    %title
+      = _('VNC Console')
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application', 'novnc/base64', 'novnc/des', 'novnc/util', 'novnc/input', 'novnc/jsunzip',
+    'novnc/display', 'novnc/keyboard', 'novnc/keysym', 'novnc/keysymdef', 'novnc/logo',
+    'novnc/playback', 'novnc/rfb', 'novnc/websock', 'novnc/webutil', 'novnc/web-socket-js/swfobject',
+    'novnc/web-socket-js/web_socket', 'novnc-rails', 'miq_novnc'
+    - if Rails.env.development?
+      = javascript_include_tag 'miq_debug'
+
+  %body{:style => 'margin: 0px; padding-top: 0px !important;'}
+    = link_to('Ctrl-Alt-Del', '#', :id => 'sendCtrlAltDelButton', :class => 'btn btn-default')
+    #vnc{'data-port' => proxy_port, 'data-password' => password, 'data-encrypt' => encrypt}
+      #noVNC_status_bar.console-status
+        #noVNC_status.label
+          = _('Loading ...')
+
+    %canvas#noVNC_canvas.console-screen
+      = _('Canvas not supported.')
