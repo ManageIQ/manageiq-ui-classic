@@ -1,0 +1,33 @@
+- if session[:userid]
+  %li.dropdown
+    %a{:href => "#", :class => "dropdown-toggle", "data-toggle" => "dropdown"}
+      %span.pficon.pficon-user
+      = "#{session[:username]} | #{session[:vmdb_name]}"
+      %b.caret
+    %ul.dropdown-menu
+      %li.disabled
+        %a{:href => "#"}
+          = _('Server: %s') % session[:vmdb_name]
+
+      - if session[:eligible_groups].length > 1
+        %li.dropdown-submenu
+          %a{:href => "#"}
+            = _('Change Group:')
+            %ul.dropdown-menu
+              - session[:eligible_groups].each do |group, id|
+                %li
+                  %a{:title => _("Select to change to another Group"), :href => "#",
+                        :onclick => "miqSparkle(true);miqToggleUserOptions(#{id})"}
+                    = id == session[:group] ? "#{group} (#{_('Current Group')})" : group
+      - else
+        %li.disabled
+          %a{:href => "#"}
+            = current_group.try(:description)
+      %li.divider
+      %li
+        %a{:href => "/dashboard/logout", :onclick => 'return miqCheckForChanges()', :title => _("Click to Logout")}
+          = _('Logout')
+
+- else
+  = _('Logging into')
+  = "#{session[:vmdb_name]}"

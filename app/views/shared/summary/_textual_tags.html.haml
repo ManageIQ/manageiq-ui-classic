@@ -1,0 +1,25 @@
+- if items
+  #table_div
+    %table.table.table-bordered.table-striped
+      %thead
+        %tr
+          %th{:colspan => "2", :align => "left"}
+            = title
+      - items.each do |item|
+        - if item[:value].kind_of?(Array)
+          - item[:value].each_with_index do |subitem, i|
+            %tr
+              - if i == 0
+                %td.label{:rowspan => item[:value].length}
+                  = item[:label]
+              %td
+                %img{:src => "/images/icons/new/#{subitem[:image]}.png"}
+                = "#{subitem[:label]}: #{subitem[:value].collect { |t| h(t) }.join("&nbsp;<b>|</b>&nbsp;")}".html_safe
+        - else
+          %tr
+            %td.label
+              = item[:label]
+            %td
+              - if item[:image]
+                %img{:src => "/images/icons/new/#{item[:image]}.png"}
+                = item[:value]

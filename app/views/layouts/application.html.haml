@@ -1,0 +1,20 @@
+- if @mks || @vmrc || @vnc || controller.action_name == "menutest"
+  = yield
+- elsif @report_only
+  !!! Strict
+  %html
+    %head
+      %title CloudForms Management Engine: #{@layout.titleize}
+      = stylesheet_link_tag 'template'
+      = stylesheet_link_tag 'application'
+      = javascript_include_tag 'application'
+      - if Rails.env.development?
+        = javascript_include_tag 'miq_debug'
+    %body{:style => "overflow: scroll; padding: 0 20px 0 20px !important"}
+      = yield
+- else
+  -# New v5 dhtmlx based outer layouts
+  = render :partial => "layouts/global_header"
+  = render :partial => "layouts/page"
+  = render :partial => "layouts/global_footer"
+

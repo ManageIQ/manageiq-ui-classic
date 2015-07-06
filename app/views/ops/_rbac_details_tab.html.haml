@@ -1,0 +1,34 @@
+- if x_active_tree == :rbac_tree
+  - node = x_node.split("-")
+  - if @tagging
+    = render :partial => "rbac_tagging"
+  - elsif node.first == "xx" && node.last == "u" && (!@edit || (@edit && !@edit[:current]))
+    = render :partial => "rbac_users_list"
+  - elsif node.first == "xx" && node.last == "g" && (!@edit || (@edit && !@edit[:current]))
+    = render :partial => "rbac_groups_list"
+  - elsif node.first == "xx" && node.last == "ur" && (!@edit || (@edit && !@edit[:current]))
+    = render :partial => "rbac_roles_list"
+  - elsif node.first == "u" || (node.last == "u" && @edit)
+    = render :partial => "rbac_user_details"
+  - elsif node.first == "g" || (node.last == "g" && @edit)
+    = render :partial => "rbac_group_details"
+  - elsif node.first == "ur" || (node.last == "ur" && @edit)
+    = render :partial => "rbac_role_details"
+  - else
+    %table.table.table-striped.table-bordered.table-hover
+      %tbody
+        %tr
+          %td.narrow{:onclick => "cfmeDynatree_activateNode('rbac_tree', 'xx-u');", :title => _("View Users")}
+            = image_tag("/images/icons/new/user.png")
+          %td{:onclick => "cfmeDynatree_activateNode('rbac_tree', 'xx-u');", :title => _("View Users")}
+            = _("Users (%s)") % @users_count.to_s
+        %tr
+          %td.narrow{:onclick => "cfmeDynatree_activateNode('rbac_tree', 'xx-g');", :title => _("View Groups")}
+            = image_tag("/images/icons/new/miq_group.png")
+          %td{:onclick => "cfmeDynatree_activateNode('rbac_tree', 'xx-g');", :title => _("View Groups")}
+            = _("Groups (%s)") % @groups_count.to_s
+        %tr
+          %td.narrow{:onclick => "cfmeDynatree_activateNode('rbac_tree', 'xx-ur');", :title => _("View Roles")}
+            = image_tag("/images/icons/new/miq_user_role.png")
+          %td{:onclick => "cfmeDynatree_activateNode('rbac_tree', 'xx-ur');", :title => _("View Roles")}
+            = _("Roles (%s)") % @roles_count.to_s

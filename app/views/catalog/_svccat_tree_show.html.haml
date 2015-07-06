@@ -1,0 +1,33 @@
+.maincontent{:xmlns => "http://www.w3.org/1999/html"}
+  = render :partial => "layouts/flash_msg"
+  %table
+    %tr
+      %td{:align => "center", :valign => "top"}
+        - if @record.picture
+          = image_tag("#{@record.picture.url_path}?#{rand(99_999_999).to_s}",
+                      :style => "width:100px; height:100px;")
+        - else
+          = image_tag("/images/icons/new/service_template.png",
+                      :style => "width:100px; height:100px;")
+        %br
+        %br
+        #buttons
+          - res_acts = @record.resource_actions.find_all { |ra| ra.action.downcase.eql? "provision" }
+          = button_tag(_("Order"),
+                       :class   => "btn btn-default",
+                       :alt     => t = _("Order this Service"),
+                       :title   => t,
+                       :onclick => "miqAjaxButton('#{url_for(:action => "svc_catalog_provision",
+                                                             :id     => @record.id,
+                                                             :button => "order")}');")
+      %td{:valign => "top"}
+        %table.style1
+          %tr
+            %td.key=_('Name')
+            %td.notwide= @record.name
+          %tr
+            %td.key=_('Description')
+            %td.notwide= @record.description
+          %tr
+            %td.key=_('Long Description')
+            %td.wide= @record.long_description.to_s.html_safe
