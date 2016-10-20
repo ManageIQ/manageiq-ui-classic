@@ -24,6 +24,12 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
       'datasourceProperties': dsPropsHash(vm.step3DsModel.dsProps),
       'connectionUrl': vm.step3DsModel.connectionUrl,
     };
+    if(angular.element('#server_id').val()){
+        payload['id'] = angular.element('#server_id').val()
+    }else{
+        payload['miq_grid_checks'] = ManageIQ.gridChecks.join(',')
+    }
+    return payload;
   };
 
   vm.dsModel = {};
