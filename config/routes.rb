@@ -1959,6 +1959,7 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         create
+        delete
         save
       )
     },
