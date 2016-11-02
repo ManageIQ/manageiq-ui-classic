@@ -1213,6 +1213,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
+        jdbc_drivers
       ) +
                compare_get,
       :post => %w(
