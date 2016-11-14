@@ -126,15 +126,15 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
 
   $scope.resetJdbcDriverForm = function() {
     $scope.jdbcDriverModel = {};
-    if(angular.element('#server_id').val()){
-        $scope.jdbcDriverModel.serverIdKey = 'id';
-        $scope.jdbcDriverModel.serverId  = angular.element('#server_id').val()
-    }else{
-        $scope.jdbcDriverModel.serverId  = ManageIQ.gridChecks.join(',')
-        $scope.jdbcDriverModel.serverIdKey = 'miq_grid_checks';
+    var serverId = angular.element('#server_id').val();
+    if (serverId) {
+      $scope.jdbcDriverModel.serverIdKey = 'id';
+      $scope.jdbcDriverModel.serverId  = serverId;
+    } else {
+      $scope.jdbcDriverModel.serverId  = ManageIQ.gridChecks.join(',');
+      $scope.jdbcDriverModel.serverIdKey = 'miq_grid_checks';
     }
 
-    $scope.jdbcDriverModel.serverId = angular.element('#server_id').val();
     $scope.jdbcDriverModel.jdbcCompliant = true;
     $scope.jdbcDriverModel.driverXaDatasourceClassName = '';
     $scope.jdbcDriverModel.databases = mwAddDatasourceService.getDatasources();

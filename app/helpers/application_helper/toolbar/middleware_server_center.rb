@@ -67,7 +67,8 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           N_('Stop Server'),
           :image   => 'power_off',
           :confirm => N_('Do you want to stop this server?'),
-          :klass   => ApplicationHelper::Button::MiddlewareStandaloneServerAction),
+          :klass   => ApplicationHelper::Button::MiddlewareStandaloneServerAction
+        ),
         button(
           :middleware_server_suspend,
           nil,

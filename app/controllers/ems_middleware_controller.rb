@@ -14,8 +14,8 @@ class EmsMiddlewareController < ApplicationController
     ManageIQ::Providers::MiddlewareManager
   end
 
-  def view_file_path
-    'ems_middleware/show'
+  def self.default_show_template
+    "ems_middleware/show"
   end
 
   def self.table_name

@@ -12,9 +12,9 @@
           = _('Existing Driver')
       .tab-content
         = miq_tab_content('specify_driver', @sb[:active_tab]) do
-          = render :partial => "specify_driver"
+          = render :partial => "middleware_server/specify_driver"
         = miq_tab_content('existing_driver', @sb[:active_tab]) do
-          = render :partial => "existing_driver"
+          = render :partial => "middleware_server/existing_driver"
       :javascript
         miq_tabs_init('#jdbc_tabs');
 

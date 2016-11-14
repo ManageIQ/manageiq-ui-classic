@@ -44,6 +44,13 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
     miqSparkleOff();
   };
 
+  this.replacePartials = function(data) {
+    Object.keys(data.replacePartials).forEach(function(elementId) {
+      $('#' + elementId).replaceWith(data.replacePartials[elementId]);
+    });
+  };
+
+  // FIXME: merge with add_flash in miq_application.js
   this.miqFlash = function(type, msg) {
     miqService.miqFlashClear();
     add_flash(msg, type);

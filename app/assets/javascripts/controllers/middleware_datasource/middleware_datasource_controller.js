@@ -13,9 +13,15 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     });
     return propsHash;
   };
+
+  var getServerIds = function() {
+    var serverId = angular.element('#server_id').val();
+    return serverId || ManageIQ.gridChecks.join(',');
+  };
+
   var makePayload = function() {
-    return {
-      'id': angular.element('#server_id').val(),
+    var serverId = angular.element('#server_id').val();
+    var payload = {
       'xaDatasource': vm.chooseDsModel.xaDatasource,
       'datasourceName': vm.step1DsModel.datasourceName,
       'jndiName': vm.step1DsModel.jndiName,
@@ -24,10 +30,10 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
       'datasourceProperties': dsPropsHash(vm.step3DsModel.dsProps),
       'connectionUrl': vm.step3DsModel.connectionUrl,
     };
-    if(angular.element('#server_id').val()){
-        payload['id'] = angular.element('#server_id').val()
-    }else{
-        payload['miq_grid_checks'] = ManageIQ.gridChecks.join(',')
+    if (serverId) {
+      payload.id = serverId;
+    } else {
+      payload.miq_grid_checks = ManageIQ.gridChecks.join(',');
     }
     return payload;
   };
@@ -93,7 +99,7 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
 
     mwAddDatasourceService.sendAddDatasource(payload).then(
       function(result) { // success
-        miqService.miqFlash(result.data.status, result.data.msg);
+        miqService.replacePartials(result.data);
       },
       function(_error) { // error
         miqService.miqFlash('error', __('Unable to install the Datasource on this server.'));
@@ -128,7 +134,7 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
 
   vm.addDatasourceStep1Next = function() {
     var dsSelection = vm.chooseDsModel.selectedDatasource;
-    var serverId = angular.element('#server_id').val();
+    var serverId = getServerIds();
     vm.dsModel.step = 'STEP2';
 
     vm.step2DsModel.jdbcDriverName = dsSelection.driverName;
