@@ -9,10 +9,10 @@ class ApplicationHelper::Toolbar::OrchestrationStackCenter < ApplicationHelper::
         button(
           :orchestration_stack_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove this Orchestration Stack'),
+          t = N_('Remove this item'),
           t,
           :url_parms => "&refresh=y",
-          :confirm   => N_("Warning: This Orchestration Stack and ALL of its components will be permanently removed!")),
+          :confirm   => N_("Warning: This item and ALL of its components will be permanently removed!")),
       ]
     ),
   ])
@@ -26,7 +26,7 @@ class ApplicationHelper::Toolbar::OrchestrationStackCenter < ApplicationHelper::
         button(
           :orchestration_stack_tag,
           'pficon pficon-edit fa-lg',
-          N_('Edit Tags for this Orchestration Stack'),
+          N_('Edit Tags for this item'),
           N_('Edit Tags')),
       ]
     ),
@@ -41,14 +41,14 @@ class ApplicationHelper::Toolbar::OrchestrationStackCenter < ApplicationHelper::
         button(
           :orchestration_stack_retire,
           'fa fa-clock-o fa-lg',
-          N_('Set Retirement Dates for this Orchestration Stack'),
+          N_('Set Retirement Dates for this item'),
           N_('Set Retirement Date')),
         button(
           :orchestration_stack_retire_now,
           'fa fa-clock-o fa-lg',
-          t = N_('Retire this Orchestration Stack'),
+          t = N_('Retire this item'),
           t,
-          :confirm => N_("Retire this Orchestration Stack")),
+          :confirm => N_("Retire this item")),
       ]
     ),
   ])

@@ -21,7 +21,8 @@ class OrchestrationStackController < ApplicationController
     return if record_no_longer_exists?(@orchestration_stack)
 
     @gtl_url = "/show"
-    drop_breadcrumb({:name => _("Orchestration Stacks"),
+    stacks_title = title_for_stacks
+    drop_breadcrumb({:name => stacks_title,
                      :url  => "/orchestration_stack/show_list?page=#{@current_page}&refresh=y"}, true)
     case @display
     when "download_pdf", "main", "summary_only"
@@ -37,9 +38,8 @@ class OrchestrationStackController < ApplicationController
       @view, @pages = get_view(ManageIQ::Providers::CloudManager::Vm, :parent => @orchestration_stack)
       @showtype = @display
     when "children"
-      title = ui_lookup(:tables => "orchestration_stack")
       kls   = OrchestrationStack
-      drop_breadcrumb(:name => _("%{name} (All %{title})") % {:name => @orchestration_stack.name, :title => title},
+      drop_breadcrumb(:name => _("%{name} (All %{title})") % {:name => @orchestration_stack.name, :title => stacks_title},
                       :url  => "/orchestration_stack/show/#{@orchestration_stack.id}?display=#{@display}")
       @view, @pages = get_view(kls, :parent => @orchestration_stack)
       @showtype = @display
@@ -271,8 +271,12 @@ class OrchestrationStackController < ApplicationController
     javascript_redirect :controller => 'catalog', :action => 'ot_show', :id => template.id
   end
 
+  def breadcrumb_name(_model)
+    title_for_stacks
+  end
+
   def get_session_data
-    @title      = _("Stack")
+    @title      = title_for_stack
     @layout     = "orchestration_stack"
     @lastaction = session[:orchestration_stack_lastaction]
     @display    = session[:orchestration_stack_display]

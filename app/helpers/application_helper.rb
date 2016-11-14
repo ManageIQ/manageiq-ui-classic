@@ -489,6 +489,8 @@ module ApplicationHelper
     elsif layout == "login"
       title += _(": Login")
     # Assume layout is a table name and look up the plural version
+    elsif layout == "orchestration_stack"
+      title += _(": #{title_for_stacks}")
     else
       title += ": #{ui_lookup(:tables => layout)}"
     end
@@ -1549,6 +1551,36 @@ module ApplicationHelper
 
   def title_for_cluster_record(record)
     record.openstack_cluster? ? _("Deployment Role") : _("Cluster")
+  end
+
+  def title_for_stacks
+    title_for_stack(true)
+  end
+
+  def title_for_stack(plural = false)
+    case ManageIQ::Providers::CloudManager.connected_provider_types
+    when :vcloud
+      plural ? _("vApps") : _("vApp")
+    else
+      plural ? _("Stacks") : _("Stack")
+    end
+  end
+
+  def start_page_allowed?(start_page)
+    storage_start_pages = %w(cim_storage_extent_show_list
+                             ontap_file_share_show_list
+                             ontap_logical_disk_show_list
+                             ontap_storage_system_show_list
+                             ontap_storage_volume_show_list
+                             storage_manager_show_list)
+    return false if storage_start_pages.include?(start_page) && !::Settings.product.storage
+    containers_start_pages = %w(ems_container_show_list
+                                container_node_show_list
+                                container_group_show_list
+                                container_service_show_list
+                                container_view)
+    return false if containers_start_pages.include?(start_page) && !::Settings.product.containers
+    role_allows?(:feature => start_page, :any => true)
   end
 
   def miq_tab_header(id, active = nil, options = {}, &_block)
