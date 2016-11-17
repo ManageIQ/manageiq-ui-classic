@@ -975,6 +975,24 @@ Rails.application.routes.draw do
       )
     },
 
+    :alerts_overview      => {
+      :get => %w(
+        show
+      )
+    },
+
+    :alerts_list      => {
+      :get => %w(
+        show
+      )
+    },
+
+    :alerts_most_recent      => {
+      :get => %w(
+        show
+      )
+    },
+
     :dashboard                => {
       :get  => %w(
         auth_error
