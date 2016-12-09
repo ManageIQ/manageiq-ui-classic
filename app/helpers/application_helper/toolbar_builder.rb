@@ -366,9 +366,6 @@ class ApplicationHelper::ToolbarBuilder
 
   # Determine if a button should be hidden
   def hide_button?(id)
-    # user can see the buttons if they can get to Policy RSOP/Automate Simulate screen
-    return false if ["miq_ae_tools"].include?(@layout)
-
     return false if id == "miq_request_reload" && # Show the request reload button
                     (@lastaction == "show_list" || @showtype == "miq_provisions")
 
@@ -381,7 +378,7 @@ class ApplicationHelper::ToolbarBuilder
                      !(id == "show_summary" && !@explorer) && id != "summary_reload" &&
                      !id.starts_with?("dialog_", "miq_task_", "compare_", "drift_", "comparemode_", "driftmode_",
                                       "custom_") &&
-                     @layout != "ops" &&
+                     !%w(ops miq_ae_tools).include?(@layout) &&
                      !(id.ends_with?("_new", "_discover") && @lastaction == "show" &&
                          !%w(main vms instances all_vms).include?(@display))
     end
