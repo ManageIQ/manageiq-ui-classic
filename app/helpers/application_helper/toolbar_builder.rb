@@ -12,31 +12,15 @@ class ApplicationHelper::ToolbarBuilder
   # Returns built toolbar loaded in instance variable `@toolbar`, or `nil`, if
   # no buttons should be in the toolbar.
   def build_toolbar(toolbar_name)
-    @toolbar = []
-    @groups_added = []
-    @sep_needed = false
-    @sep_added = false
+    build_toolbar_setup
 
     toolbar_class = toolbar_class(toolbar_name)
-    toolbar_class.definition.each_with_index do |(name, group), group_index|
-      next if group_skipped?(name)
+    build_toolbar_from_class(toolbar_class)
+  end
 
-      @sep_added = false
-      @groups_added.push(group_index)
-      case group
-      when ApplicationHelper::Toolbar::Group
-        group.buttons.each do |bgi|
-          build_button(bgi, group_index)
-        end
-      when ApplicationHelper::Toolbar::Custom
-        rendered_html = group.render(@view_context).tr('\'', '"')
-        group[:args][:html] = ERB::Util.html_escape(rendered_html).html_safe
-        @toolbar << group
-      end
-    end
-
-    @toolbar = nil if @toolbar.empty?
-    @toolbar
+  def build_toolbar_by_class(toolbar_class)
+    build_toolbar_setup
+    build_toolbar_from_class(toolbar_class)
   end
 
   private
@@ -887,5 +871,34 @@ class ApplicationHelper::ToolbarBuilder
     @layout == "pxe" &&
       item_id == "iso_datastore_new" &&
       !ManageIQ::Providers::Redhat::InfraManager.any_without_iso_datastores?
+  end
+
+  def build_toolbar_setup
+    @toolbar = []
+    @groups_added = []
+    @sep_needed = false
+    @sep_added = false
+  end
+
+  def build_toolbar_from_class(toolbar_class)
+    toolbar_class.definition.each_with_index do |(name, group), group_index|
+      next if group_skipped?(name)
+
+      @sep_added = false
+      @groups_added.push(group_index)
+      case group
+      when ApplicationHelper::Toolbar::Group
+        group.buttons.each do |bgi|
+          build_button(bgi, group_index)
+        end
+      when ApplicationHelper::Toolbar::Custom
+        rendered_html = group.render(@view_context).tr('\'', '"')
+        group[:args][:html] = ERB::Util.html_escape(rendered_html).html_safe
+        @toolbar << group
+      end
+    end
+
+    @toolbar = nil if @toolbar.empty?
+    @toolbar
   end
 end
