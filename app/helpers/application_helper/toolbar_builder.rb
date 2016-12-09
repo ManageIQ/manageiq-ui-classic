@@ -366,8 +366,6 @@ class ApplicationHelper::ToolbarBuilder
 
   # Determine if a button should be hidden
   def hide_button?(id)
-    return false if id.starts_with?("miq_capacity_") && @sb[:active_tab] == "report"
-
     # don't check for feature RBAC if id is miq_request_approve/deny
     unless %w(miq_policy catalogs).include?(@layout)
       return true if !role_allows?(:feature => id) &&
@@ -378,7 +376,8 @@ class ApplicationHelper::ToolbarBuilder
                                       "custom_") &&
                      !%w(ops miq_ae_tools).include?(@layout) &&
                      !(id.ends_with?("_new", "_discover") && @lastaction == "show" &&
-                         !%w(main vms instances all_vms).include?(@display))
+                         !%w(main vms instances all_vms).include?(@display)) &&
+                     !(id.starts_with?("miq_capacity_") && @sb[:active_tab] == "report")
     end
 
     # Check buttons with other restriction logic
