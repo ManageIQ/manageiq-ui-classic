@@ -55,8 +55,7 @@ class GenericObjectController < ApplicationController
   private
 
   def update_model_fields(generic_object_definition)
-    generic_object_definition.update_attribute(:name, params[:name])
-    generic_object_definition.update_attribute(:description, params[:description])
+    generic_object_definition.update_attributes(:name => params[:name], :description => params[:description])
   end
 
   def features
