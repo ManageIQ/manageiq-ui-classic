@@ -1,4 +1,4 @@
-require "helpers/report_helper_spec"
+require Manageiq::Ui.spec_root.join("helpers/report_helper_spec.rb")
 
 describe ReportController do
   context "Get form variables" do
