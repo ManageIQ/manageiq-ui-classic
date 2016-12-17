@@ -1,3 +1,4 @@
+require 'rails/all'
 require 'patternfly-sass'
 
 module ManageIQ

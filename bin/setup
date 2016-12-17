@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+require 'pathname'
+
+GEM_ROOT = Pathname.new File.expand_path('../../',  __FILE__)
+
+Dir.chdir(GEM_ROOT) do
+  if File.exist?("spec/manageiq")
+    puts "== Updating manageiq sample app =="
+    system "cd spec/manageiq && git pull"
+  else
+    puts "== Cloning manageiq sample app =="
+    system "git clone git@github.com:ManageIQ/manageiq.git --depth 1 spec/manageiq"
+  end
+
+  puts "== Installing dependencies =="
+  system "gem install bundler --conservative"
+  system "bundle check || bundle install"
+
+  if File.exists? "spec/manageiq"
+    system "bower update --allow-root -F --config.analytics=false"
+  else
+    puts "You must setup spec/manageiq before installing Bower components"
+  end
+
+  unless File.exist?("spec/manageiq/config/database.yml")
+    puts "\n== Copying sample config/database.yml =="
+    system "cp spec/manageiq/config/database.pg.yml spec/manageiq/config/database.yml"
+  end
+
+  unless File.exist?("spec/manageiq/certs/v2_key")
+    puts "\n== Copying sample certs/v2_key =="
+    system "cp spec/manageiq/certs/v2_key.dev spec/manageiq/certs/v2_key"
+  end
+end

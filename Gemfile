@@ -13,3 +13,17 @@ gem 'patternfly-sass'
 #   any git based gem, and compiled gems like rbtrace or memprof.
 dev_gemfile = File.expand_path("Gemfile.dev.rb", __dir__)
 eval_gemfile(dev_gemfile) if File.exist?(dev_gemfile)
+
+manageiq_gemfile = File.expand_path("spec/manageiq/Gemfile", __dir__)
+if File.exist?(manageiq_gemfile)
+  eval_gemfile(manageiq_gemfile)
+else
+  puts "ERROR: The ManageIQ application must be present in spec/manageiq."
+  puts "  Clone it from GitHub or symlink it from local source."
+  exit 1
+end
+
+group :test do
+  gem "codeclimate-test-reporter", :require => false
+  gem "simplecov", :require => false
+end

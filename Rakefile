@@ -1,37 +1,27 @@
-begin
-  require 'bundler/setup'
-rescue LoadError
-  puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
-end
-
-require 'rdoc/task'
-
-RDoc::Task.new(:rdoc) do |rdoc|
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = 'ManageIQ::UI::Classic'
-  rdoc.options << '--line-numbers'
-  rdoc.rdoc_files.include('README.md')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
-
-APP_RAKEFILE = File.expand_path("../test/dummy/Rakefile", __FILE__)
-load 'rails/tasks/engine.rake'
-
-
-load 'rails/tasks/statistics.rake'
-
-
-
+require 'bundler/setup'
 require 'bundler/gem_tasks'
+require 'manageiq-ui-classic'
+ManageIQ::UI::Classic.load_tasks
 
-require 'rake/testtask'
+begin
+  require 'rspec/core/rake_task'
 
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = false
+  APP_RAKEFILE = File.expand_path("../spec/manageiq/Rakefile", __FILE__)
+  load 'rails/tasks/engine.rake'
+rescue LoadError
 end
 
+if defined?(RSpec) && defined?(RSpec::Core::RakeTask)
+  namespace :spec do
+    desc "Setup environment for specs"
+    task :setup => ["app:test:initialize", "app:test:verify_no_db_access_loading_rails_environment", "app:test:setup_db"]
+  end
 
-task default: :test
+  RSpec::Core::RakeTask.new(:spec => ["app:test:initialize", "app:evm:compile_sti_loader"]) do |t|
+    spec_dir = File.expand_path("spec", __dir__)
+    EvmTestHelper.init_rspec_task(t, ['--require', File.join(spec_dir, 'spec_helper')])
+    t.pattern = FileList[spec_dir + '/**/*_spec.rb'].exclude(spec_dir + '/manageiq/**/*_spec.rb')
+  end
+end
+
+task :default => :spec
