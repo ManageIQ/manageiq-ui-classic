@@ -1,17 +1,16 @@
 $:.push File.expand_path("../lib", __FILE__)
 
 # Maintain your gem's version:
-require "manageiq/ui/version"
+require "manageiq/ui/classic/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "manageiq-ui"
-  s.version     = Manageiq::Ui::VERSION
-  s.authors     = ["Martin Povolny"]
-  s.email       = ["mpovolny@redhat.com"]
+  s.name        = "manageiq-ui-classic"
+  s.version     = ManageIQ::UI::Classic::VERSION
+  s.authors     = ["ManageIQ Developers"]
   s.homepage    = "http://www.manageiq.com"
-  s.summary     = "Summary of Manageiq::Ui."
-  s.description = "Description of Manageiq::Ui."
+  s.summary     = "Classic UI of ManageIQ"
+  s.description = "Classic UI of ManageIQ"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]

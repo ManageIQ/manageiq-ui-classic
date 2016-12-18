@@ -1,4 +1,4 @@
-require Manageiq::Ui.spec_root.join("helpers/report_helper_spec.rb")
+require ManageIQ::UI::Classic.spec_root.join("helpers/report_helper_spec.rb")
 
 describe TreeBuilderReportSavedReports do
   include CompressedIds

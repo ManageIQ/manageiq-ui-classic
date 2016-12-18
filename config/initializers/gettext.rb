@@ -1,1 +1,1 @@
-Vmdb::Gettext::Domains.add_domain('Manageiq_Ui', Manageiq::Ui::Engine.root.join('locale').to_s, :po)
+Vmdb::Gettext::Domains.add_domain('ManageIQ_UI_Classic', ManageIQ::UI::Classic::Engine.root.join('locale').to_s, :po)
