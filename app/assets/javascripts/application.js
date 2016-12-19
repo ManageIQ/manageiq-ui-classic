@@ -25,6 +25,7 @@
 //= require ./miq_api
 //= require bower_components/rxjs/dist/rx.all
 //= require ./miq_angular_application
+//= require ./miq_observable
 //= require_tree ./angular_modules/
 //= require_tree ./controllers/
 //= require_tree ./directives/
