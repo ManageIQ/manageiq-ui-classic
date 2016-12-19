@@ -14,7 +14,7 @@ function genericObjectDefinitionToolbarController(API, miqService, $window) {
   var toolbar = this;
 
   if (ManageIQ.angular.genericObjectDefinitionSubsription) {
-    ManageIQ.angular.genericObjectDefinitionSubsription.dispose();
+    ManageIQ.angular.genericObjectDefinitionSubsription.unsubscribe();
   }
 
   ManageIQ.angular.genericObjectDefinitionSubsription = listenToRx(function(event) {

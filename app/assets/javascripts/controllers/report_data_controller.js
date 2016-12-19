@@ -157,7 +157,7 @@
   };
 
   ReportDataController.prototype.onUnsubscribe = function() {
-    this.subscription.dispose();
+    this.subscription.unsubscribe();
   };
 
   /**
