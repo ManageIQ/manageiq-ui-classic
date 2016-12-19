@@ -23,17 +23,17 @@ class TreeBuilderMiqActionCat < TreeBuilder
 
   def tree_init_options(_tree_name)
     {
-        :expand => true,
-        :lazy   => false
+      :expand => true,
+      :lazy   => false
     }
   end
 
   def set_locals_for_render
     locals = super
     locals.merge!(
-        :id_prefix => "cat_tree",
-        :click_url => "/miq_policy/action_tag_pressed/",
-        :onclick   => "miqOnClickTagCat"
+      :id_prefix => "cat_tree",
+      :click_url => "/miq_policy/action_tag_pressed/",
+      :onclick   => "miqOnClickTagCat"
     )
   end
 
