@@ -13,21 +13,25 @@ describe TreeBuilderMiqActionCat do
     @tenant = "TestTenant"
     @tenant = "#{@tenant} Tags"
   end
+
   context 'read-only mode' do
     before do
       @tree_name = 'action_tags'
       @tree = TreeBuilderMiqActionCat.new('action_tags_tree', 'action_tags', {}, true, @tenant)
     end
+
     it 'set init options correctly' do
       tree_options = @tree.send(:tree_init_options, @tree_name)
       expect(tree_options).to eq(:expand => true, :lazy => false)
     end
+
     it 'set locals for render correctly' do
       locals = @tree.send(:set_locals_for_render)
       expect(locals[:id_prefix]).to eq('cat_tree')
       expect(locals[:click_url]).to eq("/miq_policy/action_tag_pressed/")
       expect(locals[:onclick]).to eq("miqOnClickTagCat")
     end
+
     it 'set node' do
       desc1 = _("Category: %{description}") % {:description => @tag1.description}
       desc2 = @tag1.description
@@ -52,10 +56,12 @@ describe TreeBuilderMiqActionCat do
       roots = @tree.send(:root_options)
       expect(roots).to eq([@tenant, @tenant, "100/tag.png"])
     end
+
     it 'sets first level nodes correctly' do
       roots = @tree.send(:x_get_tree_roots, false, nil)
       expect(roots).to eq([@folder1, @folder2].sort_by { |c| c.description.downcase })
     end
+
     it 'sets second level nodes correctly' do
       kid1 = @tree.send(:x_get_tree_classification_kids, @folder1, false)
       kid2 = @tree.send(:x_get_tree_classification_kids, @folder2, false)

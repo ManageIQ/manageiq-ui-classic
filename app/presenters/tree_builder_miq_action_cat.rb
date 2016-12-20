@@ -7,7 +7,6 @@ class TreeBuilderMiqActionCat < TreeBuilder
     img = "blank.gif"
     leaf = !object.entries.any?
     img = "tag.png" unless leaf
-    node[:icon] = img
     node[:image] = "100/#{img}"
     node[:title] = object.description
     node[:tooltip] = _("Category: %{description}") % {:description => object.description}
