@@ -41,22 +41,10 @@ describe TreeBuilderMiqActionCategory do
 
   describe '#override' do
     it 'set node' do
-      desc1 = _("Category: %{description}") % {:description => tag1.description}
-      desc2 = tag1.description
       node = subject.send(:override, {}, tag1, nil, nil)
-
-      expect(node[:hideCheckbox]).to eq(true)
-      expect(node[:tooltip]).to eq(desc1)
-      expect(node[:title]).to eq(desc2)
       expect(node[:cfmeNoClick]).to eq(false)
 
-      desc1 = _("Category: %{description}") % {:description => folder1.description}
-      desc2 = folder1.description
       node = subject.send(:override, {}, folder1, nil, nil)
-
-      expect(node[:hideCheckbox]).to eq(true)
-      expect(node[:tooltip]).to eq(desc1)
-      expect(node[:title]).to eq(desc2)
       expect(node[:cfmeNoClick]).to eq(true)
     end
   end

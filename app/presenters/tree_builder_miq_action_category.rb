@@ -4,14 +4,10 @@ class TreeBuilderMiqActionCategory < TreeBuilder
   private
 
   def override(node, object, _pid, _options)
-    img = "blank.gif"
-    leaf = !object.entries.any?
-    img = "tag.png" unless leaf
-    node[:image] = ActionController::Base.helpers.image_path("100/#{img}")
-    node[:title] = object.description
-    node[:tooltip] = _("Category: %{description}") % {:description => object.description}
+    leaf = !object.category?
+    image = leaf ? nil : "100/tag.png"
     node[:cfmeNoClick] = !leaf
-    node[:hideCheckbox] = true
+    node[:image] = image && ActionController::Base.helpers.image_path(image)
     node
   end
 
@@ -43,7 +39,7 @@ class TreeBuilderMiqActionCategory < TreeBuilder
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only, _options)
     cats = Classification.categories.select(&:show)
-    cats = cats.select { |c| c.entries.any? }
+    cats = cats.select { |c| c.entries.any? && c.read_only == false }
     count_only_or_objects(count_only, cats, :description)
   end
 
