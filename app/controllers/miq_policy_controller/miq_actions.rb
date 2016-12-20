@@ -293,7 +293,7 @@ module MiqPolicyController::MiqActions
   end
 
   def action_build_cat_tree
-    @cat_tree = TreeBuilderMiqActionCat.new("action_tags_tree", 'action_tags', @sb, true, "#{current_tenant.name} Tags")
+    @category_tree = TreeBuilderMiqActionCategory.new(:action_tags_tree, :action_tags, @sb, true, "#{current_tenant.name} Tags")
   end
 
   # Set action record variables to new values

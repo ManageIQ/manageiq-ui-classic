@@ -1,4 +1,4 @@
-class TreeBuilderMiqActionCat < TreeBuilder
+class TreeBuilderMiqActionCategory < TreeBuilder
   has_kids_for Classification, [:x_get_tree_classification_kids]
 
   private

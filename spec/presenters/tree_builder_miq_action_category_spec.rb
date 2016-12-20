@@ -1,4 +1,4 @@
-describe TreeBuilderMiqActionCat do
+describe TreeBuilderMiqActionCategory do
   before do
     role = MiqUserRole.find_by_name("EvmRole-operator")
     group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Tags Group")
@@ -18,10 +18,10 @@ describe TreeBuilderMiqActionCat do
     f2
   end
   let!(:tenant) { "TestTenant Tags" }
-  let!(:tree_name) { 'action_tags' }
+  let!(:tree_name) { :action_tags }
 
   subject do
-    described_class.new('action_tags_tree', 'action_tags', {}, true, tenant)
+    described_class.new(:action_tags_tree, :action_tags, {}, true, tenant)
   end
 
   describe '#tree_init_options' do

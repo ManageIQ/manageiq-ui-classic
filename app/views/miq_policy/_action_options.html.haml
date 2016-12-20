@@ -67,8 +67,7 @@
     .form-horizontal
       .form-group
         .col-md-8
-          = render(:partial => 'shared/tree',
-            :locals => {:tree => @cat_tree, :name => @cat_tree.name})
+          = render(:partial => 'shared/tree', :locals => {:tree => @category_tree, :name => @category_tree.name})
   - when "create_snapshot"
     %h3
       = _("Snapshot Settings")
