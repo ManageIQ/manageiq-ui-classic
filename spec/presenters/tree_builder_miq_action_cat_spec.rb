@@ -6,7 +6,7 @@ describe TreeBuilderMiqActionCat do
   end
 
   let!(:tag1) { FactoryGirl.create(:classification, :name => 'tag1', :show => false) }
-  let! (:folder1) do
+  let!(:folder1) do
     f1 = FactoryGirl.create(:classification, :name => 'folder1', :show => true)
     f1.entries.push(tag1)
     f1
@@ -69,11 +69,12 @@ describe TreeBuilderMiqActionCat do
 
   describe '#x_get_tree_roots' do
     it 'sets first level nodes correctly' do
-      expect(subject.send(:x_get_tree_roots, false, nil)).to eq([folder1, folder2].sort_by { |c| c.description.downcase })
+      s = subject.send(:x_get_tree_roots, false, nil)
+      expect(s).to eq([folder1, folder2].sort_by { |c| c.description.downcase })
     end
   end
 
-  describe '#x_get_tree_classification_kids'  do
+  describe '#x_get_tree_classification_kids' do
     it 'sets second level nodes correctly' do
       kid1 = subject.send(:x_get_tree_classification_kids, folder1, false)
       kid2 = subject.send(:x_get_tree_classification_kids, folder2, false)
