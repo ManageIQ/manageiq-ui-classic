@@ -138,7 +138,7 @@ module MiqPolicyController::MiqActions
   def action_tag_pressed
     @edit = session[:edit]
     @action = @edit[:action_id] ? MiqAction.find_by_id(@edit[:action_id]) : MiqAction.new
-    id = TreeBuilder.from_cid(params[:id].split('-')[1])
+    id = from_cid(params[:id].split('-')[1])
     tag_name = Classification.find(id).tag.name
     @tag_selected = Classification.tag2human(tag_name)
     @edit[:new][:options][:tags] = {} unless tag_name.nil?
