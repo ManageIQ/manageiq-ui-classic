@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.description = "Classic UI of ManageIQ"
   s.license     = "Apache 2.0"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "LICENSE.txt", "Rakefile", "README.md"]
+  s.files = Dir["{app,config,lib,locale,spec}/**/*", "LICENSE.txt", "Rakefile", "README.md"]
 
   s.add_dependency "rails", "~> 5.0.0", ">= 5.0.0.1"
 end
