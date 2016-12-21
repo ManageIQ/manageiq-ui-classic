@@ -8,12 +8,12 @@ Gem::Specification.new do |s|
   s.name        = "manageiq-ui-classic"
   s.version     = ManageIQ::UI::Classic::VERSION
   s.authors     = ["ManageIQ Developers"]
-  s.homepage    = "http://www.manageiq.com"
+  s.homepage    = "https://github.com/ManageIQ/manageiq-ui-classic"
   s.summary     = "Classic UI of ManageIQ"
   s.description = "Classic UI of ManageIQ"
-  s.license     = "MIT"
+  s.license     = "Apache 2.0"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+  s.files = Dir["{app,config,db,lib}/**/*", "LICENSE.txt", "Rakefile", "README.md"]
 
   s.add_dependency "rails", "~> 5.0.0", ">= 5.0.0.1"
 end
