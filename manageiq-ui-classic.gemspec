@@ -8,12 +8,16 @@ Gem::Specification.new do |s|
   s.name        = "manageiq-ui-classic"
   s.version     = ManageIQ::UI::Classic::VERSION
   s.authors     = ["ManageIQ Developers"]
+
   s.homepage    = "https://github.com/ManageIQ/manageiq-ui-classic"
   s.summary     = "Classic UI of ManageIQ"
   s.description = "Classic UI of ManageIQ"
   s.license     = "Apache 2.0"
 
-  s.files = Dir["{app,config,lib,locale,spec}/**/*", "LICENSE.txt", "Rakefile", "README.md"]
+  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  spec.bindir        = "exe"
+  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.require_paths = ["lib"]
 
   s.add_dependency "rails", "~> 5.0.0", ">= 5.0.0.1"
 end

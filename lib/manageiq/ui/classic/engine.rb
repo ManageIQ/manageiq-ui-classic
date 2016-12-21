@@ -19,6 +19,10 @@ module ManageIQ
             codemirror/modes/*.js codemirror/themes/*.css
           )
         end
+
+        def vmdb_plugin?
+          true
+        end
       end
     end
   end

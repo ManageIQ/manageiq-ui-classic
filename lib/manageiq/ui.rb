@@ -1,0 +1,1 @@
+require 'manageiq/ui/classic'

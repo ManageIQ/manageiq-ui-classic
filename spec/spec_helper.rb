@@ -9,11 +9,11 @@ require 'application_helper'
 require 'rails-controller-testing'
 require 'rspec/rails'
 
-require 'manageiq/ui'
+require 'manageiq-ui-classic'
 
 support_path = Rails.root.join('spec', 'support')
 
-# TODO: isolate the helpers we need for UI specs
+# TODO: isolate the helpers we need for UI specs instead of general Dir glob
 #
 # require support_path.join('evm_spec_helper.rb')
 # require support_path.join('auth_helper.rb')
@@ -25,29 +25,17 @@ support_path = Rails.root.join('spec', 'support')
 # require support_path.join('factory_girl_helper.rb')
 # require support_path.join('button_helper.rb')
 # require support_path.join('settings_helper.rb')
+#
+# Known:
+# require support_path.join("examples_group/shared_examples_for_application_helper.rb")
+# require support_path.join("rake_task_example_group.rb")
+Dir[support_path.join("**/*.rb")].each { |f| require f }
 
-Dir[support_path.join("**","*.rb")].each { |f| require f }
-
-shared_path = Rails.root.join('spec', 'shared', 'controllers', '**', '*.rb')
-
-Dir[shared_path].each do |f|
-  require f
-end
-
-require support_path.join('examples_group', 'shared_examples_for_application_helper.rb').to_s
-require support_path.join('rake_task_example_group.rb').to_s
-
+Dir[Rails.root.join("spec/shared/controllers/**/*.rb")].each { |f| require f }
 Dir[ManageIQ::Gems::Pending.root.join("spec/support/custom_matchers/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
-  config.expect_with :rspec do |c|
-    c.syntax = :expect
-  end
-  config.mock_with :rspec do |c|
-    c.syntax = :expect
-  end
-
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_path = Rails.root.join("spec/fixtures")
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
 
@@ -57,12 +45,6 @@ RSpec.configure do |config|
     # File store for --only-failures option
     config.example_status_persistence_file_path = Rails.root.join("tmp/rspec_example_store.txt")
   end
-
-  config.define_derived_metadata(:file_path => /spec\/lib\/miq_automation_engine\/models/) do |metadata|
-    metadata[:type] ||= :model
-  end
-
-  config.include Spec::Support::AutomationHelper
 
   config.include Spec::Support::AuthHelper, :type => :view
   config.include Spec::Support::ViewHelper, :type => :view
@@ -79,7 +61,6 @@ RSpec.configure do |config|
     metadata[:type] ||= :presenter
   end
 
-  config.include Spec::Support::RakeTaskExampleGroup, :type => :rake_task
   config.include Spec::Support::ButtonHelper, :type => :button
   config.include Spec::Support::AuthHelper, :type => :button
   config.define_derived_metadata(:file_path => /spec\/helpers\/application_helper\/buttons/) do |metadata|
@@ -87,11 +68,8 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do |example|
-    EmsRefresh.try(:debug_failures=, true) if example.metadata[:migrations].blank?
     ApplicationController.handle_exceptions = false if %w(controller requests).include?(example.metadata[:type])
   end
-
-  # config.before(:each, :rest_api => true) { init_api_spec_env }
 
   config.around(:each) do |example|
     EvmSpecHelper.clear_caches { example.run }

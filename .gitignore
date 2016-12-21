@@ -5,6 +5,6 @@ _yardoc/
 coverage/
 doc/
 pkg/
-spec/manageiq/
+spec/manageiq
 spec/reports/
 tmp/

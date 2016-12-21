@@ -1,7 +1,8 @@
 require 'bundler/setup'
 require 'bundler/gem_tasks'
+
 require 'manageiq-ui-classic'
-ManageIQ::UI::Classic.load_tasks
+ManageIQ::UI::Classic::Engine.load_tasks
 
 begin
   require 'rspec/core/rake_task'
