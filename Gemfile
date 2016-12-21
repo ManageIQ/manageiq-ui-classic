@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'patternfly-sass'
-
 #
 # Custom Gemfile modifications
 #
