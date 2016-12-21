@@ -17,12 +17,6 @@ class CloudObjectStoreObjectController < ApplicationController
     return tag("CloudObjectStoreObject") if params[:pressed] == 'cloud_object_store_object_tag'
   end
 
-  def download_summary_pdf
-    super do
-      @object_store_object = @record
-    end
-  end
-
   def show
     @display = params[:display] || "main" unless pagination_or_gtl_request?
     @showtype = @display
