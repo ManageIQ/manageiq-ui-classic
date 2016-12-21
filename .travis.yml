@@ -14,3 +14,10 @@ before_install:
 - source ${TRAVIS_BUILD_DIR}/tools/ci/before_install.sh
 before_script: bundle exec rake spec:setup
 after_script: bundle exec codeclimate-test-reporter
+notifications:
+  webhooks:
+    urls:
+    - https://webhooks.gitter.im/e/9a9f972a1225d28e0f05
+    on_success: change
+    on_failure: always
+    on_start: never
