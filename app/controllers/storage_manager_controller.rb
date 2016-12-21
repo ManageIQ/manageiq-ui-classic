@@ -202,12 +202,6 @@ class StorageManagerController < ApplicationController
     end
   end
 
-  def download_summary_pdf
-    super do
-      @sm = @record
-    end
-  end
-
   def show
     @display = params[:display] || "main" unless pagination_or_gtl_request?
 

@@ -19,12 +19,6 @@ class ConfigurationJobController < ApplicationController
     ems_configprovider_path(*args)
   end
 
-  def download_summary_pdf
-    super do
-      @configuration_job = @record
-    end
-  end
-
   def show
     return if perfmenu_click?
     @display = params[:display] || "main" unless pagination_or_gtl_request?

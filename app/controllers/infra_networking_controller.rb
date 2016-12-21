@@ -19,12 +19,6 @@ class InfraNetworkingController < ApplicationController
     redirect_to :action => 'explorer', :flash_msg => @flash_array ? @flash_array[0][:message] : nil
   end
 
-  def download_summary_pdf
-    super do
-      @switch = @record
-    end
-  end
-
   def show(id = nil)
     @explorer = true
     @display = params[:display] || "main" unless pagination_or_gtl_request?
