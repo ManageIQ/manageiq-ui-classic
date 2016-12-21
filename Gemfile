@@ -1,16 +1,15 @@
 source 'https://rubygems.org'
 
-# Declare your gem's dependencies in manageiq-ui.gemspec.
-# Bundler will treat runtime dependencies like base dependencies, and
-# development dependencies will be added by default to the :development group.
-gemspec
-
-# Declare any dependencies that are still in development here instead of in
-# your gemspec. These might include edge Rails or gems from your path or
-# Git. Remember to move these dependencies to your gemspec before releasing
-# your gem to rubygems.org.
-
-# To use a debugger
-# gem 'byebug', group: [:development, :test]
-gem 'pry'
 gem 'patternfly-sass'
+
+#
+# Custom Gemfile modifications
+#
+
+# Load developer specific Gemfile
+#   Developers can create a file called Gemfile.dev.rb containing any gems for
+#   their local development.  This can be any gem under evaluation that other
+#   developers may not need or may not easily install, such as rails-dev-boost,
+#   any git based gem, and compiled gems like rbtrace or memprof.
+dev_gemfile = File.expand_path("Gemfile.dev.rb", __dir__)
+eval_gemfile(dev_gemfile) if File.exist?(dev_gemfile)
