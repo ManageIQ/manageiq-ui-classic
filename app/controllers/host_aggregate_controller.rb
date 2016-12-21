@@ -8,12 +8,6 @@ class HostAggregateController < ApplicationController
   include Mixins::CheckedIdMixin
   include Mixins::GenericSessionMixin
 
-  def download_summary_pdf
-    super do
-      @host_aggregate = @record
-    end
-  end
-
   def show
     return if perfmenu_click?
     @display = params[:display] || "main" unless pagination_or_gtl_request?
