@@ -66,12 +66,6 @@ class CloudVolumeController < ApplicationController
     end
   end
 
-  def download_summary_pdf
-    super do
-      @volume = @record
-    end
-  end
-
   def show
     @display = params[:display] || "main" unless pagination_or_gtl_request?
     @showtype = @display
