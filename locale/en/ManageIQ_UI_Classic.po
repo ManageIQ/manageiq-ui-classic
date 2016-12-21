@@ -1,13 +1,13 @@
-# English translations for Manageiq_Ui package.
+# English translations for ManageIQ_UI_Classic package.
 # Copyright (C) 2016 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the Manageiq_Ui package.
+# This file is distributed under the same license as the ManageIQ_UI_Classic package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Manageiq_Ui 1.0.0\n"
+"Project-Id-Version: ManageIQ_UI_Classic 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2016-12-13 15:17+0100\n"
+"PO-Revision-Date: 2016-12-20 15:57+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -45,6 +45,9 @@ msgid " (%{priority}unavailable)"
 msgstr ""
 
 msgid " (Active)"
+msgstr ""
+
+msgid " (Ad hoc Metrics)"
 msgstr ""
 
 msgid " (All %{file_shares})"
@@ -242,9 +245,6 @@ msgstr ""
 msgid " by %{user}"
 msgstr ""
 
-msgid "\"#{operation_info.fetch(:msg)} initiated for selected server(s)\""
-msgstr ""
-
 msgid "\"%{action}\" for %{switch} \"%{name}\""
 msgstr ""
 
@@ -299,39 +299,6 @@ msgid "\"%{task}\": not supported for %{hostname}"
 msgstr ""
 
 msgid "\"%{type}\" is not a valid Orchestration Template type"
-msgstr ""
-
-msgid "\"A specific #{ui_lookup(:model => @edit[:new][:cb_model])} or all must be selected\""
-msgstr ""
-
-msgid "\"Archived #{model_name}\""
-msgstr ""
-
-msgid "\"Could not find #{params[:model]}[id=#{params[:id]}]\""
-msgstr ""
-
-msgid "\"Error during repository fetch: #{err.message}\""
-msgstr ""
-
-msgid "\"Name: #{h(item.name)} | #{ui_lookup(:table => \"storages\")} Type: #{h(item.store_type)}\""
-msgstr ""
-
-msgid "\"No #{controller_name.pluralize} selected\""
-msgstr ""
-
-msgid "\"Not #{operation_info.fetch(:hawk)} the domain server\""
-msgstr ""
-
-msgid "\"Not #{operation_info.fetch(:hawk)} the provider\""
-msgstr ""
-
-msgid "\"Orphaned #{model_name}\""
-msgstr ""
-
-msgid "\"Parent #{label}\""
-msgstr ""
-
-msgid "\"Show policy details for #{h(item.name)}\""
 msgstr ""
 
 msgid "# CPUS"
@@ -411,6 +378,9 @@ msgstr ""
 msgid "%{field} '%{value}' is already in use"
 msgstr ""
 
+msgid "%{field} is required"
+msgstr ""
+
 msgid "%{hosts} & %{clusters}"
 msgstr ""
 
@@ -439,6 +409,9 @@ msgid "%{label} is not in the current region and will be skipped"
 msgstr ""
 
 msgid "%{log_description} log downloaded"
+msgstr ""
+
+msgid "%{message} %{key}:[%{old_value}] to [%{new_value}]"
 msgstr ""
 
 msgid "%{message} %{key}:[%{old_value}] to [new_value]"
@@ -772,7 +745,13 @@ msgstr[1] ""
 msgid "%{number} bytes"
 msgstr ""
 
+msgid "%{object_types} under %{datastore_or_provider} \"%{provider_or_datastore_name}\""
+msgstr ""
+
 msgid "%{object} Conditions"
+msgstr ""
+
+msgid "%{operation} initiated for selected server(s)"
 msgstr ""
 
 msgid "%{product} Appliance restart initiated successfully"
@@ -1694,6 +1673,9 @@ msgstr ""
 msgid "A single VM"
 msgstr ""
 
+msgid "A specific %{chargeback} or all must be selected"
+msgstr ""
+
 msgid "A tag category must be chosen to commit this expression element"
 msgstr ""
 
@@ -1781,6 +1763,9 @@ msgstr ""
 msgid "Access Key ID and matching Secret Access Key fields are needed to perform verification of credentials"
 msgstr ""
 
+msgid "Access Restriction for Services, VMs, and Templates"
+msgstr ""
+
 msgid "Access Rules for all Virtual Machines"
 msgstr ""
 
@@ -1827,6 +1812,9 @@ msgid "Active"
 msgstr ""
 
 msgid "Activity"
+msgstr ""
+
+msgid "Ad hoc Metrics"
 msgstr ""
 
 msgid "Add"
@@ -1898,6 +1886,12 @@ msgstr ""
 msgid "Add New %{table}"
 msgstr ""
 
+msgid "Add New Cloud Network"
+msgstr ""
+
+msgid "Add New Cloud Network "
+msgstr ""
+
 msgid "Add New Host"
 msgstr ""
 
@@ -1958,10 +1952,10 @@ msgstr ""
 msgid "Add a New Cloud Provider"
 msgstr ""
 
-msgid "Add a New Container"
+msgid "Add a New Customization Template"
 msgstr ""
 
-msgid "Add a New Customization Template"
+msgid "Add a New Datawarehouse Provider"
 msgstr ""
 
 msgid "Add a New Domain"
@@ -1971,9 +1965,6 @@ msgid "Add a New Host Aggregate"
 msgstr ""
 
 msgid "Add a New ISO Datastore"
-msgstr ""
-
-msgid "Add a New Image Registry"
 msgstr ""
 
 msgid "Add a New Infrastructure Provider"
@@ -1994,25 +1985,10 @@ msgstr ""
 msgid "Add a New Network Provider"
 msgstr ""
 
-msgid "Add a New Node"
-msgstr ""
-
 msgid "Add a New PXE Server"
 msgstr ""
 
-msgid "Add a New Pod"
-msgstr ""
-
 msgid "Add a New Policy Profile"
-msgstr ""
-
-msgid "Add a New Project"
-msgstr ""
-
-msgid "Add a New Replicator"
-msgstr ""
-
-msgid "Add a New Service"
 msgstr ""
 
 msgid "Add a New Storage Manager"
@@ -2192,16 +2168,19 @@ msgstr ""
 msgid "Add of new Catalog Bundle was cancelled by the user"
 msgstr ""
 
+msgid "Add of new Cloud Network was cancelled by the user"
+msgstr ""
+
 msgid "Add of new Dashboard was cancelled by the user"
 msgstr ""
 
 msgid "Add of new Router was cancelled by the user"
 msgstr ""
 
-msgid "Add of new Subnet was cancelled by the user"
+msgid "Add subfolder to selected folder"
 msgstr ""
 
-msgid "Add subfolder to selected folder"
+msgid "Add tags and click the Apply button to view available metrics"
 msgstr ""
 
 msgid "Add tags individually for each VM or select multiple rows and edit tags as a group."
@@ -2560,6 +2539,9 @@ msgstr ""
 msgid "All Policy Profiles"
 msgstr ""
 
+msgid "All Providers"
+msgstr ""
+
 msgid "All RSS Feeds"
 msgstr ""
 
@@ -2853,6 +2835,9 @@ msgid "Architecture"
 msgstr ""
 
 msgid "Archived %{models}"
+msgstr ""
+
+msgid "Archived %{model}"
 msgstr ""
 
 msgid "Archived VMs & Templates"
@@ -3422,7 +3407,13 @@ msgstr ""
 msgid "Block Size"
 msgstr ""
 
+msgid "Block Storage"
+msgstr ""
+
 msgid "Block Storage Based"
+msgstr ""
+
+msgid "Block Storage Managers"
 msgstr ""
 
 msgid "Blue"
@@ -3875,6 +3866,9 @@ msgstr ""
 msgid "Change Group"
 msgstr ""
 
+msgid "Change Metrics"
+msgstr ""
+
 msgid "Change Password / Confirm Password"
 msgstr ""
 
@@ -3968,6 +3962,15 @@ msgstr ""
 msgid "Check Compliance of the last known configuration for the selected items"
 msgstr ""
 
+msgid "Check Compliance of the last known configuration for these Cloud Managers"
+msgstr ""
+
+msgid "Check Compliance of the last known configuration for these Container Managers"
+msgstr ""
+
+msgid "Check Compliance of the last known configuration for these Infra Managers"
+msgstr ""
+
 msgid "Check Compliance of the last known configuration for these Nodes"
 msgstr ""
 
@@ -3977,7 +3980,16 @@ msgstr ""
 msgid "Check Compliance of the last known configuration for these Replicators"
 msgstr ""
 
+msgid "Check Compliance of the last known configuration for this Cloud Manager"
+msgstr ""
+
+msgid "Check Compliance of the last known configuration for this Container Manager"
+msgstr ""
+
 msgid "Check Compliance of the last known configuration for this Image"
+msgstr ""
+
+msgid "Check Compliance of the last known configuration for this Infra Manager"
 msgstr ""
 
 msgid "Check Compliance of the last known configuration for this Instance"
@@ -4034,9 +4046,6 @@ msgstr ""
 msgid "Choose %{entity}"
 msgstr ""
 
-msgid "Choose %{provider}"
-msgstr ""
-
 msgid "Choose Datasource:"
 msgstr ""
 
@@ -4044,6 +4053,9 @@ msgid "Choose Flavor"
 msgstr ""
 
 msgid "Choose Policies"
+msgstr ""
+
+msgid "Choose Provider"
 msgstr ""
 
 msgid "Choose a %{cluster}"
@@ -4068,6 +4080,9 @@ msgid "Choose a Filter"
 msgstr ""
 
 msgid "Choose a Import/Export type from the menus on the left."
+msgstr ""
+
+msgid "Choose a Label"
 msgstr ""
 
 msgid "Choose a Report from the menus on the left."
@@ -4340,7 +4355,25 @@ msgstr ""
 msgid "Cloud Network"
 msgstr ""
 
+msgid "Cloud Network \"%{name}\" created"
+msgstr ""
+
+msgid "Cloud Network \"%{name}\" updated"
+msgstr ""
+
+msgid "Cloud Network creation failed: Task start failed: ID [%{id}]"
+msgstr ""
+
+msgid "Cloud Network no longer exists."
+msgstr ""
+
+msgid "Cloud Network update failed: Task start failed: ID [%{id}]"
+msgstr ""
+
 msgid "Cloud Networks"
+msgstr ""
+
+msgid "Cloud Object Store Containers"
 msgstr ""
 
 msgid "Cloud Object Stores"
@@ -4367,7 +4400,22 @@ msgstr ""
 msgid "Cloud Subnet"
 msgstr ""
 
+msgid "Cloud Subnet \"%{name}\" created"
+msgstr ""
+
+msgid "Cloud Subnet \"%{name}\" updated"
+msgstr ""
+
+msgid "Cloud Subnet creation: Task start failed: ID [%{id}]"
+msgstr ""
+
+msgid "Cloud Subnet details"
+msgstr ""
+
 msgid "Cloud Subnet no longer exists."
+msgstr ""
+
+msgid "Cloud Subnet update failed: Task start failed: ID [%{id}]"
 msgstr ""
 
 msgid "Cloud Subnets"
@@ -4742,6 +4790,9 @@ msgstr ""
 msgid "Consumption"
 msgstr ""
 
+msgid "Consumption Tab is coming"
+msgstr ""
+
 msgid "Container"
 msgid_plural "Container"
 msgstr[0] ""
@@ -4790,6 +4841,9 @@ msgid "Container Nodes"
 msgstr ""
 
 msgid "Container Projects"
+msgstr ""
+
+msgid "Container Provider Conditions"
 msgstr ""
 
 msgid "Container Replicators"
@@ -4981,10 +5035,16 @@ msgstr ""
 msgid "Cores Per Socket"
 msgstr ""
 
+msgid "Could not find %{model}[id=%{id}]"
+msgstr ""
+
 msgid "Couldn't initiate deletion of %{model} \"%{name}\": %{details}"
 msgstr ""
 
-msgid "Couldn't initiate deletion of Subnet \"%{name}\": %{details}"
+msgid "Couldn't initiate deletion of Network \"%{name}\": %{details}"
+msgstr ""
+
+msgid "Couldn't initiate update of Network \"%{name}\": %{details}"
 msgstr ""
 
 msgid "Count"
@@ -5083,13 +5143,10 @@ msgstr ""
 msgid "Creating %{model} %{name}"
 msgstr ""
 
-msgid "Creating %{network} \"%{network_name}\""
-msgstr ""
-
 msgid "Creating %{volume} \"%{volume_name}\""
 msgstr ""
 
-msgid "Creating Cloud Subnet \"%{subnet_name}\""
+msgid "Creation of a Cloud Subnet was cancelled by the user"
 msgstr ""
 
 msgid "Creation of a new Orchestration Template was cancelled by the user"
@@ -5126,9 +5183,6 @@ msgid "Credentials/Settings saved successfully"
 msgstr ""
 
 msgid "Currencies"
-msgstr ""
-
-msgid "Currency"
 msgstr ""
 
 msgid "Current"
@@ -5308,6 +5362,9 @@ msgstr ""
 msgid "Data column"
 msgstr ""
 
+msgid "Data column must be selected when chart mode is set to \"Values\""
+msgstr ""
+
 msgid "Data type: %{data_type}"
 msgstr ""
 
@@ -5353,7 +5410,7 @@ msgstr ""
 msgid "Datasource \"%s\" already exists on this server."
 msgstr ""
 
-msgid "Datasource \"%s\" has been installed on this server."
+msgid "Datasource \"%s\" installation has started on this server."
 msgstr ""
 
 msgid "Datasource:"
@@ -5395,6 +5452,9 @@ msgid "Datastores"
 msgstr ""
 
 msgid "Datastores in cluster %{name}"
+msgstr ""
+
+msgid "Datawarehouse"
 msgstr ""
 
 msgid "Date"
@@ -5620,11 +5680,6 @@ msgid_plural "Delete initiated for %{number} Cloud Networks."
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "Delete initiated for %{number} Cloud Subnet."
-msgid_plural "Delete initiated for %{number} Cloud Subnets."
-msgstr[0] ""
-msgstr[1] ""
-
 msgid "Delete initiated for %{number} Cloud Tenant."
 msgid_plural "Delete initiated for %{number} Cloud Tenants."
 msgstr[0] ""
@@ -5664,12 +5719,6 @@ msgid "Delete selected %{dialog_resource}"
 msgstr ""
 
 msgid "Delete selected Accordion and its contents"
-msgstr ""
-
-msgid "Delete selected Cloud Networks"
-msgstr ""
-
-msgid "Delete selected Cloud Subnets"
 msgstr ""
 
 msgid "Delete selected Cloud Tenants"
@@ -6215,6 +6264,9 @@ msgstr ""
 msgid "Do you want to undeploy this deployment ?"
 msgstr ""
 
+msgid "Docker Labels"
+msgstr ""
+
 msgid "Documentation"
 msgstr ""
 
@@ -6460,6 +6512,9 @@ msgstr ""
 msgid "Edit Basic Info, Scope, and Notes"
 msgstr ""
 
+msgid "Edit Cloud Network \"%{name}\""
+msgstr ""
+
 msgid "Edit Cloud Tenant"
 msgstr ""
 
@@ -6514,22 +6569,19 @@ msgstr ""
 msgid "Edit Selected Cloud Tenant"
 msgstr ""
 
-msgid "Edit Selected Container"
-msgstr ""
-
 msgid "Edit Selected Containers Provider"
 msgstr ""
 
 msgid "Edit Selected Customization Templates"
 msgstr ""
 
+msgid "Edit Selected Datawarehouse Providers"
+msgstr ""
+
 msgid "Edit Selected Domains"
 msgstr ""
 
 msgid "Edit Selected Host Aggregate"
-msgstr ""
-
-msgid "Edit Selected Image Registry"
 msgstr ""
 
 msgid "Edit Selected Infrastructure Providers"
@@ -6553,19 +6605,7 @@ msgstr ""
 msgid "Edit Selected Network Provider"
 msgstr ""
 
-msgid "Edit Selected Node"
-msgstr ""
-
 msgid "Edit Selected PXE Servers"
-msgstr ""
-
-msgid "Edit Selected Pods"
-msgstr ""
-
-msgid "Edit Selected Project"
-msgstr ""
-
-msgid "Edit Selected Replicator"
 msgstr ""
 
 msgid "Edit Selected Service"
@@ -6601,9 +6641,6 @@ msgstr ""
 msgid "Edit Storage Rate Assignments"
 msgstr ""
 
-msgid "Edit Subnet"
-msgstr ""
-
 msgid "Edit Subnet \"%{name}\""
 msgstr ""
 
@@ -6623,6 +6660,9 @@ msgid "Edit Tags for selected Containers"
 msgstr ""
 
 msgid "Edit Tags for the selected Availability Zones"
+msgstr ""
+
+msgid "Edit Tags for the selected Block Storage Managers"
 msgstr ""
 
 msgid "Edit Tags for the selected Cloud Networks"
@@ -6667,6 +6707,9 @@ msgstr ""
 msgid "Edit Tags for the selected Network Routers"
 msgstr ""
 
+msgid "Edit Tags for the selected Object Storage Managers"
+msgstr ""
+
 msgid "Edit Tags for the selected Orchestration Stacks"
 msgstr ""
 
@@ -6676,7 +6719,7 @@ msgstr ""
 msgid "Edit Tags for the selected Security Groups"
 msgstr ""
 
-msgid "Edit Tags for the selected Storage Providers"
+msgid "Edit Tags for the selected Storage Managers"
 msgstr ""
 
 msgid "Edit Tags for the selected items"
@@ -6689,6 +6732,9 @@ msgid "Edit Tags for these Container Templates"
 msgstr ""
 
 msgid "Edit Tags for these Containers Providers"
+msgstr ""
+
+msgid "Edit Tags for these Datawarehouse Providers"
 msgstr ""
 
 msgid "Edit Tags for these Image Registries"
@@ -6761,6 +6807,9 @@ msgid "Edit Tags for this Containers Provider"
 msgstr ""
 
 msgid "Edit Tags for this Datastore"
+msgstr ""
+
+msgid "Edit Tags for this Datawarehouse Provider"
 msgstr ""
 
 msgid "Edit Tags for this Distributed Switch"
@@ -6862,7 +6911,7 @@ msgstr ""
 msgid "Edit Tags for this Service"
 msgstr ""
 
-msgid "Edit Tags for this Storage Provider"
+msgid "Edit Tags for this Storage Manager"
 msgstr ""
 
 msgid "Edit Tags for this Template"
@@ -6925,6 +6974,9 @@ msgstr ""
 msgid "Edit of Class Schema Sequence was cancelled by the user"
 msgstr ""
 
+msgid "Edit of Cloud Network \"%{name}\" was cancelled by the user"
+msgstr ""
+
 msgid "Edit of Configuration Manager %{provider} was cancelled by the user"
 msgstr ""
 
@@ -6962,12 +7014,6 @@ msgid "Edit of schema for %{model} \"%{name}\" was cancelled by the user"
 msgstr ""
 
 msgid "Edit policy assignments was cancelled by the user"
-msgstr ""
-
-msgid "Edit selected Cloud Network"
-msgstr ""
-
-msgid "Edit selected Cloud Subnet"
 msgstr ""
 
 msgid "Edit selected Cloud Volume"
@@ -7117,9 +7163,6 @@ msgstr ""
 msgid "Edit this Condition"
 msgstr ""
 
-msgid "Edit this Container"
-msgstr ""
-
 msgid "Edit this Containers Provider"
 msgstr ""
 
@@ -7127,6 +7170,9 @@ msgid "Edit this Customization Template"
 msgstr ""
 
 msgid "Edit this Dashboard"
+msgstr ""
+
+msgid "Edit this Datawarehouse Provider"
 msgstr ""
 
 msgid "Edit this Dialog"
@@ -7145,9 +7191,6 @@ msgid "Edit this ISO Image"
 msgstr ""
 
 msgid "Edit this Image"
-msgstr ""
-
-msgid "Edit this Image Registry"
 msgstr ""
 
 msgid "Edit this Infrastructure Provider"
@@ -7177,9 +7220,6 @@ msgstr ""
 msgid "Edit this Network Provider"
 msgstr ""
 
-msgid "Edit this Node"
-msgstr ""
-
 msgid "Edit this Orchestration Template"
 msgstr ""
 
@@ -7187,9 +7227,6 @@ msgid "Edit this PXE Image"
 msgstr ""
 
 msgid "Edit this PXE Server"
-msgstr ""
-
-msgid "Edit this Pod"
 msgstr ""
 
 msgid "Edit this Policy Profile"
@@ -7201,25 +7238,16 @@ msgstr ""
 msgid "Edit this Policy's Event assignments"
 msgstr ""
 
-msgid "Edit this Project"
-msgstr ""
-
 msgid "Edit this Provider"
 msgstr ""
 
 msgid "Edit this Region"
 msgstr ""
 
-msgid "Edit this Replicator"
-msgstr ""
-
 msgid "Edit this Report"
 msgstr ""
 
 msgid "Edit this Role"
-msgstr ""
-
-msgid "Edit this Route"
 msgstr ""
 
 msgid "Edit this Router"
@@ -7361,6 +7389,9 @@ msgid "Enable Collection by %{clusters}"
 msgstr ""
 
 msgid "Enable Collection by Datastore"
+msgstr ""
+
+msgid "Enable DHCP"
 msgstr ""
 
 msgid "Enable Deployment"
@@ -7659,6 +7690,12 @@ msgstr ""
 msgid "Error during replication configuration save: %{message}"
 msgstr ""
 
+msgid "Error during repository fetch: %{message}"
+msgstr ""
+
+msgid "Error during repository setup: %{error_message}"
+msgstr ""
+
 msgid "Error during reset: Status [%{status}] Message [%{message}]"
 msgstr ""
 
@@ -7684,6 +7721,9 @@ msgid "Error occured when queuing action: %{message}"
 msgstr ""
 
 msgid "Error on line %{line_num}: %{err_txt}"
+msgstr ""
+
+msgid "Error requesting data from server"
 msgstr ""
 
 msgid "Error retrieving LDAP info: %{error_message}"
@@ -7720,6 +7760,9 @@ msgid "Error: Authentication failed"
 msgstr ""
 
 msgid "Error: Datastore import file upload expired"
+msgstr ""
+
+msgid "Error: Datastore import was not successful"
 msgstr ""
 
 msgid "Error: ImportFileUpload expired"
@@ -7880,6 +7923,9 @@ msgstr ""
 msgid "Export:"
 msgstr ""
 
+msgid "Exposed Ports"
+msgstr ""
+
 msgid "Expression"
 msgstr ""
 
@@ -8014,6 +8060,9 @@ msgid "Filter By"
 msgstr ""
 
 msgid "Filter Message"
+msgstr ""
+
+msgid "Filter by %s..."
 msgstr ""
 
 msgid "Filter must be selected"
@@ -8253,6 +8302,9 @@ msgid "Global search:"
 msgstr ""
 
 msgid "Glusterfs Endpoint Name"
+msgstr ""
+
+msgid "Go to my start page"
 msgstr ""
 
 msgid "Go to this item"
@@ -9051,6 +9103,9 @@ msgstr ""
 msgid "Label on Summary Row"
 msgstr ""
 
+msgid "Labeled %{tables}"
+msgstr ""
+
 msgid "Labels"
 msgstr ""
 
@@ -9222,6 +9277,9 @@ msgstr ""
 msgid "Loading ..."
 msgstr ""
 
+msgid "Loading available tags"
+msgstr ""
+
 msgid "Loading summary..."
 msgstr ""
 
@@ -9332,6 +9390,9 @@ msgstr ""
 msgid "MHz"
 msgstr ""
 
+msgid "MM/DD/YYYY HH:mm"
+msgstr ""
+
 msgid "MS vCenter"
 msgstr ""
 
@@ -9374,6 +9435,9 @@ msgstr ""
 msgid "Manage Policies"
 msgstr ""
 
+msgid "Manage Policies for the selected Block Storage Managers"
+msgstr ""
+
 msgid "Manage Policies for the selected Cloud Providers"
 msgstr ""
 
@@ -9383,10 +9447,13 @@ msgstr ""
 msgid "Manage Policies for the selected Network Providers"
 msgstr ""
 
+msgid "Manage Policies for the selected Object Storage Managers"
+msgstr ""
+
 msgid "Manage Policies for the selected Resource Pools"
 msgstr ""
 
-msgid "Manage Policies for the selected Storage Providers"
+msgid "Manage Policies for the selected Storage Managers"
 msgstr ""
 
 msgid "Manage Policies for the selected Templates"
@@ -9440,7 +9507,7 @@ msgstr ""
 msgid "Manage Policies for this Resource Pool"
 msgstr ""
 
-msgid "Manage Policies for this Storage Provider"
+msgid "Manage Policies for this Storage Manager"
 msgstr ""
 
 msgid "Manage Policies for this Template"
@@ -9516,6 +9583,9 @@ msgid "Management Events"
 msgstr ""
 
 msgid "Manager"
+msgstr ""
+
+msgid "Managers"
 msgstr ""
 
 msgid "Manual Input"
@@ -9746,6 +9816,9 @@ msgstr ""
 msgid "Months"
 msgstr ""
 
+msgid "Most Recent"
+msgstr ""
+
 msgid "Most Recent Hour"
 msgstr ""
 
@@ -9914,6 +9987,9 @@ msgstr ""
 msgid "Name: "
 msgstr ""
 
+msgid "Name: %{name} | Datastore Type: %{storage_type}"
+msgstr ""
+
 msgid "Name: %{name} | Hostname: %{hostname}"
 msgstr ""
 
@@ -10070,6 +10146,9 @@ msgstr ""
 msgid "No %{clusters} found in the current region."
 msgstr ""
 
+msgid "No %{item_type} selected"
+msgstr ""
+
 msgid "No %{label} have been assigned"
 msgstr ""
 
@@ -10152,6 +10231,9 @@ msgid "No %{providers} are available to create an ISO Datastore on"
 msgstr ""
 
 msgid "No %{records} were selected for deletion"
+msgstr ""
+
+msgid "No %{record} were selected for %{task}"
 msgstr ""
 
 msgid "No %{record} were selected for deletion"
@@ -10245,6 +10327,9 @@ msgid "No Choices Available"
 msgstr ""
 
 msgid "No Class found for explorer tree node id '%{number}'"
+msgstr ""
+
+msgid "No Cloud Network were selected for deletion."
 msgstr ""
 
 msgid "No Cloud Provider that supports instance provisioning added"
@@ -10397,31 +10482,25 @@ msgstr ""
 msgid "No Timeline data available."
 msgstr ""
 
+msgid "No Timeline data has been collected for Policy or Management Events"
+msgstr ""
+
+msgid "No Timeline data has been collected for this %{entity}"
+msgstr ""
+
 msgid "No Timeline data has been collected for this Availability Zone"
 msgstr ""
 
 msgid "No Timeline data has been collected for this Cluster"
 msgstr ""
 
-msgid "No Timeline data has been collected for this Container"
-msgstr ""
-
 msgid "No Timeline data has been collected for this Host"
-msgstr ""
-
-msgid "No Timeline data has been collected for this Node"
-msgstr ""
-
-msgid "No Timeline data has been collected for this Pod"
-msgstr ""
-
-msgid "No Timeline data has been collected for this Project"
 msgstr ""
 
 msgid "No Timeline data has been collected for this Provider"
 msgstr ""
 
-msgid "No Timeline data has been collected for this Replicator"
+msgid "No Timeline data has been collected for this Storage Manager"
 msgstr ""
 
 msgid "No Timeline data has been collected for this Template"
@@ -10476,6 +10555,12 @@ msgid "No chart data found"
 msgstr ""
 
 msgid "No child VMs to move right, no action taken"
+msgstr ""
+
+msgid "No cloud providers support creating cloud subnets."
+msgstr ""
+
+msgid "No cloud providers support creating cloud volumes."
 msgstr ""
 
 msgid "No cloud providers support key pair import or creation."
@@ -10621,6 +10706,9 @@ msgstr ""
 msgid "No type set"
 msgstr ""
 
+msgid "No url was returned from automate."
+msgstr ""
+
 msgid "No valid import records were found, please upload another file"
 msgstr ""
 
@@ -10687,6 +10775,12 @@ msgstr ""
 msgid "Not %{hawkular_info} the provider"
 msgstr ""
 
+msgid "Not %{operation_info} the domain server"
+msgstr ""
+
+msgid "Not %{operation_info} the provider"
+msgstr ""
+
 msgid "Not %{operation_name} for %{record_name} on the provider itself"
 msgstr ""
 
@@ -10733,6 +10827,9 @@ msgid "Notes"
 msgstr ""
 
 msgid "Nothing"
+msgstr ""
+
+msgid "Nothing selected"
 msgstr ""
 
 msgid "Notification Frequency"
@@ -10844,10 +10941,19 @@ msgstr ""
 msgid "Object Selection"
 msgstr ""
 
+msgid "Object Storage"
+msgstr ""
+
+msgid "Object Storage Managers"
+msgstr ""
+
 msgid "Object Store"
 msgstr ""
 
-msgid "Object Stores"
+msgid "Object Store Containers"
+msgstr ""
+
+msgid "Object Store Objects"
 msgstr ""
 
 msgid "Object Type"
@@ -10931,7 +11037,7 @@ msgstr ""
 msgid "Open Folder"
 msgstr ""
 
-msgid "Open a new browser window with Cockpit for this Node.  This requires that Cockpit is pre-configured on the Node."
+msgid "Open URL"
 msgstr ""
 
 msgid "Open a new browser window with Cockpit for this VM.  This requires that Cockpit is pre-configured on the VM."
@@ -11100,6 +11206,9 @@ msgid "Original Value"
 msgstr ""
 
 msgid "Orphaned %{models}"
+msgstr ""
+
+msgid "Orphaned %{model}"
 msgstr ""
 
 msgid "Orphaned Data"
@@ -11544,6 +11653,9 @@ msgstr[1] ""
 msgid "Policy log downloaded"
 msgstr ""
 
+msgid "Policy no longer exists"
+msgstr ""
+
 msgid "Policy%{caption}: "
 msgstr ""
 
@@ -11787,6 +11899,12 @@ msgstr ""
 msgid "Provider"
 msgstr ""
 
+msgid "Provider Compliance Policies"
+msgstr ""
+
+msgid "Provider Control Policies"
+msgstr ""
+
 msgid "Provider Network Type"
 msgstr ""
 
@@ -12015,6 +12133,9 @@ msgstr ""
 msgid "Rate"
 msgstr ""
 
+msgid "Rate (in %{currency})"
+msgstr ""
+
 msgid "Rate Assignments saved"
 msgstr ""
 
@@ -12039,6 +12160,9 @@ msgstr ""
 msgid "Re-check Authentication Status for the selected Containers Providers "
 msgstr ""
 
+msgid "Re-check Authentication Status for the selected Datawarehouse Providers"
+msgstr ""
+
 msgid "Re-check Authentication Status for the selected Infrastructure Providers"
 msgstr ""
 
@@ -12049,6 +12173,9 @@ msgid "Re-check Authentication Status for this Cloud Provider"
 msgstr ""
 
 msgid "Re-check Authentication Status for this Containers Provider"
+msgstr ""
+
+msgid "Re-check Authentication Status for this Datawarehouse Provider"
 msgstr ""
 
 msgid "Re-check Authentication Status for this Infrastructure Provider"
@@ -12198,13 +12325,13 @@ msgstr ""
 msgid "Red Background"
 msgstr ""
 
-msgid "Red Hat Enterprise Virtualization Manager"
-msgstr ""
-
 msgid "Red Hat Software Updates"
 msgstr ""
 
 msgid "Red Hat Updates"
+msgstr ""
+
+msgid "Red Hat Virtualization Manager"
 msgstr ""
 
 msgid "Red Text"
@@ -12243,10 +12370,16 @@ msgstr ""
 msgid "Refresh Items and Relationships for all Containers Providers"
 msgstr ""
 
+msgid "Refresh Items and Relationships for these Datawarehouse Providers"
+msgstr ""
+
 msgid "Refresh Items and Relationships for these Middleware Providers"
 msgstr ""
 
 msgid "Refresh Items and Relationships related to Containers Providers?"
+msgstr ""
+
+msgid "Refresh Items and Relationships related to these Datawarehouse Providers?"
 msgstr ""
 
 msgid "Refresh Items and Relationships related to these Middleware Providers?"
@@ -12320,6 +12453,12 @@ msgstr ""
 msgid "Refresh items and relationships related to this Containers Provider?"
 msgstr ""
 
+msgid "Refresh items and relationships related to this Datawarehouse Provider"
+msgstr ""
+
+msgid "Refresh items and relationships related to this Datawarehouse Provider?"
+msgstr ""
+
 msgid "Refresh items and relationships related to this Middleware Provider"
 msgstr ""
 
@@ -12327,6 +12466,12 @@ msgid "Refresh items and relationships related to this Middleware Provider?"
 msgstr ""
 
 msgid "Refresh of recent C&U data has been initiated"
+msgstr ""
+
+msgid "Refresh relationships and power states for all items related to the selected Block Storage Managers"
+msgstr ""
+
+msgid "Refresh relationships and power states for all items related to the selected Block Storage Managers?"
 msgstr ""
 
 msgid "Refresh relationships and power states for all items related to the selected Cloud Providers"
@@ -12347,10 +12492,16 @@ msgstr ""
 msgid "Refresh relationships and power states for all items related to the selected Network Providers?"
 msgstr ""
 
-msgid "Refresh relationships and power states for all items related to the selected Storage Providers"
+msgid "Refresh relationships and power states for all items related to the selected Object Storage Managers"
 msgstr ""
 
-msgid "Refresh relationships and power states for all items related to the selected Storage Providers?"
+msgid "Refresh relationships and power states for all items related to the selected Object Storage Managers?"
+msgstr ""
+
+msgid "Refresh relationships and power states for all items related to the selected Storage Managers"
+msgstr ""
+
+msgid "Refresh relationships and power states for all items related to the selected Storage Managers?"
 msgstr ""
 
 msgid "Refresh relationships and power states for all items related to the selected Templates"
@@ -12395,10 +12546,10 @@ msgstr ""
 msgid "Refresh relationships and power states for all items related to this Network Provider?"
 msgstr ""
 
-msgid "Refresh relationships and power states for all items related to this Storage Provider"
+msgid "Refresh relationships and power states for all items related to this Storage Manager"
 msgstr ""
 
-msgid "Refresh relationships and power states for all items related to this Storage Provider?"
+msgid "Refresh relationships and power states for all items related to this Storage Manager?"
 msgstr ""
 
 msgid "Refresh relationships and power states for all items related to this Template"
@@ -12574,6 +12725,9 @@ msgstr ""
 msgid "Remove Arbitration Profiles from the VMDB"
 msgstr ""
 
+msgid "Remove Block Storage Managers"
+msgstr ""
+
 msgid "Remove Catalog"
 msgstr ""
 
@@ -12589,9 +12743,6 @@ msgstr ""
 msgid "Remove Cloud Providers"
 msgstr ""
 
-msgid "Remove Containers"
-msgstr ""
-
 msgid "Remove Containers Providers"
 msgstr ""
 
@@ -12602,6 +12753,9 @@ msgid "Remove Datastore"
 msgstr ""
 
 msgid "Remove Datastores"
+msgstr ""
+
+msgid "Remove Datawarehouse Providers"
 msgstr ""
 
 msgid "Remove Dialog"
@@ -12637,9 +12791,6 @@ msgstr ""
 msgid "Remove Image"
 msgstr ""
 
-msgid "Remove Image Registries from the VMDB"
-msgstr ""
-
 msgid "Remove Infrastructure Providers"
 msgstr ""
 
@@ -12670,22 +12821,13 @@ msgstr ""
 msgid "Remove Network Providers"
 msgstr ""
 
-msgid "Remove Nodes from the VMDB"
+msgid "Remove Object Storage Managers"
 msgstr ""
 
 msgid "Remove Orchestration Stacks"
 msgstr ""
 
 msgid "Remove PXE Servers"
-msgstr ""
-
-msgid "Remove Pods from the VMDB"
-msgstr ""
-
-msgid "Remove Projects"
-msgstr ""
-
-msgid "Remove Replicators from the VMDB"
 msgstr ""
 
 msgid "Remove Resource Pool"
@@ -12706,13 +12848,7 @@ msgstr ""
 msgid "Remove Services"
 msgstr ""
 
-msgid "Remove Services from the VMDB"
-msgstr ""
-
 msgid "Remove Storage Managers"
-msgstr ""
-
-msgid "Remove Storage Providers"
 msgstr ""
 
 msgid "Remove System Image Types"
@@ -12775,6 +12911,9 @@ msgstr ""
 msgid "Remove selected Arbitration Profiles from the VMDB"
 msgstr ""
 
+msgid "Remove selected Block Storage Managers"
+msgstr ""
+
 msgid "Remove selected Catalog Items"
 msgstr ""
 
@@ -12790,9 +12929,6 @@ msgstr ""
 msgid "Remove selected Conditions from this Policy"
 msgstr ""
 
-msgid "Remove selected Containers"
-msgstr ""
-
 msgid "Remove selected Containers Providers"
 msgstr ""
 
@@ -12802,6 +12938,9 @@ msgstr ""
 msgid "Remove selected Datastores"
 msgstr ""
 
+msgid "Remove selected Datawarehouse Providers"
+msgstr ""
+
 msgid "Remove selected Dialogs"
 msgstr ""
 
@@ -12809,9 +12948,6 @@ msgid "Remove selected Domains"
 msgstr ""
 
 msgid "Remove selected ISO Datastores"
-msgstr ""
-
-msgid "Remove selected Image Registries from the VMDB"
 msgstr ""
 
 msgid "Remove selected Infrastructure Providers"
@@ -12841,7 +12977,7 @@ msgstr ""
 msgid "Remove selected Network Providers"
 msgstr ""
 
-msgid "Remove selected Nodes from the VMDB"
+msgid "Remove selected Object Storage Managers"
 msgstr ""
 
 msgid "Remove selected Orchestration Stacks"
@@ -12856,16 +12992,7 @@ msgstr ""
 msgid "Remove selected PXE Servers"
 msgstr ""
 
-msgid "Remove selected Pods from the VMDB"
-msgstr ""
-
 msgid "Remove selected Policies from this Profile"
-msgstr ""
-
-msgid "Remove selected Projects"
-msgstr ""
-
-msgid "Remove selected Replicators from the VMDB"
 msgstr ""
 
 msgid "Remove selected Resource Pools"
@@ -12874,13 +13001,7 @@ msgstr ""
 msgid "Remove selected Services"
 msgstr ""
 
-msgid "Remove selected Services from the VMDB"
-msgstr ""
-
 msgid "Remove selected Storage Managers"
-msgstr ""
-
-msgid "Remove selected Storage Providers"
 msgstr ""
 
 msgid "Remove selected System Image Types"
@@ -12934,9 +13055,6 @@ msgstr ""
 msgid "Remove this Condition from Policy [%{condition_policy_description}]"
 msgstr ""
 
-msgid "Remove this Container from the VMDB"
-msgstr ""
-
 msgid "Remove this Containers Provider"
 msgstr ""
 
@@ -12949,6 +13067,9 @@ msgstr ""
 msgid "Remove this Datastore"
 msgstr ""
 
+msgid "Remove this Datawarehouse Provider"
+msgstr ""
+
 msgid "Remove this Dialog"
 msgstr ""
 
@@ -12959,9 +13080,6 @@ msgid "Remove this ISO Datastore"
 msgstr ""
 
 msgid "Remove this Image"
-msgstr ""
-
-msgid "Remove this Image Registry from the VMDB"
 msgstr ""
 
 msgid "Remove this Infrastructure Provider"
@@ -12988,9 +13106,6 @@ msgstr ""
 msgid "Remove this Network Provider"
 msgstr ""
 
-msgid "Remove this Node from the VMDB"
-msgstr ""
-
 msgid "Remove this Orchestration Stack"
 msgstr ""
 
@@ -13003,13 +13118,7 @@ msgstr ""
 msgid "Remove this PXE Server"
 msgstr ""
 
-msgid "Remove this Pod from the VMDB"
-msgstr ""
-
 msgid "Remove this Policy Profile"
-msgstr ""
-
-msgid "Remove this Project from the VMDB"
 msgstr ""
 
 msgid "Remove this Provider"
@@ -13021,16 +13130,10 @@ msgstr ""
 msgid "Remove this Reconfigure Entry Point"
 msgstr ""
 
-msgid "Remove this Replicator from the VMDB"
-msgstr ""
-
 msgid "Remove this Resource Pool"
 msgstr ""
 
 msgid "Remove this Retirement Entry Point"
-msgstr ""
-
-msgid "Remove this Route from the VMDB"
 msgstr ""
 
 msgid "Remove this Service"
@@ -13040,9 +13143,6 @@ msgid "Remove this Shortcut"
 msgstr ""
 
 msgid "Remove this Storage Manager"
-msgstr ""
-
-msgid "Remove this Storage Provider"
 msgstr ""
 
 msgid "Remove this System Image Type"
@@ -14023,9 +14123,6 @@ msgstr ""
 msgid "Select a single Cloud Tenant to edit"
 msgstr ""
 
-msgid "Select a single Container to edit"
-msgstr ""
-
 msgid "Select a single Containers Provider to edit"
 msgstr ""
 
@@ -14033,6 +14130,9 @@ msgid "Select a single Customization Templates to copy"
 msgstr ""
 
 msgid "Select a single Customization Templates to edit"
+msgstr ""
+
+msgid "Select a single Datawarehouse Providers to edit"
 msgstr ""
 
 msgid "Select a single Domains to edit"
@@ -14048,9 +14148,6 @@ msgid "Select a single Host Aggregate to Remove Host"
 msgstr ""
 
 msgid "Select a single Host Aggregate to edit"
-msgstr ""
-
-msgid "Select a single Image Registry to edit"
 msgstr ""
 
 msgid "Select a single Image to Provision Instances"
@@ -14080,28 +14177,13 @@ msgstr ""
 msgid "Select a single Network Provider to edit"
 msgstr ""
 
-msgid "Select a single Node to edit"
-msgstr ""
-
 msgid "Select a single PXE Servers to edit"
-msgstr ""
-
-msgid "Select a single Pod to edit"
-msgstr ""
-
-msgid "Select a single Project to edit"
-msgstr ""
-
-msgid "Select a single Replicator to edit"
 msgstr ""
 
 msgid "Select a single Role to copy"
 msgstr ""
 
 msgid "Select a single Role to edit"
-msgstr ""
-
-msgid "Select a single Service to edit"
 msgstr ""
 
 msgid "Select a single Storage Manager to edit"
@@ -14138,6 +14220,9 @@ msgid "Select a single item to manage quotas"
 msgstr ""
 
 msgid "Select a single service to edit"
+msgstr ""
+
+msgid "Select a snapshot that is not the active one"
 msgstr ""
 
 msgid "Select a worker to restart"
@@ -14239,7 +14324,10 @@ msgstr ""
 msgid "Selected Chargeback Report no longer exists"
 msgstr ""
 
-msgid "Selected Custom Button Group cannot be %{action}"
+msgid "Selected Custom Button Group cannot be deleted"
+msgstr ""
+
+msgid "Selected Custom Button Group cannot be edited"
 msgstr ""
 
 msgid "Selected Day"
@@ -14249,6 +14337,9 @@ msgid "Selected Fields:"
 msgstr ""
 
 msgid "Selected Item"
+msgstr ""
+
+msgid "Selected Providers"
 msgstr ""
 
 msgid "Selected Reports:"
@@ -14267,9 +14358,6 @@ msgid "Selected VM"
 msgstr ""
 
 msgid "Selected branch or tag does not contain a valid domain"
-msgstr ""
-
-msgid "Selected item is not eligible for Provisioning"
 msgstr ""
 
 msgid "Selected:"
@@ -14647,6 +14735,9 @@ msgstr ""
 msgid "Show %{title} drift history"
 msgstr ""
 
+msgid "Show Ad hoc Metrics for this Provider"
+msgstr ""
+
 msgid "Show Arbitration Profiles for this Provider"
 msgid_plural "Show Arbitration Profiles for this Provider"
 msgstr[0] ""
@@ -14810,6 +14901,9 @@ msgstr ""
 msgid "Show Timelines for this Containers Provider"
 msgstr ""
 
+msgid "Show Timelines for this Datawarehouse Provider"
+msgstr ""
+
 msgid "Show Timelines for this Group"
 msgstr ""
 
@@ -14834,7 +14928,7 @@ msgstr ""
 msgid "Show Timelines for this Replicator"
 msgstr ""
 
-msgid "Show Timelines for this Storage Provider"
+msgid "Show Timelines for this Storage Manager"
 msgstr ""
 
 msgid "Show Timelines for this Template"
@@ -15125,6 +15219,9 @@ msgid "Show parent and child VMs"
 msgstr ""
 
 msgid "Show policies:"
+msgstr ""
+
+msgid "Show policy details for %{item_name}"
 msgstr ""
 
 msgid "Show policy details for %{name}"
@@ -15788,9 +15885,6 @@ msgstr ""
 msgid "Storage Profile"
 msgstr ""
 
-msgid "Storage Providers"
-msgstr ""
-
 msgid "Storage Rate Assignments"
 msgstr ""
 
@@ -15855,9 +15949,6 @@ msgid "Submit this provisioning request"
 msgstr ""
 
 msgid "Subnet CIDR"
-msgstr ""
-
-msgid "Subnet Gateway"
 msgstr ""
 
 msgid "Subnet Mask"
@@ -16087,6 +16178,9 @@ msgstr ""
 msgid "Tagged %{tables}"
 msgstr ""
 
+msgid "Tagged Providers"
+msgstr ""
+
 msgid "Tagging"
 msgstr ""
 
@@ -16248,6 +16342,9 @@ msgid "The selected %{tables} were deleted"
 msgstr ""
 
 msgid "The selected %{table} was deleted"
+msgstr ""
+
+msgid "The selected Cloud Network was deleted"
 msgstr ""
 
 msgid "The selected Cloud Subnet was deleted"
@@ -16835,13 +16932,13 @@ msgstr ""
 msgid "Unable to create %{model} %{name}. %{error}"
 msgstr ""
 
-msgid "Unable to create %{network} \"%{network_name}\": %{details}"
-msgstr ""
-
 msgid "Unable to create %{volume} \"%{volume_name}\": %{details}"
 msgstr ""
 
-msgid "Unable to create Cloud Subnet \"%{subnet_name}\": %{details}"
+msgid "Unable to create Cloud Network \"%{name}\": %{details}"
+msgstr ""
+
+msgid "Unable to create Cloud Subnet: %{details}"
 msgstr ""
 
 msgid "Unable to create a new template copy \"%{name}\": new template content cannot be empty."
@@ -16871,6 +16968,9 @@ msgstr ""
 msgid "Unable to initiate scaling: %{message}"
 msgstr ""
 
+msgid "Unable to install the Datasource on this server."
+msgstr ""
+
 msgid "Unable to live migrate %{instance} \"%{name}\": %{details}"
 msgstr ""
 
@@ -16883,7 +16983,10 @@ msgstr ""
 msgid "Unable to update %{model} \"%{name}\": %{details}"
 msgstr ""
 
-msgid "Unable to update Subnet \"%{name}\": %{details}"
+msgid "Unable to update Cloud Network \"%{name}\": %{details}"
+msgstr ""
+
+msgid "Unable to update Cloud Subnet \"%{name}\": %{details}"
 msgstr ""
 
 msgid "Unable to update stack, obtaining of status failed: %{message}"
@@ -16997,9 +17100,6 @@ msgstr ""
 msgid "Updating %{model} \"%{name}\""
 msgstr ""
 
-msgid "Updating Subnet \"%{name}\""
-msgstr ""
-
 msgid "Upload"
 msgstr ""
 
@@ -17076,6 +17176,12 @@ msgid "Use the Choose file button to locate an Upload file"
 msgstr ""
 
 msgid "Use the Choose file button to locate an import file"
+msgstr ""
+
+msgid "Use the Ops Tenant Metrics"
+msgstr ""
+
+msgid "Use the System Tenant Metrics"
 msgstr ""
 
 msgid "Used"
@@ -17246,9 +17352,6 @@ msgid "VM \"%{name}\""
 msgstr ""
 
 msgid "VM %{name} Remote Console"
-msgstr ""
-
-msgid "VM & Template Access Restriction"
 msgstr ""
 
 msgid "VM Analysis"
@@ -17521,6 +17624,9 @@ msgstr ""
 msgid "View Examples (read only)' Folder"
 msgstr ""
 
+msgid "View Graph"
+msgstr ""
+
 msgid "View Groups"
 msgstr ""
 
@@ -17686,6 +17792,9 @@ msgstr ""
 msgid "Volume"
 msgstr ""
 
+msgid "Volume Backups"
+msgstr ""
+
 msgid "Volume Claim"
 msgstr ""
 
@@ -17731,6 +17840,9 @@ msgstr ""
 msgid "Warning: The selected Analysis Profiles and ALL of their components will be permanently removed!"
 msgstr ""
 
+msgid "Warning: The selected Block Storage Managers and ALL of their components will be permanently removed!"
+msgstr ""
+
 msgid "Warning: The selected Button Group will be permanently removed!"
 msgstr ""
 
@@ -17740,16 +17852,10 @@ msgstr ""
 msgid "Warning: The selected Chargeback Rate will be permanently removed!"
 msgstr ""
 
-msgid "Warning: The selected Cloud Networks and ALL of their components will be removed!"
-msgstr ""
-
 msgid "Warning: The selected Cloud Providers and ALL of their components will be permanently removed from the Virtual Management Database.  Are you sure you want to remove the selected Cloud Providers?"
 msgstr ""
 
 msgid "Warning: The selected Cloud Providers and ALL related components will be permanently removed!"
-msgstr ""
-
-msgid "Warning: The selected Cloud Subnets and ALL of their components will be removed!"
 msgstr ""
 
 msgid "Warning: The selected Cloud Tenants will be permanently deleted!"
@@ -17761,13 +17867,13 @@ msgstr ""
 msgid "Warning: The selected Containers Providers and ALL of their components will be permanently removed!"
 msgstr ""
 
-msgid "Warning: The selected Containers and ALL of their components will be permanently removed!"
-msgstr ""
-
 msgid "Warning: The selected Customization Templates will be permanently removed!"
 msgstr ""
 
 msgid "Warning: The selected Datastores and ALL of their components will be permanently removed!"
+msgstr ""
+
+msgid "Warning: The selected Datawarehouse Providers and ALL of their components will be permanently removed!"
 msgstr ""
 
 msgid "Warning: The selected Dialog will be permanently removed from the Virtual Management Database!"
@@ -17780,9 +17886,6 @@ msgid "Warning: The selected Host Aggregates will be permanently deleted!"
 msgstr ""
 
 msgid "Warning: The selected ISO Datastores and ALL of their components will be permanently removed!"
-msgstr ""
-
-msgid "Warning: The selected Image Registries and ALL of their components will be permanently removed!"
 msgstr ""
 
 msgid "Warning: The selected Infrastructure Providers and ALL of their components will be permanently removed!"
@@ -17806,7 +17909,7 @@ msgstr ""
 msgid "Warning: The selected Network Providers and ALL of their components will be permanently removed!"
 msgstr ""
 
-msgid "Warning: The selected Nodes and ALL of their components will be permanently removed!"
+msgid "Warning: The selected Object Storage Managers and ALL of their components will be permanently removed!"
 msgstr ""
 
 msgid "Warning: The selected Orchestration Stacks and ALL of their components will be permanently removed!"
@@ -17815,16 +17918,7 @@ msgstr ""
 msgid "Warning: The selected PXE Servers and ALL of their components will be permanently removed!"
 msgstr ""
 
-msgid "Warning: The selected Pods and ALL of their components will be permanently removed!"
-msgstr ""
-
-msgid "Warning: The selected Projects and ALL of their components will be permanently removed!"
-msgstr ""
-
 msgid "Warning: The selected Provider and ALL of their components will be permanently removed!"
-msgstr ""
-
-msgid "Warning: The selected Replicators and ALL of their components will be permanently removed!"
 msgstr ""
 
 msgid "Warning: The selected Reports will be permanently removed from the database!"
@@ -17846,9 +17940,6 @@ msgid "Warning: The selected Services and ALL of their components will be perman
 msgstr ""
 
 msgid "Warning: The selected Storage Managers and ALL of their components will be permanently removed!"
-msgstr ""
-
-msgid "Warning: The selected Storage Providers and ALL of their components will be permanently removed!"
 msgstr ""
 
 msgid "Warning: The selected System Image Types will be permanently removed!"
@@ -17908,9 +17999,6 @@ msgstr ""
 msgid "Warning: This Cloud Volume and ALL of its components will be removed!"
 msgstr ""
 
-msgid "Warning: This Container and ALL of its components will be permanently removed!"
-msgstr ""
-
 msgid "Warning: This Containers Provider and ALL of its components will be permanently removed!"
 msgstr ""
 
@@ -17923,6 +18011,9 @@ msgstr ""
 msgid "Warning: This Datastore and ALL of its components will be permanently removed!"
 msgstr ""
 
+msgid "Warning: This Datawarehouse Provider and ALL of its components will be permanently removed!"
+msgstr ""
+
 msgid "Warning: This Dialog will be permanently removed from the Virtual Management Database!"
 msgstr ""
 
@@ -17930,9 +18021,6 @@ msgid "Warning: This Dialog will be permanently removed!"
 msgstr ""
 
 msgid "Warning: This ISO Datastore and ALL of its components will be permanently removed!"
-msgstr ""
-
-msgid "Warning: This Image Registry and ALL of its components will be permanently removed!"
 msgstr ""
 
 msgid "Warning: This Image and ALL of its components will be permanently removed!"
@@ -17953,28 +18041,13 @@ msgstr ""
 msgid "Warning: This Network Provider and ALL of its components will be permanently removed!"
 msgstr ""
 
-msgid "Warning: This Node and ALL of its components will be permanently removed!"
-msgstr ""
-
 msgid "Warning: This Orchestration Stack and ALL of its components will be permanently removed!"
 msgstr ""
 
 msgid "Warning: This PXE Server and ALL of its components will be permanently removed!"
 msgstr ""
 
-msgid "Warning: This Pod and ALL of its components will be permanently removed!"
-msgstr ""
-
-msgid "Warning: This Project and ALL of its components will be permanently removed!"
-msgstr ""
-
-msgid "Warning: This Replicator and ALL of its components will be permanently removed!"
-msgstr ""
-
 msgid "Warning: This Resource Pool and ALL of its components will be permanently removed!"
-msgstr ""
-
-msgid "Warning: This Route and ALL of its components will be permanently removed!"
 msgstr ""
 
 msgid "Warning: This Router and ALL of its components will be removed!"
@@ -17986,16 +18059,10 @@ msgstr ""
 msgid "Warning: This Schedule and ALL of its components will be permanently removed!"
 msgstr ""
 
-msgid "Warning: This Service and ALL of its components will be permanently removed!"
-msgstr ""
-
 msgid "Warning: This Service and ALL of their components will be permanently removed!"
 msgstr ""
 
 msgid "Warning: This Storage Manager and ALL of its components will be permanently removed!"
-msgstr ""
-
-msgid "Warning: This Storage Provider and ALL of its components will be permanently removed!"
 msgstr ""
 
 msgid "Warning: This System Image Type will be permanently removed!"
