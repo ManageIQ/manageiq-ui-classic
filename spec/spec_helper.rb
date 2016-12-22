@@ -1,7 +1,5 @@
-# require 'simplecov'
-# SimpleCov.start
-
-# TODO: Make this spec_helper stand alone.
+require 'simplecov'
+SimpleCov.start
 
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../manageiq/config/environment", __FILE__)
