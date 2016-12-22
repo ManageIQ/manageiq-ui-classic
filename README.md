@@ -1,6 +1,6 @@
 # ManageIQ::UI::Classic
 
-ManageIQ UI Classic is the UI that has been split out of the main 'manageiq' repo.
+ManageIQ UI Classic is the UI that has been split out of the main [manageiq repo](https://github.com/ManageIQ/manageiq).
 
 ## Development Setup
 
