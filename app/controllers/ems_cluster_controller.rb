@@ -11,6 +11,14 @@ class EmsClusterController < ApplicationController
     super
   end
 
+  def show_performance
+    @showtype = "performance"
+    @ems_cluster = @record = identify_record(params[:id])
+    drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @ems_cluster.name},
+                    :url  => "/ems_cluster/show_performance/#{@ems_cluster.id}?refresh=n")
+    perf_gen_init_options # Intialize perf chart options, charts will be generated async
+  end
+
   def show
     return if perfmenu_click?
     @display = params[:display] || "main" unless pagination_or_gtl_request?
@@ -68,12 +76,6 @@ class EmsClusterController < ApplicationController
     when "config_info"
       @showtype = "config"
       drop_breadcrumb(:name => _("Configuration"), :url => "/ems_cluster/show/#{@ems_cluster.id}?display=#{@display}")
-
-    when "performance"
-      @showtype = "performance"
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @ems_cluster.name},
-                      :url  => "/ems_cluster/show/#{@ems_cluster.id}?display=#{@display}&refresh=n")
-      perf_gen_init_options               # Intialize perf chart options, charts will be generated async
 
     when "timeline"
       @showtype = "timeline"

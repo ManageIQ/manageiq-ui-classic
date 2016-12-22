@@ -7,6 +7,14 @@ class HostAggregateController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::CheckedIdMixin
 
+  def show_performance
+    @showtype = "performance"
+    @host_aggregate = @record = identify_record(params[:id])
+    drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @host_aggregate.name},
+                    :url  => "/host_aggregate/show_performance/#{@host_aggregate.id}&refresh=n")
+    perf_gen_init_options # Intialize perf chart options, charts will be generated async
+  end
+
   def show
     return if perfmenu_click?
     @display = params[:display] || "main" unless pagination_or_gtl_request?
@@ -26,12 +34,6 @@ class HostAggregateController < ApplicationController
                       :url  => "/availability_zone/show/#{@host_aggregate.id}")
       @showtype = "main"
       set_summary_pdf_data if %w(download_pdf summary_only).include?(@display)
-
-    when "performance"
-      @showtype = "performance"
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @host_aggregate.name},
-                      :url  => "/host_aggregate/show/#{@host_aggregate.id}?display=#{@display}&refresh=n")
-      perf_gen_init_options # Intialize perf chart options, charts will be generated async
 
     when "ems_cloud"
       drop_breadcrumb(:name => _("%{name} (%{table}(s))") % {:name  => @host_aggregate.name,

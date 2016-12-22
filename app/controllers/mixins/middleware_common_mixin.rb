@@ -39,7 +39,6 @@ module MiddlewareCommonMixin
     when 'main'                          then show_main
     when 'download_pdf', 'summary_only'  then show_download
     when 'timeline'                      then show_timeline
-    when 'performance'                   then show_performance
     end
   end
 
@@ -48,6 +47,16 @@ module MiddlewareCommonMixin
     breadcrumb_title = _("%{name} (All %{title})") % {:name  => @record.name,
                                                       :title => display_name(@display)}
     drop_breadcrumb(:name => breadcrumb_title, :url => show_link(@record, :display => @display))
+    @view, @pages = get_view(klass, :parent => @record)
+  end
+
+  def show_performance
+    @ems = @record = identify_record(params[:id])
+    @showtype = @display = params[:display] unless params[:display].nil?
+    breadcrumb_title = _("%{name} (All %{title})") % {:name  => @record.name,
+                                                      :title => display_name(@display)}
+    drop_breadcrumb(:name => breadcrumb_title, :url  => "/#{controller_name}/show_performance/{@record.id}" \
+                               "&refresh=n")
     @view, @pages = get_view(klass, :parent => @record)
   end
 end

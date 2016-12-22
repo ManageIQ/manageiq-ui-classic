@@ -28,6 +28,14 @@ class StorageController < ApplicationController
     set_summary_pdf_data if "download_pdf" == @display
   end
 
+  def show_performance
+    @showtype = "performance"
+    @record = @storage = find_record(Storage, params[:id])
+    drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @storage.name},
+                    :url  => "/storage/show_performance/#{@storage.id}&refresh=n")
+    perf_gen_init_options # Intialize perf chart options, charts will be generated async
+  end
+
   def show(record = nil)
     return if perfmenu_click?
     @display = params[:display] || "main" unless pagination_or_gtl_request?
@@ -83,12 +91,6 @@ class StorageController < ApplicationController
                       :url  => "/storage/x_show/#{@storage.id}?display=main")
       @showtype = "main"
       set_summary_pdf_data if ["download_pdf", "summary_only"].include?(@display)
-
-    when "performance"
-      @showtype = "performance"
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @storage.name},
-                      :url  => "/storage/x_show/#{@storage.id}?display=#{@display}&refresh=n")
-      perf_gen_init_options               # Intialize perf chart options, charts will be generated async
 
     when "storage_extents"
       drop_breadcrumb(:name => _(" (All %{tables})") % {:name   => @storage.name,
