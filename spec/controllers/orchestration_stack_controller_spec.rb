@@ -1,6 +1,8 @@
 describe OrchestrationStackController do
   let!(:user) { stub_user(:features => :all) }
 
+  let!(:cfn_fixture_path) { Rails.root.join("spec/fixtures/orchestration_templates/cfn_parameters.json") }
+
   before(:each) do
     EvmSpecHelper.create_guid_miq_server_zone
   end
@@ -132,7 +134,7 @@ describe OrchestrationStackController do
         :templateName        => "new name",
         :templateDescription => "new description",
         :templateDraft       => "true",
-        :templateContent     => File.read('spec/fixtures/orchestration_templates/cfn_parameters.json')}
+        :templateContent     => File.read(cfn_fixture_path)}
       expect(response.status).to eq(200)
       expect(response.body).to include("window.location.href")
       expect(response.body).to include("/catalog/ot_show/")
