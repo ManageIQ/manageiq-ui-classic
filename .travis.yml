@@ -10,9 +10,14 @@ before_cache:
 - cat bower.json > vendor/assets/bower_components/bower.json
 addons:
   postgresql: '9.4'
+env:
+  matrix:
+  - TEST_SUITE=spec
+  - TEST_SUITE=spec:javascript
 before_install:
 - source ${TRAVIS_BUILD_DIR}/tools/ci/before_install.sh
-before_script: bundle exec rake spec:setup
+before_script: bundle exec rake $TEST_SUITE:setup
+script: bundle exec rake $TEST_SUITE
 after_script: bundle exec codeclimate-test-reporter
 notifications:
   webhooks:

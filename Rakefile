@@ -25,4 +25,17 @@ if defined?(RSpec) && defined?(RSpec::Core::RakeTask)
   end
 end
 
+require 'jasmine'
+load 'jasmine/tasks/jasmine.rake'
+
+namespace :spec do
+  namespace :javascript do
+    desc "Setup environment for javascript specs"
+    task :setup => "app:test:setup_db"
+  end
+
+  desc "Run all javascript specs"
+  task :javascript => ["app:test:initialize", :environment, "jasmine:ci"]
+end
+
 task :default => :spec
