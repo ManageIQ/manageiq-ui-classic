@@ -71,7 +71,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.newRecord                  = true;
 
       miqService.sparkleOn();
-      $http.get($scope.formFieldsUrl + emsCommonFormId).success(function(data) {
+      $http.get($scope.formFieldsUrl + emsCommonFormId).then(function(response) {
+        var data = response.data;
+
         $scope.emsCommonModel.zone                            = data.zone;
         $scope.emsCommonModel.tenant_mapping_enabled          = data.tenant_mapping_enabled;
         $scope.emsCommonModel.emstype_vm                      = data.emstype_vm;
@@ -97,7 +99,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.newRecord = false;
       miqService.sparkleOn();
 
-      $http.get($scope.formFieldsUrl + emsCommonFormId).success(function(data) {
+      $http.get($scope.formFieldsUrl + emsCommonFormId).then(function(response) {
+        var data = response.data;
+
         $scope.emsCommonModel.name                            = data.name;
         $scope.emsCommonModel.emstype                         = data.emstype;
         $scope.emsCommonModel.zone                            = data.zone;
