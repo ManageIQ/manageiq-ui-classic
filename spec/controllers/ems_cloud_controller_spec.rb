@@ -88,6 +88,10 @@ describe EmsCloudController do
     end
 
     it "validates credentials for a new record" do
+      stub_request(:post, "https://ec2.ap-southeast-1.amazonaws.com/")
+         .with(:body => /Action\=DescribeRegions/)
+         .to_return(:status => 200, :body => "", :headers => {})
+
       post :create, :params => {
         "button"           => "validate",
         "cred_type"        => "default",
