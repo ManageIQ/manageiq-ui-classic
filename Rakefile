@@ -31,7 +31,7 @@ load 'jasmine/tasks/jasmine.rake'
 namespace :spec do
   namespace :javascript do
     desc "Setup environment for javascript specs"
-    task :setup => "app:test:setup_db"
+    task :setup
   end
 
   desc "Run all javascript specs"
