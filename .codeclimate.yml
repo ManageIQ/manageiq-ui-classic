@@ -1,0 +1,67 @@
+---
+exclude_paths:
+- ".git/"
+- "**.gif"
+- "**.html"
+- "**.json"
+- "**.png"
+- "**.svg"
+- "**.xml"
+- "**.yaml"
+- "**.yml"
+- "app/assets/javascripts/dhtmlx*/"
+- "config/dictionary_strings.rb"
+- "config/model_attributes.rb"
+- "config/yaml_strings.rb"
+- "db/schema.rb"
+- "db/schema.yml"
+- "db/fixtures/**/*.yml"
+- "db/migrate/20130923182042_collapsed_initial_migration.rb"
+- "locale/"
+- "public/javascripts/timeline/"
+- "spec/"
+- "test/"
+- "tmp/"
+- "vendor/assets/"
+engines:
+  brakeman:
+    # very slow :sad_panda:
+    enabled: false
+  bundler-audit:
+    # requires Gemfile.lock
+    enabled: false
+  csslint:
+    enabled: false
+  duplication:
+    enabled: true
+    config:
+      concurrency: 1
+      languages:
+      - ruby
+      - javascript
+  eslint:
+    enabled: true
+    channel: "eslint-3"
+  fixme:
+    # let's enable later
+    enabled: false
+  markdownlint:
+    # let's enable later
+    enabled: false
+  rubocop:
+    enabled: true
+    config: '.rubocop_cc.yml'
+ratings:
+  paths:
+  - Gemfile.lock
+  - "**.erb"
+  - "**.haml"
+  - "**.rake"
+  - "**.rb"
+  - "**.rhtml"
+  - "**.slim"
+  - "**.css"
+  - "**.inc"
+  - "**.js"
+  - "**.jsx"
+  - "**.module"
