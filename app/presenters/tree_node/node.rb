@@ -67,6 +67,10 @@ module TreeNode
       nil
     end
 
+    def icon
+      nil
+    end
+
     def klass
       nil
     end
@@ -112,6 +116,7 @@ module TreeNode
       node = {
         :key          => key,
         :title        => text ? text : title,
+        :icon         => icon,
         :expand       => expand,
         :hideCheckbox => hide_checkbox ? hide_checkbox : nil,
         :addClass     => klass,
