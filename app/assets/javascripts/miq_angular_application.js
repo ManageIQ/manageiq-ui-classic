@@ -13,6 +13,10 @@ miqHttpInject(ManageIQ.angular.app);
 
 ManageIQ.angular.rxSubject = new Rx.Subject();
 
+ManageIQ.constants = {
+  reportData: 'report_data'
+};
+
 function miqHttpInject(angular_app) {
   angular_app.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.headers.common['X-Angular-Request'] = true;

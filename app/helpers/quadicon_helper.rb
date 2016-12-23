@@ -562,7 +562,13 @@ module QuadiconHelper
     output << flobj_img_simple(img_path, "e72")
 
     unless options[:typ] == :listnav
-      name = item.name
+      name = if item.kind_of?(MiqCimInstance)
+               item.evm_display_name
+             elsif item.kind_of?(MiqProvisionRequest)
+               item.message
+             else
+               item.name
+             end
 
       img_opts = {
         :title => h(name),
