@@ -21,6 +21,8 @@
         this.onUpdateToolbar(event.redrawToolbar);
       } else if (event.update) {
         this.onUpdateItem(event);
+      } else if (event.setCount !== undefined) {
+         this.onSetCount(event.setCount);
       }
 
       // sync changes
@@ -98,6 +100,13 @@
       }.bind(this));
   };
 
+  ToolbarController.prototype.onSetCount = function(count) {
+    this.MiQToolbarSettingsService.setCount(count);
+    if(!this.$scope.$$phase) {
+      this.$scope.$digest();
+    }
+  };
+
   ToolbarController.prototype.setClickHandler = function() {
     var buttons = _
       .chain(this.toolbarItems)
@@ -112,6 +121,7 @@
       })
       .each(function(item) {
         item.eventFunction = function($event) {
+          sendDataWithRx({tollbarEvent: 'itemClicked'});
           miqToolbarOnClick.bind($event.delegateTarget)($event);
         }
       })
