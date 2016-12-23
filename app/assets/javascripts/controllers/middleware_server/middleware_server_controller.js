@@ -1,6 +1,8 @@
 ManageIQ.angular.app.controller('mwServerController', MwServerController);
+ManageIQ.angular.app.controller('mwServerGroupController', MwServerGroupController);
 
 MwServerController.$inject = ['$scope', 'miqService' ];
+MwServerGroupController.$inject = ['$scope', 'miqService' ];
 
 /**
  * MwServerController - since there can be only one controller per page due to:
@@ -26,6 +28,14 @@ MwServerController.$inject = ['$scope', 'miqService' ];
  * @constructor
  */
 function MwServerController($scope, miqService) {
+  return MwServerControllerFactory($scope, miqService, false);
+}
+
+function MwServerGroupController($scope, miqService) {
+  return MwServerControllerFactory($scope, miqService, true);
+}
+
+function MwServerControllerFactory($scope, miqService, isGroupDeployment) {
   ManageIQ.angular.scope = $scope;
 
   ManageIQ.angular.rxSubject.subscribe(function(event) {
@@ -65,6 +75,7 @@ function MwServerController($scope, miqService) {
   /////////////////////////////////////////////////////////////////////////
 
   $scope.deployAddModel = {};
+  $scope.deployAddModel.isGroupDeployment = isGroupDeployment;
   $scope.deployAddModel.enableDeployment = true;
   $scope.deployAddModel.forceDeploy = false;
   $scope.deployAddModel.serverId = angular.element('#server_id').val();
