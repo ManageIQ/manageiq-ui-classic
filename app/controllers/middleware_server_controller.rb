@@ -3,6 +3,8 @@ class MiddlewareServerController < ApplicationController
   include Mixins::GenericShowMixin
   include EmsCommon
   include MiddlewareCommonMixin
+  include Mixins::MiddlewareDeploymentsMixin
+
 
   before_action :check_privileges
   before_action :get_session_data
@@ -93,33 +95,6 @@ class MiddlewareServerController < ApplicationController
 
   def self.operations
     ALL_OPERATIONS
-  end
-
-  def add_deployment
-    selected_server = identify_selected_entities
-    deployment_name = params["runtimeName"]
-
-    existing_deployment = false
-    if params["forceDeploy"] == 'false'
-      existing_deployment = MiddlewareDeployment.find_by(:name => deployment_name, :server_id => selected_server)
-    end
-
-    if existing_deployment
-      render :json => {
-        :status => :warn, :msg => _("Deployment \"%s\" already exists on this server.") % deployment_name
-      }
-    else
-      params[:file] = {
-        :file         => params["file"],
-        :enabled      => params["enabled"],
-        :force_deploy => params["forceDeploy"],
-        :runtime_name => params["runtimeName"]
-      }
-      run_server_operation(STANDALONE_SERVER_OPERATIONS.fetch(:middleware_add_deployment), selected_server)
-      render :json => {
-        :status => :success, :msg => _("Deployment \"%s\" has been initiated on this server.") % deployment_name
-      }
-    end
   end
 
   def add_jdbc_driver
