@@ -12,7 +12,7 @@ source 'https://rubygems.org'
 dev_gemfile = File.expand_path("Gemfile.dev.rb", __dir__)
 eval_gemfile(dev_gemfile) if File.exist?(dev_gemfile)
 
-manageiq_gemfile = File.expand_path("spec/manageiq/Gemfile", __dir__)
+manageiq_gemfile = File.realpath("spec/manageiq/Gemfile", __dir__)
 if File.exist?(manageiq_gemfile)
   eval_gemfile(manageiq_gemfile)
 else
