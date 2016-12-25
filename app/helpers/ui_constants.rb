@@ -499,6 +499,10 @@ module UiConstants
     "enterprise"        => _("The Enterprise"),
     "middleware_server" => _("Selected %{tables}") % {:tables => ui_lookup(:tables => "middleware_server")}
   }
+  ASSIGN_TOS["ContainerNode"] = {
+    "enterprise" => _("The Enterprise"),
+  }
+
 
   # This set of assignments was created for chargeback_rates
   ASSIGN_TOS[:chargeback_storage] = ASSIGN_TOS["Storage"]
