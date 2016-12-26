@@ -987,7 +987,7 @@ module MiqAeCustomizationController::Dialogs
         if params[:field_multi_value]
           @edit[:field_multi_value] = key[:multi_value] = (params[:field_multi_value] == "true")
         end
-      
+
       end
 
       if @edit[:field_typ].include?("TagControl")
