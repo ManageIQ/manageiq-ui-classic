@@ -1,6 +1,7 @@
 set -e
 
 git clone https://github.com/ManageIQ/manageiq.git --depth 1 spec/manageiq
+echo 'gem "manageiq-ui-classic", :path => "'$(/bin/pwd)'"' >> spec/manageiq/Gemfile.dev.rb
 
 cd spec/manageiq
 source tools/ci/setup_vmdb_configs.sh
