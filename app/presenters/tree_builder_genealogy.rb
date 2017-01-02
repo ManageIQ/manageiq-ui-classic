@@ -6,6 +6,10 @@ class TreeBuilderGenealogy< TreeBuilder
     super(name, type, sandbox, build)
   end
 
+  def root_id
+    @vm.parent.present? ? @vm.parent.id : @vm.id
+  end
+
   private
 
   def tree_init_options(_tree_name)
