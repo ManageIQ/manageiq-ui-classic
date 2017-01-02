@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gemspec
+
 #
 # Custom Gemfile modifications
 #
@@ -23,5 +25,4 @@ end
 
 group :test do
   gem "codeclimate-test-reporter", :require => false
-  gem "simplecov", :require => false
 end
