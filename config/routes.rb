@@ -1072,6 +1072,7 @@ Rails.application.routes.draw do
     :dashboard                => {
       :get  => %w(
         auth_error
+        cockpit_redirect
         iframe
         change_tab
         index
