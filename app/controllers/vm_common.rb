@@ -284,6 +284,7 @@ module VmCommon
       @vm_tree = TreeBuilder.convert_bs_tree(vmtree_nodes).to_json
       @tree_name = "genealogy_tree"
       @genealogy_tree = TreeBuilderGenealogy.new(:genealogy, :genealogy_tree, @sb, true, @record)
+      session[:genealogy_tree_root_id] = @genealogy_tree.root_id
       @button_group = "vmtree"
     elsif @display == "compliance_history"
       count = params[:count] ? params[:count].to_i : 10
@@ -419,10 +420,9 @@ module VmCommon
   end
 
   def vmtree_selected
-    base = params[:id].split('-')
-    session[:base_vm] = "_h-#{base[1]}"
+    base = params[:id] == 'root' ? session[:genealogy_tree_root_id] : params[:id].split('-').last
     @display = "vmtree_info"
-    javascript_redirect :action => "show", :id => base[1], :vm_tree => "vmtree_info"
+    javascript_redirect :action => "show", :id => base, :vm_tree => "vmtree_info"
   end
 
   def snap_pressed
@@ -991,7 +991,7 @@ module VmCommon
     if params[:all_checked]
       ids = params[:all_checked].split(',')
       ids.each do |id|
-        id = id.split('-')[1]
+        id = id == 'root' ? session[:genealogy_tree_root_id] : from_cid(id.split('-')[1])
         session[:checked_items].push(id) unless session[:checked_items].include?(id)
       end
     end
