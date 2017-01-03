@@ -1,17 +1,17 @@
 = render :partial => "layouts/flash_msg"
 
-.containers-live-dashboard.row.miq-dashboard-view.miq-metrics{"ng-controller" => "containerLiveDashboardController"}
-  %div{"ng-if" => "!viewGraph"}
-    %div{"pf-toolbar" => "", "id" => "exampleToolbar", "config" => "toolbarConfig", "ng-if" => "tagsLoaded"}
+.containers-live-dashboard.row.miq-dashboard-view.miq-metrics{"ng-controller" => "containerLiveDashboardController as dash"}
+  %div{"ng-if" => "!dash.viewGraph"}
+    %div{"pf-toolbar" => "", "id" => "exampleToolbar", "config" => "dash.toolbarConfig", "ng-if" => "dash.tagsLoaded"}
       %actions
         %button.btn.btn-default{"type" => "button",
-                                "ng-click" => "doViewGraph()",
-                                "ng-disabled" => "!itemSelected"}
+                                "ng-click" => "dash.doViewGraph()",
+                                "ng-disabled" => "!dash.itemSelected"}
           = _("View Graph")
-    .list-view-container.list-view-compact{"ng-if" => "applied",
-                                           "ng-class" => "{'no-filters': filterConfig.fields.length === 0}"}
-      .spinner.spinner-lg.loading{"ng-if" => "loadingMetrics"}
-      .col-md-12{"pf-list-view" => "", "config" => "listConfig", "items" => "items"}
+    .list-view-container.list-view-compact{"ng-if" => "dash.applied",
+                                           "ng-class" => "{'no-filters': dash.filterConfig.fields.length === 0}"}
+      .spinner.spinner-lg.loading{"ng-if" => "dash.loadingMetrics"}
+      .col-md-12{"pf-list-view" => "", "config" => "dash.listConfig", "items" => "dash.items"}
         .list-view-pf-body.row
           .col-md-6.col-sm-6.no-wrap
             {{item.id}}
@@ -50,54 +50,54 @@
                   %span.last-value
                     {{value}}
     .blank-slate-pf{"ng-if" => "!applied",
-                    "ng-class" => "{'no-filters': filterConfig.fields.length === 0,
-                                    'loading': !tagsLoaded}"}
-      .spinner.spinner-lg.loading{"ng-if" => "!tagsLoaded"}
+                    "ng-class" => "{'no-filters': dash.filterConfig.fields.length === 0,
+                                    'loading': !dash.tagsLoaded}"}
+      .spinner.spinner-lg.loading{"ng-if" => "!dash.tagsLoaded"}
       .blank-slate-pf-icon
         %span.fa.fa-info-circle
       %h1
         = _("Metrics")
-      %p{"ng-if" => "!tagsLoaded"}
+      %p{"ng-if" => "!dash.tagsLoaded"}
         = _("Loading available tags")
-      %p{"ng-if" => "tagsLoaded"}
+      %p{"ng-if" => "dash.tagsLoaded"}
         = _("Add tags and click the Apply button to view available metrics")
-  .metrics-graph{"ng-if" => "viewGraph"}
-    %div{"pf-toolbar" => "", "config" => "graphToolbarConfig"}
+  .metrics-graph{"ng-if" => "dash.viewGraph"}
+    %div{"pf-toolbar" => "", "config" => "dash.graphToolbarConfig"}
       %actions
-        %button.btn.btn-primary{"type" => "button", "ng-click" => "refresh_graph_data()"}
+        %button.btn.btn-primary{"type" => "button", "ng-click" => "dash.refresh_graph_data()"}
           = _("Refresh")
-        %button.btn.btn-default{"type" => "button", "ng-click" => "doViewMetrics()"}
+        %button.btn.btn-default{"type" => "button", "ng-click" => "dash.doViewMetrics()"}
           = _("Change Metrics")
 
     %form.time-range-form#form_div{:name => 'angularForm'}
       .form-group.pull-left
         .input-group.bootstrap-touchspin.timeline-stepper.pull-left
           %span.input-group-btn
-            %button.btn.btn-default.bootstrap-touchspin-down{"ng-click" => "countDecrement()",
+            %button.btn.btn-default.bootstrap-touchspin-down{"ng-click" => "dash.countDecrement()",
                                                              :type      => "button"} -
-          %input.timeline-range-input.bootstrap-touchspin.form-control{"ng-model" => "timeFilter.range_count",
+          %input.timeline-range-input.bootstrap-touchspin.form-control{"ng-model" => "dash.timeFilter.range_count",
                                                                         :readonly => "readonly",
                                                                         :type     => "text"}
           %span.input-group-btn
-            %button.btn.btn-default.bootstrap-touchspin-up{"ng-click" => "countIncrement()",
+            %button.btn.btn-default.bootstrap-touchspin-up{"ng-click" => "dash.countIncrement()",
                                                            :type => "button"} +
       .form-group.pull-left
         %select{"pf-select"  => "",
                 "id" => "timeRange",
-                "ng-model" => "timeFilter.time_range",
-                "ng-options" => "range.value as range.title for range in timeRanges",
+                "ng-model" => "dash.timeFilter.time_range",
+                "ng-options" => "range.value as range.title for range in dash.timeRanges",
                 "class"   => "timeline-date-input"}
       .form-group.pull-left
         %input{"pf-date-timepicker" => "",
-               "options" => "dateOptions",
-               "date"    => "timeFilter.date",
-               "class"   => "timeline-date-input"}
+               "options" => "dash.dateOptions",
+               "date"    => "dash.timeFilter.date",
+               "class"   => "dash.timeline-date-input"}
     .line-chart
-      .spinner.spinner-lg.loading{"ng-if" => "loadingData"}
+      .spinner.spinner-lg.loading{"ng-if" => "dash.loadingData"}
       #adHocMetricsChart{"pf-line-chart" => "",
-                             "ng-if" => "chartDataInit",
-                             "chart-data" => "chartData",
-                             "config" => "chartConfig",
+                             "ng-if" => "dash.chartDataInit",
+                             "chart-data" => "dash.chartData",
+                             "config" => "dash.chartConfig",
                              "show-x-axis" => true,
                              "show-y-axis" => true}
 
