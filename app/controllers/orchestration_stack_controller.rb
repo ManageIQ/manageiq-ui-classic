@@ -55,10 +55,7 @@ class OrchestrationStackController < ApplicationController
                       :url  => "/orchestration_stack/show/#{@orchestration_stack.id}?display=#{@display}")
     end
 
-    # Came in from outside show_list partial
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice]
-      replace_gtl_main_div
-    end
+    replace_gtl_main_div if pagination_request?
   end
 
   def show_list

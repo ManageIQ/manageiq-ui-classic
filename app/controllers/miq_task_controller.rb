@@ -57,8 +57,7 @@ class MiqTaskController < ApplicationController
     @edit[:opts] = {}
     @edit[:opts] = copy_hash(@tasks_options[@tabform])   # Backup current settings
 
-    if params[:action] != "button" && (params[:ppsetting] || params[:searchtag] ||
-                                       params[:entry] || params[:sort_choice] || params[:user_choice])
+    if pagination_request?
       get_jobs(tasks_condition(@tasks_options[@tabform]))
       render :update do |page|
         page << javascript_prologue

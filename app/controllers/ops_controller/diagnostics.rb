@@ -435,7 +435,7 @@ module OpsController::Diagnostics
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
 
     # Came in from outside show_list partial
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice] || params[:page]
+    if pagination_request?
       render :update do |page|
         page << javascript_prologue
         page.replace_html("gtl_div", :partial => "layouts/x_gtl", :locals => {:action_url => "diagnostics_server_list"})

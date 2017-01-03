@@ -123,10 +123,7 @@ class EmsClusterController < ApplicationController
     set_config(@ems_cluster)
     session[:tl_record_id] = @record.id
 
-    # Came in from outside show_list partial
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice]
-      replace_gtl_main_div
-    end
+    replace_gtl_main_div if pagination_request?
   end
 
   # handle buttons pressed on the button bar

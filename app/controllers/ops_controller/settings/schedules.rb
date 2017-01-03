@@ -4,7 +4,7 @@ module OpsController::Settings::Schedules
   # Show the main Schedules list view
   def schedules_list
     schedule_build_list
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice] || params[:page]
+    if pagination_request?
       render :update do |page|
         page << javascript_prologue
         page.replace("gtl_div", :partial => "layouts/x_gtl", :locals => {:action_url => "schedules_list"})

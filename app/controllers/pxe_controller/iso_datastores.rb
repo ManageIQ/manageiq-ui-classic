@@ -154,7 +154,7 @@ module PxeController::IsoDatastores
     session[:iso_sortcol] = @sortcol
     session[:iso_sortdir] = @sortdir
 
-    if params[:action] != "button" && (params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice] || params[:page])
+    if params[:action] != "button" && pagination_request?
       render :update do |page|
         page << javascript_prologue
         page.replace("gtl_div", :partial => "layouts/x_gtl", :locals => {:action_url => "iso_datastore_list"})

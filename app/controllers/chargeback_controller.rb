@@ -87,7 +87,7 @@ class ChargebackController < ApplicationController
     session[:rates_sortcol] = @sortcol
     session[:rates_sortdir] = @sortdir
 
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice] || params[:page]
+    if pagination_request?
       render :update do |page|
         page << javascript_prologue
         page.replace("gtl_div", :partial => "layouts/x_gtl", :locals => {:action_url => "cb_rates_list"})

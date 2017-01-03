@@ -43,9 +43,7 @@ class CloudObjectStoreObjectController < ApplicationController
       set_summary_pdf_data if %w(download_pdf summary_only).include?(@display)
     end
 
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice]
-      replace_gtl_main_div
-    end
+    replace_gtl_main_div if pagination_request?
   end
 
   def get_session_data
