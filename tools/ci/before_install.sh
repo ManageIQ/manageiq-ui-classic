@@ -1,6 +1,14 @@
 set -e
 
-git clone https://github.com/ManageIQ/manageiq.git --depth 1 spec/manageiq
+# The bower cache already exists under spec/manageiq/vendor/assets/bower_components
+# and unfortunately it is not possible to git clone to a non-empty directory.
+mkdir -p spec/manageiq
+cd spec/manageiq
+git init
+git remote add origin https://github.com/ManageIQ/manageiq.git
+git pull origin master --depth=1
+cd -
+
 echo 'unless dependencies.detect { |d| d.name == "manageiq-ui-classic" }' >> spec/manageiq/Gemfile.dev.rb
 echo '  gem "manageiq-ui-classic", :path => "'$(/bin/pwd)'"' >> spec/manageiq/Gemfile.dev.rb
 echo 'end' >> spec/manageiq/Gemfile.dev.rb

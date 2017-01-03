@@ -5,9 +5,9 @@ sudo: false
 cache:
   bundler: true
   directories:
-    - vendor/assets/bower_components
+    - spec/manageiq/vendor/assets/bower_components
 before_cache:
-- cat bower.json > vendor/assets/bower_components/bower.json
+- cat bower.json > spec/manageiq/vendor/assets/bower_components/bower.json
 addons:
   postgresql: '9.4'
 env:
