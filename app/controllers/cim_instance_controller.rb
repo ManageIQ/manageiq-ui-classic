@@ -103,7 +103,7 @@ class CimInstanceController < ApplicationController
 
   def process_show(associations = {})
     return if perfmenu_click?
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_request?
 
     @lastaction = "show"
     @showtype   = "config"

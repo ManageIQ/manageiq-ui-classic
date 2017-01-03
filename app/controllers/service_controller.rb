@@ -337,7 +337,7 @@ class ServiceController < ApplicationController
   end
 
   def show_record(id = nil)
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_request?
     @lastaction = "show"
     @showtype = "config"
     identify_service(id)

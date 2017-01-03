@@ -132,7 +132,7 @@ module EmsCommon
     when 'topology'                      then show_topology
     when 'performance'                   then show_performance
     when nil
-      if control_selected? # pagination controls
+      if pagination_request? # pagination controls
         show_entities(@display) # display loaded from session
       else                 # or default display
         show_main
@@ -143,7 +143,7 @@ module EmsCommon
     @lastaction = "show"
     session[:tl_record_id] = @record.id
 
-    replace_gtl_main_div if control_selected?
+    replace_gtl_main_div if pagination_request?
     render :template => "shared/views/ems_common/show" if params[:action] == 'show' && !performed?
   end
 

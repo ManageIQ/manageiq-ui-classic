@@ -18,7 +18,7 @@ class CloudObjectStoreObjectController < ApplicationController
   end
 
   def show
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_request?
     @showtype = @display
     @lastaction = "show"
     @object_store_object = @record = identify_record(params[:id])

@@ -42,7 +42,7 @@ class ContainerController < ApplicationController
   def show
     return if perfmenu_click?
     @sb[:action] = params[:display]
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_request?
 
     identify_container(params[:id])
     if @display == "performance"
@@ -302,7 +302,7 @@ class ContainerController < ApplicationController
   end
 
   def show_record(id = nil)
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_request?
     @lastaction = "show"
     @showtype = "main"
     identify_container(id)

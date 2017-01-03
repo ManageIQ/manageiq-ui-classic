@@ -13,7 +13,7 @@ class EmsClusterController < ApplicationController
 
   def show
     return if perfmenu_click?
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_request?
 
     @lastaction = "show"
     @showtype = "config"

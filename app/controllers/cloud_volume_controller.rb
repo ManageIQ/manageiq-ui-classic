@@ -66,7 +66,7 @@ class CloudVolumeController < ApplicationController
   end
 
   def show
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_request?
     @showtype = @display
     @lastaction = "show"
 

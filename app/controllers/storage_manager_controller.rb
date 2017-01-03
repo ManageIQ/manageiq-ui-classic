@@ -202,7 +202,7 @@ class StorageManagerController < ApplicationController
   end
 
   def show
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_request?
 
     session[:sm_summary_cool] = (@settings[:views][:sm_summary_cool] == "summary")
     @summary_view = session[:sm_summary_cool]

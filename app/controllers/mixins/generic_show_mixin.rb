@@ -9,7 +9,7 @@ module Mixins
       when *self.class.display_methods    then display_nested_list(@display)
       end
 
-      replace_gtl_main_div if control_selected?
+      replace_gtl_main_div if pagination_request?
     end
 
     def show_download
@@ -40,7 +40,7 @@ module Mixins
       return false if record_no_longer_exists?(@record)
       @lastaction = 'show'
       @gtl_url = gtl_url
-      @display = params[:display] || 'main' unless control_selected?
+      @display = params[:display] || 'main' unless pagination_request?
       true
     end
 
