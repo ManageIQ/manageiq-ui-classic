@@ -381,7 +381,7 @@ class MiqPolicyController < ApplicationController
     session[sortcol_key]     = @sortcol
     session[sortdir_key]     = @sortdir
 
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice] || params[:page]
+    if pagination_request?
       render :update do |page|
         page << javascript_prologue
         page.replace("gtl_div", :partial => "layouts/gtl", :locals => {:action_url => "#{what}_get_all", :button_div => 'policy_bar'})

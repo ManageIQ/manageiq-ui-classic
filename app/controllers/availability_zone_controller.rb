@@ -67,10 +67,7 @@ class AvailabilityZoneController < ApplicationController
                       :url  => "/availability_zone/show/#{@record.id}?refresh=n&display=timeline")
     end
 
-    # Came in from outside show_list partial
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice]
-      replace_gtl_main_div
-    end
+    replace_gtl_main_div if pagination_request?
   end
 
   # handle buttons pressed on the button bar

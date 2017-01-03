@@ -117,9 +117,7 @@ class CloudVolumeController < ApplicationController
       @showtype = @display
     end
 
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice]
-      replace_gtl_main_div
-    end
+    replace_gtl_main_div if pagination_request?
   end
 
   def cloud_volume_form_fields

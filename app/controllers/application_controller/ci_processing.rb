@@ -1630,12 +1630,8 @@ module ApplicationController::CiProcessing
     @layout = session["#{self.class.session_key_prefix}_type".to_sym] if session["#{self.class.session_key_prefix}_type".to_sym]
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
     build_listnav_search_list(@view.db) if !["miq_task"].include?(@layout) && !session[:menu_click]
-    # Came in from outside show_list partial
-    unless params[:action] == "explorer"
-      if params[:action] != "button" && (params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice])
-        replace_gtl_main_div
-      end
-    end
+
+    replace_gtl_main_div if params[:action] != "explorer" && params[:action] != "button" && pagination_request?
   end
 
   def breadcrumb_name(_model)
