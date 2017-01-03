@@ -5,14 +5,7 @@ module OpsController::Settings::Ldap
   def ldap_regions_list
     ldap_region_build_list
 
-    if !params[:button] && pagination_request?
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("gtl_div", :partial => "layouts/x_gtl", :locals => {:action_url => "ldap_regions_list"})
-        page.replace_html("paging_div", :partial => "layouts/x_pagingcontrols")
-        page << "miqSparkle(false);"  # Need to turn off sparkle in case original ajax element gets replaced
-      end
-    end
+    update_gtl_div("ldap_regions_list") if !params[:button] && pagination_request?
   end
 
   def ldap_region_show

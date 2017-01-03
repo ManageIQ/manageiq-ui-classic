@@ -147,14 +147,7 @@ module PxeController::PxeImageTypes
     session[:pxe_image_type_sortcol] = @sortcol
     session[:pxe_image_type_sortdir] = @sortdir
 
-    if params[:action] != "button" && pagination_request?
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("gtl_div", :partial => "layouts/x_gtl", :locals => {:action_url => "pxe_image_type_list"})
-        page.replace_html("paging_div", :partial => "layouts/x_pagingcontrols")
-        page << "miqSparkle(false);"  # Need to turn off sparkle in case original ajax element gets replaced
-      end
-    end
+    update_gtl_div('pxe_image_type_list') if params[:action] != "button" && pagination_request?
   end
 
   private #######################

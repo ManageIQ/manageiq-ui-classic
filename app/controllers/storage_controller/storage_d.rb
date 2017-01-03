@@ -26,14 +26,7 @@ module StorageController::StorageD
     session[:storage_sortcol] = @sortcol
     session[:storage_sortdir] = @sortdir
 
-    if params[:action] != "button" && pagination_request?
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("gtl_div", :partial => "layouts/x_gtl", :locals => {:action_url => "storage_list"})
-        page.replace_html("paging_div", :partial => "layouts/x_pagingcontrols")
-        page << "miqSparkle(false);"  # Need to turn off sparkle in case original ajax element gets replaced
-      end
-    end
+    update_gtl_div('storage_list') if params[:action] != "button" && pagination_request?
   end
 
   def miq_search_node

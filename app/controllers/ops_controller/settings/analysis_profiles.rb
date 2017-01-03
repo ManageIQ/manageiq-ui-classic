@@ -5,14 +5,7 @@ module OpsController::Settings::AnalysisProfiles
   def aps_list
     ap_build_list
 
-    if pagination_request?
-      render :update do |page|
-        page << javascript_prologue
-        page.replace_html("gtl_div", :partial => "layouts/x_gtl", :locals => {:action_url => "aps_list"})
-        page.replace_html("paging_div", :partial => "layouts/x_pagingcontrols")
-        page << "miqSparkle(false);"  # Need to turn off sparkle in case original ajax element gets replaced
-      end
-    end
+    update_gtl_div('aps_list') if pagination_request?
   end
 
   # Show a scanitemset
