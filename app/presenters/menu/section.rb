@@ -1,5 +1,15 @@
 module Menu
   Section = Struct.new(:id, :name, :icon, :items, :placement, :before, :type, :href) do
+    extend ActiveModel::Naming
+
+    def self.base_class
+      Menu::Section
+    end
+
+    def self.base_model
+      model_name
+    end
+
     def initialize(an_id, name, icon, *args)
       super
       self.items ||= []
@@ -17,7 +27,7 @@ module Menu
     end
 
     def features_recursive
-      Array(items).collect { |el| el.try(:feature) || el.try(:features) }.flatten.compact
+      Array(items).flat_map { |el| el.try(:feature) || el.try(:features) }.compact
     end
 
     def visible?
@@ -83,6 +93,10 @@ module Menu
     def parent_path(acc = [])
       acc << id
       @parent.present? ? @parent.parent_path(acc) : acc
+    end
+
+    def load_children?
+      true
     end
   end
 end

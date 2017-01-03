@@ -1,11 +1,17 @@
 module Menu
   class Manager
+    include Enumerable
     include Singleton
 
     class << self
       extend Forwardable
 
-      delegate %i(menu item_in_section? item section section_id_string_to_symbol each section_for_item_id) => :instance
+      delegate %i(menu item_in_section? item section section_id_string_to_symbol
+                  section_for_item_id each map detect select) => :instance
+    end
+
+    def each
+      @menu.each { |section| yield section }
     end
 
     private
@@ -48,10 +54,6 @@ module Menu
 
     def item_in_section?(item_id, section_id)
       @id_to_section[section_id].contains_item_id?(item_id)
-    end
-
-    def each
-      @menu.each { |section| yield section }
     end
 
     def initialize
