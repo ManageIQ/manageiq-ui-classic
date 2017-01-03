@@ -1981,7 +1981,6 @@ class ApplicationController < ActionController::Base
     # Get settings hash from the session
     @settings = session[:settings]
     @css = session[:css]
-    params[:ppsetting] = params[:perpage_setting1] || params[:perpage_setting2] || params[:perpage_setting3] if params[:perpage_setting1] || params[:perpage_setting2] || params[:perpage_setting3]
     # Get edit hash from the session
     # Commented following line in sprint 39. . . controllers should load @edit if they need it and we will
     # automatically save it in the session if it's present when the transaction ends
