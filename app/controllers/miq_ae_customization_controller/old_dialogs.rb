@@ -163,17 +163,7 @@ module MiqAeCustomizationController::OldDialogs
     session[:dialog_sortcol] = @sortcol
     session[:dialog_sortdir] = @sortdir
 
-    if pagination_request?
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("gtl_div",
-                     :partial => "layouts/x_gtl",
-                     :locals  => {:action_url => "old_dialogs_list",
-                                  :button_div => 'policy_bar'})
-        page.replace_html("paging_div", :partial => "layouts/x_pagingcontrols")
-        page << "miqSparkle(false)"
-      end
-    end
+    update_gtl_div('old_dialogs_list', 'policy_bar') if pagination_request?
   end
 
   def old_dialogs_new

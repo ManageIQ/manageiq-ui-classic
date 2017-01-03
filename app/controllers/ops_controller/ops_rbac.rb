@@ -752,14 +752,7 @@ module OpsController::OpsRbac
   # Show the main Users/Gropus/Roles list views
   def rbac_list(rec_type)
     rbac_build_list(rec_type)
-    if pagination_request?
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("gtl_div", :partial => "layouts/x_gtl", :locals => {:action_url => "rbac_#{rec_type.pluralize}_list"})
-        page.replace_html("paging_div", :partial => "layouts/x_pagingcontrols")
-        page << "miqSparkle(false);"
-      end
-    end
+    update_gtl_div("rbac_#{rec_type.pluralize}_list") if pagination_request?
   end
 
   # Create the view and associated vars for the rbac list

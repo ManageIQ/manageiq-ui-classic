@@ -1111,6 +1111,17 @@ module ApplicationHelper
     pagination_request? || params[:type]
   end
 
+  def update_gtl_div(action_url = 'explorer', button_div = 'center_tb')
+    render :update do |page|
+      page << javascript_prologue
+      page.replace("gtl_div",
+                   :partial => "layouts/x_gtl",
+                   :locals  => {:action_url => action_url, :button_div => button_div})
+      page.replace_html("paging_div", :partial => "layouts/x_pagingcontrols")
+      page << "miqSparkle(false)"
+    end
+  end
+
   def perfmenu_click?
     return false unless params[:menu_click]
     perf_menu_click

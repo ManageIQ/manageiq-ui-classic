@@ -154,14 +154,7 @@ module PxeController::IsoDatastores
     session[:iso_sortcol] = @sortcol
     session[:iso_sortdir] = @sortdir
 
-    if params[:action] != "button" && pagination_request?
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("gtl_div", :partial => "layouts/x_gtl", :locals => {:action_url => "iso_datastore_list"})
-        page.replace_html("paging_div", :partial => "layouts/x_pagingcontrols")
-        page << "miqSparkle(false);"  # Need to turn off sparkle in case original ajax element gets replaced
-      end
-    end
+    update_gtl_div('iso_datastore_list') if params[:action] != "button" && pagination_request?
   end
 
   def iso_image_edit
