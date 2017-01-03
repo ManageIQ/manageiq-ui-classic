@@ -9,11 +9,7 @@ module Mixins
       when *self.class.display_methods    then display_nested_list(@display)
       end
 
-      replace_gtl_main_div if gtl_request?
-    end
-
-    def gtl_request?
-      params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice]
+      replace_gtl_main_div if control_selected?
     end
 
     def show_download
