@@ -5,7 +5,7 @@ sudo: false
 cache:
   bundler: true
   directories:
-  - spec/manageiq/vendor/assets/bower_components
+  - vendor/assets/bower_components
 addons:
   postgresql: '9.4'
 env:
@@ -15,7 +15,10 @@ env:
 before_install: source tools/ci/before_install.sh
 before_script: bundle exec rake $TEST_SUITE:setup
 script: bundle exec rake $TEST_SUITE
-before_cache: cat bower.json > spec/manageiq/vendor/assets/bower_components/bower.json
+before_cache:
+- mkdir -p vendor/assets
+- mv spec/manageiq/vendor/assets/bower_components vendor/assets
+- cp bower.json vendor/assets/bower_components
 after_script: bundle exec codeclimate-test-reporter
 notifications:
   webhooks:

@@ -1,11 +1,14 @@
 which bower || npm install -g bower
 
 # Check if the bower cache is valid, otherwise delete it
-if ! cmp --silent bower.json spec/manageiq/vendor/assets/bower_components/bower.json; then
-  rm -rf spec/manageiq/vendor/assets/bower_components
+if ! cmp --silent bower.json vendor/assets/bower_components/bower.json; then
+  rm -rf vendor/assets/bower_components
 fi
 
-if [ -d spec/manageiq/vendor/assets/bower_components ]; then
+if [ -d vendor/assets/bower_components ]; then
+  # Restore the bower_components from cache
+  mkdir -p spec/manageiq/vendor/assets
+  mv vendor/assets/bower_components spec/manageiq/vendor/assets
   echo "bower assets installed... moving on."
 else
   bower install --allow-root -F --config.analytics=false
