@@ -7,6 +7,7 @@ class ApplicationHelper::Toolbar::XSummaryView < ApplicationHelper::Toolbar::Bas
       nil,
       :klass     => ApplicationHelper::Button::Pdf,
       :url       => "/download_summary_pdf",
-      :url_parms => ''),
+      :url_parms => ''
+    ),
   ])
 end

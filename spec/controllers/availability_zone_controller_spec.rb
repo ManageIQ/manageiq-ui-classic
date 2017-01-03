@@ -19,4 +19,6 @@ describe AvailabilityZoneController do
       end
     end
   end
+
+  include_examples '#download_summary_pdf', :availability_zone
 end

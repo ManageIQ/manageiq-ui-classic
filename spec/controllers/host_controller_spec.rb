@@ -192,6 +192,8 @@ describe HostController do
     end
   end
 
+  include_examples '#download_summary_pdf', :host
+
   context "#set_credentials" do
     let(:mocked_host) { double(Host) }
     it "uses params[:default_password] for validation if one exists" do
