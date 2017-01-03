@@ -95,4 +95,6 @@ describe EmsMiddlewareController do
       expect(hawkular.authentications.first).to have_attributes(:userid => "bar", :password => "[FILTERED]")
     end
   end
+
+  include_examples '#download_summary_pdf', :ems_hawkular
 end

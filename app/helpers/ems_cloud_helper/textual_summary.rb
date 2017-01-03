@@ -35,7 +35,7 @@ module EmsCloudHelper::TextualSummary
   #
   def textual_provider_region
     return nil if @record.provider_region.nil?
-    label_val = (@record.type.include? "Google") ? _("Preferred Region") : _("Region")
+    label_val = @record.type.include?("Google") ? _("Preferred Region") : _("Region")
     {:label => label_val, :value => @record.description}
   end
 
