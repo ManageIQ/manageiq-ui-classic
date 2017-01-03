@@ -22,7 +22,3 @@ else
   puts "  Clone it from GitHub or symlink it from local source."
   exit 1
 end
-
-group :test do
-  gem "codeclimate-test-reporter", :require => false
-end
