@@ -4,7 +4,8 @@ describe ApplicationHelper::Dialogs do
       "DialogField",
       :id                   => "100",
       :read_only            => read_only,
-      :trigger_auto_refresh => trigger_auto_refresh
+      :trigger_auto_refresh => trigger_auto_refresh,
+      :multi_value?         => true,
     )
   end
   let(:trigger_auto_refresh) { nil }
@@ -87,6 +88,7 @@ describe ApplicationHelper::Dialogs do
       it "returns the tag options with a disabled true" do
         expect(helper.textarea_tag_options(dialog_field, "url")).to eq(
           :class     => "dynamic-text-area-100 form-control",
+          :maxlength => 8192,
           :size      => "50x6",
           :disabled  => true,
           :title     => "This element is disabled because it is read only"
@@ -103,6 +105,7 @@ describe ApplicationHelper::Dialogs do
         it "returns the tag options with a data-miq-observe" do
           expect(helper.textarea_tag_options(dialog_field, "url")).to eq(
             :class             => "dynamic-text-area-100 form-control",
+            :maxlength         => 8192,
             :size              => "50x6",
             "data-miq_observe" => {
               :url          => "url",
@@ -120,6 +123,7 @@ describe ApplicationHelper::Dialogs do
         it "returns the tag options with a data-miq-observe" do
           expect(helper.textarea_tag_options(dialog_field, "url")).to eq(
             :class             => "dynamic-text-area-100 form-control",
+            :maxlength         => 8192,
             :size              => "50x6",
             "data-miq_observe" => '{"url":"url"}'
           )
@@ -279,7 +283,8 @@ describe ApplicationHelper::Dialogs do
             :class                 => "dynamic-drop-down-100 selectpicker",
             "data-miq_sparkle_on"  => true,
             "data-miq_sparkle_off" => true,
-            "data-live-search"     => true
+            "data-live-search"     => true,
+            "multiselect"          => false,
           )
         end
       end
@@ -292,7 +297,8 @@ describe ApplicationHelper::Dialogs do
             :class                 => "dynamic-drop-down-100 selectpicker",
             "data-miq_sparkle_on"  => true,
             "data-miq_sparkle_off" => true,
-            "data-live-search"     => true
+            "data-live-search"     => true,
+            "multiselect"          => false,
           )
         end
       end

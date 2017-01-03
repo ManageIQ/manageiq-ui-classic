@@ -162,7 +162,7 @@ describe MiqAeCustomizationController do
     context "#prepare_move_field_value" do
       it "Find ID of a button" do
         controller.instance_variable_set(:@_params, :entry_id => 1)
-         controller.instance_variable_set(:@edit, :field_values => [['test', 100], ['test1', 101], ['test2', 102]])
+        controller.instance_variable_set(:@edit, :field_values => [['test', 100], ['test1', 101], ['test2', 102]])
         controller.send(:prepare_move_field_value)
         expect(controller.instance_variable_get(:@idx)).to eq(1)
       end
@@ -291,7 +291,7 @@ describe MiqAeCustomizationController do
         :field_name   => 'Dropdown1'
       }
       controller.send(:dialog_validate)
-      
+
       expect(assigns(:flash_array).first[:message]).to include("Dropdown elements require some entries")
     end
 
