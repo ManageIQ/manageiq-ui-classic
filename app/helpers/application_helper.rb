@@ -1100,7 +1100,7 @@ module ApplicationHelper
     true
   end
 
-  def control_selected?
+  def pagination_request?
     params[:ppsetting] || params[:searchtag] || params[:entry] ||
       params[:sortby] || params[:sort_choice] || params[:page] || params[:type]
   end

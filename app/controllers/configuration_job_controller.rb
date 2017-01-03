@@ -20,7 +20,7 @@ class ConfigurationJobController < ApplicationController
 
   def show
     return if perfmenu_click?
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_request?
 
     @lastaction = "show"
     @configuration_job = @record = identify_record(params[:id])

@@ -159,7 +159,7 @@ class MiqRequestController < ApplicationController
   def show
     identify_request
     return if record_no_longer_exists?(@miq_request)
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_request?
 
     if @display == "main"
       prov_set_show_vars

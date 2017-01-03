@@ -6,7 +6,7 @@ module ContainersCommonMixin
     if @breadcrumbs.present? && (@breadcrumbs.last[:name].eql? 'Topology')
       @breadcrumbs.clear
     end
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_request?
     @lastaction = "show"
     @showtype = "main"
     @record = identify_record(params[:id])
