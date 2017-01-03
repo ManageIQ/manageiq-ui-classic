@@ -80,4 +80,6 @@ describe EmsClusterController do
       end
     end
   end
+
+  include_examples '#download_summary_pdf', :ems_cluster
 end

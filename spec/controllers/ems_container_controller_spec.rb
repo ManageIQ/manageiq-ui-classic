@@ -54,4 +54,6 @@ describe EmsContainerController do
       end
     end
   end
+
+  include_examples '#download_summary_pdf', :ems_kubernetes
 end
