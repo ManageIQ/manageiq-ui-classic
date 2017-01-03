@@ -226,54 +226,54 @@ module ApplicationController::MiqRequestMethods
   def sort_ds_grid
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
     field = ["miq_template", "vm", "service_template"].include?(@edit[:org_controller]) ? :placement_ds_name : :attached_ds
-    sort_grid('ds', @edit[:wf].get_field(field, :environment)[:values])
+    sort_grid('ds', @edit[:wf].send("environment_#{field}_values"))
   end
 
   # get the sort column that was clicked on, else use the current one
   def sort_vm_grid
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
-    sort_grid('vm', @edit[:wf].get_field(:src_vm_id, :service)[:values])
+    sort_grid('vm', @edit[:wf].send(:service_src_vm_id_values))
   end
 
   # get the sort column that was clicked on, else use the current one
   def sort_host_grid
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
-    @edit[:wf].kind_of?(MiqHostProvisionWorkflow) ? sort_grid('host', @edit[:wf].get_field(:src_host_ids, :service)[:values]) : sort_grid('host', @edit[:wf].get_field(:placement_host_name, :environment)[:values])
+    @edit[:wf].kind_of?(MiqHostProvisionWorkflow) ? sort_grid('host', @edit[:wf].send(:service_src_host_ids_values)) : sort_grid('host', @edit[:wf].send(:environment_placement_host_name_values))
   end
 
   # get the sort column that was clicked on, else use the current one
   def sort_configured_system_grid
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
-    sort_grid('configured_system', @edit[:wf].get_field(:src_configured_system_ids, :service)[:values])
+    sort_grid('configured_system', @edit[:wf].send(:service_src_configured_system_ids_values))
   end
 
   # get the sort column that was clicked on, else use the current one
   def sort_pxe_img_grid
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
-    sort_grid('pxe_img', @edit[:wf].get_field(:pxe_image_id, :service)[:values])
+    sort_grid('pxe_img', @edit[:wf].send(:service_pxe_image_id_values))
   end
 
   # get the sort column that was clicked on, else use the current one
   def sort_iso_img_grid
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
-    sort_grid('iso_img', @edit[:wf].get_field(:iso_image_id, :service)[:values])
+    sort_grid('iso_img', @edit[:wf].send(:service_iso_image_id_values))
   end
 
   def sort_windows_image_grid
     return unless load_edit("prov_edit__#{params[:id]}", "show_list")
-    sort_grid('windows_image', @edit[:wf].get_field(:windows_image_id, :service)[:values])
+    sort_grid('windows_image', @edit[:wf].send(:service_windows_image_id_values))
   end
 
   # get the sort column that was clicked on, else use the current one
   def sort_vc_grid
     @edit = session[:edit]
-    sort_grid('vc', @edit[:wf].get_field(:sysprep_custom_spec, :customize)[:values])
+    sort_grid('vc', @edit[:wf].send(:customize_sysprep_custom_spec_values))
   end
 
   # get the sort column that was clicked on, else use the current one
   def sort_template_grid
     @edit = session[:edit]
-    sort_grid('template', @edit[:wf].get_field(:customization_template_id, :customize)[:values])
+    sort_grid('template', @edit[:wf].send(:customize_customization_template_id_values))
   end
 
   private ############################
@@ -452,7 +452,7 @@ module ApplicationController::MiqRequestMethods
     when MiqProvisionVirtWorkflow
       if @edit[:new][:current_tab_key] == :service
         if @edit[:new][:st_prov_type]
-          build_vm_grid(@edit[:wf].get_field(:src_vm_id, :service)[:values], @edit[:vm_sortdir], @edit[:vm_sortcol], build_template_filter)
+          build_vm_grid(@edit[:wf].send(:service_src_vm_id_values), @edit[:vm_sortdir], @edit[:vm_sortcol], build_template_filter)
         else
           @vm = VmOrTemplate.find_by_id(@edit[:new][:src_vm_id] && @edit[:new][:src_vm_id][0])
         end
@@ -463,15 +463,15 @@ module ApplicationController::MiqRequestMethods
           build_iso_img_grid(@edit[:wf].send("allowed_iso_images"), @edit[:iso_img_sortdir], @edit[:iso_img_sortcol])
         end
       elsif @edit[:new][:current_tab_key] == :environment
-        build_host_grid(@edit[:wf].get_field(:placement_host_name, :environment)[:values], @edit[:host_sortdir], @edit[:host_sortcol]) unless @edit[:wf].get_field(:placement_host_name, :environment).blank?
-        build_ds_grid(@edit[:wf].get_field(:placement_ds_name, :environment)[:values], @edit[:ds_sortdir], @edit[:ds_sortcol]) unless @edit[:wf].get_field(:placement_ds_name, :environment).blank?
+        build_host_grid(@edit[:wf].send(:environment_placement_host_name_values), @edit[:host_sortdir], @edit[:host_sortcol]) unless @edit[:wf].get_field(:placement_host_name, :environment).blank?
+        build_ds_grid(@edit[:wf].send(:environment_placement_ds_name_values), @edit[:ds_sortdir], @edit[:ds_sortcol]) unless @edit[:wf].get_field(:placement_ds_name, :environment).blank?
       elsif @edit[:new][:current_tab_key] == :customize
         @edit[:template_sortdir] ||= "ASC"
         @edit[:template_sortcol] ||= "name"
         if @edit[:wf].supports_customization_template?
           build_template_grid(@edit[:wf].send("allowed_customization_templates"), @edit[:template_sortdir], @edit[:template_sortcol])
         else
-          build_vc_grid(@edit[:wf].get_field(:sysprep_custom_spec, :customize)[:values], @edit[:vc_sortdir], @edit[:vc_sortcol])
+          build_vc_grid(@edit[:wf].send(:customize_sysprep_custom_spec_values), @edit[:vc_sortdir], @edit[:vc_sortcol])
         end
         @sb[:vm_os] = VmOrTemplate.find_by_id(@edit.fetch_path(:new, :src_vm_id, 0)).platform if @edit.fetch_path(:new, :src_vm_id, 0)
       elsif @edit[:new][:current_tab_key] == :purpose
@@ -479,20 +479,20 @@ module ApplicationController::MiqRequestMethods
       end
     when VmMigrateWorkflow
       if @edit[:new][:current_tab_key] == :environment
-        build_host_grid(@edit[:wf].get_field(:placement_host_name, :environment)[:values], @edit[:host_sortdir], @edit[:host_sortcol]) unless @edit[:wf].get_field(:placement_host_name, :environment).blank?
-        build_ds_grid(@edit[:wf].get_field(:placement_ds_name, :environment)[:values], @edit[:ds_sortdir], @edit[:ds_sortcol]) unless @edit[:wf].get_field(:placement_ds_name, :environment).blank?
+        build_host_grid(@edit[:wf].send(:environment_placement_host_name_values), @edit[:host_sortdir], @edit[:host_sortcol]) unless @edit[:wf].get_field(:placement_host_name, :environment).blank?
+        build_ds_grid(@edit[:wf].send(:environment_placement_ds_name_values), @edit[:ds_sortdir], @edit[:ds_sortcol]) unless @edit[:wf].get_field(:placement_ds_name, :environment).blank?
       end
     else
       if @edit[:new][:current_tab_key] == :service
-        build_host_grid(@edit[:wf].get_field(:src_host_ids, :service)[:values], @edit[:host_sortdir], @edit[:host_sortcol])
-        build_pxe_img_grid(@edit[:wf].get_field(:pxe_image_id, :service)[:values], @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
-        build_iso_img_grid(@edit[:wf].get_field(:iso_image_id, :service)[:values], @edit[:iso_img_sortdir], @edit[:iso_img_sortcol]) if @edit[:wf].supports_iso?
+        build_host_grid(@edit[:wf].send(:service_src_host_ids_values), @edit[:host_sortdir], @edit[:host_sortcol])
+        build_pxe_img_grid(@edit[:wf].send(:service_pxe_image_id_values), @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
+        build_iso_img_grid(@edit[:wf].send(:service_iso_image_id_values), @edit[:iso_img_sortdir], @edit[:iso_img_sortcol]) if @edit[:wf].supports_iso?
       elsif @edit[:new][:current_tab_key] == :purpose
         build_tags_tree(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow), true)
       elsif @edit[:new][:current_tab_key] == :environment
-        build_ds_grid(@edit[:wf].get_field(:attached_ds, :environment)[:values], @edit[:ds_sortdir], @edit[:ds_sortcol])
+        build_ds_grid(@edit[:wf].send(:environment_attached_ds_values), @edit[:ds_sortdir], @edit[:ds_sortcol])
       elsif @edit[:new][:current_tab_key] == :customize
-        build_template_grid(@edit[:wf].get_field(:customization_template_id, :customize)[:values], @edit[:template_sortdir], @edit[:template_sortcol])
+        build_template_grid(@edit[:wf].send(:customize_customization_template_id_values), @edit[:template_sortdir], @edit[:template_sortcol])
       end
     end
   end
@@ -502,7 +502,7 @@ module ApplicationController::MiqRequestMethods
     when :purpose
       build_tags_tree(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow), true)
     when :service
-      build_configured_system_grid(@edit[:wf].get_field(:src_configured_system_ids, :service)[:values], @edit[:configured_system_sortdir], @edit[:configured_system_sortcol])
+      build_configured_system_grid(@edit[:wf].send(:service_src_configured_system_ids_values), @edit[:configured_system_sortdir], @edit[:configured_system_sortcol])
     end
   end
 
@@ -662,8 +662,9 @@ module ApplicationController::MiqRequestMethods
           params[key]
         end
 
-      if field[:values]                                                         # If a choice was made
-        if field[:values].kind_of?(Hash)
+      field_values = field.key?(:values_from) ? @edit[:wf].send("#{d}_#{f}_values") : field[:values]
+      if field_values                                                           # If a choice was made
+        if field_values.kind_of?(Hash)
           # set an array of selected ids for security groups field
           if f == "security_groups"
             if params[key] == ""
@@ -673,10 +674,10 @@ module ApplicationController::MiqRequestMethods
               params[key].split(",").each { |v| @edit[:new][f.to_sym].push(v.to_i) }
             end
           else
-            @edit[:new][f.to_sym] = [val, field[:values][val]]                    # Save [value, description]
+            @edit[:new][f.to_sym] = [val, field_values[val]]                    # Save [value, description]
           end
         else
-          field[:values].each do |v|
+          field_values.each do |v|
             if v.class.name == "MiqHashStruct" && v.evm_object_class == :Storage
               if ["miq_template", "service_template", "vm"].include?(@edit[:org_controller])
                 if params[key] == "__DS__NONE__"                                  # Added this to deselect datastore in grid
