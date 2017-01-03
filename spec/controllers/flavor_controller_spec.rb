@@ -15,4 +15,6 @@ describe FlavorController do
       end
     end
   end
+
+  include_examples '#download_summary_pdf', :flavor
 end

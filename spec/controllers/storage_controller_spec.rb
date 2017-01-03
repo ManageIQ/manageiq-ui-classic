@@ -294,4 +294,6 @@ describe StorageController do
       expect(assigns(:flash_array).first[:message]).to include("All changes have been reset")
     end
   end
+
+  include_examples '#download_summary_pdf', :storage
 end

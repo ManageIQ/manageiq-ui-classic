@@ -263,4 +263,7 @@ describe VmOrTemplateController do
       vm_common.resolve_node_info("v-#{@vm_arch[:id]}")
     end
   end
+
+  include_examples '#download_summary_pdf', :vm_cloud
+  include_examples '#download_summary_pdf', :vm_infra
 end

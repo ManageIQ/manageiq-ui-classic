@@ -201,4 +201,6 @@ describe CloudTenantController do
       end
     end
   end
+
+  include_examples '#download_summary_pdf', :cloud_tenant
 end
