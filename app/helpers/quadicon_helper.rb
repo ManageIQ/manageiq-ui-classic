@@ -138,13 +138,23 @@ module QuadiconHelper
     return unless item
 
     tag_options = {
-      :id => "quadicon_#{item.id}"
+      :id    => "quadicon_#{item.id}",
+      :class => "quadicon quadicon-#{quadicon_builder_name_from(item)}"
     }
 
     if options[:typ] == :listnav
       tag_options[:style] = quadicon_default_inline_styles
-      tag_options[:class] = ""
+      tag_options[:class] = "quadicon-listnav"
     end
+
+    # TEMP -- for visual testing
+    # if item.kind_of?(Storage)
+    #   quadicon_for(item)
+    # else
+    #   quadicon_tag(tag_options) do
+    #     quadicon_builder_factory(item, options)
+    #   end
+    # end
 
     quadicon_tag(tag_options) do
       quadicon_builder_factory(item, options)
