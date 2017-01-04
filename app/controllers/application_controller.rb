@@ -173,12 +173,10 @@ class ApplicationController < ActionController::Base
       rpt = MiqReport.find_by_name(params[:report])
       rpt.generate_table(:userid => session[:userid])
     else
-      rpt = if controller_name == "dashboard" && @sb[:report_result_id] # Check for dashboard results
-              MiqReportResult.find(@sb[:report_result_id]).report_results
+      rpt = if session[:report_result_id]
+              MiqReportResult.find(session[:report_result_id]).report_results
             elsif session[:rpt_task_id].present?
               MiqTask.find(session[:rpt_task_id]).task_results
-            elsif session[:report_result_id]
-              MiqReportResult.find(session[:report_result_id]).report_results
             else
               @report
             end
