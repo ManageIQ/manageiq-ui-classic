@@ -26,11 +26,7 @@ class TreeBuilderAlertProfile < TreeBuilder
     objects = alert_profile_kinds.map do |db|
       # Set alert profile folder nodes to open so we pre-load all children
       open_node("xx-#{db}")
-
-      # Actual translation should happen in TreeNodeBuilder
-      text = PostponedTranslation.new(N_("%{model} Alert Profiles")) do
-        {:model => ui_lookup(:model => db)}
-      end.to_proc
+      text = _("%{model} Alert Profiles") % {:model => ui_lookup(:model => db)}
       {:id => db, :text => text, :image => "100/#{db.underscore.downcase}.png", :tip => text}
     end
 

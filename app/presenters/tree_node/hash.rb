@@ -1,6 +1,6 @@
 module TreeNode
   class Hash < Node
-    set_attribute(:title) { @object[:text].kind_of?(Proc) ? @object[:text].call : _(@object[:text]) }
+    set_attribute(:title) { @object[:text] }
 
     set_attribute(:image) { @object[:image] }
 

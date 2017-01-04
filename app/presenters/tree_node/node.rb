@@ -110,6 +110,7 @@ module TreeNode
       node = {
         :key          => key,
         :title        => title,
+        :tooltip      => tooltip,
         :icon         => icon,
         :expand       => expand,
         :hideCheckbox => hide_checkbox ? hide_checkbox : nil,
@@ -118,10 +119,6 @@ module TreeNode
         :select       => selected,
         :checkable    => checkable ? nil : false,
       }
-      unless tooltip.blank?
-        tip = tooltip.kind_of?(Proc) ? tooltip.call : _(tooltip)
-        node[:tooltip] = tip
-      end
 
       node[:image] = if !image
                        nil
