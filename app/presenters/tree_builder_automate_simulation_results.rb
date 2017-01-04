@@ -48,9 +48,7 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
 
   def get_element_title(el)
     titles = {
-      :MiqAeObject    => "#{el.attributes["namespace"]} <b>/</b> "\
-                         "#{el.attributes["class"]} <b>/</b> "\
-                         "#{el.attributes["instance"]}",
+      :MiqAeObject    => "#{el.attributes["namespace"]} / #{el.attributes["class"]} / #{el.attributes["instance"]}",
       :MiqAeAttribute => el.attributes["name"],
       :not_blank      => el.text,
       :other          => el.name,
@@ -71,9 +69,9 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
   def get_root_elements(el, idx)
     title = get_element_title(el)
     object = {:id          => "e_#{idx}",
-              :text        => _(title).html_safe,
+              :text        => title,
               :image       => get_element_icon(el),
-              :tip         => _(title).html_safe,
+              :tip         => title,
               :elements    => el.each_element { |e| e },
               :cfmeNoClick => true
              }
@@ -89,7 +87,7 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
           :id          => "a_#{idx}",
           :image       => "100/attribute.png",
           :cfmeNoClick => true,
-          :text        => "#{k.first} <b>=</b> #{k.last}".html_safe
+          :text        => "#{k.first} = #{k.last}"
         }
         kids.push(object)
       end
