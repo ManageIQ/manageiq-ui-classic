@@ -54,8 +54,6 @@
         this.onUnsubscribe();
       } else if (event.tollbarEvent && (event.tollbarEvent === 'itemClicked')) {
         this.setExtraClasses();
-      } else if (event.resize) {
-        this.onResizeElement(event.resize);
       }
     }.bind(this),
     function (err) {
@@ -95,6 +93,7 @@
   }
 
   ReportDataController.prototype.onUnsubscribe = function() {
+    console.log('I was unsubscribed');
     this.subscription.dispose();
   }
 
@@ -208,6 +207,7 @@
           this.setSort(sortId, this.settings.sort_dir === 'ASC');
         }
         this.setDefaults();
+        this.movePagination();
         return data;
       }.bind(this));
   }
@@ -239,14 +239,20 @@
         angular.element(mainContent).addClass('miq-list-content');
       }
     }
+
+    var pagination = document.getElementsByClassName('miq-pagination');
+    if (pagination && pagination.length > 0 && !viewType) {
+      pagination[0].parentNode.removeChild(pagination[0]);
+    }
   }
 
-  ReportDataController.prototype.onResizeElement = function(resizeClasses) {
-    var foundClass = _.find(resizeClasses, function (item) {return item.indexOf('col-md-') !== -1});
-    var pagination = angular.element(document.querySelector('.' + PAGINATION_CLASS));
-    if (pagination && CLASSES_TO_WIDTH[foundClass]) {
-      pagination.css('width', CLASSES_TO_WIDTH[foundClass] + '%');
-    }
+  ReportDataController.prototype.movePagination = function() {
+    setTimeout(function() {
+      var pagination = document.getElementsByClassName('miq-pagination');
+      if (pagination && pagination.length > 0) {
+        document.querySelector('#paging_div .col-md-12').appendChild(pagination[0])
+      }
+    });
   }
 
   /**

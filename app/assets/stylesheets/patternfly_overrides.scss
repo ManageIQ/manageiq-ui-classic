@@ -734,14 +734,3 @@ div.disabled {
 .miq-sand-paper, .miq-sand-paper > div {
    background: #f5f5f5;
 }
-
-.miq-pagination {
-  position: fixed;
-  width: 84%;
-  bottom: -17px;
-  z-index: 99;
-}
-
-.miq-data-table .miq-pagination {
-  bottom: -7px;
-}
