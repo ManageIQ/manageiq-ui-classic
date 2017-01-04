@@ -1711,6 +1711,7 @@ Rails.application.routes.draw do
 
     :network_router           => {
       :get  => %w(
+        add_interface_select
         delete_network_routers
         download_data
         edit
@@ -1718,17 +1719,22 @@ Rails.application.routes.draw do
         network_router_form_fields
         network_router_networks_by_ems
         new
+        remove_interface_select
         show
         show_list
         tagging_edit
       ) +
         compare_get,
       :post => %w(
+        add_interface
+        add_interface_select
         button
         create
         form_field_changed
         listnav_search_selected
         quick_search
+        remove_interface
+        remove_interface_select
         sections_field_changed
         show
         show_list
