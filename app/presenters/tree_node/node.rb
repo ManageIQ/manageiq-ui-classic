@@ -107,10 +107,9 @@ module TreeNode
     end
 
     def to_h
-      text = ERB::Util.html_escape(title ? URI.unescape(title) : title) unless title.html_safe?
       node = {
         :key          => key,
-        :title        => text ? text : title,
+        :title        => title,
         :icon         => icon,
         :expand       => expand,
         :hideCheckbox => hide_checkbox ? hide_checkbox : nil,
