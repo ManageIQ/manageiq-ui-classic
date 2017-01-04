@@ -120,7 +120,6 @@ module TreeNode
       }
       unless tooltip.blank?
         tip = tooltip.kind_of?(Proc) ? tooltip.call : _(tooltip)
-        tip = ERB::Util.html_escape(URI.unescape(tip)) unless tip.html_safe?
         node[:tooltip] = tip
       end
 
