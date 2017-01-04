@@ -932,28 +932,34 @@ module OpsController::OpsRbac
     rbac_group_right_tree(@belongsto.keys)
   end
 
+  # this causes the correct tree to get instantiated, depending on the active tab
   def rbac_group_right_tree(selected)
-    @tags_tree = TreeBuilderTags.new(:tags_tree,
-                                     :tags,
-                                     @sb,
-                                     true,
-                                     :edit    => @edit,
-                                     :filters => @filters,
-                                     :group   => @group)
-    @hac_tree = TreeBuilderBelongsToHac.new(:hac_tree,
-                                            :hac,
-                                            @sb,
-                                            true,
-                                            :edit     => @edit,
-                                            :group    => @group,
-                                            :selected => selected)
-    @vat_tree = TreeBuilderBelongsToVat.new(:vat_tree,
-                                            :vat,
-                                            @sb,
-                                            true,
-                                            :edit     => @edit,
-                                            :group    => @group,
-                                            :selected => selected)
+    case @sb[:active_rbac_group_tab]
+    when 'rbac_customer_tags'
+      @tags_tree = TreeBuilderTags.new(:tags_tree,
+                                       :tags,
+                                       @sb,
+                                       true,
+                                       :edit    => @edit,
+                                       :filters => @filters,
+                                       :group   => @group)
+    when 'rbac_hosts_clusters'
+      @hac_tree = TreeBuilderBelongsToHac.new(:hac_tree,
+                                              :hac,
+                                              @sb,
+                                              true,
+                                              :edit     => @edit,
+                                              :group    => @group,
+                                              :selected => selected)
+    when 'rbac_vms_templates'
+      @vat_tree = TreeBuilderBelongsToVat.new(:vat_tree,
+                                              :vat,
+                                              @sb,
+                                              true,
+                                              :edit     => @edit,
+                                              :group    => @group,
+                                              :selected => selected)
+    end
   end
 
   def rbac_role_get_details(id)
