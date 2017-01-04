@@ -55,10 +55,4 @@ module ApplicationController::TreeSupport
   def tree_exists?(tree_name)
     @sb[:trees].try(:key?, tree_name.to_s)
   end
-
-  private ############################
-
-  def parse_nodetype_and_id(x_node)
-    x_node.split('_').last.split('-')
-  end
 end

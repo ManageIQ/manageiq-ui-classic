@@ -1764,4 +1764,8 @@ module ApplicationHelper
      _(text)
     end
   end
+
+  def parse_nodetype_and_id(x_node)
+    x_node.split('_').last.split('-')
+  end
 end
