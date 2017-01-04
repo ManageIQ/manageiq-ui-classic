@@ -1047,7 +1047,7 @@ module OpsController::OpsRbac
           @edit[:new][:filters]["#{cat_name}-#{tag_name}"] = "/managed/#{cat_name}/#{tag_name}" # Put them in the hash
         end
       else                                          # Belongsto tag checked
-        class_prefix, id = params[:id].split('_').last.split('-')
+        class_prefix, id = parse_nodetype_and_id(params[:id])
         klass = TreeBuilder.get_model_for_prefix(class_prefix)
         if params[:check] == "0"                    #   unchecked
           @edit[:new][:belongsto].delete("#{klass}_#{from_cid(id)}") #     Remove the tag from the belongsto hash

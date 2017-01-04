@@ -29,6 +29,6 @@ class ApplicationHelper::Button::MiqActionModify < ApplicationHelper::Button::Ba
   end
 
   def policy_type
-    @view_context.x_node.split('_').last.split('-')[0]
+    parse_nodetype_and_id(@view_context.x_node).first
   end
 end
