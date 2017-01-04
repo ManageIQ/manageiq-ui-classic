@@ -928,27 +928,32 @@ module OpsController::OpsRbac
     [@group.get_managed_filters].flatten.each do |f|
       @filters[f.split("/")[-2] + "-" + f.split("/")[-1]] = f
     end
+
+    rbac_group_right_tree(@belongsto.keys)
+  end
+
+  def rbac_group_right_tree(selected)
     @tags_tree = TreeBuilderTags.new(:tags_tree,
                                      :tags,
                                      @sb,
                                      true,
-                                     :edit => @edit, :filters => @filters, :group => @group)
+                                     :edit    => @edit,
+                                     :filters => @filters,
+                                     :group   => @group)
     @hac_tree = TreeBuilderBelongsToHac.new(:hac_tree,
                                             :hac,
                                             @sb,
                                             true,
                                             :edit     => @edit,
-                                            :filters  => @filters,
                                             :group    => @group,
-                                            :selected => @belongsto.keys)
+                                            :selected => selected)
     @vat_tree = TreeBuilderBelongsToVat.new(:vat_tree,
                                             :vat,
                                             @sb,
                                             true,
                                             :edit     => @edit,
-                                            :filters  => @filters,
                                             :group    => @group,
-                                            :selected => @belongsto.keys)
+                                            :selected => selected)
   end
 
   def rbac_role_get_details(id)
@@ -1111,25 +1116,8 @@ module OpsController::OpsRbac
     @edit[:new][:group_tenant] = @group.tenant_id
 
     @edit[:current] = copy_hash(@edit[:new])
-    @tags_tree = TreeBuilderTags.new(:tags_tree,
-                                     :tags,
-                                     @sb,
-                                     true,
-                                     :edit => @edit, :filters => @filters, :group => @group)
-    @hac_tree = TreeBuilderBelongsToHac.new(:hac_tree,
-                                            :hac,
-                                            @sb,
-                                            true,
-                                            :edit     => @edit,
-                                            :group    => @group,
-                                            :selected => @edit[:new][:belongsto].keys)
-    @vat_tree = TreeBuilderBelongsToVat.new(:vat_tree,
-                                            :vat,
-                                            @sb,
-                                            true,
-                                            :edit     => @edit,
-                                            :group    => @group,
-                                            :selected => @edit[:new][:belongsto].keys)
+
+    rbac_group_right_tree(@edit[:new][:belongsto].keys)
   end
 
   # Set group record variables to new values
