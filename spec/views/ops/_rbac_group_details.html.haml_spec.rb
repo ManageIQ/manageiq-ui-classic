@@ -13,26 +13,33 @@ describe 'ops/_rbac_group_details.html.haml' do
       allow(view).to receive(:current_tenant).and_return(Tenant.seed)
       allow(view).to receive(:session).and_return(:assigned_filters => [])
       FactoryGirl.create(:classification, :name => 'folder_selected', :show => true)
+
+      sb = {
+        :trees => {},
+        :active_rbac_group_tab => 'rbac_customer_tags',
+      }
+      view.instance_variable_set(:@sb, sb)
+
       @tags_tree = TreeBuilderTags.new(:tag_tree,
                                        :tag,
-                                       {},
+                                       sb,
                                        true,
-                                       :edit => {}, :filters => {}, :group => @group)
+                                       :edit    => {},
+                                       :filters => {},
+                                       :group   => @group)
       @ems_azure_network = FactoryGirl.create(:ems_azure_network)
       @hac_tree = TreeBuilderBelongsToHac.new(:hac_tree,
                                               :hac,
-                                              {:trees => {}},
+                                              sb,
                                               true,
                                               :edit     => nil,
-                                              :filters  => {},
                                               :group    => @group,
                                               :selected => {})
       @vat_tree = TreeBuilderBelongsToVat.new(:vat_tree,
                                               :vat,
-                                              {:trees => {}},
+                                              sb,
                                               true,
                                               :edit     => nil,
-                                              :filters  => {},
                                               :group    => @group,
                                               :selected => {})
     end
