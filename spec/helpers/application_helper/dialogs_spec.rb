@@ -281,7 +281,7 @@ describe ApplicationHelper::Dialogs do
             "data-miq_sparkle_on"  => true,
             "data-miq_sparkle_off" => true,
             "data-live-search"     => true,
-            "multiselect"          => false,
+            :multiple              =>"multiple"
           )
         end
       end
