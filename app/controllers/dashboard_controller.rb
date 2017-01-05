@@ -253,8 +253,8 @@ class DashboardController < ApplicationController
     end
 
     widget = MiqWidget.find_by_id(params[:widget].to_i)
-    # Save the rr id for render_zgraph
-    @sb[:report_result_id] = widget.contents_for_user(current_user).miq_report_result_id
+    # Save the rr id for rendering
+    session[:report_result_id] = widget.contents_for_user(current_user).miq_report_result_id
 
     render :update do |page|
       page << javascript_prologue
