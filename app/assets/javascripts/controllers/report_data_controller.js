@@ -93,7 +93,6 @@
   }
 
   ReportDataController.prototype.onUnsubscribe = function() {
-    console.log('I was unsubscribed');
     this.subscription.dispose();
   }
 
@@ -249,8 +248,9 @@
   ReportDataController.prototype.movePagination = function() {
     setTimeout(function() {
       var pagination = document.getElementsByClassName('miq-pagination');
-      if (pagination && pagination.length > 0) {
-        document.querySelector('#paging_div .col-md-12').appendChild(pagination[0])
+      var pagind_div = document.querySelector('#paging_div .col-md-12');
+      if (pagination && pagination.length > 0 && pagind_div) {
+        pagind_div.appendChild(pagination[0])
       }
     });
   }
