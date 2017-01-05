@@ -2,7 +2,6 @@ class TreeBuilderGenealogy< TreeBuilder
   has_kids_for VmOrTemplate, [:x_get_vm_or_template_kids]
 
   def override(node, object, _pid, options)
-    binding.pry
     if object == @vm
       node[:title] = node[:title] << _(' (Selected)')
       node[:highlighted] = true
