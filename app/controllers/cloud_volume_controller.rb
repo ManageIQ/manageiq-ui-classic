@@ -66,7 +66,7 @@ class CloudVolumeController < ApplicationController
   end
 
   def show
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
     @showtype = @display
     @lastaction = "show"
 
@@ -117,9 +117,7 @@ class CloudVolumeController < ApplicationController
       @showtype = @display
     end
 
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice]
-      replace_gtl_main_div
-    end
+    replace_gtl_main_div if pagination_request?
   end
 
   def cloud_volume_form_fields

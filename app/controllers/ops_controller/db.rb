@@ -44,7 +44,7 @@ module OpsController::Db
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
 
     # Came in from outside show_list partial
-    if params[:action] == "list_view_filter" || params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice] || params[:page]
+    if params[:action] == "list_view_filter" || pagination_request?
       render :update do |page|
         page << javascript_prologue
         page.replace_html("gtl_div", :partial => 'layouts/x_gtl', :locals => {:action_url => "db_list"})

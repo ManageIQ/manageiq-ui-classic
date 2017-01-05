@@ -9,7 +9,7 @@ class HostAggregateController < ApplicationController
 
   def show
     return if perfmenu_click?
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
 
     @lastaction = "show"
     @showtype = "config"
@@ -67,10 +67,7 @@ class HostAggregateController < ApplicationController
                       :url  => "/host_aggregate/show/#{@record.id}?refresh=n&display=timeline")
     end
 
-    # Came in from outside show_list partial
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice]
-      replace_gtl_main_div
-    end
+    replace_gtl_main_div if pagination_request?
   end
 
   def host_aggregate_form_fields

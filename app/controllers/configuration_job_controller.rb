@@ -20,7 +20,7 @@ class ConfigurationJobController < ApplicationController
 
   def show
     return if perfmenu_click?
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
 
     @lastaction = "show"
     @configuration_job = @record = identify_record(params[:id])
@@ -38,10 +38,7 @@ class ConfigurationJobController < ApplicationController
       set_summary_pdf_data if %w(download_pdf summary_only).include?(@display)
     end
 
-    # Came in from outside show_list partial
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice]
-      replace_gtl_main_div
-    end
+    replace_gtl_main_div if pagination_request?
   end
 
   def parameters

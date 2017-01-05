@@ -90,8 +90,7 @@ module MiqAeCustomizationController::Dialogs
     session[:dialog_sortcol] = @sortcol
     session[:dialog_sortdir] = @sortdir
 
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice] || params[:page]
-      # Use RJS to update the display
+    if pagination_request?
       render :update do |page|
         page << javascript_prologue
         page.replace("gtl_div",

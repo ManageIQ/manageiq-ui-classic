@@ -19,7 +19,7 @@ class InfraNetworkingController < ApplicationController
 
   def show(id = nil)
     @explorer = true
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
     @record = @switch = find_record(Switch, id || params[:id])
     return if record_no_longer_exists?(@switch)
 
@@ -162,7 +162,7 @@ class InfraNetworkingController < ApplicationController
   end
 
   def show_record(_id = nil)
-    @display    = params[:display] || "main" unless control_selected?
+    @display    = params[:display] || "main" unless pagination_or_gtl_request?
     @lastaction = "show"
     @showtype   = "config"
 
@@ -602,7 +602,7 @@ class InfraNetworkingController < ApplicationController
     if @explorer # In explorer?
       @refresh_partial = @showtype.to_s
       replace_right_cell
-    elsif params[:ppsetting] || params[:entry] || params[:sort_choice]
+    elsif pagination_request?
       replace_gtl_main_div
     elsif request.xml_http_request?
       # reload toolbars - AJAX request

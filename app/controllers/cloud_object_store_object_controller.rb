@@ -18,7 +18,7 @@ class CloudObjectStoreObjectController < ApplicationController
   end
 
   def show
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
     @showtype = @display
     @lastaction = "show"
     @object_store_object = @record = identify_record(params[:id])
@@ -43,9 +43,7 @@ class CloudObjectStoreObjectController < ApplicationController
       set_summary_pdf_data if %w(download_pdf summary_only).include?(@display)
     end
 
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice]
-      replace_gtl_main_div
-    end
+    replace_gtl_main_div if pagination_request?
   end
 
   def get_session_data

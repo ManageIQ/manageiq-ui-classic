@@ -151,15 +151,13 @@ class MiqRequestController < ApplicationController
     session[:request_sortcol] = @sortcol
     session[:request_sortdir] = @sortdir
 
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice]
-      replace_gtl_main_div
-    end
+    replace_gtl_main_div if pagination_request?
   end
 
   def show
     identify_request
     return if record_no_longer_exists?(@miq_request)
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
 
     if @display == "main"
       prov_set_show_vars
@@ -172,9 +170,8 @@ class MiqRequestController < ApplicationController
       drop_breadcrumb(:name => _("Provisioned VMs [%{description}]") % {:description => @miq_request.description},
                       :url  => "/miq_request/show/#{@miq_request.id}?display=#{@display}")
     end
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice]
-      replace_gtl_main_div
-    end
+
+    replace_gtl_main_div if pagination_request?
     @lastaction = "show"
   end
 

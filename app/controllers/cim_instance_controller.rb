@@ -103,7 +103,7 @@ class CimInstanceController < ApplicationController
 
   def process_show(associations = {})
     return if perfmenu_click?
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
 
     @lastaction = "show"
     @showtype   = "config"
@@ -141,9 +141,6 @@ class CimInstanceController < ApplicationController
       end
     end
 
-    # Came in from outside show_list partial
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice]
-      replace_gtl_main_div
-    end
+    replace_gtl_main_div if pagination_request?
   end
 end

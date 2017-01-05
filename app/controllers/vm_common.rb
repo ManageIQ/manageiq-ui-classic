@@ -185,7 +185,7 @@ module VmCommon
     @sb[:action] = params[:display]
 
     return if perfmenu_click?
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
     @display = params[:vm_tree] if params[:vm_tree]
 
     @lastaction = "show"
@@ -339,12 +339,9 @@ module VmCommon
     get_host_for_vm(@record)
     session[:tl_record_id] = @record.id
 
-    # Came in from outside show_list partial
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice]
-      replace_gtl_main_div
-    end
+    replace_gtl_main_div if pagination_request?
+
     if @explorer
-      #     @in_a_form = true
       @refresh_partial = "layouts/performance"
       replace_right_cell unless ["download_pdf", "performance"].include?(params[:display])
     end
@@ -1021,8 +1018,7 @@ module VmCommon
                       :url  => "/vm/scan_history/#{@scan_history.vm_or_template_id}")
     end
 
-    # Came in from outside show_list partial
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice]
+    if pagination_request?
       render :update do |page|
         page << javascript_prologue
         page.replace_html("gtl_div", :partial => "layouts/gtl")

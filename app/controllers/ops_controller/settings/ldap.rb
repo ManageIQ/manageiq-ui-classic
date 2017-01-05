@@ -5,7 +5,7 @@ module OpsController::Settings::Ldap
   def ldap_regions_list
     ldap_region_build_list
 
-    if !params[:button] && (params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice] || params[:page])
+    if !params[:button] && pagination_request?
       render :update do |page|
         page << javascript_prologue
         page.replace("gtl_div", :partial => "layouts/x_gtl", :locals => {:action_url => "ldap_regions_list"})

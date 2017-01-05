@@ -6,7 +6,7 @@ module ContainersCommonMixin
     if @breadcrumbs.present? && (@breadcrumbs.last[:name].eql? 'Topology')
       @breadcrumbs.clear
     end
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
     @lastaction = "show"
     @showtype = "main"
     @record = identify_record(params[:id])
@@ -105,10 +105,8 @@ module ContainersCommonMixin
     elsif @display == "container_templates" || session[:display] == "container_templates" && params[:display].nil?
       show_container_display(record, "container_templates", ContainerTemplate)
     end
-    # Came in from outside show_list partial
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice]
-      replace_gtl_main_div
-    end
+
+    replace_gtl_main_div if pagination_request?
   end
 
   def update_session_for_compliance_history(record, count)

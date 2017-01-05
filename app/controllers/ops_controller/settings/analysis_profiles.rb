@@ -5,8 +5,7 @@ module OpsController::Settings::AnalysisProfiles
   def aps_list
     ap_build_list
 
-    # Came in from outside show_list partial
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice] || params[:page]
+    if pagination_request?
       render :update do |page|
         page << javascript_prologue
         page.replace_html("gtl_div", :partial => "layouts/x_gtl", :locals => {:action_url => "aps_list"})

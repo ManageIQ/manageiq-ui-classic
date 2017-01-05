@@ -202,7 +202,7 @@ class StorageManagerController < ApplicationController
   end
 
   def show
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
 
     session[:sm_summary_cool] = (@settings[:views][:sm_summary_cool] == "summary")
     @summary_view = session[:sm_summary_cool]
@@ -222,10 +222,7 @@ class StorageManagerController < ApplicationController
     @lastaction = "show"
     session[:tl_record_id] = @record.id
 
-    # Came in from outside show_list partial
-    if params[:ppsetting] || params[:searchtag] || params[:entry] || params[:sort_choice]
-      replace_gtl_main_div
-    end
+    replace_gtl_main_div if pagination_request?
   end
 
   # Show the main MS list view overiding method from Mixins::GenericListMixin

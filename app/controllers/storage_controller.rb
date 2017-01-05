@@ -30,7 +30,7 @@ class StorageController < ApplicationController
 
   def show(record = nil)
     return if perfmenu_click?
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
     @record = @storage = find_record(Storage, record || params[:id])
     return if record_no_longer_exists?(@storage)
 
@@ -349,7 +349,7 @@ class StorageController < ApplicationController
 
 
   def show_record(_id = nil)
-    @display = params[:display] || "main" unless control_selected?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
     @lastaction = "show"
     @showtype   = "config"
 
