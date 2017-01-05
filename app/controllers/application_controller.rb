@@ -332,6 +332,7 @@ class ApplicationController < ActionController::Base
     current_view, settings = get_view(model_view, options)
     settings[:sort_dir] = @sortdir unless settings.nil?
     settings[:sort_col] = @sortcol unless settings.nil?
+    @edit = session[:edit]
     render :json => {
       :settings => settings,
       :data     => view_to_hash(current_view),
