@@ -1,10 +1,5 @@
 module TreeNode
   class Node
-    include ActionView::Context
-    include ActionView::Helpers::TagHelper
-    include ActionView::Helpers::TextHelper
-    include ActionView::Helpers::CaptureHelper
-
     def initialize(object, parent_id, options)
       @object = object
       @parent_id = parent_id
