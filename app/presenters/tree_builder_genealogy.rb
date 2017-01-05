@@ -1,6 +1,15 @@
 class TreeBuilderGenealogy< TreeBuilder
   has_kids_for VmOrTemplate, [:x_get_vm_or_template_kids]
 
+  def override(node, object, _pid, options)
+    binding.pry
+    if object == @vm
+      node[:title] = node[:title] << _(' (Selected)')
+      node[:highlighted] = true
+      node[:expand] = true
+    end
+  end
+
   def initialize(name, type, sandbox, build, vm)
     @vm = vm
     super(name, type, sandbox, build)
@@ -22,7 +31,6 @@ class TreeBuilderGenealogy< TreeBuilder
         :onclick                   => "miqOnClickGenealogyTree",
         :checkboxes                => true,
         :oncheck                   => "miqGetChecked",
-        #:reselect_node             => @vm TODO
         :check_url                 => "/vm/set_checked_items/"
     )
   end
