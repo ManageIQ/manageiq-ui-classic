@@ -33,7 +33,7 @@
       %p.form-control-static
         = h(@database_details["username"])
 
-  %hr/
+  %hr
   %h3
     = _("Run a Database Backup Now")
   - if @sb[:active_tab] == "diagnostics_database"
@@ -104,7 +104,7 @@
                  :locals  => {:confirm => _("Are you sure you want to Run a Database Backup Now?")}
 
 
-  %hr/
+  %hr
   %h3
     = _("Run Database Garbage Collection Now")
   .form-group

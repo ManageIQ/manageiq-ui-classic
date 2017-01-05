@@ -93,8 +93,8 @@
                             "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
   - layout = %w(ems_container).include?(params[:controller]) ? "container_auth" : "multi_auth_credentials"
   %hr
-    = render :partial => "/layouts/#{layout}", :locals  => {:record => @ems}
-    = documentation_link(@doc_url, ui_lookup(:table => @table_name))
+  = render :partial => "/layouts/#{layout}", :locals  => {:record => @ems}
+  = documentation_link(@doc_url, ui_lookup(:table => @table_name))
   - if @edit[:ems_id].nil?
     %table{:width => "100%"}
       %tr
