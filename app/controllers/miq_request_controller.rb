@@ -157,7 +157,7 @@ class MiqRequestController < ApplicationController
   def show
     identify_request
     return if record_no_longer_exists?(@miq_request)
-    @display = params[:display] || "main" unless pagination_request?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
 
     if @display == "main"
       prov_set_show_vars

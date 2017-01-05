@@ -185,7 +185,7 @@ module VmCommon
     @sb[:action] = params[:display]
 
     return if perfmenu_click?
-    @display = params[:display] || "main" unless pagination_request?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
     @display = params[:vm_tree] if params[:vm_tree]
 
     @lastaction = "show"

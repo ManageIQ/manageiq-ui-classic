@@ -17,7 +17,7 @@ class HostController < ApplicationController
     @lastaction = "show"
     @showtype = "config"
 
-    @display = params[:display] || "main" unless pagination_request?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
 
     @host = @record = identify_record(params[:id])
     return if record_no_longer_exists?(@host, 'Host')

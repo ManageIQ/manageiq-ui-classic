@@ -14,7 +14,7 @@ class OrchestrationStackController < ApplicationController
 
   def show
     return if perfmenu_click?
-    @display = params[:display] || "main" unless pagination_request?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
 
     @lastaction = "show"
     @orchestration_stack = @record = identify_record(params[:id])
