@@ -5,13 +5,36 @@ describe TreeNode::Node do
   let(:options) { Hash.new }
   subject { described_class.new(object, parent, options) }
 
+  describe '#escape' do
+    let(:object) { nil }
+
+    [nil, "", ViewHelper.content_tag(:strong, "x")].each do |string|
+      context "input is #{string.inspect}" do
+        let(:input) { string }
+
+        it 'returns with the argument without any modification' do
+          expect(subject.escape(input)).to eq(input)
+        end
+      end
+    end
+
+    context 'input is unsafe' do
+      let(:input) { "<script>alert('hacked');</script>" }
+
+      it 'returns with the escaped argument' do
+        expect(subject.escape(input)).not_to eq(input)
+        expect(subject.escape(input)).to eq("&lt;script&gt;alert(&#39;hacked&#39;);&lt;/script&gt;")
+      end
+    end
+  end
+
   describe '#to_h' do
     before { allow(subject).to receive(:image).and_return('') }
     context 'title contains %2f' do
       let(:object) { OpenStruct.new(:name => 'foo %2f bar') }
 
-      it 'unescapes it to slash' do
-        expect(subject.to_h[:title]).to eq('foo / bar')
+      it 'does not escape' do
+        expect(subject.to_h[:title]).to eq('foo %2f bar')
       end
     end
 

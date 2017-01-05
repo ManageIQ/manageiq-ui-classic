@@ -106,11 +106,16 @@ module TreeNode
       end
     end
 
+    def escape(string)
+      return string if string.nil? || string.blank? || string.html_safe?
+      ERB::Util.html_escape(string)
+    end
+
     def to_h
       node = {
         :key          => key,
-        :title        => title,
-        :tooltip      => tooltip,
+        :title        => escape(title),
+        :tooltip      => escape(tooltip),
         :icon         => icon,
         :expand       => expand,
         :hideCheckbox => hide_checkbox ? hide_checkbox : nil,
