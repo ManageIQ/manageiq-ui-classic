@@ -49,7 +49,7 @@ module ApplicationController::Timelines
     @tree_type = tree_type
 
     tree = rpt_menu.map do |r|
-      root = TreeNodeBuilder.generic_tree_node("r__#{r[0]}", r[0], "100/folder.png", r[0], :cfme_no_click => true)
+      root = TreeNodeBuilder.generic_tree_node("r__#{r[0]}", r[0], "100/folder.png", r[0], :cfme_no_click => true, :expand => true)
 
       @group_idx.push(r[0]) unless @group_idx.include?(r[0])
       @report_groups.push(r[0]) unless @report_groups.include?(r[0])
