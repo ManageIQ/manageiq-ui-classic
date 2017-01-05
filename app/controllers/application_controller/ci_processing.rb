@@ -1052,8 +1052,7 @@ module ApplicationController::CiProcessing
       @refresh_partial = "vm_common/#{@showtype}"
       replace_right_cell
     else
-      # Came in from outside, use RJS to redraw gtl partial
-      if params[:ppsetting] || params[:entry] || params[:sort_choice]
+      if pagination_request?
         replace_gtl_main_div
       elsif request.xml_http_request?
         # reload toolbars - AJAX request
