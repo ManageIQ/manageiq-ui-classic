@@ -37,7 +37,7 @@ class TreeBuilderComplianceHistory < TreeBuilder
     if parent.compliance_details.empty?
       kid = {:id          => "#{parent.id}-nopol",
              :text        => _("No Compliance Policies Found"),
-             :image       => "100/#{parent.id}-nopol.png",
+             :icon        => "fa fa-ban",
              :tip         => nil,
              :cfmeNoClick => true}
       kids.push(kid)

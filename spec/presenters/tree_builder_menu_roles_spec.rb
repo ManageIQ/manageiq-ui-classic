@@ -5,19 +5,19 @@
 # {
 #   :key      => "xx-b__Report Menus for cloud-execs",
 #   :title    => "Top Level",
-#   :icon     => "/assets/100/folder.png",
+#   :icon     => "pficon pficon-folder-close",
 #   :expand   => true,
 #   :children => [
 #     {
 #       :key      => "xx-p__Configuration Management",
 #       :title    => "Configuration Management",
-#       :icon     => "/assets/100/folder.png",
+#       :icon     => "pficon pficon-folder-close",
 #       :tooltip  => "Group: Configuration Management",
 #       :children => [
 #         {
 #           :key      => "xx-s__Configuration Management:Virtual Machines",
 #           :title    => "Virtual Machines",
-#           :icon     => "/assets/100/folder.png",
+#           :icon     => "pficon pficon-folder-close",
 #           :tooltip  => "Menu: Virtual Machines",
 #           :children => [
 #             {

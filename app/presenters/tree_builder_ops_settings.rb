@@ -24,13 +24,13 @@ class TreeBuilderOpsSettings < TreeBuilderOps
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(_count_only, _options)
     objects = [
-      {:id => "sis", :text => _("Analysis Profiles"), :image => "100/scan_item_set.png", :tip => _("Analysis Profiles")},
-      {:id => "z", :text => _("Zones"), :image => "100/zone.png", :tip => _("Zones")}
+      {:id => "sis", :text => _("Analysis Profiles"), :icon => "fa fa-search", :tip => _("Analysis Profiles")},
+      {:id => "z", :text => _("Zones"), :icon => "pficon pficon-zone", :tip => _("Zones")}
     ]
     if Settings.product.new_ldap
-      objects.push(:id => "l", :text => _("LDAP"), :image => "100/ldap.png", :tip => _("LDAP"))
+      objects.push(:id => "l", :text => _("LDAP"), :icon => "fa fa-database", :tip => _("LDAP"))
     end
-    objects.push(:id => "msc", :text => _("Schedules"), :image => "100/miq_schedule.png", :tip => _("Schedules"))
+    objects.push(:id => "msc", :text => _("Schedules"), :icon => "fa fa-clock-o", :tip => _("Schedules"))
     objects
   end
 

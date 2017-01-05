@@ -5,6 +5,6 @@ describe TreeNode::ConfigurationProfile do
   let(:object) { FactoryGirl.create(:configuration_profile_foreman) }
 
   include_examples 'TreeNode::Node#key prefix', 'cp-'
-  include_examples 'TreeNode::Node#image', '100/configuration_profile.png'
+  include_examples 'TreeNode::Node#icon', 'fa fa-list-ul'
   include_examples 'TreeNode::Node#tooltip prefix', 'Configuration Profile'
 end

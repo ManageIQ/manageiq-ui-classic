@@ -5,7 +5,7 @@ describe TreeNode::MiqRegion do
   let(:object) { FactoryGirl.create(:miq_region, :description => 'Elbonia') }
 
   include_examples 'TreeNode::Node#key prefix', 'mr-'
-  include_examples 'TreeNode::Node#image', '100/miq_region.png'
+  include_examples 'TreeNode::Node#icon', 'pficon pficon-regions'
   include_examples 'TreeNode::Node#title description'
 
   describe '#expand' do

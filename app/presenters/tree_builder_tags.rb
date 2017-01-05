@@ -63,7 +63,7 @@ class TreeBuilderTags < TreeBuilder
                  (@edit && @edit.fetch_path(:new, :filters, kid_id)) || (@filters && @filters.key?(kid_id))
                end
       {:id          => kid.id,
-       :image       => '100/tag.png',
+       :icon        => 'fa fa-tag',
        :text        => kid.description,
        :checkable   => @edit.present?,
        :tooltip     => _("Tag: %{description}") % {:description => kid.description},

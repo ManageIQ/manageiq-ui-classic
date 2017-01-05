@@ -7,15 +7,15 @@ module TreeNode
       # rubocop:disable LiteralInCondition
       case true
       when !@object.domain?
-        '100/ae_namespace.png'
+        'svg/ae_namespace.svg'
       when @object.git_enabled?
-        '100/ae_git_domain.png'
+        'svg/ae_git_domain.svg'
       when @object.name == MiqAeDatastore::MANAGEIQ_DOMAIN
         '100/miq.png'
       when !@object.top_level_namespace
         '100/ae_domain.png'
       else
-        "100/vendor-#{@object.top_level_namespace.downcase}.png"
+        "svg/vendor-#{@object.top_level_namespace.downcase}.svg"
       end
       # rubocop:enable LiteralInCondition
     end

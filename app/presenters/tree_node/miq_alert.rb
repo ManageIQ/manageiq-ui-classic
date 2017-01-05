@@ -1,5 +1,5 @@
 module TreeNode
   class MiqAlert < Node
-    set_attribute(:image, '100/miq_alert.png')
+    set_attribute(:icon, 'pficon pficon-warning-triangle-o')
   end
 end

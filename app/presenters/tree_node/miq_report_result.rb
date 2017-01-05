@@ -1,17 +1,17 @@
 module TreeNode
   class MiqReportResult < Node
-    set_attribute(:image) do
+    set_attribute(:icon) do
       case @object.status.downcase
       when 'error'
-        '100/report_result_error.png'
+        'pficon pficon-error-circle-o'
       when 'finished'
-        '100/report_result_completed.png'
+        'pficon pficon-ok'
       when 'running'
-        '100/report_result_running.png'
+        'pficon pficon-running'
       when 'queued'
-        '100/report_result_queued.png'
+        'fa fa-play-circle-o'
       else
-        '100/report_result.png'
+        'product product-arrow-right'
       end
     end
 

@@ -5,5 +5,5 @@ describe TreeNode::VmdbIndex do
   subject { described_class.new(object, nil, {}) }
 
   include_examples 'TreeNode::Node#key prefix', 'ti-'
-  include_examples 'TreeNode::Node#image', '100/vmdbindex.png'
+  include_examples 'TreeNode::Node#icon', 'fa fa-table'
 end

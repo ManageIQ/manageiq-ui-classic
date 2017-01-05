@@ -25,7 +25,7 @@ class TreeBuilderStoragePod < TreeBuilder
           :id            => item[:id],
           :tree          => "dsc_tree",
           :text          => item[:name],
-          :image         => "100/folder.png",
+          :icon          => "pficon pficon-folder-close",
           :tip           => item[:description],
           :load_children => true
         }

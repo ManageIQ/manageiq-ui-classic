@@ -9,7 +9,7 @@ describe TreeNode::EmsCluster do
       let(:object) { FactoryGirl.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'c-'
-      include_examples 'TreeNode::Node#image', '100/cluster.png'
+      include_examples 'TreeNode::Node#icon', 'pficon pficon-cluster'
       include_examples 'TreeNode::Node#tooltip prefix', 'Cluster / Deployment Role'
     end
   end

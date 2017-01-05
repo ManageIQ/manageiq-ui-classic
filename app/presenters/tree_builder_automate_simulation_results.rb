@@ -85,7 +85,7 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
       parent[:attributes].each_with_index do |k, idx|
         object = {
           :id          => "a_#{idx}",
-          :image       => "100/attribute.png",
+          :icon        => "product product-attribute",
           :cfmeNoClick => true,
           :text        => "#{k.first} = #{k.last}"
         }

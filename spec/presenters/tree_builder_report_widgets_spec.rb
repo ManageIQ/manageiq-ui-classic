@@ -7,10 +7,10 @@ describe TreeBuilderReportWidgets do
 
   it "#x_get_tree_roots (private)" do
     expect(subject.send(:x_get_tree_roots, false, nil)).to match_array([
-                                                                         {:id => "r", :text => "Reports", :image => "100/folder.png", :tip => "Reports"},
-                                                                         {:id => "c",  :text => "Charts",    :image => "100/folder.png", :tip => "Charts"},
-                                                                         {:id => "rf", :text => "RSS Feeds", :image => "100/folder.png", :tip => "RSS Feeds"},
-                                                                         {:id => "m",  :text => "Menus",     :image => "100/folder.png", :tip => "Menus"}
+                                                                         {:id => "r",  :text => "Reports",   :icon => "pficon pficon-folder-close", :tip => "Reports"},
+                                                                         {:id => "c",  :text => "Charts",    :icon => "pficon pficon-folder-close", :tip => "Charts"},
+                                                                         {:id => "rf", :text => "RSS Feeds", :icon => "pficon pficon-folder-close", :tip => "RSS Feeds"},
+                                                                         {:id => "m",  :text => "Menus",     :icon => "pficon pficon-folder-close", :tip => "Menus"}
                                                                        ])
   end
 

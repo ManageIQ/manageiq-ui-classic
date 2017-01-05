@@ -29,9 +29,9 @@ class TreeBuilderPolicySimulation < TreeBuilder
 
   def node_icon(result)
     case result
-    when "allow" then '100/checkmark.png'
-    when "N/A"   then '100/na.png'
-    else              '100/x.png'
+    when "allow" then 'pficon pficon-ok'
+    when "N/A"   then 'fa fa-ban'
+    else              'pficon-error-circle-o'
     end
   end
 
@@ -52,7 +52,7 @@ class TreeBuilderPolicySimulation < TreeBuilder
          :policies    => node['policies']}
       end
     else
-      nodes = [{:id => nil, :text => _("Items out of scope"), :image => '100/blank.png', :cfmeNoClick => true}]
+      nodes = [{:id => nil, :text => _("Items out of scope"), :icon => 'fa fa-ban', :cfmeNoClick => true}]
     end
     count_only_or_objects(count_only, nodes)
   end

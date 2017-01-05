@@ -22,7 +22,7 @@ class TreeBuilderContainersFilter < TreeBuilder
     [
       {:id          => "global",
        :text        => _("Global Filters"),
-       :image       => "100/folder.png",
+       :icon        => "pficon pficon-folder-close",
        :tip         => _("Global Shared Filters"),
        :cfmeNoClick => true}
     ]

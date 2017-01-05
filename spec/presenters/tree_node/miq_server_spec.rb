@@ -8,7 +8,7 @@ describe TreeNode::MiqServer do
   end
 
   include_examples 'TreeNode::Node#key prefix', 'svr-'
-  include_examples 'TreeNode::Node#image', '100/miq_server.png'
+  include_examples 'TreeNode::Node#icon', 'pficon pficon-server'
   include_examples 'TreeNode::Node#tooltip same as #title'
 
   describe '#title' do

@@ -6,5 +6,5 @@ describe TreeNode::MiqAlert do
 
   include_examples 'TreeNode::Node#key prefix', 'al-'
   include_examples 'TreeNode::Node#title description'
-  include_examples 'TreeNode::Node#image', '100/miq_alert.png'
+  include_examples 'TreeNode::Node#icon', 'pficon pficon-warning-triangle-o'
 end

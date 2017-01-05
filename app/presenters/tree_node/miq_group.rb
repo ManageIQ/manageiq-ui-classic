@@ -1,5 +1,5 @@
 module TreeNode
   class MiqGroup < Node
-    set_attribute(:image, '100/group.png')
+    set_attribute(:icon, 'product product-group')
   end
 end

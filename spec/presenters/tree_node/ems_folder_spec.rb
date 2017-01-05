@@ -15,13 +15,13 @@ describe TreeNode::EmsFolder do
       let(:object) { FactoryGirl.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'f-'
-      include_examples 'TreeNode::Node#image', '100/folder.png'
+      include_examples 'TreeNode::Node#icon', 'pficon pficon-folder-close'
       include_examples 'TreeNode::Node#tooltip prefix', 'Folder'
 
       context 'type is vat' do
         let(:options) { {:type => :vat} }
 
-        include_examples 'TreeNode::Node#image', '100/blue_folder.png'
+        include_examples 'TreeNode::Node#icon', 'pficon pficon-folder-close-blue'
       end
     end
   end
@@ -30,7 +30,7 @@ describe TreeNode::EmsFolder do
     let(:object) { FactoryGirl.create(:datacenter) }
 
     include_examples 'TreeNode::Node#key prefix', 'dc-'
-    include_examples 'TreeNode::Node#image', '100/datacenter.png'
+    include_examples 'TreeNode::Node#icon', 'fa fa-building-o'
     include_examples 'TreeNode::Node#tooltip prefix', 'Datacenter'
   end
 end

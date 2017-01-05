@@ -1,5 +1,5 @@
 module TreeNode
   class VmdbTable < Node
-    set_attribute(:image, '100/vmdbtableevm.png')
+    set_attribute(:icon, 'fa fa-table')
   end
 end

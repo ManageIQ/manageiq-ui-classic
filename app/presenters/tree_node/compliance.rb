@@ -7,6 +7,6 @@ module TreeNode
       end
     end
 
-    set_attribute(:image) { "100/#{@object.compliant ? "check" : "x"}.png" }
+    set_attribute(:icon) { "pficon #{@object.compliant ? 'pficon-ok' : 'pficon-error-circle-o'}" }
   end
 end

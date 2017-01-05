@@ -16,7 +16,7 @@ describe TreeNode::AvailabilityZone do
       let(:object) { FactoryGirl.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'az-'
-      include_examples 'TreeNode::Node#image', '100/availability_zone.png'
+      include_examples 'TreeNode::Node#icon', 'pficon pficon-zone'
       include_examples 'TreeNode::Node#tooltip prefix', 'Availability Zone'
     end
   end

@@ -16,7 +16,7 @@ describe TreeNode::Host do
       let(:object) { FactoryGirl.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'h-'
-      include_examples 'TreeNode::Node#image', '100/host.png'
+      include_examples 'TreeNode::Node#icon', 'pficon pficon-screen'
       include_examples 'TreeNode::Node#tooltip prefix', 'Host / Node'
     end
   end

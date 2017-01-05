@@ -5,5 +5,5 @@ describe TreeNode::MiqGroup do
   let(:object) { FactoryGirl.create(:miq_group) }
 
   include_examples 'TreeNode::Node#key prefix', 'g-'
-  include_examples 'TreeNode::Node#image', '100/group.png'
+  include_examples 'TreeNode::Node#icon', 'product product-group'
 end
