@@ -19,7 +19,7 @@ class InfraNetworkingController < ApplicationController
 
   def show(id = nil)
     @explorer = true
-    @display = params[:display] || "main" unless pagination_request?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
     @record = @switch = find_record(Switch, id || params[:id])
     return if record_no_longer_exists?(@switch)
 
@@ -162,7 +162,7 @@ class InfraNetworkingController < ApplicationController
   end
 
   def show_record(_id = nil)
-    @display    = params[:display] || "main" unless pagination_request?
+    @display    = params[:display] || "main" unless pagination_or_gtl_request?
     @lastaction = "show"
     @showtype   = "config"
 

@@ -1996,7 +1996,7 @@ class CatalogController < ApplicationController
   end
 
   def show_record(id = nil)
-    @display = params[:display] || "main" unless pagination_request?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
 
     @lastaction = "show"
     @showtype = "config"

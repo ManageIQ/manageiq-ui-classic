@@ -132,7 +132,7 @@ module EmsCommon
     when 'topology'                      then show_topology
     when 'performance'                   then show_performance
     when nil
-      if pagination_request? # pagination controls
+      if pagination_or_gtl_request? # pagination controls
         show_entities(@display) # display loaded from session
       else                 # or default display
         show_main

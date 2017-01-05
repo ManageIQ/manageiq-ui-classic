@@ -40,7 +40,7 @@ module Mixins
       return false if record_no_longer_exists?(@record)
       @lastaction = 'show'
       @gtl_url = gtl_url
-      @display = params[:display] || 'main' unless pagination_request?
+      @display = params[:display] || 'main' unless pagination_or_gtl_request?
       true
     end
 

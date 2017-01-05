@@ -8,7 +8,7 @@ class ResourcePoolController < ApplicationController
   include Mixins::GenericSessionMixin
 
   def show
-    @display = params[:display] || "main" unless pagination_request?
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
 
     @lastaction = "show"
     @showtype   = "config"
