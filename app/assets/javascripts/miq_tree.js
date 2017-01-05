@@ -251,9 +251,7 @@ function miqGetChecked(node, treename) {
   // Activate toolbar items according to the selection
   miqSetButtons(selectedKeys.length, 'center_tb');
   // Inform the backend about the checkbox changes
-  if (selectedKeys.length > 0) {
-    miqJqueryRequest(ManageIQ.tree.checkUrl + '?all_checked=' + selectedKeys, {beforeSend: true, complete: true});
-  }
+  miqJqueryRequest(ManageIQ.tree.checkUrl + '?all_checked=' + selectedKeys, {beforeSend: true, complete: true});
 }
 
 function miqCheckAll(cb, treename) {
@@ -271,9 +269,7 @@ function miqCheckAll(cb, treename) {
   // Activate toolbar items according to the selection
   miqSetButtons(selectedKeys.length, 'center_tb');
   // Inform the backend about the checkbox changes
-  if (selectedKeys.length > 0) {
-    miqJqueryRequest(ManageIQ.tree.checkUrl + '?check_all=' + cb.checked + '&all_checked=' + selectedKeys);
-  }
+  miqJqueryRequest(ManageIQ.tree.checkUrl + '?check_all=' + cb.checked + '&all_checked=' + selectedKeys);
 }
 
 function miqTreeExpandNode(treename, key) {
