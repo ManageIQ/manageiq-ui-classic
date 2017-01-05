@@ -27,11 +27,7 @@
                             :disabled      => true,
                             :checkchange   => true}
 
-  %table{:width => '100%'}
-    %tr
-      %td{:align => 'right'}
-        #buttons_on
-          = render :partial => "layouts/angular/x_edit_buttons_angular"
+  = render :partial => "layouts/angular/x_edit_buttons_angular"
 
 :javascript
   ManageIQ.angular.app.value('cloudSubnetFormId', '#{@subnet.id}');
