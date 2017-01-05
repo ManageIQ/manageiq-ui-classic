@@ -85,7 +85,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     $scope.actionUrl = $scope.newRecord ? $scope.createUrl : $scope.updateUrl;
     $scope.currentTab = "default";
 
-    function getEmsFormIdDataComplete(response, status, headers, config) {
+    function getEmsFormIdDataComplete(response) {
       var data = response.data;
 
       $scope.emsCommonModel.name                            = data.name;
@@ -166,7 +166,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       miqService.sparkleOff();
     }
 
-    function getNewEmsFormDataComplete(response, status, headers, config) {
+    function getNewEmsFormDataComplete(response) {
       var data = response.data;
 
       $scope.emsCommonModel.zone                            = data.zone;
@@ -194,7 +194,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
     function getEmsFormDataFailed(e) {
       miqService.sparkleOff();
-      console.log(e.message);
+      if (e.message) {
+        console.log(e.message);
+      }
       return $q.reject(e);
     }
   };
