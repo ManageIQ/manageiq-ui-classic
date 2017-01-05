@@ -1,7 +1,7 @@
 module TreeNode
   class AssignedServerRole < Node
     set_attributes(:title, :image, :klass) do
-      title = content_tag(:strong) do
+      title = ViewHelper.content_tag(:strong) do
         if @options[:tree] == :servers_by_role_tree
           "#{_('Server')}: #{ERB::Util.html_escape(@object.name)} [#{@object.id}]"
         else

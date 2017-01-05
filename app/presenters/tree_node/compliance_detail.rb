@@ -1,9 +1,9 @@
 module TreeNode
   class ComplianceDetail < Node
     set_attribute(:title) do
-      capture do
-        concat content_tag(:strong, "#{_('Policy')}: ")
-        concat @object.miq_policy_desc
+      ViewHelper.capture do
+        ViewHelper.concat ViewHelper.content_tag(:strong, "#{_('Policy')}: ")
+        ViewHelper.concat @object.miq_policy_desc
       end
     end
 
