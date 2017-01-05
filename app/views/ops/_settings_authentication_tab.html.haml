@@ -35,7 +35,7 @@
         :javascript
           miqInitSelectPicker();
           miqSelectPickerEvent('authentication_mode', "#{url}")
-  %hr/
+  %hr
   = hidden_div_if(!%w(ldap ldaps).include?(@edit[:new][:authentication][:mode]), :id => "ldap_div") do
     %h3= _("LDAP Settings")
     .form-horizontal
@@ -116,7 +116,7 @@
                             :maxlength => 255,
                             :class => "form-control",
                             "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-    %hr/
+    %hr
   = hidden_div_if(@edit[:new][:authentication][:mode] != "amazon", :id => "amazon_div") do
     %h3= _("Amazon Primary AWS Account Settings for IAM")
     .form-horizontal
@@ -138,7 +138,7 @@
                                 :placeholder       => placeholder_if_present(@edit[:new][:authentication][:amazon_secret]),
                                 :class => "form-control",
                                 "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-    %hr/
+    %hr
   = hidden_div_if(!%w(ldap ldaps).include?(@edit[:new][:authentication][:mode]), :id => "ldap_role_div") do
     %h3
       = _("Role Settings")
@@ -227,7 +227,7 @@
       .form-group
         .col-md-10{:align => "right"}
           = render :partial => 'amazon_verify_button', :locals => {:id => @sb[:active_tab].split('_').last}
-    %hr/
+    %hr
 
   = hidden_div_if(@edit[:new][:authentication][:mode] != "httpd", :id => "httpd_div") do
     %h3
@@ -253,7 +253,7 @@
           = check_box_tag("local_login_disabled", "1",
                           @edit[:new][:authentication][:local_login_disabled],
                           "data-miq_observe_checkbox" => {:url => url}.to_json)
-    %hr/
+    %hr
 
   = hidden_div_if(@edit[:new][:authentication][:mode] != "httpd", :id => "httpd_role_div") do
     %h3
@@ -266,7 +266,7 @@
           = check_box_tag("httpd_role", "1",
                           @edit[:new][:authentication][:httpd_role],
                           "data-miq_observe_checkbox" => {:url => url}.to_json)
-    %hr/
+    %hr
   %script{:type => "text/javascript"}
     - if @edit[:new][:authentication][:user_type] == "samaccountname"
       if (miqDomElementExists('user_type_base')) $('#user_type_base').hide();

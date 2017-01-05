@@ -17,7 +17,7 @@
                          :class => "form-control",
                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
         = javascript_tag(javascript_focus('name'))
-    %hr/
+    %hr
     %h3= _("LDAP Settings")
     .form-group
       %label.col-md-2.control-label
@@ -54,7 +54,7 @@
                          :maxlength         => 50,
                          :class => "form-control",
                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-    %hr/
+    %hr
     %h3= _("Role Settings")
     .form-group
       %label.col-md-2.control-label

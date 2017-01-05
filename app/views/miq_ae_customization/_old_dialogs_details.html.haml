@@ -20,14 +20,14 @@
           %p.form-control-static
             = h(@dialog.description)
     %hr
-      %h3
-        = _('Content')
-      = text_area("script", "data",
-        :value    => h(@dialog.content.to_yaml),
-        :readonly => "readonly",
-        :style    => "display:none;")
-      = render(:partial => "layouts/my_code_mirror",
-        :locals => {:text_area_id => "script_data",
-          :mode                   => "yaml",
-          :line_numbers           => true,
-          :read_only              => true})
+    %h3
+      = _('Content')
+    = text_area("script", "data",
+      :value    => h(@dialog.content.to_yaml),
+      :readonly => "readonly",
+      :style    => "display:none;")
+    = render(:partial => "layouts/my_code_mirror",
+      :locals => {:text_area_id => "script_data",
+        :mode                   => "yaml",
+        :line_numbers           => true,
+        :read_only              => true})

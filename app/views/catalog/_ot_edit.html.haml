@@ -49,14 +49,14 @@
               "data-miq_observe_checkbox" => {:url => url}.to_json)
 
   %hr
-    = text_area_tag("template_content", @edit[:current][:content], :style => "display:none;")
-    - if params[:action] != "explorer" && !@record.in_use?
-      = render :partial => "/layouts/my_code_mirror",
-        :locals => {:text_area_id => "template_content",
-                    :mode         => "yaml",
-                    :line_numbers => true,
-                    :read_only    => false,
-                    :url          => url}
+  = text_area_tag("template_content", @edit[:current][:content], :style => "display:none;")
+  - if params[:action] != "explorer" && !@record.in_use?
+    = render :partial => "/layouts/my_code_mirror",
+      :locals => {:text_area_id => "template_content",
+                  :mode         => "yaml",
+                  :line_numbers => true,
+                  :read_only    => false,
+                  :url          => url}
 
-      :javascript
-        ManageIQ.editor.refresh();
+    :javascript
+      ManageIQ.editor.refresh();

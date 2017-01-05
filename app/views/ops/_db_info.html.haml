@@ -9,7 +9,7 @@
       .col-md-8
         %p.form-control-static
           = h(@vmdb_index.name)
-  %hr/
+  %hr
   - metrics = @vmdb_index.latest_hourly_metric
   - if metrics
     %h3
@@ -39,7 +39,7 @@
         .col-md-8
           %p.form-control-static
             = h(metrics.percent_bloat)
-    %hr/
+    %hr
 - elsif @table
   %h3
     #{_("Table")}: #{h(@table.name)}
@@ -76,7 +76,7 @@
         .col-md-8
           %p.form-control-static
             = h(metrics.percent_bloat)
-  %hr/
+  %hr
 - if @indexes
   %h3
     = _("Indexes")

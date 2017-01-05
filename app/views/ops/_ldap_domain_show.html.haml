@@ -9,7 +9,7 @@
       .col-md-8
         %p.form-control-static
           = @selected_ld.name
-  %hr/
+  %hr
   %h3
     = _("LDAP Settings")
   .form-horizontal.static
@@ -56,7 +56,7 @@
       .col-md-8
         %p.form-control-static
           = @selected_ld.user_suffix
-  %hr/
+  %hr
   %h3
     = _("Role Settings")
   .form-horizontal.static
@@ -96,7 +96,7 @@
       .col-md-8
         %p.form-control-static
           = @selected_ld.authentication_password ? "*******" : ""
-  %hr/
+  %hr
   %h3
     = _("LDAP Servers")
   - if @selected_ld.ldap_servers.count <= 0
