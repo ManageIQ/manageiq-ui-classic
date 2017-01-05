@@ -868,6 +868,7 @@ module MiqAeCustomizationController::Dialogs
         !%w(DialogFieldDropDownList DialogFieldRadioButton).include?(@edit[:field_typ]))
 
       @edit[:field_required]      = key[:required]      = true
+      @edit[:field_multi_value]   = key[:multi_value]   = false
       @edit[:field_sort_by]       = key[:sort_by]       = "description"
       @edit[:field_sort_order]    = key[:sort_order]    = "ascending"
       @edit[:field_data_typ]      = key[:data_typ]      = "string"
@@ -922,6 +923,7 @@ module MiqAeCustomizationController::Dialogs
           @edit[:field_required]      = key[:required]  = false
         elsif params[:field_typ] =~ /Drop|Radio/
           @edit[:field_default_value] = key[:default_value] = nil
+          @edit[:field_multi_value]   = key[:multi_value] = false
         else
           @edit[:field_default_value] = key[:default_value] = false
         end
@@ -980,6 +982,11 @@ module MiqAeCustomizationController::Dialogs
           @edit[:field_default_value] ||= nil
           key[:default_value] ||= nil
         end
+
+        if params[:field_multi_value]
+          @edit[:field_multi_value] = key[:multi_value] = (params[:field_multi_value] == "true")
+        end
+
       end
 
       if @edit[:field_typ].include?("TagControl")
@@ -1057,6 +1064,10 @@ module MiqAeCustomizationController::Dialogs
         @edit[:field_validator_rule] = field[:validator_rule]
         @edit[:field_data_typ]       = field[:data_typ]
         @edit[:field_visible]        = field[:visible]
+      end
+
+      if %w(DialogFieldDropDownList).include?(field[:typ])
+        @edit[:field_multi_value] = field[:multi_value]
       end
 
       if field[:typ].include?('Text')
@@ -1211,6 +1222,9 @@ module MiqAeCustomizationController::Dialogs
             elsif ["DialogFieldDateControl", "DialogFieldDateTimeControl"].include?(f.type)
               fld[:past_dates] = f.show_past_dates.nil? ? false : f.show_past_dates
 
+            elsif %w(DialogFieldDropDownList).include?(f.type)
+              fld[:multi_value] = f.multi_value?
+
             elsif f.type.include?("TagControl")
               fld[:single_value] = f.single_value?
               fld[:required]     = f.required
@@ -1298,6 +1312,9 @@ module MiqAeCustomizationController::Dialogs
                   if field[:typ] == "DialogFieldCheckBox"
                     fld[:default_value] = field[:default_value]
                     fld[:required] = field[:required]
+
+                  elsif ["DialogFieldDropDownList"].include?(field[:typ])
+                    fld[:force_multi_value] = field[:multi_value]
 
                   elsif field[:typ] =~ /Text/
                     if %w(DialogFieldTextBox DialogFieldTextAreaBox).include?(field[:typ])
