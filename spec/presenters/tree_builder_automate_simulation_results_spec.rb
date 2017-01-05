@@ -13,9 +13,9 @@ describe TreeBuilderAutomateSimulationResults do
     it 'sets attribute nodes correctly' do
       nodes = @ae_simulation_tree.send(:x_get_tree_roots, false)
       tree_data = {:id          => "e_1",
-                   :text        => "ManageIQ/SYSTEM <b>/</b> PROCESS <b>/</b> Automation",
+                   :text        => "ManageIQ/SYSTEM / PROCESS / Automation",
                    :image       => "100/q.png",
-                   :tip         => "ManageIQ/SYSTEM <b>/</b> PROCESS <b>/</b> Automation",
+                   :tip         => "ManageIQ/SYSTEM / PROCESS / Automation",
                    :elements    => [],
                    :cfmeNoClick => true
                   }
