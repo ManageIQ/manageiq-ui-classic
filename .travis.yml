@@ -19,7 +19,7 @@ before_cache:
 - mkdir -p vendor/assets
 - mv spec/manageiq/vendor/assets/bower_components vendor/assets
 - cp bower.json vendor/assets/bower_components
-after_script: bundle exec codeclimate-test-reporter
+after_script: if [ "$TEST_SUITE" = "spec" ]; then bundle exec codeclimate-test-reporter; fi
 notifications:
   webhooks:
     urls:
