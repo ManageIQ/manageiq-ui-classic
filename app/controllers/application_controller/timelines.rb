@@ -43,12 +43,14 @@ module ApplicationController::Timelines
 
   # Gather information for the report/timeline menu trees accordians
   def build_timeline_tree(rpt_menu, tree_type)
-    @rep_tree = {}
     @group_idx = []
     @report_groups = []
     @branch = []
     @tree_type = tree_type
-    rpt_menu.each do |r|
+
+    tree = rpt_menu.map do |r|
+      root = TreeNodeBuilder.generic_tree_node("r__#{r[0]}", r[0], "100/folder.png", r[0], :cfme_no_click => true, :expand => true)
+
       @group_idx.push(r[0]) unless @group_idx.include?(r[0])
       @report_groups.push(r[0]) unless @report_groups.include?(r[0])
       r.each_slice(2) do |menu, section|
@@ -89,10 +91,12 @@ module ApplicationController::Timelines
             @branch.push(temp) unless temp.nil? || temp.empty?
           end
         end
-        @rep_tree[menu] = TreeBuilder.convert_bs_tree(@branch).to_json unless @branch.nil? || @branch.empty?
+        root[:children] = @branch unless @branch.nil? || @branch.empty?
         @branch = []
       end
+      root
     end
+    @rep_tree = TreeBuilder.convert_bs_tree(tree).to_json
   end
 
   def timeline_kids_tree(rec, node_color)
