@@ -12,4 +12,16 @@ module DatawarehouseSummaryHelper
   def textual_group_smart_management
     %i(tags)
   end
+
+  def textual_datawarehouse_shards
+    textual_link(@ems.datawarehouse_shards)
+  end
+
+  def textual_datawarehouse_indices
+    textual_link(@ems.datawarehouse_indices)
+  end
+
+  def textual_datawarehouse_nodes
+    textual_link(@ems.datawarehouse_nodes)
+  end
 end
