@@ -55,7 +55,7 @@ class ApplicationHelper::ToolbarChooser
   private
 
   delegate :session, :from_cid, :x_node, :x_active_tree, :super_admin_user?, :render_gtl_view_tb?,
-           :to => :@view_context
+           :parse_nodetype_and_id, :to => :@view_context
 
   def initialize(view_context, view_binding, instance_data)
     @view_context = view_context
@@ -342,7 +342,7 @@ class ApplicationHelper::ToolbarChooser
         return "miq_widget_set_center_tb"
       end
     elsif x_active_tree == :savedreports_tree
-      if x_node == "root" || x_node.split('_').last.split('-').first != "rr"
+      if x_node == "root" || parse_nodetype_and_id(x_node).first != "rr"
         return "saved_reports_center_tb"
       else
         return "saved_report_center_tb"
