@@ -106,11 +106,16 @@ module TreeNode
       end
     end
 
+    def escape(string)
+      return string if string.nil? || string.blank? || string.html_safe?
+      ERB::Util.html_escape(string)
+    end
+
     def to_h
-      text = ERB::Util.html_escape(title ? URI.unescape(title) : title) unless title.html_safe?
       node = {
         :key          => key,
-        :title        => text ? text : title,
+        :title        => escape(title),
+        :tooltip      => escape(tooltip),
         :icon         => icon,
         :expand       => expand,
         :hideCheckbox => hide_checkbox ? hide_checkbox : nil,
@@ -119,11 +124,6 @@ module TreeNode
         :select       => selected,
         :checkable    => checkable ? nil : false,
       }
-      unless tooltip.blank?
-        tip = tooltip.kind_of?(Proc) ? tooltip.call : _(tooltip)
-        tip = ERB::Util.html_escape(URI.unescape(tip)) unless tip.html_safe?
-        node[:tooltip] = tip
-      end
 
       node[:image] = if !image
                        nil
