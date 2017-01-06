@@ -30,11 +30,7 @@
                             :miqrequired   => true,
                             :checkchange   => true,
                             'ng-readonly'  => "!newRecord"}
-  %table{:width => '100%'}
-    %tr
-      %td{:align => 'right'}
-        #buttons_on
-          = render :partial => "layouts/angular/x_edit_buttons_angular"
+  = render :partial => "layouts/angular/x_edit_buttons_angular"
 
 :javascript
   ManageIQ.angular.app.value('cloudNetworkFormId', '#{@network.id}');
