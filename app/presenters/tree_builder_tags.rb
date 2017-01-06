@@ -23,9 +23,12 @@ class TreeBuilderTags < TreeBuilder
 
   def contain_selected_kid(category)
     category.entries.any? do |entry|
-      path = "#{category.name}-#{entry.name}"
-      (@edit && @edit[:new][:filters].key?(path)) || (@filters && @filters.key?(path))
+      filter_selected("#{category.name}-#{entry.name}")
     end
+  end
+
+  def filter_selected(path)
+    (@edit && @edit.fetch_path(:new, :filters, path)) || (@filters && @filters.key?(path))
   end
 
   def set_locals_for_render
@@ -59,8 +62,7 @@ class TreeBuilderTags < TreeBuilder
       select = if @edit.blank? && @filters.blank?
                  false
                else
-                 kid_id = "#{parent.name}-#{kid.name}"
-                 (@edit && @edit.fetch_path(:new, :filters, kid_id)) || (@filters && @filters.key?(kid_id))
+                 filter_selected("#{parent.name}-#{kid.name}")
                end
       {:id          => kid.id,
        :image       => '100/tag.png',
