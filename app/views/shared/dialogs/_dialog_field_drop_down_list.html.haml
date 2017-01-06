@@ -1,7 +1,9 @@
 - if edit
   - select_values = field.values.collect(&:reverse)
   - selected ||= wf.value(field.name)
-  = select_tag(field.name, options_for_select(select_values, selected), drop_down_options(field, url))
+  = select_tag(field.name, options_for_select(select_values,
+                                              wf.value(field.name)),
+                                              drop_down_options(field, url))
 
   :javascript
     dialogFieldRefresh.initializeDialogSelectPicker(
@@ -19,7 +21,8 @@
   - if field.auto_refresh
     :javascript
       dialogFieldRefresh.listenForAutoRefreshMessages("#{field.id}", function() {
-        var selectedValue = $('select[name="#{field.name}"]').val();
+        var field = $('select[name="#{field.name}"]').length;
+        $('select.dynamic-drop-down-#{field.id}').val();
         dialogFieldRefresh.refreshDropDownList("#{field.name}", "#{field.id}", selectedValue);
       });
 
