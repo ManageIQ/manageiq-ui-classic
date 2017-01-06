@@ -15,7 +15,7 @@ describe 'ops/_rbac_group_details.html.haml' do
       FactoryGirl.create(:classification, :name => 'folder_selected', :show => true)
 
       sb = {
-        :trees => {},
+        :trees                 => {},
         :active_rbac_group_tab => 'rbac_customer_tags',
       }
       view.instance_variable_set(:@sb, sb)

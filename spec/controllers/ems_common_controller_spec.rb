@@ -7,7 +7,7 @@ describe EmsCloudController do
         controller.send(:get_form_vars)
         expect(assigns(:edit)[:new][:port]).to eq(5000)
 
-        controller.instance_variable_set(:@_params, {:server_emstype => "openstack_infra"})
+        controller.instance_variable_set(:@_params, :server_emstype => "openstack_infra")
         controller.send(:get_form_vars)
         expect(assigns(:edit)[:new][:port]).to eq(5000)
 
@@ -294,7 +294,7 @@ end
 
 describe EmsInfraController do
   context "#show_link" do
-    let(:ems) { double(EmsInfra, id: 1) }
+    let(:ems) { double(EmsInfra, :id => 1) }
     it "sets relative url" do
       controller.instance_variable_set(:@table_name, "ems_infra")
       link = controller.send(:show_link, ems, :display => "vms")

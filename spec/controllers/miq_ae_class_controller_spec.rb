@@ -225,57 +225,57 @@ describe MiqAeClassController do
 
     let(:miq_ae_class) do
       double("MiqAeClass",
-                                    :id           => 1,
-                                    :fqname       => "cls_fqname",
-                                    :display_name => "FOO",
-                                    :name         => "foo",
-                                    :ae_fields    => [],
-                                    :ae_instances => [],
-                                    :ae_methods   => [],
-                                    :domain       => miq_ae_domain2
-                                   )
+             :id           => 1,
+             :fqname       => "cls_fqname",
+             :display_name => "FOO",
+             :name         => "foo",
+             :ae_fields    => [],
+             :ae_instances => [],
+             :ae_methods   => [],
+             :domain       => miq_ae_domain2
+            )
     end
 
     let(:miq_ae_instance) do
       double("MiqAeInstance",
-                                    :id           => 123,
-                                    :display_name => "some name",
-                                    :name         => "some_name",
-                                    :fqname       => "fqname",
-                                    :created_on   => Time.now,
-                                    :updated_on   => Time.current,
-                                    :updated_by   => "some_user",
-                                    :domain       => miq_ae_domain
-                                   )
+             :id           => 123,
+             :display_name => "some name",
+             :name         => "some_name",
+             :fqname       => "fqname",
+             :created_on   => Time.now,
+             :updated_on   => Time.current,
+             :updated_by   => "some_user",
+             :domain       => miq_ae_domain
+            )
     end
 
     let(:miq_ae_method) do
       double("MiqAeMethod",
-                                    :id           => 123,
-                                    :display_name => "some name",
-                                    :inputs       => [],
-                                    :name         => "some_name",
-                                    :fqname       => "fqname",
-                                    :created_on   => Time.now,
-                                    :updated_on   => Time.current,
-                                    :updated_by   => "some_user",
-                                    :domain       => miq_ae_domain
-                                   )
+             :id           => 123,
+             :display_name => "some name",
+             :inputs       => [],
+             :name         => "some_name",
+             :fqname       => "fqname",
+             :created_on   => Time.now,
+             :updated_on   => Time.current,
+             :updated_by   => "some_user",
+             :domain       => miq_ae_domain
+            )
     end
 
     let(:override) do
       double("MiqAeClass",
-                                    :fqname => "another_fqname/fqname",
-                                    :id     => 1,
-                                    :domain => miq_ae_domain
-                                   )
+             :fqname => "another_fqname/fqname",
+             :id     => 1,
+             :domain => miq_ae_domain
+            )
     end
     let(:override2) do
       double("MiqAeClass",
-                                    :fqname => "another_fqname2/fqname",
-                                    :id     => 2,
-                                    :domain => miq_ae_domain2
-                                   )
+             :fqname => "another_fqname2/fqname",
+             :id     => 2,
+             :domain => miq_ae_domain2
+            )
     end
 
     before do
@@ -689,12 +689,11 @@ describe MiqAeClassController do
       controller.x_node = "aen-#{@namespace.compressed_id}"
     end
 
-
     it "Should delete multiple selected items from list" do
       controller.instance_variable_set(:@_params,
                                        :miq_grid_checks => "aec-#{@ae_class.id},aen-#{@namespace.id}",
                                        :id              => @namespace.id
-      )
+                                      )
       controller.send(:delete_namespaces_or_classes)
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("Automate Namespace \"foo_namespace\": Delete successful")
@@ -704,7 +703,7 @@ describe MiqAeClassController do
     it "Should delete selected namespace in the tree" do
       controller.instance_variable_set(:@_params,
                                        :id => @namespace.id
-      )
+                                      )
 
       controller.send(:delete_namespaces_or_classes)
       flash_messages = assigns(:flash_array)
@@ -728,7 +727,7 @@ describe MiqAeClassController do
       controller.x_node = "aec-#{@ae_class.compressed_id}"
       controller.instance_variable_set(:@_params,
                                        :id => @namespace.id
-      )
+                                      )
 
       controller.send(:deleteclasses)
       flash_messages = assigns(:flash_array)

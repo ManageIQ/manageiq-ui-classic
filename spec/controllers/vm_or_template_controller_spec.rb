@@ -95,13 +95,13 @@ describe VmOrTemplateController do
         seed_session_trees('vm_or_template', :templates_images_filter_tree, 'root')
 
         get :explorer
-        expect(response.body).to match(%r({"text":\s*"template_vmware Name"}))
+        expect(response.body).to match(/{"text":\s*"template_vmware Name"}/)
       end
 
       it 'show a vm in the vms instances list' do
         vm_vmware
         get :explorer
-        expect(response.body).to match(%r({"text":\s*"vm_vmware Name"}))
+        expect(response.body).to match(/{"text":\s*"vm_vmware Name"}/)
       end
     end
 

@@ -90,7 +90,7 @@ describe JsHelper do
   context '#javascript_checked' do
     it 'returns js to check the provided input element of type checkbox' do
       expect(javascript_checked(
-        'foo'
+               'foo'
       )).to eq("if ($('#foo').prop('type') == 'checkbox') {$('#foo').prop('checked', true);}")
     end
   end
@@ -98,7 +98,7 @@ describe JsHelper do
   context '#javascript_unchecked' do
     it 'returns js to uncheck the provided input element of type checkbox' do
       expect(javascript_unchecked(
-        'foo'
+               'foo'
       )).to eq("if ($('#foo').prop('type') == 'checkbox') {$('#foo').prop('checked', false);}")
     end
   end
@@ -118,7 +118,7 @@ EOD
     it 'returns JS to build calendar with options' do
       opt = {:date_from => Time.at(0).utc,
              :date_to   => Time.at(946684800).utc,
-             :skip_days => [ 1, 2, 3 ]}
+             :skip_days => [1, 2, 3]}
 
       expected = <<EOD
 ManageIQ.calendar.calDateFrom = new Date('1970-01-01T00:00:00Z');

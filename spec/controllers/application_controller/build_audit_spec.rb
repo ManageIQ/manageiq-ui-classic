@@ -21,7 +21,7 @@ describe ApplicationController do
 
     it "tests build_created_audit" do
       category = FactoryGirl.create(:classification, :name => 'environment', :description => 'Environment')
-      edit = {:new     => {:name => "the-name", :changing_value => "test2", :static_value => "same",
+      edit = {:new => {:name => "the-name", :changing_value => "test2", :static_value => "same",
                            :hash_value => {:h1 => "first", :h2 => "second", :hash_password => "pw1"},
                            :password => "pw1"}}
       expect(controller.send(:build_created_audit, category, edit))

@@ -179,16 +179,16 @@ describe OpsController do
   context "#build_filtered_item_list" do
     settings = {}
     it "returns a filtered item list for MiqTemplate" do
-        controller.instance_variable_set(:@settings, settings)
-        current_user = FactoryGirl.create(:user)
-        FactoryGirl.create(:miq_search,
-                           :name        => "default_Environment / UAT",
-                           :description => "Environment / UAT",
-                           :db          => "MiqTemplate",
-                           :search_type => "default")
-        allow(controller).to receive(:current_user).and_return(current_user)
-        filtered_list = controller.send(:build_filtered_item_list, "miq_template", "global")
-        expect(filtered_list.first).to include("Environment / UAT")
+      controller.instance_variable_set(:@settings, settings)
+      current_user = FactoryGirl.create(:user)
+      FactoryGirl.create(:miq_search,
+                         :name        => "default_Environment / UAT",
+                         :description => "Environment / UAT",
+                         :db          => "MiqTemplate",
+                         :search_type => "default")
+      allow(controller).to receive(:current_user).and_return(current_user)
+      filtered_list = controller.send(:build_filtered_item_list, "miq_template", "global")
+      expect(filtered_list.first).to include("Environment / UAT")
     end
 
     it "returns a filtered item list for Datastore" do

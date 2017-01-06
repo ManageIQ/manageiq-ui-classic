@@ -15,7 +15,7 @@ describe ReportController do
       controller.instance_variable_set(:@sb, :new => {})
       controller.instance_variable_set(:@_params, :button => "default")
 
-      @user = stub_user(features: :all)
+      @user = stub_user(:features => :all)
     end
 
     it "set menus to default" do

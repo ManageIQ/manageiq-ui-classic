@@ -7,7 +7,7 @@ describe ApplicationHelper::Button::HistoryChoice do
       }
 
       view_context = setup_view_context_with_sandbox(sandbox)
-      button = described_class.new(view_context, {}, {}, 'id' => @id)
+      button = described_class.new(view_context, {}, {}, {'id' => @id})
       button.calculate_properties
       button['enabled']
     end
@@ -25,5 +25,5 @@ describe ApplicationHelper::Button::HistoryChoice do
       @id = "history_choice"
       expect(subject).to be_falsey
     end
-   end
+  end
 end

@@ -19,10 +19,10 @@ describe MiqPolicyController do
         new[:towhat] = "ContainerGroup"
         new[:description] = "Test_description"
         new[:expression] =  {">" => {"count" => "ContainerGroup.advanced_settings", "value" => "1"}}
-        controller.instance_variable_set(:@edit, {:new     => new,
-                                                  :current => new,
-                                                  :typ     => "basic",
-                                                  :key     => "policy_edit__new"})
+        controller.instance_variable_set(:@edit, :new     => new,
+                                                 :current => new,
+                                                 :typ     => "basic",
+                                                 :key     => "policy_edit__new")
         session[:edit] = assigns(:edit)
         active_node = "xx-compliance_xx-compliance-containerGroup"
         allow(controller).to receive(:replace_right_cell)

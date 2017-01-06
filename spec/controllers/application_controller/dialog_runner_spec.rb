@@ -111,7 +111,7 @@ describe CatalogController do
       allow(Dialog).to receive(:find_by_id).and_return(dialog)
 
       dialog_field.instance_variable_set(:@value, "04/05/2015 14:52")
-      controller.instance_variable_set(:@edit, {:rec_id => nil, :wf => wf})
+      controller.instance_variable_set(:@edit, :rec_id => nil, :wf => wf)
     end
 
     it "keeps hours and minutes when setting date" do
@@ -152,8 +152,8 @@ describe CatalogController do
       page = double('page')
       allow(page).to receive(:<<).with(any_args)
       expect(page).to receive(:redirect_to).with(:controller => "miq_request",
-                                             :action     => "show_list",
-                                             :flash_msg  => "Order Request was Submitted")
+                                                 :action     => "show_list",
+                                                 :flash_msg  => "Order Request was Submitted")
       expect(controller).to receive(:render).with(:update).and_yield(page)
       controller.send(:dialog_form_button_pressed)
     end

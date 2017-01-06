@@ -1,6 +1,5 @@
 describe ApplicationHelper::Button::PolicyDelete do
   describe '#visible?' do
-
     let(:button) do
       described_class.new(
         view_context,

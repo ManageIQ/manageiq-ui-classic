@@ -65,9 +65,9 @@ describe MiqRequestController do
       end
 
       it "user without approver priveleges" do
-        user             = FactoryGirl.create(:user)
+        user = FactoryGirl.create(:user)
         login_as user
-        content          = {"value" => user.id, "field" => "MiqRequest-requester_id"}
+        content = {"value" => user.id, "field" => "MiqRequest-requester_id"}
         expect(MiqExpression).to receive(:new) do |h|
           expect(h.fetch_path("and", 1, "=")).to eq(content)
         end
@@ -190,8 +190,8 @@ describe MiqRequestController do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
-      session[:settings] = {:display   => {:quad_truncate => 'f'},
-                            :views     => {:miq_request => 'grid'}}
+      session[:settings] = {:display => {:quad_truncate => 'f'},
+                            :views   => {:miq_request => 'grid'}}
     end
 
     it "miq_request/show_list sets @layout='miq_request_vm' when redirected via foreman provisioning" do

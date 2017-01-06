@@ -1,7 +1,7 @@
 describe "layouts/_list_grid.html.haml" do
   context "when showtype is 'performance'" do
     it "renders" do
-      allow(view).to receive(:options).and_return({:grid_hash => {:head => [], :rows => []}})
+      allow(view).to receive(:options).and_return(:grid_hash => {:head => [], :rows => []})
       allow(view).to receive(:js_options).and_return({:row_url => '_none_'})
       record = EmsInfra.new(:id => 1)
       assign(:parent, record)
@@ -19,14 +19,14 @@ describe "layouts/_list_grid.html.haml" do
                                          {:text => 'Display in Catalog', :sort => 'str', :col_idx => 0, :align => 'left'},
                                          {:text => 'Catalog', :sort => 'str', :col_idx => 0, :align => 'left'},
                                          {:text => 'Created On', :sort => 'str', :col_idx => 0, :align => 'left'}],
-                               :rows => [{:id => '10r96',
+                               :rows => [{:id    => '10r96',
                                           :cells => [{:is_checkbox => true},
                                                      {:tile => 'View this item', :image => '/pictures/10r33.png'},
                                                      {:text => 'abcd'}, {:text => 'abcd'}, {:text => 'Item'},
                                                      {:text => 'Yes'}, {:text => ''},
                                                      {:text => '01/10/16 22:30:00 UTC'}]
                                          },
-                                         {:id => '10r28',
+                                         {:id    => '10r28',
                                           :cells => [{:is_checkbox => true},
                                                      {:tile => 'View this item', :image => '/pictures/10r33.png'},
                                                      {:text => 'efgh'}, {:text => 'efgh'}, {:text => 'Item'},

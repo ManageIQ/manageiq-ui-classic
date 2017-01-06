@@ -1,6 +1,5 @@
 describe ApplicationHelper::Button::PolicyCopy do
   describe '#visible?' do
-
     let(:button) do
       described_class.new(
         view_context,

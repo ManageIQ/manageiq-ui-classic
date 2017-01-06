@@ -14,7 +14,7 @@ describe ContainerImageRegistryController do
     EvmSpecHelper.create_guid_miq_server_zone
     ems = FactoryGirl.create(:ems_kubernetes)
     container_image_registry =
-        ContainerImageRegistry.create(:ext_management_system => ems, :name => "Test Image Registry")
+      ContainerImageRegistry.create(:ext_management_system => ems, :name => "Test Image Registry")
     get :show, :params => { :id => container_image_registry.id }
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty

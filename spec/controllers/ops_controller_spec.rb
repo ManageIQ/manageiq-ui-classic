@@ -55,12 +55,12 @@ describe OpsController do
         :key     => 'rbac_user_edit__new',
         :current => {},
         :new     => {
-          :name      => 'test7',
-          :userid    => 'test7',
-          :email     => 'test7@foo.bar',
-          :group     => 'test_group',
-          :password  => 'test7',
-          :verify    => 'test7',
+          :name     => 'test7',
+          :userid   => 'test7',
+          :email    => 'test7@foo.bar',
+          :group    => 'test_group',
+          :password => 'test7',
+          :verify   => 'test7',
         }
       }
 
@@ -72,12 +72,12 @@ describe OpsController do
       session[:edit] = {
         :key => 'rbac_user_edit__new',
         :new => {
-          :name      => 'test7',
-          :userid    => 'test7',
-          :email     => 'test7@foo.bar',
-          :group     => 'test_group',
-          :password  => 'test7',
-          :verify    => 'test8',
+          :name     => 'test7',
+          :userid   => 'test7',
+          :email    => 'test7@foo.bar',
+          :group    => 'test_group',
+          :password => 'test7',
+          :verify   => 'test8',
         }
       }
 
@@ -92,12 +92,12 @@ describe OpsController do
       session[:edit] = {
         :key => 'rbac_user_edit__new',
         :new => {
-          :name      => 'test7',
-          :userid    => 'test7',
-          :email     => 'test7@foo.bar',
-          :group     => nil,
-          :password  => 'test7',
-          :verify    => 'test7',
+          :name     => 'test7',
+          :userid   => 'test7',
+          :email    => 'test7@foo.bar',
+          :group    => nil,
+          :password => 'test7',
+          :verify   => 'test7',
         }
       }
 
@@ -223,7 +223,7 @@ describe OpsController do
           end
         end
 
-        edit = {:new  => new, :current => current}
+        edit = {:new => new, :current => current}
         sb = {:active_tab => "settings_server", :selected_server_id => server.id}
 
         controller.instance_variable_set(:@edit, edit)

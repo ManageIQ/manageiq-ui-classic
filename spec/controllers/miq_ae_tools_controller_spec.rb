@@ -41,9 +41,9 @@ describe MiqAeToolsController do
       get :import_export
 
       expect(assigns(:importable_domain_options)).to eq([
-        ["<Same as import from>", nil],
-        %w(test_domain test_domain)
-      ])
+                                                          ["<Same as import from>", nil],
+                                                          %w(test_domain test_domain)
+                                                        ])
     end
   end
 

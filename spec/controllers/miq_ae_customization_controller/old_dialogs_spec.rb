@@ -63,7 +63,7 @@ describe MiqAeCustomizationController do
         controller.instance_variable_set(:@edit, :new    => {:name        => 'name',
                                                              :description => 'description',
                                                              :dialog_type => '',
-                                                             :content     => '',},
+                                                             :content     => '', },
                                                  :dialog => MiqDialog.new)
         allow(controller).to receive(:render)
         controller.send(:old_dialogs_update)

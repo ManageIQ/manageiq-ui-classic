@@ -143,17 +143,17 @@ describe OpsController do
         session[:edit] = {
           :key => "settings_rhn_edit__rhn_edit",
           :new => {
-            :register_to          => "sm_hosted",
-            :customer_userid      => "username",
-            :customer_password    => "password",
-            :server_url           => "example.com",
-            :repo_name            => "example_repo_name",
-            :use_proxy            => 0}}
+            :register_to       => "sm_hosted",
+            :customer_userid   => "username",
+            :customer_password => "password",
+            :server_url        => "example.com",
+            :repo_name         => "example_repo_name",
+            :use_proxy         => 0}}
         controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
-        controller.instance_variable_set(:@sb, {:trees =>
-          {:settings_tree => {:active_node => 'root'}},
-           :active_tree   => :settings_tree,
-           :active_tab    => 'settings_rhn_edit'})
+        controller.instance_variable_set(:@sb, :trees       =>
+                                                               {:settings_tree => {:active_node => 'root'}},
+                                               :active_tree => :settings_tree,
+                                               :active_tab  => 'settings_rhn_edit')
         controller.instance_variable_set(:@_params, :id => 'rhn_edit', :button => "save")
         controller.send(:settings_update)
         expect(response).to render_template('ops/_settings_rhn_tab')

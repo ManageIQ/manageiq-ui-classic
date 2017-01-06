@@ -32,7 +32,7 @@ describe MiqPolicyController do
         controller.instance_variable_set(:@sb,
                                          :trees       => {:alert_tree => {:active_node => "al-#{@miq_alert.id}"}},
                                          :active_tree => :alert_tree
-        )
+                                        )
       end
 
       it "it should skip id when copying all attributes of an existing alert" do

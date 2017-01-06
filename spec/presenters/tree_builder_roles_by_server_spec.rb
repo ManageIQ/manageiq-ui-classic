@@ -70,7 +70,7 @@ describe TreeBuilderRolesByServer do
                               },
                 ],
                 'state'   => {'expanded' => true},
-                'class' => ''
+                'class'   => ''
                }]
       expect(JSON.parse(@server_tree.locals_for_render[:bs_tree])).to eq(nodes)
     end

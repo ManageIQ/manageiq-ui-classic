@@ -4,7 +4,7 @@ describe ApplicationHelper::Button::ConditionPolicy do
     before do
       sandbox = {:active_tree => :policy_tree}
       @view_context = setup_view_context_with_sandbox(sandbox)
-      @button = described_class.new(@view_context, {}, {}, :child_id => "condition_remove")
+      @button = described_class.new(@view_context, {}, {}, {:child_id => "condition_remove"})
     end
 
     it "will be skipped" do

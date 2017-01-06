@@ -1,6 +1,5 @@
 describe ApplicationHelper::Button::MiqRequestApproval do
   describe '#visible?' do
-
     let(:button) do
       described_class.new(
         view_context,

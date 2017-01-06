@@ -58,7 +58,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       it "#custom_buttons_hash" do
         escaped_button1_text = CGI.escapeHTML(@button1.name.to_s)
         button1 = {
-          :id    => "custom__custom_#{@button1.id}",
+          :id        => "custom__custom_#{@button1.id}",
           :type      => :button,
           :icon      => "product product-custom-#{@button1.options[:button_image]} fa-lg",
           :title     => CGI.escapeHTML(@button1.description.to_s),
@@ -70,13 +70,13 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         }
         button_set_item1_items = [button1]
         button_set_item1 = {
-          :id           => "custom_#{@button_set.id}",
-          :type         => :buttonSelect,
-          :icon         => "product product-custom-#{@button_set.set_data[:button_image]} fa-lg",
-          :title        => @button_set.description,
-          :text         => @button_set.name,
-          :enabled      => true,
-          :items        => button_set_item1_items
+          :id      => "custom_#{@button_set.id}",
+          :type    => :buttonSelect,
+          :icon    => "product product-custom-#{@button_set.set_data[:button_image]} fa-lg",
+          :title   => @button_set.description,
+          :text    => @button_set.name,
+          :enabled => true,
+          :items   => button_set_item1_items
         }
         items = [button_set_item1]
         name = "custom_buttons_#{@button_set.name}"
@@ -98,13 +98,13 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         }
         button_set_item1_items = [button1]
         button_set_item1 = {
-          :id           => "custom_#{@button_set.id}",
-          :type         => :buttonSelect,
-          :icon         => "product product-custom-#{@button_set.set_data[:button_image]} fa-lg",
-          :title        => @button_set.description,
-          :text         => @button_set.name,
-          :enabled      => true,
-          :items        => button_set_item1_items
+          :id      => "custom_#{@button_set.id}",
+          :type    => :buttonSelect,
+          :icon    => "product product-custom-#{@button_set.set_data[:button_image]} fa-lg",
+          :title   => @button_set.description,
+          :text    => @button_set.name,
+          :enabled => true,
+          :items   => button_set_item1_items
         }
         group_name = "custom_buttons_#{@button_set.name}"
         expect(toolbar_builder.custom_toolbar_class(subject).definition[group_name].buttons).to eq([button_set_item1])
@@ -1078,8 +1078,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           end
         end
       end
-
-
     end # end of Vm class
 
     context "and id = miq_request_delete" do
@@ -1144,7 +1142,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     end
   end
 
-  describe "#get_record_cls"  do
+  describe "#get_record_cls" do
     subject { toolbar_builder.get_record_cls(record) }
     context "when record not exist" do
       let(:record) { nil }
@@ -1208,32 +1206,32 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       expect(toolbar_builder.twostate_button_selected("tree_small")).to be_truthy
     end
 
-    context  "when with 'compare_compressed'" do
+    context "when with 'compare_compressed'" do
       let(:id) { "compare_compressed" }
       it { is_expected.to be_truthy }
     end
 
-    context  "when with 'drift_compressed'" do
+    context "when with 'drift_compressed'" do
       let(:id) { "drift_compressed" }
       it { is_expected.to be_truthy }
     end
 
-    context  "when with 'compare_all'" do
+    context "when with 'compare_all'" do
       let(:id) { "compare_all" }
       it { is_expected.to be_truthy }
     end
 
-    context  "when with 'drift_all'" do
+    context "when with 'drift_all'" do
       let(:id) { "drift_all" }
       it { is_expected.to be_truthy }
     end
 
-    context  "when with 'comparemode_exists" do
+    context "when with 'comparemode_exists" do
       let(:id) { "comparemode_exists" }
       it { is_expected.to be_truthy }
     end
 
-    context  "when with 'driftmode_exists" do
+    context "when with 'driftmode_exists" do
       let(:id) { "driftmode_exists" }
       it { is_expected.to be_truthy }
     end

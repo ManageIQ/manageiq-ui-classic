@@ -1,6 +1,5 @@
 describe ApplicationHelper::Button::MiqRequestCopy do
   describe '#visible?' do
-
     let(:button) do
       described_class.new(
         view_context,
@@ -14,7 +13,6 @@ describe ApplicationHelper::Button::MiqRequestCopy do
     let(:user) { FactoryGirl.create(:user) }
     %w(MiqProvisionRequest MiqHostProvisionRequest VmReconfigureRequest
        VmMigrateRequest AutomationRequest ServiceTemplateProvisionRequest).each do |cls|
-
       let(:request) { "MiqProvisionRequest" }
       let(:username) { user.name }
       let(:state) { "pending_approval" }

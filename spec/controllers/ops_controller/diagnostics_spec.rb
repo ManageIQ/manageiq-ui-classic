@@ -238,7 +238,7 @@ describe OpsController do
 
       context "server does exist, but something goes wrong during deletion" do
         it 'should set the flash saying that server no longer exists' do
-          controller.instance_variable_set(:@sb, { :diag_selected_id => @miq_server.id })
+          controller.instance_variable_set(:@sb, :diag_selected_id => @miq_server.id)
           expect(controller).to receive :refresh_screen
           expect_any_instance_of(MiqServer).to receive(:destroy).and_raise 'boom'
 

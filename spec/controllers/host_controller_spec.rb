@@ -164,7 +164,7 @@ describe HostController do
       expect(response.status).to eq(200)
       expect(response).to render_template('host/show')
       expect(assigns(:breadcrumbs)).to eq([{:name => "#{@host.name} (All Datastores)",
-                                            :url => "/host/show/#{@host.id}?display=storages"}])
+                                            :url  => "/host/show/#{@host.id}?display=storages"}])
     end
   end
 
@@ -173,10 +173,10 @@ describe HostController do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryGirl.create(:user)
       @host = FactoryGirl.create(:host,
-               :hardware => FactoryGirl.create(:hardware,
-                              :cpu_sockets          => 2,
-                              :cpu_cores_per_socket => 4,
-                              :cpu_total_cores      => 8))
+                                 :hardware => FactoryGirl.create(:hardware,
+                                                                 :cpu_sockets          => 2,
+                                                                 :cpu_cores_per_socket => 4,
+                                                                 :cpu_total_cores      => 8))
       session[:settings] = {:quadicons => {:host => 'foo'}}
     end
 
@@ -220,7 +220,7 @@ describe HostController do
       default_creds = {:userid => "default_userid", :password => "default_password2"}
       remote_creds = {:userid => "remote_userid", :password => "remote_password2"}
       expect(mocked_host).to receive(:update_authentication).with({:default => default_creds,
-                                                                   :remote  => remote_creds}, :save => false)
+                                                                   :remote  => remote_creds}, {:save => false})
 
       expect(controller.send(:set_credentials, mocked_host, :validate)).to include(:default => default_creds,
                                                                                    :remote  => remote_creds)
@@ -235,7 +235,7 @@ describe HostController do
       default_creds = {:userid => "default_userid", :password => "default_password"}
       remote_creds = {:userid => "remote_userid", :password => "remote_password"}
       expect(mocked_host).to receive(:update_authentication).with({:default => default_creds,
-                                                               :remote  => remote_creds}, :save => false)
+                                                                   :remote  => remote_creds}, {:save => false})
 
       expect(controller.send(:set_credentials, mocked_host, :validate)).to include(:default => default_creds,
                                                                                    :remote  => remote_creds)
@@ -253,8 +253,8 @@ describe HostController do
       ws_creds = {:userid => "ws_userid", :password => "ws_password"}
       ipmi_creds = {:userid => "ipmi_userid", :password => "ipmi_password"}
       expect(mocked_host).to receive(:update_authentication).with({:default => default_creds,
-                                                               :ws      => ws_creds,
-                                                               :ipmi    => ipmi_creds}, :save => false)
+                                                                   :ws      => ws_creds,
+                                                                   :ipmi    => ipmi_creds}, {:save => false})
 
       expect(controller.send(:set_credentials, mocked_host, :validate)).to include(:default => default_creds,
                                                                                    :ws      => ws_creds,

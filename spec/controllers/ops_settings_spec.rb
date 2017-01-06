@@ -7,7 +7,7 @@ describe OpsController do
 
     context "no schedules selected" do
       before do
-        silence_warnings { OpsController::Settings::Schedules::STGROOT = 'ST' }
+        silence_warnings { OpsController::Settings::Schedules::STGROOT = 'ST'.freeze }
 
         allow(controller).to receive(:find_checked_items).and_return([])
         expect(controller).to receive(:render)
@@ -36,7 +36,7 @@ describe OpsController do
         allow(MiqServer).to receive(:my_server).and_return(server)
 
         @sch = FactoryGirl.create(:miq_schedule)
-        silence_warnings { OpsController::Settings::Schedules::STGROOT = 'ST' }
+        silence_warnings { OpsController::Settings::Schedules::STGROOT = 'ST'.freeze }
 
         controller.params["check_#{controller.to_cid(@sch.id)}"] = '1'
         expect(controller).to receive(:render).never
@@ -150,13 +150,13 @@ describe OpsController do
         @zone = FactoryGirl.create(:zone, :name => 'zoneName', :description => "description1")
         allow(controller).to receive(:assert_privileges)
 
-        @params = {:id => 'new',
-                   :action      => "zone_edit",
-                   :button      => "add"
+        @params = {:id     => 'new',
+                   :action => "zone_edit",
+                   :button => "add"
         }
         edit = {:new => {:name        => @zone.name,
                          :description => "description02",
-                         :ntp => {}}}
+                         :ntp         => {}}}
         controller.instance_variable_set(:@edit, edit)
         controller.instance_variable_set(:@_params, @params)
         seed_session_trees('ops', :settings_tree)
@@ -188,7 +188,7 @@ describe OpsController do
       expect(controller).to receive(:handle_bottom_cell)
       expect(controller).to receive(:extra_js_commands)
       expect(controller).to receive(:render)
-      controller.send(:replace_right_cell, {:nodetype => 'svr', :replace_trees => [:settings]})
+      controller.send(:replace_right_cell, :nodetype => 'svr', :replace_trees => [:settings])
       expect(response.status).to eq(200)
     end
   end

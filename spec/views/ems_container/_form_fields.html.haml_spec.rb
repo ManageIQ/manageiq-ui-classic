@@ -10,7 +10,7 @@ describe "rendering fields in ems_container new/edit form" do
 
   it "doesn't display IP Address" do
     render :partial => "ems_container/form_fields", :locals => {:url => ""}
-    expect(rendered).not_to match(/\AIP\ Address/)
+    expect(rendered).not_to start_with('IP\ Address')
   end
 
   it "renders provider port" do

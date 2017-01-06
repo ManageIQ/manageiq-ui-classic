@@ -37,7 +37,7 @@ describe StorageController do
     end
 
     it "when MiqTemplate Manage Policies is pressed" do
-      controller.instance_variable_set(:@_params, {:pressed => "miq_template_protect"})
+      controller.instance_variable_set(:@_params, :pressed => "miq_template_protect")
       expect(controller).to receive(:assign_policies).with(VmOrTemplate)
       controller.button
       expect(controller.send(:flash_errors?)).not_to be_truthy
@@ -115,7 +115,7 @@ describe StorageController do
         seed_session_trees('storage', :storage_tree, 'root')
 
         get :explorer
-        expect(response.body).to match(%r({"text":\s*"test_storage1"}))
+        expect(response.body).to match(/{"text":\s*"test_storage1"}/)
       end
 
       it 'show a datastore cluster in the datastore clusters list' do
@@ -148,11 +148,11 @@ describe StorageController do
         @tag1 = FactoryGirl.create(:classification_tag,
                                    :name   => "tag1",
                                    :parent => classification
-        )
+                                  )
         @tag2 = FactoryGirl.create(:classification_tag,
                                    :name   => "tag2",
                                    :parent => classification
-        )
+                                  )
         allow(Classification).to receive(:find_assigned_entries).and_return([@tag1, @tag2])
         post :x_button, :params => {:miq_grid_checks => to_cid(datastore.id), :pressed => "storage_tag", :format => :js}
         expect(response.status).to eq(200)

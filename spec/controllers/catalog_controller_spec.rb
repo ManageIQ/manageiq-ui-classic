@@ -242,7 +242,7 @@ describe CatalogController do
       @new_description = "New Description"
       @new_content = "{\"AWSTemplateFormatVersion\" : \"new-version\"}\n"
       session[:edit] = {
-        :new    => {
+        :new => {
           :name        => @new_name,
           :description => @new_description},
       }
@@ -388,7 +388,7 @@ describe CatalogController do
     it "Orchestration Template is deleted" do
       ot = FactoryGirl.create(:orchestration_template)
       controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
-      controller.params.merge!(:id => ot.id)
+      controller.params[:id] = ot.id
       controller.send(:ot_remove_submit)
       expect(controller.send(:flash_errors?)).not_to be_truthy
       expect(assigns(:flash_array).first[:message]).to include("was deleted")
@@ -397,7 +397,7 @@ describe CatalogController do
 
     it "Read-only Orchestration Template cannot deleted" do
       ot = FactoryGirl.create(:orchestration_template_with_stacks)
-      controller.params.merge!(:id => ot.id)
+      controller.params[:id] = ot.id
       controller.send(:ot_remove_submit)
       expect(controller.send(:flash_errors?)).to be_truthy
       expect(assigns(:flash_array).first[:message]).to include("read-only and cannot be deleted")
@@ -600,7 +600,7 @@ describe CatalogController do
       provision_fqname = 'ns1/cls1/inst1'
       recon_fqname     = 'ns2/cls2/inst2'
       edit = {
-        :new          => {
+        :new => {
           :name               => "New Name",
           :description        => "New Description",
           :dialog_id          => dialog.id,
@@ -626,11 +626,11 @@ describe CatalogController do
     before do
       @st = FactoryGirl.create(:service_template)
       @catalog = FactoryGirl.create(:service_template_catalog,
-                                  :name       => "foo",
-                                  :description => "FOO"
-      )
+                                    :name        => "foo",
+                                    :description => "FOO"
+                                   )
       edit = {
-        :new          => {
+        :new => {
           :name               => "New Name",
           :description        => "New Description",
           :display            => false,

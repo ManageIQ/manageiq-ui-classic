@@ -225,8 +225,8 @@ describe ChargebackController do
       expect_input(main_content, "description", "foo")
 
       expect_rendered_tiers(main_content, [{:start => "0.0", :finish => "20.0"},
-                                            {:start => "20.0", :finish => "40.0"},
-                                            {:start => "40.0", :finish => Float::INFINITY}])
+                                           {:start => "20.0", :finish => "40.0"},
+                                           {:start => "40.0", :finish => Float::INFINITY}])
 
       expect_rendered_tiers(main_content, [{:start => "0.0", :finish => Float::INFINITY}], 1)
     end
@@ -368,7 +368,7 @@ describe ChargebackController do
     let(:chargeback_rate_from_yaml) { File.join(ChargebackRate::FIXTURE_DIR, "chargeback_rates.yml") }
     let(:compute_chargeback_rate_hash_from_yaml) do
       rates_hash = YAML.load_file(chargeback_rate_from_yaml)
-      rates_hash.select { |rate| rate[:rate_type] == "Compute" }.first
+      rates_hash.find { |rate| rate[:rate_type] == "Compute" }
     end
 
     it "adds new chargeback rate using default values" do

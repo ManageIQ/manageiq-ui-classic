@@ -92,11 +92,11 @@ describe TreeBuilderArchived do
     template_arch_cloud = FactoryGirl.create(:template_cloud)
     template_orph_cloud = FactoryGirl.create(:template_cloud, :storage => FactoryGirl.create(:storage))
     nodes_orph = archived.x_get_tree_custom_kids({:id => 'orph'},
-                                                  false,
-                                                  :leaf => 'ManageIQ::Providers::CloudManager::Template')
+                                                 false,
+                                                 :leaf => 'ManageIQ::Providers::CloudManager::Template')
     nodes_arch = archived.x_get_tree_custom_kids({:id => 'arch'},
-                                                  false,
-                                                  :leaf => 'ManageIQ::Providers::CloudManager::Template')
+                                                 false,
+                                                 :leaf => 'ManageIQ::Providers::CloudManager::Template')
     expect(nodes_orph).to eq([template_orph_cloud])
     expect(nodes_arch).to eq([template_arch_cloud])
   end

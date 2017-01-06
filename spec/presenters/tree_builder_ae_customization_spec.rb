@@ -1,4 +1,4 @@
-describe TreeBuilderAeCustomization  do
+describe TreeBuilderAeCustomization do
   let(:sandbox) { {} }
 
   describe "#init_tree" do

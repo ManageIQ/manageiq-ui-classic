@@ -3,8 +3,8 @@ describe OpsController::RbacTree do
     # Pick a small subset of the product features tree to allow the spec to
     #   exercise building more than a single node
     FactoryGirl.create(:miq_user_role, :features =>
-      %w(all_vm_rules instance instance_view instance_show_list instance_control instance_scan)
-    )
+                                                    %w(all_vm_rules instance instance_view instance_show_list instance_control instance_scan)
+                      )
   end
 
   it ".build" do

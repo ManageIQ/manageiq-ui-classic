@@ -9,7 +9,7 @@ describe VmHelper do
       now = Time.now.utc
       operating_system.processes.create(:updated_on => 1.day.ago)
       operating_system.processes.create(:updated_on => now)
-      operating_system.processes.create(:updated_on => 2.day.ago)
+      operating_system.processes.create(:updated_on => 2.days.ago)
       expect(helper.last_date_processes).to be_within(1.second).of(now)
     end
 

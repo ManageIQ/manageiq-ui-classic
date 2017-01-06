@@ -43,6 +43,7 @@ describe TreeBuilderDatacenter do
         def resource_pools
           [FactoryGirl.create(:resource_pool)]
         end
+
         def vms
           [FactoryGirl.create(:vm)]
         end
@@ -51,10 +52,10 @@ describe TreeBuilderDatacenter do
     end
 
     it 'returns ResourcePool as root' do
-        root = @datacenter_tree.send(:root_options)
-        expect(root[0]).to eq(@datacenter_tree.instance_variable_get(:@root).name)
-        expect(root[1]).to eq("Resource Pool: #{@datacenter_tree.instance_variable_get(:@root).name}")
-        expect(root[2]).to eq(@datacenter_tree.instance_variable_get(:@root).vapp ? '100/vapp.png' : '100/resource_pool.png')
+      root = @datacenter_tree.send(:root_options)
+      expect(root[0]).to eq(@datacenter_tree.instance_variable_get(:@root).name)
+      expect(root[1]).to eq("Resource Pool: #{@datacenter_tree.instance_variable_get(:@root).name}")
+      expect(root[2]).to eq(@datacenter_tree.instance_variable_get(:@root).vapp ? '100/vapp.png' : '100/resource_pool.png')
     end
 
     it 'returns right kind of children' do

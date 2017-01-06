@@ -31,7 +31,7 @@ describe EmsClusterController do
     end
 
     it "when MiqTemplate Manage Policies is pressed" do
-      controller.instance_variable_set(:@_params, {:pressed => "miq_template_protect"})
+      controller.instance_variable_set(:@_params, :pressed => "miq_template_protect")
       expect(controller).to receive(:assign_policies).with(VmOrTemplate)
       controller.button
       expect(controller.send(:flash_errors?)).not_to be_truthy
