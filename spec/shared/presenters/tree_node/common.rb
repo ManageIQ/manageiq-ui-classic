@@ -14,6 +14,14 @@ shared_examples 'TreeNode::Node#image' do |image|
   end
 end
 
+shared_examples 'TreeNode::Node#icon' do |icon|
+  describe '#icon' do
+    it "returns with #{icon}" do
+      expect(subject.icon).to eq(icon)
+    end
+  end
+end
+
 shared_examples 'TreeNode::Node#tooltip same as #title' do
   describe '#tooltip' do
     it 'returns the same as node title' do
