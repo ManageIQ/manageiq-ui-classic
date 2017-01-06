@@ -23,7 +23,7 @@ describe MiqPolicyController do
       end
 
       it "Test cancel button" do
-        controller.instance_variable_set(:@sb, {:trees => {:action_tree => {:active_node => "a-#{@action.id}"}}, :active_tree => :action_tree})
+        controller.instance_variable_set(:@sb, :trees => {:action_tree => {:active_node => "a-#{@action.id}"}}, :active_tree => :action_tree)
         controller.instance_variable_set(:@_params, :id => @action.id, :button => "cancel")
         controller.action_edit
         expect(assigns(:flash_array).first[:message]).to include("cancelled")
@@ -66,7 +66,7 @@ describe MiqPolicyController do
       let(:cat2) { FactoryGirl.create(:classification, :description => res.second) }
 
       before do
-        cat1 ; cat2
+        cat1; cat2
         controller.instance_variable_set(:@sb, :active_tree => :action_tree)
       end
 

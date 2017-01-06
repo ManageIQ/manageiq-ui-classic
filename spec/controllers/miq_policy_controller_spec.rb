@@ -206,7 +206,7 @@ describe MiqPolicyController do
       allow(controller).to receive(:render).and_return(nil)
       presenter = ExplorerPresenter.new(:active_tree => :policy_tree)
 
-      controller.send(:replace_right_cell, {:nodetype => 'root', :replace_trees => [:policy], :presenter => presenter})
+      controller.send(:replace_right_cell, :nodetype => 'root', :replace_trees => [:policy], :presenter => presenter)
       expect(presenter[:replace_partials]).to have_key('policy_tree_div')
     end
 
@@ -217,7 +217,7 @@ describe MiqPolicyController do
       allow(controller).to receive(:render).and_return(nil)
       presenter = ExplorerPresenter.new(:active_tree => :action_tree)
 
-      controller.send(:replace_right_cell, {:nodetype => 'root', :replace_trees => [:action], :presenter => presenter})
+      controller.send(:replace_right_cell, :nodetype => 'root', :replace_trees => [:action], :presenter => presenter)
       expect(presenter[:set_visible_elements][:toolbar]).to be_truthy
     end
 

@@ -58,7 +58,7 @@ describe TreeBuilderMenuRoles do
     { :rpt_menu => rpt_menu }
   end
 
-  let(:instance) { TreeBuilderMenuRoles.new("menu_roles_tree", "menu_roles", sandbox, true, role_choice: "cloud-execs") }
+  let(:instance) { TreeBuilderMenuRoles.new("menu_roles_tree", "menu_roles", sandbox, true, :role_choice => "cloud-execs") }
   let(:tree_hash) { JSON.parse(instance.tree_nodes) }
 
   describe "root node" do

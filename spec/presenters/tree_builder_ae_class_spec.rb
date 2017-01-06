@@ -11,7 +11,7 @@ describe TreeBuilderAeClass do
     end
 
     it "a tree with filter" do
-      @sb[:cached_waypoint_ids] =  MiqAeClass.waypoint_ids_for_state_machines
+      @sb[:cached_waypoint_ids] = MiqAeClass.waypoint_ids_for_state_machines
       tree = TreeBuilderAeClass.new(:automate_tree, "automate", @sb)
       domains = JSON.parse(tree.tree_nodes).first['nodes'].collect { |h| h['text'] }
       expect(domains).to match_array ['LUIGI']

@@ -5,8 +5,8 @@ describe ApplicationHelper::Button::RoleSuspend do
         @record = FactoryGirl.create(
           :assigned_server_role,
           :server_role => FactoryGirl.create(
-              :server_role,
-              :name => "terminator",
+            :server_role,
+            :name => "terminator",
           )
         )
         allow(@record.server_role).to receive(:regional_role?).and_return(true)
@@ -26,13 +26,13 @@ describe ApplicationHelper::Button::RoleSuspend do
       before do
         @record = FactoryGirl.create(
           :assigned_server_role,
-          :active => true,
+          :active      => true,
           :server_role => FactoryGirl.create(
             :server_role,
-            :name => "terminator",
+            :name        => "terminator",
             :description => "cyborg"
           ),
-          :miq_server => FactoryGirl.create(
+          :miq_server  => FactoryGirl.create(
             :miq_server,
             :name => "ratman"
           )
@@ -55,13 +55,13 @@ describe ApplicationHelper::Button::RoleSuspend do
       before do
         @record = FactoryGirl.create(
           :assigned_server_role,
-          :active => false,
+          :active      => false,
           :server_role => FactoryGirl.create(
             :server_role,
-            :name => "terminator",
+            :name        => "terminator",
             :description => "cyborg"
           ),
-          :miq_server => FactoryGirl.create(
+          :miq_server  => FactoryGirl.create(
             :miq_server,
             :name => "ratman"
           )

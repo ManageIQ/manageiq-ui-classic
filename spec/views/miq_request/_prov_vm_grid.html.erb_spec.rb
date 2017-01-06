@@ -3,9 +3,9 @@ describe 'miq_request/_prov_vm_grid.html.haml' do
     before(:each) do
       @vm_user = FactoryGirl.create(:user, :role => "vm_user")
       @vms = [FactoryGirl.create(:vm_vmware)]
-      edit = {:req_id => "foo",
-              :new => {},
-              :wf => FactoryGirl.create(:miq_provision_workflow,:requester => @vm_user),
+      edit = {:req_id     => "foo",
+              :new        => {},
+              :wf         => FactoryGirl.create(:miq_provision_workflow, :requester => @vm_user),
               :vm_sortcol => 'name',
               :vm_sortdir => 'ASC',
               :vm_columns => %w(name),

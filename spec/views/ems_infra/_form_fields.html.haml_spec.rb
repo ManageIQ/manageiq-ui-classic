@@ -10,6 +10,6 @@ describe "rendering fields in ems_infra new/edit form" do
 
   it "doesn't display IP Address" do
     render :partial => "ems_infra/form_fields", :locals => {:url => ""}
-    expect(rendered).not_to match(/\AIP\ Address/)
+    expect(rendered).not_to start_with('IP Address')
   end
 end

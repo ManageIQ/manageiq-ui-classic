@@ -182,7 +182,7 @@ describe ReportController do
       end
 
       it 'renders list of Roles in Roles tree' do
-        login_as (FactoryGirl.create(:user_with_group))
+        login_as FactoryGirl.create(:user_with_group)
         post :tree_select, :params => { :id => 'root', :format => :js, :accord => 'roles' }
         expect(response).to render_template('report/_role_list')
       end

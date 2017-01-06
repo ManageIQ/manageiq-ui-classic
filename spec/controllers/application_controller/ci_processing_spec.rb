@@ -148,8 +148,8 @@ describe ApplicationController do
 
     it "displays options to select Azure or Amazon cloud" do
       session[:type] = "ems"
-      controller.instance_variable_set( :@_params,
-                                        :controller             => "ems_cloud"
+      controller.instance_variable_set(:@_params,
+                                       :controller             => "ems_cloud"
                                       )
       allow(controller).to receive(:drop_breadcrumb)
       cloud_manager_stub = double('CloudManager',
@@ -271,7 +271,7 @@ describe HostController do
       expect(response.status).to eq(200)
       expect(response).to render_template('host/show')
       expect(assigns(:breadcrumbs)).to eq([{:name => "#{@host.name} (All Datastores)",
-                                            :url => "/host/show/#{@host.id}?display=storages"}])
+                                            :url  => "/host/show/#{@host.id}?display=storages"}])
     end
 
     it "renders show_details" do

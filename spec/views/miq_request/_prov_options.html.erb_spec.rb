@@ -67,7 +67,7 @@ describe 'miq_request/_prov_options.html.haml' do
         :resource_type       => :MiqProvisionRequest,
         :MiqProvisionRequest => {
           :users  => {
-            desktop.id  => desktop.name,
+            desktop.id => desktop.name,
           },
           :states => {:pending_approval => 'Pending'},
           :types  => {:template => 'VM Provision'}
@@ -92,7 +92,7 @@ describe 'miq_request/_prov_options.html.haml' do
         :resource_type       => :MiqProvisionRequest,
         :MiqProvisionRequest => {
           :users  => {
-            vm_user.id  => vm_user.name,
+            vm_user.id => vm_user.name,
           },
           :states => {:pending_approval => 'Pending'},
           :types  => {:template         => 'VM Provision'}

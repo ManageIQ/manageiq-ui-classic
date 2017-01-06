@@ -625,8 +625,8 @@ describe ProviderForemanController do
       allow(controller).to receive(:render)
 
       controller.instance_variable_set(:@settings,
-                                       :views    => {:cm_providers          => "grid",
-                                                     :cm_configured_systems => "tile"})
+                                       :views => {:cm_providers          => "grid",
+                                                  :cm_configured_systems => "tile"})
       controller.send(:build_accordions_and_trees)
     end
 

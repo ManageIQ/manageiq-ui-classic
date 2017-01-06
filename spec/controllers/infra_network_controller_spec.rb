@@ -30,7 +30,7 @@ describe InfraNetworkingController do
         seed_session_trees('switch', :infra_networking_tree, 'root')
 
         get :explorer
-        expect(response.body).to match(%r({"text":\s*"test_switch1"}))
+        expect(response.body).to match(/{"text":\s*"test_switch1"}/)
       end
 
       it 'can render the second page of switches' do

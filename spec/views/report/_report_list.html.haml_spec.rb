@@ -7,7 +7,7 @@ describe "report/_report_list.html.haml" do
       "rep 8" => {"id" => 8}
     }
     # setup Array of Array with 2 level Folders and reports
-    rpt_menu =  [
+    rpt_menu = [
       ["Folder 1", [["Folder1-1", ["rep 1", "rep 2"]]]],
       ["Folder 2", [["Folder2-1", ["rep 5", "rep 6"]],
                     ["Folder2-2", ["rep 7", "rep 8"]]]]

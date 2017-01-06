@@ -7,11 +7,11 @@ describe TreeBuilderClusters do
       @ho_enabled = [FactoryGirl.create(:host)]
       @ho_disabled = [FactoryGirl.create(:host)]
       allow(EmsCluster).to receive(:get_perf_collection_object_list).and_return(:'1'.to_i =>
-                                                                                  {:id          => 1,
-                                                                                   :name        => 'Name',
-                                                                                   :capture     => 'unsure',
-                                                                                   :ho_enabled  => @ho_enabled,
-                                                                                   :ho_disabled => @ho_disabled})
+                                                                                             {:id          => 1,
+                                                                                              :name        => 'Name',
+                                                                                              :capture     => 'unsure',
+                                                                                              :ho_enabled  => @ho_enabled,
+                                                                                              :ho_disabled => @ho_disabled})
       @non_cluster_hosts = [{:id => 2, :name => 'Non Cluster Host', :capture => true}]
       @cluster = {:clusters => [{:id => 1, :name => 'Name', :capture => 'unsure'}], :non_cl_hosts => @non_cluster_hosts}
       @cluster_tree = TreeBuilderClusters.new(:cluster, :cluster_tree, {}, true, @cluster)

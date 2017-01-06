@@ -27,13 +27,13 @@ describe MiqCapacityController do
                       }
         tree_nodes.each do |_key, node|
           controller.instance_variable_set(:@breadcrumbs, [])
-          controller.instance_variable_set(:@sb,                                                     :trees       => {
+          controller.instance_variable_set(:@sb, :trees       => {
                                              :utilization_tree => {:active_node => node[:active_node]},
                                              :bottlenecks_tree => {:active_node => node[:active_node]}
                                            },
-                                                                                                     :active_tree => method == "util_get_node_info" ? :utilization_tree : :bottlenecks_tree,
-                                                                                                     :bottlenecks => {:options => {}},
-                                                                                                     :util        => {:options => {}}
+                                                 :active_tree => method == "util_get_node_info" ? :utilization_tree : :bottlenecks_tree,
+                                                 :bottlenecks => {:options => {}},
+                                                 :util        => {:options => {}}
                                           )
           expect(controller).not_to receive(:render)
           controller.send(method.to_sym, node[:active_node])

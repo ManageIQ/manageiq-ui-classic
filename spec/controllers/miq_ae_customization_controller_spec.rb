@@ -139,12 +139,12 @@ describe MiqAeCustomizationController do
   end
 
   describe "#explorer" do
-    #include_context "valid session"
+    # include_context "valid session"
 
     let(:sandbox_flash_messages) { nil }
 
     before do
-      session[:settings] =  {:display => {:locale => 'default'}}
+      session[:settings] = {:display => {:locale => 'default'}}
       controller.instance_variable_set(:@settings, :display => {:locale => 'default'})
       controller.instance_variable_set(:@sb, :flash_msg => sandbox_flash_messages)
       bypass_rescue
@@ -253,7 +253,7 @@ describe MiqAeCustomizationController do
           },
         }
         session[:edit] = {
-          :new => {},
+          :new     => {},
           :current => {},
         }
 
@@ -395,7 +395,6 @@ describe MiqAeCustomizationController do
     end
 
     context "when the import file upload exists" do
-
       before do
         allow(dialog_import_service).to receive(:import_service_dialogs)
       end

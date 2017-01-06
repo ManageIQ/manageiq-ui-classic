@@ -11,7 +11,7 @@ describe ApplicationHelper::Button::ServerDemote do
         button.instance_variable_set(:@sb, {:active_tab => "diagnostics_roles_servers"})
         allow(view_context).to receive(:x_active_tree).and_return(:diagnostics_tree)
         expect(button.visible?).to be_truthy
-			end
+      end
     end
 
     context "without server role" do

@@ -62,7 +62,7 @@ describe ApplicationHelper do
             expect(Menu::DefaultMenu.services_menu_section.visible?).to be_truthy
             expect(Menu::DefaultMenu.cloud_inteligence_menu_section.visible?).to be_falsey
 
-            # TODO Fix this assert, it's bad.  We need to create the right feature
+            # TODO: Fix this assert, it's bad.  We need to create the right feature
             # for this user so it's allowed using normal permissions but not with
             # the permission store.
             allow(User).to receive_message_chain(:current_user, :role_allows?).and_return(true)
@@ -800,9 +800,9 @@ describe ApplicationHelper do
         schedule = double(:run_at => nil)
         helper.set_edit_timer_from_schedule schedule
         expect(@edit[:new][:timer].to_h).to include(
-          :typ => 'Once',
+          :typ        => 'Once',
           :start_hour => "00",
-          :start_min => '00'
+          :start_min  => '00'
         )
       end
     end
@@ -814,9 +814,9 @@ describe ApplicationHelper do
         expect(@edit[:new][:timer].to_h).to include(
           :start_date => @date,
           :start_hour => @hour,
-          :start_min => @min,
-          :months => @interval,
-          :typ => 'Monthly'
+          :start_min  => @min,
+          :months     => @interval,
+          :typ        => 'Monthly'
         )
         expect(@edit[:new][:timer].to_h).not_to include(:months => '1')
       end
@@ -827,9 +827,9 @@ describe ApplicationHelper do
         expect(@edit[:new][:timer].to_h).to include(
           :start_date => @date,
           :start_hour => @hour,
-          :start_min   => @min,
-          :weeks => @interval,
-          :typ => 'Weekly'
+          :start_min  => @min,
+          :weeks      => @interval,
+          :typ        => 'Weekly'
         )
         expect(@edit[:new][:timer].to_h).not_to include(:weeks => '1')
       end
@@ -841,8 +841,8 @@ describe ApplicationHelper do
           :start_date => @date,
           :start_hour => @hour,
           :start_min  => @min,
-          :days => @interval,
-          :typ => 'Daily'
+          :days       => @interval,
+          :typ        => 'Daily'
         )
         expect(@edit[:new][:timer].to_h).not_to include(:days => '1')
       end
@@ -853,9 +853,9 @@ describe ApplicationHelper do
         expect(@edit[:new][:timer].to_h).to include(
           :start_date => @date,
           :start_hour => @hour,
-          :start_min   => @min,
-          :hours => @interval,
-          :typ => 'Hourly'
+          :start_min  => @min,
+          :hours      => @interval,
+          :typ        => 'Hourly'
         )
         expect(@edit[:new][:timer].to_h).not_to include(:hours => '1')
       end
@@ -1384,7 +1384,7 @@ describe ApplicationHelper do
                                            :type => :vms_instances_filter
                                          }
                                        }
-      )
+                                      )
       result = helper.show_adv_search?
       expect(result).to be_truthy
     end
@@ -1509,11 +1509,9 @@ describe ApplicationHelper do
       it "returns HTML with enabled links" do
         expect(subject).to_not have_selector('li.disabled')
       end
-
     end
 
     context 'with :if condition false' do
-
       let(:args) do
         {:if        => false,
          :record_id => 1}

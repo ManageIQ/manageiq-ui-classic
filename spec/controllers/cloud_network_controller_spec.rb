@@ -150,7 +150,7 @@ describe CloudNetworkController do
           :priority    => MiqQueue::HIGH_PRIORITY,
           :role        => 'ems_operations',
           :zone        => @ems.my_zone,
-          :args        => [{:name=>"test2", :admin_state_up => false, :shared => false, :external_facing => false}]
+          :args        => [{:name => "test2", :admin_state_up => false, :shared => false, :external_facing => false}]
         }
       end
 

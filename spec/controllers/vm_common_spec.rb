@@ -9,7 +9,7 @@ describe VmOrTemplateController do
                                     )
       @vm.snapshots = [@snapshot]
       tree_hash = {
-        :trees       => {
+        :trees         => {
           :vandt_tree => {
             :active_node => "v-#{@vm.id}"
           }
@@ -164,16 +164,16 @@ describe VmOrTemplateController do
       allow(controller).to receive(:render).and_return(nil)
       presenter = ExplorerPresenter.new(:active_tree => :vandt_tree)
       expect(controller).to receive(:render_to_string).with(:partial => "miq_request/prov_edit",
-                                                             :locals => {:controller => "vm"}).exactly(1).times
+                                                            :locals  => {:controller => "vm"}).exactly(1).times
       expect(controller).to receive(:render_to_string).with(:partial => "layouts/x_adv_searchbox",
-                                                             :locals => {:nameonly => true}).exactly(1).times
+                                                            :locals  => {:nameonly => true}).exactly(1).times
       expect(controller).to receive(:render_to_string).with(:partial => "layouts/x_edit_buttons",
-                                                             :locals => {:action_url      => "prov_edit",
+                                                            :locals  => {:action_url      => "prov_edit",
                                                                          :record_id       => vm.id,
                                                                          :no_reset        => true,
                                                                          :submit_button   => true,
                                                                          :continue_button => false}).exactly(1).times
-      controller.send(:replace_right_cell, {:action => 'migrate', :presenter => presenter})
+      controller.send(:replace_right_cell, :action => 'migrate', :presenter => presenter)
       expect(presenter[:update_partials]).to have_key(:form_buttons_div)
     end
   end

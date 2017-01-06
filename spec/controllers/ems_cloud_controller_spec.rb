@@ -2,7 +2,7 @@ describe EmsCloudController do
   include CompressedIds
 
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
-  let(:zone)   { FactoryGirl.build(:zone) }
+  let(:zone) { FactoryGirl.build(:zone) }
   describe "#create" do
     before do
       allow(controller).to receive(:check_privileges).and_return(true)
@@ -89,8 +89,8 @@ describe EmsCloudController do
 
     it "validates credentials for a new record" do
       stub_request(:post, "https://ec2.ap-southeast-1.amazonaws.com/")
-         .with(:body => /Action\=DescribeRegions/)
-         .to_return(:status => 200, :body => "", :headers => {})
+        .with(:body => /Action\=DescribeRegions/)
+        .to_return(:status => 200, :body => "", :headers => {})
 
       post :create, :params => {
         "button"           => "validate",

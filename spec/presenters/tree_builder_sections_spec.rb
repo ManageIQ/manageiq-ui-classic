@@ -10,7 +10,7 @@ describe TreeBuilderSections do
       second_vm = FactoryGirl.create(:vm)
       report = FactoryGirl.create(:miq_report_filesystem)
       @compare = FactoryGirl.build(:miq_compare,
-                                   :report => report,
+                                   :report  => report,
                                    :options => {:ids     => [first_vm, second_vm],
                                                 :include => {:hardware            => {:fetch   => false,
                                                                                       :fetched => false,

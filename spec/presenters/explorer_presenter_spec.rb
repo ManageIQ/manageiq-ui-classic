@@ -10,7 +10,6 @@ describe ExplorerPresenter do
 
     context "#replace" do
       it 'adds content to :replacePartials' do
-
         @presenter.replace(@el, @content)
 
         expect(subject[:replacePartials]).to include(@el => @content)

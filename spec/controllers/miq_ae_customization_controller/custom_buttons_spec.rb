@@ -28,7 +28,7 @@ describe MiqAeCustomizationController do
       edit = {
         :new              => {:button_images => %w(01 02 03), :available_dialogs => {:id => '01', :name => '02'},
                   :instance_name => 'CustomButton_1',
-                  :attrs => [%w(Attr1 01), %w(Attr2 02),  %w(Attr3 03), %w(Attr4 04), %w(Attr5 05)],
+                  :attrs => [%w(Attr1 01), %w(Attr2 02), %w(Attr3 03), %w(Attr4 04), %w(Attr5 05)],
                   :visibility_typ => 'Type1'},
         :instance_names   => %w(CustomButton_1 CustomButton_2),
         :visibility_types => %w(Type1 Type2),

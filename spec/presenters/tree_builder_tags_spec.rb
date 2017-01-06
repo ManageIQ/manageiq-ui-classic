@@ -10,7 +10,7 @@ describe TreeBuilderTags do
     @folder_not_selected = FactoryGirl.create(:classification, :name => 'folder_not_selected', :show => true)
     @folder_not_selected.entries.push(@tag_not_selected)
     @filters = {"#{@folder_selected.name}-#{@tag_selected.name}" =>
-                "/managed/#{@folder_selected.name}/#{@tag_selected.name}"}
+                                                                    "/managed/#{@folder_selected.name}/#{@tag_selected.name}"}
     @group = FactoryGirl.create(:miq_group)
   end
   context 'read-only mode' do

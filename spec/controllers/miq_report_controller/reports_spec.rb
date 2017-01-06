@@ -10,7 +10,7 @@ describe ReportController, "::Reports" do
       report = FactoryGirl.create(:miq_report, :rpt_type => "Custom")
       session['sandboxes'] = {
         controller.controller_name => { :active_tree => 'report_1',
-                      :trees => {'report_1' => {:active_node => "xx-0_xx-0-0_rep-#{report.id}"}}
+                                        :trees       => {'report_1' => {:active_node => "xx-0_xx-0-0_rep-#{report.id}"}}
         }
       }
 
@@ -24,7 +24,7 @@ describe ReportController, "::Reports" do
       report = FactoryGirl.create(:miq_report, :rpt_type => "Default")
       session['sandboxes'] = {
         controller.controller_name => { :active_tree => 'report_1',
-                      :trees => {'report_1' => {:active_node => "xx-0_xx-0-0_rep-#{report.id}"}}
+                                        :trees       => {'report_1' => {:active_node => "xx-0_xx-0-0_rep-#{report.id}"}}
         }
       }
 

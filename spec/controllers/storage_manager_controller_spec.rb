@@ -68,7 +68,7 @@ describe StorageManagerController do
       expect(mocked_sm).to receive(:zone=).with(Zone.find_by_name(edit[:new][:zone]))
       expect(mocked_sm).to receive(:update_authentication)
         .with({:default => {:userid => "username", :password => "password"}},
-              :save => true)
+              {:save => true})
       controller.send(:set_record_vars, mocked_sm)
     end
   end

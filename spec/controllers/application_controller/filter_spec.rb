@@ -14,7 +14,7 @@ describe ApplicationController, "::Filter" do
 
   context "Verify removal of tokens from expressions" do
     it "removes tokens if present" do
-      e = MiqExpression.new({"=" => {:field => "Vm.name", :value => "Test"}, :token => 1})
+      e = MiqExpression.new("=" => {:field => "Vm.name", :value => "Test"}, :token => 1)
       exp = e.exp
       controller.send(:exp_remove_tokens, exp)
       expect(exp.inspect.include?(":token")).to be_falsey

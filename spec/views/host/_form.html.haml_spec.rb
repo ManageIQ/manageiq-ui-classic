@@ -13,6 +13,6 @@ describe "rendering fields in host new/edit form" do
 
   it "doesn't display IP Address" do
     render :partial => "host/form"
-    expect(rendered).not_to match(/\AIP\ Address/)
+    expect(rendered).not_to start_with('IP Address')
   end
 end

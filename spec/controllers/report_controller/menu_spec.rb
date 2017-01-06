@@ -3,9 +3,9 @@ describe ReportController do
     before(:each) do
       controller.instance_variable_set(:@grid_folders, nil)
       session[:node_selected] = 'foo__bar'
-      controller.instance_variable_set(:@edit, {:new => [['bar', ['baz', 'quux']],  # match
-                                                         ['foo', ['frob']]],        # no match
-                                                :group_reports => []})
+      controller.instance_variable_set(:@edit, :new           => [['bar', ['baz', 'quux']], # match
+                                                                  ['foo', ['frob']]], # no match
+                                               :group_reports => [])
     end
 
     it "sets @folders to be of proper length" do
@@ -51,7 +51,7 @@ describe ReportController do
 
     it "handles reports for b__" do
       session[:node_selected] = 'b__*'
-      controller.instance_variable_set(:@edit, {:group_reports => ['A/*']})
+      controller.instance_variable_set(:@edit, :group_reports => ['A/*'])
       out = controller.send(:menu_folders, %w(A B))
 
       expect(out).to eq([{:id => "i_A", :text => "A"},
@@ -60,7 +60,7 @@ describe ReportController do
 
     it "handles reports for non-b__" do
       session[:node_selected] = '*__*'
-      controller.instance_variable_set(:@edit, {:group_reports => ['*/A']})
+      controller.instance_variable_set(:@edit, :group_reports => ['*/A'])
       out = controller.send(:menu_folders, %w(A B))
 
       expect(out).to eq([{:id => "i_A", :text => "A"},

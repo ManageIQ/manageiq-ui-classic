@@ -5,14 +5,14 @@ describe ReportController do
 
       let(:chargeback_report) do
         FactoryGirl.create(:miq_report,
-          :db         => "ChargebackVm",
-          :name       => 'name',
-          :title      => 'title',
-          :db_options => {:options => {:owner => user.userid}},
-          :col_order  => ["name"],
-          :headers    => ["Name"],
-          :tz         => nil
-        )
+                           :db         => "ChargebackVm",
+                           :name       => 'name',
+                           :title      => 'title',
+                           :db_options => {:options => {:owner => user.userid}},
+                           :col_order  => ["name"],
+                           :headers    => ["Name"],
+                           :tz         => nil
+                          )
       end
 
       let(:report_edit_options) do

@@ -1,4 +1,4 @@
-describe ApplicationController  do
+describe ApplicationController do
   describe "#get_tagdata" do
     let(:record) { double("Host") }
     let(:user) { FactoryGirl.create(:user, :userid => "testuser") }
@@ -41,7 +41,7 @@ describe ApplicationController  do
                      :syntax       => cat.syntax,
                      :single_value => cat.single_value,
                      :ns           => cat.ns)
-      options.merge!(:parent_id => cat.id) # Ugly way to set up a child
+      options[:parent_id] = cat.id # Ugly way to set up a child
       FactoryGirl.create(:classification, options)
     end
 

@@ -4,7 +4,7 @@ describe ApplicationHelper::Button::Condition do
     before do
       sandbox = {:active_tree => :condition_tree}
       @view_context = setup_view_context_with_sandbox(sandbox)
-      @button = described_class.new(@view_context, {}, {}, :child_id => "condition_copy")
+      @button = described_class.new(@view_context, {}, {}, {:child_id => "condition_copy"})
     end
 
     it "will be skipped" do
@@ -22,7 +22,7 @@ describe ApplicationHelper::Button::Condition do
       @condition = FactoryGirl.create(:condition)
       sandbox = {:active_tree => :condition_tree}
       @view_context = setup_view_context_with_sandbox(sandbox)
-      @button = described_class.new(@view_context, {}, {'condition' => @condition}, :child_id => "condition_delete")
+      @button = described_class.new(@view_context, {}, {'condition' => @condition}, {:child_id => "condition_delete"})
     end
 
     it "will be disabled" do

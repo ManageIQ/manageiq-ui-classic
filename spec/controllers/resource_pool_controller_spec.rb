@@ -21,7 +21,7 @@ describe ResourcePoolController do
     end
 
     it "when VM Retire is pressed" do
-      controller.instance_variable_set(:@_params, {:pressed => "vm_retire"})
+      controller.instance_variable_set(:@_params, :pressed => "vm_retire")
       expect(controller).to receive(:retirevms).once
       controller.button
       expect(controller.send(:flash_errors?)).not_to be_truthy

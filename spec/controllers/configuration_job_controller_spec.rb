@@ -24,7 +24,7 @@ describe ConfigurationJobController do
         expect(response).to render_template(:partial => "layouts/listnav/_configuration_job")
       end
 
-      it "links to ConfigurationJobController" do  # instead of OrchestrationStackController
+      it "links to ConfigurationJobController" do # instead of OrchestrationStackController
         extend QuadiconHelper
         extend ApplicationHelper
         allow(self).to receive(:url_for) do |opt|

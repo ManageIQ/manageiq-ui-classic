@@ -2,12 +2,12 @@ describe PxeController do
   context "#template_create_update" do
     it "correct method is being called when reset button is pressed" do
       customization_template = FactoryGirl.create(:customization_template)
-      controller.instance_variable_set(:@sb,                                           :trees       => {
+      controller.instance_variable_set(:@sb, :trees       => {
                                          :customization_templates_tree => {
                                            :active_node => "xx-xx-#{customization_template.id}"
                                          }
                                        },
-                                                                                       :active_tree => :customization_templates_tree
+                                             :active_tree => :customization_templates_tree
                                       )
       edit = {
         :new => {

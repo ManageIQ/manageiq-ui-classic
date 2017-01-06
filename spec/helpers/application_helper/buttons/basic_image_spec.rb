@@ -1,7 +1,7 @@
 describe ApplicationHelper::Button::BasicImage do
   describe '#visible?' do
     before do
-      @view_context = setup_view_context_with_sandbox({:trees => {:vandt_tree => {:active_node => "xx-arch"}},
+      @view_context = setup_view_context_with_sandbox({:trees       => {:vandt_tree => {:active_node => "xx-arch"}},
                                                        :active_tree => :vandt_tree})
     end
     context "in list of archived VMs" do
