@@ -9,3 +9,4 @@ spec/manageiq
 spec/reports/
 tmp/
 .rubocop-*
+.idea/
