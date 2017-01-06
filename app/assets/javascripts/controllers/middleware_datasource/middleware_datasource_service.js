@@ -42,12 +42,18 @@ function MwAddDatasourceService($http, $q) {
     var parameterizedUrl = BASE_URL + '?server_id=' + serverId;
 
     $http.get(parameterizedUrl).then(function(driverData) {
-      var transformedData = _.map(driverData.data.data, function(driver) {
-        return {'id': driver.properties['Driver Name'].toUpperCase(),
-                'label': driver.properties['Driver Name'],
-                'xaDsClass': driver.properties['XA DS Class'],
-                'driverClass': driver.properties['Driver Class']};
-      });
+      var transformedData = _.chain(driverData.data.data)
+        .filter(function(driver) {
+          return driver.properties['Driver Class'] !== null;
+        })
+        .map(function(driver) {
+          return {'id': driver.properties['Driver Name'].toUpperCase(),
+                  'label': driver.properties['Driver Name'],
+                  'xaDsClass': driver.properties['XA DS Class'],
+                  'driverClass': driver.properties['Driver Class']};
+      })
+      .value();
+
       deferred.resolve(transformedData);
     }).catch(function(errorMsg) {
       deferred.reject(errorMsg);
@@ -89,18 +95,18 @@ function MwAddDatasourceService($http, $q) {
     });
   };
 
-  self.findDatasourceByDriverClass = function(driverClass) {
-    return _.find(datasources, function(datasource) {
-      return datasource.driverClass === driverClass;
-    });
-  };
-
   self.findDsSelectionFromDriver = function(driverSelection) {
     var dsSelection;
+    var findDatasourceByDriverClass = function(driverClass) {
+      return _.find(datasources, function(datasource) {
+        return datasource.driverClass === driverClass;
+      });
+    };
+
     if (self.isValidDatasourceName(driverSelection.id)) {
       dsSelection = self.findDatasourceById(driverSelection.id);
     } else {
-      dsSelection = self.findDatasourceByDriverClass(driverSelection.driverClass);
+      dsSelection = findDatasourceByDriverClass(driverSelection.driverClass);
     }
     return dsSelection;
   };
