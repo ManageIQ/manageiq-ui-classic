@@ -275,12 +275,10 @@ module VmCommon
       drop_breadcrumb(:name => @record.name + _(" (Devices)"),
                       :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
     elsif @display == "vmtree_info"
-      @tree_vms = []                     # Capture all VM ids in the tree
       drop_breadcrumb({:name => @record.name, :url => "/#{rec_cls}/show/#{@record.id}"}, true)
       drop_breadcrumb(:name => @record.name + _(" (Genealogy)"),
                       :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
-      @tree_name = "genealogy_tree"
-      @genealogy_tree = TreeBuilderGenealogy.new(:genealogy, :genealogy_tree, @sb, true, @record)
+      @genealogy_tree = TreeBuilderGenealogy.new(:genealogy_tree, :genealogy, @sb, true, @record)
       session[:genealogy_tree_root_id] = @genealogy_tree.root_id
       @button_group = "vmtree"
     elsif @display == "compliance_history"
