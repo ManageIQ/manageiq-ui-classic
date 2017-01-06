@@ -62,6 +62,10 @@ module TreeNode
       nil
     end
 
+    def image
+      nil
+    end
+
     def icon
       nil
     end
