@@ -1,0 +1,5 @@
+%br
+= _("This user is limited to the selected folders and their children.")
+%br
+%br
+= render(:partial => 'shared/tree', :locals => {:tree => @vat_tree, :name => @vat_tree.name})
