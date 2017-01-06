@@ -1,7 +1,7 @@
-class TreeBuilderGenealogy< TreeBuilder
+class TreeBuilderGenealogy < TreeBuilder
   has_kids_for VmOrTemplate, [:x_get_vm_or_template_kids]
 
-  def override(node, object, _pid, options)
+  def override(node, object, _pid, _options)
     if object == @vm
       node[:title] = node[:title] << _(' (Selected)')
       node[:highlighted] = true
@@ -26,34 +26,34 @@ class TreeBuilderGenealogy< TreeBuilder
 
   def set_locals_for_render
     super.merge!(
-        :click_url                 => "/vm/vmtree_selected/",
-        :onclick                   => "miqOnClickGenealogyTree",
-        :checkboxes                => true,
-        :oncheck                   => "miqGetChecked",
-        :check_url                 => "/vm/set_checked_items/"
+      :click_url  => "/vm/vmtree_selected/",
+      :onclick    => "miqOnClickGenealogyTree",
+      :checkboxes => true,
+      :oncheck    => "miqGetChecked",
+      :check_url  => "/vm/set_checked_items/"
     )
   end
 
   def vm_image(vm)
     if vm.template?
-      image = vm.host ? "template" : "template-no-host"
+      return vm.host ? "100/template.png" : "100/template-no-host.png"
     elsif vm.retired
-      image = 'retired'
-    else
-      image = vm.current_state.downcase
+      return '100/retired.png'
     end
-    "100/#{image}.png"
+    "100/#{vm.current_state.downcase}.png"
   end
 
   def root_options
     if @vm.parent.present?
-      [@vm.parent.name + _(" (Parent)"), _("VM: %{name} (Click to view)") % {:name => @vm.parent.name}, vm_image(@vm.parent)]
+      [@vm.parent.name + _(" (Parent)"),
+       _("VM: %{name} (Click to view)") % {:name => @vm.parent.name},
+       vm_image(@vm.parent)]
     else
-      [@vm.name , _("VM: %{name} (Click to view)") % {:name => @vm.name}, vm_image(@vm)]
+      [@vm.name, _("VM: %{name} (Click to view)") % {:name => @vm.name}, vm_image(@vm)]
     end
   end
 
-  def x_get_tree_roots(count_only = false, _options)
+  def x_get_tree_roots(count_only, _options)
     kids = @vm.parent.present? ? [@vm] : @vm.children
     count_only_or_objects(count_only, kids, :name)
   end
