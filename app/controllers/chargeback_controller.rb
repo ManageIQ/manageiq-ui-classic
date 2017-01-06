@@ -87,14 +87,7 @@ class ChargebackController < ApplicationController
     session[:rates_sortcol] = @sortcol
     session[:rates_sortdir] = @sortdir
 
-    if pagination_request?
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("gtl_div", :partial => "layouts/x_gtl", :locals => {:action_url => "cb_rates_list"})
-        page.replace_html("paging_div", :partial => "layouts/x_pagingcontrols")
-        page << "miqSparkle(false)"
-      end
-    end
+    update_gtl_div('cb_rates_list') if pagination_request?
   end
 
   def cb_rate_edit
