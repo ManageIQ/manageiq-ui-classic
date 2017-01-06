@@ -1,0 +1,25 @@
+= render :partial => "layouts/vertical_navbar"
+.container-fluid.container-pf-nav-pf-vertical.container-pf-nav-pf-vertical-with-sub-menus{:style => "overflow: hidden !important; height: 100%;"}
+  .row.max-height
+    .col-md-12.max-height
+      - if !@in_a_form && taskbar_in_header?
+        .row.toolbar-pf#toolbar
+          .col-md-12
+            = render :partial => "layouts/angular/toolbar"
+      .row#main-content
+        .col-md-12
+          = render :partial => "layouts/breadcrumbs"
+        - if layout_uses_tabs?
+          .col-md-12
+            = render :partial => 'layouts/tabs'
+        .col-md-12
+          = yield
+      - if layout_uses_paging? && !@in_a_form
+        .col-md-12.no-padding
+          .row.toolbar-pf#paging_div
+            = render(:partial => 'layouts/pagingcontrols',
+                     :locals  => {:pages      => @pages,
+                                  :action_url => action_url_for_views,
+                                  :db         => @view.try(:db),
+                                  :headers    => @view.try(:headers),
+                                  :button_div => 'center_tb'})
