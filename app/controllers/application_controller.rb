@@ -1797,6 +1797,15 @@ class ApplicationController < ActionController::Base
     end
 
     vms = VmOrTemplate.where(:id => vm_ids)
+    if "migrate" == typ
+      if vms.map(&:ext_management_system).uniq.compact.any? do |ems|
+        ems.respond_to?("supports_#{typ}_for_all?") && !ems.send("supports_#{typ}_for_all?", vms)
+      end
+        add_flash(_("This VMs can not be migrated together."), :error)
+        return
+      end
+    end
+
     vms.each do |vm|
       if vm.respond_to?("supports_#{typ}?")
         render_flash_not_applicable_to_model(typ) unless vm.send("supports_#{typ}?")
