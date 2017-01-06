@@ -1,6 +1,6 @@
 #main_div
   = render(:partial => "layouts/flash_msg")
-  %hr/
+  %hr
   %h3
     = _("Basic Information")
   .form-horizontal.static
@@ -19,7 +19,7 @@
         = _("Zone")
       .col-md-8
         = @selected_lr.zone ? @selected_lr.zone.name : ""
-  %hr/
+  %hr
   %h3
     = _("LDAP Domains")
   - if @selected_lr.ldap_domains.count <= 0
