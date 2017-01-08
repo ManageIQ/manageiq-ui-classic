@@ -46,6 +46,6 @@ class TopologyController < ApplicationController
   end
 
   def generate_topology(provider_id)
-    self.class.service_class.new(provider_id).build_topology
+    self.class.service_class.new(provider_id).build_topology.merge(:settings => current_user.settings[:topology])
   end
 end
