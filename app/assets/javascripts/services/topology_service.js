@@ -99,4 +99,18 @@ ManageIQ.angular.app.service('topologyService', function() {
         return "unknown";
     }
   };
+
+  this.reduce_kinds = function(items, kinds, size_limit, remove_hierarchy) {
+    var tmp_list = _.values(items);
+    var kind_index = 0;
+    while ((tmp_list.length > size_limit) && kind_index < remove_hierarchy.length) {
+      var kind_to_hide = remove_hierarchy[kind_index];
+      tmp_list = tmp_list.filter(function(item) {
+        return item['kind'] != kind_to_hide;
+      });
+      kind_index++;
+      delete kinds[kind_to_hide]
+    }
+    return kinds
+  };
 });
