@@ -8,10 +8,16 @@ class HawkularProxyService
     @params = controller.params
     @ems = ManageIQ::Providers::ContainerManager.find(@provider_id) unless @provider_id.blank?
     @tenant = @params['tenant'] || '_system'
+
+    @cli = ManageIQ::Providers::Kubernetes::ContainerManager::MetricsCapture::HawkularClient.new(@ems, @tenant)
   end
 
   def client
-    ManageIQ::Providers::Kubernetes::ContainerManager::MetricsCapture::HawkularClient.new(@ems, @tenant)
+    if @params['type'] == "counters"
+      @cli.hawkular_client.counters
+    else
+      @cli.hawkular_client.gauges
+    end
   end
 
   def data(query)
@@ -35,7 +41,7 @@ class HawkularProxyService
   def metric_definitions
     tags = @params['tags'].blank? ? nil : JSON.parse(@params['tags'])
     tags = nil if tags == {}
-    client.gauges.query(tags).compact.map { |m| m.json if m.json }.sort { |a, b| a["id"].downcase <=> b["id"].downcase }
+    client.query(tags).compact.map { |m| m.json if m.json }.sort { |a, b| a["id"].downcase <=> b["id"].downcase }
   end
 
   def metric_tags
@@ -47,24 +53,27 @@ class HawkularProxyService
     starts = @params['starts'] || (ends - 8 * 60 * 60 * 1000)
     bucket_duration = @params['bucket_duration'] || nil
     order = @params['order'] || 'ASC'
+    limit = @params['limit'] || 100
 
-    client.gauges.get_data(id,
-                           :limit          => @params['limit'] || 100,
+    data = client.get_data(id,
+                           :limit          => limit.to_i,
                            :starts         => starts.to_i,
                            :ends           => ends.to_i,
                            :bucketDuration => bucket_duration,
                            :order          => order)
+
+    data[0..limit.to_i]
   end
 
   def tenants
-    tenants = client.hawkular_client.http_get('/tenants')
+    tenants = @cli.hawkular_client.http_get('/tenants')
     tenants = if @params['include'].blank?
                 tenants.map { |x| x["id"] }.compact
               else
                 tenants.map { |x| x["id"] if x["id"].include?(@params['include']) }.compact
               end
 
-    limit = @params['limit'].to_i || 7
-    tenants[0..limit]
+    limit = @params['limit'] || 7
+    tenants[0..limit.to_i]
   end
 end

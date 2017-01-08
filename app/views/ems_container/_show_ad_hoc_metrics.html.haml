@@ -16,13 +16,22 @@
       "typeahead-wait-ms" => 1000}
     %i.glyphicon.glyphicon-refresh{"ng-show" => "dash.loadingTenants"}
 
+    %select.ad-hoc-tenant-button{"pf-select" => "",
+                                 "ng-model" => "dash.metricType",
+                                 "id" => "metric_type",
+                                 "ng-change" => "dash.tenantChanged = true"}
+      %option{:value => "gauges"}
+        = _("Gauges")
+      %option{:value => "counters"}
+        = _("Counters")
+
   %div{"ng-if" => "!dash.viewGraph"}
     %div{"pf-toolbar" => "", "id" => "exampleToolbar", "config" => "dash.toolbarConfig", "ng-if" => "dash.tagsLoaded"}
       %actions
         %button.btn.btn-primary{"type" => "button",
                                 "ng-click" => "dash.doApply()",
                                 "ng-if" => "dash.toolbarConfig.filterConfig",
-                                "ng-disabled" => "!dash.filterChanged"}
+                                "ng-disabled" => "!dash.filterChanged || dash.tenantChanged"}
           = _("Apply")
         %button.btn.btn-default{"type" => "button",
                                 "ng-click" => "dash.doViewGraph()",

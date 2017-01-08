@@ -5,6 +5,7 @@ miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'pattern
   function (pfViewUtils, $http, $interval, $timeout, $window) {
     var dash = this;
     dash.tenant = '_ops';
+    dash.metricType = 'gauges';
 
     // get the pathname and remove trailing / if exist
     var pathname = $window.location.pathname.replace(/\/$/, '');
@@ -32,7 +33,8 @@ miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'pattern
       dash.toolbarConfig.filterConfig = dash.filterConfig;
       dash.toolbarConfig.actionsConfig = dash.actionsConfig;
 
-      dash.url = '/container_dashboard/data' + id + '/?live=true&tenant=' + dash.tenant;
+      dash.url = '/container_dashboard/data' + id + '/?live=true&tenant=' + dash.tenant + 
+        '&type=' + dash.metricType;
     }
 
     var filterChange = function (filters) {
