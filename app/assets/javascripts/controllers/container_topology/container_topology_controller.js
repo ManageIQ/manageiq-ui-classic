@@ -124,6 +124,16 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
      * added: Just the ones that were added
      */
 
+    /*
+      If we remove some kinds beforehand, and then try to bring them back we
+      get the hash {kind: undefined} instead of {kind: true}.
+    */
+    if ($scope.kinds) {
+      Object.keys($scope.kinds).forEach(function (key) {
+        $scope.kinds[key] = true
+      });
+    }
+
     added.attr("class", function(d) {
       return d.item.kind;
     });
@@ -284,9 +294,21 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
     $scope.relations = data.data.relations;
     $scope.kinds = data.data.kinds;
     icons = data.data.icons;
+    var size_limit = data.data.settings.containers_max_objects;
 
     if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys($scope.kinds).length)) {
       $scope.kinds = currentSelectedKinds;
+    } else if (size_limit > 0) {
+      var remove_hierarchy = ['Container',
+        'ContainerGroup',
+        'ContainerReplicator',
+        'ContainerService',
+        'ContainerRoute',
+        'Host',
+        'Vm',
+        'ContainerNode',
+        'ContainerManager'];
+      $scope.kinds = topologyService.reduce_kinds($scope.items, $scope.kinds, size_limit, remove_hierarchy);
     }
   }
 }

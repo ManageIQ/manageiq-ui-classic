@@ -263,6 +263,9 @@ module UiConstants
       :list    => 20,
       :reports => 20
     },
+    :topology  => {
+      :containers_max_items => 0
+    },
     :display   => {
       :startpage     => "/dashboard/show",
       :reporttheme   => "MIQ",
