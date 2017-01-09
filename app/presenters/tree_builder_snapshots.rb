@@ -27,7 +27,12 @@ class TreeBuilderSnapshots < TreeBuilder
   end
 
   def root_options
-    [@record.name, @record.name, '100/vm.png', {:cfmeNoClick => true}]
+    {
+      :title       => @record.name,
+      :tooltip     => @record.name,
+      :image       => '100/vm.png',
+      :cfmeNoClick => true
+    }
   end
 
   def x_get_tree_roots(count_only = false, _options = {})

@@ -11,7 +11,10 @@ class TreeBuilderStoragePod < TreeBuilder
   end
 
   def root_options
-    [t = _("All Datastore Clusters"), t]
+    {
+      :title   => t = _("All Datastore Clusters"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree

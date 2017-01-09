@@ -19,9 +19,11 @@ describe TreeBuilderStorageAdapters do
 
     it 'returns Host as root' do
       root = @sa_tree.send(:root_options)
-      expect(root[0]).to eq(@sa_tree.instance_variable_get(:@root).name)
-      expect(root[1]).to eq("Host: #{@sa_tree.instance_variable_get(:@root).name}")
-      expect(root[2]).to eq('100/host.png')
+      expect(root).to eq(
+        :title   => @sa_tree.instance_variable_get(:@root).name,
+        :tooltip => "Host: #{@sa_tree.instance_variable_get(:@root).name}",
+        :image   => '100/host.png'
+      )
     end
 
     it 'returns MiqScsiTarget as children of root' do

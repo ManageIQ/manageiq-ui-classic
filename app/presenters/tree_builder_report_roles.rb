@@ -20,7 +20,11 @@ class TreeBuilderReportRoles < TreeBuilder
             else
               _("My %{models}") % {:models => ui_lookup(:models => "MiqGroup")}
             end
-    [title, title, '100/miq_group.png']
+    {
+      :title   => title,
+      :tooltip => title,
+      :image   => '100/miq_group.png'
+    }
   end
 
   # Get root nodes count/array for explorer tree

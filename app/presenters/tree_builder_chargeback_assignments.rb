@@ -6,7 +6,10 @@ class TreeBuilderChargebackAssignments < TreeBuilder
   end
 
   def root_options
-    [t = _("Assignments"), t]
+    {
+      :title   => t = _("Assignments"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree

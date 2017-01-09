@@ -32,7 +32,7 @@ describe TreeBuilderInstances do
   it 'sets root correctly' do
     root = @instances_tree.root_options
 
-    expect(root).to eq(["Instances by Provider", "All Instances by Provider that I can see"])
+    expect(root).to eq(:title => "Instances by Provider", :tooltip => "All Instances by Provider that I can see")
   end
 
   it 'sets providers nodes correctly' do

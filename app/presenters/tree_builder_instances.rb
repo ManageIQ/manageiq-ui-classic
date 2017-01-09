@@ -22,7 +22,10 @@ class TreeBuilderInstances < TreeBuilder
   end
 
   def root_options
-    [_("Instances by Provider"), _("All Instances by Provider that I can see")]
+    {
+      :title   => _("Instances by Provider"),
+      :tooltip => _("All Instances by Provider that I can see")
+    }
   end
 
   def x_get_tree_roots(count_only, _options)

@@ -43,7 +43,7 @@ describe TreeBuilderRolesByServer do
       tree_options = @server_tree.send(:tree_init_options, :roles_by_server)
       root = @server_tree.send(:root_options)
       expect(tree_options[:add_root]).to eq(false)
-      expect(root).to eq([])
+      expect(root).to eq({})
     end
 
     it 'returns server nodes as root kids' do

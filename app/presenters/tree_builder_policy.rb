@@ -41,7 +41,10 @@ class TreeBuilderPolicy < TreeBuilder
 
   # level 0 - root
   def root_options
-    [t = _("All Policies"), t]
+    {
+      :title   => t = _("All Policies"),
+      :tooltip => t
+    }
   end
 
   # level 1 - compliance & control

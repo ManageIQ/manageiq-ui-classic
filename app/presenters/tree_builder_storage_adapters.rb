@@ -20,7 +20,11 @@ class TreeBuilderStorageAdapters < TreeBuilder
   end
 
   def root_options
-    [@root.name, _("Host: %{name}") % {:name => @root.name}, "100/host.png"]
+    {
+      :title   => @root.name,
+      :tooltip => _("Host: %{name}") % {:name => @root.name},
+      :image   => "100/host.png"
+    }
   end
 
   def x_get_tree_roots(count_only = false, _options)

@@ -25,7 +25,10 @@ describe TreeBuilderImages do
 
   it 'sets root correctly' do
     root = @images_tree.root_options
-    expect(root).to eq(["Images by Provider", "All Images by Provider that I can see"])
+    expect(root).to eq(
+      :title   => "Images by Provider",
+      :tooltip => "All Images by Provider that I can see"
+    )
   end
 
   it 'sets providers nodes correctly' do

@@ -12,7 +12,10 @@ class TreeBuilderCondition < TreeBuilder
 
   # level 0 - root
   def root_options
-    [t = N_("All Conditions"), t]
+    {
+      :title   => t = N_("All Conditions"),
+      :tooltip => t
+    }
   end
 
   # level 1 - host / vm

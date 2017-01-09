@@ -12,7 +12,10 @@ class TreeBuilderVmsFilter < TreeBuilder
   end
 
   def root_options
-    [_("All VMs"), _("All of the VMs that I can see")]
+    {
+      :title   => _("All VMs"),
+      :tooltip => _("All of the VMs that I can see")
+    }
   end
 
   def x_get_tree_roots(count_only, _options)

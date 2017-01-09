@@ -89,7 +89,7 @@ describe TreeBuilderBelongsToHac do
 
   describe '#root_options' do
     it 'sets root to empty one' do
-      expect(subject.send(:root_options)).to eq([])
+      expect(subject.send(:root_options)).to eq({})
     end
   end
 

@@ -14,7 +14,10 @@ class TreeBuilderCatalogItems < TreeBuilderCatalogsClass
   end
 
   def root_options
-    [t = _("All Catalog Items"), t]
+    {
+      :title   => t = _("All Catalog Items"),
+      :tooltip => t
+    }
   end
 
   def x_get_tree_stc_kids(object, count_only)

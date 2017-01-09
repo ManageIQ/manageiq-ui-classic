@@ -11,7 +11,10 @@ class TreeBuilderAeCustomization < TreeBuilder
   end
 
   def root_options
-    [t = _("Service Dialog Import/Export"), t]
+    {
+      :title   => t = _("Service Dialog Import/Export"),
+      :tooltip => t
+    }
   end
 
   def x_get_tree_roots(count_only, _options)

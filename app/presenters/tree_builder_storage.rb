@@ -11,7 +11,10 @@ class TreeBuilderStorage < TreeBuilder
   end
 
   def root_options
-    [t = _("All Datastores"), t]
+    {
+      :title   => t = _("All Datastores"),
+      :tooltip => t
+    }
   end
 
   def x_get_tree_roots(count_only, _options)

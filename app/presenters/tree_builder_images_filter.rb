@@ -13,6 +13,9 @@ class TreeBuilderImagesFilter < TreeBuilderVmsFilter
   end
 
   def root_options
-    [_("All Images"), _("All of the Images that I can see")]
+    {
+      :title   => _("All Images"),
+      :tooltip => _("All of the Images that I can see")
+    }
   end
 end

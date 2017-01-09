@@ -33,7 +33,11 @@ class TreeBuilderMiqActionCategory < TreeBuilder
   end
 
   def root_options
-    [title = @tenant_name, title, "100/tag.png"]
+    {
+      :title   => @tenant_name,
+      :tooltip => @tenant_name,
+      :image   => "100/tag.png"
+    }
   end
 
   # Get root nodes count/array for explorer tree

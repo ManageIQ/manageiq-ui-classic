@@ -20,7 +20,10 @@ class TreeBuilderReportReports < TreeBuilderReportReportsClass
   end
 
   def root_options
-    [t = _("All Reports"), t]
+    {
+      :title   => t = _("All Reports"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree

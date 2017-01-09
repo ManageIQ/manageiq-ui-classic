@@ -174,12 +174,8 @@ class TreeBuilder
   end
 
   def add_root_node(nodes)
-    root = nodes.first
-    root[:title], root[:tooltip], icon, options = root_options
-    root[:image] = ActionController::Base.helpers.image_path(icon || "100/folder.png")
-    if options.present?
-      root.merge!(options)
-    end
+    root = nodes.first.merge!(root_options)
+    root[:image] = ActionController::Base.helpers.image_path(root[:image] || "100/folder.png")
   end
 
   def set_locals_for_render

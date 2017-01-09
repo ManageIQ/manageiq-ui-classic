@@ -12,8 +12,11 @@ class TreeBuilderVat < TreeBuilderDatacenter
   private
 
   def root_options
-    image = "100/vendor-#{@root.image_name}.png"
-    [@root.name, @root.name, image]
+    {
+      :title   => @root.name,
+      :tooltip => @root.name,
+      :image   => "100/vendor-#{@root.image_name}.png"
+    }
   end
 
   def x_get_tree_roots(count_only = false, _options)

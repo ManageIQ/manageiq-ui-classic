@@ -11,7 +11,10 @@ class TreeBuilderPxeImageTypes < TreeBuilder
   end
 
   def root_options
-    [t = _("All System Image Types"), t]
+    {
+      :title   => t = _("All System Image Types"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree

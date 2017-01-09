@@ -7,7 +7,10 @@ class TreeBuilderAction < TreeBuilder
 
   # level 0 - root
   def root_options
-    [t = N_("All Actions"), t]
+    {
+      :title   => t = N_("All Actions"),
+      :tooltip => t
+    }
   end
 
   # level 1 - actions

@@ -32,11 +32,11 @@ describe TreeBuilderPolicySimulationResults do
 
     it 'sets root correctly' do
       root_options = @rsop_tree.send(:root_options)
-      expect(root_options).to eq([_("Policy Simulation Results for Event [%{description}]") %
-                                    {:description => @event.description},
-                                  nil,
-                                  "100/event-#{@event.name}.png",
-                                  {:cfmeNoClick => true}])
+      expect(root_options).to eq(
+        :title       => _("Policy Simulation Results for Event [%{description}]") % {:description => @event.description},
+        :image       => "100/event-#{@event.name}.png",
+        :cfmeNoClick => true
+      )
     end
 
     it 'sets vm nodes correctly' do

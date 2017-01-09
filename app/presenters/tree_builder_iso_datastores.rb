@@ -13,7 +13,10 @@ class TreeBuilderIsoDatastores < TreeBuilder
   end
 
   def root_options
-    [t = _("All ISO Datastores"), t]
+    {
+      :title   => t = _("All ISO Datastores"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree
