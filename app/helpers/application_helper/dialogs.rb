@@ -96,7 +96,7 @@ module ApplicationHelper::Dialogs
       "multiselect"          => false,
       # data-miq_observe functionality is handled by dialogFieldRefresh.initializeDialogSelectPicker here
     }
-    multiple ? extra_options = {:multiple => "multiple"} : nil
+    multiple ? extra_options.merge({:multiple => "multiple"}) : nil
     add_options_unless_read_only(extra_options, tag_options, field)
   end
 
