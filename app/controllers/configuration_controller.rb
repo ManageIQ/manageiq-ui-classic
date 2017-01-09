@@ -531,9 +531,7 @@ class ConfigurationController < ApplicationController
 
       current_tz = @edit.fetch_path(:current, :display, :timezone)
       if current_tz.blank?
-        new_tz = MiqServer.my_server.get_config("vmdb").config[:server][:timezone]
-        new_tz = 'UTC' if new_tz.blank?
-        @edit.store_path(:current, :display, :timezone, new_tz)
+        @edit.store_path(:current, :display, :timezone, ::Settings.server.timezone)
       end
     when 'ui_2'
       @edit = {
