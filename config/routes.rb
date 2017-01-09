@@ -984,6 +984,13 @@ Rails.application.routes.draw do
       )
     },
 
+    :container_project_topology => {
+      :get => %w(
+        show
+        data
+      )
+    },
+
     :middleware_topology       => {
       :get => %w(
         show
