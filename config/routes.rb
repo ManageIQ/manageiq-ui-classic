@@ -551,7 +551,6 @@ Rails.application.routes.draw do
       :post => %w(
         accordion_select
         button
-        container_edit
         container_form_field_changed
         explorer
         tl_chooser

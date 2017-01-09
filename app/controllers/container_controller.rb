@@ -7,8 +7,6 @@ class ContainerController < ApplicationController
   after_action :set_session_data
 
   CONTAINER_X_BUTTON_ALLOWED_ACTIONS = {
-    'container_delete'   => :container_delete,
-    'container_edit'     => :container_edit,
     'container_tag'      => :container_tag,
     'container_timeline' => :show_timeline,
     'container_perf'     => :show
@@ -26,7 +24,6 @@ class ContainerController < ApplicationController
     model, action = pressed2model_action(params[:pressed])
 
     performed_action = generic_x_button(CONTAINER_X_BUTTON_ALLOWED_ACTIONS)
-    return if [:container_delete, :container_edit].include?(performed_action)
 
     if @refresh_partial
       replace_right_cell(:action => action)
@@ -192,11 +189,6 @@ class ContainerController < ApplicationController
   # set partial name and cell header for edit screens
   def set_right_cell_vars(action)
     case action
-    when "container_edit"
-      partial = "container_form"
-      header = _("Editing %{model} \"%{name}\"") % {:name  => @record.name,
-                                                    :model => ui_lookup(:model => "Container")}
-      action = "container_edit"
     when "tag"
       partial = "layouts/tagging"
       header = _("Edit Tags for %{model}") % {:model => ui_lookup(:model => "Container")}
@@ -236,7 +228,7 @@ class ContainerController < ApplicationController
 
     replace_trees_by_presenter(presenter, trees)
 
-    if action == "container_edit" || action == "tag"
+    if action == "tag"
       presenter.update(:main_div, r[:partial => partial])
     elsif params[:display]
       partial_locals = {:controller => "container", :action_url => @lastaction}
