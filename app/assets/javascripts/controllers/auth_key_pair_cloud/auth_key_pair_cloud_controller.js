@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope', 'keyPairFormId', 'miqService', function($http, $scope, keyPairFormId, miqService) {
+ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope', 'keyPairFormId', 'miqService', '$log', '$q', function($http, $scope, keyPairFormId, miqService, $log, $q) {
     var init = function() {
         $scope.keyPairModel = {
             name: '',
@@ -13,14 +13,9 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
         ManageIQ.angular.scope = $scope;
 
         miqService.sparkleOn();
-        $http.get('/auth_key_pair_cloud/ems_form_choices').success(function(data) {
-            $scope.ems_choices = data.ems_choices;
-            if($scope.ems_choices.length > 0) {
-                $scope.keyPairModel.ems = $scope.ems_choices[0];
-            }
-            $scope.afterGet = true;
-            miqService.sparkleOff();
-        });
+        $http.get('/auth_key_pair_cloud/ems_form_choices')
+          .then(getAuthKeyPairCloudFormDataComplete)
+          .catch(getAuthKeyPairCloudFormDataFailed);
 
         if (keyPairFormId == 'new') {
             $scope.newRecord = true;
@@ -61,6 +56,25 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
     $scope.addClicked = function() {
         $scope.saveClicked();
     };
+
+    function getAuthKeyPairCloudFormDataComplete(response) {
+      var data = response.data;
+
+      $scope.ems_choices = data.ems_choices;
+      if($scope.ems_choices.length > 0) {
+        $scope.keyPairModel.ems = $scope.ems_choices[0];
+      }
+      $scope.afterGet = true;
+      miqService.sparkleOff();
+    }
+
+    function getAuthKeyPairCloudFormDataFailed(e) {
+      miqService.sparkleOff();
+      if (e.message) {
+        $log.log(e.message);
+      }
+      return $q.reject(e);
+    }
 
     init();
 }]);
