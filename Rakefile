@@ -39,3 +39,8 @@ namespace :test do
 end
 
 task :default => :test
+
+task :spec => :test
+namespace :spec do
+  task :javascript => "test:javascript"
+end
