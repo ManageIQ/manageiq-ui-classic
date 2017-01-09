@@ -62,7 +62,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       $scope.scheduleModel.log_userid   = data.log_userid;
       $scope.scheduleModel.log_protocol = data.protocol;
       $scope.scheduleModel.description  = data.schedule_description;
-      $scope.scheduleModel.enabled      = data.schedule_enabled === '1' ? true : false;
+      $scope.scheduleModel.enabled      = data.schedule_enabled == 1 ? true : false;
       $scope.scheduleModel.name         = data.schedule_name;
       $scope.scheduleModel.timer_typ    = data.schedule_timer_type;
       $scope.scheduleModel.timer_value  = data.schedule_timer_value;
@@ -87,7 +87,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
 
       $scope.timer_items        = timerOptionService.getOptions($scope.scheduleModel.timer_typ);
 
-      if (data.filter_type === 'all' || (data.protocol !== undefined && data.protocol !== null)) {
+      if (data.filter_type === 'all' || (angular.isDefined(data.protocol) && data.protocol !== null)) {
         $scope.filterValuesEmpty = true;
       } else {
         buildFilterList(data);
@@ -96,12 +96,13 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
         $scope.scheduleModel.filter_value     = data.filter_value;
       }
 
-      if(data.filter_type == null &&
-        (data.protocol !== undefined && data.protocol !== null && data.protocol != 'Samba'))
+      if (data.filter_type === null &&
+        (angular.isDefined(data.protocol) && data.protocol !== null && data.protocol !== 'Samba')) {
         $scope.scheduleModel.filter_typ = 'all';
+      }
 
-      $scope.scheduleModel.log_password = $scope.scheduleModel.log_verify = "";
-      if($scope.scheduleModel.log_userid != '') {
+      $scope.scheduleModel.log_password = $scope.scheduleModel.log_verify = '';
+      if ($scope.scheduleModel.log_userid !== '') {
         $scope.scheduleModel.log_password = $scope.scheduleModel.log_verify = miqService.storedPasswordPlaceholder;
       }
 
@@ -221,7 +222,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       miqService.sparkleOn();
 
       $http.post('/ops/automate_schedules_set_vars/' + scheduleFormId)
-        .then(postAutomateSchedulesSetVarsComplete) 
+        .then(postAutomateSchedulesSetVarsComplete)
         .catch($scope.handleFailure);
     } else {
       $scope.scheduleModel.filter_typ = 'all';
