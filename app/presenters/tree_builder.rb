@@ -175,7 +175,11 @@ class TreeBuilder
 
   def add_root_node(nodes)
     root = nodes.first.merge!(root_options)
-    root[:image] = ActionController::Base.helpers.image_path(root[:image] || "100/folder.png")
+    if root[:image]
+      root[:image] = ActionController::Base.helpers.image_path(root[:image])
+    else
+      root[:icon] ||= 'pficon pficon-folder-close' # Fall back to the folder fonticon
+    end
   end
 
   def set_locals_for_render
