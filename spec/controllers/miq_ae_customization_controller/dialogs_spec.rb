@@ -291,7 +291,7 @@ describe MiqAeCustomizationController do
         :field_name   => 'Dropdown1'
       }
       controller.send(:dialog_validate)
-      
+
       expect(assigns(:flash_array).first[:message]).to include("Dropdown elements require some entries")
     end
 
