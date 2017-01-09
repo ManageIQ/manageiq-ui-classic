@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '$attrs', 'emsCommonFormId', 'miqService', '$q', function($http, $scope, $attrs, emsCommonFormId, miqService, $q) {
+ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '$attrs', 'emsCommonFormId', 'miqService', '$q', '$log', function($http, $scope, $attrs, emsCommonFormId, miqService, $q, $log) {
   var init = function() {
     $scope.emsCommonModel = {
       name: '',
@@ -195,7 +195,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     function getEmsFormDataFailed(e) {
       miqService.sparkleOff();
       if (e.message) {
-        console.log(e.message);
+        $log.log(e.message);
       }
       return $q.reject(e);
     }
