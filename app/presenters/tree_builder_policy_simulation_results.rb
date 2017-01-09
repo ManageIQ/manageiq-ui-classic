@@ -36,14 +36,6 @@ class TreeBuilderPolicySimulationResults < TreeBuilder
     end
   end
 
-  def prefixed_title(prefix, title)
-    ViewHelper.capture do
-      ViewHelper.concat ViewHelper.content_tag(:strong, "#{prefix}:")
-      ViewHelper.concat ' '
-      ViewHelper.concat title
-    end
-  end
-
   def vm_nodes(data)
     data.sort_by! { |a| a[:name].downcase }.map do |node|
       {:id          => node[:id],

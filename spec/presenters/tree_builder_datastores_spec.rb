@@ -21,7 +21,7 @@ describe TreeBuilderDatastores do
     end
     it 'sets Datastore node correctly' do
       parent = @datastores_tree.send(:x_get_tree_roots, false, nil)
-      expect(parent.first[:text]).to eq("<b>Datastore</b> [#{@datastore.first[:location]}]")
+      expect(parent.first[:text]).to eq("<strong>Datastore</strong> [#{@datastore.first[:location]}]")
       expect(parent.first[:tip]).to eq("Datastore [#{@datastore.first[:location]}]")
       expect(parent.first[:image]).to eq('100/storage.png')
     end
