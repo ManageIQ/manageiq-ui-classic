@@ -1222,8 +1222,8 @@ module MiqAeCustomizationController::Dialogs
             elsif ["DialogFieldDateControl", "DialogFieldDateTimeControl"].include?(f.type)
               fld[:past_dates] = f.show_past_dates.nil? ? false : f.show_past_dates
 
-             elsif %w(DialogFieldDropDownList).include?(f.type)
-               fld[:multi_value] = f.multi_value?
+            elsif %w(DialogFieldDropDownList).include?(f.type)
+              fld[:multi_value] = f.multi_value?
 
             elsif f.type.include?("TagControl")
               fld[:single_value] = f.single_value?
