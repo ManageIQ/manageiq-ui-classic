@@ -334,6 +334,14 @@ class TreeBuilder
     open_nodes.push(id) unless open_nodes.include?(id)
   end
 
+  def prefixed_title(prefix, title)
+    ViewHelper.capture do
+      ViewHelper.concat_tag(:strong, "#{prefix}:")
+      ViewHelper.concat ' '
+      ViewHelper.concat title
+    end
+  end
+
   def resolve_object_lambdas(count_only, objects)
     if objects.respond_to?(:call)
       # works with a no-param lambda OR a lambda that requests the count_only

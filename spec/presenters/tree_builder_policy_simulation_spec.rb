@@ -46,7 +46,7 @@ describe TreeBuilderPolicySimulation do
 
     it 'sets root correctly' do
       root = @policy_simulation_tree.send(:root_options)
-      expect(root).to eq(["<b>Policy Simulation</b>".html_safe, 'Policy Simulation', '100/vm.png', { :cfmeNoClick => true }])
+      expect(root).to eq(["<strong>Policy Simulation</strong>", 'Policy Simulation', '100/vm.png', { :cfmeNoClick => true }])
     end
 
     it 'sets icon correctly' do
@@ -60,7 +60,7 @@ describe TreeBuilderPolicySimulation do
 
     it 'sets Policy Profile node correctly' do
       node = @policy_simulation_tree.send(:x_get_tree_roots, false).first
-      expect(node[:text]).to eq("<b>Policy Profile:</b> #{@data.first['description']}")
+      expect(node[:text]).to eq("<strong>Policy Profile:</strong> #{@data.first['description']}")
       expect(node[:image]).to eq("100/checkmark.png")
       expect(node[:tip]).to eq(@data.first['description'])
       expect(node[:policies].count).to eq(2)
@@ -69,11 +69,11 @@ describe TreeBuilderPolicySimulation do
     it 'sets Policy nodes correctly' do
       node = @policy_simulation_tree.send(:x_get_tree_roots, false).first
       kids = @policy_simulation_tree.send(:x_get_tree_hash_kids, node, false)
-      expect(kids.first[:text]).to eq("<b>Policy: </b> #{@data.first['policies'].first['description']}")
+      expect(kids.first[:text]).to eq("<strong>Policy:</strong> #{@data.first['policies'].first['description']}")
       expect(kids.first[:image]).to eq('100/na.png')
       expect(kids.first[:tip]).to eq(@data.first['policies'].first['description'])
       expect(kids.first[:conditions].count).to eq(1)
-      expect(kids.last[:text]).to eq("<b>Policy: </b> #{@data.first['policies'].last['description']}")
+      expect(kids.last[:text]).to eq("<strong>Policy:</strong> #{@data.first['policies'].last['description']}")
       expect(kids.last[:image]).to eq('100/x.png')
       expect(kids.last[:tip]).to eq(@data.first['policies'].last['description'])
       expect(kids.last[:conditions].count).to eq(1)
@@ -85,10 +85,10 @@ describe TreeBuilderPolicySimulation do
       kid_one = @policy_simulation_tree.send(:x_get_tree_hash_kids, parent_one, false).first
       parent_two = @policy_simulation_tree.send(:x_get_tree_hash_kids, root, false).last
       kid_two = @policy_simulation_tree.send(:x_get_tree_hash_kids, parent_two, false).first
-      expect(kid_one[:text]).to eq("<b>Condition: </b> #{@data.first['policies'].first['conditions'].first['description']}")
+      expect(kid_one[:text]).to eq("<strong>Condition:</strong> #{@data.first['policies'].first['conditions'].first['description']}")
       expect(kid_one[:image]).to eq('100/x.png')
       expect(kid_one[:tip]).to eq(@data.first['policies'].first['conditions'].first['description'])
-      expect(kid_two[:text]).to eq("<b>Condition: </b> #{@data.first['policies'].last['conditions'].first['description']}")
+      expect(kid_two[:text]).to eq("<strong>Condition:</strong> #{@data.first['policies'].last['conditions'].first['description']}")
       expect(kid_two[:image]).to eq('100/na.png')
       expect(kid_two[:tip]).to eq(@data.first['policies'].last['conditions'].first['description'])
     end
@@ -101,10 +101,10 @@ describe TreeBuilderPolicySimulation do
       parent_two = @policy_simulation_tree.send(:x_get_tree_hash_kids, grand_parent_two, false).first
       kid_one = @policy_simulation_tree.send(:x_get_tree_hash_kids, parent_one, false).first
       kid_two = @policy_simulation_tree.send(:x_get_tree_hash_kids, parent_two, false).first
-      expect(kid_one[:text]).to eq("<b>Scope: </b> <font color=\"red\">FIND VM and Instance.Files : Name INCLUDES &quot;nb&quot; CHECK COUNT &gt;= 1</font>")
+      expect(kid_one[:text]).to eq("<strong>Scope:</strong> <font color=\"red\">FIND VM and Instance.Files : Name INCLUDES &quot;nb&quot; CHECK COUNT &gt;= 1</font>")
       expect(kid_one[:image]).to eq('100/na.png')
       expect(kid_one[:tip]).to eq("FIND VM and Instance.Files : Name INCLUDES \"nb\" CHECK COUNT &gt;= 1")
-      expect(kid_two[:text]).to eq("<b>Expression: </b> <font color=\"red\">FIND VM and Instance.Files : Name INCLUDES &quot;nb&quot; CHECK COUNT &gt;= 1</font>")
+      expect(kid_two[:text]).to eq("<strong>Expression:</strong> <font color=\"red\">FIND VM and Instance.Files : Name INCLUDES &quot;nb&quot; CHECK COUNT &gt;= 1</font>")
       expect(kid_two[:image]).to eq('100/na.png')
       expect(kid_two[:tip]).to eq("FIND VM and Instance.Files : Name INCLUDES \"nb\" CHECK COUNT &gt;= 1")
     end
