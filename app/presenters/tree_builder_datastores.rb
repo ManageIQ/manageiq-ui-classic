@@ -35,8 +35,16 @@ class TreeBuilderDatastores < TreeBuilder
           {:name => kid.name}
         end
       end
+
+      title = ViewHelper.capture do
+        ViewHelper.concat_tag(:strong, node[:name])
+        ViewHelper.concat ' ['
+        ViewHelper.concat node[:location]
+        ViewHelper.concat ']'
+      end
+
       { :id          => node[:id].to_s,
-        :text        => "<b>#{node[:name]}</b> [#{node[:location]}]".html_safe,
+        :text        => title,
         :image       => '100/storage.png',
         :tip         => "#{node[:name]} [#{node[:location]}]",
         :select      => node[:capture] == true,
