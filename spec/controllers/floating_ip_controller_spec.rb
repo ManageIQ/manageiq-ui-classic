@@ -1,5 +1,5 @@
 describe FloatingIpController do
-  include_examples :shared_examples_for_floating_ip_controller, %w(openstack azure google)
+  include_examples :shared_examples_for_floating_ip_controller, %w(openstack azure google amazon)
 
   context "#button" do
     before(:each) do

@@ -1,5 +1,5 @@
 describe SecurityGroupController do
-  include_examples :shared_examples_for_security_group_controller, %w(openstack azure google)
+  include_examples :shared_examples_for_security_group_controller, %w(openstack azure google amazon)
 
   context "#button" do
     before(:each) do

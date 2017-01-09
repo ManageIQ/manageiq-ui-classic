@@ -1,5 +1,5 @@
 describe CloudSubnetController do
-  include_examples :shared_examples_for_cloud_subnet_controller, %w(openstack azure google)
+  include_examples :shared_examples_for_cloud_subnet_controller, %w(openstack azure google amazon)
 
   context "#button" do
     before(:each) do
