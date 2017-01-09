@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attrs', 'hostFormId', 'miqService', function($http, $scope, $attrs, hostFormId, miqService) {
+ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attrs', 'hostFormId', 'miqService', '$log', '$q', function($http, $scope, $attrs, hostFormId, miqService, $log, $q) {
   var init = function() {
     $scope.hostModel = {
       name: '',
@@ -58,38 +58,9 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
       $scope.afterGet = true;
     } else if (hostFormId.split(",").length == 1) {
         miqService.sparkleOn();
-        $http.get($scope.formFieldsUrl + hostFormId).success(function (data) {
-          $scope.hostModel.name = data.name;
-          $scope.hostModel.hostname = data.hostname;
-          $scope.hostModel.ipmi_address = data.ipmi_address;
-          $scope.hostModel.custom_1 = data.custom_1;
-          $scope.hostModel.user_assigned_os = data.user_assigned_os;
-          $scope.hostModel.operating_system = data.operating_system;
-          $scope.hostModel.mac_address = data.mac_address;
-          $scope.hostModel.default_userid = data.default_userid;
-          $scope.hostModel.remote_userid = data.remote_userid;
-          $scope.hostModel.ws_userid = data.ws_userid;
-          $scope.hostModel.ipmi_userid = data.ipmi_userid;
-          $scope.hostModel.validate_id = data.validate_id;
-
-          if($scope.hostModel.default_userid != '') {
-            $scope.hostModel.default_password = $scope.hostModel.default_verify = miqService.storedPasswordPlaceholder;
-          }
-          if($scope.hostModel.remote_userid != '') {
-            $scope.hostModel.remote_password = $scope.hostModel.remote_verify = miqService.storedPasswordPlaceholder;
-          }
-          if($scope.hostModel.ws_userid != '') {
-            $scope.hostModel.ws_password = $scope.hostModel.ws_verify = miqService.storedPasswordPlaceholder;
-          }
-          if($scope.hostModel.ipmi_userid != '') {
-            $scope.hostModel.ipmi_password = $scope.hostModel.ipmi_verify = miqService.storedPasswordPlaceholder;
-          }
-
-          $scope.afterGet = true;
-
-          $scope.modelCopy = angular.copy( $scope.hostModel );
-          miqService.sparkleOff();
-        });
+        $http.get($scope.formFieldsUrl + hostFormId)
+          .then(getHostFormDataComplete)
+          .catch(getHostFormDataFailed);
      } else if (hostFormId.split(",").length > 1) {
       $scope.afterGet = true;
     }
@@ -207,6 +178,49 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
       return true;
     } else
       return false;
+  }
+
+  function getHostFormDataComplete(response) {
+    var data = response.data;
+
+    $scope.hostModel.name = data.name;
+    $scope.hostModel.hostname = data.hostname;
+    $scope.hostModel.ipmi_address = data.ipmi_address;
+    $scope.hostModel.custom_1 = data.custom_1;
+    $scope.hostModel.user_assigned_os = data.user_assigned_os;
+    $scope.hostModel.operating_system = data.operating_system;
+    $scope.hostModel.mac_address = data.mac_address;
+    $scope.hostModel.default_userid = data.default_userid;
+    $scope.hostModel.remote_userid = data.remote_userid;
+    $scope.hostModel.ws_userid = data.ws_userid;
+    $scope.hostModel.ipmi_userid = data.ipmi_userid;
+    $scope.hostModel.validate_id = data.validate_id;
+
+    if ($scope.hostModel.default_userid !== '') {
+      $scope.hostModel.default_password = $scope.hostModel.default_verify = miqService.storedPasswordPlaceholder;
+    }
+    if ($scope.hostModel.remote_userid !== '') {
+      $scope.hostModel.remote_password = $scope.hostModel.remote_verify = miqService.storedPasswordPlaceholder;
+    }
+    if ($scope.hostModel.ws_userid !== '') {
+      $scope.hostModel.ws_password = $scope.hostModel.ws_verify = miqService.storedPasswordPlaceholder;
+    }
+    if ($scope.hostModel.ipmi_userid !== '') {
+      $scope.hostModel.ipmi_password = $scope.hostModel.ipmi_verify = miqService.storedPasswordPlaceholder;
+    }
+
+    $scope.afterGet = true;
+
+    $scope.modelCopy = angular.copy( $scope.hostModel );
+    miqService.sparkleOff();
+  }
+
+  function getHostFormDataFailed(e) {
+    miqService.sparkleOff();
+    if (e.message) {
+      $log.log(e.message);
+    }
+    return $q.reject(e);
   }
 
   init();
