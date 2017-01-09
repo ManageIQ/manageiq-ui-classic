@@ -434,7 +434,7 @@ module OpsController::Diagnostics
     @items_per_page = ONE_MILLION
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
 
-    update_gtl_div('diagnostics_server_list') if pagination_request?
+    update_gtl_div('diagnostics_server_list') if pagination_or_gtl_request?
   end
 
   def diagnostics_worker_selected

@@ -163,7 +163,7 @@ module MiqAeCustomizationController::OldDialogs
     session[:dialog_sortcol] = @sortcol
     session[:dialog_sortdir] = @sortdir
 
-    update_gtl_div('old_dialogs_list', 'policy_bar') if pagination_request?
+    update_gtl_div('old_dialogs_list', 'policy_bar') if pagination_or_gtl_request?
   end
 
   def old_dialogs_new

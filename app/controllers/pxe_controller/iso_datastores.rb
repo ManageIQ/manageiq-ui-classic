@@ -154,7 +154,7 @@ module PxeController::IsoDatastores
     session[:iso_sortcol] = @sortcol
     session[:iso_sortdir] = @sortdir
 
-    update_gtl_div('iso_datastore_list') if params[:action] != "button" && pagination_request?
+    update_gtl_div('iso_datastore_list') if params[:action] != "button" && pagination_or_gtl_request?
   end
 
   def iso_image_edit

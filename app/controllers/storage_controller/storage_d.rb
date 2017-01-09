@@ -26,7 +26,7 @@ module StorageController::StorageD
     session[:storage_sortcol] = @sortcol
     session[:storage_sortdir] = @sortdir
 
-    update_gtl_div('storage_list') if params[:action] != "button" && pagination_request?
+    update_gtl_div('storage_list') if params[:action] != "button" && pagination_or_gtl_request?
   end
 
   def miq_search_node

@@ -5,7 +5,7 @@ module OpsController::Settings::Schedules
   def schedules_list
     schedule_build_list
 
-    update_gtl_div('schedules_list') if pagination_request?
+    update_gtl_div('schedules_list') if pagination_or_gtl_request?
   end
 
   def schedule_show

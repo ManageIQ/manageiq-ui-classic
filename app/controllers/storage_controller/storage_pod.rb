@@ -27,7 +27,7 @@ module StorageController::StoragePod
     session[:ct_sortcol] = @sortcol
     session[:ct_sortdir] = @sortdir
 
-    update_gtl_div('template_list') if params[:action] != "button" && pagination_request?
+    update_gtl_div('template_list') if params[:action] != "button" && pagination_or_gtl_request?
   end
 
   private #######################

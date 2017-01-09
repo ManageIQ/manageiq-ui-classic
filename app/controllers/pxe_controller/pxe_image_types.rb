@@ -147,7 +147,7 @@ module PxeController::PxeImageTypes
     session[:pxe_image_type_sortcol] = @sortcol
     session[:pxe_image_type_sortdir] = @sortdir
 
-    update_gtl_div('pxe_image_type_list') if params[:action] != "button" && pagination_request?
+    update_gtl_div('pxe_image_type_list') if params[:action] != "button" && pagination_or_gtl_request?
   end
 
   private #######################

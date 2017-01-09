@@ -87,7 +87,7 @@ class ChargebackController < ApplicationController
     session[:rates_sortcol] = @sortcol
     session[:rates_sortdir] = @sortdir
 
-    update_gtl_div('cb_rates_list') if pagination_request?
+    update_gtl_div('cb_rates_list') if pagination_or_gtl_request?
   end
 
   def cb_rate_edit

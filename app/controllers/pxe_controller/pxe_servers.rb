@@ -174,7 +174,7 @@ module PxeController::PxeServers
     session[:pxe_sortcol] = @sortcol
     session[:pxe_sortdir] = @sortdir
 
-    update_gtl_div('pxe_server_list') if params[:action] != "button" && pagination_request?
+    update_gtl_div('pxe_server_list') if params[:action] != "button" && pagination_or_gtl_request?
   end
 
   def pxe_image_edit
