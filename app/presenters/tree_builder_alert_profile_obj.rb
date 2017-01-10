@@ -56,7 +56,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
       :hideCheckbox => true,
       :cfmeNoClick  => true
     }
-    ["Tags", "", "folder_open", options]
+    ["Tags", "", "100/folder_open", options]
   end
 
   def x_get_tree_roots(count_only, _options)
