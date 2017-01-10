@@ -2166,11 +2166,6 @@ class ApplicationController < ActionController::Base
     @sb[:detail_sortcol] = @detail_sortcol
     @sb[:detail_sortdir] = @detail_sortdir
 
-    @sb[:tree_hosts_hash] = nil if !%w(ems_folders descendant_vms).include?(params[:display]) &&
-                                   !%w(treesize tree_autoload).include?(params[:action])
-    @sb[:tree_vms_hash] = nil if !%w(ems_folders descendant_vms).include?(params[:display]) &&
-                                 !%w(treesize tree_autoload).include?(params[:action])
-
     # Set/clear sandbox (@sb) per controller in the session object
     session[:sandboxes] ||= HashWithIndifferentAccess.new
     session[:sandboxes][controller_name] = @sb.blank? ? nil : copy_hash(@sb)
