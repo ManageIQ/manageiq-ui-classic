@@ -14,16 +14,13 @@ describe('containerLiveDashboardController', function() {
     });
   });
 
-  beforeEach(inject(function(_$httpBackend_, $rootScope, _$controller_, _pfViewUtils_) {
-    pfViewUtils = _pfViewUtils_;
+  beforeEach(inject(function(_$httpBackend_, $rootScope, _$controller_) {
     $httpBackend = _$httpBackend_;
-    $httpBackend.when('GET','/container_dashboard/data/42/?live=true&type=gauges&tenant=_ops&query=metric_tags').respond(mock_data);
-    $httpBackend.when('GET','/container_dashboard/data/42/?live=true&type=gauges&tenant=_ops&query=metric_definitions&tags={}').respond(mock_metrics_data);
+    $httpBackend.when('GET','/container_dashboard/data/42/?live=true&tenant=_ops&query=metric_tags&limit=250').respond(mock_data);
+    $httpBackend.when('GET','/container_dashboard/data/42/?live=true&tenant=_ops&query=metric_definitions&tags={}').respond(mock_metrics_data);
     $httpBackend.when('GET','/container_dashboard/data/42/?live=true&type=gauges&tenant=_ops&query=get_data&metric_id=hello1&limit=5&order=DESC').respond(mock_data1_data);
     $httpBackend.when('GET','/container_dashboard/data/42/?live=true&type=gauges&tenant=_ops&query=get_data&metric_id=hello2&limit=5&order=DESC').respond(mock_data2_data);
-    $controller = _$controller_('containerLiveDashboardController', {
-        pfViewUtils: pfViewUtils
-    });
+    $controller = _$controller_('containerLiveDashboardController');
     $controller.refresh();
     $httpBackend.flush();
   }));
