@@ -1,6 +1,6 @@
 /* global miqAjaxButton miqBuildCalendar miqButtons miqJqueryRequest miqRESTAjaxButton miqSparkleOff miqSparkleOn */
 
-ManageIQ.angular.app.service('miqService', ['$timeout', '$document', function($timeout, $document) {
+ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', '$log', function($timeout, $document, $q, $log) {
   this.storedPasswordPlaceholder = "●●●●●●●●";
 
   this.showButtons = function() {
@@ -123,5 +123,13 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', function($t
     }
 
     return serializedObj;
+  };
+  
+  this.handleFailure = function(e) {
+    miqSparkleOff();
+    if (e.message) {
+      $log.log(e.message);
+    }
+    return $q.reject(e);
   };
 }]);

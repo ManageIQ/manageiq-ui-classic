@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attrs', 'hostFormId', 'miqService', '$log', '$q', function($http, $scope, $attrs, hostFormId, miqService, $log, $q) {
+ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attrs', 'hostFormId', 'miqService', function($http, $scope, $attrs, hostFormId, miqService) {
   var init = function() {
     $scope.hostModel = {
       name: '',
@@ -60,7 +60,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
         miqService.sparkleOn();
         $http.get($scope.formFieldsUrl + hostFormId)
           .then(getHostFormDataComplete)
-          .catch(getHostFormDataFailed);
+          .catch(miqService.handleFailure);
      } else if (hostFormId.split(",").length > 1) {
       $scope.afterGet = true;
     }
@@ -213,14 +213,6 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
 
     $scope.modelCopy = angular.copy( $scope.hostModel );
     miqService.sparkleOff();
-  }
-
-  function getHostFormDataFailed(e) {
-    miqService.sparkleOff();
-    if (e.message) {
-      $log.log(e.message);
-    }
-    return $q.reject(e);
   }
 
   init();

@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '$attrs', 'emsCommonFormId', 'miqService', '$q', '$log', function($http, $scope, $attrs, emsCommonFormId, miqService, $q, $log) {
+ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '$attrs', 'emsCommonFormId', 'miqService', function($http, $scope, $attrs, emsCommonFormId, miqService) {
   var init = function() {
     $scope.emsCommonModel = {
       name: '',
@@ -73,14 +73,14 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       miqService.sparkleOn();
       $http.get($scope.formFieldsUrl + emsCommonFormId)
         .then(getNewEmsFormDataComplete)
-        .catch(getEmsFormDataFailed);
+        .catch(miqService.handleFailure);
     } else {
       $scope.newRecord = false;
       miqService.sparkleOn();
 
       $http.get($scope.formFieldsUrl + emsCommonFormId)
         .then(getEmsFormIdDataComplete)
-        .catch(getEmsFormDataFailed);
+        .catch(miqService.handleFailure);
     }
     $scope.actionUrl = $scope.newRecord ? $scope.createUrl : $scope.updateUrl;
     $scope.currentTab = "default";
@@ -190,14 +190,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
       $scope.afterGet  = true;
       $scope.modelCopy = angular.copy( $scope.emsCommonModel );
-    }
-
-    function getEmsFormDataFailed(e) {
-      miqService.sparkleOff();
-      if (e.message) {
-        $log.log(e.message);
-      }
-      return $q.reject(e);
     }
   };
 
