@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope', 'keyPairFormId', 'miqService', '$log', '$q', function($http, $scope, keyPairFormId, miqService, $log, $q) {
+ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope', 'keyPairFormId', 'miqService', function($http, $scope, keyPairFormId, miqService) {
     var init = function() {
         $scope.keyPairModel = {
             name: '',
@@ -15,7 +15,7 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
         miqService.sparkleOn();
         $http.get('/auth_key_pair_cloud/ems_form_choices')
           .then(getAuthKeyPairCloudFormDataComplete)
-          .catch(getAuthKeyPairCloudFormDataFailed);
+          .catch(miqService.handleFailure);
 
         if (keyPairFormId == 'new') {
             $scope.newRecord = true;
@@ -66,14 +66,6 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
       }
       $scope.afterGet = true;
       miqService.sparkleOff();
-    }
-
-    function getAuthKeyPairCloudFormDataFailed(e) {
-      miqService.sparkleOff();
-      if (e.message) {
-        $log.log(e.message);
-      }
-      return $q.reject(e);
     }
 
     init();

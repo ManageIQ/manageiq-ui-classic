@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 'scheduleFormId', 'oneMonthAgo', 'miqService', 'timerOptionService', '$log', '$q', function($http, $scope, scheduleFormId, oneMonthAgo, miqService, timerOptionService, $log, $q) {
+ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 'scheduleFormId', 'oneMonthAgo', 'miqService', 'timerOptionService', function($http, $scope, scheduleFormId, oneMonthAgo, miqService, timerOptionService) {
   var init = function() {
     $scope.scheduleModel = {
       action_typ: '',
@@ -50,7 +50,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
 
       $http.get('/ops/schedule_form_fields/' + scheduleFormId)
         .then(getScheduleFormDataComplete)
-        .catch($scope.handleFailure);
+        .catch(miqService.handleFailure);
     }
 
     function getScheduleFormDataComplete(response) {
@@ -111,14 +111,6 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
 
       miqService.sparkleOff();
     }
-
-    $scope.handleFailure = function(e) {
-      miqService.sparkleOff();
-      if (e.message) {
-        $log.log(e.message);
-      }
-      return $q.reject(e);
-    };
 
     miqService.buildCalendar(oneMonthAgo.year, parseInt(oneMonthAgo.month, 10) + 1, oneMonthAgo.date);
   };
@@ -223,7 +215,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
 
       $http.post('/ops/automate_schedules_set_vars/' + scheduleFormId)
         .then(postAutomateSchedulesSetVarsComplete)
-        .catch($scope.handleFailure);
+        .catch(miqService.handleFailure);
     } else {
       $scope.scheduleModel.filter_typ = 'all';
     }
@@ -254,7 +246,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     miqService.sparkleOn();
     $http.post('/ops/fetch_target_ids/?target_class=' + $scope.scheduleModel.target_class)
       .then(postFetchTargetIdsComplete)
-      .catch($scope.handleFailure);
+      .catch(miqService.handleFailure);
 
     function postFetchTargetIdsComplete(response) {
       var data = response.data;
@@ -272,7 +264,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
         {filter_type: $scope.scheduleModel.filter_typ,
           action_type: $scope.scheduleModel.action_typ})
         .then(postScheduleFormFilterTypeComplete)
-        .catch($scope.handleFailure);
+        .catch(miqService.handleFailure);
     } else {
       $scope.scheduleModel.filter_value = '';
       $scope.filterValuesEmpty = true;
