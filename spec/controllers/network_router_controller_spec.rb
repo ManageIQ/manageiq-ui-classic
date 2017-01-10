@@ -146,7 +146,7 @@ describe NetworkRouterController do
       let(:queue_options) do
         {
           :class_name  => @router.class.name,
-          :method_name => 'update_network_router',
+          :method_name => 'raw_update_network_router',
           :instance_id => @router.id,
           :priority    => MiqQueue::HIGH_PRIORITY,
           :role        => 'ems_operations',
@@ -187,7 +187,7 @@ describe NetworkRouterController do
       let(:queue_options) do
         {
           :class_name  => @router.class.name,
-          :method_name => 'delete_network_router',
+          :method_name => 'raw_delete_network_router',
           :instance_id => @router.id,
           :priority    => MiqQueue::HIGH_PRIORITY,
           :role        => 'ems_operations',
