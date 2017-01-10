@@ -26,7 +26,7 @@ class TreeBuilderGenealogy < TreeBuilder
 
   def set_locals_for_render
     super.merge!(
-      :click_url  => "/vm/vmtree_selected/",
+      :click_url  => "/vm/genealogy_tree_selected/",
       :onclick    => "miqOnClickGenealogyTree",
       :checkboxes => true,
       :oncheck    => "miqGetChecked",

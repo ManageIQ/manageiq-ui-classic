@@ -344,7 +344,7 @@ module VmCommon
     end
   end
 
-  def vmtree_selected
+  def genealogy_tree_selected
     base = params[:id] == 'root' ? session[:genealogy_tree_root_id] : params[:id].split('-').last
     @display = "vmtree_info"
     javascript_redirect :action => "show", :id => base, :vm_tree => "vmtree_info"
@@ -916,7 +916,7 @@ module VmCommon
     if params[:all_checked]
       ids = params[:all_checked].split(',')
       ids.each do |id|
-        id = id == 'root' ? session[:genealogy_tree_root_id] : from_cid(id.split('-')[1])
+        id = id == 'root' ? session[:genealogy_tree_root_id] : from_cid(parse_nodetype_and_id(id).last)
         session[:checked_items].push(id) unless session[:checked_items].include?(id)
       end
     end
