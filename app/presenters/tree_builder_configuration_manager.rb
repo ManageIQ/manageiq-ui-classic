@@ -16,7 +16,10 @@ class TreeBuilderConfigurationManager < TreeBuilder
   end
 
   def root_options
-    [t = _("All Configuration Manager Providers"), t]
+    {
+      :title   => t = _("All Configuration Manager Providers"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree

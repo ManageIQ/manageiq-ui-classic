@@ -7,7 +7,7 @@ describe TreeBuilderAutomateSimulationResults do
 
     it 'no root is set' do
       root_options = @ae_simulation_tree.send(:root_options)
-      expect(root_options).to eq([])
+      expect(root_options).to eq({})
     end
 
     it 'sets attribute nodes correctly' do
@@ -15,7 +15,7 @@ describe TreeBuilderAutomateSimulationResults do
       tree_data = {:id          => "e_1",
                    :text        => "ManageIQ/SYSTEM / PROCESS / Automation",
                    :image       => "100/q.png",
-                   :tip         => "ManageIQ/SYSTEM / PROCESS / Automation",
+                   :tooltip     => "ManageIQ/SYSTEM / PROCESS / Automation",
                    :elements    => [],
                    :cfmeNoClick => true
                   }

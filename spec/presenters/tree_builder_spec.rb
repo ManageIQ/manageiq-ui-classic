@@ -19,10 +19,11 @@ describe TreeBuilder do
   context "title_and_tip" do
     it "sets title and tooltip for the passed in root node" do
       tree = TreeBuilderChargebackRates.new("cb_rates_tree", "cb_rates", {})
-      title, tooltip, icon = tree.send(:root_options)
-      expect(title).to eq("Rates")
-      expect(tooltip).to eq("Rates")
-      expect(icon).to be_nil
+      root = tree.send(:root_options)
+      expect(root).to eq(
+        :title   => 'Rates',
+        :tooltip => 'Rates'
+      )
     end
   end
 
@@ -46,7 +47,7 @@ describe TreeBuilder do
                 'text'    => "Rates",
                 'tooltip' => "Rates",
                 'class'   => '',
-                'image'   => ActionController::Base.helpers.image_path('100/folder.png')
+                'icon'   => 'pficon pficon-folder-close'
               }]
       tree.locals_for_render.key?(:bs_tree)
       expect(JSON.parse(tree.locals_for_render[:bs_tree])).to eq(nodes)
@@ -77,7 +78,10 @@ describe TreeBuilder do
     let(:tree) do
       Class.new(TreeBuilderChargebackRates) do
         def root_options
-          ["Foo", "Bar", nil]
+          {
+            :title   => "Foo",
+            :tooltip => "Bar"
+          }
         end
       end.new("cb_rates_tree", "cb_rates", {})
     end

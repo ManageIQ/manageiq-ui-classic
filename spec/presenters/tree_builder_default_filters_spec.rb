@@ -73,7 +73,7 @@ describe TreeBuilderDefaultFilters do
       tree_options = @default_filters_tree.send(:tree_init_options, :df)
       root = @default_filters_tree.send(:root_options)
       expect(tree_options[:add_root]).to eq(false)
-      expect(root).to eq([])
+      expect(root).to eq({})
     end
 
     it 'returns folders as root kids' do

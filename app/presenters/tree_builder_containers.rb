@@ -16,7 +16,10 @@ class TreeBuilderContainers < TreeBuilder
 
   # level 0 - root
   def root_options
-    [t = _("All Containers (by Pods)"), t]
+    {
+      :title   => t = _("All Containers (by Pods)"),
+      :tooltip => t
+    }
   end
 
   # level 1 - pods

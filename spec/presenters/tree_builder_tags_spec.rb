@@ -41,7 +41,7 @@ describe TreeBuilderTags do
     end
     it 'sets root to nothing' do
       roots = @tags_tree.send(:root_options)
-      expect(roots).to eq([])
+      expect(roots).to eq({})
     end
     it 'sets first level nodes correctly' do
       roots = @tags_tree.send(:x_get_tree_roots, false, nil)

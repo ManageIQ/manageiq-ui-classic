@@ -51,7 +51,11 @@ describe TreeBuilderMiqActionCategory do
 
   describe '#root_options' do
     it 'sets root_options correctly' do
-      expect(subject.send(:root_options)).to eq([tenant, tenant, "100/tag.png"])
+      expect(subject.send(:root_options)).to eq(
+        :title   => tenant,
+        :tooltip => tenant,
+        :image   => "100/tag.png"
+      )
     end
   end
 

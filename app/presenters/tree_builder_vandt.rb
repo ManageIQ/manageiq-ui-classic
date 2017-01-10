@@ -12,7 +12,10 @@ class TreeBuilderVandt < TreeBuilder
   end
 
   def root_options
-    [_("All VMs & Templates"), _("All VMs & Templates that I can see")]
+    {
+      :title   => _("All VMs & Templates"),
+      :tooltip => _("All VMs & Templates that I can see")
+    }
   end
 
   def x_get_tree_roots(count_only, options)

@@ -13,7 +13,10 @@ class TreeBuilderPxeCustomizationTemplates < TreeBuilder
   def root_options
     title = _("All %{template} - %{type}") % {:template => ui_lookup(:models => 'CustomizationTemplate'),
                                               :type     => ui_lookup(:models => 'PxeImageType')}
-    [title, title]
+    {
+      :title   => title,
+      :tooltip => title
+    }
   end
 
   # Get root nodes count/array for explorer tree

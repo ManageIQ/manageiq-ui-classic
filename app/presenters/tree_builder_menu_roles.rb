@@ -33,7 +33,11 @@ class TreeBuilderMenuRoles < TreeBuilder
   end
 
   def root_options
-    [t = _("Top Level"), t, nil, {:key => "xx-b__Report Menus for #{role_choice}"}]
+    {
+      :title   => t = _("Top Level"),
+      :tooltip => t,
+      :key     => "xx-b__Report Menus for #{role_choice}"
+    }
   end
 
   # Typically another method will populate the children of a root object.

@@ -14,7 +14,10 @@ class TreeBuilderConfigurationManagerConfigurationScripts < TreeBuilder
   end
 
   def root_options
-    [t = _("All Ansible Tower Job Templates"), t]
+    {
+      :title   => t = _("All Ansible Tower Job Templates"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree

@@ -22,10 +22,11 @@ class TreeBuilderPolicySimulationResults < TreeBuilder
 
   def root_options
     event = MiqEventDefinition.find(@root[:event_value])
-    [_("Policy Simulation Results for Event [%{description}]") % {:description => event.description},
-     nil,
-     "100/event-#{event.name}.png",
-     {:cfmeNoClick => true}]
+    {
+      :title       => _("Policy Simulation Results for Event [%{description}]") % {:description => event.description},
+      :image       => "100/event-#{event.name}.png",
+      :cfmeNoClick => true
+    }
   end
 
   def node_icon(result)

@@ -28,6 +28,6 @@ class TreeBuilderDiagnostics < TreeBuilder
   end
 
   def root_options
-    []
+    {}
   end
 end

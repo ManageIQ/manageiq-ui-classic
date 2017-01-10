@@ -13,7 +13,10 @@ class TreeBuilderPxeServers < TreeBuilder
   end
 
   def root_options
-    [t = _("All PXE Servers"), t]
+    {
+      :title   => t = _("All PXE Servers"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree

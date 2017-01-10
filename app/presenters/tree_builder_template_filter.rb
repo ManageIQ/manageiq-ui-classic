@@ -13,6 +13,9 @@ class TreeBuilderTemplateFilter < TreeBuilderVmsFilter
   end
 
   def root_options
-    [_("All Templates"), _("All of the Templates that I can see")]
+    {
+      :title   => _("All Templates"),
+      :tooltip => _("All of the Templates that I can see")
+    }
   end
 end

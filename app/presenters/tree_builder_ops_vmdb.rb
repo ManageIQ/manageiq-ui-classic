@@ -16,7 +16,11 @@ class TreeBuilderOpsVmdb < TreeBuilderOps
   end
 
   def root_options
-    [t = _("VMDB"), t, '100/miq_database.png']
+    {
+      :title   => t = _("VMDB"),
+      :tooltip => t,
+      :image   => '100/miq_database.png'
+    }
   end
 
   # Get root nodes count/array for explorer tree

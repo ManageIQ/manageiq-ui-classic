@@ -7,7 +7,10 @@ class TreeBuilderAlert < TreeBuilder
 
   # level 0 - root
   def root_options
-    [t = N_("All Alerts"), t]
+    {
+      :title   => t = N_("All Alerts"),
+      :tooltip => t
+    }
   end
 
   # level 1 - alerts

@@ -24,7 +24,12 @@ class TreeBuilderPolicySimulation < TreeBuilder
   end
 
   def root_options
-    [ViewHelper.content_tag(:strong, @root_name), @root_name, '100/vm.png', {:cfmeNoClick => true}]
+    {
+      :title       => ViewHelper.content_tag(:strong, @root_name),
+      :tooltip     => @root_name,
+      :image       => '100/vm.png',
+      :cfmeNoClick => true
+    }
   end
 
   def node_icon(result)

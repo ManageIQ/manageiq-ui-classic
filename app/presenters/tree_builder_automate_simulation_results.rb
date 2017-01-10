@@ -22,7 +22,7 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
   end
 
   def root_options
-    []
+    {}
   end
 
   def x_get_tree_roots(_count_only = false, _options = {})
@@ -71,7 +71,7 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
     object = {:id          => "e_#{idx}",
               :text        => title,
               :image       => get_element_icon(el),
-              :tip         => title,
+              :tooltip     => title,
               :elements    => el.each_element { |e| e },
               :cfmeNoClick => true
              }

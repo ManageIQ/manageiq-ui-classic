@@ -25,7 +25,7 @@ class TreeBuilderClusters < TreeBuilder
   end
 
   def root_options
-    []
+    {}
   end
 
   def non_cluster_selected

@@ -28,7 +28,7 @@ class TreeBuilderSmartproxyAffinity < TreeBuilder
   end
 
   def root_options
-    []
+    {}
   end
 
   def x_get_tree_roots(count_only = false, _options)

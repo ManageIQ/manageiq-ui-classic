@@ -11,7 +11,10 @@ class TreeBuilderChargebackReports < TreeBuilder
   end
 
   def root_options
-    [t = _("Saved Chargeback Reports"), t]
+    {
+      :title   => t = _("Saved Chargeback Reports"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree

@@ -9,7 +9,10 @@ class TreeBuilderServiceDialogs < TreeBuilderAeCustomization
   end
 
   def root_options
-    [t = _("All Dialogs"), t]
+    {
+      :title   => t = _("All Dialogs"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree

@@ -17,7 +17,12 @@ describe TreeBuilderSnapshots do
     end
     it 'sets root correctly' do
       root = @s_tree.send(:root_options)
-      expect(root).to eq([@record.name, @record.name, '100/vm.png', {:cfmeNoClick => true}])
+      expect(root).to eq(
+        :title       => @record.name,
+        :tooltip     => @record.name,
+        :image       => '100/vm.png',
+        :cfmeNoClick => true
+      )
     end
     it 'returns Snapshot as kids of root' do
       snapshot_nodes = @s_tree.send(:x_get_tree_roots, false)

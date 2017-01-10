@@ -14,7 +14,11 @@ class TreeBuilderReportSchedules < TreeBuilder
   end
 
   def root_options
-    [t = _("All Schedules"), t, '100/miq_schedule.png']
+    {
+      :title   => t = _("All Schedules"),
+      :tooltip => t,
+      :image   => '100/miq_schedule.png'
+    }
   end
 
   # Get root nodes count/array for explorer tree

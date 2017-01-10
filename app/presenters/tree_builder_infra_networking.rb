@@ -20,7 +20,10 @@ class TreeBuilderInfraNetworking < TreeBuilder
   end
 
   def root_options
-    [t = _("All Distributed Switches"), t]
+    {
+      :title   => t = _("All Distributed Switches"),
+      :tooltip => t
+    }
   end
 
   def x_get_tree_roots(count_only, _options)
