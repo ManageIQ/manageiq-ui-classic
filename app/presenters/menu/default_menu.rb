@@ -67,7 +67,7 @@ module Menu
           Menu::Item.new('host',             hosts_name,             'host',                       {:feature => 'host_show_list'},                  '/host'),
           Menu::Item.new('vm_infra',         N_('Virtual Machines'), 'vm_infra_explorer',          {:feature => 'vm_infra_explorer', :any => true}, '/vm_infra/explorer'),
           Menu::Item.new('resource_pool',    N_('Resource Pools'),   'resource_pool',              {:feature => 'resource_pool_show_list'},         '/resource_pool'),
-          Menu::Item.new('storage',          deferred_ui_lookup(:tables => 'storages'), 'storage', {:feature => 'storage_show_list'},               '/storage/explorer'),
+          Menu::Item.new('storage',          N_('Datastores'),       'storage',                    {:feature => 'storage_show_list'},               '/storage/explorer'),
           Menu::Item.new('pxe',              N_('PXE'),              'pxe',                        {:feature => 'pxe', :any => true},               '/pxe/explorer'),
           Menu::Item.new('infra_networking', N_('Networking'),       'infra_networking',           {:feature => 'infra_networking', :any => true},  '/infra_networking/explorer'),
           Menu::Item.new('miq_request_host', N_('Requests'),         nil,                          {:feature => 'miq_request_show_list'},           '/miq_request?typ=host'),
@@ -86,28 +86,23 @@ module Menu
       end
       private :hybrid_name
 
-      def deferred_ui_lookup(args)
-        -> () { ui_lookup(args) }
-      end
-      private :deferred_ui_lookup
-
       def container_menu_section
         Menu::Section.new(:cnt, N_("Containers"), 'fa fa-plus fa-2x', [
-          Menu::Item.new('container_dashboard',      N_('Overview'),                                            'container_dashboard',      {:feature => 'container_dashboard'},                       '/container_dashboard'),
-          Menu::Item.new('ems_container',            N_('Providers'),                                           'ems_container',            {:feature => 'ems_container_show_list'},                   '/ems_container'),
-          Menu::Item.new('container_project',        deferred_ui_lookup(:tables => 'container_project'),        'container_project',        {:feature => 'container_project_show_list'},               '/container_project'),
-          Menu::Item.new('container_route',          deferred_ui_lookup(:tables => 'container_route'),          'container_route',          {:feature => 'container_route_show_list'},                 '/container_route'),
-          Menu::Item.new('container_service',        N_('Container Services'),                                  'container_service',        {:feature => 'container_service_show_list'},               '/container_service'),
-          Menu::Item.new('container_replicator',     deferred_ui_lookup(:tables => 'container_replicator'),     'container_replicator',     {:feature => 'container_replicator_show_list'},            '/container_replicator'),
-          Menu::Item.new('container_group',          deferred_ui_lookup(:tables => 'container_group'),          'container_group',          {:feature => 'container_group_show_list'},                 '/container_group'),
-          Menu::Item.new('container',                deferred_ui_lookup(:tables => 'container'),                'containers',               {:feature => 'containers', :any => true},                  '/container/explorer'),
-          Menu::Item.new('container_node',           N_('Container Nodes'),                                     'container_node',           {:feature => 'container_node_show_list'},                  '/container_node'),
-          Menu::Item.new('persistent_volume',        N_('Volumes'),                                             'persistent_volume',        {:feature => 'persistent_volume_show_list', :any => true}, '/persistent_volume'),
-          Menu::Item.new('container_build',          N_('Container Builds'),                                    'container_build',          {:feature => 'container_build_show_list'},                 '/container_build'),
-          Menu::Item.new('container_image_registry', deferred_ui_lookup(:tables => 'container_image_registry'), 'container_image_registry', {:feature => 'container_image_registry_show_list'},        '/container_image_registry'),
-          Menu::Item.new('container_image',          N_('Container Images'),                                    'container_image',          {:feature => 'container_image_show_list'},                 '/container_image'),
-          Menu::Item.new('container_template',       N_('Container Templates'),                                 'container_template',       {:feature => 'container_template_show_list'},              '/container_template'),
-          Menu::Item.new('container_topology',       N_('Topology'),                                            'container_topology',       {:feature => 'container_topology', :any => true},          '/container_topology')
+          Menu::Item.new('container_dashboard',      N_('Overview'),            'container_dashboard',      {:feature => 'container_dashboard'},                       '/container_dashboard'),
+          Menu::Item.new('ems_container',            N_('Providers'),           'ems_container',            {:feature => 'ems_container_show_list'},                   '/ems_container'),
+          Menu::Item.new('container_project',        N_('Projects'),            'container_project',        {:feature => 'container_project_show_list'},               '/container_project'),
+          Menu::Item.new('container_route',          N_('Routes'),              'container_route',          {:feature => 'container_route_show_list'},                 '/container_route'),
+          Menu::Item.new('container_service',        N_('Container Services'),  'container_service',        {:feature => 'container_service_show_list'},               '/container_service'),
+          Menu::Item.new('container_replicator',     N_('Replicators'),         'container_replicator',     {:feature => 'container_replicator_show_list'},            '/container_replicator'),
+          Menu::Item.new('container_group',          N_('Pods'),                'container_group',          {:feature => 'container_group_show_list'},                 '/container_group'),
+          Menu::Item.new('container',                N_('Containers'),          'containers',               {:feature => 'containers', :any => true},                  '/container/explorer'),
+          Menu::Item.new('container_node',           N_('Container Nodes'),     'container_node',           {:feature => 'container_node_show_list'},                  '/container_node'),
+          Menu::Item.new('persistent_volume',        N_('Volumes'),             'persistent_volume',        {:feature => 'persistent_volume_show_list', :any => true}, '/persistent_volume'),
+          Menu::Item.new('container_build',          N_('Container Builds'),    'container_build',          {:feature => 'container_build_show_list'},                 '/container_build'),
+          Menu::Item.new('container_image_registry', N_('Image Registries'),    'container_image_registry', {:feature => 'container_image_registry_show_list'},        '/container_image_registry'),
+          Menu::Item.new('container_image',          N_('Container Images'),    'container_image',          {:feature => 'container_image_show_list'},                 '/container_image'),
+          Menu::Item.new('container_template',       N_('Container Templates'), 'container_template',       {:feature => 'container_template_show_list'},              '/container_template'),
+          Menu::Item.new('container_topology',       N_('Topology'),            'container_topology',       {:feature => 'container_topology', :any => true},          '/container_topology')
         ])
       end
 
@@ -202,11 +197,11 @@ module Menu
 
       def netapp_storage_menu_section
         Menu::Section.new(:nap, N_("NetApp"), 'fa fa-plus fa-2x', [
-          Menu::Item.new('ontap_storage_system', deferred_ui_lookup(:tables => 'ontap_storage_system'), 'ontap_storage_system', {:feature => 'ontap_storage_system_show_list'}, '/ontap_storage_system'),
-          Menu::Item.new('ontap_logical_disk',   deferred_ui_lookup(:tables => 'ontap_logical_disk'),   'ontap_logical_disk',   {:feature => 'ontap_logical_disk_show_list'},   '/ontap_logical_disk'),
-          Menu::Item.new('ontap_storage_volume', deferred_ui_lookup(:tables => 'ontap_storage_volume'), 'ontap_storage_volume', {:feature => 'ontap_storage_volume_show_list'}, '/ontap_storage_volume'),
-          Menu::Item.new('ontap_file_share',     deferred_ui_lookup(:tables => 'ontap_file_share'),     'ontap_file_share',     {:feature => 'ontap_file_share_show_list'},     '/ontap_file_share'),
-          Menu::Item.new('storage_manager',      N_('Storage Managers'),                                'storage_manager',      {:feature => 'storage_manager_show_list'},      '/storage_manager')
+          Menu::Item.new('ontap_storage_system', N_('Filers'),           'ontap_storage_system', {:feature => 'ontap_storage_system_show_list'}, '/ontap_storage_system'),
+          Menu::Item.new('ontap_logical_disk',   N_('Volumes'),          'ontap_logical_disk',   {:feature => 'ontap_logical_disk_show_list'},   '/ontap_logical_disk'),
+          Menu::Item.new('ontap_storage_volume', N_('LUNs'),             'ontap_storage_volume', {:feature => 'ontap_storage_volume_show_list'}, '/ontap_storage_volume'),
+          Menu::Item.new('ontap_file_share',     N_('File Shares'),      'ontap_file_share',     {:feature => 'ontap_file_share_show_list'},     '/ontap_file_share'),
+          Menu::Item.new('storage_manager',      N_('Storage Managers'), 'storage_manager',      {:feature => 'storage_manager_show_list'},      '/storage_manager')
         ])
       end
 
