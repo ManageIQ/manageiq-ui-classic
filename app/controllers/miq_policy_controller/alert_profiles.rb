@@ -172,9 +172,7 @@ module MiqPolicyController::AlertProfiles
     unless @assign[:new][:assign_to] == "enterprise"          # No further selection needed for enterprise
       if @assign[:new][:assign_to]                            # Assign to selected
         if @assign[:new][:assign_to].ends_with?("-tags")
-          if @assign[:new][:cat]
-            empty = false
-          end
+          empty = false if @assign[:new][:cat]
         else
           empty = false
         end

@@ -1,12 +1,11 @@
 class TreeBuilderAlertProfileObj < TreeBuilder
-
   def initialize(name, type, sandbox, build = true, assign = nil)
     @assign = {
       :new     => assign[:new],
       :current => assign[:current]
     }
 
-    build = false if !@assign[:new][:assign_to]
+    build = false unless @assign[:new][:assign_to]
     super(name, type, sandbox, build)
   end
 
@@ -28,12 +27,14 @@ class TreeBuilderAlertProfileObj < TreeBuilder
       end
     end
 
+    node[:title] = identifier
     node[:image] = ActionController::Base.helpers.image_path("100/#{icon}")
     node[:cfmeNoClick] = true
     node[:hideCheckbox] = false
     node[:select] = @assign[:new][:objects].include?(object.id)
     node
   end
+
   def tree_init_options(_tree_name)
     {
       :expand        => true
@@ -56,7 +57,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
       :hideCheckbox => true,
       :cfmeNoClick  => true
     }
-    ["Tags", "", "100/folder_open", options]
+    [t, "", "100/folder_open", options]
   end
 
   def x_get_tree_roots(count_only, _options)
