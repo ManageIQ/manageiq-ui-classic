@@ -1,5 +1,12 @@
 module TreeNode
   class Service < Node
-    set_attribute(:image) { @object.picture ? "/pictures/#{@object.picture.basename}" : '100/service.png' }
+    set_attributes(:image, :icon) do
+      if @object.picture
+        image = @object.decorate.listicon_image
+      else
+        icon = 'product product-service'
+      end
+      [image, icon]
+    end
   end
 end
