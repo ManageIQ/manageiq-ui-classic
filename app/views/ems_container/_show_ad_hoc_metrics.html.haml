@@ -13,17 +13,9 @@
       "placeholder" => _("Choose Tenants"),
       "typeahead" => "tenenat for tenenat in dash.getTenants($viewValue)",
       "typeahead-loading" => "dash.loadingTenants",
+      "ng-change" => "dash.tenantChanged = true",
       "typeahead-wait-ms" => 1000}
     %i.glyphicon.glyphicon-refresh{"ng-show" => "dash.loadingTenants"}
-
-    %select.ad-hoc-tenant-button{"pf-select" => "",
-                                 "ng-model" => "dash.metricType",
-                                 "id" => "metric_type",
-                                 "ng-change" => "dash.tenantChanged = true"}
-      %option{:value => "gauges"}
-        = _("Gauges")
-      %option{:value => "counters"}
-        = _("Counters")
 
   %div{"ng-if" => "!dash.viewGraph"}
     %div{"pf-toolbar" => "", "id" => "exampleToolbar", "config" => "dash.toolbarConfig", "ng-if" => "dash.tagsLoaded"}
@@ -43,6 +35,10 @@
       .col-md-12{"pf-list-view" => "", "config" => "dash.listConfig", "items" => "dash.items"}
         .list-view-pf-body.row
           .col-md-6.col-sm-6.no-wrap
+            %span{"ng-if" => "item.type == 'gauge'"}
+              %i.fa.fa-tachometer
+            %span{"ng-if" => "item.type == 'counter'"}
+              %i.pficon.pficon-trend-up
             {{item.id}}
           .col-md-6.col-sm-12.no-wrap
             .row
@@ -52,8 +48,8 @@
                 %span.time-stamp
                   {{item.last_timestamp | date:'yyyy-MM-dd hh:mm:ss'}}
               .col-md-5.col-sm-6.no-wrap
-                .spinner.spinner-sm.loading{ "ng-if" => "!item.last_value" }
-                %span.last-value{ "ng-if" => "item.last_value" }
+                .spinner.spinner-sm.loading{"ng-if" => "!item.last_value"}
+                %span.last-value{"ng-if" => "item.last_value"}
                   {{item.last_value}}
         %list-expanded-content
           .row

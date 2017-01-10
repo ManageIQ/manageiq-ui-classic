@@ -41,7 +41,16 @@ class HawkularProxyService
   def metric_definitions
     tags = @params['tags'].blank? ? nil : JSON.parse(@params['tags'])
     tags = nil if tags == {}
-    client.query(tags).compact.map { |m| m.json if m.json }.sort { |a, b| a["id"].downcase <=> b["id"].downcase }
+    limit = @params['limit'] || 20
+
+    list = if @params['type'].blank?
+             @cli.hawkular_client.counters.query(tags).compact +
+               @cli.hawkular_client.gauges.query(tags).compact
+           else
+             client.query(tags).compact
+           end
+
+    list.map { |m| m.json if m.json }.sort { |a, b| a["id"].downcase <=> b["id"].downcase }[0..limit.to_i]
   end
 
   def metric_tags
@@ -53,7 +62,7 @@ class HawkularProxyService
     starts = @params['starts'] || (ends - 8 * 60 * 60 * 1000)
     bucket_duration = @params['bucket_duration'] || nil
     order = @params['order'] || 'ASC'
-    limit = @params['limit'] || 100
+    limit = @params['limit'] || 360
 
     data = client.get_data(id,
                            :limit          => limit.to_i,
@@ -67,13 +76,14 @@ class HawkularProxyService
 
   def tenants
     tenants = @cli.hawkular_client.http_get('/tenants')
-    tenants = if @params['include'].blank?
-                tenants.map { |x| x["id"] }.compact
-              else
-                tenants.map { |x| x["id"] if x["id"].include?(@params['include']) }.compact
-              end
-
     limit = @params['limit'] || 7
-    tenants[0..limit.to_i]
+
+    if @params['include'].blank?
+      tenants.map! { |x| x["id"] }
+    else
+      tenants.map! { |x| x["id"] if x["id"].include?(@params['include']) }
+    end
+
+    tenants.compact[0..limit.to_i]
   end
 end

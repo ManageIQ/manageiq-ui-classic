@@ -1,11 +1,10 @@
 /* global miqHttpInject */
 
 miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'patternfly', 'patternfly.charts']))
-  .controller('containerLiveDashboardController', ['pfViewUtils', '$http', '$interval', '$timeout', '$window',
-  function (pfViewUtils, $http, $interval, $timeout, $window) {
+  .controller('containerLiveDashboardController', ['$http', '$window',
+  function ($http, $window) {
     var dash = this;
     dash.tenant = '_ops';
-    dash.metricType = 'gauges';
 
     // get the pathname and remove trailing / if exist
     var pathname = $window.location.pathname.replace(/\/$/, '');
@@ -33,8 +32,7 @@ miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'pattern
       dash.toolbarConfig.filterConfig = dash.filterConfig;
       dash.toolbarConfig.actionsConfig = dash.actionsConfig;
 
-      dash.url = '/container_dashboard/data' + id + '/?live=true&tenant=' + dash.tenant + 
-        '&type=' + dash.metricType;
+      dash.url = '/container_dashboard/data' + id + '/?live=true&tenant=' + dash.tenant;
     }
 
     var filterChange = function (filters) {
@@ -79,7 +77,7 @@ miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'pattern
     };
 
     var getMetricTags = function() {
-      $http.get(dash.url + '&query=metric_tags').success(function(response) {
+      $http.get(dash.url + '&query=metric_tags&limit=250').success(function(response) {
         dash.tagsLoaded = true;
         if (response && angular.isArray(response.metric_tags)) {
           response.metric_tags.sort();
@@ -101,7 +99,8 @@ miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'pattern
     };
 
     var getLatestData = function(item) {
-      var params = '&query=get_data&metric_id=' + item.id + '&limit=5&order=DESC';
+      var params = '&query=get_data&type=' + item.type + 's&metric_id=' + item.id +
+        '&limit=5&order=DESC';
 
       $http.get(dash.url + params).success(function (response) {
         'use strict';
@@ -163,13 +162,13 @@ miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'pattern
       });
     };
 
-    dash.refresh_graph = function(metric_id, n) {
+    dash.refresh_graph = function(metric_id, metric_type, n) {
       // TODO: replace with a datetimepicker, until then add 24 hours to the date
       var ends = dash.timeFilter.date.valueOf() + 24 * 60 * 60;
       var diff = dash.timeFilter.time_range * dash.timeFilter.range_count * 60 * 60 * 1000; // time_range is in hours
       var starts = ends - diff;
       var bucket_duration = parseInt(diff / 1000 / 200); // bucket duration is in seconds
-      var params = '&query=get_data&metric_id=' + metric_id + '&ends=' + ends +
+      var params = '&query=get_data&type=' + metric_type + 's&metric_id=' + metric_id + '&ends=' + ends +
                    '&starts=' + starts+ '&bucket_duration=' + bucket_duration + 's';
 
       $http.get(dash.url + params).success(function(response) {
@@ -207,12 +206,12 @@ miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'pattern
 
       for (var i = 0; i < dash.selectedItems.length; i++) {
         var metric_id = dash.selectedItems[i].id;
-        dash.refresh_graph(metric_id, i);
+        var metric_type = dash.selectedItems[i].type;
+        dash.refresh_graph(metric_id, metric_type, i);
       }
     };
 
     dash.getTenants = function(include) {
-      dash.tenantChanged = true;
       return $http.get(dash.url + "&query=get_tenants&limit=7&include=" + include).then(function(response) {
         return response.data.tenants;
       });
