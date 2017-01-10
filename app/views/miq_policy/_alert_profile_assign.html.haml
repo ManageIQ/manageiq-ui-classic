@@ -35,9 +35,9 @@
     %h3
       = _('Selections')
     - if @assign[:obj_tree]
-      = render(:partial => 'shared/tree', :locals => {:tree => @new_tree, :name => @new_tree.name})
+      = render(:partial => 'shared/tree', :locals => {:tree => @assign[:obj_tree], :name => @assign[:obj_tree].name})
       #obj_treebox.treeview-pf-hover.treeview-pf-select{:style => "width: 100%; color: #000;"}
-      = render(:partial => "layouts/tree",
+      -#= render(:partial => "layouts/tree",
         :locals         => {:tree_id    => "obj_treebox",
           :tree_name                    => "obj_tree",
           :bs_tree                      => @assign[:obj_tree],
