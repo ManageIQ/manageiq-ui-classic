@@ -6097,7 +6097,7 @@ msgstr "已删除数据源"
 #: ../app/controllers/middleware_deployment_controller.rb:31
 #: ../app/controllers/middleware_deployment_controller.rb:38
 msgid "Not %{operation_name} for %{record_name} on the provider itself"
-msgstr "不是供应商中用于 %{page_number} 的 %{operation_name} "
+msgstr "不是供应商中用于 %{record_name} 的 %{operation_name} "
 
 #: ../app/controllers/middleware_datasource_controller.rb:18
 msgid "The selected datasources were removed"
