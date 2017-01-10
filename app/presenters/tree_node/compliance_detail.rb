@@ -7,6 +7,6 @@ module TreeNode
       end
     end
 
-    set_attribute(:image) { "100/#{@object.miq_policy_result ? "check" : "x"}.png" }
+    set_attribute(:icon) { "pficon #{@object.miq_policy_result ? 'pficon-ok' : 'pficon-error-circle-o'}" }
   end
 end

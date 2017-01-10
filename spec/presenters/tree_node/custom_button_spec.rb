@@ -5,7 +5,7 @@ describe TreeNode::CustomButton do
   let(:object) { FactoryGirl.create(:custom_button, :applies_to_class => 'Host') }
 
   include_examples 'TreeNode::Node#key prefix', 'cb-'
-  include_examples 'TreeNode::Node#image', '100/leaf.gif'
+  include_examples 'TreeNode::Node#icon', 'fa fa-file-o'
 
   describe '#tooltip' do
     it 'returns with prefix Button: and description' do

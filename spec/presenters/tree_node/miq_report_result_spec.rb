@@ -5,5 +5,5 @@ describe TreeNode::MiqReportResult do
   let(:object) { FactoryGirl.create(:miq_report_result) }
 
   include_examples 'TreeNode::Node#key prefix', 'rr-'
-  include_examples 'TreeNode::Node#image', '100/report_result.png'
+  include_examples 'TreeNode::Node#icon', 'product product-arrow-right'
 end

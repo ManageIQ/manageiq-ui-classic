@@ -5,7 +5,7 @@ describe TreeNode::LdapRegion do
   let(:object) { FactoryGirl.create(:ldap_region) }
 
   include_examples 'TreeNode::Node#key prefix', 'lr-'
-  include_examples 'TreeNode::Node#image', '100/ldap_region.png'
+  include_examples 'TreeNode::Node#icon', 'pficon pficon-regions'
 
   describe '#title' do
     it 'returns with the name prefixed by Region:' do

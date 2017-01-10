@@ -33,7 +33,7 @@ describe TreeBuilderClusters do
       cluster_nodes = @cluster_tree.send(:x_get_tree_roots, false)
       expect(cluster_nodes.first).to eq(:id          => "1",
                                         :text        => "Name",
-                                        :image       => '100/cluster.png',
+                                        :icon        => 'pficon pficon-cluster',
                                         :tip         => "Name",
                                         :select      => 'unsure',
                                         :cfmeNoClick => true,
@@ -41,7 +41,7 @@ describe TreeBuilderClusters do
       # non-cluster-node
       expect(cluster_nodes.last).to eq(:id          => "NonCluster",
                                        :text        => _("Non-clustered Hosts"),
-                                       :image       => '100/host.png',
+                                       :icon        => 'pficon pficon-screen',
                                        :tip         => _("Non-clustered Hosts"),
                                        :select      => true,
                                        :cfmeNoClick => true,
@@ -54,7 +54,7 @@ describe TreeBuilderClusters do
       expect(non_cluster_host).to eq([{:id          => "NonCluster_2",
                                        :text        => "Non Cluster Host",
                                        :tip         => "Host: Non Cluster Host",
-                                       :image       => '100/host.png',
+                                       :icon        => 'pficon pficon-screen',
                                        :select      => true,
                                        :cfmeNoClick => true,
                                        :children    => []}])
@@ -67,7 +67,7 @@ describe TreeBuilderClusters do
         {:id          => "#{cluster_nodes.first[:id]}_#{node[:id]}",
          :text        => node[:name],
          :tip         => _("Host: %{name}") % {:name => node[:name]},
-         :image       => '100/host.png',
+         :icon        => 'pficon pficon-screen',
          :select      => true,
          :cfmeNoClick => true,
          :children    => []}
@@ -76,7 +76,7 @@ describe TreeBuilderClusters do
         {:id          => "#{cluster_nodes.first[:id]}_#{node[:id]}",
          :text        => node[:name],
          :tip         => _("Host: %{name}") % {:name => node[:name]},
-         :image       => '100/host.png',
+         :icon        => 'pficon pficon-screen',
          :select      => false,
          :cfmeNoClick => true,
          :children    => []}

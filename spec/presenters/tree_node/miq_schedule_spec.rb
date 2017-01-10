@@ -8,5 +8,5 @@ describe TreeNode::MiqSchedule do
   end
 
   include_examples 'TreeNode::Node#key prefix', 'msc-'
-  include_examples 'TreeNode::Node#image', '100/miq_schedule.png'
+  include_examples 'TreeNode::Node#icon', 'fa fa-clock-o'
 end

@@ -5,7 +5,7 @@ describe TreeNode::LdapDomain do
   let(:object) { FactoryGirl.create(:ldap_domain) }
 
   include_examples 'TreeNode::Node#key prefix', 'ld-'
-  include_examples 'TreeNode::Node#image', '100/ldap_domain.png'
+  include_examples 'TreeNode::Node#icon', 'pficon pficon-domain'
 
   describe '#title' do
     it 'returns with the name prefixed by Domain:' do

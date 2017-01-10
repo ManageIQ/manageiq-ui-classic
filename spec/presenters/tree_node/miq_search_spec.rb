@@ -5,7 +5,7 @@ describe TreeNode::MiqSearch do
   let(:object) { FactoryGirl.create(:miq_search) }
 
   include_examples 'TreeNode::Node#key prefix', 'ms-'
-  include_examples 'TreeNode::Node#image', '100/filter.png'
+  include_examples 'TreeNode::Node#icon', 'fa fa-filter'
   include_examples 'TreeNode::Node#title description'
   include_examples 'TreeNode::Node#tooltip prefix', 'Filter'
 end

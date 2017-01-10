@@ -5,6 +5,6 @@ describe TreeNode::ConfigurationScript do
   let(:object) { FactoryGirl.create(:ansible_configuration_script) }
 
   include_examples 'TreeNode::Node#key prefix', 'cf-'
-  include_examples 'TreeNode::Node#image', '100/configuration_script.png'
+  include_examples 'TreeNode::Node#icon', 'product product-template'
   include_examples 'TreeNode::Node#tooltip prefix', 'Ansible Tower Job Template'
 end

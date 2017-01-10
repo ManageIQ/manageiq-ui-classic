@@ -21,22 +21,22 @@ class TreeBuilderConfigurationManagerConfiguredSystems < TreeBuilder
     objects = []
     objects.push(:id            => "csf",
                  :text          => _("%{name} Configured Systems") % {:name => ui_lookup(:ui_title => 'foreman')},
-                 :image         => "100/folder.png",
+                 :icon          => "pficon pficon-folder-close",
                  :tip           => _("%{name} Configured Systems") % {:name => ui_lookup(:ui_title => 'foreman')},
                  :load_children => true)
     objects.push(:id            => "csa",
                  :text          => _("Ansible Tower Configured Systems"),
-                 :image         => "100/folder.png",
+                 :icon          => "pficon pficon-folder-close",
                  :tip           => _("Ansible Tower Configured Systems"),
                  :load_children => true)
     objects.push(:id          => "global",
                  :text        => _("Global Filters"),
-                 :image       => "100/folder.png",
+                 :icon        => "pficon pficon-folder-close",
                  :tip         => _("Global Shared Filters"),
                  :cfmeNoClick => true)
     objects.push(:id          => "my",
                  :text        => _("My Filters"),
-                 :image       => "100/folder.png",
+                 :icon        => "pficon pficon-folder-close",
                  :tip         => _("My Personal Filters"),
                  :cfmeNoClick => true)
     count_only_or_objects(count_only, objects)

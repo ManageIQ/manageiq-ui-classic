@@ -1,5 +1,5 @@
 module TreeNode
   class PxeServer < Node
-    set_attribute(:image, '100/pxeserver.png')
+    set_attribute(:icon, 'pficon pficon-server')
   end
 end

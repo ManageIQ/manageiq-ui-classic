@@ -8,8 +8,8 @@ module TreeNode
       end
     end
 
-    set_attribute(:image) do
-      @object.set_data && @object.set_data[:button_image] ? "100/custom-#{@object.set_data[:button_image]}.png" : '100/folder.png'
+    set_attribute(:icon) do
+      @object.set_data && @object.set_data[:button_image] ? "product product-custom-#{@object.set_data[:button_image]}" : 'pficon pficon-folder-close'
     end
 
     set_attribute(:tooltip) do

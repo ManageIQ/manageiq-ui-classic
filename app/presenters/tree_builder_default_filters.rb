@@ -53,7 +53,7 @@ class TreeBuilderDefaultFilters < TreeBuilder
     roots = @data.keys.map do |folder|
       {:id           => folder,
        :text         => folder,
-       :image        => "100/folder.png",
+       :icon         => "pficon pficon-folder-close",
        :tip          => folder,
        :cfmeNoClick  => true,
        :hideCheckbox => true}
@@ -70,7 +70,7 @@ class TreeBuilderDefaultFilters < TreeBuilder
                 folders.map do |folder|
                   {:id           => "#{parent[:id]}_#{folder}",
                    :text         => folder,
-                   :image        => "100/folder.png",
+                   :icon         => "pficon pficon-folder-close",
                    :tip          => folder,
                    :cfmeNoClick  => true,
                    :hideCheckbox => true}
@@ -79,7 +79,7 @@ class TreeBuilderDefaultFilters < TreeBuilder
                 kids.map do |kid|
                   {:id          => kid[:id],
                    :text        => kid[:description],
-                   :image       => '100/filter.png',
+                   :icon        => 'fa fa-filter',
                    :tip         => kid[:description],
                    :cfmeNoClick => true,
                    :select      => kid[:search_key] != "_hidden_"}

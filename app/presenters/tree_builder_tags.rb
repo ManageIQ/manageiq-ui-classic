@@ -63,7 +63,7 @@ class TreeBuilderTags < TreeBuilder
     kids = parent.entries.map do |kid|
       select = selected_entry_value(parent, kid)
       {:id          => kid.id,
-       :image       => '100/tag.png',
+       :icon        => 'fa fa-tag',
        :text        => kid.description,
        :checkable   => @edit.present?,
        :tooltip     => _("Tag: %{description}") % {:description => kid.description},

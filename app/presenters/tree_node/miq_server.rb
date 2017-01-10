@@ -1,6 +1,6 @@
 module TreeNode
   class MiqServer < Node
-    set_attribute(:image, '100/miq_server.png')
+    set_attribute(:icon, 'pficon pficon-server')
     set_attribute(:expand, true)
 
     set_attributes(:title, :tooltip) do

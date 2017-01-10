@@ -30,9 +30,9 @@ class TreeBuilderPolicySimulationResults < TreeBuilder
 
   def node_icon(result)
     case result
-    when 'allow' then '100/checkmark.png'
-    when 'N/A'   then '100/na.png'
-    else '100/x.png'
+    when 'allow' then 'pficon pficon-ok'
+    when 'N/A'   then 'fa fa-ban'
+    else 'pficon pficon-error-circle-o'
     end
   end
 
@@ -50,7 +50,7 @@ class TreeBuilderPolicySimulationResults < TreeBuilder
     data.sort_by! { |a| a[:description].downcase }.map do |node|
       {:id          => node[:id],
        :text        => prefixed_title(_('Profile'), node[:description]),
-       :image       => node_icon(node[:result]),
+       :icon        => node_icon(node[:result]),
        :policies    => node[:policies],
        :cfmeNoClick => true}
     end
@@ -61,7 +61,7 @@ class TreeBuilderPolicySimulationResults < TreeBuilder
       active_caption = node[:active] ? "" : _(" (Inactive)")
       {:id          => node['id'],
        :text        => prefixed_title("#{_('Policy')}#{active_caption}", node[:description]),
-       :image       => node_icon(node[:result]),
+       :icon        => node_icon(node[:result]),
        :conditions  => node[:conditions],
        :actions     => node[:actions],
        :scope       => node[:scope],
@@ -73,7 +73,7 @@ class TreeBuilderPolicySimulationResults < TreeBuilder
     data.map do |node|
       {:id          => node[:id],
        :text        => prefixed_title(_('Action'), node[:description]),
-       :image       => node_icon(node[:result]),
+       :icon        => node_icon(node[:result]),
        :cfmeNoClick => true}
     end
   end
@@ -82,7 +82,7 @@ class TreeBuilderPolicySimulationResults < TreeBuilder
     data.map do |node|
       {:id          => node[:id],
        :text        => prefixed_title(_('Condition'), node[:description]),
-       :image       => node_icon(node[:result]),
+       :icon        => node_icon(node[:result]),
        :expression  => node[:expression],
        :cfmeNoClick => true}
     end
@@ -93,7 +93,7 @@ class TreeBuilderPolicySimulationResults < TreeBuilder
     {:id          => nil,
      :text        => prefixed_title(_('Scope'), name),
      :tip         => tip.html_safe,
-     :image       => node_icon(data[:result]),
+     :icon        => node_icon(data[:result]),
      :cfmeNoClick => true}
   end
 
@@ -101,16 +101,16 @@ class TreeBuilderPolicySimulationResults < TreeBuilder
     name, tip = exp_build_string(data)
     image = case data["result"]
             when true
-              '100/checkmark.png'
+              'pficon pficon-ok'
             when false
-              '100/x.png'
+              'pficon-error-circle-o'
             else
-              '100/na.png'
+              'fa fa-ban'
             end
     {:id          => nil,
      :text        => prefixed_title(_('Expression'), name),
      :tip         => tip.html_safe,
-     :image       => image,
+     :icon        => image,
      :cfmeNoClick => true}
   end
 

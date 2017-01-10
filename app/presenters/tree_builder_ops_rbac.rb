@@ -28,16 +28,16 @@ class TreeBuilderOpsRbac < TreeBuilder
   def x_get_tree_roots(_count_only, _options)
     objects = []
     if ApplicationHelper.role_allows?(:feature => "rbac_user_view", :any => true)
-      objects.push(:id => "u", :text => _("Users"), :image => "100/user.png", :tip => _("Users"))
+      objects.push(:id => "u", :text => _("Users"), :icon => "pficon pficon-user", :tip => _("Users"))
     end
     if ApplicationHelper.role_allows?(:feature => "rbac_group_view", :any => true)
-      objects.push(:id => "g", :text => _("Groups"), :image => "100/group.png", :tip => _("Groups"))
+      objects.push(:id => "g", :text => _("Groups"), :icon => "product product-group", :tip => _("Groups"))
     end
     if ApplicationHelper.role_allows?(:feature => "rbac_role_view", :any => true)
-      objects.push(:id => "ur", :text => _("Roles"), :image => "100/miq_user_role.png", :tip => _("Roles"))
+      objects.push(:id => "ur", :text => _("Roles"), :icon => "product product-role", :tip => _("Roles"))
     end
     if ApplicationHelper.role_allows?(:feature => "rbac_tenant_view")
-      objects.push(:id => "tn", :text => _("Tenants"), :image => "100/tenant.png", :tip => _("Tenants"))
+      objects.push(:id => "tn", :text => _("Tenants"), :icon => "product product-tenant", :tip => _("Tenants"))
     end
     objects
   end

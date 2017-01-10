@@ -1,5 +1,5 @@
 module TreeNode
   class Container < Node
-    set_attribute(:image, '100/container.png')
+    set_attribute(:icon, 'fa fa-cube')
   end
 end

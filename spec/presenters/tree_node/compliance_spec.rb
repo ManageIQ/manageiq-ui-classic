@@ -14,11 +14,11 @@ describe TreeNode::Compliance do
   end
 
   context 'passed compliance' do
-    include_examples 'TreeNode::Node#image', '100/check.png'
+    include_examples 'TreeNode::Node#icon', 'pficon pficon-ok'
   end
 
   context 'failed compliance' do
     let(:compliant) { false }
-    include_examples 'TreeNode::Node#image', '100/x.png'
+    include_examples 'TreeNode::Node#icon', 'pficon pficon-error-circle-o'
   end
 end

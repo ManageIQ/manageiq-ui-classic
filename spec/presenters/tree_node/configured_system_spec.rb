@@ -13,7 +13,7 @@ describe TreeNode::ConfiguredSystem do
       let(:object) { FactoryGirl.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'cs-'
-      include_examples 'TreeNode::Node#image', '100/configured_system.png'
+      include_examples 'TreeNode::Node#icon', 'product product-configured_system'
       include_examples 'TreeNode::Node#tooltip prefix', 'Configured System'
     end
   end

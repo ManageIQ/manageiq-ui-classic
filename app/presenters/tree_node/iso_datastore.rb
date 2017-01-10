@@ -1,5 +1,5 @@
 module TreeNode
   class IsoDatastore < Node
-    set_attribute(:image, '100/isodatastore.png')
+    set_attribute(:icon, 'pficon pficon-server')
   end
 end

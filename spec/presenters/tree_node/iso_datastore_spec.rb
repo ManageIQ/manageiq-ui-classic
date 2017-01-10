@@ -5,5 +5,5 @@ describe TreeNode::IsoDatastore do
   let(:object) { FactoryGirl.create(:iso_datastore) }
 
   include_examples 'TreeNode::Node#key prefix', 'isd-'
-  include_examples 'TreeNode::Node#image', '100/isodatastore.png'
+  include_examples 'TreeNode::Node#icon', 'pficon pficon-server'
 end

@@ -53,15 +53,15 @@ describe TreeBuilderPolicySimulation do
       deny = @policy_simulation_tree.send(:node_icon, 'deny')
       allow = @policy_simulation_tree.send(:node_icon, 'allow')
       na = @policy_simulation_tree.send(:node_icon, 'N/A')
-      expect(deny).to eq('100/x.png')
-      expect(allow).to eq('100/checkmark.png')
-      expect(na).to eq('100/na.png')
+      expect(deny).to eq('pficon-error-circle-o')
+      expect(allow).to eq('pficon pficon-ok')
+      expect(na).to eq('fa fa-ban')
     end
 
     it 'sets Policy Profile node correctly' do
       node = @policy_simulation_tree.send(:x_get_tree_roots, false).first
       expect(node[:text]).to eq("<strong>Policy Profile:</strong> #{@data.first['description']}")
-      expect(node[:image]).to eq("100/checkmark.png")
+      expect(node[:image]).to eq("pficon pficon-ok")
       expect(node[:tip]).to eq(@data.first['description'])
       expect(node[:policies].count).to eq(2)
     end
@@ -70,11 +70,11 @@ describe TreeBuilderPolicySimulation do
       node = @policy_simulation_tree.send(:x_get_tree_roots, false).first
       kids = @policy_simulation_tree.send(:x_get_tree_hash_kids, node, false)
       expect(kids.first[:text]).to eq("<strong>Policy:</strong> #{@data.first['policies'].first['description']}")
-      expect(kids.first[:image]).to eq('100/na.png')
+      expect(kids.first[:image]).to eq('fa fa-ban')
       expect(kids.first[:tip]).to eq(@data.first['policies'].first['description'])
       expect(kids.first[:conditions].count).to eq(1)
       expect(kids.last[:text]).to eq("<strong>Policy:</strong> #{@data.first['policies'].last['description']}")
-      expect(kids.last[:image]).to eq('100/x.png')
+      expect(kids.last[:image]).to eq('pficon-error-circle-o')
       expect(kids.last[:tip]).to eq(@data.first['policies'].last['description'])
       expect(kids.last[:conditions].count).to eq(1)
     end
@@ -86,10 +86,10 @@ describe TreeBuilderPolicySimulation do
       parent_two = @policy_simulation_tree.send(:x_get_tree_hash_kids, root, false).last
       kid_two = @policy_simulation_tree.send(:x_get_tree_hash_kids, parent_two, false).first
       expect(kid_one[:text]).to eq("<strong>Condition:</strong> #{@data.first['policies'].first['conditions'].first['description']}")
-      expect(kid_one[:image]).to eq('100/x.png')
+      expect(kid_one[:image]).to eq('pficon-error-circle-o')
       expect(kid_one[:tip]).to eq(@data.first['policies'].first['conditions'].first['description'])
       expect(kid_two[:text]).to eq("<strong>Condition:</strong> #{@data.first['policies'].last['conditions'].first['description']}")
-      expect(kid_two[:image]).to eq('100/na.png')
+      expect(kid_two[:image]).to eq('fa fa-ban')
       expect(kid_two[:tip]).to eq(@data.first['policies'].last['conditions'].first['description'])
     end
 
@@ -126,7 +126,7 @@ describe TreeBuilderPolicySimulation do
     it 'sets Policy Profile node correctly if no data found' do
       node = @policy_simulation_tree.send(:x_get_tree_roots, false).first
       expect(node[:text]).to eq("Items out of scope")
-      expect(node[:image]).to eq("100/blank.png")
+      expect(node[:icon]).to eq("fa fa-ban")
       expect(node[:cfmeNoClick]).to eq(true)
     end
   end

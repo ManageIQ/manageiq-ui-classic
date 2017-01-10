@@ -28,7 +28,7 @@ class TreeBuilderChargebackReports < TreeBuilder
         objects.push(
           :id    => "#{to_cid(item.miq_report_id)}-#{idx}",
           :text  => item.miq_report.name,
-          :image => "100/report.png",
+          :icon  => "product product-report",
           :tip   => item.name
         )
       end

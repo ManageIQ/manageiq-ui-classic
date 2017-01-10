@@ -7,7 +7,7 @@ describe TreeNode::ServerRole do
   subject { described_class.new(object, nil, {}) }
 
   include_examples 'TreeNode::Node#key prefix', 'role-'
-  include_examples 'TreeNode::Node#image', '100/role.png'
+  include_examples 'TreeNode::Node#icon', 'product product-role'
 
   describe '#title' do
     it 'returns with title' do

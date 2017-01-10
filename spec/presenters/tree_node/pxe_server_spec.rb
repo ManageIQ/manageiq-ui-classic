@@ -5,5 +5,5 @@ describe TreeNode::PxeServer do
   let(:object) { FactoryGirl.create(:pxe_server) }
 
   include_examples 'TreeNode::Node#key prefix', 'ps-'
-  include_examples 'TreeNode::Node#image', '100/pxeserver.png'
+  include_examples 'TreeNode::Node#icon', 'pficon pficon-server'
 end

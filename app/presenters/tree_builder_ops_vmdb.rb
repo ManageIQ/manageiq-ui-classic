@@ -50,7 +50,7 @@ class TreeBuilderOpsVmdb < TreeBuilderOps
         {
           :id            => to_cid(object.id.to_s).to_s,
           :text          => _("Indexes"),
-          :image         => "100/folder.png",
+          :icon          => "pficon pficon-folder-close",
           :tip           => _("Indexes"),
           :load_children => true
         }

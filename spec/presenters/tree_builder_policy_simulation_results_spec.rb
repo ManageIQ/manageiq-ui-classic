@@ -55,7 +55,7 @@ describe TreeBuilderPolicySimulationResults do
       profiles_one = @rsop_tree.send(:x_get_tree_hash_kids, vms.first, false)
       profiles_two = @rsop_tree.send(:x_get_tree_hash_kids, vms.last, false)
       expect(profiles_one.first[:text]).to eq("<strong>Profile:</strong> #{original_vms.first[:profiles].first[:description]}")
-      expect(profiles_one.first[:image]).to eq(@rsop_tree.send(:node_icon, original_vms.first[:profiles].first[:result]))
+      expect(profiles_one.first[:icon]).to eq(@rsop_tree.send(:node_icon, original_vms.first[:profiles].first[:result]))
       expect(profiles_two).to eq([])
     end
 
@@ -65,7 +65,7 @@ describe TreeBuilderPolicySimulationResults do
       profiles = @rsop_tree.send(:x_get_tree_hash_kids, vms.first, false)
       policies = @rsop_tree.send(:x_get_tree_hash_kids, profiles.first, false)
       expect(policies.first[:text]).to eq("<strong>Policy (Inactive):</strong> #{original_vms.first[:profiles].first[:policies].first[:description]}")
-      expect(policies.first[:image]).to eq('100/x.png')
+      expect(policies.first[:icon]).to eq('pficon pficon-error-circle-o')
     end
 
     it 'sets condition and action nodes correctly' do
@@ -75,9 +75,9 @@ describe TreeBuilderPolicySimulationResults do
       policies = @rsop_tree.send(:x_get_tree_hash_kids, profiles.first, false)
       conditions_and_actions = @rsop_tree.send(:x_get_tree_hash_kids, policies.first, false)
       expect(conditions_and_actions.first[:text]).to eq("<strong>Condition:</strong> #{original_vms.first[:profiles].first[:policies].first[:conditions].first[:description]}")
-      expect(conditions_and_actions.first[:image]).to eq('100/x.png')
+      expect(conditions_and_actions.first[:icon]).to eq('pficon pficon-error-circle-o')
       expect(conditions_and_actions[1][:text]).to eq("<strong>Action:</strong> #{original_vms.first[:profiles].first[:policies].first[:actions][0][:description]}")
-      expect(conditions_and_actions[1][:image]).to eq('100/x.png')
+      expect(conditions_and_actions[1][:icon]).to eq('pficon pficon-error-circle-o')
     end
   end
 end

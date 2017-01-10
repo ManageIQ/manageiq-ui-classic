@@ -54,7 +54,7 @@ describe TreeBuilderRolesByServer do
     it 'returns Roles by Servers' do
       nodes = [{'key'     => "svr-#{MiqRegion.compress_id(@miq_server.id)}",
                 'tooltip' => "Server: #{@miq_server.name} [#{@miq_server.id}] (current) (started)",
-                'image'   => ActionController::Base.helpers.image_path('100/miq_server.png'),
+                'icon'    => "pficon pficon-server",
                 'text'    => "<strong>Server: #{@miq_server.name} [#{@miq_server.id}] (current) (started)</strong>",
                 'nodes'   => [{'key'   => "asr-#{MiqRegion.compress_id(@assigned_server_role1.id)}",
                                'image' => ActionController::Base.helpers.image_path('100/on.png'),
