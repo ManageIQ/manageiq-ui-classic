@@ -14,7 +14,10 @@ class TreeBuilderReportSavedReports < TreeBuilderReportReportsClass
   end
 
   def root_options
-    [t = _("All Saved Reports"), t]
+    {
+      :title   => t = _("All Saved Reports"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree
@@ -27,7 +30,7 @@ class TreeBuilderReportSavedReports < TreeBuilderReportReportsClass
     end
     objects = []
     folder_ids.sort.each_with_index do |p|
-      objects.push(:id => p[1], :text => p[0], :image => '100/report.png', :tip => p[0])
+      objects.push(:id => p[1], :text => p[0], :icon => 'product product-report', :tip => p[0])
     end
     count_only_or_objects(count_only, objects)
   end

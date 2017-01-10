@@ -14,7 +14,10 @@ class TreeBuilderAeClass < TreeBuilder
   end
 
   def root_options
-    [t = _("Datastore"), t]
+    {
+      :title   => t = _("Datastore"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree

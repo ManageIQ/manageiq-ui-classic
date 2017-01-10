@@ -555,8 +555,7 @@ module OpsController::Diagnostics
     # @edit[:new][:end_date] = "#{t.month}/#{t.day}/#{t.year}" # Set the start date
     @edit[:new][:end_date] = ""
 
-    tz = MiqServer.my_server.get_config("vmdb").config[:server][:timezone]
-    @edit[:new][:timezone] = tz.blank? ? "UTC" : tz
+    @edit[:new][:timezone] = ::Settings.server.timezone
   end
 
   def cu_repair_get_form_vars

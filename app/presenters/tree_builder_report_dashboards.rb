@@ -16,7 +16,10 @@ class TreeBuilderReportDashboards < TreeBuilder
   end
 
   def root_options
-    [t = _("All Dashboards"), t]
+    {
+      :title   => t = _("All Dashboards"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree
@@ -24,8 +27,8 @@ class TreeBuilderReportDashboards < TreeBuilder
     objects = []
     default_ws = MiqWidgetSet.find_by(:name => 'default', :read_only => true)
     text = "#{default_ws.description} (#{default_ws.name})"
-    objects.push(:id => to_cid(default_ws.id), :text => text, :image => '100/dashboard.png', :tip => text)
-    objects.push(:id => 'g', :text => _('All Groups'), :image => '100/folder.png', :tip => _('All Groups'))
+    objects.push(:id => to_cid(default_ws.id), :text => text, :icon => 'fa fa-tachometer', :tip => text)
+    objects.push(:id => 'g', :text => _('All Groups'), :icon => 'pficon pficon-folder-close', :tip => _('All Groups'))
     count_only_or_objects(count_only, objects)
   end
 

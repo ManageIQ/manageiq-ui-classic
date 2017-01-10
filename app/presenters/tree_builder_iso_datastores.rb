@@ -13,7 +13,10 @@ class TreeBuilderIsoDatastores < TreeBuilder
   end
 
   def root_options
-    [t = _("All ISO Datastores"), t]
+    {
+      :title   => t = _("All ISO Datastores"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree
@@ -33,7 +36,7 @@ class TreeBuilderIsoDatastores < TreeBuilder
         objects.push(
           :id    => "isd_xx-#{to_cid(object.id)}",
           :text  => _("ISO Images"),
-          :image => "100/folder.png",
+          :icon  => "pficon pficon-folder-close",
           :tip   => _("ISO Images")
         )
       end

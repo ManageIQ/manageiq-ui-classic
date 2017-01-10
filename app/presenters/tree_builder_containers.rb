@@ -16,7 +16,10 @@ class TreeBuilderContainers < TreeBuilder
 
   # level 0 - root
   def root_options
-    [t = _("All Containers (by Pods)"), t]
+    {
+      :title   => t = _("All Containers (by Pods)"),
+      :tooltip => t
+    }
   end
 
   # level 1 - pods
@@ -27,7 +30,7 @@ class TreeBuilderContainers < TreeBuilder
         :id          => c.id,
         :text        => c.name,
         :tip         => c.ems_ref,
-        :image       => "100/folder.png",
+        :icon        => "pficon pficon-folder-close",
         :cfmeNoClick => true
       }
     end

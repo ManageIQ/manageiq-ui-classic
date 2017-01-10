@@ -14,7 +14,7 @@ describe TreeNode::CustomizationTemplate do
       let(:object) { FactoryGirl.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'ct-'
-      include_examples 'TreeNode::Node#image', '100/customizationtemplate.png'
+      include_examples 'TreeNode::Node#icon', 'product product-template'
     end
   end
 end

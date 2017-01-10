@@ -8,6 +8,6 @@ describe TreeNode::MiqAeClass do
   end
 
   include_examples 'TreeNode::Node#key prefix', 'aec-'
-  include_examples 'TreeNode::Node#image', '100/ae_class.png'
+  include_examples 'TreeNode::Node#icon', 'product product-ae_class'
   include_examples 'TreeNode::Node#tooltip prefix', 'Automate Class'
 end

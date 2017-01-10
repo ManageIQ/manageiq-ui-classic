@@ -24,7 +24,7 @@ class TreeBuilderDatastores < TreeBuilder
   end
 
   def root_options
-    []
+    {}
   end
 
   def x_get_tree_roots(count_only = false, _options)
@@ -35,9 +35,17 @@ class TreeBuilderDatastores < TreeBuilder
           {:name => kid.name}
         end
       end
+
+      title = ViewHelper.capture do
+        ViewHelper.concat_tag(:strong, node[:name])
+        ViewHelper.concat ' ['
+        ViewHelper.concat node[:location]
+        ViewHelper.concat ']'
+      end
+
       { :id          => node[:id].to_s,
-        :text        => "<b>#{node[:name]}</b> [#{node[:location]}]".html_safe,
-        :image       => '100/storage.png',
+        :text        => title,
+        :icon        => 'fa fa-database',
         :tip         => "#{node[:name]} [#{node[:location]}]",
         :select      => node[:capture] == true,
         :cfmeNoClick => true,
@@ -50,7 +58,7 @@ class TreeBuilderDatastores < TreeBuilder
     nodes = parent[:children].map do |node|
       { :id           => node[:name],
         :text         => node[:name],
-        :image        => '100/host.png',
+        :icon         => 'pficon pficon-screen',
         :tip          => node[:name],
         :hideCheckbox => true,
         :cfmeNoClick  => true,

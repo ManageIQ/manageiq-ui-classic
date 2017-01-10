@@ -8,7 +8,10 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
   end
 
   def root_options
-    [t = _("Object Types"), t]
+    {
+      :title   => t = _("Object Types"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree

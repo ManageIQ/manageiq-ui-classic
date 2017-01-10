@@ -9,7 +9,7 @@ describe TreeNode::Container do
       let(:object) { FactoryGirl.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'cnt-'
-      include_examples 'TreeNode::Node#image', '100/container.png'
+      include_examples 'TreeNode::Node#icon', 'fa fa-cube'
     end
   end
 end

@@ -5,5 +5,5 @@ describe TreeNode::ResourcePool do
   let(:object) { FactoryGirl.create(:resource_pool) }
 
   include_examples 'TreeNode::Node#key prefix', 'r-'
-  include_examples 'TreeNode::Node#image', '100/resource_pool.png'
+  include_examples 'TreeNode::Node#icon', 'pficon pficon-resource-pool'
 end

@@ -28,7 +28,7 @@ describe TreeBuilderComplianceHistory do
       tree_options = @ch_tree.send(:tree_init_options, :ch)
       root = @ch_tree.send(:root_options)
       expect(tree_options[:add_root]).to eq(false)
-      expect(root).to eq([])
+      expect(root).to eq({})
     end
     it 'returns Compliance as root kids' do
       kids = @ch_tree.send(:x_get_tree_roots, false)
@@ -51,7 +51,7 @@ describe TreeBuilderComplianceHistory do
       expect(kid).to eq(:id          => "#{parent.id}-nopol",
                         :text        => "No Compliance Policies Found",
                         :cfmeNoClick => true,
-                        :image       => "100/#{parent.id}-nopol.png",
+                        :icon        => "fa fa-ban",
                         :tip         => nil)
       expect(kid).to be_a_kind_of(Hash)
       expect(@ch_tree.send(:x_get_tree_custom_kids, kid, true, {})).to eq(0)

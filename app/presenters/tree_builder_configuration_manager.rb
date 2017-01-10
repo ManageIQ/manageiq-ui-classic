@@ -16,7 +16,10 @@ class TreeBuilderConfigurationManager < TreeBuilder
   end
 
   def root_options
-    [t = _("All Configuration Manager Providers"), t]
+    {
+      :title   => t = _("All Configuration Manager Providers"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree
@@ -25,13 +28,13 @@ class TreeBuilderConfigurationManager < TreeBuilder
     objects.push(:id            => "fr",
                  :tree          => "fr_tree",
                  :text          => _("%{name} Providers") % {:name => ui_lookup(:ui_title => 'foreman')},
-                 :image         => "100/folder.png",
+                 :icon          => "pficon pficon-folder-close",
                  :tip           => _("%{name} Providers") % {:name => ui_lookup(:ui_title => 'foreman')},
                  :load_children => true)
     objects.push(:id            => "at",
                  :tree          => "at_tree",
                  :text          => _("Ansible Tower Providers"),
-                 :image         => "100/folder.png",
+                 :icon          => "pficon pficon-folder-close",
                  :tip           => _("Ansible Tower Providers"),
                  :load_children => true)
     count_only_or_objects(count_only, objects)

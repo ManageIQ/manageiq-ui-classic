@@ -5,5 +5,5 @@ describe TreeNode::Storage do
   let(:object) { FactoryGirl.create(:storage) }
 
   include_examples 'TreeNode::Node#key prefix', 'ds-'
-  include_examples 'TreeNode::Node#image', '100/storage.png'
+  include_examples 'TreeNode::Node#icon', 'fa fa-database'
 end

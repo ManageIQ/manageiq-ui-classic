@@ -1,6 +1,6 @@
 module TreeNode
   class Snapshot < Node
-    set_attribute(:image, '100/snapshot.png')
+    set_attribute(:icon, 'fa fa-camera')
     set_attribute(:tooltip, &:name)
     set_attribute(:title) do
       if @object.current?

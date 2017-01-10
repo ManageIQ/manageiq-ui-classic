@@ -11,7 +11,10 @@ class TreeBuilderStoragePod < TreeBuilder
   end
 
   def root_options
-    [t = _("All Datastore Clusters"), t]
+    {
+      :title   => t = _("All Datastore Clusters"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree
@@ -25,7 +28,7 @@ class TreeBuilderStoragePod < TreeBuilder
           :id            => item[:id],
           :tree          => "dsc_tree",
           :text          => item[:name],
-          :image         => "100/folder.png",
+          :icon          => "pficon pficon-folder-close",
           :tip           => item[:description],
           :load_children => true
         }

@@ -20,7 +20,10 @@ class TreeBuilderReportReports < TreeBuilderReportReportsClass
   end
 
   def root_options
-    [t = _("All Reports"), t]
+    {
+      :title   => t = _("All Reports"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree
@@ -30,7 +33,7 @@ class TreeBuilderReportReports < TreeBuilderReportReportsClass
       objects.push(
         :id    => i.to_s,
         :text  => r[0],
-        :image => (@grp_title == r[0] ? '100/blue_folder.png' : '100/folder.png'),
+        :icon  => "pficon #{@grp_title == r[0] ? 'pficon-folder-close-blue' : 'pficon-folder-close'}",
         :tip   => r[0]
       )
       # load next level of folders when building the tree
@@ -47,7 +50,7 @@ class TreeBuilderReportReports < TreeBuilderReportReportsClass
         objects.push(
           :id    => "#{nodes.last.split('-').last}-#{i}",
           :text  => r[0],
-          :image => (@grp_title == @rpt_menu[nodes.last.to_i][0] ? '100/blue_folder.png' : '100/folder.png'),
+          :icon  => "pficon #{@grp_title == @rpt_menu[nodes.last.to_i][0] ? 'pficon-folder-close-blue' : 'pficon-folder-close'}",
           :tip   => r[0]
         )
       end

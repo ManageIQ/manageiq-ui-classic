@@ -174,11 +174,11 @@ class TreeBuilder
   end
 
   def add_root_node(nodes)
-    root = nodes.first
-    root[:title], root[:tooltip], icon, options = root_options
-    root[:image] = ActionController::Base.helpers.image_path(icon || "100/folder.png")
-    if options.present?
-      root.merge!(options)
+    root = nodes.first.merge!(root_options)
+    if root[:image]
+      root[:image] = ActionController::Base.helpers.image_path(root[:image])
+    else
+      root[:icon] ||= 'pficon pficon-folder-close' # Fall back to the folder fonticon
     end
   end
 
@@ -332,6 +332,14 @@ class TreeBuilder
   def open_node(id)
     open_nodes = @tree_state.x_tree(@name)[:open_nodes]
     open_nodes.push(id) unless open_nodes.include?(id)
+  end
+
+  def prefixed_title(prefix, title)
+    ViewHelper.capture do
+      ViewHelper.concat_tag(:strong, "#{prefix}:")
+      ViewHelper.concat ' '
+      ViewHelper.concat title
+    end
   end
 
   def resolve_object_lambdas(count_only, objects)

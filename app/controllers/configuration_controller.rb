@@ -13,7 +13,6 @@ class ConfigurationController < ApplicationController
 
   def index
     @breadcrumbs = []
-    @config_tab = params[:config_tab] ? params[:config_tab] : "ui"
     active_tab = nil
     if role_allows?(:feature => "my_settings_visuals")
       active_tab = 1 if active_tab.nil?
@@ -24,24 +23,8 @@ class ConfigurationController < ApplicationController
     elsif role_allows?(:feature => "my_settings_time_profiles")
       active_tab = 4 if active_tab.nil?
     end
-    @tabform = params[:load_edit_err] ? @tabform : @config_tab + "_#{active_tab}"
-    case @config_tab
-    when "operations", "ui", "filters"
-      if @tabform == "operations_1" || @tabform == "operations_2"
-        init_server_options
-        @server_options[:server_id] = MiqServer.my_server.id
-        @server_options[:remote] = false
-      end
-      if (@tabform == "filters_1")
-        @tabform = @config_tab + "_2"
-      end
-      if (@tabform == "filters_2")
-        @tabform = @config_tab + "_3"
-      end
-      edit
-    when "admin"
-      show_users
-    end
+    @tabform = params[:load_edit_err] ? @tabform : "ui_#{active_tab}"
+    edit
     render :action => "show"
   end
 
@@ -79,7 +62,7 @@ class ConfigurationController < ApplicationController
 
   # New tab was pressed
   def change_tab
-    @tabform = @config_tab + "_" + params[:tab] if params[:tab] != "5"
+    @tabform = "ui_" + params[:tab] if params[:tab] != "5"
     edit
     render :action => "show"
   end
@@ -490,19 +473,17 @@ class ConfigurationController < ApplicationController
 
   def build_tabs
     @breadcrumbs = []
-    if @config_tab == "ui"
-      if @tabform != "ui_4"
-        drop_breadcrumb({:name => _("User Interface Configuration"), :url => "/configuration/edit"}, true)
-      end
-
-      @active_tab = @tabform.split("_").last
-
-      @tabs = []
-      @tabs.push(["1", _("Visual")])          if role_allows?(:feature => "my_settings_visuals")
-      @tabs.push(["2", _("Default Views")])   if role_allows?(:feature => "my_settings_default_views")
-      @tabs.push(["3", _("Default Filters")]) if role_allows?(:feature => "my_settings_default_filters")
-      @tabs.push(["4", _("Time Profiles")])   if role_allows?(:feature => "my_settings_time_profiles")
+    if @tabform != "ui_4"
+      drop_breadcrumb({:name => _("User Interface Configuration"), :url => "/configuration/edit"}, true)
     end
+
+    @active_tab = @tabform.split("_").last
+
+    @tabs = []
+    @tabs.push(["1", _("Visual")])          if role_allows?(:feature => "my_settings_visuals")
+    @tabs.push(["2", _("Default Views")])   if role_allows?(:feature => "my_settings_default_views")
+    @tabs.push(["3", _("Default Filters")]) if role_allows?(:feature => "my_settings_default_filters")
+    @tabs.push(["4", _("Time Profiles")])   if role_allows?(:feature => "my_settings_time_profiles")
   end
 
   def merge_in_user_settings(settings)
@@ -531,9 +512,7 @@ class ConfigurationController < ApplicationController
 
       current_tz = @edit.fetch_path(:current, :display, :timezone)
       if current_tz.blank?
-        new_tz = MiqServer.my_server.get_config("vmdb").config[:server][:timezone]
-        new_tz = 'UTC' if new_tz.blank?
-        @edit.store_path(:current, :display, :timezone, new_tz)
+        @edit.store_path(:current, :display, :timezone, ::Settings.server.timezone)
       end
     when 'ui_2'
       @edit = {
@@ -621,14 +600,12 @@ class ConfigurationController < ApplicationController
   def get_session_data
     @title        = session[:config_title] ? _("Configuration") : session[:config_title]
     @layout       = "configuration"
-    @config_tab   = session[:config_tab]        if session[:config_tab]
     @tabform      = session[:config_tabform]    if session[:config_tabform]
     @schema_ver   = session[:config_schema_ver] if session[:config_schema_ver]
     @zone_options = session[:zone_options]      if session[:zone_options]
   end
 
   def set_session_data
-    session[:config_tab]        = @config_tab
     session[:config_tabform]    = @tabform
     session[:config_schema_ver] = @schema_ver
     session[:vm_filters]        = @filters

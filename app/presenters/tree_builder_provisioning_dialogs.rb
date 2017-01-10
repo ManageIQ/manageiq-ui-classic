@@ -6,7 +6,10 @@ class TreeBuilderProvisioningDialogs < TreeBuilderAeCustomization
   end
 
   def root_options
-    [t = _("All Dialogs"), t]
+    {
+      :title   => t = _("All Dialogs"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree
@@ -15,7 +18,7 @@ class TreeBuilderProvisioningDialogs < TreeBuilderAeCustomization
       {
         :id    => "MiqDialog_#{typ[1]}",
         :text  => typ[0],
-        :image => "100/folder.png",
+        :icon  => "pficon pficon-folder-close",
         :tip   => typ[0]
       }
     end

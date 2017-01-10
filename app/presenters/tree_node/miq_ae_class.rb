@@ -1,5 +1,5 @@
 module TreeNode
   class MiqAeClass < MiqAeNode
-    set_attribute(:image, '100/ae_class.png')
+    set_attribute(:icon, 'product product-ae_class')
   end
 end

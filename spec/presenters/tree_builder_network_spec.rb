@@ -15,9 +15,12 @@ describe TreeBuilderNetwork do
     end
     it 'returns Host as root' do
       root = @network_tree.send(:root_options)
-      expect(root[0]).to eq(@network_tree.instance_variable_get(:@root).name)
-      expect(root[1]).to eq(_("Host: %{name}") % {:name => @network_tree.instance_variable_get(:@root).name})
-      expect(root[2]).to eq('100/host.png')
+      expect(root).to eq(
+        :title       => @network_tree.instance_variable_get(:@root).name,
+        :tooltip     => _("Host: %{name}") % {:name => @network_tree.instance_variable_get(:@root).name},
+        :image       => '100/host.png',
+        :cfmeNoClick => true
+      )
     end
     it 'returns Switch as root child' do
       kid = @network_tree.send(:x_get_tree_roots, false)

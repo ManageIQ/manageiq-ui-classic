@@ -9,6 +9,6 @@ describe TreeNode::Snapshot do
   end
 
   include_examples 'TreeNode::Node#key prefix', 'sn-'
-  include_examples 'TreeNode::Node#image', '100/snapshot.png'
+  include_examples 'TreeNode::Node#icon', 'fa fa-camera'
   include_examples 'TreeNode::Node#tooltip same as #title'
 end

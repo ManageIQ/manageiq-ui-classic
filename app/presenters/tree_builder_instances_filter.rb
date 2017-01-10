@@ -13,6 +13,9 @@ class TreeBuilderInstancesFilter < TreeBuilderVmsFilter
   end
 
   def root_options
-    [_("All Instances"), _("All of the Instances that I can see")]
+    {
+      :title   => _("All Instances"),
+      :tooltip => _("All of the Instances that I can see")
+    }
   end
 end

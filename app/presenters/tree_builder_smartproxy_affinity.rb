@@ -28,7 +28,7 @@ class TreeBuilderSmartproxyAffinity < TreeBuilder
   end
 
   def root_options
-    []
+    {}
   end
 
   def x_get_tree_roots(count_only = false, _options)
@@ -37,9 +37,9 @@ class TreeBuilderSmartproxyAffinity < TreeBuilder
   end
 
   def x_get_server_kids(parent, count_only = false)
-    nodes = %w(host storage).map do |kid|
+    nodes = {'host' => 'pficon pficon-screen', "storage" => 'fa fa-database'}.map do |kid, icon|
       {:id          => "#{parent.id}__#{kid}",
-       :image       => "100/#{kid}.png",
+       :icon        => icon,
        :parent      => parent,
        :text        => Dictionary.gettext(kid.camelcase, :type => :model, :notfound => :titleize, :plural => true),
        :cfmeNoClick => true,
@@ -53,7 +53,7 @@ class TreeBuilderSmartproxyAffinity < TreeBuilder
     affinities = parent[:parent].send("vm_scan_#{parent[:smartproxy_kind]}_affinity").collect(&:id) if parent[:parent].present?
     nodes = parent[:children].map do |kid|
       {:id          => "#{parent[:id]}_#{kid.id}",
-       :image       => parent[:image],
+       :icon        => parent[:icon],
        :text        => kid.name,
        :select      => affinities.include?(kid.id),
        :cfmeNoClick => true,

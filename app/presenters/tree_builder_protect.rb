@@ -21,7 +21,7 @@ class TreeBuilderProtect < TreeBuilder
   end
 
   def root_options
-    []
+    {}
   end
 
   def x_get_tree_roots(count_only = false, _options)
@@ -40,9 +40,8 @@ class TreeBuilderProtect < TreeBuilder
 
   def x_get_tree_hash_kids(parent, count_only)
     nodes = parent[:children].map do |policy|
-      text = "<b>#{ui_lookup(:model => policy.towhat)} #{policy.mode.capitalize}:</b> #{policy.description}"
       {:id           => "policy_#{policy.id}",
-       :text         => text.html_safe,
+       :text         => prefixed_title("#{ui_lookup(:model => policy.towhat)} #{policy.mode.capitalize}", policy.description),
        :image        => "100/miq_policy_#{policy.towhat.downcase}#{policy.active ? "" : "_inactive"}.png",
        :tip          => policy.description,
        :hideCheckbox => true,

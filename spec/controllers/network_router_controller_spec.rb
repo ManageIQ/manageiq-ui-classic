@@ -1,7 +1,5 @@
-require Rails.root.join('spec/shared/controllers/shared_examples_for_network_router_controller')
-
 describe NetworkRouterController do
-  include_examples :shared_examples_for_network_router_controller, %w(openstack azure google)
+  include_examples :shared_examples_for_network_router_controller, %w(openstack azure google amazon)
 
   context "#button" do
     before(:each) do
@@ -148,7 +146,7 @@ describe NetworkRouterController do
       let(:queue_options) do
         {
           :class_name  => @router.class.name,
-          :method_name => 'update_network_router',
+          :method_name => 'raw_update_network_router',
           :instance_id => @router.id,
           :priority    => MiqQueue::HIGH_PRIORITY,
           :role        => 'ems_operations',
@@ -189,7 +187,7 @@ describe NetworkRouterController do
       let(:queue_options) do
         {
           :class_name  => @router.class.name,
-          :method_name => 'delete_network_router',
+          :method_name => 'raw_delete_network_router',
           :instance_id => @router.id,
           :priority    => MiqQueue::HIGH_PRIORITY,
           :role        => 'ems_operations',

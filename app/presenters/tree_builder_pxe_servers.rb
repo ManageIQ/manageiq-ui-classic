@@ -13,7 +13,10 @@ class TreeBuilderPxeServers < TreeBuilder
   end
 
   def root_options
-    [t = _("All PXE Servers"), t]
+    {
+      :title   => t = _("All PXE Servers"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree
@@ -35,14 +38,14 @@ class TreeBuilderPxeServers < TreeBuilder
         open_nodes.push("pxe_xx-#{to_cid(object.id)}") unless open_nodes.include?("pxe_xx-#{to_cid(object.id)}")
         objects.push(:id    => "pxe_xx-#{to_cid(object.id)}",
                      :text  => _("PXE Images"),
-                     :image => "100/folder.png",
+                     :icon  => "pficon pficon-folder-close",
                      :tip   => _("PXE Images"))
       end
       if win_images.size > 0
         open_nodes.push("win_xx-#{to_cid(object.id)}") unless open_nodes.include?("win_xx-#{to_cid(object.id)}")
         objects.push(:id    => "win_xx-#{to_cid(object.id)}",
                      :text  => _("Windows Images"),
-                     :image => "100/folder.png",
+                     :icon  => "pficon pficon-folder-close",
                      :tip   => _("Windows Images"))
       end
       objects

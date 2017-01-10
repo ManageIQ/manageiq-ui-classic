@@ -5,5 +5,5 @@ describe TreeNode::Tenant do
   let(:object) { FactoryGirl.create(:tenant) }
 
   include_examples 'TreeNode::Node#key prefix', 'tn-'
-  include_examples 'TreeNode::Node#image', '100/tenant.png'
+  include_examples 'TreeNode::Node#icon', 'product product-tenant'
 end

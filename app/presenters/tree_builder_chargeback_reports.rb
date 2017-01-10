@@ -11,7 +11,10 @@ class TreeBuilderChargebackReports < TreeBuilder
   end
 
   def root_options
-    [t = _("Saved Chargeback Reports"), t]
+    {
+      :title   => t = _("Saved Chargeback Reports"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree
@@ -28,7 +31,7 @@ class TreeBuilderChargebackReports < TreeBuilder
         objects.push(
           :id    => "#{to_cid(item.miq_report_id)}-#{idx}",
           :text  => item.miq_report.name,
-          :image => "100/report.png",
+          :icon  => "product product-report",
           :tip   => item.name
         )
       end

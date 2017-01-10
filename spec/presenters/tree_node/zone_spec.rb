@@ -5,6 +5,6 @@ describe TreeNode::Zone do
   subject { described_class.new(object, nil, {}) }
 
   include_examples 'TreeNode::Node#key prefix', 'z-'
-  include_examples 'TreeNode::Node#image', '100/zone.png'
+  include_examples 'TreeNode::Node#icon', 'pficon pficon-zone'
   include_examples 'TreeNode::Node#tooltip same as #title'
 end

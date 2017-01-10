@@ -5,7 +5,7 @@ describe TreeNode::CustomButtonSet do
   let(:object) { FactoryGirl.create(:custom_button_set, :description => "custom button set description") }
 
   include_examples 'TreeNode::Node#key prefix', 'cbg-'
-  include_examples 'TreeNode::Node#image', '100/folder.png'
+  include_examples 'TreeNode::Node#icon', 'pficon pficon-folder-close'
 
   describe "#tooltip" do
     it "returns the prefixed title" do

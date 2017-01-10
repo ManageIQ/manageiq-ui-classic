@@ -5,7 +5,7 @@ describe TreeNode::MiqScsiLun do
   let(:object) { FactoryGirl.create(:miq_scsi_lun, :canonical_name => 'foo') }
 
   include_examples 'TreeNode::Node#key prefix', 'sl-'
-  include_examples 'TreeNode::Node#image', '100/lun.png'
+  include_examples 'TreeNode::Node#icon', 'fa fa-database'
   include_examples 'TreeNode::Node#tooltip prefix', 'LUN'
 
   describe '#title' do

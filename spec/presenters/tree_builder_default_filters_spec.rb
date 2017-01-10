@@ -73,13 +73,13 @@ describe TreeBuilderDefaultFilters do
       tree_options = @default_filters_tree.send(:tree_init_options, :df)
       root = @default_filters_tree.send(:root_options)
       expect(tree_options[:add_root]).to eq(false)
-      expect(root).to eq([])
+      expect(root).to eq({})
     end
 
     it 'returns folders as root kids' do
       kids = @default_filters_tree.send(:x_get_tree_roots, false)
       kids.each do |kid|
-        expect(kid[:image]).to eq('100/folder.png')
+        expect(kid[:icon]).to eq('pficon pficon-folder-close')
         expect(kid[:hideCheckbox]).to eq(true)
         expect(kid[:cfmeNoClick]).to eq(true)
       end
@@ -96,19 +96,19 @@ describe TreeBuilderDefaultFilters do
           if offsprings.kind_of?(Hash)
             kids = @default_filters_tree.send(:x_get_tree_hash_kids, parent, false)
             kids.each do |kid|
-              expect(kid[:image]).to eq('100/folder.png')
+              expect(kid[:icon]).to eq('pficon pficon-folder-close')
               expect(kid[:hideCheckbox]).to eq(true)
               expect(kid[:cfmeNoClick]).to eq(true)
               grandkids = @default_filters_tree.send(:x_get_tree_hash_kids, kid, false)
               grandkids.each_with_index do |grandkid, index|
-                expect(grandkid[:image]).to eq('100/filter.png')
+                expect(grandkid[:icon]).to eq('fa fa-filter')
                 expect(grandkid[:select]).to eq(offsprings[kid[:text]][index][:search_key] != "_hidden_")
               end
             end
           else
             kids = @default_filters_tree.send(:x_get_tree_hash_kids, parent, false)
             kids.each_with_index do |kid, index|
-              expect(kid[:image]).to eq('100/filter.png')
+              expect(kid[:icon]).to eq('fa fa-filter')
               expect(kid[:select]).to eq(offsprings[index][:search_key] != "_hidden_")
             end
           end

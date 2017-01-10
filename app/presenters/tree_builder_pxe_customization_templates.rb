@@ -13,7 +13,10 @@ class TreeBuilderPxeCustomizationTemplates < TreeBuilder
   def root_options
     title = _("All %{template} - %{type}") % {:template => ui_lookup(:models => 'CustomizationTemplate'),
                                               :type     => ui_lookup(:models => 'PxeImageType')}
-    [title, title]
+    {
+      :title   => title,
+      :tooltip => title
+    }
   end
 
   # Get root nodes count/array for explorer tree
@@ -26,10 +29,10 @@ class TreeBuilderPxeCustomizationTemplates < TreeBuilder
       objects = []
       objects.push(:id    => "xx-system",
                    :text  => _("Examples (read only)"),
-                   :image => "100/folder.png",
+                   :icon  => "pficon pficon-folder-close",
                    :tip   => _("Examples (read only)"))
       PxeImageType.all.sort.each do |item, _idx|
-        objects.push(:id => "xx-#{to_cid(item.id)}", :text => item.name, :image => "100/folder.png", :tip => item.name)
+        objects.push(:id => "xx-#{to_cid(item.id)}", :text => item.name, :icon => "pficon pficon-folder-close", :tip => item.name)
       end
       objects
     end

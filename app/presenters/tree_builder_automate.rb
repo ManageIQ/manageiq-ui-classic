@@ -19,7 +19,11 @@ class TreeBuilderAutomate < TreeBuilderAeClass
   end
 
   def root_options
-    [t = _("Datastore"), t, nil, {:cfmeNoClick => true}]
+    {
+      :title       => t = _("Datastore"),
+      :tooltip     => t,
+      :cfmeNoClick => true
+    }
   end
 
   def set_locals_for_render

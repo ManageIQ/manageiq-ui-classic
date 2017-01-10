@@ -1,5 +1,5 @@
 module TreeNode
   class MiqSchedule < Node
-    set_attribute(:image, '100/miq_schedule.png')
+    set_attribute(:icon, 'fa fa-clock-o')
   end
 end

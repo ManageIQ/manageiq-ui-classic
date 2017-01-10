@@ -15,7 +15,11 @@ class TreeBuilderReportExport < TreeBuilder
   end
 
   def root_options
-    [t = _("Import / Export"), t, '100/report.png']
+    {
+      :title   => t = _("Import / Export"),
+      :tooltip => t,
+      :image   => '100/report.png'
+    }
   end
 
   # Get root nodes count/array for explorer tree
@@ -23,10 +27,10 @@ class TreeBuilderReportExport < TreeBuilder
     export_children = [
       {:id    => 'exportcustomreports',
        :text  => _('Custom Reports'),
-       :image => '100/report.png'},
+       :icon  => 'product product-report'},
       {:id    => 'exportwidgets',
        :text  => _('Widgets'),
-       :image => '100/report.png'}
+       :icon  => 'product product-report'}
     ]
     count_only_or_objects(count_only, export_children)
   end

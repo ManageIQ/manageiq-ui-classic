@@ -21,6 +21,14 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 5.0.0", ">= 5.0.0.1"
 
+  s.add_dependency "angular-ui-bootstrap-rails", "~>0.13.0"
+  s.add_dependency "coffee-rails"
+  s.add_dependency "jquery-hotkeys-rails"
+  s.add_dependency "lodash-rails", "~>3.10.0"
+  s.add_dependency "patternfly-sass", "~> 3.15.0"
+  s.add_dependency "sass-rails"
+
   s.add_development_dependency "codeclimate-test-reporter", "~> 1.0.0"
+  s.add_development_dependency "guard-rspec", '~> 4.7.3'
   s.add_development_dependency "simplecov"
 end

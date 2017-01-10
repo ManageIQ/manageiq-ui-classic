@@ -16,7 +16,10 @@ class TreeBuilderServices < TreeBuilder
   end
 
   def root_options
-    [t = _("All Services"), t]
+    {
+      :title   => t = _("All Services"),
+      :tooltip => t
+    }
   end
 
   # Get root nodes count/array for explorer tree

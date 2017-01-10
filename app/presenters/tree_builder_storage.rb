@@ -11,14 +11,17 @@ class TreeBuilderStorage < TreeBuilder
   end
 
   def root_options
-    [t = _("All Datastores"), t]
+    {
+      :title   => t = _("All Datastores"),
+      :tooltip => t
+    }
   end
 
   def x_get_tree_roots(count_only, _options)
     objects =
       [
-        {:id => "global", :text => _("Global Filters"), :image => "100/folder.png", :tip => _("Global Shared Filters"), :cfmeNoClick => true},
-        {:id => "my",     :text => _("My Filters"),     :image => "100/folder.png", :tip => _("My Personal Filters"),   :cfmeNoClick => true}
+        {:id => "global", :text => _("Global Filters"), :icon => "pficon pficon-folder-close", :tip => _("Global Shared Filters"), :cfmeNoClick => true},
+        {:id => "my",     :text => _("My Filters"),     :icon => "pficon pficon-folder-close", :tip => _("My Personal Filters"),   :cfmeNoClick => true}
       ]
     count_only_or_objects(count_only, objects)
   end

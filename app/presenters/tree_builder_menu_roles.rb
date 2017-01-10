@@ -33,7 +33,11 @@ class TreeBuilderMenuRoles < TreeBuilder
   end
 
   def root_options
-    [t = _("Top Level"), t, nil, {:key => "xx-b__Report Menus for #{role_choice}"}]
+    {
+      :title   => t = _("Top Level"),
+      :tooltip => t,
+      :key     => "xx-b__Report Menus for #{role_choice}"
+    }
   end
 
   # Typically another method will populate the children of a root object.
@@ -47,7 +51,7 @@ class TreeBuilderMenuRoles < TreeBuilder
 
       {
         :id      => "p__#{i.first}",
-        :image   => "100/folder.png",
+        :icon    => "pficon pficon-folder-close",
         :text    => i.first,
         :tooltip => i.first,
         :data    => grandkids
@@ -74,7 +78,7 @@ class TreeBuilderMenuRoles < TreeBuilder
   def build_middle_child(parent_name, item)
     {
       :id      => "s__#{parent_name}:#{item.first}",
-      :image   => "100/folder.png",
+      :icon    => "pficon pficon-folder-close",
       :text    => item.first,
       :tooltip => item.first,
       :data    => item.last
@@ -84,7 +88,7 @@ class TreeBuilderMenuRoles < TreeBuilder
   def build_last_child(child)
     {
       :id          => child,
-      :image       => "100/report.png",
+      :icon        => "product product-report",
       :text        => child,
       :tooltip     => child,
       :cfmeNoClick => true,

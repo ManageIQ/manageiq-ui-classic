@@ -1,5 +1,5 @@
 module TreeNode
   class MiqReport < Node
-    set_attribute(:image, '100/report.png')
+    set_attribute(:icon, 'product product-report')
   end
 end

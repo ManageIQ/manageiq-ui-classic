@@ -28,7 +28,11 @@ class TreeBuilderUtilization < TreeBuilderRegion
                                                                            :product => I18n.t('product.name')}
       icon  = '100/miq_region.png'
     end
-    [title, title, icon]
+    {
+      :title   => title,
+      :tooltip => title,
+      :image   => icon
+    }
   end
 
   def x_get_tree_ems_kids(object, count_only)
@@ -44,7 +48,7 @@ class TreeBuilderUtilization < TreeBuilderRegion
       {
         :id    => "folder_c_xx-#{to_cid(object.id)}",
         :text  => _("Cluster / Deployment Role"),
-        :image => "100/folder.png",
+        :icon  => "pficon pficon-folder-close",
         :tip   => _("Cluster / Deployment Role (Click to open)")
       }
     ]

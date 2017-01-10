@@ -12,18 +12,21 @@ class TreeBuilderCondition < TreeBuilder
 
   # level 0 - root
   def root_options
-    [t = N_("All Conditions"), t]
+    {
+      :title   => t = _("All Conditions"),
+      :tooltip => t
+    }
   end
 
   # level 1 - host / vm
   def x_get_tree_roots(count_only, _options)
-    text_i18n = {:Host                => N_("Host Conditions"),
-                 :Vm                  => N_("VM and Instance Conditions"),
-                 :ContainerReplicator => N_("Replicator Conditions"),
-                 :ContainerGroup      => N_("Pod Conditions"),
-                 :ContainerNode       => N_("Container Node Conditions"),
-                 :ContainerImage      => N_("Container Image Conditions"),
-                 :ExtManagementSystem => N_("Container Provider Conditions")}
+    text_i18n = {:Host                => _("Host Conditions"),
+                 :Vm                  => _("VM and Instance Conditions"),
+                 :ContainerReplicator => _("Replicator Conditions"),
+                 :ContainerGroup      => _("Pod Conditions"),
+                 :ContainerNode       => _("Container Node Conditions"),
+                 :ContainerImage      => _("Container Image Conditions"),
+                 :ExtManagementSystem => _("Container Provider Conditions")}
 
     objects = MiqPolicyController::UI_FOLDERS.collect do |model|
       text = text_i18n[model.name.to_sym]

@@ -1,5 +1,5 @@
 module TreeNode
   class VmdbIndex < Node
-    set_attribute(:image, '100/vmdbindex.png')
+    set_attribute(:icon, 'fa fa-table')
   end
 end
