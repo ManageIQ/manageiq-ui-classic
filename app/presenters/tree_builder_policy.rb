@@ -15,20 +15,20 @@ class TreeBuilderPolicy < TreeBuilder
   end
 
   def compliance_control_kids(mode)
-    text_i18n = {:compliance => {:Host                => N_("Host Compliance Policies"),
-                                 :Vm                  => N_("Vm Compliance Policies"),
-                                 :ContainerReplicator => N_("Replicator Compliance Policies"),
-                                 :ContainerGroup      => N_("Pod Compliance Policies"),
-                                 :ContainerNode       => N_("Container Node Compliance Policies"),
-                                 :ContainerImage      => N_("Container Image Compliance Policies"),
-                                 :ExtManagementSystem => N_("Provider Compliance Policies")},
-                 :control    => {:Host                => N_("Host Control Policies"),
-                                 :Vm                  => N_("Vm Control Policies"),
-                                 :ContainerReplicator => N_("Replicator Control Policies"),
-                                 :ContainerGroup      => N_("Pod Control Policies"),
-                                 :ContainerNode       => N_("Container Node Control Policies"),
-                                 :ContainerImage      => N_("Container Image Control Policies"),
-                                 :ExtManagementSystem => N_("Provider Control Policies")}}
+    text_i18n = {:compliance => {:Host                => _("Host Compliance Policies"),
+                                 :Vm                  => _("Vm Compliance Policies"),
+                                 :ContainerReplicator => _("Replicator Compliance Policies"),
+                                 :ContainerGroup      => _("Pod Compliance Policies"),
+                                 :ContainerNode       => _("Container Node Compliance Policies"),
+                                 :ContainerImage      => _("Container Image Compliance Policies"),
+                                 :ExtManagementSystem => _("Provider Compliance Policies")},
+                 :control    => {:Host                => _("Host Control Policies"),
+                                 :Vm                  => _("Vm Control Policies"),
+                                 :ContainerReplicator => _("Replicator Control Policies"),
+                                 :ContainerGroup      => _("Pod Control Policies"),
+                                 :ContainerNode       => _("Container Node Control Policies"),
+                                 :ContainerImage      => _("Container Image Control Policies"),
+                                 :ExtManagementSystem => _("Provider Control Policies")}}
 
     MiqPolicyController::UI_FOLDERS.collect do |model|
       text = text_i18n[mode.to_sym][model.name.to_sym]
@@ -50,8 +50,8 @@ class TreeBuilderPolicy < TreeBuilder
   # level 1 - compliance & control
   def x_get_tree_roots(count_only, _options)
     objects = []
-    objects << {:id => "compliance", :text => N_("Compliance Policies"), :icon => "pficon pficon-history", :tip => N_("Compliance Policies")}
-    objects << {:id => "control", :text => N_("Control Policies"), :icon => "fa fa-shield", :tip => N_("Control Policies")}
+    objects << {:id => "compliance", :text => _("Compliance Policies"), :icon => "pficon pficon-history", :tip => _("Compliance Policies")}
+    objects << {:id => "control", :text => _("Control Policies"), :icon => "fa fa-shield", :tip => _("Control Policies")}
 
     # Push folder node ids onto open_nodes array
     objects.each { |o| open_node("xx-#{o[:id]}") }
