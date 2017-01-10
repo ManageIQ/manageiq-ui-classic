@@ -6,9 +6,8 @@ class TreeBuilderNetwork < TreeBuilder
     node[:cfmeNoClick] = true unless node[:image].include?('100/currentstate-')
   end
 
-  def initialize(name, type, sandbox, build = true, root = nil, vm_kids = [])
+  def initialize(name, type, sandbox, build = true, root = nil)
     sandbox[:network_root] = TreeBuilder.build_node_id(root) if root
-    @tree_vms = vm_kids
     @root = root
     unless @root
       model, id = TreeBuilder.extract_node_model_and_id(sandbox[:network_root])
@@ -55,7 +54,6 @@ class TreeBuilderNetwork < TreeBuilder
     if parent.respond_to?("vms_and_templates") && parent.vms_and_templates.present?
       kids = count_only_or_objects(count_only, parent.vms_and_templates, "name")
     end
-    @tree_vms.concat(kids) unless count_only
     kids
   end
 end

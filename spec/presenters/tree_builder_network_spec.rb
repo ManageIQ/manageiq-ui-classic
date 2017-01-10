@@ -13,6 +13,7 @@ describe TreeBuilderNetwork do
       network = FactoryGirl.create(:host, :switches => [switch])
       @network_tree = TreeBuilderNetwork.new(:network_tree, :network, {}, true, network)
     end
+
     it 'returns Host as root' do
       root = @network_tree.send(:root_options)
       expect(root).to eq(
@@ -22,21 +23,25 @@ describe TreeBuilderNetwork do
         :cfmeNoClick => true
       )
     end
+
     it 'returns Switch as root child' do
       kid = @network_tree.send(:x_get_tree_roots, false)
       expect(kid.first).to be_a_kind_of(Switch)
     end
+
     it 'returns GuestDevice and Lan as Switch children' do
       parent = @network_tree.send(:x_get_tree_roots, false).first
       kids = @network_tree.send(:x_get_tree_switch_kids, parent, false)
       expect(kids[0]).to be_a_kind_of(GuestDevice)
       expect(kids[1]).to be_a_kind_of(Lan)
     end
+
     it 'returns Vm as Lan child' do
       parent = @network_tree.send(:x_get_tree_roots, false).first.lans.first
       kid = @network_tree.send(:x_get_tree_lan_kids, parent, false)
       expect(kid.first).to be_a_kind_of(Vm)
     end
+
     it 'returns nothing as GuestDevice child' do
       parent = @network_tree.send(:x_get_tree_roots, false).first.guest_devices.first
       number_of_kids = @network_tree.send(:x_get_tree_objects, parent, {}, true, nil)
