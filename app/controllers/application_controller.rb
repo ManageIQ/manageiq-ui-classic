@@ -296,11 +296,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def build_vm_host_array
-    @tree_hosts = Host.where(:id => (@sb[:tree_hosts_hash] || {}).keys)
-    @tree_vms   = Vm.where(:id => (@sb[:tree_vms_hash] || {}).keys)
-  end
-
   # Common method to show a standalone report
   def report_only
     @report_only = true                 # Indicate stand alone report for views
