@@ -22,10 +22,14 @@ class TreeBuilderTags < TreeBuilder
   end
 
   def contain_selected_kid(category)
-    category.entries.any? do |entry|
-      path = "#{category.name}-#{entry.name}"
-      (@edit && @edit[:new][:filters].key?(path)) || (@filters && @filters.key?(path))
-    end
+    return false unless @edit || @filters
+    category.entries.any? { |entry| selected_entry_value(category, entry) }
+  end
+
+  def selected_entry_value(category, entry)
+    return false unless @edit || @filters
+    path = "#{category.name}-#{entry.name}"
+    (@edit && @edit.fetch_path(:new, :filters, path)) || (@filters && @filters.key?(path))
   end
 
   def set_locals_for_render
@@ -44,6 +48,7 @@ class TreeBuilderTags < TreeBuilder
   end
 
   def x_get_tree_roots(count_only, _options)
+    return @categories.size if count_only
     # open node if at least one of his kids is selected
     if @edit.present? || @filters.present?
       @categories.each do |c|
@@ -56,12 +61,7 @@ class TreeBuilderTags < TreeBuilder
   def x_get_classification_kids(parent, count_only)
     return parent.entries.size if count_only
     kids = parent.entries.map do |kid|
-      select = if @edit.blank? && @filters.blank?
-                 false
-               else
-                 kid_id = "#{parent.name}-#{kid.name}"
-                 (@edit && @edit.fetch_path(:new, :filters, kid_id)) || (@filters && @filters.key?(kid_id))
-               end
+      select = selected_entry_value(parent, kid)
       {:id          => kid.id,
        :image       => '100/tag.png',
        :text        => kid.description,
