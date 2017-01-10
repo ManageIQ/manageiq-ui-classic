@@ -50,7 +50,10 @@
             :display       => 'images',
             :tables        => 'template_cloud')
         - if role_allows?(:feature => "orchestration_stack_show_list")
+          - stacks_title = title_for_stacks
           = li_link(:count => @record.number_of(:orchestration_stacks),
             :record        => @record,
             :display       => 'orchestration_stacks',
-            :tables        => 'orchestration_stack')
+            :tables        => 'orchestration_stack',
+            :link_text     => stacks_title,
+            :title         => _("Show all %{stacks}") % {:stacks => stacks_title})

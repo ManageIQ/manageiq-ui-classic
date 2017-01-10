@@ -70,7 +70,7 @@ module EmsCommon
                                           :storage_managers],
       "miq_templates"                 => [MiqTemplate,            _("Templates")],
       "vms"                           => [Vm,                     _("VMs")],
-      "orchestration_stacks"          => [OrchestrationStack,     _("Stacks")],
+      "orchestration_stacks"          => [OrchestrationStack,     title_for_stacks],
       # "configuration_jobs"            => [ConfigurationJob, _("Configuration Jobs")],
       "cloud_object_store_containers" => [CloudObjectStoreContainer, _('Cloud Object Store Containers')],
       'containers'                    => [Container,              _('Containers')],
