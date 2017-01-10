@@ -25,7 +25,7 @@ describe TreeBuilderGenealogy do
 
   describe '#set_locals_for_render' do
     it 'sets locals for render correctly' do
-      expect(subject.send(:set_locals_for_render)).to include(:click_url  => "/vm/vmtree_selected/",
+      expect(subject.send(:set_locals_for_render)).to include(:click_url  => "/vm/genealogy_tree_selected/",
                                                               :onclick    => "miqOnClickGenealogyTree",
                                                               :checkboxes => true,
                                                               :oncheck    => "miqGetChecked",
