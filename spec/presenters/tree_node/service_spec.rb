@@ -5,5 +5,5 @@ describe TreeNode::Service do
   let(:object) { FactoryGirl.create(:service) }
 
   include_examples 'TreeNode::Node#key prefix', 's-'
-  include_examples 'TreeNode::Node#image', '100/service.png'
+  include_examples 'TreeNode::Node#icon', 'product product-service'
 end
