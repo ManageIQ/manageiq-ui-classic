@@ -152,10 +152,10 @@ module MiqPolicyController::AlertProfiles
     end
     if params.key?(:id)
       if params[:check] == "1"
-        @assign[:new][:objects].push(params[:id].split("_").last.to_i)
+        @assign[:new][:objects].push(params[:id].split("-").last.to_i)
         @assign[:new][:objects].sort!
       else
-        @assign[:new][:objects].delete(params[:id].split("_").last.to_i)
+        @assign[:new][:objects].delete(params[:id].split("-").last.to_i)
       end
     end
 
@@ -241,6 +241,7 @@ module MiqPolicyController::AlertProfiles
           root_node[:children].push(node)
         end
         tree = TreeBuilder.convert_bs_tree(root_node).to_json
+        @new_tree = TreeBuilderAlertProfileObj.new(:object_tree, :object, @sb, true, @assign)
       end
     end
     tree
