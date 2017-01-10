@@ -8,7 +8,7 @@ class TreeBuilderEvent < TreeBuilder
   # level 0 - root
   def root_options
     {
-      :title   => t = N_("All Events"),
+      :title   => t = _("All Events"),
       :tooltip => t
     }
   end

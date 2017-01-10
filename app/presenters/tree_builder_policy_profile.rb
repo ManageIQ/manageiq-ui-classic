@@ -18,7 +18,7 @@ class TreeBuilderPolicyProfile < TreeBuilder
   # level 0 - root
   def root_options
     {
-      :title   => t = N_("All Policy Profiles"),
+      :title   => t = _("All Policy Profiles"),
       :tooltip => t
     }
   end
