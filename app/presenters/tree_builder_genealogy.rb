@@ -3,7 +3,7 @@ class TreeBuilderGenealogy < TreeBuilder
 
   def override(node, object, _pid, _options)
     if object == @vm
-      node[:title] = node[:title] << _(' (Selected)')
+      node[:title] = _("%{item} (Selected)") % {:item => node[:title]}
       node[:highlighted] = true
       node[:expand] = true
     end
@@ -34,22 +34,23 @@ class TreeBuilderGenealogy < TreeBuilder
     )
   end
 
-  def vm_image(vm)
+  def vm_icon_image(vm)
     if vm.template?
-      return vm.host ? "100/template.png" : "100/template-no-host.png"
+      {:icon => "product product-template"}
     elsif vm.retired
-      return '100/retired.png'
+      {:image => '100/retired.png'}
+    else
+      {:image => "100/#{vm.current_state.downcase}.png"}
     end
-    "100/#{vm.current_state.downcase}.png"
   end
 
   def root_options
     if @vm.parent.present?
-      [@vm.parent.name + _(" (Parent)"),
-       _("VM: %{name} (Click to view)") % {:name => @vm.parent.name},
-       vm_image(@vm.parent)]
+      {:title   => @vm.parent.name + _(" (Parent)"),
+       :tooltip => _("VM: %{name} (Click to view)") % {:name => @vm.parent.name}}.merge(vm_icon_image(@vm.parent))
     else
-      [@vm.name, _("VM: %{name} (Click to view)") % {:name => @vm.name}, vm_image(@vm)]
+      {:title   => @vm.name,
+       :tooltip => _("VM: %{name} (Click to view)") % {:name => @vm.name}}.merge(vm_icon_image(@vm))
     end
   end
 

@@ -232,7 +232,7 @@ function miqOnClickTagCat(id) {
 
 // OnClick handler for Genealogy Tree
 function miqOnClickGenealogyTree(id) {
-    miqJqueryRequest(ManageIQ.tree.clickUrl + id, {beforeSend: true, complete: true});
+  miqJqueryRequest(ManageIQ.tree.clickUrl + id, {beforeSend: true, complete: true});
 }
 
 // OnCheck handler for the SmartProxy Affinity tree
