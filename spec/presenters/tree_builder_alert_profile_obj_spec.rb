@@ -15,6 +15,9 @@ describe TreeBuilderAlertProfileObj do
     f1.entries.push(tag3a)
     f1
   end
+  let!(:tag1b) { FactoryGirl.create(:tenant, :name => 'tag1b') }
+  let!(:tag2b) { FactoryGirl.create(:tenant, :name => 'tag2b') }
+  let!(:tag3b) { FactoryGirl.create(:tenant, :name => 'tag3b') }
   let!(:tree_name) { :alert_profile_obj }
 
   subject do
@@ -22,7 +25,7 @@ describe TreeBuilderAlertProfileObj do
     @assign[:new] = {}
     @assign[:new][:assign_to] = 'storage-tags'
     @assign[:new][:cat] = folder1a.id
-    @assign[:new][:objects] = []
+    @assign[:new][:objects] = [tag1a.id, tag2a.id]
     described_class.new(:alert_profile_obj_tree, :alert_profile_obj, {}, true, @assign)
   end
 
@@ -44,9 +47,17 @@ describe TreeBuilderAlertProfileObj do
 
   describe '#override' do
     it 'set node' do
+      binding.pry
       node = subject.send(:override, {}, tag1a, nil, nil)
       expect(node[:cfmeNoClick]).to eq(true)
       expect(node[:hideCheckbox]).to eq(false)
+      expect(node[:select]).to eq(true)
+
+      node = subject.send(:override, {}, tag2a, nil, nil)
+      expect(node[:select]).to eq(true)
+
+      node = subject.send(:override, {}, tag3a, nil, nil)
+      expect(node[:select]).to eq(false)
     end
   end
 
@@ -62,4 +73,38 @@ describe TreeBuilderAlertProfileObj do
       expect(s).to eq([tag1a, tag2a, tag3a].sort_by { |o| (o.name.presence || o.description).downcase } )
     end
   end
+
+=begin
+  subject do
+    @assign = {}
+    @assign[:new] = {}
+    @assign[:new][:assign_to] = 'tenant'
+    @assign[:new][:objects] = [tag1b.id]
+    described_class.new(:alert_profile_obj_tree, :alert_profile_obj, {}, true, @assign)
+  end
+
+  describe '#x_get_tree_roots' do
+    it 'sets first level nodes correctly' do
+      binding.pry
+      s = subject.send(:x_get_tree_roots, false, nil)
+      expect(s).to eq([tag1b, tag2b, tag3b].sort_by { |o| (o.name.presence || o.description).downcase } )
+    end
+  end
+
+  describe '#override' do
+    it 'set node' do
+      node = subject.send(:override, {}, tag1b, nil, nil)
+      expect(node[:cfmeNoClick]).to eq(true)
+      expect(node[:hideCheckbox]).to eq(false)
+      expect(node[:select]).to eq(true)
+
+      node = subject.send(:override, {}, tag2b, nil, nil)
+      expect(node[:select]).to eq(false)
+
+      node = subject.send(:override, {}, tag3b, nil, nil)
+      expect(node[:select]).to eq(false)
+    end
+  end
+=end
+
 end
