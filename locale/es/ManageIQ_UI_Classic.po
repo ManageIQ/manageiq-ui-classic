@@ -30286,7 +30286,7 @@ msgstr "No hay paneles definidos para este grupo. Se mostrará el panel predeter
 
 #: ../app/views/report/_db_list.html.haml:99
 msgid "Click to view '%{widgetset_description} (%{widgetset_name})'"
-msgstr "Haga clic para ver '%{asistenteset_description} (%{asistenteset_name})'"
+msgstr "Haga clic para ver '%{widgetset_description} (%{widgetset_name})'"
 
 #: ../app/views/report/_db_seq_form.html.haml:11
 msgid "Dashboards:"
