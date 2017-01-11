@@ -39,6 +39,6 @@
       sortColIdx: '#{@sortcol}',
       sortDir: '#{@sortdir}',
       isExplorer: '#{@explorer}' === 'true' ? true : false,
-      showUrl: '#{view_to_url(@view) if !@view.nil? && !@view.db.nil?}'
+      showUrl: '#{view_to_url(@view) if @view.present? && @view.db.present?}'
     }
   }});
