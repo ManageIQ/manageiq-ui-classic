@@ -12,12 +12,6 @@ class ContainerController < ApplicationController
     'container_perf'     => :show_performance
   }
 
-  def button
-    custom_buttons if params[:pressed] == "custom_button"
-    # custom button screen, so return, let custom_buttons method handle everything
-    return if ["custom_button"].include?(params[:pressed])
-  end
-
   def x_button
     generic_x_button(CONTAINER_X_BUTTON_ALLOWED_ACTIONS)
   end
