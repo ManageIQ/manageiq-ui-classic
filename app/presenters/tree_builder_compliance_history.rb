@@ -53,7 +53,7 @@ class TreeBuilderComplianceHistory < TreeBuilder
   def get_policy_elm(parent, node)
     {:id          => "#{parent.id}-p_#{node.miq_policy_id}",
      :text        => prefixed_title(_('Condition'), node.condition_desc),
-     :image       => node.condition_result ? "100/check.png" : "100/x.png",
+     :icon        => node.condition_result ? "pficon pficon-ok" : "pficon pficon-error-circle-o",
      :tip         => nil,
      :cfmeNoClick => true}
   end

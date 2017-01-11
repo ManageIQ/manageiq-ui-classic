@@ -2,22 +2,23 @@ module TreeNode
   class MiqAeNamespace < MiqAeNode
     include MiqAeClassHelper
 
-    set_attribute(:image) do
+    set_attributes(:icon, :image) do
       # Having a "flat" case here makes the code more readable
       # rubocop:disable LiteralInCondition
       case true
       when !@object.domain?
-        'svg/ae_namespace.svg'
+        icon = 'pficon pficon-folder-close'
       when @object.git_enabled?
-        'svg/ae_git_domain.svg'
+        image = 'svg/ae_git_domain.svg'
       when @object.name == MiqAeDatastore::MANAGEIQ_DOMAIN
-        '100/miq.png'
+        icon = 'product product-product'
       when !@object.top_level_namespace
-        '100/ae_domain.png'
+        icon = 'fa fa-globe'
       else
-        "svg/vendor-#{@object.top_level_namespace.downcase}.svg"
+        image = "svg/vendor-#{@object.top_level_namespace.downcase}.svg"
       end
       # rubocop:enable LiteralInCondition
+      [icon, image]
     end
 
     set_attribute(:klass) { @object.domain? && @object.enabled? ? nil : 'striketrough' }

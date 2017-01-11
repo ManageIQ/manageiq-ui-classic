@@ -24,7 +24,7 @@ class TreeBuilderOpsRbac < TreeBuilder
     {
       :title   => title,
       :tooltip => title,
-      :image   => '100/miq_region.png'
+      :icon    => 'pficon pficon-regions'
     }
   end
 

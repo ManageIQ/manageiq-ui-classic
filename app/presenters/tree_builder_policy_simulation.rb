@@ -27,7 +27,7 @@ class TreeBuilderPolicySimulation < TreeBuilder
     {
       :title       => ViewHelper.content_tag(:strong, @root_name),
       :tooltip     => @root_name,
-      :image       => '100/vm.png',
+      :icon        => 'pficon pficon-virtual-machine',
       :cfmeNoClick => true
     }
   end
@@ -51,7 +51,7 @@ class TreeBuilderPolicySimulation < TreeBuilder
       nodes = reject_na_nodes(@data).map do |node|
         {:id          => node['id'],
          :text        => prefixed_title(_('Policy Profile'), node['description']),
-         :image       => node_icon(node["result"]),
+         :icon        => node_icon(node["result"]),
          :tip         => node['description'],
          :cfmeNoClick => true,
          :policies    => node['policies']}
@@ -85,9 +85,9 @@ class TreeBuilderPolicySimulation < TreeBuilder
   def policy_nodes(parent)
     parent[:policies].reject { |node| skip_node?(node) }.sort_by { |a| a["description"] }.map do |node|
       active_caption = get_active_caption(node)
-      {:id         => node['id'],
+      {:id          => node['id'],
        :text        => prefixed_title(_('Policy%{caption}') % {:caption => active_caption}, node['description']),
-       :image       => node_icon(node["result"]),
+       :icon        => node_icon(node["result"]),
        :tip         => node['description'],
        :scope       => node['scope'],
        :conditions  => node['conditions'],
@@ -100,7 +100,7 @@ class TreeBuilderPolicySimulation < TreeBuilder
     nodes = nodes.sort_by { |a| a["description"] }.map do |node|
       {:id          => node['id'],
        :text        => prefixed_title(_('Condition'), node['description']),
-       :image       => node_icon(node["result"]),
+       :icon        => node_icon(node["result"]),
        :tip         => node['description'],
        :scope       => node['scope'],
        :expression  => node["expression"],
@@ -110,15 +110,15 @@ class TreeBuilderPolicySimulation < TreeBuilder
   end
 
   def scope_node(parent)
-    icon = parent[:scope]["result"] ? "100/checkmark.png" : "100/na.png"
+    icon = parent[:scope]["result"] ? "pficon pficon-ok" : "fa fa-ban"
     text, tip = exp_build_string(parent[:scope])
-    {:id => nil, :text => prefixed_title(_('Scope'), text), :image => icon, :tip => tip, :cfmeNoClick => true}
+    {:id => nil, :text => prefixed_title(_('Scope'), text), :icon => icon, :tip => tip, :cfmeNoClick => true}
   end
 
   def expression_node(parent)
-    icon = parent[:expression]["result"] ? "100/checkmark.png" : "100/na.png"
+    icon = parent[:expression]["result"] ? "pficon pficon-ok" : "fa fa-ban"
     text, tip = exp_build_string(parent[:expression])
-    {:id => nil, :text => prefixed_title(_('Expression'), text), :image => icon, :tip => tip, :cfmeNoClick => true}
+    {:id => nil, :text => prefixed_title(_('Expression'), text), :icon => icon, :tip => tip, :cfmeNoClick => true}
   end
 
   def get_correct_node(parent, node_name)

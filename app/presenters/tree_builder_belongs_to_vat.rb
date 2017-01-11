@@ -15,7 +15,7 @@ class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
     end
     if object.kind_of?(EmsFolder)
       if blue?(object)
-        node[:icon] = ActionController::Base.helpers.image_path("100/blue_folder.png")
+        node[:icon] = "pficon pficon-folder-close-blue"
       else
         node[:hideCheckbox] = true
       end

@@ -21,7 +21,7 @@ describe TreeBuilderDatacenter do
       expect(root).to eq(
         :title   => @datacenter_tree.instance_variable_get(:@root).name,
         :tooltip => "Cluster: #{@datacenter_tree.instance_variable_get(:@root).name}",
-        :image   => "100/cluster.png"
+        :icon    => "pficon pficon-cluster"
       )
     end
 
@@ -58,7 +58,7 @@ describe TreeBuilderDatacenter do
       expect(root).to eq(
         :title   => @datacenter_tree.instance_variable_get(:@root).name,
         :tooltip => "Resource Pool: #{@datacenter_tree.instance_variable_get(:@root).name}",
-        :image   => @datacenter_tree.instance_variable_get(:@root).vapp ? '100/vapp.png' : '100/resource_pool.png'
+        :icon    => "pficon-resource-pool"
       )
     end
 
