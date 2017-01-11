@@ -318,12 +318,12 @@ class ProviderForemanController < ApplicationController
     when "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem", "ConfiguredSystem"
       options = configured_system_list(id, model)
     when "MiqSearch"
-      options = miq_search_node
+      miq_search_node
     else
       if unassigned_configuration_profile?(treenodeid)
-        options = configuration_profile_node(id, model)
+        configuration_profile_node(id, model)
       else
-        options = default_node
+        default_node
       end
     end
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && x_tree[:type] == :configuration_manager_cs_filter && @edit && @edit[:adv_search_applied]

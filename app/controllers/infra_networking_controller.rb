@@ -303,19 +303,19 @@ class InfraNetworkingController < ApplicationController
       id = nil
     end
 
-    case model
+    options = case model
     when  "ExtManagementSystem"
-      options = provider_switches_list(id, ExtManagementSystem)
+      provider_switches_list(id, ExtManagementSystem)
     when  "Host"
-      options = host_switches_list(id, Host)
+      host_switches_list(id, Host)
     when "EmsCluster"
-      options = cluster_switches_list(id, EmsCluster)
+      cluster_switches_list(id, EmsCluster)
     when "Switch"
-      options = dvswitch_node(id, Switch)
+      dvswitch_node(id, Switch)
     when "MiqSearch"
-      options = miq_search_node
+      miq_search_node
     else
-      options = default_node
+      default_node
     end
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && @edit && @edit[:adv_search_applied]
 

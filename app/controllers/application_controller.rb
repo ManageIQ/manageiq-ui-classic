@@ -270,7 +270,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Private method for processing params.
-  # params can contain these oprions:
+  # params can contain these options:
   # @param params parameters object.
   # @option params :explorer [String]
   #     String value of boolean if we are fetching data for explorer or not. "true" | "false"
@@ -1665,7 +1665,8 @@ class ApplicationController < ActionController::Base
 
     # Save the paged_view_search_options for download buttons to use later
     session[:paged_view_search_options] = {
-      :parent                    => parent ? minify_ar_object(parent) : nil, # Make a copy of parent object (to avoid saving related objects)
+       # Make a copy of parent object (to avoid saving related objects)
+      :parent                    => parent ? minify_ar_object(parent) : nil,
       :parent_method             => options[:parent_method],
       :targets_hash              => true,
       :association               => association,

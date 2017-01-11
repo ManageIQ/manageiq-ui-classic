@@ -14,7 +14,7 @@ miqHttpInject(ManageIQ.angular.app);
 ManageIQ.angular.rxSubject = new Rx.Subject();
 
 ManageIQ.constants = {
-  reportData: 'report_data'
+  reportData: 'report_data',
 };
 
 function miqHttpInject(angular_app) {
