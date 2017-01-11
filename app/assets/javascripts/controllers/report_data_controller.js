@@ -1,19 +1,11 @@
-(function(){
+(function() {
   var COTNROLLER_NAME = 'reportDataController';
   var MAIN_CONTETN_ID = 'main-content';
-  var PAGINATION_CLASS = 'miq-pagination';
-  var CLASSES_TO_WIDTH = {
-    'col-md-12': 100,
-    'col-md-11': 91,
-    'col-md-10': 83,
-    'col-md-9': 75,
-    'col-md-8': 66,
-    'col-md-7': 58
-  };
 
   /**
   * Private method for setting rootPoint of MiQEndpointsService.
-  * @param MiQEndpointsService service responsible for endpoits.
+  * @param {Object} MiQEndpointsService service responsible for endpoits.
+  * @returns {undefined}
   */
   function initEndpoints(MiQEndpointsService) {
     MiQEndpointsService.rootPoint = '/' + ManageIQ.controller;
@@ -23,6 +15,7 @@
   /**
   * Method for init paging component for GTL.
   * Default paging has 5, 10, 20, 50, 100, 1000
+  * @returns {Object} pagination object.
   */
   function defaultPaging() {
     return {
@@ -37,14 +30,15 @@
         {id: 'per_page_20', text: 20, value: 20, hidden: false, enabled: true},
         {id: 'per_page_50', text: 50, value: 50, hidden: false, enabled: true},
         {id: 'per_page_100', text: 100, value: 100, hidden: false, enabled: true},
-        {id: 'per_page_1000', text: 1000, value: 1000, hidden: false, enabled: true}
-      ]
+        {id: 'per_page_1000', text: 1000, value: 1000, hidden: false, enabled: true},
+      ],
     };
   }
 
   /**
   * Private method for subscribing to rxSubject.
   * For success functuon @see ToolbarController#onRowSelect()
+  * @returns {undefined}
   */
   function subscribeToSubject() {
     this.subscription = ManageIQ.angular.rxSubject.subscribe(function(event) {
@@ -56,10 +50,10 @@
         this.setExtraClasses();
       }
     }.bind(this),
-    function (err) {
+    function(err) {
       console.error('Angular RxJs Error: ', err);
     },
-    function () {
+    function() {
       console.debug('Angular RxJs subject completed, no more events to catch.');
     });
   }
@@ -67,45 +61,59 @@
   /**
   * Constructor for GTL controller. This constructor will init params accessible via `this` property and calls
   * initEndpoints, subscribes to subject, and sets default paging.
-  * @param MiQDataTableService datatable service for fetching GTL data and filtering them.
-  * @param MiQEndpointsService service for setting basic routes.
-  * @param $filter angular filter Service.
+  * @param {Object} MiQDataTableService datatable service for fetching GTL data and filtering them.
+  * @param {Object} MiQEndpointsService service for setting basic routes.
+  * @param {Object} $filter angular filter Service.
+  * @param {Object} $location angular location object.
+  * @param {Object} $scope current scope.
+  * @param {Object} $document angular's document service.
+  * @param {Object} $timeout angular's timeout service.
+  * @returns {undefined}
   */
-  var ReportDataController = function(MiQDataTableService, MiQEndpointsService, $filter, $location, $scope) {
+  var ReportDataController = function(MiQDataTableService,
+                                      MiQEndpointsService,
+                                      $filter,
+                                      $location,
+                                      $scope,
+                                      $document,
+                                      $timeout) {
     this.settings = {};
     this.MiQDataTableService = MiQDataTableService;
     this.MiQEndpointsService = MiQEndpointsService;
     this.$filter = $filter;
     this.$scope = $scope;
     this.$location = $location;
+    this.$document = $document;
+    this.$timeout = $timeout;
     initEndpoints(this.MiQEndpointsService);
     subscribeToSubject.bind(this)();
     this.perPage = defaultPaging();
-  }
+  };
 
   ReportDataController.prototype.setSort = function(headerId, isAscending) {
     if (this.gtlData.cols[headerId]) {
       this.settings.sortBy = {
         sortObject: this.gtlData.cols[headerId],
-        isAscending: isAscending
+        isAscending: isAscending,
       };
     }
-  }
+  };
 
   ReportDataController.prototype.onUnsubscribe = function() {
     this.subscription.dispose();
-  }
+  };
 
   /**
   * Method for handeling sort function. This will be called when sort of items will be needed. This method will set
   * sort object to settings and calls method for filtering and sorting.
-  * @param headerId ID of column which is sorted by.
-  * @param isAscending true | false.
+  * @param {Number} headerId ID of column which is sorted by.
+  * @param {Boolean} isAscending true | false.
+  * @returns {undefined}
   */
   ReportDataController.prototype.onSort = function(headerId, isAscending) {
     this.setSort(headerId, isAscending);
     this.initController(this.initObject);
-  }
+  };
 
   ReportDataController.prototype.setPaging = function(start, perPage) {
     this.perPage.value = perPage;
@@ -113,48 +121,52 @@
     this.settings.perpage = perPage;
     this.settings.startIndex = start;
     this.settings.current = ( start / perPage) + 1;
-  }
+  };
 
   /**
   * Method for loading more items, either by selecting next page, or by choosing different number of items per page.
   * It will calculate start index of page and will call method for filtering and sorting items.
-  * @param start index of item, which will be taken as start item.
-  * @param perPage Number of items per page.
+  * @param {Number} start index of item, which will be taken as start item.
+  * @param {Number} perPage Number of items per page.
+  * @returns {undefined}
   */
   ReportDataController.prototype.onLoadNext = function(start, perPage) {
     this.setPaging(start, perPage);
     this.initController(this.initObject);
-  }
+  };
 
   /**
   * Method for handeling clicking on item (either gliphicon or item). It will perform navigation or post message based
   * on type of items.
-  * @param item which item was clicked.
-  * @param event jQuery event.
+  * @param {Object} item which item was clicked.
+  * @param {Object} event jQuery event.
+  * @returns {undefined}
   */
   ReportDataController.prototype.onItemClicked = function(item, event) {
     event.stopPropagation();
     event.preventDefault();
+    var prefix;
     if (this.initObject.isExplorer) {
-      var prefix = '/' + ManageIQ.controller;
+      prefix = '/' + ManageIQ.controller;
       $.post(prefix + '/x_show/' + item.id)
         .always(function() {
           this.setExtraClasses();
         }.bind(this));
     } else {
-      var prefix = this.initObject.showUrl;
+      prefix = this.initObject.showUrl;
       DoNav(prefix + '/' + item.id);
     }
     return false;
-  }
+  };
 
   /**
   * Method which will be fired when item was selected (either trough select box or by clicking on tile).
-  * @param item which item was selected.
-  * @param isSelected true | false.
+  * @param {Object} item which item was selected.
+  * @param {Boolean} isSelected true | false.
+  * @returns {undefined}
   */
   ReportDataController.prototype.onItemSelect = function(item, isSelected) {
-    selectedItem = _.find(this.gtlData.rows, {id: item.id});
+    var selectedItem = _.find(this.gtlData.rows, {id: item.id});
     if (selectedItem) {
       selectedItem.checked = isSelected;
       selectedItem.selected = isSelected;
@@ -166,22 +178,22 @@
         index !== -1 && ManageIQ.gridChecks.splice(index, 1);
       }
     }
-  }
+  };
 
   ReportDataController.prototype.initObjects = function(initObject) {
-    this.gtlData = { cols: [] ,rows: [] };
+    this.gtlData = { cols: [], rows: [] };
     this.initObject = initObject;
     this.gtlType = initObject.gtlType;
     this.settings.isLoading = true;
     ManageIQ.gridChecks = [];
     sendDataWithRx({setCount: 0});
-  }
+  };
 
   /**
   * Method for initializing controller. Good for bootstraping controller after loading items. This method will call
   * getData for fetching data for current state. After these data were fetched, sorting items and filtering them takes
   * place.
-  * @param initObject this object will hold all information about current state.
+  * @param {Object} initObject this object will hold all information about current state.
   * ```
   *   initObject: {
   *     modelName: string,
@@ -191,6 +203,7 @@
   *     isExplorer: Boolean
   *   }
   * ```
+  * @returns {Object} promise of fetched data.
   */
   ReportDataController.prototype.initController = function(initObject) {
     initObject.modelName = decodeURIComponent(initObject.modelName);
@@ -209,7 +222,7 @@
         this.movePagination();
         return data;
       }.bind(this));
-  }
+  };
 
   /**
   * Public method for setting default values of settings object.
@@ -218,6 +231,7 @@
   *       sortedByTitle  - String  => title for sort by
   *       isLoading      - Boolean => if loading has finished.
   *       scrollElement  - String  => ID of scroll element.
+  * @returns {undefined}
   */
   ReportDataController.prototype.setDefaults = function() {
     this.settings.selectAllTitle = __('Select All');
@@ -225,10 +239,10 @@
     this.settings.isLoading = false;
     this.settings.scrollElement = MAIN_CONTETN_ID;
     this.settings.dropDownClass = ['dropup'];
-  }
+  };
 
   ReportDataController.prototype.setExtraClasses = function(viewType) {
-    var mainContent = document.getElementById(MAIN_CONTETN_ID);
+    var mainContent = this.$document.context.getElementById(MAIN_CONTETN_ID);
     if (mainContent) {
       angular.element(mainContent).removeClass('miq-sand-paper');
       angular.element(mainContent).removeClass('miq-list-content');
@@ -239,42 +253,51 @@
       }
     }
 
-    var pagination = document.getElementsByClassName('miq-pagination');
+    var pagination = this.$document.context.getElementsByClassName('miq-pagination');
     if (pagination && pagination.length > 0 && !viewType) {
       pagination[0].parentNode.removeChild(pagination[0]);
     }
-  }
+  };
 
   ReportDataController.prototype.movePagination = function() {
-    setTimeout(function() {
-      var pagination = document.getElementsByClassName('miq-pagination');
-      var pagind_div = document.querySelector('#paging_div .col-md-12');
+    this.$timeout(function() {
+      var pagination = this.$document.context.getElementsByClassName('miq-pagination');
+      var pagind_div = this.$document.context.querySelector('#paging_div .col-md-12');
       if (pagination && pagination.length > 0 && pagind_div) {
-        pagind_div.appendChild(pagination[0])
+        pagind_div.appendChild(pagination[0]);
       }
-    });
-  }
+    }.bind(this));
+  };
 
   /**
   * Method for fetching data from server. gtlData, settings and pePage is selected after fetching data.
-  * @param modelName name of current model.
-  * @param activeTree ID of active tree node.
-  * @param currId current Id, if some nested items are displayed.
-  * @param isExplorer true | false if we are in explorer part of application.
-  * @param settings settings object.
+  * @param {String} modelName name of current model.
+  * @param {Number} activeTree ID of active tree node.
+  * @param {Number} currId current Id, if some nested items are displayed.
+  * @param {Boolean} isExplorer true | false if we are in explorer part of application.
+  * @param {Object} settings settings object.
+  * @returns {Object} promise of retriveRowsAndColumnsFromUrl of MiQDataTableService.
   */
   ReportDataController.prototype.getData = function(modelName, activeTree, currId, isExplorer, settings) {
     return this.MiQDataTableService.retrieveRowsAndColumnsFromUrl(modelName, activeTree, currId, isExplorer, settings)
-      .then(function (gtlData) {
+      .then(function(gtlData) {
         this.gtlData = gtlData;
         this.perPage.text = gtlData.settings.perpage;
         this.perPage.value = gtlData.settings.perpage;
         this.settings = gtlData.settings;
         return gtlData;
       }.bind(this));
-  }
+  };
 
-  ReportDataController.$inject = ['MiQDataTableService', 'MiQEndpointsService', '$filter', '$location', '$scope'];
+  ReportDataController.$inject = [
+    'MiQDataTableService',
+    'MiQEndpointsService',
+    '$filter',
+    '$location',
+    '$scope',
+    '$document',
+    '$timeout',
+  ];
   miqHttpInject(angular.module('ManageIQ.report_data'))
     .controller(COTNROLLER_NAME, ReportDataController);
 })();

@@ -1,7 +1,14 @@
 describe ApplicationController do
-  let(:basic_settings) {
-    { "perpage" => 10, "current" => 1, "items" => 0, "total" => 0, "sort_dir" => "DESC", "sort_col" => 0 }
-  }
+  let(:basic_settings) do
+    {
+      "perpage"  => 10,
+      "current"  => 1,
+      "items"    => 0,
+      "total"    => 0,
+      "sort_dir" => "DESC",
+      "sort_col" => 0
+    }
+  end
   before do
     stub_user(:features => :all)
   end
@@ -65,7 +72,10 @@ describe ApplicationController do
       allow(controller).to receive(:get_node_info)
       controller.send(
         :process_params_options,
-        { :explorer => "true", :active_tree => "vandt_tree", :model_id => "e-2", :controller => "vm_infra" }
+        :explorer    => "true",
+        :active_tree => "vandt_tree",
+        :model_id    => "e-2",
+        :controller  => "vm_infra"
       )
       expect(controller).to have_received(:get_node_info)
     end

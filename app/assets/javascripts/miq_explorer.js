@@ -231,7 +231,7 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
   if (data.reportData && _.isObject(data.reportData)) {
     sendDataWithRx({initController: {
       name: data.reportData.controller_name,
-      data: data.reportData.data
+      data: data.reportData.data,
     }});
   }
 
