@@ -1102,13 +1102,13 @@ module ApplicationHelper
 
   def pagination_request?
     params[:ppsetting] || params[:searchtag] || params[:entry] ||
-      params[:sortby] || params[:sort_choice] || params[:page]
+      params[:sortby] || params[:sort_choice]
   end
 
   # FIXME: params[:type] is used in multiple contexts, we should rename it to
   # :gtl_type or remove it as we move to the Angular GTL component
   def pagination_or_gtl_request?
-    pagination_request? || params[:type]
+    pagination_request? || params[:type] || params[:page]
   end
 
   def update_gtl_div(action_url = 'explorer', button_div = 'center_tb')

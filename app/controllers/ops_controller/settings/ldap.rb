@@ -5,7 +5,7 @@ module OpsController::Settings::Ldap
   def ldap_regions_list
     ldap_region_build_list
 
-    update_gtl_div("ldap_regions_list") if !params[:button] && pagination_request?
+    update_gtl_div("ldap_regions_list") if !params[:button] && pagination_or_gtl_request?
   end
 
   def ldap_region_show

@@ -5,12 +5,11 @@ module OpsController::Settings::AnalysisProfiles
   def aps_list
     ap_build_list
 
-    update_gtl_div('aps_list') if pagination_request?
+    update_gtl_div('aps_list') if pagination_or_gtl_request?
   end
 
   # Show a scanitemset
   def ap_show
-    @new_gtl_type = params[:type] if params[:type]  # Set new list view type, if it's sent in
     # identify_scanitemset
     if @selected_scan.nil?
       redirect_to :action => "show_list_set", :flash_msg => _("Error: Record no longer exists in the database"), :flash_error => true
