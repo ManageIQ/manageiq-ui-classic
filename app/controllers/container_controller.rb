@@ -154,9 +154,8 @@ class ContainerController < ApplicationController
     # resetting action that was stored during edit to determine what is being edited
     @sb[:action] = nil
     if x_node == "root" || TreeBuilder.get_model_for_prefix(@nodetype) == "MiqSearch"
-      typ = "Container"
       process_show_list(:where_clause => 'containers.deleted_on IS NULL')
-      @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => typ)}
+      @right_cell_text = _("All Containers")
     else
       show_record(from_cid(id))
       @right_cell_text = _("%{model} \"%{name}\" (Summary)") % {
@@ -183,7 +182,7 @@ class ContainerController < ApplicationController
     case action
     when "tag"
       partial = "layouts/tagging"
-      header = _("Edit Tags for %{model}") % {:model => ui_lookup(:model => "Container")}
+      header = _("Edit Tags for Container")
       action = "container_tag"
     when "perf"
       partial = "layouts/performance"
