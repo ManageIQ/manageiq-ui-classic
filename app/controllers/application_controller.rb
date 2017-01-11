@@ -1441,7 +1441,6 @@ class ApplicationController < ActionController::Base
 
     # Save the paged_view_search_options for download buttons to use later
     session[:paged_view_search_options] = {
-       # Make a copy of parent object (to avoid saving related objects)
       :parent                    => parent ? minify_ar_object(parent) : nil,
       :parent_method             => options[:parent_method],
       :targets_hash              => true,

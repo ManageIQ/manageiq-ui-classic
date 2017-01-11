@@ -68,6 +68,7 @@
   * @param {Object} $scope current scope.
   * @param {Object} $document angular's document service.
   * @param {Object} $timeout angular's timeout service.
+  * @param {Object} $window angular's window service.
   * @returns {undefined}
   */
   var ReportDataController = function(MiQDataTableService,
@@ -76,7 +77,8 @@
                                       $location,
                                       $scope,
                                       $document,
-                                      $timeout) {
+                                      $timeout,
+                                      $window) {
     this.settings = {};
     this.MiQDataTableService = MiQDataTableService;
     this.MiQEndpointsService = MiQEndpointsService;
@@ -85,6 +87,7 @@
     this.$location = $location;
     this.$document = $document;
     this.$timeout = $timeout;
+    this.$window = $window;
     initEndpoints(this.MiQEndpointsService);
     subscribeToSubject.bind(this)();
     this.perPage = defaultPaging();
@@ -154,7 +157,7 @@
         }.bind(this));
     } else {
       prefix = this.initObject.showUrl;
-      DoNav(prefix + '/' + item.id);
+      this.$window.DoNav(prefix + '/' + item.id);
     }
     return false;
   };
@@ -170,7 +173,7 @@
     if (selectedItem) {
       selectedItem.checked = isSelected;
       selectedItem.selected = isSelected;
-      sendDataWithRx({rowSelect: selectedItem});
+      this.$window.sendDataWithRx({rowSelect: selectedItem});
       if (isSelected) {
         ManageIQ.gridChecks.push(item.id);
       } else {
@@ -186,7 +189,7 @@
     this.gtlType = initObject.gtlType;
     this.settings.isLoading = true;
     ManageIQ.gridChecks = [];
-    sendDataWithRx({setCount: 0});
+    this.$window.sendDataWithRx({setCount: 0});
   };
 
   /**
@@ -254,7 +257,7 @@
     }
 
     var pagination = this.$document.context.getElementsByClassName('miq-pagination');
-    if (pagination && pagination.length > 0 && !viewType) {
+    if (pagination && pagination.length > 0 && ! viewType) {
       pagination[0].parentNode.removeChild(pagination[0]);
     }
   };
@@ -297,7 +300,8 @@
     '$scope',
     '$document',
     '$timeout',
+    '$window',
   ];
-  miqHttpInject(angular.module('ManageIQ.report_data'))
+  window.miqHttpInject(angular.module('ManageIQ.report_data'))
     .controller(COTNROLLER_NAME, ReportDataController);
 })();
