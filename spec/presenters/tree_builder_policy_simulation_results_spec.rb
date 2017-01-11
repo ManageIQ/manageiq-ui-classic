@@ -34,7 +34,7 @@ describe TreeBuilderPolicySimulationResults do
       root_options = @rsop_tree.send(:root_options)
       expect(root_options).to eq(
         :title       => _("Policy Simulation Results for Event [%{description}]") % {:description => @event.description},
-        :image       => "100/event-#{@event.name}.png",
+        :icon        => @event.decorate.fonticon,
         :cfmeNoClick => true
       )
     end
@@ -44,7 +44,7 @@ describe TreeBuilderPolicySimulationResults do
       original_vms = @data[:results].sort_by { |a| a[:name].downcase }
       vms.each_with_index do |vm, i|
         expect(vm[:text]).to eq("<strong>VM:</strong> #{original_vms[i][:name]}")
-        expect(vm[:image]).to eq('100/vm.png')
+        expect(vm[:icon]).to eq('pficon pficon-virtual-machine')
         expect(vm[:profiles]).to eq(original_vms[i][:profiles])
       end
     end

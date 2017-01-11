@@ -20,7 +20,7 @@ describe TreeBuilderSnapshots do
       expect(root).to eq(
         :title       => @record.name,
         :tooltip     => @record.name,
-        :image       => '100/vm.png',
+        :icon        => 'pficon pficon-virtual-machine',
         :cfmeNoClick => true
       )
     end

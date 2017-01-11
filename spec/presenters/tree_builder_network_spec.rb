@@ -18,7 +18,7 @@ describe TreeBuilderNetwork do
       expect(root).to eq(
         :title       => @network_tree.instance_variable_get(:@root).name,
         :tooltip     => _("Host: %{name}") % {:name => @network_tree.instance_variable_get(:@root).name},
-        :image       => '100/host.png',
+        :icon        => 'pficon pficon-screen',
         :cfmeNoClick => true
       )
     end
