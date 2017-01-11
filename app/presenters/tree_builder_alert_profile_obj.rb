@@ -68,7 +68,8 @@ class TreeBuilderAlertProfileObj < TreeBuilder
           if @assign[:new][:cat]                              # Tag category selected
             @objects = Classification.find(@assign[:new][:cat]).entries
           end
-        else                                                  # Model selected
+        else
+          # Model selected
           @objects = @assign[:new][:assign_to].camelize.constantize.all
         end
       end
