@@ -5,6 +5,7 @@ module Menu
         Menu::Section.new(:compute, N_("Compute"), 'fa product-memory fa-2x', [
           clouds_menu_section,
           infrastructure_menu_section,
+          physical_infrastructure_menu_section,
           container_menu_section
         ])
       end
@@ -72,6 +73,13 @@ module Menu
           Menu::Item.new('infra_networking', N_('Networking'),       'infra_networking',           {:feature => 'infra_networking', :any => true},  '/infra_networking/explorer'),
           Menu::Item.new('miq_request_host', N_('Requests'),         nil,                          {:feature => 'miq_request_show_list'},           '/miq_request?typ=host'),
           Menu::Item.new('infra_topology',   N_('Topology'), 'infra_topology',                     {:feature => 'infra_topology', :any => true},    '/infra_topology')
+        ])
+      end
+
+      def physical_infrastructure_menu_section
+        Menu::Section.new(:phy, N_("Physical Infrastructure"), 'fa fa-plus fa-2x', [
+          Menu::Item.new('ems_physical_infra',    N_('Providers'), 'ems_physical_infra',    {:feature => 'ems_physical_infra_show_list'},    '/ems_physical_infra'),
+          Menu::Item.new('physical_server', N_('Servers'),   'physical_server', {:feature => 'physical_server_show_list'}, '/physical_server'),
         ])
       end
 
