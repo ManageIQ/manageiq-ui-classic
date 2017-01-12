@@ -245,6 +245,7 @@ module UiConstants
       :scanhistory                              => "list",
       :snialocalfilesystem                      => "list",
       :storage_files                            => "list",
+      :summary_mode                             => "dashboard",
       :registryitems                            => "list",
       :serverbuild                              => "list",
       :storage                                  => "grid",
