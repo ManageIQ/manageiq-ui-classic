@@ -38,6 +38,7 @@ module EmsCommon
     @showtype = "dashboard"
     @lastaction = "show_dashboard"
     drop_breadcrumb(:name => @ems.name + _(" (Dashboard)"), :url => show_link(@ems))
+    render :action => "show_dashboard"
   end
 
   def show_ad_hoc_metrics
@@ -118,6 +119,7 @@ module EmsCommon
   end
 
   def show
+    #binding.pry
     return unless init_show
     session[:vm_summary_cool] = (settings(:views, :vm_summary_cool).to_s == "summary")
     @summary_view = session[:vm_summary_cool]
