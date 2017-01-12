@@ -25,6 +25,7 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
   vm.dsModel.step = 'CHOOSE_DS';
 
   vm.chooseDsModel = {
+    xaDatasource: true,
     selectedDatasource: undefined,
     datasources: undefined,
   };
@@ -51,7 +52,7 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     securityDomain: '',
   };
 
-  vm.chooseDsModel.datasources = mwAddDatasourceService.getDatasources();
+  vm.chooseDsModel.datasources = mwAddDatasourceService.getXaDatasources();
 
   $scope.$on(ADD_DATASOURCE_EVENT, function(_event, payload) {
     if (mwAddDatasourceService.isXaDriver(vm.step2DsModel.selectedJdbcDriver)) {
@@ -90,6 +91,14 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
       vm.step2DsModel.driverClass = driverSelection.driverClass;
     }
   });
+
+  vm.onXaChange = function() {
+    if (vm.chooseDsModel.xaDatasource) {
+      vm.chooseDsModel.datasources = mwAddDatasourceService.getXaDatasources();
+    } else {
+      vm.chooseDsModel.datasources = mwAddDatasourceService.getDatasources();
+    }
+  };
 
   vm.addDatasourceChooseNext = function() {
     var dsSelection = vm.chooseDsModel.selectedDatasource;
