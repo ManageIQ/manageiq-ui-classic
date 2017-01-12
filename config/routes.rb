@@ -152,6 +152,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
+        wait_for_task
       ) + adv_search_post + compare_post + exp_post + save_post
     },
 
