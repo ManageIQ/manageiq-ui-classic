@@ -50,6 +50,10 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     userName: '',
     password: '',
     securityDomain: '',
+    addKey: 'key1',
+    addValue: 'value1',
+    editKey: 'editKey',
+    editValue: 'editValue',
   };
 
   vm.chooseDsModel.datasources = mwAddDatasourceService.getXaDatasources();

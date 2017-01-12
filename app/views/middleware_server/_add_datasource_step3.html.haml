@@ -41,7 +41,6 @@
                                            "placeholder"  => _("Enter Password"),
                                            "ng-model"     => "vm.step3DsModel.password"}
 
-
     .form-group
       %label.col-md-4.control-label{:for => "security_domain_input"}
         = _("Security Domain")
@@ -49,6 +48,32 @@
         %input.form-control#security_domain_input{:type          => "text",
                                                   "placeholder"  => _("Enter Security Domain"),
                                                   "ng-model"     => "vm.step3DsModel.securityDomain"}
+
+    .form-group
+      %label.col-md-4.control-label{:for => "xa_properties"}
+        = _("XA Properties")
+      .col-md-8
+        %input.form-control#xa_properties{:type          => "text",
+                                          "ng-model"     => "vm.step3DsModel.securityDomain"}
+    .form-group
+      %label.col-md-4.control-label{:for => "xa_properties"}
+        = _("Add ")
+      .col-md-4
+        %input.form-control#xa_add_key_input{:type      => "text",
+                                             "ng-model" => "vm.step3DsModel.addKey"}
+      .col-md-4
+        %input.form-control#xa_add_value_input{:type      => "text",
+                                               "ng-model" => "vm.step3DsModel.addValue"}
+
+    .form-group
+      %label.col-md-4.control-label{:for => "xa_properties"}
+        = _("Edit ")
+      .col-md-4
+        %input.form-control#xa_edit_key_input{:type      => "text",
+                                              "ng-model" => "vm.step3DsModel.editKey"}
+      .col-md-4
+        %input.form-control#xa_edit_value_input{:type      => "text",
+                                                "ng-model" => "vm.step3DsModel.editValue"}
 
     .modal-footer
       %button.btn.btn-default.dialog-cancel-button{:type      => "button",
