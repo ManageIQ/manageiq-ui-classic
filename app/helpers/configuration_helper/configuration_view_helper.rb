@@ -1,6 +1,7 @@
 module ConfigurationHelper
   module ConfigurationViewHelper
     def render_view_buttons(resource, view)
+      #binding.pry
       (case resource
        when :compare, :drift
          view == "compressed" ? compare_or_drift_compressed(resource) : compare_or_drift_expanded(resource)
@@ -8,6 +9,9 @@ module ConfigurationHelper
          view == "details" ? compare_or_drift_mode_details(resource) : compare_or_drift_mode_exists(resource)
        when :treesize
          view == "20" ? treesize_small : treesize_large
+       when :summary_mode
+         #binding.pry
+         view == "dashboard" ? summary_mode_dashboard(resource) : summary_mode_textual(resource)
        else
          case view
          when "grid" then grid_view(resource)
@@ -56,6 +60,16 @@ module ConfigurationHelper
     def compare_or_drift_mode_details(resource)
       active_icon("fa fa-bars fa-rotate-90", _('Details Mode')) +
         inactive_icon("product product-exists", _('Exists Mode'), resource, "exists")
+    end
+
+    def summary_mode_textual(resource)
+      inactive_icon("fa fa-tachometer fa-1xplus", _('Dashboard View'), resource, "dashboard") +
+        active_icon("fa fa-th-list", _('Textual View'))
+    end
+
+    def summary_mode_dashboard(resource)
+      active_icon("fa fa-tachometer fa-1xplus", _('Dashboard View')) +
+        inactive_icon("fa fa-th-list", _('Textual View'), resource, "textual")
     end
 
     def treesize_small
