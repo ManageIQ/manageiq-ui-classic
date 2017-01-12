@@ -142,8 +142,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
           N_('Set Retirement Dates'),
           :url_parms => "main_div",
           :enabled   => false,
-          :onwhen    => "1+",
-          :klass     => ApplicationHelper::Button::InstanceRetire),
+          :onwhen    => "1+"),
         button(
           :instance_retire_now,
           'fa fa-clock-o fa-lg',
@@ -152,8 +151,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
           :url_parms => "main_div",
           :confirm   => N_("Retire the selected items?"),
           :enabled   => false,
-          :onwhen    => "1+",
-          :klass     => ApplicationHelper::Button::InstanceRetire),
+          :onwhen    => "1+"),
         button(
           :instance_live_migrate,
           'product product-migrate fa-lg',
@@ -272,8 +270,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
           :url_parms => "main_div",
           :confirm   => N_("Hard Reboot the Guest OS on the selected items?"),
           :enabled   => false,
-          :onwhen    => "1+",
-          :klass     => ApplicationHelper::Button::InstanceReset),
+          :onwhen    => "1+"),
         button(
           :instance_terminate,
           nil,
