@@ -476,7 +476,7 @@ module ApplicationHelper
       title += _(": Workloads")
     # Specific titles for groups of layouts
     elsif layout.starts_with?("miq_ae_")
-      title += _(": Automate")
+      title += _(": Automation")
     elsif layout.starts_with?("miq_policy")
       title += _(": Control")
     elsif layout.starts_with?("miq_capacity")
