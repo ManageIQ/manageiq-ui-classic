@@ -5,5 +5,5 @@ describe TreeNode::PxeImageType do
   let(:object) { FactoryGirl.create(:pxe_image_type) }
 
   include_examples 'TreeNode::Node#key prefix', 'pit-'
-  include_examples 'TreeNode::Node#image', '100/pxeimagetype.png'
+  include_examples 'TreeNode::Node#icon', 'product product-network_card'
 end
