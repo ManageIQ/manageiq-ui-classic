@@ -6,5 +6,5 @@ describe TreeNode::MiqPolicySet do
 
   include_examples 'TreeNode::Node#key prefix', 'pp-'
   include_examples 'TreeNode::Node#title description'
-  include_examples 'TreeNode::Node#image', '100/policy_profile_inactive.png'
+  include_examples 'TreeNode::Node#icon', 'fa fa-inactive fa-shield'
 end

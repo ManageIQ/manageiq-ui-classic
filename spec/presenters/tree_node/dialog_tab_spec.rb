@@ -5,7 +5,7 @@ describe TreeNode::DialogTab do
   let(:object) { FactoryGirl.create(:dialog_tab) }
 
   include_examples 'TreeNode::Node#key prefix', '-'
-  include_examples 'TreeNode::Node#image', '100/dialog_tab.png'
+  include_examples 'TreeNode::Node#icon', 'product product-tab'
 
   describe '#title' do
     it 'returns with the label' do

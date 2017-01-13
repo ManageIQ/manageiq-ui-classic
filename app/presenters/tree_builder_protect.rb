@@ -28,7 +28,7 @@ class TreeBuilderProtect < TreeBuilder
     nodes = MiqPolicySet.all.sort_by { |profile| profile.description.downcase }.map do |profile|
       { :id          => "policy_profile_#{profile.id}",
         :text        => profile.description,
-        :image       => "100/policy_profile#{profile.active? ? "" : "_inactive"}.png",
+        :icon        => profile.active? ? "fa fa-shield" : "fa fa-inactive fa-shield",
         :tip         => profile.description,
         :select      => @data[:new][profile.id] == @data[:pol_items].length,
         :children    => profile.members,

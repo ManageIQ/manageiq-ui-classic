@@ -41,6 +41,11 @@
   content: "\e623";
 }
 
+.fa-inactive, .product-inactive, .pficon-inactive { // add styling to show inactive icon (policies, etc)//
+opacity:0.6;
+}
+
+
 /*end icon class customizations*/
 
 /* custom font for this product */
@@ -300,6 +305,18 @@ span[class^="product-"], span[class*=" product-"], // i & span tags prevent conf
 }
 .product-output:before {
   content: "\e651";
+}
+.product-tab:before {
+  content: "\e652";
+}
+.product-network_switch:before {
+  content: "\e653";
+}
+.product-network_card:before {
+  content: "\e654";
+}
+.product-field:before {
+  content: "\e655";
 }
 
 /* define  colors */

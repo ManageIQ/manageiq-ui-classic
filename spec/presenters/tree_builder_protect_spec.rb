@@ -38,7 +38,7 @@ describe TreeBuilderProtect do
       roots = @protect_tree.send(:x_get_tree_roots, false)
       @roots.each_with_index do |root, i|
         expect(roots[i][:id]).to eq("policy_profile_#{root.id}")
-        expect(roots[i][:image]).to eq("100/policy_profile#{root.active? ? "" : "_inactive"}.png")
+        expect(roots[i][:icon]).to eq(root.active? ? "fa fa-shield" : "fa fa-inactive fa-shield")
         expect(roots[i][:text]).to eq(root.description)
         expect(roots[i][:children]).to eq(root.members)
         expect(roots[i][:select]).to eq(@edit[:new].keys.include?(root.id))
