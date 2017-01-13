@@ -28,7 +28,7 @@
                 [_("By Cloud/Infrastructure Providers"), "ems"],
                 [_("By %{clusters}") % {:clusters => title_for_clusters}, "cluster"],
                 [_("By %{hosts}") % {:hosts => title_for_host}, "host"],
-                [_("Single VM"), "vm"]], @sb[:rsop][:filter]), "data-miq_observe" => observe)
+                [_("Single VM/Instance"), "vm"]], @sb[:rsop][:filter]), "data-miq_observe" => observe)
             - if @sb[:rsop][:filter] == "host"
               %br
               %br
