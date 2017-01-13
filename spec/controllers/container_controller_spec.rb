@@ -40,6 +40,7 @@ describe ContainerController do
     end
 
     it "builds tagging screen" do
+      controller.instance_variable_set(:@explorer, true)
       post :x_button, :params => { :pressed => "container_tag", :format => :js, :id => @ct.id }
       expect(assigns(:flash_array)).to be_nil
       expect(assigns(:entries)).not_to be_nil
