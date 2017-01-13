@@ -214,13 +214,19 @@ module Menu
         ])
       end
 
+      def automation_menu_section
+        Menu::Section.new(:aut, N_("Automation"), 'fa product-memory fa-2x', [
+          automate_menu_section
+        ])
+      end
+
       def automate_menu_section
         generic_object_item = if ::Settings.product.generic_object == true
           Menu::Item.new('generic_object',       N_('Generic Objects'), 'generic_object_explorer',       {:feature => 'generic_object_explorer'},       '/generic_object/explorer')
         else
           nil
         end
-        Menu::Section.new(:aut, N_("Automation"), 'fa fa-recycle fa-2x', [
+        Menu::Section.new(:automate, N_("Automate"), 'fa fa-recycle fa-2x', [
           Menu::Item.new('miq_ae_class',         N_('Explorer'),        'miq_ae_class_explorer',         {:feature => 'miq_ae_domain_view'},            '/miq_ae_class/explorer'),
           Menu::Item.new('miq_ae_tools',         N_('Simulation'),      'miq_ae_class_simulation',       {:feature => 'miq_ae_class_simulation'},       '/miq_ae_tools/resolve'),
           Menu::Item.new('miq_ae_customization', N_('Customization'),   'miq_ae_customization_explorer', {:feature => 'miq_ae_customization_explorer'}, '/miq_ae_customization/explorer'),
@@ -250,7 +256,7 @@ module Menu
       def default_menu
         [cloud_inteligence_menu_section, services_menu_section, compute_menu_section, configuration_menu_section,
          network_menu_section, middleware_menu_section, datawarehouse_menu_section, storage_menu_section,
-         control_menu_section, automate_menu_section, optimize_menu_section, settings_menu_section].compact
+         control_menu_section, automation_menu_section, optimize_menu_section, settings_menu_section].compact
       end
     end
   end
