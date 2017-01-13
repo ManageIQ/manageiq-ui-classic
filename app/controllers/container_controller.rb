@@ -64,7 +64,7 @@ class ContainerController < ApplicationController
 
   # ST clicked on in the explorer right cell
   def x_show
-    get_tagdata(Container.find_by_id(from_cid(params[:id])))
+    get_tagdata(Container.find(from_cid(params[:id])))
     identify_container(from_cid(params[:id]))
     generic_x_show(x_tree(:containers_tree))
   end
@@ -129,7 +129,7 @@ class ContainerController < ApplicationController
   def show_timeline
     @showtype = "timeline"
     session[:tl_record_id] = params[:id]
-    @record = Container.find_by_id(from_cid(params[:id]))
+    @record = Container.find(from_cid(params[:id]))
     @timeline = @timeline_filter = true
     @lastaction = "show_timeline"
     tl_build_timeline # Create the timeline report
