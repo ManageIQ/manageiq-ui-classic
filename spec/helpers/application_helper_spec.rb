@@ -606,7 +606,7 @@ describe ApplicationHelper do
 
     it "when layout likes 'miq_ae_*'" do
       @layout = "miq_ae_some_thing"
-      expect(subject).to eq(title + ": Automate")
+      expect(subject).to eq(title + ": Automation")
     end
 
     it "when layout likes 'miq_policy*'" do
