@@ -2570,7 +2570,7 @@ class MiqAeClassController < ApplicationController
     end
   end
 
-  menu_section :aut
+  menu_section :automate
 
   def process_element_destroy_via_queue(element, klass, name)
     return unless element.respond_to?(:destroy)

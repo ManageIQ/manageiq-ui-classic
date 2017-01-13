@@ -608,7 +608,7 @@ class MiqRequestController < ApplicationController
 
   def menu_section(parms)
     case parms[:typ]
-    when 'at'   then :aut
+    when 'at'   then :automate
     when 'vm'   then :svc
     when 'host' then :inf
     end
