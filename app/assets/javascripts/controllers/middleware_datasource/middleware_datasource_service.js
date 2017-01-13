@@ -116,10 +116,8 @@ function MwAddDatasourceService($http, $q) {
     var parameterizedUrl = BASE_URL + '?server_id=' + serverId;
 
     $http.get(parameterizedUrl).then(function(driverData) {
+      console.dir(driverData.data.data);
       var transformedData = _.chain(driverData.data.data)
-        .filter(function(driver) {
-          return driver.properties['Driver Class'] !== null;
-        })
         .map(function(driver) {
           return {'id': driver.properties['Driver Name'].toUpperCase(),
                   'label': driver.properties['Driver Name'],
@@ -160,21 +158,20 @@ function MwAddDatasourceService($http, $q) {
     }
   };
 
-  self.findDatasourceById = function(id) {
-    return _.find(datasources, function(datasource) {
-      // handle special case when JDBC Driver Name doesn't match naming of Datasource
-      // For instance, 'POSTGRES' vs 'POSTGRESQL'
-      // in this case an 'alias' in the datasource configuration is used
-      if (datasource.hasOwnProperty('alias')) {
-        return datasource.alias === id;
-      } else {
-        return datasource.driverName.toUpperCase() === id;
-      }
-    });
-  };
-
   self.findDsSelectionFromDriver = function(driverSelection) {
-    var dsSelection;
+    var datasourceSelection = {};
+    var findDatasourceById = function(id) {
+      return _.find(datasources, function(datasource) {
+        // handle special case when JDBC Driver Name doesn't match naming of Datasource
+        // For instance, 'POSTGRES' vs 'POSTGRESQL'
+        // in this case an 'alias' in the datasource configuration is used
+        if (datasource.hasOwnProperty('alias')) {
+          return datasource.alias === id;
+        } else {
+          return datasource.driverName.toUpperCase() === id;
+        }
+      });
+    };
     var findDatasourceByDriverClass = function(driverClass) {
       return _.find(datasources, function(datasource) {
         return datasource.driverClass === driverClass;
@@ -182,11 +179,11 @@ function MwAddDatasourceService($http, $q) {
     };
 
     if (self.isValidDatasourceName(driverSelection.id)) {
-      dsSelection = self.findDatasourceById(driverSelection.id);
+      datasourceSelection = findDatasourceById(driverSelection.id);
     } else {
-      dsSelection = findDatasourceByDriverClass(driverSelection.driverClass);
+      datasourceSelection = findDatasourceByDriverClass(driverSelection.driverClass);
     }
-    return dsSelection;
+    return datasourceSelection;
   };
 
   self.determineConnectionUrlFromExisting = function(driverSelection) {

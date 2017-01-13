@@ -121,7 +121,17 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     vm.step2DsModel.driverClass = dsSelection.driverClass;
 
     mwAddDatasourceService.getExistingJdbcDrivers(serverId).then(function(result) {
-      vm.step2DsModel.existingJdbcDrivers = result;
+      var filteredResult;
+      if(vm.chooseDsModel.xaDatasource){
+        filteredResult = _.filter(result, function(item) {
+          return item.xaDsClass != null;
+        });
+      } else {
+        filteredResult = _.filter(result, function(item) {
+          return item.driverClass != null;
+        });
+      }
+      vm.step2DsModel.existingJdbcDrivers = filteredResult;
     }).catch(function(errorMsg) {
       miqService.miqFlash(errorMsg.data.status, errorMsg.data.msg);
     });
