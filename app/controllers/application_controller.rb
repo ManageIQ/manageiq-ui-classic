@@ -296,11 +296,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def build_vm_host_array
-    @tree_hosts = Host.where(:id => (@sb[:tree_hosts_hash] || {}).keys)
-    @tree_vms   = Vm.where(:id => (@sb[:tree_vms_hash] || {}).keys)
-  end
-
   # Common method to show a standalone report
   def report_only
     @report_only = true                 # Indicate stand alone report for views
@@ -2170,11 +2165,6 @@ class ApplicationController < ActionController::Base
     @sb[:search_text] = @search_text
     @sb[:detail_sortcol] = @detail_sortcol
     @sb[:detail_sortdir] = @detail_sortdir
-
-    @sb[:tree_hosts_hash] = nil if !%w(ems_folders descendant_vms).include?(params[:display]) &&
-                                   !%w(treesize tree_autoload).include?(params[:action])
-    @sb[:tree_vms_hash] = nil if !%w(ems_folders descendant_vms).include?(params[:display]) &&
-                                 !%w(treesize tree_autoload).include?(params[:action])
 
     # Set/clear sandbox (@sb) per controller in the session object
     session[:sandboxes] ||= HashWithIndifferentAccess.new
