@@ -630,7 +630,7 @@ module OpsController::Settings::Schedules
     @action_type_options_for_select.push([_("Database Backup"), "db_backup"])
 
     if role_allows?(:feature => "miq_ae_class_simulation")
-      @action_type_options_for_select.push([_("Automate Tasks"), "automation_request"])
+      @action_type_options_for_select.push([_("Automation Tasks"), "automation_request"])
     end
 
     @vm_options_for_select = [

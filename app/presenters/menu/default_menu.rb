@@ -225,7 +225,7 @@ module Menu
         else
           nil
         end
-        Menu::Section.new(:aut, N_("Automate"), 'fa fa-recycle fa-2x', [
+        Menu::Section.new(:aut, N_("Automation"), 'fa fa-recycle fa-2x', [
           Menu::Item.new('miq_ae_class',         N_('Explorer'),        'miq_ae_class_explorer',         {:feature => 'miq_ae_domain_view'},            '/miq_ae_class/explorer'),
           Menu::Item.new('miq_ae_tools',         N_('Simulation'),      'miq_ae_class_simulation',       {:feature => 'miq_ae_class_simulation'},       '/miq_ae_tools/resolve'),
           Menu::Item.new('miq_ae_customization', N_('Customization'),   'miq_ae_customization_explorer', {:feature => 'miq_ae_customization_explorer'}, '/miq_ae_customization/explorer'),
