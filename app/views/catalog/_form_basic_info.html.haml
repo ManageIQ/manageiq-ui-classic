@@ -52,6 +52,13 @@
                         :class                => "selectpicker")
           :javascript
             miqSelectPickerEvent('dialog_id', '#{url}')
+    - if @edit[:new][:st_prov_type]
+      .form-group
+        %label.col-md-2.control-label
+          = _('Item Type')
+        .col-md-4
+          %p.form-control-static
+            = h(ServiceTemplate::CATALOG_ITEM_TYPES[@edit[:new][:st_prov_type]])
     - if @edit[:new][:st_prov_type] == "generic"
       .form-group
         %label.col-md-2.control-label
