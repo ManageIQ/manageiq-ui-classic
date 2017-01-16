@@ -9,25 +9,26 @@ require 'rspec/rails'
 
 require 'manageiq-ui-classic'
 
-support_path = Rails.root.join('spec', 'support')
+support_path = Pathname.new(__FILE__) / '../support'
+Dir[support_path.join("**/*.rb")].each { |f| require f }
 
 # TODO: isolate the helpers we need for UI specs instead of general Dir glob
 #
-# require support_path.join('evm_spec_helper.rb')
-# require support_path.join('auth_helper.rb')
-# require support_path.join('controller_helper.rb')
-# require support_path.join('view_helper.rb')
-# require support_path.join('presenter_helper.rb')
-# require support_path.join('menu_helper.rb')
-# require support_path.join('automation_helper.rb')
-# require support_path.join('factory_girl_helper.rb')
-# require support_path.join('button_helper.rb')
-# require support_path.join('settings_helper.rb')
+# require core_support_path.join('evm_spec_helper.rb')
+# require core_support_path.join('auth_helper.rb')
+# require core_support_path.join('controller_helper.rb')
+# require core_support_path.join('presenter_helper.rb')
+# require core_support_path.join('menu_helper.rb')
+# require core_support_path.join('automation_helper.rb')
+# require core_support_path.join('factory_girl_helper.rb')
+# require core_support_path.join('button_helper.rb')
+# require core_support_path.join('settings_helper.rb')
 #
 # Known:
-# require support_path.join("examples_group/shared_examples_for_application_helper.rb")
-# require support_path.join("rake_task_example_group.rb")
-Dir[support_path.join("**/*.rb")].each { |f| require f }
+# require core_support_path.join("examples_group/shared_examples_for_application_helper.rb")
+# require core_support_path.join("rake_task_example_group.rb")
+core_support_path = Rails.root / 'spec/support'
+Dir[core_support_path.join("**/*.rb")].each { |f| require f }
 
 Dir[ManageIQ::UI::Classic::Engine.root.join('spec/shared/controllers/**/*.rb')].each { |f| require f }
 Dir[ManageIQ::Gems::Pending.root.join("spec/support/custom_matchers/*.rb")].each { |f| require f }
