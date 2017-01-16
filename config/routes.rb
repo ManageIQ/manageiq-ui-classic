@@ -155,6 +155,48 @@ Rails.application.routes.draw do
       ) + adv_search_post + compare_post + exp_post + save_post
     },
 
+    :ansible_tower         => {
+      :get  => %w(
+        download_data
+        explorer
+        ansible_tower_form_fields
+        show
+        show_list
+        tagging_edit
+      ),
+      :post => %w(
+        accordion_select
+        authentication_validate
+        button
+        change_tab
+        delete
+        edit
+        explorer
+        exp_button
+        exp_changed
+        exp_token_pressed
+        form_field_changed
+        new
+        provision
+        quick_search
+        refresh
+        reload
+        show
+        show_list
+        tagging
+        tagging_edit
+        tag_edit_form_field_changed
+        tree_autoload
+        tree_select
+        configscript_service_dialog_submit
+        cs_form_field_changed
+        users
+        wait_for_task
+      ) +
+        adv_search_post +
+        x_post
+    },
+
     :availability_zone        => {
       :get  => %w(
         download_data

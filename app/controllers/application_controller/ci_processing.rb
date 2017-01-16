@@ -1944,7 +1944,7 @@ module ApplicationController::CiProcessing
        :models  => ui_lookup(:models => klass.to_s)})
   end
 
-  def foreman_button_operation(method, display_name)
+  def manager_button_operation(method, display_name)
     items = []
     if params[:id]
       if params[:id].nil? || !ExtManagementSystem.where(:id => params[:id]).exists?
@@ -1959,25 +1959,24 @@ module ApplicationController::CiProcessing
     if items.empty?
       add_flash(_("No providers were selected for %{task}") % {:task  => display_name}, :error)
     else
-      process_cfgmgr(items, method) unless items.empty? && !flash_errors?
+      process_configuration_managers(items, method) unless items.empty? && !flash_errors?
     end
   end
 
-  def process_cfgmgr(providers, task)
-    providers, _services_out_region = filter_ids_in_region(providers, "ManageIQ::Providers::ConfigurationManager")
-    return if providers.empty?
+  def process_configuration_managers(managers, task)
+    manager_ids, _services_out_region = filter_ids_in_region(managers, "ManageIQ::Providers::ConfigurationManager")
+    return if manager_ids.empty?
 
-    options = {:ids => providers, :task => task, :userid => session[:userid]}
-    kls = ManageIQ::Providers::ConfigurationManager.find_by_id(providers.first).class
+    options = {:ids => manager_ids, :task => task, :userid => session[:userid]}
+    kls = ManageIQ::Providers::ConfigurationManager.find_by(:id => manager_ids.first).class
     kls.process_tasks(options)
   rescue => err
     add_flash(_("Error during '%{task}': %{message}") % {:task => task, :message => err.message}, :error)
   else
-    add_flash(n_("%{task} initiated for %{count} provider (%{controller})",
-                 "%{task} initiated for %{count} providers (%{controller})", providers.length) %
+    add_flash(n_("%{task} initiated for %{count} provider",
+                 "%{task} initiated for %{count} providers)", manager_ids.length) %
                 {:task       => task_name(task),
-                 :controller => ProviderForemanController.model_to_name(kls.to_s),
-                 :count      => providers.length})
+                 :count      => manager_ids.length})
   end
 
   # Delete all selected or single displayed VM(s)

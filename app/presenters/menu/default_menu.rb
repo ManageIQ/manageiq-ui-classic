@@ -215,9 +215,17 @@ module Menu
       end
 
       def automation_menu_section
-        Menu::Section.new(:aut, N_("Automation"), 'fa fa-recycle fa-2x', [
-          automate_menu_section
-        ])
+        Menu::Section.new(:aut, N_("Automation"), 'fa product-memory fa-2x', [
+                                automate_menu_section,
+                                ansible_tower_menu_section
+                              ])
+      end
+
+      def ansible_tower_menu_section
+        Menu::Section.new(:conf, N_("Ansible Tower"), 'fa fa-cog  fa-2x', [
+                                 Menu::Item.new('ansible_tower',     N_('Explorer'), 'ansible_tower',     {:feature => 'ansible_tower', :any => true}, '/ansible_tower/explorer'),
+                                 Menu::Item.new('configuration_job', N_('Jobs'),     'configuration_job', {:feature => 'configuration_job_show_list'}, '/configuration_job'),
+                               ])
       end
 
       def automate_menu_section

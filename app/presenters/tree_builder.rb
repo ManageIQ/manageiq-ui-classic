@@ -356,7 +356,6 @@ class TreeBuilder
     # Catalog explorer trees
     :configuration_manager_providers => "TreeBuilderConfigurationManager",
     :cs_filter                       => "TreeBuilderConfigurationManagerConfiguredSystems",
-    :configuration_scripts           => "TreeBuilderConfigurationManagerConfigurationScripts",
 
     # Catalog explorer trees
     :ot                              => "TreeBuilderOrchestrationTemplates",
@@ -441,6 +440,12 @@ class TreeBuilder
 
     :network                         => "TreeBuilderNetwork",
     :df                              => "TreeBuilderDefaultFilters",
+
+    # Automation trees
+    :ansible_tower_providers         => "TreeBuilderAnsibleTowerProviders",
+    :ansible_tower_cs_filter         => "TreeBuilderAnsibleTowerConfiguredSystems",
+    :configuration_scripts           => "TreeBuilderAnsibleTowerConfigurationScripts",
+
   }
 
   # Tree node prefixes for generic explorers
@@ -455,7 +460,9 @@ class TreeBuilder
     "asr" => "AssignedServerRole",
     "az"  => "AvailabilityZone",
     "azu" => "OrchestrationTemplateAzure",
-    "at"  => "ManageIQ::Providers::AnsibleTower::AutomationManager",
+    "at"  => "ManageIQ::Providers::AnsibleTower::ConfigurationManager",
+    "atp"  => "ManageIQ::Providers::AnsibleTower::ConfigurationManager",
+    "atcs" => "ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfiguredSystem",
     "cl"  => "Classification",
     "cf"  => "ConfigurationScript",
     "cfp" => "ConfigurationScriptPayload",

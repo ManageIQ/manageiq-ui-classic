@@ -20,11 +20,7 @@ class ProviderForemanController < ApplicationController
   }.freeze
 
   def self.model_to_name(provmodel)
-    if provmodel.include?("ManageIQ::Providers::AnsibleTower")
-      Dictionary.gettext('ansible_tower', :type => :ui_title, :translate => false)
-    elsif provmodel.include?("ManageIQ::Providers::Foreman")
-      Dictionary.gettext('foreman', :type => :ui_title, :translate => false)
-    end
+    Dictionary.gettext(model_to_type_name(provmodel), :type => :ui_title, :translate => false)
   end
 
   def self.model_to_type_name(provmodel)
@@ -106,7 +102,7 @@ class ProviderForemanController < ApplicationController
   def refresh
     assert_privileges("provider_foreman_refresh_provider")
     @explorer = true
-    foreman_button_operation('refresh_ems', _('Refresh'))
+    manager_button_operation('refresh_ems', _('Refresh'))
     replace_right_cell
   end
 
@@ -181,7 +177,7 @@ class ProviderForemanController < ApplicationController
       model = "#{model_to_name(@provider_cfgmgmt.type)} #{ui_lookup(:model => 'ExtManagementSystem')}"
       if params[:id] == "new"
         add_flash(_("%{model} \"%{name}\" was added") % {:model => model, :name => @provider_cfgmgmt.name})
-        process_cfgmgr([@provider_cfgmgmt.configuration_manager.id], "refresh_ems")
+        process_configuration_managers([@provider_cfgmgmt.configuration_manager.id], "refresh_ems")
       else
         add_flash(_("%{model} \"%{name}\" was updated") % {:model => model, :name => @provider_cfgmgmt.name})
       end
