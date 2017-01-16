@@ -57,7 +57,6 @@ module ApplicationController::CiProcessing
   alias_method :instance_ownership, :set_ownership
   alias_method :vm_ownership, :set_ownership
   alias_method :miq_template_ownership, :set_ownership
-  alias_method :service_ownership, :set_ownership
 
   def get_class_from_controller_param(controller)
     case controller
@@ -231,7 +230,6 @@ module ApplicationController::CiProcessing
   end
   alias_method :instance_retire, :retirevms
   alias_method :vm_retire, :retirevms
-  alias_method :service_retire, :retirevms
   alias_method :orchestration_stack_retire, :retirevms
 
   def retirement_info

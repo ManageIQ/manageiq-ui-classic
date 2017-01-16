@@ -8,7 +8,7 @@ class ServiceController < ApplicationController
     'service_delete'      => :service_delete,
     'service_edit'        => :service_edit,
     'service_ownership'   => :service_ownership,
-    'service_tag'         => :service_tag,
+    'service_tag'         => :service_tag_edit,
     'service_retire'      => :service_retire,
     'service_retire_now'  => :service_retire_now,
     'service_reconfigure' => :service_reconfigure
@@ -20,19 +20,7 @@ class ServiceController < ApplicationController
   end
 
   def x_button
-    @explorer = true
-    model, action = pressed2model_action(params[:pressed])
-
-    performed_action = generic_x_button(SERVICE_X_BUTTON_ALLOWED_ACTIONS)
-    return if [:service_delete, :service_edit, :service_reconfigure].include?(performed_action)
-
-    if @refresh_partial
-      replace_right_cell(:action => action)
-    else
-      add_flash(_("Button not yet implemented %{model_name}:%{action_name}") %
-        {:model_name => model, :action_name => action}, :error) unless @flash_array
-      javascript_flash
-    end
+    generic_x_button(SERVICE_X_BUTTON_ALLOWED_ACTIONS)
   end
 
   # Service show selected, redirect to proper controller
@@ -86,6 +74,7 @@ class ServiceController < ApplicationController
 
   def service_edit
     assert_privileges("service_edit")
+    @explorer = true
     case params[:button]
     when "cancel"
       service = Service.find_by_id(params[:id])
@@ -114,13 +103,13 @@ class ServiceController < ApplicationController
   end
 
   def service_reconfigure
+    @explorer = true
     s = Service.find_by_id(from_cid(params[:id]))
     st = s.service_template
     ra = st.resource_actions.find_by_action('Reconfigure') if st
     if ra && ra.dialog_id
       @right_cell_text = _("Reconfigure %{model} \"%{name}\"") % {:name  => st.name,
                                                                   :model => ui_lookup(:model => "Service")}
-      @explorer = true
       options = {
         :header      => @right_cell_text,
         :target_id   => s.id,
@@ -150,6 +139,24 @@ class ServiceController < ApplicationController
                                                   :title    => _("Services"))]
   end
 
+  def service_ownership
+    @explorer = true
+    set_ownership
+    replace_right_cell(:action => 'ownership')
+  end
+
+  def service_tag_edit
+    @explorer = true
+    service_tag
+    replace_right_cell(:action => 'tag')
+  end
+
+  def service_retire
+    @explorer = true
+    retirevms
+    replace_right_cell(:action => 'retire')
+  end
+
   def service_set_record_vars(svc)
     svc.name = params[:name] if params[:name]
     svc.description = params[:description] if params[:description]
@@ -157,6 +164,7 @@ class ServiceController < ApplicationController
 
   def service_delete
     assert_privileges("service_delete")
+    @explorer = true
     elements = []
     if params[:id]
       elements.push(params[:id])
