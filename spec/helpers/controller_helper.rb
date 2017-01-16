@@ -49,14 +49,10 @@ module Spec
         expect(response.status).to eq(200)
         expect(response).to render_template("layouts/listnav/_#{controller.class.table_name}")
 
-        # Breadcrumbs of nested table contains the right link to itself, which will surface by clicking on the table item
+        # Breadcrumbs of nested table contains the right link to itself, which will surface by
+        # clicking on the table item
         expect(assigns(:breadcrumbs)).to include(:name => "#{parent.name} (#{label})",
                                                  :url  => "/#{parent_route}/#{parent.id}?display=#{relation}")
-
-        # TODO(lsmola) for some reason, the toolbar is not being rendered
-        # expect(response.body).to include('title="Grid View" id="view_grid" data-url="/show/" data-url_parms="?type=grid"')
-        # expect(response.body).to include('title="Tile View" id="view_tile" data-url="/show/" data-url_parms="?type=tile"')
-        # expect(response.body).to include('title="List View" id="view_list" data-url="/show/" data-url_parms="?type=list"')
 
         # The table renders all children objects
         children.each do |child_object|
