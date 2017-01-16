@@ -913,10 +913,10 @@
       "CloudNetwork": "",
       "CloudTenant": "",
       "Vm": "",
-      "Openstack": "/assets/100/vendor-openstack-101a7353730a0de56e4e0cd68bbea8e94bd8f2aa27f771659714d8b5cbe921b5.png",
-      "Amazon": "/assets/100/vendor-amazon-0a8a9819253e7a0d46fa1de433b8a8038027fe37b550525b2a355c2e4f6e823c.png",
-      "Azure": "/assets/100/vendor-azure-2e64b8e33112ccc402e499512cfbc72dd49ea9f7d367ee7ae7d372fdc0b300d6.png",
-      "Google": "/assets/100/vendor-google-37961336be6f1e0df548a3d5329a65426cc27c9d25dca7a17d3d84a696865574.png"
+      "Openstack": "/assets/svg/vendor-openstack-101a7353730a0de56e4e0cd68bbea8e94bd8f2aa27f771659714d8b5cbe921b5.svg",
+      "Amazon": "/assets/svg/vendor-amazon-0a8a9819253e7a0d46fa1de433b8a8038027fe37b550525b2a355c2e4f6e823c.svg",
+      "Azure": "/assets/svg/vendor-azure-2e64b8e33112ccc402e499512cfbc72dd49ea9f7d367ee7ae7d372fdc0b300d6.svg",
+      "Google": "/assets/svg/vendor-google-37961336be6f1e0df548a3d5329a65426cc27c9d25dca7a17d3d84a696865574.svg"
     }
   }
 }
