@@ -93,7 +93,7 @@ class TreeBuilderPolicySimulationResults < TreeBuilder
     name, tip = exp_build_string(data)
     {:id          => nil,
      :text        => prefixed_title(_('Scope'), name),
-     :tip         => tip.html_safe,
+     :tip         => tip,
      :icon        => node_icon(data[:result]),
      :cfmeNoClick => true}
   end
@@ -110,7 +110,7 @@ class TreeBuilderPolicySimulationResults < TreeBuilder
             end
     {:id          => nil,
      :text        => prefixed_title(_('Expression'), name),
-     :tip         => tip.html_safe,
+     :tip         => tip,
      :icon        => image,
      :cfmeNoClick => true}
   end
