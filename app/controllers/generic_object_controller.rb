@@ -66,5 +66,5 @@ class GenericObjectController < ApplicationController
                                                   :title       => _("Generic Objects"))]
   end
 
-  menu_section :aut
+  menu_section :automate
 end
