@@ -15,17 +15,23 @@ ManageIQ.angular.app.controller('cloudSubnetFormController', ['$http', '$scope',
   } else {
     miqService.sparkleOn();
 
-    $http.get('/cloud_subnet/cloud_subnet_form_fields/' + cloudSubnetFormId).success(function(data) {
-      $scope.afterGet = true;
-      $scope.cloudSubnetModel.name = data.name;
-      $scope.cloudSubnetModel.dhcp_enabled = data.dhcp_enabled;
-      $scope.cloudSubnetModel.cidr = data.cidr;
-      $scope.cloudSubnetModel.gateway = data.gateway;
-      $scope.cloudSubnetModel.ip_version = data.ip_version;
+    $http.get('/cloud_subnet/cloud_subnet_form_fields/' + cloudSubnetFormId)
+      .then(getCloudSubnetFormDataComplete)
+      .catch(miqService.handleFailure);
+  }
 
-      $scope.modelCopy = angular.copy( $scope.cloudSubnetModel );
-      miqService.sparkleOff();
-    });
+  function getCloudSubnetFormDataComplete(response) {
+    var data = response.data;
+
+    $scope.afterGet = true;
+    $scope.cloudSubnetModel.name = data.name;
+    $scope.cloudSubnetModel.dhcp_enabled = data.dhcp_enabled;
+    $scope.cloudSubnetModel.cidr = data.cidr;
+    $scope.cloudSubnetModel.gateway = data.gateway;
+    $scope.cloudSubnetModel.ip_version = data.ip_version;
+
+    $scope.modelCopy = angular.copy( $scope.cloudSubnetModel );
+    miqService.sparkleOff();
   }
 
   $scope.addClicked = function() {
@@ -55,12 +61,27 @@ ManageIQ.angular.app.controller('cloudSubnetFormController', ['$http', '$scope',
 
   $scope.filterNetworkManagerChanged = function(id) {
     miqService.sparkleOn();
-    $http.get('/cloud_subnet/cloud_subnet_networks_by_ems/' + id).success(function(data) {
-      $scope.available_networks = data.available_networks;
-    });
-    $http.get('/cloud_subnet/cloud_tenants_by_ems/' + id).success(function(data) {
-      $scope.available_tenants = data.available_tenants;
-    });
+
+    $http.get('/cloud_subnet/cloud_subnet_networks_by_ems/' + id)
+      .then(getCloudSubnetNetworksByEmsComplete)
+      .catch(miqService.handleFailure);
+
+    $http.get('/cloud_subnet/cloud_tenants_by_ems/' + id)
+      .then(getCloudTenantsByEmsComplete)
+      .catch(miqService.handleFailure);
+
     miqService.sparkleOff();
   };
+
+  function getCloudSubnetNetworksByEmsComplete(response) {
+    var data = response.data;
+
+    $scope.available_networks = data.available_networks;
+  }
+
+  function getCloudTenantsByEmsComplete(response) {
+    var data = response.data;
+
+    $scope.available_tenants = data.available_tenants;
+  }
 }]);
