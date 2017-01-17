@@ -51,7 +51,7 @@ describe GenericObjectController do
     let(:generic_object_definition) { GenericObjectDefinition.create!(:name => "name", :description => "description") }
 
     before do
-      post :delete, params
+      post :delete, :params => params
     end
 
     it "deletes the generic object" do
