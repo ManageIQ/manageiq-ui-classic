@@ -50,6 +50,7 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     userName: '',
     password: '',
     securityDomain: '',
+    props: [],
     addKey: 'key1',
     addValue: 'value1',
     editKey: 'editKey',
@@ -144,6 +145,11 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
   vm.addDatasourceStep2Next = function() {
     var useExistingDriver = vm.step2DsModel.selectedJdbcDriver !== '';
     vm.dsModel.step = 'STEP3';
+
+    for(var name in vm.chooseDsModel.selectedDatasource.properties){
+      vm.step3DsModel.props.push({name: name, value: vm.chooseDsModel.selectedDatasource.properties[name]});
+    }
+
     if (useExistingDriver) {
       vm.step3DsModel.connectionUrl = mwAddDatasourceService.determineConnectionUrlFromExisting(vm.step2DsModel.selectedJdbcDriver);
     } else {

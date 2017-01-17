@@ -53,27 +53,15 @@
       %label.col-md-4.control-label{:for => "xa_properties"}
         = _("XA Properties")
       .col-md-8
-        %input.form-control#xa_properties{:type          => "text",
-                                          "ng-model"     => "vm.step3DsModel.securityDomain"}
-    .form-group
-      %label.col-md-4.control-label{:for => "xa_properties"}
-        = _("Add ")
-      .col-md-4
-        %input.form-control#xa_add_key_input{:type      => "text",
-                                             "ng-model" => "vm.step3DsModel.addKey"}
-      .col-md-4
-        %input.form-control#xa_add_value_input{:type      => "text",
-                                               "ng-model" => "vm.step3DsModel.addValue"}
+        %div
 
     .form-group
-      %label.col-md-4.control-label{:for => "xa_properties"}
-        = _("Edit ")
-      .col-md-4
-        %input.form-control#xa_edit_key_input{:type      => "text",
-                                              "ng-model" => "vm.step3DsModel.editKey"}
-      .col-md-4
-        %input.form-control#xa_edit_value_input{:type      => "text",
-                                                "ng-model" => "vm.step3DsModel.editValue"}
+      %div{"ng-repeat" => "prop in vm.step3DsModel.props track by $index"}
+        .col-md-2.col-md-offset-4
+          %label{ "ng-bind" => "prop.name"}
+        .col-md-4
+          %input.form-control{:type      => "text",
+                              "ng-model" => "prop.value"}
 
     .modal-footer
       %button.btn.btn-default.dialog-cancel-button{:type      => "button",
@@ -87,8 +75,8 @@
                               "ng-click" => "vm.finishAddDatasourceBack()"}
         = t
       %button.btn.btn-primary{:type         => "button",
-                              "alt"      => (t = _("Finish")),
-                              "title"    => t,
+                              "alt"         => (t = _("Finish")),
+                              "title"       => t,
                               "ng-click"    => "vm.finishAddDatasource()",
                               "ng-disabled" => "step3Form.$invalid"}
         = t
