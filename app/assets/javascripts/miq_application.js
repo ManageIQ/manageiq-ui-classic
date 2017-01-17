@@ -453,7 +453,10 @@ function miqSetButtons(count, button_div) {
 
 // go to the specified URL when a table cell is clicked
 function DoNav(theUrl) {
-  document.location.href = theUrl;
+  // FIXME: history.pushState({},title,url)
+  history.pushState({}, null, theUrl);
+  console.debug('history: ' + theUrl);
+  miqJqueryRequest(theUrl, {beforeSend: true, complete: true, type: 'GET'});
 }
 
 // Routines to get the size of the window
@@ -1170,6 +1173,7 @@ function miqJqueryRequest(url, options) {
 
   // copy selected options over
   _.extend(ajax_options, _.pick(options, [
+    'type',
     'data',
     'dataType',
     'contentType',

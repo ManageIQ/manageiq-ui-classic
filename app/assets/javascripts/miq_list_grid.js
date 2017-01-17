@@ -5,6 +5,8 @@ function miqRowClick(row_id, row_url, row_url_ajax) {
   if (! row_url)
     return;
 
+  console.debug('miqRowClick');
+  //miqJqueryRequest(row_url + row_id, {beforeSend: true, complete: true, type: 'GET'});
   if (row_url_ajax) {
     miqJqueryRequest(row_url + row_id, {beforeSend: true, complete: true});
   } else {

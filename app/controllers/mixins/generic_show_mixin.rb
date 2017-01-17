@@ -39,6 +39,14 @@ module Mixins
 
       replace_gtl_main_div if pagination_request?
 
+      return if performed?
+
+      if request.xml_http_request? && respond_to?(:replace_center_div)
+        replace_center_div
+      else
+        render_show_view
+      end
+
       if params[:action] == 'show' && !performed? && self.class.respond_to?(:default_show_template)
         render :template => self.class.default_show_template
       end
@@ -56,6 +64,31 @@ module Mixins
 
     def custom_display_call(display)
       public_send(custom_display_method_name(display))
+    end
+
+    def render_show_view
+      render options_for_center_div_render
+    end
+
+    def options_for_center_div_render
+      case @showtype
+      when 'main'
+        {:template => "#{controller_name}/_main"}
+      when 'item' # FIXME: remove this
+        {:template => 'layouts/_item'}
+      else
+        {:template => "layouts/_gtl", :locals => {:action_url => "show/#{@record.id}"}}
+      end
+    end
+
+    def replace_center_div
+      options_for_render = options_for_center_div_render.update(:layout => 'layouts/_center_div_with_listnav')
+
+      # FIXME: use JSON (ExplorerPresenter) for this intead of RJS
+      render :update do |page|
+        page << javascript_prologue
+        page.replace_html(:center_div, options_for_render)
+      end
     end
 
     def show_download

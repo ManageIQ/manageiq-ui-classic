@@ -37,10 +37,20 @@ $.ajaxSetup({
     }),
     "text script": logError(function (text) {
       if (text.match(/^{/)) {
+        console.debug('json payload');
         return jQuery.jsonPayload(text, function (text) {
           return text;
         });
+
+      } else if (text.match(/<!DOCTYPE html>/)) { // plain HTML payload fallback
+        console.debug('html payload');
+        document.open();
+        document.write(text);
+        document.close();
+        return text;
+
       } else { // JavaScript payload
+        console.debug('javascript payload');
         jQuery.globalEval(text.slice('throw "error";'.length));
         return text;
       }
