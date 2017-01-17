@@ -11,14 +11,20 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['$http', '$scope',
     $scope.cloudVolumeModel.name = "";
   } else {
     miqService.sparkleOn();
+    
+    $http.get('/cloud_volume/cloud_volume_form_fields/' + cloudVolumeFormId)
+      .then(getCloudVolumeFormDataComplete)
+      .catch(miqService.handleFailure);
+  }
 
-    $http.get('/cloud_volume/cloud_volume_form_fields/' + cloudVolumeFormId).success(function(data) {
-      $scope.afterGet = true;
-      $scope.cloudVolumeModel.name = data.name;
+  function getCloudVolumeFormDataComplete(response) {
+    var data = response.data;
 
-      $scope.modelCopy = angular.copy( $scope.cloudVolumeModel );
-      miqService.sparkleOff();
-    });
+    $scope.afterGet = true;
+    $scope.cloudVolumeModel.name = data.name;
+
+    $scope.modelCopy = angular.copy( $scope.cloudVolumeModel );
+    miqService.sparkleOff();
   }
 
   $scope.addClicked = function() {
