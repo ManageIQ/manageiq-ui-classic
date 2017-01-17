@@ -11,7 +11,6 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['$http', '$scope',
     $scope.cloudVolumeModel.name = "";
   } else {
     miqService.sparkleOn();
-    
     $http.get('/cloud_volume/cloud_volume_form_fields/' + cloudVolumeFormId)
       .then(getCloudVolumeFormDataComplete)
       .catch(miqService.handleFailure);
