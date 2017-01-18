@@ -5,6 +5,7 @@ class ConfigurationJobController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericListMixin
+  include Mixins::GenericSessionMixin
 
   def self.model
     ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job
@@ -80,16 +81,8 @@ class ConfigurationJobController < ApplicationController
     end
   end
 
-  def get_session_data
-    @title      = _("Job")
-    @layout     = "configuration_job"
-    @lastaction = session[:configuration_job_lastaction]
-    @display    = session[:configuration_job_display]
-  end
-
-  def set_session_data
-    session[:configuration_job_lastaction] = @lastaction
-    session[:configuration_job_display]    = @display unless @display.nil?
+  def title
+    _("Job")
   end
 
   menu_section :conf
