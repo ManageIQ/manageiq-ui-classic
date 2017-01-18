@@ -196,6 +196,7 @@ module UiConstants
       :cloudvolume                              => "list",
       :cloudvolumebackup                        => "list",
       :cloudvolumesnapshot                      => "list",
+      :datawarehousenode                        => "list",
       :drift                                    => "expanded",
       :drift_mode                               => "details",
       :emscluster                               => "grid",

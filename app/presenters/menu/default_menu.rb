@@ -110,7 +110,9 @@ module Menu
         if ::Settings.product.datawarehouse_manager
           Menu::Section.new(:dwh, N_("Datawarehouse"), 'fa product-datawarehouse fa-2x', [
             Menu::Item.new('ems_datawarehouse', N_('Providers'), 'ems_datawarehouse',
-                           {:feature => 'ems_datawarehouse_show_list'}, '/ems_datawarehouse')
+                           {:feature => 'ems_datawarehouse_show_list'}, '/ems_datawarehouse'),
+            Menu::Item.new('datawarehouse_node', N_('Datawarehouse Node'), 'datawarehouse_node',
+                           {:feature => 'datawarehouse_node_show_list'}, '/datawarehouse_node')
             ])
         end
       end

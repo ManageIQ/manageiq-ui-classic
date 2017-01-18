@@ -11,5 +11,5 @@
            :title => _("Show Summary"))
     = miq_accordion_panel(_("Relationships"), false, "ems_datawarehouse_rel") do
       %ul.nav.nav-pills.nav-stacked
-        - %w().each do |ent|
+        - %w(datawarehouse_node).each do |ent|
           = multiple_relationship_link(@record, ent)

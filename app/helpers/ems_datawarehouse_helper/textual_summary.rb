@@ -10,7 +10,7 @@ module EmsDatawarehouseHelper::TextualSummary
 
   def textual_group_relationships
     # Order of items should be from parent to child
-    %i(ems datawarehouse_nodes datawarehouse_indices datawarehouse_shards)
+    %i(ems datawarehouse_nodes)
   end
 
   def textual_group_status
@@ -42,19 +42,19 @@ module EmsDatawarehouseHelper::TextualSummary
   end
 
   def textual_cluster_status
-    @ems.advanced_settings.find_by_name("health-status").value
+    @ems.advanced_settings.find_by(:name => "health-status").value
   end
 
   def textual_lucene_version
-    @ems.advanced_settings.find_by_name("version-lucene_version").value
+    @ems.advanced_settings.find_by(:name => "version-lucene_version").value
   end
 
   def textual_elastic_version
-    @ems.advanced_settings.find_by_name("version-number").value
+    @ems.advanced_settings.find_by(:name => "version-number").value
   end
 
   def textual_cluster_name
-    @ems.advanced_settings.find_by_name("version-cluster_name").value
+    @ems.advanced_settings.find_by(:name => "version-cluster_name").value
   end
 
   def textual_active_shards
