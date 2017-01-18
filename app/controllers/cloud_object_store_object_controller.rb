@@ -46,9 +46,8 @@ class CloudObjectStoreObjectController < ApplicationController
     replace_gtl_main_div if pagination_request?
   end
 
-  def get_session_data
-    super
-    @title = _("Cloud Objects")
+  def title
+    _("Cloud Objects")
   end
 
   menu_section :ost

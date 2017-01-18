@@ -127,22 +127,6 @@ module ContainersCommonMixin
     end
   end
 
-  def get_session_data
-    @title      = ui_lookup(:tables => self.class.table_name)
-    @layout     = self.class.table_name
-    prefix      = self.class.session_key_prefix
-    @lastaction = session["#{prefix}_lastaction".to_sym]
-    @showtype   = session["#{prefix}_showtype".to_sym]
-    @display    = session["#{prefix}_display".to_sym]
-  end
-
-  def set_session_data
-    prefix                                 = self.class.session_key_prefix
-    session["#{prefix}_lastaction".to_sym] = @lastaction
-    session["#{prefix}_showtype".to_sym]   = @showtype
-    session["#{prefix}_display".to_sym]    = @display unless @display.nil?
-  end
-
   def show_container_display(record, display, klass, alt_controller_name = nil)
     title = ui_lookup(:tables => display)
     drop_breadcrumb(:name => _("%{name} (All %{title})") % {:name => record.name, :title => title},
@@ -231,5 +215,6 @@ module ContainersCommonMixin
 
     # include also generic show_list and index methods
     include Mixins::GenericListMixin
+    include Mixins::GenericSessionMixin
   end
 end

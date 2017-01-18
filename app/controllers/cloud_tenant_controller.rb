@@ -9,6 +9,7 @@ class CloudTenantController < ApplicationController
   include Mixins::CheckedIdMixin
   include Mixins::GenericButtonMixin
   include Mixins::GenericFormMixin
+  include Mixins::GenericSessionMixin
 
   # handle buttons pressed on the button bar
   def button
@@ -264,23 +265,6 @@ class CloudTenantController < ApplicationController
                    "Delete initiated for %{number} Cloud Tenants.",
                    tenants.length) % {:number => tenants.length})
     end
-  end
-
-  def get_session_data
-    @title      = _("Cloud Tenant")
-    @layout     = "cloud_tenant"
-    @lastaction = session[:cloud_tenant_lastaction]
-    @display    = session[:cloud_tenant_display]
-    @filters    = session[:cloud_tenant_filters]
-    @catinfo    = session[:cloud_tenant_catinfo]
-    @flash_array = session[:flash_msgs] if session[:flash_msgs].present?
-  end
-
-  def set_session_data
-    session[:cloud_tenant_lastaction] = @lastaction
-    session[:cloud_tenant_display]    = @display unless @display.nil?
-    session[:cloud_tenant_filters]    = @filters
-    session[:cloud_tenant_catinfo]    = @catinfo
   end
 
   menu_section :clo
