@@ -13,15 +13,11 @@ module DatawarehouseSummaryHelper
     %i(tags)
   end
 
-  def textual_datawarehouse_shards
-    textual_link(@ems.datawarehouse_shards)
-  end
-
-  def textual_datawarehouse_indices
-    textual_link(@ems.datawarehouse_indices)
+  def textual_datawarehouse_node
+    textual_link(@record.datawarehouse_node)
   end
 
   def textual_datawarehouse_nodes
-    textual_link(@ems.datawarehouse_nodes)
+    textual_link(@record.datawarehouse_nodes)
   end
 end
