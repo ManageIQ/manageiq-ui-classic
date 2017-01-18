@@ -1,6 +1,6 @@
 require 'shared/presenters/tree_node/common'
 
-describe TreeNode::ConfigurationScript do
+describe TreeNode::ConfigurationScriptBase do
   subject { described_class.new(object, nil, {}) }
   let(:object) { FactoryGirl.create(:ansible_configuration_script) }
 
