@@ -35,7 +35,7 @@
               = _(@view.headers[@sortcol])
 
           - unless db.blank?
-            - if %w(EmsInfra EmsCloud EmsCluster ResourcePool OntapStorageSystem OntapLogicalDisk CimBaseStorageExtent OntapStorageVolume StorageManager OntapFileShare SniaLocalFileSystem).include?(db)
+            - if %w(EmsInfra EmsPhysicalInfra EmsCloud EmsCluster ResourcePool OntapStorageSystem OntapLogicalDisk CimBaseStorageExtent OntapStorageVolume StorageManager OntapFileShare SniaLocalFileSystem).include?(db)
               - @db = db.underscore
 
         .form-group
