@@ -129,10 +129,11 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     if (d.item.icon) {
       return {
         'type': 'image',
-        'icon': '/assets/svg/' + d.item.icon + '.svg'
-      }
+        'icon': d.item.icon,
+      };
     }
-    return icons[d.item.display_kind]
+
+    return icons[d.item.display_kind];
   };
 
   this.dblclick = function dblclick(d) {
