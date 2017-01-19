@@ -6,12 +6,6 @@ class AuthPrivateKeyDecorator < Draper::Decorator
   end
 
   def listicon_image
-    "100/#{item_image}.png"
-  end
-
-  private
-
-  def item_image
-    'auth_key_pair'
+    "100/auth_key_pair.png"
   end
 end

@@ -6,8 +6,7 @@ class MiddlewareDatasourceDecorator < Draper::Decorator
     'fa fa-database'.freeze
   end
 
-  # Determine the icon
-  def item_image
-    'middleware_datasource'
+  def listicon_image
+    '100/middleware_datasource.png'
   end
 end
