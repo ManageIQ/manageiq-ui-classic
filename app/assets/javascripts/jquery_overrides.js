@@ -42,7 +42,7 @@ $.ajaxSetup({
           return text;
         });
 
-      } else if (text.match(/<!DOCTYPE html>/)) { // plain HTML payload fallback
+      } else if (text.match(/^<!DOCTYPE html>/)) { // plain HTML payload fallback
         console.debug('html payload');
         document.open();
         document.write(text);
