@@ -141,10 +141,12 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
 
   vm.addDatasourceStep2Next = function() {
     var useExistingDriver = vm.step2DsModel.selectedJdbcDriver !== '';
+    var i = 0;
     vm.dsModel.step = 'STEP3';
 
     for(var name in vm.chooseDsModel.selectedDatasource.properties){
-      vm.step3DsModel.dsProps.push({name: name, value: vm.chooseDsModel.selectedDatasource.properties[name]});
+      vm.step3DsModel.dsProps.push({id: i, name: name, value: vm.chooseDsModel.selectedDatasource.properties[name]});
+      i = i + 1;
     }
 
     if (useExistingDriver) {
@@ -166,6 +168,12 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
 
   vm.finishAddDatasourceBack = function() {
     vm.dsModel.step = 'STEP2';
+  };
+
+  vm.deleteDsProperty = function(id) {
+    _.remove(vm.step3DsModel.dsProps, function(prop) {
+      return prop.id === id;
+    });
   };
 
   vm.reset = function() {

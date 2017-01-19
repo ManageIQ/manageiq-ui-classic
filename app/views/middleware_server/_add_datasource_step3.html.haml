@@ -63,6 +63,12 @@
           .col-md-4
             %input.form-control{:type    => "text",
                               "ng-model" => "prop.value"}
+          .col-md-1
+            %button.btn.btn-default{:type      => "button",
+                                    :class     => "pficon-delete",
+                                    "alt"      => (t = _("Delete")),
+                                    "title"    => t,
+                                    "ng-click" => "vm.deleteDsProperty(prop.id)"}
 
     .modal-footer
       %button.btn.btn-default.dialog-cancel-button{:type      => "button",
