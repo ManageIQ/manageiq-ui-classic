@@ -102,7 +102,6 @@ class ConfigurationController < ApplicationController
   # AJAX driven routine for gtl view selection
   def view_selected
     # ui2 form
-    binding.pry
     return unless load_edit("config_edit__ui2", "configuration")
     @edit[:new][:views][VIEW_RESOURCES[params[:resource]]] = params[:view] # Capture the new view setting
     @edit[:new][:display][:display_vms] = params[:display_vms] == 'true' if params.key?(:display_vms)

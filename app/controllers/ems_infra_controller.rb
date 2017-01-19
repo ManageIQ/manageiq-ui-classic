@@ -25,6 +25,14 @@ class EmsInfraController < ApplicationController
     new_ems_infra_path
   end
 
+  def dashboard_view
+    if @sb[:summary_mode].present?
+      @sb[:summary_mode] == 'dashboard'
+    else
+      current_user[:settings][:views][:summary_mode] == 'dashboard'
+    end
+  end
+
   def index
     redirect_to :action => 'show_list'
   end
