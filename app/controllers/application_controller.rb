@@ -2341,24 +2341,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_gettext_locale
-    user_settings =  current_user.try(:settings)
-    user_locale = user_settings[:display][:locale] if user_settings &&
-                                                      user_settings.key?(:display) &&
-                                                      user_settings[:display].key?(:locale)
-    if user_locale == 'default' || user_locale.nil?
-      server_locale = ::Settings.server.locale
-      # user settings && server settings == 'default'
-      # OR not defined
-      # use HTTP_ACCEPT_LANGUAGE
-      locale = if server_locale == "default" || server_locale.nil?
-                 request.headers['Accept-Language']
-               else
-                 server_locale
-               end
-    else
-      locale = user_locale
-    end
-    FastGettext.set_locale(locale)
+    FastGettext.set_locale(LocaleResolver.resolve(current_user, request.headers))
   end
 
   def flip_sort_direction(direction)
