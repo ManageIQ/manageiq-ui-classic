@@ -48,4 +48,12 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['$http', '$scope
     $scope.angularForm.$setPristine(true);
     miqService.miqFlash("warn", "All changes have been reset");
   };
+
+  $scope.filterNetworkManagerChanged = function(id) {
+    miqService.sparkleOn();
+    $http.get('/security_group/cloud_tenants_by_ems/' + id).success(function(data) {
+      $scope.available_tenants = data.available_tenants;
+    });
+    miqService.sparkleOff();
+  };
 }]);

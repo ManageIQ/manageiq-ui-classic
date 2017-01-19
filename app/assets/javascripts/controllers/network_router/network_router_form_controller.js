@@ -68,7 +68,10 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
     miqService.sparkleOn();
     $http.get('/network_router/network_router_networks_by_ems/' + id).success(function(data) {
       $scope.available_networks = data.available_networks;
-      miqService.sparkleOff();
     });
+    $http.get('/network_router/cloud_tenants_by_ems/' + id).success(function(data) {
+      $scope.available_tenants = data.available_tenants;
+    });
+    miqService.sparkleOff();
   };
 }]);

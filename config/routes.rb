@@ -1479,6 +1479,7 @@ Rails.application.routes.draw do
 
     :security_group           => {
       :get  => %w(
+        cloud_tenants_by_ems
         edit
         download_data
         index
@@ -1511,6 +1512,7 @@ Rails.application.routes.draw do
 
     :floating_ip              => {
       :get  => %w(
+        cloud_tenants_by_ems
         download_data
         edit
         floating_ip_form_fields
@@ -1579,6 +1581,7 @@ Rails.application.routes.draw do
     :cloud_network             => {
       :get  => %w(
         cloud_network_form_fields
+        cloud_tenants_by_ems
         delete_networks
         download_data
         edit
@@ -1641,6 +1644,7 @@ Rails.application.routes.draw do
     :network_router           => {
       :get  => %w(
         add_interface_select
+        cloud_tenants_by_ems
         delete_network_routers
         download_data
         edit

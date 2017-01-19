@@ -51,7 +51,10 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
     miqService.sparkleOn();
     $http.get('/floating_ip/networks_by_ems/' + id).success(function(data) {
       $scope.available_networks = data.available_networks;
-      miqService.sparkleOff();
     });
+    $http.get('/floating_ip/cloud_tenants_by_ems/' + id).success(function(data) {
+      $scope.available_tenants = data.available_tenants;
+    });
+    miqService.sparkleOff();
   };
 }]);
