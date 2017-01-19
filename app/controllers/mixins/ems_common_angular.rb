@@ -284,6 +284,18 @@ module Mixins
                        :ems_controller            => controller_name,
                        :default_auth_status       => default_auth_status,
                        :hawkular_auth_status      => hawkular_auth_status.nil? ? true : hawkular_auth_status,
+       } if controller_name == "ems_physical_infra"
+
+       render :json => {:name                      => @ems.name,
+                        :emstype                   => @ems.emstype,
+                        :zone                      => zone,
+                        :provider_id               => @ems.provider_id ? @ems.provider_id : "",
+                        :hostname                  => @ems.hostname,
+                        :default_hostname          => @ems.connection_configurations.default.endpoint.hostname,
+                        :provider_region           => @ems.provider_region,
+                        :default_userid            => @ems.authentication_userid ? @ems.authentication_userid : "",
+                        :ems_controller            => controller_name,
+                        :default_auth_status       => default_auth_status,
       } if controller_name == "ems_container"
 
       render :json => {:name                => @ems.name,

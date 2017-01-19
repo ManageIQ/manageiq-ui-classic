@@ -6,7 +6,7 @@
                        "name"            => "angularForm",
                        "ng-show"         => "afterGet",
                        "create-url"      => "#{url}",
-                       "form-fields-url" => "/#{controller_name}/ems_infra_form_fields/",
+                       "form-fields-url" => "/#{controller_name}/ems_physical_infra_form_fields/",
                        "novalidate"      => true}) do |f|
   %input{:type => 'hidden', :id => "form_id", :value => "##{f.options[:html][:id]}"}
   %input{:type => 'hidden', :id => "button_name", :name => "button", :value => "add"}
