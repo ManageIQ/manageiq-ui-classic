@@ -10,7 +10,7 @@
             %label.control-label.col-md-2= _("Description")
             .col-md-10
               %p.form-control-static
-                %img{:src => image_path("100/event-#{h(@event.name)}.png")}
+                %i{:class => @event.decorate.fonticon}
                 = h(@event.description)
         .form-group
           %label.control-label.col-md-2= _("Event Group")
