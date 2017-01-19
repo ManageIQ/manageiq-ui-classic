@@ -88,7 +88,6 @@ shared_examples :shared_examples_for_ems_network_controller do |providers|
           controller.instance_variable_set(:@breadcrumbs, [])
           get :new
           expect(response.status).to eq(200)
-          expect(allow(controller).to(receive(:edit))).to_not be_nil
         end
       end
 
