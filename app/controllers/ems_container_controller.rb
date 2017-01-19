@@ -4,6 +4,7 @@ class EmsContainerController < ApplicationController
   include EmsCommon        # common methods for EmsInfra/Cloud/Container controllers
   include Mixins::EmsCommonAngular
   include Mixins::GenericSessionMixin
+  include Mixins::DashboardViewMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -16,14 +17,6 @@ class EmsContainerController < ApplicationController
 
   def self.table_name
     @table_name ||= "ems_container"
-  end
-
-  def dashboard_view
-    if @sb[:summary_mode].present?
-      @sb[:summary_mode] == 'dashboard'
-    else
-      current_user[:settings][:views][:summary_mode] == 'dashboard'
-    end
   end
 
   def show_list
