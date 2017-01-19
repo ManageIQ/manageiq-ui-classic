@@ -310,7 +310,7 @@ describe EmsInfraController do
 
       it do
         is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => "layouts/listnav/_ems_infra")
+        is_expected.not_to render_template(:partial => "layouts/listnav/_ems_infra")
       end
     end
 
@@ -413,7 +413,7 @@ describe EmsInfraController do
         breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
         expect(breadcrumbs).to eq([{:name => "Infrastructure Providers",
                                     :url  => "/ems_infra/show_list?page=&refresh=y"},
-                                   {:name => "#{ems.name} (Summary)",
+                                   {:name => "#{ems.name} (Dashboard)",
                                     :url  => "/ems_infra/#{ems.id}"}])
       end
     end
