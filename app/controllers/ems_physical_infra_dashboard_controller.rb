@@ -19,11 +19,11 @@ class EmsPhysicalInfraDashboardController < ApplicationController
   private
 
   def collect_data(ems_id)
-    EmsInfraDashboardService.new(ems_id, self).all_data
+    EmsPhysicalInfraDashboardService.new(ems_id, self).all_data
   end
 
   def get_session_data
-    @layout = "ems_infra_dashboard"
+    @layout = "ems_physical_infra_dashboard"
   end
 
   def set_session_data
