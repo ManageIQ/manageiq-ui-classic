@@ -9,11 +9,12 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
   var makePayload = function() {
     return {
       'id': angular.element('#server_id').val(),
-      'xaDatasource': false,
+      'xaDatasource': vm.chooseDsModel.xaDatasource,
       'datasourceName': vm.step1DsModel.datasourceName,
       'jndiName': vm.step1DsModel.jndiName,
       'driverName': vm.step2DsModel.jdbcDriverName,
       'driverClass': vm.step2DsModel.driverClass,
+      'datasourceProperties': vm.step3DsModel.dsProps,
       'connectionUrl': vm.step3DsModel.connectionUrl,
       'userName': vm.step3DsModel.userName,
       'password': vm.step3DsModel.password,
@@ -50,11 +51,7 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     userName: '',
     password: '',
     securityDomain: '',
-    props: [],
-    addKey: 'key1',
-    addValue: 'value1',
-    editKey: 'editKey',
-    editValue: 'editValue',
+    dsProps: [],
   };
 
   vm.chooseDsModel.datasources = mwAddDatasourceService.getXaDatasources();
@@ -147,7 +144,7 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     vm.dsModel.step = 'STEP3';
 
     for(var name in vm.chooseDsModel.selectedDatasource.properties){
-      vm.step3DsModel.props.push({name: name, value: vm.chooseDsModel.selectedDatasource.properties[name]});
+      vm.step3DsModel.dsProps.push({name: name, value: vm.chooseDsModel.selectedDatasource.properties[name]});
     }
 
     if (useExistingDriver) {
@@ -178,6 +175,7 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     vm.dsModel.step = 'CHOOSE_DS';
 
     vm.chooseDsModel.selectedDatasource = '';
+    vm.chooseDsModel.xaDatasource = true;
 
     vm.step1DsModel.datasourceName = '';
     vm.step1DsModel.jndiName = '';
@@ -192,5 +190,6 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     vm.step3DsModel.userName = '';
     vm.step3DsModel.password = '';
     vm.step3DsModel.securityDomain = '';
+    vm.step3DsModel.dsProps = [];
   };
 }

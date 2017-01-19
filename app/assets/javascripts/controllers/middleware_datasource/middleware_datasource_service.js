@@ -57,7 +57,7 @@ function MwAddDatasourceService($http, $q) {
       driverName: 'sqlserver', driverModuleName: 'com.microsoft',
       driverClass: 'com.microsoft.sqlserver.jdbc.SQLServerXADataSource',
       properties: {
-        DatabaseName: 'postgresdb',
+        DatabaseName: 'MyDatabase',
         SelectMethod: 'cursor',
         ServerName: 'localhost',
       },
@@ -116,7 +116,6 @@ function MwAddDatasourceService($http, $q) {
     var parameterizedUrl = BASE_URL + '?server_id=' + serverId;
 
     $http.get(parameterizedUrl).then(function(driverData) {
-      console.dir(driverData.data.data);
       var transformedData = _.chain(driverData.data.data)
         .map(function(driver) {
           return {'id': driver.properties['Driver Name'].toUpperCase(),

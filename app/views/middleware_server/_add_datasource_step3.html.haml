@@ -56,7 +56,7 @@
         %div
 
     .form-group
-      %div{"ng-repeat" => "prop in vm.step3DsModel.props track by $index"}
+      %div{"ng-repeat" => "prop in vm.step3DsModel.dsProps track by $index"}
         .col-md-2.col-md-offset-4
           %label{ "ng-bind" => "prop.name"}
         .col-md-4
