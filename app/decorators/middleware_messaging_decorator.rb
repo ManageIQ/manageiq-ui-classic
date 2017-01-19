@@ -6,8 +6,7 @@ class MiddlewareMessagingDecorator < Draper::Decorator
     'fa fa-exchange'.freeze
   end
 
-  # Determine the icon
-  def item_image
-    'middleware_messaging'
+  def listicon_image
+    '100/middleware_messaging.png'
   end
 end

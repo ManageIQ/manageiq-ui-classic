@@ -6,8 +6,7 @@ class MiddlewareServerGroupDecorator < Draper::Decorator
     'pficon-server-group'.freeze
   end
 
-  # Determine the icon
-  def item_image
-    'middleware_server_group'
+  def listicon_image
+    '100/middleware_server_group.png'
   end
 end
