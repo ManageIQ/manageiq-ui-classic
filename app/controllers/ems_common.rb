@@ -38,7 +38,13 @@ module EmsCommon
     @showtype = "dashboard"
     @lastaction = "show_dashboard"
     drop_breadcrumb(:name => @ems.name + _(" (Dashboard)"), :url => show_link(@ems))
+    @sb[:summary_mode] = 'dashboard' unless @sb[:summary_mode] == 'dashboard'
     render :action => "show_dashboard"
+  end
+
+  def show_main
+    @sb[:summary_mode] = 'textual' unless @sb[:summary_mode] == 'textual'
+    super
   end
 
   def show_ad_hoc_metrics
@@ -118,6 +124,10 @@ module EmsCommon
     view_setup_helper(display, *view_setup_params[display])
   end
 
+  def dashboard_view
+    false
+  end
+
   def show
     return unless init_show
     session[:vm_summary_cool] = (settings(:views, :vm_summary_cool).to_s == "summary")
@@ -125,7 +135,6 @@ module EmsCommon
     @ems = @record
 
     drop_breadcrumb({:name => ui_lookup(:tables => @table_name), :url => "/#{@table_name}/show_list?page=#{@current_page}&refresh=y"}, true)
-
     case params[:display]
     when 'main'                          then show_main
     when 'download_pdf', 'summary_only'  then show_download
@@ -140,7 +149,7 @@ module EmsCommon
       if pagination_or_gtl_request? # pagination controls
         show_entities(@display) # display loaded from session
       else                 # or default display
-        show_main
+        dashboard_view ? show_dashboard : show_main
       end
     else show_entities(params[:display])
     end

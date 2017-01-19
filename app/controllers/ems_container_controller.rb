@@ -18,6 +18,14 @@ class EmsContainerController < ApplicationController
     @table_name ||= "ems_container"
   end
 
+  def dashboard_view
+    if @sb[:summary_mode].present?
+      @sb[:summary_mode] == 'dashboard'
+    else
+      current_user[:settings][:views][:summary_mode] == 'dashboard'
+    end
+  end
+
   def show_list
     process_show_list(:gtl_dbname => 'emscontainer')
   end
