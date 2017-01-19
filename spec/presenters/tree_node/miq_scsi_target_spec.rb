@@ -5,7 +5,7 @@ describe TreeNode::MiqScsiTarget do
   let(:object) { FactoryGirl.create(:miq_scsi_target) }
 
   include_examples 'TreeNode::Node#key prefix', 'sg-'
-  include_examples 'TreeNode::Node#image', '100/target_scsi.png'
+  include_examples 'TreeNode::Node#icon', 'product product-network_card'
   include_examples 'TreeNode::Node#tooltip prefix', 'Target'
 
   describe '#title' do

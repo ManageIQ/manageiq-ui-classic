@@ -13,7 +13,7 @@ describe TreeNode::PxeImage do
       let(:object) { FactoryGirl.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'pi-'
-      include_examples 'TreeNode::Node#image', '100/pxeimage.png'
+      include_examples 'TreeNode::Node#icon', 'product product-network_card'
     end
   end
 end

@@ -1,6 +1,6 @@
 module TreeNode
   class DialogTab < Node
     set_attribute(:title, &:label)
-    set_attribute(:image, '100/dialog_tab.png')
+    set_attribute(:icon, 'product product-tab')
   end
 end
