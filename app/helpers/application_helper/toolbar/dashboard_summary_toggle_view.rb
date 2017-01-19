@@ -13,7 +13,8 @@ class ApplicationHelper::Toolbar::DashboardSummaryToggleView < ApplicationHelper
       N_('Summary View'),
       nil,
       :url       => "/",
-      :url_parms => ""),
+      :url_parms => "?display=main"
+    ),
     twostate(
       :view_topology,
       'fa pficon-topology',
