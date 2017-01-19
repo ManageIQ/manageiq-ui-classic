@@ -1054,6 +1054,7 @@ Rails.application.routes.draw do
         protect
         rows_json
         show
+        show_performance
         show_list
         tagging_edit
       ) +
@@ -1756,6 +1757,7 @@ Rails.application.routes.draw do
         show_association
         show_details
         show_list
+        show_performance
         start
         tagging_edit
         users
@@ -2754,6 +2756,7 @@ Rails.application.routes.draw do
         protect
         show
         show_list
+        show_performance
         snapshot_files
         tagging_edit
         tree_select
@@ -2779,6 +2782,7 @@ Rails.application.routes.draw do
         show_association
         show_details
         show_list
+        show_performance
         storage_list
         storage_pod_list
         snapshot_files
@@ -3000,6 +3004,7 @@ Rails.application.routes.draw do
         protect
         retire
         show
+        show_performance
         tagging_edit
         ownership_form_fields
       ) +
@@ -3041,6 +3046,7 @@ Rails.application.routes.draw do
         sections_field_changed
         security_groups
         show
+        show_performance
         sort_ds_grid
         sort_host_grid
         sort_iso_img_grid
@@ -3089,6 +3095,7 @@ Rails.application.routes.draw do
         protect
         retire
         show
+        show_performance
         tagging_edit
         util_report_download
         utilization
@@ -3144,6 +3151,7 @@ Rails.application.routes.draw do
         cloud_networks
         cloud_volumes
         show
+        show_performance
         sort_ds_grid
         sort_host_grid
         sort_iso_img_grid

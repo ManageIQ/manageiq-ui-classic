@@ -50,6 +50,7 @@ module EmsCommon
 
   def show_performance
     @showtype = "performance"
+    @record = identify_record(params[:id], @table_name)
     drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @record.name},
                     :url  => "/#{@table_name}/show/#{@record.id}?display=#{@display}&refresh=n")
     perf_gen_init_options # Initialize perf chart options, charts will be generated async
@@ -130,7 +131,6 @@ module EmsCommon
     when 'dashboard'                     then show_dashboard
     when 'ad_hoc_metrics'                then show_ad_hoc_metrics
     when 'topology'                      then show_topology
-    when 'performance'                   then show_performance
     when nil
       if pagination_or_gtl_request? # pagination controls
         show_entities(@display) # display loaded from session

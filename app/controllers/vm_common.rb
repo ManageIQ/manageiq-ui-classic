@@ -180,6 +180,35 @@ module VmCommon
     generic_x_show
   end
 
+  def show_performance(id = nil)
+    @flash_array = []
+    @sb[:action] = "performance"
+
+    return if perfmenu_click?
+    @display = "performance"
+    @display = params[:vm_tree] if params[:vm_tree]
+
+    @lastaction = "show_performance"
+    @record = identify_record(id || params[:id], VmOrTemplate)
+    if @record.nil?
+      referrer = Rails.application.routes.recognize_path(request.referrer)
+      redirect_to :controller => referrer[:controller], :action => referrer[:action]
+      return
+    end
+    return if record_no_longer_exists?(@record)
+
+    @explorer = true if request.xml_http_request? # Ajax request means in explorer
+
+    @showtype = "performance"
+    drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @record.name},
+                    :url  => "/vm_infra/show_performance/#{@record.id}?refresh=n")
+    perf_gen_init_options               # Initialize perf chart options, charts will be generated async
+
+    if @explorer
+      @refresh_partial = "layouts/performance"
+    end
+  end
+
   def show(id = nil)
     @flash_array = [] if params[:display] && params[:display] != "snapshot_info"
     @sb[:action] = params[:display]
