@@ -1533,6 +1533,7 @@ Rails.application.routes.draw do
         tag_edit_form_field_changed
         tagging_edit
         update
+        wait_for_task
       ) +
         adv_search_post +
         compare_post +
