@@ -1,6 +1,5 @@
 class MiddlewareDomainDecorator < Draper::Decorator
   delegate_all
-  include MiddlewareDecoratorMixin
 
   def fonticon
     'pficon-domain'.freeze

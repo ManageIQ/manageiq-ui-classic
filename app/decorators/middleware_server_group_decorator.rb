@@ -1,6 +1,5 @@
 class MiddlewareServerGroupDecorator < Draper::Decorator
   delegate_all
-  include MiddlewareDecoratorMixin
 
   def fonticon
     'pficon-server-group'.freeze

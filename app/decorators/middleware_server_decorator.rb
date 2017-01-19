@@ -1,6 +1,5 @@
 class MiddlewareServerDecorator < Draper::Decorator
   delegate_all
-  include MiddlewareDecoratorMixin
 
   def fonticon
     nil

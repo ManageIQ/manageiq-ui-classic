@@ -1,6 +1,5 @@
 class MiddlewareDeploymentDecorator < Draper::Decorator
   delegate_all
-  include MiddlewareDecoratorMixin
 
   def fonticon
     if name.end_with? '.ear'
