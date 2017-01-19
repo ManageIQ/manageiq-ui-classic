@@ -8,7 +8,6 @@ describe EmsContainerController do
     get :new
 
     expect(response.status).to eq(200)
-    expect(allow(controller).to receive(:edit)).to_not be_nil
   end
 
   describe "#show" do
