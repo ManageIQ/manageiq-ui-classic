@@ -52,6 +52,8 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     password: '',
     securityDomain: '',
     dsProps: [],
+    dsAddPropertyName: '',
+    dsAddPropertyValue: '',
   };
 
   vm.chooseDsModel.datasources = mwAddDatasourceService.getXaDatasources();
@@ -176,6 +178,12 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     });
   };
 
+  vm.addDsProperty = function(name, value) {
+    vm.step3DsModel.dsProps.push({id: vm.step3DsModel.dsProps.length - 1, name: name, value: value});
+    vm.step3DsModel.dsAddPropertyName = '';
+    vm.step3DsModel.dsAddPropertyValue = '';
+  };
+
   vm.reset = function() {
     angular.element('#modal_ds_div').modal('hide');
     $scope.dsAddForm.$setPristine();
@@ -198,6 +206,8 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     vm.step3DsModel.userName = '';
     vm.step3DsModel.password = '';
     vm.step3DsModel.securityDomain = '';
+    vm.step3DsModel.dsAddPropertyName = '';
+    vm.step3DsModel.dsAddPropertyValue = '';
     vm.step3DsModel.dsProps = [];
   };
 }

@@ -139,12 +139,16 @@ class MiddlewareServerController < ApplicationController
       }
     else
       params[:datasource] = {
-        :datasourceName => datasource_name,
-        :xaDatasource   => params["xaDatasource"],
-        :jndiName       => params["jndiName"],
-        :driverName     => params["driverName"],
-        :driverClass    => params["driverClass"],
-        :connectionUrl  => params["connectionUrl"]
+        :datasourceName       => datasource_name,
+        :xaDatasource         => params["xaDatasource"],
+        :jndiName             => params["jndiName"],
+        :driverName           => params["driverName"],
+        :driverClass          => params["driverClass"],
+        :connectionUrl        => params["connectionUrl"],
+        :userName             => params["userName"],
+        :password             => params["password"],
+        :securityDomain       => params["securityDomain"],
+        :datasourceProperties => params["datasourceProperties"]
       }
 
       run_server_operation(STANDALONE_SERVER_OPERATIONS.fetch(:middleware_add_datasource), selected_server)

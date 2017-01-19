@@ -70,6 +70,22 @@
                                     "title"    => t,
                                     "ng-click" => "vm.deleteDsProperty(prop.id)"}
 
+      %div.row.property-table-item
+        .col-md-2.col-md-offset-4
+          %input.form-control{:type         => "text",
+                              "placeholder" => _("Name"),
+                              "ng-model"    => "vm.step3DsModel.dsAddPropertyName"}
+        .col-md-4
+          %input.form-control{:type         => "text",
+                              "placeholder" => _("Value"),
+                              "ng-model"    => "vm.step3DsModel.dsAddPropertyValue"}
+        .col-md-1
+          %button.btn.btn-default{:type      => "button",
+                                  :class     => "pficon-add-circle-o",
+                                  "alt"      => (t = _("Add")),
+                                  "title"    => t,
+                                  "ng-click" => "vm.addDsProperty(vm.step3DsModel.dsAddPropertyName, vm.step3DsModel.dsAddPropertyValue)"}
+
     .modal-footer
       %button.btn.btn-default.dialog-cancel-button{:type      => "button",
                                                    "alt"      => (t = _("Cancel")),
