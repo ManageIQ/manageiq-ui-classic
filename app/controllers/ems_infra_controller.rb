@@ -3,6 +3,7 @@ class EmsInfraController < ApplicationController
   include Mixins::GenericShowMixin
   include EmsCommon        # common methods for EmsInfra/Cloud controllers
   include Mixins::EmsCommonAngular
+  include Mixins::DashboardViewMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -23,14 +24,6 @@ class EmsInfraController < ApplicationController
 
   def new_ems_path
     new_ems_infra_path
-  end
-
-  def dashboard_view
-    if @sb[:summary_mode].present?
-      @sb[:summary_mode] == 'dashboard'
-    else
-      current_user[:settings][:views][:summary_mode] == 'dashboard'
-    end
   end
 
   def index
