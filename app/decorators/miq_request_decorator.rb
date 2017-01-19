@@ -2,7 +2,12 @@ class MiqRequestDecorator < Draper::Decorator
   delegate_all
 
   def fonticon
-    nil
+    case request_status.to_s.downcase
+    when "ok"
+      "pficon pficon-ok"
+    when "error"
+      "pficon pficon-error-circle-o"
+    end
   end
 
   def listicon_image

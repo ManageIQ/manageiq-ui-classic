@@ -2,7 +2,7 @@ class ResourcePoolDecorator < Draper::Decorator
   delegate_all
 
   def fonticon
-    nil
+    "pficon pficon-resource-pool"
   end
 
   def listicon_image
