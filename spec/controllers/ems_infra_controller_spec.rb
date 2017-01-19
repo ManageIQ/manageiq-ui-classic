@@ -97,7 +97,6 @@ describe EmsInfraController do
       controller.instance_variable_set(:@breadcrumbs, [])
       get :new
       expect(response.status).to eq(200)
-      expect(allow(controller).to receive(:edit)).to_not be_nil
     end
   end
 
