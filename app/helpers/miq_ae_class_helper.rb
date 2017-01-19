@@ -43,7 +43,7 @@ module MiqAeClassHelper
     rec_name = rec_name.gsub(/\n/, "\\n")
     rec_name = rec_name.gsub(/\t/, "\\t")
     rec_name = rec_name.tr('"', "'")
-    rec_name = CGI.escapeHTML(rec_name)
+    rec_name = ERB::Util.html_escape(rec_name)
     rec_name.gsub(/\\/, "&#92;")
   end
 
