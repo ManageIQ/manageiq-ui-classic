@@ -57,10 +57,11 @@
 
     .form-group
       %div{"ng-repeat" => "prop in vm.step3DsModel.dsProps track by $index"}
-        .col-md-2.col-md-offset-4
-          %label{ "ng-bind" => "prop.name"}
-        .col-md-4
-          %input.form-control{:type      => "text",
+        %div.row.property-table-item
+          .col-md-2.col-md-offset-4
+            %label{ "ng-bind" => "prop.name"}
+          .col-md-4
+            %input.form-control{:type    => "text",
                               "ng-model" => "prop.value"}
 
     .modal-footer
