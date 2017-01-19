@@ -21,7 +21,7 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
     @sb[:target_classes] = resolve.invert
     resolve = Array(resolve.invert).sort
     resolve.collect do |typ|
-      {:id => "ab_#{typ[1]}", :text => typ[0], :image => buttons_node_image(typ[1]), :tip => typ[0]}
+      {:id => "ab_#{typ[1]}", :text => typ[0], :tip => typ[0]}.merge(buttons_node_image(typ[1]))
     end
   end
 
@@ -69,10 +69,10 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
 
   def buttons_node_image(node)
     case node
-    when "ExtManagementSystem" then '100/ext_management_system.png'
-    when "MiqTemplate"         then '100/vm.png'
-    when 'CloudTenant'         then '100/cloud_tenant.png'
-    else                            "100/#{node.downcase}.png"
+    when "ExtManagementSystem" then {:icon  => 'pficon pficon-server'}
+    when "MiqTemplate"         then {:icon  => 'pficon-virtual-machine'}
+    when 'CloudTenant'         then {:icon  => 'pficon-cloud-tenant'}
+    else                            {:image => '100/#{node.downcase}.png'}
     end
   end
 end

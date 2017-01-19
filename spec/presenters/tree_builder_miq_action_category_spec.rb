@@ -54,7 +54,7 @@ describe TreeBuilderMiqActionCategory do
       expect(subject.send(:root_options)).to eq(
         :title   => tenant,
         :tooltip => tenant,
-        :image   => "100/tag.png"
+        :icon    => "fa fa-tag"
       )
     end
   end

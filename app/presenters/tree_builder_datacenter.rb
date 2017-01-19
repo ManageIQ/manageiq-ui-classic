@@ -49,13 +49,13 @@ class TreeBuilderDatacenter < TreeBuilder
       {
         :title   => @root.name,
         :tooltip => _("Cluster: %{name}") % {:name => @root.name},
-        :image   => "100/cluster.png"
+        :icon    => "pficon pficon-cluster"
       }
     elsif @root.kind_of?(ResourcePool)
       {
         :title   => @root.name,
         :tooltip => _("Resource Pool: %{name}") % {:name => @root.name},
-        :image   => @root.vapp ? "100/vapp.png" : "100/resource_pool.png"
+        :icon    => "pficon-resource-pool"
       }
     end
   end

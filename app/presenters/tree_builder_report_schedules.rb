@@ -17,7 +17,7 @@ class TreeBuilderReportSchedules < TreeBuilder
     {
       :title   => t = _("All Schedules"),
       :tooltip => t,
-      :image   => '100/miq_schedule.png'
+      :icon    => 'fa fa-clock-o'
     }
   end
 

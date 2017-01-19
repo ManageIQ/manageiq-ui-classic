@@ -18,7 +18,7 @@ class TreeBuilderReportExport < TreeBuilder
     {
       :title   => t = _("Import / Export"),
       :tooltip => t,
-      :image   => '100/report.png'
+      :icon    => 'product product-report'
     }
   end
 

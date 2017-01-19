@@ -49,7 +49,7 @@ describe TreeBuilderPolicySimulation do
       expect(root).to eq(
         :title       => "<strong>Policy Simulation</strong>",
         :tooltip     => 'Policy Simulation',
-        :image       => '100/vm.png',
+        :icon        => 'pficon pficon-virtual-machine',
         :cfmeNoClick => true
       )
     end
@@ -66,7 +66,7 @@ describe TreeBuilderPolicySimulation do
     it 'sets Policy Profile node correctly' do
       node = @policy_simulation_tree.send(:x_get_tree_roots, false).first
       expect(node[:text]).to eq("<strong>Policy Profile:</strong> #{@data.first['description']}")
-      expect(node[:image]).to eq("pficon pficon-ok")
+      expect(node[:icon]).to eq("pficon pficon-ok")
       expect(node[:tip]).to eq(@data.first['description'])
       expect(node[:policies].count).to eq(2)
     end
@@ -75,11 +75,11 @@ describe TreeBuilderPolicySimulation do
       node = @policy_simulation_tree.send(:x_get_tree_roots, false).first
       kids = @policy_simulation_tree.send(:x_get_tree_hash_kids, node, false)
       expect(kids.first[:text]).to eq("<strong>Policy:</strong> #{@data.first['policies'].first['description']}")
-      expect(kids.first[:image]).to eq('fa fa-ban')
+      expect(kids.first[:icon]).to eq('fa fa-ban')
       expect(kids.first[:tip]).to eq(@data.first['policies'].first['description'])
       expect(kids.first[:conditions].count).to eq(1)
       expect(kids.last[:text]).to eq("<strong>Policy:</strong> #{@data.first['policies'].last['description']}")
-      expect(kids.last[:image]).to eq('pficon-error-circle-o')
+      expect(kids.last[:icon]).to eq('pficon-error-circle-o')
       expect(kids.last[:tip]).to eq(@data.first['policies'].last['description'])
       expect(kids.last[:conditions].count).to eq(1)
     end
@@ -91,10 +91,10 @@ describe TreeBuilderPolicySimulation do
       parent_two = @policy_simulation_tree.send(:x_get_tree_hash_kids, root, false).last
       kid_two = @policy_simulation_tree.send(:x_get_tree_hash_kids, parent_two, false).first
       expect(kid_one[:text]).to eq("<strong>Condition:</strong> #{@data.first['policies'].first['conditions'].first['description']}")
-      expect(kid_one[:image]).to eq('pficon-error-circle-o')
+      expect(kid_one[:icon]).to eq('pficon-error-circle-o')
       expect(kid_one[:tip]).to eq(@data.first['policies'].first['conditions'].first['description'])
       expect(kid_two[:text]).to eq("<strong>Condition:</strong> #{@data.first['policies'].last['conditions'].first['description']}")
-      expect(kid_two[:image]).to eq('fa fa-ban')
+      expect(kid_two[:icon]).to eq('fa fa-ban')
       expect(kid_two[:tip]).to eq(@data.first['policies'].last['conditions'].first['description'])
     end
 
@@ -107,10 +107,10 @@ describe TreeBuilderPolicySimulation do
       kid_one = @policy_simulation_tree.send(:x_get_tree_hash_kids, parent_one, false).first
       kid_two = @policy_simulation_tree.send(:x_get_tree_hash_kids, parent_two, false).first
       expect(kid_one[:text]).to eq("<strong>Scope:</strong> <font color=\"red\">FIND VM and Instance.Files : Name INCLUDES &quot;nb&quot; CHECK COUNT &gt;= 1</font>")
-      expect(kid_one[:image]).to eq('100/na.png')
+      expect(kid_one[:icon]).to eq('fa fa-ban')
       expect(kid_one[:tip]).to eq("FIND VM and Instance.Files : Name INCLUDES \"nb\" CHECK COUNT &gt;= 1")
       expect(kid_two[:text]).to eq("<strong>Expression:</strong> <font color=\"red\">FIND VM and Instance.Files : Name INCLUDES &quot;nb&quot; CHECK COUNT &gt;= 1</font>")
-      expect(kid_two[:image]).to eq('100/na.png')
+      expect(kid_two[:icon]).to eq('fa fa-ban')
       expect(kid_two[:tip]).to eq("FIND VM and Instance.Files : Name INCLUDES \"nb\" CHECK COUNT &gt;= 1")
     end
   end

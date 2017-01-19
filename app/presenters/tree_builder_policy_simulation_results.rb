@@ -24,7 +24,7 @@ class TreeBuilderPolicySimulationResults < TreeBuilder
     event = MiqEventDefinition.find(@root[:event_value])
     {
       :title       => _("Policy Simulation Results for Event [%{description}]") % {:description => event.description},
-      :image       => "100/event-#{event.name}.png",
+      :icon        => event.decorate.fonticon,
       :cfmeNoClick => true
     }
   end
@@ -41,7 +41,7 @@ class TreeBuilderPolicySimulationResults < TreeBuilder
     data.sort_by! { |a| a[:name].downcase }.map do |node|
       {:id          => node[:id],
        :text        => prefixed_title(_('VM'), node[:name]),
-       :image       => '100/vm.png',
+       :icon        => 'pficon pficon-virtual-machine',
        :profiles    => node[:profiles],
        :cfmeNoClick => true}
     end

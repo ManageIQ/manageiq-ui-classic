@@ -19,7 +19,7 @@ class TreeBuilderOpsVmdb < TreeBuilderOps
     {
       :title   => t = _("VMDB"),
       :tooltip => t,
-      :image   => '100/miq_database.png'
+      :icon    => 'fa fa-database'
     }
   end
 

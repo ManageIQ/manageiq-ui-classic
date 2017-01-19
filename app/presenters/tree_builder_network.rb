@@ -31,7 +31,7 @@ class TreeBuilderNetwork < TreeBuilder
     {
       :title       => @root.name,
       :tooltip     => _("Host: %{name}") % {:name => @root.name},
-      :image       => '100/host.png',
+      :icon        => 'pficon pficon-screen',
       :cfmeNoClick => true
     }
   end
