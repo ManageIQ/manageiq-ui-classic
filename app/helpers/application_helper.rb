@@ -600,11 +600,6 @@ module ApplicationHelper
       VALID_PERF_PARENTS.keys.include?(@perf_options[:parent])
   end
 
-  # Check if a parent chart has been selected and applies
-  def perf_compare_vm?
-    @perf_options[:model] == "OntapLogicalDisk" && @perf_options[:typ] != "realtime" && !@perf_options[:compare_vm].nil?
-  end
-
   # Determine the type of report (performance/trend/chargeback) based on the model
   def model_report_type(model)
     if model

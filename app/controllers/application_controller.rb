@@ -1448,7 +1448,7 @@ class ApplicationController < ActionController::Base
     # Check for new search by name text entered
     if params[:search] &&
        # Disabled search for Storage CIs until backend is fixed to handle evm_display_name field
-       !%w(CimBaseStorageExtent, SniaLocalFileSystem).include?(view.db)
+       !%w(CimBaseStorageExtent SniaLocalFileSystem).include?(view.db)
       @search_text = params[:search][:text].blank? ? nil : params[:search][:text].strip
     elsif params[:search_text] && @explorer
       @search_text = params[:search_text].blank? ? nil : params[:search_text].strip

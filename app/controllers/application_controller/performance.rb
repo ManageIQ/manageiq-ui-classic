@@ -739,16 +739,6 @@ module ApplicationController::Performance
       p_rpt.where_clause[1] = @perf_options[:parent]
       p_rpt.where_clause[2] = @perf_record.send(VALID_PERF_PARENTS[@perf_options[:parent]]).id
       rpts.push(p_rpt)
-    elsif perf_compare_vm?                        # Build the compare to VM report, i0f asked for
-      c_rpt = perf_get_chart_rpt("vim_perf_#{@perf_options[:typ].downcase}")
-      c_rpt.tz = @perf_options[:tz]
-      c_rpt.time_profile_id = @perf_options[:time_profile]
-      c_rpt.where_clause =  ["resource_type = ? and resource_id = ? and timestamp >= ? and timestamp <= ?",
-                             "VmOrTemplate",
-                             @perf_options[:compare_vm],
-                             from_dt,
-                             to_dt]
-      rpts.push(c_rpt)
     end
 
     initiate_wait_for_task(:task_id => MiqReport.async_generate_tables(:reports => rpts, :userid => session[:userid]))
@@ -759,24 +749,18 @@ module ApplicationController::Performance
     miq_task = MiqTask.find(params[:task_id])     # Not first time, read the task record
     rpt = miq_task.task_results.first             # Grab the only report in the array of reports returned
     p_rpt = miq_task.task_results[1] if perf_parent?  # Grab the parent report in the array of reports returned
-    c_rpt = miq_task.task_results[1] if perf_compare_vm?  # Grab the compare VM report in the array of reports returned
     miq_task.destroy                              # Get rid of the task and results
 
     @charts, @chart_data = perf_gen_charts(rpt, @perf_options)
     if perf_parent?
       @parent_charts, @parent_chart_data =
         perf_gen_charts(p_rpt, @perf_options.merge(:model => "Parent-#{@perf_options[:parent]}"))
-    elsif perf_compare_vm?
-      @compare_vm = VmOrTemplate.find_by_id(@perf_options[:compare_vm]) # Get rec for view to use
-      @compare_vm_charts, @compare_vm_chart_data =
-        perf_gen_charts(c_rpt, @perf_options.merge(:model => "VmOrTemplate"))
     end
 
     @sb[:chart_reports] = rpt           # Hang on to the report data for these charts
 
     @html = perf_report_to_html
     @p_html = perf_report_to_html(p_rpt, @parent_charts[0]) if perf_parent?
-    @c_html = perf_report_to_html(c_rpt, @compare_vm_charts[0]) if perf_compare_vm? && !@compare_vm_charts.empty?
   end
 
   # Return the column in the chart that starts with "trend_"
