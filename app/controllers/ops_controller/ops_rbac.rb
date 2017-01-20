@@ -1028,8 +1028,7 @@ module OpsController::OpsRbac
   end
 
   def valid_tenant?(tenant_id)
-    all_tenants, = Tenant.tenant_and_project_names
-    all_tenants.include?(tenant_id)
+    Rbac.filtered(Tenant.in_my_region.where(:id => tenant_id)).present?
   end
 
   # Get variables from group edit form
