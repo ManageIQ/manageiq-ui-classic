@@ -49,12 +49,27 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
 
   $scope.filterNetworkManagerChanged = function(id) {
     miqService.sparkleOn();
-    $http.get('/floating_ip/networks_by_ems/' + id).success(function(data) {
-      $scope.available_networks = data.available_networks;
-    });
-    $http.get('/floating_ip/cloud_tenants_by_ems/' + id).success(function(data) {
-      $scope.available_tenants = data.available_tenants;
-    });
+
+    $http.get('/floating_ip/networks_by_ems/' + id)
+      .then(getNetworksByEmsComplete)
+      .catch(miqService.handleFailure);
+
+    $http.get('/floating_ip/cloud_tenants_by_ems/' + id)
+      .then(getCloudTenantsByEmsComplete)
+      .catch(miqService.handleFailure);
+
     miqService.sparkleOff();
   };
+
+  function getNetworksByEmsComplete(response) {
+    var data = response.data;
+
+    $scope.available_networks = data.available_networks;
+  }
+
+  function getCloudTenantsByEmsComplete(response) {
+    var data = response.data;
+
+    $scope.available_tenants = data.available_tenants;
+  }
 }]);
