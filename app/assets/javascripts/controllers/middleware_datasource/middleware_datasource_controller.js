@@ -142,19 +142,24 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
   };
 
   vm.addDatasourceStep2Next = function() {
-    var useExistingDriver = vm.step2DsModel.selectedJdbcDriver !== '';
-    var i = 0;
+    var selectedJdbcDriver = vm.step2DsModel.selectedJdbcDriver;
+    var useExistingDriver = selectedJdbcDriver !== '';
+    var dsSelection;
     vm.dsModel.step = 'STEP3';
 
-    for(var name in vm.chooseDsModel.selectedDatasource.properties){
-      vm.step3DsModel.dsProps.push({id: i, name: name, value: vm.chooseDsModel.selectedDatasource.properties[name]});
-      i = i + 1;
-    }
-
     if (useExistingDriver) {
-      vm.step3DsModel.connectionUrl = mwAddDatasourceService.determineConnectionUrlFromExisting(vm.step2DsModel.selectedJdbcDriver);
+      dsSelection = mwAddDatasourceService.findDsSelectionFromDriver(selectedJdbcDriver);
+      vm.step3DsModel.connectionUrl = mwAddDatasourceService.determineConnectionUrlFromExisting(selectedJdbcDriver);
     } else {
-      vm.step3DsModel.connectionUrl = mwAddDatasourceService.determineConnectionUrl(vm.chooseDsModel.selectedDatasource);
+      dsSelection = vm.chooseDsModel.selectedDatasource;
+      vm.step3DsModel.connectionUrl = mwAddDatasourceService.determineConnectionUrl(dsSelection);
+    }
+    if(dsSelection.hasOwnProperty('properties')){
+      var i = 0;
+      for(var name in dsSelection.properties){
+        vm.step3DsModel.dsProps.push({id: i, name: name, value: dsSelection.properties[name]});
+        i = i + 1;
+      }
     }
   };
 

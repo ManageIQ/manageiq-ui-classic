@@ -45,7 +45,7 @@ function MwAddDatasourceService($http, $q) {
       jndiName: 'java:/PostgresXADS',
       driverName: 'postresql',
       driverModuleName: 'org.postgresql',
-      driverClass: 'org.postgresql.Driver',
+      driverClass: 'org.postgresql.xa.PGXADataSource',
       properties: {
         DatabaseName: 'postgresdb',
         PortNumber: 5432,
@@ -108,7 +108,6 @@ function MwAddDatasourceService($http, $q) {
       },
       connectionUrl: '://localhost:4100/db_name'},
   ];
-  var dsDriverNames = _.pluck(datasources, 'driverName');
 
   self.getExistingJdbcDrivers = function(serverId) {
     var deferred = $q.defer();
@@ -149,7 +148,9 @@ function MwAddDatasourceService($http, $q) {
     return JDBC_PREFIX + driverName + dsSelection.connectionUrl;
   };
 
-  self.isValidDatasourceName = function(dsName) {
+  self.isValidDatasourceName = function(dsName, isXa) {
+    var dsContainer = isXa ? xaDatasources : datasources;
+    var dsDriverNames = _.pluck(dsContainer, 'driverName');
     if (dsName) {
       return _.contains(dsDriverNames, dsName.toLowerCase());
     } else {
@@ -157,30 +158,43 @@ function MwAddDatasourceService($http, $q) {
     }
   };
 
-  self.findDsSelectionFromDriver = function(driverSelection) {
-    var datasourceSelection = {};
-    var findDatasourceById = function(id) {
-      return _.find(datasources, function(datasource) {
-        // handle special case when JDBC Driver Name doesn't match naming of Datasource
-        // For instance, 'POSTGRES' vs 'POSTGRESQL'
-        // in this case an 'alias' in the datasource configuration is used
-        if (datasource.hasOwnProperty('alias')) {
-          return datasource.alias === id;
-        } else {
-          return datasource.driverName.toUpperCase() === id;
-        }
-      });
-    };
-    var findDatasourceByDriverClass = function(driverClass) {
-      return _.find(datasources, function(datasource) {
+  self.findDatasourceById = function(id, isXa) {
+    var aDatasources = isXa ? xaDatasources : datasources;
+    return _.find(aDatasources, function(datasource) {
+      // handle special case when JDBC Driver Name doesn't match naming of Datasource
+      // For instance, 'POSTGRES' vs 'POSTGRESQL'
+      // in this case an 'alias' in the datasource configuration is used
+      if (datasource.hasOwnProperty('alias')) {
+        return datasource.alias === id;
+      } else {
+        return datasource.driverName.toUpperCase() === id;
+      }
+    });
+  };
+
+  self.findDatasourceByDriverClass = function(driverClass, isXa) {
+    var dsContainer = isXa ? xaDatasources : datasources;
+
+    if(isXa){
+      return _.find(dsContainer, function(datasource) {
         return datasource.driverClass === driverClass;
       });
-    };
-
-    if (self.isValidDatasourceName(driverSelection.id)) {
-      datasourceSelection = findDatasourceById(driverSelection.id);
     } else {
-      datasourceSelection = findDatasourceByDriverClass(driverSelection.driverClass);
+      return _.find(dsContainer, function(datasource) {
+        return datasource.driverClass === driverClass;
+      });
+    }
+  };
+
+  self.findDsSelectionFromDriver = function(driverSelection) {
+    var datasourceSelection = {};
+    var isXa = self.isXaDriver(driverSelection);
+
+    if (self.isValidDatasourceName(driverSelection.id, isXa)) {
+      datasourceSelection = self.findDatasourceById(driverSelection.id, isXa);
+    } else {
+      var driverClass = isXa ? driverSelection.xaDsClass : driverSelection.driverClass;
+      datasourceSelection = self.findDatasourceByDriverClass(driverClass, isXa);
     }
     return datasourceSelection;
   };

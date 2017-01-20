@@ -49,15 +49,15 @@
                                                   "placeholder"  => _("Enter Security Domain"),
                                                   "ng-model"     => "vm.step3DsModel.securityDomain"}
 
-    .form-group
+    .form-group{"ng-show" => "vm.chooseDsModel.xaDatasource"}
       %label.col-md-4.control-label{:for => "xa_properties"}
         = _("XA Properties")
       .col-md-8
         %div
 
-    .form-group
+    .form-group{"ng-show" => "vm.chooseDsModel.xaDatasource"}
       %div{"ng-repeat" => "prop in vm.step3DsModel.dsProps track by $index"}
-        %div.row.property-table-item
+        .row.property-table-item
           .col-md-2.col-md-offset-4
             %label{ "ng-bind" => "prop.name"}
           .col-md-4
@@ -70,7 +70,7 @@
                                     "title"    => t,
                                     "ng-click" => "vm.deleteDsProperty(prop.id)"}
 
-      %div.row.property-table-item
+      .row.property-table-item
         .col-md-2.col-md-offset-4
           %input.form-control{:type         => "text",
                               "placeholder" => _("Name"),
