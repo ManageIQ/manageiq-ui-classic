@@ -1,88 +1,88 @@
 /* global miqHttpInject */
 
 miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'patternfly', 'patternfly.charts']))
-  .controller('containerLiveDashboardController', ['$scope', 'pfViewUtils', '$http', '$interval', '$timeout', '$window',
-  function ($scope, pfViewUtils, $http, $interval, $timeout, $window) {
-    $scope.tenant = '_ops';
+  .controller('containerLiveDashboardController', ['$http', '$window',
+  function ($http, $window) {
+    var dash = this;
+    dash.tenant = '_ops';
 
     // get the pathname and remove trailing / if exist
     var pathname = $window.location.pathname.replace(/\/$/, '');
     var id = '/' + (/^\/[^\/]+\/(\d+)$/.exec(pathname)[1]);
 
     var initialization = function() {
-      $scope.filtersText = '';
-      $scope.definitions = [];
-      $scope.items = [];
-      $scope.tags = {};
-      $scope.tagsLoaded = false;
+      dash.tenantChanged = false;
 
-      $scope.applied = false;
-      $scope.filterChanged = true;
-      $scope.viewGraph = false;
-      $scope.chartData = {};
+      dash.filtersText = '';
+      dash.definitions = [];
+      dash.items = [];
+      dash.tags = {};
+      dash.tagsLoaded = false;
 
-      $scope.filterConfig.fields = [];
-      $scope.filterConfig.resultsCount = $scope.items.length;
-      $scope.filterConfig.appliedFilters = [];
-      $scope.filterConfig.onFilterChange = filterChange;
+      dash.applied = false;
+      dash.filterChanged = true;
+      dash.viewGraph = false;
+      dash.chartData = {};
 
-      $scope.toolbarConfig.filterConfig = $scope.filterConfig;
-      $scope.toolbarConfig.actionsConfig = $scope.actionsConfig;
+      dash.filterConfig.fields = [];
+      dash.filterConfig.resultsCount = dash.items.length;
+      dash.filterConfig.appliedFilters = [];
+      dash.filterConfig.onFilterChange = filterChange;
 
-      $scope.url = '/container_dashboard/data' + id + '/?live=true&tenant=' + $scope.tenant;
+      dash.toolbarConfig.filterConfig = dash.filterConfig;
+      dash.toolbarConfig.actionsConfig = dash.actionsConfig;
+
+      dash.url = '/container_dashboard/data' + id + '/?live=true&tenant=' + dash.tenant;
     }
 
     var filterChange = function (filters) {
-      $scope.filterChanged = true;
-      $scope.filtersText = "";
-      $scope.tags = {};
-      $scope.filterConfig.appliedFilters.forEach(function (filter) {
-        $scope.filtersText += filter.title + " : " + filter.value + "\n";
-        $scope.tags[filter.id] = filter.value;
+      dash.filterChanged = true;
+      dash.filtersText = "";
+      dash.tags = {};
+      dash.filterConfig.appliedFilters.forEach(function (filter) {
+        dash.filtersText += filter.title + " : " + filter.value + "\n";
+        dash.tags[filter.id] = filter.value;
       });
     };
 
     var selectionChange = function() {
-      $scope.itemSelected = false;
-      for (var i = 0; i < $scope.items.length && !$scope.itemSelected; i++) {
-        if ($scope.items[i].selected) {
-          $scope.itemSelected = true;
+      dash.itemSelected = false;
+      for (var i = 0; i < dash.items.length && !dash.itemSelected; i++) {
+        if (dash.items[i].selected) {
+          dash.itemSelected = true;
         }
       }
     };
 
-    $scope.doApply = function() {
-      $scope.applied = true;
-      $scope.filterChanged = false;
-      $scope.refresh();
+    dash.doApply = function() {
+      dash.applied = true;
+      dash.filterChanged = false;
+      dash.refresh();
     };
 
-    $scope.doViewGraph = function() {
-      $scope.viewGraph = true;
-      $scope.chartDataInit = false;
-      $scope.refresh_graph_data();
+    dash.doViewGraph = function() {
+      dash.viewGraph = true;
+      dash.chartDataInit = false;
+      dash.refresh_graph_data();
     };
 
-    $scope.doViewMetrics = function() {
-      $scope.viewGraph = false;
-      $scope.refresh();
+    dash.doViewMetrics = function() {
+      dash.viewGraph = false;
+      dash.refresh();
     };
 
-    var doRefreshTenant = function (action) {
-      $scope.tenant = action.tenant;
-
+    dash.doRefreshTenant = function() {
       initialization();
-      filterChange();
       getMetricTags();
     };
 
     var getMetricTags = function() {
-      $http.get($scope.url + '&query=metric_tags').success(function(response) {
-        $scope.tagsLoaded = true;
+      $http.get(dash.url + '&query=metric_tags&limit=250').success(function(response) {
+        dash.tagsLoaded = true;
         if (response && angular.isArray(response.metric_tags)) {
           response.metric_tags.sort();
           for (var i = 0; i < response.metric_tags.length; i++) {
-            $scope.filterConfig.fields.push(
+            dash.filterConfig.fields.push(
               {
                 id: response.metric_tags[i],
                 title:  response.metric_tags[i],
@@ -92,16 +92,17 @@ miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'pattern
           }
         } else {
           // No filters available, apply without filtering
-          $scope.toolbarConfig.filterConfig = undefined;
-          $scope.doApply();
+          dash.toolbarConfig.filterConfig = undefined;
+          dash.doApply();
         }
       });
     };
 
     var getLatestData = function(item) {
-      var params = '&query=get_data&metric_id=' + item.id + '&limit=5&order=DESC';
+      var params = '&query=get_data&type=' + item.type + '&metric_id=' + item.id +
+        '&limit=5&order=DESC';
 
-      $http.get($scope.url + params).success(function (response) {
+      $http.get(dash.url + params).success(function (response) {
         'use strict';
         if (response.error) {
           add_flash(response.error, 'error');
@@ -140,37 +141,37 @@ miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'pattern
       });
     };
 
-    $scope.refresh = function() {
-      $scope.loadingMetrics = true;
-      var _tags = $scope.tags != {} ? '&tags=' + JSON.stringify($scope.tags) : '';
-      $http.get($scope.url + '&query=metric_definitions' + _tags).success(function (response) {
+    dash.refresh = function() {
+      dash.loadingMetrics = true;
+      var _tags = dash.tags != {} ? '&tags=' + JSON.stringify(dash.tags) : '';
+      $http.get(dash.url + '&query=metric_definitions' + _tags).success(function (response) {
         'use strict';
-        $scope.loadingMetrics = false;
+        dash.loadingMetrics = false;
         if (response.error) {
           add_flash(response.error, 'error');
           return;
         }
 
-        $scope.items = response.metric_definitions.filter(function(item) {
+        dash.items = response.metric_definitions.filter(function(item) {
           return item.id && item.type;
         });
 
-        angular.forEach($scope.items, getLatestData);
+        angular.forEach(dash.items, getLatestData);
 
-        $scope.filterConfig.resultsCount = $scope.items.length;
+        dash.filterConfig.resultsCount = dash.items.length;
       });
     };
 
-    $scope.refresh_graph = function(metric_id, n) {
+    dash.refresh_graph = function(metric_id, metric_type, n) {
       // TODO: replace with a datetimepicker, until then add 24 hours to the date
-      var ends = $scope.timeFilter.date.valueOf() + 24 * 60 * 60;
-      var diff = $scope.timeFilter.time_range * $scope.timeFilter.range_count * 60 * 60 * 1000; // time_range is in hours
+      var ends = dash.timeFilter.date.valueOf() + 24 * 60 * 60;
+      var diff = dash.timeFilter.time_range * dash.timeFilter.range_count * 60 * 60 * 1000; // time_range is in hours
       var starts = ends - diff;
       var bucket_duration = parseInt(diff / 1000 / 200); // bucket duration is in seconds
-      var params = '&query=get_data&metric_id=' + metric_id + '&ends=' + ends +
+      var params = '&query=get_data&type=' + metric_type + '&metric_id=' + metric_id + '&ends=' + ends +
                    '&starts=' + starts+ '&bucket_duration=' + bucket_duration + 's';
 
-      $http.get($scope.url + params).success(function(response) {
+      $http.get(dash.url + params).success(function(response) {
         'use strict';
         if (response.error) {
           add_flash(response.error, 'error');
@@ -185,59 +186,66 @@ miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'pattern
         yData.unshift(metric_id);
 
         // TODO: Use time buckets
-        $scope.chartData.xData = xData;
-        $scope.chartData['yData'+n] = yData;
+        dash.chartData.xData = xData;
+        dash.chartData['yData'+n] = yData;
 
-        $scope.chartDataInit = true;
-        $scope.loadCount++;
-        if ($scope.loadCount >= $scope.selectedItems.length) {
-          $scope.loadingData = false;
+        dash.chartDataInit = true;
+        dash.loadCount++;
+        if (dash.loadCount >= dash.selectedItems.length) {
+          dash.loadingData = false;
         }
       });
     };
 
-    $scope.refresh_graph_data = function() {
-      $scope.loadCount = 0;
-      $scope.loadingData = true;
-      $scope.chartData = {};
+    dash.refresh_graph_data = function() {
+      dash.loadCount = 0;
+      dash.loadingData = true;
+      dash.chartData = {};
 
-      $scope.selectedItems = $scope.items.filter(function(item) { return item.selected });
+      dash.selectedItems = dash.items.filter(function(item) { return item.selected });
 
-      for (var i = 0; i < $scope.selectedItems.length; i++) {
-        var metric_id = $scope.selectedItems[i].id;
-        $scope.refresh_graph(metric_id, i);
+      for (var i = 0; i < dash.selectedItems.length; i++) {
+        var metric_id = dash.selectedItems[i].id;
+        var metric_type = dash.selectedItems[i].type;
+        dash.refresh_graph(metric_id, metric_type, i);
       }
     };
 
-    $scope.timeRanges = [
+    dash.getTenants = function(include) {
+      return $http.get(dash.url + "&query=get_tenants&limit=7&include=" + include).then(function(response) {
+        return response.data.tenants;
+      });
+    }
+
+    dash.timeRanges = [
       {title: _("Hours"), value: 1},
       {title: _("Days"), value: 24},
       {title: _("Weeks"), value: 168},
       {title: _("Months"), value: 672}
     ];
 
-    $scope.timeFilter = {
+    dash.timeFilter = {
       time_range: 24,
       range_count: 1,
       date: moment()
     };
 
-    $scope.dateOptions = {
+    dash.dateOptions = {
       format: __('MM/DD/YYYY HH:mm')
     };
 
-    $scope.countDecrement = function() {
-      if ($scope.timeFilter.range_count > 1) {
-        $scope.timeFilter.range_count--;
+    dash.countDecrement = function() {
+      if (dash.timeFilter.range_count > 1) {
+        dash.timeFilter.range_count--;
       }
     };
 
-    $scope.countIncrement = function() {
-      $scope.timeFilter.range_count++;
+    dash.countIncrement = function() {
+      dash.timeFilter.range_count++;
     };
 
     // Graphs
-    $scope.chartConfig = {
+    dash.chartConfig = {
       legend       : { show: false },
       chartId      : 'adHocMetricsChart',
       point        : { r: 1 },
@@ -259,39 +267,25 @@ miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'pattern
       }
     };
 
-    $scope.actionsConfig = {
-      actionsInclude: true,
-      moreActions: [
-        {
-          name: 'System',
-          tenant: '_system',
-          title: __("Use the System Tenant Metrics"),
-          actionFn: doRefreshTenant
-        },
-        {
-          name: 'Ops',
-          tenant: '_ops',
-          title: __("Use the Ops Tenant Metrics"),
-          actionFn: doRefreshTenant
-        }
-      ]
+    dash.actionsConfig = {
+      actionsInclude: true
     };
 
-    $scope.graphToolbarConfig = {
-      actionsConfig: $scope.actionsConfig
+    dash.graphToolbarConfig = {
+      actionsConfig: dash.actionsConfig
     };
 
-    $scope.itemSelected = false;
+    dash.itemSelected = false;
 
-    $scope.listConfig = {
+    dash.listConfig = {
       selectionMatchProp: 'id',
       showSelectBox: true,
       useExpandingRows: true,
       onCheckBoxChange: selectionChange
     };
 
-    $scope.filterConfig = {};
-    $scope.toolbarConfig = {};
+    dash.filterConfig = {};
+    dash.toolbarConfig = {};
 
     initialization();
     getMetricTags();
