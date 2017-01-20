@@ -2872,7 +2872,7 @@ Rails.application.routes.draw do
         set_checked_items
         show_list
         tree_autoload
-        vmtree_selected
+        genealogy_tree_selected
         ownership_update
       ) +
                ownership_post +
