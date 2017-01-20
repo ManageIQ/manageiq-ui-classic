@@ -2335,7 +2335,7 @@ msgstr ""
 msgid "Aggregated Node Utilization"
 msgstr ""
 
-msgid "Alert Profile \"%{alert_profile}\" assignments succesfully saved"
+msgid "Alert Profile \"%{alert_profile}\" assignments successfully saved"
 msgstr ""
 
 msgid "Alert Profiles"
