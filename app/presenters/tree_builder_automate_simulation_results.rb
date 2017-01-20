@@ -34,48 +34,41 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
     objects
   end
 
-  def choose_correct_attr(el, attrs)
+  def lookup_attrs(el)
     if el.name == "MiqAeObject"
-      attrs[:MiqAeObject]
+      {
+        :text    => t = "#{el.attributes["namespace"]} / #{el.attributes["class"]} / #{el.attributes["instance"]}",
+        :tooltip => t,
+        :image   => '100/q.png'
+      }
     elsif el.name == "MiqAeAttribute"
-      attrs[:MiqAeAttribute]
+      {
+        :text    => el.attributes["name"],
+        :tooltip => el.attributes["name"],
+        :image   => '100/attribute.png'
+      }
     elsif !el.text.blank?
-      attrs[:not_blank]
+      {
+        :text  => el.text,
+        :tip   => el.text,
+        :image => "100/#{el.name.underscore}.png"
+      }
     else
-      attrs[:other]
+      {
+        :text    => el.name,
+        :tooltip => el.name,
+        :image   => "100/#{el.name.underscore.sub(/^miq_ae_service_/, '')}.png"
+      }
     end
   end
 
-  def get_element_title(el)
-    titles = {
-      :MiqAeObject    => "#{el.attributes["namespace"]} / #{el.attributes["class"]} / #{el.attributes["instance"]}",
-      :MiqAeAttribute => el.attributes["name"],
-      :not_blank      => el.text,
-      :other          => el.name,
-    }
-    choose_correct_attr(el, titles)
-  end
-
-  def get_element_icon(el)
-    icons = {
-      :MiqAeObject    => "100/q.png",
-      :MiqAeAttribute => "100/attribute.png",
-      :not_blank      => "100/#{el.name.underscore}.png",
-      :other          => "100/#{el.name.underscore.sub(/^miq_ae_service_/, '')}.png",
-    }
-    choose_correct_attr(el, icons)
-  end
-
   def get_root_elements(el, idx)
-    title = get_element_title(el)
-    object = {:id          => "e_#{idx}",
-              :text        => title,
-              :image       => get_element_icon(el),
-              :tooltip     => title,
-              :elements    => el.each_element { |e| e },
-              :cfmeNoClick => true
-             }
-    object[:attributes] = el.attributes if title == el.name
+    object = {
+      :id          => "e_#{idx}",
+      :elements    => el.each_element { |e| e },
+      :cfmeNoClick => true
+    }.merge(lookup_attrs(el))
+    object[:attributes] = el.attributes if object[:text] == el.name
     object
   end
 
