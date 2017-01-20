@@ -13,7 +13,7 @@ class HawkularProxyService
   end
 
   def client
-    if @params['type'] == "counters"
+    if @params['type'] == "counter"
       @cli.hawkular_client.counters
     else
       @cli.hawkular_client.gauges
