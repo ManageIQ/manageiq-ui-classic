@@ -19,9 +19,8 @@ describe EmsContainerController do
       @container = FactoryGirl.create(:ems_kubernetes)
     end
 
-    subject { get :show, :id => @container.id }
-
     context "render" do
+      subject { get :show, :params => { :id => @container.id } }
       render_views
       it { is_expected.to render_template('shared/views/ems_common/show') }
 
@@ -35,6 +34,24 @@ describe EmsContainerController do
         expect(response.status).to eq(200)
         expect(response.body).to_not be_empty
         expect(response).to render_template('container_topology/show')
+      end
+    end
+
+    context "render dashboard" do
+      subject { get :show, :params => { :id => @container.id, :display => 'dashboard' } }
+      render_views
+
+      it 'never render template show' do
+        is_expected.not_to render_template('shared/views/ems_common/show')
+      end
+
+      it 'never render listnav' do
+        is_expected.not_to render_template(:partial => "layouts/listnav/_ems_container")
+      end
+
+      it 'uses its own template' do
+        is_expected.to have_http_status 200
+        is_expected.not_to render_template(:partial => "ems_container/show_dashboard")
       end
     end
   end

@@ -346,6 +346,24 @@ describe EmsInfraController do
                                             :url  => "/ems_infra/#{@ems.id}?display=storages"},
                                            {:name => "Tag Assignment", :url => "//tagging_edit"}])
     end
+
+    context "render dashboard" do
+      subject { get :show, :params => { :id => @ems.id, :display => 'dashboard' } }
+      render_views
+
+      it 'never render template show' do
+        is_expected.not_to render_template('shared/views/ems_common/show')
+      end
+
+      it 'never render listnav' do
+        is_expected.not_to render_template(:partial => "layouts/listnav/_ems_container")
+      end
+
+      it 'uses its own template' do
+        is_expected.to have_http_status 200
+        is_expected.not_to render_template(:partial => "ems_container/show_dashboard")
+      end
+    end
   end
 
   describe "#show_list" do

@@ -115,7 +115,6 @@ module EmsCommon
   end
 
   def show
-    #binding.pry
     return unless init_show
     session[:vm_summary_cool] = (settings(:views, :vm_summary_cool).to_s == "summary")
     @summary_view = session[:vm_summary_cool]
