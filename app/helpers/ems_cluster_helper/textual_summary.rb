@@ -210,39 +210,6 @@ module EmsClusterHelper::TextualSummary
     h
   end
 
-  def textual_ss_size
-    num = @record.storage_systems.count
-    label = ui_lookup(:tables => "ontap_storage_system")
-    h = {:label => label, :icon => "pficon pficon-volume", :value => num}
-    if num > 0 && role_allows?(:feature => "ontap_storage_system_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
-      h[:link]  = url_for(:controller => 'ems_cluster', :action => 'show', :id => @record, :display => 'storage_systems')
-    end
-    h
-  end
-
-  def textual_sv_size
-    num = @record.storage_systems.count
-    label = ui_lookup(:tables => "ontap_storage_volume")
-    h = {:label => label, :icon => "pficon pficon-volume", :value => num}
-    if num > 0 && role_allows?(:feature => "ontap_storage_system_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
-      h[:link]  = url_for(:controller => 'ems_cluster', :action => 'show', :id => @record, :display => 'ontap_storage_volumes')
-    end
-    h
-  end
-
-  def textual_fs_size
-    num = @record.file_shares.count
-    label = ui_lookup(:tables => "ontap_file_share")
-    h = {:label => label, :icon => "product product-file_share", :value => num}
-    if num > 0 && role_allows?(:feature => "ontap_file_share_show_list")
-      h[:title] = label
-      h[:link]  = url_for(:controller => 'ems_cluster', :action => 'show', :id => @record, :display => 'ontap_file_shares')
-    end
-    h
-  end
-
   def textual_se_size
     num = @record.base_storage_extents.count
     label = ui_lookup(:tables => "cim_base_storage_extent")

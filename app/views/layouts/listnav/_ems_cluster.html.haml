@@ -77,27 +77,6 @@
     - if ::Settings.product.storage
       = miq_accordion_panel(_("Storage Relationships"), false, "host_inf_rel") do
         %ul.nav.nav-pills.nav-stacked
-          - if role_allows?(:feature => "ontap_storage_system_show_list")
-            = li_link(:count => @record.storage_systems.count,
-              :record_id     => @record.id,
-              :tables        => 'ontap_storage_system',
-              :display       => 'storage_systems',
-              :action        => 'show',
-              :title         => _("Show all %{ontap_storage_system}") % {:ontap_storage_system => ui_lookup(:tables => "ontap_storage_system")})
-          - if role_allows?(:feature => "ontap_storage_volume_show_list")
-            = li_link(:count => @record.storage_volumes.count,
-              :record_id     => @record.id,
-              :tables        => 'ontap_storage_volume',
-              :display       => 'ontap_storage_volumes',
-              :action        => 'show',
-              :title         => ui_lookup(:tables => "ontap_storage_volume"))
-          - if role_allows?(:feature => "ontap_file_share_show_list")
-            = li_link(:count => @record.file_shares.count,
-              :record_id     => @record.id,
-              :tables        => 'ontap_file_share',
-              :display       => 'ontap_file_shares',
-              :action        => 'show',
-              :title         => _("Show all %{ontap_file_share}") % {:ontap_file_share => ui_lookup(:tables => "ontap_file_share")})
           - if role_allows?(:feature => "cim_base_storage_extent_show_list")
             = li_link(:count => @record.base_storage_extents.count,
               :record_id     => @record.id,

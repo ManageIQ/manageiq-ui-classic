@@ -119,50 +119,6 @@ module StorageHelper::TextualSummary
     {:label => _("Unmanaged VMs"), :icon => "pficon pficon-virtual-machine", :value => @record.total_unmanaged_vms}
   end
 
-  def textual_storage_systems
-    num   = @record.storage_systems_size
-    label = ui_lookup(:tables => "ontap_storage_system")
-    h     = {:label => label, :icon => "pficon pficon-volume", :value => num}
-    if num > 0 && role_allows?(:feature => "ontap_storage_system_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
-      h[:link]  = url_for(:controller => controller.controller_name, :action => 'show', :id => @record, :display => "ontap_storage_systems")
-    end
-    h
-  end
-
-  def textual_storage_volumes
-    num   = @record.storage_volumes_size
-    label = ui_lookup(:tables => "ontap_storage_volume")
-    h     = {:label => label, :icon => "pficon pficon-volume", :value => num}
-    if num > 0 && role_allows?(:feature => "ontap_storage_volume_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
-      h[:link]  = url_for(:controller => controller.controller_name, :action => 'show', :id => @record, :display => "ontap_storage_volumes")
-    end
-    h
-  end
-
-  def textual_logical_disk
-    ld = @record.logical_disk
-    label = ui_lookup(:table => "ontap_logical_disk")
-    h = {:label => label, :icon => "fa fa-hdd-o", :value => (ld.blank? ? _("None") : ld.evm_display_name)}
-    if !ld.blank? && role_allows?(:feature => "ontap_logical_disk_show")
-      h[:title] = _("Show this Datastore's %{label}") % {:label => label}
-      h[:link]  = url_for(:controller => 'ontap_logical_disk', :action => 'show', :id => ld)
-    end
-    h
-  end
-
-  def textual_file_share
-    fs = @record.file_share
-    label = ui_lookup(:table => "ontap_file_share")
-    h = {:label => label, :icon => "product product-file_share", :value => (fs.blank? ? _("None") : fs.evm_display_name)}
-    if !fs.blank? && role_allows?(:feature => "ontap_file_share_show")
-      h[:title] = _("Show this Datastore's %{label}") % {:label => label}
-      h[:link]  = url_for(:controller => 'ontap_file_share', :action => 'show', :id => fs)
-    end
-    h
-  end
-
   def textual_files
     num   = @record.number_of(:files)
     h     = {:label => _("All Files"), :icon => "fa fa-file-o", :value => num}

@@ -343,50 +343,6 @@ module HostHelper::TextualSummary
     @record.miq_templates
   end
 
-  def textual_storage_systems
-    num = @record.storage_systems_size
-    label = ui_lookup(:tables => "ontap_storage_system")
-    h = {:label => label, :icon => "pficon pficon-volume", :value => num}
-    if num > 0 && role_allows?(:feature => "ontap_storage_system_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
-      h[:link]  = url_for(:controller => controller.controller_name, :action => 'show', :id => @record, :display => "ontap_storage_systems")
-    end
-    h
-  end
-
-  def textual_storage_volumes
-    num = @record.storage_volumes_size
-    label = ui_lookup(:tables => "ontap_storage_volume")
-    h = {:label => label, :icon => "pficon pficon-volume", :value => num}
-    if num > 0 && role_allows?(:feature => "ontap_storage_volume_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
-      h[:link]  = url_for(:controller => controller.controller_name, :action => 'show', :id => @record, :display => "ontap_storage_volumes")
-    end
-    h
-  end
-
-  def textual_file_shares
-    num = @record.file_shares_size
-    label = ui_lookup(:tables => "ontap_file_share")
-    h = {:label => label, :icon => "product product-file_share", :value => num}
-    if num > 0 && role_allows?(:feature => "ontap_file_share_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
-      h[:link]  = url_for(:controller => controller.controller_name, :action => 'show', :id => @record, :display => "ontap_file_shares")
-    end
-    h
-  end
-
-  def textual_logical_disks
-    num = @record.logical_disks_size
-    label = ui_lookup(:tables => "ontap_logical_disk")
-    h = {:label => label, :icon => "fa fa-hdd-o", :value => num}
-    if num > 0 && role_allows?(:feature => "ontap_logical_disk_show_list")
-      h[:title] = _("Show all %{label}") % {:label => label}
-      h[:link]  = url_for(:controller => controller.controller_name, :action => 'show', :id => @record, :display => "ontap_logical_disks")
-    end
-    h
-  end
-
   def textual_compliance_history
     super(:title => _("Show Compliance History of this %{title} (Last 10 Checks)") % {:title => host_title})
   end

@@ -196,10 +196,6 @@ module Menu
 
       def netapp_storage_menu_section
         Menu::Section.new(:nap, N_("NetApp"), 'fa fa-plus fa-2x', [
-          Menu::Item.new('ontap_storage_system', N_('Filers'),           'ontap_storage_system', {:feature => 'ontap_storage_system_show_list'}, '/ontap_storage_system'),
-          Menu::Item.new('ontap_logical_disk',   N_('Volumes'),          'ontap_logical_disk',   {:feature => 'ontap_logical_disk_show_list'},   '/ontap_logical_disk'),
-          Menu::Item.new('ontap_storage_volume', N_('LUNs'),             'ontap_storage_volume', {:feature => 'ontap_storage_volume_show_list'}, '/ontap_storage_volume'),
-          Menu::Item.new('ontap_file_share',     N_('File Shares'),      'ontap_file_share',     {:feature => 'ontap_file_share_show_list'},     '/ontap_file_share'),
           Menu::Item.new('storage_manager',      N_('Storage Managers'), 'storage_manager',      {:feature => 'storage_manager_show_list'},      '/storage_manager')
         ])
       end

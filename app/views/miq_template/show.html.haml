@@ -11,7 +11,7 @@
     - case @showtype
     - when "details"
       = render :partial => "layouts/gtl", :locals => {:action_url => @lastaction}
-    - when "miq_proxies", "storage_extents", "storage_systems", "ontap_storage_volumes", "ontap_file_shares"
+    - when "miq_proxies", "storage_extents"
       = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@miq_template.id}"}
     - when "compare", "drift_history", "drift", "item"
       = render :partial => "layouts/#{@showtype}"

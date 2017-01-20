@@ -137,12 +137,7 @@ describe QuadiconHelper do
         helper.instance_variable_set(:@view, FactoryGirl.build(:miq_report))
       end
 
-      %w(
-        cim_storage_extent
-        ontap_file_share
-        ontap_logical_disk
-        ontap_storage_system
-        ontap_storage_volume
+      %w(cim_storage_extent
         snia_local_file_system
       ).each do |obj|
         it "renders a quadicon for #{obj}" do
@@ -916,34 +911,6 @@ describe QuadiconHelper do
 
     context "when @listicon is nil" do
       include_examples :has_base_single
-
-      context "when item is MiqCimInstance" do
-        let(:item) do
-          obj = WBEM::CIMInstance.new("ONTAP_StorageSystem")
-          obj["Name"] = "FooBar"
-
-          FactoryGirl.create(:miq_cim_instance, :obj => obj)
-        end
-
-        it 'includes a miq_cim_instance img' do
-          expect(single_quad).to have_selector("img[src*='miq_cim_instance']")
-        end
-
-        it 'is named after the evm_display_name' do
-          expect(single_quad).to include(item.evm_display_name)
-        end
-      end
-
-      context "when item is CimStorageExtent" do
-        let(:item) do
-          obj = WBEM::CIMInstance.new("ONTAP_StorageSystem")
-          FactoryGirl.create(:cim_storage_extent, :obj => obj)
-        end
-
-        it 'includes a cim_base_storage_extent img' do
-          expect(single_quad).to have_selector("img[src*='cim_base_storage_extent']")
-        end
-      end
 
       context "when item is decorated" do
         context "when item is a config manager foreman" do

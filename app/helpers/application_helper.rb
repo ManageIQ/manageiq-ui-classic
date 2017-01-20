@@ -240,11 +240,7 @@ module ApplicationHelper
       else
         if @explorer
           # showing a list view of another CI inside vmx
-          if %w(OntapStorageSystem
-                OntapLogicalDisk
-                OntapStorageVolume
-                OntapFileShare
-                SecurityGroup
+          if %w(SecurityGroup
                 FloatingIp
                 NetworkRouter
                 NetworkPort
@@ -856,10 +852,6 @@ module ApplicationHelper
        network_port
        network_router
        offline
-       ontap_file_share
-       ontap_logical_disk
-       ontap_storage_system
-       ontap_storage_volume
        orchestration_stack
        persistent_volume
        provider_foreman
@@ -1278,10 +1270,6 @@ module ApplicationHelper
                         network_router
                         network_topology
                         offline
-                        ontap_file_share
-                        ontap_logical_disk
-                        ontap_storage_system
-                        ontap_storage_volume
                         orchestration_stack
                         persistent_volume
                         policy
@@ -1440,10 +1428,6 @@ module ApplicationHelper
              miq_template
              network_port
              network_router
-             ontap_file_share
-             ontap_logical_disk
-             ontap_storage_system
-             ontap_storage_volume
              orchestration_stack
              persistent_volume
              policy
@@ -1503,10 +1487,6 @@ module ApplicationHelper
       network_port
       network_router
       offline
-      ontap_file_share
-      ontap_logical_disk
-      ontap_storage_system
-      ontap_storage_volume
       orchestration_stack
       persistent_volume
       provider_foreman

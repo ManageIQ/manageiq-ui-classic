@@ -2,10 +2,6 @@ module StartUrl
   extend ActiveSupport::Concern
 
   STORAGE_START_PAGES = %w(cim_storage_extent_show_list
-                           ontap_file_share_show_list
-                           ontap_logical_disk_show_list
-                           ontap_storage_system_show_list
-                           ontap_storage_volume_show_list
                            storage_manager_show_list).to_set.freeze
   CONTAINERS_START_PAGES = %w(ems_container_show_list
                               container_node_show_list

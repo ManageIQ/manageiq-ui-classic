@@ -637,7 +637,6 @@ describe ApplicationHelper do
 
   context "#controller_model_name" do
     it "returns the model's title" do
-      expect(helper.controller_model_name("OntapFileShare")).to eq("Storage - File Share")
       expect(helper.controller_model_name("CimStorageExtent")).to eq("Storage - Extent")
     end
   end
@@ -863,11 +862,6 @@ describe ApplicationHelper do
   end
 
   context "#perf_parent?" do
-    it "when model != 'VmOrTemplate'" do
-      @perf_options = {:model => 'OntapVolumeDerivedMetric'}
-      expect(helper.perf_parent?).to be_falsey
-    end
-
     it "when model == 'VmOrTemplate' and typ == 'realtime'" do
       @perf_options = {:model => 'VmOrTemplate', :typ => 'realtime'}
       expect(helper.perf_parent?).to be_falsey
@@ -894,28 +888,6 @@ describe ApplicationHelper do
     end
   end
 
-  context "#perf_compare_vm?" do
-    it "when model != 'OntapLogicalDisk'" do
-      @perf_options = {:model => 'OntapVolumeDerivedMetric'}
-      expect(helper.perf_compare_vm?).to be_falsey
-    end
-
-    it "when model == 'OntapLogicalDisk' and typ == 'realtime'" do
-      @perf_options = {:model => 'OntapLogicalDisk', :typ => 'realtime'}
-      expect(helper.perf_compare_vm?).to be_falsey
-    end
-
-    it "when model == 'OntapLogicalDisk', typ != 'realtime' and compare_vm == nil" do
-      @perf_options = {:model => 'OntapLogicalDisk', :typ => 'Daily', :compare_vm => nil}
-      expect(helper.perf_compare_vm?).to be_falsey
-    end
-
-    it "when model == 'OntapLogicalDisk', typ != 'realtime' and compare_vm != nil" do
-      @perf_options = {:model => 'OntapLogicalDisk', :typ => 'Daily', :compare_vm => 'something'}
-      expect(helper.perf_compare_vm?).to be_truthy
-    end
-  end
-
   context "#model_report_type" do
     it "when model == nil" do
       expect(helper.model_report_type(nil)).to be_falsey
@@ -923,7 +895,6 @@ describe ApplicationHelper do
 
     it "when model likes '...Performance' or '...MetricsRollup'" do
       expect(helper.model_report_type("VmPerformance")).to eq(:performance)
-      expect(helper.model_report_type("OntapVolumeMetricsRollup")).to eq(:performance)
     end
 
     it "when model == VimPerformanceTrend" do

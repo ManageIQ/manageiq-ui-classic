@@ -144,11 +144,7 @@
           %fieldset
             %h3
               = _('Storage')
-            - keys = {:ontapstoragesystem   => "ontap_storage_system",
-                      :ontapstoragevolume   => "ontap_storage_volume",
-                      :ontaplogicaldisk     => "ontap_logical_disk",
-                      :ontapfileshare       => "ontap_file_share",
-                      :cimbasestorageextent => "cim_base_storage_extent",
+            - keys = {:cimbasestorageextent => "cim_base_storage_extent",
                       :snialocalfilesystem  => "snia_local_file_system"}
             - keys.each do |resource, table_view_name|
               .form-group

@@ -122,34 +122,6 @@ class HostController < ApplicationController
                       :url  => "/host/show/#{@host.id}?display=storages")
       @view, @pages = get_view(Storage, :parent => @host) # Get the records (into a view) and the paginator
       @showtype = "storages"
-
-    when "ontap_logical_disks"
-      drop_breadcrumb(:name => _("%{name} (All %{tables})") % {:name   => @host.name,
-                                                               :tables => ui_lookup(:tables => "ontap_logical_disk")},
-                      :url  => "/host/show/#{@host.id}?display=ontap_logicals_disks")
-      @view, @pages = get_view(OntapLogicalDisk, :parent => @host, :parent_method => :logical_disks)  # Get the records (into a view) and the paginator
-      @showtype = "ontap_logicals_disks"
-
-    when "ontap_storage_systems"
-      drop_breadcrumb(:name => _("%{name} (All %{tables})") % {:name   => @host.name,
-                                                               :tables => ui_lookup(:tables => "ontap_storage_system")},
-                      :url  => "/host/show/#{@host.id}?display=ontap_storage_systems")
-      @view, @pages = get_view(OntapStorageSystem, :parent => @host, :parent_method => :storage_systems)  # Get the records (into a view) and the paginator
-      @showtype = "ontap_storage_systems"
-
-    when "ontap_storage_volumes"
-      drop_breadcrumb(:name => _("%{name} (All %{tables})") % {:name   => @host.name,
-                                                               :tables => ui_lookup(:tables => "ontap_storage_volume")},
-                      :url  => "/host/show/#{@host.id}?display=ontap_storage_volumes")
-      @view, @pages = get_view(OntapStorageVolume, :parent => @host, :parent_method => :storage_volumes)  # Get the records (into a view) and the paginator
-      @showtype = "ontap_storage_volumes"
-
-    when "ontap_file_shares"
-      drop_breadcrumb(:name => _("%{name} (All %{tables})") % {:name   => @host.name,
-                                                               :tables => ui_lookup(:tables => "ontap_file_share")},
-                      :url  => "/host/show/#{@host.id}?display=ontap_file_shares")
-      @view, @pages = get_view(OntapFileShare, :parent => @host, :parent_method => :file_shares)  # Get the records (into a view) and the paginator
-      @showtype = "ontap_file_shares"
     end
     @lastaction = "show"
     session[:tl_record_id] = @record.id

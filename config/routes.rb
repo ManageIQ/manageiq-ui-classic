@@ -2337,125 +2337,6 @@ Rails.application.routes.draw do
         save_post
     },
 
-    :ontap_file_share         => {
-      :get  => %w(
-        cim_base_storage_extents
-        create_ds
-        download_data
-        download_summary_pdf
-        index
-        protect
-        show
-        show_list
-        snia_local_file_systems
-        tagging_edit
-      ) +
-               compare_get,
-      :post => %w(
-        button
-        create_ds
-        create_ds_field_changed
-        protect
-        quick_search
-        sections_field_changed
-        show
-        show_list
-        tag_edit_form_field_changed
-        tagging_edit
-      ) +
-               adv_search_post +
-               compare_post +
-               exp_post
-    },
-
-    :ontap_logical_disk       => {
-      :get  => %w(
-        cim_base_storage_extents
-        download_data
-        download_summary_pdf
-        index
-        protect
-        show
-        show_list
-        snia_local_file_systems
-        tagging_edit
-      ) +
-               compare_get,
-      :post => %w(
-        button
-        perf_chart_chooser
-        protect
-        quick_search
-        sections_field_changed
-        show
-        show_list
-        tag_edit_form_field_changed
-        tagging_edit
-        wait_for_task
-      ) +
-               adv_search_post +
-               compare_post +
-               exp_post
-    },
-
-    :ontap_storage_system     => {
-      :get  => %w(
-        cim_base_storage_extents
-        create_ld
-        download_data
-        download_summary_pdf
-        index
-        protect
-        show
-        show_list
-        snia_local_file_systems
-        tagging_edit
-      ) +
-               compare_get,
-      :post => %w(
-        button
-        create_ld
-        create_ld_field_changed
-        protect
-        quick_search
-        sections_field_changed
-        show
-        show_list
-        tag_edit_form_field_changed
-        tagging_edit
-      ) +
-               adv_search_post +
-               compare_post +
-               exp_post
-    },
-
-    :ontap_storage_volume     => {
-      :get  => %w(
-        cim_base_storage_extents
-        download_data
-        download_summary_pdf
-        index
-        protect
-        show
-        show_list
-        tagging_edit
-      ) +
-               compare_get,
-      :post => %w(
-        button
-        protect
-        quick_search
-        sections_field_changed
-        show
-        show_list
-        tag_edit_form_field_changed
-        tagging_edit
-      ) +
-               adv_search_post +
-               compare_post +
-               exp_post
-    },
-
     :ops                      => {
       :get  => %w(
         explorer
@@ -3118,10 +2999,6 @@ Rails.application.routes.draw do
         groups
         kernel_drivers
         linux_initprocesses
-        ontap_file_shares
-        ontap_logical_disks
-        ontap_storage_systems
-        ontap_storage_volume
         ownership_field_changed
         ownership_update
         patches
@@ -3217,9 +3094,6 @@ Rails.application.routes.draw do
         guest_applications
         kernel_drivers
         linux_initprocesses
-        ontap_file_shares
-        ontap_logical_disks
-        ontap_storage_systems
         ownership_field_changed
         ownership_update
         patches

@@ -11,7 +11,6 @@ class CimInstanceController < ApplicationController
 
   # Examples:
   #   In CimStorageExtentController, button_name("tag") => cim_storage_extent_tag
-  #   In OntapFileShareController, button_name("create_datastore") => ontap_file_share_create_datastore
   def button_name(suffix)
     "#{self.class.table_name}_#{suffix}"
   end

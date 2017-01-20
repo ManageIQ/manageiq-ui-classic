@@ -35,28 +35,6 @@
     - if ::Settings.product.storage
       = miq_accordion_panel(_("Relationships"), false, "storage_inf_rel") do
         %ul.nav.nav-pills.nav-stacked
-          - if role_allows?(:feature => "ontap_storage_system_show_list")
-            = li_link(:count => @record.storage_systems_size,
-              :record_id     => @record.id,
-              :tables        => 'ontap_storage_system',
-              :display       => 'storage_systems',
-              :title         => _("Show all Filers"))
-
-          - unless @record.file_share.nil?
-            - if role_allows?(:feature => "ontap_file_share_show")
-              - fs = @record.file_share
-              %li
-                = link_to("#{ui_lookup(:table => "ontap_file_share")}: #{fs.name}",
-                  {:controller => "ontap_file_share", :action => 'show', :id => fs.id.to_s},
-                  :title => _("Show File Shares"))
-            - else
-              - if role_allows?(:feature => "ontap_storage_volume_show_list")
-                = li_link(:count => @record.storage_volumes_size,
-                  :record_id     => @record.id,
-                  :tables        => 'ontap_storage_volume',
-                  :display       => 'ontap_storage_volumes',
-                  :title         => _("Show all LUNs"))
-
           - if role_allows?(:feature => "cim_base_storage_volume_show_list")
             = li_link(:count => @record.base_storage_extents_size,
               :record_id     => @record.id,
