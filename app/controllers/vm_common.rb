@@ -278,8 +278,14 @@ module VmCommon
       drop_breadcrumb({:name => @record.name, :url => "/#{rec_cls}/show/#{@record.id}"}, true)
       drop_breadcrumb(:name => @record.name + _(" (Genealogy)"),
                       :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
-      @genealogy_tree = TreeBuilderGenealogy.new(:genealogy_tree, :genealogy, @sb, true, @record)
-      session[:genealogy_tree_root_id] = @genealogy_tree.root_id
+      if @record.parents.length > 1
+        add_flash(_("VM has too many parents."), :error)
+        javascript_flash(:spinner_off => true)
+        return
+      else
+        @genealogy_tree = TreeBuilderGenealogy.new(:genealogy_tree, :genealogy, @sb, true, @record)
+        session[:genealogy_tree_root_id] = @genealogy_tree.root_id
+      end
       @button_group = "vmtree"
     elsif @display == "compliance_history"
       count = params[:count] ? params[:count].to_i : 10
