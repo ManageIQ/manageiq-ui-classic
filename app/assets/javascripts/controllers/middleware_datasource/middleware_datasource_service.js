@@ -1,5 +1,4 @@
 ManageIQ.angular.app.service('mwAddDatasourceService', MwAddDatasourceService);
-'use strict';
 
 MwAddDatasourceService.$inject = ['$http', '$q'];
 

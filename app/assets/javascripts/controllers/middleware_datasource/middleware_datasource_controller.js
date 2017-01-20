@@ -1,5 +1,4 @@
 ManageIQ.angular.app.controller('mwAddDatasourceController', MwAddDatasourceCtrl);
-'use strict';
 
 var ADD_DATASOURCE_EVENT = 'mwAddDatasourceEvent';
 
