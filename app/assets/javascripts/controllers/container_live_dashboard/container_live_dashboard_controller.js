@@ -99,7 +99,7 @@ miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'pattern
     };
 
     var getLatestData = function(item) {
-      var params = '&query=get_data&type=' + item.type + 's&metric_id=' + item.id +
+      var params = '&query=get_data&type=' + item.type + '&metric_id=' + item.id +
         '&limit=5&order=DESC';
 
       $http.get(dash.url + params).success(function (response) {
@@ -168,7 +168,7 @@ miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'pattern
       var diff = dash.timeFilter.time_range * dash.timeFilter.range_count * 60 * 60 * 1000; // time_range is in hours
       var starts = ends - diff;
       var bucket_duration = parseInt(diff / 1000 / 200); // bucket duration is in seconds
-      var params = '&query=get_data&type=' + metric_type + 's&metric_id=' + metric_id + '&ends=' + ends +
+      var params = '&query=get_data&type=' + metric_type + '&metric_id=' + metric_id + '&ends=' + ends +
                    '&starts=' + starts+ '&bucket_duration=' + bucket_duration + 's';
 
       $http.get(dash.url + params).success(function(response) {
