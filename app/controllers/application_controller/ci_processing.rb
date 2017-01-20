@@ -505,27 +505,21 @@ module ApplicationController::CiProcessing
       @record = @sb[:action] = nil
     when "submit"
       if @record.supports_live_migrate?
-        if params['auto_select_host'] == 'on'
-          hostname = nil
-        else
-          hostname = params[:destination_host]
+        options = {
+          :hostname         => params['auto_select_host'] == 'on' ? nil : params[:destination_host],
+          :block_migration  => params['block_migration']   == 'on',
+          :disk_over_commit => params['disk_over_commit']  == 'on'
+        }
+        task_id = @record.class.live_migrate_queue(session[:userid], @record, options)
+        unless task_id.kind_of?(Integer)
+          add_flash(_("Instance live migration task %{id} failed.") % {:id => task_id.to_s}, :error)
         end
-        block_migration = params[:block_migration]
-        disk_over_commit = params[:disk_over_commit]
-        begin
-          @record.live_migrate(
-            :hostname         => hostname,
-            :block_migration  => block_migration == 'on',
-            :disk_over_commit => disk_over_commit == 'on'
-          )
-          add_flash(_("Live Migrating %{instance} \"%{name}\"") % {
-            :instance => ui_lookup(:table => 'vm_cloud'),
-            :name     => @record.name})
-        rescue => ex
-          add_flash(_("Unable to live migrate %{instance} \"%{name}\": %{details}") % {
-            :instance => ui_lookup(:table => 'vm_cloud'),
-            :name     => @record.name,
-            :details  => get_error_message_from_fog(ex)}, :error)
+
+        if @flash_array
+          javascript_flash(:spinner_off => true)
+        else
+          initiate_wait_for_task(:task_id => task_id, :action => "live_migrate_finished")
+          return
         end
       else
         add_flash(_("Unable to live migrate %{instance} \"%{name}\": %{details}") % {
@@ -543,7 +537,31 @@ module ApplicationController::CiProcessing
       session[:flash_msgs] = @flash_array.dup
       javascript_redirect previous_breadcrumb_url
     end
-    return
+  end
+
+  def live_migrate_finished
+    task_id = session[:async][:params][:task_id]
+    vm_id = session[:async][:params][:id]
+    vm = VmOrTemplate.find_by_id(vm_id)
+    task = MiqTask.find(task_id)
+    if MiqTask.status_ok?(task.status)
+      add_flash(_("Live migration of Instance \"%{name}\" complete.") % {:name => vm.name})
+    else
+      add_flash(_("Unable to live migrate Instance \"%{name}\": %{details}") % {
+        :name    => vm.name,
+        :details => get_error_message_from_fog(task.message)}, :error)
+    end
+    @breadcrumbs.pop if @breadcrumbs
+    session[:edit] = nil
+    params[:id] = vm.id.to_s # reset id in params for show
+    @record = nil
+    @sb[:action] = nil
+    if @sb[:explorer]
+      replace_right_cell
+    else
+      session[:flash_msgs] = @flash_array.dup
+      javascript_redirect previous_breadcrumb_url
+    end
   end
 
   def evacuate

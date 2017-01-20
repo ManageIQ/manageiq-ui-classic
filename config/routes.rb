@@ -2927,6 +2927,7 @@ Rails.application.routes.draw do
         tree_autoload
         genealogy_tree_selected
         ownership_update
+        wait_for_task
       ) +
                ownership_post +
                pre_prov_post
@@ -3024,6 +3025,7 @@ Rails.application.routes.draw do
         ownership_update
         associate_floating_ip_vm
         disassociate_floating_ip_vm
+        wait_for_task
       ) +
                adv_search_post +
                compare_post +
