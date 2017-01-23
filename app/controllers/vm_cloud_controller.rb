@@ -72,28 +72,46 @@ class VmCloudController < ApplicationController
     when "attach"
       volume = find_by_id_filtered(CloudVolume, params[:volume_id])
       if volume.is_available?(:attach_volume)
-        begin
-          volume.raw_attach_volume(@vm.ems_ref, params[:device_path])
-          add_flash(_("Attaching %{volume} \"%{volume_name}\" to %{vm_name}") % {
-            :volume      => ui_lookup(:table => 'cloud_volume'),
-            :volume_name => volume.name,
-            :vm_name     => @vm.name})
-        rescue => ex
-          add_flash(_("Unable to attach %{volume} \"%{volume_name}\" to %{vm_name}: %{details}") % {
-            :volume      => ui_lookup(:table => 'cloud_volume'),
-            :volume_name => volume.name,
-            :vm_name     => @vm.name,
-            :details     => get_error_message_from_fog(ex)}, :error)
+        task_id = volume.attach_volume_queue(session[:userid], @vm.ems_ref, params[:device_path])
+
+        if task_id.kind_of?(Integer)
+          initiate_wait_for_task(:task_id => task_id, :action => "attach_finished")
+        else
+          add_flash(_("Attaching Cloud volume failed: Task start failed"), :error)
+          javascript_flash(:spinner_off => true)
         end
       else
         add_flash(_(volume.is_available_now_error_message(:attach_volume)), :error)
+        javascript_flash
       end
-      @breadcrumbs.pop if @breadcrumbs
-      session[:edit] = nil
-      @record = @sb[:action] = nil
-      replace_right_cell
-
     end
+  end
+
+  def attach_finished
+    task_id = session[:async][:params][:task_id]
+    vm_id = session[:async][:params][:id]
+    vm_name = session[:async][:params][:name]
+    volume_id = session[:async][:params][:volume_id]
+    volume = find_by_id_filtered(CloudVolume, volume_id)
+    task = MiqTask.find(task_id)
+    if MiqTask.status_ok?(task.status)
+      add_flash(_("Attaching Cloud Volume \"%{volume_name}\" to %{vm_name} finished") % {
+        :name    => volume.name,
+        :vm_name => vm_name
+      })
+    else
+      add_flash(_("Unable to attach Cloud Volume \"%{volume_name}\" to %{vm_name}: %{details}") % {
+        :volume_name => volume.name,
+        :vm_name     => vm_name,
+        :details     => task.message
+      }, :error)
+    end
+
+    @breadcrumbs.pop if @breadcrumbs
+    session[:edit] = nil
+    session[:flash_msgs] = @flash_array.dup if @flash_array
+
+    javascript_redirect :action => "show", :id => vm_id
   end
 
   def detach_volume
@@ -111,27 +129,46 @@ class VmCloudController < ApplicationController
     when "detach"
       volume = find_by_id_filtered(CloudVolume, params[:volume_id])
       if volume.is_available?(:detach_volume)
-        begin
-          volume.raw_detach_volume(@vm.ems_ref)
-          add_flash(_("Detaching %{volume} \"%{volume_name}\" from %{vm_name}") % {
-            :volume      => ui_lookup(:table => 'cloud_volume'),
-            :volume_name => volume.name,
-            :vm_name     => @vm.name})
-        rescue => ex
-          add_flash(_("Unable to detach %{volume} \"%{volume_name}\" from %{vm_name}: %{details}") % {
-            :volume      => ui_lookup(:table => 'cloud_volume'),
-            :volume_name => volume.name,
-            :vm_name     => @vm.name,
-            :details     => get_error_message_from_fog(ex)}, :error)
+        task_id = volume.detach_volume_queue(session[:userid], @vm.ems_ref)
+
+        if task_id.kind_of?(Integer)
+          initiate_wait_for_task(:task_id => task_id, :action => "detach_finished")
+        else
+          add_flash(_("Detaching Cloud volume failed: Task start failed"), :error)
+          javascript_flash(:spinner_off => true)
         end
       else
         add_flash(_(volume.is_available_now_error_message(:detach_volume)), :error)
+        javascript_flash
       end
-      @breadcrumbs.pop if @breadcrumbs
-      session[:edit] = nil
-      @record = @sb[:action] = nil
-      replace_right_cell
     end
+  end
+
+  def detach_finished
+    task_id = session[:async][:params][:task_id]
+    vm_id = session[:async][:params][:id]
+    vm_name = session[:async][:params][:name]
+    volume_id = session[:async][:params][:volume_id]
+    volume = find_by_id_filtered(CloudVolume, volume_id)
+    task = MiqTask.find(task_id)
+    if MiqTask.status_ok?(task.status)
+      add_flash(_("Detaching Cloud Volume \"%{volume_name}\" from %{vm_name} finished") % {
+        :name    => volume.name,
+        :vm_name => vm_name
+      })
+    else
+      add_flash(_("Unable to detach Cloud Volume \"%{volume_name}\" from %{vm_name}: %{details}") % {
+        :volume_name => volume.name,
+        :vm_name     => vm_name,
+        :details     => task.message
+      }, :error)
+    end
+
+    @breadcrumbs.pop if @breadcrumbs
+    session[:edit] = nil
+    session[:flash_msgs] = @flash_array.dup if @flash_array
+
+    javascript_redirect :action => "show", :id => vm_id
   end
 
   def cancel_action(message)
