@@ -51,7 +51,7 @@ describe('containerTopologyController', function() {
 
     describe('the topology gets correct icons', function() {
       it('in graph elements', function() {
-        expect($controller.getIcon(openshift).icon).toContain("/assets/svg/vendor-openshift");
+        expect($controller.getIcon(openshift).icon).toMatch(/openshift/);
         expect($controller.getIcon(openshift).type).toEqual("image");
         expect($controller.getIcon(pod).icon).toEqual("\uF1B3");
         expect($controller.getIcon(pod).type).toEqual("glyph");
