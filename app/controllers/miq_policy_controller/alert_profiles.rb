@@ -92,7 +92,7 @@ module MiqPolicyController::AlertProfiles
       unless flash_errors?
         alert_profile_sync_provider
         alert_profile_assign_save
-        add_flash(_("Alert Profile \"%{alert_profile}\" assignments succesfully saved") %
+        add_flash(_("Alert Profile \"%{alert_profile}\" assignments successfully saved") %
           {:alert_profile => @alert_profile.description})
         get_node_info(x_node)
         @assign = nil
