@@ -25,8 +25,10 @@ function load_c3_chart(data, chart_id, height) {
   var generate_args = chartData(data.miqChart, data, { bindto: "#" + chart_id, size: {height: height}})
 
   generate_args.data.onclick = function (data, _i) {
-    var seriesIndex = _.findIndex(generate_args.data.columns, function(col) { return col[0] == data.id; }) - 1
-    var pointIndex = data.index;
+    var index = _.findIndex(generate_args.data.columns, function(col) { return col[0] == data.id; });
+    // when not Pie/Donut chart, first column doesn't contain actual data.
+    var seriesIndex = _.contains(['Pie', 'Donut'], generate_args.miqChart) ? index : index - 1;
+    var pointIndex = _.contains(['Pie', 'Donut'], generate_args.miqChart) ? index : data.index;
     var value = data.value;
 
     var parts = chart_id.split('_'); // miq_chart_candu_2
