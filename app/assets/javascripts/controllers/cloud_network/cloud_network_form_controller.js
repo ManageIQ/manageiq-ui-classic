@@ -67,20 +67,6 @@ ManageIQ.angular.app.controller('cloudNetworkFormController', ['$http', '$scope'
   $scope.filterNetworkManagerChanged = function(id) {
     miqService.sparkleOn();
 
-    $http.get('/cloud_subnet/cloud_subnet_networks_by_ems/' + id)
-      .then(getCloudSubnetNetworksByEmsComplete)
-      .catch(miqService.handleFailure);
-
-    $http.get('/cloud_subnet/cloud_tenants_by_ems/' + id)
-      .then(getCloudTenantsByEmsComplete)
-      .catch(miqService.handleFailure);
-
-    miqService.sparkleOff();
-  };
-
-  $scope.filterNetworkManagerChanged = function(id) {
-    miqService.sparkleOn();
-
     $http.get('/cloud_network/cloud_tenants_by_ems/' + id)
       .then(getCloudTenantsByEmsComplete)
       .catch(miqService.handleFailure);
