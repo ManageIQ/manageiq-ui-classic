@@ -373,7 +373,7 @@ describe ChargebackController do
       end
 
       before do
-        ChargebackRate.seed
+        [ChargebackRateDetailMeasure, ChargebackRateDetailCurrency, ChargeableField, ChargebackRate].each(&:seed)
       end
 
       it "adds new chargeback rate using default values" do
