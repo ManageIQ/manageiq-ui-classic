@@ -97,15 +97,12 @@ module ReportFormatter
           #         e_title = "#{ui_lookup(:model=>rec[:resource_type])}: #{rec[:resource_name]}"
           e_title = rec[:resource_name]
           e_image = ActionController::Base.helpers.image_path("100/#{bubble_icon(rec)}.png")
-          e_icon = ActionController::Base.helpers.image_path("timeline/#{rec.event_type.downcase}_#{rec[:severity]}.png")
         #         e_text = e_title # Commented out since name is showing in the columns anyway
         when "Vm"
           e_title = rec[:name]
-          e_icon = ActionController::Base.helpers.image_path("timeline/vendor-#{rec.vendor.downcase}.png")
           e_image = ActionController::Base.helpers.image_path("svg/os-#{rec.os_image_name.downcase}.svg")
         when "Host"
           e_title = rec[:name]
-          e_icon = ActionController::Base.helpers.image_path("timeline/vendor-#{rec.vmm_vendor_display.downcase}.png")
           e_image = ActionController::Base.helpers.image_path("svg/os-#{rec.os_image_name.downcase}.svg")
         when "EventStream"
           ems_cloud = false
@@ -137,13 +134,7 @@ module ReportFormatter
             e_title = rec[title_col] unless title_col.nil?
           end
           e_title ||= ems ? ems.name : "No VM, Host, or MS"
-          e_icon = ActionController::Base.helpers.image_path("timeline/#{timeline_icon("vm_event", rec.event_type.downcase)}.png")
           # See if this is EVM's special event
-          if rec.event_type == "GeneralUserEvent"
-            if rec.message.include?("EVM SmartState Analysis")
-              e_icon =  ActionController::Base.helpers.image_path("timeline/evm_analysis.png")
-            end
-          end
           if rec[:vm_or_template_id] && Vm.exists?(rec[:vm_or_template_id])
             e_image = ActionController::Base.helpers.image_path("svg/os-#{Vm.find(rec[:vm_or_template_id]).os_image_name.downcase}.svg")
           end
