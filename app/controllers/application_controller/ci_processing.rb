@@ -517,6 +517,7 @@ module ApplicationController::CiProcessing
 
         if @flash_array
           javascript_flash(:spinner_off => true)
+          return
         else
           initiate_wait_for_task(:task_id => task_id, :action => "live_migrate_finished")
           return
