@@ -57,45 +57,54 @@ describe MiddlewareTopologyService do
                                                 :name                  => "JMS Topic [HawkularMetricData]",
                                                 :nativeid              => long_id_7)
 
-      expect(subject[:items]).to eq(
+      expect(subject[:items]).to include(
         "MiddlewareManager" + ems_hawkular.compressed_id.to_s      => {:name         => ems_hawkular.name,
                                                                        :status       => "Unknown",
                                                                        :kind         => "MiddlewareManager",
                                                                        :display_kind => "Hawkular",
                                                                        :miq_id       => ems_hawkular.id,
-                                                                       :icon         => "vendor-hawkular"},
+                                                                       :icon         => match(/vendor-hawkular/)}
+      )
 
+      expect(subject[:items]).to include(
         "MiddlewareServer" + mw_server.compressed_id.to_s          => {:name         => mw_server.name,
                                                                        :status       => "Unknown",
                                                                        :kind         => "MiddlewareServer",
                                                                        :display_kind => "MiddlewareServer",
                                                                        :miq_id       => mw_server.id,
-                                                                       :icon         => "vendor-wildfly"},
+                                                                       :icon         => match(/vendor-wildfly/)}
+      )
 
+      expect(subject[:items]).to include(
         "MiddlewareDeployment" + mw_deployment1.compressed_id.to_s => {:name         => mw_deployment1.name,
                                                                        :status       => "Unknown",
                                                                        :kind         => "MiddlewareDeployment",
                                                                        :display_kind => "MiddlewareDeploymentWar",
-                                                                       :miq_id       => mw_deployment1.id},
+                                                                       :miq_id       => mw_deployment1.id}
+      )
 
+      expect(subject[:items]).to include(
         "MiddlewareDeployment" + mw_deployment2.compressed_id.to_s => {:name         => mw_deployment2.name,
                                                                        :status       => "Unknown",
                                                                        :kind         => "MiddlewareDeployment",
                                                                        :display_kind => "MiddlewareDeploymentWar",
-                                                                       :miq_id       => mw_deployment2.id},
+                                                                       :miq_id       => mw_deployment2.id}
+      )
 
+      expect(subject[:items]).to include(
         "MiddlewareDatasource" + mw_datasource.compressed_id.to_s  => {:name         => mw_datasource.name,
                                                                        :status       => "Unknown",
                                                                        :kind         => "MiddlewareDatasource",
                                                                        :display_kind => "MiddlewareDatasource",
-                                                                       :miq_id       => mw_datasource.id},
+                                                                       :miq_id       => mw_datasource.id}
+      )
 
+      expect(subject[:items]).to include(
         "MiddlewareMessaging" + mw_messaging.compressed_id.to_s    => {:name         => mw_messaging.name,
                                                                        :status       => "Unknown",
                                                                        :kind         => "MiddlewareMessaging",
                                                                        :display_kind => "MiddlewareMessaging",
-                                                                       :miq_id       => mw_messaging.id},
-
+                                                                       :miq_id       => mw_messaging.id}
       )
 
       expect(subject[:relations].size).to eq(5)
