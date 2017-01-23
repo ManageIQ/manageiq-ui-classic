@@ -200,15 +200,15 @@
       },
       "Kubernetes": {
         "type": "image",
-        "icon": "/assets/svg/vendor-kubernetes-72d5f7ebb2b7162e35b2ff33e0d7e094a7d2c23d662e99835735d3350401f088.svg"
+        "icon": "...kubernetes..."
       },
       "Openshift": {
         "type": "image",
-        "icon": "/assets/svg/vendor-openshift-1d618a8a9b84a545ce01bf41e996f2614b8cf433e1845fcf953af8ff43788707.svg"
+        "icon": "...openshift..."
       },
       "OpenshiftEnterprise": {
         "type": "image",
-        "icon": "/assets/svg/vendor-openshift_enterprise-1d618a8a9b84a545ce01bf41e996f2614b8cf433e1845fcf953af8ff43788707.svg"
+        "icon": "...openshift_enterprise..."
       }
     }
   }
