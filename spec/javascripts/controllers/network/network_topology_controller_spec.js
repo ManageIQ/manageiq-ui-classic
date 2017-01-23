@@ -45,8 +45,8 @@ describe('networkTopologyController', function() {
     describe('the topology gets correct icons', function() {
       it('in graph elements', function() {
         var d = { id:"2",  item:{display_kind:"Amazon", kind:"NetworkManager", id:"2"}};
-        expect($controller.getIcon(d)).toContain("/assets/svg/vendor-amazon");
-        expect($controller.getIcon(network_provider)).toContain("/assets/svg/vendor-openstack");
+        expect($controller.getIcon(d)).toMatch(/amazon/);
+        expect($controller.getIcon(network_provider)).toMatch(/openstack/);
         d = { id:"3",  item:{display_kind:"SecurityGroup", kind:"SecurityGroup", id:"3"}};
         expect($controller.getIcon(d)).toEqual("\uE903");
         d = { id:"4",  item:{display_kind:"VM", kind:"Vm", id:"4"}};

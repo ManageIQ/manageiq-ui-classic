@@ -41,8 +41,8 @@ describe('infraTopologyController', function() {
     describe('the topology gets correct icons', function() {
       it('in graph elements', function() {
         var d = { id:"2",  item:{display_kind:"Openstack", kind:"InfraManager", id:"2"}};
-        expect($controller.getIcon(d)).toContain("/assets/svg/vendor-openstack");
-        expect($controller.getIcon(infra_provider)).toContain("/assets/svg/vendor-openstack");
+        expect($controller.getIcon(d)).toMatch(/openstack/);
+        expect($controller.getIcon(infra_provider)).toMatch(/openstack/);
         d = { id:"4",  item:{display_kind:"Host", kind:"Host", id:"4"}};
         expect($controller.getIcon(d)).toEqual("\uE600");
         expect($controller.getIcon(cluster)).toEqual("\uE620");
