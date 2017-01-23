@@ -34,7 +34,7 @@
     "providers": [
       {
         "count": 1,
-        "iconImage": "/assets/svg//assets/svg/vendor-vmware-20ea028edb64dfe71defdae793b868a6c43105206e4011c1dfc74428a6c85cec.svg"
+        "iconImage": "...vmware..."
       }
     ],
     "ems_utilization": {
