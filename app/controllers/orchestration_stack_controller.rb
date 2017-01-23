@@ -4,6 +4,8 @@ class OrchestrationStackController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericSessionMixin
+
   def self.table_name
     @table_name ||= "orchestration_stack"
   end
@@ -268,16 +270,8 @@ class OrchestrationStackController < ApplicationController
     javascript_redirect :controller => 'catalog', :action => 'ot_show', :id => template.id
   end
 
-  def get_session_data
-    @title      = _("Stack")
-    @layout     = "orchestration_stack"
-    @lastaction = session[:orchestration_stack_lastaction]
-    @display    = session[:orchestration_stack_display]
-  end
-
-  def set_session_data
-    session[:orchestration_stack_lastaction] = @lastaction
-    session[:orchestration_stack_display]    = @display unless @display.nil?
+  def title
+    _("Stack")
   end
 
   menu_section :clo

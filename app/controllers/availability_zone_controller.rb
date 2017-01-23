@@ -5,6 +5,7 @@ class AvailabilityZoneController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericListMixin
+  include Mixins::GenericSessionMixin
 
   def show
     return if perfmenu_click?
@@ -132,24 +133,6 @@ class AvailabilityZoneController < ApplicationController
         end
       end
     end
-  end
-
-  private ############################
-
-  def get_session_data
-    @title      = _("Availability Zone")
-    @layout     = "availability_zone"
-    @lastaction = session[:availability_zone_lastaction]
-    @display    = session[:availability_zone_display]
-    @filters    = session[:availability_zone_filters]
-    @catinfo    = session[:availability_zone_catinfo]
-  end
-
-  def set_session_data
-    session[:availability_zone_lastaction] = @lastaction
-    session[:availability_zone_display]    = @display unless @display.nil?
-    session[:availability_zone_filters]    = @filters
-    session[:availability_zone_catinfo]    = @catinfo
   end
 
   menu_section :clo

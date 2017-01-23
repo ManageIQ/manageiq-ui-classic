@@ -5,6 +5,8 @@ class ProviderForemanController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericSessionMixin
+
   def self.model
     ManageIQ::Providers::ConfigurationManager
   end
@@ -1165,12 +1167,8 @@ class ProviderForemanController < ApplicationController
     record
   end
 
-  def get_session_data
-    @title  = _("Providers")
-    @layout = controller_name
-  end
-
-  def set_session_data
+  def title
+    _("Providers")
   end
 
   def configscript_service_dialog
