@@ -1646,11 +1646,11 @@ module ApplicationHelper
     elsif %(Vm VmOrTemplate).include?(db)
       vm = @targets_hash[from_cid(@id)]
       vendor = vm ? vm.vendor : "unknown"
-      image = "100/vendor-#{vendor}.png"
+      image = "svg/vendor-#{vendor}.svg"
     elsif db == "Host"
       host = @targets_hash[@id] if @targets_hash
       vendor = host ? host.vmm_vendor_display.downcase : "unknown"
-      image = "100/vendor-#{vendor}.png"
+      image = "svg/vendor-#{vendor}.svg"
     elsif db == "MiqAction"
       action = @targets_hash[@id.to_i]
       image = if action && action.action_type != "default"
@@ -1665,7 +1665,7 @@ module ApplicationHelper
       image = "100/processmanager-#{worker.normalized_type}.png"
     elsif db == "ExtManagementSystem"
       ems = @targets_hash[from_cid(@id)]
-      image = "100/vendor-#{ems.image_name}.png"
+      image = "svg/vendor-#{ems.image_name}.svg"
     elsif db == "Tenant"
       image = row['divisible'] ? "100/tenant.png" : "100/project.png"
     else
