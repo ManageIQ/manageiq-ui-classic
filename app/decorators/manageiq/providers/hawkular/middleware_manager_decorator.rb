@@ -5,11 +5,7 @@ module ManageIQ::Providers::Hawkular
     end
 
     def listicon_image
-      "svg/#{item_image}.svg"
-    end
-
-    def item_image
-      'vendor-hawkular'
+      "svg/vendor-hawkular.svg"
     end
   end
 end

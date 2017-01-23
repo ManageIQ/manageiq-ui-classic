@@ -1,13 +1,11 @@
 class MiddlewareDomainDecorator < Draper::Decorator
   delegate_all
-  include MiddlewareDecoratorMixin
 
   def fonticon
     'pficon-domain'.freeze
   end
 
-  # Determine the icon
-  def item_image
-    'middleware_domain'
+  def listicon_image
+    '100/middleware_domain.png'
   end
 end

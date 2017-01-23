@@ -1,23 +1,18 @@
 class MiddlewareServerDecorator < Draper::Decorator
   delegate_all
-  include MiddlewareDecoratorMixin
 
   def fonticon
     nil
   end
 
-  # Determine the icon
-  # we want to display a different icon depending of the type
-  # of server we have.
-  def item_image
+  def listicon_image
     case product
     when 'Hawkular'
-      'vendor-hawkular'
+      'svg/vendor-hawkular.svg'
     when 'JBoss EAP'
-      'vendor-jboss-eap'
+      'svg/vendor-jboss-eap.svg'
     else
-      'vendor-wildfly'
+      'svg/vendor-wildfly.svg'
     end
   end
-
 end
