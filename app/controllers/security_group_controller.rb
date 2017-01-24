@@ -17,11 +17,10 @@ class SecurityGroupController < ApplicationController
   menu_section :net
 
   def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w(vms instances images).include?(@display)
-    params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
-
-    @refresh_div = "main_div"
+    restore_edit_for_search
+    copy_sub_item_display_value_to_params
+    save_current_page_for_refresh
+    set_default_refresh_div
 
     case params[:pressed]
     when "security_group_tag"
@@ -33,11 +32,10 @@ class SecurityGroupController < ApplicationController
     else
       if params[:pressed] == "security_group_new"
         javascript_redirect :action => "new"
-      elsif !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
-      else
-        render_flash
+        return
       end
+
+      button_render_fallback
     end
   end
 

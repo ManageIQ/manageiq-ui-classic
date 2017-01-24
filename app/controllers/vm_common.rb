@@ -17,11 +17,13 @@ module VmCommon
     helper_method :textual_group_list
   end
 
+  include Mixins::GenericButtonMixin
+
   # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit]                                  # Restore @edit for adv search box
-    params[:page] = @current_page unless @current_page.nil?   # Save current page for list refresh
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
+    restore_edit_for_search
+    save_current_page_for_refresh
+    set_default_refresh_div
 
     case params[:pressed]
     when 'custom_button'
@@ -37,44 +39,8 @@ module VmCommon
       remove_service
     end
 
-    if @flash_array.nil? # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    else    # Figure out what was showing to refresh it
-      if @lastaction == "show" && ["vmtree"].include?(@showtype)
-        @refresh_partial = @showtype
-      elsif @lastaction == "show" && ["config"].include?(@showtype)
-        @refresh_partial = @showtype
-      elsif @lastaction == "show_list"
-        # default to the gtl_type already set
-      else
-        @refresh_partial = "layouts/flash_msg"
-        @refresh_div = "flash_msg_div"
-      end
-    end
-    @vm = @record = identify_record(params[:id], VmOrTemplate) unless @lastaction == "show_list"
-
-    if !@flash_array.nil? && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
-    elsif params[:pressed].ends_with?("_edit")
-      if @redirect_controller
-        javascript_redirect :controller => @redirect_controller, :action => @refresh_partial, :id => @redirect_id, :org_controller => @org_controller
-      else
-        javascript_redirect :action => @refresh_partial, :id => @redirect_id
-      end
-    else
-      if @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
-      else
-        if @refresh_div == "flash_msg_div"
-          javascript_flash(:spinner_off => true)
-        else
-          options
-          partial_replace(@refresh_div, "vm_common/#{@refresh_partial}")
-        end
-      end
-    end
+    check_if_button_is_implemented
+    vm_common_javascript_redirect
   end
 
   # to reload currently displayed summary screen in explorer

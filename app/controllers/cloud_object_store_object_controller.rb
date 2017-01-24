@@ -12,8 +12,9 @@ class CloudObjectStoreObjectController < ApplicationController
   end
 
   def button
-    @edit = session[:edit]
-    params[:page] = @current_page unless @current_page.nil?
+    restore_edit_for_search
+    save_current_page_for_refresh
+
     return tag("CloudObjectStoreObject") if params[:pressed] == 'cloud_object_store_object_tag'
   end
 

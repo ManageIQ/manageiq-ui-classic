@@ -4,6 +4,8 @@ class MiqRequestController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericButtonMixin
+
   def index
     #   show_list
     #   render :action=>"show_list"
@@ -13,95 +15,49 @@ class MiqRequestController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
-    deleterequests if params[:pressed] == "miq_request_delete"
-    request_edit if params[:pressed] == "miq_request_edit"
-    request_copy if params[:pressed] == "miq_request_copy"
+    save_current_page_for_refresh
+    set_default_refresh_div
 
-    if ! @refresh_partial && params[:pressed] != "miq_request_reload" # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
+    if handled_buttons.include?(params[:pressed])
+      self.send("handle_#{params[:pressed]}".to_sym)
     end
-    return if params[:pressed] == "miq_request_edit" && @refresh_partial == "reconfigure"
-    if !@flash_array.nil? && params[:pressed] == "miq_request_delete"
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
-    elsif ["miq_request_copy", "miq_request_edit"].include?(params[:pressed])
-      javascript_redirect :controller     => @redirect_controller,
-                          :action         => @refresh_partial,
-                          :id             => @redirect_id,
-                          :prov_type      => @prov_type,
-                          :req_id         => @req_id,
-                          :org_controller => @org_controller,
-                          :prov_id        => @prov_id
-    elsif params[:pressed].ends_with?("_edit")
+
+    return if @refresh_partial == "reconfigure" || performed?
+
+    check_if_button_is_implemented unless params[:pressed] == "miq_request_reload"
+
+    if params[:pressed].ends_with?("_edit")
       if @refresh_partial == "show_list"
         javascript_redirect :action      => @refresh_partial,
                             :flash_msg   => _("Default Requests can not be edited"),
                             :flash_error => true
       else
-        javascript_redirect :action => @refresh_partial, :id => @redirect_id
-      end
-    elsif params[:pressed] == "miq_request_reload"
-      if @display == "main" && params[:id].present?
-        show
-        c_tb = build_toolbar(center_toolbar_filename)
-        render :update do |page|
-          page << javascript_prologue
-          page.replace("request_div", :partial => "miq_request/request")
-          page << javascript_pf_toolbar_reload('center_tb', c_tb)
-        end
-      elsif @display == "miq_provisions"
-        show
-        render :update do |page|
-          page << javascript_prologue
-          page.replace("gtl_div", :partial => "layouts/gtl")  # Replace the provisioned vms list
-        end
-      else
-        # forcing to refresh the view when reload button is pressed
-        @_params[:refresh] = "y"
-        show_list
-        render :update do |page|
-          page << javascript_prologue
-          page.replace("prov_options_div", :partial => "prov_options")
-          page.replace("gtl_div", :partial => "layouts/gtl")
-        end
+        js_redirect_with_partial_and_id
       end
     else
-      render :update do |page|
-        page << javascript_prologue
-        unless @refresh_partial.nil?
-          if @refresh_div == "flash_msg_div"
-            page.replace(@refresh_div, :partial => @refresh_partial)
-          else
-            page.replace_html(@refresh_div, :partial => @refresh_partial)
-          end
-        end
-        page.replace_html(@refresh_div, :action => @render_action) unless @render_action.nil?
-      end
+      miq_request_render_update
     end
   end
 
-  def request_edit
-    assert_privileges("miq_request_edit")
-    provision_request = MiqRequest.find_by_id(params[:id])
-    if provision_request.workflow_class || provision_request.kind_of?(MiqProvisionConfiguredSystemRequest)
-      request_edit_settings(provision_request)
-    else
-      session[:checked_items] = provision_request.options[:src_ids]
-      @refresh_partial = "reconfigure"
-      @_params[:controller] = "vm"
-      reconfigurevms
-    end
-  end
+  # def request_edit
+  #   assert_privileges("miq_request_edit")
+  #   provision_request = MiqRequest.find_by_id(params[:id])
+  #   if provision_request.workflow_class || provision_request.kind_of?(MiqProvisionConfiguredSystemRequest)
+  #     request_edit_settings(provision_request)
+  #   else
+  #     session[:checked_items] = provision_request.options[:src_ids]
+  #     @refresh_partial = "reconfigure"
+  #     @_params[:controller] = "vm"
+  #     reconfigurevms
+  #   end
+  # end
 
-  def request_copy
-    assert_privileges("miq_request_copy")
-    provision_request = MiqRequest.find_by_id(params[:id])
-    @refresh_partial = "prov_copy"
-    request_settings_for_edit_or_copy(provision_request)
-  end
+  # def request_copy
+  #   assert_privileges("miq_request_copy")
+  #   provision_request = MiqRequest.find_by_id(params[:id])
+  #   @refresh_partial = "prov_copy"
+  #   request_settings_for_edit_or_copy(provision_request)
+  # end
 
   # Show the main Requests list view
   def show_list
@@ -513,31 +469,31 @@ class MiqRequestController < ApplicationController
   end
 
   # Delete all selected or single displayed action(s)
-  def deleterequests
-    assert_privileges("miq_request_delete")
-    miq_requests = []
-    if @lastaction == "show_list" # showing a list
-      miq_requests = find_checked_items
-      if miq_requests.empty?
-        add_flash(_("No %{model} were selected for deletion") % {:model => ui_lookup(:tables => "miq_request")}, :error)
-      end
-      process_requests(miq_requests, "destroy") unless miq_requests.empty?
-      add_flash(_("The selected %{tables} were deleted") %
-        {:tables => ui_lookup(:tables => "miq_request")}) unless flash_errors?
-    else # showing 1 request, delete it
-      if params[:id].nil? || MiqRequest.find_by_id(params[:id]).nil?
-        add_flash(_("%{table} no longer exists") % {:table => ui_lookup(:table => "miq_request")}, :error)
-      else
-        miq_requests.push(params[:id])
-      end
-      @single_delete = true
-      process_requests(miq_requests, "destroy") unless miq_requests.empty?
-      add_flash(_("The selected %{table} was deleted") %
-        {:table => ui_lookup(:table => "miq_request")}) unless flash_errors?
-    end
-    show_list
-    @refresh_partial = "layouts/gtl"
-  end
+  # def deleterequests
+  #   assert_privileges("miq_request_delete")
+  #   miq_requests = []
+  #   if @lastaction == "show_list" # showing a list
+  #     miq_requests = find_checked_items
+  #     if miq_requests.empty?
+  #       add_flash(_("No %{model} were selected for deletion") % {:model => ui_lookup(:tables => "miq_request")}, :error)
+  #     end
+  #     process_requests(miq_requests, "destroy") unless miq_requests.empty?
+  #     add_flash(_("The selected %{tables} were deleted") %
+  #       {:tables => ui_lookup(:tables => "miq_request")}) unless flash_errors?
+  #   else # showing 1 request, delete it
+  #     if params[:id].nil? || MiqRequest.find_by_id(params[:id]).nil?
+  #       add_flash(_("%{table} no longer exists") % {:table => ui_lookup(:table => "miq_request")}, :error)
+  #     else
+  #       miq_requests.push(params[:id])
+  #     end
+  #     @single_delete = true
+  #     process_requests(miq_requests, "destroy") unless miq_requests.empty?
+  #     add_flash(_("The selected %{table} was deleted") %
+  #       {:table => ui_lookup(:table => "miq_request")}) unless flash_errors?
+  #   end
+  #   show_list
+  #   @refresh_partial = "layouts/gtl"
+  # end
 
   # Common Request button handler routines
   def process_requests(miq_requests, task)
@@ -611,6 +567,106 @@ class MiqRequestController < ApplicationController
     when 'at'   then :automate
     when 'vm'   then :svc
     when 'host' then :inf
+    end
+  end
+
+  def redirect_for_edit_and_copy
+    javascript_redirect :controller     => @redirect_controller,
+                        :action         => @refresh_partial,
+                        :id             => @redirect_id,
+                        :prov_type      => @prov_type,
+                        :req_id         => @req_id,
+                        :org_controller => @org_controller,
+                        :prov_id        => @prov_id
+  end
+
+  def handled_buttons
+    %w(
+      miq_request_copy
+      miq_request_edit
+      miq_request_delete
+      miq_request_reload
+    )
+  end
+
+  def handle_miq_request_copy
+    assert_privileges("miq_request_copy")
+    provision_request = MiqRequest.find_by_id(params[:id])
+    @refresh_partial = "prov_copy"
+    request_settings_for_edit_or_copy(provision_request)
+    redirect_for_edit_and_copy
+  end
+
+  def handle_miq_request_edit
+    assert_privileges("miq_request_edit")
+    provision_request = MiqRequest.find_by_id(params[:id])
+    if provision_request.workflow_class || provision_request.kind_of?(MiqProvisionConfiguredSystemRequest)
+      request_edit_settings(provision_request)
+    else
+      session[:checked_items] = provision_request.options[:src_ids]
+      @refresh_partial = "reconfigure"
+      @_params[:controller] = "vm"
+      reconfigurevms
+    end
+
+    redirect_for_edit_and_copy
+  end
+
+  def handle_miq_request_delete
+    assert_privileges("miq_request_delete")
+    miq_requests = []
+    if @lastaction == "show_list" # showing a list
+      miq_requests = find_checked_items
+      if miq_requests.empty?
+        add_flash(_("No %{model} were selected for deletion") % {:model => ui_lookup(:tables => "miq_request")}, :error)
+      end
+      process_requests(miq_requests, "destroy") unless miq_requests.empty?
+      add_flash(_("The selected %{tables} were deleted") %
+        {:tables => ui_lookup(:tables => "miq_request")}) unless flash_errors?
+    else # showing 1 request, delete it
+      if params[:id].nil? || MiqRequest.find_by_id(params[:id]).nil?
+        add_flash(_("%{table} no longer exists") % {:table => ui_lookup(:table => "miq_request")}, :error)
+      else
+        miq_requests.push(params[:id])
+      end
+      @single_delete = true
+      process_requests(miq_requests, "destroy") unless miq_requests.empty?
+      add_flash(_("The selected %{table} was deleted") %
+        {:table => ui_lookup(:table => "miq_request")}) unless flash_errors?
+    end
+    show_list
+    @refresh_partial = "layouts/gtl"
+
+    if !@flash_array.nil?
+      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
+    end
+  end
+
+  def handle_miq_request_reload
+    case @display
+    when "main"
+      show
+      c_tb = build_toolbar(center_toolbar_filename)
+      render :update do |page|
+        page << javascript_prologue
+        page.replace("request_div", :partial => "miq_request/request")
+        page << javascript_pf_toolbar_reload('center_tb', c_tb)
+      end
+    when "miq_provisions"
+      show
+      render :update do |page|
+        page << javascript_prologue
+        page.replace("gtl_div", :partial => "layouts/gtl")  # Replace the provisioned vms list
+      end
+    else
+      # forcing to refresh the view when reload button is pressed
+      @_params[:refresh] = "y"
+      show_list
+      render :update do |page|
+        page << javascript_prologue
+        page.replace("prov_options_div", :partial => "prov_options")
+        page.replace("gtl_div", :partial => "layouts/gtl")
+      end
     end
   end
 end

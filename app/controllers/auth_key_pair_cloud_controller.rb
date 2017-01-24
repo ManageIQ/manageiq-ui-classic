@@ -6,6 +6,7 @@ class AuthKeyPairCloudController < ApplicationController
 
   include Mixins::GenericShowMixin
   include Mixins::GenericListMixin
+  include Mixins::GenericButtonMixin
   include Mixins::GenericSessionMixin
 
   def self.display_methods
@@ -30,25 +31,22 @@ class AuthKeyPairCloudController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
-    return tag("ManageIQ::Providers::CloudManager::AuthKeyPair") if params[:pressed] == 'auth_key_pair_cloud_tag'
-    delete_auth_key_pairs if params[:pressed] == 'auth_key_pair_cloud_delete'
-    new if params[:pressed] == 'auth_key_pair_cloud_new'
+    restore_edit_for_search
+    save_current_page_for_refresh
 
-    if !@flash_array.nil? && params[:pressed] == "auth_key_pair_cloud_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
-    elsif params[:pressed] == "auth_key_pair_cloud_new"
-      if @flash_array
-        show_list
+    case params[:pressed]
+    when 'auth_key_pair_cloud_tag'
+      return tag("ManageIQ::Providers::CloudManager::AuthKeyPair")
+    when 'auth_key_pair_cloud_delete'
+      handle_delete_button
+    when 'auth_key_pair_cloud_new'
+      handle_new_button
+    else
+      if button_replace_gtl_main?
         replace_gtl_main_div
       else
-        javascript_redirect :action => "new"
+        render_flash
       end
-    elsif @refresh_div == "main_div" && @lastaction == "show_list"
-      replace_gtl_main_div
-    else
-      render_flash
     end
   end
 
@@ -220,4 +218,25 @@ class AuthKeyPairCloudController < ApplicationController
   helper_method :textual_group_list
 
   menu_section :clo
+
+  private
+
+  def handle_delete_button
+    delete_auth_key_pairs
+
+    if @flash_array.present? && @single_delete
+      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
+    end
+  end
+
+  def handle_new_button
+    new
+
+    if @flash_array.present?
+      show_list
+      replace_gtl_main_div
+    else
+      javascript_redirect :action => "new"
+    end
+  end
 end

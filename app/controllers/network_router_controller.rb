@@ -16,26 +16,24 @@ class NetworkRouterController < ApplicationController
   end
 
   def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w(vms instances images).include?(@display)
-    params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
+    restore_edit_for_search
+    copy_sub_item_display_value_to_params
+    save_current_page_for_refresh
+    set_default_refresh_div
 
-    @refresh_div = "main_div"
-    return tag("NetworkRouter") if params[:pressed] == "network_router_tag"
-    delete_network_routers if params[:pressed] == 'network_router_delete'
-
-    if params[:pressed] == "network_router_edit"
+    case params[:pressed]
+    when "network_router_tag" then return tag("NetworkRouter")
+    when "network_router_delete" then delete_network_routers
+    when "network_router_edit"
       javascript_redirect :action => "edit", :id => checked_item_id
-    elsif params[:pressed] == "network_router_new"
+    when "network_router_new"
       javascript_redirect :action => "new"
-    elsif params[:pressed] == "network_router_add_interface"
+    when "network_router_add_interface"
       javascript_redirect :action => "add_interface_select", :id => checked_item_id
-    elsif params[:pressed] == "network_router_remove_interface"
+    when "network_router_remove_interface"
       javascript_redirect :action => "remove_interface_select", :id => checked_item_id
-    elsif !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
-      replace_gtl_main_div
     else
-      render_flash
+      button_render_fallback
     end
   end
 
