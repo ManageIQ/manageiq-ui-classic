@@ -54,10 +54,14 @@ module Mixins::MiddlewareDeploymentsMixin
     if params['forceDeploy'] == 'false'
       existing_deployment = find_existing_deployment
       unless existing_deployment.nil?
-        msg = 'Deployment "%s" already exists on this ' + parent_entity_name
+        msg = if @is_server
+                _('Deployment "%{deployment}" already exists on this server.') % {:deployment => @deployment_name}
+              else
+                _('Deployment "%{deployment}" already exists on this server group.') % {:deployment => @deployment_name}
+              end
         render :json => {
           :status => :warn,
-          :msg    => _(msg) % @deployment_name
+          :msg    => msg
         }
         return false
       end
@@ -67,10 +71,14 @@ module Mixins::MiddlewareDeploymentsMixin
 
   def run_it(operation)
     run_specific_operation(@klass.operations.fetch(operation), @entity_id)
-    msg = 'Deployment "%s" has been initiated on this ' + parent_entity_name
+    msg = if @is_server
+            _('Deployment "%{deployment}" has been initiated on this server.') % {:deployment => @deployment_name}
+          else
+            _('Deployment "%{deployment}" has been initiated on this group.') % {:deployment => @deployment_name}
+          end
     render :json => {
       :status => :success,
-      :msg    => _(msg) % @deployment_name
+      :msg    => msg
     }
   end
 end

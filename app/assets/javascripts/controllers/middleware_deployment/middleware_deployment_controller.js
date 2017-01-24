@@ -23,8 +23,9 @@ function MwAddDeploymentController($scope, $http, miqService) {
           miqService.miqFlash(result.data.status, result.data.msg);
         },
         function() { // error
-          miqService.miqFlash('error', 'Unable to deploy "' + data.runtimeName + '" on this server' +
-              (isGroupDeployment ? ' group' : '') +'.');
+          var msg = sprintf(__('Unable to deploy %s on this server %s"'), data.runtimeName,
+              (isGroupDeployment ? ' group.' : '.'));
+          miqService.miqFlash('error', msg);
         })
       .finally(function() {
         angular.element("#modal_d_div").modal('hide');
