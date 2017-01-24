@@ -7,36 +7,41 @@ class CloudVolumeController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::CheckedIdMixin
   include Mixins::GenericFormMixin
+  include Mixins::GenericButtonMixin
   include Mixins::GenericSessionMixin
 
   # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w(vms instances images).include?(@display)
-    params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
+    restore_edit_for_search
+    copy_sub_item_display_value_to_params
+    save_current_page_for_refresh
 
-    if params[:pressed].starts_with?("instance_")
-      pfx = pfx_for_vm_button_pressed(params[:pressed])
+    handle_sub_item_presses(params[:pressed]) do |pfx|
       process_vm_buttons(pfx)
-      # Control transferred to another screen, so return
-      return if ["#{pfx}_policy_sim", "#{pfx}_compare", "#{pfx}_tag", "#{pfx}_retire", "#{pfx}_resize",
-                 "#{pfx}_protect", "#{pfx}_ownership", "#{pfx}_refresh", "#{pfx}_right_size",
-                 "#{pfx}_resize", "#{pfx}_live_migrate", "#{pfx}_evacuate"].include?(params[:pressed]) && @flash_array.nil?
-      unless ["#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone",
-              "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
-        @refresh_div = "main_div"
-        @refresh_partial = "layouts/gtl"
-        show # Handle EMS buttons
+
+      return if button_control_transferred?(params[:pressed])
+
+      unless button_has_redirect_suffix?
+        set_refresh_and_show
       end
-    else
-      @refresh_div = "main_div"
-      return tag("CloudVolume") if params[:pressed] == "cloud_volume_tag"
-      delete_volumes if params[:pressed] == 'cloud_volume_delete'
     end
 
-    if params[:pressed] == "cloud_volume_attach"
+    unless params[:pressed].starts_with?("instance_")
+      set_default_refresh_div
+
+      if params[:pressed] == "cloud_volume_tag"
+        return tag("CloudVolume")
+      end
+
+      if params[:pressed] == 'cloud_volume_delete'
+        delete_volumes
+      end
+    end
+
+    case params[:pressed]
+    when "cloud_volume_attach"
       javascript_redirect :action => "attach", :id => checked_item_id
-    elsif params[:pressed] == "cloud_volume_detach"
+    when "cloud_volume_detach"
       @volume = find_by_id_filtered(CloudVolume, checked_item_id)
       if @volume.attachments.empty?
         render_flash(_("%{volume} \"%{volume_name}\" is not attached to any %{instances}") % {
@@ -46,23 +51,24 @@ class CloudVolumeController < ApplicationController
       else
         javascript_redirect :action => "detach", :id => checked_item_id
       end
-    elsif params[:pressed] == "cloud_volume_edit"
+    when "cloud_volume_edit"
       javascript_redirect :action => "edit", :id => checked_item_id
-    elsif params[:pressed] == "cloud_volume_snapshot_create"
+    when "cloud_volume_snapshot_create"
       javascript_redirect :action => "snapshot_new", :id => checked_item_id
-    elsif params[:pressed] == "cloud_volume_new"
+    when "cloud_volume_new"
       javascript_redirect :action => "new"
-    elsif params[:pressed] == "cloud_volume_backup_create"
+    when "cloud_volume_backup_create"
       javascript_redirect :action => "backup_new", :id => checked_item_id
-    elsif params[:pressed] == "cloud_volume_backup_restore"
+    when "cloud_volume_backup_restore"
       javascript_redirect :action => "backup_select", :id => checked_item_id
-    elsif !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
-      replace_gtl_main_div
-    elsif params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new", "#{pfx}_clone",
-                                                   "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
-      render_or_redirect_partial(pfx)
     else
-      render_flash
+      if !flash_errors? && button_replace_gtl_main?
+        replace_gtl_main_div
+      elsif button_has_redirect_suffix?(params[:pressed])
+        render_or_redirect_partial(pfx)
+      else
+        render_flash
+      end
     end
   end
 

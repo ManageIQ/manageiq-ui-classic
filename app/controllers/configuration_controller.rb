@@ -2,6 +2,8 @@ require 'miq_bulk_import'
 class ConfigurationController < ApplicationController
   include StartUrl
 
+  include Mixins::GenericButtonMixin
+
   logo_dir = File.expand_path(File.join(Rails.root, "public/upload"))
   Dir.mkdir logo_dir unless File.exist?(logo_dir)
   @@logo_file = File.join(logo_dir, "custom_logo.png")
@@ -30,27 +32,22 @@ class ConfigurationController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
-    timeprofile_delete if params[:pressed] == "tp_delete"
-    copy_record if params[:pressed] == "tp_copy"
-    edit_record if params[:pressed] == "tp_edit"
+    set_default_refresh_div
 
-    if ! @refresh_partial && @flash_array.nil? # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
+    case params[:pressed]
+    when "tp_delete" then timeprofile_delete
+    when "tp_copy"   then copy_record
+    when "tp_edit"   then edit_record
     end
 
-    if params[:pressed].ends_with?("_edit", "_copy")
+    if button_not_handled?
+      set_refresh_and_alert_not_implemented
+    end
+
+    if button_has_redirect_suffix?
       javascript_redirect :action => @refresh_partial, :id => @redirect_id
     else
-      c_tb = build_toolbar(center_toolbar_filename)
-      render :update do |page|
-        page << javascript_prologue
-        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-        page.replace_html("main_div", :partial => "ui_4") # Replace the main div area contents
-        page << javascript_pf_toolbar_reload('center_tb', c_tb)
-      end
+      configuration_render_update
     end
   end
 

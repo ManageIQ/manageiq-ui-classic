@@ -1,20 +1,39 @@
 module ContainersCommonMixin
   extend ActiveSupport::Concern
 
+  include Mixins::GenericButtonMixin
+
+  def show
+    # fix breadcrumbs - remove displaying 'topology' when navigating to any container related entity summary page
+    if @breadcrumbs.present? && (@breadcrumbs.last[:name].eql? 'Topology')
+      @breadcrumbs.clear
+    end
+    @display = params[:display] || "main" unless pagination_or_gtl_request?
+    @lastaction = "show"
+    @showtype = "main"
+    @record = identify_record(params[:id])
+    show_container(@record, controller_name, display_name)
+  end
+
   def button
-    @edit = session[:edit]                          # Restore @edit for adv search box
-    params[:display] = @display if ["#{params[:controller]}s"].include?(@display)  # displaying container_*
-    params[:page] = @current_page if @current_page.nil?   # Save current page for list refresh
+    restore_edit_for_search
+    copy_sub_item_display_value_to_params
+    save_current_page_for_refresh
+    set_default_refresh_div
 
     # Handle Toolbar Policy Tag Button
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
+
     model = self.class.model
-    tag(model) if params[:pressed] == "#{params[:controller]}_tag"
+    if params[:pressed] == "#{params[:controller]}_tag"
+      tag(model)
+
+      return if @flash_array.nil? # Tag screen showing
+    end
+
     if [ContainerReplicator, ContainerGroup, ContainerNode, ContainerImage].include?(model)
       assign_policies(model) if params[:pressed] == "#{model.name.underscore}_protect"
       check_compliance(model) if params[:pressed] == "#{model.name.underscore}_check_compliance"
     end
-    return if ["#{params[:controller]}_tag"].include?(params[:pressed]) && @flash_array.nil? # Tag screen showing
 
     # Handle scan
     if params[:pressed] == "container_image_scan"
@@ -103,6 +122,10 @@ module ContainersCommonMixin
         add_flash(_("\"%{record}\": Compliance check successfully initiated") % {:record => entity.name})
       end
     end
+  end
+
+  def button_sub_item_display_values
+    ["#{params[:controller]}s"]
   end
 
   included do

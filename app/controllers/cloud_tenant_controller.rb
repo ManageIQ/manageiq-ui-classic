@@ -11,6 +11,18 @@ class CloudTenantController < ApplicationController
   include Mixins::GenericFormMixin
   include Mixins::GenericSessionMixin
 
+  DISPLAY_METHODS = %w(
+    security_groups
+    cloud_volumes
+    cloud_volume_snapshots
+    cloud_object_store_containers
+    floating_ips
+    network_ports
+    cloud_networks
+    cloud_subnets
+    network_routers
+  ).freeze
+
   # handle buttons pressed on the button bar
   def button
     case params[:pressed]
@@ -24,13 +36,17 @@ class CloudTenantController < ApplicationController
       # custom button screen, so return, let custom_buttons method handle everything
       custom_buttons
     else
-      editable_objects = CloudTenantController.display_methods.map(&:singularize) - %w(instance image) # handled in super
       if params[:pressed].starts_with?(*editable_objects)
-        target_controller = editable_objects.find { |n| params[:pressed].starts_with?(n) }
+        target_controller = editable_objects.detect { |n| params[:pressed].starts_with?(n) }
         action = params[:pressed].sub("#{target_controller}_", '')
-        action = "#{action}_#{target_controller.sub('cloud_','').pluralize}" if action == 'delete'
+
+        if action == 'delete'
+          action = "#{action}_#{target_controller.sub('cloud_','').pluralize}"
+        end
+
         if action == 'detach'
           volume = find_by_id_filtered(CloudVolume, from_cid(params[:miq_grid_checks]))
+
           if volume.attachments.empty?
             render_flash(_("%{volume} \"%{volume_name}\" is not attached to any %{instances}") % {
                 :volume      => ui_lookup(:table => 'cloud_volume'),
@@ -39,17 +55,13 @@ class CloudTenantController < ApplicationController
             return
           end
         end
+
         javascript_redirect :controller => target_controller, :miq_grid_checks => params[:miq_grid_checks], :action => action
       else
         # calling the method from Mixins::GenericButtonMixin
         super
       end
     end
-  end
-
-  def self.display_methods
-    %w(instances images security_groups cloud_volumes cloud_volume_snapshots cloud_object_store_containers floating_ips
-       network_ports cloud_networks cloud_subnets network_routers)
   end
 
   def new
@@ -270,6 +282,10 @@ class CloudTenantController < ApplicationController
                    "Delete initiated for %{number} Cloud Tenants.",
                    tenants.length) % {:number => tenants.length})
     end
+  end
+
+  def editable_objects
+    DISPLAY_METHODS.map(&:singularize)
   end
 
   menu_section :clo

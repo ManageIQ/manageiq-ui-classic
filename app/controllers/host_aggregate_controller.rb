@@ -6,6 +6,7 @@ class HostAggregateController < ApplicationController
 
   include Mixins::GenericListMixin
   include Mixins::CheckedIdMixin
+  include Mixins::GenericButtonMixin
   include Mixins::GenericSessionMixin
 
   def show
@@ -73,56 +74,48 @@ class HostAggregateController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit] # Restore @edit for adv search box
+    restore_edit_for_search
+    copy_sub_item_display_value_to_params
+    save_current_page_for_refresh
 
-    params[:display] = @display if %w(images instances).include?(@display) # Were we displaying vms/hosts/storages
-    params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
-
-    if params[:pressed].starts_with?("image_", # Handle buttons from sub-items screen
-                                     "instance_")
-
-      pfx = pfx_for_vm_button_pressed(params[:pressed])
+    handle_sub_item_presses(params[:pressed]) do |pfx|
       process_vm_buttons(pfx)
 
-      # Control transferred to another screen, so return
-      return if ["#{pfx}_policy_sim", "#{pfx}_compare", "#{pfx}_tag",
-                 "#{pfx}_retire", "#{pfx}_protect", "#{pfx}_ownership",
-                 "#{pfx}_refresh", "#{pfx}_right_size",
-                 "#{pfx}_reconfigure"].include?(params[:pressed]) &&
-                @flash_array.nil?
+      return if button_control_transferred?(params[:pressed])
 
-      unless ["#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone",
-              "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
-        @refresh_div = "main_div"
-        @refresh_partial = "layouts/gtl"
-        show # Handle VMs buttons
+      unless button_has_redirect_suffix?(params[:pressed])
+        set_refresh_and_show
       end
-    else
+    end
+
+    if !params[:pressed].starts_with?(*button_sub_item_prefixes)
       tag(HostAggregate) if params[:pressed] == "host_aggregate_tag"
       return if ["host_aggregate_tag"].include?(params[:pressed]) &&
                 @flash_array.nil? # Tag screen showing, so return
     end
 
-    if params[:pressed] == "host_aggregate_new"
+    case params[:pressed]
+    when "host_aggregate_new"
       javascript_redirect :action => "new"
       return
-    elsif params[:pressed] == "host_aggregate_edit"
+    when "host_aggregate_edit"
       javascript_redirect :action => "edit", :id => checked_item_id
       return
-    elsif params[:pressed] == 'host_aggregate_delete'
+    when 'host_aggregate_delete'
       delete_host_aggregates
       render_flash
       return
-    elsif params[:pressed] == "host_aggregate_add_host"
+    when "host_aggregate_add_host"
       javascript_redirect :action => "add_host_select", :id => checked_item_id
       return
-    elsif params[:pressed] == "host_aggregate_remove_host"
+    when "host_aggregate_remove_host"
       javascript_redirect :action => "remove_host_select", :id => checked_item_id
       return
-    elsif params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new", "#{pfx}_clone",
-                                                   "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
-      render_or_redirect_partial(pfx)
-    elsif @refresh_div == "main_div" && @lastaction == "show_list"
+    end
+
+    if button_has_redirect_suffix?(params[:pressed])
+      render_or_redirect_partial_for(params[:pressed])
+    elsif button_replace_gtl_main?
       replace_gtl_main_div
     else
       render :update do |page|
@@ -142,11 +135,7 @@ class HostAggregateController < ApplicationController
       end
     end
 
-    unless @refresh_partial # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    end
+    check_if_button_is_implemented
   end
 
   def new
@@ -596,6 +585,10 @@ class HostAggregateController < ApplicationController
     add_flash(n_("Delete initiated for %{number} Host Aggregate.",
                  "Delete initiated for %{number} Host Aggregates.",
                  host_aggregates.length) % {:number => host_aggregates.length})
+  end
+
+  def button_sub_item_prefixes
+    %w(image_ instance_)
   end
 
   menu_section :clo

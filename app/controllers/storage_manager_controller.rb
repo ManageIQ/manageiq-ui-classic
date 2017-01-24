@@ -9,34 +9,32 @@ class StorageManagerController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit]                                  # Restore @edit for adv search box
-    params[:page] = @current_page unless @current_page.nil?   # Save current page for list refresh
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
-    redirect_to :action => "new" if params[:pressed] == "storage_manager_new"
-    deletesms if params[:pressed] == "storage_manager_delete"
-    edit_record if params[:pressed] == "storage_manager_edit"
-    refresh_inventory if params[:pressed] == "storage_manager_refresh_inventory"
-    refresh_status_sm if params[:pressed] == "storage_manager_refresh_status"
+    restore_edit_for_search
+    save_current_page_for_refresh
+    set_default_refresh_div
 
-    if !@flash_array && !@refresh_partial # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    elsif @flash_array && @lastaction == "show"
-      @sm = @record = identify_record(params[:id])
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
+    case params[:pressed]
+    when "storage_manager_new" then redirect_to :action => "new"
+    when "storage_manager_edit" then edit_record
+    when "storage_manager_refresh_inventory" then refresh_inventory
+    when "storage_manager_refresh_status" then refresh_status_sm
+    when "storage_manager_delete"
+      deletesms
+
+      if !@flash_array.nil? && @single_delete
+        javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]  # redirect to build the retire screen
+      end
     end
 
-    if !@flash_array.nil? && params[:pressed] == "storage_manager_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]  # redirect to build the retire screen
-    elsif params[:pressed].ends_with?("_edit")
+    check_if_button_is_implemented
+
+    if button_has_redirect_suffix?(params[:pressed])
       if @redirect_controller
         javascript_redirect :controller => @redirect_controller, :action => @refresh_partial, :id => @redirect_id
       else
         javascript_redirect :action => @refresh_partial, :id => @redirect_id
       end
-    elsif @refresh_div == "main_div" && @lastaction == "show_list"
+    elsif button_replace_gtl_main?
       replace_gtl_main_div
     elsif @refresh_div == "flash_msg_div"
       javascript_flash

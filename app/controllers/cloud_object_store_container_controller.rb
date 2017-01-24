@@ -6,6 +6,7 @@ class CloudObjectStoreContainerController < ApplicationController
 
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
+  include Mixins::GenericButtonMixin
   include Mixins::GenericSessionMixin
 
   def breadcrumb_name(_model)
@@ -14,8 +15,8 @@ class CloudObjectStoreContainerController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
+    restore_edit_for_search
+    save_current_page_for_refresh
 
     process_cloud_object_storage_buttons(params[:pressed])
 
