@@ -99,6 +99,7 @@ module EmsCommon
       'middleware_messagings'         => [MiddlewareMessaging,    _('Middleware Messagings')],
       'cloud_tenants'                 => [CloudTenant,            _('Cloud Tenants')],
       'cloud_volumes'                 => [CloudVolume,            _('Cloud Volumes')],
+      'cloud_volume_snapshots'        => [CloudVolumeSnapshot,    _('Cloud Volume Snapshots')],
       'flavors'                       => [Flavor,                 _('Flavors')],
       'security_groups'               => [SecurityGroup,          _('Security Groups')],
       'floating_ips'                  => [FloatingIp,             _('Floating IPs')],

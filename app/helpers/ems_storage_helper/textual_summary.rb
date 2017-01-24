@@ -9,7 +9,7 @@ module EmsStorageHelper::TextualSummary
   end
 
   def textual_group_relationships
-    %i(parent_ems_cloud cloud_volumes cloud_object_store_containers)
+    %i(parent_ems_cloud cloud_volumes cloud_volume_snapshots cloud_object_store_containers)
   end
 
   def textual_group_status
@@ -62,6 +62,10 @@ module EmsStorageHelper::TextualSummary
 
   def textual_cloud_volumes
     @record.try(:cloud_volumes)
+  end
+
+  def textual_cloud_volume_snapshots
+    @record.try(:cloud_volume_snapshots)
   end
 
   def textual_cloud_object_store_containers
