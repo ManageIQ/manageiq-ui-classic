@@ -5,7 +5,7 @@ module EmsPhysicalInfraHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(hostname ipaddress type port cpu_resources memory_resources cpus cpu_cores guid host_default_vnc_port_range)
+    %i(hostname ipaddress type port guid)
   end
 
   def textual_group_relationships
@@ -169,7 +169,7 @@ module EmsPhysicalInfraHelper::TextualSummary
   end
 
   def textual_zone
-    {:label => _("Managed by Zone"), :icon => "pficon pficon-zone", :value => @ems.zone.name}
+    {:label => _("Managed by Zone"), :icon => "pficon pficon-zone", :value => @ems.zone}
   end
 
   def textual_host_default_vnc_port_range
