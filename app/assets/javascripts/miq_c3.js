@@ -94,18 +94,26 @@ function recalculateChartYAxisLabels (id) {
     return;
   }
 
-  var o = recalculatePrecision(minShowed, maxShowed, format, minMax[0], minMax[1]);
+  var o = validatePrecision(minShowed, maxShowed, format, minMax[0], minMax[1]);
   if (o.changed) {
     this.config.axis_y_tick_format = o.format;
     this.api.flush();
   }
 }
 
+function validatePrecision(minShowed, maxShowed, format, min, max) {
+  if (min === max) {
+    return {'changed' : false, 'format' : ManageIQ.charts.formatters[format.function].c3(format.options)}
+  }
+  var recalculated = recalculatePrecision(minShowed, maxShowed, format, min, max);
+  return {
+    'changed' : recalculated.changed,
+    'format'  : ManageIQ.charts.formatters[recalculated.format.function].c3(recalculated.format.options)
+  }
+}
+
 function recalculatePrecision(minShowed, maxShowed, format, min, max) {
   var changed = false;
-  if (min === max) {
-    return {'changed' : changed, 'format' : ManageIQ.charts.formatters[format.function].c3(format.options)}
-  }
   if (maxShowed - minShowed <= Math.pow(10, 1 - format.options.precision)) {
     // if min and max are close, labels should be more precise
     changed = true;
@@ -126,7 +134,7 @@ function recalculatePrecision(minShowed, maxShowed, format, min, max) {
       maxShowed = getChartFormatedValue(format, max);
     }
   }
-  return {'changed' : changed, 'format' : ManageIQ.charts.formatters[format.function].c3(format.options)}
+  return {'changed' : changed, 'format' : format};
 }
 
 function getMinMaxFromChart(chart) {
@@ -164,9 +172,10 @@ function validateMinMax(min, max, minShowed, maxShowed) {
   if (max <= min || maxShowed <= minShowed) {
     if (max < min || max > 10) {
       invalid = true;
-    }
-    else if (max > 0){
+    } else if (max > 0){
       min = 0;
+    } else if (min === 0 && max === 0){
+      invalid = true;
     }
   }
 
