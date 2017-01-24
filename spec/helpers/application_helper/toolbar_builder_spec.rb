@@ -414,18 +414,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       expect(subject).to match(/No.*are available/)
     end
 
-    context "when record class = SniaLocalFileSystem" do
-      before do
-        @record = SniaLocalFileSystem.new
-        allow(@record).to receive_messages(:latest_derived_metrics => true)
-      end
-      context "and id = snia_local_file_system_statistics" do
-        before { @id = "snia_local_file_system_statistics" }
-        it_behaves_like 'record without latest derived metrics', "No Statistics Collected"
-        it_behaves_like 'default case'
-      end
-    end
-
     context "when record class = EmsCluster" do
       before do
         @record = EmsCluster.new
