@@ -21,43 +21,17 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
       if (providerForemanFormId == 'new') {
         $scope.newRecord = true;
 
-        $http.get('/provider_foreman/provider_foreman_form_fields/' + providerForemanFormId).success(function(data) {
-          $scope.providerForemanModel.provtype = '';
-          $scope.providerForemanModel.name = '';
-          $scope.providerForemanModel.zone = data.zone;
-          $scope.providerForemanModel.url = '';
-          $scope.providerForemanModel.verify_ssl = false;
-
-          $scope.providerForemanModel.log_userid = '';
-          $scope.providerForemanModel.log_password = '';
-          $scope.providerForemanModel.log_verify = '';
-          $scope.afterGet = true;
-          $scope.modelCopy = angular.copy($scope.providerForemanModel);
-
-        });
+        $http.get('/provider_foreman/provider_foreman_form_fields/' + providerForemanFormId)
+          .then(getProviderForemanFormData)
+          .catch(miqService.handleFailure);
       } else {
         $scope.newRecord = false;
 
         miqService.sparkleOn();
 
-        $http.get('/provider_foreman/provider_foreman_form_fields/' + providerForemanFormId).success(function(data) {
-          $scope.providerForemanModel.provtype        = data.provtype;
-          $scope.providerForemanModel.name            = data.name;
-          $scope.providerForemanModel.zone            = data.zone;
-          $scope.providerForemanModel.url             = data.url;
-          $scope.providerForemanModel.verify_ssl      = data.verify_ssl == "1";
-
-          $scope.providerForemanModel.log_userid   = data.log_userid;
-
-          if($scope.providerForemanModel.log_userid != '') {
-            $scope.providerForemanModel.log_password = $scope.providerForemanModel.log_verify = miqService.storedPasswordPlaceholder;
-          }
-
-          $scope.afterGet = true;
-          $scope.modelCopy = angular.copy( $scope.providerForemanModel );
-
-          miqService.sparkleOff();
-        });
+        $http.get('/provider_foreman/provider_foreman_form_fields/' + providerForemanFormId)
+          .then(getProviderForemanFormData)
+          .catch(miqService.handleFailure);
       }
     };
 
@@ -108,6 +82,29 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
     $scope.addClicked = function() {
       $scope.saveClicked();
     };
+
+    function getProviderForemanFormData(response) {
+      var data = response.data;
+
+      if (!$scope.newRecord) {
+        $scope.providerForemanModel.provtype = data.provtype;
+        $scope.providerForemanModel.name = data.name;
+        $scope.providerForemanModel.url = data.url;
+        $scope.providerForemanModel.verify_ssl = data.verify_ssl == "1";
+
+        $scope.providerForemanModel.log_userid = data.log_userid;
+
+        if ($scope.providerForemanModel.log_userid != '') {
+          $scope.providerForemanModel.log_password = $scope.providerForemanModel.log_verify = miqService.storedPasswordPlaceholder;
+        }
+      }
+
+      $scope.providerForemanModel.zone = data.zone;
+      $scope.afterGet = true;
+      $scope.modelCopy = angular.copy( $scope.providerForemanModel );
+
+      miqService.sparkleOff();
+    }
 
     init();
 }]);
