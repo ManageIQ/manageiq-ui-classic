@@ -459,7 +459,7 @@ module ApplicationController::CiProcessing
 
   def live_migrate
     assert_privileges("instance_live_migrate")
-    @record ||= VmOrTemplate.find_by_id(params[:rec_id])
+    @record ||= VmOrTemplate.find_by(:id => params[:rec_id])
     drop_breadcrumb(
       :name => _("Live Migrate Instance '%{name}'") % {:name => @record.name},
       :url  => "/vm_cloud/live_migrate"
@@ -497,11 +497,12 @@ module ApplicationController::CiProcessing
 
   def live_migrate_vm
     assert_privileges("instance_live_migrate")
-    @record = VmOrTemplate.find_by_id(params[:id])
+    @record = VmOrTemplate.find_by(:id => params[:id])
     case params[:button]
     when "cancel"
       add_flash(_("Live Migration of %{model} \"%{name}\" was cancelled by the user") % {
-        :model => ui_lookup(:table => "vm_cloud"), :name => @record.name})
+        :model => ui_lookup(:table => "vm_cloud"), :name => @record.name
+      })
       @record = @sb[:action] = nil
     when "submit"
       if @record.supports_live_migrate?
@@ -515,22 +516,18 @@ module ApplicationController::CiProcessing
           add_flash(_("Instance live migration task %{id} failed.") % {:id => task_id.to_s}, :error)
         end
 
-        if @flash_array
-          javascript_flash(:spinner_off => true)
-          return
-        else
-          initiate_wait_for_task(:task_id => task_id, :action => "live_migrate_finished")
-          return
-        end
+        return javascript_flash(:spinner_off => true) if @flash_array
+        return initiate_wait_for_task(:task_id => task_id, :action => "live_migrate_finished")
       else
         add_flash(_("Unable to live migrate %{instance} \"%{name}\": %{details}") % {
           :instance => ui_lookup(:table => 'vm_cloud'),
           :name     => @record.name,
-          :details  => @record.unsupported_reason(:live_migrate)}, :error)
+          :details  => @record.unsupported_reason(:live_migrate)
+        }, :error)
+        params[:id] = @record.id.to_s # reset id in params for show
+        @record = nil
+        @sb[:action] = nil
       end
-      params[:id] = @record.id.to_s # reset id in params for show
-      @record = nil
-      @sb[:action] = nil
     end
     if @sb[:explorer]
       replace_right_cell
@@ -543,14 +540,15 @@ module ApplicationController::CiProcessing
   def live_migrate_finished
     task_id = session[:async][:params][:task_id]
     vm_id = session[:async][:params][:id]
-    vm = VmOrTemplate.find_by_id(vm_id)
+    vm = VmOrTemplate.find_by(:id => vm_id)
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
       add_flash(_("Live migration of Instance \"%{name}\" complete.") % {:name => vm.name})
     else
       add_flash(_("Unable to live migrate Instance \"%{name}\": %{details}") % {
         :name    => vm.name,
-        :details => get_error_message_from_fog(task.message)}, :error)
+        :details => get_error_message_from_fog(task.message)
+      }, :error)
     end
     @breadcrumbs.pop if @breadcrumbs
     session[:edit] = nil
