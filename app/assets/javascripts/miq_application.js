@@ -1726,20 +1726,8 @@ function chartData(type, data, data2) {
 
     if (changeFormat) {
       // if min and max are close, labels should be more precise
-      if (maxShowed - minShowed <= Math.pow(10, 1 - format.options.precision)) {
-        while (((maxShowed - minShowed ) * Math.pow(10, format.options.precision)) < 9.9) {
-          format.options.precision += 1;
-        }
-      }
-      // if min and max are not close, labels should be less precise
-      else if ((maxShowed - minShowed) >= Math.pow(10, 2 - format.options.precision)) {
-        while (((maxShowed - minShowed ) * Math.pow(10, format.options.precision)) > 99) {
-          if (format.options.precision < 1) {
-            break;
-          }
-          format.options.precision -= 1;
-        }
-      }
+      var recalculated = recalculatePrecision(minShowed, maxShowed, format, min, max);
+      format = recalculated.format;
     }
     data.axis.y.tick.format = ManageIQ.charts.formatters[format.function].c3(format.options);
     data.legend.item = {
