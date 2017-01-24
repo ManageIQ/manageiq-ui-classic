@@ -5,6 +5,7 @@ class CloudVolumeSnapshotController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericListMixin
+  include Mixins::GenericShowMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericButtonMixin
 
