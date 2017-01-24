@@ -63,15 +63,6 @@ function recalculateChartYAxisLabels (id) {
   this.api.toggle(id);
 
   var minMax = getMinMaxFromChart(this);
-  // if there are no valid values or there is only single value big enough, then return
-  /*if (!minMax || minMax[0] === minMax[1]) {
-    if (!minMax || minMax[1] >= 10) {
-      return;
-    }
-    else if (minMax[1] > 0){
-      minMax[0] = 0;
-    }
-  }*/
 
   if (minMax) {
     var columnsData = validateMinMax(minMax[0], minMax[1], minShowed, maxShowed);
