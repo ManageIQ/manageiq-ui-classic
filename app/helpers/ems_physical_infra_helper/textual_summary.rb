@@ -9,7 +9,7 @@ module EmsPhysicalInfraHelper::TextualSummary
   end
 
   def textual_group_relationships
-    %i(infrastructure_folders folders clusters hosts datastores vms templates orchestration_stacks ems_cloud)
+    %i(physical_servers datastores vms)
   end
 
   def textual_group_status
@@ -45,11 +45,16 @@ module EmsPhysicalInfraHelper::TextualSummary
     @ems.supports_port? ? {:label => _("API Port"), :value => @ems.port} : nil
   end
 
+  def textual_physical_servers
+    #TODO: (walteraa) Create a relationship 'physical manager has_many physical servers' and display it as :value
+    #TODO: (walteraa) Use textual_link 
+    {:label =>  _("Physical Servers"), :value  => 0} 
+  end
+
   def textual_cpu_resources
     {:label => _("Aggregate %{title} CPU Resources") % {:title => title_for_host},
      :value => mhz_to_human_size(@ems.aggregate_cpu_speed)}
   end
-
   def textual_memory_resources
     {:label => _("Aggregate %{title} Memory") % {:title => title_for_host},
      :value => number_to_human_size(@ems.aggregate_memory * 1.megabyte, :precision => 0)}
