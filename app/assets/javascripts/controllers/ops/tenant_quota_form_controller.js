@@ -12,30 +12,9 @@ ManageIQ.angular.app.controller('tenantQuotaFormController', ['$http', '$scope',
     ManageIQ.angular.scope = $scope;
     $scope.newRecord = false;
     miqService.sparkleOn();
-    $http.get('/ops/tenant_quotas_form_fields/' + tenantQuotaFormId).success(function(data) {
-      $scope.tenantQuotaModel.name = data.name;
-      $scope.tenantQuotaModel.quotas = angular.copy(data.quotas);
-      var GIGABYTE = 1024 * 1024 * 1024;
-      for (var key in $scope.tenantQuotaModel.quotas) {
-        if($scope.tenantQuotaModel.quotas.hasOwnProperty(key)) {
-          var quota =  $scope.tenantQuotaModel.quotas[key];
-          if (quota['value']) {
-            if (quota['unit'] === "bytes")
-              quota['value'] = quota['value'] / GIGABYTE;
-            quota['enforced'] = true;
-          } else
-            quota['enforced'] = false;
-
-          if (quota['format'] === "general_number_precision_0")
-            quota['valpattern'] = "^[1-9][0-9]*$";
-          else
-            quota['valpattern'] = /^\s*(?=.*[1-9])\d*(?:\.\d{1,6})?\s*$/;
-        }
-      }
-      $scope.afterGet = true;
-      $scope.modelCopy = angular.copy( $scope.tenantQuotaModel );
-      miqService.sparkleOff();
-    });
+    $http.get('/ops/tenant_quotas_form_fields/' + tenantQuotaFormId)
+      .then(getTenantQuotaData)
+      .catch(miqService.handleFailure);
   };
 
   var tenantManageQuotasButtonClicked = function(buttonName, serializeFields) {
@@ -112,6 +91,33 @@ ManageIQ.angular.app.controller('tenantQuotaFormController', ['$http', '$scope',
     if (!$scope.check_quotas_changed())
       $scope.angularForm.$setPristine(true);
   };
+
+  function getTenantQuotaData(response) {
+    var data = response.data;
+
+    $scope.tenantQuotaModel.name = data.name;
+    $scope.tenantQuotaModel.quotas = angular.copy(data.quotas);
+    var GIGABYTE = 1024 * 1024 * 1024;
+    for (var key in $scope.tenantQuotaModel.quotas) {
+      if($scope.tenantQuotaModel.quotas.hasOwnProperty(key)) {
+        var quota =  $scope.tenantQuotaModel.quotas[key];
+        if (quota['value']) {
+          if (quota['unit'] === "bytes")
+            quota['value'] = quota['value'] / GIGABYTE;
+          quota['enforced'] = true;
+        } else
+          quota['enforced'] = false;
+
+        if (quota['format'] === "general_number_precision_0")
+          quota['valpattern'] = "^[1-9][0-9]*$";
+        else
+          quota['valpattern'] = /^\s*(?=.*[1-9])\d*(?:\.\d{1,6})?\s*$/;
+      }
+    }
+    $scope.afterGet = true;
+    $scope.modelCopy = angular.copy( $scope.tenantQuotaModel );
+    miqService.sparkleOff();
+  }
 
   init();
 }]);
