@@ -474,11 +474,6 @@ class ApplicationHelper::ToolbarBuilder
           return N_("No Timeline data has been collected for this Availability Zone")
         end
       end
-    when "CimBaseStorageExtent"
-      case id
-      when "cim_base_storage_extent_statistics"
-        return N_("No Statistics Collected") unless @record.latest_derived_metrics
-      end
     when "SniaLocalFileSystem"
       case id
       when "snia_local_file_system_statistics"
