@@ -414,19 +414,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       expect(subject).to match(/No.*are available/)
     end
 
-    context "when record class = CimBaseStorageExtent" do
-      before do
-        @record = CimBaseStorageExtent.new
-        allow(@record).to receive_messages(:latest_derived_metrics => true)
-      end
-
-      context "and id = cim_base_storage_extent_statistics" do
-        before { @id = "cim_base_storage_extent_statistics" }
-        it_behaves_like 'record without latest derived metrics', "No Statistics Collected"
-        it_behaves_like 'default case'
-      end
-    end
-
     context "when record class = SniaLocalFileSystem" do
       before do
         @record = SniaLocalFileSystem.new
