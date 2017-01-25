@@ -1315,7 +1315,6 @@ module MiqAeCustomizationController::Dialogs
                     fld[:required] = field[:required]
 
                   elsif ["DialogFieldDropDownList"].include?(field[:typ])
-                  #	binding.pry 
                     fld[:force_multi_value] = field[:multi_value]
 
                   elsif field[:typ] =~ /Text/
