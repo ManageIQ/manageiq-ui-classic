@@ -101,6 +101,8 @@ class ApplicationHelper::ToolbarChooser
         end
       elsif @layout == "provider_foreman" && [:configuration_manager_providers_tree, :cs_filter_tree, :configuration_scripts_tree].include?(x_active_tree)
         return center_toolbar_filename_configuration_manager_providers
+      elsif @layout == "ansible_tower"
+        return center_toolbar_filename_ansible_tower
       elsif [:infra_networking_tree].include?(x_active_tree)
         return center_toolbar_filename_infra_networking
       else
@@ -516,6 +518,17 @@ class ApplicationHelper::ToolbarChooser
     end
   end
 
+  def center_toolbar_filename_ansible_tower
+    nodes = x_node.split('-')
+    if x_active_tree == :ansible_tower_providers_tree
+      ansible_tower_providers_tree_center_tb(nodes)
+    elsif x_active_tree == :ansible_tower_cs_filter_tree
+      ansible_tower_cs_filter_tree_center_tb(nodes)
+    elsif x_active_tree == :ansible_tower_configuration_scripts_tree
+      ansible_tower_configuration_scripts_tree_center_tb(nodes)
+    end
+  end
+
   def center_toolbar_filename_infra_networking
     nodes = x_node.split('-')
     infra_networking_tree_center_tb(nodes)
@@ -550,6 +563,30 @@ class ApplicationHelper::ToolbarChooser
       "configuration_script_center_tb"
     end
   end
+
+  def ansible_tower_providers_tree_center_tb(nodes)
+    case nodes.first
+      when "root" then  "ansible_tower_providers_center_tb"
+      when "at"   then  "ansible_tower_provider_center_tb"
+      when "f"    then  inventory_group_center_tb
+      when "xx"   then  "configured_systems_ansible_center_tb"
+    end
+  end
+
+  def ansible_tower_cs_filter_tree_center_tb(nodes)
+    case nodes.first
+      when "root", "ms", "xx", "csa" then "configured_systems_ansible_center_tb"
+    end
+  end
+
+  def ansible_tower_configuration_scripts_tree_center_tb(nodes)
+    if %w(root at).include?(nodes.first)
+      "configuration_scripts_center_tb"
+    else
+      "configuration_script_center_tb"
+    end
+  end
+
 
   def infra_networking_tree_center_tb(nodes)
     if %w(root e h c).include?(nodes.first)

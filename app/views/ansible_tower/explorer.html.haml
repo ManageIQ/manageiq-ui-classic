@@ -1,0 +1,20 @@
+- content_for :search do
+  = render(:partial => "layouts/x_adv_searchbox", :locals => {:nameonly => x_active_tree == :configuration_manager_providers_tree})
+  = render(:partial => 'layouts/quick_search')
+
+-# These are the initial divs that will go inside center_cell_div
+- if @inventory_group_record
+  #main_div
+    - @pages = nil if @sb[:active_tab] == 'summary'
+    = render(:partial => 'ansible_tower/inventory_group')
+
+- elsif @configured_system_record
+  #main_div
+    = render(:partial => 'ansible_tower/main', :locals => {:controller => "ansible_tower"})
+- elsif @configuration_script_record
+  #main_div
+    = render(:partial => 'ansible_tower/configuration_script', :locals => {:controller => "ansible_tower"})
+- else
+  #main_div
+    = render(:partial => 'layouts/x_gtl')
+

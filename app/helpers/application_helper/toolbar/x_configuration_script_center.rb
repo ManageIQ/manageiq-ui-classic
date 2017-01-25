@@ -14,7 +14,7 @@ class ApplicationHelper::Toolbar::XConfigurationScriptCenter < ApplicationHelper
                 ]
     ),
     select(
-      :provider_foreman_policy_choice,
+      :ansible_tower_policy_choice,
       'fa fa-shield fa-lg',
       t = N_('Policy'),
       t,
