@@ -108,8 +108,7 @@ class ServiceController < ApplicationController
     st = s.service_template
     ra = st.resource_actions.find_by_action('Reconfigure') if st
     if ra && ra.dialog_id
-      @right_cell_text = _("Reconfigure %{model} \"%{name}\"") % {:name  => st.name,
-                                                                  :model => ui_lookup(:model => "Service")}
+      @right_cell_text = _("Reconfigure Service \"%{name}\"") % {:name => st.name}
       options = {
         :header      => @right_cell_text,
         :target_id   => s.id,
@@ -173,7 +172,7 @@ class ServiceController < ApplicationController
     else # showing 1 element, delete it
       elements = find_checked_items
       if elements.empty?
-        add_flash(_("No %{model} were selected for deletion") % {:model => ui_lookup(:tables => "service")}, :error)
+        add_flash(_("No Services were selected for deletion"), :error)
       end
       process_elements(elements, Service, 'destroy') unless elements.empty?
     end
@@ -200,9 +199,12 @@ class ServiceController < ApplicationController
       @view, @pages = get_view(Vm, :parent => @record, :parent_method => :all_vms, :all_pages => true)  # Get the records (into a view) and the paginator
     else      # Get list of child Catalog Items/Services of this node
       if x_node == "root"
-        typ = x_active_tree == :svcs_tree ? "Service" : "ServiceTemplate"
         process_show_list(:where_clause => "ancestry is null")
-        @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => typ)}
+        @right_cell_text = if x_active_tree == :svcs_tree
+                             _("All Services")
+                           else
+                             _("All Service Catalog Items")
+                           end
       else
         show_record(from_cid(id))
         typ = x_active_tree == :svcs_tree ? "Service" : TreeBuilder.get_model_for_prefix(@nodetype)
@@ -221,19 +223,19 @@ class ServiceController < ApplicationController
       action = "dialog_form_button_pressed"
     when "ownership"
       partial = "shared/views/ownership"
-      header = _("Set Ownership for %{model}") % {:model => ui_lookup(:model => "Service")}
+      header = _("Set Ownership for Service")
       action = "ownership_update"
     when "retire"
       partial = "shared/views/retire"
-      header = _("Set/Remove retirement date for %{model}") % {:model => ui_lookup(:model => "Service")}
+      header = _("Set/Remove retirement date for Service")
       action = "retire"
     when "service_edit"
       partial = "service_form"
-      header = _("Editing %{model} \"%{name}\"") % {:name => @service.name, :model => ui_lookup(:model => "Service")}
+      header = _("Editing Service \"%{name}\"") % {:name => @service.name}
       action = "service_edit"
     when "tag"
       partial = "layouts/tagging"
-      header = _("Edit Tags for %{model}") % {:model => ui_lookup(:model => "Service")}
+      header = _("Edit Tags for Service")
       action = "service_tag"
     else
       action = nil
