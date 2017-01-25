@@ -3,9 +3,9 @@
 miqHttpInject(angular.module('topologyApp', ['kubernetesUI', 'ui.bootstrap', 'ManageIQ']))
 .controller('containerTopologyController', ContainerTopologyCtrl);
 
-ContainerTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', 'topologyService', '$window'];
+ContainerTopologyCtrl.$inject = ['$scope', '$http', '$interval', 'topologyService', '$window', 'miqService'];
 
-function ContainerTopologyCtrl($scope, $http, $interval, $location, topologyService, $window) {
+function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $window, miqService) {
   ManageIQ.angular.scope = $scope;
   miqHideSearchClearButton();
   var self = this;
@@ -27,18 +27,9 @@ function ContainerTopologyCtrl($scope, $http, $interval, $location, topologyServ
 
     var url = '/container_topology/data' + id;
 
-    var currentSelectedKinds = $scope.kinds;
-
-    $http.get(url).success(function(data) {
-      $scope.items = data.data.items;
-      $scope.relations = data.data.relations;
-      $scope.kinds = data.data.kinds;
-      icons = data.data.icons;
-
-      if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length != Object.keys($scope.kinds).length)) {
-        $scope.kinds = currentSelectedKinds;
-      }
-    });
+    $http.get(url)
+      .then(getContainerTopologyData)
+      .catch(miqService.handleFailure);
   };
 
   $scope.checkboxModel = {
@@ -283,4 +274,19 @@ function ContainerTopologyCtrl($scope, $http, $interval, $location, topologyServ
     // Reset the search term in search input
     $('input#search_topology')[0].value = "";
   };
+
+  function getContainerTopologyData(response) {
+    var data = response.data;
+
+    var currentSelectedKinds = $scope.kinds;
+
+    $scope.items = data.data.items;
+    $scope.relations = data.data.relations;
+    $scope.kinds = data.data.kinds;
+    icons = data.data.icons;
+
+    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys($scope.kinds).length)) {
+      $scope.kinds = currentSelectedKinds;
+    }
+  }
 }

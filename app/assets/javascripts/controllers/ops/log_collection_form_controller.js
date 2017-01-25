@@ -35,22 +35,9 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
       miqService.sparkleOn();
 
       var url = $scope.logCollectionFormFieldsUrl;
-      $http.get(url + serverId).success(function(data) {
-        $scope.logCollectionModel.log_protocol = data.log_protocol;
-        $scope.logCollectionModel.depot_name = data.depot_name;
-        $scope.logCollectionModel.uri = data.uri;
-        $scope.logCollectionModel.uri_prefix = data.uri_prefix;
-        $scope.logCollectionModel.log_userid = data.log_userid;
-
-        if($scope.logCollectionModel.log_userid != '') {
-          $scope.logCollectionModel.log_password = $scope.logCollectionModel.log_verify = miqService.storedPasswordPlaceholder;
-        }
-
-        $scope.afterGet = true;
-        $scope.modelCopy = angular.copy( $scope.logCollectionModel );
-
-        miqService.sparkleOff();
-      });
+      $http.get(url + serverId)
+        .then(getLogCollectionFormData)
+        .catch(miqService.handleFailure);
     }
   };
 
@@ -61,12 +48,9 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
        $scope.logCollectionModel.log_protocol != '') {
       var url = $scope.logProtocolChangedUrl;
       miqService.sparkleOn();
-      $http.get(url + serverId + '?log_protocol=' + $scope.logCollectionModel.log_protocol).success(function (data) {
-        $scope.logCollectionModel.depot_name = data.depot_name;
-        $scope.logCollectionModel.uri = data.uri;
-        $scope.logCollectionModel.uri_prefix = data.uri_prefix;
-        miqService.sparkleOff();
-      });
+      $http.get(url + serverId + '?log_protocol=' + $scope.logCollectionModel.log_protocol)
+        .then(getLogProtocolData)
+        .catch(miqService.handleFailure);
     }
     $scope.$broadcast('reactiveFocus');
     miqDBBackupService.logProtocolChanged($scope.logCollectionModel);
@@ -113,6 +97,34 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
       return true;
     else
       return false;
+  }
+
+  function getLogCollectionFormData(response) {
+    var data = response.data;
+
+    $scope.logCollectionModel.log_protocol = data.log_protocol;
+    $scope.logCollectionModel.depot_name = data.depot_name;
+    $scope.logCollectionModel.uri = data.uri;
+    $scope.logCollectionModel.uri_prefix = data.uri_prefix;
+    $scope.logCollectionModel.log_userid = data.log_userid;
+
+    if ($scope.logCollectionModel.log_userid !== '') {
+      $scope.logCollectionModel.log_password = $scope.logCollectionModel.log_verify = miqService.storedPasswordPlaceholder;
+    }
+
+    $scope.afterGet = true;
+    $scope.modelCopy = angular.copy( $scope.logCollectionModel );
+
+    miqService.sparkleOff();
+  }
+
+  function getLogProtocolData(response) {
+    var data = response.data;
+
+    $scope.logCollectionModel.depot_name = data.depot_name;
+    $scope.logCollectionModel.uri = data.uri;
+    $scope.logCollectionModel.uri_prefix = data.uri_prefix;
+    miqService.sparkleOff();
   }
 
   init();

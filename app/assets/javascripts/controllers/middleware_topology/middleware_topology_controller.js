@@ -2,9 +2,9 @@
 miqHttpInject(angular.module('mwTopologyApp', ['kubernetesUI', 'ui.bootstrap', 'ManageIQ']))
   .controller('middlewareTopologyController', MiddlewareTopologyCtrl);
 
-MiddlewareTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', 'topologyService'];
+MiddlewareTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', 'topologyService', 'miqService'];
 
-function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologyService) {
+function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologyService, miqService) {
   var self = this;
   $scope.vs = null;
   var d3 = window.d3;
@@ -17,17 +17,10 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     } else {
       id = '/' + (/middleware_topology\/show\/(\d+)/.exec($location.absUrl())[1]);
     }
-    var currentSelectedKinds = $scope.kinds;
     var url = '/middleware_topology/data' + id;
-    $http.get(url).success(function(data) {
-      $scope.items = data.data.items;
-      $scope.relations = data.data.relations;
-      $scope.kinds = data.data.kinds;
-      icons = data.data.icons;
-      if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length != Object.keys($scope.kinds).length)) {
-        $scope.kinds = currentSelectedKinds;
-      }
-    });
+    $http.get(url)
+      .then(getMiddlewareTopologyData)
+      .catch(miqService.handleFailure);
   };
 
   $scope.checkboxModel = {
@@ -191,4 +184,18 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     // Reset the search term in search input
     $scope.search.query = '';
   };
+
+  function getMiddlewareTopologyData(response) {
+    var data = response.data;
+
+    var currentSelectedKinds = $scope.kinds;
+
+    $scope.items = data.data.items;
+    $scope.relations = data.data.relations;
+    $scope.kinds = data.data.kinds;
+    icons = data.data.icons;
+    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys($scope.kinds).length)) {
+      $scope.kinds = currentSelectedKinds;
+    }
+  }
 }
