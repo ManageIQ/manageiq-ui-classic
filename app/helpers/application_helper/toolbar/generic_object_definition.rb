@@ -35,6 +35,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinition < ApplicationHelper::T
           title,
           :onwhen  => "1",
           :enabled => false,
+          :confirm => N_("Are you sure you want to delete this Generic Object Definition?"),
           :data    => {
             'function'      => 'sendDataWithRx',
             'function-data' => '{"eventType": "deleteGenericObject"}'
