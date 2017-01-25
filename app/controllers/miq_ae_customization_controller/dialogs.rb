@@ -1182,7 +1182,8 @@ module MiqAeCustomizationController::Dialogs
               :dynamic              => f.dynamic,
               :visible              => f.visible,
               :read_only            => f.read_only,
-              :trigger_auto_refresh => f.trigger_auto_refresh
+              :trigger_auto_refresh => f.trigger_auto_refresh,
+              :force_multi_value    => field.options.include?("multiple")
             }
 
             if dynamic_field?(fld)
@@ -1223,7 +1224,7 @@ module MiqAeCustomizationController::Dialogs
               fld[:past_dates] = f.show_past_dates.nil? ? false : f.show_past_dates
 
             elsif %w(DialogFieldDropDownList).include?(f.type)
-              fld[:multi_value] = f.multi_value?
+              fld[:multi_value] = f.options.include?("multiple")
 
             elsif f.type.include?("TagControl")
               fld[:single_value] = f.single_value?
@@ -1314,6 +1315,7 @@ module MiqAeCustomizationController::Dialogs
                     fld[:required] = field[:required]
 
                   elsif ["DialogFieldDropDownList"].include?(field[:typ])
+                  #	binding.pry 
                     fld[:force_multi_value] = field[:multi_value]
 
                   elsif field[:typ] =~ /Text/
