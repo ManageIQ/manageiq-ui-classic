@@ -60,7 +60,6 @@ module Spec
 
         # The table renders all children objects
         children.each do |child_object|
-          child_object_row = "miqRowClick(&#39;#{child_object.compressed_id}&#39;, &#39;/#{child_route}/&#39;"
           expect(response.body).to include("modelName: '#{relation}'")
           expect(response.body).to include("activeTree: ''")
           expect(response.body).to include("gtlType: '#{gtl_types.first}'")
