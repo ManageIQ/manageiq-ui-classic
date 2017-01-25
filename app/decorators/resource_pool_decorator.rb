@@ -1,6 +1,4 @@
-class ResourcePoolDecorator < Draper::Decorator
-  delegate_all
-
+class ResourcePoolDecorator < MiqDecorator
   def fonticon
     "pficon pficon-resource-pool"
   end

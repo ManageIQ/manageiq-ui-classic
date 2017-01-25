@@ -1,9 +1,11 @@
-class ManageIQ::Providers::CloudManager::OrchestrationStackDecorator < Draper::Decorator
-  def fonticon
-    'product product-orchestration_stack'.freeze
-  end
+module ManageIQ::Providers::CloudManager
+  class OrchestrationStackDecorator < MiqDecorator
+    def fonticon
+      'product product-orchestration_stack'
+    end
 
-  def listicon_image
-    "100/orchestration_stack.png"
+    def listicon_image
+      "100/orchestration_stack.png"
+    end
   end
 end

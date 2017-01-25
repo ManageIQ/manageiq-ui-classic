@@ -1,6 +1,4 @@
-class MiqEventDefinitionDecorator < Draper::Decorator
-  delegate_all
-
+class MiqEventDefinitionDecorator < MiqDecorator
   def fonticon
     convert = {
       "after_assigned_company_tag"                  => "fa fa-tag",

@@ -1,11 +1,11 @@
-class ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScriptDecorator < Draper::Decorator
-  delegate_all
+module ManageIQ::Providers::AnsibleTower::AutomationManager
+  class ConfigurationScriptDecorator < MiqDecorator
+    def fonticon
+      'product product-template'
+    end
 
-  def fonticon
-    'product product-template'.freeze
-  end
-
-  def listicon_image
-    '100/configuration_script.png'
+    def listicon_image
+      '100/configuration_script.png'
+    end
   end
 end

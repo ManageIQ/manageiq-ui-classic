@@ -1,6 +1,4 @@
-class MiddlewareDeploymentDecorator < Draper::Decorator
-  delegate_all
-
+class MiddlewareDeploymentDecorator < MiqDecorator
   def fonticon
     if name.end_with? '.ear'
       'product product-file-ear-o'

@@ -1,6 +1,4 @@
-class FilesystemDecorator < Draper::Decorator
-  delegate_all
-
+class FilesystemDecorator < MiqDecorator
   def fonticon
     convert = {
       "dll"      => "fa fa-cogs",
@@ -15,5 +13,4 @@ class FilesystemDecorator < Draper::Decorator
     }
     convert[name.downcase] || "fa fa-file-o"
   end
-
 end
