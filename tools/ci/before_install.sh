@@ -1,6 +1,6 @@
 set -e
 
-git clone https://github.com/karelhala/manageiq.git --branch report_data --depth 1 spec/manageiq
+git clone https://github.com/ManageIQ/manageiq.git --branch master --depth 1 spec/manageiq
 
 cd spec/manageiq
 source tools/ci/setup_vmdb_configs.sh
