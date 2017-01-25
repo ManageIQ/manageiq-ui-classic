@@ -572,4 +572,6 @@ describe EmsCloudController do
       }
     end
   end
+
+  include_examples '#download_summary_pdf', :ems_amazon
 end
