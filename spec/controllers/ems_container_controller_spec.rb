@@ -21,11 +21,9 @@ describe EmsContainerController do
     context "render" do
       subject { get :show, :params => { :id => @container.id } }
       render_views
-      it { is_expected.to render_template('shared/views/ems_common/show') }
-
       it do
         is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => "layouts/listnav/_ems_container")
+        is_expected.to render_template(:partial => 'ems_container/_show_dashboard')
       end
 
       it "renders topology view" do

@@ -1435,6 +1435,10 @@ class ApplicationController < ActionController::Base
     gtl_type
   end
 
+  def dashboard_view
+    false
+  end
+
   def get_view_process_search_text(view)
     # Check for new search by name text entered
     if params[:search] &&
