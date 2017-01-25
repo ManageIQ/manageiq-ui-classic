@@ -3,9 +3,9 @@
 miqHttpInject(angular.module('topologyApp', ['kubernetesUI', 'ui.bootstrap', 'ManageIQ']))
 .controller('containerTopologyController', ContainerTopologyCtrl);
 
-ContainerTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', 'topologyService', '$window', 'miqService'];
+ContainerTopologyCtrl.$inject = ['$scope', '$http', '$interval', 'topologyService', '$window', 'miqService'];
 
-function ContainerTopologyCtrl($scope, $http, $interval, $location, topologyService, $window, miqService) {
+function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $window, miqService) {
   ManageIQ.angular.scope = $scope;
   miqHideSearchClearButton();
   var self = this;
@@ -285,7 +285,7 @@ function ContainerTopologyCtrl($scope, $http, $interval, $location, topologyServ
     $scope.kinds = data.data.kinds;
     icons = data.data.icons;
 
-    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length != Object.keys($scope.kinds).length)) {
+    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys($scope.kinds).length)) {
       $scope.kinds = currentSelectedKinds;
     }
   }

@@ -102,14 +102,15 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
     $scope.diagnosticsDatabaseModel.uri_prefix = data.uri_prefix;
     $scope.diagnosticsDatabaseModel.log_userid = data.log_userid;
 
-    if($scope.diagnosticsDatabaseModel.uri_prefix == 'nfs')
+    if ($scope.diagnosticsDatabaseModel.uri_prefix === 'nfs') {
       $scope.diagnosticsDatabaseModel.log_protocol = 'Network File System';
-    else
+    } else {
       $scope.diagnosticsDatabaseModel.log_protocol = 'Samba';
+    }
 
     $scope.diagnosticsDatabaseModel.action_typ = 'db_backup';
 
-    if($scope.diagnosticsDatabaseModel.log_userid != '') {
+    if ($scope.diagnosticsDatabaseModel.log_userid !== '') {
       $scope.diagnosticsDatabaseModel.log_password = $scope.diagnosticsDatabaseModel.log_verify = miqService.storedPasswordPlaceholder;
     }
 

@@ -368,8 +368,9 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
     $scope.pglogicalReplicationModel.subscriptions = angular.copy(data.subscriptions);
     $scope.pglogicalReplicationModel.exclusion_list = angular.copy(data.exclusion_list);
 
-    if ($scope.pglogicalReplicationModel.replication_type == "none")
-      miqService.miqFlash("warn", __("No replication role has been set"));
+    if ($scope.pglogicalReplicationModel.replication_type === 'none') {
+      miqService.miqFlash('warn', __("No replication role has been set"));
+    }
 
     $scope.afterGet = true;
     $scope.modelCopy = angular.copy( $scope.pglogicalReplicationModel );

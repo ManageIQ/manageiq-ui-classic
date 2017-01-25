@@ -277,7 +277,7 @@ function InfraTopologyCtrl($scope, $http, $interval, $location, topologyService,
     $scope.kinds = data.data.kinds;
     icons = data.data.icons;
 
-    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length != Object.keys($scope.kinds).length)) {
+    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys($scope.kinds).length)) {
       $scope.kinds = currentSelectedKinds;
     }
   }
