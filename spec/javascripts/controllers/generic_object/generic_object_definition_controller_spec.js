@@ -1,6 +1,6 @@
 describe('genericObjectDefinitionFormController', function() {
   var $scope, $controller, $httpBackend, miqService, genericObjectSubscriptionService;
-  var showAddFormCallback, showEditFormCallback, treeClickCallback, rootTreeClickCallback;
+  var showAddFormCallback, showEditFormCallback, deleteGenericObjectCallback, treeClickCallback, rootTreeClickCallback;
   var treeData = {the: 'tree_data'};
 
   beforeEach(module('ManageIQ'));
@@ -24,6 +24,11 @@ describe('genericObjectDefinitionFormController', function() {
         showEditFormCallback = callback;
       }
     );
+    spyOn(genericObjectSubscriptionService, 'subscribeToDeleteGenericObject').and.callFake(
+      function(callback) {
+        deleteGenericObjectCallback = callback;
+      }
+    );
     spyOn(genericObjectSubscriptionService, 'subscribeToTreeClicks').and.callFake(
       function(callback) {
         treeClickCallback = callback;
@@ -36,8 +41,9 @@ describe('genericObjectDefinitionFormController', function() {
     );
 
     $httpBackend.whenGET('tree_data').respond({tree_data: JSON.stringify(treeData)});
-    $httpBackend.whenPOST('create', {name: 'name', description: 'description'}).respond({message: "success"});
-    $httpBackend.whenPOST('save', {name: 'new name', description: 'description'}).respond({message: "success"});
+    $httpBackend.whenPOST('create', {id: '', name: 'name', description: 'description'}).respond({message: "success"});
+    $httpBackend.whenPOST('save', {id: 123, name: 'new name', description: 'description'}).respond({message: "success"});
+    $httpBackend.whenPOST('delete', {id: 123}).respond({message: "success"});
 
     $controller = _$controller_('genericObjectDefinitionFormController', {
       $scope: $scope,
@@ -54,7 +60,7 @@ describe('genericObjectDefinitionFormController', function() {
   describe('initialization', function() {
     it('sets up the generic object definition model', function() {
       expect($scope.genericObjectDefinitionModel).toEqual(
-        {name: '', description: ''}
+        {id: '', name: '', description: ''}
       );
     });
 
@@ -118,7 +124,7 @@ describe('genericObjectDefinitionFormController', function() {
       });
 
       it('copies the model to prepare for the reset button', function() {
-        expect($scope.backupGenericObjectDefinitionModel).toEqual({name: '', description: ''});
+        expect($scope.backupGenericObjectDefinitionModel).toEqual({id: '', name: '', description: ''});
       });
 
       it('sets the newRecord to false', function() {
@@ -131,6 +137,24 @@ describe('genericObjectDefinitionFormController', function() {
 
       it('sends an updateToolbarCount event', function() {
         expect(window.sendDataWithRx).toHaveBeenCalledWith({eventType: 'updateToolbarCount', countSelected: 0});
+      });
+    });
+
+    describe('initialization deleteGenericObjectCallback', function() {
+      var response = 'does not matter';
+
+      beforeEach(function() {
+        $scope.genericObjectDefinitionModel = {
+          id: 123,
+          name: 'potato',
+          description: 'potato'
+        };
+      });
+
+      it('posts to the delete action', function() {
+        $httpBackend.expectPOST('delete', {id: 123}).respond(200, '');
+        deleteGenericObjectCallback(response);
+        $httpBackend.flush();
       });
     });
 
@@ -198,12 +222,14 @@ describe('genericObjectDefinitionFormController', function() {
   describe('#clearForm', function() {
     it('clears the genericObjectDefinitionModel', function() {
       $scope.genericObjectDefinitionModel = {
+        id: 'potato',
         name: 'potato',
         description: 'potato'
       };
 
       $scope.clearForm();
       expect($scope.genericObjectDefinitionModel).toEqual({
+        id: '',
         name: '',
         description: ''
       });
@@ -225,13 +251,14 @@ describe('genericObjectDefinitionFormController', function() {
   describe('#addClicked', function() {
     beforeEach(function() {
       $scope.genericObjectDefinitionModel = {
+        id: '',
         name: 'name',
         description: 'description'
       };
     });
 
     it('makes a create http request', function() {
-      $httpBackend.expectPOST('create', {name: 'name', description: 'description'}).respond(200, '');
+      $httpBackend.expectPOST('create', {id: '', name: 'name', description: 'description'}).respond(200, '');
       $scope.addClicked();
       $httpBackend.flush();
     });
@@ -246,13 +273,14 @@ describe('genericObjectDefinitionFormController', function() {
   describe('#saveClicked', function() {
     beforeEach(function() {
       $scope.genericObjectDefinitionModel = {
+        id: 123,
         name: 'new name',
         description: 'description'
       };
     });
 
     it('makes a save http request', function() {
-      $httpBackend.expectPOST('save', {name: 'new name', description: 'description'}).respond(200, '');
+      $httpBackend.expectPOST('save', {id: 123, name: 'new name', description: 'description'}).respond(200, '');
       $scope.saveClicked();
       $httpBackend.flush();
     });
@@ -279,6 +307,7 @@ describe('genericObjectDefinitionFormController', function() {
 
     it('clears the form', function() {
       expect($scope.genericObjectDefinitionModel).toEqual({
+        id: '',
         name: '',
         description: ''
       });
