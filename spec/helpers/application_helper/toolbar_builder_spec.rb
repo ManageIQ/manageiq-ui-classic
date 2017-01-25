@@ -1121,6 +1121,20 @@ describe ApplicationHelper, "::ToolbarBuilder" do
             'function-data' => '{"eventType": "showEditForm"}'
           }
         )
+        expect(items[2]).to include(
+          :id      => "generic_object_definition_choice__generic_object_definition_delete",
+          :type    => :button,
+          :icon    => "pficon pficon-delete fa-lg",
+          :title   => "Delete this Generic Object Definition",
+          :text    => "Delete this Generic Object Definition",
+          :onwhen  => "1",
+          :enabled => false,
+          :confirm => "Are you sure you want to delete this Generic Object Definition?",
+          :data    => {
+            'function'      => 'sendDataWithRx',
+            'function-data' => '{"eventType": "deleteGenericObject"}'
+          }
+        )
       end
     end
   end
