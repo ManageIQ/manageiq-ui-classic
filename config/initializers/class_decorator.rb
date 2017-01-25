@@ -4,8 +4,6 @@ class ApplicationRecord < ActiveRecord::Base
       @_decorator ||= decorator_for(self)
     end
 
-    private
-
     def decorator_for(klass)
       decorator = nil
 
@@ -16,5 +14,9 @@ class ApplicationRecord < ActiveRecord::Base
 
       decorator
     end
+  end
+
+  def decorate
+    self.class.decorator_for(self.class).new(self)
   end
 end
