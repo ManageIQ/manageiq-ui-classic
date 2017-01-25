@@ -27,11 +27,6 @@ class TreeBuilderConfigurationManagerConfiguredSystems < TreeBuilder
                  :icon          => "pficon pficon-folder-close",
                  :tip           => _("%{name} Configured Systems") % {:name => ui_lookup(:ui_title => 'foreman')},
                  :load_children => true)
-    objects.push(:id            => "csa",
-                 :text          => _("Ansible Tower Configured Systems"),
-                 :icon          => "pficon pficon-folder-close",
-                 :tip           => _("Ansible Tower Configured Systems"),
-                 :load_children => true)
     objects.push(:id          => "global",
                  :text        => _("Global Filters"),
                  :icon        => "pficon pficon-folder-close",
