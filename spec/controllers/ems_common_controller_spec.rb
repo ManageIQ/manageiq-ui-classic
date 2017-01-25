@@ -154,7 +154,7 @@ describe EmsCloudController do
     end
   end
 
-  describe "#show" do
+  describe "#download_summary_pdf" do
     let(:provider_openstack) { FactoryGirl.create(:provider_openstack, :name => "Undercloud") }
     let(:ems_openstack) { FactoryGirl.create(:ems_openstack, :name => "overcloud", :provider => provider_openstack) }
     let(:pdf_options) { controller.instance_variable_get(:@options) }
@@ -163,7 +163,7 @@ describe EmsCloudController do
       before :each do
         stub_user(:features => :all)
         allow(PdfGenerator).to receive(:pdf_from_string).with('', 'pdf_summary').and_return("")
-        get :show, :id => ems_openstack.id, :display => "download_pdf"
+        get :download_summary_pdf, :params => {:id => ems_openstack.id}
       end
 
       it "should not contains string 'ManageIQ' in the title of summary report" do
@@ -269,7 +269,7 @@ describe EmsContainerController do
       end
     end
 
-    describe "#show" do
+    describe "#download_summary_pdf" do
       let(:ems_kubernetes_container) { FactoryGirl.create(:ems_kubernetes, :name => "test") }
       let(:pdf_options) { controller.instance_variable_get(:@options) }
 
@@ -277,7 +277,7 @@ describe EmsContainerController do
         before :each do
           stub_user(:features => :all)
           allow(PdfGenerator).to receive(:pdf_from_string).with('', 'pdf_summary').and_return("")
-          get :show, :id => ems_kubernetes_container.id, :display => "download_pdf"
+          get :download_summary_pdf, :params => {:id => ems_kubernetes_container.id}
         end
 
         it "should not contains string 'ManageIQ' in the title of summary report" do
@@ -317,25 +317,5 @@ describe EmsInfraController do
       end
     end
   end
-
-  describe "#show" do
-    let(:ems_openstack_infra) { FactoryGirl.create(:ems_openstack_infra, :name => "test") }
-    let(:pdf_options) { controller.instance_variable_get(:@options) }
-
-    context "download pdf file" do
-      before :each do
-        stub_user(:features => :all)
-        allow(PdfGenerator).to receive(:pdf_from_string).with('', 'pdf_summary').and_return("")
-        get :show, :id => ems_openstack_infra.id, :display => "download_pdf"
-      end
-
-      it "should not contains string 'ManageIQ' in the title of summary report" do
-        expect(pdf_options[:title]).not_to include('ManageIQ')
-      end
-
-      it "should match proper title of report" do
-        expect(pdf_options[:title]).to eq('Infrastructure Provider (OpenStack) "test"')
-      end
-    end
-  end
+  include_examples '#download_summary_pdf', :ems_openstack_infra
 end

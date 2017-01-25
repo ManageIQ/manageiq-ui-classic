@@ -819,4 +819,6 @@ describe EmsInfraController do
       expect(vmware.authentications.first).to have_attributes(:userid => "bar", :password => "[FILTERED]")
     end
   end
+
+  include_examples '#download_summary_pdf', :ems_vmware
 end

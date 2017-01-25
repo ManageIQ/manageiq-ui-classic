@@ -86,4 +86,6 @@ describe ConfigurationJobController do
       expect(assigns(:edit)).to be_nil
     end
   end
+
+  include_examples '#download_summary_pdf', :ansible_tower_job
 end

@@ -78,4 +78,6 @@ describe ContainerImageController do
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
   end
+
+  include_examples '#download_summary_pdf', :container_image
 end

@@ -20,6 +20,8 @@ describe HostAggregateController do
     end
   end
 
+  include_examples '#download_summary_pdf', :host_aggregate_openstack
+
   describe "#create" do
     before do
       stub_user(:features => :all)

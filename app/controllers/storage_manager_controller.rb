@@ -214,11 +214,11 @@ class StorageManagerController < ApplicationController
     @showtype = "config"
     drop_breadcrumb({:name => ui_lookup(:tables => "storage_managers"), :url => "/storage_manager/show_list?page=#{@current_page}&refresh=y"}, true)
 
-    if ["download_pdf", "main", "summary_only"].include?(@display)
+    if %w(main summary_only).include?(@display)
       # get_tagdata(StorageManager)
       drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @sm.name}, :url => "/storage_manager/show/#{@sm.id}")
       @showtype = "main"
-      set_summary_pdf_data if ["download_pdf", "summary_only"].include?(@display)
+      set_summary_pdf_data if @display == 'summary_only'
     end
     @lastaction = "show"
     session[:tl_record_id] = @record.id

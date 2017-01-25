@@ -55,4 +55,6 @@ describe ContainerGroupController do
       end
     end
   end
+
+  include_examples '#download_summary_pdf', :container_group_with_assoc
 end
