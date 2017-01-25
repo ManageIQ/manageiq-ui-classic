@@ -23,7 +23,7 @@ describe TreeNode do
 
     TreeNode.constants.each do |type|
       # We never instantiate MiqAeNode and Node in our codebase
-      next if [:MiqAeNode, :Node].include?(type)
+      next if [:MiqAeNode, :Node, :Menu].include?(type)
 
       describe(type) do
         let(:klass) { type.to_s.constantize }
