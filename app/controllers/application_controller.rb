@@ -1524,6 +1524,8 @@ class ApplicationController < ActionController::Base
 
     # Set up the list view type (grid/tile/list)
     @settings ||= {:views => {}, :perpage => {}}
+    @settings[:views] ||= {}
+    @settings[:perpage] ||= {}
     @settings[:views][db_sym] = params[:type] if params[:type]  # Change the list view type, if it's sent in
 
     @gtl_type = get_view_calculate_gtl_type(db_sym)
