@@ -108,7 +108,7 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
     $scope.logCollectionModel.uri_prefix = data.uri_prefix;
     $scope.logCollectionModel.log_userid = data.log_userid;
 
-    if($scope.logCollectionModel.log_userid != '') {
+    if ($scope.logCollectionModel.log_userid !== '') {
       $scope.logCollectionModel.log_password = $scope.logCollectionModel.log_verify = miqService.storedPasswordPlaceholder;
     }
 
