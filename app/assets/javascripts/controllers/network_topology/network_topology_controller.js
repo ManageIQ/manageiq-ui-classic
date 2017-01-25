@@ -279,7 +279,7 @@ function NetworkTopologyCtrl($scope, $http, $interval, $location, topologyServic
     $scope.kinds = data.data.kinds;
     icons = data.data.icons;
 
-    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length != Object.keys($scope.kinds).length)) {
+    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys($scope.kinds).length)) {
       $scope.kinds = currentSelectedKinds;
     }
   }

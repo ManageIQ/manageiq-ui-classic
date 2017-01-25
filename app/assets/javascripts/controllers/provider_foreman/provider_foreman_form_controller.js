@@ -86,15 +86,15 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
     function getProviderForemanFormData(response) {
       var data = response.data;
 
-      if (!$scope.newRecord) {
+      if (! $scope.newRecord) {
         $scope.providerForemanModel.provtype = data.provtype;
         $scope.providerForemanModel.name = data.name;
         $scope.providerForemanModel.url = data.url;
-        $scope.providerForemanModel.verify_ssl = data.verify_ssl == "1";
+        $scope.providerForemanModel.verify_ssl = data.verify_ssl === 1;
 
         $scope.providerForemanModel.log_userid = data.log_userid;
 
-        if ($scope.providerForemanModel.log_userid != '') {
+        if ($scope.providerForemanModel.log_userid !== '') {
           $scope.providerForemanModel.log_password = $scope.providerForemanModel.log_verify = miqService.storedPasswordPlaceholder;
         }
       }

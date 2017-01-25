@@ -16,7 +16,7 @@ describe('providerForemanFormController', function() {
       name: '',
       url: '',
       zone: 'foo_zone',
-      verify_ssl: false,
+      verify_ssl: 0,
       log_userid: ''
     };
 
@@ -65,7 +65,7 @@ describe('providerForemanFormController', function() {
         name: 'Foreman',
         url: '10.10.10.10',
         zone: 'My Test Zone',
-        verify_ssl: true,
+        verify_ssl: 1,
         log_userid: 'admin'
       };
 
