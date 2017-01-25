@@ -705,7 +705,7 @@ module ApplicationHelper
   ]
   # Return a blank tb if a placeholder is needed for AJAX explorer screens, return nil if no custom toolbar to be shown
   def custom_toolbar_filename
-    if %w(ems_cloud ems_cluster ems_infra host miq_template storage ems_storage ems_network cloud_tenant).include?(@layout) # Classic CIs
+    if %w(ems_cloud ems_cluster ems_infra ems_physical_infra host miq_template storage ems_storage ems_network cloud_tenant).include?(@layout) # Classic CIs
       return "custom_buttons_tb" if @record && @lastaction == "show" && @display == "main"
     end
 
@@ -827,6 +827,7 @@ module ApplicationHelper
        ems_infra
        ems_middleware
        ems_network
+       ems_physical_infra
        ems_storage
        flavor
        floating_ip
@@ -1238,6 +1239,7 @@ module ApplicationHelper
                         ems_infra_dashboard
                         ems_middleware
                         ems_network
+                        ems_physical_infra
                         ems_storage
                         infra_topology
                         event
@@ -1336,6 +1338,7 @@ module ApplicationHelper
           ems_infra
           ems_middleware
           ems_network
+          ems_physical_infra
           ems_storage
           flavor
           floating_ip
@@ -1401,6 +1404,7 @@ module ApplicationHelper
              ems_infra
              ems_middleware
              ems_network
+             ems_physical_infra
              ems_storage
              flavor
              floating_ip
@@ -1459,6 +1463,7 @@ module ApplicationHelper
       ems_infra
       ems_middleware
       ems_network
+      ems_physical_infra
       ems_storage
       flavor
       floating_ip
