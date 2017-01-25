@@ -1,0 +1,2 @@
+class MiqDecorator < SimpleDelegator
+end
