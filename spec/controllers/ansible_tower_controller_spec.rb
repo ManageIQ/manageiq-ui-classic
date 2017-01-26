@@ -7,21 +7,21 @@ describe AnsibleTowerController do
     Tag.find_or_create_by(:name => tags.first)
 
     @provider_ans = ManageIQ::Providers::AnsibleTower::Provider.create(:name => "ansibletest", :url => "10.8.96.108", :zone => @zone)
-    @config_ans = ManageIQ::Providers::AnsibleTower::ConfigurationManager.find_by(:provider_id => @provider_ans.id)
+    @config_ans = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => @provider_ans.id)
 
     @provider_ans2 = ManageIQ::Providers::AnsibleTower::Provider.create(:name => "ansibletest2", :url => "10.8.96.109", :zone => @zone)
-    @config_ans2 = ManageIQ::Providers::AnsibleTower::ConfigurationManager.find_by(:provider_id => @provider_ans2.id)
+    @config_ans2 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => @provider_ans2.id)
 
     @inventory_group = ManageIQ::Providers::ConfigurationManager::InventoryRootGroup.create(:name => "testinvgroup", :ems_id => @config_ans.id)
     @inventory_group2 = ManageIQ::Providers::ConfigurationManager::InventoryRootGroup.create(:name => "testinvgroup2", :ems_id => @config_ans2.id)
-    @ans_configured_system = ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfiguredSystem.create(:hostname                => "ans_test_configured_system",
+    @ans_configured_system = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem.create(:hostname                => "ans_test_configured_system",
                                                                                                               :inventory_root_group_id => @inventory_group.id,
                                                                                                               :manager_id              => @config_ans.id)
 
-    @ans_configured_system2a = ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfiguredSystem.create(:hostname                => "test2a_ans_configured_system",
+    @ans_configured_system2a = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem.create(:hostname                => "test2a_ans_configured_system",
                                                                                                                 :inventory_root_group_id => @inventory_group.id,
                                                                                                                 :manager_id              => @config_ans.id)
-    @ans_configured_system2b = ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfiguredSystem.create(:hostname                => "test2b_ans_configured_system",
+    @ans_configured_system2b = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem.create(:hostname                => "test2b_ans_configured_system",
                                                                                                                 :inventory_root_group_id => @inventory_group2.id,
                                                                                                                 :manager_id              => @config_ans2.id)
     controller.instance_variable_set(:@sb, :active_tree => :ansible_tower_providers_tree)
@@ -348,7 +348,7 @@ describe AnsibleTowerController do
       allow(controller).to receive(:x_active_accord).and_return(:ansible_tower_providers)
       allow(controller).to receive(:build_listnav_search_list)
       controller.instance_variable_set(:@_params, :id => "ansible_tower_providers")
-      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::ConfigurationManager", :dbname => :ansible_tower_providers).and_call_original
+      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::AutomationManager", :dbname => :ansible_tower_providers).and_call_original
       controller.send(:accordion_select)
     end
 
@@ -357,7 +357,7 @@ describe AnsibleTowerController do
       allow(controller).to receive(:x_node).and_return("root")
       allow(controller).to receive(:x_tree).and_return(:type => :filter)
       controller.instance_variable_set(:@_params, :id => "ansible_tower_cs_filter")
-      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfiguredSystem", :dbname => :ansible_tower_configured_systems).and_call_original
+      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem", :dbname => :ansible_tower_configured_systems).and_call_original
       allow(controller).to receive(:build_listnav_search_list)
       controller.send(:accordion_select)
     end
@@ -367,7 +367,7 @@ describe AnsibleTowerController do
       allow(controller).to receive(:x_active_tree).and_return(:configuration_scripts_tree)
       allow(controller).to receive(:x_active_accord).and_return(:configuration_scripts)
       controller.instance_variable_set(:@_params, :id => "configuration_scripts")
-      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfigurationScript", :dbname => :configuration_scripts).and_call_original
+      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript", :dbname => :configuration_scripts).and_call_original
       controller.send(:accordion_select)
     end
   end
@@ -584,7 +584,7 @@ describe AnsibleTowerController do
   end
 
   def inventory_group_key(inv_group)
-    ig =  ManageIQ::Providers::ConfigurationManager::InventoryGroup.where(:id => inv_group.id).first
+    ig =  ManageIQ::Providers::AutomationManager::InventoryGroup.where(:id => inv_group.id).first
     "f-" + ApplicationRecord.compress_id(ig.id)
   end
 

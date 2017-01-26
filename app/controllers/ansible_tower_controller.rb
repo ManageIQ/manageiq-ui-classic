@@ -47,7 +47,7 @@ class AnsibleTowerController < ApplicationController
 
   def new
     assert_privileges("ansible_tower_add_provider")
-    @provider_manager = ManageIQ::Providers::AnsibleTower::ConfigurationManager.new
+    @provider_manager = ManageIQ::Providers::AnsibleTower::AutomationManager.new
     @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
     render_form
   end
@@ -63,7 +63,7 @@ class AnsibleTowerController < ApplicationController
     else
       assert_privileges("ansible_tower_edit_provider")
       manager_id            = from_cid(params[:miq_grid_checks] || params[:id] || find_checked_items[0])
-      @provider_manager     = find_record(ManageIQ::Providers::AnsibleTower::ConfigurationManager, manager_id)
+      @provider_manager     = find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, manager_id)
       @providerdisplay_type = model_to_name(@provider_manager.type)
       render_form
     end
@@ -112,7 +112,7 @@ class AnsibleTowerController < ApplicationController
       tagging_edit('ConfiguredSystem', false)
     when :configuration_scripts
       assert_privileges("configuration_script_tag")
-      tagging_edit('ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfigurationScript', false)
+      tagging_edit('ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript', false)
     end
     render_tagging_form
   end
@@ -181,7 +181,7 @@ class AnsibleTowerController < ApplicationController
       return render :json => {:zone => Zone.in_my_region.size >= 1 ? Zone.in_my_region.first.name : nil }
     end
 
-    config_mgr = find_record(ManageIQ::Providers::AnsibleTower::ConfigurationManager, params[:id])
+    config_mgr = find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, params[:id])
     provider   = config_mgr.provider
 
     render :json => {:name       => provider.name,
@@ -212,7 +212,7 @@ class AnsibleTowerController < ApplicationController
     @display = params[:display] || "main"
     @lastaction = "show"
     @record = if inventory_group_record?
-                find_record(ManageIQ::Providers::ConfigurationManager::InventoryGroup, id || params[:id])
+                find_record(ManageIQ::Providers::AutomationManager::InventoryGroup, id || params[:id])
               else
                 find_record(ConfiguredSystem, id || params[:id])
               end
@@ -304,12 +304,12 @@ class AnsibleTowerController < ApplicationController
   def ansible_tower_providers_tree_rec
     nodes = x_node.split('-')
     case nodes.first
-    when "root" then find_record(ManageIQ::Providers::AnsibleTower::ConfigurationManager, params[:id])
-    when "at"   then find_record(ManageIQ::Providers::ConfigurationManager::InventoryGroup, params[:id])
-    when "f"    then find_record(ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfiguredSystem, params[:id])
+    when "root" then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, params[:id])
+    when "at"   then find_record(ManageIQ::Providers::AutomationManager::InventoryGroup, params[:id])
+    when "f"    then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem, params[:id])
     when "xx" then
       case nodes.second
-      when "at"  then find_record(ManageIQ::Providers::AnsibleTower::ConfigurationManager, params[:id])
+      when "at"  then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, params[:id])
       when "csa" then find_record(ConfiguredSystem, params[:id])
       end
     end
@@ -327,7 +327,7 @@ class AnsibleTowerController < ApplicationController
     nodes = x_node.split('-')
     case nodes.first
     when "root", "at"
-      find_record(ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfigurationScript, params[:id])
+      find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript, params[:id])
     end
   end
 
@@ -493,11 +493,11 @@ class AnsibleTowerController < ApplicationController
     end
 
     case model
-    when "ManageIQ::Providers::AnsibleTower::ConfigurationManager"
+    when "ManageIQ::Providers::AnsibleTower::AutomationManager"
       provider_list(id, model)
     when "EmsFolder"
       inventory_group_node(id, model)
-    when "ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfiguredSystem", "ConfiguredSystem"
+    when "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem", "ConfiguredSystem"
       configured_system_list(id, model)
     when "ConfigurationScript"
       configuration_scripts_list(id, model)
@@ -526,7 +526,7 @@ class AnsibleTowerController < ApplicationController
       cs_provider_node(provider)
     else
       @no_checkboxes = true
-      options = {:model                 => "ManageIQ::Providers::ConfigurationManager::InventoryGroup",
+      options = {:model                 => "ManageIQ::Providers::AutomationManager::InventoryGroup",
                  :match_via_descendants => ConfiguredSystem,
                  :where_clause          => ["ems_id IN (?)", provider.id]}
       process_show_list(options)
@@ -537,7 +537,7 @@ class AnsibleTowerController < ApplicationController
   end
 
   def cs_provider_node(provider)
-    options = {:model                 => "ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfigurationScript",
+    options = {:model                 => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript",
                :match_via_descendants => ConfigurationScript,
                :where_clause          => ["manager_id IN (?)", provider.id]}
     process_show_list(options)
@@ -553,7 +553,7 @@ class AnsibleTowerController < ApplicationController
   end
 
   def inventory_group_node(id, model)
-    @record = @inventory_group_record = find_record(ManageIQ::Providers::ConfigurationManager::InventoryGroup, id) if model
+    @record = @inventory_group_record = find_record(ManageIQ::Providers::AutomationManager::InventoryGroup, id) if model
 
     if @inventory_group_record.nil?
       self.x_node = "root"
@@ -601,22 +601,22 @@ class AnsibleTowerController < ApplicationController
   end
 
   def configuration_script_node(id)
-    @record = @configuration_script_record = find_record(ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfigurationScript, id)
+    @record = @configuration_script_record = find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript, id)
     display_node(id)
   end
 
   def default_node
     return unless x_node == "root"
     if x_active_tree == :ansible_tower_providers_tree
-      options = {:model => "ManageIQ::Providers::AnsibleTower::ConfigurationManager"}
+      options = {:model => "ManageIQ::Providers::AnsibleTower::AutomationManager"}
       process_show_list(options)
       @right_cell_text = _("All Ansible Tower Providers")
     elsif x_active_tree == :ansible_tower_cs_filter_tree
-      options = {:model => "ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfiguredSystem"}
+      options = {:model => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem"}
       process_show_list(options)
       @right_cell_text = _("All Ansible Tower Configured Systems")
     elsif x_active_tree == :configuration_scripts_tree
-      options = {:model => "ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfigurationScript"}
+      options = {:model => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript"}
       process_show_list(options)
       @right_cell_text = _("All Ansible Tower Job Templates")
     end
@@ -740,10 +740,10 @@ class AnsibleTowerController < ApplicationController
   end
 
   def ansible_tower_manager_record?(node = x_node)
-    return @record.kind_of?(ManageIQ::Providers::AnsibleTower::ConfigurationManager) if @record
+    return @record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager) if @record
 
     type, _id = node.split("-")
-    type && ["ManageIQ::Providers::AnsibleTower::ConfigurationManager"].include?(TreeBuilder.get_model_for_prefix(type))
+    type && ["ManageIQ::Providers::AnsibleTower::AutomationManager"].include?(TreeBuilder.get_model_for_prefix(type))
   end
 
   def provider_record?(node = x_node)
@@ -979,7 +979,7 @@ class AnsibleTowerController < ApplicationController
 
   def configscript_service_dialog
     assert_privileges("ansible_tower_configscript_service_dialog")
-    cs = ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfigurationScript.find_by(:id => params[:id])
+    cs = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript.find_by(:id => params[:id])
     @edit = {:new    => {:dialog_name => ""},
              :key    => "cs_edit__#{cs.id}",
              :rec_id => cs.id}
