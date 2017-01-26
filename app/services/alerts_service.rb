@@ -4,5 +4,4 @@ class AlertsService
   def initialize(controller)
     @controller = controller
   end
-
 end

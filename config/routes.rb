@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   # rubocop:disable AlignHash
-  # rubocop:disable MultilineOperationIndentation
   # grouped routes
   adv_search_post = %w(
     adv_search_button
