@@ -97,11 +97,13 @@ describe('dialogFieldRefresh', function() {
 
   describe('#refreshCheckbox', function() {
     var loadedDoneFunction;
+    var refreshCallback;
 
     beforeEach(function() {
       spyOn(dialogFieldRefresh, 'setReadOnly');
       spyOn(dialogFieldRefresh, 'setVisible');
       spyOn($.fn, 'prop');
+      refreshCallback = jasmine.createSpyObj('refreshCallback', ['call']);
 
       spyOn(dialogFieldRefresh, 'sendRefreshRequest').and.callFake(function(_url, _data, doneFunction) {
         loadedDoneFunction = doneFunction;
@@ -109,7 +111,7 @@ describe('dialogFieldRefresh', function() {
     });
 
     it('calls sendRefreshRequest', function() {
-      dialogFieldRefresh.refreshCheckbox('abc', 123);
+      dialogFieldRefresh.refreshCheckbox('abc', 123, refreshCallback);
       expect(dialogFieldRefresh.sendRefreshRequest).toHaveBeenCalledWith(
         'dynamic_checkbox_refresh',
         {name: 'abc'},
@@ -119,6 +121,7 @@ describe('dialogFieldRefresh', function() {
 
     describe('#refreshCheckbox doneFunction', function() {
       beforeEach(function() {
+        dialogFieldRefresh.refreshCheckbox('abc', 123, refreshCallback);
         var data = {responseText: JSON.stringify({values: {checked: true, read_only: true, visible: false}})};
         loadedDoneFunction(data);
       });
@@ -137,22 +140,29 @@ describe('dialogFieldRefresh', function() {
           true
         );
       });
+
       it('sets the visible property', function() {
         expect(dialogFieldRefresh.setVisible).toHaveBeenCalledWith(
           jasmine.objectContaining({selector: '#field_123_tr'}),
           false
         );
       });
+
+      it('calls the callback', function() {
+        expect(refreshCallback.call).toHaveBeenCalled();
+      });
     });
   });
 
   describe('#refreshDateTime', function() {
     var loadedDoneFunction;
+    var refreshCallback;
 
     beforeEach(function() {
       spyOn(dialogFieldRefresh, 'setReadOnly');
       spyOn(dialogFieldRefresh, 'setVisible');
       spyOn($.fn, 'val');
+      refreshCallback = jasmine.createSpyObj('refreshCallback', ['call']);
 
       spyOn(dialogFieldRefresh, 'sendRefreshRequest').and.callFake(function(_url, _data, doneFunction) {
         loadedDoneFunction = doneFunction;

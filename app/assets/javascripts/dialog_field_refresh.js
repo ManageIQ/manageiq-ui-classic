@@ -27,7 +27,7 @@ var dialogFieldRefresh = {
     }});
   },
 
-  refreshCheckbox: function(fieldName, fieldId) {
+  refreshCheckbox: function(fieldName, fieldId, callback) {
     miqSparkleOn();
 
     var data = {name: fieldName};
@@ -36,12 +36,13 @@ var dialogFieldRefresh = {
       $('.dynamic-checkbox-' + fieldId).prop('checked', responseData.values.checked);
       dialogFieldRefresh.setReadOnly($('.dynamic-checkbox-' + fieldId), responseData.values.read_only);
       dialogFieldRefresh.setVisible($('#field_' +fieldId + '_tr'), responseData.values.visible);
+      callback.call();
     };
 
     dialogFieldRefresh.sendRefreshRequest('dynamic_checkbox_refresh', data, doneFunction);
   },
 
-  refreshDateTime: function(fieldName, fieldId) {
+  refreshDateTime: function(fieldName, fieldId, callback) {
     miqSparkleOn();
 
     var data = {name: fieldName};

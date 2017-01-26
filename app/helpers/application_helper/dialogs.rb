@@ -53,12 +53,15 @@ module ApplicationHelper::Dialogs
     add_options_unless_read_only(extra_options, tag_options, field)
   end
 
-  def checkbox_tag_options(field, url)
+  def checkbox_tag_options(field, url, auto_refresh_options_hash)
     tag_options = {:class => "dynamic-checkbox-#{field.id}"}
+    miq_observe_options = {
+      :url => url
+    }.merge(auto_refresh_options(field, auto_refresh_options_hash)).to_json
     extra_options = {
       "data-miq_sparkle_on"       => true,
       "data-miq_sparkle_off"      => true,
-      "data-miq_observe_checkbox" => {:url => url}.merge(auto_refresh_options(field)).to_json
+      "data-miq_observe_checkbox" => miq_observe_options
     }
 
     add_options_unless_read_only(extra_options, tag_options, field)
