@@ -484,6 +484,7 @@ module ApplicationController::MiqRequestMethods
         build_ous_tree(@edit[:wf], @edit[:new][:ldap_ous])
         @sb[:vm_os] = VmOrTemplate.find_by_id(@edit.fetch_path(:new, :src_vm_id, 0)).platform if @edit.fetch_path(:new, :src_vm_id, 0)
       elsif @edit[:new][:current_tab_key] == :purpose
+        # Not yet found
         build_tags_tree(@edit[:wf], @edit[:new][:vm_tags], true)
       end
     when VmMigrateWorkflow
@@ -497,6 +498,7 @@ module ApplicationController::MiqRequestMethods
         build_pxe_img_grid(@edit[:wf].get_field(:pxe_image_id, :service)[:values], @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
         build_iso_img_grid(@edit[:wf].get_field(:iso_image_id, :service)[:values], @edit[:iso_img_sortdir], @edit[:iso_img_sortcol]) if @edit[:wf].supports_iso?
       elsif @edit[:new][:current_tab_key] == :purpose
+        # Not yet found
         build_tags_tree(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow), true)
       elsif @edit[:new][:current_tab_key] == :environment
         build_ds_grid(@edit[:wf].get_field(:attached_ds, :environment)[:values], @edit[:ds_sortdir], @edit[:ds_sortcol])
@@ -509,6 +511,8 @@ module ApplicationController::MiqRequestMethods
   def build_dialog_page_miq_provision_configured_system_workflow
     case @edit[:new][:current_tab_key]
     when :purpose
+      # Go Templates -> choose one -> Lifecycle -> Provision VMs using this Template
+      # Compute -> Infrastructure -> Hosts -> choose one -> Lifecycle -> Provision Item
       build_tags_tree(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow), true)
     when :service
       build_configured_system_grid(@edit[:wf].get_field(:src_configured_system_ids, :service)[:values], @edit[:configured_system_sortdir], @edit[:configured_system_sortcol])
@@ -790,7 +794,6 @@ module ApplicationController::MiqRequestMethods
           end
         end
         @options[tag_symbol_for_workflow] ||= []  # Initialize if came back nil from record
-        build_tags_tree(options[:wf], @options[tag_symbol_for_workflow], false) if @miq_request.resource_type != "VmMigrateRequest"
         unless ["MiqHostProvisionRequest", "VmMigrateRequest"].include?(@miq_request.resource_type)
           build_ous_tree(options[:wf], @options[:ldap_ous])
           svm = VmOrTemplate.where(:id => @options[:src_vm_id][0]).first if @options[:src_vm_id] && @options[:src_vm_id][0]
@@ -869,7 +872,6 @@ module ApplicationController::MiqRequestMethods
           @edit[:template_sortdir] ||= "ASC"
           @edit[:template_sortcol] ||= "name"
           build_vm_grid(@edit[:wf].send("allowed_templates"), @edit[:vm_sortdir], @edit[:vm_sortcol], build_template_filter)
-          build_tags_tree(@edit[:wf], @edit[:new][:vm_tags], true)
           build_ous_tree(@edit[:wf], @edit[:new][:ldap_ous])
           if @edit[:wf].supports_pxe?
             build_pxe_img_grid(@edit[:wf].send("allowed_images"), @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
@@ -884,7 +886,6 @@ module ApplicationController::MiqRequestMethods
         else
           @edit[:template_sortdir] ||= "ASC"
           @edit[:template_sortcol] ||= "name"
-          build_tags_tree(@edit[:wf], @edit[:new][:tag_ids], true)
           build_pxe_img_grid(@edit[:wf].send("allowed_images"), @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
           build_iso_img_grid(@edit[:wf].send("allowed_iso_images"), @edit[:iso_img_sortdir], @edit[:iso_img_sortcol])
           build_host_grid(@edit[:wf].send("allowed_hosts"), @edit[:host_sortdir], @edit[:host_sortcol])
