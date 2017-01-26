@@ -359,13 +359,14 @@ describe ApplicationHelper::Dialogs do
     context "when the field is read_only" do
       let(:read_only) { true }
       let(:selected_value) { "some_value" }
+
       context "when the current value is equal to the default value" do
         let(:value) { "some_value" }
 
         it "returns the tag options with a disabled true and checked" do
           expect(helper.radio_options(dialog_field, "url", value, selected_value)).to eq(
             :type     => "radio",
-            :id       => "100",
+            :class    => "100",
             :value    => "some_value",
             :name     => "field_name",
             :checked  => '',
@@ -381,7 +382,7 @@ describe ApplicationHelper::Dialogs do
         it "returns the tag options with a disabled true and checked" do
           expect(helper.radio_options(dialog_field, "url", value, selected_value)).to eq(
             :type     => "radio",
-            :id       => "100",
+            :class    => "100",
             :value    => "bogus",
             :name     => "field_name",
             :checked  => nil,
@@ -395,82 +396,32 @@ describe ApplicationHelper::Dialogs do
     context "when the dialog field is not read only" do
       let(:read_only) { false }
       let(:selected_value) { "some_value" }
-      let(:onclick_string) do
-        "$.ajax(" \
-          "{beforeSend:function(request){miqSparkle(true);}, " \
-          "complete:function(request){miqSparkle(false);}, " \
-          "data:miqSerializeForm('dynamic-radio-100'), " \
-          "dataType:'script', " \
-          "type:'post', " \
-          "url:'url'}" \
-        ")"
-      end
 
       context "when the current value is equal to the default value" do
         let(:value) { "some_value" }
 
-        context "when the dialog field triggers auto refresh" do
-          let(:trigger_auto_refresh) { true }
-
-          it "returns the tag options with a disabled true and checked" do
-            expect(helper.radio_options(dialog_field, "url", value, selected_value)).to eq(
-              :type    => "radio",
-              :id      => "100",
-              :value   => "some_value",
-              :name    => "field_name",
-              :checked => '',
-              :onclick => "dialogFieldRefresh.triggerAutoRefresh('100', 'true');" + onclick_string
-            )
-          end
-        end
-
-        context "when the dialog field does not trigger auto refresh" do
-          let(:trigger_auto_refresh) { false }
-
-          it "returns the tag options with a disabled true and checked" do
-            expect(helper.radio_options(dialog_field, "url", value, selected_value)).to eq(
-              :type    => "radio",
-              :id      => "100",
-              :value   => "some_value",
-              :name    => "field_name",
-              :checked => '',
-              :onclick => onclick_string
-            )
-          end
+        it "returns the tag options with a disabled true and checked" do
+          expect(helper.radio_options(dialog_field, "url", value, selected_value)).to eq(
+            :type    => "radio",
+            :class   => "100",
+            :value   => "some_value",
+            :name    => "field_name",
+            :checked => '',
+          )
         end
       end
 
       context "when the current value is not equal to the default value" do
         let(:value) { "bogus" }
 
-        context "when the dialog field triggers auto refresh" do
-          let(:trigger_auto_refresh) { true }
-
-          it "returns the tag options with a disabled true and checked" do
-            expect(helper.radio_options(dialog_field, "url", value, selected_value)).to eq(
-              :type    => "radio",
-              :id      => "100",
-              :value   => "bogus",
-              :name    => "field_name",
-              :checked => nil,
-              :onclick => "dialogFieldRefresh.triggerAutoRefresh('100', 'true');" + onclick_string
-            )
-          end
-        end
-
-        context "when the dialog field does not trigger auto refresh" do
-          let(:trigger_auto_refresh) { false }
-
-          it "returns the tag options with a disabled true and checked" do
-            expect(helper.radio_options(dialog_field, "url", value, selected_value)).to eq(
-              :type    => "radio",
-              :id      => "100",
-              :value   => "bogus",
-              :name    => "field_name",
-              :checked => nil,
-              :onclick => onclick_string
-            )
-          end
+        it "returns the tag options with a disabled true and checked" do
+          expect(helper.radio_options(dialog_field, "url", value, selected_value)).to eq(
+            :type    => "radio",
+            :class   => "100",
+            :value   => "bogus",
+            :name    => "field_name",
+            :checked => nil,
+          )
         end
       end
     end

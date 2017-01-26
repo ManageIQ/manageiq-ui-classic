@@ -27,6 +27,24 @@ var dialogFieldRefresh = {
     }});
   },
 
+  initializeRadioButtonOnClick: function(fieldId, url, autoRefreshOptions) {
+    $('#dynamic-radio-' + fieldId).children('input').on('click', function() {
+      dialogFieldRefresh.radioButtonSelectEvent(url, fieldId, function() {
+        dialogFieldRefresh.triggerAutoRefresh(autoRefreshOptions);
+      });
+    });
+  },
+
+  radioButtonSelectEvent: function(url, fieldId, callback) {
+    miqObserveRequest(url, {
+      data: miqSerializeForm('dynamic-radio-' + fieldId),
+      dataType: 'script',
+      beforeSend: true,
+      complete: true,
+      done: callback
+    });
+  },
+
   refreshCheckbox: function(fieldName, fieldId, callback) {
     miqSparkleOn();
 
@@ -78,43 +96,15 @@ var dialogFieldRefresh = {
     dialogFieldRefresh.sendRefreshRequest('dynamic_radio_button_refresh', data, doneFunction);
   },
 
-  refreshRadioList: function(fieldName, fieldId, checkedValue, onClickString) {
+  refreshRadioList: function(fieldName, fieldId, checkedValue, url, autoRefreshOptions, callback) {
     miqSparkleOn();
 
     var data = {name: fieldName, checked_value: checkedValue};
     var doneFunction = function(data) {
       var responseData = JSON.parse(data.responseText);
-      var radioButtons = [];
+      dialogFieldRefresh.replaceRadioButtons(fieldId, fieldName, responseData, url, autoRefreshOptions);
 
-      $.each(responseData.values.refreshed_values, function(_index, value) {
-        var radio = $('<input>')
-          .attr('id', fieldId)
-          .attr('name', fieldName)
-          .attr('type', 'radio')
-          .val(value[0]);
-
-        var label = $('<label></label>')
-          .addClass('dynamic-radio-label')
-          .text(value[1]);
-
-        if (responseData.values.checked_value === String(value[0])) {
-          radio.prop('checked', true);
-        }
-
-        if (responseData.values.read_only === true) {
-          radio.attr('title', __("This element is disabled because it is read only"));
-          radio.prop('disabled', true);
-        } else {
-          radio.on('click', onClickString);
-        }
-
-        radioButtons.push(radio);
-        radioButtons.push(" ");
-        radioButtons.push(label);
-        radioButtons.push(" ");
-      });
-
-      $('#dynamic-radio-' + fieldId).html(radioButtons);
+      callback.call();
     };
 
     dialogFieldRefresh.sendRefreshRequest('dynamic_radio_button_refresh', data, doneFunction);
@@ -241,6 +231,40 @@ var dialogFieldRefresh = {
     } else {
       field.hide();
     }
-  }
+  },
 
+  replaceRadioButtons: function(fieldId, fieldName, responseData, url, autoRefreshOptions) {
+    $('#dynamic-radio-' + fieldId).children().remove();
+
+    $.each(responseData.values.refreshed_values, function(_index, value) {
+      var radio = $('<input>')
+      .attr('class', fieldId)
+      .attr('name', fieldName)
+      .attr('type', 'radio')
+      .val(value[0]);
+
+      var label = $('<label></label>')
+      .attr('for', value[0])
+      .addClass('dynamic-radio-label')
+      .text(value[1]);
+
+      if (responseData.values.checked_value === String(value[0])) {
+        radio.prop('checked', true);
+      }
+
+      if (responseData.values.read_only === true) {
+        radio.attr('title', __("This element is disabled because it is read only"));
+        radio.prop('disabled', true);
+      } else {
+        radio.on('click', function(event) {
+          dialogFieldRefresh.radioButtonSelectEvent(url, fieldId, function() {
+            dialogFieldRefresh.triggerAutoRefresh(autoRefreshOptions);
+          });
+        });
+      }
+
+      radio.appendTo($('#dynamic-radio-' + fieldId));
+      label.appendTo($('#dynamic-radio-' + fieldId));
+    });
+  }
 };

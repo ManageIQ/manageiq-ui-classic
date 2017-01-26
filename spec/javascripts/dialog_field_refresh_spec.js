@@ -405,6 +405,62 @@ describe('dialogFieldRefresh', function() {
     });
   });
 
+  describe('#refreshRadioList', function() {
+    var loadedDoneFunction;
+    var refreshCallback;
+
+    beforeEach(function() {
+      refreshCallback = jasmine.createSpyObj('refreshCallback', ['call']);
+
+      spyOn(dialogFieldRefresh, 'sendRefreshRequest').and.callFake(function(_url, _data, doneFunction) {
+        loadedDoneFunction = doneFunction;
+      });
+      spyOn(dialogFieldRefresh, 'replaceRadioButtons');
+    });
+
+    it('calls sendRefreshRequest', function() {
+      dialogFieldRefresh.refreshRadioList('abc', 123, 'test', 'url', 'autoRefreshOptions', refreshCallback);
+      expect(dialogFieldRefresh.sendRefreshRequest).toHaveBeenCalledWith(
+        'dynamic_radio_button_refresh',
+        {name: 'abc', checked_value: 'test'},
+        loadedDoneFunction
+      );
+    });
+
+    describe('#refreshDropDownList doneFunction', function() {
+      var data;
+
+      beforeEach(function() {
+        dialogFieldRefresh.refreshRadioList('abc', 123, 'test', 'url', 'autoRefreshOptions', refreshCallback);
+        data = {
+          responseText: JSON.stringify({
+            read_only: true,
+            visible: false,
+            values: {
+              checked_value: 'selectedTest',
+              refreshed_values: [['1', 'first'], ['2', 'second']]
+            }
+          })
+        };
+        loadedDoneFunction(data);
+      });
+
+      it('replaces the radio buttons', function() {
+        expect(dialogFieldRefresh.replaceRadioButtons).toHaveBeenCalledWith(
+          123,
+          'abc',
+          JSON.parse(data.responseText),
+          'url',
+          'autoRefreshOptions'
+        );
+      });
+
+      it('calls the callback', function() {
+        expect(refreshCallback.call).toHaveBeenCalled();
+      });
+    });
+  });
+
   describe('#initializeDialogSelectPicker', function() {
     var fieldName, selectedValue, url;
 
@@ -452,6 +508,61 @@ describe('dialogFieldRefresh', function() {
     it('triggers autorefresh with true only when triggerAutoRefresh arg is true', function() {
       dialogFieldRefresh.initializeDialogSelectPicker(fieldName, fieldId, selectedValue, url, 'true');
       expect(dialogFieldRefresh.triggerAutoRefresh).toHaveBeenCalledWith(fieldId, 'true');
+    });
+  });
+
+  describe('#initializeRadioButtonOnClick', function() {
+    var loadedSelectCallback;
+
+    beforeEach(function() {
+      spyOn(dialogFieldRefresh, 'radioButtonSelectEvent').and.callFake(function(_url, _fieldId, selectCallback) {
+        loadedSelectCallback = selectCallback;
+      });
+      spyOn(dialogFieldRefresh, 'triggerAutoRefresh');
+
+      var html = '<div id="dynamic-radio-123">';
+      html += '<input id="clickMe"/>';
+      html += '</div>';
+      setFixtures(html);
+    });
+
+    it('sets up the radio button select event for clicks', function() {
+      dialogFieldRefresh.initializeRadioButtonOnClick(123, 'url', 'autoRefreshOptions');
+      $('#clickMe').trigger('click');
+      expect(dialogFieldRefresh.radioButtonSelectEvent).toHaveBeenCalledWith('url', 123, loadedSelectCallback);
+    });
+
+    describe('#initializeRadioButtonOnClick select event callback', function() {
+      beforeEach(function() {
+        dialogFieldRefresh.initializeRadioButtonOnClick(123, 'url', 'autoRefreshOptions');
+        $('#clickMe').trigger('click');
+      });
+
+      it('triggers an auto refresh', function() {
+        loadedSelectCallback();
+        expect(dialogFieldRefresh.triggerAutoRefresh).toHaveBeenCalledWith('autoRefreshOptions');
+      });
+    });
+  });
+
+  describe('#radioButtonSelectEvent', function() {
+    beforeEach(function() {
+      spyOn(window, 'miqObserveRequest');
+      var html = '<form id="dynamic-radio-123">';
+      html += '<input type="text" name="textbox" value="test" />';
+      html += '</form>';
+      setFixtures(html);
+    });
+
+    it('makes an miqObserveRequest', function() {
+      dialogFieldRefresh.radioButtonSelectEvent('url', 123, 'callback');
+      expect(window.miqObserveRequest).toHaveBeenCalledWith('url', {
+        data: 'textbox=test',
+        dataType: 'script',
+        beforeSend: true,
+        complete: true,
+        done: 'callback'
+      });
     });
   });
 

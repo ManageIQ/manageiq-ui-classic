@@ -96,25 +96,13 @@ module ApplicationHelper::Dialogs
   def radio_options(field, url, value, selected_value)
     tag_options = {
       :type    => 'radio',
-      :id      => field.id,
+      :class   => field.id,
       :value   => value,
       :name    => field.name,
       :checked => selected_value.to_s == value.to_s ? '' : nil
     }
 
-    auto_refresh_string = field.trigger_auto_refresh ? "dialogFieldRefresh.triggerAutoRefresh('#{field.id}', '#{field.trigger_auto_refresh}');" : ""
-
-    extra_options = {
-      # FIXME: when removing remote_function, note that onclick should really be onchange instead
-      :onclick  => auto_refresh_string + remote_function(
-        :with     => "miqSerializeForm('dynamic-radio-#{field.id}')",
-        :url      => url,
-        :loading  => "miqSparkle(true);",
-        :complete => "miqSparkle(false);"
-      )
-    }
-
-    add_options_unless_read_only(extra_options, tag_options, field)
+    add_options_unless_read_only({}, tag_options, field)
   end
 
   private
