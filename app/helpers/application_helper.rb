@@ -170,20 +170,20 @@ module ApplicationHelper
     !["ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile", "ServiceTemplate"].include? type
   end
 
-  CONTROLLER_TO_MODEL = Hash.new { |_h, k| k.safe_constantize }.merge(
+  CONTROLLER_TO_MODEL = {
     "ManageIQ::Providers::CloudManager::Template" => VmOrTemplate,
     "ManageIQ::Providers::CloudManager::Vm"       => VmOrTemplate,
     "ManageIQ::Providers::InfraManager::Template" => VmOrTemplate,
     "ManageIQ::Providers::InfraManager::Vm"       => VmOrTemplate
-  ).freeze
+  }.freeze
 
   def controller_to_model
     CONTROLLER_TO_MODEL[self.class.model.to_s] || self.class.model
   end
 
-  MODEL_STRING = Hash.new { |_h, k| k.safe_constantize }.merge(
+  MODEL_STRING = {
     "all_vms" => VmOrTemplate
-  ).freeze
+  }.freeze
 
   def model_string_to_constant(model_string)
     MODEL_STRING[model_string] || model_string.singularize.classify.constantize
