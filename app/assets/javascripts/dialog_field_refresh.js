@@ -16,13 +16,14 @@ var dialogFieldRefresh = {
     });
   },
 
-  initializeDialogSelectPicker: function(fieldName, fieldId, selectedValue, url, triggerAutoRefresh) {
+  initializeDialogSelectPicker: function(fieldName, selectedValue, url, autoRefreshOptions) {
     miqInitSelectPicker();
     if (selectedValue !== undefined) {
       $('#' + fieldName).selectpicker('val', selectedValue);
     }
+
     miqSelectPickerEvent(fieldName, url, {callback: function() {
-      dialogFieldRefresh.triggerAutoRefresh(fieldId, triggerAutoRefresh);
+      dialogFieldRefresh.triggerAutoRefresh(autoRefreshOptions);
       return true;
     }});
   },
@@ -81,7 +82,7 @@ var dialogFieldRefresh = {
     dialogFieldRefresh.sendRefreshRequest('dynamic_date_refresh', data, doneFunction);
   },
 
-  refreshDropDownList: function(fieldName, fieldId, selectedValue) {
+  refreshDropDownList: function(fieldName, fieldId, selectedValue, callback) {
     miqSparkleOn();
 
     var data = {name: fieldName, checked_value: selectedValue};
@@ -92,6 +93,7 @@ var dialogFieldRefresh = {
       dialogFieldRefresh.setVisible($('#field_' +fieldId + '_tr'), responseData.values.visible);
       $('#' + fieldName).selectpicker('refresh');
       $('#' + fieldName).selectpicker('val', responseData.values.checked_value);
+      callback.call();
     };
 
     dialogFieldRefresh.sendRefreshRequest('dynamic_radio_button_refresh', data, doneFunction);

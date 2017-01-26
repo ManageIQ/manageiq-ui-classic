@@ -349,12 +349,14 @@ describe('dialogFieldRefresh', function() {
 
   describe('#refreshDropDownList', function() {
     var loadedDoneFunction;
+    var refreshCallback;
 
     beforeEach(function() {
       spyOn(dialogFieldRefresh, 'addOptionsToDropDownList');
       spyOn(dialogFieldRefresh, 'setReadOnly');
       spyOn(dialogFieldRefresh, 'setVisible');
       spyOn($.fn, 'selectpicker');
+      refreshCallback = jasmine.createSpyObj('refreshCallback', ['call']);
 
       spyOn(dialogFieldRefresh, 'sendRefreshRequest').and.callFake(function(_url, _data, doneFunction) {
         loadedDoneFunction = doneFunction;
@@ -362,7 +364,7 @@ describe('dialogFieldRefresh', function() {
     });
 
     it('calls sendRefreshRequest', function() {
-      dialogFieldRefresh.refreshDropDownList('abc', 123, 'test');
+      dialogFieldRefresh.refreshDropDownList('abc', 123, 'test', refreshCallback);
       expect(dialogFieldRefresh.sendRefreshRequest).toHaveBeenCalledWith(
         'dynamic_radio_button_refresh',
         {name: 'abc', checked_value: 'test'},
@@ -372,6 +374,7 @@ describe('dialogFieldRefresh', function() {
 
     describe('#refreshDropDownList doneFunction', function() {
       beforeEach(function() {
+        dialogFieldRefresh.refreshDropDownList('abc', 123, 'test', refreshCallback);
         var data = {responseText: JSON.stringify({values: {checked_value: 'selectedTest', read_only: true, visible: false}})};
         loadedDoneFunction(data);
       });
@@ -389,7 +392,8 @@ describe('dialogFieldRefresh', function() {
           true
         );
       });
-     it('sets the visible property', function() {
+
+      it('sets the visible property', function() {
         expect(dialogFieldRefresh.setVisible).toHaveBeenCalledWith(
           jasmine.objectContaining({selector: '#field_' + 123 + "_tr"}),
           false
@@ -404,9 +408,12 @@ describe('dialogFieldRefresh', function() {
         expect($.fn.selectpicker).toHaveBeenCalledWith('val', 'selectedTest');
       });
 
-
       it('uses the correct selector', function() {
         expect($.fn.selectpicker.calls.mostRecent().object.selector).toEqual('#abc');
+      });
+
+      it('calls the callback', function() {
+        expect(refreshCallback.call).toHaveBeenCalled();
       });
     });
   });
@@ -468,7 +475,7 @@ describe('dialogFieldRefresh', function() {
   });
 
   describe('#initializeDialogSelectPicker', function() {
-    var fieldName, selectedValue, url;
+    var fieldName, selectedValue, url, autoRefreshOptions;
 
     beforeEach(function() {
       spyOn(dialogFieldRefresh, 'triggerAutoRefresh');
@@ -478,9 +485,9 @@ describe('dialogFieldRefresh', function() {
       });
       spyOn($.fn, 'selectpicker');
       fieldName = 'fieldName';
-      fieldId = 'fieldId';
       selectedValue = 'selectedValue';
       url = 'url';
+      autoRefreshOptions = 'autoRefreshOptions';
 
       var html = "";
       html += '<select id=fieldName class="dynamic-drop-down-193 selectpicker">';
@@ -492,28 +499,28 @@ describe('dialogFieldRefresh', function() {
     });
 
     it('initializes the select picker', function() {
-      dialogFieldRefresh.initializeDialogSelectPicker(fieldName, fieldId, selectedValue, url);
+      dialogFieldRefresh.initializeDialogSelectPicker(fieldName, selectedValue, url, autoRefreshOptions);
       expect(window.miqInitSelectPicker).toHaveBeenCalled();
     });
 
     it('sets the value of the select picker', function() {
-      dialogFieldRefresh.initializeDialogSelectPicker(fieldName, fieldId, selectedValue, url);
+      dialogFieldRefresh.initializeDialogSelectPicker(fieldName, selectedValue, url, autoRefreshOptions);
       expect($.fn.selectpicker).toHaveBeenCalledWith('val', 'selectedValue');
     });
 
     it('uses the correct selector', function() {
-      dialogFieldRefresh.initializeDialogSelectPicker(fieldName, fieldId, selectedValue, url);
+      dialogFieldRefresh.initializeDialogSelectPicker(fieldName, selectedValue, url, autoRefreshOptions);
       expect($.fn.selectpicker.calls.mostRecent().object.selector).toEqual('#fieldName');
     });
 
     it('sets up the select picker event', function() {
-      dialogFieldRefresh.initializeDialogSelectPicker(fieldName, fieldId, selectedValue, url);
+      dialogFieldRefresh.initializeDialogSelectPicker(fieldName, selectedValue, url, autoRefreshOptions);
       expect(window.miqSelectPickerEvent).toHaveBeenCalledWith('fieldName', 'url', {callback: jasmine.any(Function)});
     });
 
     it('triggers autorefresh with true only when triggerAutoRefresh arg is true', function() {
-      dialogFieldRefresh.initializeDialogSelectPicker(fieldName, fieldId, selectedValue, url, 'true');
-      expect(dialogFieldRefresh.triggerAutoRefresh).toHaveBeenCalledWith(fieldId, 'true');
+      dialogFieldRefresh.initializeDialogSelectPicker(fieldName, selectedValue, url, autoRefreshOptions);
+      expect(dialogFieldRefresh.triggerAutoRefresh).toHaveBeenCalledWith('autoRefreshOptions');
     });
   });
 
