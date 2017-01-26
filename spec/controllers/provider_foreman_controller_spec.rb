@@ -41,21 +41,21 @@ describe ProviderForemanController do
     end
 
     @provider_ans = ManageIQ::Providers::AnsibleTower::Provider.create(:name => "ansibletest", :url => "10.8.96.108", :zone => @zone)
-    @config_ans = ManageIQ::Providers::AnsibleTower::ConfigurationManager.find_by_provider_id(@provider_ans.id)
+    @config_ans = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by_provider_id(@provider_ans.id)
 
     @provider_ans2 = ManageIQ::Providers::AnsibleTower::Provider.create(:name => "ansibletest2", :url => "10.8.96.109", :zone => @zone)
-    @config_ans2 = ManageIQ::Providers::AnsibleTower::ConfigurationManager.find_by_provider_id(@provider_ans2.id)
+    @config_ans2 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by_provider_id(@provider_ans2.id)
 
-    @inventory_group = ManageIQ::Providers::ConfigurationManager::InventoryRootGroup.create(:name => "testinvgroup", :ems_id => @config_ans.id)
-    @inventory_group2 = ManageIQ::Providers::ConfigurationManager::InventoryRootGroup.create(:name => "testinvgroup2", :ems_id => @config_ans2.id)
-    @ans_configured_system = ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfiguredSystem.create(:hostname                => "ans_test_configured_system",
+    @inventory_group = ManageIQ::Providers::AutomationManager::InventoryRootGroup.create(:name => "testinvgroup", :ems_id => @config_ans.id)
+    @inventory_group2 = ManageIQ::Providers::AutomationManager::InventoryRootGroup.create(:name => "testinvgroup2", :ems_id => @config_ans2.id)
+    @ans_configured_system = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem.create(:hostname                => "ans_test_configured_system",
                                                                                                               :inventory_root_group_id => @inventory_group.id,
                                                                                                               :manager_id              => @config_ans.id)
 
-    @ans_configured_system2a = ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfiguredSystem.create(:hostname                => "test2a_ans_configured_system",
+    @ans_configured_system2a = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem.create(:hostname                => "test2a_ans_configured_system",
                                                                                                                 :inventory_root_group_id => @inventory_group.id,
                                                                                                                 :manager_id              => @config_ans.id)
-    @ans_configured_system2b = ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfiguredSystem.create(:hostname                => "test2b_ans_configured_system",
+    @ans_configured_system2b = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem.create(:hostname                => "test2b_ans_configured_system",
                                                                                                                 :inventory_root_group_id => @inventory_group2.id,
                                                                                                                 :manager_id              => @config_ans2.id)
     @ans_job_template1 = FactoryGirl.create(:ansible_configuration_script, :name => "ConfigScript1", :manager_id => @config_ans.id)
@@ -526,7 +526,7 @@ describe ProviderForemanController do
       allow(controller).to receive(:x_active_tree).and_return(:configuration_scripts_tree)
       allow(controller).to receive(:x_active_accord).and_return(:configuration_scripts)
       controller.instance_variable_set(:@_params, :id => "configuration_scripts")
-      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfigurationScript", :dbname => :configuration_scripts).and_call_original
+      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript", :dbname => :configuration_scripts).and_call_original
       controller.send(:accordion_select)
     end
   end

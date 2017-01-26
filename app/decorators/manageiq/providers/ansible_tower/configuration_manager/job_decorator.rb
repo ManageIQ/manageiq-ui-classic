@@ -1,4 +1,4 @@
-class ManageIQ::Providers::AnsibleTower::ConfigurationManager::JobDecorator < Draper::Decorator
+class ManageIQ::Providers::AnsibleTower::AutomationManager::JobDecorator < Draper::Decorator
   delegate_all
 
   def fonticon
