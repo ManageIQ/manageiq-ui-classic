@@ -250,7 +250,7 @@ class ProviderForemanController < ApplicationController
     @record = if configuration_profile_record?
                 find_record(ConfigurationProfile, id || params[:id])
               elsif inventory_group_record?
-                find_record(ManageIQ::Providers::ConfigurationManager::InventoryGroup, id || params[:id])
+                find_record(ManageIQ::Providers::AutomationManager::InventoryGroup, id || params[:id])
               else
                 find_record(ConfiguredSystem, id || params[:id])
               end
@@ -363,7 +363,7 @@ class ProviderForemanController < ApplicationController
     case nodes.first
     when "root" then find_record(ManageIQ::Providers::ConfigurationManager, params[:id])
     when "fr"   then find_record(ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile, params[:id])
-    when "at"   then find_record(ManageIQ::Providers::ConfigurationManager::InventoryGroup, params[:id])
+    when "at"   then find_record(ManageIQ::Providers::AutomationManager::InventoryGroup, params[:id])
     when "f"    then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem, params[:id])
     when "cp"   then find_record(ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem, params[:id])
     when "xx" then
@@ -603,7 +603,7 @@ class ProviderForemanController < ApplicationController
         {:name => provider.name,
          :model => "#{ui_lookup(:tables => "configuration_profile")} under #{record_model} Provider"}
       when "ManageIQ::Providers::AnsibleTower::AutomationManager"
-        options = {:model => "ManageIQ::Providers::ConfigurationManager::InventoryGroup", :match_via_descendants => ConfiguredSystem, :where_clause => ["ems_id IN (?)", provider.id]}
+        options = {:model => "ManageIQ::Providers::AutomationManager::InventoryGroup", :match_via_descendants => ConfiguredSystem, :where_clause => ["ems_id IN (?)", provider.id]}
         process_show_list(options)
         record_model = ui_lookup(:model => model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
         @right_cell_text = _("%{model} \"%{name}\"") %
@@ -658,7 +658,7 @@ class ProviderForemanController < ApplicationController
   end
 
   def inventory_group_node(id, model)
-    @record = @inventory_group_record = find_record(ManageIQ::Providers::ConfigurationManager::InventoryGroup, id) if model
+    @record = @inventory_group_record = find_record(ManageIQ::Providers::AutomationManager::InventoryGroup, id) if model
 
     if @inventory_group_record.nil?
       self.x_node = "root"
