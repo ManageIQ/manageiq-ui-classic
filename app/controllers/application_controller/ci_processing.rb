@@ -513,7 +513,7 @@ module ApplicationController::CiProcessing
         }
         task_id = @record.class.live_migrate_queue(session[:userid], @record, options)
         unless task_id.kind_of?(Integer)
-          add_flash(_("Instance live migration task %{id} failed.") % {:id => task_id.to_s}, :error)
+          add_flash(_("Instance live migration task failed."), :error)
         end
 
         return javascript_flash(:spinner_off => true) if @flash_array
