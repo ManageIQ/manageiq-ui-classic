@@ -2443,21 +2443,21 @@ module ApplicationController::CiProcessing
 
   # Common Stacks button handler routines
   def process_configuration_jobs(stacks, task, _ = nil)
-    stacks, = filter_ids_in_region(stacks, "ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job")
+    stacks, = filter_ids_in_region(stacks, "ManageIQ::Providers::AnsibleTower::AutomationManager::Job")
     return if stacks.empty?
 
     if task == "destroy"
-      ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job.where(:id => stacks).order("lower(name)").each do |stack|
+      ManageIQ::Providers::AnsibleTower::AutomationManager::Job.where(:id => stacks).order("lower(name)").each do |stack|
         id = stack.id
         stack_name = stack.name
         audit = {:event        => "stack_record_delete_initiated",
                  :message      => "[#{stack_name}] Record delete initiated",
                  :target_id    => id,
-                 :target_class => "ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job",
+                 :target_class => "ManageIQ::Providers::AnsibleTower::AutomationManager::Job",
                  :userid       => session[:userid]}
         AuditEvent.success(audit)
       end
-      ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job.destroy_queue(stacks)
+      ManageIQ::Providers::AnsibleTower::AutomationManager::Job.destroy_queue(stacks)
     end
   end
 
@@ -2678,7 +2678,7 @@ module ApplicationController::CiProcessing
 
   def configuration_job_delete
     assert_privileges("configuration_job_delete")
-    delete_elements(ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job,
+    delete_elements(ManageIQ::Providers::AnsibleTower::AutomationManager::Job,
                     :process_configuration_jobs,
                     'configuration_job')
   end

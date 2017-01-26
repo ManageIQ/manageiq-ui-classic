@@ -1,7 +1,7 @@
 class TreeBuilderConfigurationManager < TreeBuilder
   has_kids_for ManageIQ::Providers::Foreman::ConfigurationManager, [:x_get_tree_cmf_kids]
-  has_kids_for ManageIQ::Providers::AnsibleTower::ConfigurationManager, [:x_get_tree_cmat_kids]
-  has_kids_for ManageIQ::Providers::ConfigurationManager::InventoryRootGroup, [:x_get_tree_igf_kids]
+  has_kids_for ManageIQ::Providers::AnsibleTower::AutomationManager, [:x_get_tree_cmat_kids]
+  has_kids_for ManageIQ::Providers::AutomationManager::InventoryRootGroup, [:x_get_tree_igf_kids]
   has_kids_for ConfigurationProfile, [:x_get_tree_cpf_kids]
 
   private
@@ -42,7 +42,7 @@ class TreeBuilderConfigurationManager < TreeBuilder
 
   def x_get_tree_cmat_kids(object, count_only)
     count_only_or_objects_filtered(count_only,
-                                   ManageIQ::Providers::ConfigurationManager::InventoryGroup.where(:ems_id => object[:id]),
+                                   ManageIQ::Providers::AutomationManager::InventoryGroup.where(:ems_id => object[:id]),
                                    "name", :match_via_descendants => ConfiguredSystem)
   end
 
@@ -89,7 +89,7 @@ class TreeBuilderConfigurationManager < TreeBuilder
     objects =
       case object_hash[:id]
       when "fr" then ManageIQ::Providers::Foreman::ConfigurationManager
-      when "at" then ManageIQ::Providers::AnsibleTower::ConfigurationManager
+      when "at" then ManageIQ::Providers::AnsibleTower::AutomationManager
       end
     count_only_or_objects_filtered(count_only, objects, "name", :match_via_descendants => ConfiguredSystem)
   end

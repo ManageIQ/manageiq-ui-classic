@@ -359,7 +359,7 @@ module ApplicationHelper
       action = "diagnostics_worker_selected"
     when "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
         "ManageIQ::Providers::CloudManager::OrchestrationStack",
-        "ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job"
+        "ManageIQ::Providers::AnsibleTower::AutomationManager::Job"
       controller = request.parameters[:controller]
     when "ContainerVolume"
       controller = "persistent_volume"
@@ -943,7 +943,7 @@ module ApplicationHelper
 
   def controller_for_stack(model)
     case model.to_s
-    when "ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job"
+    when "ManageIQ::Providers::AnsibleTower::AutomationManager::Job"
       "configuration_job"
     else
       model.name.underscore

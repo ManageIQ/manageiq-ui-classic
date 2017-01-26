@@ -1,4 +1,4 @@
-class ManageIQ::Providers::ConfigurationManager::InventoryGroupDecorator < Draper::Decorator
+class ManageIQ::Providers::AutomationManager::InventoryGroupDecorator < Draper::Decorator
   delegate_all
 
   def fonticon
