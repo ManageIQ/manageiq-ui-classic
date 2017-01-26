@@ -89,10 +89,6 @@ module VmHelper::TextualSummary
     TextualGroup.new(_("Diagnostics"), %i(processes event_logs))
   end
 
-  def textual_group_storage_relationships
-    TextualGroup.new(_("Storage Relationships"), %i(storage_systems storage_volumes logical_disks file_shares))
-  end
-
   def textual_group_vmsafe
     TextualGroup.new(
       _("VMsafe"),

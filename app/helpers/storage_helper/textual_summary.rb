@@ -18,10 +18,6 @@ module StorageHelper::TextualSummary
     )
   end
 
-  def textual_group_storage_relationships
-    TextualGroup.new(_("Storage Relationships"), %i(storage_systems storage_volumes logical_disk file_share))
-  end
-
   def textual_group_smart_management
     TextualTags.new(_("Smart Management"), %i(tags))
   end

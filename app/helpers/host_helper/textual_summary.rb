@@ -23,10 +23,6 @@ module HostHelper::TextualSummary
     )
   end
 
-  def textual_group_storage_relationships
-    TextualGroup.new(_("Storage Relationships"), %i(storage_systems storage_volumes logical_disks file_shares))
-  end
-
   def textual_group_security
     return nil if @record.is_vmware_esxi?
     TextualGroup.new(_("Security"), %i(users groups patches firewall_rules ssh_root))

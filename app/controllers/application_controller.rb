@@ -2126,7 +2126,7 @@ class ApplicationController < ActionController::Base
       # These controllers don't use breadcrumbs, see above get method to store URL
       when "dashboard", "report", "support", "alert", "jobs", "ui_jobs", "miq_ae_tools", "miq_policy", "miq_action", "miq_capacity", "chargeback", "service"
 
-      when "snia_local_file_system", "storage_manager"
+      when "snia_local_file_system", "storage_manager", "cim_base_storage_extent"
         session[:tab_bc][:sto] = @breadcrumbs.dup if ["show", "show_list", "index"].include?(action_name)
       when "ems_cloud", "availability_zone", "host_aggregate", "flavor"
         session[:tab_bc][:clo] = @breadcrumbs.dup if ["show", "show_list"].include?(action_name)
