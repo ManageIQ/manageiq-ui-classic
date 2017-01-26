@@ -111,7 +111,7 @@ describe ReportController do
       nodes = controller.send(:tree_add_child_nodes, 'xx-r')
       expected = [{:key     => "-#{controller.to_cid(widget.id)}",
                    :text    => "Foo",
-                   :image   => ActionController::Base.helpers.image_path('100/report_widget.png'),
+                   :icon    => 'fa fa-file-text-o',
                    :tooltip => "Foo",
                    :state   => {:expanded => false},
                    :class   => ""}]

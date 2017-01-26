@@ -69,10 +69,14 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
 
   def buttons_node_image(node)
     case node
-    when "ExtManagementSystem" then {:icon  => 'pficon pficon-server'}
-    when "MiqTemplate"         then {:icon  => 'pficon-virtual-machine'}
+    when 'ExtManagementSystem' then {:icon  => 'pficon pficon-server'}
     when 'CloudTenant'         then {:icon  => 'pficon-cloud-tenant'}
-    else                            {:image => '100/#{node.downcase}.png'}
+    when 'EmsCluster'          then {:icon  => 'pficon pficon-cluster'}
+    when 'Host'                then {:icon  => 'pficon pficon-screen'}
+    when 'MiqTemplate'         then {:icon  => 'product product-template'}
+    when 'Service'             then {:icon  => 'pficon pficon-service'}
+    when 'Storage'             then {:icon  => 'fa fa-database'}
+    when 'Vm'                  then {:icon  => 'pficon pficon-virtual-machine'}
     end
   end
 end

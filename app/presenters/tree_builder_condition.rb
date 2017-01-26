@@ -30,10 +30,28 @@ class TreeBuilderCondition < TreeBuilder
 
     objects = MiqPolicyController::UI_FOLDERS.collect do |model|
       text = text_i18n[model.name.to_sym]
-      {:id    => model.name.camelize(:lower),
-       :image => "100/#{model.name.underscore}.png",
-       :text  => text,
-       :tip   => text}
+      icon = case model.to_s
+             when 'Host'
+               'pficon pficon-screen'
+             when 'Vm'
+               'pficon pficon-virtual-machine'
+             when 'ContainerReplicator'
+               'pficon pficon-replicator'
+             when 'ContainerGroup'
+               'fa fa-cubes'
+             when 'ContainerNode'
+               'pficon pficon-container-node'
+             when 'ContainerImage'
+               'pficon pficon-image'
+             when 'ExtManagementSystem'
+               'pficon pficon-server'
+             end
+      {
+        :id   => model.name.camelize(:lower),
+        :icon => icon,
+        :text => text,
+        :tip  => text
+      }
     end
     count_only_or_objects(count_only, objects)
   end
