@@ -780,7 +780,7 @@ describe ProviderForemanController do
   end
 
   def inventory_group_key(inv_group)
-    ig =  ManageIQ::Providers::ConfigurationManager::InventoryGroup.where(:id => inv_group.id).first
+    ig =  ManageIQ::Providers::AutomationManager::InventoryGroup.where(:id => inv_group.id).first
     "f-" + ApplicationRecord.compress_id(ig.id)
   end
 

@@ -42,7 +42,7 @@ class TreeBuilderConfigurationManager < TreeBuilder
 
   def x_get_tree_cmat_kids(object, count_only)
     count_only_or_objects_filtered(count_only,
-                                   ManageIQ::Providers::ConfigurationManager::InventoryGroup.where(:ems_id => object[:id]),
+                                   ManageIQ::Providers::AutomationManager::InventoryGroup.where(:ems_id => object[:id]),
                                    "name", :match_via_descendants => ConfiguredSystem)
   end
 
