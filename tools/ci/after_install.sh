@@ -4,5 +4,6 @@ fi
 
 # Collapse Travis output https://github.com/travis-ci/travis-ci/issues/2158
 echo "travis_fold:start:GEMFILE_LOCK"
+echo "Gemfile.lock: "
 cat Gemfile.lock
 echo "travis_fold:end:GEMFILE_LOCK"
