@@ -310,7 +310,7 @@ class ApplicationController < ActionController::Base
     if model_view.nil? && params[:active_tree]
       model_view = vm_model_from_active_tree(params[:active_tree].to_sym)
     end
-    if model_view.nil? && controller_to_model_params[self.class.model.to_s].nil? && params[:model]
+    if model_view.nil? && CONTROLLER_TO_MODEL[self.class.model.to_s].nil? && params[:model]
       model_view = model_string_to_constant(params[:model])
     end
 

@@ -742,3 +742,11 @@ div.disabled {
 .miq-pagination .miq-paging {
   padding: 0;
 }
+
+.miq-small-tile .card-view-pf .card .card-content .miq-tile-head {
+  margin-left: 0 !important;
+}
+
+.miq-tile-section .card .card-content {
+  padding-right: 0 !important;
+}

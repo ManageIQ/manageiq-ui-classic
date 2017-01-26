@@ -159,16 +159,6 @@ module ApplicationHelper
     record.class.base_model.name.underscore
   end
 
-  def controller_to_model_params
-    {
-      "ManageIQ::Providers::CloudManager::Template" => VmOrTemplate,
-      "ManageIQ::Providers::CloudManager::Vm"       => VmOrTemplate,
-      "ManageIQ::Providers::InfraManager::Template" => VmOrTemplate,
-      "ManageIQ::Providers::InfraManager::Vm"       => VmOrTemplate
-    }
-  end
-  private :controller_to_model_params
-
   def model_string_to_constant_params
     {
       "all_vms" => VmOrTemplate
@@ -180,12 +170,23 @@ module ApplicationHelper
     !["ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile", "ServiceTemplate"].include? type
   end
 
+  CONTROLLER_TO_MODEL = Hash.new { |_h, k| k.safe_constantize }.merge(
+    "ManageIQ::Providers::CloudManager::Template" => VmOrTemplate,
+    "ManageIQ::Providers::CloudManager::Vm"       => VmOrTemplate,
+    "ManageIQ::Providers::InfraManager::Template" => VmOrTemplate,
+    "ManageIQ::Providers::InfraManager::Vm"       => VmOrTemplate
+  ).freeze
+
   def controller_to_model
-    controller_to_model_params[self.class.model.to_s] || self.class.model
+    CONTROLLER_TO_MODEL[self.class.model.to_s] || self.class.model
   end
 
+  MODEL_STRING = Hash.new { |_h, k| k.safe_constantize }.merge(
+    "all_vms" => VmOrTemplate
+  ).freeze
+
   def model_string_to_constant(model_string)
-    model_string_to_constant_params[model_string] || model_string.singularize.classify.constantize
+    MODEL_STRING[model_string] || model_string.singularize.classify.constantize
   end
 
   def restful_routed?(record_or_model)
