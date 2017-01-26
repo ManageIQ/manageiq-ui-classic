@@ -217,12 +217,6 @@ describe ProviderForemanController do
       allow(controller).to receive(:rebuild_toolbars).and_return("true")
     end
 
-    it "renders the refresh flash message for Ansible Tower" do
-      post :refresh, :params => {:miq_grid_checks => @config_ans.id}
-      expect(response.status).to eq(200)
-      expect(assigns(:flash_array).first[:message]).to include("Refresh Provider initiated for 1 provider (Ansible Tower)")
-    end
-
     it "renders the refresh flash message for Foreman" do
       post :refresh, :params => {:miq_grid_checks => @config_mgr.id}
       expect(response.status).to eq(200)
@@ -382,7 +376,7 @@ describe ProviderForemanController do
       controller.instance_variable_set(:@search_text, "manager")
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
-      expect(view.table.data.size).to eq(4)
+      expect(view.table.data.size).to eq(2)
 
       controller.instance_variable_set(:@_params, :id => "xx-fr")
       controller.instance_variable_set(:@search_text, "manager")
@@ -427,7 +421,7 @@ describe ProviderForemanController do
       controller.instance_variable_set(:@search_text, "2")
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0].name).to eq("ansibletest2 Configuration Manager")
+      expect(view.table.data[0].name).to eq("ansibletest2 Automation Manager")
 
       invgroup_id2 = inventory_group_key(@inventory_group2)
       controller.instance_variable_set(:@_params, :id => invgroup_id2)
@@ -454,7 +448,7 @@ describe ProviderForemanController do
       search_text = controller.instance_variable_get(:@search_text)
       expect(search_text).to eq("manager")
       view = controller.instance_variable_get(:@view)
-      expect(view.table.data.size).to eq(4)
+      expect(view.table.data.size).to eq(2)
     end
     it "renders tree_select for a ConfigurationManagerForeman node that contains an unassigned profile" do
       ems_id = ems_key_for_provider(@provider)
