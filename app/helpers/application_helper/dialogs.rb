@@ -27,28 +27,28 @@ module ApplicationHelper::Dialogs
     options_for_select(Array.new(59) { |i| i.to_s.rjust(2, '0') }, value)
   end
 
-  def textbox_tag_options(field, url)
+  def textbox_tag_options(field, url, auto_refresh_options_hash)
     tag_options = {
       :maxlength => 50,
       :class     => "dynamic-text-box-#{field.id} form-control"
     }
 
     extra_options = {"data-miq_observe" => {
-      :url      => url,
-    }.merge(auto_refresh_options(field)).to_json}
+      :url => url,
+    }.merge(auto_refresh_options(field, auto_refresh_options_hash)).to_json}
 
     add_options_unless_read_only(extra_options, tag_options, field)
   end
 
-  def textarea_tag_options(field, url)
+  def textarea_tag_options(field, url, auto_refresh_options_hash)
     tag_options = {
       :class     => "dynamic-text-area-#{field.id} form-control",
       :size      => "50x6"
     }
 
     extra_options = {"data-miq_observe" => {
-      :url      => url,
-    }.merge(auto_refresh_options(field)).to_json}
+      :url => url,
+    }.merge(auto_refresh_options(field, auto_refresh_options_hash)).to_json}
 
     add_options_unless_read_only(extra_options, tag_options, field)
   end
@@ -116,12 +116,15 @@ module ApplicationHelper::Dialogs
 
   private
 
-  def auto_refresh_options(field)
+  def auto_refresh_options(field, auto_refresh_options_hash)
     if field.trigger_auto_refresh
       {
-        :auto_refresh => true,
-        :field_id     => field.id.to_s,
-        :trigger      => field.trigger_auto_refresh.to_s
+        :auto_refresh                    => true,
+        :tab_index                       => auto_refresh_options_hash[:tab_index],
+        :group_index                     => auto_refresh_options_hash[:group_index],
+        :field_index                     => auto_refresh_options_hash[:field_index],
+        :auto_refreshable_field_indicies => auto_refresh_options_hash[:auto_refreshable_field_indicies],
+        :trigger                         => auto_refresh_options_hash[:trigger]
       }
     else
       {}

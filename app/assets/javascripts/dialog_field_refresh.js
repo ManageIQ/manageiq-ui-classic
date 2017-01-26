@@ -1,9 +1,16 @@
 /* global miqInitSelectPicker miqSelectPickerEvent miqSparkle miqSparkleOn */
 
 var dialogFieldRefresh = {
-  listenForAutoRefreshMessages: function(fieldId, callbackFunction) {
+  listenForAutoRefreshMessages: function(autoRefreshOptions, callbackFunction) {
+    var thisIsTheFieldToUpdate = function(event) {
+      tabIndex = event.data.tabIndex;
+      groupIndex = event.data.groupIndex;
+      fieldIndex = event.data.fieldIndex;
+      return tabIndex === autoRefreshOptions.tab_index && groupIndex === autoRefreshOptions.group_index && fieldIndex === autoRefreshOptions.field_index;
+    };
+
     window.addEventListener('message', function(event) {
-      if (event.data.fieldId !== fieldId) {
+      if (thisIsTheFieldToUpdate(event)) {
         callbackFunction.call();
       }
     });
@@ -112,7 +119,7 @@ var dialogFieldRefresh = {
     dialogFieldRefresh.sendRefreshRequest('dynamic_radio_button_refresh', data, doneFunction);
   },
 
-  refreshTextAreaBox: function(fieldName, fieldId) {
+  refreshTextAreaBox: function(fieldName, fieldId, callback) {
     miqSparkleOn();
 
     var data = {name: fieldName};
@@ -121,12 +128,13 @@ var dialogFieldRefresh = {
       $('.dynamic-text-area-' + fieldId).val(responseData.values.text);
       dialogFieldRefresh.setReadOnly($('.dynamic-text-area-' + fieldId), responseData.values.read_only);
       dialogFieldRefresh.setVisible($('#field_' +fieldId + '_tr'), responseData.values.visible);
+      callback.call();
     };
 
     dialogFieldRefresh.sendRefreshRequest('dynamic_text_box_refresh', data, doneFunction);
   },
 
-  refreshTextBox: function(fieldName, fieldId) {
+  refreshTextBox: function(fieldName, fieldId, callback) {
     miqSparkleOn();
 
     var data = {name: fieldName};
@@ -135,6 +143,7 @@ var dialogFieldRefresh = {
       $('.dynamic-text-box-' + fieldId).val(responseData.values.text);
       dialogFieldRefresh.setReadOnly($('.dynamic-text-box-' + fieldId), responseData.values.read_only);
       dialogFieldRefresh.setVisible($('#field_' +fieldId + '_tr'), responseData.values.visible);
+      callback.call();
     };
 
     dialogFieldRefresh.sendRefreshRequest('dynamic_text_box_refresh', data, doneFunction);
@@ -166,10 +175,42 @@ var dialogFieldRefresh = {
     $('.dynamic-drop-down-' + fieldId + '.selectpicker').selectpicker('refresh');
   },
 
+  triggerAutoRefresh: function(autoRefreshOptions) {
+    if (Boolean(autoRefreshOptions.trigger) === true) {
+      var groupIndex = autoRefreshOptions.group_index;
+      var fieldIndex = autoRefreshOptions.field_index;
+      var autoRefreshableIndicies = autoRefreshOptions.auto_refreshable_field_indicies;
+      var nextAvailableAutoRefreshFieldIndex;
+      var nextAvailableAutoRefreshGroupIndex;
+      var foundNextAvailable = false;
 
-  triggerAutoRefresh: function(fieldId, trigger) {
-    if (Boolean(trigger) === true) {
-      parent.postMessage({fieldId: fieldId}, '*');
+      $.each(autoRefreshableIndicies, function(refreshableGroupIndex, refreshableGroup) {
+        if (foundNextAvailable === false && refreshableGroup[0] !== undefined) {
+          if (groupIndex < refreshableGroupIndex) {
+            $.each(refreshableGroup, function(refreshableFieldIndex, refreshableField) {
+              nextAvailableAutoRefreshFieldIndex = autoRefreshableIndicies[refreshableGroupIndex][refreshableFieldIndex];
+              nextAvailableAutoRefreshGroupIndex = refreshableGroupIndex;
+              foundNextAvailable = true;
+            });
+          } else if (groupIndex === refreshableGroupIndex) {
+            $.each(refreshableGroup, function(refreshableFieldIndex, refreshableField) {
+              if (fieldIndex < refreshableField && foundNextAvailable === false) {
+                nextAvailableAutoRefreshFieldIndex = autoRefreshableIndicies[refreshableGroupIndex][refreshableFieldIndex];
+                nextAvailableAutoRefreshGroupIndex = refreshableGroupIndex;
+                foundNextAvailable = true;
+              }
+            });
+          }
+        }
+      });
+
+      if (nextAvailableAutoRefreshFieldIndex !== undefined) {
+        parent.postMessage({
+          tabIndex: autoRefreshOptions.tab_index,
+          groupIndex: nextAvailableAutoRefreshGroupIndex,
+          fieldIndex: nextAvailableAutoRefreshFieldIndex,
+        }, '*');
+      }
     }
   },
 

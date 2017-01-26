@@ -33,11 +33,21 @@ describe ApplicationHelper::Dialogs do
   end
 
   describe "#textbox_tag_options" do
+    let(:auto_refresh_options_hash) do
+      {
+        :tab_index                       => "100",
+        :group_index                     => "200",
+        :field_index                     => "300",
+        :auto_refreshable_field_indicies => [1, 2, 3],
+        :trigger                         => "true"
+      }
+    end
+
     context "when the field is read_only" do
       let(:read_only) { true }
 
       it "returns the tag options with a disabled true" do
-        expect(helper.textbox_tag_options(dialog_field, "url")).to eq(
+        expect(helper.textbox_tag_options(dialog_field, "url", auto_refresh_options_hash)).to eq(
           :maxlength => 50,
           :class     => "dynamic-text-box-100 form-control",
           :disabled  => true,
@@ -53,7 +63,7 @@ describe ApplicationHelper::Dialogs do
         let(:trigger_auto_refresh) { false }
 
         it "returns the tag options with a data-miq-observe" do
-          expect(helper.textbox_tag_options(dialog_field, "url")).to eq(
+          expect(helper.textbox_tag_options(dialog_field, "url", auto_refresh_options_hash)).to eq(
             :maxlength         => 50,
             :class             => "dynamic-text-box-100 form-control",
             "data-miq_observe" => '{"url":"url"}'
@@ -65,14 +75,17 @@ describe ApplicationHelper::Dialogs do
         let(:trigger_auto_refresh) { true }
 
         it "returns the tag options with a data-miq-observe" do
-          expect(helper.textbox_tag_options(dialog_field, "url")).to eq(
+          expect(helper.textbox_tag_options(dialog_field, "url", auto_refresh_options_hash)).to eq(
             :maxlength         => 50,
             :class             => "dynamic-text-box-100 form-control",
             "data-miq_observe" => {
-              :url          => "url",
-              :auto_refresh => true,
-              :field_id     => "100",
-              :trigger      => "true"
+              :url                             => "url",
+              :auto_refresh                    => true,
+              :tab_index                       => "100",
+              :group_index                     => "200",
+              :field_index                     => "300",
+              :auto_refreshable_field_indicies => [1, 2, 3],
+              :trigger                         => "true"
             }.to_json
           )
         end
@@ -81,11 +94,21 @@ describe ApplicationHelper::Dialogs do
   end
 
   describe "#textarea_tag_options" do
+    let(:auto_refresh_options_hash) do
+      {
+        :tab_index                       => "100",
+        :group_index                     => "200",
+        :field_index                     => "300",
+        :auto_refreshable_field_indicies => [1, 2, 3],
+        :trigger                         => "true"
+      }
+    end
+
     context "when the field is read_only" do
       let(:read_only) { true }
 
       it "returns the tag options with a disabled true" do
-        expect(helper.textarea_tag_options(dialog_field, "url")).to eq(
+        expect(helper.textarea_tag_options(dialog_field, "url", auto_refresh_options_hash)).to eq(
           :class    => "dynamic-text-area-100 form-control",
           :size     => "50x6",
           :disabled => true,
@@ -101,14 +124,17 @@ describe ApplicationHelper::Dialogs do
         let(:trigger_auto_refresh) { true }
 
         it "returns the tag options with a data-miq-observe" do
-          expect(helper.textarea_tag_options(dialog_field, "url")).to eq(
+          expect(helper.textarea_tag_options(dialog_field, "url", auto_refresh_options_hash)).to eq(
             :class             => "dynamic-text-area-100 form-control",
             :size              => "50x6",
             "data-miq_observe" => {
-              :url          => "url",
-              :auto_refresh => true,
-              :field_id     => "100",
-              :trigger      => "true"
+              :url                             => "url",
+              :auto_refresh                    => true,
+              :tab_index                       => "100",
+              :group_index                     => "200",
+              :field_index                     => "300",
+              :auto_refreshable_field_indicies => [1, 2, 3],
+              :trigger                         => "true"
             }.to_json
           )
         end
@@ -118,7 +144,7 @@ describe ApplicationHelper::Dialogs do
         let(:trigger_auto_refresh) { false }
 
         it "returns the tag options with a data-miq-observe" do
-          expect(helper.textarea_tag_options(dialog_field, "url")).to eq(
+          expect(helper.textarea_tag_options(dialog_field, "url", auto_refresh_options_hash)).to eq(
             :class             => "dynamic-text-area-100 form-control",
             :size              => "50x6",
             "data-miq_observe" => '{"url":"url"}'

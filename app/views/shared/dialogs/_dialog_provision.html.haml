@@ -8,9 +8,9 @@
           = miq_tab_header(tab.id) do
             = tab.label
       .tab-content
-        - wf.dialog.dialog_tabs.each do |tab|
+        - wf.dialog.dialog_tabs.each_with_index do |tab, tab_index|
           = miq_tab_content(tab.id) do
-            = render :partial => "shared/dialogs/dialog_tab", :locals => {:wf => wf, :tab => tab}
+            = render :partial => "shared/dialogs/dialog_tab", :locals => {:wf => wf, :tab => tab, :tab_index => tab_index}
   - if @edit && !@edit[:explorer] && @record.respond_to?(:buttons)
     = render :partial => "layouts/x_dialog_buttons",
              :locals  => {:action_url => 'dialog_form_button_pressed',

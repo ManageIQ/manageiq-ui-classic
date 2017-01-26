@@ -215,11 +215,13 @@ describe('dialogFieldRefresh', function() {
 
   describe('#refreshTextBox', function() {
     var loadedDoneFunction;
+    var refreshCallback;
 
     beforeEach(function() {
       spyOn(dialogFieldRefresh, 'setReadOnly');
       spyOn(dialogFieldRefresh, 'setVisible');
       spyOn($.fn, 'val');
+      refreshCallback = jasmine.createSpyObj('refreshCallback', ['call']);
 
       spyOn(dialogFieldRefresh, 'sendRefreshRequest').and.callFake(function(_url, _data, doneFunction) {
         loadedDoneFunction = doneFunction;
@@ -227,7 +229,7 @@ describe('dialogFieldRefresh', function() {
     });
 
     it('calls sendRefreshRequest', function() {
-      dialogFieldRefresh.refreshTextBox('abc', 123);
+      dialogFieldRefresh.refreshTextBox('abc', 123, refreshCallback);
       expect(dialogFieldRefresh.sendRefreshRequest).toHaveBeenCalledWith(
         'dynamic_text_box_refresh',
         {name: 'abc'},
@@ -237,6 +239,7 @@ describe('dialogFieldRefresh', function() {
 
     describe('#refreshTextBox doneFunction', function() {
       beforeEach(function() {
+        dialogFieldRefresh.refreshTextBox('abc', 123, refreshCallback);
         var data = {responseText: JSON.stringify({values: {text: 'text', read_only: true, visible: false}})};
         loadedDoneFunction(data);
       });
@@ -255,22 +258,29 @@ describe('dialogFieldRefresh', function() {
           true
         );
       });
+
       it('sets the visible property', function() {
         expect(dialogFieldRefresh.setVisible).toHaveBeenCalledWith(
           jasmine.objectContaining({selector: '#field_123_tr'}),
           false
         );
       });
+
+      it('calls the callback', function() {
+        expect(refreshCallback.call).toHaveBeenCalled();
+      });
     });
   });
 
   describe('#refreshTextAreaBox', function() {
     var loadedDoneFunction;
+    var refreshCallback;
 
     beforeEach(function() {
       spyOn(dialogFieldRefresh, 'setReadOnly');
       spyOn(dialogFieldRefresh, 'setVisible');
       spyOn($.fn, 'val');
+      refreshCallback = jasmine.createSpyObj('refreshCallback', ['call']);
 
       spyOn(dialogFieldRefresh, 'sendRefreshRequest').and.callFake(function(_url, _data, doneFunction) {
         loadedDoneFunction = doneFunction;
@@ -278,7 +288,7 @@ describe('dialogFieldRefresh', function() {
     });
 
     it('calls sendRefreshRequest', function() {
-      dialogFieldRefresh.refreshTextAreaBox('abc', 123);
+      dialogFieldRefresh.refreshTextAreaBox('abc', 123, refreshCallback);
       expect(dialogFieldRefresh.sendRefreshRequest).toHaveBeenCalledWith(
         'dynamic_text_box_refresh',
         {name: 'abc'},
@@ -288,6 +298,7 @@ describe('dialogFieldRefresh', function() {
 
     describe('#refreshTextAreaBox doneFunction', function() {
       beforeEach(function() {
+        dialogFieldRefresh.refreshTextAreaBox('abc', 123, refreshCallback);
         var data = {responseText: JSON.stringify({values: {text: 'text', read_only: true, visible: false}})};
         loadedDoneFunction(data);
       });
@@ -306,11 +317,16 @@ describe('dialogFieldRefresh', function() {
           true
         );
       });
+
       it('sets the visible property', function() {
         expect(dialogFieldRefresh.setVisible).toHaveBeenCalledWith(
           jasmine.objectContaining({selector: '#field_123_tr'}),
           false
         );
+      });
+
+      it('calls the callback', function() {
+        expect(refreshCallback.call).toHaveBeenCalled();
       });
     });
   });
@@ -436,22 +452,172 @@ describe('dialogFieldRefresh', function() {
 
     context('when the trigger passed in falsy', function() {
       it('does not post any messages', function() {
-        dialogFieldRefresh.triggerAutoRefresh(123, "");
+        dialogFieldRefresh.triggerAutoRefresh({trigger: ""});
         expect(parent.postMessage).not.toHaveBeenCalled();
       });
     });
 
     context('when the trigger passed in is the string "true"', function() {
-      it('posts a message', function() {
-        dialogFieldRefresh.triggerAutoRefresh(123, "true");
-        expect(parent.postMessage).toHaveBeenCalledWith({fieldId: 123}, '*');
+      context('when the next auto refreshable field is in the same group and ahead', function() {
+        beforeEach(function() {
+          dialogFieldRefresh.triggerAutoRefresh({
+            tab_index: 0,
+            group_index: 0,
+            field_index: 0,
+            auto_refreshable_field_indicies: [[0, 1, 2], [0, 2]],
+            trigger: "true"
+          });
+        });
+
+        it('posts a message', function() {
+          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 0, groupIndex: 0, fieldIndex: 1}, '*');
+        });
+      });
+
+      context('when the next auto refreshable field is in the same group and behind', function() {
+        beforeEach(function() {
+          dialogFieldRefresh.triggerAutoRefresh({
+            tab_index: 0,
+            group_index: 0,
+            field_index: 1,
+            auto_refreshable_field_indicies: [[0, 1, 2], [0, 2]],
+            trigger: "true"
+          });
+        });
+
+        it('posts a message', function() {
+          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 0, groupIndex: 0, fieldIndex: 2}, '*');
+        });
+      });
+
+      context('when the next auto refreshable field is in the next group', function() {
+        beforeEach(function() {
+          dialogFieldRefresh.triggerAutoRefresh({
+            tab_index: 0,
+            group_index: 0,
+            field_index: 0,
+            auto_refreshable_field_indicies: [[], [2]],
+            trigger: "true"
+          });
+        });
+
+        it('posts a message', function() {
+          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 0, groupIndex: 1, fieldIndex: 2}, '*');
+        });
+      });
+
+      context('when the next auto refreshable field is in the second group and current is ahead', function() {
+        beforeEach(function() {
+          dialogFieldRefresh.triggerAutoRefresh({
+            tab_index: 0,
+            group_index: 1,
+            field_index: 2,
+            auto_refreshable_field_indicies: [[0, 1, 2], [0, 2, 3, 4, 5]],
+            trigger: "true"
+          });
+        });
+
+        it('posts a message', function() {
+          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 0, groupIndex: 1, fieldIndex: 3}, '*');
+        });
+      });
+
+      context('when there are no auto refreshable fields', function() {
+        beforeEach(function() {
+          dialogFieldRefresh.triggerAutoRefresh({
+            tab_index: 0,
+            group_index: 1,
+            field_index: 1,
+            auto_refreshable_field_indicies: [[], []],
+            trigger: "true"
+          });
+        });
+
+        it('does not post a message', function() {
+          expect(parent.postMessage).not.toHaveBeenCalled();
+        });
       });
     });
 
     context('when the trigger passed in is true', function() {
-      it('posts a message', function() {
-        dialogFieldRefresh.triggerAutoRefresh(123, true);
-        expect(parent.postMessage).toHaveBeenCalledWith({fieldId: 123}, '*');
+      context('when the next auto refreshable field is in the same group and ahead', function() {
+        beforeEach(function() {
+          dialogFieldRefresh.triggerAutoRefresh({
+            tab_index: 0,
+            group_index: 0,
+            field_index: 0,
+            auto_refreshable_field_indicies: [[0, 1, 2], [0, 2]],
+            trigger: true
+          });
+        });
+
+        it('posts a message', function() {
+          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 0, groupIndex: 0, fieldIndex: 1}, '*');
+        });
+      });
+
+      context('when the next auto refreshable field is in the same group and behind', function() {
+        beforeEach(function() {
+          dialogFieldRefresh.triggerAutoRefresh({
+            tab_index: 0,
+            group_index: 0,
+            field_index: 1,
+            auto_refreshable_field_indicies: [[0, 1, 2], [0, 2]],
+            trigger: true
+          });
+        });
+
+        it('posts a message', function() {
+          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 0, groupIndex: 0, fieldIndex: 2}, '*');
+        });
+      });
+
+      context('when the next auto refreshable field is in the next group', function() {
+        beforeEach(function() {
+          dialogFieldRefresh.triggerAutoRefresh({
+            tab_index: 0,
+            group_index: 0,
+            field_index: 0,
+            auto_refreshable_field_indicies: [[], [2]],
+            trigger: true
+          });
+        });
+
+        it('posts a message', function() {
+          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 0, groupIndex: 1, fieldIndex: 2}, '*');
+        });
+      });
+
+      context('when the next auto refreshable field is in the second group and current is ahead', function() {
+        beforeEach(function() {
+          dialogFieldRefresh.triggerAutoRefresh({
+            tab_index: 0,
+            group_index: 1,
+            field_index: 2,
+            auto_refreshable_field_indicies: [[0, 1, 2], [0, 2, 3, 4, 5]],
+            trigger: true
+          });
+        });
+
+        it('posts a message', function() {
+          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 0, groupIndex: 1, fieldIndex: 3}, '*');
+        });
+      });
+
+      context('when there are no auto refreshable fields', function() {
+        beforeEach(function() {
+          dialogFieldRefresh.triggerAutoRefresh({
+            tab_index: 0,
+            group_index: 1,
+            field_index: 1,
+            auto_refreshable_field_indicies: [[], []],
+            trigger: true
+          });
+        });
+
+        it('does not post a message', function() {
+          expect(parent.postMessage).not.toHaveBeenCalled();
+        });
       });
     });
   });
