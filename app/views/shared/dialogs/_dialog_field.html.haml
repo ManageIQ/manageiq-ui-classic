@@ -51,7 +51,7 @@
                        drop_down_options(field, url).merge(:multiple => true))
 
         :javascript
-          dialogFieldRefresh.initializeDialogSelectPicker('#{field.name}', '#{field.id}', undefined, '#{url}', '#{field.trigger_auto_refresh}');
+          dialogFieldRefresh.initializeDialogSelectPicker('#{field.name}', undefined, '#{url}', JSON.parse('#{j(auto_refresh_options.to_json)}'));
 
       - else
         - value = wf.value(field.name) || ''
