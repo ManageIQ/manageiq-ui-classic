@@ -1497,7 +1497,7 @@ class CatalogController < ApplicationController
 
   def available_ansible_tower_managers
     @edit[:new][:available_managers] =
-      ManageIQ::Providers::AnsibleTower::ConfigurationManager.all.collect { |t| [t.name, t.id] }.sort
+      ManageIQ::Providers::AnsibleTower::AutomationManager.all.collect { |t| [t.name, t.id] }.sort
     @edit[:new][:template_id] = @record.job_template.try(:id)
     @edit[:new][:manager_id] = @record.job_template.try(:manager).try(:id)
     available_ansible_tower_job_templates(@edit[:new][:manager_id]) if @edit[:new][:manager_id]

@@ -62,7 +62,7 @@ class OrchestrationStackController < ApplicationController
 
   def show_list
     process_show_list(
-      :where_clause => "orchestration_stacks.type != 'ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job'"
+      :where_clause => "orchestration_stacks.type != 'ManageIQ::Providers::AnsibleTower::AutomationManager::Job'"
     )
   end
 
