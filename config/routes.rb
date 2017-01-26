@@ -259,6 +259,7 @@ Rails.application.routes.draw do
 
     :catalog                  => {
       :get  => %w(
+        catalog_item_form_fields
         download_data
         explorer
         ot_edit
@@ -274,6 +275,7 @@ Rails.application.routes.draw do
         atomic_form_field_changed
         atomic_st_edit
         automate_button_field_changed
+        catalog_item_edit
         explorer
         get_ae_tree_edit_key
         group_create

@@ -111,6 +111,7 @@ class CatalogController < ApplicationController
         @edit[:new] ||= {}
         @edit[:current] ||= {}
         @edit[:key] = "prov_edit__new"
+        @edit[:st_prov_types] = catalog_item_types
       end
       @edit[:new][:st_prov_type] = @record.prov_type if @record.prov_type.present?
       # set name and description for ServiceTemplate record
@@ -126,6 +127,58 @@ class CatalogController < ApplicationController
     end
   end
 
+  def catalog_item_types
+    {
+      "amazon"                   => "Amazon",
+      "generic_ansible_playbook" => "Ansible Playbook",
+      "azure"                    => "Azure",
+      "generic"                  => "Generic",
+      "generic_orchestration"    => "Orchestration",
+      "generic_ansible_tower"    => "AnsibleTower",
+      "google"                   => "Google",
+      "microsoft"                => "SCVMM",
+      "openstack"                => "OpenStack",
+      "redhat"                   => "RHEV",
+      "vmware"                   => "VMware"
+    }
+  end
+
+  def catalog_item_edit
+    assert_privileges("atomic_catalogitem_edit")
+    case params[:button]
+    when "cancel"
+      service_template = ServiceTemplate.find_by_id(params[:id])
+      if service_template.try(:id).nil?
+        add_flash(_("Add of new Catalog Item was cancelled by the user"))
+      else
+        add_flash(_("Edit of Catalog Item \"%{name}\" was cancelled by the user") %
+                    {:name => service_template.name})
+      end
+      get_node_info(x_node)
+      replace_right_cell(:nodetype => x_node)
+    when "save", "add"
+      service_template = params[:id] != "new" ? ServiceTemplate.find_by_id(params[:id]) : ServiceTemplate.new
+
+      # This should be changed to something like service_template.changed? and service_template.changes
+      # when we have a version of Rails that supports detecting changes on serialized
+      # fields
+      old_service_template_attributes = service_template.attributes.clone
+      service_template_set_record_vars(service_template)
+
+      begin
+        service_template.save!
+      rescue => bang
+        add_flash(_("Error when adding a new Catalog Item: %{message}") % {:message => bang.message}, :error)
+        javascript_flash
+      else
+        AuditEvent.success(build_saved_audit_hash(old_service_template_attributes, service_template, params[:button] == "add"))
+        add_flash(_("Catalog Item \"%{name}\" was saved") %
+                    {:name => service_template.name})
+        replace_right_cell(:replace_trees => trees_to_replace([:sandt, :svccat, :stcat]))
+      end
+    end
+  end
+
   def atomic_form_field_changed
     # need to check req_id in session since we are using common code for prov requests and atomic ST screens
     id = session[:edit][:req_id] || "new"
@@ -136,31 +189,45 @@ class CatalogController < ApplicationController
     build_ae_tree(:catalog, :automate_tree) if params[:display] || params[:template_id] || params[:manager_id]
     if params[:st_prov_type] # build request screen for selected item type
       @_params[:org_controller] = "service_template"
-      prov_set_form_vars if need_prov_dialogs?(params[:st_prov_type])
-      @record = class_service_template(params[:st_prov_type]).new
-      set_form_vars
-      @edit[:new][:st_prov_type] = params[:st_prov_type] if params[:st_prov_type]
-      @edit[:new][:service_type] = "atomic"
-      default_entry_point(@edit[:new][:st_prov_type],
-                          @edit[:new][:service_type])
-      @edit[:rec_id] = @record.try(:id)
-      @tabactive = @edit[:new][:current_tab_key]
+      if ansible_playbook?
+        @record = ServiceTemplate.new
+        if false
+          add_flash(_("Before adding Ansible Service, at least 1 repository, 1 playbook, 1 credential must exist in VMDB"), :error)
+          javascript_flash
+          return
+        end
+      else
+        prov_set_form_vars if need_prov_dialogs?(params[:st_prov_type])
+        @record = class_service_template(params[:st_prov_type]).new
+        set_form_vars
+        @edit[:new][:st_prov_type] = params[:st_prov_type] if params[:st_prov_type]
+        @edit[:new][:service_type] = "atomic"
+        default_entry_point(@edit[:new][:st_prov_type],
+                            @edit[:new][:service_type])
+        @edit[:rec_id] = @record.try(:id)
+        @tabactive = @edit[:new][:current_tab_key]
+      end
     end
     render :update do |page|
       page << javascript_prologue
-      # for generic/orchestration type tabs do not show up on screen as there is only a single tab when form is initialized
-      # when display in catalog is checked, replace div so tabs can be redrawn
-      page.replace("form_div", :partial => "st_form") if params[:st_prov_type] ||
-        (params[:display] && @edit[:new][:st_prov_type].starts_with?("generic"))
-      page.replace_html("basic_info_div", :partial => "form_basic_info") if params[:display] || params[:template_id] || params[:manager_id]
-      if params[:display]
-        page << "miq_tabs_show_hide('#details_tab', '#{(params[:display] == "1")}')"
+      if ansible_playbook?
+        page.replace("form_div", :partial => "st_angular_form")
+        page << javascript_hide("form_buttons_div")
+      else
+        # for generic/orchestration type tabs do not show up on screen as there is only a single tab when form is initialized
+        # when display in catalog is checked, replace div so tabs can be redrawn
+        page.replace("form_div", :partial => "st_form") if params[:st_prov_type] ||
+          (params[:display] && @edit[:new][:st_prov_type].starts_with?("generic"))
+        page.replace_html("basic_info_div", :partial => "form_basic_info") if params[:display] || params[:template_id] || params[:manager_id]
+        if params[:display]
+          page << "miq_tabs_show_hide('#details_tab', '#{(params[:display] == "1")}')"
+        end
+        if changed != session[:changed]
+          page << javascript_for_miq_button_visibility(changed)
+          session[:changed] = changed
+        end
+        page << set_spinner_off
       end
-      if changed != session[:changed]
-        page << javascript_for_miq_button_visibility(changed)
-        session[:changed] = changed
-      end
-      page << set_spinner_off
     end
   end
 
@@ -802,6 +869,12 @@ class CatalogController < ApplicationController
   end
 
   private
+
+  def ansible_playbook?
+    prov_type = params[:st_prov_type] ? params[:st_prov_type] : @record.prov_type
+    prov_type == "generic_ansible_playbook"
+  end
+  helper_method :ansible_playbook?
 
   def features
     [{:role     => "svc_catalog_accord",
@@ -1859,7 +1932,7 @@ class CatalogController < ApplicationController
         action_url = x_active_tree == :ot_tree ? "ot_tags_edit" : "st_tags_edit"
         r[:partial => "layouts/x_tagging", :locals => {:action_url => action_url}]
       elsif action && ["at_st_new", "st_new"].include?(action)
-        r[:partial => "st_form"]
+        r[:partial => ansible_playbook? ? "st_angular_form" : "st_form"]
       elsif action && ["st_catalog_new", "st_catalog_edit"].include?(action)
         r[:partial => "stcat_form"]
       elsif action == "dialog_provision"
@@ -1904,7 +1977,8 @@ class CatalogController < ApplicationController
           'st_new', 'st_catalog_new', 'st_catalog_edit'].include?(action)
         presenter.hide(:toolbar).show(:paging_div)
         # incase it was hidden for summary screen, and incase there were no records on show_list
-        presenter.show(:form_buttons_div).hide(:pc_div_1)
+        presenter.hide(:pc_div_1)
+        ansible_playbook? ? presenter.hide(:form_buttons_div) : presenter.show(:form_buttons_div)
         locals = {:record_id => @edit[:rec_id]}
         case action
         when 'group_edit'
