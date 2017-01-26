@@ -19,7 +19,7 @@ class AlertsListController < ApplicationController
   private
 
   def session_data
-    @layout = "alerts_list"
+    @layout = "monitor_alerts_list"
   end
 
   def set_session_data

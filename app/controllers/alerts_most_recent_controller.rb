@@ -19,7 +19,7 @@ class AlertsMostRecentController < ApplicationController
   private
 
   def session_data
-    @layout = "alerts_most_recent"
+    @layout = "monitor_alerts_most_recent"
   end
 
   def set_session_data

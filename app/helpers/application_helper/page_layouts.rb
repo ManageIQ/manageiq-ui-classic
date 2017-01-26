@@ -3,9 +3,6 @@ module ApplicationHelper::PageLayouts
     return false if @in_a_form
     return false if %w(
       about
-      alerts_overview
-      alerts_list
-      alerts_most_recent
       all_tasks
       all_ui_tasks
       chargeback
@@ -27,6 +24,9 @@ module ApplicationHelper::PageLayouts
       miq_policy
       miq_policy_export
       miq_policy_logs
+      monitor_alerts_overview
+      monitor_alerts_list
+      monitor_alerts_most_recent
       my_tasks
       my_ui_tasks
       ops
