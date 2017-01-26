@@ -75,6 +75,7 @@ var dialogFieldRefresh = {
 
       dialogFieldRefresh.setReadOnly($('.dynamic-date-' + fieldId), responseData.values.read_only);
       dialogFieldRefresh.setVisible($('#field_' +fieldId + '_tr'), responseData.values.visible);
+      callback.call();
     };
 
     dialogFieldRefresh.sendRefreshRequest('dynamic_date_refresh', data, doneFunction);

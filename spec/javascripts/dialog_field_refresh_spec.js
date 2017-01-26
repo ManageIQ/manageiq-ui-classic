@@ -170,7 +170,7 @@ describe('dialogFieldRefresh', function() {
     });
 
     it('calls sendRefreshRequest', function() {
-      dialogFieldRefresh.refreshDateTime('abc', 123);
+      dialogFieldRefresh.refreshDateTime('abc', 123, refreshCallback);
       expect(dialogFieldRefresh.sendRefreshRequest).toHaveBeenCalledWith(
         'dynamic_date_refresh',
         {name: 'abc'},
@@ -180,6 +180,7 @@ describe('dialogFieldRefresh', function() {
 
     describe('#refreshDateTime doneFunction', function() {
       beforeEach(function() {
+        dialogFieldRefresh.refreshDateTime('abc', 123, refreshCallback);
         var data = {responseText: JSON.stringify({values: {date: 'today', hour: '12', min: '34', read_only: true, visible: false}})};
         loadedDoneFunction(data);
       });
@@ -214,11 +215,16 @@ describe('dialogFieldRefresh', function() {
           true
         );
       });
+
       it('sets the visible property', function() {
         expect(dialogFieldRefresh.setVisible).toHaveBeenCalledWith(
           jasmine.objectContaining({selector: '#field_123_tr'}),
           false
         );
+      });
+
+      it('calls the callback', function() {
+        expect(refreshCallback.call).toHaveBeenCalled();
       });
     });
   });

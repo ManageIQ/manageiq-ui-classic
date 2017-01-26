@@ -67,16 +67,21 @@ module ApplicationHelper::Dialogs
     add_options_unless_read_only(extra_options, tag_options, field)
   end
 
-  def date_tag_options(field, url)
+  def date_tag_options(field, url, auto_refresh_options_hash)
     tag_options = {:class => "css1 dynamic-date-#{field.id}", :readonly => "true"}
-    extra_options = {"data-miq_observe_date" => {:url => url}.merge(auto_refresh_options(field)).to_json}
+    miq_observe_options = {
+      :url => url
+    }.merge(auto_refresh_options(field, auto_refresh_options_hash)).to_json
+    extra_options = {"data-miq_observe_date" => miq_observe_options}
 
     add_options_unless_read_only(extra_options, tag_options, field)
   end
 
-  def time_tag_options(field, url, hour_or_min)
+  def time_tag_options(field, url, hour_or_min, auto_refresh_options_hash)
     tag_options = {:class => "dynamic-date-#{hour_or_min}-#{field.id}"}
-    extra_options = {"data-miq_observe" => {:url => url}.merge(auto_refresh_options(field)).to_json}
+    extra_options = {"data-miq_observe" => {
+      :url => url
+    }.merge(auto_refresh_options(field, auto_refresh_options_hash)).to_json}
 
     add_options_unless_read_only(extra_options, tag_options, field)
   end
