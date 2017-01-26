@@ -349,5 +349,8 @@
       "Vm":{"type":"glyph","icon":"","fontfamily":"PatternFlyIcons-webfont"},
       "Kubernetes":{"type":"image","icon":"...kubernetes..."},
       "Openshift":{"type":"image","icon":"...openshift..."},
-      "OpenshiftEnterprise":{"type":"image","icon":"...openshift_enterprise..."}}}
+      "OpenshiftEnterprise":{"type":"image","icon":"...openshift_enterprise..."}
+    },
+    "settings": { "containers_max_objects":100}
+  }
 }

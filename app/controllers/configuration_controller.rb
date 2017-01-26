@@ -576,6 +576,7 @@ class ConfigurationController < ApplicationController
       @edit[:new][:perpage][:tile] = params[:perpage_tile].to_i if params[:perpage_tile]
       @edit[:new][:perpage][:list] = params[:perpage_list].to_i if params[:perpage_list]
       @edit[:new][:perpage][:reports] = params[:perpage_reports].to_i if params[:perpage_reports]
+      @edit[:new][:topology][:containers_max_objects] = params[:topology_containers_max_objects].to_i if params[:topology_containers_max_objects]
       @edit[:new][:display][:theme] = params[:display_theme] unless params[:display_theme].nil?
       @edit[:new][:display][:bg_color] = params[:bg_color] unless params[:bg_color].nil?
       @edit[:new][:display][:reporttheme] = params[:display_reporttheme] unless params[:display_reporttheme].nil?
