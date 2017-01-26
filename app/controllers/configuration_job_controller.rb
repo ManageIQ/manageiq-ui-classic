@@ -8,7 +8,7 @@ class ConfigurationJobController < ApplicationController
   include Mixins::GenericSessionMixin
 
   def self.model
-    ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job
+    ManageIQ::Providers::AnsibleTower::AutomationManager::Job
   end
 
   def self.table_name
@@ -58,7 +58,7 @@ class ConfigurationJobController < ApplicationController
     when "configuration_job_delete"
       configuration_job_delete
     when "configuration_job_tag"
-      tag(ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job)
+      tag(ManageIQ::Providers::AnsibleTower::AutomationManager::Job)
     end
     return if %w(configuration_job_tag).include?(params[:pressed]) && @flash_array.nil? # Tag screen showing, so return
 

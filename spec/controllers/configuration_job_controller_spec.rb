@@ -52,10 +52,10 @@ describe ConfigurationJobController do
                                  :name   => "tag2",
                                  :parent => classification)
       allow(Classification).to receive(:find_assigned_entries).with(@cj).and_return([@tag1, @tag2])
-      session[:tag_db] = "ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job"
+      session[:tag_db] = "ManageIQ::Providers::AnsibleTower::AutomationManager::Job"
       edit = {
-        :key        => "ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job_edit_tags__#{@cj.id}",
-        :tagging    => "ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job",
+        :key        => "ManageIQ::Providers::AnsibleTower::AutomationManager::Job_edit_tags__#{@cj.id}",
+        :tagging    => "ManageIQ::Providers::AnsibleTower::AutomationManager::Job",
         :object_ids => [@cj.id],
         :current    => {:assignments => []},
         :new        => {:assignments => [@tag1.id, @tag2.id]}
