@@ -6,5 +6,5 @@ describe TreeNode::MiqPolicy do
 
   include_examples 'TreeNode::Node#key prefix', 'p-'
   include_examples 'TreeNode::Node#title description'
-  include_examples 'TreeNode::Node#image', '100/miq_policy_vm.png'
+  include_examples 'TreeNode::Node#icon', 'pficon pficon-virtual-machine'
 end

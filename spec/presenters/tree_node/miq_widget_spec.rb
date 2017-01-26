@@ -5,7 +5,7 @@ describe TreeNode::MiqWidget do
   let(:object) { FactoryGirl.create(:miq_widget) }
 
   include_examples 'TreeNode::Node#key prefix', '-'
-  include_examples 'TreeNode::Node#image', '100/report_widget.png'
+  include_examples 'TreeNode::Node#icon', 'fa fa-file-text-o'
 
   describe '#tooltip' do
     it 'returns with the same as node title' do
