@@ -200,7 +200,7 @@ module HostHelper::TextualSummary
   def textual_storage_adapters
     return nil if @record.openstack_host?
     num = @record.hardware.nil? ? 0 : @record.hardware.number_of(:storage_adapters)
-    h = {:label => _("Storage Adapters"), :image => "100/sa.png", :value => num}
+    h = {:label => _("Storage Adapters"), :icon => "product product-network_card", :value => num}
     if num > 0
       h[:title] = _("Show %{title} Storage Adapters") % {:title => host_title}
       h[:link]  = url_for(:action => 'show', :id => @record, :display => 'storage_adapters')
