@@ -356,7 +356,6 @@ class TreeBuilder
     # Catalog explorer trees
     :configuration_manager_providers => "TreeBuilderConfigurationManager",
     :cs_filter                       => "TreeBuilderConfigurationManagerConfiguredSystems",
-    :configuration_scripts           => "TreeBuilderConfigurationManagerConfigurationScripts",
 
     # Catalog explorer trees
     :ot                              => "TreeBuilderOrchestrationTemplates",
