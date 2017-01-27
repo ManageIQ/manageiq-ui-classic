@@ -1159,41 +1159,22 @@ Rails.application.routes.draw do
 
     :ems_physical_infra                => {
       :get  => %w(
-        dialog_load
         discover
         download_data
         ems_physical_infra_form_fields
-        register_nodes
-        introspect_nodes
-        protect
         show_list
-        tagging_edit
-        scaling
-        scaledown
       ) +
                compare_get,
       :post => %w(
         button
         create
-        form_field_changed
-        register_nodes
-        introspect_nodes
         listnav_search_selected
-        protect
         quick_search
-        sections_field_changed
         show
         show_list
-        tag_edit_form_field_changed
-        tagging_edit
-        tl_chooser
-        tree_autoload
         update
         wait_for_task
-        scaling
-        scaledown
         x_show
-        squash_toggle
       ) +
                adv_search_post +
                compare_post +
