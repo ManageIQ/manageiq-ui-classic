@@ -463,11 +463,6 @@ class ApplicationHelper::ToolbarBuilder
     end
 
     case get_record_cls(@record)
-    when "SniaLocalFileSystem"
-      case id
-      when "snia_local_file_system_statistics"
-        return N_("No Statistics Collected") unless @record.latest_derived_metrics
-      end
     when "EmsCluster"
       case id
       when "ems_cluster_perf"
