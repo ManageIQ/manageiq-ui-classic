@@ -53,7 +53,7 @@ describe ProviderForemanController do
 
     get :explorer
     accords = controller.instance_variable_get(:@accords)
-    expect(accords.size).to eq(3)
+    expect(accords.size).to eq(2)
     breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
     expect(breadcrumbs[0]).to include(:url => '/provider_foreman/show_list')
     expect(response.status).to eq(200)
@@ -112,17 +112,6 @@ describe ProviderForemanController do
   end
 
   context "Verify the provisionable flag for CSs" do
-    it "Provision action should be allowed for a Configured System marked as provisionable" do
-      allow(controller).to receive(:x_node).and_return("root")
-      allow(controller).to receive(:x_tree).and_return(:type => :filter)
-      controller.instance_variable_set(:@_params, :id => "cs_filter")
-      allow(controller).to receive(:replace_right_cell)
-      controller.instance_variable_set(:@_params, :id => @config_ans2.id)
-      controller.send(:provision)
-      expect(controller.send(:flash_errors?)).to be_truthy
-      expect(assigns(:flash_array).first[:message]).to include("Provisioning is not supported for at least one of the selected systems")
-    end
-
     it "Provision action should not be allowed only for a Configured System marked as not provisionable" do
       allow(controller).to receive(:x_node).and_return("root")
       allow(controller).to receive(:x_tree).and_return(:type => :filter)
@@ -193,12 +182,6 @@ describe ProviderForemanController do
       stub_user(:features => :all)
       allow(controller).to receive(:x_node).and_return("root")
       allow(controller).to receive(:rebuild_toolbars).and_return("true")
-    end
-
-    it "renders the refresh flash message for Ansible Tower" do
-      post :refresh, :params => {:miq_grid_checks => @config_ans.id}
-      expect(response.status).to eq(200)
-      expect(assigns(:flash_array).first[:message]).to include("Refresh Provider initiated for 1 provider (Ansible Tower)")
     end
 
     it "renders the refresh flash message for Foreman" do

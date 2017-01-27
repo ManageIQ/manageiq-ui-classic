@@ -4,7 +4,7 @@ class TreeBuilderConfigurationManagerConfiguredSystems < TreeBuilder
   private
 
   def tree_init_options(_tree_name)
-    {:leaf => "ConfiguredSystem"}
+    {:leaf => "ManageIQ::Providers::ForemanProvider::ConfigurationManager::ConfiguredSystem"}
   end
 
   def set_locals_for_render

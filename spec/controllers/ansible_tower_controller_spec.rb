@@ -12,8 +12,8 @@ describe AnsibleTowerController do
     @provider_ans2 = ManageIQ::Providers::AnsibleTower::Provider.create(:name => "ansibletest2", :url => "10.8.96.109", :zone => @zone)
     @config_ans2 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => @provider_ans2.id)
 
-    @inventory_group = ManageIQ::Providers::ConfigurationManager::InventoryRootGroup.create(:name => "testinvgroup", :ems_id => @config_ans.id)
-    @inventory_group2 = ManageIQ::Providers::ConfigurationManager::InventoryRootGroup.create(:name => "testinvgroup2", :ems_id => @config_ans2.id)
+    @inventory_group = ManageIQ::Providers::AutomationManager::InventoryRootGroup.create(:name => "testinvgroup", :ems_id => @config_ans.id)
+    @inventory_group2 = ManageIQ::Providers::AutomationManager::InventoryRootGroup.create(:name => "testinvgroup2", :ems_id => @config_ans2.id)
     @ans_configured_system = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem.create(:hostname                => "ans_test_configured_system",
                                                                                                               :inventory_root_group_id => @inventory_group.id,
                                                                                                               :manager_id              => @config_ans.id)

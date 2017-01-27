@@ -4,7 +4,7 @@ class TreeBuilderAnsibleTowerConfiguredSystems < TreeBuilder
   private
 
   def tree_init_options(_tree_name)
-    {:leaf => "ConfiguredSystem"}
+    {:leaf => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem"}
   end
 
   def set_locals_for_render

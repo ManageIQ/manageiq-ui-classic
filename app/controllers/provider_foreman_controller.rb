@@ -98,7 +98,7 @@ class ProviderForemanController < ApplicationController
   def refresh
     assert_privileges("provider_foreman_refresh_provider")
     @explorer = true
-    foreman_button_operation('refresh_ems', _('Refresh'))
+    manager_button_operation('refresh_ems', _('Refresh'))
     replace_right_cell
   end
 
@@ -170,7 +170,7 @@ class ProviderForemanController < ApplicationController
       model = "#{model_to_name(@provider_cfgmgmt.type)} #{ui_lookup(:model => 'ExtManagementSystem')}"
       if params[:id] == "new"
         add_flash(_("%{model} \"%{name}\" was added") % {:model => model, :name => @provider_cfgmgmt.name})
-        process_cfgmgr([@provider_cfgmgmt.configuration_manager.id], "refresh_ems")
+        process_configuration_managers([@provider_cfgmgmt.configuration_manager.id], "refresh_ems")
       else
         add_flash(_("%{model} \"%{name}\" was updated") % {:model => model, :name => @provider_cfgmgmt.name})
       end
@@ -516,8 +516,6 @@ class ProviderForemanController < ApplicationController
       provider_list(id, model)
     when "ConfigurationProfile"
       configuration_profile_node(id, model)
-    when "EmsFolder"
-      inventory_group_node(id, model)
     when "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem", "ConfiguredSystem"
       configured_system_list(id, model)
     when "MiqSearch"
@@ -880,7 +878,7 @@ class ProviderForemanController < ApplicationController
   end
 
   def active_tab_configured_systems?
-    (%w(x_show x_search_by_name).include?(action_name) && (configuration_profile_record? || inventory_group_record?)) ||
+    (%w(x_show x_search_by_name).include?(action_name) && configuration_profile_record?) ||
       unassigned_configuration_profile?(x_node)
   end
 

@@ -1,6 +1,6 @@
 class TreeBuilderAnsibleTowerProviders < TreeBuilder
   has_kids_for ManageIQ::Providers::AnsibleTower::AutomationManager, [:x_get_tree_cmat_kids]
-  has_kids_for ManageIQ::Providers::ConfigurationManager::InventoryRootGroup, [:x_get_tree_igf_kids]
+  has_kids_for ManageIQ::Providers::AutomationManager::InventoryRootGroup, [:x_get_tree_igf_kids]
 
   private
 
