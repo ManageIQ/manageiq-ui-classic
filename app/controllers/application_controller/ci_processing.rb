@@ -2720,7 +2720,7 @@ module ApplicationController::CiProcessing
   end
 
   # Delete all selected or single displayed RP(s)
-  def deleteresourcepools
+  def delete_resource_pools
     assert_privileges("resource_pool_delete")
     delete_elements(ResourcePool, :process_resourcepools)
   end
