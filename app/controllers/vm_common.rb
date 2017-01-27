@@ -1,6 +1,7 @@
 module VmCommon
   extend ActiveSupport::Concern
   include ActionView::Helpers::JavaScriptHelper
+  include ChargebackPreview
 
   # handle buttons pressed on the button bar
   def button
@@ -1662,6 +1663,10 @@ module VmCommon
       header = _("Editing %{vm_or_template} \"%{name}\"") %
         {:name => name, :vm_or_template => ui_lookup(:table => table)}
       action = "edit_vm"
+    when 'chargeback'
+      partial = @refresh_partial
+      header = _('Chargeback preview for "%{vm_name}"') % { :vm_name => name }
+      action = 'vm_chargeback'
     when "evm_relationship"
       partial = "vm_common/evm_relationship"
       header = _("Edit %{product} Server Relationship for %{vm_or_template} \"%{name}\"") %
