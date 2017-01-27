@@ -1,4 +1,4 @@
-- url = @ems.persisted? ? ems_infras_path(@ems) : ems_infras_path
+- url = @ems.persisted? ? ems_physical_infras_path(@ems) : ems_physical_infras_path
 = form_for(@ems,
            :url    => url,
            :method => :post,

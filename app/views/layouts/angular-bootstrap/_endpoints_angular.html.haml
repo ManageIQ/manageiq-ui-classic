@@ -1,4 +1,4 @@
-- return unless %w(ems_cloud ems_infra ems_container ems_middleware ems_network ems_datawarehouse).include?(controller_name)
+- return unless %w(ems_cloud ems_infra ems_container ems_middleware ems_network ems_datawarehouse ems_physical_infra).include?(controller_name)
 - prefix ||= "default"
 - ng_reqd_hostname ||= true
 - ng_reqd_api_port ||= true
@@ -26,14 +26,15 @@
 
 %div{"ng-if" => defined?(apiport_hide) ? false : true}
   .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_api_port.$invalid}",
-              "ng-if" => "emsCommonModel.emstype == 'openstack' || " +       |
-                         "emsCommonModel.emstype == 'openstack_infra' || " + |
-                         "emsCommonModel.emstype == 'nuage_network' || " +   |
-                         "emsCommonModel.emstype == 'rhevm' || " +           |
-                         "emsCommonModel.emstype == 'vmware_cloud' || " +    |
-                         "emsCommonModel.emstype == 'hawkular' || " +        |
-                         "emsCommonModel.emstype == 'hawkular_datawarehouse' || " +        |
-                         "emsCommonModel.ems_controller == 'ems_container'"} |
+              "ng-if" => "emsCommonModel.emstype == 'openstack'              || " + |
+                         "emsCommonModel.emstype == 'openstack_infra'        || " + |
+                         "emsCommonModel.emstype == 'nuage_network'          || " + |
+                         "emsCommonModel.emstype == 'rhevm'                  || " + |
+                         "emsCommonModel.emstype == 'vmware_cloud'           || " + |
+                         "emsCommonModel.emstype == 'hawkular'               || " + |
+                         "emsCommonModel.emstype == 'hawkular_datawarehouse' || " + |
+                         "emsCommonModel.emstype == 'lenovo_ph_infra'        || " + |
+                         "emsCommonModel.ems_controller == 'ems_container'"}        |
     %label.col-md-2.control-label{"for" => "#{prefix}_api_port"}
       = _('API Port')
     .col-md-2
