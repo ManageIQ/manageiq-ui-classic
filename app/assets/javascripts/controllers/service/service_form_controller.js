@@ -12,14 +12,9 @@ ManageIQ.angular.app.controller('serviceFormController', ['$http', '$scope', 'se
       ManageIQ.angular.scope = $scope;
 
       miqService.sparkleOn();
-      $http.get('/service/service_form_fields/' + serviceFormId).success(function(data) {
-        $scope.serviceModel.name        = data.name;
-        $scope.serviceModel.description = data.description;
-
-        $scope.afterGet = true;
-        $scope.modelCopy = angular.copy( $scope.serviceModel );
-        miqService.sparkleOff();
-      });
+      $http.get('/service/service_form_fields/' + serviceFormId)
+        .then(getServiceFormData)
+        .catch(miqService.handleFailure);
     };
 
     var serviceEditButtonClicked = function(buttonName, serializeFields) {
@@ -45,6 +40,17 @@ ManageIQ.angular.app.controller('serviceFormController', ['$http', '$scope', 'se
       serviceEditButtonClicked('save', true);
       $scope.angularForm.$setPristine(true);
     };
+
+    function getServiceFormData(response) {
+      var data = response.data;
+
+      $scope.serviceModel.name        = data.name;
+      $scope.serviceModel.description = data.description;
+
+      $scope.afterGet = true;
+      $scope.modelCopy = angular.copy( $scope.serviceModel );
+      miqService.sparkleOff();
+    }
 
     init();
 }]);
