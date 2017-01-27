@@ -61,7 +61,7 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
         button(
           :ems_physical_infra_protect,
           'pficon pficon-edit fa-lg',
-          N_('Manage Policies for the selected Infrastructure Providers'),
+          N_('Manage Policies for the selected Physical Infrastructure Providers'),
           N_('Manage Policies'),
           :url_parms => "main_div",
           :enabled   => false,
@@ -69,7 +69,7 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
         button(
           :ems_physical_infra_tag,
           'pficon pficon-edit fa-lg',
-          N_('Edit Tags for the selected Infrastructure Providers'),
+          N_('Edit Tags for the selected Physical Infrastructure Providers'),
           N_('Edit Tags'),
           :url_parms => "main_div",
           :enabled   => false,
@@ -77,7 +77,7 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
         button(
           :ems_physical_infra_check_compliance,
           'fa fa-search fa-lg',
-          N_('Check Compliance of the last known configuration for these Infra Managers'),
+          N_('Check Compliance of the last known configuration for these Physical Infra Managers'),
           N_('Check Compliance of Last Known Configuration'),
           :url_parms => "main_div",
           :confirm   => N_("Initiate Check Compliance of the last known configuration for the selected items?"),
@@ -98,7 +98,7 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
         button(
           :ems_physical_infra_recheck_auth_status,
           'fa fa-search fa-lg',
-          N_('Re-check Authentication Status for the selected Infrastructure Providers'),
+          N_('Re-check Authentication Status for the selected Physical Infrastructure Providers'),
           N_('Re-check Authentication Status'),
           :url_parms => "main_div",
           :enabled   => false,
