@@ -155,11 +155,11 @@ Rails.application.routes.draw do
       ) + adv_search_post + compare_post + exp_post + save_post
     },
 
-    :ansible_tower         => {
+    :automation_manager => {
       :get  => %w(
         download_data
         explorer
-        ansible_tower_form_fields
+        automation_manager_form_fields
         show
         show_list
         tagging_edit

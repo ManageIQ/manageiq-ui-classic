@@ -1,4 +1,4 @@
-class AnsibleTowerController < ApplicationController
+class AutomationManagerController < ApplicationController
   before_action :check_privileges
   before_action :get_session_data
 
@@ -10,7 +10,7 @@ class AnsibleTowerController < ApplicationController
   end
 
   def self.table_name
-    @table_name ||= "ansible_tower"
+    @table_name ||= "automation_manager"
   end
 
   CM_X_BUTTON_ALLOWED_ACTIONS = {
@@ -30,11 +30,11 @@ class AnsibleTowerController < ApplicationController
   end
 
   def model_to_name(provmodel)
-    AnsibleTowerController.model_to_name(provmodel)
+    AutomationManagerController.model_to_name(provmodel)
   end
 
   def model_to_type_name(provmodel)
-    AnsibleTowerController.model_to_type_name(provmodel)
+    AutomationManagerController.model_to_type_name(provmodel)
   end
 
   def index
@@ -46,7 +46,7 @@ class AnsibleTowerController < ApplicationController
   end
 
   def new
-    assert_privileges("ansible_tower_add_provider")
+    assert_privileges("automation_manager_add_provider")
     @provider_manager = ManageIQ::Providers::AnsibleTower::AutomationManager.new
     @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
     render_form
@@ -56,12 +56,12 @@ class AnsibleTowerController < ApplicationController
     @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
     case params[:button]
     when "cancel"
-      cancel_provider_ansible_tower
+      cancel_provider_automation_manager
     when "save"
-      add_provider_ansible_tower
-      save_provider_ansible_tower
+      add_provider_automation_manager
+      save_provider_automation_manager
     else
-      assert_privileges("ansible_tower_edit_provider")
+      assert_privileges("automation_manager_edit_provider")
       manager_id            = from_cid(params[:miq_grid_checks] || params[:id] || find_checked_items[0])
       @provider_manager     = find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, manager_id)
       @providerdisplay_type = model_to_name(@provider_manager.type)
@@ -70,10 +70,10 @@ class AnsibleTowerController < ApplicationController
   end
 
   def delete
-    assert_privileges("ansible_tower_delete_provider")
+    assert_privileges("automation_manager_delete_provider")
     checked_items = find_checked_items
     checked_items.push(params[:id]) if checked_items.empty? && params[:id]
-    providers = ManageIQ::Providers::ConfigurationManager.where(:id => checked_items).includes(:provider).collect(&:provider)
+    providers = ManageIQ::Providers::AutomationManager.where(:id => checked_items).includes(:provider).collect(&:provider)
     if providers.empty?
       add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => "providers"), :task => "deletion"}, :error)
     else
@@ -96,19 +96,19 @@ class AnsibleTowerController < ApplicationController
   end
 
   def refresh
-    assert_privileges("ansible_tower_refresh_provider")
+    assert_privileges("automation_manager_refresh_provider")
     @explorer = true
-    manager_button_operation('refresh_ems', _('Refresh'))
+    automation_manager_button_operation('refresh_ems', _('Refresh'))
     replace_right_cell
   end
 
   def tagging
     case x_active_accord
-    when :ansible_tower_providers
-      assert_privileges("ansible_tower_provider_configured_system_tag")
+    when :automation_manager_providers
+      assert_privileges("automation_manager_provider_configured_system_tag")
       tagging_edit('ConfiguredSystem', false)
-    when :ansible_tower_cs_filter
-      assert_privileges("ansible_tower_configured_system_tag")
+    when :automation_manager_cs_filter
+      assert_privileges("automation_manager_configured_system_tag")
       tagging_edit('ConfiguredSystem', false)
     when :configuration_scripts
       assert_privileges("configuration_script_tag")
@@ -117,7 +117,7 @@ class AnsibleTowerController < ApplicationController
     render_tagging_form
   end
 
-  def add_provider_ansible_tower
+  def add_provider_automation_manager
     find_or_build_provider
     sync_form_to_instance
 
@@ -138,7 +138,7 @@ class AnsibleTowerController < ApplicationController
     }
   end
 
-  def save_provider_ansible_tower
+  def save_provider_automation_manager
     if @provider.save
       construct_edit_for_audit
       AuditEvent.success(build_created_audit(@provider, @edit))
@@ -151,7 +151,7 @@ class AnsibleTowerController < ApplicationController
       else
         add_flash(_("%{model} \"%{name}\" was updated") % {:model => model, :name => @provider.name})
       end
-      replace_right_cell(:replace_trees => [:ansible_tower_providers_tree])
+      replace_right_cell(:replace_trees => [:automation_manager_providers_tree])
     else
       @provider.errors.each do |field, msg|
         @sb[:action] = nil
@@ -161,7 +161,7 @@ class AnsibleTowerController < ApplicationController
     end
   end
 
-  def cancel_ansible_tower
+  def cancel_provider_automation_manager
     @in_a_form = false
     @sb[:action] = nil
     if params[:id] == "new"
@@ -174,8 +174,8 @@ class AnsibleTowerController < ApplicationController
     replace_right_cell
   end
 
-  def ansible_tower_form_fields
-    assert_privileges("ansible_tower_edit_provider")
+  def automation_manager_form_fields
+    assert_privileges("automation_manager_edit_provider")
     # set value of read only zone text box, when there is only single zone
     if params[:id] == "new"
       return render :json => {:zone => Zone.in_my_region.size >= 1 ? Zone.in_my_region.first.name : nil }
@@ -230,10 +230,10 @@ class AnsibleTowerController < ApplicationController
     self.x_active_tree = params[:tree] if params[:tree]
     self.x_node = params[:id]
     load_or_clear_adv_search
-    apply_node_search_text if x_active_tree == :ansible_tower_providers_tree
+    apply_node_search_text if x_active_tree == :automation_manager_providers_tree
 
     if action_name == "reload"
-      replace_right_cell(:replace_trees => [:ansible_tower_providers])
+      replace_right_cell(:replace_trees => [:automation_manager_providers])
     else
       @sb[:active_tab] = if active_tab_configured_systems?
                            'configured_systems'
@@ -247,13 +247,13 @@ class AnsibleTowerController < ApplicationController
   def accordion_select
     @lastaction = "explorer"
 
-    @sb[:ansible_tower_search_text] ||= {}
-    @sb[:ansible_tower_search_text]["#{x_active_accord}_search_text"] = @search_text
+    @sb[:automation_manager_search_text] ||= {}
+    @sb[:automation_manager_search_text]["#{x_active_accord}_search_text"] = @search_text
 
     self.x_active_accord = params[:id].sub(/_accord$/, '')
     self.x_active_tree   = "#{x_active_accord}_tree"
 
-    @search_text = @sb[:ansible_tower_search_text]["#{x_active_accord}_search_text"]
+    @search_text = @sb[:automation_manager_search_text]["#{x_active_accord}_search_text"]
 
     load_or_clear_adv_search
     replace_right_cell(:replace_trees => [x_active_accord])
@@ -264,12 +264,12 @@ class AnsibleTowerController < ApplicationController
     session[:edit] = @edit
     @explorer = true
 
-    if x_active_tree != :ansible_tower_cs_filter_tree || x_node == "root"
+    if x_active_tree != :automation_manager_cs_filter_tree || x_node == "root"
       listnav_search_selected(0)
     else
       @nodetype, id = parse_nodetype_and_id(valid_active_node(x_node))
 
-      if x_active_tree == :ansible_tower_cs_filter_tree && @nodetype == "xx-csa"
+      if x_active_tree == :automation_manager_cs_filter_tree && @nodetype == "xx-csa"
         search_id = @nodetype == "root" ? 0 : from_cid(id)
         listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
         if @edit[:adv_search_applied] &&
@@ -295,13 +295,13 @@ class AnsibleTowerController < ApplicationController
   def tree_record
     @record =
       case x_active_tree
-      when :ansible_tower_providers_tree  then ansible_tower_providers_tree_rec
-      when :ansible_tower_cs_filter_tree  then ansible_tower_cs_filter_tree_rec
+      when :automation_manager_providers_tree  then automation_manager_providers_tree_rec
+      when :automation_manager_cs_filter_tree  then automation_manager_cs_filter_tree_rec
       when :configuration_scripts_tree then configuration_scripts_tree_rec
       end
   end
 
-  def ansible_tower_providers_tree_rec
+  def automation_manager_providers_tree_rec
     nodes = x_node.split('-')
     case nodes.first
     when "root" then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, params[:id])
@@ -315,7 +315,7 @@ class AnsibleTowerController < ApplicationController
     end
   end
 
-  def ansible_tower_cs_filter_tree_rec
+  def automation_manager_cs_filter_tree_rec
     nodes = x_node.split('-')
     case nodes.first
     when "root", "xx" then find_record(ConfiguredSystem, params[:id])
@@ -344,14 +344,14 @@ class AnsibleTowerController < ApplicationController
     end
 
     if @record.kind_of?(ConfiguredSystem)
-      rec_cls = "ansible_tower_configured_system"
+      rec_cls = "automation_manager_configured_system"
     end
     return unless %w(download_pdf main).include?(@display)
     @button_group = case x_active_accord
-                    when :ansible_tower_cs_filter
+                    when :automation_manager_cs_filter
                       rec_cls.to_s
-                    when :ansible_tower_providers
-                      "ansible_tower_#{rec_cls}"
+                    when :automation_manager_providers
+                      "automation_manager_#{rec_cls}"
                     when :configuration_scripts
                       @record.kind_of?(ConfigurationScript) ? "configuration_script" : "configuration_scripts"
                     end
@@ -440,7 +440,7 @@ class AnsibleTowerController < ApplicationController
 
   def find_or_build_provider
     @provider = provider_class.new if params[:id] == "new"
-    @provider ||= find_record(ManageIQ::Providers::ConfigurationManager, params[:id]).provider
+    @provider ||= find_record(ManageIQ::Providers::AutomationManager, params[:id]).provider
   end
 
   def sync_form_to_instance
@@ -452,15 +452,15 @@ class AnsibleTowerController < ApplicationController
 
   def features
     [
-      {:role     => "ansible_tower_providers",
+      {:role     => "automation_manager_providers",
        :role_any => true,
-       :name     => :ansible_tower_providers,
+       :name     => :automation_manager_providers,
        :title    => _("Providers")},
-      {:role     => "ansible_tower_cs_filter_accord",
+      {:role     => "automation_manager_cs_filter_accord",
        :role_any => true,
-       :name     => :ansible_tower_cs_filter,
+       :name     => :automation_manager_cs_filter,
        :title    => _("Configured Systems")},
-      {:role     => "ansible_tower_configuration_scripts_accord",
+      {:role     => "automation_manager_configuration_scripts_accord",
        :role_any => true,
        :name     => :configuration_scripts,
        :title    => _("Job Templates")}
@@ -469,14 +469,14 @@ class AnsibleTowerController < ApplicationController
     end
   end
 
-  def build_ansible_tower_tree(type, name)
+  def build_automation_manager_tree(type, name)
     tree = case name
-           when :ansible_tower_providers_tree
-             TreeBuilderAnsibleTowerProviders.new(name, type, @sb)
-           when :ansible_tower_cs_filter_tree
-             TreeBuilderAnsibleTowerConfiguredSystems.new(name, type, @sb)
+           when :automation_manager_providers_tree
+             TreeBuilderAutomationManagerProviders.new(name, type, @sb)
+           when :automation_manager_cs_filter_tree
+             TreeBuilderAutomationManagerConfiguredSystems.new(name, type, @sb)
            else
-             TreeBuilderAnsibleTowerConfigurationScripts.new(name, type, @sb)
+             TreeBuilderAutomationManagerConfigurationScripts.new(name, type, @sb)
            end
     instance_variable_set :"@#{name}", tree.tree_nodes
     tree
@@ -506,7 +506,7 @@ class AnsibleTowerController < ApplicationController
     else
       default_node
     end
-    @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && x_tree[:type] == :ansible_tower_cs_filter && @edit && @edit[:adv_search_applied]
+    @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && x_tree[:type] == :automation_manager_cs_filter && @edit && @edit[:adv_search_applied]
 
     if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
       x_history_add_item(:id     => x_node,
@@ -607,11 +607,11 @@ class AnsibleTowerController < ApplicationController
 
   def default_node
     return unless x_node == "root"
-    if x_active_tree == :ansible_tower_providers_tree
+    if x_active_tree == :automation_manager_providers_tree
       options = {:model => "ManageIQ::Providers::AnsibleTower::AutomationManager"}
       process_show_list(options)
       @right_cell_text = _("All Ansible Tower Providers")
-    elsif x_active_tree == :ansible_tower_cs_filter_tree
+    elsif x_active_tree == :automation_manager_cs_filter_tree
       options = {:model => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem"}
       process_show_list(options)
       @right_cell_text = _("All Ansible Tower Configured Systems")
@@ -634,7 +634,7 @@ class AnsibleTowerController < ApplicationController
   def render_form
     presenter, r = rendering_objects
     @in_a_form = true
-    presenter.update(:main_div, r[:partial => 'form', :locals => {:controller => 'ansible_tower'}])
+    presenter.update(:main_div, r[:partial => 'form', :locals => {:controller => 'automation_manager'}])
     update_title(presenter)
     rebuild_toolbars(false, presenter)
     handle_bottom_cell(presenter, r)
@@ -700,16 +700,16 @@ class AnsibleTowerController < ApplicationController
 
     trees = {}
     if replace_trees
-      if replace_trees.include?(:ansible_tower_providers)
-        trees[:ansible_tower_providers] = build_ansible_tower_tree(:ansible_tower_providers,
-                                                                   :ansible_tower_providers_tree)
+      if replace_trees.include?(:automation_manager_providers)
+        trees[:automation_manager_providers] = build_automation_manager_tree(:automation_manager_providers,
+                                                                   :automation_manager_providers_tree)
       end
-      if replace_trees.include?(:ansible_tower_cs_filter)
-        trees[:ansible_tower_cs_filter] = build_ansible_tower_tree(:ansible_tower_cs_filter,
-                                                                   :ansible_tower_cs_filter_tree)
+      if replace_trees.include?(:automation_manager_cs_filter)
+        trees[:automation_manager_cs_filter] = build_automation_manager_tree(:automation_manager_cs_filter,
+                                                                   :automation_manager_cs_filter_tree)
       end
       if replace_trees.include?(:configuration_scripts)
-        trees[:configuration_scripts] = build_ansible_tower_tree(:configuration_scripts,
+        trees[:configuration_scripts] = build_automation_manager_tree(:configuration_scripts,
                                                                  :configuration_scripts_tree)
       end
     end
@@ -739,7 +739,7 @@ class AnsibleTowerController < ApplicationController
     type && %w(EmsFolder).include?(TreeBuilder.get_model_for_prefix(type))
   end
 
-  def ansible_tower_manager_record?(node = x_node)
+  def automation_manager_manager_record?(node = x_node)
     return @record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager) if @record
 
     type, _id = node.split("-")
@@ -747,7 +747,7 @@ class AnsibleTowerController < ApplicationController
   end
 
   def provider_record?(node = x_node)
-    ansible_tower_manager_record?(node)
+    automation_manager_manager_record?(node)
   end
 
   def search_text_type(node)
@@ -758,47 +758,47 @@ class AnsibleTowerController < ApplicationController
 
   def apply_node_search_text
     setup_search_text_for_node
-    previous_nodetype = search_text_type(@sb[:ansible_tower_search_text][:previous_node])
-    current_nodetype  = search_text_type(@sb[:ansible_tower_search_text][:current_node])
+    previous_nodetype = search_text_type(@sb[:automation_manager_search_text][:previous_node])
+    current_nodetype  = search_text_type(@sb[:automation_manager_search_text][:current_node])
 
-    @sb[:ansible_tower_search_text]["#{previous_nodetype}_search_text"] = @search_text
-    @search_text = @sb[:ansible_tower_search_text]["#{current_nodetype}_search_text"]
-    @sb[:ansible_tower_search_text]["#{x_active_accord}_search_text"] = @search_text
+    @sb[:automation_manager_search_text]["#{previous_nodetype}_search_text"] = @search_text
+    @search_text = @sb[:automation_manager_search_text]["#{current_nodetype}_search_text"]
+    @sb[:automation_manager_search_text]["#{x_active_accord}_search_text"] = @search_text
   end
 
   def setup_search_text_for_node
-    @sb[:ansible_tower_search_text] ||= {}
-    @sb[:ansible_tower_search_text][:current_node] ||= x_node
-    @sb[:ansible_tower_search_text][:previous_node] = @sb[:ansible_tower_search_text][:current_node]
-    @sb[:ansible_tower_search_text][:current_node] = x_node
+    @sb[:automation_manager_search_text] ||= {}
+    @sb[:automation_manager_search_text][:current_node] ||= x_node
+    @sb[:automation_manager_search_text][:previous_node] = @sb[:automation_manager_search_text][:current_node]
+    @sb[:automation_manager_search_text][:current_node] = x_node
   end
 
   def update_partials(record_showing, presenter, r)
     if record_showing && valid_configured_system_record?(@configured_system_record)
       get_tagdata(@record)
       presenter.hide(:form_buttons_div)
-      path_dir = "ansible_tower"
+      path_dir = "automation_manager"
       presenter.update(:main_div, r[:partial => "#{path_dir}/main",
-                                    :locals  => {:controller => 'ansible_tower'}])
+                                    :locals  => {:controller => 'automation_manager'}])
     elsif @in_a_form
-      partial_locals = {:controller => 'ansible_tower'}
+      partial_locals = {:controller => 'automation_manager'}
       @right_cell_text =
-        if @sb[:action] == "ansible_tower_add_provider"
-          _("Add a new Configuration Manager Provider")
-        elsif @sb[:action] == "ansible_tower_edit_provider"
+        if @sb[:action] == "automation_manager_add_provider"
+          _("Add a new Automation Manager Provider")
+        elsif @sb[:action] == "automation_manager_edit_provider"
           # set the title based on the configuration manager provider type
-          _("Edit Automation Provider")
+          _("Edit Automation Manager Provider")
         end
       partial = 'form'
       presenter.update(:main_div, r[:partial => partial, :locals => partial_locals])
     elsif valid_inventory_group_record?(@inventory_group_record)
       presenter.hide(:form_buttons_div)
       presenter.update(:main_div, r[:partial => "inventory_group",
-                                    :locals  => {:controller => 'ansible_tower'}])
+                                    :locals  => {:controller => 'automation_manager'}])
     elsif valid_configuration_script_record?(@configuration_script_record)
       presenter.hide(:form_buttons_div)
       presenter.update(:main_div, r[:partial => "configuration_script",
-                                    :locals  => {:controller => 'ansible_tower'}])
+                                    :locals  => {:controller => 'automation_manager'}])
     else
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     end
@@ -808,7 +808,7 @@ class AnsibleTowerController < ApplicationController
     # Replace the searchbox
     presenter.replace(:adv_searchbox_div,
                       r[:partial => 'layouts/x_adv_searchbox',
-                        :locals  => {:nameonly => x_active_tree == :ansible_tower_providers_tree}])
+                        :locals  => {:nameonly => x_active_tree == :automation_manager_providers_tree}])
 
     presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
   end
@@ -945,10 +945,10 @@ class AnsibleTowerController < ApplicationController
 
   def process_show_list(options = {})
     options[:dbname] = case x_active_accord
-                       when :ansible_tower_providers
-                         options[:model] && options[:model] == 'ConfiguredSystem' ? :ansible_tower_configured_systems : :ansible_tower_providers
-                       when :ansible_tower_cs_filter
-                         :ansible_tower_configured_systems
+                       when :automation_manager_providers
+                         options[:model] && options[:model] == 'ConfiguredSystem' ? :automation_manager_configured_systems : :automation_manager_providers
+                       when :automation_manager_cs_filter
+                         :automation_manager_configured_systems
                        when :configuration_scripts
                          :configuration_scripts
                        end
@@ -978,7 +978,7 @@ class AnsibleTowerController < ApplicationController
   end
 
   def configscript_service_dialog
-    assert_privileges("ansible_tower_configscript_service_dialog")
+    assert_privileges("automation_manager_configscript_service_dialog")
     cs = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript.find_by(:id => params[:id])
     @edit = {:new    => {:dialog_name => ""},
              :key    => "cs_edit__#{cs.id}",
@@ -996,7 +996,7 @@ class AnsibleTowerController < ApplicationController
   end
 
   def configscript_service_dialog_submit_save
-    assert_privileges("ansible_tower_configscript_service_dialog")
+    assert_privileges("automation_manager_configscript_service_dialog")
     load_edit("cs_edit__#{params[:id]}", "replace_cell__explorer")
     begin
       cs = ConfigurationScript.find_by(:id => params[:id])

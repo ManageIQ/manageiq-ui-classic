@@ -6,14 +6,14 @@
 - if @inventory_group_record
   #main_div
     - @pages = nil if @sb[:active_tab] == 'summary'
-    = render(:partial => 'ansible_tower/inventory_group')
+    = render(:partial => 'automation_manager/inventory_group')
 
 - elsif @configured_system_record
   #main_div
-    = render(:partial => 'ansible_tower/main', :locals => {:controller => "ansible_tower"})
+    = render(:partial => 'automation_manager/main', :locals => {:controller => "automation_manager"})
 - elsif @configuration_script_record
   #main_div
-    = render(:partial => 'ansible_tower/configuration_script', :locals => {:controller => "ansible_tower"})
+    = render(:partial => 'automation_manager/configuration_script', :locals => {:controller => "automation_manager"})
 - else
   #main_div
     = render(:partial => 'layouts/x_gtl')

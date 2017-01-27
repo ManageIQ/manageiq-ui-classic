@@ -98,7 +98,7 @@ class ProviderForemanController < ApplicationController
   def refresh
     assert_privileges("provider_foreman_refresh_provider")
     @explorer = true
-    manager_button_operation('refresh_ems', _('Refresh'))
+    configuration_manager_button_operation('refresh_ems', _('Refresh'))
     replace_right_cell
   end
 

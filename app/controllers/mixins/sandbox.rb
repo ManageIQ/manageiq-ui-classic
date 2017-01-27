@@ -39,8 +39,8 @@ module Sandbox
     alert_profile_tree
     alert_tree
     automate_tree
-    ansible_tower_providers_tree
-    ansible_tower_cs_filter_tree
+    automation_manager_providers_tree
+    automation_manager_cs_filter_tree
     bottlenecks_tree
     cb_assignments_tree
     cb_rates_tree
@@ -112,9 +112,9 @@ module Sandbox
     action
     alert
     alert_profile
-    ansible_tower_providers
-    ansible_tower_cs_filter
-    ansible_tower_configuration_scripts
+    automation_manager_providers
+    automation_manager_cs_filter
+    automation_manager_configuration_scripts
     cb_assignments
     cb_rates
     cb_reports

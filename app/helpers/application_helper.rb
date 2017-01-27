@@ -1596,8 +1596,8 @@ module ApplicationHelper
   end
 
   def tree_with_advanced_search?
-    %i(ansible_tower_providers
-       ansible_tower_cs_filter
+    %i(automation_manager_providers
+       automation_manager_cs_filter
        containers
        containers_filter
        cs_filter

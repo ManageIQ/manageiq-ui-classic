@@ -1,4 +1,4 @@
-class ApplicationHelper::Toolbar::AnsibleTowerProviderCenter < ApplicationHelper::Toolbar::Basic
+class ApplicationHelper::Toolbar::AutomationManagerProviderCenter < ApplicationHelper::Toolbar::Basic
   button_group('provider_vmdb', [
                                 select(
                                   :provider_vmdb_choice,
@@ -8,7 +8,7 @@ class ApplicationHelper::Toolbar::AnsibleTowerProviderCenter < ApplicationHelper
                                   :enabled => true,
                                   :items   => [
                                     button(
-                                      :ansible_tower_refresh_provider,
+                                      :automation_manager_refresh_provider,
                                       'fa fa-refresh fa-lg',
                                       N_('Refresh relationships for all items related to this Provider'),
                                       N_('Refresh Relationships and Power states'),
@@ -17,14 +17,14 @@ class ApplicationHelper::Toolbar::AnsibleTowerProviderCenter < ApplicationHelper
                                     ),
                                     separator,
                                     button(
-                                      :ansible_tower_edit_provider,
+                                      :automation_manager_edit_provider,
                                       'pficon pficon-edit fa-lg',
                                       t = N_('Edit this Provider'),
                                       t,
                                       :url => "edit"
                                     ),
                                     button(
-                                      :ansible_tower_delete_provider,
+                                      :automation_manager_delete_provider,
                                       'pficon pficon-delete fa-lg',
                                       t = N_('Remove this Provider'),
                                       t,

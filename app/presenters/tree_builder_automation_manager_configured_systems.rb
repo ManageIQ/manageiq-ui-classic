@@ -1,4 +1,4 @@
-class TreeBuilderAnsibleTowerConfiguredSystems < TreeBuilder
+class TreeBuilderAutomationManagerConfiguredSystems < TreeBuilder
   attr_reader :tree_nodes
 
   private

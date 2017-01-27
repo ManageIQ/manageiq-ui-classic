@@ -1,14 +1,14 @@
-class ApplicationHelper::Toolbar::XAnsibleTowerConfiguredSystemCenter < ApplicationHelper::Toolbar::Basic
+class ApplicationHelper::Toolbar::XAutomationManagerConfiguredSystemCenter < ApplicationHelper::Toolbar::Basic
   button_group('record_summary', [
                                  select(
-                                   :ansible_tower_policy_choice,
+                                   :automation_manager_policy_choice,
                                    'fa fa-shield fa-lg',
                                    t = N_('Policy'),
                                    t,
                                    :enabled => true,
                                    :items   => [
                                      button(
-                                       :ansible_tower_configured_system_tag,
+                                       :automation_manager_configured_system_tag,
                                        'pficon pficon-edit fa-lg',
                                        N_('Edit Tags for this Configured System'),
                                        N_('Edit Tags'),

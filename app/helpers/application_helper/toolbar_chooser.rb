@@ -101,8 +101,8 @@ class ApplicationHelper::ToolbarChooser
         end
       elsif @layout == "provider_foreman" && [:configuration_manager_providers_tree, :cs_filter_tree, :configuration_scripts_tree].include?(x_active_tree)
         return center_toolbar_filename_configuration_manager_providers
-      elsif @layout == "ansible_tower"
-        return center_toolbar_filename_ansible_tower
+      elsif @layout == "automation_manager"
+        return center_toolbar_filename_automation_manager
       elsif [:infra_networking_tree].include?(x_active_tree)
         return center_toolbar_filename_infra_networking
       else
@@ -518,14 +518,14 @@ class ApplicationHelper::ToolbarChooser
     end
   end
 
-  def center_toolbar_filename_ansible_tower
+  def center_toolbar_filename_automation_manager
     nodes = x_node.split('-')
-    if x_active_tree == :ansible_tower_providers_tree
-      ansible_tower_providers_tree_center_tb(nodes)
-    elsif x_active_tree == :ansible_tower_cs_filter_tree
-      ansible_tower_cs_filter_tree_center_tb(nodes)
-    elsif x_active_tree == :ansible_tower_configuration_scripts_tree
-      ansible_tower_configuration_scripts_tree_center_tb(nodes)
+    if x_active_tree == :automation_manager_providers_tree
+      automation_manager_providers_tree_center_tb(nodes)
+    elsif x_active_tree == :automation_manager_cs_filter_tree
+      automation_manager_cs_filter_tree_center_tb(nodes)
+    elsif x_active_tree == :automation_manager_configuration_scripts_tree
+      automation_manager_configuration_scripts_tree_center_tb(nodes)
     end
   end
 
@@ -564,22 +564,22 @@ class ApplicationHelper::ToolbarChooser
     end
   end
 
-  def ansible_tower_providers_tree_center_tb(nodes)
+  def automation_manager_providers_tree_center_tb(nodes)
     case nodes.first
-      when "root" then  "ansible_tower_providers_center_tb"
-      when "at"   then  "ansible_tower_provider_center_tb"
+      when "root" then  "automation_manager_providers_center_tb"
+      when "at"   then  "automation_manager_provider_center_tb"
       when "f"    then  inventory_group_center_tb
       when "xx"   then  "configured_systems_ansible_center_tb"
     end
   end
 
-  def ansible_tower_cs_filter_tree_center_tb(nodes)
+  def automation_manager_cs_filter_tree_center_tb(nodes)
     case nodes.first
       when "root", "ms", "xx", "csa" then "configured_systems_ansible_center_tb"
     end
   end
 
-  def ansible_tower_configuration_scripts_tree_center_tb(nodes)
+  def automation_manager_configuration_scripts_tree_center_tb(nodes)
     if %w(root at).include?(nodes.first)
       "configuration_scripts_center_tb"
     else

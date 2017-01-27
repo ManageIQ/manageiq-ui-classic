@@ -1,4 +1,4 @@
-module AnsibleTowerHelper
+module AutomationManagerHelper
   include TextualMixins::TextualGroupTags
 
   def textual_group_properties

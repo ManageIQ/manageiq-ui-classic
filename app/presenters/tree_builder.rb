@@ -442,9 +442,9 @@ class TreeBuilder
     :df                              => "TreeBuilderDefaultFilters",
 
     # Automation trees
-    :ansible_tower_providers         => "TreeBuilderAnsibleTowerProviders",
-    :ansible_tower_cs_filter         => "TreeBuilderAnsibleTowerConfiguredSystems",
-    :configuration_scripts           => "TreeBuilderAnsibleTowerConfigurationScripts",
+    :automation_manager_providers         => "TreeBuilderAutomationManagerProviders",
+    :automation_manager_cs_filter         => "TreeBuilderAutomationManagerConfiguredSystems",
+    :configuration_scripts           => "TreeBuilderAutomationManagerConfigurationScripts",
 
   }
 

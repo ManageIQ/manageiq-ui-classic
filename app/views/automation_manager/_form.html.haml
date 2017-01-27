@@ -2,7 +2,7 @@
 
 .form-horizontal{:id => "start_form_div", :style => "display:none"}
   %form#form_div{:name           => "angularForm",
-                 'ng-controller' => "ansibleTowerFormController",
+                 'ng-controller' => "automationManagerFormController",
                  'ng-show'       => "afterGet",
                  :novalidate     => true}
     = render :partial => "layouts/flash_msg"
@@ -13,7 +13,7 @@
       .col-md-8
         %input.form-control{:type            => "text",
                             :name            => "name",
-                            'ng-model'       => "ansibleTowerModel.name",
+                            'ng-model'       => "automationManagerModel.name",
                             :maxlength       => MAX_NAME_LEN,
                             :required        => "",
                             :checkchange     => true,
@@ -30,7 +30,7 @@
           %input.form-control{"type"        => "text",
                               "id"          => "prov_zone",
                               "name"        => "zone",
-                              "ng-model"    => "ansibleTowerModel.zone",
+                              "ng-model"    => "automationManagerModel.zone",
                               "maxlength"   => 15,
                               "required"    => "",
                               "checkchange" => "",
@@ -39,7 +39,7 @@
         - else
           = select_tag('zone',
                        options_for_select(@server_zones.sort_by { |name, _name| name }),
-                       "ng-model"                    => "ansibleTowerModel.zone",
+                       "ng-model"                    => "automationManagerModel.zone",
                        "checkchange"                 => "",
                        "required"                    => "",
                        "selectpicker-for-select-tag" => "")
@@ -50,7 +50,7 @@
       .col-md-8
         %input.form-control{:type           => "text",
                             :name           => "url",
-                            'ng-model'      => "ansibleTowerModel.url",
+                            'ng-model'      => "automationManagerModel.url",
                             :maxlength      => MAX_DESC_LEN,
                             "id"            => "url",
                             :required       => "",
@@ -67,7 +67,7 @@
       .col-md-8
         %input{:type            => "checkbox",
                :name            => "verify_ssl",
-               'ng-model'       => "ansibleTowerModel.verify_ssl",
+               'ng-model'       => "automationManagerModel.verify_ssl",
                :checkchange     => true}
 
 
@@ -76,7 +76,7 @@
       = _("Credentials")
     = render :partial => "layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
              :locals  => {:ng_show           => true,
-                          :ng_model          => "ansibleTowerModel",
+                          :ng_model          => "automationManagerModel",
                           :ng_reqd_userid    => true,
                           :ng_reqd_password  => true,
                           :ng_reqd_verify    => true,
@@ -89,5 +89,5 @@
     %span{:style => "color:black"}= _("Required. Should have privileged access, such as root or administrator.")
 
 :javascript
-  ManageIQ.angular.app.value('ansibleTowerFormId', '#{@provider_manager.id || "new"}');
+  ManageIQ.angular.app.value('automationManagerFormId', '#{@provider_manager.id || "new"}');
   miq_bootstrap('#form_div');

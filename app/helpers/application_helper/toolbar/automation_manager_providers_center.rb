@@ -1,4 +1,4 @@
-class ApplicationHelper::Toolbar::AnsibleTowerProvidersCenter < ApplicationHelper::Toolbar::Basic
+class ApplicationHelper::Toolbar::AutomationManagerProvidersCenter < ApplicationHelper::Toolbar::Basic
   button_group('provider_vmdb', [
                                 select(
                                   :provider_vmdb_choice,
@@ -8,7 +8,7 @@ class ApplicationHelper::Toolbar::AnsibleTowerProvidersCenter < ApplicationHelpe
                                   :enabled => true,
                                   :items   => [
                                     button(
-                                      :ansible_tower_refresh_provider,
+                                      :automation_manager_refresh_provider,
                                       'fa fa-refresh fa-lg',
                                       N_('Refresh relationships for all items related to the selected items'),
                                       N_('Refresh Relationships and Power states'),
@@ -20,7 +20,7 @@ class ApplicationHelper::Toolbar::AnsibleTowerProvidersCenter < ApplicationHelpe
                                     ),
                                     separator,
                                     button(
-                                      :ansible_tower_add_provider,
+                                      :automation_manager_add_provider,
                                       'pficon pficon-add-circle-o fa-lg',
                                       t = N_('Add a new Provider'),
                                       t,
@@ -28,7 +28,7 @@ class ApplicationHelper::Toolbar::AnsibleTowerProvidersCenter < ApplicationHelpe
                                       :url     => "new"
                                     ),
                                     button(
-                                      :ansible_tower_edit_provider,
+                                      :automation_manager_edit_provider,
                                       'pficon pficon-edit fa-lg',
                                       N_('Select a single item to edit'),
                                       N_('Edit Selected item'),
@@ -38,7 +38,7 @@ class ApplicationHelper::Toolbar::AnsibleTowerProvidersCenter < ApplicationHelpe
                                       :onwhen    => "1"
                                     ),
                                     button(
-                                      :ansible_tower_delete_provider,
+                                      :automation_manager_delete_provider,
                                       'pficon pficon-delete fa-lg',
                                       t = N_('Remove selected items'),
                                       t,

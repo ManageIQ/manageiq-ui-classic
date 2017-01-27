@@ -1944,7 +1944,7 @@ module ApplicationController::CiProcessing
        :models  => ui_lookup(:models => klass.to_s)})
   end
 
-  def manager_button_operation(method, display_name)
+  def configuration_manager_button_operation(method, display_name)
     items = []
     if params[:id]
       if params[:id].nil? || !ExtManagementSystem.where(:id => params[:id]).exists?
@@ -1975,8 +1975,44 @@ module ApplicationController::CiProcessing
   else
     add_flash(n_("%{task} initiated for %{count} provider",
                  "%{task} initiated for %{count} providers)", manager_ids.length) %
-                {:task       => task_name(task),
-                 :count      => manager_ids.length})
+                {:task  => task_name(task),
+                 :count => manager_ids.length})
+  end
+
+
+  def automation_manager_button_operation(method, display_name)
+    items = []
+    if params[:id]
+      if params[:id].nil? || !ExtManagementSystem.where(:id => params[:id]).exists?
+        add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => controller_name)}, :error)
+      else
+        items.push(params[:id])
+      end
+    else
+      items = find_checked_items
+    end
+
+    if items.empty?
+      add_flash(_("No providers were selected for %{task}") % {:task  => display_name}, :error)
+    else
+      process_automation_managers(items, method) unless items.empty? && !flash_errors?
+    end
+  end
+
+  def process_automation_managers(managers, task)
+    manager_ids, _services_out_region = filter_ids_in_region(managers, "ManageIQ::Providers::AutomationManager")
+    return if manager_ids.empty?
+
+    options = {:ids => manager_ids, :task => task, :userid => session[:userid]}
+    kls = ManageIQ::Providers::AutomationManager.find_by(:id => manager_ids.first).class
+    kls.process_tasks(options)
+  rescue => err
+    add_flash(_("Error during '%{task}': %{message}") % {:task => task, :message => err.message}, :error)
+  else
+    add_flash(n_("%{task} initiated for %{count} provider",
+                 "%{task} initiated for %{count} providers)", manager_ids.length) %
+                {:task  => task_name(task),
+                 :count => manager_ids.length})
   end
 
   # Delete all selected or single displayed VM(s)

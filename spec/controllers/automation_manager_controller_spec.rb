@@ -1,38 +1,37 @@
-describe AnsibleTowerController do
+describe AutomationManagerController do
   render_views
 
+  let(:zone) { EvmSpecHelper.local_miq_server.zone }
   let(:tags) { ["/managed/quota_max_memory/2048"] }
+  let(:automation_provider1) { FactoryGirl.create(:provider_ansible_tower, :name => "ansibletest", :url => "10.8.96.107", :zone => zone) }
+  let(:automation_provider2) { FactoryGirl.create(:provider_ansible_tower, :name => "ansibletest2", :url => "10.8.96.108", :zone => zone) }
+
   before(:each) do
-    @zone = EvmSpecHelper.local_miq_server.zone
     Tag.find_or_create_by(:name => tags.first)
+    @automation_manager1 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider1.id)
+    @automation_manager2 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider2.id)
 
-    @provider_ans = ManageIQ::Providers::AnsibleTower::Provider.create(:name => "ansibletest", :url => "10.8.96.108", :zone => @zone)
-    @config_ans = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => @provider_ans.id)
-
-    @provider_ans2 = ManageIQ::Providers::AnsibleTower::Provider.create(:name => "ansibletest2", :url => "10.8.96.109", :zone => @zone)
-    @config_ans2 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => @provider_ans2.id)
-
-    @inventory_group = ManageIQ::Providers::AutomationManager::InventoryRootGroup.create(:name => "testinvgroup", :ems_id => @config_ans.id)
-    @inventory_group2 = ManageIQ::Providers::AutomationManager::InventoryRootGroup.create(:name => "testinvgroup2", :ems_id => @config_ans2.id)
-    @ans_configured_system = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem.create(:hostname                => "ans_test_configured_system",
-                                                                                                              :inventory_root_group_id => @inventory_group.id,
-                                                                                                              :manager_id              => @config_ans.id)
+    @inventory_group = ManageIQ::Providers::AutomationManager::InventoryRootGroup.create(:name => "testinvgroup", :ems_id => @automation_manager1.id)
+    @inventory_group2 = ManageIQ::Providers::AutomationManager::InventoryRootGroup.create(:name => "testinvgroup2", :ems_id => @automation_manager2.id)
+    @ans_configured_system = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem.create(:hostname   => "ans_test_configured_system",
+                                                                                                           :inventory_root_group_id => @inventory_group.id,
+                                                                                                              :manager_id              => @automation_manager1.id)
 
     @ans_configured_system2a = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem.create(:hostname                => "test2a_ans_configured_system",
                                                                                                                 :inventory_root_group_id => @inventory_group.id,
-                                                                                                                :manager_id              => @config_ans.id)
+                                                                                                                :manager_id              => @automation_manager1.id)
     @ans_configured_system2b = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem.create(:hostname                => "test2b_ans_configured_system",
                                                                                                                 :inventory_root_group_id => @inventory_group2.id,
-                                                                                                                :manager_id              => @config_ans2.id)
-    controller.instance_variable_set(:@sb, :active_tree => :ansible_tower_providers_tree)
+                                                                                                                :manager_id              => @automation_manager2.id)
+    controller.instance_variable_set(:@sb, :active_tree => :automation_manager_providers_tree)
 
     [@ans_configured_system, @ans_configured_system2a, @ans_configured_system2b].each do |cs|
       cs.tag_with(tags, :namespace => '')
     end
 
-    @ans_job_template1 = FactoryGirl.create(:ansible_configuration_script, :name => "ConfigScript1", :manager_id => @config_ans.id)
-    @ans_job_template2 = FactoryGirl.create(:ansible_configuration_script, :name => "ConfigScript2", :manager_id => @config_ans2.id)
-    @ans_job_template3 = FactoryGirl.create(:ansible_configuration_script, :name => "ConfigScript3", :manager_id => @config_ans.id)
+    @ans_job_template1 = FactoryGirl.create(:ansible_configuration_script, :name => "ConfigScript1", :manager_id => @automation_manager1.id)
+    @ans_job_template2 = FactoryGirl.create(:ansible_configuration_script, :name => "ConfigScript2", :manager_id => @automation_manager2.id)
+    @ans_job_template3 = FactoryGirl.create(:ansible_configuration_script, :name => "ConfigScript3", :manager_id => @automation_manager1.id)
   end
 
   it "renders index" do
@@ -43,36 +42,36 @@ describe AnsibleTowerController do
   end
 
   it "renders explorer" do
-    login_as user_with_feature(%w(ansible_tower_providers ansible_tower_cs_filter_accord ansible_tower_configuration_scripts_accord))
+    login_as user_with_feature(%w(automation_manager_providers automation_manager_cs_filter_accord automation_manager_configuration_scripts_accord))
 
     get :explorer
     accords = controller.instance_variable_get(:@accords)
     expect(accords.size).to eq(3)
     breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
-    expect(breadcrumbs[0]).to include(:url => '/ansible_tower/show_list')
+    expect(breadcrumbs[0]).to include(:url => '/automation_manager/show_list')
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
   end
 
   context "renders the explorer based on RBAC" do
-    it "renders explorer based on RBAC access to feature 'ansible_tower_configured_system_tag'" do
-      login_as user_with_feature %w(ansible_tower_configured_system_tag)
+    it "renders explorer based on RBAC access to feature 'automation_manager_configured_system_tag'" do
+      login_as user_with_feature %w(automation_manager_configured_system_tag)
 
       get :explorer
       accords = controller.instance_variable_get(:@accords)
       expect(accords.size).to eq(1)
-      expect(accords[0][:name]).to eq("ansible_tower_cs_filter")
+      expect(accords[0][:name]).to eq("automation_manager_cs_filter")
       expect(response.status).to eq(200)
       expect(response.body).to_not be_empty
     end
 
-    it "renders explorer based on RBAC access to feature 'ansible_tower_add_provider'" do
-      login_as user_with_feature %w(ansible_tower_add_provider)
+    it "renders explorer based on RBAC access to feature 'automation_manager_add_provider'" do
+      login_as user_with_feature %w(automation_manager_add_provider)
 
       get :explorer
       accords = controller.instance_variable_get(:@accords)
       expect(accords.size).to eq(1)
-      expect(accords[0][:name]).to eq("ansible_tower_providers")
+      expect(accords[0][:name]).to eq("automation_manager_providers")
       expect(response.status).to eq(200)
       expect(response.body).to_not be_empty
     end
@@ -80,11 +79,11 @@ describe AnsibleTowerController do
 
   context "asserts correct privileges" do
     before do
-      login_as user_with_feature %w(ansible_tower_provider_configured_system_tag)
+      login_as user_with_feature %w(automation_manager_provider_configured_system_tag)
     end
 
     it "should raise an error for feature that user has no access to" do
-      expect { controller.send(:assert_privileges, "ansible_tower_add_provider") }
+      expect { controller.send(:assert_privileges, "automation_manager_add_provider") }
         .to raise_error(MiqException::RbacPrivilegeException)
     end
   end
@@ -101,12 +100,12 @@ describe AnsibleTowerController do
     expect(response.status).to eq(200)
   end
 
-  it "#ansible_tower_save_provider save does not accept a duplicate name" do
-    ManageIQ::Providers::AnsibleTower::Provider.create(:name => "test2Ansible", :url => "server1", :zone => @zone)
-    provider2 = ManageIQ::Providers::AnsibleTower::Provider.new(:name => "test2Ansible", :url => "server2", :zone => @zone)
+  it "#automation_manager_save_provider save does not accept a duplicate name" do
+    ManageIQ::Providers::AnsibleTower::Provider.create(:name => "test2Ansible", :url => "server1", :zone => zone)
+    provider2 = ManageIQ::Providers::AnsibleTower::Provider.new(:name => "test2Ansible", :url => "server2", :zone => zone)
     controller.instance_variable_set(:@provider, provider2)
     allow(controller).to receive(:render_flash)
-    controller.save_provider_ansible_tower
+    controller.save_provider_automation_manager
     expect(assigns(:flash_array).first[:message]).to include("has already been taken")
   end
 
@@ -116,7 +115,7 @@ describe AnsibleTowerController do
     end
 
     it "renders the edit page when the manager id is supplied" do
-      post :edit, :params => { :id => @config_ans.id }
+      post :edit, :params => { :id => @automation_manager1.id }
       expect(response.status).to eq(200)
       right_cell_text = controller.instance_variable_get(:@right_cell_text)
       expect(right_cell_text).to eq(_("Edit Ansible Tower Provider"))
@@ -124,32 +123,32 @@ describe AnsibleTowerController do
 
     it "should display the zone field" do
       new_zone = FactoryGirl.create(:zone, :name => "TestZone")
-      controller.instance_variable_set(:@provider, @provider_ans)
-      post :edit, :params => { :id => @config_ans.id }
+      controller.instance_variable_set(:@provider, automation_provider1)
+      post :edit, :params => { :id => @automation_manager1.id }
       expect(response.status).to eq(200)
       expect(response.body).to include("option value=\\\"#{new_zone.name}\\\"")
     end
 
     it "should save the zone field" do
       new_zone = FactoryGirl.create(:zone, :name => "TestZone")
-      controller.instance_variable_set(:@provider, @provider_ans)
+      controller.instance_variable_set(:@provider, automation_provider1)
       allow(controller).to receive(:leaf_record).and_return(false)
       post :edit, :params => { :button     => 'save',
-                               :id         => @config_ans.id,
+                               :id         => @automation_manager1.id,
                                :zone       => new_zone.name,
-                               :url        => @provider_ans.url,
-                               :verify_ssl => @provider_ans.verify_ssl }
+                               :url        => automation_provider1.url,
+                               :verify_ssl => automation_provider1.verify_ssl }
       expect(response.status).to eq(200)
-      expect(@provider_ans.zone).to eq(new_zone)
+      expect(automation_provider1.zone).to eq(new_zone)
     end
 
     it "renders the edit page when the manager id is selected from a list view" do
-      post :edit, :params => { :miq_grid_checks => @config_ans.id }
+      post :edit, :params => { :miq_grid_checks => @automation_manager1.id }
       expect(response.status).to eq(200)
     end
 
     it "renders the edit page when the ansible tower manager id is selected from a grid/tile" do
-      post :edit, :params => { "check_#{ApplicationRecord.compress_id(@config_ans.id)}" => "1" }
+      post :edit, :params => { "check_#{ApplicationRecord.compress_id(@automation_manager1.id)}" => "1" }
       expect(response.status).to eq(200)
     end
   end
@@ -162,21 +161,21 @@ describe AnsibleTowerController do
     end
 
     it "renders the refresh flash message for Ansible Tower" do
-      post :refresh, :params => {:miq_grid_checks => @config_ans.id}
+      post :refresh, :params => {:miq_grid_checks => @automation_manager1.id}
       expect(response.status).to eq(200)
-      expect(assigns(:flash_array).first[:message]).to include("Refresh Provider initiated for 1 provider (Ansible Tower)")
+      expect(assigns(:flash_array).first[:message]).to include("Refresh Provider initiated for 1 provider")
     end
 
     it "refreshes the provider when the manager id is supplied" do
       allow(controller).to receive(:replace_right_cell)
-      post :refresh, :params => { :id => @config_ans.id }
+      post :refresh, :params => { :id => @automation_manager1.id }
       expect(assigns(:flash_array).first[:message]).to include("Refresh Provider initiated for 1 provider")
     end
 
     it "it refreshes a provider when the manager id is selected from a grid/tile" do
       allow(controller).to receive(:replace_right_cell)
-      post :refresh, :params => { "check_#{ApplicationRecord.compress_id(@config_ans.id)}"  => "1",
-                                  "check_#{ApplicationRecord.compress_id(@config_ans2.id)}" => "1" }
+      post :refresh, :params => { "check_#{ApplicationRecord.compress_id(@automation_manager1.id)}" => "1",
+                                  "check_#{ApplicationRecord.compress_id(@automation_manager2.id)}" => "1" }
       expect(assigns(:flash_array).first[:message]).to include("Refresh Provider initiated for 2 providers")
     end
   end
@@ -188,19 +187,19 @@ describe AnsibleTowerController do
 
     it "deletes the provider when the manager id is supplied" do
       allow(controller).to receive(:replace_right_cell)
-      post :delete, :params => { :id => @config_ans.id }
+      post :delete, :params => { :id => @automation_manager1.id }
       expect(assigns(:flash_array).first[:message]).to include("Delete initiated for 1 Provider")
     end
 
     it "it deletes a provider when the manager id is selected from a list view" do
       allow(controller).to receive(:replace_right_cell)
-      post :delete, :params => { :miq_grid_checks => "#{@config_ans.id}, #{@config_ans2.id}"}
+      post :delete, :params => { :miq_grid_checks => "#{@automation_manager1.id}, #{@automation_manager2.id}"}
       expect(assigns(:flash_array).first[:message]).to include("Delete initiated for 2 Providers")
     end
 
     it "it deletes a provider when the manager id is selected from a grid/tile" do
       allow(controller).to receive(:replace_right_cell)
-      post :delete, :params => { "check_#{ApplicationRecord.compress_id(@config_ans.id)}" => "1" }
+      post :delete, :params => { "check_#{ApplicationRecord.compress_id(@automation_manager1.id)}" => "1" }
       expect(assigns(:flash_array).first[:message]).to include("Delete initiated for 1 Provider")
     end
   end
@@ -208,7 +207,7 @@ describe AnsibleTowerController do
   context "renders right cell text" do
     before do
       right_cell_text = nil
-      login_as user_with_feature(%w(ansible_tower_providers ansible_tower_cs_filter_accord ansible_tower_configuration_scripts_accord))
+      login_as user_with_feature(%w(automation_manager_providers automation_manager_cs_filter_accord automation_manager_configuration_scripts_accord))
       controller.instance_variable_set(:@right_cell_text, right_cell_text)
       allow(controller).to receive(:get_view_calculate_gtl_type)
       allow(controller).to receive(:get_view_pages)
@@ -231,33 +230,33 @@ describe AnsibleTowerController do
   end
 
   it "builds ansible tower child tree" do
-    controller.send(:build_ansible_tower_tree, :ansible_tower_providers, :ansible_tower_providers_tree)
-    tree_builder = TreeBuilderAnsibleTowerProviders.new("root", "", {})
+    controller.send(:build_automation_manager_tree, :automation_manager_providers, :automation_manager_providers_tree)
+    tree_builder = TreeBuilderAutomationManagerProviders.new("root", "", {})
     objects = tree_builder.send(:x_get_tree_roots, false, {})
-    expected_objects = [@config_ans, @config_ans2]
+    expected_objects = [@automation_manager1, @automation_manager2]
     expect(objects).to match_array(expected_objects)
   end
 
   it "constructs the ansible tower inventory tree node" do
-    controller.send(:build_ansible_tower_tree, :ansible_tower_providers, :ansible_tower_providers_tree)
-    tree_builder = TreeBuilderAnsibleTowerProviders.new("root", "", {})
+    controller.send(:build_automation_manager_tree, :automation_manager_providers, :automation_manager_providers_tree)
+    tree_builder = TreeBuilderAutomationManagerProviders.new("root", "", {})
     objects = tree_builder.send(:x_get_tree_objects, @inventory_group, nil, false, nil)
     expected_objects = [@ans_configured_system, @ans_configured_system2a]
     expect(objects).to match_array(expected_objects)
   end
 
   it "builds ansible tower job templates tree" do
-    controller.send(:build_ansible_tower_tree, :configuration_scripts, :configuration_scripts_tree)
-    tree_builder = TreeBuilderAnsibleTowerConfigurationScripts.new("root", "", {})
+    controller.send(:build_automation_manager_tree, :configuration_scripts, :configuration_scripts_tree)
+    tree_builder = TreeBuilderAutomationManagerConfigurationScripts.new("root", "", {})
     objects = tree_builder.send(:x_get_tree_roots, false, {})
-    expected_objects = [@config_ans, @config_ans2]
+    expected_objects = [@automation_manager1, @automation_manager2]
     expect(objects).to match_array(expected_objects)
   end
 
   it "constructs the ansible tower job templates tree node" do
-    login_as user_with_feature(%w(providers_accord ansible_tower_cs_filter_accord ansible_tower_configuration_scripts_accord))
-    controller.send(:build_ansible_tower_tree, :configuration_scripts, :configuration_scripts_tree)
-    tree_builder = TreeBuilderAnsibleTowerConfigurationScripts.new("root", "", {})
+    login_as user_with_feature(%w(providers_accord automation_manager_cs_filter_accord automation_manager_configuration_scripts_accord))
+    controller.send(:build_automation_manager_tree, :configuration_scripts, :configuration_scripts_tree)
+    tree_builder = TreeBuilderAutomationManagerConfigurationScripts.new("root", "", {})
     objects = tree_builder.send(:x_get_tree_roots, false, {})
     objects = tree_builder.send(:x_get_tree_cmat_kids, objects[0], false)
     expected_objects = [@ans_job_template1, @ans_job_template3]
@@ -268,7 +267,7 @@ describe AnsibleTowerController do
     before do
       get :explorer
       right_cell_text = nil
-      login_as user_with_feature(%w(ansible_tower_providers ansible_tower_cs_filter_accord ansible_tower_configuration_scripts_accord))
+      login_as user_with_feature(%w(automation_manager_providers automation_manager_cs_filter_accord automation_manager_configuration_scripts_accord))
       controller.instance_variable_set(:@right_cell_text, right_cell_text)
       allow(controller).to receive(:get_view_calculate_gtl_type)
       allow(controller).to receive(:get_view_pages)
@@ -291,7 +290,7 @@ describe AnsibleTowerController do
       view = controller.instance_variable_get(:@view)
       expect(view.table.data.size).to eq(2)
 
-      ems_id = ems_key_for_provider(@provider_ans)
+      ems_id = ems_key_for_provider(automation_provider1)
       controller.instance_variable_set(:@_params, :id => ems_id)
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
@@ -301,7 +300,7 @@ describe AnsibleTowerController do
       controller.instance_variable_set(:@search_text, "2")
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0].name).to eq("ansibletest2 Configuration Manager")
+      expect(view.table.data[0].name).to eq("ansibletest2 Automation Manager")
 
       invgroup_id2 = inventory_group_key(@inventory_group2)
       controller.instance_variable_set(:@_params, :id => invgroup_id2)
@@ -316,11 +315,11 @@ describe AnsibleTowerController do
 
       allow(controller).to receive(:x_node).and_return("root")
       allow(controller).to receive(:x_tree).and_return(:type => :filter)
-      controller.instance_variable_set(:@_params, :id => "ansible_tower_cs_filter")
+      controller.instance_variable_set(:@_params, :id => "automation_manager_cs_filter")
       controller.send(:accordion_select)
       controller.instance_variable_set(:@search_text, "brew")
       allow(controller).to receive(:x_tree).and_return(:type => :providers)
-      controller.instance_variable_set(:@_params, :id => "ansible_tower_providers")
+      controller.instance_variable_set(:@_params, :id => "automation_manager_providers")
       controller.send(:accordion_select)
 
       controller.instance_variable_set(:@_params, :id => "root")
@@ -335,7 +334,7 @@ describe AnsibleTowerController do
       allow(controller).to receive(:x_active_tree).and_return(:configuration_scripts_tree)
       controller.instance_variable_set(:@_params, :id => "configuration_scripts")
       controller.send(:accordion_select)
-      controller.instance_variable_set(:@_params, :id => "at-" + ApplicationRecord.compress_id(@config_ans.id))
+      controller.instance_variable_set(:@_params, :id => "at-" + ApplicationRecord.compress_id(@automation_manager1.id))
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
       expect(view.table.data[0].name).to eq("ConfigScript1")
@@ -344,11 +343,11 @@ describe AnsibleTowerController do
 
     it "calls get_view with the associated dbname for the Ansible Tower Providers accordion" do
       stub_user(:features => :all)
-      allow(controller).to receive(:x_active_tree).and_return(:ansible_tower_providers_tree)
-      allow(controller).to receive(:x_active_accord).and_return(:ansible_tower_providers)
+      allow(controller).to receive(:x_active_tree).and_return(:automation_manager_providers_tree)
+      allow(controller).to receive(:x_active_accord).and_return(:automation_manager_providers)
       allow(controller).to receive(:build_listnav_search_list)
-      controller.instance_variable_set(:@_params, :id => "ansible_tower_providers")
-      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::AutomationManager", :dbname => :ansible_tower_providers).and_call_original
+      controller.instance_variable_set(:@_params, :id => "automation_manager_providers")
+      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::AutomationManager", :dbname => :automation_manager_providers).and_call_original
       controller.send(:accordion_select)
     end
 
@@ -356,8 +355,8 @@ describe AnsibleTowerController do
       stub_user(:features => :all)
       allow(controller).to receive(:x_node).and_return("root")
       allow(controller).to receive(:x_tree).and_return(:type => :filter)
-      controller.instance_variable_set(:@_params, :id => "ansible_tower_cs_filter")
-      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem", :dbname => :ansible_tower_configured_systems).and_call_original
+      controller.instance_variable_set(:@_params, :id => "automation_manager_cs_filter")
+      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem", :dbname => :automation_manager_configured_systems).and_call_original
       allow(controller).to receive(:build_listnav_search_list)
       controller.send(:accordion_select)
     end
@@ -379,7 +378,7 @@ describe AnsibleTowerController do
   it "renders tagging editor for a configured system" do
     session[:tag_items] = [@ans_configured_system.id]
     session[:assigned_filters] = []
-    allow(controller).to receive(:x_active_accord).and_return(:ansible_tower_cs_filter)
+    allow(controller).to receive(:x_active_accord).and_return(:automation_manager_cs_filter)
     parent = FactoryGirl.create(:classification, :name => "test_category")
     FactoryGirl.create(:classification_tag,      :name => "test_entry",         :parent => parent)
     FactoryGirl.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
@@ -388,7 +387,7 @@ describe AnsibleTowerController do
   end
 
   it "renders tree_select as js" do
-    controller.send(:build_ansible_tower_tree, :ansible_tower_providers, :ansible_tower_providers_tree)
+    controller.send(:build_automation_manager_tree, :automation_manager_providers, :automation_manager_providers_tree)
 
     allow(controller).to receive(:process_show_list)
     allow(controller).to receive(:replace_explorer_trees)
@@ -399,26 +398,26 @@ describe AnsibleTowerController do
 
     stub_user(:features => :all)
 
-    key = ems_key_for_provider(@provider_ans)
+    key = ems_key_for_provider(automation_provider1)
     post :tree_select, :params => { :id => key, :format => :js }
     expect(response.status).to eq(200)
   end
 
   context "tree_select on ansible tower provider node" do
     before do
-      login_as user_with_feature %w(ansible_tower_refresh_provider ansible_tower_edit_provider ansible_tower_delete_provider)
+      login_as user_with_feature %w(automation_manager_refresh_provider automation_manager_edit_provider automation_manager_delete_provider)
 
       allow(controller).to receive(:check_privileges)
       allow(controller).to receive(:process_show_list)
       allow(controller).to receive(:replace_explorer_trees)
       allow(controller).to receive(:build_listnav_search_list)
       allow(controller).to receive(:replace_search_box)
-      allow(controller).to receive(:x_active_tree).and_return(:ansible_tower_providers_tree)
+      allow(controller).to receive(:x_active_tree).and_return(:automation_manager_providers_tree)
     end
 
     it "does not hide Configuration button in the toolbar" do
-      controller.send(:build_ansible_tower_tree, :ansible_tower_provider, :ansible_tower_providers_tree)
-      key = ems_key_for_provider(@provider_ans)
+      controller.send(:build_automation_manager_tree, :automation_manager_provider, :automation_manager_providers_tree)
+      key = ems_key_for_provider(automation_provider1)
       post :tree_select, :params => { :id => key, :format => :js }
       expect(response.status).to eq(200)
       expect(response.body).not_to include('<div class=\"hidden btn-group dropdown\"><button data-explorer=\"true\" title=\"Configuration\"')
@@ -427,7 +426,7 @@ describe AnsibleTowerController do
 
   context "ansible tower job template accordion " do
     before do
-      login_as user_with_feature(%w(ansible_tower_providers nsible_tower_cs_filter_accord ansible_tower_configuration_scripts_accord))
+      login_as user_with_feature(%w(automation_manager_providers nsible_tower_cs_filter_accord automation_manager_configuration_scripts_accord))
       controller.instance_variable_set(:@right_cell_text, nil)
     end
     render_views
@@ -453,7 +452,7 @@ describe AnsibleTowerController do
 
   context "fetches the list setting:Grid/Tile/List from settings" do
     before do
-      login_as user_with_feature(%w(ansible_tower_providers ansible_tower_cs_filter_accord))
+      login_as user_with_feature(%w(automation_manager_providers automation_manager_cs_filter_accord))
       allow(controller).to receive(:items_per_page).and_return(20)
       allow(controller).to receive(:current_page).and_return(1)
       allow(controller).to receive(:get_view_pages)
@@ -464,22 +463,22 @@ describe AnsibleTowerController do
       allow(controller).to receive(:render)
 
       controller.instance_variable_set(:@settings,
-                                       :views => {:ansible_tower_providers          => "grid",
-                                                  :ansible_tower_configured_systems => "tile"})
+                                       :views => {:automation_manager_providers          => "grid",
+                                                  :automation_manager_configured_systems => "tile"})
       controller.send(:build_accordions_and_trees)
     end
 
     it "fetches list type = 'grid' from settings for Providers accordion" do
-      key = ems_key_for_provider(@provider_ans)
-      allow(controller).to receive(:x_active_accord).and_return(:ansible_tower_providers)
+      key = ems_key_for_provider(automation_provider1)
+      allow(controller).to receive(:x_active_accord).and_return(:automation_manager_providers)
       controller.send(:get_node_info, key)
       list_type = controller.instance_variable_get(:@gtl_type)
       expect(list_type).to eq("grid")
     end
 
     it "fetches list type = 'tile' from settings for Configured Systems accordion" do
-      key = ems_key_for_provider(@provider_ans)
-      allow(controller).to receive(:x_active_accord).and_return(:ansible_tower_cs_filter)
+      key = ems_key_for_provider(automation_provider1)
+      allow(controller).to receive(:x_active_accord).and_return(:automation_manager_cs_filter)
       controller.send(:get_node_info, key)
       list_type = controller.instance_variable_get(:@gtl_type)
       expect(list_type).to eq("tile")
@@ -497,8 +496,8 @@ describe AnsibleTowerController do
 
     it "uses the stored password for validation if params[:log_password] does not exist" do
       controller.instance_variable_set(:@_params, :log_userid => "userid")
-      controller.instance_variable_set(:@provider, @provider_ans)
-      expect(@provider_ans).to receive(:authentication_password).and_return('password')
+      controller.instance_variable_set(:@provider, automation_provider1)
+      expect(automation_provider1).to receive(:authentication_password).and_return('password')
       creds = {:userid => "userid", :password => "password"}
       expect(controller.send(:build_credentials)).to include(:default => creds)
     end
@@ -506,14 +505,14 @@ describe AnsibleTowerController do
 
   context "when user with specific tag settings logs in" do
     before do
-      @user = user_with_feature %w(ansible_tower_providers ansible_tower_cs_filter_accord)
+      @user = user_with_feature %w(automation_manager_providers automation_manager_cs_filter_accord)
       login_as @user
     end
     it "builds foreman tree with no nodes after rbac filtering" do
       user_filters = {'belongs' => [], 'managed' => [tags]}
       allow(@user).to receive(:get_filters).and_return(user_filters)
-      controller.send(:build_ansible_tower_tree, :ansible_tower_providers, :ansible_tower_providers_tree)
-      first_child = find_treenode_for_provider(@provider_ans)
+      controller.send(:build_automation_manager_tree, :automation_manager_providers, :automation_manager_providers_tree)
+      first_child = find_treenode_for_provider(automation_provider1)
       expect(first_child).to eq(nil)
     end
   end
@@ -574,7 +573,7 @@ describe AnsibleTowerController do
 
   def find_treenode_for_provider(provider)
     key = ems_key_for_provider(provider)
-    tree = JSON.parse(controller.instance_variable_get(:@ansible_tower_providers_tree))
+    tree = JSON.parse(controller.instance_variable_get(:@automation_manager_providers_tree))
     tree[0]['nodes'].find { |c| c['key'] == key } unless tree[0]['nodes'].nil?
   end
 
