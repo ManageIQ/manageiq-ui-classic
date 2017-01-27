@@ -46,9 +46,8 @@ module EmsPhysicalInfraHelper::TextualSummary
   end
 
   def textual_physical_servers
-    #TODO: (walteraa) Create a relationship 'physical manager has_many physical servers' and display it as :value
     #TODO: (walteraa) Use textual_link 
-    {:label =>  _("Physical Servers"), :value  => 0} 
+    {:label =>  _("Physical Servers"), :value  => @ems.number_of(:physical_servers)} 
   end
 
   def textual_cpu_resources
