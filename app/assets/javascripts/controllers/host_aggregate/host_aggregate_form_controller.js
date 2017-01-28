@@ -22,15 +22,9 @@ ManageIQ.angular.app.controller('hostAggregateFormController', ['$http', '$scope
   } else {
     miqService.sparkleOn();
 
-    $http.get('/host_aggregate/host_aggregate_form_fields/' + hostAggregateFormId).success(function(data) {
-      $scope.afterGet = true;
-      $scope.hostAggregateModel.name = data.name;
-      $scope.hostAggregateModel.ems_id = data.ems_id;
-      $scope.hostAggregateModel.host_id = "";
-
-      $scope.modelCopy = angular.copy( $scope.hostAggregateModel );
-      miqService.sparkleOff();
-    });
+    $http.get('/host_aggregate/host_aggregate_form_fields/' + hostAggregateFormId)
+      .then(getHostAggregateFormData)
+      .catch(miqService.handleFailure);
   }
 
   $scope.addClicked = function() {
@@ -84,4 +78,16 @@ ManageIQ.angular.app.controller('hostAggregateFormController', ['$http', '$scope
     $scope.angularForm.$setPristine(true);
     miqService.miqFlash("warn", "All changes have been reset");
   };
+
+  function getHostAggregateFormData(response) {
+    var data = response.data;
+
+    $scope.afterGet = true;
+    $scope.hostAggregateModel.name = data.name;
+    $scope.hostAggregateModel.ems_id = data.ems_id;
+    $scope.hostAggregateModel.host_id = "";
+
+    $scope.modelCopy = angular.copy( $scope.hostAggregateModel );
+    miqService.sparkleOff();
+  }
 }]);
