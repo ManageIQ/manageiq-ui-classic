@@ -33,5 +33,6 @@ class ApplicationHelper::Toolbar::AutomationManagerProviderCenter < ApplicationH
                                     )
                                   ]
                                 ),
-                              ])
+                              ]
+  )
 end

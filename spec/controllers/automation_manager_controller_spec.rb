@@ -13,16 +13,16 @@ describe AutomationManagerController do
 
     @inventory_group = ManageIQ::Providers::AutomationManager::InventoryRootGroup.create(:name => "testinvgroup", :ems_id => @automation_manager1.id)
     @inventory_group2 = ManageIQ::Providers::AutomationManager::InventoryRootGroup.create(:name => "testinvgroup2", :ems_id => @automation_manager2.id)
-    @ans_configured_system = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem.create(:hostname   => "ans_test_configured_system",
+    @ans_configured_system = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem.create(:hostname                => "ans_test_configured_system",
                                                                                                            :inventory_root_group_id => @inventory_group.id,
-                                                                                                              :manager_id              => @automation_manager1.id)
+                                                                                                           :manager_id              => @automation_manager1.id)
 
     @ans_configured_system2a = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem.create(:hostname                => "test2a_ans_configured_system",
-                                                                                                                :inventory_root_group_id => @inventory_group.id,
-                                                                                                                :manager_id              => @automation_manager1.id)
+                                                                                                             :inventory_root_group_id => @inventory_group.id,
+                                                                                                             :manager_id              => @automation_manager1.id)
     @ans_configured_system2b = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem.create(:hostname                => "test2b_ans_configured_system",
-                                                                                                                :inventory_root_group_id => @inventory_group2.id,
-                                                                                                                :manager_id              => @automation_manager2.id)
+                                                                                                             :inventory_root_group_id => @inventory_group2.id,
+                                                                                                             :manager_id              => @automation_manager2.id)
     controller.instance_variable_set(:@sb, :active_tree => :automation_manager_providers_tree)
 
     [@ans_configured_system, @ans_configured_system2a, @ans_configured_system2b].each do |cs|

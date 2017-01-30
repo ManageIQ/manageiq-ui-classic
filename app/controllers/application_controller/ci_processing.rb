@@ -1979,7 +1979,6 @@ module ApplicationController::CiProcessing
                  :count => manager_ids.length})
   end
 
-
   def automation_manager_button_operation(method, display_name)
     items = []
     if params[:id]
@@ -1993,7 +1992,7 @@ module ApplicationController::CiProcessing
     end
 
     if items.empty?
-      add_flash(_("No providers were selected for %{task}") % {:task  => display_name}, :error)
+      add_flash(_("No providers were selected for %{task}") % {:task => display_name}, :error)
     else
       process_automation_managers(items, method) unless items.empty? && !flash_errors?
     end

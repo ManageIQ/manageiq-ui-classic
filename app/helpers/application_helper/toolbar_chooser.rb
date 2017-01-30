@@ -566,10 +566,10 @@ class ApplicationHelper::ToolbarChooser
 
   def automation_manager_providers_tree_center_tb(nodes)
     case nodes.first
-      when "root" then  "automation_manager_providers_center_tb"
-      when "at"   then  "automation_manager_provider_center_tb"
-      when "f"    then  inventory_group_center_tb
-      when "xx"   then  "configured_systems_ansible_center_tb"
+    when "root" then  "automation_manager_providers_center_tb"
+    when "at"   then  "automation_manager_provider_center_tb"
+    when "f"    then  inventory_group_center_tb
+    when "xx"   then  "configured_systems_ansible_center_tb"
     end
   end
 
@@ -586,7 +586,6 @@ class ApplicationHelper::ToolbarChooser
       "configuration_script_center_tb"
     end
   end
-
 
   def infra_networking_tree_center_tb(nodes)
     if %w(root e h c).include?(nodes.first)

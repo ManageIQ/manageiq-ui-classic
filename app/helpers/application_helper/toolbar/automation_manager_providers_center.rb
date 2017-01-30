@@ -51,5 +51,6 @@ class ApplicationHelper::Toolbar::AutomationManagerProvidersCenter < Application
                                     separator,
                                   ]
                                 ),
-                              ])
+                              ]
+  )
 end

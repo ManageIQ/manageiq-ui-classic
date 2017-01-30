@@ -442,8 +442,8 @@ class TreeBuilder
     :df                              => "TreeBuilderDefaultFilters",
 
     # Automation trees
-    :automation_manager_providers         => "TreeBuilderAutomationManagerProviders",
-    :automation_manager_cs_filter         => "TreeBuilderAutomationManagerConfiguredSystems",
+    :automation_manager_providers    => "TreeBuilderAutomationManagerProviders",
+    :automation_manager_cs_filter    => "TreeBuilderAutomationManagerConfiguredSystems",
     :configuration_scripts           => "TreeBuilderAutomationManagerConfigurationScripts",
 
   }

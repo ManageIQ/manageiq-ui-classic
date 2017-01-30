@@ -215,10 +215,8 @@ module Menu
       end
 
       def automation_menu_section
-        Menu::Section.new(:aut, N_("Automation"), 'fa product-memory fa-2x', [
-                                automate_menu_section,
-                                automation_manager_menu_section
-                              ])
+        Menu::Section.new(:aut, N_("Automation"), 'fa product-memory fa-2x', [automate_menu_section,
+                                                                              automation_manager_menu_section])
       end
 
       def automation_manager_menu_section
