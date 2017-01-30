@@ -10,6 +10,9 @@ class PhysicalServerController  < ApplicationController
   after_action :set_session_data
 
 
+  def self.model
+    ManageIQ::Providers::PhysicalServer
+  end
 
   def self.table_name
     @table_name ||= "physical_servers"
