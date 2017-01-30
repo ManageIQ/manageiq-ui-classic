@@ -24,7 +24,8 @@ describe MiqAeCustomizationController do
           :tab_id      => 942,
           :group_id    => 1053,
           :order       => 0,
-          :multi_value => false}
+          :multi_value => false
+        }
         edit_new = {:new => { :tabs => [{:groups => [{:fields =>[field]}]}]}}
         controller.instance_variable_set(:@edit, edit_new)
         controller.instance_variable_set(:@_params, :field_typ => "DialogFieldDropDownList")
@@ -60,7 +61,8 @@ describe MiqAeCustomizationController do
           :typ         => "DialogFieldDropDownList",
           :tab_id      => 942,
           :group_id    => 1053,
-          :multi_value => true}
+          :multi_value => true
+        }
         edit_new = {:new => { :tabs => [{:groups => [{:fields =>[field]}]}]}}
         session[:edit] = edit_new
 
@@ -82,21 +84,21 @@ describe MiqAeCustomizationController do
       end
       it "loads record from not the session" do
         field = {
-          :id            => 9463,
-          :name          => "foo",
-          :label         => "first_drop_down",
-          :description   => "first_drop_down",
-          :typ           => "DialogFieldDropDownList",
-          :tab_id        => 942,
-          :group_id      => 1053,
-          :order         => 0,
-          :multi_value   => false,
-          :required      => false,
-          :sort_by       => :value,
-          :sort_order    => "ascending",
-          :data_type     => Integer,
-          :values        => [1, 2, 3],
-          :default_value => 1
+          :id                => 9463,
+          :name              => "foo",
+          :label             => "first_drop_down",
+          :description       => "first_drop_down",
+          :typ               => "DialogFieldDropDownList",
+          :tab_id            => 942,
+          :group_id          => 1053,
+          :order             => 0,
+          :required          => false,
+          :sort_by           => :value,
+          :sort_order        => "ascending",
+          :data_type         => Integer,
+          :values            => [1, 2, 3],
+          :default_value     => 1,
+          :force_multi_value => true
         }
         new_hash = {
           :label       => "Dialog 1",
@@ -118,7 +120,7 @@ describe MiqAeCustomizationController do
         }
         controller.instance_variable_set(:@edit, :new => new_hash, :dialog_buttons => [])
 
-        controller.send(:dialog_set_record_vars, dialog)
+        controller.send(:dialog_set_record_vars, dialog, "foo")
 
         expect(dialog.dialog_tabs.first.dialog_groups.first.dialog_fields.first.options[:force_multi_value]).to be false
       end

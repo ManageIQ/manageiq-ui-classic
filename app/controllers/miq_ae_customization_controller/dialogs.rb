@@ -924,7 +924,7 @@ module MiqAeCustomizationController::Dialogs
           @edit[:field_required]      = key[:required]  = false
         elsif params[:field_typ] =~ /Drop|Radio/
           @edit[:field_default_value] = key[:default_value] = nil
-          @edit[:field_multi_value]   = key[:multi_value]   = nil
+          @edit[:field_multi_value]   = key[:multi_value]   = false
         else
           @edit[:field_default_value] = key[:default_value] = false
         end
@@ -1223,7 +1223,8 @@ module MiqAeCustomizationController::Dialogs
               fld[:past_dates] = f.show_past_dates.nil? ? false : f.show_past_dates
 
             elsif %w(DialogFieldDropDownList).include?(f.type)
-              fld[:multi_value] =  f.options.include?(:force_multi_value) && f.options.values_at(:force_multi_value).to_s == "[true]"
+              fld[:multi_value] =  f.options.include?(:force_multi_value) && 
+                                   f.options.values_at(:force_multi_value).to_s == "[true]"
 
             elsif f.type.include?("TagControl")
               fld[:single_value] = f.single_value?
