@@ -1,6 +1,6 @@
-TextualGroup = Struct.new(:title, :items) do
+TextualCustom = Struct.new(:title, :template_name, :items) do
   def template
-    'shared/summary/textual'
+    self.template_name
   end
 
   def locals
