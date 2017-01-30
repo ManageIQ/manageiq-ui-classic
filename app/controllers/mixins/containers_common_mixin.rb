@@ -18,6 +18,7 @@ module ContainersCommonMixin
 
     # Handle scan
     if params[:pressed] == "container_image_scan"
+      check_smart_roles
       scan_images
 
       if @lastaction == "show"
@@ -101,6 +102,15 @@ module ContainersCommonMixin
                   :error) # Push msg and error flag
       else
         add_flash(_("\"%{record}\": Compliance check successfully initiated") % {:record => entity.name})
+      end
+    end
+  end
+
+  def check_smart_roles
+    %w(SmartProxy SmartState).each do |role|
+      my_zone = MiqServer.my_server.my_zone
+      unless MiqServer.all.any? { |s| s.has_active_role?(role.downcase) && (s.my_zone == my_zone) }
+        add_flash("There is no server with the #{role} role enabled", :warning)
       end
     end
   end

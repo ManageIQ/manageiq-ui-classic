@@ -7,6 +7,7 @@ describe ContainerImageController do
   it "when Smart Analysis is pressed" do
     ApplicationController.handle_exceptions = true
 
+    EvmSpecHelper.create_guid_miq_server_zone
     expect(controller).to receive(:scan_images)
     post :button, :params => { :pressed => 'container_image_scan', :format => :js }
     expect(controller.send(:flash_errors?)).not_to be_truthy
