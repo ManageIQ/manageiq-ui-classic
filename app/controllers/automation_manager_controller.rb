@@ -456,7 +456,7 @@ class AutomationManagerController < ApplicationController
        :role_any => true,
        :name     => :automation_manager_providers,
        :title    => _("Providers")},
-      {:role     => "automation_manager_cs_filter_accord",
+      {:role     => "automation_manager_configured_system",
        :role_any => true,
        :name     => :automation_manager_cs_filter,
        :title    => _("Configured Systems")},

@@ -42,7 +42,7 @@ describe AutomationManagerController do
   end
 
   it "renders explorer" do
-    login_as user_with_feature(%w(automation_manager_providers automation_manager_cs_filter_accord automation_manager_configuration_scripts_accord))
+    login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system automation_manager_configuration_scripts_accord))
 
     get :explorer
     accords = controller.instance_variable_get(:@accords)
@@ -207,7 +207,7 @@ describe AutomationManagerController do
   context "renders right cell text" do
     before do
       right_cell_text = nil
-      login_as user_with_feature(%w(automation_manager_providers automation_manager_cs_filter_accord automation_manager_configuration_scripts_accord))
+      login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system automation_manager_configuration_scripts_accord))
       controller.instance_variable_set(:@right_cell_text, right_cell_text)
       allow(controller).to receive(:get_view_calculate_gtl_type)
       allow(controller).to receive(:get_view_pages)
@@ -254,7 +254,7 @@ describe AutomationManagerController do
   end
 
   it "constructs the ansible tower job templates tree node" do
-    login_as user_with_feature(%w(providers_accord automation_manager_cs_filter_accord automation_manager_configuration_scripts_accord))
+    login_as user_with_feature(%w(providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord))
     controller.send(:build_automation_manager_tree, :configuration_scripts, :configuration_scripts_tree)
     tree_builder = TreeBuilderAutomationManagerConfigurationScripts.new("root", "", {})
     objects = tree_builder.send(:x_get_tree_roots, false, {})
@@ -267,7 +267,7 @@ describe AutomationManagerController do
     before do
       get :explorer
       right_cell_text = nil
-      login_as user_with_feature(%w(automation_manager_providers automation_manager_cs_filter_accord automation_manager_configuration_scripts_accord))
+      login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system automation_manager_configuration_scripts_accord))
       controller.instance_variable_set(:@right_cell_text, right_cell_text)
       allow(controller).to receive(:get_view_calculate_gtl_type)
       allow(controller).to receive(:get_view_pages)
@@ -452,7 +452,7 @@ describe AutomationManagerController do
 
   context "fetches the list setting:Grid/Tile/List from settings" do
     before do
-      login_as user_with_feature(%w(automation_manager_providers automation_manager_cs_filter_accord))
+      login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system))
       allow(controller).to receive(:items_per_page).and_return(20)
       allow(controller).to receive(:current_page).and_return(1)
       allow(controller).to receive(:get_view_pages)
@@ -505,7 +505,7 @@ describe AutomationManagerController do
 
   context "when user with specific tag settings logs in" do
     before do
-      @user = user_with_feature %w(automation_manager_providers automation_manager_cs_filter_accord)
+      @user = user_with_feature %w(automation_manager_providers automation_manager_configured_system)
       login_as @user
     end
     it "builds foreman tree with no nodes after rbac filtering" do
