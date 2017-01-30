@@ -924,7 +924,7 @@ module MiqAeCustomizationController::Dialogs
           @edit[:field_required]      = key[:required]  = false
         elsif params[:field_typ] =~ /Drop|Radio/
           @edit[:field_default_value] = key[:default_value] = nil
-          @edit[:field_multi_value]   = key[:multi_value]   =  nil
+          @edit[:field_multi_value]   = key[:multi_value]   = nil
         else
           @edit[:field_default_value] = key[:default_value] = false
         end
