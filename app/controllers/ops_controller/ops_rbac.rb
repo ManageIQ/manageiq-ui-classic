@@ -1111,7 +1111,8 @@ module OpsController::OpsRbac
 
     # Build roles hash
     @edit[:roles]["<Choose a Role>"] = nil if @record.id.nil?
-    MiqUserRole.all.each do |r|
+
+    Rbac::Filterer.filtered(MiqUserRole).each do |r|
       @edit[:roles][r.name] = r.id
     end
     if @group.miq_user_role.nil? # If adding, set to first role
