@@ -869,7 +869,7 @@ module MiqAeCustomizationController::Dialogs
         !%w(DialogFieldDropDownList DialogFieldRadioButton).include?(@edit[:field_typ]))
 
       @edit[:field_required]      = key[:required]      = true
-      @edit[:field_multi_value]   = key[:multi_value]   = false
+      @edit[:field_multi_value]   = key[:multi_value]   = true
       @edit[:field_sort_by]       = key[:sort_by]       = "description"
       @edit[:field_sort_order]    = key[:sort_order]    = "ascending"
       @edit[:field_data_typ]      = key[:data_typ]      = "string"
@@ -924,7 +924,7 @@ module MiqAeCustomizationController::Dialogs
           @edit[:field_required]      = key[:required]  = false
         elsif params[:field_typ] =~ /Drop|Radio/
           @edit[:field_default_value] = key[:default_value] = nil
-          @edit[:field_multi_value]   = key[:multi_value] = false
+          @edit[:field_multi_value]   = key[:multi_value]   =  nil
         else
           @edit[:field_default_value] = key[:default_value] = false
         end
@@ -1182,8 +1182,7 @@ module MiqAeCustomizationController::Dialogs
               :dynamic              => f.dynamic,
               :visible              => f.visible,
               :read_only            => f.read_only,
-              :trigger_auto_refresh => f.trigger_auto_refresh,
-              :force_multi_value    => field.options.include?("multiple")
+              :trigger_auto_refresh => f.trigger_auto_refresh
             }
 
             if dynamic_field?(fld)
@@ -1224,7 +1223,7 @@ module MiqAeCustomizationController::Dialogs
               fld[:past_dates] = f.show_past_dates.nil? ? false : f.show_past_dates
 
             elsif %w(DialogFieldDropDownList).include?(f.type)
-              fld[:multi_value] = f.options.include?("multiple")
+              fld[:multi_value] =  f.options.include?(:force_multi_value) && f.options.values_at(:force_multi_value).to_s == "[true]"
 
             elsif f.type.include?("TagControl")
               fld[:single_value] = f.single_value?

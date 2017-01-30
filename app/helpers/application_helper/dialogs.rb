@@ -88,16 +88,15 @@ module ApplicationHelper::Dialogs
 
   def drop_down_options(field, url)
     tag_options = {:class => "dynamic-drop-down-#{field.id} selectpicker"}
-    multiple = field.multi_value? ? true : false
+    multiple = field.force_multi_value ? true : false
     extra_options = {
       "data-miq_sparkle_on"  => true,
       "data-miq_sparkle_off" => true,
       "data-live-search"     => true,
-      "multiselect"          => false,
       # data-miq_observe functionality is handled by dialogFieldRefresh.initializeDialogSelectPicker here
     }
-    multiple ? extra_options.merge(:multiple => "multiple") : nil
-    add_options_unless_read_only(extra_options, tag_options, field)
+    options_hash = multiple ? {:multiple => "multiple"} : {}
+    add_options_unless_read_only(extra_options, tag_options, field).merge(options_hash)
   end
 
   def radio_options(field, url, value, selected_value)
