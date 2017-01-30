@@ -21,18 +21,16 @@ angular.module('alertsCenter').controller('alertsOverviewController',
     }
 
     function setupConfig() {
-      vm.severityTitles = [__("Information"), __("Warning"), __("Error")];
-
       vm.category = alertsCenterService.categories[0];
 
-      vm.groups = [
-        {
-          value: '',
-          title: __("Ungrouped"),
-          itemsList: [],
-          open: true
-        }
-      ];
+      vm.unGroupedGroup =         {
+        value: __("Ungrouped"),
+        title: __("Ungrouped"),
+        itemsList: [],
+        open: true
+      };
+
+      vm.groups = [vm.unGroupedGroup];
 
       vm.cardsConfig = {
         selectItems: false,
@@ -172,6 +170,7 @@ angular.module('alertsCenter').controller('alertsOverviewController',
         if (item.displayType === vm.displayFilter) {
           var group = addGroup(item[vm.category]);
           if (!filteredOut(item)) {
+            group.hasItems = true;
             totalCount++;
             group.itemsList.push(item);
           }
@@ -181,7 +180,7 @@ angular.module('alertsCenter').controller('alertsOverviewController',
       // Sort the groups
       vm.groups.sort(function(group1, group2) {
         if (!group1.value) {
-          return -1;
+          return 1;
         } else if (!group2.value) {
           return -1;
         }
@@ -198,20 +197,24 @@ angular.module('alertsCenter').controller('alertsOverviewController',
 
     function addGroup(category) {
       var foundGroup;
-      var groupCategory = category || __('Not Grouped');
+      var groupCategory = category;
 
-      angular.forEach(vm.groups, function(nextGroup) {
-        if (nextGroup.value === groupCategory) {
-          foundGroup = nextGroup;
-        }
-      });
+      if (angular.isUndefined(category)) {
+        foundGroup = vm.unGroupedGroup;
+      } else {
+        angular.forEach(vm.groups, function(nextGroup) {
+          if (nextGroup.value === groupCategory) {
+            foundGroup = nextGroup;
+          }
+        });
+      }
 
       if (!foundGroup) {
         foundGroup = {value: groupCategory, title: groupCategory, itemsList: [], open: true};
         vm.groups.push(foundGroup);
       }
 
-      foundGroup.hasItems = true;
+      foundGroup.hasItems = false;
 
       return foundGroup;
     }
@@ -237,22 +240,23 @@ angular.module('alertsCenter').controller('alertsOverviewController',
       vm.hoverAlerts = alerts;
     };
 
-    function onInitComplete() {
-      alertsCenterService.getAlertsData(processData);
+    vm.processData = processData;
+
+    function initializeAlerts() {
+      alertsCenterService.updateAlertsData().then(processData);
 
       if (alertsCenterService.refreshInterval > 0) {
         $interval(
           function() {
-            alertsCenterService.getAlertsData(processData);
+            alertsCenterService.updateAlertsData().then(processData);
           },
           alertsCenterService.refreshInterval
         );
       }
     }
 
-    setupInitialValues();
-
     alertsCenterService.registerObserverCallback(vm.filterChange);
-    alertsCenterService.initialize(onInitComplete);
+    setupInitialValues();
+    initializeAlerts();
   }
 ]);

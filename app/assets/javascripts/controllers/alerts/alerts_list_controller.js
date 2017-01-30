@@ -23,7 +23,8 @@ angular.module('alertsCenter').controller('alertsListController',
       vm.listConfig = {
         showSelectBox: false,
         selectItems: false,
-        useExpandingRows: true
+        useExpandingRows: true,
+        onClick: expandRow
       };
 
       vm.menuActions = alertsCenterService.menuActions;
@@ -80,22 +81,28 @@ angular.module('alertsCenter').controller('alertsListController',
       }
     }
 
-    function onInitComplete() {
-      alertsCenterService.getAlertsData(processData);
+    function expandRow(item) {
+      if (!item.disableRowExpansion) {
+        item.isExpanded = !item.isExpanded;
+      }
+    }
+
+    function getAlerts() {
+      alertsCenterService.updateAlertsData().then(processData);
 
       if (alertsCenterService.refreshInterval > 0) {
         $interval(
           function() {
-            alertsCenterService.getAlertsData(processData);
+            alertsCenterService.updateAlertsData().then(processData);
           },
           alertsCenterService.refreshInterval
         );
       }
     }
 
-    setupConfig();
-
     alertsCenterService.registerObserverCallback(vm.filterChange);
-    alertsCenterService.initialize(onInitComplete);
+
+    setupConfig();
+    getAlerts();
   }
 ]);

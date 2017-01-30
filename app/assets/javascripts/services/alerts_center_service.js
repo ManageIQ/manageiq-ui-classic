@@ -1,8 +1,8 @@
 angular.module('alertsCenter').service('alertsCenterService', alertsCenterService);
 
-alertsCenterService.$inject = ['$http', '$timeout', '$document', '$modal'];
+alertsCenterService.$inject = ['API', '$q', '$timeout', '$document', '$modal'];
 
-function alertsCenterService($http, $timeout, $document, $modal) {
+function alertsCenterService(API, $q, $timeout, $document, $modal) {
   var _this = this;
   var providersURL = '/api/providers';
   var tagsURL = '/api/tags';
@@ -15,11 +15,11 @@ function alertsCenterService($http, $timeout, $document, $modal) {
     });
   };
 
-  this.registerObserverCallback = function(callback){
+  _this.registerObserverCallback = function(callback){
     observerCallbacks.push(callback);
   };
 
-  this.unregisterObserverCallback = function(callback){
+  _this.unregisterObserverCallback = function(callback){
     var index = observerCallbacks.indexOf(callback);
     if (index > -1) {
       observerCallbacks.splice(index, 1);
@@ -77,12 +77,6 @@ function alertsCenterService($http, $timeout, $document, $modal) {
       filterValues: _this.severityTitles
     },
     {
-      id: 'nodeName',
-      title: __('Host Name'),
-      placeholder: __('Filter by Host Name'),
-      filterType: 'text'
-    },
-    {
       id: 'name',
       title: __('Provider Name'),
       placeholder: __('Filter by Provider Name'),
@@ -110,7 +104,7 @@ function alertsCenterService($http, $timeout, $document, $modal) {
     {
       id: 'acknowledged',
       title: __('Acknowledged'),
-      placeholder: __('Filter by Acknowleged'),
+      placeholder: __('Filter by Acknowledged'),
       filterType: 'select',
       filterValues: [__('Acknowledged'), __('Unacknowledged')]
     }
@@ -168,8 +162,6 @@ function alertsCenterService($http, $timeout, $document, $modal) {
       found = filterStringCompare(item.message, filter.value);
     } else if (filter.id === 'type') {
       found = item.objectType === filter.value;
-    } else if (filter.id === 'nodeName') {
-      found = filterStringCompare(item.node_hostname, filter.value);
     } else if (filter.id === 'name') {
       found = filterStringCompare(item.objectName, filter.value);
     } else if (filter.id === 'assignee') {
@@ -215,8 +207,6 @@ function alertsCenterService($http, $timeout, $document, $modal) {
       compValue = item1.evaluated_on - item2.evaluated_on;
     } else if (sortId === 'severity') {
       compValue = item1.severityInfo.value - item2.severityInfo.value;
-    } else if (sortId === 'nodeName') {
-      compValue = item1.node_hostname.localeCompare(item2.node_hostname);
     } else if (sortId === 'name') {
       compValue = item1.objectName.localeCompare(item2.objectName);
     } else if (sortId === 'type') {
@@ -253,11 +243,6 @@ function alertsCenterService($http, $timeout, $document, $modal) {
       sortType: 'numeric'
     },
     {
-      id: 'nodeName',
-      title: __('Host Name'),
-      sortType: 'alpha'
-    },
-    {
       id: 'name',
       title: __('Provider Name'),
       sortType: 'alpha'
@@ -283,26 +268,31 @@ function alertsCenterService($http, $timeout, $document, $modal) {
     {
       id: 'acknowledge',
       name: __('Acknowledge'),
+      isVisible: true,
       actionFn: handleMenuAction
     },
     {
       id: 'addcomment',
       name: __('Add Note'),
+      isVisible: true,
       actionFn: handleMenuAction
     },
     {
       id: 'assign',
       name: __('Assign'),
+      isVisible: true,
       actionFn: handleMenuAction
     },
     {
       id: 'unacknowledge',
       name: __('Unacknowledge'),
+      isVisible: true,
       actionFn: handleMenuAction
     },
     {
       id: 'unassign',
       name: __('Unassign'),
+      isVisible: true,
       actionFn: handleMenuAction
     }
   ];
@@ -310,12 +300,12 @@ function alertsCenterService($http, $timeout, $document, $modal) {
   _this.updateMenuActionForItemFn = function(action, item) {
     if (action.id === 'unassign') {
       action.isVisible = item.assigned;
-    }
-    if (action.id === 'acknowledge') {
+    } else if (action.id === 'acknowledge') {
       action.isVisible = (item.assignee_id == _this.currentUser.id) && item.acknowledged !== true;
-    }
-    if (action.id === 'unacknowledge') {
+    } else if (action.id === 'unacknowledge') {
       action.isVisible = (item.assignee_id == _this.currentUser.id) && item.acknowledged === true;
+    } else {
+      action.isVisbile = true;
     }
   };
 
@@ -330,7 +320,80 @@ function alertsCenterService($http, $timeout, $document, $modal) {
     return foundUser;
   };
 
-  _this.getAlertsData = function(onRefreshCB, limit, offset, filters, sortField, sortAscending) {
+  _this.getCurrentUser = function() {
+    var deferred = $q.defer();
+
+    // Get the current user
+    API.get('/api').then(function(response) {
+      _this.currentUser = response.identity;
+      deferred.resolve();
+    });
+
+    return deferred.promise;
+  };
+
+  _this.updateExistingUsers = function() {
+    var deferred = $q.defer();
+
+    // Get the existing users
+    API.get('/api/users?expand=resources').then(function (response) {
+      // update the existing users list and current user
+      _this.existingUsers = response.resources;
+      _this.existingUsers.sort(function(user1, user2) {
+        return user1.name.localeCompare(user2.name);
+      });
+      _this.currentUser = _this.getUserByIdOrUserId(_this.currentUser.userid);
+
+      deferred.resolve();
+    });
+
+    return deferred.promise;
+  };
+
+  _this.updateProviders = function() {
+    var deferred = $q.defer();
+
+    API.get(providersURL + '?expand=resources&attributes=tags').then(function(response) {
+      _this.providers = response.resources;
+      deferred.resolve();
+    });
+
+    return deferred.promise;
+  };
+
+  _this.updateTags = function() {
+    var deferred = $q.defer();
+
+    API.get(tagsURL + '?expand=resources&attributes=category,categorization').then(function(response) {
+      _this.tags = response.resources;
+      deferred.resolve();
+    });
+
+    return deferred.promise;
+  };
+
+  _this.updateAlertsData = function(limit, offset, filters, sortField, sortAscending) {
+    var deferred = $q.defer();
+
+    // Update data then get the alerts data
+    _this.getCurrentUser().then(function() {
+      _this.updateExistingUsers().then(function() {
+        _this.updateProviders().then(function() {
+          _this.updateTags().then(function() {
+            _this.getAlertsData(limit, offset, filters, sortField, sortAscending).then(function (response) {
+              deferred.resolve(response);
+            })
+          })
+        })
+      })
+    });
+
+    return deferred.promise;
+  };
+
+  _this.getAlertsData = function(limit, offset, filters, sortField, sortAscending) {
+    var deferred = $q.defer();
+    var resourceOptions = '?expand=resources,alert_actions&attributes=assignee';
     var limitOptions = '';
     var offsetOptions = '';
     var sortOptions = '';
@@ -347,41 +410,13 @@ function alertsCenterService($http, $timeout, $document, $modal) {
       offsetOptions = '&offset=' + offset;
     }
 
-    // Get the existing users
-    $http.get('/api/users?expand=resources').then(function(response) {
-      // update the existing users list and current user
-      updateUsers(response.data);
-
-      // Get the providers
-      API.get(providersURL + '?expand=resources&attributes=tags').then(function(response) {
-        _this.providers = response.resources;
-
-        API.get(tagsURL + '?expand=resources&attributes=category,categorization').then(function(response) {
-          _this.tags = response.resources;
-
-          // Get the alert data
-          API.get(alertsURL + '?expand=resources,alert_actions&attributes=assignee' + limitOptions + offsetOptions + sortOptions).then(function(response) {
-            onRefreshCB(response);
-          });
-        });
-      });
+    // Get the alert data
+    API.get(alertsURL + resourceOptions + limitOptions + offsetOptions + sortOptions).then(function(response) {
+      deferred.resolve(response);
     });
+
+    return deferred.promise;
   };
-
-  _this.initialize = function(onInitCB) {
-    $http.get('/api').then(function(response) {
-      _this.currentUser = response.data.identity;
-      onInitCB();
-    });
-  };
-
-  function updateUsers(userData) {
-    _this.existingUsers = userData.resources;
-    _this.existingUsers.sort(function(user1, user2) {
-      return user1.name.localeCompare(user2.name);
-    });
-    _this.currentUser = _this.getUserByIdOrUserId(_this.currentUser.userid);
-  }
 
   function getObjectType(item) {
     var objectType = item.type;
@@ -455,7 +490,7 @@ function alertsCenterService($http, $timeout, $document, $modal) {
       id: alertData.id,
       description: alertData.description,
       assignee: alertData.assignee,
-      acknowledged: alertData.acknowledged,
+      acknowledged: angular.isDefined(alertData.acknowledged) ? alertData.acknowledged : false,
       objectName: objectName,
       objectType: objectType,
       objectTypeImg: typeImage,
@@ -622,8 +657,8 @@ function alertsCenterService($http, $timeout, $document, $modal) {
   function processState(response) {
     var newState;
 
-    if (response.data.results && response.data.results.length > 0) {
-      newState = response.data.results[0];
+    if (response.results && response.results.length > 0) {
+      newState = response.results[0];
 
       if (angular.isUndefined(_this.editItem.alert_actions)) {
         _this.editItem.alert_actions = [];
@@ -667,7 +702,7 @@ function alertsCenterService($http, $timeout, $document, $modal) {
     }
 
     var stateURL = alertsURL + '/' + _this.editItem.id + '/alert_actions';
-    $http.post(stateURL, state).then(processState);
+    API.post(stateURL, state).then(processState);
   }
 
   function doAcknowledge() {
