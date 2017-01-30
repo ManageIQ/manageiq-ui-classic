@@ -524,7 +524,7 @@ class ApplicationHelper::ToolbarChooser
       automation_manager_providers_tree_center_tb(nodes)
     elsif x_active_tree == :automation_manager_cs_filter_tree
       automation_manager_cs_filter_tree_center_tb(nodes)
-    elsif x_active_tree == :automation_manager_configuration_scripts_tree
+    elsif x_active_tree == :configuration_scripts_tree
       automation_manager_configuration_scripts_tree_center_tb(nodes)
     end
   end
