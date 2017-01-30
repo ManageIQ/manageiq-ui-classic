@@ -39,6 +39,16 @@ module TextualSummaryHelper
     Array.wrap(summaries).map { |summary| expand_textual_summary(summary, context) }.compact
   end
 
+  def textual_group_render_options(group_symbol)
+    group = send("textual_group_#{group_symbol}")
+    return nil unless group
+
+    {
+      :partial => group.template,
+      :locals  => group.locals,
+    }
+  end
+
   def textual_tags
     label = _("%{name} Tags") % {:name => session[:customer_name]}
     h = {:label => label}
