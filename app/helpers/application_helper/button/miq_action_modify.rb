@@ -1,4 +1,5 @@
 class ApplicationHelper::Button::MiqActionModify < ApplicationHelper::Button::Basic
+  needs @view_context
   include CompressedIds
 
   def role_allows_feature?
