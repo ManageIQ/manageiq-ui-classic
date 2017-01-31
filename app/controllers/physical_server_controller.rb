@@ -35,8 +35,8 @@ class PhysicalServerController  < ApplicationController
 
 
   def show
-    @display = params[:display] || "main" unless pagination_or_gtl_request?
-  
+    @display = params[:display] || "physical_server" unless pagination_or_gtl_request?
+
     @ph_server = @record = identify_record(params[:id])
     return if record_no_longer_exists?(@ph_server, 'PhysicalServer')
 
