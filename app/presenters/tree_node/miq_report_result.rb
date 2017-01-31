@@ -11,7 +11,7 @@ module TreeNode
       when 'queued'
         'fa fa-play-circle-o'
       else
-        'product product-arrow-right'
+        'fa fa-arrow-right'
       end
     end
 

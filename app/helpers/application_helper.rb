@@ -1700,18 +1700,18 @@ module ApplicationHelper
       when "queued"
         glyphicon = "fa fa-pause"
       else
-        glyphicon = "product product-arrow-right"
+        glyphicon = "fa fa-arrow-right"
       end
     when "MiqUserRole"
       glyphicon = "product product-role"
     when "MiqWidget"
       case row['content_type'].downcase
       when "chart"
-        glyphicon = "product product-chart"
+        glyphicon = "fa fa-pie-chart"
       when "menu"
         glyphicon = "fa fa-share-square-o"
       when "report"
-        glyphicon = "product product-report"
+        glyphicon = "fa fa-file-text-o"
       when "rss"
         glyphicon = "fa fa-rss"
       end

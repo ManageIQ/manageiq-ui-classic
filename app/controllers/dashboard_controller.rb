@@ -172,8 +172,8 @@ class DashboardController < ApplicationController
         image, tip = case w.content_type
                      when "menu"   then ["fa fa-share-square-o fa-lg",     _("Add this Menu Widget")]
                      when "rss"    then ["fa fa-rss fa-lg",  _("Add this RSS Feed Widget")]
-                     when "chart"  then ["product product-chart fa-lg", _("Add this Chart Widget")]
-                     when "report" then ["product product-report fa-lg",   _("Add this Report Widget")]
+                     when "chart"  then ["fa fa-pie-chart fa-lg", _("Add this Chart Widget")]
+                     when "report" then ["fa fa-file-text-o fa-lg",   _("Add this Report Widget")]
                      end
         if prev_type && prev_type != w.content_type
           widget_list << {:id => w.content_type, :type => :separator}

@@ -370,7 +370,7 @@ class MiqAeClassController < ApplicationController
       glyphicon = "product product-ae_class"
     when "MiqAeNamespace"
       cls = "aen"
-      glyphicon = "product product-ae_namespace"
+      glyphicon = "pficon pficon-folder-open"
     when "MiqAeInstance"
       cls = "aei"
       glyphicon = "product product-ae_instance"

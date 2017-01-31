@@ -407,9 +407,9 @@ module ReportController::Dashboards
     @available_widgets.sort_by! { |w| [w.content_type, w.title.downcase] }
 
     if @available_widgets.blank?
-      @widgets_options = [["No Widgets available to add", "", {"data-icon" => "product product-arrow-right"}]]
+      @widgets_options = [["No Widgets available to add", "", {"data-icon" => "fa fa-arrow-right"}]]
     else
-      @widgets_options = [["Add a Widget", "", {"data-icon" => "product product-arrow-right"}]]
+      @widgets_options = [["Add a Widget", "", {"data-icon" => "fa fa-arrow-right"}]]
 
       @available_widgets.each do |w|
         next if col_widgets.include?(w.id) || !w.enabled
@@ -417,9 +417,9 @@ module ReportController::Dashboards
                 when "rss"
                   "fa fa-rss"
                 when "chart"
-                  "product product-chart"
+                  "fa fa-pie-chart"
                 when "report"
-                  "product product-report"
+                  "fa fa-file-text-o"
                 when "menu"
                   "fa fa-share-square-o"
                 end

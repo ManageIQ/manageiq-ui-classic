@@ -1,5 +1,5 @@
 module TreeNode
   class Tenant < Node
-    set_attribute(:icon) { "product #{@object.tenant? ? "product-tenant" : "product-project"}" }
+    set_attribute(:icon) { @object.tenant? ? "pficon pficon-tenant" : "pficon pficon-project" }
   end
 end
