@@ -30,28 +30,9 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', '$scope',
     ManageIQ.angular.scope = $scope;
 
     miqService.sparkleOn();
-    $http.get('/configuration/time_profile_form_fields/' + timeProfileFormId).success(function(data) {
-      $scope.timeProfileModel.description = data.description;
-      $scope.timeProfileModel.admin_user = data.admin_user;
-      $scope.timeProfileModel.restricted_time_profile = data.restricted_time_profile;
-      $scope.timeProfileModel.profile_type = data.profile_type;
-      $scope.timeProfileModel.profile_tz = data.profile_tz;
-      $scope.timeProfileModel.rollup_daily = data.rollup_daily;
-      $scope.timeProfileModel.miq_reports_count = data.miq_reports_count;
-      $scope.timeProfileModel.all_days = data.all_days;
-      $scope.timeProfileModel.days = data.days;
-      $scope.timeProfileModel.all_hours = data.all_hours;
-      $scope.timeProfileModel.hours = data.hours;
-      $scope.getDaysValues();
-      $scope.getHoursValues();
-
-      $scope.note = sprintf(__("In use by %s reports, cannot be disabled"), $scope.timeProfileModel.miq_reports_count);
-
-      $scope.afterGet = true;
-      $scope.modelCopy                    = angular.copy( $scope.timeProfileModel );
-
-      miqService.sparkleOff();
-    });
+    $http.get('/configuration/time_profile_form_fields/' + timeProfileFormId)
+      .then(getTimeProfileFormData)
+      .catch(miqService.handleFailure);
 
     if (timeProfileFormId == 'new') {
       $scope.newRecord = true;
@@ -210,6 +191,31 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', '$scope',
   $scope.addClicked = function() {
     $scope.saveClicked();
   };
+
+  function getTimeProfileFormData(response) {
+    var data = response.data;
+
+    $scope.timeProfileModel.description = data.description;
+    $scope.timeProfileModel.admin_user = data.admin_user;
+    $scope.timeProfileModel.restricted_time_profile = data.restricted_time_profile;
+    $scope.timeProfileModel.profile_type = data.profile_type;
+    $scope.timeProfileModel.profile_tz = data.profile_tz;
+    $scope.timeProfileModel.rollup_daily = data.rollup_daily;
+    $scope.timeProfileModel.miq_reports_count = data.miq_reports_count;
+    $scope.timeProfileModel.all_days = data.all_days;
+    $scope.timeProfileModel.days = data.days;
+    $scope.timeProfileModel.all_hours = data.all_hours;
+    $scope.timeProfileModel.hours = data.hours;
+    $scope.getDaysValues();
+    $scope.getHoursValues();
+
+    $scope.note = sprintf(__("In use by %s reports, cannot be disabled"), $scope.timeProfileModel.miq_reports_count);
+
+    $scope.afterGet = true;
+    $scope.modelCopy                    = angular.copy( $scope.timeProfileModel );
+
+    miqService.sparkleOff();
+  }
 
   init();
 }]);
