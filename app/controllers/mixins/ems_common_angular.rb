@@ -434,7 +434,7 @@ module Mixins
 
     def get_hostname_from_routes(ems, hostname, port, token)
       client = ems.class.raw_connect(hostname, port, :bearer => token)
-      client.get_routes(:name=>'hawkular-metrics').first.try(:spec).try(:host)
+      client.get_route('hawkular-metrics', 'openshift-infra').try(:spec).try(:host)
     end
 
     def build_connection(ems, endpoints, mode)
