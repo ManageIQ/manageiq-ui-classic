@@ -93,19 +93,21 @@
 
     dash.refresh = function() {
       dash.loadingMetrics = true;
-      var _tags = dash.tags != {} ? '&tags=' + JSON.stringify(dash.tags) : '';
+      var _tags = dash.tags !== {} ? '&tags=' + JSON.stringify(dash.tags) : '';
       $http.get(dash.url + '&query=metric_definitions' + _tags)
         .then(getMetricDefinitionsData)
         .catch(miqService.handleFailure);
     };
 
-    dash.refresh_graph = function(metric_id, metric_type, n) {
+    dash.refresh_graph = function(metricId, metricType, currentItem) {
       // TODO: replace with a datetimepicker, until then add 24 hours to the date
+      dash.metricId = metricId;
+      dash.currentItem = currentItem;
       var ends = dash.timeFilter.date.valueOf() + 24 * 60 * 60;
       var diff = dash.timeFilter.time_range * dash.timeFilter.range_count * 60 * 60 * 1000; // time_range is in hours
       var starts = ends - diff;
       var bucket_duration = parseInt(diff / 1000 / 200); // bucket duration is in seconds
-      var params = '&query=get_data&type=' + metric_type + '&metric_id=' + metric_id + '&ends=' + ends +
+      var params = '&query=get_data&type=' + metricType + '&metric_id=' + dash.metricId + '&ends=' + ends +
                    '&starts=' + starts+ '&bucket_duration=' + bucket_duration + 's';
 
       $http.get(dash.url + params)
@@ -216,9 +218,9 @@
           dash.filterConfig.fields.push(
             {
               id: data.metric_tags[i],
-              title:  data.metric_tags[i],
-              placeholder: sprintf(__("Filter by %s..."), data.metric_tags[i]),
-              filterType: 'alpha'
+              title: data.metric_tags[i],
+              placeholder: sprintf(__('Filter by %s...'), data.metric_tags[i]),
+              filterType: 'alpha',
             });
         }
       } else {
@@ -260,7 +262,7 @@
             } else {
               change = 0;
             }
-            dash.item.percent_change = "(" + numeral(change).format('0,0.00%') + ")";
+            dash.item.percent_change = '(' + numeral(change).format('0,0.00%') + ')';
           }
         }
       }
@@ -299,11 +301,11 @@
       var yData = data.map(function(d) { return d.avg || null; });
 
       xData.unshift('time');
-      yData.unshift(metric_id);
+      yData.unshift(dash.metricId);
 
       // TODO: Use time buckets
       dash.chartData.xData = xData;
-      dash.chartData['yData'+n] = yData;
+      dash.chartData['yData'+ dash.currentItem] = yData;
 
       dash.chartDataInit = true;
       dash.loadCount++;

@@ -7,7 +7,7 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'angular.validators',
   'miq.api',
   'miq.card',
-  'miq.util'
+  'miq.util',
 ]);
 miqHttpInject(ManageIQ.angular.app);
 

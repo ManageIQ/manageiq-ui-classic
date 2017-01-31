@@ -93,12 +93,12 @@
             $scope.isSingleProvider = false;
             $scope.objectStatus.providers.count = 0;
             $scope.objectStatus.providers.notifications = [];
-            providers.forEach(function (item) {
+            providers.forEach(function(item) {
               $scope.objectStatus.providers.count += item.count;
               $scope.objectStatus.providers.notifications.push({
                 iconImage: item.iconImage,
-                count: item.count
-              })
+                count: item.count,
+              });
             });
           }
 
@@ -118,10 +118,10 @@
 
         // Node utilization donut
         $scope.cpuUsageData = chartsMixin.processUtilizationData(data.ems_utilization.cpu,
-                                                                 "dates",
+                                                                 'dates',
                                                                  $scope.cpuUsageConfig.units);
         $scope.memoryUsageData = chartsMixin.processUtilizationData(data.ems_utilization.mem,
-                                                                    "dates",
+                                                                    'dates',
                                                                     $scope.memoryUsageConfig.units);
 
         // Heatmaps
@@ -137,7 +137,7 @@
 
         $scope.dailyNetworkUtilization =
           chartsMixin.processUtilizationData(data.daily_network_metrics,
-                                             "dates",
+                                             'dates',
                                              $scope.networkUtilizationDailyConfig.units);
 
         // Pod metrics
@@ -145,7 +145,7 @@
 
         $scope.dailyPodEntityTrend =
             chartsMixin.processPodUtilizationData(data.daily_pod_metrics,
-                "dates",
+                'dates',
                 $scope.podEntityTrendDailyConfig.createdLabel,
                 $scope.podEntityTrendDailyConfig.deletedLabel);
 
@@ -154,7 +154,7 @@
 
         $scope.dailyImageEntityTrend =
             chartsMixin.processUtilizationData(data.daily_image_metrics,
-                "dates",
+                'dates',
                 $scope.imageEntityTrendDailyConfig.createdLabel);
 
         // Trend lines data

@@ -90,12 +90,12 @@
             $scope.isSingleProvider = false;
             $scope.objectStatus.providers.count = 0;
             $scope.objectStatus.providers.notifications = [];
-            providers.forEach(function (item) {
+            providers.forEach(function(item) {
               $scope.objectStatus.providers.count += item.count;
               $scope.objectStatus.providers.notifications.push({
                 iconImage: item.iconImage,
-                count: item.count
-              })
+                count: item.count,
+              });
             });
           }
 
@@ -112,10 +112,10 @@
 
         // cluster utilization donut
         $scope.cpuUsageData = infraChartsMixin.processUtilizationData(data.ems_utilization.cpu,
-          "dates",
+          'dates',
           $scope.cpuUsageConfig.units);
         $scope.memoryUsageData = infraChartsMixin.processUtilizationData(data.ems_utilization.mem,
-          "dates",
+          'dates',
           $scope.memoryUsageConfig.units);
 
         // Heatmaps
@@ -131,7 +131,7 @@
 
         // recent Hosts chart
         $scope.recentHostsData = infraChartsMixin.processRecentHostsData(data.recentHosts,
-          "dates",
+          'dates',
           $scope.recentHostsConfig.label);
 
         // Recent VMs
@@ -139,7 +139,7 @@
 
         // recent VMS chart
         $scope.recentVmsData = infraChartsMixin.processRecentVmsData(data.recentVms,
-          "dates",
+          'dates',
           $scope.recentVmsConfig.label);
 
         // Trend lines data
