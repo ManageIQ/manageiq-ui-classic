@@ -10,8 +10,8 @@ addons:
   postgresql: '9.4'
 env:
   matrix:
-  - TEST_SUITE=spec
-  - TEST_SUITE=spec:javascript
+  - TEST_SUITE=test
+  - TEST_SUITE=test:javascript
 before_install: source tools/ci/before_install.sh
 before_script: bundle exec rake $TEST_SUITE:setup
 script: bundle exec rake $TEST_SUITE
@@ -19,7 +19,7 @@ before_cache:
 - mkdir -p vendor/assets
 - mv spec/manageiq/vendor/assets/bower_components vendor/assets
 - cp bower.json vendor/assets/bower_components
-after_script: if [ "$TEST_SUITE" = "spec" ]; then bundle exec codeclimate-test-reporter; fi
+after_script: if [ "$TEST_SUITE" = "test" ]; then bundle exec codeclimate-test-reporter; fi
 notifications:
   webhooks:
     urls:
