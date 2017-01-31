@@ -1,8 +1,7 @@
 /* global miqHttpInject */
 
-miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'patternfly', 'patternfly.charts']))
-  .controller('containerLiveDashboardController', ['$http', '$window',
-  function ($http, $window) {
+  ManageIQ.angular.app.controller('containerLiveDashboardController', ['$http', '$window', 'miqService',
+    function($http, $window, miqService) {
     var dash = this;
     dash.tenant = '_ops';
 
@@ -77,89 +76,26 @@ miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'pattern
     };
 
     var getMetricTags = function() {
-      $http.get(dash.url + '&query=metric_tags&limit=250').success(function(response) {
-        dash.tagsLoaded = true;
-        if (response && angular.isArray(response.metric_tags)) {
-          response.metric_tags.sort();
-          for (var i = 0; i < response.metric_tags.length; i++) {
-            dash.filterConfig.fields.push(
-              {
-                id: response.metric_tags[i],
-                title:  response.metric_tags[i],
-                placeholder: sprintf(__("Filter by %s..."), response.metric_tags[i]),
-                filterType: 'alpha'
-              });
-          }
-        } else {
-          // No filters available, apply without filtering
-          dash.toolbarConfig.filterConfig = undefined;
-          dash.doApply();
-        }
-      });
+      $http.get(dash.url + '&query=metric_tags&limit=250')
+        .then(getMetricTagsData)
+        .catch(miqService.handleFailure);
     };
 
     var getLatestData = function(item) {
       var params = '&query=get_data&type=' + item.type + '&metric_id=' + item.id +
         '&limit=5&order=DESC';
 
-      $http.get(dash.url + params).success(function (response) {
-        'use strict';
-        if (response.error) {
-          add_flash(response.error, 'error');
-        } else {
-          var data = response.data;
-
-          item.lastValues = {};
-          angular.forEach(data, function(d) {
-            item.lastValues[d.timestamp] = numeral(d.value).format('0,0.00a');
-          });
-
-          if (data.length > 0) {
-            var lastValue = data[0].value;
-            item.last_value = numeral(lastValue).format('0,0.00a');
-            item.last_timestamp = data[0].timestamp;
-          } else {
-            item.last_value = '-';
-            item.last_timestamp = '-';
-          }
-
-          if (data.length > 1) {
-            var prevValue = data[1].value;
-            if (angular.isNumber(lastValue) && angular.isNumber(prevValue)) {
-              var change;
-              if (prevValue !== 0 && lastValue !== 0) {
-                change = Math.round((lastValue - prevValue) / lastValue);
-              } else if (lastValue !== 0) {
-                change = 1;
-              } else {
-                change = 0;
-              }
-              item.percent_change = "(" + numeral(change).format('0,0.00%') + ")";
-            }
-          }
-        }
-      });
+      $http.get(dash.url + params)
+        .then(getContainerDashboardData)
+        .catch(miqService.handleFailure);
     };
 
     dash.refresh = function() {
       dash.loadingMetrics = true;
       var _tags = dash.tags != {} ? '&tags=' + JSON.stringify(dash.tags) : '';
-      $http.get(dash.url + '&query=metric_definitions' + _tags).success(function (response) {
-        'use strict';
-        dash.loadingMetrics = false;
-        if (response.error) {
-          add_flash(response.error, 'error');
-          return;
-        }
-
-        dash.items = response.metric_definitions.filter(function(item) {
-          return item.id && item.type;
-        });
-
-        angular.forEach(dash.items, getLatestData);
-
-        dash.filterConfig.resultsCount = dash.items.length;
-      });
+      $http.get(dash.url + '&query=metric_definitions' + _tags)
+        .then(getMetricDefinitionsData)
+        .catch(miqService.handleFailure);
     };
 
     dash.refresh_graph = function(metric_id, metric_type, n) {
@@ -171,30 +107,9 @@ miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'pattern
       var params = '&query=get_data&type=' + metric_type + '&metric_id=' + metric_id + '&ends=' + ends +
                    '&starts=' + starts+ '&bucket_duration=' + bucket_duration + 's';
 
-      $http.get(dash.url + params).success(function(response) {
-        'use strict';
-        if (response.error) {
-          add_flash(response.error, 'error');
-          return;
-        }
-
-        var data  = response.data;
-        var xData = data.map(function(d) { return d.start; });
-        var yData = data.map(function(d) { return d.avg || null; });
-
-        xData.unshift('time');
-        yData.unshift(metric_id);
-
-        // TODO: Use time buckets
-        dash.chartData.xData = xData;
-        dash.chartData['yData'+n] = yData;
-
-        dash.chartDataInit = true;
-        dash.loadCount++;
-        if (dash.loadCount >= dash.selectedItems.length) {
-          dash.loadingData = false;
-        }
-      });
+      $http.get(dash.url + params)
+        .then(getContainerParamsData)
+        .catch(miqService.handleFailure);
     };
 
     dash.refresh_graph_data = function() {
@@ -289,5 +204,110 @@ miqHttpInject(angular.module('containerLiveDashboard', ['ui.bootstrap', 'pattern
 
     initialization();
     getMetricTags();
-  }
-]);
+
+    function getMetricTagsData(response) {
+      var data = response.data;
+
+      dash.tagsLoaded = true;
+      if (data && angular.isArray(data.metric_tags)) {
+        data.metric_tags.sort();
+        for (var i = 0; i < data.metric_tags.length; i++) {
+          dash.filterConfig.fields.push(
+            {
+              id: data.metric_tags[i],
+              title:  data.metric_tags[i],
+              placeholder: sprintf(__("Filter by %s..."), data.metric_tags[i]),
+              filterType: 'alpha'
+            });
+        }
+      } else {
+        // No filters available, apply without filtering
+        dash.toolbarConfig.filterConfig = undefined;
+        dash.doApply();
+      }
+    }
+
+    function getContainerDashboardData(response) {
+      'use strict';
+      if (response.data.error) {
+        add_flash(response.data.error, 'error');
+      } else {
+        var data = response.data.data;
+
+        item.lastValues = {};
+        angular.forEach(data, function(d) {
+          item.lastValues[d.timestamp] = numeral(d.value).format('0,0.00a');
+        });
+
+        if (data.length > 0) {
+          var lastValue = data[0].value;
+          item.last_value = numeral(lastValue).format('0,0.00a');
+          item.last_timestamp = data[0].timestamp;
+        } else {
+          item.last_value = '-';
+          item.last_timestamp = '-';
+        }
+
+        if (data.length > 1) {
+          var prevValue = data[1].value;
+          if (angular.isNumber(lastValue) && angular.isNumber(prevValue)) {
+            var change;
+            if (prevValue !== 0 && lastValue !== 0) {
+              change = Math.round((lastValue - prevValue) / lastValue);
+            } else if (lastValue !== 0) {
+              change = 1;
+            } else {
+              change = 0;
+            }
+            item.percent_change = "(" + numeral(change).format('0,0.00%') + ")";
+          }
+        }
+      }
+    }
+
+    function getMetricDefinitionsData(response) {
+      'use strict';
+
+      var data = response.data;
+
+      dash.loadingMetrics = false;
+      if (response.data.error) {
+        add_flash(response.data.error, 'error');
+        return;
+      }
+
+      dash.items = data.metric_definitions.filter(function(item) {
+        return item.id && item.type;
+      });
+
+      angular.forEach(dash.items, getLatestData);
+
+      dash.filterConfig.resultsCount = dash.items.length;
+    }
+
+    function getContainerParamsData(response) {
+      'use strict';
+
+      if (response.data.error) {
+        add_flash(response.data.error, 'error');
+        return;
+      }
+
+      var data  = response.data.data;
+      var xData = data.map(function(d) { return d.start; });
+      var yData = data.map(function(d) { return d.avg || null; });
+
+      xData.unshift('time');
+      yData.unshift(metric_id);
+
+      // TODO: Use time buckets
+      dash.chartData.xData = xData;
+      dash.chartData['yData'+n] = yData;
+
+      dash.chartDataInit = true;
+      dash.loadCount++;
+      if (dash.loadCount >= dash.selectedItems.length) {
+        dash.loadingData = false;
+      }
+    }
+    }]);
