@@ -54,87 +54,19 @@
       };
 
       $scope.refresh = function() {
-        var id;
         // get the pathname and remove trailing / if exist
         var pathname = $window.location.pathname.replace(/\/$/, '');
         if (pathname.match(/show$/)) {
-          id = '';
+          $scope.id = '';
         } else {
           // search for pattern ^/<controler>/<id>$ in the pathname
-          id = '/' + (/^\/[^\/]+\/(\d+)$/.exec(pathname)[1]);
+          $scope.id = '/' + (/^\/[^\/]+\/(\d+)$/.exec(pathname)[1]);
         }
 
-        var url = '/ems_infra_dashboard/data' + id;
-        $http.get(url).success(function(response) {
-          'use strict';
-
-          var data = response.data;
-
-          // Obj-status (entity count row)
-          var providers = data.providers;
-          if (providers) {
-            if (id) {
-              $scope.providerTypeIconImage = data.providers[0].iconImage;
-              $scope.isSingleProvider = true;
-            } else {
-              $scope.isSingleProvider = false;
-              $scope.objectStatus.providers.count = 0;
-              $scope.objectStatus.providers.notifications = [];
-              providers.forEach(function (item) {
-                $scope.objectStatus.providers.count += item.count;
-                $scope.objectStatus.providers.notifications.push({
-                  iconImage: item.iconImage,
-                  count: item.count
-                })
-              });
-            }
-
-            if ($scope.objectStatus.providers.count > 0) {
-              $scope.objectStatus.providers.href = data.providers_link;
-            }
-          }
-
-          infraDashboardUtilsFactory.updateStatus($scope.objectStatus.ems_clusters, data.status.ems_clusters);
-          infraDashboardUtilsFactory.updateStatus($scope.objectStatus.hosts, data.status.hosts);
-          infraDashboardUtilsFactory.updateStatus($scope.objectStatus.datastores, data.status.datastores);
-          infraDashboardUtilsFactory.updateStatus($scope.objectStatus.vms, data.status.vms);
-          infraDashboardUtilsFactory.updateStatus($scope.objectStatus.miq_templates, data.status.miq_templates);
-
-          // cluster utilization donut
-          $scope.cpuUsageData = infraChartsMixin.processUtilizationData(data.ems_utilization.cpu,
-                                                                   "dates",
-                                                                   $scope.cpuUsageConfig.units);
-          $scope.memoryUsageData = infraChartsMixin.processUtilizationData(data.ems_utilization.mem,
-                                                                      "dates",
-                                                                      $scope.memoryUsageConfig.units);
-
-          // Heatmaps
-          $scope.clusterCpuUsage = infraChartsMixin.processHeatmapData($scope.clusterCpuUsage, data.heatmaps.clusterCpuUsage);
-          $scope.clusterCpuUsage.loadingDone = true;
-
-          $scope.clusterMemoryUsage =
-            infraChartsMixin.processHeatmapData($scope.clusterMemoryUsage, data.heatmaps.clusterMemoryUsage);
-          $scope.clusterMemoryUsage.loadingDone = true;
-
-          // Recent Hosts
-          $scope.recentHostsConfig = infraChartsMixin.chartConfig.recentHostsConfig;
-
-          // recent Hosts chart
-          $scope.recentHostsData = infraChartsMixin.processRecentHostsData(data.recentHosts,
-            "dates",
-            $scope.recentHostsConfig.label);
-
-          // Recent VMs
-          $scope.recentVmsConfig = infraChartsMixin.chartConfig.recentVmsConfig;
-
-          // recent VMS chart
-          $scope.recentVmsData = infraChartsMixin.processRecentVmsData(data.recentVms,
-            "dates",
-            $scope.recentVmsConfig.label);
-
-          // Trend lines data
-          $scope.loadingDone = true;
-        });
+        var url = '/ems_infra_dashboard/data' + $scope.id;
+        $http.get(url)
+          .then(getEmsInfraDashboardData)
+          .catch(miqService.handleFailure);
       };
       $scope.refresh();
       var promise = $interval($scope.refresh, 1000 * 60 * 3);
@@ -142,4 +74,75 @@
       $scope.$on('$destroy', function() {
         $interval.cancel(promise);
       });
+
+      function getEmsInfraDashboardData(response) {
+        'use strict';
+
+        var data = response.data.data;
+
+        // Obj-status (entity count row)
+        var providers = data.providers;
+        if (providers) {
+          if ($scope.id) {
+            $scope.providerTypeIconImage = data.providers[0].iconImage;
+            $scope.isSingleProvider = true;
+          } else {
+            $scope.isSingleProvider = false;
+            $scope.objectStatus.providers.count = 0;
+            $scope.objectStatus.providers.notifications = [];
+            providers.forEach(function (item) {
+              $scope.objectStatus.providers.count += item.count;
+              $scope.objectStatus.providers.notifications.push({
+                iconImage: item.iconImage,
+                count: item.count
+              })
+            });
+          }
+
+          if ($scope.objectStatus.providers.count > 0) {
+            $scope.objectStatus.providers.href = data.providers_link;
+          }
+        }
+
+        infraDashboardUtilsFactory.updateStatus($scope.objectStatus.ems_clusters, data.status.ems_clusters);
+        infraDashboardUtilsFactory.updateStatus($scope.objectStatus.hosts, data.status.hosts);
+        infraDashboardUtilsFactory.updateStatus($scope.objectStatus.datastores, data.status.datastores);
+        infraDashboardUtilsFactory.updateStatus($scope.objectStatus.vms, data.status.vms);
+        infraDashboardUtilsFactory.updateStatus($scope.objectStatus.miq_templates, data.status.miq_templates);
+
+        // cluster utilization donut
+        $scope.cpuUsageData = infraChartsMixin.processUtilizationData(data.ems_utilization.cpu,
+          "dates",
+          $scope.cpuUsageConfig.units);
+        $scope.memoryUsageData = infraChartsMixin.processUtilizationData(data.ems_utilization.mem,
+          "dates",
+          $scope.memoryUsageConfig.units);
+
+        // Heatmaps
+        $scope.clusterCpuUsage = infraChartsMixin.processHeatmapData($scope.clusterCpuUsage, data.heatmaps.clusterCpuUsage);
+        $scope.clusterCpuUsage.loadingDone = true;
+
+        $scope.clusterMemoryUsage =
+          infraChartsMixin.processHeatmapData($scope.clusterMemoryUsage, data.heatmaps.clusterMemoryUsage);
+        $scope.clusterMemoryUsage.loadingDone = true;
+
+        // Recent Hosts
+        $scope.recentHostsConfig = infraChartsMixin.chartConfig.recentHostsConfig;
+
+        // recent Hosts chart
+        $scope.recentHostsData = infraChartsMixin.processRecentHostsData(data.recentHosts,
+          "dates",
+          $scope.recentHostsConfig.label);
+
+        // Recent VMs
+        $scope.recentVmsConfig = infraChartsMixin.chartConfig.recentVmsConfig;
+
+        // recent VMS chart
+        $scope.recentVmsData = infraChartsMixin.processRecentVmsData(data.recentVms,
+          "dates",
+          $scope.recentVmsConfig.label);
+
+        // Trend lines data
+        $scope.loadingDone = true;
+      }
     }]);
