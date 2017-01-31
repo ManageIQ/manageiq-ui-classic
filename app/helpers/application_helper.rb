@@ -1634,10 +1634,10 @@ module ApplicationHelper
         end
       elsif %w(queued waiting_to_start).include?(row["state"].downcase)
         image = "100/job-queued.png"
-        title = "Status = Queued"
+        title = _("Status = Queued")
       elsif !%w(finished queued waiting_to_start).include?(row["state"].downcase)
         image = "100/job-running.png"
-        title = "Status = Running"
+        title = _("Status = Running")
       end
     elsif %(Vm VmOrTemplate).include?(db)
       vm = @targets_hash[from_cid(@id)]
