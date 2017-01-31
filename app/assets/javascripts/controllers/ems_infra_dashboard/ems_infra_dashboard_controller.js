@@ -1,8 +1,7 @@
 /* global miqHttpInject */
 
-miqHttpInject(angular.module('emsInfraDashboard', ['ui.bootstrap', 'patternfly', 'patternfly.charts', 'miq.card', 'miq.util']))
-  .controller('emsInfraDashboardController', ['$scope', 'infraDashboardUtilsFactory', 'infraChartsMixin', '$http', '$interval', '$window',
-    function($scope, infraDashboardUtilsFactory, infraChartsMixin, $http, $interval, $window) {
+  ManageIQ.angular.app.controller('emsInfraDashboardController', ['$scope', 'infraDashboardUtilsFactory', 'infraChartsMixin', '$http', '$interval', '$window', 'miqService',
+    function($scope, infraDashboardUtilsFactory, infraChartsMixin, $http, $interval, $window, miqService) {
       document.getElementById("center_div").className += " miq-body";
 
       // Obj-status cards init
