@@ -495,12 +495,6 @@ class ApplicationHelper::ToolbarBuilder
         return N_("Default actions can not be deleted.") if @record.action_type == "default"
         return N_("Actions assigned to Policies can not be deleted") unless @record.miq_policies.empty?
       end
-    when "MiqAlert"
-      case id
-      when "alert_delete"
-        return N_("Alerts that belong to Alert Profiles can not be deleted") unless @record.memberof.empty?
-        return N_("Alerts referenced by Actions can not be deleted") unless @record.owning_miq_actions.empty?
-      end
     when "MiqRequest"
       case id
       when "miq_request_delete"
