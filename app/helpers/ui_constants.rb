@@ -214,6 +214,7 @@ module UiConstants
       :manageiq_providers_middlewaremanager     => "grid",
       :manageiq_providers_storagemanager        => "list",
       :manageiq_providers_physicalinframanager  => "grid",
+      :physicalserver                           => "grid",
       :middlewaredatasource                     => "list",
       :middlewaredeployment                     => "list",
       :middlewaredomain                         => "list",
