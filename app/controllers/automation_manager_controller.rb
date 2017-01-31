@@ -98,7 +98,7 @@ class AutomationManagerController < ApplicationController
   def refresh
     assert_privileges("automation_manager_refresh_provider")
     @explorer = true
-    automation_manager_button_operation('refresh_ems', _('Refresh'))
+    manager_button_operation('refresh_ems', _('Refresh'))
     replace_right_cell
   end
 
@@ -111,7 +111,7 @@ class AutomationManagerController < ApplicationController
       assert_privileges("automation_manager_configured_system_tag")
       tagging_edit('ConfiguredSystem', false)
     when :configuration_scripts
-      assert_privileges("configuration_script_tag")
+      assert_privileges("automation_manager_configuration_script_tag")
       tagging_edit('ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript', false)
     end
     render_tagging_form
@@ -147,7 +147,7 @@ class AutomationManagerController < ApplicationController
       model = "#{model_to_name(@provider.type)} #{ui_lookup(:model => 'ExtManagementSystem')}"
       if params[:id] == "new"
         add_flash(_("%{model} \"%{name}\" was added") % {:model => model, :name => @provider.name})
-        process_automation_managers([@provider.configuration_manager.id], "refresh_ems")
+        process_managers([@provider.configuration_manager.id], "refresh_ems")
       else
         add_flash(_("%{model} \"%{name}\" was updated") % {:model => model, :name => @provider.name})
       end
@@ -221,7 +221,6 @@ class AutomationManagerController < ApplicationController
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
 
     @gtl_url = "/show"
-    set_summary_pdf_data if "download_pdf" == @display
   end
 
   def tree_select
@@ -978,7 +977,7 @@ class AutomationManagerController < ApplicationController
   end
 
   def configscript_service_dialog
-    assert_privileges("automation_manager_configscript_service_dialog")
+    assert_privileges("automation_manager_configuration_script_service_dialog")
     cs = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript.find_by(:id => params[:id])
     @edit = {:new    => {:dialog_name => ""},
              :key    => "cs_edit__#{cs.id}",
@@ -996,7 +995,7 @@ class AutomationManagerController < ApplicationController
   end
 
   def configscript_service_dialog_submit_save
-    assert_privileges("automation_manager_configscript_service_dialog")
+    assert_privileges("automation_manager_configuration_script_service_dialog")
     load_edit("cs_edit__#{params[:id]}", "replace_cell__explorer")
     begin
       cs = ConfigurationScript.find_by(:id => params[:id])

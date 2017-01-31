@@ -98,7 +98,7 @@ class ProviderForemanController < ApplicationController
   def refresh
     assert_privileges("provider_foreman_refresh_provider")
     @explorer = true
-    configuration_manager_button_operation('refresh_ems', _('Refresh'))
+    manager_button_operation('refresh_ems', _('Refresh'))
     replace_right_cell
   end
 
@@ -170,7 +170,7 @@ class ProviderForemanController < ApplicationController
       model = "#{model_to_name(@provider_cfgmgmt.type)} #{ui_lookup(:model => 'ExtManagementSystem')}"
       if params[:id] == "new"
         add_flash(_("%{model} \"%{name}\" was added") % {:model => model, :name => @provider_cfgmgmt.name})
-        process_configuration_managers([@provider_cfgmgmt.configuration_manager.id], "refresh_ems")
+        process_managers([@provider_cfgmgmt.configuration_manager.id], "refresh_ems")
       else
         add_flash(_("%{model} \"%{name}\" was updated") % {:model => model, :name => @provider_cfgmgmt.name})
       end
