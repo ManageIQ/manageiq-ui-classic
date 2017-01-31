@@ -25,7 +25,8 @@ class ApplicationHelper::Toolbar::MiqAlertCenter < ApplicationHelper::Toolbar::B
           t = N_('Delete this Alert'),
           t,
           :url_parms => "main_div",
-          :confirm   => N_("Are you sure you want to delete this Alert?")),
+          :confirm   => N_("Are you sure you want to delete this Alert?"),
+          :klass     => ApplicationHelper::Button::MiqActionDelete),
       ]
     ),
   ])
