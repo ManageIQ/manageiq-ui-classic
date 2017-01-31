@@ -617,6 +617,11 @@ class CloudVolumeController < ApplicationController
 
   private
 
+  def textual_group_list
+    [%i(properties relationships), %i(tags)]
+  end
+  helper_method :textual_group_list
+
   def form_params
     options = {}
     options[:name] = params[:name] if params[:name]

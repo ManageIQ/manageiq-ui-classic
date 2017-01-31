@@ -3,6 +3,20 @@ module VmCommon
   include ActionView::Helpers::JavaScriptHelper
   include ChargebackPreview
 
+  def textual_group_list
+    [
+      %i(properties lifecycle relationships) +
+        (::Settings.product.storage ? %i(storage_relationships) : []) +
+        %i(vmsafe normal_operating_ranges miq_custom_attributes ems_custom_attributes),
+      %i(compliance power_management security configuration datastore_allocation datastore_usage diagnostics tags)
+    ]
+  end
+
+  included do
+    private :textual_group_list
+    helper_method :textual_group_list
+  end
+
   # handle buttons pressed on the button bar
   def button
     @edit = session[:edit]                                  # Restore @edit for adv search box

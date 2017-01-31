@@ -11,6 +11,11 @@ class CloudVolumeSnapshotController < ApplicationController
 
   private
 
+  def textual_group_list
+    [%i(properties relationships), %i(tags)]
+  end
+  helper_method :textual_group_list
+
   # handle buttons pressed on the button bar
   def specific_buttons(pressed)
     if pressed == 'cloud_volume_snapshot_delete'

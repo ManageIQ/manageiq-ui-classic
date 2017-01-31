@@ -18,37 +18,37 @@ module VmCloudHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name region server description ipaddress mac_address custom_1 container preemptible tools_status
+    TextualGroup.new(_("Properties"), %i(name region server description ipaddress mac_address custom_1 container preemptible tools_status
        load_balancer_health_check_state osinfo architecture snapshots advanced_settings resources guid
-       virtualization_type root_device_type ems_ref)
+       virtualization_type root_device_type ems_ref))
   end
 
   def textual_group_security
-    %i(users groups patches key_pairs)
+    TextualGroup.new(_("Security"), %i(users groups patches key_pairs))
   end
 
   def textual_group_configuration
-    %i(guest_applications init_processes win32_services kernel_drivers filesystem_drivers filesystems registry_items)
+    TextualGroup.new(_("Configuration"), %i(guest_applications init_processes win32_services kernel_drivers filesystem_drivers filesystems registry_items))
   end
 
   def textual_group_diagnostics
-    %i(processes event_logs)
+    TextualGroup.new(_("Diagnostics"), %i(processes event_logs))
   end
 
   def textual_group_vmsafe
-    %i(vmsafe_enable vmsafe_agent_address vmsafe_agent_port vmsafe_fail_open vmsafe_immutable_vm vmsafe_timeout)
+    TextualGroup.new(_("VMsafe"), %i(vmsafe_enable vmsafe_agent_address vmsafe_agent_port vmsafe_fail_open vmsafe_immutable_vm vmsafe_timeout))
   end
 
   def textual_group_miq_custom_attributes
-    textual_miq_custom_attributes
+    TextualGroup.new(_("Custom Attributes"), textual_miq_custom_attributes)
   end
 
   def textual_group_ems_custom_attributes
-    textual_ems_custom_attributes
+    TextualGroup.new(_("VC Custom Attributes"), textual_ems_custom_attributes)
   end
 
   def textual_group_power_management
-    %i(power_state boot_time state_changed_on)
+    TextualGroup.new(_("Power Management"), %i(power_state boot_time state_changed_on))
   end
 
   #

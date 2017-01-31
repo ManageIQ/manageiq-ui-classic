@@ -5,20 +5,21 @@ module ContainerBuildHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name creation_timestamp resource_version)
+    TextualGroup.new(_("Properties"), %i(name creation_timestamp resource_version))
   end
 
   def textual_group_relationships
-    %i(ems container_project )
+    TextualGroup.new(_("Relationships"), %i(ems container_project))
   end
 
   def textual_group_smart_management
     items = %w(tags)
-    items.collect { |m| send("textual_#{m}") }.flatten.compact
+    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
+    TextualTags.new(_("Smart Management"), i)
   end
 
   def textual_group_build_instances
-    {
+    TextualMultilabel.new(_("Build Instances"), 
       :additional_table_class => "table-fixed",
       :labels                 => [_("Name"), _("Phase"),
                                   _("Message"), _("Reason"),
@@ -28,7 +29,7 @@ module ContainerBuildHelper::TextualSummary
                                   _("Duration"),
                                  ],
       :values                 => collect_build_pods,
-    }
+    )
   end
 
   def collect_build_pods

@@ -4,18 +4,19 @@ module ContainerHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name state reason started_at finished_at exit_code signal message last_state restart_count backing_ref command
+    TextualGroup.new(_("Properties"), %i(name state reason started_at finished_at exit_code signal message last_state restart_count backing_ref command
        capabilities_add capabilities_drop privileged run_as_user se_linux_user se_linux_role se_linux_type
-       se_linux_level run_as_non_root)
+       se_linux_level run_as_non_root))
   end
 
   def textual_group_relationships
-    %i(ems container_project container_replicator container_group container_node container_image)
+    TextualGroup.new(_("Relationships"), %i(ems container_project container_replicator container_group container_node container_image))
   end
 
   def textual_group_smart_management
     items = %w(tags)
-    items.collect { |m| send("textual_#{m}") }.flatten.compact
+    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
+    TextualTags.new(_("Smart Management"), i)
   end
 
   #
@@ -116,11 +117,11 @@ module ContainerHelper::TextualSummary
   end
 
   def textual_group_env
-    {
+    TextualMultilabel.new(_("Environment variables"),
       :additional_table_class => "table-fixed",
       :labels                 => [_("Name"), _("Type"), _("Value")],
       :values                 => collect_env
-    }
+    )
   end
 
   def collect_env_variables

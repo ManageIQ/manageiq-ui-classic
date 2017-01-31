@@ -4,13 +4,13 @@ module ContainerNodeHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name creation_timestamp resource_version num_cpu_cores memory
+    TextualGroup.new(_("Properties"), %i(name creation_timestamp resource_version num_cpu_cores memory
        max_container_groups identity_system identity_machine identity_infra container_runtime_version
-       kubernetes_kubelet_version kubernetes_proxy_version os_distribution kernel_version)
+       kubernetes_kubelet_version kubernetes_proxy_version os_distribution kernel_version))
   end
 
   def textual_group_relationships
-    %i(ems container_routes container_services container_replicators container_groups containers lives_on container_images)
+    TextualGroup.new(_("Relationships"), %i(ems container_routes container_services container_replicators container_groups containers lives_on container_images))
   end
 
   def textual_group_conditions
@@ -24,12 +24,13 @@ module ContainerNodeHelper::TextualSummary
         (condition.reason || "")
       ]
     end
-    h
+    TextualGroup.new(_("Conditions"), h)
   end
 
   def textual_group_smart_management
     items = %w(tags)
-    items.collect { |m| send("textual_#{m}") }.flatten.compact
+    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
+    TextualGroup.new(_("Smart Management"), i)
   end
 
   #

@@ -267,7 +267,12 @@ class ProviderForemanController < ApplicationController
                     end
   end
 
-  private ###########
+  private
+
+  def textual_group_list
+    [%i(properties environment group_os), %i(tenancy tags)]
+  end
+  helper_method :textual_group_list
 
   def find_or_build_provider
     @provider = provider_class_from_provtype.new if params[:id] == "new"

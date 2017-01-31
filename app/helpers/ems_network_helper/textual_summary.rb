@@ -5,25 +5,27 @@ module EmsNetworkHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(provider_region hostname ipaddress type port guid)
+    TextualGroup.new(_("Properties"), %i(provider_region hostname ipaddress type port guid))
   end
 
   def textual_group_relationships
-    %i(parent_ems_cloud cloud_networks cloud_subnets network_routers security_groups
-       floating_ips network_ports load_balancers)
+    TextualGroup.new(_("Relationships"), %i(parent_ems_cloud cloud_networks cloud_subnets
+       network_routers security_groups floating_ips network_ports load_balancers))
   end
 
   def textual_group_status
-    textual_authentications(@record.authentication_for_summary) + %i(refresh_status)
+    TextualGroup.new(_("Status"), textual_authentications(@record.authentication_for_summary) + %i(refresh_status))
   end
 
   def textual_group_smart_management
-    %i(zone tags)
+    TextualTags.new(_("Smart Management"), %i(zone tags))
   end
 
   def textual_group_topology
     items = %w(topology)
-    items.collect { |m| send("textual_#{m}") }.flatten.compact
+    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
+
+    TextualGroup.new(_("Overview"), i)
   end
 
   #

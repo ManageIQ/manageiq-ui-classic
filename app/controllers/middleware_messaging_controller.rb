@@ -10,4 +10,11 @@ class MiddlewareMessagingController < ApplicationController
   after_action :set_session_data
 
   menu_section :mdl
+
+  private
+
+  def textual_group_list
+    [%i(properties), %i(relationships smart_management)]
+  end
+  helper_method :textual_group_list
 end

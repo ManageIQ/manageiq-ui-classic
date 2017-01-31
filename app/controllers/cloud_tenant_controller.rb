@@ -231,6 +231,11 @@ class CloudTenantController < ApplicationController
 
   private
 
+  def textual_group_list
+    [%i(relationships quotas), %i(tags)]
+  end
+  helper_method :textual_group_list
+
   def form_params
     options = {}
     options[:name] = params[:name] if params[:name]

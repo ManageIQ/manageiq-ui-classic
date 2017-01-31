@@ -227,7 +227,12 @@ class InfraNetworkingController < ApplicationController
     render_tagging_form
   end
 
-  private ###########
+  private
+
+  def textual_group_list
+    [%i(relationships), %i(smart_management)]
+  end
+  helper_method :textual_group_list
 
   def hosts_list
     condition         = nil

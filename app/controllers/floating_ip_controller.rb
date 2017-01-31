@@ -233,6 +233,11 @@ class FloatingIpController < ApplicationController
 
   private
 
+  def textual_group_list
+    [%i(properties relationships), %i(tags)]
+  end
+  helper_method :textual_group_list
+
   def form_params
     options = {}
     options[:ems_id] = params[:ems_id] if params[:ems_id] && params[:ems_id] != 'new'

@@ -9,5 +9,12 @@ class CloudVolumeBackupController < ApplicationController
   include Mixins::GenericButtonMixin
   include Mixins::GenericSessionMixin
 
+  private
+
+  def textual_group_list
+    [%i(properties relationships), %i(tags)]
+  end
+  helper_method :textual_group_list
+
   menu_section :bst
 end

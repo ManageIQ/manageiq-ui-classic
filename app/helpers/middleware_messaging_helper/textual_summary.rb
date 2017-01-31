@@ -4,12 +4,12 @@ module MiddlewareMessagingHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name nativeid messaging_type)
+    TextualGroup.new(_("Properties"), %i(name nativeid messaging_type))
   end
 
   def textual_group_relationships
     # Order of items should be from parent to child
-    %i(ems middleware_server)
+    TextualGroup.new(_("Relationships"), %i(ems middleware_server))
   end
 
   def textual_messaging_type

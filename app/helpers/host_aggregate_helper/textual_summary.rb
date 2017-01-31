@@ -6,7 +6,7 @@ module HostAggregateHelper::TextualSummary
   #
 
   def textual_group_relationships
-    %i(ems_cloud instances hosts)
+    TextualGroup.new(_("Relationships"), %i(ems_cloud instances hosts))
   end
 
   #

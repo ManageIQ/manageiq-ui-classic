@@ -19,4 +19,11 @@ class MiddlewareDomainController < ApplicationController
   end
 
   menu_section :cnt
+
+  private
+
+  def textual_group_list
+    [%i(properties), %i(relationships smart_management)]
+  end
+  helper_method :textual_group_list
 end

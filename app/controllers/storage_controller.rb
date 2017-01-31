@@ -641,5 +641,14 @@ class StorageController < ApplicationController
 
   private
 
+  def textual_group_list
+    [
+      %i(properties registered_vms relationships),
+      (::Settings.product.storage ? %i(storage_relationships) : []) +
+        %i(content smart_management)
+    ]
+  end
+  helper_method :textual_group_list
+
   menu_section :inf
 end

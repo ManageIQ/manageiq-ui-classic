@@ -5,30 +5,31 @@ module PersistentVolumeHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name creation_timestamp resource_version access_modes reclaim_policy status_phase
+    TextualGroup.new(_("Properties"), %i(name creation_timestamp resource_version access_modes reclaim_policy status_phase
        storage_medium_type gce_pd_resource git_repository git_revision nfs_server
        iscsi_target_portal iscsi_target_qualified_name iscsi_target_lun_number glusterfs_endpoint_name
        rados_ceph_monitors rados_image_name rados_pool_name rados_user_name rados_keyring
-       volume_path fs_type read_only volume_id partition secret_name)
+       volume_path fs_type read_only volume_id partition secret_name))
   end
 
   def textual_group_claim_properties
     @claim = @record.persistent_volume_claim
-    %i(claim_name claim_creation_timestamp desired_access_modes) if @claim
+    TextualGroup.new(_("Volume Claim"), %i(claim_name claim_creation_timestamp desired_access_modes)) if @claim
   end
 
   def textual_group_relationships
-    %i(parent)
+    TextualGroup.new(_("Relationships"), %i(parent))
   end
 
   def textual_group_smart_management
     items = %w(tags)
-    items.collect { |m| send("textual_#{m}") }.flatten.compact
+    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
+    TextualTags.new(_("Smart Management"), i)
   end
 
   def textual_group_capacity
     labels = [_("Resource"), _("Quantity")]
-    {:labels => labels, :values => @record.capacity}
+    TextualGroup.new(_("Capacity"), {:labels => labels, :values => @record.capacity})
   end
 
   #

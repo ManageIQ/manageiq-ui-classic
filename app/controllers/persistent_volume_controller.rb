@@ -8,6 +8,11 @@ class PersistentVolumeController < ApplicationController
 
   private
 
+  def textual_group_list
+    [%i(properties claim_properties), %i(relationships smart_management group_capacity)]
+  end
+  helper_method :textual_group_list
+
   def display_name
     _("Volumes")
   end

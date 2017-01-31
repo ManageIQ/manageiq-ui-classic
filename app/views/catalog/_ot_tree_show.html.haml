@@ -33,7 +33,7 @@
         =  @record.updated_at
     .form-group
       .col-md-10
-        = render :partial => "shared/summary/textual_tags", :locals => {:title => _("Smart Management"), :items => textual_group_smart_management}
+        = render textual_group_render_options(textual_group_smart_management)
 
   %hr
   #form_div

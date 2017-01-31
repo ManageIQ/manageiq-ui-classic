@@ -18,69 +18,72 @@ module VmHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name region server description hostname ipaddress custom_1 container host_platform tools_status load_balancer_health_check_state osinfo devices cpu_affinity snapshots advanced_settings resources guid storage_profile)
+    TextualGroup.new(_("Properties"), %i(name region server description hostname ipaddress custom_1 container host_platform tools_status load_balancer_health_check_state osinfo devices cpu_affinity snapshots advanced_settings resources guid storage_profile))
   end
 
   def textual_group_lifecycle
-    %i(discovered analyzed retirement_date retirement_state provisioned owner group)
+    TextualGroup.new(_("Lifecycle"), %i(discovered analyzed retirement_date retirement_state provisioned owner group))
   end
 
   def textual_group_relationships
-    %i(ems cluster host resource_pool storage service parent_vm genealogy drift scan_history cloud_network cloud_subnet)
+    TextualGroup.new(_("Relationships"), %i(ems cluster host resource_pool storage service parent_vm genealogy drift scan_history cloud_network cloud_subnet))
   end
 
   def textual_group_vm_cloud_relationships
-    %i(ems ems_infra cluster host availability_zone cloud_tenant flavor vm_template drift scan_history service
+    TextualGroup.new(_("Relationships"), %i(ems ems_infra cluster host availability_zone cloud_tenant flavor vm_template drift scan_history service
        cloud_network cloud_subnet orchestration_stack cloud_networks cloud_subnets network_routers security_groups
-       floating_ips network_ports load_balancers cloud_volumes)
+       floating_ips network_ports load_balancers cloud_volumes))
   end
 
   def textual_group_template_cloud_relationships
-    %i(ems parent_vm drift scan_history cloud_tenant)
+    TextualGroup.new(_("Relationships"), %i(ems parent_vm drift scan_history cloud_tenant))
   end
 
   def textual_group_security
-    %i(users groups patches)
+    TextualGroup.new(_("Security"), %i(users groups patches))
   end
 
   def textual_group_configuration
-    %i(guest_applications init_processes win32_services kernel_drivers filesystem_drivers filesystems registry_items)
+    TextualGroup.new(_("Configuration"), %i(guest_applications init_processes win32_services kernel_drivers filesystem_drivers filesystems registry_items))
   end
 
   def textual_group_datastore_allocation
-    %i(disks disks_aligned thin_provisioned allocated_disks allocated_total)
+    TextualGroup.new(_("Datastore Allocation Summary"), %i(disks disks_aligned thin_provisioned allocated_disks allocated_total))
   end
 
   def textual_group_datastore_usage
-    %i(usage_disks usage_snapshots usage_disk_storage usage_overcommitted)
+    TextualGroup.new(_("Datastore Actual Usage Summary"), %i(usage_disks usage_snapshots usage_disk_storage usage_overcommitted))
   end
 
   def textual_group_diagnostics
-    %i(processes event_logs)
+    TextualGroup.new(_("Diagnostics"), %i(processes event_logs))
   end
 
   def textual_group_storage_relationships
-    %i(storage_systems storage_volumes logical_disks file_shares)
+    TextualGroup.new(_("Storage Relationships"), %i(storage_systems storage_volumes logical_disks file_shares))
   end
 
   def textual_group_vmsafe
-    %i(vmsafe_enable vmsafe_agent_address vmsafe_agent_port vmsafe_fail_open vmsafe_immutable_vm vmsafe_timeout)
+    TextualGroup.new(_("VMsafe"), %i(vmsafe_enable vmsafe_agent_address vmsafe_agent_port vmsafe_fail_open vmsafe_immutable_vm vmsafe_timeout))
   end
 
   def textual_group_miq_custom_attributes
-    textual_miq_custom_attributes
+    TextualGroup.new(_("Custom Attributes"), textual_miq_custom_attributes)
   end
 
   def textual_group_ems_custom_attributes
-    textual_ems_custom_attributes
+    TextualGroup.new(_("VC Custom Attributes"), textual_ems_custom_attributes)
   end
 
   def textual_group_power_management
-    %i(power_state boot_time state_changed_on)
+    TextualGroup.new(_("Power Management"), %i(power_state boot_time state_changed_on))
   end
 
   def textual_group_normal_operating_ranges
-    %i(normal_operating_ranges_cpu normal_operating_ranges_cpu_usage normal_operating_ranges_memory normal_operating_ranges_memory_usage)
+    TextualCustom.new(_("Normal Operating Ranges (over 30 days)"),
+      'shared/summary/textual_normal_operating_ranges',
+      %i(normal_operating_ranges_cpu normal_operating_ranges_cpu_usage normal_operating_ranges_memory normal_operating_ranges_memory_usage)
+    )
   end
 
   #

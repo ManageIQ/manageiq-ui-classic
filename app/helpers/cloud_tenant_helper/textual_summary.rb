@@ -5,13 +5,14 @@ module CloudTenantHelper::TextualSummary
   # Groups
   #
   def textual_group_relationships
-    %i(ems_cloud security_groups instances images cloud_object_store_containers cloud_volumes cloud_volume_snapshots
-       cloud_networks cloud_subnets network_routers security_groups floating_ips network_ports)
+    TextualGroup.new(_("Relationships"), %i(ems_cloud security_groups instances images cloud_object_store_containers cloud_volumes cloud_volume_snapshots
+       cloud_networks cloud_subnets network_routers security_groups floating_ips network_ports))
   end
 
   def textual_group_quotas
     quotas = @record.cloud_resource_quotas.order(:service_name, :name)
-    quotas.collect { |quota| textual_quotas(quota) }
+    q = quotas.collect { |quota| textual_quotas(quota) }
+    TextualGroup.new(_("Quotas"), q)
   end
 
   #

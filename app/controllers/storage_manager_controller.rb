@@ -231,7 +231,12 @@ class StorageManagerController < ApplicationController
     process_show_list(:conditions => ["agent_type<>?", "VMDB"])
   end
 
-  private ############################
+  private
+
+  def textual_group_list
+    [%i(properties)]
+  end
+  helper_method :textual_group_list
 
   # Validate the sm record fields
   def valid_record?(sm)

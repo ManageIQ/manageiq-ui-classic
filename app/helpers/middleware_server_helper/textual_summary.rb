@@ -4,12 +4,12 @@ module MiddlewareServerHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name hostname feed bind_addr server_state product version)
+    TextualGroup.new(_("Properties"), %i(name hostname feed bind_addr server_state product version))
   end
 
   def textual_group_relationships
     # Order of items should be from parent to child
-    %i(ems middleware_server_group middleware_deployments middleware_datasources lives_on middleware_messagings)
+    TextualGroup.new(_("Relationships"), %i(ems middleware_server_group middleware_deployments middleware_datasources lives_on middleware_messagings))
   end
 
   #

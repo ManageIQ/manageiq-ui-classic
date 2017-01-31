@@ -5,24 +5,25 @@ module ContainerImageHelper
     #
 
     def textual_group_properties
-      %i(name tag id full_name os_distribution product_type product_name architecture author command entrypoint docker_version exposed_ports size)
+      TextualGroup.new(_("Properties"), %i(name tag id full_name os_distribution product_type product_name architecture author command entrypoint docker_version exposed_ports size))
     end
 
     def textual_group_relationships
-      %i(ems container_image_registry container_projects container_groups containers container_nodes)
+      TextualGroup.new(_("Relationships"), %i(ems container_image_registry container_projects container_groups containers container_nodes))
     end
 
     def textual_group_configuration
-      %i(guest_applications openscap openscap_html last_scan)
+      TextualGroup.new(_("Configuration"), %i(guest_applications openscap openscap_html last_scan))
     end
 
     def textual_group_smart_management
       items = %w(tags)
-      items.collect { |m| send("textual_#{m}") }.flatten.compact
+      i = items.collect { |m| send("textual_#{m}") }.flatten.compact
+      TextualTags.new(_("Smart Management"), i)
     end
 
-    def textual_openscap_failed_rules
-      %i(openscap_failed_rules_low openscap_failed_rules_medium openscap_failed_rules_high)
+    def textual_group_openscap_failed_rules
+      TextualGroup.new(_("OpenSCAP Failed Rules Summary"), %i(openscap_failed_rules_low openscap_failed_rules_medium openscap_failed_rules_high))
     end
 
     #
@@ -100,11 +101,11 @@ module ContainerImageHelper
   end
 
   def textual_group_env
-    {
+    TextualGroup.new(_("Environment variables"), {
       :additional_table_class => "table-fixed",
       :labels                 => [_("Name"), _("Type"), _("Value")],
       :values                 => collect_env
-    }
+    })
   end
 
   def collect_env_variables
@@ -114,6 +115,6 @@ module ContainerImageHelper
   end
 
   def textual_group_container_docker_labels
-    textual_key_value_group(@record.docker_labels.to_a)
+    TextualGroup.new(_("Docker Labels"), textual_key_value_group(@record.docker_labels.to_a))
   end
 end

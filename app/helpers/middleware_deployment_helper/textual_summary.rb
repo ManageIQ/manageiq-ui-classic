@@ -4,12 +4,12 @@ module MiddlewareDeploymentHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name status nativeid)
+    TextualGroup.new(_("Properties"), %i(name status nativeid))
   end
 
   def textual_group_relationships
     # Order of items should be from parent to child
-    %i(ems middleware_server)
+    TextualGroup.new(_("Relationships"), %i(ems middleware_server))
   end
 
   def textual_status

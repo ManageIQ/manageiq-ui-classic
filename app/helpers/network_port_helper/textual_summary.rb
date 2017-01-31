@@ -7,11 +7,11 @@ module NetworkPortHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name mac_address type device_owner floating_ip_addresses fixed_ip_addresses)
+    TextualGroup.new(_("Properties"), %i(name mac_address type device_owner floating_ip_addresses fixed_ip_addresses))
   end
 
   def textual_group_relationships
-    %i(parent_ems_cloud ems_network cloud_tenant instance cloud_subnets floating_ips host)
+    TextualGroup.new(_("Relationships"), %i(parent_ems_cloud ems_network cloud_tenant instance cloud_subnets floating_ips host))
   end
 
   #

@@ -196,7 +196,12 @@ class MiddlewareServerController < ApplicationController
     end
   end
 
-  private ############################
+  private
+
+  def textual_group_list
+    [%i(properties), %i(relationships tags)]
+  end
+  helper_method :textual_group_list
 
   # Identify the selected servers. When we got the call from the
   # single server page, we need to look at :id, otherwise from

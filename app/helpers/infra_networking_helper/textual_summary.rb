@@ -4,15 +4,15 @@ module InfraNetworkingHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(switch_type)
+    TextualGroup.new(_('UNUSED?'), %i(switch_type))
   end
 
   def textual_group_relationships
-    %i(hosts)
+    TextualGroup.new(_("Relationships"), %i(hosts))
   end
 
   def textual_group_smart_management
-    %i(tags)
+    TextualTags.new(_("Smart Management"), %i(tags))
   end
 
   #

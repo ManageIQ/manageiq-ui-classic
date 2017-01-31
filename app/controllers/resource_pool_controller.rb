@@ -118,5 +118,12 @@ class ResourcePoolController < ApplicationController
     end
   end
 
+  private
+
+  def textual_group_list
+    [%i(properties relationships), %i(configuration smart_management)]
+  end
+  helper_method :textual_group_list
+
   menu_section :inf
 end

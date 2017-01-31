@@ -9,6 +9,13 @@ class NetworkPortController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
 
+  # app/views/network_port/_main.html.haml
+  def textual_group_list
+    [%i(properties tags), %i(relationships)]
+  end
+  helper_method :textual_group_list
+
+
   def self.display_methods
     %w(cloud_subnets floating_ips)
   end

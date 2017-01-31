@@ -6,7 +6,7 @@ module FlavorHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(
+    TextualGroup.new(_("Properties"), %i(
       cpus
       cpu_cores
       memory
@@ -16,11 +16,11 @@ module FlavorHelper::TextualSummary
       supports_paravirtual
       block_storage_based_only
       cloud_subnet_required
-    )
+    ))
   end
 
   def textual_group_relationships
-    %i(ems_cloud instances)
+    TextualGroup.new(_("Relationships"), %i(ems_cloud instances))
   end
 
   #

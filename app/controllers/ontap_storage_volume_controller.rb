@@ -12,5 +12,12 @@ class OntapStorageVolumeController < CimInstanceController
     )
   end
 
+  private
+
+  def textual_group_list
+    [%i(properties tags), %i(relationships infrastructure_relationships)]
+  end
+  helper_method :textual_group_list
+
   menu_section :nap
 end

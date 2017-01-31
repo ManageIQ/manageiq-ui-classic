@@ -2,13 +2,13 @@ module ProviderForemanHelper
   include TextualMixins::TextualGroupTags
 
   def textual_group_properties
-    %i(hostname
+    TextualGroup.new(_("Properties"), %i(hostname
        ipmi_present
        ipaddress
        mac_address
        configuration_profile_desc
        provider_name
-       zone)
+       zone))
   end
 
   def textual_hostname
@@ -53,9 +53,9 @@ module ProviderForemanHelper
   end
 
   def textual_group_environment
-    %i(configuration_environment_name
+    TextualGroup.new(_("Environment"), %i(configuration_environment_name
        configuration_domain_name
-       configuration_realm_name)
+       configuration_realm_name))
   end
 
   def textual_configuration_environment_name
@@ -71,11 +71,11 @@ module ProviderForemanHelper
   end
 
   def textual_group_os
-    %i(configuration_compute_profile_name
+    TextualGroup.new(_("Operating System"), %i(configuration_compute_profile_name
        configuration_architecture_name
        operating_system_flavor_name
        customization_script_medium_name
-       customization_script_ptable_name)
+       customization_script_ptable_name))
   end
 
   def textual_configuration_compute_profile_name
@@ -99,8 +99,8 @@ module ProviderForemanHelper
   end
 
   def textual_group_tenancy
-    %i(configuration_locations_name
-       configuration_organizations_name)
+    TextualGroup.new(_("Tenancy"), %i(configuration_locations_name
+       configuration_organizations_name))
   end
 
   def textual_configuration_locations_name

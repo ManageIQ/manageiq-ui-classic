@@ -10,5 +10,12 @@ class ContainerProjectController < ApplicationController
     process_show_list(:where_clause => 'container_projects.deleted_on IS NULL')
   end
 
+  private
+
+  def textual_group_list
+    [%i(properties quota limits container_labels), %i(relationships smart_management)]
+  end
+  helper_method :textual_group_list
+
   menu_section :cnt
 end

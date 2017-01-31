@@ -42,7 +42,7 @@ module TextualSummaryHelper
   def textual_group_render_options(group_symbol)
     group = send("textual_group_#{group_symbol}")
     return nil unless group
-
+    binding.pry if Array === group
     {
       :partial => group.template,
       :locals  => group.locals,

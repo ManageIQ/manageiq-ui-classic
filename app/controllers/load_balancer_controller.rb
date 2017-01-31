@@ -13,5 +13,12 @@ class LoadBalancerController < ApplicationController
     %w(instances)
   end
 
+  private
+
+  def textual_group_list
+    [%i(properties relationships), %i(tags)]
+  end
+  helper_method :textual_group_list
+
   menu_section :net
 end

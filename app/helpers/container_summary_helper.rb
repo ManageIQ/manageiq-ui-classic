@@ -70,7 +70,11 @@ module ContainerSummaryHelper
   end
 
   def textual_group_container_labels
-    textual_key_value_group(@record.labels.to_a)
+    TextualGroup.new(_("Labels"), textual_key_value_group(@record.labels.to_a))
+  end
+
+  def textual_group_miq_custom_attributes
+    TextualGroup.new(_("Custom Attributes"), textual_miq_custom_attributes)
   end
 
   def textual_miq_custom_attributes
@@ -80,11 +84,11 @@ module ContainerSummaryHelper
   end
 
   def textual_group_container_selectors
-    textual_key_value_group(@record.selector_parts.to_a)
+    TextualGroup.new(_("Node Selector"), textual_key_value_group(@record.selector_parts.to_a))
   end
 
-  def textual_container_node_selectors
-    textual_key_value_group(@record.node_selector_parts.to_a)
+  def textual_group_container_node_selectors
+    TextualGroup.new(_("Node Selector"), textual_key_value_group(@record.node_selector_parts.to_a))
   end
 
   def textual_container_image
@@ -172,26 +176,6 @@ module ContainerSummaryHelper
 
   def textual_parent
     textual_link(@record.parent)
-  end
-
-  def textual_tags
-    label = _("%{name} Tags") % {:name => session[:customer_name]}
-    h = {:label => label}
-    tags = session[:assigned_filters]
-    if tags.present?
-      h[:value] = tags.sort_by { |category, _assigned| category.downcase }.collect do |category, assigned|
-        {
-          :image => "100/smarttag.png",
-          :label => category,
-          :value => assigned
-        }
-      end
-    else
-      h[:image] = "100/smarttag.png"
-      h[:value] = _("No %{label} have been assigned") % {:label => label}
-    end
-
-    h
   end
 
   def collect_env
