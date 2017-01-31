@@ -11,7 +11,7 @@ class ApplicationHelper::Toolbar::MiqActionCenter < ApplicationHelper::Toolbar::
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Action'),
           t,
-          :klass     => ApplicationHelper::Button::MiqActionModify,
+          :klass     => ApplicationHelper::Button::MiqActionEdit,
           :url_parms => "?type=basic"),
         button(
           :action_delete,
@@ -19,7 +19,8 @@ class ApplicationHelper::Toolbar::MiqActionCenter < ApplicationHelper::Toolbar::
           t = N_('Delete this Action'),
           t,
           :url_parms => "main_div",
-          :confirm   => N_("Are you sure you want to delete this Action?")),
+          :confirm   => N_("Are you sure you want to delete this Action?"),
+          :klass     =>  ApplicationHelper::Button::MiqActionDelete),
       ]
     ),
   ])
