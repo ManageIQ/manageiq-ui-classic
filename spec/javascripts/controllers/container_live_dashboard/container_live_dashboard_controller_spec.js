@@ -5,7 +5,7 @@ describe('containerLiveDashboardController', function() {
   var mock_data1_data = getJSONFixture('container_live_dashboard_data1_response.json');
   var mock_data2_data = getJSONFixture('container_live_dashboard_data2_response.json');
 
-  beforeEach(module('containerLiveDashboard'));
+  beforeEach(module('ManageIQ'));
 
   beforeEach(function() {
     var $window = {location: { pathname: '/ems_container/42' }};
@@ -57,9 +57,9 @@ describe('containerLiveDashboardController', function() {
 
   describe('check numeric formater', function() {
     it('should fomrat numbers correctly', function() {
-      expect($controller.items[0].lastValues[1480424640000]).toBe("10.00");
-      expect($controller.items[0].lastValues[1480424630000]).toBe("1.01k");
-      expect($controller.items[0].lastValues[1480424620000]).toBe("20.00t");
+      expect($controller.items[1].lastValues[1480424640000]).toBe("10.00");
+      expect($controller.items[1].lastValues[1480424630000]).toBe("1.01k");
+      expect($controller.items[1].lastValues[1480424620000]).toBe("20.00t");
     });
   });
 });

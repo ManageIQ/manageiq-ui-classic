@@ -82,7 +82,8 @@
     };
 
     var getLatestData = function(item) {
-      var params = '&query=get_data&type=' + item.type + '&metric_id=' + item.id +
+      dash.item = item;
+      var params = '&query=get_data&type=' + dash.item.type + '&metric_id=' + dash.item.id +
         '&limit=5&order=DESC';
 
       $http.get(dash.url + params)
@@ -234,18 +235,18 @@
       } else {
         var data = response.data.data;
 
-        item.lastValues = {};
+        dash.item.lastValues = {};
         angular.forEach(data, function(d) {
-          item.lastValues[d.timestamp] = numeral(d.value).format('0,0.00a');
+          dash.item.lastValues[d.timestamp] = numeral(d.value).format('0,0.00a');
         });
 
         if (data.length > 0) {
           var lastValue = data[0].value;
-          item.last_value = numeral(lastValue).format('0,0.00a');
-          item.last_timestamp = data[0].timestamp;
+          dash.item.last_value = numeral(lastValue).format('0,0.00a');
+          dash.item.last_timestamp = data[0].timestamp;
         } else {
-          item.last_value = '-';
-          item.last_timestamp = '-';
+          dash.item.last_value = '-';
+          dash.item.last_timestamp = '-';
         }
 
         if (data.length > 1) {
@@ -259,7 +260,7 @@
             } else {
               change = 0;
             }
-            item.percent_change = "(" + numeral(change).format('0,0.00%') + ")";
+            dash.item.percent_change = "(" + numeral(change).format('0,0.00%') + ")";
           }
         }
       }
