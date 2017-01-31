@@ -1162,19 +1162,27 @@ Rails.application.routes.draw do
         discover
         download_data
         ems_physical_infra_form_fields
+        protect
         show_list
+        tagging_edit
       ) +
                compare_get,
       :post => %w(
         button
         create
         listnav_search_selected
+        protect
         quick_search
         show
         show_list
+        tag_edit_form_field_changed
+        tagging_edit
+        tl_chooser
+        tree_autoload
         update
         wait_for_task
         x_show
+        squash_toggle
       ) +
                adv_search_post +
                compare_post +
