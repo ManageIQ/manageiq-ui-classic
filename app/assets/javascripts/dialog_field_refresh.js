@@ -171,38 +171,20 @@ var dialogFieldRefresh = {
 
   triggerAutoRefresh: function(autoRefreshOptions) {
     if (Boolean(autoRefreshOptions.trigger) === true) {
-      var groupIndex = autoRefreshOptions.group_index;
-      var fieldIndex = autoRefreshOptions.field_index;
       var autoRefreshableIndicies = autoRefreshOptions.auto_refreshable_field_indicies;
-      var nextAvailableAutoRefreshFieldIndex;
-      var nextAvailableAutoRefreshGroupIndex;
-      var foundNextAvailable = false;
+      var currentIndex = autoRefreshOptions.current_index;
 
-      $.each(autoRefreshableIndicies, function(refreshableGroupIndex, refreshableGroup) {
-        if (foundNextAvailable === false && refreshableGroup[0] !== undefined) {
-          if (groupIndex < refreshableGroupIndex) {
-            $.each(refreshableGroup, function(refreshableFieldIndex, refreshableField) {
-              nextAvailableAutoRefreshFieldIndex = autoRefreshableIndicies[refreshableGroupIndex][refreshableFieldIndex];
-              nextAvailableAutoRefreshGroupIndex = refreshableGroupIndex;
-              foundNextAvailable = true;
-            });
-          } else if (groupIndex === refreshableGroupIndex) {
-            $.each(refreshableGroup, function(refreshableFieldIndex, refreshableField) {
-              if (fieldIndex < refreshableField && foundNextAvailable === false) {
-                nextAvailableAutoRefreshFieldIndex = autoRefreshableIndicies[refreshableGroupIndex][refreshableFieldIndex];
-                nextAvailableAutoRefreshGroupIndex = refreshableGroupIndex;
-                foundNextAvailable = true;
-              }
-            });
-          }
-        }
+      var nextAvailable = $.grep(autoRefreshableIndicies, function(potential, potentialsIndex) {
+        return (potential.auto_refresh === true && potentialsIndex > currentIndex);
       });
 
-      if (nextAvailableAutoRefreshFieldIndex !== undefined) {
+      nextAvailable = nextAvailable[0];
+
+      if (nextAvailable !== undefined) {
         parent.postMessage({
-          tabIndex: autoRefreshOptions.tab_index,
-          groupIndex: nextAvailableAutoRefreshGroupIndex,
-          fieldIndex: nextAvailableAutoRefreshFieldIndex,
+          tabIndex: nextAvailable.tab_index,
+          groupIndex: nextAvailable.group_index,
+          fieldIndex: nextAvailable.field_index,
         }, '*');
       }
     }

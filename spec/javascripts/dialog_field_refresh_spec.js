@@ -592,165 +592,67 @@ describe('dialogFieldRefresh', function() {
     });
 
     context('when the trigger passed in is the string "true"', function() {
-      context('when the next auto refreshable field is in the same group and ahead', function() {
+      context('when the next auto refreshable field does not exist', function() {
         beforeEach(function() {
           dialogFieldRefresh.triggerAutoRefresh({
-            tab_index: 0,
-            group_index: 0,
-            field_index: 0,
-            auto_refreshable_field_indicies: [[0, 1, 2], [0, 2]],
-            trigger: "true"
-          });
-        });
-
-        it('posts a message', function() {
-          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 0, groupIndex: 0, fieldIndex: 1}, '*');
-        });
-      });
-
-      context('when the next auto refreshable field is in the same group and behind', function() {
-        beforeEach(function() {
-          dialogFieldRefresh.triggerAutoRefresh({
-            tab_index: 0,
-            group_index: 0,
-            field_index: 1,
-            auto_refreshable_field_indicies: [[0, 1, 2], [0, 2]],
-            trigger: "true"
-          });
-        });
-
-        it('posts a message', function() {
-          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 0, groupIndex: 0, fieldIndex: 2}, '*');
-        });
-      });
-
-      context('when the next auto refreshable field is in the next group', function() {
-        beforeEach(function() {
-          dialogFieldRefresh.triggerAutoRefresh({
-            tab_index: 0,
-            group_index: 0,
-            field_index: 0,
-            auto_refreshable_field_indicies: [[], [2]],
-            trigger: "true"
-          });
-        });
-
-        it('posts a message', function() {
-          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 0, groupIndex: 1, fieldIndex: 2}, '*');
-        });
-      });
-
-      context('when the next auto refreshable field is in the second group and current is ahead', function() {
-        beforeEach(function() {
-          dialogFieldRefresh.triggerAutoRefresh({
-            tab_index: 0,
-            group_index: 1,
-            field_index: 2,
-            auto_refreshable_field_indicies: [[0, 1, 2], [0, 2, 3, 4, 5]],
-            trigger: "true"
-          });
-        });
-
-        it('posts a message', function() {
-          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 0, groupIndex: 1, fieldIndex: 3}, '*');
-        });
-      });
-
-      context('when there are no auto refreshable fields', function() {
-        beforeEach(function() {
-          dialogFieldRefresh.triggerAutoRefresh({
-            tab_index: 0,
-            group_index: 1,
-            field_index: 1,
-            auto_refreshable_field_indicies: [[], []],
+            current_index: 0,
+            auto_refreshable_field_indicies: [{tab_index: 1, group_index: 1, field_index: 1}],
             trigger: "true"
           });
         });
 
         it('does not post a message', function() {
           expect(parent.postMessage).not.toHaveBeenCalled();
+        });
+      });
+
+      context('when the next auto refreshable field exists', function() {
+        beforeEach(function() {
+          dialogFieldRefresh.triggerAutoRefresh({
+            current_index: 0,
+            auto_refreshable_field_indicies: [
+              {tab_index: 1, group_index: 1, field_index: 1},
+              {tab_index: 1, group_index: 1, field_index: 2, auto_refresh: true}
+            ],
+            trigger: "true"
+          });
+        });
+
+        it('posts a message', function() {
+          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 1, groupIndex: 1, fieldIndex: 2}, '*');
         });
       });
     });
 
     context('when the trigger passed in is true', function() {
-      context('when the next auto refreshable field is in the same group and ahead', function() {
+      context('when the next auto refreshable field does not exist', function() {
         beforeEach(function() {
           dialogFieldRefresh.triggerAutoRefresh({
-            tab_index: 0,
-            group_index: 0,
-            field_index: 0,
-            auto_refreshable_field_indicies: [[0, 1, 2], [0, 2]],
-            trigger: true
-          });
-        });
-
-        it('posts a message', function() {
-          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 0, groupIndex: 0, fieldIndex: 1}, '*');
-        });
-      });
-
-      context('when the next auto refreshable field is in the same group and behind', function() {
-        beforeEach(function() {
-          dialogFieldRefresh.triggerAutoRefresh({
-            tab_index: 0,
-            group_index: 0,
-            field_index: 1,
-            auto_refreshable_field_indicies: [[0, 1, 2], [0, 2]],
-            trigger: true
-          });
-        });
-
-        it('posts a message', function() {
-          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 0, groupIndex: 0, fieldIndex: 2}, '*');
-        });
-      });
-
-      context('when the next auto refreshable field is in the next group', function() {
-        beforeEach(function() {
-          dialogFieldRefresh.triggerAutoRefresh({
-            tab_index: 0,
-            group_index: 0,
-            field_index: 0,
-            auto_refreshable_field_indicies: [[], [2]],
-            trigger: true
-          });
-        });
-
-        it('posts a message', function() {
-          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 0, groupIndex: 1, fieldIndex: 2}, '*');
-        });
-      });
-
-      context('when the next auto refreshable field is in the second group and current is ahead', function() {
-        beforeEach(function() {
-          dialogFieldRefresh.triggerAutoRefresh({
-            tab_index: 0,
-            group_index: 1,
-            field_index: 2,
-            auto_refreshable_field_indicies: [[0, 1, 2], [0, 2, 3, 4, 5]],
-            trigger: true
-          });
-        });
-
-        it('posts a message', function() {
-          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 0, groupIndex: 1, fieldIndex: 3}, '*');
-        });
-      });
-
-      context('when there are no auto refreshable fields', function() {
-        beforeEach(function() {
-          dialogFieldRefresh.triggerAutoRefresh({
-            tab_index: 0,
-            group_index: 1,
-            field_index: 1,
-            auto_refreshable_field_indicies: [[], []],
+            current_index: 0,
+            auto_refreshable_field_indicies: [{tab_index: 1, group_index: 1, field_index: 1}],
             trigger: true
           });
         });
 
         it('does not post a message', function() {
           expect(parent.postMessage).not.toHaveBeenCalled();
+        });
+      });
+
+      context('when the next auto refreshable field exists', function() {
+        beforeEach(function() {
+          dialogFieldRefresh.triggerAutoRefresh({
+            current_index: 0,
+            auto_refreshable_field_indicies: [
+              {tab_index: 1, group_index: 1, field_index: 1},
+              {tab_index: 1, group_index: 1, field_index: 2, auto_refresh: true}
+            ],
+            trigger: true
+          });
+        });
+
+        it('posts a message', function() {
+          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 1, groupIndex: 1, fieldIndex: 2}, '*');
         });
       });
     });

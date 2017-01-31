@@ -110,6 +110,27 @@ module ApplicationHelper::Dialogs
     add_options_unless_read_only({}, tag_options, field)
   end
 
+  def build_auto_refreshable_field_indicies(workflow)
+    auto_refreshable_field_indicies = []
+
+    workflow.dialog.dialog_tabs.each_with_index do |tab, tab_index|
+      tab.dialog_groups.each_with_index do |group, group_index|
+        group.dialog_fields.each_with_index do |field, field_index|
+          if field.auto_refresh || field.trigger_auto_refresh
+            auto_refreshable_field_indicies << {
+              :tab_index        => tab_index,
+              :group_index      => group_index,
+              :field_index      => field_index,
+              :auto_refresh     => !!field.auto_refresh
+            }
+          end
+        end
+      end
+    end
+
+    auto_refreshable_field_indicies
+  end
+
   private
 
   def auto_refresh_options(field, auto_refresh_options_hash)

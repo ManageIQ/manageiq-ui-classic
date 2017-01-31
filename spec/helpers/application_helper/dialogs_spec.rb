@@ -462,4 +462,31 @@ describe ApplicationHelper::Dialogs do
       end
     end
   end
+
+  describe "#build_auto_refreshable_field_indicies" do
+    let(:workflow) { instance_double("ResourceActionWorkflow", :dialog => dialog) }
+    let(:dialog) { instance_double("Dialog", :dialog_tabs => [dialog_tab_1, dialog_tab_2]) }
+    let(:dialog_tab_1) { instance_double("DialogTab", :dialog_groups => [dialog_group_1, dialog_group_2]) }
+    let(:dialog_tab_2) { instance_double("DialogTab", :dialog_groups => [dialog_group_2]) }
+    let(:dialog_group_1) do
+      instance_double("DialogGroup", :dialog_fields => [dialog_field_1, dialog_field_1, dialog_field_2])
+    end
+    let(:dialog_group_2) do
+      instance_double("DialogGroup", :dialog_fields => [dialog_field_3, dialog_field_2, dialog_field_1])
+    end
+    let(:dialog_field_1) { instance_double("DialogField", :auto_refresh => nil, :trigger_auto_refresh => false) }
+    let(:dialog_field_2) { instance_double("DialogField", :auto_refresh => true, :trigger_auto_refresh => false) }
+    let(:dialog_field_3) { instance_double("DialogField", :auto_refresh => false, :trigger_auto_refresh => true) }
+
+
+    it "builds a list of auto refreshable fields and trigger fields with their indicies" do
+      expect(helper.build_auto_refreshable_field_indicies(workflow)).to eq([
+        {tab_index: 0, group_index: 0, field_index: 2, auto_refresh: true},
+        {tab_index: 0, group_index: 1, field_index: 0, auto_refresh: false},
+        {tab_index: 0, group_index: 1, field_index: 1, auto_refresh: true},
+        {tab_index: 1, group_index: 0, field_index: 0, auto_refresh: false},
+        {tab_index: 1, group_index: 0, field_index: 1, auto_refresh: true}
+      ])
+    end
+  end
 end
