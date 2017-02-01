@@ -1600,7 +1600,7 @@ module ApplicationHelper
        automation_manager_cs_filter
        containers
        containers_filter
-       cs_filter
+       configuration_manager_cs_filter
        configuration_scripts
        configuration_manager_providers
        images

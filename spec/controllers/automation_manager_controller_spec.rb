@@ -105,7 +105,7 @@ describe AutomationManagerController do
     provider2 = ManageIQ::Providers::AnsibleTower::Provider.new(:name => "test2Ansible", :url => "server2", :zone => zone)
     controller.instance_variable_set(:@provider, provider2)
     allow(controller).to receive(:render_flash)
-    controller.save_provider_automation_manager
+    controller.save_provider
     expect(assigns(:flash_array).first[:message]).to include("has already been taken")
   end
 
@@ -118,7 +118,7 @@ describe AutomationManagerController do
       post :edit, :params => { :id => @automation_manager1.id }
       expect(response.status).to eq(200)
       right_cell_text = controller.instance_variable_get(:@right_cell_text)
-      expect(right_cell_text).to eq(_("Edit Ansible Tower Provider"))
+      expect(right_cell_text).to eq(_("Edit Provider"))
     end
 
     it "should display the zone field" do

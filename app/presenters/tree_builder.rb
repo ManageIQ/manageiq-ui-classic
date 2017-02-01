@@ -355,7 +355,7 @@ class TreeBuilder
   X_TREE_NODE_CLASSES = {
     # Catalog explorer trees
     :configuration_manager_providers => "TreeBuilderConfigurationManager",
-    :cs_filter                       => "TreeBuilderConfigurationManagerConfiguredSystems",
+    :configuration_manager_cs_filter => "TreeBuilderConfigurationManagerConfiguredSystems",
 
     # Catalog explorer trees
     :ot                              => "TreeBuilderOrchestrationTemplates",

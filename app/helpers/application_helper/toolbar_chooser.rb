@@ -99,7 +99,7 @@ class ApplicationHelper::ToolbarChooser
                   when :vms_instances_filter_tree then               "vms_center_tb"
                   end
         end
-      elsif @layout == "provider_foreman" && [:configuration_manager_providers_tree, :cs_filter_tree, :configuration_scripts_tree].include?(x_active_tree)
+      elsif @layout == "provider_foreman" && [:configuration_manager_providers_tree, :configuration_manager_cs_filter_tree].include?(x_active_tree)
         return center_toolbar_filename_configuration_manager_providers
       elsif @layout == "automation_manager"
         return center_toolbar_filename_automation_manager
@@ -511,7 +511,7 @@ class ApplicationHelper::ToolbarChooser
     nodes = x_node.split('-')
     if x_active_tree == :configuration_manager_providers_tree
       configuration_manager_providers_tree_center_tb(nodes)
-    elsif x_active_tree == :cs_filter_tree
+    elsif x_active_tree == :configuration_manager_cs_filter_tree
       cs_filter_tree_center_tb(nodes)
     elsif x_active_tree == :configuration_scripts_tree
       configuration_scripts_tree_center_tb(nodes)

@@ -67,7 +67,7 @@ describe ProviderForemanController do
       get :explorer
       accords = controller.instance_variable_get(:@accords)
       expect(accords.size).to eq(1)
-      expect(accords[0][:name]).to eq("cs_filter")
+      expect(accords[0][:name]).to eq("configuration_manager_cs_filter")
       expect(response.status).to eq(200)
       expect(response.body).to_not be_empty
     end
@@ -115,7 +115,7 @@ describe ProviderForemanController do
     it "Provision action should not be allowed only for a Configured System marked as not provisionable" do
       allow(controller).to receive(:x_node).and_return("root")
       allow(controller).to receive(:x_tree).and_return(:type => :filter)
-      controller.instance_variable_set(:@_params, :id => "cs_filter")
+      controller.instance_variable_set(:@_params, :id => "configuration_manager_cs_filter")
       allow(controller).to receive(:replace_right_cell)
       allow(controller).to receive(:render)
       controller.instance_variable_set(:@_params, :id => @configured_system2a.id)
@@ -127,9 +127,9 @@ describe ProviderForemanController do
   it "#save_provider_foreman will not save with a duplicate name" do
     ManageIQ::Providers::Foreman::Provider.create(:name => "test2Foreman", :url => "server1", :zone => @zone)
     provider2 = ManageIQ::Providers::Foreman::Provider.new(:name => "test2Foreman", :url => "server2", :zone => @zone)
-    controller.instance_variable_set(:@provider_cfgmgmt, provider2)
+    controller.instance_variable_set(:@provider, provider2)
     allow(controller).to receive(:render_flash)
-    controller.save_provider_foreman
+    controller.save_provider
     expect(assigns(:flash_array).first[:message]).to include("Name has already been taken")
   end
 
@@ -142,12 +142,12 @@ describe ProviderForemanController do
       post :edit, :params => { :id => @config_mgr.id }
       expect(response.status).to eq(200)
       right_cell_text = controller.instance_variable_get(:@right_cell_text)
-      expect(right_cell_text).to eq(_("Edit Configuration Manager Provider"))
+      expect(right_cell_text).to eq(_("Edit Provider"))
     end
 
     it "should display the zone field" do
       new_zone = FactoryGirl.create(:zone, :name => "TestZone")
-      controller.instance_variable_set(:@provider_cfgmgmt, @provider)
+      controller.instance_variable_set(:@provider, @provider)
       post :edit, :params => { :id => @config_mgr.id }
       expect(response.status).to eq(200)
       expect(response.body).to include("option value=\\\"#{new_zone.name}\\\"")
@@ -155,7 +155,7 @@ describe ProviderForemanController do
 
     it "should save the zone field" do
       new_zone = FactoryGirl.create(:zone, :name => "TestZone")
-      controller.instance_variable_set(:@provider_cfgmgmt, @provider)
+      controller.instance_variable_set(:@provider, @provider)
       allow(controller).to receive(:leaf_record).and_return(false)
       post :edit, :params => { :button     => 'save',
                                :id         => @config_mgr.id,
@@ -326,7 +326,7 @@ describe ProviderForemanController do
 
       allow(controller).to receive(:x_node).and_return("root")
       allow(controller).to receive(:x_tree).and_return(:type => :filter)
-      controller.instance_variable_set(:@_params, :id => "cs_filter")
+      controller.instance_variable_set(:@_params, :id => "configuration_manager_cs_filter")
       controller.send(:accordion_select)
       controller.instance_variable_set(:@search_text, "brew")
       allow(controller).to receive(:x_tree).and_return(:type => :providers)
@@ -340,6 +340,7 @@ describe ProviderForemanController do
       view = controller.instance_variable_get(:@view)
       expect(view.table.data.size).to eq(2)
     end
+
     it "renders tree_select for a ConfigurationManagerForeman node that contains an unassigned profile" do
       ems_id = ems_key_for_provider(@provider)
       controller.instance_variable_set(:@_params, :id => ems_id)
@@ -385,10 +386,10 @@ describe ProviderForemanController do
 
     it "calls get_view with the associated dbname for the Configured Systems accordion" do
       stub_user(:features => :all)
-      allow(controller).to receive(:x_active_tree).and_return(:cs_filter_tree)
-      allow(controller).to receive(:x_active_accord).and_return(:cs_filter)
+      allow(controller).to receive(:x_active_tree).and_return(:configuration_manager_cs_filter_tree)
+      allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
       allow(controller).to receive(:build_listnav_search_list)
-      controller.instance_variable_set(:@_params, :id => "cs_filter_accord")
+      controller.instance_variable_set(:@_params, :id => "configuration_manager_cs_filter_accord")
       expect(controller).to receive(:get_view).with("ConfiguredSystem", :dbname => :cm_configured_systems).and_call_original
       allow(controller).to receive(:build_listnav_search_list)
       controller.send(:accordion_select)
@@ -402,7 +403,7 @@ describe ProviderForemanController do
   it "renders tagging editor for a configured system" do
     session[:tag_items] = [@configured_system.id]
     session[:assigned_filters] = []
-    allow(controller).to receive(:x_active_accord).and_return(:cs_filter)
+    allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
     parent = FactoryGirl.create(:classification, :name => "test_category")
     FactoryGirl.create(:classification_tag,      :name => "test_entry",         :parent => parent)
     FactoryGirl.create(:classification_tag,      :name => "another_test_entry", :parent => parent)
@@ -478,7 +479,7 @@ describe ProviderForemanController do
 
     it "fetches list type = 'tile' from settings for Configured Systems accordion" do
       key = ems_key_for_provider(@provider)
-      allow(controller).to receive(:x_active_accord).and_return(:cs_filter)
+      allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
       controller.send(:get_node_info, key)
       list_type = controller.instance_variable_get(:@gtl_type)
       expect(list_type).to eq("tile")
@@ -496,7 +497,7 @@ describe ProviderForemanController do
 
     it "uses the stored password for validation if params[:log_password] does not exist" do
       controller.instance_variable_set(:@_params, :log_userid => "userid")
-      controller.instance_variable_set(:@provider_cfgmgmt, @provider)
+      controller.instance_variable_set(:@provider, @provider)
       expect(@provider).to receive(:authentication_password).and_return('password')
       creds = {:userid => "userid", :password => "password"}
       expect(controller.send(:build_credentials)).to include(:default => creds)
