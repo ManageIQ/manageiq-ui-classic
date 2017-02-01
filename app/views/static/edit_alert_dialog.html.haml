@@ -3,7 +3,7 @@
     %button.close{"type" => "button", "ng-click" => "$dismiss()", "aria-hidden" => "true"}
       %span.pficon.pficon-close
     %h4.modal-title
-      {{vm.editTitle}}
+      {{vm.editData.editTitle}}
   .modal-body
     %form.form-horizontal
       .form-group
@@ -11,28 +11,28 @@
           = _("Message")
         .col-sm-10
           %label
-            {{vm.editItem.description}}
+            {{vm.editData.editItem.description}}
       .form-group
         %label.col-sm-2.control-label
           = _("Owner")
         .col-sm-5
-          %select#assign-select{"ng-if" => "vm.showAssign",
-                                "ng-model"   => "vm.owner",
-                                "ng-options" => "user as user.name for user in vm.existingUsers",
+          %select#assign-select{"ng-if" => "vm.editData.showAssign",
+                                "ng-model"   => "vm.editData.owner",
+                                "ng-options" => "user as user.name for user in vm.editData.existingUsers",
                                 "pf-select"  => ""}
-          %label{"ng-if" => "!vm.showAssign && vm.owner"}
-            {{vm.owner.name}}
-          %label{"ng-if" => "!vm.showAssign && !vm.owner"}
+          %label{"ng-if" => "!vm.editData.showAssign && vm.editData.owner"}
+            {{vm.editData.owner.name}}
+          %label{"ng-if" => "!vm.editData.showAssign && !vm.editData.owner"}
             = _("Unassigned")
-        .col-sm-4{"ng-if" => "vm.showAssign && vm.owner.id === vm.currentUser.id"}
+        .col-sm-4{"ng-if" => "vm.editData.showAssign && vm.editData.owner.id === vm.editData.currentUser.id"}
           %label.control-label.checkbox-inline
-          %input{"type" => "checkbox", "ng-model" => "vm.currentAcknowledged"}
+          %input{"type" => "checkbox", "ng-model" => "vm.editData.currentAcknowledged"}
             = _("Acknowledge")
       .form-group
         %label.col-sm-2.control-label
           = _("Note")
         .col-sm-10
-          %textarea.form-control#comment-text-area{"rows" => "4", "ng-model" => "vm.newComment"}
+          %textarea.form-control#comment-text-area{"rows" => "4", "ng-model" => "vm.editData.newComment"}
   .modal-footer
     .confirmation__buttons
       %button.confirmation__button.btn.btn-default{"type" => "button", "ng-click" => "$dismiss()"}

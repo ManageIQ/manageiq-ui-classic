@@ -1,8 +1,8 @@
 /* global miqHttpInject */
 
 angular.module('alertsCenter').controller('alertsMostRecentController',
-  ['$scope', '$window', 'alertsCenterService', '$interval', '$timeout',
-  function($scope, $window, alertsCenterService, $interval, $timeout) {
+  ['$window', 'alertsCenterService', '$interval', '$timeout',
+  function($window, alertsCenterService, $interval, $timeout) {
     var vm = this;
 
     vm.alertsList = [];

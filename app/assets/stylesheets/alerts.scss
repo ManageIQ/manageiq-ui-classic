@@ -225,11 +225,8 @@
       text-overflow: ellipsis;
       display: inline-block;
     }
-    .name-col {
-      width: 100px;
-    }
     .description-col {
-      width: calc(100% - 225px);
+      width: calc(100% - 125px);
       padding: 0 5px;
     }
     .date-col {
