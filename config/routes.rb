@@ -1936,6 +1936,28 @@ Rails.application.routes.draw do
       )
     },
 
+    :ansible_playbook => {
+      :get => %w(
+        download_data
+        download_summary_pdf
+        show
+        show_list
+      ),
+      :post => %w(
+        show_list)
+    },
+
+    :ansible_repository => {
+      :get => %w(
+        download_data
+        download_summary_pdf
+        show
+        show_list
+      ),
+      :post => %w(
+        show_list)
+    },
+
     :miq_ae_class             => {
       :get  => %w(
         explorer
