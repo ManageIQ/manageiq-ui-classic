@@ -27,7 +27,10 @@
               = _("Select the file to deploy")
             .col-md-8
               = render :partial => "shared/file_chooser",
-                       :locals => {:object_name => "upload", :method => "file", :custom_options => {"ng-model" => "deployAddModel.filePath", "require-file" => "handle"}}
+                       :locals => {:object_name => "upload",
+                                   :method => "file",
+                                   :custom_options => {"ng-model" => "deployAddModel.filePath",
+                                                       "require-file" => "handle"}}
           .form-group
             %label.col-md-4.control-label{:for => "enable_deployment_cb"}
               = _("Enable Deployment")

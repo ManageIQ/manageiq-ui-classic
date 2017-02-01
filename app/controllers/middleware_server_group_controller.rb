@@ -12,29 +12,22 @@ class MiddlewareServerGroupController < ApplicationController
 
   OPERATIONS = {
     :middleware_server_group_reload         => {:op  => :reload_middleware_server_group,
-                                                :msg => N_('Reload')
-    },
+                                                :msg => N_('Reload')},
     :middleware_server_group_suspend        => {:op    => :suspend_middleware_server_group,
                                                 :msg   => N_('Suspend'),
-                                                :param => :timeout
-    },
+                                                :param => :timeout},
     :middleware_server_group_resume         => {:op  => :resume_middleware_server_group,
-                                                :msg => N_('Resume')
-    },
+                                                :msg => N_('Resume')},
     :middleware_server_group_restart        => {:op  => :restart_middleware_server_group,
-                                                :msg => N_('Restart')
-    },
+                                                :msg => N_('Restart')},
     :middleware_server_group_start          => {:op  => :start_middleware_server_group,
-                                                :msg => N_('Start')
-    },
+                                                :msg => N_('Start')},
     :middleware_server_group_stop           => {:op    => :stop_middleware_server_group,
                                                 :msg   => N_('Stop'),
-                                                :param => :timeout
-    },
+                                                :param => :timeout},
     :middleware_server_group_add_deployment => {:op    => :add_middleware_deployment,
                                                 :msg   => N_('Deployment initiated for selected server group(s)'),
-                                                :param => :file
-    },
+                                                :param => :file},
   }.freeze
 
   def self.operations
