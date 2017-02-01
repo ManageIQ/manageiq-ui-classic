@@ -1,0 +1,51 @@
+{
+  "name": "tags",
+  "count": 4,
+  "subcount": 4,
+  "resources": [
+    {
+      "id": 1,
+      "categorization" : {
+        "name": "qa",
+        "description": "Quality Assurance",
+        "category": {
+          "name": "environment",
+          "description": "Environment"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "categorization" : {
+        "name": "prod",
+        "description": "Production",
+        "category": {
+          "name": "environment",
+          "description": "Environment"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "categorization" : {
+        "name": "dev",
+        "description": "Development",
+        "category": {
+          "name": "environment",
+          "description": "Environment"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "categorization" : {
+        "name": "8192",
+        "description": "8GB",
+        "category": {
+          "name": "quota_max_memory",
+          "description": "Quota - Max Memory"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "name": "providers",
+  "count": 2,
+  "subcount": 2,
+  "resources": [
+    {
+      "id": 1,
+      "name": "Provider 1",
+      "type": "ManageIQ::Providers::Hawkular::DatawarehouseManager",
+      "tags": [
+        {
+          "id": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Provider 2",
+      "type": "ManageIQ::Providers::Openshift::ContainerManager",
+      "tags": [
+        {
+          "id": 2
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Provider 3",
+      "type": "ManageIQ::Providers::Openshift::ContainerManager",
+      "tags": [
+        {
+          "id": 2
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Provider 4",
+      "type": "ManageIQ::Providers::Openshift::ContainerManager",
+      "tags": []
+    }
+  ]
+}
