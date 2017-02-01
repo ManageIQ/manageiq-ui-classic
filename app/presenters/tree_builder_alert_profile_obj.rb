@@ -16,17 +16,16 @@ class TreeBuilderAlertProfileObj < TreeBuilder
     end
 
     if @assign[:new][:assign_to].ends_with?("-tags")
-      icon = "tag.png"
+      node[:icon] = "fa fa-tag"
     elsif @assign[:new][:assign_to] == "ext_management_system"
-      icon = "vendor-#{object.image_name}.png"
+      node[:image] = "svg/vendor-#{object.image_name}.svg"
     elsif @assign[:new][:assign_to] == "resource_pool"
-      icon = object.vapp ? "vapp.png" : "resource_pool.png"
+      node[:icon] = "pficon-resource_pool"
     else
-      icon = "#{@assign[:new][:assign_to]}.png"
+      node[:image] = "100/#{@assign[:new][:assign_to]}.png"
     end
 
     node[:title] = identifier
-    node[:image] = ActionController::Base.helpers.image_path("100/#{icon}")
     node[:cfmeNoClick] = true
     node[:hideCheckbox] = false
     node[:select] = @assign[:new][:objects].include?(object.id)
@@ -51,20 +50,20 @@ class TreeBuilderAlertProfileObj < TreeBuilder
 
   def root_options
     t = @assign[:new][:assign_to].ends_with?("-tags") ? "Tags" : ui_lookup(:tables => @assign[:new][:assign_to])
-    #[t, "", "100/folder_open", options]
     {
-      :title          => t,
-      :tooltip        => "",
-      :image          => "100/folder_open",
-      :hideCheckbox   => true,
-      :cfmeNoClick    => true,
-      :expand         => true
+      :title        => t,
+      :tooltip      => "",
+      :image        => "100/folder_open",
+      :hideCheckbox => true,
+      :cfmeNoClick  => true,
+      :expand       => true
     }
   end
 
   def x_get_tree_roots(count_only, _options)
     @objects = []
-    if !(@assign[:new][:assign_to] == "enterprise") && @assign[:new][:assign_to]           # No further selection needed for enterprise
+    if !(@assign[:new][:assign_to] == "enterprise") && @assign[:new][:assign_to]
+      # No further selection needed for enterprise
       # Assign to selected
       if @assign[:new][:assign_to].ends_with?("-tags") && @assign[:new][:cat]
         # Tag category selected

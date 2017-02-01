@@ -1,6 +1,6 @@
 describe TreeBuilderAlertProfileObj do
   before do
-    role = MiqUserRole.find_by(name: "EvmRole-operator")
+    role = MiqUserRole.find_by(:name => "EvmRole-operator")
     group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Tags Group")
     login_as FactoryGirl.create(:user, :userid => 'tags_wilma', :miq_groups => [group])
   end
