@@ -17,14 +17,12 @@ class TreeBuilderAlertProfileObj < TreeBuilder
 
     if @assign[:new][:assign_to].ends_with?("-tags")
       icon = "tag.png"
+    elsif @assign[:new][:assign_to] == "ext_management_system"
+      icon = "vendor-#{object.image_name}.png"
+    elsif @assign[:new][:assign_to] == "resource_pool"
+      icon = object.vapp ? "vapp.png" : "resource_pool.png"
     else
-      if @assign[:new][:assign_to] == "ext_management_system"
-        icon = "vendor-#{object.image_name}.png"
-      elsif @assign[:new][:assign_to] == "resource_pool"
-        icon = object.vapp ? "vapp.png" : "resource_pool.png"
-      else
-        icon = "#{@assign[:new][:assign_to]}.png"
-      end
+      icon = "#{@assign[:new][:assign_to]}.png"
     end
 
     node[:title] = identifier
@@ -37,7 +35,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
 
   def tree_init_options(_tree_name)
     {
-      :expand        => true
+      :expand => true
     }
   end
 
@@ -53,25 +51,27 @@ class TreeBuilderAlertProfileObj < TreeBuilder
 
   def root_options
     t = @assign[:new][:assign_to].ends_with?("-tags") ? "Tags" : ui_lookup(:tables => @assign[:new][:assign_to])
-    options = {
-      :hideCheckbox => true,
-      :cfmeNoClick  => true
+    #[t, "", "100/folder_open", options]
+    {
+      :title          => t,
+      :tooltip        => "",
+      :image          => "100/folder_open",
+      :hideCheckbox   => true,
+      :cfmeNoClick    => true,
+      :expand         => true
     }
-    [t, "", "100/folder_open", options]
   end
 
   def x_get_tree_roots(count_only, _options)
     @objects = []
-    unless @assign[:new][:assign_to] == "enterprise"          # No further selection needed for enterprise
-      if @assign[:new][:assign_to]                            # Assign to selected
-        if @assign[:new][:assign_to].ends_with?("-tags")
-          if @assign[:new][:cat]                              # Tag category selected
-            @objects = Classification.find(@assign[:new][:cat]).entries
-          end
-        else
-          # Model selected
-          @objects = @assign[:new][:assign_to].camelize.constantize.all
-        end
+    if !(@assign[:new][:assign_to] == "enterprise") && @assign[:new][:assign_to]           # No further selection needed for enterprise
+      # Assign to selected
+      if @assign[:new][:assign_to].ends_with?("-tags") && @assign[:new][:cat]
+        # Tag category selected
+        @objects = Classification.find(@assign[:new][:cat]).entries
+      else
+        # Model selected
+        @objects = @assign[:new][:assign_to].camelize.constantize.all
       end
     end
     count_only_or_objects(count_only, @objects.sort_by { |o| (o.name.presence || o.description).downcase })
