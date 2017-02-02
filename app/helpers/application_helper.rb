@@ -1648,12 +1648,8 @@ module ApplicationHelper
       vendor = host ? host.vmm_vendor_display.downcase : "unknown"
       image = "svg/vendor-#{vendor}.svg"
     elsif db == "MiqAction"
-      action = @targets_hash[@id.to_i]
-      image = if action && action.action_type != "default"
-                "100/miq_action_#{action.action_type}.png"
-              else
-                "100/miq_action.png"
-              end
+      action = @targets_hash[row['id']]
+      icon = action ? action.decorate.fonticon : 'product product-action'
     elsif db == "MiqProvision"
       image = "100/miq_request.png"
     elsif db == "MiqWorker"
