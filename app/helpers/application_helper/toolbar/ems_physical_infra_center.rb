@@ -33,8 +33,6 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfraCenter < ApplicationHelper::To
       ]
     ),
   ])
-<<<<<<< HEAD
-=======
   button_group('ems_physical_infra_policy', [
     select(
       :ems_physical_infra_policy_choice,
@@ -95,5 +93,4 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfraCenter < ApplicationHelper::To
       ]
     ),
   ])
->>>>>>> 045cef07a6e181a6dd621533db9c762b6d4698b6
 end
