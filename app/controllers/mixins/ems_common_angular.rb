@@ -286,10 +286,18 @@ module Mixins
                        :provider_id               => @ems.provider_id ? @ems.provider_id : "",
                        :hostname                  => @ems.hostname,
                        :default_hostname          => @ems.connection_configurations.default.endpoint.hostname,
+                       :hawkular_hostname         => hawkular_hostname,
+                       :default_api_port          => @ems.connection_configurations.default.endpoint.port,
+                       :hawkular_api_port         => hawkular_api_port,
+                       :api_version               => @ems.api_version ? @ems.api_version : "v2",
+                       :default_security_protocol => default_security_protocol,
                        :provider_region           => @ems.provider_region,
                        :default_userid            => @ems.authentication_userid ? @ems.authentication_userid : "",
+                       :service_account           => service_account ? service_account : "",
+                       :bearer_token_exists       => @ems.authentication_token(:bearer).nil? ? false : true,
                        :ems_controller            => controller_name,
                        :default_auth_status       => default_auth_status,
+                       :hawkular_auth_status      => hawkular_auth_status.nil? ? true : hawkular_auth_status,
       } if controller_name == "ems_container"
 
       render :json => {:name                => @ems.name,
