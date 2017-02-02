@@ -13,13 +13,9 @@ module PhysicalServerHelper::TextualSummary
 
   end
 
-  # def textual_hostname
-  #   {:label => _("Host name"), :value => @record.hostname }
-  # end
 
   def textual_host
-    #TODO (walteraa) use physical->virtual relationship to show host TAG
-    {:label => _("Host"), :value => "2YSAGD6236235DFASD123"}
+    {:label => _("Host"), :value => @record.host.service_tag, :link => url_for(:controller =>'host', :action =>  'show', :id =>  @record.host.id)}
   end
 
   def textual_name
