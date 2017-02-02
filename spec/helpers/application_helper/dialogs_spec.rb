@@ -478,14 +478,13 @@ describe ApplicationHelper::Dialogs do
     let(:dialog_field_2) { instance_double("DialogField", :auto_refresh => true, :trigger_auto_refresh => false) }
     let(:dialog_field_3) { instance_double("DialogField", :auto_refresh => false, :trigger_auto_refresh => true) }
 
-
     it "builds a list of auto refreshable fields and trigger fields with their indicies" do
       expect(helper.build_auto_refreshable_field_indicies(workflow)).to eq([
-        {tab_index: 0, group_index: 0, field_index: 2, auto_refresh: true},
-        {tab_index: 0, group_index: 1, field_index: 0, auto_refresh: false},
-        {tab_index: 0, group_index: 1, field_index: 1, auto_refresh: true},
-        {tab_index: 1, group_index: 0, field_index: 0, auto_refresh: false},
-        {tab_index: 1, group_index: 0, field_index: 1, auto_refresh: true}
+        {:tab_index => 0, :group_index => 0, :field_index => 2, :auto_refresh => true},
+        {:tab_index => 0, :group_index => 1, :field_index => 0, :auto_refresh => false},
+        {:tab_index => 0, :group_index => 1, :field_index => 1, :auto_refresh => true},
+        {:tab_index => 1, :group_index => 0, :field_index => 0, :auto_refresh => false},
+        {:tab_index => 1, :group_index => 0, :field_index => 1, :auto_refresh => true}
       ])
     end
   end

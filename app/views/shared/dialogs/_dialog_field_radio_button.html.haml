@@ -27,7 +27,11 @@
       dialogFieldRefresh.listenForAutoRefreshMessages(JSON.parse("#{j(auto_refresh_options.to_json)}"), function() {
         var checkedValue = $('input:radio[name="#{field.name}"]:checked').val();
 
-        dialogFieldRefresh.refreshRadioList("#{field.name}", "#{field.id}", checkedValue, "#{url}", JSON.parse('#{j(auto_refresh_options.to_json)}'), function() {
+        dialogFieldRefresh.refreshRadioList("#{field.name}",
+                                            "#{field.id}",
+                                            checkedValue,
+                                            "#{url}",
+                                            JSON.parse('#{j(auto_refresh_options.to_json)}'), function() {
           dialogFieldRefresh.triggerAutoRefresh(JSON.parse('#{j(auto_refresh_options.to_json)}'));
         });
       });
@@ -39,7 +43,11 @@
     $('#refresh-dynamic-field-#{field.id}').click(function() {
       var checkedValue = $('input:radio[name="#{field.name}"]:checked').val();
 
-      dialogFieldRefresh.refreshRadioList("#{field.name}", "#{field.id}", checkedValue, "#{url}", JSON.parse('#{j(auto_refresh_options.to_json)}'), function() {
+      dialogFieldRefresh.refreshRadioList("#{field.name}",
+                                          "#{field.id}",
+                                          checkedValue,
+                                          "#{url}",
+                                          JSON.parse('#{j(auto_refresh_options.to_json)}'), function() {
         dialogFieldRefresh.triggerAutoRefresh(JSON.parse('#{j(auto_refresh_options.to_json)}'));
       });
     });
