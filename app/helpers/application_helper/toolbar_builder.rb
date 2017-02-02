@@ -495,17 +495,6 @@ class ApplicationHelper::ToolbarBuilder
         return N_("Default actions can not be deleted.") if @record.action_type == "default"
         return N_("Actions assigned to Policies can not be deleted") unless @record.miq_policies.empty?
       end
-    when "MiqRequest"
-      case id
-      when "miq_request_delete"
-        requester = current_user
-        return false if requester.admin_user?
-        return N_("Users are only allowed to delete their own requests") if requester.name != @record.requester_name
-        if %w(approved denied).include?(@record.approval_state)
-          return N_("%{approval_states} requests cannot be deleted") %
-            {:approval_states => @record.approval_state.titleize}
-        end
-      end
     when "MiqGroup"
       case id
       when "rbac_group_delete"

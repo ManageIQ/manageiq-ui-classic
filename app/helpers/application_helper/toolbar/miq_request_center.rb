@@ -20,7 +20,8 @@ class ApplicationHelper::Toolbar::MiqRequestCenter < ApplicationHelper::Toolbar:
       N_('Delete this Request'),
       nil,
       :url_parms => "&refresh=y",
-      :confirm   => N_("Are you sure you want to delete this Request?")),
+      :confirm   => N_("Are you sure you want to delete this Request?"),
+      :klass     => ApplicationHelper::Button::MiqRequestDelete),
     button(
       :miq_request_reload,
       'fa fa-repeat fa-lg',

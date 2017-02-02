@@ -670,38 +670,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       end
     end # end of Vm class
 
-    context "and id = miq_request_delete" do
-      let(:server) { double("MiqServer", :logon_status => :ready) }
-      let(:user)   { FactoryGirl.create(:user_admin) }
-      before do
-        allow(MiqServer).to receive(:my_server).and_return(server)
-
-        @id = "miq_request_delete"
-        login_as user
-        @record = MiqProvisionRequest.new
-        allow(@record).to receive_messages(:resource_type => "something", :approval_state => "xx", :requester_name => user.name)
-      end
-
-      it "and requester.name != @record.requester_name" do
-        allow(@record).to receive_messages(:requester_name => 'admin')
-        expect(toolbar_builder.disable_button("miq_request_delete")).to be_falsey
-      end
-
-      it "and approval_state = approved" do
-        allow(@record).to receive_messages(:approval_state => "approved")
-        expect(subject).to be_falsey
-      end
-
-      it "and requester.name = @record.requester_name & approval_state != approved|denied" do
-        expect(subject).to be_falsey
-      end
-
-      it "and requester.name != @record.requester_name" do
-        login_as FactoryGirl.create(:user, :role => "test")
-        expect(toolbar_builder.disable_button("miq_request_delete"))
-          .to include("Users are only allowed to delete their own requests")
-      end
-    end
   end # end of disable button
 
   describe "#hide_button_ops" do
