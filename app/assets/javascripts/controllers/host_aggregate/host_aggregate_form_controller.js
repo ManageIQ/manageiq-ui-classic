@@ -85,7 +85,7 @@ ManageIQ.angular.app.controller('hostAggregateFormController', ['$http', '$scope
     $scope.afterGet = true;
     $scope.hostAggregateModel.name = data.name;
     $scope.hostAggregateModel.ems_id = data.ems_id;
-    $scope.hostAggregateModel.host_id = "";
+    $scope.hostAggregateModel.host_id = '';
 
     $scope.modelCopy = angular.copy( $scope.hostAggregateModel );
     miqService.sparkleOff();

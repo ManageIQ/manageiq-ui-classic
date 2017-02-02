@@ -41,7 +41,7 @@ ManageIQ.angular.app.controller('orchestrationTemplateCopyController', ['$http',
     var data = response.data;
 
     $scope.templateInfo.templateId = data.template_id;
-    $scope.templateInfo.templateName = "Copy of " + data.template_name;
+    $scope.templateInfo.templateName = 'Copy of ' + data.template_name;
     $scope.templateInfo.templateDescription = data.template_description;
     $scope.templateInfo.templateDraft = data.template_draft;
     $scope.templateInfo.templateContent = data.template_content;

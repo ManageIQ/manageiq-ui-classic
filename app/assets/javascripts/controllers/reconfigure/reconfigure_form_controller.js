@@ -277,12 +277,15 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
 
       $scope.updateDisksAddRemove();
 
-      for (var disk in $scope.reconfigureModel.vmdisks)
-        if($scope.reconfigureModel.vmdisks[disk]['add_remove'] == '' )
-          $scope.reconfigureModel.vmdisks[disk]['delete_backing'] = false;
+      angular.forEach($scope.reconfigureModel.vmdisks, function(disk) {
+        if ($scope.reconfigureModel.vmdisks[disk].add_remove === '' ) {
+          $scope.reconfigureModel.vmdisks[disk].delete_backing = false;
+        }
+      });
 
-      if(data.socket_count && data.cores_per_socket_count)
+      if (data.socket_count && data.cores_per_socket_count) {
         $scope.reconfigureModel.total_cpus = (parseInt($scope.reconfigureModel.socket_count, 10) * parseInt($scope.reconfigureModel.cores_per_socket_count, 10)).toString();
+      }
       $scope.afterGet = true;
       $scope.modelCopy = angular.copy( $scope.reconfigureModel );
       $scope.cb_memoryCopy = $scope.cb_memory;

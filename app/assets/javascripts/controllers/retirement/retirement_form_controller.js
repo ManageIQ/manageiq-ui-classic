@@ -32,7 +32,7 @@ ManageIQ.angular.app.controller('retirementFormController', ['$http', '$scope', 
     if (data.retirement_date != null) {
       $scope.retirementInfo.retirementDate = moment.utc(data.retirement_date, 'MM-DD-YYYY').toDate();
     }
-    $scope.retirementInfo.retirementWarning = data.retirement_warning || "";
+    $scope.retirementInfo.retirementWarning = data.retirement_warning || '';
     $scope.modelCopy = _.extend({}, $scope.retirementInfo);
   }
 }]);

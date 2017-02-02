@@ -71,7 +71,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
 
     $scope.afterGet = true;
     $scope.networkRouterModel.name = data.name;
-    $scope.networkRouterModel.cloud_subnet_id = "";
+    $scope.networkRouterModel.cloud_subnet_id = '';
 
     $scope.modelCopy = angular.copy( $scope.networkRouterModel );
     miqService.sparkleOff();
