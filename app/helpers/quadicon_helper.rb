@@ -171,6 +171,7 @@ module QuadiconHelper
     when 'single_quad'           then render_single_quad_quadicon(item, options)
     when 'storage'               then render_storage_quadicon(item, options)
     when 'vm_or_template'        then render_vm_or_template_quadicon(item, options)
+    when 'physical_server'       then render_physical_server_quadicon(item, options)
     else
       flobj_img_simple(options[:size], "#{options[:size]}/#{partial_name}.png")
     end
@@ -499,6 +500,47 @@ module QuadiconHelper
     output.collect(&:html_safe).join('').html_safe
   end
 
+ # Renders a quadicon for hosts
+  #
+  def render_physical_server_quadicon(item, options)
+    size = options[:size]
+    width = options[:size] == 150 ? 54 : 35
+    output = []
+
+    if settings(:quadicons, :physical_server)
+      output << flobj_img_simple(size, "#{size}/base.png")
+
+      output << flobj_p_simple("a#{size}", item.hosts.size)
+      output << flobj_img_simple(size, "72/currentstate-#{h(item.normalized_state.downcase)}.png", "b#{size}")
+      output << flobj_img_simple(size, img_for_host_vendor(item), "c#{size}")
+      output << flobj_img_simple(size, img_for_auth_status(item), "d#{size}")
+      output << flobj_img_simple(size, '100/shield.png', "g#{size}") unless item.get_policies.empty?
+    else
+      output << flobj_img_simple(size)
+      output << flobj_img_simple(width * 1.8, img_for_host_vendor(item), "e#{size}")
+    end
+
+    if options[:typ] == :listnav
+      # Listnav, no href needed
+      output << content_tag(:div, :class => 'flobj') do
+        tag(:img, :src => ActionController::Base.helpers.image_path("#{options[:size]}/reflection.png"), :border => 0)
+      end
+    else
+      href = if quadicon_show_links?
+               quadicon_edit_key?(:hostitems) ? "/host/edit/?selected_host=#{item.id}" : url_for_record(item)
+             end
+
+      output << content_tag(:div, :class => 'flobj') do
+        title = _("Name: %{name} ") % {:name => h(item.name)}
+
+        link_to(href, :title => title) do
+          quadicon_reflection_img(:size => size)
+        end
+      end
+    end
+    output.collect(&:html_safe).join('').html_safe
+  end
+
   # Renders a quadicon for ext_management_systems
   #
   def render_ext_management_system_quadicon(item, options)
@@ -508,7 +550,12 @@ module QuadiconHelper
 
     if settings(:quadicons, db_for_quadicon)
       output << flobj_img_simple(size, "#{size}/base.png")
-      output << flobj_p_simple("a#{size}", item.kind_of?(EmsCloud) ? item.total_vms : item.hosts.size)
+      item_count = case item
+        when EmsPhysicalInfra then item.physical_servers.size
+        when EmsCloud  then item.total_vms
+        else item.hosts.size
+      end
+      output << flobj_p_simple("a#{size}",item_count)
       output << flobj_p_simple("b#{size}", item.total_miq_templates) if item.kind_of?(EmsCloud)
       output << flobj_img_simple(size, "svg/vendor-#{h(item.image_name)}.svg", "c#{size}")
       output << flobj_img_simple(size, img_for_auth_status(item), "d#{size}")

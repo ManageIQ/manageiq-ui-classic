@@ -10,9 +10,7 @@ module EmsPhysicalInfraHelper::TextualSummary
 
   def textual_group_relationships
     %i(physical_servers datastores vms)
-    %i(hostname ipaddress type port cpu_resources memory_resources cpus cpu_cores guid host_default_vnc_port_range)
   end
-
 
   def textual_group_status
     textual_authentications(@ems.authentication_userid_passwords) + %i(refresh_status orchestration_stacks_status)
