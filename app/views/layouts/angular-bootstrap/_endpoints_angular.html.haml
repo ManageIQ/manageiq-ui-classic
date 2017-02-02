@@ -114,6 +114,38 @@
                        "selectpicker-for-select-tag" => "",
                        "prefix"                      => "#{prefix}",
                        "reset-validation-status"     => "#{prefix}_auth_status")
+
+%div{"ng-if" => defined?(tls_hide) ? false : true}
+  .form-group{"ng-if"=> "emsCommonModel.emstype == 'rhevm'"}
+    %label.col-md-2.control-label{"for" => "#{prefix}_tls_verify"}
+      = _('Verify TLS Certificates')
+    .col-md-8
+      %input{"type"            => "checkbox",
+             "id"              => "#{prefix}_tls_verify",
+             "name"            => "#{prefix}_tls_verify",
+             "bs-switch"       => "",
+             "switch-on-text"  => _("Yes"),
+             "switch-off-text" => _("No"),
+             "ng-true-value"   => "true",
+             "ng-false-value"  => "false",
+             "ng-model"        => "#{ng_model}.#{prefix}_tls_verify",
+             "prefix"          => "#{prefix}"}
+
+%div{"ng-if" => defined?(tls_hide) ? false : true}
+  .form-group{"ng-if"=> "emsCommonModel.emstype == 'rhevm'"}
+    %label.col-md-2.control-label{"for" => "#{prefix}_tls_ca_certs"}
+      = _('Trusted CA Certificates')
+    .col-md-4
+      %textarea.form-control{"id"          => "#{prefix}_tls_ca_certs",
+                             "name"        => "#{prefix}_tls_ca_certs",
+                             "ng-model"    => "#{ng_model}.#{prefix}_tls_ca_certs",
+                             "ng-disabled" => "!#{ng_model}.#{prefix}_tls_verify",
+                             "ng-required" => false,
+                             "ng-trim"     => false,
+                             "prefix"      => "#{prefix}"}
+      %span.help-block
+        = _("Paste here the trusted CA certificates, in PEM format.")
+
 .form-group{"ng-class" => "{'has-error': angularForm.realm.$invalid}",
             "ng-if" => "emsCommonModel.emstype == 'scvmm' && emsCommonModel.default_security_protocol == 'kerberos'"}
   %label.col-md-2.control-label{"for" => "realm"}
@@ -133,3 +165,4 @@
       = _("Required")
     %span.help-block{"ng-show" => "angularForm.realm.$error.detectedSpaces"}
       = _("Spaces are prohibited")
+

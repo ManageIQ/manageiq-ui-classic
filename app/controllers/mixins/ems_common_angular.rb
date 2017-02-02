@@ -117,7 +117,10 @@ module Mixins
       assert_privileges("#{permission_prefix}_edit")
       @ems = model.new if params[:id] == 'new'
       @ems = find_by_id_filtered(model, params[:id]) if params[:id] != 'new'
-      default_security_protocol = @ems.default_endpoint.security_protocol ? @ems.default_endpoint.security_protocol : 'ssl'
+      default_endpoint = @ems.default_endpoint
+      default_security_protocol = default_endpoint.security_protocol ? default_endpoint.security_protocol : 'ssl'
+      default_tls_verify = default_endpoint.verify_ssl != 0 ? true : false
+      default_tls_ca_certs = default_endpoint.certificate_authority
 
       if @ems.zone.nil? || @ems.my_zone == ""
         zone = "default"
@@ -249,6 +252,8 @@ module Mixins
                         :metrics_api_port              => metrics_port ? metrics_port : "",
                         :default_security_protocol     => default_security_protocol,
                         :amqp_security_protocol        => amqp_security_protocol,
+                        :default_tls_verify            => default_tls_verify,
+                        :default_tls_ca_certs          => default_tls_ca_certs,
                         :api_version                   => @ems.api_version ? @ems.api_version : "v2",
                         :provider_region               => @ems.provider_region,
                         :default_userid                => @ems.authentication_userid ? @ems.authentication_userid : "",
@@ -363,7 +368,14 @@ module Mixins
       ssh_keypair_endpoint = {:role => :ssh_keypair} if ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
 
       if ems.kind_of?(ManageIQ::Providers::Redhat::InfraManager)
-        default_endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
+        default_endpoint = {
+          :role                  => :default,
+          :hostname              => hostname,
+          :port                  => port,
+          :security_protocol     => ems.security_protocol,
+          :verify_ssl            => params[:default_tls_verify] == 'on' ? 1 : 0,
+          :certificate_authority => params[:default_tls_ca_certs],
+        }
         metrics_endpoint = { :role     => :metrics,
                              :hostname => metrics_hostname,
                              :port     => metrics_port,
