@@ -1,6 +1,6 @@
 #main_div
-  - if %w(physical_server physical_serversphysical_server physical_servers  vms cloud_tenants storages miq_proxies miq_templates resource_pools ontap_logical_disks ontap_storage_systems ontap_storage_volumes ontap_file_shares).include?(@display) && @showtype != "compare"
-    = render(:partial => "layouts/gtl", :locals => {:action_url => "show/#{@host.id}"})
+  - if %w(physical_server physical_servers vms cloud_tenants storages miq_proxies miq_templates resource_pools ontap_logical_disks ontap_storage_systems ontap_storage_volumes ontap_file_shares).include?(@display) && @showtype != "compare"
+    = render(:partial => "layouts/gtl", :locals => {:action_url => "show/#{@ph_server.id}"})
   - else
     - case @showtype
     - when "details"
