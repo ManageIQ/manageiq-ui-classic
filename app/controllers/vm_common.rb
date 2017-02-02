@@ -157,22 +157,23 @@ module VmCommon
   end
 
   def launch_html5_console
-    proto = request.ssl? ? 'wss' : 'ws'
+    scheme = request.ssl? ? 'wss' : 'ws'
     override_content_security_policy_directives(
-      :connect_src => ["'self'", "#{proto}://#{request.env['HTTP_HOST']}"],
+      :connect_src => ["'self'", "#{scheme}://#{request.env['HTTP_HOST']}"],
       :img_src     => %w(data: 'self')
     )
-    %i(secret url).each { |p| params.require(p) }
-    @secret = j(params[:secret])
-    @url = j(params[:url])
+    %i(secret url proto).each { |p| params.require(p) }
 
-    case j(params[:proto])
-    when 'spice'     # spice, vnc - from rhevm
-      render(:template => 'vm_common/console_spice', :layout => false)
-    when nil, 'vnc'  # nil - from vmware
-      render(:template => 'vm_common/console_vnc', :layout => false)
-    when 'novnc_url' # from OpenStack
-      redirect_to host_address
+    proto = j(params[:proto])
+    if %w(vnc spice).include?(proto) # VMWare, RHEV
+      @console = {
+        :url    => j(params[:url]),
+        :secret => j(params[:secret]),
+        :type   => proto
+      }
+      render(:template => 'layouts/remote_console', :layout => false)
+    else
+      raise 'Unsupported protocol'
     end
   end
 
