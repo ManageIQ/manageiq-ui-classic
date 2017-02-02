@@ -47,7 +47,7 @@ module EmsPhysicalInfraHelper::TextualSummary
 
   def textual_physical_servers
     #TODO: (walteraa) Use textual_link 
-    {:label =>  _("Physical Servers"), :value  => @ems.number_of(:physical_servers)} 
+    {:label =>  _("Physical Servers"),  :icon =>  "pficon pficon-server", :value  => @ems.number_of(:physical_servers)} 
   end
 
   def textual_cpu_resources
