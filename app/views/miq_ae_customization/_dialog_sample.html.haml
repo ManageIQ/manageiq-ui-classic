@@ -91,7 +91,7 @@
 
                               - else
                                 -# NOT REQUIRED
-                                = select_tag(field.id.to_s, options_for_select([[(None.to_s).to_s, nil]] + val.collect(&:reverse),
+                                = select_tag(field.id.to_s, options_for_select([["#{_('None')}", nil]] + val.collect(&:reverse),
                                               field.default_value),
                                               drop_down_options(field, "someURL"))
                                 :javascript
