@@ -70,21 +70,35 @@ function eventNotifications($timeout) {
     if (seed) {
       API.get('/api/notifications?expand=resources&attributes=details')
       .then(function (data) {
-        data.resources.forEach(function(resource) {
-          var msg = miqFormatNotification(resource.details.text, resource.details.bindings);
+        if (angular.isDefined(data.error)) {
+          var msg = miqFormatNotification(data.error.message);
           events.notifications.splice(0, 0, {
-            id: resource.id,
+            // id: null,
             notificationType: _this.EVENT_NOTIFICATION,
-            unread: !resource.seen,
-            type: resource.details.level,
+            unread: true,
+            type: 'error',
             message: msg,
-            data: {
-              message: msg
-            },
-            href: resource.href,
-            timeStamp: resource.details.created_at
+            data: {},
+            href: null,
+            timeStamp: null
           });
-        });
+        } else {
+          data.resources.forEach(function (resource) {
+            var msg = miqFormatNotification(resource.details.text, resource.details.bindings);
+            events.notifications.splice(0, 0, {
+              id: resource.id,
+              notificationType: _this.EVENT_NOTIFICATION,
+              unread: !resource.seen,
+              type: resource.details.level,
+              message: msg,
+              data: {
+                message: msg
+              },
+              href: resource.href,
+              timeStamp: resource.details.created_at
+            });
+          });
+        }
 
         updateUnreadCount(events);
         notifyObservers();
