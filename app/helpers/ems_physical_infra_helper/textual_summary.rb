@@ -63,9 +63,9 @@ module EmsPhysicalInfraHelper::TextualSummary
   end
 
   def textual_physical_infrastructure_folders
-    label     = "#{title_for_hosts} & #{title_for_clusters}"
+    label = "#{title_for_hosts} & #{title_for_clusters}"
     available = @ems.number_of(:ems_folders) > 0 && @ems.ems_folder_root
-    h         = {:label => label, :icon => "pficon pficon-virtual-machine", :value => available ? _("Available") : _("N/A")}
+    h = {:label => label, :icon => "pficon pficon-virtual-machine", :value => available ? _("Available") : _("N/A")}
     if available
       h[:link]  = ems_physical_infra_path(@ems.id, :display => 'ems_folders')
       h[:title] = _("Show %{label}") % {:label => label}
@@ -74,9 +74,9 @@ module EmsPhysicalInfraHelper::TextualSummary
   end
 
   def textual_folders
-    label     = _("VMs & Templates")
+    label = _("VMs & Templates")
     available = @ems.number_of(:ems_folders) > 0 && @ems.ems_folder_root
-    h         = {:label => label, :icon => "pficon pficon-virtual-machine", :value => available ? _("Available") : _("N/A")}
+    h = {:label => label, :icon => "pficon pficon-virtual-machine", :value => available ? _("Available") : _("N/A")}
     if available
       h[:link]  = ems_physical_infra_path(@ems.id, :display => 'ems_folders', :vat => true)
       h[:title] = _("Show Virtual Machines & Templates")
