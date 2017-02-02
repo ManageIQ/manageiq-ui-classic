@@ -233,6 +233,9 @@ module ApplicationHelper
       if controller == "ems_infra" && action == "show"
         return ems_infras_path
       end
+      if controller == "ems_physical_infra" && action == "show"
+        return ems_physical_infras_path
+      end
       if controller == "ems_container" && action == "show"
         return ems_containers_path
       end
