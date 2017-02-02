@@ -1,6 +1,6 @@
 module MiddlewareCommonMixin
   extend ActiveSupport::Concern
-  include MiddlewareOperationsMixin
+  include Mixins::MiddlewareOperationsMixin
 
   def show
     return unless init_show
