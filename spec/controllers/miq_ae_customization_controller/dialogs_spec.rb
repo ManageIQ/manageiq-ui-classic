@@ -98,7 +98,7 @@ describe MiqAeCustomizationController do
           :data_type         => Integer,
           :values            => [1, 2, 3],
           :default_value     => 1,
-          :force_multi_value => true
+          :force_multi_value => nil
         }
         new_hash = {
           :label       => "Dialog 1",
@@ -122,7 +122,7 @@ describe MiqAeCustomizationController do
 
         controller.send(:dialog_set_record_vars, dialog, "foo")
 
-        expect(dialog.dialog_tabs.first.dialog_groups.first.dialog_fields.first.options[:force_multi_value]).to be false
+        expect(dialog.dialog_tabs.first.dialog_groups.first.dialog_fields.first.options[:force_multi_value]).to be nil
       end
     end
 
