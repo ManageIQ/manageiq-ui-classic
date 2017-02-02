@@ -7,18 +7,31 @@ describe EmsContainerHelper::TextualSummary do
       allow(controller).to receive(:controller_name).and_return("ems_container")
     end
 
+    it "should only display custom attributes from allowed sections" do
+      @record.save
+      @record.custom_attributes.create(:section => "metadata",
+                                       :name    => "Example_custom_attribute",
+                                       :value   => 4)
+      @record.custom_attributes.create(:section => "no_allowed",
+                                       :name    => "Example_custom_attribute_2",
+                                       :value   => 5)
+
+      expect(textual_miq_displayable_custom_attributes.count).to eq(1)
+    end
+
     it "should parse custom attributes to labels and values" do
-      @record.custom_attributes << FactoryGirl.build(:custom_attribute,
-                                                     :name  => "Example_custom_attribute",
-                                                     :value => 4)
+      @record.save
+      @record.custom_attributes.create(:section => "metadata",
+                                       :name    => "Example_custom_attribute",
+                                       :value   => 4)
 
-      expect(textual_miq_custom_attributes.first[:label]).to eq("Example custom attribute")
+      expect(textual_miq_displayable_custom_attributes.first[:label]).to eq("Example custom attribute")
 
-      expect(textual_miq_custom_attributes.first[:value]).to eq("4")
+      expect(textual_miq_displayable_custom_attributes.first[:value]).to eq("4")
     end
 
     it "should return nil if no custom attributes" do
-      expect(textual_miq_custom_attributes).to eq(nil)
+      expect(textual_miq_displayable_custom_attributes).to eq(nil)
     end
   end
 end
