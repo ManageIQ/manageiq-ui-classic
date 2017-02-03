@@ -22,10 +22,17 @@ module PhysicalServerHelper::TextualSummary
     host_service_tag = nil
     if @record.host != nil
       host_id = @record.host.id
-      host_service_tag = @record.host.sevice_tag
+      host_service_tag = @record.host.service_tag
     end
 
-    {:label => _("Host"), :value => host_service_tag, :link => url_for(:controller =>'host', :action =>  'show', :id =>  host_id)}
+    hostText = {:label => _("Host"), :value => host_service_tag}
+    
+    # Only have a link to the host if we actually have a host
+    if @record.host != nil
+      hostText[:link] = url_for(:controller => 'host', :action => 'show', :id => host_id)
+    end
+
+    hostText
   end
 
   def textual_name
