@@ -1600,7 +1600,7 @@ module ApplicationHelper
        containers_filter
        cs_filter
        configuration_scripts
-       foreman_providers
+       configuration_manager_providers
        images
        images_filter
        instances
