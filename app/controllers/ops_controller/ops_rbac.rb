@@ -1032,7 +1032,7 @@ module OpsController::OpsRbac
   end
 
   def valid_role?(group_id)
-    Rbac::Filterer.filtered(group_id, :class => MiqUserRole).present?
+    Rbac::Filterer.filtered_object(group_id, :class => MiqUserRole).present?
   end
 
   # Get variables from group edit form
