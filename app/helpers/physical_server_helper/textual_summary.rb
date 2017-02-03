@@ -15,7 +15,7 @@ module PhysicalServerHelper::TextualSummary
 
 
   def textual_host
-    {:label => _("Host"), :value => @record.host.name, :icon =>  "pficon pficon-virtual-machine", :link => url_for(:controller =>'host', :action =>  'show', :id =>  @record.host&.id)}
+    {:label => _("Host"), :value => @record.host&.name, :icon =>  "pficon pficon-virtual-machine", :link => url_for(:controller =>'host', :action =>  'show', :id =>  @record.host&.id)}
   end
 
   def textual_name
