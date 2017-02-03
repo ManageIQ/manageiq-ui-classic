@@ -15,7 +15,17 @@ module PhysicalServerHelper::TextualSummary
 
 
   def textual_host
-    {:label => _("Host"), :value => @record.host.service_tag, :link => url_for(:controller =>'host', :action =>  'show', :id =>  @record.host.id)}
+    # If no hosts have been discovered the host relationship 
+    # is undefined.  Adding a check for a nil host before reading
+    # properties from host.
+    host_id = nil
+    host_service_tag = nil
+    if @record.host != nil
+      host_id = @record.host.id
+      host_service_tag = @record.host.sevice_tag
+    end
+
+    {:label => _("Host"), :value => host_service_tag, :link => url_for(:controller =>'host', :action =>  'show', :id =>  host_id)}
   end
 
   def textual_name
