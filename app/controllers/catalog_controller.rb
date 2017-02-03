@@ -396,9 +396,13 @@ class CatalogController < ApplicationController
         msg = _("Custom Image must be a .png or .jpg file")
         err = true
       else
-        @record.picture ||= Picture.new
-        @record.picture.content = params[:upload][:image].read
-        @record.picture.extension = ext
+        picture = {:content   => params[:upload][:image].read,
+                   :extension => ext}
+        if @record.picture.nil?
+          @record.picture = Picture.new(picture)
+        else
+          @record.picture.update(picture)
+        end
         @record.save
         msg = _("Custom Image file \"%{name}\" successfully uploaded") %
               {:name => params[:upload][:image].original_filename}
