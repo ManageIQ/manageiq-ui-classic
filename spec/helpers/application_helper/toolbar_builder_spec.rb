@@ -303,7 +303,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     context 'last action set to show' do
       let(:lastaction) { 'show' }
 
-      %w(main vms instances all_vms).each do | display |
+      %w(main vms instances all_vms).each do |display|
         context "requested to display #{display}" do
           it 'returns with false' do
             stub_user(:features => :all)
