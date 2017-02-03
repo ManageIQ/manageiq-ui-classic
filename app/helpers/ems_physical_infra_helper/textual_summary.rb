@@ -5,11 +5,11 @@ module EmsPhysicalInfraHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(hostname ipaddress type port cpu_resources memory_resources cpus cpu_cores guid host_default_vnc_port_range)
+    %i(hostname ipaddress type port guid)
   end
 
   def textual_group_relationships
-    %i(infrastructure_folders folders clusters hosts datastores vms templates orchestration_stacks ems_cloud)
+    %i(physical_servers datastores vms)
   end
 
   def textual_group_status
@@ -45,11 +45,15 @@ module EmsPhysicalInfraHelper::TextualSummary
     @ems.supports_port? ? {:label => _("API Port"), :value => @ems.port} : nil
   end
 
+  def textual_physical_servers
+    #TODO: (walteraa) Use textual_link 
+    {:label =>  _("Physical Servers"), :value  => @ems.number_of(:physical_servers)} 
+  end
+
   def textual_cpu_resources
     {:label => _("Aggregate %{title} CPU Resources") % {:title => title_for_host},
      :value => mhz_to_human_size(@ems.aggregate_cpu_speed)}
   end
-
   def textual_memory_resources
     {:label => _("Aggregate %{title} Memory") % {:title => title_for_host},
      :value => number_to_human_size(@ems.aggregate_memory * 1.megabyte, :precision => 0)}
@@ -169,7 +173,7 @@ module EmsPhysicalInfraHelper::TextualSummary
   end
 
   def textual_zone
-    {:label => _("Managed by Zone"), :icon => "pficon pficon-zone", :value => @ems.zone.name}
+    {:label => _("Managed by Zone"), :icon => "pficon pficon-zone", :value => @ems.zone}
   end
 
   def textual_host_default_vnc_port_range

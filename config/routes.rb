@@ -1192,6 +1192,24 @@ Rails.application.routes.draw do
                save_post
     },
 
+    :physical_server    =>  {
+      :get  =>  %w(
+        download_data
+        perf_top_chart
+        protect
+        show_list
+        show
+        
+      ) + compare_get,
+
+      :post   =>  %w(
+        show_list
+        create
+        update
+
+      )
+    },
+
     :ems_physical_infra_dashboard      => {
       :get => %w(
         show
@@ -1244,6 +1262,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
+        jdbc_drivers
       ) +
                compare_get,
       :post => %w(

@@ -11,4 +11,5 @@ spec/reports/
 tmp/
 .rubocop-*
 .idea/
+node_modules/
 .ruby-version
