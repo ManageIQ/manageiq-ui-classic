@@ -381,7 +381,7 @@ class ChargebackController < ApplicationController
     end
   end
 
-  def get_node_info(node)
+  def get_node_info(node, show_list = true)
     node = valid_active_node(node)
     if x_active_tree == :cb_rates_tree
       if node == "root"

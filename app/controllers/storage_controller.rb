@@ -394,7 +394,7 @@ class StorageController < ApplicationController
     end
   end
 
-  def get_node_info(node)
+  def get_node_info(node, show_list = true)
     node = valid_active_node(node)
     case x_active_tree
     when :storage_tree     then storage_get_node_info(node)
