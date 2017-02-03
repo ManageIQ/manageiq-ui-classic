@@ -460,7 +460,7 @@ class OpsController < ApplicationController
   end
 
   # Get all info for the node about to be displayed
-  def get_node_info(treenodeid)
+  def get_node_info(treenodeid, show_list = true)
     return if params[:cls_id] # no need to do get_node_info if redirected from show_product_update
     @nodetype = valid_active_node(treenodeid).split("-").first
     if @replace_trees

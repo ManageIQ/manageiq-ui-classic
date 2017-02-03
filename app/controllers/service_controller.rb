@@ -190,7 +190,7 @@ class ServiceController < ApplicationController
   end
 
   # Get all info for the node about to be displayed
-  def get_node_info(treenodeid)
+  def get_node_info(treenodeid, show_list = true)
     @nodetype, id = parse_nodetype_and_id(valid_active_node(treenodeid))
     # resetting action that was stored during edit to determine what is being edited
     @sb[:action] = nil

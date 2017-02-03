@@ -327,9 +327,14 @@ class ApplicationController < ActionController::Base
   # Then this method will return JSON object with settings and data.
   def report_data
     options = process_params_options(params)
-    model_view = process_params_model_view(params, options)
-    @edit = session[:edit]
-    current_view, settings = get_view(model_view, options)
+    if options[:view].nil?
+      model_view = process_params_model_view(params, options)
+      @edit = session[:edit]
+      current_view, settings = get_view(model_view, options)
+    else
+      current_view = options[:view]
+      settings = options[:pages]
+    end
     settings[:sort_dir] = @sortdir unless settings.nil?
     settings[:sort_col] = @sortcol unless settings.nil?
     @edit = session[:edit]

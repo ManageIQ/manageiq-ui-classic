@@ -395,7 +395,7 @@ class MiqPolicyController < ApplicationController
   end
 
   # Get all info for the node about to be displayed
-  def get_node_info(treenodeid)
+  def get_node_info(treenodeid, show_list = true)
     _modelname, nodeid, @nodetype = TreeBuilder.extract_node_model_and_id(valid_active_node(treenodeid))
     node_ids = {}
     treenodeid.split("_").each do |p|

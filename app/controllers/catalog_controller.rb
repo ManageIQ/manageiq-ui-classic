@@ -1659,7 +1659,7 @@ class CatalogController < ApplicationController
   end
 
   # Get all info for the node about to be displayed
-  def get_node_info(treenodeid)
+  def get_node_info(treenodeid, show_list = true)
     @explorer |= true
     @nodetype, id = parse_nodetype_and_id(valid_active_node(treenodeid))
     # saving this so it can be used while adding buttons/groups in buttons editor
