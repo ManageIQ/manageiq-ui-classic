@@ -3,9 +3,9 @@
 var dialogFieldRefresh = {
   listenForAutoRefreshMessages: function(autoRefreshOptions, callbackFunction) {
     var thisIsTheFieldToUpdate = function(event) {
-      tabIndex = event.data.tabIndex;
-      groupIndex = event.data.groupIndex;
-      fieldIndex = event.data.fieldIndex;
+      var tabIndex = event.data.tabIndex;
+      var groupIndex = event.data.groupIndex;
+      var fieldIndex = event.data.fieldIndex;
       return tabIndex === autoRefreshOptions.tab_index && groupIndex === autoRefreshOptions.group_index && fieldIndex === autoRefreshOptions.field_index;
     };
 
@@ -113,33 +113,33 @@ var dialogFieldRefresh = {
     dialogFieldRefresh.sendRefreshRequest('dynamic_radio_button_refresh', data, doneFunction);
   },
 
+  updateTextContainerDoneFunction: function(containerSelector, fieldId, data, callback) {
+    var responseData = JSON.parse(data.responseText);
+    $(containerSelector + fieldId).val(responseData.values.text);
+    dialogFieldRefresh.setReadOnly($(containerSelector + fieldId), responseData.values.read_only);
+    dialogFieldRefresh.setVisible($('#field_' + fieldId + '_tr'), responseData.values.visible);
+    callback.call();
+  },
+
   refreshTextAreaBox: function(fieldName, fieldId, callback) {
     miqSparkleOn();
 
-    var data = {name: fieldName};
     var doneFunction = function(data) {
-      var responseData = JSON.parse(data.responseText);
-      $('.dynamic-text-area-' + fieldId).val(responseData.values.text);
-      dialogFieldRefresh.setReadOnly($('.dynamic-text-area-' + fieldId), responseData.values.read_only);
-      dialogFieldRefresh.setVisible($('#field_' +fieldId + '_tr'), responseData.values.visible);
-      callback.call();
+      dialogFieldRefresh.updateTextContainerDoneFunction('.dynamic-text-area-', fieldId, data, callback);
     };
 
+    var data = {name: fieldName};
     dialogFieldRefresh.sendRefreshRequest('dynamic_text_box_refresh', data, doneFunction);
   },
 
   refreshTextBox: function(fieldName, fieldId, callback) {
     miqSparkleOn();
 
-    var data = {name: fieldName};
     var doneFunction = function(data) {
-      var responseData = JSON.parse(data.responseText);
-      $('.dynamic-text-box-' + fieldId).val(responseData.values.text);
-      dialogFieldRefresh.setReadOnly($('.dynamic-text-box-' + fieldId), responseData.values.read_only);
-      dialogFieldRefresh.setVisible($('#field_' +fieldId + '_tr'), responseData.values.visible);
-      callback.call();
+      dialogFieldRefresh.updateTextContainerDoneFunction('.dynamic-text-box-', fieldId, data, callback);
     };
 
+    var data = {name: fieldName};
     dialogFieldRefresh.sendRefreshRequest('dynamic_text_box_refresh', data, doneFunction);
   },
 
