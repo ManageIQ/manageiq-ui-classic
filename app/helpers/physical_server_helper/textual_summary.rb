@@ -15,7 +15,20 @@ module PhysicalServerHelper::TextualSummary
 
 
   def textual_host
-    {:label => _("Host"), :value => @record.host.service_tag, :link => url_for(:controller =>'host', :action =>  'show', :id =>  @record.host.id)}
+    # The host / physical server relationship is currently broken in the
+    # database. This causes the value of @record.host to be nil, so when
+    # a host's service_tag or id attribute is accessed, an undefined method
+    # error occurs. To prevent this error, we need to check to see if the
+    # record's host is nil, and if it is, we will not attempt to access any
+    # of its attributes.
+    host_id = nil
+    host_service_tag = nil
+    if @record.host != nil
+      host_id = @record.host.id
+      host_service_tag = @record.host.sevice_tag
+    end
+
+    {:label => _("Host"), :value => host_service_tag, :link => url_for(:controller =>'host', :action =>  'show', :id =>  host_id)}
   end
 
   def textual_name
