@@ -6,6 +6,13 @@ MwAddDatasourceCtrl.$inject = ['$scope', '$rootScope', 'miqService', 'mwAddDatas
 
 function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceService) {
   var vm = this;
+  var dsPropsHash = function(dsProps) {
+    var propsHash = {};
+    dsProps.forEach(function(prop) {
+      propsHash[prop.name] = prop.value;
+    });
+    return propsHash;
+  };
   var makePayload = function() {
     return {
       'id': angular.element('#server_id').val(),
@@ -14,7 +21,7 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
       'jndiName': vm.step1DsModel.jndiName,
       'driverName': vm.step2DsModel.jdbcDriverName,
       'driverClass': vm.step2DsModel.driverClass,
-      'datasourceProperties': vm.step3DsModel.dsProps,
+      'datasourceProperties': dsPropsHash(vm.step3DsModel.dsProps),
       'connectionUrl': vm.step3DsModel.connectionUrl,
       'userName': vm.step3DsModel.userName,
       'password': vm.step3DsModel.password,
@@ -67,7 +74,6 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
           driverClass: '',
         });
     }
-
     mwAddDatasourceService.sendAddDatasource(payload).then(
       function(result) { // success
         miqService.miqFlash(result.data.status, result.data.msg);
@@ -122,7 +128,7 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
 
     mwAddDatasourceService.getExistingJdbcDrivers(serverId).then(function(result) {
       var filteredResult;
-      if(vm.chooseDsModel.xaDatasource){
+      if (vm.chooseDsModel.xaDatasource) {
         filteredResult = _.filter(result, function(item) {
           return item.xaDsClass != null;
         });
@@ -154,13 +160,16 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
       dsSelection = vm.chooseDsModel.selectedDatasource;
       vm.step3DsModel.connectionUrl = mwAddDatasourceService.determineConnectionUrl(dsSelection);
     }
-    if(dsSelection.hasOwnProperty('properties')){
+    if (dsSelection.hasOwnProperty('properties')) {
       var i = 0;
-      for(var name in dsSelection.properties){
-        vm.step3DsModel.dsProps.push({id: i, name: name, value: dsSelection.properties[name]});
-        i = i + 1;
+      for (var name in dsSelection.properties) {
+        vm.step3DsModel.dsProps.push({id: i++, name: name, value: dsSelection.properties[name]});
       }
     }
+  };
+
+  vm.enableAddProperty = function() {
+    return !!vm.step3DsModel.dsAddPropertyName || !!vm.step3DsModel.dsAddPropertyName;
   };
 
   vm.addDatasourceStep2Back = function() {
@@ -174,6 +183,7 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
   };
 
   vm.finishAddDatasourceBack = function() {
+    vm.step3DsModel.dsProps = [];
     vm.dsModel.step = 'STEP2';
   };
 

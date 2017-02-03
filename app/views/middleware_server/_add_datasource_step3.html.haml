@@ -59,32 +59,33 @@
       %div{"ng-repeat" => "prop in vm.step3DsModel.dsProps track by $index"}
         .row.property-table-item
           .col-md-2.col-md-offset-4
-            %label{ "ng-bind" => "prop.name"}
+            %label{"ng-bind" => "prop.name"}
           .col-md-4
-            %input.form-control{:type    => "text",
-                              "ng-model" => "prop.value"}
+            %input.form-control{:type      => "text",
+                                "ng-model" => "prop.value"}
           .col-md-1
-            %button.btn.btn-default{:type      => "button",
-                                    :class     => "pficon-delete",
-                                    "alt"      => (t = _("Delete")),
-                                    "title"    => t,
-                                    "ng-click" => "vm.deleteDsProperty(prop.id)"}
+            %button.btn.btn-default.pficon-delete{:type      => "button",
+                                                  "alt"      => (t = _("Delete")),
+                                                  "title"    => t,
+                                                  "ng-click" => "vm.deleteDsProperty(prop.id)"}
 
       .row.property-table-item
         .col-md-2.col-md-offset-4
           %input.form-control{:type         => "text",
+                              "name"        => "addName",
                               "placeholder" => _("Name"),
                               "ng-model"    => "vm.step3DsModel.dsAddPropertyName"}
         .col-md-4
           %input.form-control{:type         => "text",
+                              "name"        => "addValue",
                               "placeholder" => _("Value"),
                               "ng-model"    => "vm.step3DsModel.dsAddPropertyValue"}
         .col-md-1
-          %button.btn.btn-default{:type      => "button",
-                                  :class     => "pficon-add-circle-o",
-                                  "alt"      => (t = _("Add")),
-                                  "title"    => t,
-                                  "ng-click" => "vm.addDsProperty(vm.step3DsModel.dsAddPropertyName, vm.step3DsModel.dsAddPropertyValue)"}
+          %button.btn.btn-default.pficon-add-circle-o{:type         => "button",
+                                                      "alt"         => (t = _("Add")),
+                                                      "title"       => t,
+                                                      "ng-disabled" => "!vm.enableAddProperty()",
+                                                      "ng-click"    => "vm.addDsProperty(vm.step3DsModel.dsAddPropertyName, vm.step3DsModel.dsAddPropertyValue)"}
 
     .modal-footer
       %button.btn.btn-default.dialog-cancel-button{:type      => "button",

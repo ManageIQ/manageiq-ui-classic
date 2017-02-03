@@ -140,7 +140,7 @@ function MwAddDatasourceService($http, $q) {
   };
 
   self.isXaDriver = function(driver) {
-    return driver.hasOwnProperty('xaDsClass') && driver.xaDsClass !== '';
+    return driver.hasOwnProperty('xaDsClass') && !!driver.xaDsClass;
   };
 
   self.determineConnectionUrl = function(dsSelection) {
@@ -175,7 +175,7 @@ function MwAddDatasourceService($http, $q) {
   self.findDatasourceByDriverClass = function(driverClass, isXa) {
     var dsContainer = isXa ? xaDatasources : datasources;
 
-    if(isXa){
+    if (isXa) {
       return _.find(dsContainer, function(datasource) {
         return datasource.driverClass === driverClass;
       });
