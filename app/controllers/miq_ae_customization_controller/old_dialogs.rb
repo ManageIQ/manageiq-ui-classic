@@ -165,8 +165,6 @@ module MiqAeCustomizationController::OldDialogs
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
     session[:dialog_sortcol] = @sortcol
     session[:dialog_sortdir] = @sortdir
-
-    update_gtl_div('old_dialogs_list', 'policy_bar') if pagination_or_gtl_request?
   end
 
   def old_dialogs_new
