@@ -73,7 +73,7 @@
                           @edit[:field_trigger_auto_refresh],
                           'data-miq_observe_checkbox' => {:url => url}.to_json)
 
-  - if @edit[:field_typ] =~ /Drop|Radio/ && !@edit[:field_dynamic]
+  - if @edit[:field_typ] =~ /Radio/ && !@edit[:field_dynamic]
     = render :partial => 'field_values', :locals => {:entry => nil}
   - if @edit[:field_typ] =~ /Drop/
     .form-horizontal

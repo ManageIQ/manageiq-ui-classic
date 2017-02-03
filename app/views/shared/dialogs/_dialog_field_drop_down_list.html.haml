@@ -1,9 +1,8 @@
 - if edit
   - select_values = field.values.collect(&:reverse)
   - selected ||= wf.value(field.name)
-  = select_tag(field.name, options_for_select(select_values, selected), drop_down_options(field, url))
   = select_tag(field.name, options_for_select(select_values,
-                                              wf.value(field.name)),
+                                              selected),
                                               drop_down_options(field, url))  
 
   :javascript
@@ -28,7 +27,6 @@
 
     - if field.show_refresh_button?
       = button_tag(_('Refresh'), :id => "refresh-dynamic-field-#{field.id}", :class => "btn btn-default")
-
     :javascript
 
       $('#refresh-dynamic-field-#{field.id}').click(function() {
@@ -36,12 +34,6 @@
         dialogFieldRefresh.refreshDropDownList("#{field.name}", "#{field.id}", selectedValue, function() {
           dialogFieldRefresh.triggerAutoRefresh(JSON.parse('#{j(auto_refresh_options.to_json)}'));
         });
-
-    //  dialogFieldRefresh.listenForAutoRefreshMessages("#{field.id}", function() {
-    //   var field = $('select[name="#{field.name}"]').length;
-    //    $('select.dynamic-drop-down-#{field.id}').val();
-     //   dialogFieldRefresh.refreshDropDownList("#{field.name}", "#{field.id}", selectedValue);
-
       });
 
 - else

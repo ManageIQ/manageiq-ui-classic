@@ -355,7 +355,6 @@ describe ApplicationHelper::Dialogs do
           :class    => "dynamic-drop-down-100 selectpicker",
           :disabled => true,
           :title    => "This element is disabled because it is read only",
-          :multiple => "multiple"
         )
       end
     end

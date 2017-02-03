@@ -95,8 +95,8 @@ module ApplicationHelper::Dialogs
       "data-live-search"     => true,
       # data-miq_observe functionality is handled by dialogFieldRefresh.initializeDialogSelectPicker here
     }
-    options_hash = multiple ? {:multiple => "multiple"} : {}
-    add_options_unless_read_only(extra_options, tag_options, field).merge(options_hash)
+    extra_options[:multiple] = "multiple" if multiple
+    add_options_unless_read_only(extra_options, tag_options, field)
   end
 
   def radio_options(field, url, value, selected_value)

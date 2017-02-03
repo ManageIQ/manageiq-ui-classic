@@ -1224,7 +1224,7 @@ module MiqAeCustomizationController::Dialogs
 
             elsif %w(DialogFieldDropDownList).include?(f.type)
               fld[:multi_value] =  f.options.include?(:force_multi_value) &&
-                                    f.options.values_at(:force_multi_value).to_s == "[true]"
+                                   f.options.values_at(:force_multi_value)[0]
 
             elsif f.type.include?("TagControl")
               fld[:single_value] = f.single_value?
