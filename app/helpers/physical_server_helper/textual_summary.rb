@@ -15,12 +15,9 @@ module PhysicalServerHelper::TextualSummary
 
 
   def textual_host
-    # The host / physical server relationship is currently broken in the
-    # database. This causes the value of @record.host to be nil, so when
-    # a host's service_tag or id attribute is accessed, an undefined method
-    # error occurs. To prevent this error, we need to check to see if the
-    # record's host is nil, and if it is, we will not attempt to access any
-    # of its attributes.
+    # If no hosts have been discovered the host relationship 
+    # is undefined.  Adding a check for a nil host before reading
+    # properties from host.
     host_id = nil
     host_service_tag = nil
     if @record.host != nil
