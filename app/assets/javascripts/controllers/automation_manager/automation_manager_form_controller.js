@@ -1,5 +1,4 @@
 ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', function($http, $scope, automationManagerFormId, miqService) {
-  var init = function() {
     $scope.automationManagerModel = {
       name: '',
       url: '',
@@ -20,42 +19,49 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     if (automationManagerFormId == 'new') {
       $scope.newRecord = true;
 
-      $http.get('/automation_manager/automation_manager_form_fields/' + automationManagerFormId).success(function(data) {
-        $scope.automationManagerModel.name = '';
-        $scope.automationManagerModel.zone = data.zone;
-        $scope.automationManagerModel.url = '';
-        $scope.automationManagerModel.verify_ssl = false;
+      $scope.automationManagerModel.name = '';
+      $scope.automationManagerModel.url = '';
+      $scope.automationManagerModel.verify_ssl = false;
+      $scope.automationManagerModel.log_userid = '';
+      $scope.automationManagerModel.log_password = '';
+      $scope.automationManagerModel.log_verify = '';
 
-        $scope.automationManagerModel.log_userid = '';
-        $scope.automationManagerModel.log_password = '';
-        $scope.automationManagerModel.log_verify = '';
-        $scope.afterGet = true;
-        $scope.modelCopy = angular.copy($scope.automationManagerModel);
-
-      });
-    } else {
+      $http.get('/automation_manager/automation_manager_form_fields/' + automationManagerFormId)
+        .then(getAutomationManagerNewFormDataComplete)
+        .catch(miqService.handleFailure);
+    }else {
       $scope.newRecord = false;
-
       miqService.sparkleOn();
 
-      $http.get('/automation_manager/automation_manager_form_fields/' + automationManagerFormId).success(function(data) {
-        $scope.automationManagerModel.name            = data.name;
-        $scope.automationManagerModel.zone            = data.zone;
-        $scope.automationManagerModel.url             = data.url;
-        $scope.automationManagerModel.verify_ssl      = data.verify_ssl == "1";
+      $http.get('/automation_manager/automation_manager_form_fields/' + automationManagerFormId)
+        .then(getAutomationManagerFormDataComplete)
+        .catch(miqService.handleFailure);
 
-        $scope.automationManagerModel.log_userid   = data.log_userid;
+      miqService.sparkleOff();
+      }
 
-        if($scope.automationManagerModel.log_userid != '') {
-          $scope.automationManagerModel.log_password = $scope.automationManagerModel.log_verify = miqService.storedPasswordPlaceholder;
-        }
+  function getAutomationManagerNewFormDataComplete(response) {
+    var data = response.data;
+    $scope.afterGet = true;
+    $scope.automationManagerModel.zone = data.zone;
+    $scope.modelCopy = angular.copy($scope.automationManagerModel);
+  }
 
-        $scope.afterGet = true;
-        $scope.modelCopy = angular.copy( $scope.automationManagerModel );
+  function getAutomationManagerFormDataComplete(response) {
+    var data = response.data;
+    $scope.afterGet = true;
 
-        miqService.sparkleOff();
-      });
+    $scope.automationManagerModel.name            = data.name;
+    $scope.automationManagerModel.zone            = data.zone;
+    $scope.automationManagerModel.url             = data.url;
+    $scope.automationManagerModel.verify_ssl      = data.verify_ssl == "1";
+
+    $scope.automationManagerModel.log_userid   = data.log_userid;
+
+    if($scope.automationManagerModel.log_userid != '') {
+      $scope.automationManagerModel.log_password = $scope.automationManagerModel.log_verify = miqService.storedPasswordPlaceholder;
     }
+    $scope.modelCopy = angular.copy( $scope.automationManagerModel );
   };
 
   $scope.canValidateBasicInfo = function () {
@@ -63,7 +69,7 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
       return true;
     else
       return false;
-  }
+  };
 
   $scope.isBasicInfoValid = function() {
     if($scope.angularForm.url.$valid &&
@@ -105,6 +111,4 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
   $scope.addClicked = function() {
     $scope.saveClicked();
   };
-
-  init();
 }]);
