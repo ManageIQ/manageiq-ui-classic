@@ -106,14 +106,12 @@ module MiqAeCustomizationController::OldDialogs
       old_dialogs_list
       @right_cell_text = _("All %{dialogs}") % {:dialogs => ui_lookup(:models => "MiqDialog")}
       @right_cell_div  = "old_dialogs_list"
-      {:pages => @pages, :view => @view}
     else
       nodes = treenodeid.split("_")
       if nodes[0].split('-').first == "odg"
         @right_cell_div = "dialogs_details"
         @record = @dialog = MiqDialog.find_by_id(from_cid(nodes[0].split('-').last))
         @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:models => "MiqDialog"), :name => @dialog.description}
-        {:pages => @pages, :view => @view}
       else
         old_dialogs_list
         img_typ = ""
@@ -122,9 +120,9 @@ module MiqAeCustomizationController::OldDialogs
         end
         @right_cell_text = _("%{typ} %{model}") % {:typ => img_typ, :model => ui_lookup(:models => "MiqDialog")}
         @right_cell_div  = "old_dialogs_list"
-        {:pages => @pages, :view => @view}
       end
     end
+    {:pages => @pages, :view => @view}
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
