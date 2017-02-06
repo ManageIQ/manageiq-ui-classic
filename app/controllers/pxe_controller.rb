@@ -82,7 +82,7 @@ class PxeController < ApplicationController
     end
   end
 
-  def get_node_info(node, show_list = true)
+  def get_node_info(node, _show_list = true)
     node = valid_active_node(node)
     case x_active_tree
     when :pxe_servers_tree             then pxe_server_get_node_info(node)

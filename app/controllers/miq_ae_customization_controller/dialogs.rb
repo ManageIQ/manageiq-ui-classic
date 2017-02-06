@@ -1400,7 +1400,6 @@ module MiqAeCustomizationController::Dialogs
     if treenodeid == "root"
       dialog_list
       @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => "Dialog")}
-      {:pages => @pages, :view => @view}
     else
       @sb[:active_tab] = "sample_tab" unless params[:tab_id]     # reset active tab if not coming in from change_tab
       @record = Dialog.find_by_id(from_cid(treenodeid.split('-').last))
@@ -1408,12 +1407,11 @@ module MiqAeCustomizationController::Dialogs
         @replace_tree = true      # refresh tree and go back to root node if previously selected dialog record is deleted outside UI from vmdb
         self.x_node = "root"
         dialog_get_node_info(x_node)
-        {:pages => @pages, :view => @view}
       else
         @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "Dialog"), :name => @record.label}
-        {:pages => @pages, :view => @view}
       end
     end
+    {:pages => @pages, :view => @view}
   end
 
   def dynamic_field?(field)
