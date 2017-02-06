@@ -326,6 +326,9 @@ class ApplicationController < ActionController::Base
   # From these options and model we get view (for fetching data) and settings (will hold info about paging).
   # Then this method will return JSON object with settings and data.
   def report_data
+    if params[:explorer]
+      params[:action] = "explorer"
+    end
     options = process_params_options(params)
     if options[:view].nil?
       model_view = process_params_model_view(params, options)
