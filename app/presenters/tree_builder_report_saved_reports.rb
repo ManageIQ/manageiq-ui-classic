@@ -30,7 +30,7 @@ class TreeBuilderReportSavedReports < TreeBuilderReportReportsClass
     end
     objects = []
     folder_ids.sort.each_with_index do |p|
-      objects.push(:id => p[1], :text => p[0], :icon => 'product product-report', :tip => p[0])
+      objects.push(:id => p[1], :text => p[0], :icon => 'fa fa-file-text-o', :tip => p[0])
     end
     count_only_or_objects(count_only, objects)
   end

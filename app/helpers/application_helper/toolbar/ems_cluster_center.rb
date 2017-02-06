@@ -55,14 +55,16 @@ class ApplicationHelper::Toolbar::EmsClusterCenter < ApplicationHelper::Toolbar:
           N_('Show Capacity & Utilization data for this item'),
           N_('Utilization'),
           :url       => "/show",
-          :url_parms => "?display=performance"),
+          :url_parms => "?display=performance",
+          :klass     => ApplicationHelper::Button::EmsClusterPerformance),
         button(
           :ems_cluster_timeline,
           'product product-timeline fa-lg',
           N_('Show Timelines for this item'),
           N_('Timelines'),
           :url       => "/show",
-          :url_parms => "?display=timeline"),
+          :url_parms => "?display=timeline",
+          :klass     => ApplicationHelper::Button::EmsClusterTimeline),
       ]
     ),
   ])

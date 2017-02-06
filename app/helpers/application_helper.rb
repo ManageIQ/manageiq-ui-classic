@@ -1613,7 +1613,7 @@ module ApplicationHelper
        containers_filter
        cs_filter
        configuration_scripts
-       foreman_providers
+       configuration_manager_providers
        images
        images_filter
        instances
@@ -1633,28 +1633,24 @@ module ApplicationHelper
   end
 
   def listicon_image_tag(db, row)
-    img_attr = {:alt => nil}
+    icon = nil
     if %w(Job MiqTask).include?(db)
-      img_attr = {:valign => "middle", :width => "16", :height => "16", :alt => nil}
       if row["state"].downcase == "finished" && row["status"]
-        row_status = _("Status = %{row}") % {:row => row["status"].capitalize}
+        title = _("Status = %{row}") % {:row => row["status"].capitalize}
         cancel_msg = row["message"].include?('cancel')
         if row["status"].downcase == "ok" && !cancel_msg
           image = "100/checkmark.png"
-          img_attr.merge!(:title => row_status)
         elsif row["status"].downcase == "error" || cancel_msg
           image = "100/x.png"
-          img_attr.merge!(:title => row_status)
         elsif row["status"].downcase == "warn" || cancel_msg
           image = "100/warning.png"
-          img_attr.merge!(:title => row_status)
         end
       elsif %w(queued waiting_to_start).include?(row["state"].downcase)
         image = "100/job-queued.png"
-        img_attr.merge!(:title => "Status = Queued")
+        title = _("Status = Queued")
       elsif !%w(finished queued waiting_to_start).include?(row["state"].downcase)
         image = "100/job-running.png"
-        img_attr.merge!(:title => "Status = Running")
+        title = _("Status = Running")
       end
     elsif %(Vm VmOrTemplate).include?(db)
       vm = @targets_hash[from_cid(@id)]
@@ -1665,12 +1661,8 @@ module ApplicationHelper
       vendor = host ? host.vmm_vendor_display.downcase : "unknown"
       image = "svg/vendor-#{vendor}.svg"
     elsif db == "MiqAction"
-      action = @targets_hash[@id.to_i]
-      image = if action && action.action_type != "default"
-                "100/miq_action_#{action.action_type}.png"
-              else
-                "100/miq_action.png"
-              end
+      action = @targets_hash[row['id']]
+      icon = action ? action.decorate.fonticon : 'product product-action'
     elsif db == "MiqProvision"
       image = "100/miq_request.png"
     elsif db == "MiqWorker"
@@ -1685,7 +1677,11 @@ module ApplicationHelper
       image = "100/#{db.underscore}.png"
     end
 
-    image_tag(ActionController::Base.helpers.image_path(image), img_attr)
+    if icon
+      content_tag(:i, nil, :class => icon, :title => title)
+    else
+      image_tag(ActionController::Base.helpers.image_path(image), :title => title, :alt => nil)
+    end
   end
 
   def listicon_glyphicon_tag_for_widget(widget)
@@ -1713,18 +1709,18 @@ module ApplicationHelper
       when "queued"
         glyphicon = "fa fa-pause"
       else
-        glyphicon = "product product-arrow-right"
+        glyphicon = "fa fa-arrow-right"
       end
     when "MiqUserRole"
       glyphicon = "product product-role"
     when "MiqWidget"
       case row['content_type'].downcase
       when "chart"
-        glyphicon = "product product-chart"
+        glyphicon = "fa fa-pie-chart"
       when "menu"
         glyphicon = "fa fa-share-square-o"
       when "report"
-        glyphicon = "product product-report"
+        glyphicon = "fa fa-file-text-o"
       when "rss"
         glyphicon = "fa fa-rss"
       end

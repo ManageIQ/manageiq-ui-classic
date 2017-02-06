@@ -463,15 +463,6 @@ class ApplicationHelper::ToolbarBuilder
     end
 
     case get_record_cls(@record)
-    when "EmsCluster"
-      case id
-      when "ems_cluster_perf"
-        return N_("No Capacity & Utilization data has been collected for this Cluster") unless @record.has_perf_data?
-      when "ems_cluster_timeline"
-        unless @record.has_events? || @record.has_events?(:policy_events)
-          return N_("No Timeline data has been collected for this Cluster")
-        end
-      end
     when "Host"
       case id
       when "host_analyze_check_compliance", "host_check_compliance"
@@ -494,23 +485,6 @@ class ApplicationHelper::ToolbarBuilder
       when "action_delete"
         return N_("Default actions can not be deleted.") if @record.action_type == "default"
         return N_("Actions assigned to Policies can not be deleted") unless @record.miq_policies.empty?
-      end
-    when "MiqAlert"
-      case id
-      when "alert_delete"
-        return N_("Alerts that belong to Alert Profiles can not be deleted") unless @record.memberof.empty?
-        return N_("Alerts referenced by Actions can not be deleted") unless @record.owning_miq_actions.empty?
-      end
-    when "MiqRequest"
-      case id
-      when "miq_request_delete"
-        requester = current_user
-        return false if requester.admin_user?
-        return N_("Users are only allowed to delete their own requests") if requester.name != @record.requester_name
-        if %w(approved denied).include?(@record.approval_state)
-          return N_("%{approval_states} requests cannot be deleted") %
-            {:approval_states => @record.approval_state.titleize}
-        end
       end
     when "MiqGroup"
       case id

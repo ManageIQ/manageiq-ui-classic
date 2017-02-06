@@ -37,31 +37,9 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
         $scope.newRecord = false;
 
       miqService.sparkleOn();
-      $http.get('reconfigure_form_fields/' + reconfigureFormId + ',' + $scope.objectIds).success(function(data) {
-        $scope.reconfigureModel.memory                 = data.memory;
-        $scope.reconfigureModel.memory_type            = data.memory_type;
-        $scope.reconfigureModel.socket_count           = data.socket_count;
-        $scope.reconfigureModel.cores_per_socket_count = data.cores_per_socket_count;
-        $scope.mem_type_prev = $scope.reconfigureModel.memory_type;
-        $scope.cb_memory = data.cb_memory;
-        $scope.cb_cpu = data.cb_cpu;
-        $scope.reconfigureModel.vmdisks = angular.copy(data.disks);
-
-        $scope.updateDisksAddRemove();
-
-        for (var disk in $scope.reconfigureModel.vmdisks)
-          if($scope.reconfigureModel.vmdisks[disk]['add_remove'] == '' )
-            $scope.reconfigureModel.vmdisks[disk]['delete_backing'] = false;
-
-        if(data.socket_count && data.cores_per_socket_count)
-          $scope.reconfigureModel.total_cpus = (parseInt($scope.reconfigureModel.socket_count, 10) * parseInt($scope.reconfigureModel.cores_per_socket_count, 10)).toString();
-        $scope.afterGet = true;
-        $scope.modelCopy = angular.copy( $scope.reconfigureModel );
-        $scope.cb_memoryCopy = $scope.cb_memory;
-        $scope.cb_cpuCopy = $scope.cb_cpu;
-
-        miqService.sparkleOff();
-      });
+      $http.get('reconfigure_form_fields/' + reconfigureFormId + ',' + $scope.objectIds)
+        .then(getReconfigureFormData)
+        .catch(miqService.handleFailure);
     };
 
     $scope.canValidateBasicInfo = function () {
@@ -284,6 +262,37 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
     $scope.addClicked = function() {
       $scope.submitClicked();
     };
+
+    function getReconfigureFormData(response) {
+      var data = response.data;
+
+      $scope.reconfigureModel.memory                 = data.memory;
+      $scope.reconfigureModel.memory_type            = data.memory_type;
+      $scope.reconfigureModel.socket_count           = data.socket_count;
+      $scope.reconfigureModel.cores_per_socket_count = data.cores_per_socket_count;
+      $scope.mem_type_prev = $scope.reconfigureModel.memory_type;
+      $scope.cb_memory = data.cb_memory;
+      $scope.cb_cpu = data.cb_cpu;
+      $scope.reconfigureModel.vmdisks = angular.copy(data.disks);
+
+      $scope.updateDisksAddRemove();
+
+      angular.forEach($scope.reconfigureModel.vmdisks, function(disk) {
+        if ($scope.reconfigureModel.vmdisks[disk].add_remove === '' ) {
+          $scope.reconfigureModel.vmdisks[disk].delete_backing = false;
+        }
+      });
+
+      if (data.socket_count && data.cores_per_socket_count) {
+        $scope.reconfigureModel.total_cpus = (parseInt($scope.reconfigureModel.socket_count, 10) * parseInt($scope.reconfigureModel.cores_per_socket_count, 10)).toString();
+      }
+      $scope.afterGet = true;
+      $scope.modelCopy = angular.copy( $scope.reconfigureModel );
+      $scope.cb_memoryCopy = $scope.cb_memory;
+      $scope.cb_cpuCopy = $scope.cb_cpu;
+
+      miqService.sparkleOff();
+    }
 
     init();
 }]);

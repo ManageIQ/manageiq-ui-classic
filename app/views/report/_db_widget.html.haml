@@ -12,9 +12,9 @@
     %h3.panel-title.sortable-handle{:style => @edit && @edit[:current] ? "cursor: move;" : ""}
       - case widget.content_type
       - when "chart"
-        - glyphicon = "product product-chart"
+        - glyphicon = "fa fa-pie-chart"
       - when "report"
-        - glyphicon = "product product-report"
+        - glyphicon = "fa fa-file-text-o"
       - when "rss"
         - glyphicon = "fa fa-rss"
 

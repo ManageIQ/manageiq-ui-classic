@@ -164,6 +164,12 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           N_('Timelines'),
           :url_parms => "?display=timeline",
           :klass     => ApplicationHelper::Button::VmTimeline),
+        button(
+          :vm_chargeback,
+          'fa fa-file-text-o fa-lg',
+          N_('Show Chargeback preview'),
+          N_('Chargeback Preview')
+        ),
       ]
     ),
   ])

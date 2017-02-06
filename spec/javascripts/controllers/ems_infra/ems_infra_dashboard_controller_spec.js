@@ -2,7 +2,7 @@ describe('emsInfraDashboardController gets data and', function() {
   var $scope, $controller, $httpBackend, infraDashboardUtilsFactory;
   var mock_data = getJSONFixture('ems_infra_dashboard_response.json');
 
-  beforeEach(module('emsInfraDashboard'));
+  beforeEach(module('ManageIQ'));
 
   beforeEach(function() {
     var $window = {location: { pathname: '/ems_infra_dashboard/show' }};
@@ -53,7 +53,7 @@ describe('emsInfraDashboardController gets no data and', function() {
   var $scope, $controller, $httpBackend, infraDashboardUtilsFactory;
   var mock_data = getJSONFixture('ems_infra_dashboard_no_data_response.json');
 
-  beforeEach(module('emsInfraDashboard'));
+  beforeEach(module('ManageIQ'));
 
   beforeEach(function() {
     var $window = {location: { pathname: '/ems_infra_dashboard/show' }};
@@ -103,7 +103,7 @@ describe('emsInfraDashboardController gets data for one provider and', function(
   var $scope, $controller, $httpBackend, infraDashboardUtilsFactory;
   var mock_data = getJSONFixture('ems_infra_dashboard_response.json');
 
-  beforeEach(module('emsInfraDashboard'));
+  beforeEach(module('ManageIQ'));
 
   beforeEach(function() {
     var $window = {location: { pathname: '/ems_infra/42' }};

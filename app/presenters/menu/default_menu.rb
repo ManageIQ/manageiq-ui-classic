@@ -2,7 +2,7 @@ module Menu
   class DefaultMenu
     class << self
       def compute_menu_section
-        Menu::Section.new(:compute, N_("Compute"), 'fa product-memory fa-2x', [
+        Menu::Section.new(:compute, N_("Compute"), 'pficon pficon-cpu fa-2x', [
           clouds_menu_section,
           infrastructure_menu_section,
           physical_infrastructure_menu_section,
@@ -36,7 +36,7 @@ module Menu
       end
 
       def services_menu_section
-        Menu::Section.new(:svc, N_("Services"), 'fa pficon-service fa-2x', [
+        Menu::Section.new(:svc, N_("Services"), 'pficon pficon-service fa-2x', [
           Menu::Item.new('services',       N_('My Services'), 'service',     {:feature => 'service', :any => true},     '/service/explorer'),
           Menu::Item.new('catalogs',       N_('Catalogs'),    'catalog',     {:feature => 'catalog', :any => true},     '/catalog/explorer'),
           Menu::Item.new('vm_or_template', N_('Workloads'),   'vm_explorer', {:feature => 'vm_explorer', :any => true}, '/vm_or_template/explorer'),
@@ -124,7 +124,7 @@ module Menu
       end
 
       def middleware_menu_section
-        Menu::Section.new(:mdl, N_("Middleware"), 'fa product-middleware fa-2x', [
+        Menu::Section.new(:mdl, N_("Middleware"), 'pficon pficon-middleware fa-2x', [
           Menu::Item.new('ems_middleware',        N_('Providers'),   'ems_middleware',        {:feature => 'ems_middleware_show_list'},          '/ems_middleware'),
           Menu::Item.new('middleware_domain',     N_('Domains'),     'middleware_domain',     {:feature => 'middleware_domain_show_list'},       '/middleware_domain'),
           Menu::Item.new('middleware_server',     N_('Servers'),     'middleware_server',     {:feature => 'middleware_server_show_list'},       '/middleware_server'),
@@ -137,7 +137,7 @@ module Menu
       end
 
       def network_menu_section
-        Menu::Section.new(:net, N_("Networks"), 'fa pficon-network fa-2x', [
+        Menu::Section.new(:net, N_("Networks"), 'pficon pficon-network fa-2x', [
           Menu::Item.new('ems_network',      N_('Providers'),       'ems_network',      {:feature => 'ems_network_show_list'},    '/ems_network'),
           Menu::Item.new('cloud_network',    N_('Networks'),        'cloud_network',    {:feature => 'cloud_network_show_list'},  '/cloud_network'),
           Menu::Item.new('cloud_subnet',     N_('Subnets'),         'cloud_subnet',     {:feature => 'cloud_subnet_show_list'},   '/cloud_subnet'),
@@ -223,7 +223,7 @@ module Menu
       end
 
       def automation_menu_section
-        Menu::Section.new(:aut, N_("Automation"), 'fa product-memory fa-2x', [
+        Menu::Section.new(:aut, N_("Automation"), 'fa fa-recycle fa-2x', [
           automate_menu_section
         ])
       end

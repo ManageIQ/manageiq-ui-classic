@@ -414,25 +414,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       expect(subject).to match(/No.*are available/)
     end
 
-    context "when record class = EmsCluster" do
-      before do
-        @record = EmsCluster.new
-        allow(@record).to receive_messages(:has_perf_data? => true, :has_events? => true)
-      end
-
-      context "and id = ems_cluster_perf" do
-        before { @id = "ems_cluster_perf" }
-        it_behaves_like 'record without perf data', "No Capacity & Utilization data has been collected for this Cluster"
-        it_behaves_like 'default case'
-      end
-
-      context "and id = ems_cluster_timeline" do
-        before { @id = "ems_cluster_timeline" }
-        it_behaves_like 'record without ems events and policy events', "No Timeline data has been collected for this Cluster"
-        it_behaves_like 'default case'
-      end
-    end
-
     context "when record class = Host" do
       before do
         @record = Host.new
@@ -670,38 +651,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       end
     end # end of Vm class
 
-    context "and id = miq_request_delete" do
-      let(:server) { double("MiqServer", :logon_status => :ready) }
-      let(:user)   { FactoryGirl.create(:user_admin) }
-      before do
-        allow(MiqServer).to receive(:my_server).and_return(server)
-
-        @id = "miq_request_delete"
-        login_as user
-        @record = MiqProvisionRequest.new
-        allow(@record).to receive_messages(:resource_type => "something", :approval_state => "xx", :requester_name => user.name)
-      end
-
-      it "and requester.name != @record.requester_name" do
-        allow(@record).to receive_messages(:requester_name => 'admin')
-        expect(toolbar_builder.disable_button("miq_request_delete")).to be_falsey
-      end
-
-      it "and approval_state = approved" do
-        allow(@record).to receive_messages(:approval_state => "approved")
-        expect(subject).to be_falsey
-      end
-
-      it "and requester.name = @record.requester_name & approval_state != approved|denied" do
-        expect(subject).to be_falsey
-      end
-
-      it "and requester.name != @record.requester_name" do
-        login_as FactoryGirl.create(:user, :role => "test")
-        expect(toolbar_builder.disable_button("miq_request_delete"))
-          .to include("Users are only allowed to delete their own requests")
-      end
-    end
   end # end of disable button
 
   describe "#hide_button_ops" do

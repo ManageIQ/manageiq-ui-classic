@@ -295,10 +295,7 @@
                       %tr{:title => _("View this Action"),
                         :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=action")}
                         %td.narrow
-                          - if oa.action_type == "default"
-                            %img{:src => image_path('100/miq_action.png')}
-                          - else
-                            %img{:src => image_path("100/miq_action_#{oa.action_type}.png")}
+                          %i{:class => oa.decorate.fonticon}
                         %td.narrow
                           = oa.description
               %hr

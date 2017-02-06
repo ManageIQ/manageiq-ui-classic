@@ -39,6 +39,8 @@ class TreeBuilderAlertProfile < TreeBuilder
                   {:icon => 'pficon pficon-screen'}
                 when 'MiddlewareServer'
                   {:image => 'svg/vendor-wildfly.svg'}
+                when 'ContainerNode'
+                  {:icon => 'pficon pficon-container-node'}
                 when 'ExtManagementSystem'
                   {:icon => 'pficon pficon-server'}
                 when 'MiqServer'
