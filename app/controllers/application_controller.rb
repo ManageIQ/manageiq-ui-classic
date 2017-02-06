@@ -283,7 +283,7 @@ class ApplicationController < ActionController::Base
     @explorer = params[:explorer] == "true" if params[:explorer]
 
     if params[:active_tree]
-      node_info = (method(:get_node_info).arity == 1) ? get_node_info(x_node) : get_node_info(x_node, false)
+      node_info = get_node_info(x_node, false)
       options.merge!(node_info) unless node_info.nil?
     end
 

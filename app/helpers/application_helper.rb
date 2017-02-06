@@ -182,7 +182,9 @@ module ApplicationHelper
   end
 
   MODEL_STRING = {
-    "all_vms" => VmOrTemplate
+    "all_vms"   => VmOrTemplate,
+    "instances" => Vm,
+    "images"    => MiqTemplate
   }.freeze
 
   def model_string_to_constant(model_string)

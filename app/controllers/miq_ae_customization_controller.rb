@@ -257,7 +257,7 @@ class MiqAeCustomizationController < ApplicationController
     sub_node == "xx" || !(sub_node == "" && node.split('_').length <= 2)
   end
 
-  def get_node_info(node = {}, show_list = true)
+  def get_node_info(node = {}, _show_list = true)
     node = x_node
     node = valid_active_node(x_node) unless dialog_edit_tree_active? || first_sub_node_is_a_folder?(node)
 
