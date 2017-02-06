@@ -1082,7 +1082,7 @@ class ApplicationController < ActionController::Base
             when Storage
               "100/piecharts/datastore/#{calculate_pct_img(item.v_free_space_percent_of_total)}.png"
             when MiqRequest
-              item.decorate.listicon_image || "100/#{@listicon.downcase}.png"
+              item.decorate.listicon_image || "100/#{@listicon.downcase}.png" if @listicon.try(:downcase)
             when ManageIQ::Providers::CloudManager::AuthKeyPair
               "100/auth_key_pair.png"
             else

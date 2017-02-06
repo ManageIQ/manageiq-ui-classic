@@ -85,7 +85,7 @@
     this.$filter = $filter;
     this.$scope = $scope;
     this.$location = $location;
-    this.$document = $document;
+    this.$document = $document[0];
     this.$timeout = $timeout;
     this.$window = $window;
     initEndpoints(this.MiQEndpointsService);
@@ -245,7 +245,8 @@
   };
 
   ReportDataController.prototype.setExtraClasses = function(viewType) {
-    var mainContent = this.$document.context.getElementById(MAIN_CONTETN_ID);
+    console.log(this);
+    var mainContent = this.$document.getElementById(MAIN_CONTETN_ID);
     if (mainContent) {
       angular.element(mainContent).removeClass('miq-sand-paper');
       angular.element(mainContent).removeClass('miq-list-content');
@@ -256,7 +257,7 @@
       }
     }
 
-    var pagination = this.$document.context.getElementsByClassName('miq-pagination');
+    var pagination = this.$document.getElementsByClassName('miq-pagination');
     if (pagination && pagination.length > 0 && ! viewType) {
       pagination[0].parentNode.removeChild(pagination[0]);
     }
@@ -264,8 +265,8 @@
 
   ReportDataController.prototype.movePagination = function() {
     this.$timeout(function() {
-      var pagination = this.$document.context.getElementsByClassName('miq-pagination');
-      var pagind_div = this.$document.context.querySelector('#paging_div .col-md-12');
+      var pagination = this.$document.getElementsByClassName('miq-pagination');
+      var pagind_div = this.$document.querySelector('#paging_div .col-md-12');
       if (pagination && pagination.length > 0 && pagind_div) {
         pagind_div.appendChild(pagination[0]);
       }
