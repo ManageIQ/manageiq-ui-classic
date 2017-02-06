@@ -259,8 +259,7 @@
                   %tr{:title => _("Click to view Policy"),
                     :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=policy")}
                     %td.narrow
-                      - src = "#{p.towhat.downcase}#{p.active ? '' : '_inactive'}"
-                      %img{:src => image_path("100/miq_policy_#{src}.png")}
+                      %i{:class => p.decorate.fonticon}
                     %td
                       = p.description
           %hr
