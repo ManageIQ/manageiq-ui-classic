@@ -1,6 +1,7 @@
 angular.module('alertsCenter')
-  .controller('EditAlertDialogController',['$scope', 'vm',
-    function($scope, vm) {
-      $scope.vm = vm;
+  .controller('EditAlertDialogController',['editData',
+    function(editData) {
+      var vm = this;
+      vm.editData = editData;
     }
   ]);

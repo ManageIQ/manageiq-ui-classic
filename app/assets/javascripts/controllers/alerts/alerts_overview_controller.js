@@ -1,14 +1,14 @@
 /* global miqHttpInject */
 
 angular.module('alertsCenter').controller('alertsOverviewController',
-  ['$scope', '$window', 'alertsCenterService', '$interval', '$timeout',
-  function($scope, $window, alertsCenterService, $interval, $timeout) {
+  ['$window', 'alertsCenterService', '$interval', '$timeout',
+  function($window, alertsCenterService, $interval, $timeout) {
     var vm = this;
     vm.alertData = [];
     vm.loadingDone = false;
 
     function setupInitialValues() {
-      angular.element(document.querySelector('#center_div')).addClass("miq-body");
+      document.getElementById("center_div").className += " miq-body";
 
       setupConfig();
 

@@ -742,9 +742,9 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
     animation: true,
     backdrop: 'static',
     templateUrl: '/static/edit_alert_dialog.html',
-    controller: 'EditAlertDialogController',
+    controller: 'EditAlertDialogController as vm',
     resolve: {
-      vm: function() {
+      editData: function() {
         return _this;
       }
     }
