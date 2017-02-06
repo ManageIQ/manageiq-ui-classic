@@ -524,6 +524,7 @@ class ReportController < ApplicationController
     end
 
     x_history_add_item(:id => treenodeid, :text => @right_cell_text)
+    {:view => @view, :pages => @pages}
   end
 
   def get_export_reports
