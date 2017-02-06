@@ -571,7 +571,7 @@ module QuadiconHelper
              elsif item.kind_of?(MiqProvisionRequest)
                item.message
              else
-               item.name
+               item.try(:name)
              end
 
       img_opts = {
