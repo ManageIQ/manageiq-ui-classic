@@ -8,6 +8,9 @@ describe('alertsOverviewController', function() {
     $scope = _$rootScope_.$new();
     alertsCenterService = _alertsCenterService_;
 
+    var dummyDocument = document.createElement('div');
+    spyOn(document, 'getElementById').and.returnValue(dummyDocument);
+
     alertsCenterService.refreshInterval = -1;
     adminResponse = getJSONFixture('alerts_center/admin_user_response.json');
     operatorResponse = getJSONFixture('alerts_center/operator_user_response.json');
