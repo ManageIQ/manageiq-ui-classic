@@ -41,7 +41,7 @@ class TreeBuilderOpsRbac < TreeBuilder
       objects.push(:id => "ur", :text => _("Roles"), :icon => "product product-role", :tip => _("Roles"))
     end
     if ApplicationHelper.role_allows?(:feature => "rbac_tenant_view")
-      objects.push(:id => "tn", :text => _("Tenants"), :icon => "product product-tenant", :tip => _("Tenants"))
+      objects.push(:id => "tn", :text => _("Tenants"), :icon => "pficon pficon-tenant", :tip => _("Tenants"))
     end
     objects
   end

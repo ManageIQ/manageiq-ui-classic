@@ -8,7 +8,7 @@ class ApplicationHelper::Toolbar::SavedReportCenter < ApplicationHelper::Toolbar
       :items => [
         button(
           :report_only,
-          'product product-report fa-lg',
+          'fa fa-file-text-o fa-lg',
           t = N_('Show full screen Report'),
           t,
           :url     => "/report_only",

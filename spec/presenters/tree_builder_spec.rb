@@ -33,7 +33,7 @@ describe TreeBuilder do
       nodes = [{'key'     => "root",
                 'nodes'   => [{'key'     => "xx-Compute",
                                'tooltip' => "Compute",
-                               'icon'    => "product product-memory",
+                               'icon'    => "pficon pficon-cpu",
                                'state'   => { 'expanded' => true },
                                'text'    => "Compute",
                                'class'   => ''},

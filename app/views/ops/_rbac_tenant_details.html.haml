@@ -50,7 +50,7 @@
             %tr{:onclick => "miqTreeActivateNode('rbac_tree', 'tn-#{to_cid(tenant.id)}');",
               :title => _("Click to view child Tenant")}
               %td.narrow
-                %i.product.product-tenant
+                %i.pficon.pficon-tenant
               %td= tenant.name
   - all_subprojects = @tenant.all_subprojects
   - unless all_subprojects.blank?
@@ -64,7 +64,7 @@
             %tr{:onclick => "miqTreeActivateNode('rbac_tree', 'tn-#{to_cid(tenant.id)}');",
               :title => _("Click to view child TenantProject")}
               %td.narrow
-                %i.product.product-project
+                %i.pficon.pficon-project
               %td= tenant.name
   .row
     .col-md-12.col-lg-10

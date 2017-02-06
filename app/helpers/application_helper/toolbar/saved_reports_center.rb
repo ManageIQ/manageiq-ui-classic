@@ -17,7 +17,7 @@ class ApplicationHelper::Toolbar::SavedReportsCenter < ApplicationHelper::Toolba
       :items => [
         button(
           :report_only,
-          'product product-report fa-lg',
+          'fa fa-file-text-o fa-lg',
           t = N_('Show full screen Report'),
           t,
           :enabled => false,

@@ -88,7 +88,7 @@ class TreeBuilderMenuRoles < TreeBuilder
   def build_last_child(child)
     {
       :id          => child,
-      :icon        => "product product-report",
+      :icon        => "fa fa-file-text-o",
       :text        => child,
       :tooltip     => child,
       :cfmeNoClick => true,
