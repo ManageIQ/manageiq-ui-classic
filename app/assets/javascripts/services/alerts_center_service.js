@@ -540,7 +540,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
     angular.forEach(alertData.resources, function(item) {
 
       alertProvider = _.find(_this.providers, function(provider) {
-        return provider.id === item.resource_id;
+        return provider.id === item.ems_id;
       });
 
       if (angular.isDefined(alertProvider)) {
@@ -580,12 +580,12 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
 
       // Set the provider object for the alert (we only support provider alerts at this time)
       summaryItem = _.find(alertData, function(nextSummaryItem) {
-        return nextSummaryItem.id === item.resource_id;
+        return nextSummaryItem.id === item.ems_id;
       });
 
       if (!summaryItem) {
         angular.forEach(_this.providers, function(provider) {
-          if (provider.id === item.resource_id) {
+          if (provider.id === item.ems_id) {
             summaryItem = {
               id: provider.id,
               name: provider.name,
