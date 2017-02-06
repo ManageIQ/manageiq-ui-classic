@@ -11,11 +11,9 @@ ManageIQ.angular.app.controller('vmCloudEvacuateFormController', ['$http', '$sco
 
   ManageIQ.angular.scope = $scope;
 
-  $http.get('/vm_cloud/evacuate_form_fields/' + vmCloudEvacuateFormId).success(function(data) {
-    $scope.hosts = data.hosts;
-    $scope.modelCopy = angular.copy( $scope.vmCloudModel );
-    miqService.sparkleOff();
-  });
+  $http.get('/vm_cloud/evacuate_form_fields/' + vmCloudEvacuateFormId)
+    .then(getEvacuateFormData)
+    .catch(miqService.handleFailure);
 
   $scope.cancelClicked = function() {
     miqService.sparkleOn();
@@ -28,4 +26,12 @@ ManageIQ.angular.app.controller('vmCloudEvacuateFormController', ['$http', '$sco
     var url = '/vm_cloud/evacuate_vm/' + vmCloudEvacuateFormId + '?button=submit';
     miqService.miqAjaxButton(url, true);
   };
+
+  function getEvacuateFormData(response) {
+    var data = response.data;
+
+    $scope.hosts = data.hosts;
+    $scope.modelCopy = angular.copy( $scope.vmCloudModel );
+    miqService.sparkleOff();
+  }
 }]);

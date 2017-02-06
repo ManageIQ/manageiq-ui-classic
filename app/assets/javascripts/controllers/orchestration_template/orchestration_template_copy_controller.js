@@ -15,14 +15,9 @@ ManageIQ.angular.app.controller('orchestrationTemplateCopyController', ['$http',
   var otinfoUrl = '/orchestration_stack/stacks_ot_info';
   var submitUrl = '/orchestration_stack/stacks_ot_copy';
 
-  $http.get(otinfoUrl + '/' + stackId).success(function(response) {
-    $scope.templateInfo.templateId = response.template_id;
-    $scope.templateInfo.templateName = "Copy of " + response.template_name;
-    $scope.templateInfo.templateDescription = response.template_description;
-    $scope.templateInfo.templateDraft = response.template_draft;
-    $scope.templateInfo.templateContent = response.template_content;
-    $scope.modelCopy = _.extend({}, $scope.templateInfo);
-  });
+  $http.get(otinfoUrl + '/' + stackId)
+    .then(getOrchestrationInfoFormData)
+    .catch(miqService.handleFailure);
 
   $scope.$watch('templateInfo.templateContent', function() {
     if ($scope.templateInfo.templateContent != null) {
@@ -41,4 +36,15 @@ ManageIQ.angular.app.controller('orchestrationTemplateCopyController', ['$http',
     miqService.sparkleOn();
     miqService.miqAjaxButton(submitUrl + '?button=add', $scope.templateInfo);
   };
+
+  function getOrchestrationInfoFormData(response) {
+    var data = response.data;
+
+    $scope.templateInfo.templateId = data.template_id;
+    $scope.templateInfo.templateName = 'Copy of ' + data.template_name;
+    $scope.templateInfo.templateDescription = data.template_description;
+    $scope.templateInfo.templateDraft = data.template_draft;
+    $scope.templateInfo.templateContent = data.template_content;
+    $scope.modelCopy = _.extend({}, $scope.templateInfo);
+  }
 }]);

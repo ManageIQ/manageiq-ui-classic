@@ -14,13 +14,9 @@ ManageIQ.angular.app.controller('ownershipFormController', ['$http', '$scope', '
     ManageIQ.angular.scope = $scope;
 
     miqService.sparkleOn();
-    $http.get('ownership_form_fields/' + objectIds.join(',')).success(function(data) {
-      $scope.ownershipModel.user = data.user;
-      $scope.ownershipModel.group = data.group;
-      $scope.afterGet = true;
-      $scope.modelCopy = angular.copy( $scope.ownershipModel );
-      miqService.sparkleOff();
-    });
+    $http.get('ownership_form_fields/' + objectIds.join(','))
+      .then(getOwnershipFormData)
+      .catch(miqService.handleFailure);
   };
 
   $scope.canValidateBasicInfo = function () {
@@ -66,6 +62,16 @@ ManageIQ.angular.app.controller('ownershipFormController', ['$http', '$scope', '
   $scope.addClicked = function() {
     $scope.saveClicked();
   };
+
+  function getOwnershipFormData(response) {
+    var data = response.data;
+
+    $scope.ownershipModel.user = data.user;
+    $scope.ownershipModel.group = data.group;
+    $scope.afterGet = true;
+    $scope.modelCopy = angular.copy( $scope.ownershipModel );
+    miqService.sparkleOff();
+  }
 
   init();
 }]);
