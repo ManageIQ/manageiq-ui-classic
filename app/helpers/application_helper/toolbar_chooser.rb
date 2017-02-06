@@ -575,7 +575,7 @@ class ApplicationHelper::ToolbarChooser
 
   def automation_manager_cs_filter_tree_center_tb(nodes)
     case nodes.first
-      when "root", "ms", "xx", "csa" then "configured_systems_ansible_center_tb"
+    when "root", "ms", "xx", "csa" then "configured_systems_ansible_center_tb"
     end
   end
 

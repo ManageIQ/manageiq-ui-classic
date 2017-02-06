@@ -1,6 +1,5 @@
 module Mixins
   module ManagerControllerMixin
-
     def index
       redirect_to :action => 'explorer'
     end
@@ -161,16 +160,16 @@ module Mixins
       load_or_clear_adv_search
       apply_node_search_text if x_active_tree == "#{manager_prefix}_providers_tree".to_sym
 
-        if action_name == "reload"
-          replace_right_cell(:replace_trees => [x_active_accord])
-        else
-          @sb[:active_tab] = if active_tab_configured_systems?
-                               'configured_systems'
-                             else
-                               'summary'
-                             end
-          replace_right_cell
-        end
+      if action_name == "reload"
+        replace_right_cell(:replace_trees => [x_active_accord])
+      else
+        @sb[:active_tab] = if active_tab_configured_systems?
+                             'configured_systems'
+                           else
+                             'summary'
+                           end
+        replace_right_cell
+      end
     end
 
     def accordion_select
@@ -222,14 +221,12 @@ module Mixins
       end
     end
 
-
     def sync_form_to_instance
       @provider.name       = params[:name]
       @provider.url        = params[:url]
       @provider.verify_ssl = params[:verify_ssl].eql?("on")
       @provider.zone       = Zone.find_by(:name => params[:zone].to_s)
     end
-
 
     def provider_list(id, model)
       return provider_node(id, model) if id

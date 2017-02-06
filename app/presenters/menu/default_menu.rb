@@ -221,9 +221,9 @@ module Menu
 
       def automation_manager_menu_section
         Menu::Section.new(:at, N_("Ansible Tower"), 'fa fa-cog  fa-2x', [
-                               Menu::Item.new('automation_manager', N_('Explorer'), 'automation_manager', {:feature => 'automation_manager', :any => true}, '/automation_manager/explorer'),
-                               Menu::Item.new('configuration_job',  N_('Jobs'),     'configuration_job',  {:feature => 'configuration_job_show_list'},      '/configuration_job'),
-                             ])
+          Menu::Item.new('automation_manager', N_('Explorer'), 'automation_manager', {:feature => 'automation_manager', :any => true}, '/automation_manager/explorer'),
+          Menu::Item.new('configuration_job',  N_('Jobs'),     'configuration_job',  {:feature => 'configuration_job_show_list'},      '/configuration_job')
+        ])
       end
 
       def automate_menu_section

@@ -140,12 +140,12 @@ class ProviderForemanController < ApplicationController
   def provider_foreman_form_fields
     assert_privileges("provider_foreman_edit_provider")
     # set value of read only zone text box, when there is only single zone
-    return render :json => {
-                             :zone => Zone.in_my_region.size >= 1 ? Zone.in_my_region.first.name : nil
-                           } if params[:id] == "new"
+    if params[:id] == "new"
+      return render :json => {:zone => Zone.in_my_region.size >= 1 ? Zone.in_my_region.first.name : nil}
+    end
 
     manager = find_record(ManageIQ::Providers::ConfigurationManager, params[:id])
-    provider   = manager.provider
+    provider = manager.provider
 
     render :json => {:provtype   => model_to_name(manager.type),
                      :name       => provider.name,
@@ -267,7 +267,7 @@ class ProviderForemanController < ApplicationController
                     end
   end
 
- private ###########
+  private ###########
 
   def find_or_build_provider
     @provider = provider_class_from_provtype.new if params[:id] == "new"

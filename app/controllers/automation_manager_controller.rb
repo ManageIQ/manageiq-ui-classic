@@ -120,16 +120,15 @@ class AutomationManagerController < ApplicationController
     render_tagging_form
   end
 
-
   def automation_manager_form_fields
     assert_privileges("automation_manager_edit_provider")
     # set value of read only zone text box, when there is only single zone
-    return render :json => {
-                             :zone => Zone.in_my_region.size >= 1 ? Zone.in_my_region.first.name : nil
-                           } if params[:id] == "new"
+    if params[:id] == "new"
+      return render :json => {:zone => Zone.in_my_region.size >= 1 ? Zone.in_my_region.first.name : nil}
+    end
 
     manager = find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, params[:id])
-    provider   = manager.provider
+    provider = manager.provider
 
     render :json => {:name       => provider.name,
                      :zone       => provider.zone.name,
@@ -232,7 +231,7 @@ class AutomationManagerController < ApplicationController
                     when :automation_manager_providers
                       "automation_manager_#{rec_cls}"
                     when :configuration_scripts
-                       @record.kind_of?(ConfigurationScript) ? "configuration_script" : "configuration_scripts"
+                      @record.kind_of?(ConfigurationScript) ? "configuration_script" : "configuration_scripts"
                     end
   end
 
@@ -402,7 +401,6 @@ class AutomationManagerController < ApplicationController
       @right_cell_text = _("All Ansible Tower Job Templates")
     end
   end
-
 
   def rebuild_trees(replace_trees)
     trees = {}
