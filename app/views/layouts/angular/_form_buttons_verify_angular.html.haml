@@ -8,13 +8,12 @@
   - validate = "validateClicked($event, '#{valtype}', true)"
 - else
   - validate = "validateClicked('#{url_for(:action => validate_url, :id => id, :type => valtype, :button => "validate")}')"
-%div{"ng-show" => ng_show, "ng-controller" => "buttonGroupController"}
+%div{"ng-show" => ng_show}
   = button_tag(_("Validate"),
                  :class     => "btn btn-primary btn-xs disabled",
                  :alt       => verify_title_off,
                  :title     => verify_title_off,
-                 "ng-show"  => basic_info_needed ? "!canValidateBasicInfo()" : "!canValidate()",
-                 "ng-click" => "disabledClick($event)")
+                 "ng-show"  => basic_info_needed ? "!canValidateBasicInfo()" : "!canValidate()")
   = button_tag(_("Validate"),
                  :class     => "btn btn-primary btn-xs",
                  :alt       => verify_title_on,
