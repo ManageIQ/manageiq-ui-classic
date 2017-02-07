@@ -373,7 +373,7 @@ class ApplicationHelper::ToolbarBuilder
       when "diagnostics_audit_log"
         return !["fetch_audit_log", "refresh_audit_log"].include?(id)
       when "diagnostics_collect_logs"
-        return !%(collect_current_logs collect_logs log_depot_edit
+        return !%w(collect_current_logs collect_logs log_depot_edit
                   zone_collect_current_logs zone_collect_logs
                   zone_log_depot_edit).include?(id)
       when "diagnostics_evm_log"
