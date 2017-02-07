@@ -37,7 +37,7 @@ describe TreeBuilderGenealogy do
     it 'sets root to empty one' do
       expect(subject.send(:root_options)).to eq(:title   => record.name,
                                                 :tooltip => _("VM: %{name} (Click to view)") % {:name => record.name},
-                                                :image   => "100/#{record.current_state.downcase}.png")
+                                                :image   => "svg/currentstate-#{record.current_state.downcase}.svg")
     end
   end
 

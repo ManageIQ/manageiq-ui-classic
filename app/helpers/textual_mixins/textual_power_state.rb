@@ -3,7 +3,7 @@ module TextualMixins::TextualPowerState
     state = @record.current_state.downcase
     state = "unknown" if state.blank?
     h = {:label => _("Power State"), :value => state}
-    h[:image] = "100/currentstate-#{@record.template? ? (@record.host ? "template" : "template-no-host") : state}.png"
+    h[:image] = "svg/currentstate-#{@record.template? ? (@record.host ? "template" : "template-no-host") : state}.svg"
     h
   end
 end
