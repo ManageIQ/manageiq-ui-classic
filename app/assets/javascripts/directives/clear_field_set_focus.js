@@ -6,7 +6,7 @@ ManageIQ.angular.app.directive('clearFieldSetFocus', ['$timeout', 'miqService', 
 
       var option = attr.clearFieldSetFocus;
 
-      scope.$watch('bChangeStoredPassword', function(value) {
+      scope.$watch('vm.bChangeStoredPassword', function(value) {
         if (value) {
           $timeout(function () {
             scope[scope.model][ctrl.$name] = '';
@@ -16,7 +16,7 @@ ManageIQ.angular.app.directive('clearFieldSetFocus', ['$timeout', 'miqService', 
         }
       });
 
-      scope.$watch('bCancelPasswordChange', function(value) {
+      scope.$watch('vm.bCancelPasswordChange', function(value) {
         if (value) {
           $timeout(function () {
             scope[scope.model][ctrl.$name] = miqService.storedPasswordPlaceholder;
