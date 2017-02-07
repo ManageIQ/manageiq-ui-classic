@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/LineLength
 module Menu
   class DefaultMenu
     class << self
@@ -256,43 +257,12 @@ module Menu
         ])
       end
 
-      def alerts_overview_item
-        Menu::Item.new(
-          'monitor_alerts_overview',
-          N_('Overview'),
-          'monitor_alerts_overview',
-          {:feature => 'monitor_alerts_overview', :any => true},
-          '/alerts_overview'
-        )
-      end
-
-      def alerts_list_item
-        Menu::Item.new(
-          'monitor_alerts_list',
-          N_('All Alerts'),
-          'monitor_alerts_list',
-          {:feature => 'monitor_alerts_list', :any => true},
-          '/alerts_list'
-        )
-      end
-
-      def alerts_most_recent_item
-        Menu::Item.new(
-          'monitor_alerts_most_recent',
-          N_('Most Recent Alerts'),
-          'monitor_alerts_most_recent',
-          {:feature => 'monitor_alerts_most_recent', :any => true},
-          '/alerts_most_recent'
-        )
-      end
-
       def alerts_menu_section
-        Menu::Section.new(
-          :monitor_alerts,
-          N_("Alerts"),
-          'fa fa-bullhorn-o fa-2x',
-          [alerts_overview_item, alerts_list_item, alerts_most_recent_item]
-        )
+        Menu::Section.new(:monitor_alerts, N_("Alerts"), 'fa fa-bullhorn-o fa-2x', [
+                            Menu::Item.new('monitor_alerts_overview', N_('Overview'), 'monitor_alerts_overview', {:feature => 'monitor_alerts_overview', :any => true}, '/alerts_overview'),
+                            Menu::Item.new('monitor_alerts_list', N_('All Alerts'), 'monitor_alerts_list', {:feature => 'monitor_alerts_list', :any => true}, '/alerts_list'),
+                            Menu::Item.new('monitor_alerts_most_recent', N_('Most Recent Alerts'), 'monitor_alerts_most_recent', {:feature => 'monitor_alerts_most_recent', :any => true}, '/alerts_most_recent')
+                          ])
       end
 
       def monitor_menu_section
