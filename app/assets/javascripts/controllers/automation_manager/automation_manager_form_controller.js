@@ -1,44 +1,44 @@
 ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', function($http, $scope, automationManagerFormId, miqService) {
-    $scope.automationManagerModel = {
-      name: '',
-      url: '',
-      zone: '',
-      verify_ssl: '',
-      log_userid: '',
-      log_password: '',
-      log_verify: ''
-    };
-    $scope.formId = automationManagerFormId;
-    $scope.afterGet = false;
-    $scope.validateClicked = miqService.validateWithAjax;
-    $scope.modelCopy = angular.copy( $scope.automationManagerModel );
-    $scope.model = 'automationManagerModel';
+  $scope.automationManagerModel = {
+    name: '',
+    url: '',
+    zone: '',
+    verify_ssl: '',
+    log_userid: '',
+    log_password: '',
+    log_verify: '',
+  };
+  $scope.formId = automationManagerFormId;
+  $scope.afterGet = false;
+  $scope.validateClicked = miqService.validateWithAjax;
+  $scope.modelCopy = angular.copy( $scope.automationManagerModel );
+  $scope.model = 'automationManagerModel';
 
-    ManageIQ.angular.scope = $scope;
+  ManageIQ.angular.scope = $scope;
 
-    if (automationManagerFormId == 'new') {
-      $scope.newRecord = true;
+  if (automationManagerFormId === 'new') {
+    $scope.newRecord = true;
 
-      $scope.automationManagerModel.name = '';
-      $scope.automationManagerModel.url = '';
-      $scope.automationManagerModel.verify_ssl = false;
-      $scope.automationManagerModel.log_userid = '';
-      $scope.automationManagerModel.log_password = '';
-      $scope.automationManagerModel.log_verify = '';
+    $scope.automationManagerModel.name = '';
+    $scope.automationManagerModel.url = '';
+    $scope.automationManagerModel.verify_ssl = false;
+    $scope.automationManagerModel.log_userid = '';
+    $scope.automationManagerModel.log_password = '';
+    $scope.automationManagerModel.log_verify = '';
 
-      $http.get('/automation_manager/automation_manager_form_fields/' + automationManagerFormId)
-        .then(getAutomationManagerNewFormDataComplete)
-        .catch(miqService.handleFailure);
-    }else {
-      $scope.newRecord = false;
-      miqService.sparkleOn();
+    $http.get('/automation_manager/automation_manager_form_fields/' + automationManagerFormId)
+      .then(getAutomationManagerNewFormDataComplete)
+      .catch(miqService.handleFailure);
+  } else {
+    $scope.newRecord = false;
+    miqService.sparkleOn();
 
-      $http.get('/automation_manager/automation_manager_form_fields/' + automationManagerFormId)
-        .then(getAutomationManagerFormDataComplete)
-        .catch(miqService.handleFailure);
+    $http.get('/automation_manager/automation_manager_form_fields/' + automationManagerFormId)
+      .then(getAutomationManagerFormDataComplete)
+      .catch(miqService.handleFailure);
 
-      miqService.sparkleOff();
-      }
+    miqService.sparkleOff();
+  }
 
   function getAutomationManagerNewFormDataComplete(response) {
     var data = response.data;
@@ -62,13 +62,15 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
       $scope.automationManagerModel.log_password = $scope.automationManagerModel.log_verify = miqService.storedPasswordPlaceholder;
     }
     $scope.modelCopy = angular.copy( $scope.automationManagerModel );
-  };
+  }
 
-  $scope.canValidateBasicInfo = function () {
-    if ($scope.isBasicInfoValid())
+  $scope.canValidateBasicInfo = function() {
+    if ($scope.isBasicInfoValid()) {
       return true;
-    else
+    }
+    else {
       return false;
+    }
   };
 
   $scope.isBasicInfoValid = function() {
@@ -97,10 +99,10 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
   };
 
   $scope.resetClicked = function() {
-    $scope.$broadcast ('resetClicked');
+    $scope.$broadcast('resetClicked');
     $scope.automationManagerModel = angular.copy( $scope.modelCopy );
     $scope.angularForm.$setPristine(true);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   $scope.saveClicked = function() {
