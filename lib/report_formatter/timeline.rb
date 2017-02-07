@@ -215,24 +215,5 @@ module ReportFormatter
       end
     end
 
-    # Return the name of an icon for a specific table, event pair
-    def timeline_icon(table, event_text)
-      # Create the icon hash, if it doesn't exist yet
-      unless @icon_hash
-        icon_dir = "#{TIMELINES_FOLDER}/icons"
-        begin
-          data = File.read(File.join(icon_dir, "#{table}.csv")).split("\n")
-        rescue
-          return table    # If we can't read the file, return the table name as the icon name
-        end
-        @icon_hash = {}
-        data.each do |rec|
-          evt, txt = rec.split(",")
-          @icon_hash[evt] = txt
-        end
-      end
-      return @icon_hash[event_text] if @icon_hash[event_text]
-      table
-    end
   end
 end
