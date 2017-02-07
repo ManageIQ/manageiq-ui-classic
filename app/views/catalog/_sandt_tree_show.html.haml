@@ -40,6 +40,12 @@
             = _('Dialog')
           .col-md-8
             = h(@sb[:dialog_label])
+        - if @record.prov_type
+          .form-group
+            %label.col-md-2.control-label
+              = _('Item Type')
+            .col-md-8
+              = h(ServiceTemplate::CATALOG_ITEM_TYPES[@record.prov_type])
         - if @record.prov_type == "generic"
           .form-group
             %label.col-md-2.control-label

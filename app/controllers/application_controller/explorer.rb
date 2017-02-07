@@ -250,8 +250,10 @@ module ApplicationController::Explorer
     unless kls.where(:id => from_cid(rec_id)).exists?
       @replace_trees = [@sb[:active_accord]] # refresh trees
       self.x_node = "root"
-      add_flash(_("Last selected %{record_name} no longer exists") %
-        {:record_name => ui_lookup(:model => kls.to_s)}, :error)
+      unless @report_deleted
+        add_flash(_("Last selected %{record_name} no longer exists") %
+                    {:record_name => ui_lookup(:model => kls.to_s)}, :error)
+      end
     end
     x_node
   end

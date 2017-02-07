@@ -1652,7 +1652,7 @@ module ApplicationHelper
         image = "100/job-running.png"
         title = _("Status = Running")
       end
-    elsif %(Vm VmOrTemplate).include?(db)
+    elsif %w(Vm VmOrTemplate).include?(db)
       vm = @targets_hash[from_cid(@id)]
       vendor = vm ? vm.vendor : "unknown"
       image = "svg/vendor-#{vendor}.svg"

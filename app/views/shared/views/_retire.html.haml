@@ -46,7 +46,7 @@
     - elsif request.parameters[:controller] == "orchestration_stack"
       = n_("New setting will affect Orchestration Stack", "New setting will affect Orchestration Stacks",
            @retireitems.length)
-    - elsif %(vm_cloud vm_infra).include?(request.parameters[:controller])
+    - elsif %w(vm_cloud vm_infra).include?(request.parameters[:controller])
       = n_("New setting will affect VM", "New setting will affect VMs", @retireitems.length)
 
   - if @retireitems

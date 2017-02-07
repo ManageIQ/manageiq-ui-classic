@@ -373,7 +373,7 @@ class ApplicationHelper::ToolbarBuilder
       when "diagnostics_audit_log"
         return !["fetch_audit_log", "refresh_audit_log"].include?(id)
       when "diagnostics_collect_logs"
-        return !%(collect_current_logs collect_logs log_depot_edit
+        return !%w(collect_current_logs collect_logs log_depot_edit
                   zone_collect_current_logs zone_collect_logs
                   zone_log_depot_edit).include?(id)
       when "diagnostics_evm_log"
@@ -410,7 +410,7 @@ class ApplicationHelper::ToolbarBuilder
   def hide_button?(id)
     # need to hide add buttons when on sub-list view screen of a CI.
     return true if id.ends_with?("_new", "_discover") &&
-                   @lastaction == "show" && !%w(main vms instances).include?(@display)
+                   @lastaction == "show" && !%w(main vms instances all_vms).include?(@display)
 
     # user can see the buttons if they can get to Policy RSOP/Automate Simulate screen
     return false if ["miq_ae_tools"].include?(@layout)
