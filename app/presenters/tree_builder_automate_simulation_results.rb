@@ -1,5 +1,5 @@
 class TreeBuilderAutomateSimulationResults < TreeBuilder
-  include ApplicationHelper
+  include MiqAeClassHelper
 
   has_kids_for Hash, [:x_get_tree_hash_kids]
   def initialize(name, type, sandbox, build = true, root = nil)
