@@ -111,7 +111,6 @@ class CatalogController < ApplicationController
         @edit[:new] ||= {}
         @edit[:current] ||= {}
         @edit[:key] = "prov_edit__new"
-        @edit[:st_prov_types] = catalog_item_types
       end
       @edit[:new][:st_prov_type] = @record.prov_type if @record.prov_type.present?
       # set name and description for ServiceTemplate record
@@ -125,21 +124,6 @@ class CatalogController < ApplicationController
       session[:changed] = false
       replace_right_cell(:action => "at_st_new")
     end
-  end
-
-  def catalog_item_types
-    {
-      "amazon"                => "Amazon",
-      "azure"                 => "Azure",
-      "generic"               => "Generic",
-      "generic_orchestration" => "Orchestration",
-      "generic_ansible_tower" => "AnsibleTower",
-      "google"                => "Google",
-      "microsoft"             => "SCVMM",
-      "openstack"             => "OpenStack",
-      "redhat"                => "RHEV",
-      "vmware"                => "VMware"
-    }
   end
 
   def atomic_form_field_changed

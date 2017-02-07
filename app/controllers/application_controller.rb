@@ -894,6 +894,8 @@ class ApplicationController < ActionController::Base
           celltext = Dictionary.gettext(row[col], :type => :model, :notfound => :titleize)
         when 'approval_state'
           celltext = _(PROV_STATES[row[col]])
+        when 'prov_type'
+          celltext = row[col] ? _(ServiceTemplate::CATALOG_ITEM_TYPES[row[col]]) : ''
         when "result"
           new_row[:cells] << {:span => result_span_class(row[col]), :text => row[col].titleize}
         when "severity"
