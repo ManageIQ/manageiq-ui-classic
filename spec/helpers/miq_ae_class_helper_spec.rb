@@ -34,4 +34,14 @@ describe MiqAeClassHelper do
       end
     end
   end
+
+  describe '#ae_field_fonticon' do
+    (MiqAeField::AVAILABLE_DATATYPES | MiqAeField::AVAILABLE_AETYPES).each do |field|
+      context "field is #{field}" do
+        it 'returns with not nil' do
+          expect(ae_field_fonticon(field)).not_to be_nil
+        end
+      end
+    end
+  end
 end
