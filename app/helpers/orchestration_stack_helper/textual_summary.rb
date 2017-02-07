@@ -16,7 +16,13 @@ module OrchestrationStackHelper::TextualSummary
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(ems_cloud service parent_orchestration_stack child_orchestration_stack orchestration_template instances security_groups cloud_networks parameters outputs resources))
+    TextualGroup.new(
+      _("Relationships"),
+      %i(
+        ems_cloud service parent_orchestration_stack child_orchestration_stack orchestration_template
+        instances security_groups cloud_networks parameters outputs resources
+      )
+    )
   end
 
   #

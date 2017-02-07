@@ -4,6 +4,6 @@ TextualTable = Struct.new(:title, :values, :labels) do
   end
 
   def locals
-    {:title => self.title, :values => self.values, :labels => self.labels}
+    {:title => title, :values => values, :labels => labels}
   end
 end

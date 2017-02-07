@@ -11,7 +11,10 @@ module NetworkRouterHelper::TextualSummary
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(parent_ems_cloud ems_network cloud_tenant instances cloud_subnets external_gateway))
+    TextualGroup.new(
+      _("Relationships"),
+      %i(parent_ems_cloud ems_network cloud_tenant instances cloud_subnets external_gateway)
+    )
   end
 
   #

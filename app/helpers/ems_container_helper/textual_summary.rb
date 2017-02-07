@@ -21,7 +21,10 @@ module EmsContainerHelper::TextualSummary
   end
 
   def textual_group_status
-    TextualGroup.new(_("Status"), textual_authentications_status + %i(authentications_status metrics_status refresh_status))
+    TextualGroup.new(
+      _("Status"),
+      textual_authentications_status + %i(authentications_status metrics_status refresh_status)
+    )
   end
 
   def textual_group_component_statuses
@@ -102,10 +105,19 @@ module EmsContainerHelper::TextualSummary
   def textual_group_endpoints
     return unless @record.connection_configurations.hawkular
 
-    TextualGroup.new(_("Endpoints"), [{:label => _('Hawkular Host Name'),
-      :value => @record.connection_configurations.hawkular.endpoint.hostname},
-     {:label => _('Hawkular API Port'),
-      :value => @record.connection_configurations.hawkular.endpoint.port}])
+    TextualGroup.new(
+      _("Endpoints"),
+      [
+        {
+          :label => _('Hawkular Host Name'),
+          :value => @record.connection_configurations.hawkular.endpoint.hostname
+        },
+        {
+          :label => _('Hawkular API Port'),
+          :value => @record.connection_configurations.hawkular.endpoint.port
+        }
+      ]
+    )
   end
 
   def textual_group_miq_custom_attributes

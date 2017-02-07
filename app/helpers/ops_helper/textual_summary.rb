@@ -4,8 +4,13 @@ module OpsHelper::TextualSummary
   #
 
   def textual_group_vmdb_connection_properties
-    TextualGroup.new(_("Properties"), %i(vmdb_connection_name vmdb_connection_ipaddress vmdb_connection_vendor vmdb_connection_version
-       vmdb_connection_data_directory vmdb_connection_data_disk vmdb_connection_last_start_time))
+    TextualGroup.new(
+      _("Properties"),
+      %i(
+        vmdb_connection_name vmdb_connection_ipaddress vmdb_connection_vendor vmdb_connection_version
+        vmdb_connection_data_directory vmdb_connection_data_disk vmdb_connection_last_start_time
+      )
+    )
   end
 
   def textual_group_vmdb_tables_most_rows
@@ -21,8 +26,13 @@ module OpsHelper::TextualSummary
   end
 
   def textual_group_vmdb_connection_capacity_data
-    TextualGroup.new(_("Capacity Data"), %i(vmdb_connection_timestamp vmdb_connection_total_space vmdb_connection_used_space vmdb_connection_free_space
-       vmdb_connection_total_index_nodes vmdb_connection_used_index_nodes vmdb_connection_free_index_nodes))
+    TextualGroup.new(
+      _("Capacity Data"),
+      %i(
+        vmdb_connection_timestamp vmdb_connection_total_space vmdb_connection_used_space vmdb_connection_free_space
+        vmdb_connection_total_index_nodes vmdb_connection_used_index_nodes vmdb_connection_free_index_nodes
+      )
+    )
   end
 
   def textual_group_tenant_quota_allocations

@@ -9,7 +9,10 @@ module EmsStorageHelper::TextualSummary
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(parent_ems_cloud cloud_volumes cloud_volume_snapshots cloud_object_store_containers))
+    TextualGroup.new(
+      _("Relationships"),
+      %i(parent_ems_cloud cloud_volumes cloud_volume_snapshots cloud_object_store_containers)
+    )
   end
 
   def textual_group_status

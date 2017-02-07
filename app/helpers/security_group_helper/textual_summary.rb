@@ -11,7 +11,10 @@ module SecurityGroupHelper::TextualSummary
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(parent_ems_cloud ems_network cloud_tenant instances orchestration_stack network_ports))
+    TextualGroup.new(
+      _("Relationships"),
+      %i(parent_ems_cloud ems_network cloud_tenant instances orchestration_stack network_ports)
+    )
   end
 
   def textual_group_firewall
@@ -28,7 +31,11 @@ module SecurityGroupHelper::TextualSummary
       ]
     end.sort
 
-    TextualTable.new(_("Firewall Rules"), items, [_("Network Protocol"), _("Host Protocol"), _("Direction"), _("Port"), _("End Port"), _("Source")])
+    TextualTable.new(
+      _("Firewall Rules"),
+      items,
+      [_("Network Protocol"), _("Host Protocol"), _("Direction"), _("Port"), _("End Port"), _("Source")]
+    )
   end
 
   #

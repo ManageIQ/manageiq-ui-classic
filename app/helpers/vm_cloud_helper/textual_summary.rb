@@ -18,9 +18,14 @@ module VmCloudHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name region server description ipaddress mac_address custom_1 container preemptible tools_status
-       load_balancer_health_check_state osinfo architecture snapshots advanced_settings resources guid
-       virtualization_type root_device_type ems_ref))
+    TextualGroup.new(
+      _("Properties"),
+      %i(
+        name region server description ipaddress mac_address custom_1 container preemptible tools_status
+        load_balancer_health_check_state osinfo architecture snapshots advanced_settings resources guid
+        virtualization_type root_device_type ems_ref
+      )
+    )
   end
 
   def textual_group_security
@@ -28,7 +33,10 @@ module VmCloudHelper::TextualSummary
   end
 
   def textual_group_configuration
-    TextualGroup.new(_("Configuration"), %i(guest_applications init_processes win32_services kernel_drivers filesystem_drivers filesystems registry_items))
+    TextualGroup.new(
+      _("Configuration"),
+      %i(guest_applications init_processes win32_services kernel_drivers filesystem_drivers filesystems registry_items)
+    )
   end
 
   def textual_group_diagnostics
@@ -36,7 +44,10 @@ module VmCloudHelper::TextualSummary
   end
 
   def textual_group_vmsafe
-    TextualGroup.new(_("VMsafe"), %i(vmsafe_enable vmsafe_agent_address vmsafe_agent_port vmsafe_fail_open vmsafe_immutable_vm vmsafe_timeout))
+    TextualGroup.new(
+      _("VMsafe"),
+      %i(vmsafe_enable vmsafe_agent_address vmsafe_agent_port vmsafe_fail_open vmsafe_immutable_vm vmsafe_timeout)
+    )
   end
 
   def textual_group_miq_custom_attributes
@@ -196,7 +207,7 @@ module VmCloudHelper::TextualSummary
     # TODO: Why is this image different than graphical?
     h = {:label => _("File System Drivers"), :icon => "fa fa-cog", :value => num}
     if num > 0
-      h[:title] = n_("Show the File System Driver installed on this VM" ,
+      h[:title] = n_("Show the File System Driver installed on this VM",
                     "Show the File System Drivers installed on this VM", num)
       h[:explorer] = true
       h[:link]  = url_for(:controller => controller.controller_name, :action => 'filesystem_drivers', :id => @record)
@@ -241,7 +252,7 @@ module VmCloudHelper::TextualSummary
     if num > 0
       h[:title] = n_("Show Event Log on this VM", "Show Event Logs on this VM", num)
       h[:explorer] = true
-      h[:link]  = url_for(:controller => controller.controller_name, :action => 'event_logs', :id => @record)
+      h[:link] = url_for(:controller => controller.controller_name, :action => 'event_logs', :id => @record)
     end
     h
   end

@@ -5,15 +5,24 @@ module EmsInfraHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(hostname ipaddress type port cpu_resources memory_resources cpus cpu_cores guid host_default_vnc_port_range))
+    TextualGroup.new(
+      _("Properties"),
+      %i(hostname ipaddress type port cpu_resources memory_resources cpus cpu_cores guid host_default_vnc_port_range)
+    )
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(infrastructure_folders folders clusters hosts datastores vms templates orchestration_stacks ems_cloud))
+    TextualGroup.new(
+      _("Relationships"),
+      %i(infrastructure_folders folders clusters hosts datastores vms templates orchestration_stacks ems_cloud)
+    )
   end
 
   def textual_group_status
-    TextualGroup.new(_("Status"), textual_authentications(@record.authentication_userid_passwords) + %i(refresh_status orchestration_stacks_status))
+    TextualGroup.new(
+      _("Status"),
+      textual_authentications(@record.authentication_userid_passwords) + %i(refresh_status orchestration_stacks_status)
+    )
   end
 
   def textual_group_smart_management

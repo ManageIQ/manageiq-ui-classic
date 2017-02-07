@@ -7,11 +7,17 @@ module NetworkPortHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name mac_address type device_owner floating_ip_addresses fixed_ip_addresses))
+    TextualGroup.new(
+      _("Properties"),
+      %i(name mac_address type device_owner floating_ip_addresses fixed_ip_addresses)
+    )
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(parent_ems_cloud ems_network cloud_tenant instance cloud_subnets floating_ips host))
+    TextualGroup.new(
+      _("Relationships"),
+      %i(parent_ems_cloud ems_network cloud_tenant instance cloud_subnets floating_ips host)
+    )
   end
 
   #
@@ -68,8 +74,14 @@ module NetworkPortHelper::TextualSummary
 
   def textual_host
     return nil unless @record.device_type == "Host"
-    {:icon => "pficon pficon-screen", :value => @record.device, :link => url_for(:controller => "host",
-                                                                  :action     => "show",
-                                                                  :id         => @record.device.id)}
+    {
+      :icon  => "pficon pficon-screen",
+      :value => @record.device,
+      :link  => url_for(
+        :controller => "host",
+        :action     => "show",
+        :id         => @record.device.id
+      )
+    }
   end
 end

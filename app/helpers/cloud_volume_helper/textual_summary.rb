@@ -8,8 +8,13 @@ module CloudVolumeHelper::TextualSummary
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(parent_ems_cloud ems availability_zone cloud_tenant base_snapshot cloud_volume_backups
-       cloud_volume_snapshots attachments))
+    TextualGroup.new(
+      _("Relationships"),
+      %i(
+        parent_ems_cloud ems availability_zone cloud_tenant base_snapshot cloud_volume_backups
+        cloud_volume_snapshots attachments
+      )
+    )
   end
 
   def textual_size

@@ -4,17 +4,27 @@ module OntapLogicalDiskHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name element_name caption zone_name description operational_status_str
-       health_state_str enabled_state data_redundancy system_name number_of_blocks block_size consumable_blocks
-       device_id extent_status delta_reservation no_single_point_of_failure? is_based_on_underlying_redundancy?
-       primordial? last_update_status_str))
+    TextualGroup.new(
+      _("Properties"),
+      %i(
+        name element_name caption zone_name description operational_status_str
+        health_state_str enabled_state data_redundancy system_name number_of_blocks block_size consumable_blocks
+        device_id extent_status delta_reservation no_single_point_of_failure? is_based_on_underlying_redundancy?
+        primordial? last_update_status_str
+      )
+    )
   end
 
   def textual_group_capacity_data
-    TextualGroup.new(_("Capacity Data"), %i(state size_available size_used size_total snapshot_blocks_reserved compressed_data
-       compression_saved_percentage dedup_percent_saved dedup_size_saved dedup_size_shared
-       disk_count files_total files_used is_compression_enabled is_inconsistent is_invalid
-       is_unrecoverable))
+    TextualGroup.new(
+      _("Capacity Data"),
+      %i(
+        state size_available size_used size_total snapshot_blocks_reserved compressed_data
+        compression_saved_percentage dedup_percent_saved dedup_size_saved dedup_size_shared
+        disk_count files_total files_used is_compression_enabled is_inconsistent is_invalid
+        is_unrecoverable
+      )
+    )
   end
 
   def textual_group_relationships

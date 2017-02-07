@@ -4,12 +4,21 @@ module ContainerGroupHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name phase message reason creation_timestamp resource_version restart_policy dns_policy ip))
+    TextualGroup.new(
+      _("Properties"),
+      %i(name phase message reason creation_timestamp resource_version restart_policy dns_policy ip)
+    )
   end
 
   def textual_group_relationships
     # Order of items should be from parent to child
-    TextualGroup.new(_("Relationships"), %i(ems container_project container_services container_replicator containers container_node lives_on container_images))
+    TextualGroup.new(
+      _("Relationships"),
+      %i(
+        ems container_project container_services container_replicator containers container_node
+        lives_on container_images
+      )
+    )
   end
 
   def textual_group_conditions

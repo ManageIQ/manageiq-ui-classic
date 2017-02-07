@@ -5,12 +5,20 @@ module EmsCloudHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(provider_region hostname ipaddress type port guid region keystone_v3_domain_id))
+    TextualGroup.new(
+      _("Properties"),
+      %i(provider_region hostname ipaddress type port guid region keystone_v3_domain_id)
+    )
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(ems_infra network_manager availability_zones host_aggregates cloud_tenants flavors
-       security_groups instances images orchestration_stacks storage_managers))
+    TextualGroup.new(
+      _("Relationships"),
+      %i(
+        ems_infra network_manager availability_zones host_aggregates cloud_tenants flavors
+        security_groups instances images orchestration_stacks storage_managers
+      )
+    )
   end
 
   def textual_group_configuration_relationships

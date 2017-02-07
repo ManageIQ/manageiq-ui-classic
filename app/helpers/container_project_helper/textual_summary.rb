@@ -8,8 +8,13 @@ module ContainerProjectHelper::TextualSummary
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(ems container_routes container_services container_replicators container_groups container_nodes container_images
-       container_templates))
+    TextualGroup.new(
+      _("Relationships"),
+      %i(
+        ems container_routes container_services container_replicators container_groups
+        container_nodes container_images container_templates
+      )
+    )
   end
 
   def textual_group_smart_management
@@ -19,10 +24,11 @@ module ContainerProjectHelper::TextualSummary
   end
 
   def textual_group_quota
-    TextualMultilabel.new(_("Resource Quota"), {
+    TextualMultilabel.new(
+      _("Resource Quota"),
       :labels => [_("Name"), _("Resource"), _("Desired"), _("Enforced"), _("Observed")],
       :values => collect_quota_items
-    })
+    )
   end
 
   def collect_quota_items
@@ -40,11 +46,12 @@ module ContainerProjectHelper::TextualSummary
   end
 
   def textual_group_limits
-    TextualMultilabel.new(_("Limit Ranges"), {
+    TextualMultilabel.new(
+      _("Limit Ranges"),
       :labels => [_("Name"), _("Type"), _("Resource"), _("Max"), _("Min"), _("Default Limit"),
                   _("Default Request"), _("Limit Request Ratio")],
       :values => collect_limit_items
-    })
+    )
   end
 
   def collect_limit_items

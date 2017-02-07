@@ -4,8 +4,10 @@ module ContainerReplicatorHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name creation_timestamp resource_version
-       replicas current_replicas))
+    TextualGroup.new(
+      _("Properties"),
+      %i(name creation_timestamp resource_version replicas current_replicas)
+    )
   end
 
   def textual_group_relationships

@@ -4,7 +4,7 @@ TextualTags  = Struct.new(:title, :items) do
   end
 
   def locals
-    {:title => self.title, :items => self.items}
+    {:title => title, :items => items}
   end
 end
 

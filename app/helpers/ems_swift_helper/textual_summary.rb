@@ -17,7 +17,7 @@ module EmsSwiftHelper::TextualSummary
   end
 
   def textual_group_smart_management
-    TextualTags.new(("Smart Management"), %i(zone tags))
+    TextualTags.new(_("Smart Management"), %i(zone tags))
   end
 
   def textual_group_topology

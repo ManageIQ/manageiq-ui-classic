@@ -4,14 +4,10 @@ module ContainerServiceHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(
-      name
-      creation_timestamp
-      resource_version
-      session_affinity
-      service_type
-      portal_ip
-    ))
+    TextualGroup.new(
+      _("Properties"),
+      %i(name creation_timestamp resource_version session_affinity service_type portal_ip)
+    )
   end
 
   def textual_group_port_configs
@@ -30,7 +26,10 @@ module ContainerServiceHelper::TextualSummary
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(ems container_project container_routes container_groups container_nodes container_image_registry))
+    TextualGroup.new(
+      _("Relationships"),
+      %i(ems container_project container_routes container_groups container_nodes container_image_registry)
+    )
   end
 
   def textual_group_smart_management

@@ -12,7 +12,10 @@ module StorageHelper::TextualSummary
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(hosts managed_vms managed_miq_templates registered_vms unregistered_vms unmanaged_vms))
+    TextualGroup.new(
+      _("Relationships"),
+      %i(hosts managed_vms managed_miq_templates registered_vms unregistered_vms unmanaged_vms)
+    )
   end
 
   def textual_group_storage_relationships

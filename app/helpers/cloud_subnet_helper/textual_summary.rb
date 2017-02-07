@@ -7,11 +7,20 @@ module CloudSubnetHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name type cidr gateway network_protocol dns_nameservers_show allocation_pools host_routes ip_version))
+    TextualGroup.new(
+      _("Properties"),
+      %i(name type cidr gateway network_protocol dns_nameservers_show allocation_pools host_routes ip_version)
+    )
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(parent_ems_cloud ems_network cloud_tenant availability_zone instances cloud_network network_router parent_subnet managed_subnets))
+    TextualGroup.new(
+      _("Relationships"),
+      %i(
+        parent_ems_cloud ems_network cloud_tenant availability_zone instances cloud_network
+        network_router parent_subnet managed_subnets
+      )
+    )
   end
 
   #
@@ -42,7 +51,11 @@ module CloudSubnetHelper::TextualSummary
   end
 
   def textual_host_routes
-    @record.host_routes.map { |x| "next_hop: #{x['next_hop']}, destination: #{x['destination']}" }.join(" | ") if @record.host_routes
+    if @record.host_routes
+      @record.host_routes.map do |x|
+        "next_hop: #{x['next_hop']}, destination: #{x['destination']}"
+      end.join(" | ")
+    end
   end
 
   def textual_ip_version

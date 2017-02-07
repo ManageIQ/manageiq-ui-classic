@@ -6,17 +6,13 @@ module FlavorHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(
-      cpus
-      cpu_cores
-      memory
-      supports_32_bit
-      supports_64_bit
-      supports_hvm
-      supports_paravirtual
-      block_storage_based_only
-      cloud_subnet_required
-    ))
+    TextualGroup.new(
+      _("Properties"),
+      %i(
+        cpus cpu_cores memory supports_32_bit supports_64_bit supports_hvm supports_paravirtual
+        block_storage_based_only cloud_subnet_required
+      )
+    )
   end
 
   def textual_group_relationships

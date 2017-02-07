@@ -6,13 +6,21 @@ module HostHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(hostname ipaddress ipmi_ipaddress custom_1 vmm_vendor_display model asset_tag service_tag osinfo
-       power_state lockdown_mode maintenance_mode devices network storage_adapters num_cpu num_cpu_cores
-       cpu_cores_per_socket memory guid))
+    TextualGroup.new(
+      _("Properties"),
+      %i(
+        hostname ipaddress ipmi_ipaddress custom_1 vmm_vendor_display model asset_tag service_tag osinfo
+        power_state lockdown_mode maintenance_mode devices network storage_adapters num_cpu num_cpu_cores
+        cpu_cores_per_socket memory guid
+      )
+    )
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(ems cluster availability_zone used_tenants storages resource_pools vms templates drift_history))
+    TextualGroup.new(
+      _("Relationships"),
+      %i(ems cluster availability_zone used_tenants storages resource_pools vms templates drift_history)
+    )
   end
 
   def textual_group_storage_relationships
@@ -46,7 +54,10 @@ module HostHelper::TextualSummary
   end
 
   def textual_group_authentications
-    TextualGroup.new(_("Authentication Status"), textual_authentications(@record.authentication_userid_passwords + @record.authentication_key_pairs))
+    TextualGroup.new(
+      _("Authentication Status"),
+      textual_authentications(@record.authentication_userid_passwords + @record.authentication_key_pairs)
+    )
   end
 
   def textual_group_cloud_services

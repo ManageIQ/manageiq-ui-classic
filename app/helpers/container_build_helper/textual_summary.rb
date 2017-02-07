@@ -19,16 +19,18 @@ module ContainerBuildHelper::TextualSummary
   end
 
   def textual_group_build_instances
-    TextualMultilabel.new(_("Build Instances"), 
+    TextualMultilabel.new(
+      _("Build Instances"),
       :additional_table_class => "table-fixed",
-      :labels                 => [_("Name"), _("Phase"),
-                                  _("Message"), _("Reason"),
-                                  _("Pod"), _("Output Image"),
-                                  _("Start Timestamp"),
-                                  {:value => _("Completion Timestamp"), :sortable => :desc},
-                                  _("Duration"),
-                                 ],
       :values                 => collect_build_pods,
+      :labels                 => [
+        _("Name"), _("Phase"),
+        _("Message"), _("Reason"),
+        _("Pod"), _("Output Image"),
+        _("Start Timestamp"),
+        {:value => _("Completion Timestamp"), :sortable => :desc},
+        _("Duration"),
+      ],
     )
   end
 
@@ -37,7 +39,7 @@ module ContainerBuildHelper::TextualSummary
       [
         build_pod.name,
         build_pod.phase,
-        {:value =>  build_pod.message, :expandable => true},
+        {:value => build_pod.message, :expandable => true},
         build_pod.reason,
         link_to_pod(build_pod.container_group),
         {:value => build_pod.output_docker_image_reference, :expandable => true},

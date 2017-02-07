@@ -4,13 +4,21 @@ module ContainerHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name state reason started_at finished_at exit_code signal message last_state restart_count backing_ref command
-       capabilities_add capabilities_drop privileged run_as_user se_linux_user se_linux_role se_linux_type
-       se_linux_level run_as_non_root))
+    TextualGroup.new(
+      _("Properties"),
+      %i(
+        name state reason started_at finished_at exit_code signal message last_state restart_count backing_ref command
+        capabilities_add capabilities_drop privileged run_as_user se_linux_user se_linux_role se_linux_type
+        se_linux_level run_as_non_root
+      )
+    )
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(ems container_project container_replicator container_group container_node container_image))
+    TextualGroup.new(
+      _("Relationships"),
+      %i(ems container_project container_replicator container_group container_node container_image)
+    )
   end
 
   def textual_group_smart_management

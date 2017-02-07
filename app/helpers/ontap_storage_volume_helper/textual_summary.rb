@@ -4,10 +4,15 @@ module OntapStorageVolumeHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name element_name caption zone_name description operational_status_str
-       health_state_str enabled_state data_redundancy system_name number_of_blocks block_size consumable_blocks
-       device_id extent_status delta_reservation no_single_point_of_failure? is_based_on_underlying_redundancy?
-       primordial? last_update_status_str))
+    TextualGroup.new(
+      _("Properties"),
+      %i(
+        name element_name caption zone_name description operational_status_str
+        health_state_str enabled_state data_redundancy system_name number_of_blocks block_size consumable_blocks
+        device_id extent_status delta_reservation no_single_point_of_failure? is_based_on_underlying_redundancy?
+        primordial? last_update_status_str
+      )
+    )
   end
 
   def textual_group_relationships

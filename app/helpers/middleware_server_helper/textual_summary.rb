@@ -9,7 +9,10 @@ module MiddlewareServerHelper::TextualSummary
 
   def textual_group_relationships
     # Order of items should be from parent to child
-    TextualGroup.new(_("Relationships"), %i(ems middleware_server_group middleware_deployments middleware_datasources lives_on middleware_messagings))
+    TextualGroup.new(
+      _("Relationships"),
+      %i(ems middleware_server_group middleware_deployments middleware_datasources lives_on middleware_messagings)
+    )
   end
 
   #
@@ -58,16 +61,16 @@ module MiddlewareServerHelper::TextualSummary
     lives_on_ems = @record.try(:lives_on).try(:ext_management_system)
     return nil if lives_on_ems.nil?
     lives_on_entity_name = _("Virtual Machine")
-     {
-         :label      => "Underlying #{lives_on_entity_name}",
-         :image      => "svg/vendor-#{lives_on_ems.image_name}.svg",
-         :value      => @record.lives_on.name.to_s,
-         :link       => url_for(
-           :action     => 'show',
-           :controller => 'vm_or_template',
-           :id         => @record.lives_on.id
-          )
-     }
+    {
+      :label => "Underlying #{lives_on_entity_name}",
+      :image => "svg/vendor-#{lives_on_ems.image_name}.svg",
+      :value => @record.lives_on.name.to_s,
+      :link  => url_for(
+        :action     => 'show',
+        :controller => 'vm_or_template',
+        :id         => @record.lives_on.id
+      )
+    }
   end
 
   def not_yet_started?(server)

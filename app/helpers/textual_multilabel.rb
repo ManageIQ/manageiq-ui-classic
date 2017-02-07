@@ -4,6 +4,6 @@ TextualMultilabel = Struct.new(:title, :options) do
   end
 
   def locals
-    options.merge(:title => self.title)
+    options.merge(:title => title)
   end
 end

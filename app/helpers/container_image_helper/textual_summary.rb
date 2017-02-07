@@ -5,11 +5,20 @@ module ContainerImageHelper
     #
 
     def textual_group_properties
-      TextualGroup.new(_("Properties"), %i(name tag id full_name os_distribution product_type product_name architecture author command entrypoint docker_version exposed_ports size))
+      TextualGroup.new(
+        _("Properties"),
+        %i(
+          name tag id full_name os_distribution product_type product_name architecture author
+          command entrypoint docker_version exposed_ports size
+        )
+      )
     end
 
     def textual_group_relationships
-      TextualGroup.new(_("Relationships"), %i(ems container_image_registry container_projects container_groups containers container_nodes))
+      TextualGroup.new(
+        _("Relationships"),
+        %i(ems container_image_registry container_projects container_groups containers container_nodes)
+      )
     end
 
     def textual_group_configuration
@@ -23,7 +32,10 @@ module ContainerImageHelper
     end
 
     def textual_group_openscap_failed_rules
-      TextualGroup.new(_("OpenSCAP Failed Rules Summary"), %i(openscap_failed_rules_low openscap_failed_rules_medium openscap_failed_rules_high))
+      TextualGroup.new(
+        _("OpenSCAP Failed Rules Summary"),
+        %i(openscap_failed_rules_low openscap_failed_rules_medium openscap_failed_rules_high)
+      )
     end
 
     #
@@ -82,8 +94,9 @@ module ContainerImageHelper
     end
 
     def textual_exposed_ports
-      {:label => _("Exposed Ports"),
-       :value => (@record['exposed_ports'].collect { |t, p| "#{p}/#{t}" }).join(', ')
+      {
+        :label => _("Exposed Ports"),
+        :value => (@record['exposed_ports'].collect { |t, p| "#{p}/#{t}" }).join(', ')
       }
     end
 
@@ -101,11 +114,12 @@ module ContainerImageHelper
   end
 
   def textual_group_env
-    TextualGroup.new(_("Environment variables"), {
+    TextualGroup.new(
+      _("Environment variables"),
       :additional_table_class => "table-fixed",
       :labels                 => [_("Name"), _("Type"), _("Value")],
       :values                 => collect_env
-    })
+    )
   end
 
   def collect_env_variables
