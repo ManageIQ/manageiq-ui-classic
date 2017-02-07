@@ -21,7 +21,8 @@ class TreeBuilderServiceCatalog < TreeBuilderCatalogsClass
   end
 
   def x_get_tree_roots(count_only, _options)
-    objects = Rbac.filtered(ServiceTemplateCatalog).sort_by { |o| o.name.downcase }
+    includes = {:tenant => {}}
+    objects = Rbac.filtered(ServiceTemplateCatalog, :include_for_find => includes).sort_by { |o| o.name.downcase }
     filtered_objects = []
     # only show catalogs nodes that have any servicetemplate records under them
     objects.each do |object|
