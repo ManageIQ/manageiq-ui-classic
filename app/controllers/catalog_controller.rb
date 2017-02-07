@@ -1225,7 +1225,8 @@ class CatalogController < ApplicationController
     actions.each do |action|
       ra = st.resource_actions.find_by_action(action[:name])
       if ra.nil? && !@edit[:new][action[:edit_key]].blank?
-        attrs = {:action => action[:name]}
+        attrs = {:action        => action[:name],
+                 :ae_attributes => {:service_action => action[:name]}}
         ra = st.resource_actions.build(attrs)
       end
       if @edit[:new][action[:edit_key]].blank?
