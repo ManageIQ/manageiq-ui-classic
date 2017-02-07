@@ -101,6 +101,7 @@ module ReportController::SavedReports
       @sb[:miq_report_id] = r.miq_report_id
       process_saved_reports(savedreports, "destroy")  unless savedreports.empty?
       add_flash(_("The selected Saved Report was deleted")) if @flash_array.nil?
+      @report_deleted = true
     end
     self.x_node = "xx-#{to_cid(@sb[:miq_report_id])}" if x_active_tree == :savedreports_tree &&
                                                          x_node.split('-').first == "rr"
