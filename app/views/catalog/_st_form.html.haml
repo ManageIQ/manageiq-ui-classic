@@ -8,7 +8,7 @@
       .form-group
         %label.col-md-2.control-label= _('Catalog Item Type')
         .col-md-8
-          - array = Array(ServiceTemplate::CATALOG_ITEM_TYPES.invert).sort_by { |a| a.first.downcase }
+          - array = Array(@edit[:st_prov_types].invert).sort_by { |a| a.first.downcase }
           = select_tag('st_prov_type',
                        options_for_select(([["<#{_('Choose')}>",nil]]) + array, nil),
                        "data-miq_sparkle_on" => true,

@@ -105,7 +105,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
   // list of service catalogs
   $scope.formOptions = function() {
     API.get("/api/service_catalogs/?expand=resources&attributes=id,name").then(function(data) {
-      $scope.catalogs = data.resources
+      $scope.catalogs = data.resources;
       $scope._catalog = _.find($scope.catalogs, {id: $scope.catalogItemModel.catalog_id})
     })
 
@@ -117,31 +117,35 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     })
 
     // list of repositories
-    //API.get("/api/configuration_script_sources/?expand=resources&attributes=id,name")
-
-    API.get("/api/service_catalogs/?expand=resources&attributes=id,name").then(function (data) {
-      $scope.repositories = data.resources
+    API.get("/api/configuration_script_sources/?expand=resources&attributes=id,name").then(function (data) {
+      $scope.repositories = data.resources;
       $scope._retirement_repository = _.find($scope.repositories, {id: $scope.catalogItemModel.retirement_repository_id})
       $scope._provisioning_repository = _.find($scope.repositories, {id: $scope.catalogItemModel.provisioning_repository_id})
     })
 
     // list of machine credentials
+    // check if the type of credentials can be specified in the API
+    //API.get("/api/automation_manager_authentications/?expand=resources&attributes=id,name")
     API.get("/api/service_catalogs/?expand=resources&attributes=id,name").then(function (data) {
-      $scope.machine_credentials = data.resources
+      $scope.machine_credentials = data.resources;
       $scope._retirement_machine_credential = _.find($scope.machine_credentials, {id: $scope.catalogItemModel.retirement_machine_credential_id})
       $scope._provisioning_machine_credential = _.find($scope.machine_credentials, {id: $scope.catalogItemModel.provisioning_machine_credential_id})
     })
 
     // list of network credentials
-    API.get("/api/service_catalogs/?expand=resources&attributes=id,name").then(function (data) {
-      $scope.network_credentials = data.resources
+    // check if the type of credentials can be specified in the API
+    //API.get("/api/automation_manager_authentications/?expand=resources&attributes=id,name")
+     API.get("/api/service_catalogs/?expand=resources&attributes=id,name").then(function (data) {
+      $scope.network_credentials = data.resources;
       $scope._retirement_network_credential = _.find($scope.network_credentials, {id: $scope.catalogItemModel.retirement_network_credential_id})
       $scope._provisioning_network_credential = _.find($scope.network_credentials, {id: $scope.catalogItemModel.provisioning_network_credential_id})
     })
 
     // list of cloud credentials
+    // check if the type of credentials can be specified in the API
+    //API.get("/api/automation_manager_authentications/?expand=resources&attributes=id,name")
     API.get("/api/service_catalogs/?expand=resources&attributes=id,name").then(function (data) {
-      $scope.cloud_credentials = data.resources
+      $scope.cloud_credentials = data.resources;
       $scope._retirement_cloud_credential = _.find($scope.cloud_credentials, {id: $scope.catalogItemModel.retirement_cloud_credential_id})
       $scope._provisioning_cloud_credential = _.find($scope.cloud_credentials, {id: $scope.catalogItemModel.provisioning_cloud_credential_id})
     })
@@ -149,15 +153,12 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
 
   // get playbooks for selected repository
   $scope.repositoryChanged = function(prefix, id) {
-    //uncomment this line and remove line 153
-    //var url = "/api/configuration_script_sources/" + id + "?attributes=configuration_script_payloads";
 
-    var url = "/api/cloud_networks/" + '10000000000005' + "?attributes=cloud_subnets";
+    API.get("/api/configuration_script_payload/?expand=resources&attributes=id,name").then(function(data){
+    //var url = "/api/cloud_networks/" + '10000000000005' + "?attributes=cloud_subnets";
     $scope.catalogItemModel[prefix + '_playbook_id'] = '';
     $scope.catalogItemModel[prefix + '_repository_id'] = id;
-
-    API.get(url).then(function(response) {
-      $scope[prefix + '_playbooks']  = response.cloud_subnets;
+    $scope[prefix + '_playbooks']  = data.resources;
     })
   };
 
@@ -184,6 +185,21 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     $scope.catalogItemModel[prefix + "_value"] = '';
   }
 
+  $scope.provisioning_repository_selected = function() {
+    return $scope.catalogItemModel.provisioning_repository_id !== '';
+  }
+
+  $scope.retirement_repository_selected = function() {
+    return $scope.catalogItemModel.retirement_repository_id !== '';
+  }
+
+  $scope.provisioning_playbook_selected = function() {
+    return $scope.catalogItemModel.provisioning_playbook_id !== '';
+  }
+
+  $scope.retirement_playbook_selected = function() {
+    return $scope.catalogItemModel.retirement_playbook_id !== '';
+  }
   $scope.removeKeyValue = function(prefix, key) {
     delete $scope.catalogItemModel[prefix + "_variables"][key];
   }
