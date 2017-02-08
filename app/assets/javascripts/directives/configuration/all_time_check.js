@@ -29,7 +29,7 @@ ManageIQ.angular.app.directive('allTimeCheck', function() {
           if (hoursArr[j] === name) {
             updatedHourArr = allQuarterArrHoursChecked(name, i, value);
           } else {
-            if (!angular.equals(_.times(6, _.constant(true)), scope.vm[scope.vm.model][hoursArr[j]])) {
+            if (!angular.equals(_.times(6, _.constant(true)), scope.vm.timeProfileModel[hoursArr[j]])) {
               otherHourArrs = false;
               break;
             }
@@ -41,7 +41,7 @@ ManageIQ.angular.app.directive('allTimeCheck', function() {
       };
 
       var allQuarterArrHoursChecked = function(name, i, value) {
-        var quarterArrHours = scope.vm[scope.vm.model][name];
+        var quarterArrHours = scope.vm.timeProfileModel[name];
         quarterArrHours[i] = value;
         return angular.equals(_.times(6, _.constant(true)), quarterArrHours);
       };

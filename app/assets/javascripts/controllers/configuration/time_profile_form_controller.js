@@ -168,31 +168,24 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', '$scope',
     var url = '/configuration/timeprofile_update/' + timeProfileFormId + '?button=' + buttonName;
     var timeProfileModelObj = angular.copy(vm.timeProfileModel);
     delete timeProfileModelObj.profile_tz;
-    var moreUrlParams = $.param(miqService.serializeModel(timeProfileModelObj));
-    if(moreUrlParams)
-      url += '&' + decodeURIComponent(moreUrlParams);
-    miqService.miqAjaxButton(url, true);
+    miqService.miqAjaxButton(url, timeProfileModelObj);
   };
 
   $scope.cancelClicked = function() {
     timeProfileEditButtonClicked('cancel');
-    vm.angularForm.$setPristine(true);
   };
 
   $scope.resetClicked = function() {
     vm.timeProfileModel = angular.copy( vm.modelCopy );
-    vm.angularForm.$setPristine(true);
+    $scope.angularForm.$setPristine(true);
     miqService.miqFlash("warn", __("All changes have been reset"));
   };
 
   $scope.saveClicked = function() {
     timeProfileEditButtonClicked('save', true);
-    vm.angularForm.$setPristine(true);
   };
 
-  $scope.addClicked = function() {
-    $scope.saveClicked();
-  };
+  $scope.addClicked = $scope.saveClicked;
 
   function getTimeProfileFormData(response) {
     var data = response.data;

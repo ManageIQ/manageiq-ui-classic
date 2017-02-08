@@ -69,13 +69,13 @@ ManageIQ.angular.app.directive('checkchange', ['miqService', function(miqService
 
       var checkForOverallFormPristinity = function(scope, ctrl) {
         // don't do anything before the model and modelCopy are actually initialized
-        if (! (modelCopy() in scope) || ! modelCopy() || ! model() || ! (model() in scope))
+        if (!model() || !modelCopy())
           return;
 
         var modelCopyObject = _.cloneDeep(modelCopy());
         delete modelCopyObject[ctrl.$name];
 
-        var modelObject = _.cloneDeep(scope[model()]);
+        var modelObject = _.cloneDeep(model());
         delete modelObject[ctrl.$name];
 
         scope.angularForm.$pristine = angular.equals(modelCopyObject, modelObject);
