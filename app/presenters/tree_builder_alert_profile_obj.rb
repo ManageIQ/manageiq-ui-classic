@@ -21,8 +21,10 @@ class TreeBuilderAlertProfileObj < TreeBuilder
       node[:image] = "svg/vendor-#{object.image_name}.svg"
     elsif @assign[:new][:assign_to] == "resource_pool"
       node[:icon] = "pficon-resource_pool"
+    elsif @assign[:new][:assign_to] == "tenant"
+      node[:image] = ActionController::Base.helpers.image_path("100/tenant.png")
     else
-      node[:image] = "100/#{@assign[:new][:assign_to]}.png"
+      node[:image] = ActionController::Base.helpers.image_path("100/#{@assign[:new][:assign_to]}.png")
     end
 
     node[:title] = identifier
@@ -53,7 +55,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
     {
       :title        => t,
       :tooltip      => "",
-      :image        => "100/folder_open",
+      :icon        => "pficon pficon-folder-open",
       :hideCheckbox => true,
       :cfmeNoClick  => true,
       :expand       => true

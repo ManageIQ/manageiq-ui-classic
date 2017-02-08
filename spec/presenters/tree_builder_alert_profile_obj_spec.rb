@@ -22,12 +22,12 @@ describe TreeBuilderAlertProfileObj do
 
   context 'classification tree' do
     subject do
-      @assign = {}
-      @assign[:new] = {}
-      @assign[:new][:assign_to] = 'storage-tags'
-      @assign[:new][:cat] = folder1a.id
-      @assign[:new][:objects] = [tag1a.id, tag2a.id]
-      described_class.new(:alert_profile_obj_tree, :alert_profile_obj, {}, true, @assign)
+      assign = {}
+      assign[:new] = {}
+      assign[:new][:assign_to] = 'storage-tags'
+      assign[:new][:cat] = folder1a.id
+      assign[:new][:objects] = [tag1a.id, tag2a.id]
+      described_class.new(:alert_profile_obj_tree, :alert_profile_obj, {}, true, assign)
     end
 
     describe '#tree_init_options' do
@@ -63,7 +63,17 @@ describe TreeBuilderAlertProfileObj do
 
     describe '#root_options' do
       it 'sets root_options correctly' do
-        #expect(subject.send(:root_options)).to eq([tenant, tenant, "100/folder_open])
+        assign_to = 'storage-tags'
+        t = assign_to.ends_with?("-tags") ? "Tags" : ui_lookup(:tables => assign_to)
+        opt = {
+          :title        => t,
+          :tooltip      => "",
+          :icon         => "pficon pficon-folder-open",
+          :hideCheckbox => true,
+          :cfmeNoClick  => true,
+          :expand       => true
+        }
+        expect(subject.send(:root_options)).to eq(opt)
       end
     end
 
@@ -77,11 +87,11 @@ describe TreeBuilderAlertProfileObj do
 
   context 'tenant tree' do
     subject do
-      @assign = {}
-      @assign[:new] = {}
-      @assign[:new][:assign_to] = 'tenant'
-      @assign[:new][:objects] = [tag1b.id]
-      described_class.new(:alert_profile_obj_tree, :alert_profile_obj, {}, true, @assign)
+      assign = {}
+      assign[:new] = {}
+      assign[:new][:assign_to] = 'tenant'
+      assign[:new][:objects] = [tag1b.id]
+      described_class.new(:alert_profile_obj_tree, :alert_profile_obj, {}, true, assign)
     end
 
     describe '#x_get_tree_roots' do
