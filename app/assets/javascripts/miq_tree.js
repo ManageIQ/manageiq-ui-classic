@@ -147,9 +147,9 @@ function miqOnClickIncludeDomainPrefix() {
 
 function miqOnClickSelectOptimizeTreeNode(id) {
   var tree;
-  if (miqDomElementExists('miq_capacity_utilization')) {
+  if (miqDomElementExists('utilization_accord')) {
     tree = "utilization_tree";
-  } else if (miqDomElementExists('miq_capacity_bottlenecks')) {
+  } else if (miqDomElementExists('bottlenecks_accord')) {
     tree = "bottlenecks_tree";
   }
   if (id.split('-')[1].split('_')[0] == 'folder' ) {
