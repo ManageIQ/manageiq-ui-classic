@@ -2,12 +2,14 @@
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
 - else
     - case @showtype
+    - when "main"
+        = render :partial => "layouts/textual_groups_generic"
     - when "timeline"
-        = render(:partial => "layouts/tl_show")
+        = render :partial => "layouts/tl_show"
         :javascript
             ManageIQ.afterOnload = "miqAsyncAjax('#{url_for(:action => @ajax_action, :id => @record)}');"
     - when "performance"
-        = render(:partial => "layouts/performance")
+        = render :partial => "layouts/performance"
         :javascript
             ManageIQ.afterOnload = "miqAsyncAjax('#{url_for(:action => @ajax_action, :id => @record)}');"
     - when "compliance_history"

@@ -7,4 +7,4 @@
 - elsif @record.kind_of?(ManageIQ::Providers::AutomationManager::InventoryGroup)
   = render :partial => "#{controller}/main_inventory_group"
 - else
-  = render :partial => "#{controller}/main"
+  = render :partial => "layouts/textual_groups_generic"

@@ -1253,7 +1253,7 @@ module VmCommon
     if record_showing
       presenter.hide(:form_buttons_div)
       path_dir = @record.kind_of?(ManageIQ::Providers::CloudManager::Vm) || @record.kind_of?(ManageIQ::Providers::CloudManager::Template) ? "vm_cloud" : "vm_common"
-      presenter.update(:main_div, r[:partial => "#{path_dir}/main", :locals => {:controller => 'vm'}])
+      presenter.update(:main_div, r[:partial => "layouts/textual_groups_generic"])
     elsif @in_a_form
       partial_locals = {:controller => 'vm'}
       partial_locals[:action_url] = @lastaction if partial == 'layouts/x_gtl'

@@ -1,4 +1,4 @@
-TextualTags  = Struct.new(:title, :items) do
+TextualTags = Struct.new(:title, :items) do
   def template
     'shared/summary/textual_tags'
   end
@@ -7,4 +7,3 @@ TextualTags  = Struct.new(:title, :items) do
     {:title => title, :items => items}
   end
 end
-

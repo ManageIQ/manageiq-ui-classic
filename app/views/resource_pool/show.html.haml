@@ -8,5 +8,7 @@
     - when "compare"
       = raise 'compare partial called through "show"'
       = render :partial => "layouts/#{@showtype}"
+    - when 'main'
+      = render :partial => "layouts/textual_groups_generic"
     - else
       = render :partial => @showtype

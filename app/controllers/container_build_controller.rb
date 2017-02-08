@@ -13,7 +13,6 @@ class ContainerBuildController < ApplicationController
   end
   helper_method :textual_group_list
 
-
   def display_name
     "Builds"
   end

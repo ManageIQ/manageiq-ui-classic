@@ -52,9 +52,10 @@ module ProviderForemanHelper
   end
 
   def textual_group_environment
-    TextualGroup.new(_("Environment"), %i(configuration_environment_name
-       configuration_domain_name
-       configuration_realm_name))
+    TextualGroup.new(
+      _("Environment"),
+      %i(configuration_environment_name configuration_domain_name configuration_realm_name)
+    )
   end
 
   def textual_configuration_environment_name
@@ -70,11 +71,13 @@ module ProviderForemanHelper
   end
 
   def textual_group_os
-    TextualGroup.new(_("Operating System"), %i(configuration_compute_profile_name
-       configuration_architecture_name
-       operating_system_flavor_name
-       customization_script_medium_name
-       customization_script_ptable_name))
+    TextualGroup.new(
+      _("Operating System"),
+      %i(
+        configuration_compute_profile_name configuration_architecture_name operating_system_flavor_name
+        customization_script_medium_name customization_script_ptable_name
+      )
+    )
   end
 
   def textual_configuration_compute_profile_name
@@ -98,8 +101,7 @@ module ProviderForemanHelper
   end
 
   def textual_group_tenancy
-    TextualGroup.new(_("Tenancy"), %i(configuration_locations_name
-       configuration_organizations_name))
+    TextualGroup.new(_("Tenancy"), %i(configuration_locations_name configuration_organizations_name))
   end
 
   def textual_configuration_locations_name
@@ -186,14 +188,16 @@ module ProviderForemanHelper
   end
 
   def textual_configuration_profile_configuration_locations
-    {:label => _("Configuration Location"),
-     :value => @record.configuration_locations.collect(&:name).join(", ")
+    {
+      :label => _("Configuration Location"),
+      :value => @record.configuration_locations.collect(&:name).join(", ")
     }
   end
 
   def textual_configuration_profile_configuration_organizations
-    {:label => _("Configuration Organization"),
-     :value => @record.configuration_organizations.collect(&:name).join(", ")
+    {
+      :label => _("Configuration Organization"),
+      :value => @record.configuration_organizations.collect(&:name).join(", ")
     }
   end
 

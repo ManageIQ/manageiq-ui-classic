@@ -1868,7 +1868,7 @@ class CatalogController < ApplicationController
         r[:partial => action]
       elsif record_showing
         if TreeBuilder.get_model_for_prefix(@nodetype) == "MiqTemplate"
-          r[:partial => "vm_common/main", :locals => {:controller => "vm"}]
+          r[:partial => "layouts/textual_groups_generic"]
         elsif @sb[:buttons_node]
           r[:partial => "shared/buttons/ab_list"]
         else
