@@ -1,4 +1,6 @@
 class TreeBuilderAutomateSimulationResults < TreeBuilder
+  include MiqAeClassHelper
+
   has_kids_for Hash, [:x_get_tree_hash_kids]
   def initialize(name, type, sandbox, build = true, root = nil)
     @root = root
@@ -49,9 +51,9 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
       }
     elsif !el.text.blank?
       {
-        :text  => el.text,
-        :tip   => el.text,
-        :image => "100/#{el.name.underscore}.png"
+        :text => el.text,
+        :tip  => el.text,
+        :icon => ae_field_fonticon(el.name.underscore)
       }
     else
       {
