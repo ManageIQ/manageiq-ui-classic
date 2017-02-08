@@ -1,7 +1,7 @@
 - auth_mode = ::Settings.authentication.mode
 
 %span#badge
-  %img{:src => "#{current_tenant.logo? ? '/upload/custom_logo.png' : image_path("login-screen-logo.png")}"}
+  %img{:src => "#{::Settings.server.custom_logo ? '/upload/custom_logo.png' : image_path("login-screen-logo.png")}"}
 
 .container
   .row
