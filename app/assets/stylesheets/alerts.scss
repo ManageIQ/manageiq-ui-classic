@@ -113,8 +113,25 @@
         background-color: #ededed;
       }
     }
+    .list-view-pf-expand .fa-angle-right {
+      margin-top: 12px;
+    }
+  }
+  .column-label {
+    display: inline-block;
+    font-weight: 700;
+    text-align: right;
+    width: 60px;
   }
   .assignee-column {
+  }
+  .description-column {
+    display: inline-block;
+    line-height: 20px;
+    max-height: calc(2 * 20px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
   }
   .ack-icon {
     font-size: 14px;
@@ -225,8 +242,11 @@
       text-overflow: ellipsis;
       display: inline-block;
     }
+    .host-col {
+      width: 100px;
+    }
     .description-col {
-      width: calc(100% - 125px);
+      width: calc(100% - 225px);
       padding: 0 5px;
     }
     .date-col {
