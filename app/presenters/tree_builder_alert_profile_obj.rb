@@ -17,10 +17,6 @@ class TreeBuilderAlertProfileObj < TreeBuilder
 
     if @assign[:new][:assign_to].ends_with?("-tags")
       node[:icon] = "fa fa-tag"
-    elsif @assign[:new][:assign_to] == "ext_management_system"
-      node[:image] = "svg/vendor-#{object.image_name}.svg"
-    elsif @assign[:new][:assign_to] == "resource_pool"
-      node[:icon] = "pficon pficon-resource_pool"
     elsif @assign[:new][:assign_to] == "tenant"
       node[:icon] = "pficon pficon-tenant"
     else
@@ -63,21 +59,6 @@ class TreeBuilderAlertProfileObj < TreeBuilder
   end
 
   def x_get_tree_roots(count_only, _options)
-=begin
-    @objects = []
-    if !(@assign[:new][:assign_to] == "enterprise") && @assign[:new][:assign_to]
-      # No further selection needed for enterprise
-      # Assign to selected
-      if @assign[:new][:assign_to].ends_with?("-tags") && @assign[:new][:cat]
-        # Tag category selected
-        @objects = Classification.find(@assign[:new][:cat]).entries
-      else
-        # Model selected
-        @objects = @assign[:new][:assign_to].camelize.constantize.all
-      end
-    end
-=end
-    #binding.pry
     @objects = if !@assign[:new][:assign_to] || @assign[:new][:assign_to] == "enterprise"
                  []
                elsif @assign[:new][:assign_to].ends_with?("-tags")
@@ -85,7 +66,6 @@ class TreeBuilderAlertProfileObj < TreeBuilder
                else
                  @assign[:new][:assign_to].camelize.constantize.all
                end
-
 
     count_only_or_objects(count_only, @objects.sort_by { |o| (o.name.presence || o.description).downcase })
   end

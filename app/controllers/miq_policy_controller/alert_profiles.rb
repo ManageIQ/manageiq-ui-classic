@@ -144,6 +144,7 @@ module MiqPolicyController::AlertProfiles
       @assign[:new][:assign_to] = params[:chosen_assign_to].blank? ? nil : params[:chosen_assign_to]
       @assign[:new][:cat] = nil                                 # Clear chosen tag category
     end
+
     @assign[:new][:cat] = params[:chosen_cat].blank? ? nil : params[:chosen_cat].to_i if params.key?(:chosen_cat)
     if params.key?(:chosen_assign_to) || params.key?(:chosen_cat)
       @assign[:new][:objects] = []                       # Clear selected objects
