@@ -1621,6 +1621,13 @@ module ApplicationHelper
     end
   end
 
+  LIST_ICON_FOR = [
+    "MiqReportResult",
+    "MiqSchedule",
+    "MiqUserRole",
+    "MiqWidget"
+  ].freeze
+
   def listicon_tag(db, row)
     if %w(MiqReportResult MiqSchedule MiqUserRole MiqWidget).include?(db)
       listicon_glyphicon_tag(db, row)

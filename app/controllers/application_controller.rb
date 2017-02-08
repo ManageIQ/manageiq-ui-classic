@@ -984,9 +984,11 @@ class ApplicationController < ActionController::Base
         item = listicon_item(view, row['id'])
         image = listicon_image(item, view)
         new_row[:img_url] = ActionController::Base.helpers.image_path(listicon_image(item, view).to_s)
+        icon = listicon_icon(item) || listicon_glyphicon_tag_for_widget(row) if LIST_ICON_FOR.include?(view.db)
         new_row[:cells] << {:title => _('View this item'),
                             :image => image,
-                            :icon  => listicon_icon(item)}
+                            :icon  => icon}
+
       end
 
       view.col_order.each_with_index do |col, col_idx|
