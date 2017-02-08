@@ -28,7 +28,7 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', '$scope',
     vm.afterGet = false;
     vm.modelCopy = angular.copy( vm.timeProfileModel );
     vm.model = 'timeProfileModel';
-
+    
     ManageIQ.angular.scope = vm;
 
     miqService.sparkleOn();

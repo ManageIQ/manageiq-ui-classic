@@ -12,10 +12,10 @@ ManageIQ.angular.app.directive('allTimeCheck', function() {
       });
 
       var setAllDaysChecked = function(i, value) {
-        var dayValues = scope.timeProfileModel.dayValues;
+        var dayValues = scope.vm.timeProfileModel.dayValues;
         dayValues[i] = value;
         if (angular.equals(_.times(7, _.constant(true)), dayValues)) {
-          scope.timeProfileModel.all_days = true;
+          scope.vm.timeProfileModel.all_days = true;
         }
       };
 
@@ -29,19 +29,19 @@ ManageIQ.angular.app.directive('allTimeCheck', function() {
           if (hoursArr[j] === name) {
             updatedHourArr = allQuarterArrHoursChecked(name, i, value);
           } else {
-            if (!angular.equals(_.times(6, _.constant(true)), scope[scope.model][hoursArr[j]])) {
+            if (!angular.equals(_.times(6, _.constant(true)), scope.vm[scope.vm.model][hoursArr[j]])) {
               otherHourArrs = false;
               break;
             }
           }
         }
         if (updatedHourArr && otherHourArrs) {
-          scope.timeProfileModel.all_hours = true;
+          scope.vm.timeProfileModel.all_hours = true;
         }
       };
 
       var allQuarterArrHoursChecked = function(name, i, value) {
-        var quarterArrHours = scope[scope.model][name];
+        var quarterArrHours = scope.vm[scope.vm.model][name];
         quarterArrHours[i] = value;
         return angular.equals(_.times(6, _.constant(true)), quarterArrHours);
       };

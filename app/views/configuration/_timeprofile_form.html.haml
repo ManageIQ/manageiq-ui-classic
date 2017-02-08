@@ -6,6 +6,9 @@
 .form-horizontal{:id => "start_form_div"}
   %form#form_div{:name           => "angularForm",
                  'ng-controller' => "timeProfileFormController as vm",
+                 "miq-form"       => true,
+                 "model"          => "vm.timeProfileModel",
+                 "model-copy"     => 'vm.modelCopy',
                  :novalidate     => true}
     = render :partial => "layouts/flash_msg"
     .form-group{"ng-class" => "{'has-error': angularForm.description.$invalid}"}
