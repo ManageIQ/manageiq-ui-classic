@@ -154,8 +154,10 @@ module ApplicationController::Filter
   def adv_search_toggle
     @edit = session[:edit]
 
-    # Rebuild the pulldowns if opening the search box
-    @edit[@expkey].prefill_val_types unless @edit[:adv_search_open]
+    unless @edit[:adv_search_open]
+      @edit[@expkey].prefill_val_types # Rebuild the pulldowns if opening the search box
+      @edit[:search_type] = 'global' if @edit.fetch_path(:expression, :selected, :typ).present? && @edit[:expression][:selected][:typ] == 'global'
+    end
 
     render :update do |page|
       page << javascript_prologue
