@@ -11,8 +11,7 @@ class TreeBuilderPxeCustomizationTemplates < TreeBuilder
   end
 
   def root_options
-    title = _("All %{template} - %{type}") % {:template => ui_lookup(:models => 'CustomizationTemplate'),
-                                              :type     => ui_lookup(:models => 'PxeImageType')}
+    title = _("All Customization Templates - System Image Types")
     {
       :title   => title,
       :tooltip => title
