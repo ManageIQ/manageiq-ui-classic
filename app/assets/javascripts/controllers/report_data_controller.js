@@ -19,7 +19,7 @@
   */
   function defaultPaging() {
     return {
-      label: __('Items per page'),
+      labelItems: __('Items'),
       enabled: true,
       text: 10,
       value: 10,
@@ -120,7 +120,7 @@
 
   ReportDataController.prototype.setPaging = function(start, perPage) {
     this.perPage.value = perPage;
-    this.perPage.text = perPage;
+    this.perPage.text = perPage + ' ' + this.perPage.labelItems;
     this.settings.perpage = perPage;
     this.settings.startIndex = start;
     this.settings.current = ( start / perPage) + 1;
