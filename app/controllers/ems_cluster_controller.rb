@@ -90,13 +90,6 @@ class EmsClusterController < ApplicationController
                       :url  => "/ems_cluster/show/#{@ems_cluster.id}?display=storage")
       @view, @pages = get_view(Storage, :parent => @ems_cluster)  # Get the records (into a view) and the paginator
       @showtype = "storage"
-
-    when "storage_extents"
-      drop_breadcrumb(:name => @ems_cluster.name + _(" (All %{tables})") %
-        {:tables => ui_lookup(:tables => "cim_base_storage_extent")},
-                      :url  => "/ems_cluster/show/#{@ems_cluster.id}?display=storage_extents")
-      @view, @pages = get_view(CimBaseStorageExtent, :parent => @ems_cluster, :parent_method => :base_storage_extents)  # Get the records (into a view) and the paginator
-      @showtype = "storage_extents"
     end
 
     set_config(@ems_cluster)

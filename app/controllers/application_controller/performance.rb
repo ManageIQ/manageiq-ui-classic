@@ -561,7 +561,7 @@ module ApplicationController::Performance
       @perf_options[:typ] = "Hourly" if @perf_record.class.name.starts_with?("Vmdb")
       @perf_options[:days] = "7"
       @perf_options[:rt_minutes] = 15.minutes
-      @perf_options[:model] = @perf_record.kind_of?(MiqCimInstance) ? @perf_record.class.to_s : @perf_record.class.base_class.to_s
+      @perf_options[:model] = @perf_record.class.base_class.to_s
     end
     @perf_options[:rt_minutes] ||= 15.minutes
     @perf_options[:cats] ||= perf_build_cats(@perf_options[:model]) if ["EmsCluster", "Host", "Storage", "AvailabilityZone", "HostAggregate"].include?(@perf_options[:model])
@@ -650,26 +650,7 @@ module ApplicationController::Performance
       end
 
       # Get the report definition (yaml) and set the where clause based on the record type
-      if @perf_record.kind_of?(MiqCimInstance)
-        rpt = perf_get_chart_rpt(@perf_options[:model].underscore)
-        if interval_type == "hourly"
-          rpt.where_clause =  ["miq_cim_instance_id = ? and statistic_time >= ? and statistic_time <= ? and rollup_type = ?",
-                               @perf_record.id,
-                               from_dt,
-                               to_dt,
-                               interval_type]
-        elsif interval_type == "daily"
-          tz = @perf_options["tz#{@perf_options[:typ] == "Daily" ? "_daily" : ""}".to_sym]
-          tp = @perf_options[:time_profile] ||
-               TimeProfile.rollup_daily_metrics.find_all_with_entire_tz.detect { |p| p.tz_or_default == tz }.id
-          rpt.where_clause =  ["miq_cim_instance_id = ? and statistic_time >= ? and statistic_time <= ? and rollup_type = ? and time_profile_id = ?",
-                               @perf_record.id,
-                               from_dt,
-                               to_dt,
-                               interval_type,
-                               tp]
-        end
-      elsif @perf_record.kind_of?(VmdbDatabase)
+      if @perf_record.kind_of?(VmdbDatabase)
         rpt = perf_get_chart_rpt(@perf_options[:model].underscore)
         rpt.where_clause =  ["vmdb_database_id = ? and timestamp >= ? and timestamp <= ? and capture_interval_name = ?",
                              @perf_record.id,

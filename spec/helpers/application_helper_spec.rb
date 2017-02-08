@@ -624,20 +624,9 @@ describe ApplicationHelper do
       expect(subject).to eq(title + ": Requests")
     end
 
-    it "when layout likes 'cim_*' or 'snia_*'" do
-      @layout = "cim_base_storage_extent"
-      expect(subject).to eq(title + ": Storage - #{ui_lookup(:tables => @layout)}")
-    end
-
     it "otherwise" do
       @layout = "xxx"
       expect(subject).to eq(title + ": #{ui_lookup(:tables => @layout)}")
-    end
-  end
-
-  context "#controller_model_name" do
-    it "returns the model's title" do
-      expect(helper.controller_model_name("CimStorageExtent")).to eq("Storage - Extent")
     end
   end
 

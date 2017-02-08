@@ -88,13 +88,6 @@ class StorageController < ApplicationController
       drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @storage.name},
                       :url  => "/storage/x_show/#{@storage.id}?display=#{@display}&refresh=n")
       perf_gen_init_options               # Intialize perf chart options, charts will be generated async
-
-    when "storage_extents"
-      drop_breadcrumb(:name => _(" (All %{tables})") % {:name   => @storage.name,
-                                                        :tables => ui_lookup(:tables => "cim_base_storage_extent")},
-                      :url  => "/storage/x_show/#{@storage.id}?display=storage_extents")
-      @view, @pages = get_view(CimBaseStorageExtent, :parent => @storage, :parent_method => :base_storage_extents)  # Get the records (into a view) and the paginator
-      @showtype = "storage_extents"
     end
     @lastaction = "show"
   end

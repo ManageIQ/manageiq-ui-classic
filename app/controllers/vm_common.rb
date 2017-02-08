@@ -1619,15 +1619,15 @@ module VmCommon
       action = nil
     else
       # now take care of links on summary screen
-      if @showtype == "details"
-        partial = "layouts/x_gtl"
-      elsif @showtype == "item"
-        partial = "layouts/item"
-      elsif @showtype == "drift_history"
-        partial = "layouts/#{@showtype}"
-      else
-        partial = "#{@showtype == "compliance_history" ? "shared/views" : "vm_common"}/#{@showtype}"
-      end
+      partial = if @showtype == "details"
+                  "layouts/x_gtl"
+                elsif @showtype == "item"
+                  "layouts/item"
+                elsif @showtype == "drift_history"
+                  "layouts/#{@showtype}"
+                else
+                  "#{@showtype == "compliance_history" ? "shared/views" : "vm_common"}/#{@showtype}"
+                end
       if @showtype == "item"
         header = _("%{action} \"%{item_name}\" for %{vm_or_template} \"%{name}\"") % {
           :vm_or_template => ui_lookup(:table => table),

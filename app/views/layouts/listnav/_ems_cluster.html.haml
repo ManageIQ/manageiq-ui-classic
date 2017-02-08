@@ -73,14 +73,3 @@
             :record_id    => @record.id,
             :display      => nil,
             :title        => _("Show %{cluster_title} drift history") % {:cluster_title => cluster_title})
-
-    - if ::Settings.product.storage
-      = miq_accordion_panel(_("Storage Relationships"), false, "host_inf_rel") do
-        %ul.nav.nav-pills.nav-stacked
-          - if role_allows?(:feature => "cim_base_storage_extent_show_list")
-            = li_link(:count => @record.base_storage_extents.count,
-              :record_id     => @record.id,
-              :tables        => 'cim_base_storage_extent',
-              :display       => 'storage_extents',
-              :action        => 'show',
-              :title         => _("Show all %{base_storage_extent}") % {:base_storage_extent => ui_lookup(:tables => "cim_base_storage_extent")})

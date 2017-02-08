@@ -2710,11 +2710,6 @@ Rails.application.routes.draw do
                dialog_runner_post
     },
 
-    # TODO: revisit this controller/route, might be removed after other storage issues are sorted out
-    :snia_local_file_system   => {
-      :get  => %w(show)
-    },
-
     :storage                  => {
       :get  => %w(
         button

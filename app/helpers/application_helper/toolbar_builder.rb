@@ -463,6 +463,26 @@ class ApplicationHelper::ToolbarBuilder
     end
 
     case get_record_cls(@record)
+    when "AvailabilityZone"
+      case id
+      when "availability_zone_perf"
+        unless @record.has_perf_data?
+          return N_("No Capacity & Utilization data has been collected for this Availability Zone")
+        end
+      when "availability_zone_timeline"
+        unless @record.has_events? # || @record.has_events?(:policy_events), may add this check back in later
+          return N_("No Timeline data has been collected for this Availability Zone")
+        end
+      end
+    when "EmsCluster"
+      case id
+      when "ems_cluster_perf"
+        return N_("No Capacity & Utilization data has been collected for this Cluster") unless @record.has_perf_data?
+      when "ems_cluster_timeline"
+        unless @record.has_events? || @record.has_events?(:policy_events)
+          return N_("No Timeline data has been collected for this Cluster")
+        end
+      end
     when "Host"
       case id
       when "host_analyze_check_compliance", "host_check_compliance"

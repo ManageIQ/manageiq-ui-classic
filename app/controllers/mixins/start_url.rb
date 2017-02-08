@@ -1,8 +1,7 @@
 module StartUrl
   extend ActiveSupport::Concern
 
-  STORAGE_START_PAGES = %w(cim_storage_extent_show_list
-                           storage_manager_show_list).to_set.freeze
+  STORAGE_START_PAGES = %w(storage_manager_show_list).to_set.freeze
   CONTAINERS_START_PAGES = %w(ems_container_show_list
                               container_node_show_list
                               container_group_show_list
@@ -41,7 +40,7 @@ module StartUrl
   private
 
   def start_page_allowed?(start_page)
-    return false if STORAGE_START_PAGES.include?(start_page) && !::Settings.product.storage
+    return false if STORAGE_START_PAGES.include?(start_page)
     return false if CONTAINERS_START_PAGES.include?(start_page) && !::Settings.product.containers
     role_allows?(:feature => start_page, :any => true)
   end

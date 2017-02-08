@@ -76,8 +76,6 @@ class ApplicationController < ActionController::Base
   end
 
   # Convert Controller Name to Actual Model
-  # Examples:
-  #   CimStorageExtentController => CimStorageExtent
   def self.model
     @model ||= name[0..-11].constantize
   end
@@ -86,8 +84,6 @@ class ApplicationController < ActionController::Base
     controller_name
   end
 
-  # Examples:
-  #   CimStorageExtentController => cim_storage_extent
   def self.table_name
     @table_name ||= model.name.underscore
   end
@@ -1446,9 +1442,7 @@ class ApplicationController < ActionController::Base
 
   def get_view_process_search_text(view)
     # Check for new search by name text entered
-    if params[:search] &&
-       # Disabled search for Storage CIs until backend is fixed to handle evm_display_name field
-       !%w(CimBaseStorageExtent SniaLocalFileSystem).include?(view.db)
+    if params[:search]
       @search_text = params[:search][:text].blank? ? nil : params[:search][:text].strip
     elsif params[:search_text] && @explorer
       @search_text = params[:search_text].blank? ? nil : params[:search_text].strip
@@ -2126,7 +2120,7 @@ class ApplicationController < ActionController::Base
       # These controllers don't use breadcrumbs, see above get method to store URL
       when "dashboard", "report", "support", "alert", "jobs", "ui_jobs", "miq_ae_tools", "miq_policy", "miq_action", "miq_capacity", "chargeback", "service"
 
-      when "snia_local_file_system", "storage_manager", "cim_base_storage_extent"
+      when "storage_manager"
         session[:tab_bc][:sto] = @breadcrumbs.dup if ["show", "show_list", "index"].include?(action_name)
       when "ems_cloud", "availability_zone", "host_aggregate", "flavor"
         session[:tab_bc][:clo] = @breadcrumbs.dup if ["show", "show_list"].include?(action_name)
