@@ -814,6 +814,7 @@ module ApplicationHelper
   def display_adv_search?
     %w(auth_key_pair_cloud
        availability_zone
+       automation_manager
        cim_base_storage_extent
        cloud_network
        cloud_object_store_container
@@ -1458,6 +1459,7 @@ module ApplicationHelper
     show_search = %w(
       auth_key_pair_cloud
       availability_zone
+      automation_manager
       cim_base_storage_extent
       cloud_network
       cloud_object_store_container
