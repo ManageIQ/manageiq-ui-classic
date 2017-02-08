@@ -20,9 +20,9 @@ class TreeBuilderAlertProfileObj < TreeBuilder
     elsif @assign[:new][:assign_to] == "ext_management_system"
       node[:image] = "svg/vendor-#{object.image_name}.svg"
     elsif @assign[:new][:assign_to] == "resource_pool"
-      node[:icon] = "pficon-resource_pool"
+      node[:icon] = "pficon pficon-resource_pool"
     elsif @assign[:new][:assign_to] == "tenant"
-      node[:image] = ActionController::Base.helpers.image_path("100/tenant.png")
+      node[:icon] = "pficon pficon-tenant"
     else
       node[:image] = ActionController::Base.helpers.image_path("100/#{@assign[:new][:assign_to]}.png")
     end
@@ -63,6 +63,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
   end
 
   def x_get_tree_roots(count_only, _options)
+=begin
     @objects = []
     if !(@assign[:new][:assign_to] == "enterprise") && @assign[:new][:assign_to]
       # No further selection needed for enterprise
@@ -75,6 +76,17 @@ class TreeBuilderAlertProfileObj < TreeBuilder
         @objects = @assign[:new][:assign_to].camelize.constantize.all
       end
     end
+=end
+    #binding.pry
+    @objects = if !@assign[:new][:assign_to] || @assign[:new][:assign_to] == "enterprise"
+                 []
+               elsif @assign[:new][:assign_to].ends_with?("-tags")
+                 @assign[:new][:cat] ? Classification.find(@assign[:new][:cat]).entries : []
+               else
+                 @assign[:new][:assign_to].camelize.constantize.all
+               end
+
+
     count_only_or_objects(count_only, @objects.sort_by { |o| (o.name.presence || o.description).downcase })
   end
 end
