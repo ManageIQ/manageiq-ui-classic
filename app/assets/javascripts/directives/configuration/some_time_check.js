@@ -12,12 +12,12 @@ ManageIQ.angular.app.directive('someTimeCheck', function() {
 
       var allDaysUnchecked = function(scope) {
         var dayValues = _.times(7, _.constant(false));
-        return angular.equals(scope.timeProfileModel.dayValues, dayValues);
+        return angular.equals(scope.vm.timeProfileModel.dayValues, dayValues);
       };
 
       var allHoursUnchecked = function(scope) {
         var hourValues = _.times(24, _.constant(false));
-        return angular.equals(scope.timeProfileModel.hourValues, hourValues);
+        return angular.equals(scope.vm.timeProfileModel.hourValues, hourValues);
       };
     }
   }

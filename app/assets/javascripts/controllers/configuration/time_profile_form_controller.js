@@ -1,6 +1,8 @@
 ManageIQ.angular.app.controller('timeProfileFormController', ['$http', '$scope', 'timeProfileFormId', 'miqService', function($http, $scope, timeProfileFormId, miqService) {
+  var vm = this;
+
   var init = function() {
-    $scope.timeProfileModel = {
+    vm.timeProfileModel = {
       description: '',
       admin_user: false,
       restricted_time_profile: false,
@@ -19,15 +21,15 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', '$scope',
       some_days_checked: true,
       some_hours_checked: true,
     };
-    $scope.dayNames = [__("Sunday"), __("Monday"), __("Tuesday"), __("Wednesday"), __("Thursday"), __("Friday"), __("Saturday")];
-    $scope.hourNamesFirstHalf = [__("12-1"), __("1-2"), __("2-3"), __("3-4"), __("4-5"), __("5-6")];
-    $scope.hourNamesSecondHalf = [__("6-7"), __("7-8"), __("8-9"), __("9-10"), __("10-11"), __("11-12")];
-    $scope.formId = timeProfileFormId;
-    $scope.afterGet = false;
-    $scope.modelCopy = angular.copy( $scope.timeProfileModel );
-    $scope.model = 'timeProfileModel';
+    vm.dayNames = [__("Sunday"), __("Monday"), __("Tuesday"), __("Wednesday"), __("Thursday"), __("Friday"), __("Saturday")];
+    vm.hourNamesFirstHalf = [__("12-1"), __("1-2"), __("2-3"), __("3-4"), __("4-5"), __("5-6")];
+    vm.hourNamesSecondHalf = [__("6-7"), __("7-8"), __("8-9"), __("9-10"), __("10-11"), __("11-12")];
+    vm.formId = timeProfileFormId;
+    vm.afterGet = false;
+    vm.modelCopy = angular.copy( vm.timeProfileModel );
+    vm.model = 'timeProfileModel';
 
-    ManageIQ.angular.scope = $scope;
+    ManageIQ.angular.scope = vm;
 
     miqService.sparkleOn();
     $http.get('/configuration/time_profile_form_fields/' + timeProfileFormId)
@@ -35,136 +37,136 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', '$scope',
       .catch(miqService.handleFailure);
 
     if (timeProfileFormId == 'new') {
-      $scope.newRecord = true;
+      vm.newRecord = true;
     } else {
-      $scope.newRecord = false;
+      vm.newRecord = false;
     }
   };
 
-  $scope.getDaysValues = function() {
+  vm.getDaysValues = function() {
     for(i = 0; i < 7; i++) {
-      if ($scope.timeProfileModel.days.indexOf(i) > -1) {
-        $scope.timeProfileModel.dayValues.push(true);
+      if (vm.timeProfileModel.days.indexOf(i) > -1) {
+        vm.timeProfileModel.dayValues.push(true);
       } else {
-        $scope.timeProfileModel.dayValues.push(false);
+        vm.timeProfileModel.dayValues.push(false);
       }
     }
   };
 
-  $scope.dayValuesChanged = function() {
+  vm.dayValuesChanged = function() {
     var tempDays = [];
 
     for(var i = 0; i < 7; i++) {
-      if ($scope.timeProfileModel.dayValues[i] === true) {
+      if (vm.timeProfileModel.dayValues[i] === true) {
         tempDays.push(i);
       }
     }
-    $scope.timeProfileModel.days = tempDays;
+    vm.timeProfileModel.days = tempDays;
   };
 
-  $scope.getHoursValues = function() {
+  vm.getHoursValues = function() {
     for(i = 0; i < 6; i++) {
-      if ($scope.timeProfileModel.hours.indexOf(i) > -1) {
-        $scope.timeProfileModel.hourValuesAMFirstHalf.push(true);
+      if (vm.timeProfileModel.hours.indexOf(i) > -1) {
+        vm.timeProfileModel.hourValuesAMFirstHalf.push(true);
       } else {
-        $scope.timeProfileModel.hourValuesAMFirstHalf.push(false);
+        vm.timeProfileModel.hourValuesAMFirstHalf.push(false);
       }
     }
     for(i = 6; i < 12; i++) {
-      if ($scope.timeProfileModel.hours.indexOf(i) > -1) {
-        $scope.timeProfileModel.hourValuesAMSecondHalf.push(true);
+      if (vm.timeProfileModel.hours.indexOf(i) > -1) {
+        vm.timeProfileModel.hourValuesAMSecondHalf.push(true);
       } else {
-        $scope.timeProfileModel.hourValuesAMSecondHalf.push(false);
+        vm.timeProfileModel.hourValuesAMSecondHalf.push(false);
       }
     }
     for(i = 12; i < 18; i++) {
-      if ($scope.timeProfileModel.hours.indexOf(i) > -1) {
-        $scope.timeProfileModel.hourValuesPMFirstHalf.push(true);
+      if (vm.timeProfileModel.hours.indexOf(i) > -1) {
+        vm.timeProfileModel.hourValuesPMFirstHalf.push(true);
       } else {
-        $scope.timeProfileModel.hourValuesPMFirstHalf.push(false);
+        vm.timeProfileModel.hourValuesPMFirstHalf.push(false);
       }
     }
     for(i = 18; i < 24; i++) {
-      if ($scope.timeProfileModel.hours.indexOf(i) > -1) {
-        $scope.timeProfileModel.hourValuesPMSecondHalf.push(true);
+      if (vm.timeProfileModel.hours.indexOf(i) > -1) {
+        vm.timeProfileModel.hourValuesPMSecondHalf.push(true);
       } else {
-        $scope.timeProfileModel.hourValuesPMSecondHalf.push(false);
+        vm.timeProfileModel.hourValuesPMSecondHalf.push(false);
       }
     }
-    $scope.calculateTimeProfileHourValues();
+    vm.calculateTimeProfileHourValues();
   };
 
-  $scope.hourValuesChanged = function() {
+  vm.hourValuesChanged = function() {
     var tempHours = [];
 
     for(var i = 0; i < 6; i++) {
-      if ($scope.timeProfileModel.hourValuesAMFirstHalf[i] === true) {
+      if (vm.timeProfileModel.hourValuesAMFirstHalf[i] === true) {
         tempHours.push(i);
       }
     }
     for(var i = 0, j = 6; i < 6, j < 12; i++, j++) {
-      if ($scope.timeProfileModel.hourValuesAMSecondHalf[i] === true) {
+      if (vm.timeProfileModel.hourValuesAMSecondHalf[i] === true) {
         tempHours.push(j);
       }
     }
     for(var i = 0, j = 12; i < 6, j < 18; i++, j++) {
-      if ($scope.timeProfileModel.hourValuesPMFirstHalf[i] === true) {
+      if (vm.timeProfileModel.hourValuesPMFirstHalf[i] === true) {
         tempHours.push(j);
       }
     }
     for(var i = 0, j = 18; i < 6, j < 24; i++, j++) {
-      if ($scope.timeProfileModel.hourValuesPMSecondHalf[i] === true) {
+      if (vm.timeProfileModel.hourValuesPMSecondHalf[i] === true) {
         tempHours.push(j);
       }
     }
-    $scope.timeProfileModel.hours = tempHours;
-    $scope.calculateTimeProfileHourValues();
+    vm.timeProfileModel.hours = tempHours;
+    vm.calculateTimeProfileHourValues();
   };
 
-  $scope.calculateTimeProfileHourValues = function() {
-    $scope.timeProfileModel.hourValues = [];
-    $scope.timeProfileModel.hourValues.push($scope.timeProfileModel.hourValuesAMFirstHalf);
-    $scope.timeProfileModel.hourValues.push($scope.timeProfileModel.hourValuesAMSecondHalf);
-    $scope.timeProfileModel.hourValues.push($scope.timeProfileModel.hourValuesPMFirstHalf);
-    $scope.timeProfileModel.hourValues.push($scope.timeProfileModel.hourValuesPMSecondHalf);
-    $scope.timeProfileModel.hourValues = _.flattenDeep($scope.timeProfileModel.hourValues);
+  vm.calculateTimeProfileHourValues = function() {
+    vm.timeProfileModel.hourValues = [];
+    vm.timeProfileModel.hourValues.push(vm.timeProfileModel.hourValuesAMFirstHalf);
+    vm.timeProfileModel.hourValues.push(vm.timeProfileModel.hourValuesAMSecondHalf);
+    vm.timeProfileModel.hourValues.push(vm.timeProfileModel.hourValuesPMFirstHalf);
+    vm.timeProfileModel.hourValues.push(vm.timeProfileModel.hourValuesPMSecondHalf);
+    vm.timeProfileModel.hourValues = _.flattenDeep(vm.timeProfileModel.hourValues);
   };
 
-  $scope.allDaysClicked = function() {
-    if ($scope.timeProfileModel.all_days) {
-      $scope.timeProfileModel.dayValues = _.times(7, _.constant(true));
-      $scope.timeProfileModel.days = _.times(7, i);
-      $scope.timeProfileModel.some_days_checked = true;
+  vm.allDaysClicked = function() {
+    if (vm.timeProfileModel.all_days) {
+      vm.timeProfileModel.dayValues = _.times(7, _.constant(true));
+      vm.timeProfileModel.days = _.times(7, i);
+      vm.timeProfileModel.some_days_checked = true;
     } else {
-      $scope.timeProfileModel.dayValues = _.times(7, _.constant(false));
-      $scope.timeProfileModel.days = [];
-      $scope.timeProfileModel.some_days_checked = false;
+      vm.timeProfileModel.dayValues = _.times(7, _.constant(false));
+      vm.timeProfileModel.days = [];
+      vm.timeProfileModel.some_days_checked = false;
     }
   };
 
-  $scope.allHoursClicked = function() {
-    if ($scope.timeProfileModel.all_hours) {
-      $scope.timeProfileModel.hourValuesAMFirstHalf = _.times(6, _.constant(true));
-      $scope.timeProfileModel.hourValuesAMSecondHalf = _.times(6, _.constant(true));
-      $scope.timeProfileModel.hourValuesPMFirstHalf = _.times(6, _.constant(true));
-      $scope.timeProfileModel.hourValuesPMSecondHalf = _.times(6, _.constant(true));
-      $scope.timeProfileModel.hours = _.times(24, i);
-      $scope.timeProfileModel.some_hours_checked = true;
+  vm.allHoursClicked = function() {
+    if (vm.timeProfileModel.all_hours) {
+      vm.timeProfileModel.hourValuesAMFirstHalf = _.times(6, _.constant(true));
+      vm.timeProfileModel.hourValuesAMSecondHalf = _.times(6, _.constant(true));
+      vm.timeProfileModel.hourValuesPMFirstHalf = _.times(6, _.constant(true));
+      vm.timeProfileModel.hourValuesPMSecondHalf = _.times(6, _.constant(true));
+      vm.timeProfileModel.hours = _.times(24, i);
+      vm.timeProfileModel.some_hours_checked = true;
     } else {
-      $scope.timeProfileModel.hourValuesAMFirstHalf = _.times(6, _.constant(false));
-      $scope.timeProfileModel.hourValuesAMSecondHalf = _.times(6, _.constant(false));
-      $scope.timeProfileModel.hourValuesPMFirstHalf = _.times(6, _.constant(false));
-      $scope.timeProfileModel.hourValuesPMSecondHalf = _.times(6, _.constant(false));
-      $scope.timeProfileModel.some_hours_checked = false;
-      $scope.timeProfileModel.hours = [];
+      vm.timeProfileModel.hourValuesAMFirstHalf = _.times(6, _.constant(false));
+      vm.timeProfileModel.hourValuesAMSecondHalf = _.times(6, _.constant(false));
+      vm.timeProfileModel.hourValuesPMFirstHalf = _.times(6, _.constant(false));
+      vm.timeProfileModel.hourValuesPMSecondHalf = _.times(6, _.constant(false));
+      vm.timeProfileModel.some_hours_checked = false;
+      vm.timeProfileModel.hours = [];
     }
-    $scope.calculateTimeProfileHourValues();
+    vm.calculateTimeProfileHourValues();
   };
 
   var timeProfileEditButtonClicked = function(buttonName, serializeFields) {
     miqService.sparkleOn();
     var url = '/configuration/timeprofile_update/' + timeProfileFormId + '?button=' + buttonName;
-    var timeProfileModelObj = angular.copy($scope.timeProfileModel);
+    var timeProfileModelObj = angular.copy(vm.timeProfileModel);
     delete timeProfileModelObj.profile_tz;
     var moreUrlParams = $.param(miqService.serializeModel(timeProfileModelObj));
     if(moreUrlParams)
@@ -174,18 +176,18 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', '$scope',
 
   $scope.cancelClicked = function() {
     timeProfileEditButtonClicked('cancel');
-    $scope.angularForm.$setPristine(true);
+    vm.angularForm.$setPristine(true);
   };
 
   $scope.resetClicked = function() {
-    $scope.timeProfileModel = angular.copy( $scope.modelCopy );
-    $scope.angularForm.$setPristine(true);
+    vm.timeProfileModel = angular.copy( vm.modelCopy );
+    vm.angularForm.$setPristine(true);
     miqService.miqFlash("warn", __("All changes have been reset"));
   };
 
   $scope.saveClicked = function() {
     timeProfileEditButtonClicked('save', true);
-    $scope.angularForm.$setPristine(true);
+    vm.angularForm.$setPristine(true);
   };
 
   $scope.addClicked = function() {
@@ -195,24 +197,24 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', '$scope',
   function getTimeProfileFormData(response) {
     var data = response.data;
 
-    $scope.timeProfileModel.description = data.description;
-    $scope.timeProfileModel.admin_user = data.admin_user;
-    $scope.timeProfileModel.restricted_time_profile = data.restricted_time_profile;
-    $scope.timeProfileModel.profile_type = data.profile_type;
-    $scope.timeProfileModel.profile_tz = data.profile_tz;
-    $scope.timeProfileModel.rollup_daily = data.rollup_daily;
-    $scope.timeProfileModel.miq_reports_count = data.miq_reports_count;
-    $scope.timeProfileModel.all_days = data.all_days;
-    $scope.timeProfileModel.days = data.days;
-    $scope.timeProfileModel.all_hours = data.all_hours;
-    $scope.timeProfileModel.hours = data.hours;
-    $scope.getDaysValues();
-    $scope.getHoursValues();
+    vm.timeProfileModel.description = data.description;
+    vm.timeProfileModel.admin_user = data.admin_user;
+    vm.timeProfileModel.restricted_time_profile = data.restricted_time_profile;
+    vm.timeProfileModel.profile_type = data.profile_type;
+    vm.timeProfileModel.profile_tz = data.profile_tz;
+    vm.timeProfileModel.rollup_daily = data.rollup_daily;
+    vm.timeProfileModel.miq_reports_count = data.miq_reports_count;
+    vm.timeProfileModel.all_days = data.all_days;
+    vm.timeProfileModel.days = data.days;
+    vm.timeProfileModel.all_hours = data.all_hours;
+    vm.timeProfileModel.hours = data.hours;
+    vm.getDaysValues();
+    vm.getHoursValues();
 
-    $scope.note = sprintf(__("In use by %s reports, cannot be disabled"), $scope.timeProfileModel.miq_reports_count);
+    vm.note = sprintf(__("In use by %s reports, cannot be disabled"), vm.timeProfileModel.miq_reports_count);
 
-    $scope.afterGet = true;
-    $scope.modelCopy                    = angular.copy( $scope.timeProfileModel );
+    vm.afterGet = true;
+    vm.modelCopy                    = angular.copy( vm.timeProfileModel );
 
     miqService.sparkleOff();
   }

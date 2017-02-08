@@ -3,10 +3,9 @@
   %br
   %br
 
-.form-horizontal{:id => "start_form_div", :style => "display:none"}
+.form-horizontal{:id => "start_form_div"}
   %form#form_div{:name           => "angularForm",
-                 'ng-controller' => "timeProfileFormController",
-                 'ng-show'       => "afterGet",
+                 'ng-controller' => "timeProfileFormController as vm",
                  :novalidate     => true}
     = render :partial => "layouts/flash_msg"
     .form-group{"ng-class" => "{'has-error': angularForm.description.$invalid}"}
@@ -16,8 +15,8 @@
         %input.form-control{:type              => "text",
                               :name            => "description",
                               "id"             => "description",
-                              'ng-model'       => "timeProfileModel.description",
-                              'ng-disabled'    => "timeProfileModel.restricted_time_profile",
+                              'ng-model'       => "vm.timeProfileModel.description",
+                              'ng-disabled'    => "vm.timeProfileModel.restricted_time_profile",
                               :maxlength       => MAX_NAME_LEN,
                               :required        => "",
                               :checkchange     => true,
@@ -25,14 +24,14 @@
                               "start-form-div" => "start_form_div"}
         %span.help-block{"ng-show" => "angularForm.description.$error.required"}
           = _("Required")
-    .form-group{"ng-if" => "timeProfileModel.admin_user"}
+    .form-group{"ng-if" => "vm.timeProfileModel.admin_user"}
       %label.col-md-2.control-label
         = _('Scope')
       .col-md-8
         = select_tag('profile_type',
                    options_for_select([["<#{_('Choose')}>", nil]] + [["#{_('All Users')}", "global"], ["#{_('Current User')}", "user"]], disabled: ["<#{_('Choose')}>", nil]),
-                   "ng-model"                    => "timeProfileModel.profile_type",
-                   'ng-disabled'                 => "timeProfileModel.restricted_time_profile",
+                   "ng-model"                    => "vm.timeProfileModel.profile_type",
+                   'ng-disabled'                 => "vm.timeProfileModel.restricted_time_profile",
                    "required"                    => "",
                    "checkchange"                 => "",
                    "selectpicker-for-select-tag" => "",
@@ -49,23 +48,23 @@
               %input.form-control{:type         => "checkbox",
                                   :name         => "all_days",
                                   "id"          => "all_days",
-                                  'ng-model'    => "timeProfileModel.all_days",
-                                  'ng-disabled' => "timeProfileModel.restricted_time_profile",
-                                  "ng-change"   => "allDaysClicked()",
+                                  'ng-model'    => "vm.timeProfileModel.all_days",
+                                  'ng-disabled' => "vm.timeProfileModel.restricted_time_profile",
+                                  "ng-change"   => "vm.allDaysClicked()",
                                   "bs-switch"   => "",
                                   :checkchange  => "",
                                 }
         .form-group{"ng-class" => "{'has-error': angularForm.some_days_checked.$error.someDaysCheck}"}
           %label.col-md-2.control-label
           %div
-            %span.col-sm-1{"ng-repeat" => "day in timeProfileModel.dayValues track by $index"}
-              {{dayNames[$index]}}
+            %span.col-sm-1{"ng-repeat" => "day in vm.timeProfileModel.dayValues track by $index"}
+              {{vm.dayNames[$index]}}
               %div
                 %input.form-control{:type            => "checkbox",
                                     :name            => "dayValues",
-                                    'ng-model'       => "timeProfileModel.dayValues[$index]",
-                                    'ng-disabled'    => "timeProfileModel.restricted_time_profile",
-                                    'ng-change'      => "dayValuesChanged()",
+                                    'ng-model'       => "vm.timeProfileModel.dayValues[$index]",
+                                    'ng-disabled'    => "vm.timeProfileModel.restricted_time_profile",
+                                    'ng-change'      => "vm.dayValuesChanged()",
                                     "bs-switch"      => "",
                                     :checkchange     => "",
                                     'time-type'      => "day",
@@ -79,7 +78,7 @@
               %input.form-control{:type             => "checkbox",
                                   :name             => "some_days_checked",
                                   "id"              => "some_days_checked",
-                                  'ng-model'        => "timeProfileModel.some_days_checked",
+                                  'ng-model'        => "vm.timeProfileModel.some_days_checked",
                                   'ng-hide'         => true,
                                   'time-type'       => "day",
                                   "some-time-check" => ""}
@@ -94,9 +93,9 @@
               %input.form-control{:type         => "checkbox",
                                   :name         => "all_hours",
                                   "id"          => "all_hours",
-                                  'ng-model'    => "timeProfileModel.all_hours",
-                                  'ng-disabled' => "timeProfileModel.restricted_time_profile",
-                                  "ng-change"   => "allHoursClicked()",
+                                  'ng-model'    => "vm.timeProfileModel.all_hours",
+                                  'ng-disabled' => "vm.timeProfileModel.restricted_time_profile",
+                                  "ng-change"   => "vm.allHoursClicked()",
                                   "bs-switch"   => "",
                                   :checkchange  => "",
                                 }
@@ -104,14 +103,14 @@
           %label.col-md-2.control-label
             = _('AM')
           %div
-            %span.col-sm-1{"ng-repeat" => "hour in timeProfileModel.hourValuesAMFirstHalf track by $index"}
-              {{hourNamesFirstHalf[$index]}}
+            %span.col-sm-1{"ng-repeat" => "hour in vm.timeProfileModel.hourValuesAMFirstHalf track by $index"}
+              {{vm.hourNamesFirstHalf[$index]}}
               %div
                 %input.form-control{:type            => "checkbox",
                                     :name            => "hourValuesAMFirstHalf",
-                                    'ng-model'       => "timeProfileModel.hourValuesAMFirstHalf[$index]",
-                                    'ng-disabled'    => "timeProfileModel.restricted_time_profile",
-                                    'ng-change'      => "hourValuesChanged()",
+                                    'ng-model'       => "vm.timeProfileModel.hourValuesAMFirstHalf[$index]",
+                                    'ng-disabled'    => "vm.timeProfileModel.restricted_time_profile",
+                                    'ng-change'      => "vm.hourValuesChanged()",
                                     "bs-switch"      => "",
                                     :checkchange     => "",
                                     'time-type'      => "hour",
@@ -121,14 +120,14 @@
         .form-group
           %label.col-md-2.control-label
           %div
-            %span.col-sm-1{"ng-repeat" => "hour in timeProfileModel.hourValuesAMSecondHalf track by $index"}
-              {{hourNamesSecondHalf[$index]}}
+            %span.col-sm-1{"ng-repeat" => "hour in vm.timeProfileModel.hourValuesAMSecondHalf track by $index"}
+              {{vm.hourNamesSecondHalf[$index]}}
               %div
                 %input.form-control{:type            => "checkbox",
                                     :name            => "hourValuesAMSecondHalf",
-                                    'ng-model'       => "timeProfileModel.hourValuesAMSecondHalf[$index]",
-                                    'ng-disabled'    => "timeProfileModel.restricted_time_profile",
-                                    'ng-change'      => "hourValuesChanged()",
+                                    'ng-model'       => "vm.timeProfileModel.hourValuesAMSecondHalf[$index]",
+                                    'ng-disabled'    => "vm.timeProfileModel.restricted_time_profile",
+                                    'ng-change'      => "vm.hourValuesChanged()",
                                     "bs-switch"      => "",
                                     :checkchange     => "",
                                     'time-type'      => "hour",
@@ -139,14 +138,14 @@
           %label.col-md-2.control-label
             = _('PM')
           %div
-            %span.col-sm-1{"ng-repeat" => "hour in timeProfileModel.hourValuesPMFirstHalf track by $index"}
-              {{hourNamesFirstHalf[$index]}}
+            %span.col-sm-1{"ng-repeat" => "hour in vm.timeProfileModel.hourValuesPMFirstHalf track by $index"}
+              {{vm.hourNamesFirstHalf[$index]}}
               %div
                 %input.form-control{:type            => "checkbox",
                                     :name            => "hourValuesPMFirstHalf",
-                                    'ng-model'       => "timeProfileModel.hourValuesPMFirstHalf[$index]",
-                                    'ng-change'      => "hourValuesChanged()",
-                                    'ng-disabled'    => "timeProfileModel.restricted_time_profile",
+                                    'ng-model'       => "vm.timeProfileModel.hourValuesPMFirstHalf[$index]",
+                                    'ng-change'      => "vm.hourValuesChanged()",
+                                    'ng-disabled'    => "vm.timeProfileModel.restricted_time_profile",
                                     "bs-switch"      => "",
                                     :checkchange     => "",
                                     'time-type'      => "hour",
@@ -156,14 +155,14 @@
         .form-group
           %label.col-md-2.control-label
           %div
-            %span.col-sm-1{"ng-repeat" => "hour in timeProfileModel.hourValuesPMSecondHalf track by $index"}
-              {{hourNamesSecondHalf[$index]}}
+            %span.col-sm-1{"ng-repeat" => "hour in vm.timeProfileModel.hourValuesPMSecondHalf track by $index"}
+              {{vm.hourNamesSecondHalf[$index]}}
               %div
                 %input.form-control{:type            => "checkbox",
                                     :name            => "hourValuesPMSecondHalf",
-                                    'ng-model'       => "timeProfileModel.hourValuesPMSecondHalf[$index]",
-                                    'ng-change'      => "hourValuesChanged()",
-                                    'ng-disabled'    => "timeProfileModel.restricted_time_profile",
+                                    'ng-model'       => "vm.timeProfileModel.hourValuesPMSecondHalf[$index]",
+                                    'ng-change'      => "vm.hourValuesChanged()",
+                                    'ng-disabled'    => "vm.timeProfileModel.restricted_time_profile",
                                     "bs-switch"      => "",
                                     :checkchange     => "",
                                     'time-type'      => "hour",
@@ -177,7 +176,7 @@
               %input.form-control{:type             => "checkbox",
                                   :name             => "some_hours_checked",
                                   "id"              => "some_hours_checked",
-                                  'ng-model'        => "timeProfileModel.some_hours_checked",
+                                  'ng-model'        => "vm.timeProfileModel.some_hours_checked",
                                   'ng-hide'         => true,
                                   'time-type'       => "hour",
                                   "some-time-check" => ""}
@@ -189,29 +188,29 @@
           .col-md-8
             = select_tag('profile_tz',
                        options_for_select([["<#{_('Determine at Run Time')}>", nil]] + ALL_TIMEZONES),
-                       "ng-model"                    => "timeProfileModel.profile_tz",
-                       'ng-disabled'                 => "timeProfileModel.restricted_time_profile",
+                       "ng-model"                    => "vm.timeProfileModel.profile_tz",
+                       'ng-disabled'                 => "vm.timeProfileModel.restricted_time_profile",
                        "checkchange"                 => "",
                        "selectpicker-for-select-tag" => "",
                        "data-live-search"            => "true")
 
-      .form-group{"ng-if" => "timeProfileModel.admin_user && timeProfileModel.profile_tz != ''"}
+      .form-group{"ng-if" => "vm.timeProfileModel.admin_user && vm.timeProfileModel.profile_tz != ''"}
         %label.col-md-2.control-label
           = _('Roll Up Daily Performance')
         .col-md-8
           %input.form-control{:type             => "checkbox",
                               :name             => "rollup_daily",
-                              'ng-model'        => "timeProfileModel.rollup_daily",
+                              'ng-model'        => "vm.timeProfileModel.rollup_daily",
                               "bs-switch"       => "",
-                              "switch-readonly" => "timeProfileModel.restricted_time_profile || timeProfileModel.miq_reports_count > 0",
+                              "switch-readonly" => "vm.timeProfileModel.restricted_time_profile || vm.timeProfileModel.miq_reports_count > 0",
                               :checkchange      => "",
                              }
-          %div{"ng-if" => "timeProfileModel.miq_reports_count > 0"}
+          %div{"ng-if" => "vm.timeProfileModel.miq_reports_count > 0"}
             {{note}}
     = render :partial => "layouts/angular/x_edit_buttons_angular"
     %br
     %br
-    %div{"ng-if" => "timeProfileModel.miq_reports_count > 0"}
+    %div{"ng-if" => "vm.timeProfileModel.miq_reports_count > 0"}
       %hr
       %h3= _('Reports Currently Using This Time Profile')
       %table.table.table-striped.table-bordered
