@@ -77,6 +77,12 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
       filterValues: _this.severityTitles
     },
     {
+      id: 'host',
+      title: __('Host Name'),
+      placeholder: __('Filter by Host Name'),
+      filterType: 'text'
+    },
+    {
       id: 'name',
       title: __('Provider Name'),
       placeholder: __('Filter by Provider Name'),
@@ -160,6 +166,8 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
       found = item.severityInfo.title === filter.value;
     } else if (filter.id === 'message') {
       found = filterStringCompare(item.message, filter.value);
+    } else if (filter.id === 'host') {
+      found = filterStringCompare(item.hostName, filter.value);
     } else if (filter.id === 'type') {
       found = item.objectType === filter.value;
     } else if (filter.id === 'name') {
@@ -207,6 +215,8 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
       compValue = item1.evaluated_on - item2.evaluated_on;
     } else if (sortId === 'severity') {
       compValue = item1.severityInfo.value - item2.severityInfo.value;
+    } else if (sortId === 'host') {
+      compValue = item1.hostName.localeCompare(item2.hostName);
     } else if (sortId === 'name') {
       compValue = item1.objectName.localeCompare(item2.objectName);
     } else if (sortId === 'type') {
@@ -241,6 +251,11 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
       id: 'severity',
       title: __('Severity'),
       sortType: 'numeric'
+    },
+    {
+      id: 'host',
+      title: __('Host Name'),
+      sortType: 'alpha'
     },
     {
       id: 'name',
@@ -393,7 +408,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
 
   _this.getAlertsData = function(limit, offset, filters, sortField, sortAscending) {
     var deferred = $q.defer();
-    var resourceOptions = '?expand=resources,alert_actions&attributes=assignee';
+    var resourceOptions = '?expand=resources,alert_actions&attributes=assignee,resource';
     var limitOptions = '';
     var offsetOptions = '';
     var sortOptions = '';
@@ -491,6 +506,8 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
       description: alertData.description,
       assignee: alertData.assignee,
       acknowledged: angular.isDefined(alertData.acknowledged) ? alertData.acknowledged : false,
+      hostName: alertData.resource.name,
+      hostType: alertData.resource.type,
       objectName: objectName,
       objectType: objectType,
       objectTypeImg: typeImage,

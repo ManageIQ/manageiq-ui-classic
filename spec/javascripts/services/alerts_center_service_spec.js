@@ -31,31 +31,33 @@ describe('alertsCenterService', function() {
 
     it('should give the correct filter choices', function() {
       var filters = testService.alertListFilterFields;
-      expect(filters.length).toBe(6);
+      expect(filters.length).toBe(7);
 
       expect(filters[0].title).toBe(__("Severity"));
       expect(filters[0].filterValues).toBe(testService.severityTitles);
-      expect(filters[1].title).toBe(__("Provider Name"));
-      expect(filters[2].title).toBe(__("Provider Type"));
-      expect(filters[2].filterValues).toBe(testService.objectTypes);
-      expect(filters[3].title).toBe(__("Message Text"));
-      expect(filters[4].title).toBe(__("Owner"));
-      expect(filters[5].title).toBe(__("Acknowledged"));
-      expect(filters[5].filterValues.length).toBe(2);
-      expect(filters[5].filterValues[0]).toBe(__('Acknowledged'));
-      expect(filters[5].filterValues[1]).toBe(__('Unacknowledged'));
+      expect(filters[1].title).toBe(__("Host Name"));
+      expect(filters[2].title).toBe(__("Provider Name"));
+      expect(filters[3].title).toBe(__("Provider Type"));
+      expect(filters[3].filterValues).toBe(testService.objectTypes);
+      expect(filters[4].title).toBe(__("Message Text"));
+      expect(filters[5].title).toBe(__("Owner"));
+      expect(filters[6].title).toBe(__("Acknowledged"));
+      expect(filters[6].filterValues.length).toBe(2);
+      expect(filters[6].filterValues[0]).toBe(__('Acknowledged'));
+      expect(filters[6].filterValues[1]).toBe(__('Unacknowledged'));
     });
 
     it('should give the correct sort options', function() {
       var sortFields = testService.alertListSortFields;
-      expect(sortFields.length).toBe(6);
+      expect(sortFields.length).toBe(7);
 
       expect(sortFields[0].title).toBe(__("Time"));
       expect(sortFields[1].title).toBe(__("Severity"));
-      expect(sortFields[2].title).toBe(__("Provider Name"));
-      expect(sortFields[3].title).toBe(__("Provider Type"));
-      expect(sortFields[4].title).toBe(__("Owner"));
-      expect(sortFields[5].title).toBe(__("Acknowledged"));
+      expect(sortFields[2].title).toBe(__("Host Name"));
+      expect(sortFields[3].title).toBe(__("Provider Name"));
+      expect(sortFields[4].title).toBe(__("Provider Type"));
+      expect(sortFields[5].title).toBe(__("Owner"));
+      expect(sortFields[6].title).toBe(__("Acknowledged"));
     });
 
     it('should give the correct menu actions', function() {
