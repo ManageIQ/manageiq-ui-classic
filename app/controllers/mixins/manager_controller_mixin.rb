@@ -38,7 +38,7 @@ module Mixins
         model = "#{model_to_name(@provider.type)} #{ui_lookup(:model => 'ExtManagementSystem')}"
         if params[:id] == "new"
           add_flash(_("%{model} \"%{name}\" was added") % {:model => model, :name => @provider.name})
-          process_managers([@provider.configuration_manager.id], "refresh_ems")
+          process_managers([@provider.instance_eval(manager_prefix).id], "refresh_ems")
         else
           add_flash(_("%{model} \"%{name}\" was updated") % {:model => model, :name => @provider.name})
         end
