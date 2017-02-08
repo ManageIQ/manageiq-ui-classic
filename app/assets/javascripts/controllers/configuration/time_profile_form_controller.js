@@ -28,7 +28,7 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', '$scope',
     vm.afterGet = false;
     vm.modelCopy = angular.copy( vm.timeProfileModel );
     vm.model = 'timeProfileModel';
-    
+
     ManageIQ.angular.scope = vm;
 
     miqService.sparkleOn();
@@ -197,17 +197,8 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', '$scope',
   function getTimeProfileFormData(response) {
     var data = response.data;
 
-    vm.timeProfileModel.description = data.description;
-    vm.timeProfileModel.admin_user = data.admin_user;
-    vm.timeProfileModel.restricted_time_profile = data.restricted_time_profile;
-    vm.timeProfileModel.profile_type = data.profile_type;
-    vm.timeProfileModel.profile_tz = data.profile_tz;
-    vm.timeProfileModel.rollup_daily = data.rollup_daily;
-    vm.timeProfileModel.miq_reports_count = data.miq_reports_count;
-    vm.timeProfileModel.all_days = data.all_days;
-    vm.timeProfileModel.days = data.days;
-    vm.timeProfileModel.all_hours = data.all_hours;
-    vm.timeProfileModel.hours = data.hours;
+    Object.assign(vm.timeProfileModel, data);
+
     vm.getDaysValues();
     vm.getHoursValues();
 
