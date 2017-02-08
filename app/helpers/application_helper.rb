@@ -1626,17 +1626,17 @@ module ApplicationHelper
         title = _("Status = %{row}") % {:row => row["status"].capitalize}
         cancel_msg = row["message"].include?('cancel')
         if row["status"].downcase == "ok" && !cancel_msg
-          image = "100/checkmark.png"
+          icon = "pficon pficon-ok"
         elsif row["status"].downcase == "error" || cancel_msg
-          image = "100/x.png"
+          icon = "pficon pficon-error-circle-o"
         elsif row["status"].downcase == "warn" || cancel_msg
-          image = "100/warning.png"
+          icon = "pficon pficon-warning-triangle-o"
         end
       elsif %w(queued waiting_to_start).include?(row["state"].downcase)
-        image = "100/job-queued.png"
+        icon = "fa fa-step-forward"
         title = _("Status = Queued")
       elsif !%w(finished queued waiting_to_start).include?(row["state"].downcase)
-        image = "100/job-running.png"
+        icon = "pficon pficon-running"
         title = _("Status = Running")
       end
     elsif %w(Vm VmOrTemplate).include?(db)
@@ -1659,7 +1659,7 @@ module ApplicationHelper
       ems = @targets_hash[from_cid(@id)]
       image = "svg/vendor-#{ems.image_name}.svg"
     elsif db == "Tenant"
-      image = row['divisible'] ? "100/tenant.png" : "100/project.png"
+      icon = row['divisible'] ? "pficon pficon-tenant" : "pficon pficon-project"
     else
       image = "100/#{db.underscore}.png"
     end
@@ -1675,7 +1675,7 @@ module ApplicationHelper
     case widget.status.downcase
     when 'complete' then 'pficon pficon-ok'
     when 'queued'   then 'fa fa-pause'
-    when 'running'  then 'fa fa-play'
+    when 'running'  then 'pficon pficon-running'
     when 'error'    then 'fa fa-warning'
     end
   end
@@ -1692,7 +1692,7 @@ module ApplicationHelper
       when "finished"
         glyphicon = "pficon pficon-ok"
       when "running"
-        glyphicon = "fa fa-play"
+        glyphicon = "pficon pficon-running"
       when "queued"
         glyphicon = "fa fa-pause"
       else

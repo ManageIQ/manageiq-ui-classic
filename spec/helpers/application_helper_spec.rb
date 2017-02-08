@@ -1452,8 +1452,7 @@ describe ApplicationHelper do
     it "returns correct image for job record based upon it's status" do
       job_attrs = {"state" => "running", "status" => "ok"}
       image = helper.listicon_image_tag("Job", job_attrs)
-      expect(image).to eq("<img title=\"Status = Running\"" \
-                          " src=\"#{ActionController::Base.helpers.image_path('100/job-running.png')}\" />")
+      expect(image).to eq("<i class=\"pficon pficon-running\" title=\"Status = Running\"></i>")
     end
   end
 
