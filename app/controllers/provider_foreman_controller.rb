@@ -403,8 +403,7 @@ class ProviderForemanController < ApplicationController
     if replace_trees
       trees[:configuration_manager_providers] = build_configuration_manager_tree(:configuration_manager_providers,
                                                                                  :configuration_manager_providers_tree) if replace_trees.include?(:configuration_manager_providers)
-      trees[:configuration_manager_cs_filter] = build_configuration_manager_tree(:configuration_manager_cs_filter,
-                                                           :configuration_manager_cs_filter_tree) if replace_trees.include?(:configuration_manager_cs_filter)
+      trees[:configuration_manager_cs_filter] = build_configuration_manager_tree (:configuration_manager_cs_filter, :configuration_manager_cs_filter_tree) if replace_trees.include?(:configuration_manager_cs_filter)
     end
     trees
   end

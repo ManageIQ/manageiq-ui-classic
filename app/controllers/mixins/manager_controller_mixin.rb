@@ -210,7 +210,7 @@ module Mixins
       render :json => presenter.for_render
     end
 
-    def display_node(id, mode)
+    def display_node(id, _mode)
       if @record.nil?
         self.x_node = "root"
         get_node_info("root")
