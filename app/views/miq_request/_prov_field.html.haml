@@ -430,7 +430,7 @@
           - else
             -# Just show the field value
             -# Description is in the second, last, if it is an array element, or possible single value from the API
-            -if options[field].kind_of?(Array)
+            - if options[field].kind_of?(Array)
               = options[field].last
             - else
               = options[field]
