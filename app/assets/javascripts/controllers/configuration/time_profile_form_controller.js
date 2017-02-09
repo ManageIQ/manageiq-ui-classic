@@ -167,10 +167,9 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', '$scope',
     miqService.sparkleOn();
     var url = '/configuration/timeprofile_update/' + timeProfileFormId + '?button=' + buttonName;
     var timeProfileModelObj = angular.copy(vm.timeProfileModel);
-    delete timeProfileModelObj.profile_tz;
     miqService.miqAjaxButton(url, timeProfileModelObj);
   };
-
+  // $scope preserved because it's used by x_edit_buttons_angular
   $scope.cancelClicked = function() {
     timeProfileEditButtonClicked('cancel');
   };
