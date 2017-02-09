@@ -96,17 +96,11 @@ module ReportFormatter
         when "BottleneckEvent"
           #         e_title = "#{ui_lookup(:model=>rec[:resource_type])}: #{rec[:resource_name]}"
           e_title = rec[:resource_name]
-          e_image = ActionController::Base.helpers.image_path("100/#{bubble_icon(rec)}.png")
-          e_icon = ActionController::Base.helpers.image_path("timeline/#{rec.event_type.downcase}_#{rec[:severity]}.png")
         #         e_text = e_title # Commented out since name is showing in the columns anyway
         when "Vm"
           e_title = rec[:name]
-          e_icon = ActionController::Base.helpers.image_path("timeline/vendor-#{rec.vendor.downcase}.png")
-          e_image = ActionController::Base.helpers.image_path("svg/os-#{rec.os_image_name.downcase}.svg")
         when "Host"
           e_title = rec[:name]
-          e_icon = ActionController::Base.helpers.image_path("timeline/vendor-#{rec.vmm_vendor_display.downcase}.png")
-          e_image = ActionController::Base.helpers.image_path("svg/os-#{rec.os_image_name.downcase}.svg")
         when "EventStream"
           ems_cloud = false
           if rec[:ems_id] && ExtManagementSystem.exists?(rec[:ems_id])
@@ -137,19 +131,8 @@ module ReportFormatter
             e_title = rec[title_col] unless title_col.nil?
           end
           e_title ||= ems ? ems.name : "No VM, Host, or MS"
-          e_icon = ActionController::Base.helpers.image_path("timeline/#{timeline_icon("vm_event", rec.event_type.downcase)}.png")
-          # See if this is EVM's special event
-          if rec.event_type == "GeneralUserEvent"
-            if rec.message.include?("EVM SmartState Analysis")
-              e_icon =  ActionController::Base.helpers.image_path("timeline/evm_analysis.png")
-            end
-          end
-          if rec[:vm_or_template_id] && Vm.exists?(rec[:vm_or_template_id])
-            e_image = ActionController::Base.helpers.image_path("svg/os-#{Vm.find(rec[:vm_or_template_id]).os_image_name.downcase}.svg")
-          end
         else
           e_title = rec[:name] ? rec[:name] : row[mri.col_order.first].to_s
-          e_icon = image = nil
         end
       end
 
@@ -202,46 +185,7 @@ module ReportFormatter
       # Add the event to the timeline
       @events_data.push("start"       => format_timezone(row[col], tz, 'view'),
                         "title"       => e_title.length < 20 ? e_title : e_title[0...17] + "...",
-                        "icon"        => e_icon,
-                        "image"       => e_image,
                         "description" => e_text)
-    end
-
-    def bubble_icon(rec)
-      case rec.resource_type.downcase
-      when "emscluster"
-        return "cluster"
-      when "miqenterprise"
-        return "enterprise"
-      when "extmanagementsystem"
-        if rec.resource.kind_of?(ExtManagementSystem) && rec.resource.emstype == "rhevm"
-          return "vendor-redhat"
-        else
-          return "ems"
-        end
-      else
-        return rec.resource_type.downcase
-      end
-    end
-
-    # Return the name of an icon for a specific table, event pair
-    def timeline_icon(table, event_text)
-      # Create the icon hash, if it doesn't exist yet
-      unless @icon_hash
-        icon_dir = "#{TIMELINES_FOLDER}/icons"
-        begin
-          data = File.read(File.join(icon_dir, "#{table}.csv")).split("\n")
-        rescue
-          return table    # If we can't read the file, return the table name as the icon name
-        end
-        @icon_hash = {}
-        data.each do |rec|
-          evt, txt = rec.split(",")
-          @icon_hash[evt] = txt
-        end
-      end
-      return @icon_hash[event_text] if @icon_hash[event_text]
-      table
     end
   end
 end
