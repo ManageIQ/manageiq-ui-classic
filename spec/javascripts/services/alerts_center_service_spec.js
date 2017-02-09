@@ -169,7 +169,7 @@ describe('alertsCenterService', function() {
       expect(overviewItems[0].name).toBe('Provider 1');
       expect(overviewItems[0].displayType).toBe('providers');
       expect(overviewItems[0].tags.length).toBe(1);
-      expect(overviewItems[0].danger.length).toBe(0);
+      expect(overviewItems[0].error.length).toBe(0);
       expect(overviewItems[0].warning.length).toBe(1);
       expect(overviewItems[0].info.length).toBe(1);
 
@@ -177,7 +177,7 @@ describe('alertsCenterService', function() {
       expect(overviewItems[1].name).toBe('Provider 2');
       expect(overviewItems[1].displayType).toBe('providers');
       expect(overviewItems[1].tags.length).toBe(1);
-      expect(overviewItems[1].danger.length).toBe(1);
+      expect(overviewItems[1].error.length).toBe(1);
       expect(overviewItems[1].warning.length).toBe(0);
       expect(overviewItems[1].info.length).toBe(0);
 
