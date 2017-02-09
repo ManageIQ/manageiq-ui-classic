@@ -6,6 +6,8 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       display: false,
       prov_type: '',
       catalog_id: '',
+      key: '',
+      key_value: '',
       provisioning_repository_id: '',
       provisioning_playbook_id: '',
       provisioning_machine_credential_id: '',
@@ -31,9 +33,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       retirement_key: '',
       retirement_value: '',
       retirement_variables: {"r_var1": "r_val1", "r_var2": "r_val2"},
-      retirement_editMode: false,
-      key: '',
-      key_value: '',
+      retirement_editMode: false
     };
     $scope.formId = catalogItemFormId;
     $scope.afterGet = false;
@@ -153,25 +153,25 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
 
   // get playbooks for selected repository
   $scope.repositoryChanged = function(prefix, id) {
-
-    API.get("/api/configuration_script_payload/?expand=resources&attributes=id,name").then(function(data){
-    //var url = "/api/cloud_networks/" + '10000000000005' + "?attributes=cloud_subnets";
-    $scope.catalogItemModel[prefix + '_playbook_id'] = '';
-    $scope.catalogItemModel[prefix + '_repository_id'] = id;
-    $scope[prefix + '_playbooks']  = data.resources;
+    API.get("/api/configuration_script_sources/" + id + "?attributes=configuration_script_payloads").then(function(data){
+      $scope.catalogItemModel[prefix + '_playbook_id'] = '';
+      $scope.catalogItemModel[prefix + '_repository_id'] = id;
+      $scope[prefix + '_playbooks']  = data.configuration_script_payloads;
     })
   };
 
   $scope.$watch('_provisioning_repository', function(value) {
     if (value) {
       $scope.repositoryChanged("provisioning", value.id)
-    }
+    } else
+      $scope.catalogItemModel['provisioning_repository_id'] = ''
   });
 
   $scope.$watch('_retirement_repository', function(value) {
     if (value) {
       $scope.repositoryChanged("retirement", value.id)
-    }
+    } else
+      $scope.catalogItemModel['retirement_repository_id'] = ''
   });
 
   $scope.$watch('catalogItemModel.display', function(value) {
@@ -193,13 +193,6 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     return $scope.catalogItemModel.retirement_repository_id !== '';
   }
 
-  $scope.provisioning_playbook_selected = function() {
-    return $scope.catalogItemModel.provisioning_playbook_id !== '';
-  }
-
-  $scope.retirement_playbook_selected = function() {
-    return $scope.catalogItemModel.retirement_playbook_id !== '';
-  }
   $scope.removeKeyValue = function(prefix, key) {
     delete $scope.catalogItemModel[prefix + "_variables"][key];
   }
@@ -219,12 +212,23 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     $scope.catalogItemModel[prefix + "_variables"][$scope.catalogItemModel.original_key] = $scope.catalogItemModel.original_key_value;
   }
 
-  $scope.saveKeyValue = function(prefix, key, key_value, index) {
+  $scope.saveKeyValue = function(prefix, index) {
     $scope.catalogItemModel[prefix + "_editMode"] = false;
     $scope.catalogItemModel.s_index = '';
-    delete $scope.catalogItemModel[prefix + "_variables"][$scope.catalogItemModel.original_key];
-    $scope.catalogItemModel[prefix + "_variables"][key] = key_value;
+    // delete key if key name was edited, and a add new key to hash with new name
+    if ($scope.catalogItemModel.original_key !== $scope.catalogItemModel.key)
+      delete $scope.catalogItemModel[prefix + "_variables"][$scope.catalogItemModel.original_key];
+
+    $scope.catalogItemModel[prefix + "_variables"][$scope.catalogItemModel.key] = $scope.catalogItemModel.key_value;
   }
+
+  $scope.toggleDialogSelection = function(prefix, selected_value) {
+    $scope.catalogItemModel[prefix + "_dialog_existing"] = selected_value
+  };
+
+  $scope.repositoryRequired = function(prefix) {
+    return prefix == "provisioning";
+  };
 
   init();
 }]);
