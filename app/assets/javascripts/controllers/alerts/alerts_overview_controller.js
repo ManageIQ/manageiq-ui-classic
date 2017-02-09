@@ -111,7 +111,7 @@ angular.module('alertsCenter').controller('alertsOverviewController',
 
     function filteredOut(item) {
       var filtered = true;
-      if (item.info.length + item.warning.length + item.danger.length > 0) {
+      if (item.info.length + item.warning.length + item.error.length > 0) {
         var filter = _.find(vm.filterConfig.appliedFilters, function (filter) {
           if (!alertsCenterService.matchesFilter(item, filter)) {
             return true;
@@ -133,7 +133,7 @@ angular.module('alertsCenter').controller('alertsOverviewController',
     function compareItems(item1, item2) {
       var compValue = 0;
       if (vm.toolbarConfig.sortConfig.currentField.id === 'errors') {
-        compValue = item1.danger.length - item2.danger.length;
+        compValue = item1.error.length - item2.error.length;
       } else if (vm.toolbarConfig.sortConfig.currentField.id === 'warnings') {
         compValue = item1.warning.length - item2.warning.length;
       } else if (vm.toolbarConfig.sortConfig.currentField.id === 'infos') {

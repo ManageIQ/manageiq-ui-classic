@@ -182,7 +182,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
       } else if (filter.value === _this.severityTitles[1]) {
         found = item.warning.length > 0;
       } else if (filter.value === _this.severityTitles[2]) {
-        found = item.danger.length > 0;
+        found = item.error.length > 0;
       }
     }
 
@@ -519,7 +519,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
       alert_actions: alertData.alert_actions
     };
 
-    if (newAlert.severity == 'danger') {
+    if (newAlert.severity == 'error') {
       newAlert.severityInfo = _this.severities.error;
     } else if (newAlert.severity == 'warning') {
       newAlert.severityInfo = _this.severities.warning;
@@ -616,7 +616,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
               objectName: provider.name,
               displayType: 'providers',
               tags: [],
-              danger: [],
+              error: [],
               warning: [],
               info: []
             };

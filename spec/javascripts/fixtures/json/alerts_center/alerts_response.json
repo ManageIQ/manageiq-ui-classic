@@ -68,7 +68,7 @@
         "created_on": "2017-01-26T17:27:26Z",
         "updated_on": "2017-01-26T17:27:26Z"
       },
-      "severity": "danger",
+      "severity": "error",
       "miq_alert_id": 3,
       "resource_id": 2,
       "resource_type": "ContainerNode",
@@ -93,7 +93,7 @@
     },
     {
       "id": 4,
-      "severity": "danger",
+      "severity": "error",
       "miq_alert_id": 1,
       "resource_id": 4,
       "resource_type": "ContainerNode",

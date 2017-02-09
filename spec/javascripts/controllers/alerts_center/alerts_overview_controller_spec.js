@@ -59,19 +59,19 @@ describe('alertsOverviewController', function() {
         expect($controller.groups.length).toBe(3);
         expect($controller.groups[0].hasItems).toBeTruthy();
         expect($controller.groups[0].itemsList.length).toBe(1);
-        expect($controller.groups[0].itemsList[0].danger.length).toBe(1);
+        expect($controller.groups[0].itemsList[0].error.length).toBe(1);
         expect($controller.groups[0].itemsList[0].info.length).toBe(0);
         expect($controller.groups[0].itemsList[0].warning.length).toBe(0);
 
         expect($controller.groups[1].hasItems).toBeTruthy();
         expect($controller.groups[1].itemsList.length).toBe(1);
-        expect($controller.groups[1].itemsList[0].danger.length).toBe(0);
+        expect($controller.groups[1].itemsList[0].error.length).toBe(0);
         expect($controller.groups[1].itemsList[0].info.length).toBe(1);
         expect($controller.groups[1].itemsList[0].warning.length).toBe(1);
 
         expect($controller.groups[2].hasItems).toBeTruthy();
         expect($controller.groups[2].itemsList.length).toBe(1);
-        expect($controller.groups[2].itemsList[0].danger.length).toBe(1);
+        expect($controller.groups[2].itemsList[0].error.length).toBe(1);
         expect($controller.groups[2].itemsList[0].info.length).toBe(0);
         expect($controller.groups[2].itemsList[0].warning.length).toBe(0);
 
