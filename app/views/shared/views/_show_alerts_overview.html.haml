@@ -8,7 +8,7 @@
       %li.active
         %strong
           = _("Overview")
-  .row{"ng-if" => "vm.loadingDone"}
+  .row.init-hidden{"ng-class" => "{'initialized': vm.loadingDone}" }
     %div{"pf-toolbar" => "", "config" => "vm.toolbarConfig"}
       %actions.group-toolbar-actions
         %span
@@ -23,8 +23,8 @@
                 "ng-model" => "vm.displayFilter",
                 "ng-options" => "o as o for o in vm.displayFilters",
                 "ng-change" => "vm.filterChange()"}
-  .row.row-tile-pf
-    %ul.list-group{"ng-if" => "vm.loadingDone"}
+  .row.row-tile-pf.init-hidden{"ng-class" => "{'initialized': vm.loadingDone}" }
+    %ul.list-group
       %li.list-group-item.alerts-group-item{"ng-repeat" => "group in vm.groups track by $index"}
         %a.miq-alert-group-title{"ng-if" => "group.hasItems",
                                  "ng-class" => "{'collapsed': !group.open}",
