@@ -242,6 +242,12 @@
     this.settings.isLoading = false;
     this.settings.scrollElement = MAIN_CONTETN_ID;
     this.settings.dropDownClass = ['dropup'];
+    this.settings.translateTotalOf = function(start, end, total) {
+      if (start, end, total) {
+        return sprintf(__('%d - %d of %d'), start, end, total);
+      }
+      return start + ' - ' + end + ' of ' + total;
+    };
   };
 
   ReportDataController.prototype.setExtraClasses = function(viewType) {
