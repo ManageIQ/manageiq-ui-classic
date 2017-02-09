@@ -1,15 +1,14 @@
-- if items
-  %table.table.table-bordered.table-striped.table-summary-screen
-    %thead
-      %tr
-        %th{:colspan => items[:labels].count, :align => "left"}
-          = title
-    - labels.each do |label|
-      %td
-        %strong
-          = label
-    - items.each do |item|
-      %tr
-        - item.each do |value|
-          %td
-            = value
+%table.table.table-bordered.table-striped.table-summary-screen
+  %thead
+    %tr
+      %th{:colspan => labels.count, :align => "left"}
+        = title
+  - labels.each do |label|
+    %td
+      %strong
+        = label
+  - rows.each do |row|
+    %tr
+      - row.each do |value|
+        %td
+          = value
