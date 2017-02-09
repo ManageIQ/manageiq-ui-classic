@@ -68,7 +68,7 @@ describe SecurityGroupController do
   describe "#show" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @security_group = FactoryGirl.create(:security_group)
+      @security_group = FactoryGirl.create(:security_group_with_firewall_rules)
       login_as FactoryGirl.create(:user)
     end
 
@@ -76,10 +76,11 @@ describe SecurityGroupController do
       get :show, :params => {:id => @security_group.id}
     end
 
-    context "render listnav partial" do
+    context "render" do
       render_views
       it do
         is_expected.to have_http_status 200
+        is_expected.to render_template(:partial => 'layouts/_textual_groups_generic')
         is_expected.to render_template(:partial => "layouts/listnav/_security_group")
       end
     end
