@@ -57,8 +57,8 @@ class MiqTaskController < ApplicationController
     @edit[:opts] = {}
     @edit[:opts] = copy_hash(@tasks_options[@tabform])   # Backup current settings
 
+    get_jobs
     if pagination_request?
-      get_jobs(tasks_condition(@tasks_options[@tabform]))
       render :update do |page|
         page << javascript_prologue
         page.replace_html("gtl_div", :partial => "layouts/gtl", :locals => {:action_url => @lastaction})
@@ -69,38 +69,34 @@ class MiqTaskController < ApplicationController
                                                      :headers    => @view.headers})
         page << "miqSparkle(false);"  # Need to turn off sparkle in case original ajax element gets replaced
       end
-    else                      # Came in from non-ajax, just get the jobs
-      get_jobs(tasks_condition(@tasks_options[@tabform]))
     end
   end
 
-  def get_jobs(conditions)
+  def get_jobs
     @lastaction = "jobs"
 
     if @tabform == "tasks_1"
       @layout = "my_tasks"
-      @view, @pages = get_view(Job, :conditions => conditions)  # Get the records (into a view) and the paginator
       drop_breadcrumb(:name => _("My VM and Container Analysis Tasks"), :url => "/miq_task/index?jobs_tab=tasks")
 
     elsif @tabform == "tasks_2"
       # My UI Tasks
       @layout = "my_ui_tasks"
-      @view, @pages = get_view(MiqTask, :conditions => conditions)  # Get the records (into a view) and the paginator
       drop_breadcrumb(:name => _("My Other UI Tasks"), :url => "/miq_task/index?jobs_tab=tasks")
 
     elsif @tabform == "tasks_3" || @tabform == "alltasks_1"
       @layout = "all_tasks"
-      @view, @pages = get_view(Job, :conditions => conditions)  # Get the records (into a view) and the paginator
       drop_breadcrumb(:name => _("All VM and Container Analysis Tasks"), :url => "/miq_task/index?jobs_tab=alltasks")
       @user_names = Job.distinct("userid").pluck("userid").delete_if(&:blank?)
 
     elsif @tabform == "tasks_4" || @tabform == "alltasks_2"
       # All UI Tasks
       @layout = "all_ui_tasks"
-      @view, @pages = get_view(MiqTask, :conditions => conditions)  # Get the records (into a view) and the paginator
       drop_breadcrumb(:name => _("All Other Tasks"), :url => "/miq_task/index?jobs_tab=alltasks")
       @user_names = MiqTask.distinct("userid").pluck("userid").delete_if(&:blank?)
     end
+    
+    @view, @pages = get_view(db_class, :conditions => tasks_condition(@tasks_options[@tabform]))
   end
 
   # Cancel a single selected job
@@ -288,7 +284,7 @@ class MiqTaskController < ApplicationController
       @edit[:opts] = copy_hash(@tasks_options[@tabform]) # Backup current settings
     end
 
-    get_jobs(tasks_condition(@tasks_options[@tabform]))  # Get the jobs based on the latest options
+    get_jobs  # Get the jobs based on the latest options
     @pp_choices = PPCHOICES2                             # Get special pp choices for jobs/tasks lists
 
     render :update do |page|
@@ -314,6 +310,13 @@ class MiqTaskController < ApplicationController
     end
   end
 
+  def db_table
+    case @layout
+      when 'my_tasks', 'all_tasks'       then %Q["jobs"]
+      when 'my_ui_tasks', 'all_ui_tasks' then %Q["miq_tasks"]
+    end
+  end
+  
   # Set all task options to default
   def tasks_set_default_options
     @tasks_options[@tabform] = {
@@ -334,6 +337,9 @@ class MiqTaskController < ApplicationController
   # Create a condition from the passed in options
   def tasks_condition(opts, use_times = true)
     cond = [[]]
+    
+    cond = add_to_condition(cond, "\"jobs\".\"guid\" IS NULL", nil) unless vm_analysis_task?
+    
     cond = add_to_condition(cond, *build_query_for_userid(opts))
 
     if !opts[:ok] && !opts[:queued] && !opts[:error] && !opts[:warn] && !opts[:running]
@@ -362,8 +368,8 @@ class MiqTaskController < ApplicationController
   end
 
   def build_query_for_userid(opts)
-    return ["userid=?", session[:userid]] if %w(tasks_1 tasks_2).include?(@tabform)
-    return ["userid=?", opts[:user_choice]] if opts[:user_choice] && opts[:user_choice] != "all"
+    return ["#{db_table}.\"userid\"=?", session[:userid]] if %w(tasks_1 tasks_2).include?(@tabform)
+    return ["#{db_table}.\"userid\"=?", opts[:user_choice]] if opts[:user_choice] && opts[:user_choice] != "all"
     return nil, nil
   end
 
@@ -378,7 +384,7 @@ class MiqTaskController < ApplicationController
   end
 
   def build_query_for_queued
-    ["(state=? OR state=?)", %w(waiting_to_start Queued)]
+    ["(#{db_table}.\"state\"=? OR #{db_table}.\"state\"=?)", %w(waiting_to_start Queued)]
   end
 
   def build_query_for_ok
@@ -394,32 +400,32 @@ class MiqTaskController < ApplicationController
   end
 
   def build_query_for_status_completed(status)
-    return ["(state=? AND status=?)", ["finished", status]] if vm_analysis_task?
-    ["(state=? AND status=?)", ["Finished", status.capitalize]]
+    return ["(#{db_table}.\"state\"=? AND #{db_table}.\"status\"=?)", ["finished", status]] if vm_analysis_task?
+    ["(#{db_table}.\"state\"=? AND #{db_table}.\"status\"=?)", ["Finished", status.capitalize]]
   end
 
   def build_query_for_running
-    return ["(state!=? AND state!=? AND state!=?)", %w(finished waiting_to_start queued)] if vm_analysis_task?
-    ["(state!=? AND state!=? AND state!=?)", %w(Finished waiting_to_start Queued)]
+    return ["(#{db_table}.\"state\"!=? AND #{db_table}.\"state\"!=? AND #{db_table}.\"state\"!=?)", %w(finished waiting_to_start queued)] if vm_analysis_task?
+    ["(#{db_table}.\"state\"!=? AND #{db_table}.\"state\"!=? AND #{db_table}.\"state\"!=?)", %w(Finished waiting_to_start Queued)]
   end
 
   def build_query_for_status_none_selected
-    return ["(status!=? AND status!=? AND status!=? AND state!=? AND state!=?)",
+    return ["(#{db_table}.\"status\"!=? AND #{db_table}.\"status\"!=? AND #{db_table}.\"status\"!=? AND #{db_table}\"state\"!=? AND #{db_table}.\"state\"!=?)",
             %w(ok error warn finished waiting_to_start)] if vm_analysis_task?
-    ["(status!=? AND status!=? AND status!=? AND state!=? AND state!=?)", %w(Ok Error Warn Finished Queued)]
+    ["(#{db_table}.\"status\"!=? AND #{db_table}.\"status\"!=? AND #{db_table}.\"status\"!=? AND #{db_table}.\"state\"!=? AND #{db_table}.\"state\"!=?)", %w(Ok Error Warn Finished Queued)]
   end
 
   def build_query_for_time_period(opts)
     t = format_timezone(opts[:time_period].to_i != 0 ? opts[:time_period].days.ago : Time.now, Time.zone, "raw")
-    ["updated_on>=? AND updated_on<=?", [t.beginning_of_day, t.end_of_day]]
+    ["#{db_table}.\"updated_on\">=? AND #{db_table}.\"updated_on\"<=?", [t.beginning_of_day, t.end_of_day]]
   end
 
   def build_query_for_zone(opts)
-    ["zone=?", opts[:zone]]
+    ["#{db_table}.\"zone\"=?", opts[:zone]]
   end
 
   def build_query_for_state(opts)
-    ["state=?", opts[:state_choice]]
+    ["#{db_table}.\"state\"=?", opts[:state_choice]]
   end
 
   def vm_analysis_task?
