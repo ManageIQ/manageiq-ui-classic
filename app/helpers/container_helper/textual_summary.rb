@@ -76,16 +76,20 @@ module ContainerHelper::TextualSummary
   end
 
   def textual_capabilities_add
-    unless @record.container_definition.capabilities_add.empty?
-      {:label => _("Add Capabilities"),
-       :value => @record.container_definition.capabilities_add}
+    if @record.container_definition.capabilities_add.present?
+      {
+        :label => _("Add Capabilities"),
+        :value => @record.container_definition.capabilities_add
+      }
     end
   end
 
   def textual_capabilities_drop
-    unless @record.container_definition.capabilities_drop.empty?
-      {:label => _("Drop Capabilities"),
-       :value => @record.container_definition.capabilities_drop}
+    if @record.container_definition.capabilities_drop.present?
+      {
+        :label => _("Drop Capabilities"),
+        :value => @record.container_definition.capabilities_drop
+      }
     end
   end
 
