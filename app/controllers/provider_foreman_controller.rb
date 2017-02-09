@@ -270,7 +270,7 @@ class ProviderForemanController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties environment group_os), %i(tenancy tags)]
+    [%i(properties environment os), %i(tenancy tags)]
   end
   helper_method :textual_group_list
 
