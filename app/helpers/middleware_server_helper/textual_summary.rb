@@ -36,13 +36,17 @@ module MiddlewareServerHelper::TextualSummary
               else
                 @record.properties['Bound Address']
               end
-    {:label => _('Bind Address'),
-     :value => address}
+    {
+      :label => _('Bind Address'),
+      :value => address
+    }
   end
 
   def textual_server_state
-    {:label => _('Server State'),
-     :value => @record.properties['Server State'].capitalize}
+    {
+      :label => _('Server State'),
+      :value => @record.properties['Server State'].to_s.capitalize
+    }
   end
 
   def textual_product
