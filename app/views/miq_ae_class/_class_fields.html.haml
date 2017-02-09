@@ -20,11 +20,11 @@
                 %td.text-nowrap
                   / Name is special processed
                   - if fname == 'name'
-                    %i.product.fa-lg{:class => "product-ae_#{ae_field.aetype}",
+                    %i.product.fa-lg{:class  => ae_field_fonticon(ae_field.aetype),
                                       :alt   => (t = "#{_('Type:')} #{ae_field.aetype}"),
                                       :title => t}
                     - if !ae_field.datatype.blank? && ae_field.datatype != "string"
-                      %i.product.fa-lg{:class => "product-#{ae_field.datatype}",
+                      %i.product.fa-lg{:class  => ae_field_fonticon(ae_field.datatype),
                                         :alt   => (t = "#{_('Data Type:')} #{ae_field.datatype}"), :title => t}
 
                     %i.fa-lg{:class => "#{image}",

@@ -278,7 +278,8 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
       $scope.updateDisksAddRemove();
 
       angular.forEach($scope.reconfigureModel.vmdisks, function(disk) {
-        if ($scope.reconfigureModel.vmdisks[disk].add_remove === '' ) {
+        if (angular.isDefined($scope.reconfigureModel.vmdisks[disk])
+          && $scope.reconfigureModel.vmdisks[disk].add_remove === '' ) {
           $scope.reconfigureModel.vmdisks[disk].delete_backing = false;
         }
       });
