@@ -247,6 +247,7 @@ module UiConstants
       :scanhistory                              => "list",
       :snialocalfilesystem                      => "list",
       :storage_files                            => "list",
+      :summary_mode                             => "dashboard",
       :registryitems                            => "list",
       :serverbuild                              => "list",
       :storage                                  => "grid",
@@ -261,6 +262,9 @@ module UiConstants
       :tile    => 20,
       :list    => 20,
       :reports => 20
+    },
+    :topology  => {
+      :containers_max_items => 100
     },
     :display   => {
       :startpage     => "/dashboard/show",
@@ -449,60 +453,38 @@ module UiConstants
   # This set of assignments was created for miq_alerts
   ASSIGN_TOS["ExtManagementSystem"] = {
     "enterprise"                 => N_("The Enterprise"),
-    "ext_management_system"      => PostponedTranslation.new(N_("Selected Providers")),
-    "ext_management_system-tags" => PostponedTranslation.new(N_("Tagged Providers"))
+    "ext_management_system"      => N_("Selected Providers"),
+    "ext_management_system-tags" => N_("Tagged Providers")
   }
   ASSIGN_TOS["EmsCluster"] = {
-    "ems_cluster"      => PostponedTranslation.new(N_("Selected %{tables}")) do
-                            {:tables => ui_lookup(:tables => "ems_cluster")}
-                          end,
-    "ems_cluster-tags" => PostponedTranslation.new(N_("Tagged %{tables}")) do
-                            {:tables => ui_lookup(:tables => "ems_cluster")}
-                          end
+    "ems_cluster"      => N_("Selected Cluster / Deployment Roles"),
+    "ems_cluster-tags" => N_("Tagged Cluster / Deployment Roles"),
   }.merge(ASSIGN_TOS["ExtManagementSystem"])
   ASSIGN_TOS["Host"] = {
-    "host"      => PostponedTranslation.new(N_("Selected %{tables}")) do
-                     {:tables => ui_lookup(:tables => "host")}
-                   end,
-    "host-tags" => PostponedTranslation.new(N_("Tagged %{tables}")) do
-                     {:tables => ui_lookup(:tables => "host")}
-                   end
+    "host"      => N_("Selected Host / Nodes"),
+    "host-tags" => N_("Tagged Host / Nodes")
   }.merge(ASSIGN_TOS["EmsCluster"])
   ASSIGN_TOS["Vm"] = {
-    "ems_folder"         => PostponedTranslation.new(N_("Selected %{tables}")) do
-                              {:tables => ui_lookup(:tables => "ems_folder")}
-                            end,
-    "resource_pool"      => PostponedTranslation.new(N_("Selected %{tables}")) do
-                              {:tables => ui_lookup(:tables => "resource_pool")}
-                            end,
-    "resource_pool-tags" => PostponedTranslation.new(N_("Tagged %{tables}")) do
-                              {:tables => ui_lookup(:tables => "resource_pool")}
-                            end,
-    "vm-tags"            => PostponedTranslation.new(N_("Tagged %{tables}")) do
-                              {:tables => ui_lookup(:tables => "vm")}
-                            end
+    "ems_folder"         => N_("Selected Folders"),
+    "resource_pool"      => N_("Selected Resource Pools"),
+    "resource_pool-tags" => N_("Tagged Resource Pools"),
+    "vm-tags"            => N_("Tagged VMs and Instances")
   }.merge(ASSIGN_TOS["Host"])
   ASSIGN_TOS["Storage"] = {
     "enterprise"   => N_("The Enterprise"),
-    "storage"      => PostponedTranslation.new(N_("Selected %{tables}")) do
-                        {:tables => ui_lookup(:tables => "storage")}
-                      end,
-    "storage-tags" => PostponedTranslation.new(N_("Tagged %{tables}")) do
-                        {:tables => ui_lookup(:tables => "storage")}
-                      end,
+    "storage"      => N_("Selected Datastores"),
+    "storage-tags" => N_("Tagged Datastores"),
     "tenant"       => N_("Tenants")
   }
   ASSIGN_TOS["MiqServer"] = {
-    "miq_server" => PostponedTranslation.new(N_("Selected %{tables}")) do
-                      {:tables => ui_lookup(:tables => "miq_server")}
-                    end,
+    "miq_server" => N_("Selected Servers"),
   }
   ASSIGN_TOS["MiddlewareServer"] = {
-    "enterprise"        => _("The Enterprise"),
-    "middleware_server" => _("Selected %{tables}") % {:tables => ui_lookup(:tables => "middleware_server")}
+    "enterprise"        => N_("The Enterprise"),
+    "middleware_server" => N_("Selected Middleware Servers")
   }
   ASSIGN_TOS["ContainerNode"] = {
-    "enterprise" => _("The Enterprise"),
+    "enterprise" => N_("The Enterprise"),
   }
 
 
@@ -510,24 +492,12 @@ module UiConstants
   ASSIGN_TOS[:chargeback_storage] = ASSIGN_TOS["Storage"]
   ASSIGN_TOS[:chargeback_compute] = {
     "enterprise"             => N_("The Enterprise"),
-    "ext_management_system"  => PostponedTranslation.new(N_("Selected %{tables}")) do
-                                  {:tables => ui_lookup(:tables => "ext_management_systems")}
-                                end,
-    "ems_cluster"            => PostponedTranslation.new(N_("Selected %{tables}")) do
-                                  {:tables => ui_lookup(:tables => "ems_cluster")}
-                                end,
-    "ems_container"          => PostponedTranslation.new(N_("Selected %{tables}")) do
-                                  {:tables => ui_lookup(:tables => "ems_container")}
-                                end,
-    "vm-tags"                => PostponedTranslation.new(N_("Tagged %{tables}")) do
-                                  {:tables => ui_lookup(:tables => "vm")}
-                                end,
-    "container_image-tags"   => PostponedTranslation.new(N_("Tagged %{models}")) do
-                                  {:models => ui_lookup(:models => "ContainerImage")}
-                                end,
-    "container_image-labels" => PostponedTranslation.new(N_("Labeled %{models}")) do
-                                  {:models => ui_lookup(:models => "ContainerImage")}
-                                end,
+    "ext_management_system"  => N_("Selected Providers"),
+    "ems_cluster"            => N_("Selected Cluster / Deployment Roles"),
+    "ems_container"          => N_("Selected Containers Providers"),
+    "vm-tags"                => N_("Tagged VMs and Instances"),
+    "container_image-tags"   => N_("Tagged Container Images"),
+    "container_image-labels" => N_("Labeled Container Images"),
     "tenant"                 => N_("Tenants")
   }
 

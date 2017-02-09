@@ -97,7 +97,6 @@ describe EmsInfraController do
       controller.instance_variable_set(:@breadcrumbs, [])
       get :new
       expect(response.status).to eq(200)
-      expect(allow(controller).to receive(:edit)).to_not be_nil
     end
   end
 
@@ -311,7 +310,7 @@ describe EmsInfraController do
 
       it do
         is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => "layouts/listnav/_ems_infra")
+        is_expected.not_to render_template(:partial => "layouts/listnav/_ems_infra")
       end
     end
 
@@ -345,6 +344,24 @@ describe EmsInfraController do
                                            {:name => "#{@ems.name} (All Managed Datastores)",
                                             :url  => "/ems_infra/#{@ems.id}?display=storages"},
                                            {:name => "Tag Assignment", :url => "//tagging_edit"}])
+    end
+
+    context "render dashboard" do
+      subject { get :show, :params => { :id => @ems.id, :display => 'dashboard' } }
+      render_views
+
+      it 'never render template show' do
+        is_expected.not_to render_template('shared/views/ems_common/show')
+      end
+
+      it 'never render listnav' do
+        is_expected.not_to render_template(:partial => "layouts/listnav/_ems_container")
+      end
+
+      it 'uses its own template' do
+        is_expected.to have_http_status 200
+        is_expected.not_to render_template(:partial => "ems_container/show_dashboard")
+      end
     end
   end
 
@@ -396,7 +413,7 @@ describe EmsInfraController do
         breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
         expect(breadcrumbs).to eq([{:name => "Infrastructure Providers",
                                     :url  => "/ems_infra/show_list?page=&refresh=y"},
-                                   {:name => "#{ems.name} (Summary)",
+                                   {:name => "#{ems.name} (Dashboard)",
                                     :url  => "/ems_infra/#{ems.id}"}])
       end
     end
@@ -802,4 +819,6 @@ describe EmsInfraController do
       expect(vmware.authentications.first).to have_attributes(:userid => "bar", :password => "[FILTERED]")
     end
   end
+
+  include_examples '#download_summary_pdf', :ems_vmware
 end

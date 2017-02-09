@@ -14,7 +14,6 @@ describe EmsCloudController do
       controller.instance_variable_set(:@breadcrumbs, [])
       get :new
       expect(response.status).to eq(200)
-      expect(allow(controller).to receive(:edit)).to_not be_nil
     end
 
     render_views
@@ -573,4 +572,6 @@ describe EmsCloudController do
       }
     end
   end
+
+  include_examples '#download_summary_pdf', :ems_amazon
 end

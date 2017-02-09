@@ -24,7 +24,7 @@ class TreeBuilderOpsRbac < TreeBuilder
     {
       :title   => title,
       :tooltip => title,
-      :image   => '100/miq_region.png'
+      :icon    => 'pficon pficon-regions'
     }
   end
 
@@ -41,7 +41,7 @@ class TreeBuilderOpsRbac < TreeBuilder
       objects.push(:id => "ur", :text => _("Roles"), :icon => "product product-role", :tip => _("Roles"))
     end
     if ApplicationHelper.role_allows?(:feature => "rbac_tenant_view")
-      objects.push(:id => "tn", :text => _("Tenants"), :icon => "product product-tenant", :tip => _("Tenants"))
+      objects.push(:id => "tn", :text => _("Tenants"), :icon => "pficon pficon-tenant", :tip => _("Tenants"))
     end
     objects
   end
@@ -51,7 +51,7 @@ class TreeBuilderOpsRbac < TreeBuilder
       case object_hash[:id]
       when "u"  then Rbac.filtered(User.in_my_region)
       when "g"  then Rbac.filtered(MiqGroup.non_tenant_groups_in_my_region)
-      when "ur" then MiqUserRole.all
+      when "ur" then Rbac.filtered(MiqUserRole)
       when "tn" then Tenant.with_current_tenant
       end
     count_only_or_objects(count_only, objects, "name")

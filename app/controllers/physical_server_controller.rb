@@ -29,4 +29,11 @@ class PhysicalServerController  < ApplicationController
   end
 
 
+  def show_list
+    process_show_list
+  end
+
+
+
+
 end

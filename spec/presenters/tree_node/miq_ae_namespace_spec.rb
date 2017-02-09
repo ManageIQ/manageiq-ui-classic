@@ -10,7 +10,7 @@ describe TreeNode::MiqAeNamespace do
   end
 
   include_examples 'TreeNode::Node#key prefix', 'aen-'
-  include_examples 'TreeNode::Node#image', 'svg/ae_namespace.svg'
+  include_examples 'TreeNode::Node#icon', 'pficon pficon-folder-close'
   include_examples 'TreeNode::Node#tooltip prefix', 'Automate Namespace'
 
   context 'MiqAeDomain' do

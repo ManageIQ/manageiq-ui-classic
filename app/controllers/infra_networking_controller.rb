@@ -5,6 +5,8 @@ class InfraNetworkingController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericSessionMixin
+
   def self.model
     Switch
   end
@@ -55,12 +57,11 @@ class InfraNetworkingController < ApplicationController
       drop_breadcrumb(:name => _("%{name} (All Registered Hosts)") % {:name => @record.name},
                       :url  => "/infra_networking/x_show/#{@record.id}?display=hosts")
       @showtype = "hosts"
-    when "download_pdf", "main"
+    when "main"
       get_tagdata(@configuration_job)
       drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @record..name},
                       :url  => "/infra_networking/show/#{@record.id}")
       @showtype = "main"
-      set_summary_pdf_data if %w(download_pdf).include?(@display)
     end
     @lastaction = "show"
   end
@@ -747,15 +748,8 @@ class InfraNetworkingController < ApplicationController
     render :json => presenter.for_render
   end
 
-  def get_session_data
-    @title          = _("Networking")
-    @layout         = controller_name
-    @lastaction     = session[:switch_lastaction]
-    @showtype       = session[:switch_showtype]
-    @display        = session[:switch_display]
-  end
-
-  def set_session_data
+  def title
+    _("Networking")
   end
 
   menu_section :inf

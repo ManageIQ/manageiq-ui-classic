@@ -58,11 +58,16 @@ class MiddlewareTopologyService < TopologyService
     data = build_base_entity_data(entity)
     data[:status] = 'Unknown'
     data[:display_kind] = entity_display_type(entity)
-    data[:icon] = entity.decorate.try(:item_image) unless glyph? entity
+
+    unless glyph? entity
+      data[:icon] = ActionController::Base.helpers.image_path(entity.decorate.try(:listicon_image))
+    end
+
     if entity.kind_of?(Vm)
       data[:status] = entity.power_state.capitalize
       data[:provider] = entity.ext_management_system.name
     end
+
     data
   end
 

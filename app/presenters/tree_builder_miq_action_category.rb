@@ -5,9 +5,8 @@ class TreeBuilderMiqActionCategory < TreeBuilder
 
   def override(node, object, _pid, _options)
     leaf = !object.category?
-    image = leaf ? nil : "100/tag.png"
     node[:cfmeNoClick] = !leaf
-    node[:image] = image && ActionController::Base.helpers.image_path(image)
+    node[:icon] = leaf ? nil : "fa fa-tag"
     node
   end
 
@@ -36,7 +35,7 @@ class TreeBuilderMiqActionCategory < TreeBuilder
     {
       :title   => @tenant_name,
       :tooltip => @tenant_name,
-      :image   => "100/tag.png"
+      :icon    => "fa fa-tag"
     }
   end
 

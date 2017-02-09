@@ -7,68 +7,22 @@ class ContainerController < ApplicationController
   after_action :set_session_data
 
   CONTAINER_X_BUTTON_ALLOWED_ACTIONS = {
-    'container_delete'   => :container_delete,
-    'container_edit'     => :container_edit,
-    'container_tag'      => :container_tag,
+    'container_tag'      => :container_tag_edit,
     'container_timeline' => :show_timeline,
-    'container_perf'     => :show
+    'container_perf'     => :show_performance
   }
 
-  def button
-    custom_buttons if params[:pressed] == "custom_button"
-    # custom button screen, so return, let custom_buttons method handle everything
-    return if ["custom_button"].include?(params[:pressed])
-  end
-
   def x_button
-    @explorer = true
-
-    model, action = pressed2model_action(params[:pressed])
-
-    performed_action = generic_x_button(CONTAINER_X_BUTTON_ALLOWED_ACTIONS)
-    return if [:container_delete, :container_edit].include?(performed_action)
-
-    if @refresh_partial
-      replace_right_cell(:action => action)
-    else
-      unless @flash_array
-        add_flash(_("Button not yet implemented %{model}: %{action}") % {:model => model, :action => action}, :error)
-      end
-      javascript_flash
-    end
+    generic_x_button(CONTAINER_X_BUTTON_ALLOWED_ACTIONS)
   end
 
   # Container show selected, redirect to proper controller
   def show
-    return if perfmenu_click?
-    @sb[:action] = params[:display]
-    @display = params[:display] || "main" unless pagination_or_gtl_request?
-
     identify_container(params[:id])
-    if @display == "performance"
-      @showtype = "performance"
-      perf_gen_init_options
-      @refresh_partial = "layouts/performance"
-    end
-
     node_type = TreeBuilder.get_prefix_for_model(@record.class.base_model)
     redirect_to :action     => 'explorer',
                 :controller => @record.class.base_model.to_s.underscore,
-                :id         => "#{node_type}-#{@record.id}" unless @display == "performance"
-  end
-
-  def show_timeline
-    @showtype = "timeline"
-    session[:tl_record_id] = params[:id]
-    @record = Container.find_by_id(from_cid(params[:id]))
-    @timeline = @timeline_filter = true
-    @lastaction = "show_timeline"
-    tl_build_timeline                       # Create the timeline report
-    @refresh_partial = "layouts/tl_show"
-    if params[:refresh]
-      @sb[:action] = "timeline"
-      replace_right_cell
-    end
+                :id         => "#{node_type}-#{@record.id}"
   end
 
   def show_list
@@ -110,7 +64,7 @@ class ContainerController < ApplicationController
 
   # ST clicked on in the explorer right cell
   def x_show
-    get_tagdata(Container.find_by_id(from_cid(params[:id])))
+    get_tagdata(Container.find(from_cid(params[:id])))
     identify_container(from_cid(params[:id]))
     generic_x_show(x_tree(:containers_tree))
   end
@@ -146,7 +100,7 @@ class ContainerController < ApplicationController
     [{:role     => "container_accord",
       :role_any => true,
       :name     => :containers,
-      :title    => ui_lookup(:tables => "container")},
+      :title    => _("Containers")},
 
      {:role     => "container_filter_accord",
       :role_any => true,
@@ -157,6 +111,35 @@ class ContainerController < ApplicationController
     end
   end
 
+  def container_tag_edit
+    container_tag
+    replace_right_cell(:action => "tag")
+  end
+
+  def show_performance
+    return if perfmenu_click?
+    @sb[:action] = params[:display]
+    identify_container(params[:id])
+    @showtype = "performance"
+    perf_gen_init_options
+    @refresh_partial = "layouts/performance"
+    replace_right_cell(:action => "perf")
+  end
+
+  def show_timeline
+    @showtype = "timeline"
+    session[:tl_record_id] = params[:id]
+    @record = Container.find(from_cid(params[:id]))
+    @timeline = @timeline_filter = true
+    @lastaction = "show_timeline"
+    tl_build_timeline # Create the timeline report
+    @refresh_partial = "layouts/tl_show"
+    if params[:refresh]
+      @sb[:action] = "timeline"
+      replace_right_cell
+    end
+    replace_right_cell(:action => 'timeline')
+  end
 
   # Get all info for the node about to be displayed
   def get_node_info(treenodeid)
@@ -165,9 +148,8 @@ class ContainerController < ApplicationController
     # resetting action that was stored during edit to determine what is being edited
     @sb[:action] = nil
     if x_node == "root" || TreeBuilder.get_model_for_prefix(@nodetype) == "MiqSearch"
-      typ = "Container"
       process_show_list(:where_clause => 'containers.deleted_on IS NULL')
-      @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => typ)}
+      @right_cell_text = _("All Containers")
     else
       show_record(from_cid(id))
       @right_cell_text = _("%{model} \"%{name}\" (Summary)") % {
@@ -192,15 +174,18 @@ class ContainerController < ApplicationController
   # set partial name and cell header for edit screens
   def set_right_cell_vars(action)
     case action
-    when "container_edit"
-      partial = "container_form"
-      header = _("Editing %{model} \"%{name}\"") % {:name  => @record.name,
-                                                    :model => ui_lookup(:model => "Container")}
-      action = "container_edit"
     when "tag"
       partial = "layouts/tagging"
-      header = _("Edit Tags for %{model}") % {:model => ui_lookup(:model => "Container")}
+      header = _("Edit Tags for Container")
       action = "container_tag"
+    when "perf"
+      partial = "layouts/performance"
+      header = _("Capacity & Utilization data for Container \"%{container_name}\"") % {:container_name => @record.name}
+      action = nil
+    when "timeline"
+      partial = "layouts/tl_show"
+      header = _("Timelines for Container \"%{container_name}\"") % {:container_name => @record.name}
+      action = nil
     else
       action = nil
     end
@@ -236,7 +221,7 @@ class ContainerController < ApplicationController
 
     replace_trees_by_presenter(presenter, trees)
 
-    if action == "container_edit" || action == "tag"
+    if action == "tag"
       presenter.update(:main_div, r[:partial => partial])
     elsif params[:display]
       partial_locals = {:controller => "container", :action_url => @lastaction}

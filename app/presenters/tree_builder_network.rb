@@ -3,12 +3,11 @@ class TreeBuilderNetwork < TreeBuilder
   has_kids_for Switch, [:x_get_tree_switch_kids]
 
   def override(node, _object, _pid, _options)
-    node[:cfmeNoClick] = true unless node[:image].include?('100/currentstate-')
+    node[:cfmeNoClick] = true if node[:image].nil? || !node[:image].include?('100/currentstate-')
   end
 
-  def initialize(name, type, sandbox, build = true, root = nil, vm_kids = [])
+  def initialize(name, type, sandbox, build = true, root = nil)
     sandbox[:network_root] = TreeBuilder.build_node_id(root) if root
-    @tree_vms = vm_kids
     @root = root
     unless @root
       model, id = TreeBuilder.extract_node_model_and_id(sandbox[:network_root])
@@ -32,7 +31,7 @@ class TreeBuilderNetwork < TreeBuilder
     {
       :title       => @root.name,
       :tooltip     => _("Host: %{name}") % {:name => @root.name},
-      :image       => '100/host.png',
+      :icon        => 'pficon pficon-screen',
       :cfmeNoClick => true
     }
   end
@@ -55,7 +54,6 @@ class TreeBuilderNetwork < TreeBuilder
     if parent.respond_to?("vms_and_templates") && parent.vms_and_templates.present?
       kids = count_only_or_objects(count_only, parent.vms_and_templates, "name")
     end
-    @tree_vms.concat(kids) unless count_only
     kids
   end
 end

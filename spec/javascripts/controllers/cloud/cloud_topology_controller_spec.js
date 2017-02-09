@@ -42,8 +42,8 @@ describe('cloudTopologyController', function() {
     describe('the topology gets correct icons', function() {
       it('in graph elements', function() {
         var d = { id:"2",  item:{display_kind:"Openstack", kind:"CloudManager", id:"2"}};
-        expect($controller.getIcon(d)).toContain("/assets/svg/vendor-openstack");
-        expect($controller.getIcon(cloud_provider)).toContain("/assets/svg/vendor-openstack");
+        expect($controller.getIcon(d)).toMatch(/openstack/);
+        expect($controller.getIcon(cloud_provider)).toMatch(/openstack/);
         d = { id:"4",  item:{display_kind:"VM", kind:"Vm", id:"4"}};
         expect($controller.getIcon(d)).toEqual("\uE90f");
         expect($controller.getIcon(cloud_tenant)).toEqual("\uE904");

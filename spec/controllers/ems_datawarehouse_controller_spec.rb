@@ -10,7 +10,6 @@ describe EmsDatawarehouseController do
     get :new
 
     expect(response.status).to eq(200)
-    expect(allow(controller).to receive(:edit)).to_not be_nil
   end
 
   describe "#show" do
@@ -99,4 +98,6 @@ describe EmsDatawarehouseController do
       expect(dwh.authentications.first).to have_attributes(:auth_key => "MUCH_WOW")
     end
   end
+
+  include_examples '#download_summary_pdf', :ems_hawkular_datawarehouse
 end

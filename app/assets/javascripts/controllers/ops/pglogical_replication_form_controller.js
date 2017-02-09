@@ -16,18 +16,9 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
     $scope.newRecord = false;
 
     miqService.sparkleOn();
-    $http.get('/ops/pglogical_subscriptions_form_fields/' + pglogicalReplicationFormId).success(function(data) {
-      $scope.pglogicalReplicationModel.replication_type = data.replication_type;
-      $scope.pglogicalReplicationModel.subscriptions = angular.copy(data.subscriptions);
-      $scope.pglogicalReplicationModel.exclusion_list = angular.copy(data.exclusion_list);
-
-      if ($scope.pglogicalReplicationModel.replication_type == "none")
-        miqService.miqFlash("warn", __("No replication role has been set"));
-
-      $scope.afterGet = true;
-      $scope.modelCopy = angular.copy( $scope.pglogicalReplicationModel );
-      miqService.sparkleOff();
-    });
+    $http.get('/ops/pglogical_subscriptions_form_fields/' + pglogicalReplicationFormId)
+      .then(getPgLogicalFormData)
+      .catch(miqService.handleFailure);
   };
 
   var pglogicalManageSubscriptionsButtonClicked = function(buttonName, serializeFields) {
@@ -369,6 +360,22 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
   $ctrl.toggleAnimation = function () {
     $ctrl.animationsEnabled = !$ctrl.animationsEnabled;
   };
+
+  function getPgLogicalFormData(response) {
+    var data = response.data;
+
+    $scope.pglogicalReplicationModel.replication_type = data.replication_type;
+    $scope.pglogicalReplicationModel.subscriptions = angular.copy(data.subscriptions);
+    $scope.pglogicalReplicationModel.exclusion_list = angular.copy(data.exclusion_list);
+
+    if ($scope.pglogicalReplicationModel.replication_type === 'none') {
+      miqService.miqFlash('warn', __("No replication role has been set"));
+    }
+
+    $scope.afterGet = true;
+    $scope.modelCopy = angular.copy( $scope.pglogicalReplicationModel );
+    miqService.sparkleOff();
+  }
 
   init();
 }]);

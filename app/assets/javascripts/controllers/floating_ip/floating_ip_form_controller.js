@@ -14,12 +14,9 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
   } else {
     miqService.sparkleOn();
 
-    $http.get('/floating_ip/floating_ip_form_fields/' + floatingIpFormId).success(function(data) {
-      $scope.afterGet = true;
-      $scope.floatingIpModel.network_port_ems_ref = data.network_port_ems_ref;
-      $scope.modelCopy = angular.copy( $scope.floatingIpModel );
-      miqService.sparkleOff();
-    });
+    $http.get('/floating_ip/floating_ip_form_fields/' + floatingIpFormId)
+      .then(getFloatingIpFormData)
+      .catch(miqService.handleFailure);
   }
 
   $scope.addClicked = function() {
@@ -49,9 +46,24 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
 
   $scope.filterNetworkManagerChanged = function(id) {
     miqService.sparkleOn();
-    $http.get('/floating_ip/networks_by_ems/' + id).success(function(data) {
-      $scope.available_networks = data.available_networks;
-      miqService.sparkleOff();
-    });
+    $http.get('/floating_ip/networks_by_ems/' + id)
+      .then(getNetworkByEmsFormData)
+      .catch(miqService.handleFailure);
   };
+
+  function getFloatingIpFormData(response) {
+    var data = response.data;
+
+    $scope.afterGet = true;
+    $scope.floatingIpModel.network_port_ems_ref = data.network_port_ems_ref;
+    $scope.modelCopy = angular.copy( $scope.floatingIpModel );
+    miqService.sparkleOff();
+  }
+
+  function getNetworkByEmsFormData(response) {
+    var data = response.data;
+
+    $scope.available_networks = data.available_networks;
+    miqService.sparkleOff();
+  }
 }]);

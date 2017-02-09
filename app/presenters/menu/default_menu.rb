@@ -2,7 +2,7 @@ module Menu
   class DefaultMenu
     class << self
       def compute_menu_section
-        Menu::Section.new(:compute, N_("Compute"), 'fa product-memory fa-2x', [
+        Menu::Section.new(:compute, N_("Compute"), 'pficon pficon-cpu fa-2x', [
           clouds_menu_section,
           infrastructure_menu_section,
           physical_infrastructure_menu_section,
@@ -36,7 +36,7 @@ module Menu
       end
 
       def services_menu_section
-        Menu::Section.new(:svc, N_("Services"), 'fa pficon-service fa-2x', [
+        Menu::Section.new(:svc, N_("Services"), 'pficon pficon-service fa-2x', [
           Menu::Item.new('services',       N_('My Services'), 'service',     {:feature => 'service', :any => true},     '/service/explorer'),
           Menu::Item.new('catalogs',       N_('Catalogs'),    'catalog',     {:feature => 'catalog', :any => true},     '/catalog/explorer'),
           Menu::Item.new('vm_or_template', N_('Workloads'),   'vm_explorer', {:feature => 'vm_explorer', :any => true}, '/vm_or_template/explorer'),
@@ -124,7 +124,7 @@ module Menu
       end
 
       def middleware_menu_section
-        Menu::Section.new(:mdl, N_("Middleware"), 'fa product-middleware fa-2x', [
+        Menu::Section.new(:mdl, N_("Middleware"), 'pficon pficon-middleware fa-2x', [
           Menu::Item.new('ems_middleware',        N_('Providers'),   'ems_middleware',        {:feature => 'ems_middleware_show_list'},          '/ems_middleware'),
           Menu::Item.new('middleware_domain',     N_('Domains'),     'middleware_domain',     {:feature => 'middleware_domain_show_list'},       '/middleware_domain'),
           Menu::Item.new('middleware_server',     N_('Servers'),     'middleware_server',     {:feature => 'middleware_server_show_list'},       '/middleware_server'),
@@ -137,7 +137,7 @@ module Menu
       end
 
       def network_menu_section
-        Menu::Section.new(:net, N_("Networks"), 'fa pficon-network fa-2x', [
+        Menu::Section.new(:net, N_("Networks"), 'pficon pficon-network fa-2x', [
           Menu::Item.new('ems_network',      N_('Providers'),       'ems_network',      {:feature => 'ems_network_show_list'},    '/ems_network'),
           Menu::Item.new('cloud_network',    N_('Networks'),        'cloud_network',    {:feature => 'cloud_network_show_list'},  '/cloud_network'),
           Menu::Item.new('cloud_subnet',     N_('Subnets'),         'cloud_subnet',     {:feature => 'cloud_subnet_show_list'},   '/cloud_subnet'),
@@ -222,13 +222,19 @@ module Menu
         ])
       end
 
+      def automation_menu_section
+        Menu::Section.new(:aut, N_("Automation"), 'fa fa-recycle fa-2x', [
+          automate_menu_section
+        ])
+      end
+
       def automate_menu_section
         generic_object_item = if ::Settings.product.generic_object == true
           Menu::Item.new('generic_object',       N_('Generic Objects'), 'generic_object_explorer',       {:feature => 'generic_object_explorer'},       '/generic_object/explorer')
         else
           nil
         end
-        Menu::Section.new(:aut, N_("Automate"), 'fa fa-recycle fa-2x', [
+        Menu::Section.new(:automate, N_("Automate"), 'fa fa-recycle fa-2x', [
           Menu::Item.new('miq_ae_class',         N_('Explorer'),        'miq_ae_class_explorer',         {:feature => 'miq_ae_domain_view'},            '/miq_ae_class/explorer'),
           Menu::Item.new('miq_ae_tools',         N_('Simulation'),      'miq_ae_class_simulation',       {:feature => 'miq_ae_class_simulation'},       '/miq_ae_tools/resolve'),
           Menu::Item.new('miq_ae_customization', N_('Customization'),   'miq_ae_customization_explorer', {:feature => 'miq_ae_customization_explorer'}, '/miq_ae_customization/explorer'),
@@ -258,7 +264,7 @@ module Menu
       def default_menu
         [cloud_inteligence_menu_section, services_menu_section, compute_menu_section, configuration_menu_section,
          network_menu_section, middleware_menu_section, datawarehouse_menu_section, storage_menu_section,
-         control_menu_section, automate_menu_section, optimize_menu_section, settings_menu_section].compact
+         control_menu_section, automation_menu_section, optimize_menu_section, settings_menu_section].compact
       end
     end
   end

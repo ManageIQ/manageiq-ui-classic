@@ -27,14 +27,16 @@ class ApplicationHelper::Toolbar::AvailabilityZoneCenter < ApplicationHelper::To
           N_('Show Capacity & Utilization data for this Availability Zone'),
           N_('Utilization'),
           :url       => "/show",
-          :url_parms => "?display=performance"),
+          :url_parms => "?display=performance",
+          :klass     => ApplicationHelper::Button::AvailabilityZonePerformance),
         button(
           :availability_zone_timeline,
           'product product-timeline fa-lg',
           N_('Show Timelines for this Availability Zone'),
           N_('Timelines'),
           :url       => "/show",
-          :url_parms => "?display=timeline"),
+          :url_parms => "?display=timeline",
+          :klass     => ApplicationHelper::Button::AvailabilityZoneTimeline),
       ]
     ),
   ])

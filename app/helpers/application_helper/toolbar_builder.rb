@@ -12,31 +12,15 @@ class ApplicationHelper::ToolbarBuilder
   # Returns built toolbar loaded in instance variable `@toolbar`, or `nil`, if
   # no buttons should be in the toolbar.
   def build_toolbar(toolbar_name)
-    @toolbar = []
-    @groups_added = []
-    @sep_needed = false
-    @sep_added = false
+    build_toolbar_setup
 
     toolbar_class = toolbar_class(toolbar_name)
-    toolbar_class.definition.each_with_index do |(name, group), group_index|
-      next if group_skipped?(name)
+    build_toolbar_from_class(toolbar_class)
+  end
 
-      @sep_added = false
-      @groups_added.push(group_index)
-      case group
-      when ApplicationHelper::Toolbar::Group
-        group.buttons.each do |bgi|
-          build_button(bgi, group_index)
-        end
-      when ApplicationHelper::Toolbar::Custom
-        rendered_html = group.render(@view_context).tr('\'', '"')
-        group[:args][:html] = ERB::Util.html_escape(rendered_html).html_safe
-        @toolbar << group
-      end
-    end
-
-    @toolbar = nil if @toolbar.empty?
-    @toolbar
+  def build_toolbar_by_class(toolbar_class)
+    build_toolbar_setup
+    build_toolbar_from_class(toolbar_class)
   end
 
   private
@@ -389,7 +373,7 @@ class ApplicationHelper::ToolbarBuilder
       when "diagnostics_audit_log"
         return !["fetch_audit_log", "refresh_audit_log"].include?(id)
       when "diagnostics_collect_logs"
-        return !%(collect_current_logs collect_logs log_depot_edit
+        return !%w(collect_current_logs collect_logs log_depot_edit
                   zone_collect_current_logs zone_collect_logs
                   zone_log_depot_edit).include?(id)
       when "diagnostics_evm_log"
@@ -426,7 +410,7 @@ class ApplicationHelper::ToolbarBuilder
   def hide_button?(id)
     # need to hide add buttons when on sub-list view screen of a CI.
     return true if id.ends_with?("_new", "_discover") &&
-                   @lastaction == "show" && !%w(main vms instances).include?(@display)
+                   @lastaction == "show" && !%w(main vms instances all_vms).include?(@display)
 
     # user can see the buttons if they can get to Policy RSOP/Automate Simulate screen
     return false if ["miq_ae_tools"].include?(@layout)
@@ -459,23 +443,6 @@ class ApplicationHelper::ToolbarBuilder
     case id
     when "miq_task_canceljob"
       return true unless ["all_tasks", "all_ui_tasks"].include?(@layout)
-    when "vm_console"
-      type = ::Settings.server.remote_console_type
-      return type != 'MKS' || !@record.console_supported?(type)
-    when "vm_vnc_console"
-      if @record.vendor == 'vmware'
-        # remote_console_type is only useful for vmware consoles
-        type = ::Settings.server.remote_console_type
-        return type != 'VNC' || !@record.console_supported?(type)
-      end
-      return !@record.console_supported?('vnc')
-    when "vm_vmrc_console"
-      type = ::Settings.server.remote_console_type
-      return type != 'VMRC' || !@record.console_supported?(type)
-    # Check buttons behind SMIS setting
-    when "ontap_storage_system_statistics", "ontap_logical_disk_statistics", "ontap_storage_volume_statistics",
-        "ontap_file_share_statistics"
-      return true unless ::Settings.product.smis
     end
 
     false  # No reason to hide, allow the button to show
@@ -496,60 +463,6 @@ class ApplicationHelper::ToolbarBuilder
     end
 
     case get_record_cls(@record)
-    when "AvailabilityZone"
-      case id
-      when "availability_zone_perf"
-        unless @record.has_perf_data?
-          return N_("No Capacity & Utilization data has been collected for this Availability Zone")
-        end
-      when "availability_zone_timeline"
-        unless @record.has_events? # || @record.has_events?(:policy_events), may add this check back in later
-          return N_("No Timeline data has been collected for this Availability Zone")
-        end
-      end
-    when "OntapStorageSystem"
-      case id
-      when "ontap_storage_system_statistics"
-        return N_("No Statistics Collected") unless @record.latest_derived_metrics
-      end
-    when "OntapLogicalDisk"
-      case id
-      when "ontap_logical_disk_perf"
-        unless @record.has_perf_data?
-          return N_("No Capacity & Utilization data has been collected for this Logical Disk")
-        end
-      when "ontap_logical_disk_statistics"
-        return N_("No Statistics collected for this Logical Disk") unless @record.latest_derived_metrics
-      end
-    when "CimBaseStorageExtent"
-      case id
-      when "cim_base_storage_extent_statistics"
-        return N_("No Statistics Collected") unless @record.latest_derived_metrics
-      end
-    when "OntapStorageVolume"
-      case id
-      when "ontap_storage_volume_statistics"
-        return N_("No Statistics Collected") unless @record.latest_derived_metrics
-      end
-    when "OntapFileShare"
-      case id
-      when "ontap_file_share_statistics"
-        return N_("No Statistics Collected") unless @record.latest_derived_metrics
-      end
-    when "SniaLocalFileSystem"
-      case id
-      when "snia_local_file_system_statistics"
-        return N_("No Statistics Collected") unless @record.latest_derived_metrics
-      end
-    when "EmsCluster"
-      case id
-      when "ems_cluster_perf"
-        return N_("No Capacity & Utilization data has been collected for this Cluster") unless @record.has_perf_data?
-      when "ems_cluster_timeline"
-        unless @record.has_events? || @record.has_events?(:policy_events)
-          return N_("No Timeline data has been collected for this Cluster")
-        end
-      end
     when "Host"
       case id
       when "host_analyze_check_compliance", "host_check_compliance"
@@ -572,23 +485,6 @@ class ApplicationHelper::ToolbarBuilder
       when "action_delete"
         return N_("Default actions can not be deleted.") if @record.action_type == "default"
         return N_("Actions assigned to Policies can not be deleted") unless @record.miq_policies.empty?
-      end
-    when "MiqAlert"
-      case id
-      when "alert_delete"
-        return N_("Alerts that belong to Alert Profiles can not be deleted") unless @record.memberof.empty?
-        return N_("Alerts referenced by Actions can not be deleted") unless @record.owning_miq_actions.empty?
-      end
-    when "MiqRequest"
-      case id
-      when "miq_request_delete"
-        requester = current_user
-        return false if requester.admin_user?
-        return N_("Users are only allowed to delete their own requests") if requester.name != @record.requester_name
-        if %w(approved denied).include?(@record.approval_state)
-          return N_("%{approval_states} requests cannot be deleted") %
-            {:approval_states => @record.approval_state.titleize}
-        end
       end
     when "MiqGroup"
       case id
@@ -681,52 +577,6 @@ class ApplicationHelper::ToolbarBuilder
       case id
       when "instance_perf", "vm_perf", "container_perf"
         return N_("No Capacity & Utilization data has been collected for this VM") unless @record.has_perf_data?
-      when "vm_check_compliance"
-        unless @record.has_compliance_policies?
-          return N_("No Compliance Policies assigned to this virtual machine")
-        end
-      when "vm_console", "vm_vmrc_console"
-        if !is_browser?(%w(explorer firefox mozilla chrome)) ||
-           !is_browser_os?(%w(windows linux))
-          return N_("The web-based console is only available on IE, Firefox or Chrome (Windows/Linux)")
-        end
-
-        if id.in?(["vm_vmrc_console"])
-          begin
-            @record.validate_remote_console_vmrc_support
-          rescue MiqException::RemoteConsoleNotSupportedError => err
-            return N_("VM VMRC Console error: %{error}") % {:error => err}
-          end
-        end
-
-        if @record.current_state != "on"
-          return N_("The web-based console is not available because the VM is not powered on")
-        end
-      when "vm_vnc_console"
-        if @record.current_state != "on"
-          return N_("The web-based VNC console is not available because the VM is not powered on")
-        end
-      when "vm_timeline"
-        unless @record.has_events? || @record.has_events?(:policy_events)
-          return N_("No Timeline data has been collected for this VM")
-        end
-      when "vm_snapshot_add"
-        if @record.number_of(:snapshots) <= 0
-          return @record.is_available_now_error_message(:create_snapshot) unless @record.is_available?(:create_snapshot)
-        else
-          unless @record.is_available?(:create_snapshot)
-            return @record.is_available_now_error_message(:create_snapshot)
-          else
-            return N_("Select the Active snapshot to create a new snapshot for this VM") unless @active
-          end
-        end
-      when "vm_snapshot_delete"
-        return @record.is_available_now_error_message(:remove_snapshot) unless @record.is_available?(:remove_snapshot)
-      when "vm_snapshot_delete_all"
-        return @record.is_available_now_error_message(:remove_all_snapshots) unless @record.is_available?(:remove_all_snapshots)
-      when "vm_snapshot_revert"
-        return N_("Select a snapshot that is not the active one") if @active
-        return @record.is_available_now_error_message(:revert_to_snapshot) unless @record.is_available?(:revert_to_snapshot)
       end
     when "MiqTemplate"
       case id
@@ -887,5 +737,34 @@ class ApplicationHelper::ToolbarBuilder
     @layout == "pxe" &&
       item_id == "iso_datastore_new" &&
       !ManageIQ::Providers::Redhat::InfraManager.any_without_iso_datastores?
+  end
+
+  def build_toolbar_setup
+    @toolbar = []
+    @groups_added = []
+    @sep_needed = false
+    @sep_added = false
+  end
+
+  def build_toolbar_from_class(toolbar_class)
+    toolbar_class.definition.each_with_index do |(name, group), group_index|
+      next if group_skipped?(name)
+
+      @sep_added = false
+      @groups_added.push(group_index)
+      case group
+      when ApplicationHelper::Toolbar::Group
+        group.buttons.each do |bgi|
+          build_button(bgi, group_index)
+        end
+      when ApplicationHelper::Toolbar::Custom
+        rendered_html = group.render(@view_context).tr('\'', '"')
+        group[:args][:html] = ERB::Util.html_escape(rendered_html).html_safe
+        @toolbar << group
+      end
+    end
+
+    @toolbar = nil if @toolbar.empty?
+    @toolbar
   end
 end

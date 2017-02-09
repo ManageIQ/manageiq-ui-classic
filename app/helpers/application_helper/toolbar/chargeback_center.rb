@@ -32,7 +32,7 @@ class ApplicationHelper::Toolbar::ChargebackCenter < ApplicationHelper::Toolbar:
     ),
     button(
       :chargeback_report_only,
-      'product product-report fa-lg',
+      'fa fa-file-text-o fa-lg',
       N_('Show full screen report'),
       nil,
       :klass   => ApplicationHelper::Button::ChargebackReportOnly,

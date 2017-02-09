@@ -1,6 +1,10 @@
 module EmsCommon
   extend ActiveSupport::Concern
 
+  included do
+    include Mixins::GenericSessionMixin
+  end
+
   def show_props
     drop_breadcrumb(:name => @ems.name + _(" (Properties)"), :url => show_link(@ems, :display  =>  "props"))
   end
@@ -34,6 +38,13 @@ module EmsCommon
     @showtype = "dashboard"
     @lastaction = "show_dashboard"
     drop_breadcrumb(:name => @ems.name + _(" (Dashboard)"), :url => show_link(@ems))
+    @sb[:summary_mode] = 'dashboard' unless @sb[:summary_mode] == 'dashboard'
+    render :action => "show_dashboard"
+  end
+
+  def show_main
+    @sb[:summary_mode] = 'textual' unless @sb[:summary_mode] == 'textual'
+    super
   end
 
   def show_ad_hoc_metrics
@@ -94,6 +105,7 @@ module EmsCommon
       'middleware_messagings'         => [MiddlewareMessaging,    _('Middleware Messagings')],
       'cloud_tenants'                 => [CloudTenant,            _('Cloud Tenants')],
       'cloud_volumes'                 => [CloudVolume,            _('Cloud Volumes')],
+      'cloud_volume_snapshots'        => [CloudVolumeSnapshot,    _('Cloud Volume Snapshots')],
       'flavors'                       => [Flavor,                 _('Flavors')],
       'security_groups'               => [SecurityGroup,          _('Security Groups')],
       'floating_ips'                  => [FloatingIp,             _('Floating IPs')],
@@ -121,10 +133,9 @@ module EmsCommon
     @ems = @record
 
     drop_breadcrumb({:name => ui_lookup(:tables => @table_name), :url => "/#{@table_name}/show_list?page=#{@current_page}&refresh=y"}, true)
-
     case params[:display]
     when 'main'                          then show_main
-    when 'download_pdf', 'summary_only'  then show_download
+    when 'summary_only'                  then show_download
     when 'props'                         then show_props
     when 'ems_folders'                   then show_ems_folders
     when 'timeline'                      then show_timeline
@@ -136,7 +147,7 @@ module EmsCommon
       if pagination_or_gtl_request? # pagination controls
         show_entities(@display) # display loaded from session
       else                 # or default display
-        show_main
+        dashboard_view ? show_dashboard : show_main
       end
     else show_entities(params[:display])
     end
@@ -572,13 +583,14 @@ module EmsCommon
   end
 
   def check_compliance(model)
-    emss = find_checked_items
-    if emss.empty?
-      add_flash(_("No %{record} were selected for %{task}") % {model => ui_lookup(:models => model),
-                                                               :task  => "Compliance Check"}, :error)
+    showlist = @lastaction == "show_list"
+    ids = showlist ? find_checked_items : [params[:id]]
+    if ids.blank?
+      add_flash(_("No %{model} were selected for Compliance Check") % {:model => ui_lookup(:models => model.to_s)}, :error)
     end
-    process_emss(emss, "check_compliance")
-    @lastaction == "show_list" ? show_list : show
+    process_emss(ids, "check_compliance")
+    params[:display] = "main"
+    showlist ? show_list : show
   end
 
   def arbitration_profile_edit
@@ -1164,25 +1176,6 @@ module EmsCommon
   def any_blank_fields?(hash, fields)
     fields = [fields] unless fields.kind_of? Array
     fields.any? { |f| hash[f].blank? }
-  end
-
-  def get_session_data
-    prefix      = self.class.session_key_prefix
-    @title      = ui_lookup(:tables => prefix)
-    @layout     = prefix
-    @table_name = request.parameters[:controller]
-    @lastaction = session["#{prefix}_lastaction".to_sym]
-    @display    = session["#{prefix}_display".to_sym]
-    @filters    = session["#{prefix}_filters".to_sym]
-    @catinfo    = session["#{prefix}_catinfo".to_sym]
-  end
-
-  def set_session_data
-    prefix                                 = self.class.session_key_prefix
-    session["#{prefix}_lastaction".to_sym] = @lastaction
-    session["#{prefix}_display".to_sym]    = @display unless @display.nil?
-    session["#{prefix}_filters".to_sym]    = @filters
-    session["#{prefix}_catinfo".to_sym]    = @catinfo
   end
 
   def model

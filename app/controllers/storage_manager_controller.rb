@@ -5,6 +5,7 @@ class StorageManagerController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericListMixin
+  include Mixins::GenericSessionMixin
 
   # handle buttons pressed on the button bar
   def button
@@ -213,11 +214,11 @@ class StorageManagerController < ApplicationController
     @showtype = "config"
     drop_breadcrumb({:name => ui_lookup(:tables => "storage_managers"), :url => "/storage_manager/show_list?page=#{@current_page}&refresh=y"}, true)
 
-    if ["download_pdf", "main", "summary_only"].include?(@display)
+    if %w(main summary_only).include?(@display)
       # get_tagdata(StorageManager)
       drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @sm.name}, :url => "/storage_manager/show/#{@sm.id}")
       @showtype = "main"
-      set_summary_pdf_data if ["download_pdf", "summary_only"].include?(@display)
+      set_summary_pdf_data if @display == 'summary_only'
     end
     @lastaction = "show"
     session[:tl_record_id] = @record.id
@@ -477,22 +478,6 @@ class StorageManagerController < ApplicationController
   def deletesms
     assert_privileges("storage_manager_delete")
     sm_button_operation('destroy', 'deletion')
-  end
-
-  def get_session_data
-    @title      = _("Storage Managers")
-    @layout     = "storage_manager"
-    @lastaction = session[:sm_lastaction]
-    @display    = session[:sm_display]
-    @filters    = session[:sm_filters]
-    @catinfo    = session[:sm_catinfo]
-  end
-
-  def set_session_data
-    session[:sm_lastaction] = @lastaction
-    session[:sm_display]    = @display unless @display.nil?
-    session[:sm_filters]    = @filters
-    session[:sm_catinfo]    = @catinfo
   end
 
   menu_section :nap

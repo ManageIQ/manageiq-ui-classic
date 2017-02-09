@@ -12,7 +12,9 @@ function MwAddDeploymentController($scope, $http, miqService) {
     fd.append('enabled', data.enableDeployment);
     fd.append('forceDeploy', data.forceDeploy);
     fd.append('runtimeName', data.runtimeName);
-    $http.post('/middleware_server/add_deployment', fd, {
+    var isGroupDeployment = data.isGroupDeployment;
+    var path = '/middleware_server' + (isGroupDeployment ? '_group' : '') + '/add_deployment';
+    $http.post(path, fd, {
       transformRequest: angular.identity,
       headers: {'Content-Type': undefined}
     })
@@ -21,7 +23,9 @@ function MwAddDeploymentController($scope, $http, miqService) {
           miqService.miqFlash(result.data.status, result.data.msg);
         },
         function() { // error
-          miqService.miqFlash('error', 'Unable to deploy "' + data.runtimeName + '" on this server.');
+          var msg = sprintf(__('Unable to deploy %s on this server %s"'), data.runtimeName,
+              (isGroupDeployment ? ' group.' : '.'));
+          miqService.miqFlash('error', msg);
         })
       .finally(function() {
         angular.element("#modal_d_div").modal('hide');

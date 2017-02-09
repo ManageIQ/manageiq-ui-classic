@@ -460,5 +460,5 @@ Methods updated/added: %{method_stats}") % stat_options)
     session[:resolve_tools] = @resolve if @resolve
   end
 
-  menu_section :aut
+  menu_section :automate
 end

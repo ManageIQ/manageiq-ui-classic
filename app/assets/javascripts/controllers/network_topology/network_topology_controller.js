@@ -3,9 +3,9 @@
 miqHttpInject(angular.module('netTopologyApp', ['kubernetesUI', 'ui.bootstrap', 'ManageIQ']))
 .controller('networkTopologyController', NetworkTopologyCtrl);
 
-NetworkTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', 'topologyService'];
+NetworkTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', 'topologyService', 'miqService'];
 
-function NetworkTopologyCtrl($scope, $http, $interval, $location, topologyService) {
+function NetworkTopologyCtrl($scope, $http, $interval, $location, topologyService, miqService) {
   var self = this;
   $scope.vs = null;
   var icons = null;
@@ -19,19 +19,11 @@ function NetworkTopologyCtrl($scope, $http, $interval, $location, topologyServic
       id = '/' + (/network_topology\/show\/(\d+)/.exec($location.absUrl())[1]);
     }
 
-    var currentSelectedKinds = $scope.kinds;
     var url = '/network_topology/data' + id;
 
-    $http.get(url).success(function(data) {
-      $scope.items = data.data.items;
-      $scope.relations = data.data.relations;
-      $scope.kinds = data.data.kinds;
-      icons = data.data.icons;
-
-      if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length != Object.keys($scope.kinds).length)) {
-        $scope.kinds = currentSelectedKinds;
-      }
-    });
+    $http.get(url)
+      .then(getNetworkTopologyData)
+      .catch(miqService.handleFailure);
   };
 
   $scope.checkboxModel = {
@@ -277,4 +269,18 @@ function NetworkTopologyCtrl($scope, $http, $interval, $location, topologyServic
     // Reset the search term in search input
     $scope.search.query = "";
   };
+
+  function getNetworkTopologyData(response) {
+    var data = response.data;
+
+    var currentSelectedKinds = $scope.kinds;
+    $scope.items = data.data.items;
+    $scope.relations = data.data.relations;
+    $scope.kinds = data.data.kinds;
+    icons = data.data.icons;
+
+    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys($scope.kinds).length)) {
+      $scope.kinds = currentSelectedKinds;
+    }
+  }
 }

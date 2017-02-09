@@ -32,10 +32,28 @@ class TreeBuilderPolicy < TreeBuilder
 
     MiqPolicyController::UI_FOLDERS.collect do |model|
       text = text_i18n[mode.to_sym][model.name.to_sym]
-      {:id    => "#{mode}-#{model.name.camelize(:lower)}",
-       :image => "100/#{model.name.underscore}.png",
-       :text  => text,
-       :tip   => text}
+      icon = case model.to_s
+             when 'Host'
+               'pficon pficon-screen'
+             when 'Vm'
+               'pficon pficon-virtual-machine'
+             when 'ContainerReplicator'
+               'pficon pficon-replicator'
+             when 'ContainerGroup'
+               'fa fa-cubes'
+             when 'ContainerNode'
+               'pficon pficon-container-node'
+             when 'ContainerImage'
+               'pficon pficon-image'
+             when 'ExtManagementSystem'
+               'pficon pficon-server'
+             end
+      {
+        :id   => "#{mode}-#{model.name.camelize(:lower)}",
+        :icon => icon,
+        :text => text,
+        :tip  => text
+      }
     end
   end
 

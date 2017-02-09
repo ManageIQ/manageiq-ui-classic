@@ -472,4 +472,7 @@ describe VmInfraController do
                                :id          => vm_vmware.id}
     expect(assigns(:flash_array).first[:message]).to include("Create Snapshot")
   end
+
+  include_examples '#download_summary_pdf', :vm_vmware
+  include_examples '#download_summary_pdf', :template_vmware
 end

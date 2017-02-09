@@ -1,6 +1,7 @@
 module VmCommon
   extend ActiveSupport::Concern
   include ActionView::Helpers::JavaScriptHelper
+  include ChargebackPreview
 
   # handle buttons pressed on the button bar
   def button
@@ -156,28 +157,36 @@ module VmCommon
   end
 
   def launch_html5_console
-    proto = request.ssl? ? 'wss' : 'ws'
+    scheme = request.ssl? ? 'wss' : 'ws'
     override_content_security_policy_directives(
-      :connect_src => ["'self'", "#{proto}://#{request.env['HTTP_HOST']}"],
+      :connect_src => ["'self'", "#{scheme}://#{request.env['HTTP_HOST']}"],
       :img_src     => %w(data: 'self')
     )
-    %i(secret url).each { |p| params.require(p) }
-    @secret = j(params[:secret])
-    @url = j(params[:url])
+    %i(secret url proto).each { |p| params.require(p) }
 
-    case j(params[:proto])
-    when 'spice'     # spice, vnc - from rhevm
-      render(:template => 'vm_common/console_spice', :layout => false)
-    when nil, 'vnc'  # nil - from vmware
-      render(:template => 'vm_common/console_vnc', :layout => false)
-    when 'novnc_url' # from OpenStack
-      redirect_to host_address
+    proto = j(params[:proto])
+    if %w(vnc spice).include?(proto) # VMWare, RHEV
+      @console = {
+        :url    => j(params[:url]),
+        :secret => j(params[:secret]),
+        :type   => proto
+      }
+      render(:template => 'layouts/remote_console', :layout => false)
+    else
+      raise 'Unsupported protocol'
     end
   end
 
   def x_show
     @vm = @record = identify_record(params[:id], VmOrTemplate)
     generic_x_show
+  end
+
+  def download_summary_pdf
+    super do
+      @flash_array = []
+      @record = identify_record(params[:id], VmOrTemplate)
+    end
   end
 
   def show(id = nil)
@@ -200,7 +209,7 @@ module VmCommon
 
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
 
-    if !@explorer && @display != "download_pdf"
+    unless @explorer
       tree_node_id = TreeBuilder.build_node_id(@record)
       session[:exp_parms] = {:display => @display, :refresh => params[:refresh], :id => tree_node_id}
       controller_name = controller_for_vm(model_for_vm(@record))
@@ -239,14 +248,14 @@ module VmCommon
       rec_cls = "vm"
     end
     @gtl_url = "/show"
-    if ["download_pdf", "main", "summary_only"].include?(@display)
+    if %w(main summary_only).include?(@display)
       get_tagdata(@record)
       drop_breadcrumb({:name => _("Virtual Machines"),
                        :url  => "/#{rec_cls}/show_list?page=#{@current_page}&refresh=y"}, true)
       drop_breadcrumb(:name => @record.name + _(" (Summary)"), :url => "/#{rec_cls}/show/#{@record.id}")
       @showtype = "main"
       @button_group = rec_cls
-      set_summary_pdf_data if ["download_pdf", "summary_only"].include?(@display)
+      set_summary_pdf_data if @display == "summary_only"
     elsif @display == "networks"
       drop_breadcrumb(:name => @record.name + _(" (Networks)"),
                       :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
@@ -262,6 +271,7 @@ module VmCommon
     elsif @display == "snapshot_info"
       drop_breadcrumb(:name => @record.name + _(" (Snapshots)"),
                       :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
+      session[:snap_selected] = nil if Snapshot.find_by(:id => session[:snap_selected]).nil?
       @sb[@sb[:active_accord]] = TreeBuilder.build_node_id(@record)
       @snapshot_tree = TreeBuilderSnapshots.new(:snapshot_tree, :snapshot, @sb, true, :root => @record)
       @active = if @snapshot_tree.selected_node
@@ -275,14 +285,17 @@ module VmCommon
       drop_breadcrumb(:name => @record.name + _(" (Devices)"),
                       :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
     elsif @display == "vmtree_info"
-      @tree_vms = []                     # Capture all VM ids in the tree
       drop_breadcrumb({:name => @record.name, :url => "/#{rec_cls}/show/#{@record.id}"}, true)
       drop_breadcrumb(:name => @record.name + _(" (Genealogy)"),
                       :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
-      # session[:base_id] = @record.id
-      vmtree_nodes = vmtree(@record)
-      @vm_tree = TreeBuilder.convert_bs_tree(vmtree_nodes).to_json
-      @tree_name = "genealogy_tree"
+      if @record.parents.length > 1
+        add_flash(_("VM has too many parents."), :error)
+        javascript_flash(:spinner_off => true)
+        return
+      else
+        @genealogy_tree = TreeBuilderGenealogy.new(:genealogy_tree, :genealogy, @sb, true, @record)
+        session[:genealogy_tree_root_id] = @genealogy_tree.root_id
+      end
       @button_group = "vmtree"
     elsif @display == "compliance_history"
       count = params[:count] ? params[:count].to_i : 10
@@ -343,85 +356,18 @@ module VmCommon
 
     if @explorer
       @refresh_partial = "layouts/performance"
-      replace_right_cell unless ["download_pdf", "performance"].include?(params[:display])
+      replace_right_cell unless params[:display] == "performance"
     end
   end
 
-  def vmtree(vm)
-    session[:base_vm] = "_h-" + vm.id.to_s
-    if vm.parents.length > 0
-      vm_parent = vm.parents
-      @tree_vms.push(vm_parent[0]) unless @tree_vms.include?(vm_parent[0])
-      parent_node = {}
-      session[:parent_vm] = "_v-" + vm_parent[0].id.to_s       # setting base node id to be passed for check/uncheck all button
-      image = if vm_parent[0].retired == true
-                "100/retired.png"
-              elsif vm_parent[0].template?
-                if vm_parent[0].host
-                  "100/template.png"
-                else
-                  "100/template-no-host.png"
-                end
-              else
-                "100/#{vm_parent[0].current_state.downcase}.png"
-              end
-      parent_node = TreeNodeBuilder.generic_tree_node(
-        "_v-#{vm_parent[0].id}",
-        "#{vm_parent[0].name} (Parent)",
-        image,
-        "VM: #{vm_parent[0].name} (Click to view)",
-      )
-    else
-      session[:parent_vm] = nil
-    end
-
-    session[:parent_vm] = session[:base_vm] if session[:parent_vm].nil?  # setting base node id to be passed for check/uncheck all button if vm has no parent
-
-    base = []
-    base_node = vm_kidstree(vm)
-    base.push(base_node)
-    if !parent_node.nil?
-      parent_node[:children] = base
-      parent_node[:expand] = true
-      return parent_node
-    else
-      base_node[:expand] = true
-      return base_node
-    end
+  def node_id(id)
+    id == 'root' ? session[:genealogy_tree_root_id] : from_cid(parse_nodetype_and_id(id).last)
   end
 
-  # Recursive method to build a snapshot tree node
-  def vm_kidstree(vm)
-    key = "_v-#{vm.id}"
-    title = vm.name
-    tooltip = _("VM: %{name} (Click to view)") % {:name => vm.name}
-    if session[:base_vm] == "_h-#{vm.id}"
-      title << _(" (Selected)")
-      key = session[:base_vm]
-      tooltip = ""
-    end
-    image = if vm.template?
-              vm.host ? "100/template.png" : "100/template-no-host.png"
-            else
-              "100/#{vm.current_state.downcase}.png"
-            end
-    branch = TreeNodeBuilder.generic_tree_node(key, title, image, tooltip)
-    @tree_vms.push(vm) unless @tree_vms.include?(vm)
-    if vm.children.any?
-      kids = []
-      vm.children.each do |kid|
-        kids.push(vm_kidstree(kid)) unless @tree_vms.include?(kid)
-      end
-      branch[:children] = kids.sort_by { |a| a[:title].downcase }
-    end
-    branch
-  end
-
-  def vmtree_selected
-    base = params[:id].split('-')
-    session[:base_vm] = "_h-#{base[1]}"
+  def genealogy_tree_selected
+    base = node_id(params[:id])
     @display = "vmtree_info"
-    javascript_redirect :action => "show", :id => base[1], :vm_tree => "vmtree_info"
+    javascript_redirect :action => "show", :id => base, :vm_tree => "vmtree_info"
   end
 
   def snap_pressed
@@ -990,7 +936,7 @@ module VmCommon
     if params[:all_checked]
       ids = params[:all_checked].split(',')
       ids.each do |id|
-        id = id.split('-')[1]
+        id = node_id(id)
         session[:checked_items].push(id) unless session[:checked_items].include?(id)
       end
     end
@@ -1719,6 +1665,10 @@ module VmCommon
       header = _("Editing %{vm_or_template} \"%{name}\"") %
         {:name => name, :vm_or_template => ui_lookup(:table => table)}
       action = "edit_vm"
+    when 'chargeback'
+      partial = @refresh_partial
+      header = _('Chargeback preview for "%{vm_name}"') % { :vm_name => name }
+      action = 'vm_chargeback'
     when "evm_relationship"
       partial = "vm_common/evm_relationship"
       header = _("Edit %{product} Server Relationship for %{vm_or_template} \"%{name}\"") %

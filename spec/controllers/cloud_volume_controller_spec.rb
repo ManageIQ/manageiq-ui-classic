@@ -71,7 +71,6 @@ describe CloudVolumeController do
           :class_name  => @volume.class.name,
           :method_name => "backup_create",
           :instance_id => @volume.id,
-          :priority    => MiqQueue::HIGH_PRIORITY,
           :role        => "ems_operations",
           :zone        => @ems.my_zone,
           :args        => [{:name => "backup_name"}]
@@ -114,7 +113,6 @@ describe CloudVolumeController do
           :class_name  => @volume.class.name,
           :method_name => "backup_restore",
           :instance_id => @volume.id,
-          :priority    => MiqQueue::HIGH_PRIORITY,
           :role        => "ems_operations",
           :zone        => @ems.my_zone,
           :args        => [@backup.ems_ref]
@@ -176,4 +174,6 @@ describe CloudVolumeController do
       end
     end
   end
+
+  include_examples '#download_summary_pdf', :cloud_volume
 end

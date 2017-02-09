@@ -3,9 +3,9 @@
 miqHttpInject(angular.module('topologyApp', ['kubernetesUI', 'ui.bootstrap', 'ManageIQ']))
 .controller('containerTopologyController', ContainerTopologyCtrl);
 
-ContainerTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', 'topologyService', '$window'];
+ContainerTopologyCtrl.$inject = ['$scope', '$http', '$interval', 'topologyService', '$window', 'miqService'];
 
-function ContainerTopologyCtrl($scope, $http, $interval, $location, topologyService, $window) {
+function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $window, miqService) {
   ManageIQ.angular.scope = $scope;
   miqHideSearchClearButton();
   var self = this;
@@ -27,18 +27,9 @@ function ContainerTopologyCtrl($scope, $http, $interval, $location, topologyServ
 
     var url = '/container_topology/data' + id;
 
-    var currentSelectedKinds = $scope.kinds;
-
-    $http.get(url).success(function(data) {
-      $scope.items = data.data.items;
-      $scope.relations = data.data.relations;
-      $scope.kinds = data.data.kinds;
-      icons = data.data.icons;
-
-      if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length != Object.keys($scope.kinds).length)) {
-        $scope.kinds = currentSelectedKinds;
-      }
-    });
+    $http.get(url)
+      .then(getContainerTopologyData)
+      .catch(miqService.handleFailure);
   };
 
   $scope.checkboxModel = {
@@ -132,6 +123,16 @@ function ContainerTopologyCtrl($scope, $http, $interval, $location, topologyServ
      * vertices: All the elements
      * added: Just the ones that were added
      */
+
+    /*
+      If we remove some kinds beforehand, and then try to bring them back we
+      get the hash {kind: undefined} instead of {kind: true}.
+    */
+    if ($scope.kinds) {
+      Object.keys($scope.kinds).forEach(function (key) {
+        $scope.kinds[key] = true
+      });
+    }
 
     added.attr("class", function(d) {
       return d.item.kind;
@@ -283,4 +284,31 @@ function ContainerTopologyCtrl($scope, $http, $interval, $location, topologyServ
     // Reset the search term in search input
     $('input#search_topology')[0].value = "";
   };
+
+  function getContainerTopologyData(response) {
+    var data = response.data;
+
+    var currentSelectedKinds = $scope.kinds;
+
+    $scope.items = data.data.items;
+    $scope.relations = data.data.relations;
+    $scope.kinds = data.data.kinds;
+    icons = data.data.icons;
+    var size_limit = data.data.settings.containers_max_objects;
+
+    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys($scope.kinds).length)) {
+      $scope.kinds = currentSelectedKinds;
+    } else if (size_limit > 0) {
+      var remove_hierarchy = ['Container',
+        'ContainerGroup',
+        'ContainerReplicator',
+        'ContainerService',
+        'ContainerRoute',
+        'Host',
+        'Vm',
+        'ContainerNode',
+        'ContainerManager'];
+      $scope.kinds = topologyService.reduce_kinds($scope.items, $scope.kinds, size_limit, remove_hierarchy);
+    }
+  }
 }

@@ -10,7 +10,6 @@ describe EmsMiddlewareController do
     get :new
 
     expect(response.status).to eq(200)
-    expect(allow(controller).to receive(:edit)).to_not be_nil
   end
 
   describe "#show" do
@@ -96,4 +95,6 @@ describe EmsMiddlewareController do
       expect(hawkular.authentications.first).to have_attributes(:userid => "bar", :password => "[FILTERED]")
     end
   end
+
+  include_examples '#download_summary_pdf', :ems_hawkular
 end

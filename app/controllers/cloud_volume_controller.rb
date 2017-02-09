@@ -7,6 +7,7 @@ class CloudVolumeController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::CheckedIdMixin
   include Mixins::GenericFormMixin
+  include Mixins::GenericSessionMixin
 
   # handle buttons pressed on the button bar
   def button
@@ -80,14 +81,14 @@ class CloudVolumeController < ApplicationController
                     true)
 
     case @display
-    when "download_pdf", "main", "summary_only"
+    when "main", "summary_only"
       get_tagdata(@volume)
       drop_breadcrumb(
         :name => _("%{name} (Summary)") % {:name => @volume.name.to_s},
         :url  => "/cloud_volume/show/#{@volume.id}"
       )
       @showtype = "main"
-      set_summary_pdf_data if %w(download_pdf summary_only).include?(@display)
+      set_summary_pdf_data if @display == 'summary_only'
     when "cloud_volume_snapshots"
       title = ui_lookup(:tables => 'cloud_volume_snapshots')
       kls   = CloudVolumeSnapshot
@@ -646,24 +647,6 @@ class CloudVolumeController < ApplicationController
                    "Delete initiated for %{number} Cloud Volumes.",
                    volumes.length) % {:number => volumes.length})
     end
-  end
-
-  def get_session_data
-    @title      = ui_lookup(:table => 'cloud_volume')
-    @layout     = "cloud_volume"
-    @lastaction = session[:cloud_volume_lastaction]
-    @display    = session[:cloud_volume_display]
-    @filters    = session[:cloud_volume_filters]
-    @catinfo    = session[:cloud_volume_catinfo]
-    @showtype   = session[:cloud_volume_showtype]
-  end
-
-  def set_session_data
-    session[:cloud_volume_lastaction] = @lastaction
-    session[:cloud_volume_display]    = @display unless @display.nil?
-    session[:cloud_volume_filters]    = @filters
-    session[:cloud_volume_catinfo]    = @catinfo
-    session[:cloud_volume_showtype]   = @showtype
   end
 
   menu_section :bst

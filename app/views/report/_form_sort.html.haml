@@ -75,18 +75,6 @@
               :javascript
                 miqInitSelectPicker();
                 miqSelectPickerEvent('break_format', '#{url}', {beforeSend: true, complete: true});
-          - if false
-            -# TODO: Commented out as this observe causes double transactions until we can undo the form observe
-            .form-group
-              %label.control-label.col-md-2
-                = _('Label on Summary Row')
-              .col-md-8
-                #break_label_div
-                  = text_field_tag("break_label",
-                    @edit[:new].fetch_path(:col_options, @sortby1.split("-").last, :break_label).to_s,
-                    :maxlength         => 100,
-                    "class"            => "form-control",
-                    "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
   - if @sortby1 != NOTHING_STRING
     %br
     .form-horizontal

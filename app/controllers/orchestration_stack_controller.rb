@@ -4,6 +4,8 @@ class OrchestrationStackController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericSessionMixin
+
   def self.table_name
     @table_name ||= "orchestration_stack"
   end
@@ -24,12 +26,12 @@ class OrchestrationStackController < ApplicationController
     drop_breadcrumb({:name => _("Orchestration Stacks"),
                      :url  => "/orchestration_stack/show_list?page=#{@current_page}&refresh=y"}, true)
     case @display
-    when "download_pdf", "main", "summary_only"
+    when "main", "summary_only"
       get_tagdata(@orchestration_stack)
       drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @orchestration_stack.name},
                       :url  => "/orchestration_stack/show/#{@orchestration_stack.id}")
       @showtype = "main"
-      set_summary_pdf_data if %w(download_pdf summary_only).include?(@display)
+      set_summary_pdf_data if @display == 'summary_only'
     when "instances"
       title = ui_lookup(:tables => "vm_cloud")
       drop_breadcrumb(:name => _("%{name} (All %{title})") % {:name => @orchestration_stack.name, :title => title},
@@ -60,7 +62,7 @@ class OrchestrationStackController < ApplicationController
 
   def show_list
     process_show_list(
-      :where_clause => "orchestration_stacks.type != 'ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job'"
+      :where_clause => "orchestration_stacks.type != 'ManageIQ::Providers::AnsibleTower::AutomationManager::Job'"
     )
   end
 
@@ -268,16 +270,8 @@ class OrchestrationStackController < ApplicationController
     javascript_redirect :controller => 'catalog', :action => 'ot_show', :id => template.id
   end
 
-  def get_session_data
-    @title      = _("Stack")
-    @layout     = "orchestration_stack"
-    @lastaction = session[:orchestration_stack_lastaction]
-    @display    = session[:orchestration_stack_display]
-  end
-
-  def set_session_data
-    session[:orchestration_stack_lastaction] = @lastaction
-    session[:orchestration_stack_display]    = @display unless @display.nil?
+  def title
+    _("Stack")
   end
 
   menu_section :clo

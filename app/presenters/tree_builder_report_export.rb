@@ -18,7 +18,7 @@ class TreeBuilderReportExport < TreeBuilder
     {
       :title   => t = _("Import / Export"),
       :tooltip => t,
-      :image   => '100/report.png'
+      :icon    => 'fa fa-file-text-o'
     }
   end
 
@@ -27,10 +27,10 @@ class TreeBuilderReportExport < TreeBuilder
     export_children = [
       {:id    => 'exportcustomreports',
        :text  => _('Custom Reports'),
-       :icon  => 'product product-report'},
+       :icon  => 'fa fa-file-text-o'},
       {:id    => 'exportwidgets',
        :text  => _('Widgets'),
-       :icon  => 'product product-report'}
+       :icon  => 'fa fa-file-text-o'}
     ]
     count_only_or_objects(count_only, export_children)
   end

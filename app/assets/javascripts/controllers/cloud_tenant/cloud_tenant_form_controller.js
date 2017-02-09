@@ -12,13 +12,19 @@ ManageIQ.angular.app.controller('cloudTenantFormController', ['$http', '$scope',
   } else {
     miqService.sparkleOn();
 
-    $http.get('/cloud_tenant/cloud_tenant_form_fields/' + cloudTenantFormId).success(function(data) {
-      $scope.afterGet = true;
-      $scope.cloudTenantModel.name = data.name;
+    $http.get('/cloud_tenant/cloud_tenant_form_fields/' + cloudTenantFormId)
+      .then(getCloudTenantFormDataComplete)
+      .catch(miqService.handleFailure);
+  }
 
-      $scope.modelCopy = angular.copy( $scope.cloudTenantModel );
-      miqService.sparkleOff();
-    });
+  function getCloudTenantFormDataComplete(response) {
+    var data = response.data;
+
+    $scope.afterGet = true;
+    $scope.cloudTenantModel.name = data.name;
+
+    $scope.modelCopy = angular.copy( $scope.cloudTenantModel );
+    miqService.sparkleOff();
   }
 
   $scope.cancelClicked = function() {

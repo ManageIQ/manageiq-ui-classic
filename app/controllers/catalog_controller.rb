@@ -111,7 +111,6 @@ class CatalogController < ApplicationController
         @edit[:new] ||= {}
         @edit[:current] ||= {}
         @edit[:key] = "prov_edit__new"
-        @edit[:st_prov_types] = catalog_item_types
       end
       @edit[:new][:st_prov_type] = @record.prov_type if @record.prov_type.present?
       # set name and description for ServiceTemplate record
@@ -125,21 +124,6 @@ class CatalogController < ApplicationController
       session[:changed] = false
       replace_right_cell(:action => "at_st_new")
     end
-  end
-
-  def catalog_item_types
-    {
-      "amazon"                => "Amazon",
-      "azure"                 => "Azure",
-      "generic"               => "Generic",
-      "generic_orchestration" => "Orchestration",
-      "generic_ansible_tower" => "AnsibleTower",
-      "google"                => "Google",
-      "microsoft"             => "SCVMM",
-      "openstack"             => "OpenStack",
-      "redhat"                => "RHEV",
-      "vmware"                => "VMware"
-    }
   end
 
   def atomic_form_field_changed
@@ -396,9 +380,13 @@ class CatalogController < ApplicationController
         msg = _("Custom Image must be a .png or .jpg file")
         err = true
       else
-        @record.picture ||= Picture.new
-        @record.picture.content = params[:upload][:image].read
-        @record.picture.extension = ext
+        picture = {:content   => params[:upload][:image].read,
+                   :extension => ext}
+        if @record.picture.nil?
+          @record.picture = Picture.new(picture)
+        else
+          @record.picture.update(picture)
+        end
         @record.save
         msg = _("Custom Image file \"%{name}\" successfully uploaded") %
               {:name => params[:upload][:image].original_filename}
@@ -1221,7 +1209,8 @@ class CatalogController < ApplicationController
     actions.each do |action|
       ra = st.resource_actions.find_by_action(action[:name])
       if ra.nil? && !@edit[:new][action[:edit_key]].blank?
-        attrs = {:action => action[:name]}
+        attrs = {:action        => action[:name],
+                 :ae_attributes => {:service_action => action[:name]}}
         ra = st.resource_actions.build(attrs)
       end
       if @edit[:new][action[:edit_key]].blank?
@@ -1497,7 +1486,7 @@ class CatalogController < ApplicationController
 
   def available_ansible_tower_managers
     @edit[:new][:available_managers] =
-      ManageIQ::Providers::AnsibleTower::ConfigurationManager.all.collect { |t| [t.name, t.id] }.sort
+      ManageIQ::Providers::AnsibleTower::AutomationManager.all.collect { |t| [t.name, t.id] }.sort
     @edit[:new][:template_id] = @record.job_template.try(:id)
     @edit[:new][:manager_id] = @record.job_template.try(:manager).try(:id)
     available_ansible_tower_job_templates(@edit[:new][:manager_id]) if @edit[:new][:manager_id]

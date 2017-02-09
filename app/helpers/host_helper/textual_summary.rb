@@ -204,7 +204,7 @@ module HostHelper::TextualSummary
   def textual_storage_adapters
     return nil if @record.openstack_host?
     num = @record.hardware.nil? ? 0 : @record.hardware.number_of(:storage_adapters)
-    h = {:label => _("Storage Adapters"), :image => "100/sa.png", :value => num}
+    h = {:label => _("Storage Adapters"), :icon => "product product-network_card", :value => num}
     if num > 0
       h[:title] = _("Show %{title} Storage Adapters") % {:title => host_title}
       h[:link]  = url_for(:action => 'show', :id => @record, :display => 'storage_adapters')
@@ -493,13 +493,13 @@ module HostHelper::TextualSummary
   def textual_miq_custom_attributes
     attrs = @record.miq_custom_attributes
     return nil if attrs.blank?
-    attrs.collect { |a| {:label => a.name, :value => a.value} }
+    attrs.sort_by(&:name).collect { |a| {:label => a.name, :value => a.value} }
   end
 
   def textual_ems_custom_attributes
     attrs = @record.ems_custom_attributes
     return nil if attrs.blank?
-    attrs.collect { |a| {:label => a.name, :value => a.value} }
+    attrs.sort_by(&:name).collect { |a| {:label => a.name, :value => a.value} }
   end
 
   def textual_openstack_nova_scheduler

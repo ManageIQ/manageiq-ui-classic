@@ -21,17 +21,17 @@ class TreeBuilderUtilization < TreeBuilderRegion
   def root_options
     if MiqEnterprise.my_enterprise.is_enterprise?
       title = _("Enterprise")
-      icon  = '100/enterprise.png'
+      icon  = 'pficon pficon-enterprise'
     else
       title = _("%{product} Region: %{region_description} [%{region}]") % {:region_description => MiqRegion.my_region.description,
                                                                            :region => MiqRegion.my_region.region,
                                                                            :product => I18n.t('product.name')}
-      icon  = '100/miq_region.png'
+      icon  = 'pficon pficon-regions'
     end
     {
       :title   => title,
       :tooltip => title,
-      :image   => icon
+      :icon    => icon
     }
   end
 

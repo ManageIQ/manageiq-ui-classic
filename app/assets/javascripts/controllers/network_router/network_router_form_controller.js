@@ -1,5 +1,8 @@
 ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope', 'networkRouterFormId', 'miqService', function($http, $scope, networkRouterFormId, miqService) {
-  $scope.networkRouterModel = { name: '' };
+  $scope.networkRouterModel = {
+    name: '',
+    cloud_subnet_id: '',
+  };
   $scope.formId = networkRouterFormId;
   $scope.afterGet = false;
   $scope.modelCopy = angular.copy( $scope.networkRouterModel );
@@ -9,17 +12,14 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
 
   if (networkRouterFormId == 'new') {
     $scope.networkRouterModel.name = "";
+    $scope.networkRouterModel.cloud_subnet_id = "";
     $scope.newRecord = true;
   } else {
     miqService.sparkleOn();
 
-    $http.get('/network_router/network_router_form_fields/' + networkRouterFormId).success(function(data) {
-      $scope.afterGet = true;
-      $scope.networkRouterModel.name = data.name;
-
-      $scope.modelCopy = angular.copy( $scope.networkRouterModel );
-      miqService.sparkleOff();
-    });
+    $http.get('/network_router/network_router_form_fields/' + networkRouterFormId)
+      .then(getNetworkRouterFormData)
+      .catch(miqService.handleFailure);
   }
 
   $scope.addClicked = function() {
@@ -41,6 +41,18 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
     miqService.miqAjaxButton(url, $scope.networkRouterModel, { complete: false });
   };
 
+  $scope.addInterfaceClicked = function() {
+    miqService.sparkleOn();
+    var url = '/network_router/add_interface/' + networkRouterFormId + '?button=add';
+    miqService.miqAjaxButton(url, $scope.networkRouterModel, { complete: false });
+  };
+
+  $scope.removeInterfaceClicked = function() {
+    miqService.sparkleOn();
+    var url = '/network_router/remove_interface/' + networkRouterFormId + '?button=remove';
+    miqService.miqAjaxButton(url, $scope.networkRouterModel, { complete: false });
+  };
+
   $scope.resetClicked = function() {
     $scope.networkRouterModel = angular.copy( $scope.modelCopy );
     $scope.angularForm.$setPristine(true);
@@ -49,9 +61,26 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
 
   $scope.filterNetworkManagerChanged = function(id) {
     miqService.sparkleOn();
-    $http.get('/network_router/network_router_networks_by_ems/' + id).success(function(data) {
-      $scope.available_networks = data.available_networks;
-      miqService.sparkleOff();
-    });
+    $http.get('/network_router/network_router_networks_by_ems/' + id)
+      .then(getNetworkRouterFormByEmsData)
+      .catch(miqService.handleFailure);
   };
+
+  function getNetworkRouterFormData(response) {
+    var data = response.data;
+
+    $scope.afterGet = true;
+    $scope.networkRouterModel.name = data.name;
+    $scope.networkRouterModel.cloud_subnet_id = '';
+
+    $scope.modelCopy = angular.copy( $scope.networkRouterModel );
+    miqService.sparkleOff();
+  }
+
+  function getNetworkRouterFormByEmsData(response) {
+    var data = response.data;
+
+    $scope.available_networks = data.available_networks;
+    miqService.sparkleOff();
+  }
 }]);

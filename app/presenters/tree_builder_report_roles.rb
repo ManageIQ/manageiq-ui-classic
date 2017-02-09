@@ -23,7 +23,7 @@ class TreeBuilderReportRoles < TreeBuilder
     {
       :title   => title,
       :tooltip => title,
-      :image   => '100/miq_group.png'
+      :icon    => 'product product-group'
     }
   end
 

@@ -13,14 +13,9 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
         ManageIQ.angular.scope = $scope;
 
         miqService.sparkleOn();
-        $http.get('/auth_key_pair_cloud/ems_form_choices').success(function(data) {
-            $scope.ems_choices = data.ems_choices;
-            if($scope.ems_choices.length > 0) {
-                $scope.keyPairModel.ems = $scope.ems_choices[0];
-            }
-            $scope.afterGet = true;
-            miqService.sparkleOff();
-        });
+        $http.get('/auth_key_pair_cloud/ems_form_choices')
+          .then(getAuthKeyPairCloudFormDataComplete)
+          .catch(miqService.handleFailure);
 
         if (keyPairFormId == 'new') {
             $scope.newRecord = true;
@@ -61,6 +56,17 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
     $scope.addClicked = function() {
         $scope.saveClicked();
     };
+
+    function getAuthKeyPairCloudFormDataComplete(response) {
+      var data = response.data;
+
+      $scope.ems_choices = data.ems_choices;
+      if($scope.ems_choices.length > 0) {
+        $scope.keyPairModel.ems = $scope.ems_choices[0];
+      }
+      $scope.afterGet = true;
+      miqService.sparkleOff();
+    }
 
     init();
 }]);

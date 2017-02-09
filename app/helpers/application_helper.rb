@@ -223,6 +223,9 @@ module ApplicationHelper
       if controller == "ems_infra" && action == "show"
         return ems_infras_path
       end
+      if controller == "ems_physical_infra" && action == "show"
+        return ems_physical_infras_path
+      end      
       if controller == "ems_container" && action == "show"
         return ems_containers_path
       end
@@ -359,7 +362,7 @@ module ApplicationHelper
       action = "diagnostics_worker_selected"
     when "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
         "ManageIQ::Providers::CloudManager::OrchestrationStack",
-        "ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job"
+        "ManageIQ::Providers::AnsibleTower::AutomationManager::Job"
       controller = request.parameters[:controller]
     when "ContainerVolume"
       controller = "persistent_volume"
@@ -476,7 +479,7 @@ module ApplicationHelper
       title += _(": Workloads")
     # Specific titles for groups of layouts
     elsif layout.starts_with?("miq_ae_")
-      title += _(": Automate")
+      title += _(": Automation")
     elsif layout.starts_with?("miq_policy")
       title += _(": Control")
     elsif layout.starts_with?("miq_capacity")
@@ -714,7 +717,7 @@ module ApplicationHelper
   ]
   # Return a blank tb if a placeholder is needed for AJAX explorer screens, return nil if no custom toolbar to be shown
   def custom_toolbar_filename
-    if %w(ems_cloud ems_cluster ems_infra host miq_template storage ems_storage ems_network cloud_tenant).include?(@layout) # Classic CIs
+    if %w(ems_cloud ems_cluster ems_infra ems_physical_infra host miq_template storage ems_storage ems_network cloud_tenant).include?(@layout) # Classic CIs
       return "custom_buttons_tb" if @record && @lastaction == "show" && @display == "main"
     end
 
@@ -837,6 +840,7 @@ module ApplicationHelper
        ems_infra
        ems_middleware
        ems_network
+       ems_physical_infra
        ems_storage
        flavor
        floating_ip
@@ -943,7 +947,7 @@ module ApplicationHelper
 
   def controller_for_stack(model)
     case model.to_s
-    when "ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job"
+    when "ManageIQ::Providers::AnsibleTower::AutomationManager::Job"
       "configuration_job"
     else
       model.name.underscore
@@ -1253,6 +1257,7 @@ module ApplicationHelper
                         ems_infra_dashboard
                         ems_middleware
                         ems_network
+                        ems_physical_infra
                         ems_storage
                         infra_topology
                         event
@@ -1280,6 +1285,7 @@ module ApplicationHelper
                         ontap_storage_volume
                         orchestration_stack
                         persistent_volume
+                        physical_server
                         policy
                         policy_group
                         policy_profile
@@ -1354,6 +1360,7 @@ module ApplicationHelper
           ems_infra
           ems_middleware
           ems_network
+          ems_physical_infra
           ems_storage
           flavor
           floating_ip
@@ -1370,6 +1377,7 @@ module ApplicationHelper
           offline
           orchestration_stack
           persistent_volume
+          physical_server
           resource_pool
           retired
           security_group
@@ -1420,6 +1428,7 @@ module ApplicationHelper
              ems_infra
              ems_middleware
              ems_network
+             ems_physical_infra
              ems_storage
              ems_physical_infra
              flavor
@@ -1444,6 +1453,7 @@ module ApplicationHelper
              ontap_storage_volume
              orchestration_stack
              persistent_volume
+             physical_server
              policy
              resource_pool
              scan_profile
@@ -1485,6 +1495,7 @@ module ApplicationHelper
       ems_infra
       ems_middleware
       ems_network
+      ems_physical_infra
       ems_storage
       flavor
       floating_ip
@@ -1523,6 +1534,8 @@ module ApplicationHelper
 
   def db_for_quadicon
     case @layout
+    when "ems_physical_infra"
+      :ems    
     when "ems_infra"
       :ems
     when "ems_cloud"
@@ -1602,7 +1615,7 @@ module ApplicationHelper
        containers_filter
        cs_filter
        configuration_scripts
-       foreman_providers
+       configuration_manager_providers
        images
        images_filter
        instances
@@ -1622,44 +1635,36 @@ module ApplicationHelper
   end
 
   def listicon_image_tag(db, row)
-    img_attr = {:alt => nil}
+    icon = nil
     if %w(Job MiqTask).include?(db)
-      img_attr = {:valign => "middle", :width => "16", :height => "16", :alt => nil}
       if row["state"].downcase == "finished" && row["status"]
-        row_status = _("Status = %{row}") % {:row => row["status"].capitalize}
+        title = _("Status = %{row}") % {:row => row["status"].capitalize}
         cancel_msg = row["message"].include?('cancel')
         if row["status"].downcase == "ok" && !cancel_msg
           image = "100/checkmark.png"
-          img_attr.merge!(:title => row_status)
         elsif row["status"].downcase == "error" || cancel_msg
           image = "100/x.png"
-          img_attr.merge!(:title => row_status)
         elsif row["status"].downcase == "warn" || cancel_msg
           image = "100/warning.png"
-          img_attr.merge!(:title => row_status)
         end
       elsif %w(queued waiting_to_start).include?(row["state"].downcase)
         image = "100/job-queued.png"
-        img_attr.merge!(:title => "Status = Queued")
+        title = _("Status = Queued")
       elsif !%w(finished queued waiting_to_start).include?(row["state"].downcase)
         image = "100/job-running.png"
-        img_attr.merge!(:title => "Status = Running")
+        title = _("Status = Running")
       end
-    elsif %(Vm VmOrTemplate).include?(db)
+    elsif %w(Vm VmOrTemplate).include?(db)
       vm = @targets_hash[from_cid(@id)]
       vendor = vm ? vm.vendor : "unknown"
-      image = "100/vendor-#{vendor}.png"
+      image = "svg/vendor-#{vendor}.svg"
     elsif db == "Host"
       host = @targets_hash[@id] if @targets_hash
       vendor = host ? host.vmm_vendor_display.downcase : "unknown"
-      image = "100/vendor-#{vendor}.png"
+      image = "svg/vendor-#{vendor}.svg"
     elsif db == "MiqAction"
-      action = @targets_hash[@id.to_i]
-      image = if action && action.action_type != "default"
-                "100/miq_action_#{action.action_type}.png"
-              else
-                "100/miq_action.png"
-              end
+      action = @targets_hash[row['id']]
+      icon = action ? action.decorate.fonticon : 'product product-action'
     elsif db == "MiqProvision"
       image = "100/miq_request.png"
     elsif db == "MiqWorker"
@@ -1667,14 +1672,18 @@ module ApplicationHelper
       image = "100/processmanager-#{worker.normalized_type}.png"
     elsif db == "ExtManagementSystem"
       ems = @targets_hash[from_cid(@id)]
-      image = "100/vendor-#{ems.image_name}.png"
+      image = "svg/vendor-#{ems.image_name}.svg"
     elsif db == "Tenant"
       image = row['divisible'] ? "100/tenant.png" : "100/project.png"
     else
       image = "100/#{db.underscore}.png"
     end
 
-    image_tag(ActionController::Base.helpers.image_path(image), img_attr)
+    if icon
+      content_tag(:i, nil, :class => icon, :title => title)
+    else
+      image_tag(ActionController::Base.helpers.image_path(image), :title => title, :alt => nil)
+    end
   end
 
   def listicon_glyphicon_tag_for_widget(widget)
@@ -1702,18 +1711,18 @@ module ApplicationHelper
       when "queued"
         glyphicon = "fa fa-pause"
       else
-        glyphicon = "product product-arrow-right"
+        glyphicon = "fa fa-arrow-right"
       end
     when "MiqUserRole"
       glyphicon = "product product-role"
     when "MiqWidget"
       case row['content_type'].downcase
       when "chart"
-        glyphicon = "product product-chart"
+        glyphicon = "fa fa-pie-chart"
       when "menu"
         glyphicon = "fa fa-share-square-o"
       when "report"
-        glyphicon = "product product-report"
+        glyphicon = "fa fa-file-text-o"
       when "rss"
         glyphicon = "fa fa-rss"
       end

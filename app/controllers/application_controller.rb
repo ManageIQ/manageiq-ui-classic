@@ -151,6 +151,15 @@ class ApplicationController < ActionController::Base
     redirect_to(:action => params[:tab], :id => params[:id])
   end
 
+  def download_summary_pdf
+    @record = identify_record(params[:id])
+    yield if block_given?
+    return if record_no_longer_exists?(@record)
+    get_tagdata(@record)
+    @display = "download_pdf"
+    set_summary_pdf_data
+  end
+
   def build_targets_hash(items, typ = true)
     @targets_hash ||= {}
     if typ
@@ -296,15 +305,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def build_vm_host_array
-    @tree_hosts = Host.where(:id => (@sb[:tree_hosts_hash] || {}).keys)
-    @tree_vms   = Vm.where(:id => (@sb[:tree_vms_hash] || {}).keys)
-  end
-
   # Common method to show a standalone report
   def report_only
     @report_only = true                 # Indicate stand alone report for views
-
+    # Render error message if report doesn't exist
+    if params[:rr_id].nil? && @sb.fetch_path(:pages, :rr_id).nil?
+      add_flash(_("This report isn't generated yet. It cannot be rendered."), :error)
+      render :partial => "layouts/flash_msg"
+      return
+    end
     # Dashboard widget will send in report result id else, find report result in the sandbox
     search_id = params[:rr_id] ? params[:rr_id].to_i : @sb[:pages][:rr_id]
     rr = MiqReportResult.find(search_id)
@@ -885,6 +894,8 @@ class ApplicationController < ActionController::Base
           celltext = Dictionary.gettext(row[col], :type => :model, :notfound => :titleize)
         when 'approval_state'
           celltext = _(PROV_STATES[row[col]])
+        when 'prov_type'
+          celltext = row[col] ? _(ServiceTemplate::CATALOG_ITEM_TYPES[row[col]]) : ''
         when "result"
           new_row[:cells] << {:span => result_span_class(row[col]), :text => row[col].titleize}
         when "severity"
@@ -1431,6 +1442,10 @@ class ApplicationController < ActionController::Base
     gtl_type
   end
 
+  def dashboard_view
+    false
+  end
+
   def get_view_process_search_text(view)
     # Check for new search by name text entered
     if params[:search] &&
@@ -1795,6 +1810,17 @@ class ApplicationController < ActionController::Base
     end
 
     vms = VmOrTemplate.where(:id => vm_ids)
+    if typ == "migrate"
+      # if one of the providers in question cannot support simultaneous migration of his subset of
+      # the selected VMs, we abort
+      if vms.group_by(&:ext_management_system).except(nil).any? do |ems, ems_vms|
+        ems.respond_to?(:supports_migrate_for_all?) && !ems.supports_migrate_for_all?(ems_vms)
+      end
+        add_flash(_("These VMs can not be migrated together."), :error)
+        return
+      end
+    end
+
     vms.each do |vm|
       if vm.respond_to?("supports_#{typ}?")
         render_flash_not_applicable_to_model(typ) unless vm.send("supports_#{typ}?")
@@ -2171,11 +2197,6 @@ class ApplicationController < ActionController::Base
     @sb[:detail_sortcol] = @detail_sortcol
     @sb[:detail_sortdir] = @detail_sortdir
 
-    @sb[:tree_hosts_hash] = nil if !%w(ems_folders descendant_vms).include?(params[:display]) &&
-                                   !%w(treesize tree_autoload).include?(params[:action])
-    @sb[:tree_vms_hash] = nil if !%w(ems_folders descendant_vms).include?(params[:display]) &&
-                                 !%w(treesize tree_autoload).include?(params[:action])
-
     # Set/clear sandbox (@sb) per controller in the session object
     session[:sandboxes] ||= HashWithIndifferentAccess.new
     session[:sandboxes][controller_name] = @sb.blank? ? nil : copy_hash(@sb)
@@ -2351,24 +2372,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_gettext_locale
-    user_settings =  current_user.try(:settings)
-    user_locale = user_settings[:display][:locale] if user_settings &&
-                                                      user_settings.key?(:display) &&
-                                                      user_settings[:display].key?(:locale)
-    if user_locale == 'default' || user_locale.nil?
-      server_locale = ::Settings.server.locale
-      # user settings && server settings == 'default'
-      # OR not defined
-      # use HTTP_ACCEPT_LANGUAGE
-      locale = if server_locale == "default" || server_locale.nil?
-                 request.headers['Accept-Language']
-               else
-                 server_locale
-               end
-    else
-      locale = user_locale
-    end
-    FastGettext.set_locale(locale)
+    FastGettext.set_locale(LocaleResolver.resolve(current_user, request.headers))
   end
 
   def flip_sort_direction(direction)

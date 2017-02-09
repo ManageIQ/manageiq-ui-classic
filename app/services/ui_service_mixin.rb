@@ -13,7 +13,7 @@ module UiServiceMixin
       :Host                    => {:type => "glyph", :icon => "\uE600", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-screen
       :Vm                      => {:type => "glyph", :icon => "\uE90f", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-virtual-machine
       :MiddlewareDatasource    => {:type => "glyph", :icon => "\uF1C0", :fontfamily => "FontAwesome"},             # fa-database
-      :MiddlewareDeployment    => {:type => "glyph", :icon => "\uE603", :fontfamily => "icomoon"},                 # product-report
+      :MiddlewareDeployment    => {:type => "glyph", :icon => "\uF0f6", :fontfamily => "FontAwesome"},             # fa-file-text-o
       :MiddlewareDeploymentEar => {:type => "glyph", :icon => "\uE626", :fontfamily => "icomoon"},                 # product-file-ear-o
       :MiddlewareDeploymentWar => {:type => "glyph", :icon => "\uE627", :fontfamily => "icomoon"},                 # product-file-war-o
       :MiddlewareDomain        => {:type => "glyph", :icon => "\uE919", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-domain
@@ -26,10 +26,10 @@ module UiServiceMixin
       :NetworkRouter           => {:type => "glyph", :icon => "\uE625", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-route
       :SecurityGroup           => {:type => "glyph", :icon => "\uE903", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-cloud-security
       :FloatingIp              => {:type => "glyph", :icon => "\uF041", :fontfamily => "FontAwesome"},             # fa-map-marker
-      :CloudNetwork            => {:type => "glyph", :icon => "\uE62c", :fontfamily => "IcoMoon"},
+      :CloudNetwork            => {:type => "glyph", :icon => "\uE62c", :fontfamily => "IcoMoon"},                 # product-cloud_network
       :CloudTenant             => {:type => "glyph", :icon => "\uE904", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-cloud-tenant
-      :LoadBalancer            => {:type => "glyph", :icon => "\uE637", :fontfamily => "IcoMoon"},                 # load_balancer
-      :Tag                     => {:type => "glyph", :icon => "\uF02b", :fontfamily => "FontAwesome"},
+      :LoadBalancer            => {:type => "glyph", :icon => "\uE637", :fontfamily => "IcoMoon"},                 # product-load_balancer
+      :Tag                     => {:type => "glyph", :icon => "\uF02b", :fontfamily => "FontAwesome"},             # fa-tag
       :Openstack               => {:type => "image", :icon => provider_icon(:Openstack)},
       :Amazon                  => {:type => "image", :icon => provider_icon(:Amazon)},
       :Azure                   => {:type => "image", :icon => provider_icon(:Azure)},

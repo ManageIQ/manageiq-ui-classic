@@ -1,7 +1,7 @@
 module TreeNode
   class MiqAction < Node
     set_attribute(:title, &:description)
-    set_attribute(:image) do
+    set_attribute(:icon) do
       if @options[:tree] != :action_tree
         if @options[:tree] == :policy_profile_tree
           policy_id = @parent_id.split('-')[2].split('_').first
@@ -13,9 +13,9 @@ module TreeNode
         p  = ::MiqPolicy.find_by_id(ApplicationRecord.uncompress_id(policy_id))
         ev = ::MiqEventDefinition.find_by_id(ApplicationRecord.uncompress_id(event_id))
 
-        p.action_result_for_event(@object, ev) ? "100/check.png" : "100/x.png"
+        p.action_result_for_event(@object, ev) ? "pficon pficon-ok" : "pficon pficon-error-circle-o"
       else
-        @object.action_type == "default" ? "100/miq_action.png" : "100/miq_action_#{@object.action_type}.png"
+        @object.decorate.fonticon
       end
     end
   end

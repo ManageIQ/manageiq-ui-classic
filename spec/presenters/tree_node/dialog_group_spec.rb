@@ -5,7 +5,7 @@ describe TreeNode::DialogGroup do
   let(:object) { FactoryGirl.create(:dialog_group) }
 
   include_examples 'TreeNode::Node#key prefix', '-'
-  include_examples 'TreeNode::Node#image', '100/dialog_group.png'
+  include_examples 'TreeNode::Node#icon', 'fa fa-comments-o'
 
   describe '#title' do
     it 'returns with the label' do

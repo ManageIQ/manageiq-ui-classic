@@ -1,4 +1,4 @@
-module MiddlewareOperationsMixin
+module Mixins::MiddlewareOperationsMixin
   extend ActiveSupport::Concern
 
   def button
@@ -70,7 +70,7 @@ module MiddlewareOperationsMixin
 
   def skip_operation?(item_record, operation_info)
     provider_name = 'Hawkular'
-    if operation_info.fetch(:skip)
+    if operation_info.key?(:skip) && operation_info.fetch(:skip)
       item_record.try(:product) == provider_name || item_record.try(:middleware_server).try(:product) == provider_name
     end
   end

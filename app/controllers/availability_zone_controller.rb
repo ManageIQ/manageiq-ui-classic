@@ -5,6 +5,7 @@ class AvailabilityZoneController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericListMixin
+  include Mixins::GenericSessionMixin
 
   def show
     return if perfmenu_click?
@@ -19,12 +20,12 @@ class AvailabilityZoneController < ApplicationController
     drop_breadcrumb({:name => _("Availabilty Zones"),
                      :url  => "/availability_zones/show_list?page=#{@current_page}&refresh=y"}, true)
     case @display
-    when "download_pdf", "main", "summary_only"
+    when "main", "summary_only"
       get_tagdata(@availability_zone)
       drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @availability_zone.name},
                       :url  => "/availability_zone/show/#{@availability_zone.id}")
       @showtype = "main"
-      set_summary_pdf_data if ["download_pdf", "summary_only"].include?(@display)
+      set_summary_pdf_data if @display == "summary_only"
 
     when "performance"
       @showtype = "performance"
@@ -132,24 +133,6 @@ class AvailabilityZoneController < ApplicationController
         end
       end
     end
-  end
-
-  private ############################
-
-  def get_session_data
-    @title      = _("Availability Zone")
-    @layout     = "availability_zone"
-    @lastaction = session[:availability_zone_lastaction]
-    @display    = session[:availability_zone_display]
-    @filters    = session[:availability_zone_filters]
-    @catinfo    = session[:availability_zone_catinfo]
-  end
-
-  def set_session_data
-    session[:availability_zone_lastaction] = @lastaction
-    session[:availability_zone_display]    = @display unless @display.nil?
-    session[:availability_zone_filters]    = @filters
-    session[:availability_zone_catinfo]    = @catinfo
   end
 
   menu_section :clo

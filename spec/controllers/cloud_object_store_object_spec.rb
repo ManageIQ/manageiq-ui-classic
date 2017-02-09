@@ -47,4 +47,6 @@ describe CloudObjectStoreObjectController do
       expect(assigns(:edit)).to be_nil
     end
   end
+
+  include_examples '#download_summary_pdf', :cloud_object_store_object
 end

@@ -257,11 +257,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
      "resource_pool_protect",
      "vm_check_compliance",
      "vm_start",
-     "vm_suspend",
-     "vm_snapshot_add",
-     "vm_snapshot_delete",
-     "vm_snapshot_delete_all",
-     "vm_snapshot_revert"].each do |id|
+     "vm_suspend"].each do |id|
       it "when with #{id}" do
         @id = id
         stub_user(:features => :all)
@@ -306,124 +302,16 @@ describe ApplicationHelper, "::ToolbarBuilder" do
 
     context 'last action set to show' do
       let(:lastaction) { 'show' }
-      context 'requested to display instances' do
-        let(:display) { 'instances' }
-        it 'returns with false' do
-          @lastaction = lastaction
-          @display = display
-          @id = 'vm_miq_request_new'
-          stub_user(:features => :all)
-          expect(subject).to be_falsey
-        end
-      end
-    end
 
-    context "when with vm_console" do
-      before do
-        @id = "vm_console"
-        stub_user(:features => :all)
-        allow(@record).to receive_messages(:console_supported? => false)
-      end
-
-      it "and record is not console supported" do
-        expect(subject).to be_truthy
-      end
-
-      it "and server's remote_console_type not set" do
-        stub_settings(:server => {})
-        expect(subject).to be_truthy
-      end
-
-      it "and server's remote_console_type is not MKS" do
-        stub_settings(:server => {:remote_console_type => "not_MKS"})
-        expect(subject).to be_truthy
-      end
-
-      it "and record is console supported and server's remote_console_type is MKS" do
-        allow(@record).to receive_messages(:console_supported? => true)
-        stub_settings(:server => {:remote_console_type => "MKS"})
-        expect(subject).to be_falsey
-      end
-    end
-
-    context "when with vm_vnc_console" do
-      before do
-        @id = "vm_vnc_console"
-        stub_user(:features => :all)
-        allow(@record).to receive_messages(:console_supported? => false)
-        allow(@record).to receive_messages(:vendor => "vmware")
-      end
-
-      it "and record is not console supported" do
-        expect(subject).to be_truthy
-      end
-
-      it "and server's remote_console_type not set" do
-        stub_settings(:server => {})
-        expect(subject).to be_truthy
-      end
-
-      it "and server's remote_console_type is not VNC" do
-        stub_settings(:server => {:remote_console_type => "not_VNC"})
-        expect(subject).to be_truthy
-      end
-
-      it "and record is console supported and server's remote_console_type is VNC" do
-        allow(@record).to receive_messages(:console_supported? => true)
-        stub_settings(:server => {:remote_console_type => "VNC"})
-        expect(subject).to be_falsey
-      end
-
-      it "and record is console supported and not vmware" do
-        allow(@record).to receive_messages(:console_supported? => true)
-        allow(@record).to receive_messages(:vendor => "not_vmware")
-        expect(subject).to be_falsey
-      end
-    end
-
-    context "when with vm_vmrc_console" do
-      before do
-        @id = "vm_vmrc_console"
-        stub_user(:features => :all)
-        allow(@record).to receive_messages(:console_supported? => false)
-      end
-
-      it "and record is not console supported" do
-        expect(subject).to be_truthy
-      end
-
-      it "and server's remote_console_type not set" do
-        stub_settings(:server => {})
-        expect(subject).to be_truthy
-      end
-
-      it "and server's remote_console_type is not VMRC" do
-        stub_settings(:server => {:remote_console_type => "not_VMRC"})
-        expect(subject).to be_truthy
-      end
-
-      it "and record is console supported and server's remote_console_type is VMRC" do
-        allow(@record).to receive_messages(:console_supported? => true)
-        stub_settings(:server => {:remote_console_type => "VMRC"})
-        expect(subject).to be_falsey
-      end
-    end
-
-    ["ontap_storage_system_statistics", "ontap_logical_disk_statistics", "ontap_storage_volume_statistics", "ontap_file_share_statistics"].each do |id|
-      context "when with #{id}" do
-        before do
-          @id = id
-          stub_user(:features => :all)
-        end
-
-        it "and Settings.product.smis != true " do
-          stub_settings(:product => {:smis => false})
-          expect(subject).to be_truthy
-        end
-
-        it "and Settings.product.smis = true " do
-          stub_settings(:product => {:smis => true})
-          expect(subject).to be_falsey
+      %w(main vms instances all_vms).each do |display|
+        context "requested to display #{display}" do
+          it 'returns with false' do
+            stub_user(:features => :all)
+            @lastaction = lastaction
+            @display = display
+            @id = 'vm_miq_request_new'
+            expect(subject).to be_falsey
+          end
         end
       end
     end
@@ -526,110 +414,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       @id = "iso_datastore_new"
 
       expect(subject).to match(/No.*are available/)
-    end
-
-    context "when record class = OntapStorageSystem" do
-      before do
-        @record = OntapStorageSystem.new
-        allow(@record).to receive_messages(:latest_derived_metrics => true)
-      end
-
-      context "and id = ontap_storage_system_statistics" do
-        before { @id = "ontap_storage_system_statistics" }
-        it_behaves_like 'record without latest derived metrics', "No Statistics Collected"
-        it_behaves_like 'default case'
-      end
-    end
-
-    context "when record class = OntapLogicalDisk" do
-      before { @record = OntapLogicalDisk.new }
-
-      context "and id = ontap_logical_disk_perf" do
-        before do
-          @id = "ontap_logical_disk_perf"
-          allow(@record).to receive_messages(:has_perf_data? => true)
-        end
-        it_behaves_like 'record without perf data', "No Capacity & Utilization data has been collected for this Logical Disk"
-        it_behaves_like 'default case'
-      end
-
-      context "and id = ontap_logical_disk_statistics" do
-        before do
-          @id = "ontap_logical_disk_statistics"
-          allow(@record).to receive_messages(:latest_derived_metrics => true)
-        end
-        it_behaves_like 'record without latest derived metrics', "No Statistics collected for this Logical Disk"
-        it_behaves_like 'default case'
-      end
-    end
-
-    context "when record class = CimBaseStorageExtent" do
-      before do
-        @record = CimBaseStorageExtent.new
-        allow(@record).to receive_messages(:latest_derived_metrics => true)
-      end
-
-      context "and id = cim_base_storage_extent_statistics" do
-        before { @id = "cim_base_storage_extent_statistics" }
-        it_behaves_like 'record without latest derived metrics', "No Statistics Collected"
-        it_behaves_like 'default case'
-      end
-    end
-
-    context "when record class = OntapStorageVolume" do
-      before do
-        @record = OntapStorageVolume.new
-        allow(@record).to receive_messages(:latest_derived_metrics => true)
-      end
-
-      context "and id = ontap_storage_volume_statistics" do
-        before { @id = "ontap_storage_volume_statistics" }
-        it_behaves_like 'record without latest derived metrics', "No Statistics Collected"
-        it_behaves_like 'default case'
-      end
-    end
-
-    context "when record class = OntapFileShare" do
-      before do
-        @record = OntapFileShare.new
-        allow(@record).to receive_messages(:latest_derived_metrics => true)
-      end
-      context "and id = ontap_file_share_statistics" do
-        before { @id = "ontap_file_share_statistics" }
-        it_behaves_like 'record without latest derived metrics', "No Statistics Collected"
-        it_behaves_like 'default case'
-      end
-    end
-
-    context "when record class = SniaLocalFileSystem" do
-      before do
-        @record = SniaLocalFileSystem.new
-        allow(@record).to receive_messages(:latest_derived_metrics => true)
-      end
-      context "and id = snia_local_file_system_statistics" do
-        before { @id = "snia_local_file_system_statistics" }
-        it_behaves_like 'record without latest derived metrics', "No Statistics Collected"
-        it_behaves_like 'default case'
-      end
-    end
-
-    context "when record class = EmsCluster" do
-      before do
-        @record = EmsCluster.new
-        allow(@record).to receive_messages(:has_perf_data? => true, :has_events? => true)
-      end
-
-      context "and id = ems_cluster_perf" do
-        before { @id = "ems_cluster_perf" }
-        it_behaves_like 'record without perf data', "No Capacity & Utilization data has been collected for this Cluster"
-        it_behaves_like 'default case'
-      end
-
-      context "and id = ems_cluster_timeline" do
-        before { @id = "ems_cluster_timeline" }
-        it_behaves_like 'record without ems events and policy events', "No Timeline data has been collected for this Cluster"
-        it_behaves_like 'default case'
-      end
     end
 
     context "when record class = Host" do
@@ -843,43 +627,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         it_behaves_like 'default case'
       end
 
-      context "and id = vm_console" do
-        before do
-          @id = "vm_console"
-          allow(@record).to receive_messages(:current_state => 'on')
-          setup_firefox_with_linux
-        end
-
-        it_behaves_like 'vm not powered on', "The web-based console is not available because the VM is not powered on"
-        it_behaves_like 'default case'
-      end
-
-      context "and id = vm_vnc_console" do
-        before do
-          @id = "vm_vnc_console"
-          allow(@record).to receive_messages(:current_state => 'on', :ipaddresses => '192.168.1.1')
-        end
-
-        it_behaves_like 'vm not powered on', "The web-based VNC console is not available because the VM is not powered on"
-        it_behaves_like 'default case'
-      end
-
-      context "and id = vm_vmrc_console" do
-        before do
-          @id = "vm_vmrc_console"
-          allow(@record).to receive_messages(:current_state => 'on', :validate_remote_console_vmrc_support => true)
-          setup_firefox_with_linux
-        end
-
-        it "raise MiqException::RemoteConsoleNotSupportedError when can't get remote console url" do
-          allow(@record).to receive(:validate_remote_console_vmrc_support).and_call_original
-          expect(subject).to include("VM VMRC Console error")
-          expect(subject).to include("VMRC remote console is not supported on")
-        end
-
-        it_behaves_like 'vm not powered on', "The web-based console is not available because the VM is not powered on"
-      end
-
       context "and id = storage_scan" do
         before do
           @id = "storage_scan"
@@ -904,214 +651,8 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           expect(subject).to include('cannot be performed on selected')
         end
       end
-
-      context "and id = vm_timeline" do
-        before do
-          @id = "vm_timeline"
-          allow(@record).to receive(:has_events?).and_return(true)
-        end
-        it_behaves_like 'record without ems events and policy events', 'No Timeline data has been collected for this VM'
-        it_behaves_like 'default case'
-      end
-
-      context "snapshot buttons" do
-        before do
-          @record = FactoryGirl.create(:vm_vmware, :vendor => "vmware")
-        end
-
-        context "and id = vm_snapshot_add" do
-          before do
-            @id = "vm_snapshot_add"
-            allow(@record).to receive(:is_available?).with(:create_snapshot).and_return(false)
-          end
-
-          context "when number of snapshots <= 0" do
-            before { allow(@record).to receive(:is_available?).with(:create_snapshot).and_return(false) }
-            it_behaves_like 'record with error message', 'create_snapshot'
-          end
-
-          context "when number of snapshots > 0" do
-            before do
-              allow(@record).to receive(:number_of).with(:snapshots).and_return(4)
-              allow(@record).to receive(:is_available?).with(:create_snapshot).and_return(false)
-            end
-
-            it_behaves_like 'record with error message', 'create_snapshot'
-
-            it "when no available message but active" do
-              allow(@record).to receive(:is_available?).with(:create_snapshot).and_return(false)
-              @active = true
-              expect(subject).to eq("The VM is not connected to a Host")
-            end
-          end
-          it_behaves_like 'default true_case'
-        end
-
-        context "and id = vm_snapshot_delete" do
-          before { @id = "vm_snapshot_delete" }
-          context "when with available message" do
-            before { allow(@record).to receive(:is_available?).with(:remove_snapshot).and_return(false) }
-            it_behaves_like 'record with error message', 'remove_snapshot'
-          end
-          context "when without snapshots" do
-            before { allow(@record).to receive_message_chain(:snapshots, :size).and_return(0) }
-            it_behaves_like 'record with error message', 'remove_snapshot'
-          end
-          context "when with snapshots" do
-            before { allow(@record).to receive_message_chain(:snapshots, :size).and_return(2) }
-            it_behaves_like 'record with error message', 'remove_snapshot'
-          end
-        end
-
-        context "and id = vm_snapshot_delete_all" do
-          before { @id = "vm_snapshot_delete_all" }
-          context "when with available message" do
-            before { allow(@record).to receive(:is_available?).with(:remove_all_snapshots).and_return(false) }
-            it_behaves_like 'record with error message', 'remove_all_snapshots'
-          end
-          context "when without snapshots" do
-            before { allow(@record).to receive_message_chain(:snapshots, :size).and_return(0) }
-            it_behaves_like 'record with error message', 'remove_all_snapshots'
-          end
-          context "when with snapshots" do
-            before { allow(@record).to receive_message_chain(:snapshots, :size).and_return(2) }
-            it_behaves_like 'record with error message', 'remove_all_snapshots'
-          end
-        end
-
-        context "id = vm_snapshot_revert" do
-          before { @id = "vm_snapshot_revert" }
-          context "when with available message" do
-            before { allow(@record).to receive(:is_available?).with(:revert_to_snapshot).and_return(false) }
-            it_behaves_like 'record with error message', 'revert_to_snapshot'
-          end
-          context "when without snapshots" do
-            before { allow(@record).to receive_message_chain(:snapshots, :size).and_return(0) }
-            it_behaves_like 'record with error message', 'revert_to_snapshot'
-          end
-          context "when with snapshots" do
-            before { allow(@record).to receive_message_chain(:snapshots, :size).and_return(2) }
-            it_behaves_like 'record with error message', 'revert_to_snapshot'
-          end
-        end
-      end
-
-      # This is practically a copy paste from the VMWare tests, wasted lots of time trying ot make shared example but
-      # unfortunately it kept failing on travis while passing localy, also causing other tests to fail from totaly
-      # diffrent parts of the project. This is not nice but I can't spend more time on trying to figure it out.
-      context "RHEV snapshot buttons" do
-        before do
-          @record = FactoryGirl.create(:vm_redhat, :vendor => "redhat")
-        end
-
-        context "and id = vm_snapshot_add" do
-          before do
-            @id = "vm_snapshot_add"
-            allow(@record).to receive(:is_available?).with(:create_snapshot).and_return(false)
-          end
-
-          context "when number of snapshots <= 0" do
-            before { allow(@record).to receive(:is_available?).with(:create_snapshot).and_return(false) }
-            it_behaves_like 'record with error message', 'create_snapshot'
-          end
-
-          context "when number of snapshots > 0" do
-            before do
-              allow(@record).to receive(:number_of).with(:snapshots).and_return(4)
-              allow(@record).to receive(:is_available?).with(:create_snapshot).and_return(false)
-            end
-            it_behaves_like 'record with error message', 'create_snapshot'
-            it "when no available message but active" do
-              allow(@record).to receive(:is_available?).with(:create_snapshot).and_return(false)
-              @active = true
-              expect(subject).to eq("Create Snapshot operation not supported for Redhat VM")
-            end
-          end
-          it_behaves_like 'default true_case'
-        end
-        context "and id = vm_snapshot_delete" do
-          before { @id = "vm_snapshot_delete" }
-          context "when with available message" do
-            before { allow(@record).to receive(:is_available?).with(:remove_snapshot).and_return(false) }
-            it_behaves_like 'record with error message', 'remove_snapshot'
-          end
-          context "when without snapshots" do
-            before { allow(@record).to receive_message_chain(:snapshots, :size).and_return(0) }
-          end
-          context "when with snapshots" do
-            before { allow(@record).to receive_message_chain(:snapshots, :size).and_return(2) }
-            it_behaves_like 'record with error message', 'remove_snapshot'
-          end
-        end
-
-        context "and id = vm_snapshot_delete_all" do
-          before { @id = "vm_snapshot_delete_all" }
-          context "when with available message" do
-            before { allow(@record).to receive(:is_available?).with(:remove_all_snapshots).and_return(false) }
-            it_behaves_like 'record with error message', 'remove_all_snapshots'
-          end
-          context "when without snapshots" do
-            before { allow(@record).to receive_message_chain(:snapshots, :size).and_return(0) }
-            it_behaves_like 'record with error message', 'remove_all_snapshots'
-          end
-          context "when with snapshots" do
-            before { allow(@record).to receive_message_chain(:snapshots, :size).and_return(2) }
-            it 'returns error message on trying to remove all snapshots at once' do
-              expect(subject).to eq "Removing all snapshots is currently not supported"
-            end
-          end
-        end
-
-        context "id = vm_snapshot_revert" do
-          before { @id = "vm_snapshot_revert" }
-          context "when with available message" do
-            before { allow(@record).to receive(:is_available?).with(:revert_to_snapshot).and_return(false) }
-            it_behaves_like 'record with error message', 'revert_to_snapshot'
-          end
-          context "when without snapshots" do
-            before { allow(@record).to receive_message_chain(:snapshots, :size).and_return(0) }
-            it_behaves_like 'record with error message', 'revert_to_snapshot'
-          end
-          context "when with snapshots" do
-            before { allow(@record).to receive_message_chain(:snapshots, :size).and_return(2) }
-            it_behaves_like 'record with error message', 'revert_to_snapshot'
-          end
-        end
-      end
     end # end of Vm class
 
-    context "and id = miq_request_delete" do
-      let(:server) { double("MiqServer", :logon_status => :ready) }
-      let(:user)   { FactoryGirl.create(:user_admin) }
-      before do
-        allow(MiqServer).to receive(:my_server).and_return(server)
-
-        @id = "miq_request_delete"
-        login_as user
-        @record = MiqProvisionRequest.new
-        allow(@record).to receive_messages(:resource_type => "something", :approval_state => "xx", :requester_name => user.name)
-      end
-
-      it "and requester.name != @record.requester_name" do
-        allow(@record).to receive_messages(:requester_name => 'admin')
-        expect(toolbar_builder.disable_button("miq_request_delete")).to be_falsey
-      end
-
-      it "and approval_state = approved" do
-        allow(@record).to receive_messages(:approval_state => "approved")
-        expect(subject).to be_falsey
-      end
-
-      it "and requester.name = @record.requester_name & approval_state != approved|denied" do
-        expect(subject).to be_falsey
-      end
-
-      it "and requester.name != @record.requester_name" do
-        login_as FactoryGirl.create(:user, :role => "test")
-        expect(toolbar_builder.disable_button("miq_request_delete"))
-          .to include("Users are only allowed to delete their own requests")
-      end
-    end
   end # end of disable button
 
   describe "#hide_button_ops" do
@@ -1494,7 +1035,8 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       end
 
       it "includes the correct button items" do
-        expect(_toolbar_builder.build_toolbar(toolbar_to_build).first[:items].first).to include(
+        items = _toolbar_builder.build_toolbar(toolbar_to_build).first[:items]
+        expect(items[0]).to include(
           :id    => "generic_object_definition_choice__generic_object_definition_create",
           :type  => :button,
           :icon  => "pficon pficon-add-circle-o fa-lg",
@@ -1503,6 +1045,102 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :data  => {
             'function'      => 'sendDataWithRx',
             'function-data' => '{"eventType": "showAddForm"}'
+          }
+        )
+        expect(items[1]).to include(
+          :id      => "generic_object_definition_choice__generic_object_definition_edit",
+          :type    => :button,
+          :icon    => "pficon pficon-edit fa-lg",
+          :title   => "Edit this Generic Object Definition",
+          :text    => "Edit this Generic Object Definition",
+          :onwhen  => "1",
+          :enabled => false,
+          :data    => {
+            'function'      => 'sendDataWithRx',
+            'function-data' => '{"eventType": "showEditForm"}'
+          }
+        )
+        expect(items[2]).to include(
+          :id      => "generic_object_definition_choice__generic_object_definition_delete",
+          :type    => :button,
+          :icon    => "pficon pficon-delete fa-lg",
+          :title   => "Delete this Generic Object Definition",
+          :text    => "Delete this Generic Object Definition",
+          :onwhen  => "1",
+          :enabled => false,
+          :confirm => "Are you sure you want to delete this Generic Object Definition?",
+          :data    => {
+            'function'      => 'sendDataWithRx',
+            'function-data' => '{"eventType": "deleteGenericObject"}'
+          }
+        )
+      end
+    end
+  end
+
+  describe "#build_toolbar_by_class" do
+    context "when the toolbar to be built is a blank view" do
+      let(:toolbar_to_build) { ApplicationHelper::Toolbar::BlankView }
+
+      it "returns nil" do
+        expect(_toolbar_builder.build_toolbar_by_class(toolbar_to_build)).to be_nil
+      end
+    end
+
+    context "when the toolbar to be built is a generic object toolbar" do
+      let(:toolbar_to_build) { ApplicationHelper::Toolbar::GenericObjectDefinition }
+
+      before do
+        allow(Rbac).to receive(:role_allows?).and_return(true)
+      end
+
+      it "includes the button group" do
+        expect(_toolbar_builder.build_toolbar_by_class(toolbar_to_build).first).to include(
+          :id    => "generic_object_definition_choice",
+          :type  => :buttonSelect,
+          :icon  => "fa fa-cog fa-lg",
+          :title => "Configuration",
+          :text  => "Configuration"
+        )
+      end
+
+      it "includes the correct button items" do
+        items = _toolbar_builder.build_toolbar_by_class(toolbar_to_build).first[:items]
+        expect(items[0]).to include(
+          :id    => "generic_object_definition_choice__generic_object_definition_create",
+          :type  => :button,
+          :icon  => "pficon pficon-add-circle-o fa-lg",
+          :title => "Create a new Generic Object Definition",
+          :text  => "Create a new Generic Object Definition",
+          :data  => {
+            'function'      => 'sendDataWithRx',
+            'function-data' => '{"eventType": "showAddForm"}'
+          }
+        )
+        expect(items[1]).to include(
+          :id      => "generic_object_definition_choice__generic_object_definition_edit",
+          :type    => :button,
+          :icon    => "pficon pficon-edit fa-lg",
+          :title   => "Edit this Generic Object Definition",
+          :text    => "Edit this Generic Object Definition",
+          :onwhen  => "1",
+          :enabled => false,
+          :data    => {
+            'function'      => 'sendDataWithRx',
+            'function-data' => '{"eventType": "showEditForm"}'
+          }
+        )
+        expect(items[2]).to include(
+          :id      => "generic_object_definition_choice__generic_object_definition_delete",
+          :type    => :button,
+          :icon    => "pficon pficon-delete fa-lg",
+          :title   => "Delete this Generic Object Definition",
+          :text    => "Delete this Generic Object Definition",
+          :onwhen  => "1",
+          :enabled => false,
+          :data    => {
+            'function'      => 'sendDataWithRx',
+            'function-data' => '{"eventType": "deleteGenericObject"}'
           }
         )
       end

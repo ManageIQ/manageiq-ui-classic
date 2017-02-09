@@ -1,6 +1,6 @@
 describe TreeNode do
   # Force load all the TreeNode:: subclasses
-  Dir[Rails.root.join('app', 'presenters', 'tree_node', '*.rb')].each { |f| require f }
+  Dir[ManageIQ::UI::Classic::Engine.root.join('app', 'presenters', 'tree_node', '*.rb')].each { |f| require f }
 
   # FIXME: rewrite this to FactoryGirl
   let(:object) do
@@ -23,7 +23,7 @@ describe TreeNode do
 
     TreeNode.constants.each do |type|
       # We never instantiate MiqAeNode and Node in our codebase
-      next if [:MiqAeNode, :Node].include?(type)
+      next if [:MiqAeNode, :Node, :Menu].include?(type)
 
       describe(type) do
         let(:klass) { type.to_s.constantize }

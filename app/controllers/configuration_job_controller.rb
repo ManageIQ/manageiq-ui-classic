@@ -5,9 +5,10 @@ class ConfigurationJobController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericListMixin
+  include Mixins::GenericSessionMixin
 
   def self.model
-    ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job
+    ManageIQ::Providers::AnsibleTower::AutomationManager::Job
   end
 
   def self.table_name
@@ -30,12 +31,12 @@ class ConfigurationJobController < ApplicationController
     drop_breadcrumb({:name => _("Configuration_Jobs"),
                      :url  => "/configuration_job/show_list?page=#{@current_page}&refresh=y"}, true)
     case @display
-    when "download_pdf", "main", "summary_only"
+    when "main", "summary_only"
       get_tagdata(@configuration_job)
       drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @configuration_job.name},
                       :url  => "/configuration_job/show/#{@configuration_job.id}")
       @showtype = "main"
-      set_summary_pdf_data if %w(download_pdf summary_only).include?(@display)
+      set_summary_pdf_data if @display == 'summary_only'
     end
 
     replace_gtl_main_div if pagination_request?
@@ -57,7 +58,7 @@ class ConfigurationJobController < ApplicationController
     when "configuration_job_delete"
       configuration_job_delete
     when "configuration_job_tag"
-      tag(ManageIQ::Providers::AnsibleTower::ConfigurationManager::Job)
+      tag(ManageIQ::Providers::AnsibleTower::AutomationManager::Job)
     end
     return if %w(configuration_job_tag).include?(params[:pressed]) && @flash_array.nil? # Tag screen showing, so return
 
@@ -80,16 +81,8 @@ class ConfigurationJobController < ApplicationController
     end
   end
 
-  def get_session_data
-    @title      = _("Job")
-    @layout     = "configuration_job"
-    @lastaction = session[:configuration_job_lastaction]
-    @display    = session[:configuration_job_display]
-  end
-
-  def set_session_data
-    session[:configuration_job_lastaction] = @lastaction
-    session[:configuration_job_display]    = @display unless @display.nil?
+  def title
+    _("Job")
   end
 
   menu_section :conf

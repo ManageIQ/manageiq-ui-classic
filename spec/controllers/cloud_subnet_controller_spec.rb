@@ -200,4 +200,6 @@ describe CloudSubnetController do
       end
     end
   end
+
+  include_examples '#download_summary_pdf', :cloud_subnet_openstack
 end

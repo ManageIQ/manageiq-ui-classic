@@ -41,6 +41,11 @@
   content: "\e623";
 }
 
+.fa-inactive, .product-inactive, .pficon-inactive { // add styling to show inactive icon (policies, etc)//
+opacity:0.6;
+}
+
+
 /*end icon class customizations*/
 
 /* custom font for this product */
@@ -82,17 +87,8 @@ span[class^="product-"], span[class*=" product-"], // i & span tags prevent conf
 .product-group:before {
   content: "\e602";
 }
-.product-report:before {
-  content: "\e603";
-}
 .product-ae_instance:before {
   content: "\e603";
-}
-.product-chart:before {
-  content: "\e604";
-}
-.product-arrow-right:before {
-  content: "\e605";
 }
 .product-custom-1:before {
   content: "\e606";
@@ -190,20 +186,11 @@ span[class^="product-"], span[class*=" product-"], // i & span tags prevent conf
 .product-boolean:before {
   content: "\e61f";
 }
-.product-time:before {
-  content: "\e620";
-}
 .product-password:before {
   content: "\e621";
 }
 .product-ae_class:before {
   content: "\e622";
-}
-.product-ae_namespace:before {
-  content: "\e623";
-}
-.product-memory:before {
-  content: "\e624";
 }
 .product-action:before {
   content: "\e625";
@@ -213,12 +200,6 @@ span[class^="product-"], span[class*=" product-"], // i & span tags prevent conf
 }
 .product-file-war-o:before {
   content: "\e627";
-}
-.product-tenant:before {
-  content: "\e628";
-}
-.product-project:before {
-  content: "\e629";
 }
 .product-exists:before {
   content: "\e62a";
@@ -259,9 +240,6 @@ span[class^="product-"], span[class*=" product-"], // i & span tags prevent conf
 .product-drift:before {
   content: "\e635";
 }
-.product-middleware:before {
-  content: "\e636";
-}
 .product-load_balancer:before {
   content: "\e637";
 }
@@ -300,6 +278,18 @@ span[class^="product-"], span[class*=" product-"], // i & span tags prevent conf
 }
 .product-output:before {
   content: "\e651";
+}
+.product-tab:before {
+  content: "\e652";
+}
+.product-network_switch:before {
+  content: "\e653";
+}
+.product-network_card:before {
+  content: "\e654";
+}
+.product-field:before {
+  content: "\e655";
 }
 
 /* define  colors */

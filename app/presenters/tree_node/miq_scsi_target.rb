@@ -1,6 +1,6 @@
 module TreeNode
   class MiqScsiTarget < Node
-    set_attribute(:image, '100/target_scsi.png')
+    set_attribute(:icon, 'product product-network_card')
 
     set_attributes(:title, :tooltip) do
       title = if @object.iscsi_name.blank?

@@ -606,7 +606,7 @@ describe ApplicationHelper do
 
     it "when layout likes 'miq_ae_*'" do
       @layout = "miq_ae_some_thing"
-      expect(subject).to eq(title + ": Automate")
+      expect(subject).to eq(title + ": Automation")
     end
 
     it "when layout likes 'miq_policy*'" do
@@ -1351,6 +1351,19 @@ describe ApplicationHelper do
       expect(result).to be_truthy
     end
 
+    it 'should return true for the configuration providers tree' do
+      controller.instance_variable_set(:@sb,
+                                       :active_tree => :configuration_manager_providers_tree,
+                                       :trees       => {
+                                         :configuration_manager_providers_tree => {
+                                           :tree => :configuration_manager_providers_tree,
+                                           :type => :configuration_manager_providers
+                                         }
+                                       })
+      result = helper.tree_with_advanced_search?
+      expect(result).to be_truthy
+    end
+
     it 'should return false for tree w/o advanced search' do
       controller.instance_variable_set(:@sb,
                                        :active_tree => :reports_tree,
@@ -1439,7 +1452,7 @@ describe ApplicationHelper do
     it "returns correct image for job record based upon it's status" do
       job_attrs = {"state" => "running", "status" => "ok"}
       image = helper.listicon_image_tag("Job", job_attrs)
-      expect(image).to eq("<img valign=\"middle\" width=\"16\" height=\"16\" title=\"Status = Running\"" \
+      expect(image).to eq("<img title=\"Status = Running\"" \
                           " src=\"#{ActionController::Base.helpers.image_path('100/job-running.png')}\" />")
     end
   end

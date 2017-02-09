@@ -1027,6 +1027,14 @@ module OpsController::OpsRbac
     valid
   end
 
+  def valid_tenant?(tenant_id)
+    Rbac.filtered(Tenant.in_my_region.where(:id => tenant_id)).present?
+  end
+
+  def valid_role?(user_role_id)
+    Rbac::Filterer.filtered_object(user_role_id, :class => MiqUserRole).present?
+  end
+
   # Get variables from group edit form
   def rbac_group_get_form_vars
     if %w(up down).include?(params[:button])
@@ -1035,8 +1043,23 @@ module OpsController::OpsRbac
     else
       @edit[:new][:ldap_groups_user] = params[:ldap_groups_user]  if params[:ldap_groups_user]
       @edit[:new][:description]      = params[:description]       if params[:description]
-      @edit[:new][:role]             = params[:group_role]        if params[:group_role]
-      @edit[:new][:group_tenant]     = params[:group_tenant].to_i if params[:group_tenant]
+
+      if params[:group_role]
+        if valid_role?(new_role_id = params[:group_role].to_i)
+          @edit[:new][:role] = new_role_id
+        else
+          raise "Invalid group selected."
+        end
+      end
+
+      if params[:group_tenant]
+        if valid_tenant?(new_tenant_id = params[:group_tenant].to_i)
+          @edit[:new][:group_tenant] = new_tenant_id
+        else
+          raise "Invalid tenant selected."
+        end
+      end
+
       @edit[:new][:lookup]           = (params[:lookup] == "1")   if params[:lookup]
       @edit[:new][:user]             = params[:user]              if params[:user]
       @edit[:new][:user_id]          = params[:user_id]           if params[:user_id]
@@ -1099,7 +1122,8 @@ module OpsController::OpsRbac
 
     # Build roles hash
     @edit[:roles]["<Choose a Role>"] = nil if @record.id.nil?
-    MiqUserRole.all.each do |r|
+
+    Rbac::Filterer.filtered(MiqUserRole).each do |r|
       @edit[:roles][r.name] = r.id
     end
     if @group.miq_user_role.nil? # If adding, set to first role

@@ -42,6 +42,6 @@
         - if role_allows?(:feature => "rbac_tenant_view", :any => true)
           %tr
             %td.narrow{:onclick => "miqTreeActivateNode('rbac_tree', 'xx-tn');", :title => _("View Tenants")}
-              %i.product.product-tenant
+              %i.pficon.pficon-tenant
             %td{:onclick => "miqTreeActivateNode('rbac_tree', 'xx-tn');", :title => _("View Tenants")}
               = _("Tenants (%{tenants_count})") % {:tenants_count => @tenants_count.to_s}

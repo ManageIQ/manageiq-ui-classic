@@ -53,11 +53,11 @@ module ContainersCommonMixin
     drop_breadcrumb({:name => display_name,
                      :url  => "/#{controller_name}/show_list?page=#{@current_page}&refresh=y"},
                     true)
-    if %w(download_pdf main summary_only).include? @display
+    if %w(main summary_only).include? @display
       get_tagdata(@record)
       drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => record.name},
                       :url  => "/#{controller_name}/show/#{record.id}")
-      set_summary_pdf_data if %w(download_pdf summary_only).include?(@display)
+      set_summary_pdf_data if @display == 'summary_only'
     elsif @display == "timeline"
       @showtype = "timeline"
       session[:tl_record_id] = params[:id] if params[:id]
@@ -125,22 +125,6 @@ module ContainersCommonMixin
         :name => _("%{name} (Compliance History - Last %{number} Checks)") % {:name => record.name, :number => count},
         :url  => "/#{controller_name}/show/#{record.id}?display=#{@display}&refresh=n")
     end
-  end
-
-  def get_session_data
-    @title      = ui_lookup(:tables => self.class.table_name)
-    @layout     = self.class.table_name
-    prefix      = self.class.session_key_prefix
-    @lastaction = session["#{prefix}_lastaction".to_sym]
-    @showtype   = session["#{prefix}_showtype".to_sym]
-    @display    = session["#{prefix}_display".to_sym]
-  end
-
-  def set_session_data
-    prefix                                 = self.class.session_key_prefix
-    session["#{prefix}_lastaction".to_sym] = @lastaction
-    session["#{prefix}_showtype".to_sym]   = @showtype
-    session["#{prefix}_display".to_sym]    = @display unless @display.nil?
   end
 
   def show_container_display(record, display, klass, alt_controller_name = nil)
@@ -231,5 +215,6 @@ module ContainersCommonMixin
 
     # include also generic show_list and index methods
     include Mixins::GenericListMixin
+    include Mixins::GenericSessionMixin
   end
 end

@@ -5,6 +5,8 @@ class ProviderForemanController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericSessionMixin
+
   def self.model
     ManageIQ::Providers::ConfigurationManager
   end
@@ -144,7 +146,7 @@ class ProviderForemanController < ApplicationController
       tagging_edit('ConfiguredSystem', false)
     when :configuration_scripts
       assert_privileges("configuration_script_tag")
-      tagging_edit('ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfigurationScript', false)
+      tagging_edit('ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript', false)
     end
     render_tagging_form
   end
@@ -248,7 +250,7 @@ class ProviderForemanController < ApplicationController
     @record = if configuration_profile_record?
                 find_record(ConfigurationProfile, id || params[:id])
               elsif inventory_group_record?
-                find_record(ManageIQ::Providers::ConfigurationManager::InventoryGroup, id || params[:id])
+                find_record(ManageIQ::Providers::AutomationManager::InventoryGroup, id || params[:id])
               else
                 find_record(ConfiguredSystem, id || params[:id])
               end
@@ -257,7 +259,6 @@ class ProviderForemanController < ApplicationController
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
 
     @gtl_url = "/show"
-    set_summary_pdf_data if "download_pdf" == @display
   end
 
   def tree_select
@@ -362,12 +363,12 @@ class ProviderForemanController < ApplicationController
     case nodes.first
     when "root" then find_record(ManageIQ::Providers::ConfigurationManager, params[:id])
     when "fr"   then find_record(ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile, params[:id])
-    when "at"   then find_record(ManageIQ::Providers::ConfigurationManager::InventoryGroup, params[:id])
-    when "f"    then find_record(ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfiguredSystem, params[:id])
+    when "at"   then find_record(ManageIQ::Providers::AutomationManager::InventoryGroup, params[:id])
+    when "f"    then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem, params[:id])
     when "cp"   then find_record(ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem, params[:id])
     when "xx" then
       case nodes.second
-      when "at" then find_record(ManageIQ::Providers::AnsibleTower::ConfigurationManager, params[:id])
+      when "at" then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, params[:id])
       when "fr" then find_record(ManageIQ::Providers::Foreman::ConfigurationManager, params[:id])
       when "csa", "csf" then find_record(ConfiguredSystem, params[:id])
       end
@@ -386,7 +387,7 @@ class ProviderForemanController < ApplicationController
     nodes = x_node.split('-')
     case nodes.first
     when "root", "at"
-      find_record(ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfigurationScript, params[:id])
+      find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript, params[:id])
     end
   end
 
@@ -406,7 +407,7 @@ class ProviderForemanController < ApplicationController
     if @record.kind_of?(ConfiguredSystem)
       rec_cls = "#{model_to_type_name(@record.ext_management_system.class.to_s)}_configured_system"
     end
-    return unless %w(download_pdf main).include?(@display)
+    return unless @display == 'main'
     @showtype     = "main"
     @button_group = case x_active_accord
                     when :cs_filter
@@ -553,13 +554,13 @@ class ProviderForemanController < ApplicationController
     end
 
     case model
-    when "ManageIQ::Providers::Foreman::ConfigurationManager", "ManageIQ::Providers::AnsibleTower::ConfigurationManager"
+    when "ManageIQ::Providers::Foreman::ConfigurationManager", "ManageIQ::Providers::AnsibleTower::AutomationManager"
       provider_list(id, model)
     when "ConfigurationProfile"
       configuration_profile_node(id, model)
     when "EmsFolder"
       inventory_group_node(id, model)
-    when "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem", "ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfiguredSystem", "ConfiguredSystem"
+    when "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem", "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem", "ConfiguredSystem"
       configured_system_list(id, model)
     when "ConfigurationScript"
       configuration_scripts_list(id, model)
@@ -601,8 +602,8 @@ class ProviderForemanController < ApplicationController
         @right_cell_text = _("%{model} \"%{name}\"") %
         {:name => provider.name,
          :model => "#{ui_lookup(:tables => "configuration_profile")} under #{record_model} Provider"}
-      when "ManageIQ::Providers::AnsibleTower::ConfigurationManager"
-        options = {:model => "ManageIQ::Providers::ConfigurationManager::InventoryGroup", :match_via_descendants => ConfiguredSystem, :where_clause => ["ems_id IN (?)", provider.id]}
+      when "ManageIQ::Providers::AnsibleTower::AutomationManager"
+        options = {:model => "ManageIQ::Providers::AutomationManager::InventoryGroup", :match_via_descendants => ConfiguredSystem, :where_clause => ["ems_id IN (?)", provider.id]}
         process_show_list(options)
         record_model = ui_lookup(:model => model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
         @right_cell_text = _("%{model} \"%{name}\"") %
@@ -613,7 +614,7 @@ class ProviderForemanController < ApplicationController
 
   def cs_provider_node(provider)
     options = {
-      :model => "ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfigurationScript",
+      :model => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript",
       :match_via_descendants => ConfigurationScript,
       :where_clause => ["manager_id IN (?)", provider.id]
     }
@@ -657,7 +658,7 @@ class ProviderForemanController < ApplicationController
   end
 
   def inventory_group_node(id, model)
-    @record = @inventory_group_record = find_record(ManageIQ::Providers::ConfigurationManager::InventoryGroup, id) if model
+    @record = @inventory_group_record = find_record(ManageIQ::Providers::AutomationManager::InventoryGroup, id) if model
 
     if @inventory_group_record.nil?
       self.x_node = "root"
@@ -708,7 +709,7 @@ class ProviderForemanController < ApplicationController
   end
 
   def configuration_script_node(id, model)
-    @record = @configuration_script_record = find_record(ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfigurationScript, id)
+    @record = @configuration_script_record = find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript, id)
     display_node(id, model)
   end
 
@@ -723,7 +724,7 @@ class ProviderForemanController < ApplicationController
       process_show_list(options)
       @right_cell_text = _("All Configured Systems")
     elsif x_active_tree == :configuration_scripts_tree
-      options = {:model => "ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfigurationScript"}
+      options = {:model => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript"}
       process_show_list(options)
       @right_cell_text = _("All Ansible Tower Job Templates")
     end
@@ -851,10 +852,10 @@ class ProviderForemanController < ApplicationController
   end
 
   def ansible_tower_cfgmgr_record?(node = x_node)
-    return @record.kind_of?(ManageIQ::Providers::AnsibleTower::ConfigurationManager) if @record
+    return @record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager) if @record
 
     type, _id = node.split("-")
-    type && ["ManageIQ::Providers::AnsibleTower::ConfigurationManager"].include?(TreeBuilder.get_model_for_prefix(type))
+    type && ["ManageIQ::Providers::AnsibleTower::AutomationManager"].include?(TreeBuilder.get_model_for_prefix(type))
   end
 
   def provider_record?(node = x_node)
@@ -923,8 +924,7 @@ class ProviderForemanController < ApplicationController
   def replace_search_box(presenter, r)
     # Replace the searchbox
     presenter.replace(:adv_searchbox_div,
-                      r[:partial => 'layouts/x_adv_searchbox',
-                        :locals  => {:nameonly => x_active_tree == :configuration_manager_providers_tree}])
+                      r[:partial => 'layouts/x_adv_searchbox'])
 
     presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
   end
@@ -1165,17 +1165,13 @@ class ProviderForemanController < ApplicationController
     record
   end
 
-  def get_session_data
-    @title  = _("Providers")
-    @layout = controller_name
-  end
-
-  def set_session_data
+  def title
+    _("Providers")
   end
 
   def configscript_service_dialog
     assert_privileges("configscript_service_dialog")
-    cs = ManageIQ::Providers::AnsibleTower::ConfigurationManager::ConfigurationScript.find_by_id(params[:id])
+    cs = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript.find_by_id(params[:id])
     @edit = {:new    => {:dialog_name => ""},
              :key    => "cs_edit__#{cs.id}",
              :rec_id => cs.id}

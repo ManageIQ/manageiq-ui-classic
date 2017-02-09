@@ -3,6 +3,7 @@ class EmsInfraController < ApplicationController
   include Mixins::GenericShowMixin
   include EmsCommon        # common methods for EmsInfra/Cloud controllers
   include Mixins::EmsCommonAngular
+  include Mixins::DashboardViewMixin
 
   before_action :check_privileges
   before_action :get_session_data

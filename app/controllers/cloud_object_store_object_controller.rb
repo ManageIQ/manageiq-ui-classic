@@ -33,22 +33,21 @@ class CloudObjectStoreObjectController < ApplicationController
       true
     )
     case @display
-    when "download_pdf", "main", "summary_only"
+    when "main", "summary_only"
       get_tagdata(@object_store_object)
       drop_breadcrumb(
         :name => _("%{name} (Summary)") % {:name => @object_store_object.key.to_s},
         :url  => "/cloud_object_store_object/show/#{@object_store_object.id}"
       )
       @showtype = "main"
-      set_summary_pdf_data if %w(download_pdf summary_only).include?(@display)
+      set_summary_pdf_data if @display == "summary_only"
     end
 
     replace_gtl_main_div if pagination_request?
   end
 
-  def get_session_data
-    super
-    @title = _("Cloud Objects")
+  def title
+    _("Cloud Objects")
   end
 
   menu_section :ost

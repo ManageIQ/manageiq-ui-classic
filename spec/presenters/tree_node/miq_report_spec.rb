@@ -5,5 +5,5 @@ describe TreeNode::MiqReport do
   let(:object) { FactoryGirl.create(:miq_report) }
 
   include_examples 'TreeNode::Node#key prefix', 'rep-'
-  include_examples 'TreeNode::Node#icon', 'product product-report'
+  include_examples 'TreeNode::Node#icon', 'fa fa-file-text-o'
 end

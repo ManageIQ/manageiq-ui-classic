@@ -42,7 +42,7 @@ module ApplicationController::Explorer
     'guest_restart'    => :s1, 'retire_now'                => :s1, 'snapshot_revert'     => :s1,
     'start'            => :s1, 'stop'                      => :s1, 'suspend'             => :s1,
     'reset'            => :s1, 'terminate'                 => :s1, 'pause'               => :s1,
-    'shelve'           => :s1, 'shelve_offload'            => :s1,
+    'shelve'           => :s1, 'shelve_offload'            => :s1, 'chargeback'          => :s1,
 
     # group 2
     'clone'        => :s2, 'compare'          => :s2, 'drift'           => :s2,
@@ -250,8 +250,10 @@ module ApplicationController::Explorer
     unless kls.where(:id => from_cid(rec_id)).exists?
       @replace_trees = [@sb[:active_accord]] # refresh trees
       self.x_node = "root"
-      add_flash(_("Last selected %{record_name} no longer exists") %
-        {:record_name => ui_lookup(:model => kls.to_s)}, :error)
+      unless @report_deleted
+        add_flash(_("Last selected %{record_name} no longer exists") %
+                    {:record_name => ui_lookup(:model => kls.to_s)}, :error)
+      end
     end
     x_node
   end

@@ -26,18 +26,9 @@ ManageIQ.angular.app.controller('tenantFormController', ['$http', '$scope', 'ten
       } else {
         $scope.newRecord = false;
         miqService.sparkleOn();
-        $http.get('/ops/tenant_form_fields/' + tenantFormId).success(function(data) {
-          $scope.tenantModel.name                      = data.name;
-          $scope.tenantModel.description               = data.description;
-          $scope.tenantModel.default                   = data.default;
-          $scope.tenantModel.divisible                 = data.divisible;
-          $scope.tenantModel.use_config_for_attributes = data.use_config_for_attributes;
-
-          $scope.afterGet = true;
-          $scope.modelCopy = angular.copy( $scope.tenantModel );
-
-          miqService.sparkleOff();
-        });
+        $http.get('/ops/tenant_form_fields/' + tenantFormId)
+          .then(getTenantFormData)
+          .catch(miqService.handleFailure);
       }
     };
 
@@ -71,6 +62,21 @@ ManageIQ.angular.app.controller('tenantFormController', ['$http', '$scope', 'ten
     $scope.addClicked = function() {
       $scope.saveClicked();
     };
+
+    function getTenantFormData(response) {
+      var data = response.data;
+
+      $scope.tenantModel.name                      = data.name;
+      $scope.tenantModel.description               = data.description;
+      $scope.tenantModel.default                   = data.default;
+      $scope.tenantModel.divisible                 = data.divisible;
+      $scope.tenantModel.use_config_for_attributes = data.use_config_for_attributes;
+
+      $scope.afterGet = true;
+      $scope.modelCopy = angular.copy( $scope.tenantModel );
+
+      miqService.sparkleOff();
+    }
 
     init();
 }]);

@@ -1,5 +1,5 @@
 module TreeNode
   class PxeImageType < Node
-    set_attribute(:image, '100/pxeimagetype.png')
+    set_attribute(:icon, 'product product-network_card')
   end
 end

@@ -30,7 +30,7 @@ class TreeBuilderSnapshots < TreeBuilder
     {
       :title       => @record.name,
       :tooltip     => @record.name,
-      :image       => '100/vm.png',
+      :icon        => 'pficon pficon-virtual-machine',
       :cfmeNoClick => true
     }
   end

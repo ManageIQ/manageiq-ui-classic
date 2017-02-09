@@ -3,12 +3,27 @@ class GenericObjectController < ApplicationController
 
   def create
     generic_object_definition = GenericObjectDefinition.new
-    generic_object_definition.name = params[:name]
-    generic_object_definition.description = params[:description]
 
+    update_model_fields(generic_object_definition)
     generic_object_definition.save!
 
     render :json => {:message => _("Generic Object Definition created successfully")}
+  end
+
+  def save
+    generic_object_definition = GenericObjectDefinition.find(params[:id])
+
+    update_model_fields(generic_object_definition)
+
+    render :json => {:message => _("Generic Object Definition saved successfully")}
+  end
+
+  def delete
+    generic_object_definition = GenericObjectDefinition.find(params[:id])
+
+    generic_object_definition.delete
+
+    render :json => {:message => _("Generic Object Definition deleted")}
   end
 
   def explorer
@@ -32,7 +47,11 @@ class GenericObjectController < ApplicationController
   def object_data
     generic_object_definition = GenericObjectDefinition.find(params[:id])
 
-    render :json => {:name => generic_object_definition.name, :description => generic_object_definition.description}
+    render :json => {
+      :id          => generic_object_definition.id,
+      :name        => generic_object_definition.name,
+      :description => generic_object_definition.description
+    }
   end
 
   def tree_data
@@ -43,6 +62,10 @@ class GenericObjectController < ApplicationController
 
   private
 
+  def update_model_fields(generic_object_definition)
+    generic_object_definition.update_attributes(:name => params[:name], :description => params[:description])
+  end
+
   def features
     [ApplicationController::Feature.new_with_hash(:role        => "generic_object_explorer",
                                                   :role_any    => true,
@@ -51,5 +74,5 @@ class GenericObjectController < ApplicationController
                                                   :title       => _("Generic Objects"))]
   end
 
-  menu_section :aut
+  menu_section :automate
 end
