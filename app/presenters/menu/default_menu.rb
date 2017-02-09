@@ -61,7 +61,7 @@ module Menu
         hosts_name    = hybrid_name(Host,       N_("Hosts"),    N_("Nodes"),            N_("Hosts / Nodes"))
         clusters_name = hybrid_name(EmsCluster, N_("Clusters"), N_("Deployment Roles"), N_("Clusters / Deployment Roles"))
 
-        Menu::Section.new(:inf, N_("Infrastructure"), 'fa fa-plus fa-2x', [
+        Menu::Section.new(:inf, N_("Virtual Infrastructure"), 'fa fa-plus fa-2x', [
           Menu::Item.new('ems_infra',        N_('Providers'),        'ems_infra',                  {:feature => 'ems_infra_show_list'},             '/ems_infra'),
           Menu::Item.new('ems_cluster',      clusters_name,          'ems_cluster',                {:feature => 'ems_cluster_show_list'},           '/ems_cluster'),
           Menu::Item.new('host',             hosts_name,             'host',                       {:feature => 'host_show_list'},                  '/host'),
