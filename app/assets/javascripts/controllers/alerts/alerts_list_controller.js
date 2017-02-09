@@ -100,6 +100,16 @@ angular.module('alertsCenter').controller('alertsListController',
       }
     }
 
+    vm.showHostPage = function(item, event) {
+      event.stopImmediatePropagation();
+      $window.location.href = item.hostLink;
+    };
+
+    vm.showObjectPage = function(item, event) {
+      event.stopImmediatePropagation();
+      $window.location.href = item.objectLink;
+    };
+
     alertsCenterService.registerObserverCallback(vm.filterChange);
 
     setupConfig();
