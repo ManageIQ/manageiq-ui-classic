@@ -325,7 +325,7 @@ Methods updated/added: %{method_stats}") % stat_options)
   private ###########################
 
   def automate_import_json_serializer
-    @automate_import_json_serializer ||= AutomateImportJsonSerializer.new
+    @automate_import_json_serializer ||= AutomateImportJsonSerializerService.new
   end
 
   def automate_import_service
