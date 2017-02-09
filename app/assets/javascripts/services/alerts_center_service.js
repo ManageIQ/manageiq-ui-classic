@@ -508,9 +508,11 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
       acknowledged: angular.isDefined(alertData.acknowledged) ? alertData.acknowledged : false,
       hostName: alertData.resource.name,
       hostType: alertData.resource.type,
+      hostLink: '/container_node/show/' + alertData.resource.id,
       objectName: objectName,
       objectType: objectType,
       objectTypeImg: typeImage,
+      objectLink: '/ems_container/' + alertData.ems_id,
       evaluated_on: convertApiTime(alertData.evaluated_on),
       severity: alertData.severity,
       alert_actions: alertData.alert_actions

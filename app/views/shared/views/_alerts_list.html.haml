@@ -14,17 +14,19 @@
       .row
         .col-md-3.col-sm-4.col-xs-6
           %div
-            %span.no-wrap{"tooltip" => "{{item.hostName}}",
-                          "tooltip-placement" => "bottom",
-                          "tooltip-popup-delay" => "1000"}
-              %img.list-view-type-img{"ng-src" => "/assets/100/container_node.png"}
-              {{item.hostName}}
+            %a{"href" => "#", "ng-click" => "customScope.showHostPage(item, $event)"}
+              %span.no-wrap{"tooltip" => "{{item.hostName}}",
+                            "tooltip-placement" => "bottom",
+                            "tooltip-popup-delay" => "1000"}
+                %img.list-view-type-img{"ng-src" => "/assets/100/container_node.png"}
+                {{item.hostName}}
           %div
-            %span.no-wrap{"tooltip" => "{{item.objectName}}",
-                          "tooltip-placement" => "bottom",
-                          "tooltip-popup-delay" => "1000"}
-              %img.list-view-type-img{"ng-src" => "{{item.objectTypeImg}}"}
-              {{item.objectName}}
+            %a{"href" => "#", "ng-click" => "customScope.showObjectPage(item, $event)"}
+              %span.no-wrap{"tooltip" => "{{item.objectName}}",
+                            "tooltip-placement" => "bottom",
+                            "tooltip-popup-delay" => "1000"}
+                %img.list-view-type-img{"ng-src" => "{{item.objectTypeImg}}"}
+                {{item.objectName}}
         .col-lg-3.col-lg-push-4.col-md-4.col-md-push-3.col-sm-3.col-sm-push-3.col-xs-6.container-fluid
           %div
             %span.no-wrap{"tooltip" => "{{item.lastUpdate| date:'yyyy-MM-dd hh:mm:ss'}}",
