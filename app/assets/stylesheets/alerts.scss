@@ -7,6 +7,13 @@
     padding-left: 20px;
     padding-right: 20px;
   }
+  .init-hidden {
+    display: none;
+
+    &.initialized {
+      display: block;
+    }
+  }
   .toolbar-pf .form-group {
     padding-left: 25px;
     .btn {
