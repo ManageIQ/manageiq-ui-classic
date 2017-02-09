@@ -13,16 +13,16 @@ describe MiddlewareDeploymentController do
   describe '#show' do
     let(:server) { FactoryGirl.create(:hawkular_middleware_server, :middleware_server_group => nil) }
     let(:ems) { FactoryGirl.create(:ems_middleware) }
-    let(:deployment) { 
-      FactoryGirl.create(:middleware_deployment, :ext_management_system => ems, :middleware_server => server) 
-    } 
+    let(:deployment) do
+      FactoryGirl.create(:middleware_deployment, :ext_management_system => ems, :middleware_server => server)
+    end
 
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryGirl.create(:user)
     end
 
-    subject { get :show, :id => deployment.id }
+    subject { get :show, :params => {:id => deployment.id} }
 
     context 'render' do
       render_views
