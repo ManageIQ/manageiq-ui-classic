@@ -355,8 +355,7 @@ class TreeBuilder
   X_TREE_NODE_CLASSES = {
     # Catalog explorer trees
     :configuration_manager_providers => "TreeBuilderConfigurationManager",
-    :cs_filter                       => "TreeBuilderConfigurationManagerConfiguredSystems",
-    :configuration_scripts           => "TreeBuilderConfigurationManagerConfigurationScripts",
+    :configuration_manager_cs_filter => "TreeBuilderConfigurationManagerConfiguredSystems",
 
     # Catalog explorer trees
     :ot                              => "TreeBuilderOrchestrationTemplates",
@@ -441,6 +440,12 @@ class TreeBuilder
 
     :network                         => "TreeBuilderNetwork",
     :df                              => "TreeBuilderDefaultFilters",
+
+    # Automation trees
+    :automation_manager_providers    => "TreeBuilderAutomationManagerProviders",
+    :automation_manager_cs_filter    => "TreeBuilderAutomationManagerConfiguredSystems",
+    :configuration_scripts           => "TreeBuilderAutomationManagerConfigurationScripts",
+
   }
 
   # Tree node prefixes for generic explorers

@@ -99,8 +99,10 @@ class ApplicationHelper::ToolbarChooser
                   when :vms_instances_filter_tree then               "vms_center_tb"
                   end
         end
-      elsif @layout == "provider_foreman" && [:configuration_manager_providers_tree, :cs_filter_tree, :configuration_scripts_tree].include?(x_active_tree)
+      elsif @layout == "provider_foreman" && [:configuration_manager_providers_tree, :configuration_manager_cs_filter_tree].include?(x_active_tree)
         return center_toolbar_filename_configuration_manager_providers
+      elsif @layout == "automation_manager"
+        return center_toolbar_filename_automation_manager
       elsif [:infra_networking_tree].include?(x_active_tree)
         return center_toolbar_filename_infra_networking
       else
@@ -509,10 +511,21 @@ class ApplicationHelper::ToolbarChooser
     nodes = x_node.split('-')
     if x_active_tree == :configuration_manager_providers_tree
       configuration_manager_providers_tree_center_tb(nodes)
-    elsif x_active_tree == :cs_filter_tree
+    elsif x_active_tree == :configuration_manager_cs_filter_tree
       cs_filter_tree_center_tb(nodes)
     elsif x_active_tree == :configuration_scripts_tree
       configuration_scripts_tree_center_tb(nodes)
+    end
+  end
+
+  def center_toolbar_filename_automation_manager
+    nodes = x_node.split('-')
+    if x_active_tree == :automation_manager_providers_tree
+      automation_manager_providers_tree_center_tb(nodes)
+    elsif x_active_tree == :automation_manager_cs_filter_tree
+      automation_manager_cs_filter_tree_center_tb(nodes)
+    elsif x_active_tree == :configuration_scripts_tree
+      automation_manager_configuration_scripts_tree_center_tb(nodes)
     end
   end
 
@@ -544,6 +557,29 @@ class ApplicationHelper::ToolbarChooser
   end
 
   def configuration_scripts_tree_center_tb(nodes)
+    if %w(root at).include?(nodes.first)
+      "configuration_scripts_center_tb"
+    else
+      "configuration_script_center_tb"
+    end
+  end
+
+  def automation_manager_providers_tree_center_tb(nodes)
+    case nodes.first
+    when "root" then  "automation_manager_providers_center_tb"
+    when "at"   then  "automation_manager_provider_center_tb"
+    when "f"    then  inventory_group_center_tb
+    when "xx"   then  "configured_systems_ansible_center_tb"
+    end
+  end
+
+  def automation_manager_cs_filter_tree_center_tb(nodes)
+    case nodes.first
+    when "root", "ms", "xx", "csa" then "configured_systems_ansible_center_tb"
+    end
+  end
+
+  def automation_manager_configuration_scripts_tree_center_tb(nodes)
     if %w(root at).include?(nodes.first)
       "configuration_scripts_center_tb"
     else

@@ -1,10 +1,10 @@
-class TreeBuilderConfigurationManagerConfiguredSystems < TreeBuilder
+class TreeBuilderAutomationManagerConfiguredSystems < TreeBuilder
   attr_reader :tree_nodes
 
   private
 
   def tree_init_options(_tree_name)
-    {:leaf => "ManageIQ::Providers::ForemanProvider::ConfigurationManager::ConfiguredSystem"}
+    {:leaf => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem"}
   end
 
   def set_locals_for_render
@@ -14,7 +14,7 @@ class TreeBuilderConfigurationManagerConfiguredSystems < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("All Configured Systems"),
+      :title   => t = _("All Ansible Tower Configured Systems"),
       :tooltip => t
     }
   end
@@ -22,10 +22,10 @@ class TreeBuilderConfigurationManagerConfiguredSystems < TreeBuilder
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only, _options)
     objects = []
-    objects.push(:id            => "csf",
-                 :text          => _("%{name} Configured Systems") % {:name => ui_lookup(:ui_title => 'foreman')},
+    objects.push(:id            => "csa",
+                 :text          => _("Ansible Tower Configured Systems"),
                  :icon          => "pficon pficon-folder-close",
-                 :tip           => _("%{name} Configured Systems") % {:name => ui_lookup(:ui_title => 'foreman')},
+                 :tip           => _("Ansible Tower Configured Systems"),
                  :load_children => true)
     objects.push(:id          => "global",
                  :text        => _("Global Filters"),
@@ -59,6 +59,6 @@ class TreeBuilderConfigurationManagerConfiguredSystems < TreeBuilder
 
   def x_get_my_filter_search_results(leaf)
     MiqSearch.where(:db => leaf, :search_type => "user", :search_key => User.current_user.userid)
-      .sort_by { |a| a.description.downcase }
+             .sort_by { |a| a.description.downcase }
   end
 end

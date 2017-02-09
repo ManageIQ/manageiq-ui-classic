@@ -12,7 +12,6 @@ module Menu
       def configuration_menu_section
         Menu::Section.new(:conf, N_("Configuration"), 'fa fa-cog  fa-2x', [
           Menu::Item.new('provider_foreman',  N_('Management'), 'provider_foreman_explorer', {:feature => 'provider_foreman_explorer', :any => true}, '/provider_foreman/explorer'),
-          Menu::Item.new('configuration_job', N_('Jobs'),       'configuration_job',         {:feature => 'configuration_job_show_list'},             '/configuration_job'),
         ])
       end
 
@@ -215,8 +214,14 @@ module Menu
       end
 
       def automation_menu_section
-        Menu::Section.new(:aut, N_("Automation"), 'fa fa-recycle fa-2x', [
-          automate_menu_section
+        Menu::Section.new(:aut, N_("Automation"), 'fa fa-recycle fa-2x', [automate_menu_section,
+                                                                          automation_manager_menu_section])
+      end
+
+      def automation_manager_menu_section
+        Menu::Section.new(:at, N_("Ansible Tower"), 'fa fa-cog  fa-2x', [
+          Menu::Item.new('automation_manager', N_('Explorer'), 'automation_manager', {:feature => 'automation_manager', :any => true}, '/automation_manager/explorer'),
+          Menu::Item.new('configuration_job',  N_('Jobs'),     'configuration_job',  {:feature => 'configuration_job_show_list'},      '/configuration_job')
         ])
       end
 

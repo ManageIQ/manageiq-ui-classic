@@ -14,7 +14,7 @@ class ApplicationHelper::Toolbar::ConfigurationScriptCenter < ApplicationHelper:
       ]
     ),
     select(
-      :provider_foreman_policy_choice,
+      :automation_manager_policy_choice,
       'fa fa-shield fa-lg',
       t = N_('Policy'),
       t,

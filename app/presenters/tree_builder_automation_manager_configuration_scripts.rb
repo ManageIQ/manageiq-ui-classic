@@ -1,4 +1,4 @@
-class TreeBuilderConfigurationManagerConfigurationScripts < TreeBuilder
+class TreeBuilderAutomationManagerConfigurationScripts < TreeBuilder
   has_kids_for ManageIQ::Providers::AnsibleTower::AutomationManager, [:x_get_tree_cmat_kids]
   attr_reader :tree_nodes
 
