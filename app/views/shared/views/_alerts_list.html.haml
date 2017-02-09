@@ -1,5 +1,5 @@
 .col-md-12.list-view-container.list-view-compact
-  %div.list-view-pf-view{"pf-list-view" => "",
+  .list-view-pf-view{"pf-list-view" => "",
        "config" => "vm.listConfig",
        "items" => "vm.alertsList",
        "menu-actions" => "vm.menuActions",
@@ -63,7 +63,7 @@
     %list-expanded-content
       .row
         .col-md-12
-          %a{"href" => "{{$parent.item.sopLink}}", "target" => "_blank", "ng-if" => "$parent.item.sopLink" }
+          %a{"href" => "{{$parent.item.sopLink}}", "target" => "_blank", "ng-if" => "$parent.item.sopLink"}
             = _("View SOP")
       .row
         .col-md-12
