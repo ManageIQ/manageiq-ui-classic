@@ -8,7 +8,20 @@ angular.module('alertsCenter').controller('alertsMostRecentController',
     vm.alertsList = [];
 
     function processData(response) {
-      vm.alerts = alertsCenterService.convertToAlertsList(response);
+      var updatedAlerts = alertsCenterService.convertToAlertsList(response);
+
+      // update display data for the alerts from the current alert settings
+      angular.forEach(updatedAlerts, function(nextUpdate) {
+        matchingAlert = _.find(vm.alerts, function(existingAlert) {
+          return nextUpdate.id === existingAlert.id;
+        });
+
+        if (angular.isDefined(matchingAlert)) {
+          nextUpdate.isExpanded = matchingAlert.isExpanded;
+        }
+      });
+
+      vm.alerts = updatedAlerts;
       vm.loadingDone = true;
       vm.filterChange();
 
