@@ -112,8 +112,10 @@ module PersistentVolumeHelper::TextualSummary
 
   def textual_rados_ceph_monitors
     ceph_monitors = @record.rbd_ceph_monitors
-    {:label => _("Rados Ceph Monitors"),
-     :value => ceph_monitors} unless ceph_monitors.empty?
+    {
+      :label => _("Rados Ceph Monitors"),
+      :value => ceph_monitors
+    } if ceph_monitors.present?
   end
 
   def textual_rados_image_name
