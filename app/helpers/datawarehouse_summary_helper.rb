@@ -8,8 +8,4 @@ module DatawarehouseSummaryHelper
   def textual_nativeid
     @record.nativeid
   end
-
-  def textual_group_smart_management
-    %i(tags)
-  end
 end
