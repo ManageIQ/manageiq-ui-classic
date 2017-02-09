@@ -513,6 +513,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
       objectType: objectType,
       objectTypeImg: typeImage,
       objectLink: '/ems_container/' + alertData.ems_id,
+      sopLink: alertData.url,
       evaluated_on: convertApiTime(alertData.evaluated_on),
       severity: alertData.severity,
       alert_actions: alertData.alert_actions
