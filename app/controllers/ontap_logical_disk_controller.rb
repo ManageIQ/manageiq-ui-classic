@@ -16,7 +16,7 @@ class OntapLogicalDiskController < CimInstanceController
   private
 
   def textual_group_list
-    [%i(properties relationships infrastructure_relationships), %i(capacity_data group_smart_management)]
+    [%i(properties relationships infrastructure_relationships), %i(capacity_data smart_management)]
   end
   helper_method :textual_group_list
 
