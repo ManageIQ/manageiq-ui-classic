@@ -11,11 +11,11 @@ describe TreeBuilderArchived do
     nodes = archived.x_get_tree_arch_orph_nodes('VMs/Templates')
     expect(nodes).to eq([{:id    => "arch",
                           :text  => "<Archived>",
-                          :image => "100/currentstate-archived.png",
+                          :image => "svg/currentstate-archived.svg",
                           :tip   => "Archived VMs/Templates"},
                          {:id    => "orph",
                           :text  => "<Orphaned>",
-                          :image => "100/currentstate-orphaned.png",
+                          :image => "svg/currentstate-orphaned.svg",
                           :tip   => "Orphaned VMs/Templates"}])
   end
 

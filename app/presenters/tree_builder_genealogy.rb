@@ -38,9 +38,9 @@ class TreeBuilderGenealogy < TreeBuilder
     if vm.template?
       {:icon => "product product-template"}
     elsif vm.retired
-      {:image => '100/retired.png'}
+      {:image => 'svg/currentstate-retired.svg'}
     else
-      {:image => "100/#{vm.current_state.downcase}.png"}
+      {:image => "svg/currentstate-#{vm.current_state.downcase}.svg"}
     end
   end
 

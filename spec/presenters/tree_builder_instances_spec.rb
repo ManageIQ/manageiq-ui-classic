@@ -42,11 +42,11 @@ describe TreeBuilderInstances do
                              @vm_cloud_without_az.ext_management_system,
                              {:id    => "arch",
                               :text  => "<Archived>",
-                              :image => "100/currentstate-archived.png",
+                              :image => "svg/currentstate-archived.svg",
                               :tip   => "Archived Instances"},
                              {:id    => "orph",
                               :text  => "<Orphaned>",
-                              :image => "100/currentstate-orphaned.png",
+                              :image => "svg/currentstate-orphaned.svg",
                               :tip   => "Orphaned Instances"}])
   end
 
