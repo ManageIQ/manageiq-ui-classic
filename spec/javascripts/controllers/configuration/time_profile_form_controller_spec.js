@@ -13,7 +13,8 @@ describe('timeProfileFormController', function() {
     spyOn(miqService, 'sparkleOff');
     $scope = $rootScope.$new();
 
-    $scope.timeProfileModel = {
+    $scope.vm = {};
+    $scope.vm.timeProfileModel = {
       description: '',
       admin_user: false,
       restricted_time_profile: false,
@@ -39,7 +40,7 @@ describe('timeProfileFormController', function() {
     };
 
     $httpBackend.whenGET('/configuration/time_profile_form_fields/new').respond(timeProfileResponse);
-    $controller = _$controller_('timeProfileFormController', {
+    $controller = _$controller_('timeProfileFormController as vm', {
       $scope: $scope,
       timeProfileFormId: 'new',
       miqService: miqService
@@ -57,25 +58,25 @@ describe('timeProfileFormController', function() {
     });
     describe('when the timeProfileFormId is new', function() {
       it('sets the name to blank', function () {
-        expect($scope.timeProfileModel.description).toEqual('');
+        expect($scope.vm.timeProfileModel.description).toEqual('');
       });
       it('sets the admin_user to false', function () {
-        expect($scope.timeProfileModel.admin_user).toBeFalsy();
+        expect($scope.vm.timeProfileModel.admin_user).toBeFalsy();
       });
       it('sets the restricted_time_profile to false', function () {
-        expect($scope.timeProfileModel.restricted_time_profile).toBeFalsy();
+        expect($scope.vm.timeProfileModel.restricted_time_profile).toBeFalsy();
       });
       it('sets the profile_type to blank', function () {
-        expect($scope.timeProfileModel.profile_type).toEqual('');
+        expect($scope.vm.timeProfileModel.profile_type).toEqual('');
       });
       it('sets the profile_tz to blank', function () {
-        expect($scope.timeProfileModel.profile_tz).toEqual('');
+        expect($scope.vm.timeProfileModel.profile_tz).toEqual('');
       });
       it('sets the all_days to false', function () {
-        expect($scope.timeProfileModel.all_days).toBeFalsy();
+        expect($scope.vm.timeProfileModel.all_days).toBeFalsy();
       });
       it('sets the all_hours to blank', function () {
-        expect($scope.timeProfileModel.all_hours).toBeFalsy();
+        expect($scope.vm.timeProfileModel.all_hours).toBeFalsy();
       });
     });
   });
@@ -96,7 +97,7 @@ describe('timeProfileFormController', function() {
 
     beforeEach(inject(function(_$controller_) {
       $httpBackend.whenGET('/configuration/time_profile_form_fields/12345').respond(timeProfileFormResponse);
-      $controller = _$controller_('timeProfileFormController',
+      $controller = _$controller_('timeProfileFormController as vm',
         {
           $scope: $scope,
           timeProfileFormId: '12345',
@@ -106,25 +107,25 @@ describe('timeProfileFormController', function() {
     }));
 
     it('sets the name to blank', function () {
-      expect($scope.timeProfileModel.description).toEqual('TimeProfileTest');
+      expect($scope.vm.timeProfileModel.description).toEqual('TimeProfileTest');
     });
     it('sets the admin_user to false', function () {
-      expect($scope.timeProfileModel.admin_user).toBeTruthy();
+      expect($scope.vm.timeProfileModel.admin_user).toBeTruthy();
     });
     it('sets the restricted_time_profile to false', function () {
-      expect($scope.timeProfileModel.restricted_time_profile).toBeFalsy();
+      expect($scope.vm.timeProfileModel.restricted_time_profile).toBeFalsy();
     });
     it('sets the profile_type to blank', function () {
-      expect($scope.timeProfileModel.profile_type).toEqual('user');
+      expect($scope.vm.timeProfileModel.profile_type).toEqual('user');
     });
     it('sets the profile_tz to blank', function () {
-      expect($scope.timeProfileModel.profile_tz).toEqual('Alaska');
+      expect($scope.vm.timeProfileModel.profile_tz).toEqual('Alaska');
     });
     it('sets the all_days to false', function () {
-      expect($scope.timeProfileModel.all_days).toBeTruthy();
+      expect($scope.vm.timeProfileModel.all_days).toBeTruthy();
     });
     it('sets the all_hours to blank', function () {
-      expect($scope.timeProfileModel.all_hours).toBeTruthy();
+      expect($scope.vm.timeProfileModel.all_hours).toBeTruthy();
     });
   });
 
