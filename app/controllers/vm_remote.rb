@@ -6,7 +6,7 @@ module VmRemote
     console_type = ::Settings.server.remote_console_type.downcase
     params[:task_id] ? console_after_task(console_type) : console_before_task(console_type)
   end
-  alias_method :vmrc_console, :console # VMRC needs its own URL for RBAC checking
+  alias vmrc_console console # VMRC needs its own URL for RBAC checking
 
   def launch_cockpit
     vm = identify_record(params[:id], VmOrTemplate)
@@ -58,7 +58,7 @@ module VmRemote
     scheme = request.ssl? ? 'wss' : 'ws'
     override_content_security_policy_directives(
       :connect_src => ["'self'", "#{scheme}://#{request.env['HTTP_HOST']}"],
-      :img_src     => %w(data: 'self')
+      :img_src     => %w(data: self)
     )
     %i(secret url proto).each { |p| params.require(p) }
 
@@ -95,8 +95,10 @@ module VmRemote
     end
 
     task_id = record.remote_console_acquire_ticket_queue(ticket_type, session[:userid])
-    add_flash(_("Console access failed: Task start failed: ID [%{id}]") %
-                {:id => task_id.to_s}, :error) unless task_id.kind_of?(Integer)
+    unless task_id.kind_of?(Integer)
+      add_flash(_("Console access failed: Task start failed: ID [%{id}]") %
+                  {:id => task_id.to_s}, :error)
+    end
 
     if @flash_array
       javascript_flash(:spinner_off => true)
@@ -118,7 +120,9 @@ module VmRemote
               miq_task.task_results[:remote_url]
             else
               console_action = console_type == 'html5' ? 'launch_html5_console' : 'launch_vmware_console'
-              url_for(miq_task.task_results.merge(:controller => controller_name, :action => console_action, :id => j(params[:id])))
+              url_for(miq_task.task_results.merge(:controller => controller_name,
+                                                  :action     => console_action,
+                                                  :id         => j(params[:id])))
             end
       javascript_open_window(url)
     end
