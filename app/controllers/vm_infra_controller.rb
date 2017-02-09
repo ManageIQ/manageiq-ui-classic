@@ -1,5 +1,6 @@
 class VmInfraController < ApplicationController
-  include VmCommon        # common methods for vm controllers
+  include VmCommon # common methods for vm controllers
+  include VmRemote # methods for VM remote access
   include VmShowMixin
 
   before_action :check_privileges
