@@ -63,10 +63,8 @@
     %list-expanded-content
       .row
         .col-md-12
-          %span.header
-            = _("SOP")
-          %a{"href" => "#"}
-            = _("Associated link configured by OP Admin")
+          %a{"href" => "{{$parent.item.sopLink}}", "target" => "_blank", "ng-if" => "$parent.item.sopLink" }
+            = _("View SOP")
       .row
         .col-md-12
           %span.header
