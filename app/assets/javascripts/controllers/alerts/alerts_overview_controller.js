@@ -54,6 +54,13 @@ angular.module('alertsCenter').controller('alertsOverviewController',
             title: __('Name'),
             placeholder: __('Filter by Name'),
             filterType: 'text'
+          },
+          {
+            id: 'objectType',
+            title: __('Type'),
+            placeholder: __('Filter by Type'),
+            filterType: 'select',
+            filterValues: alertsCenterService.objectTypes
           }
         ],
         resultsCount: 0,
@@ -134,7 +141,7 @@ angular.module('alertsCenter').controller('alertsOverviewController',
       } else if (vm.toolbarConfig.sortConfig.currentField.id === 'object_name') {
         compValue = item1.name.localeCompare(item2.name);
       } else if (vm.toolbarConfig.sortConfig.currentField.id === 'object_type') {
-        compValue = item1.type.localeCompare(item2.type);
+        compValue = item1.objectType.localeCompare(item2.objectType);
       }
 
       if (compValue === 0) {

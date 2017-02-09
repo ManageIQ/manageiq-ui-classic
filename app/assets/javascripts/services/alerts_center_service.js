@@ -89,7 +89,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
       filterType: 'text'
     },
     {
-      id: 'type',
+      id: 'objectType',
       title: __('Provider Type'),
       placeholder: __('Filter by Provider Type'),
       filterType: 'select',
@@ -168,7 +168,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
       found = filterStringCompare(item.message, filter.value);
     } else if (filter.id === 'host') {
       found = filterStringCompare(item.hostName, filter.value);
-    } else if (filter.id === 'type') {
+    } else if (filter.id === 'objectType') {
       found = item.objectType === filter.value;
     } else if (filter.id === 'name') {
       found = filterStringCompare(item.objectName, filter.value);
@@ -219,7 +219,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
       compValue = item1.hostName.localeCompare(item2.hostName);
     } else if (sortId === 'name') {
       compValue = item1.objectName.localeCompare(item2.objectName);
-    } else if (sortId === 'type') {
+    } else if (sortId === 'objectType') {
       compValue = item1.objectType.localeCompare(item2.objectType);
     } else if (sortId === 'assignee') {
       compValue = item1.assignee_name.localeCompare(item2.assignee_name);
@@ -263,7 +263,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
       sortType: 'alpha'
     },
     {
-      id: 'type',
+      id: 'objectType',
       title: __('Provider Type'),
       sortType: 'alpha'
     },
@@ -590,9 +590,13 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
     var path = '/assets/svg/';
     var suffix = '.svg';
 
+    _this.objectTypes.splice(0, _this.objectTypes.length);
+
     // Add each alert in the appropriate group
     angular.forEach(responseData.resources, function(item) {
       var objectType;
+      var providerType;
+      var foundType;
       var descriptors;
       var summaryItem;
       var matchingTag;
@@ -617,14 +621,23 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
               info: []
             };
 
+            providerType = getObjectType(provider);
             descriptors = provider.type.toLowerCase().split("::");
             if (descriptors.length >= 3) {
               summaryItem.displayType = descriptors[1];
               objectType = descriptors[2];
             }
 
-            objectType = objectType.replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
-            summaryItem.objectTypeImg = path + 'vendor-' + objectType + suffix;
+            summaryItem.objectType = objectType.replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
+            summaryItem.objectTypeImg = path + 'vendor-' + summaryItem.objectType + suffix;
+
+            foundType = _.find(_this.objectTypes, function(nextType) {
+              return nextType === summaryItem.objectType;
+            });
+
+            if (!foundType) {
+              _this.objectTypes.push(summaryItem.objectType);
+            }
 
             // Determine the tag values for this object
             if (provider.tags) {
