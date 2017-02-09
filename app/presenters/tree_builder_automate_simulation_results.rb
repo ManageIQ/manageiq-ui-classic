@@ -47,7 +47,7 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
       {
         :text    => el.attributes["name"],
         :tooltip => el.attributes["name"],
-        :image   => '100/attribute.png'
+        :icon    => 'product product-attribute'
       }
     elsif !el.text.blank?
       {
