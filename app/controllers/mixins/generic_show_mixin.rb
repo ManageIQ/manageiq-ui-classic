@@ -19,12 +19,11 @@ module Mixins
 
     def show_main
       get_tagdata(@record)
-      drop_breadcrumb({:name => ui_lookup(:tables => self.class.table_name),
-                       :url  => "/#{self.class.table_name}/show_list?page=#{@current_page}&refresh=y"},
+      drop_breadcrumb({:name => ui_lookup(:models => self.class.model.to_s),
+                       :url  => "/#{controller_name}/show_list?page=#{@current_page}&refresh=y"},
                       true)
 
-      show_url = restful? ? "/#{self.class.table_name}/" :
-                            "/#{self.class.table_name}/show/"
+      show_url = restful? ? "/#{controller_name}/" : "/#{controller_name}/show/"
 
       drop_breadcrumb(:name =>  _("%{name} (Summary)") % {:name => @record.name},
                       :url  => "#{show_url}#{@record.id}")
