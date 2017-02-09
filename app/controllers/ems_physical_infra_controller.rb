@@ -47,5 +47,19 @@ class EmsPhysicalInfraController < ApplicationController
   end
   public :restful?
 
+  def parse_json(uploaded_file)
+    JSON.parse(uploaded_file.read)["nodes"]
+  end
+
+
+  def get_session_data
+    @title  = _("Physical Infra Providers")
+    @layout = "ems_physical_infra"
+  end
+
+  def set_session_data
+    session[:layout] = @layout
+  end
+
   menu_section :phy
 end

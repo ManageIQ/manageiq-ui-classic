@@ -118,6 +118,7 @@ module EmsCommon
       'ems_clusters'                  => [EmsCluster,             title_for_clusters],
       'persistent_volumes'            => [PersistentVolume,       _('Volumes'), :persistent_volumes],
       'hosts'                         => [Host,                   _("Managed Hosts")],
+      'physical_servers'              => [PhysicalServer,         _("Physical Servers")],
     }
   end
 

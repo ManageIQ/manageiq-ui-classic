@@ -15,24 +15,7 @@ module PhysicalServerHelper::TextualSummary
 
 
   def textual_host
-    # If no hosts have been discovered the host relationship 
-    # is undefined.  Adding a check for a nil host before reading
-    # properties from host.
-    host_id = nil
-    host_service_tag = nil
-    if @record.host != nil
-      host_id = @record.host.id
-      host_service_tag = @record.host.service_tag
-    end
-
-    hostText = {:label => _("Host"), :value => host_service_tag}
-    
-    # Only have a link to the host if we actually have a host
-    if @record.host != nil
-      hostText[:link] = url_for(:controller => 'host', :action => 'show', :id => host_id)
-    end
-
-    hostText
+    {:label => _("Host"), :value => @record.host&.name, :icon =>  "pficon pficon-virtual-machine", :link => url_for(:controller =>'host', :action =>  'show', :id =>  @record.host&.id)}
   end
 
   def textual_name
