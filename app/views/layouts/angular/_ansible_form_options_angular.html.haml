@@ -8,7 +8,7 @@
         %select{"ng-model"    => "_#{prefix}_repository",
                 "name"        => "#{prefix}_repository_id",
                 'ng-options'  => 'repository as repository.name for repository in repositories',
-                "ng-required" => "repositoryRequired('#{prefix}')",
+                "ng-required" => "fieldsRequired('#{prefix}')",
                 'ng_change'   => "repository_changed()",
                 'pf-select'   => true}
           %option{"value" => ""}
@@ -163,13 +163,12 @@
           %select{"ng-model"    => "_#{prefix}_dialog",
                   "name"        => "#{prefix}_dialog_id",
                   'ng-options'  => 'dialog as dialog.label for dialog in dialogs',
-                  "ng-required" => "#{ng_model}.#{prefix}_dialog_existing == 'existing'",
-                  :miqrequired  => true,
+                  "ng-required" => "fieldsRequired('#{prefix}') && #{ng_model}.#{prefix}_dialog_existing == 'existing'",
                   :checkchange  => true,
                   'pf-select'   => true}
             %option{"value" => ""}
               = "<#{_('Choose')}>"
-            %span.help-block{"ng-show" => "angularForm.#{prefix}_dialog_id.$error.miqrequired"}
+            %span.help-block{"ng-show" => "angularForm.#{prefix}_dialog_id.$error.$invalid"}
               = _("Required")
 
         .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_dialog_name.$invalid}", "ng-if" => "#{ng_model}.#{prefix}_dialog_existing == 'create'"}
@@ -177,8 +176,7 @@
                               'ng-model'    => "#{ng_model}.#{prefix}_dialog_name",
                               :name         => "#{prefix}_dialog_name",
                               :maxlength    => 50,
-                              "ng-required" => "#{ng_model}.#{prefix}_dialog_existing == 'create'",
-                              "miqrequired" => "",
+                              "ng-required" => "fieldsRequired('#{prefix}') && #{ng_model}.#{prefix}_dialog_existing == 'create'",
                               "checkchange" => ""}
-            %span.help-block{"ng-show" => "angularForm.#{prefix}_dialog_name.$error.miqrequired"}
+            %span.help-block{"ng-show" => "angularForm.#{prefix}_dialog_name.$error.$invalid"}
               = _("Required")

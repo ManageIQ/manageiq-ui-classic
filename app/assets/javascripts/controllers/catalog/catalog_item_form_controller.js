@@ -226,7 +226,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     $scope.catalogItemModel[prefix + "_dialog_existing"] = selected_value
   };
 
-  $scope.repositoryRequired = function(prefix) {
+  $scope.fieldsRequired = function(prefix) {
     return prefix == "provisioning";
   };
 
