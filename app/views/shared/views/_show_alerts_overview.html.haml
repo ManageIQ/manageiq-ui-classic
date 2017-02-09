@@ -32,10 +32,11 @@
           {{group.title}} ({{group.itemsList.length}})
         .card-view-pf{"ng-if" => "group.hasItems", "ng-class" => "{'collapse': !group.open}"}
           .card-pf.card-pf-aggregate-status{"ng-repeat" => "item in group.itemsList track by item.name"}
-            %span.h2.card-pf-title
-              %img.card-view-type-img{"ng-if" => "item.objectTypeImg",
-                                      "ng-src" => "{{item.objectTypeImg}}"}
-              {{item.name}}
+            %a{"href" => "#", "ng-click" => "vm.showGroupAlerts(item)"}
+              %span.h2.card-pf-title
+                %img.card-view-type-img{"ng-if" => "item.objectTypeImg",
+                                        "ng-src" => "{{item.objectTypeImg}}"}
+                {{item.name}}
             .card-pf-body
               %p.card-pf-aggregate-status-notifications
                 %span.card-pf-aggregate-status-notification{"ng-if" => "item.danger.length > 0",
