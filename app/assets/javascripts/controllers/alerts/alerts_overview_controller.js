@@ -153,7 +153,11 @@ angular.module('alertsCenter').controller('alertsOverviewController',
     };
 
     vm.showGroupAlerts = function(item, status) {
-      $window.location.href = "/alerts_list/show?name=" + item.name + "&severity=" + status;
+      var locationRef = "/alerts_list/show?name=" + item.name;
+      if (angular.isDefined(status)) {
+        locationRef += "&severity=" + status;
+      }
+      $window.location.href = locationRef;
     };
 
     vm.filterChange = function() {
