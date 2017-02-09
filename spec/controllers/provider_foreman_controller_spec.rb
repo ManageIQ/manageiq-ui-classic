@@ -451,6 +451,22 @@ describe ProviderForemanController do
     end
   end
 
+  it "renders textual summary for a configured system" do
+    stub_user(:features => :all)
+
+    tree_node_id = ApplicationRecord.compress_id(@configured_system.id)
+
+    # post to x_show sets session variables and redirects to explorer
+    # then get to explorer renders the data for the active node
+    # we test the textual_summary for a configured system
+
+    seed_session_trees('provider_foreman', 'cs_tree', "cs-#{tree_node_id}")
+    get :explorer
+
+    expect(response.status).to eq(200)
+    expect(response).to render_template(:partial => 'layouts/_textual_groups_generic')
+  end
+
   context "fetches the list setting:Grid/Tile/List from settings" do
     before do
       login_as user_with_feature(%w(providers_accord configured_systems_filter_accord))
