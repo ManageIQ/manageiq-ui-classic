@@ -44,9 +44,6 @@ describe('alertsListController', function() {
     );
   }));
 
-  afterEach(function() {
-  });
-
   describe('data loads successfully and', function() {
     it('shows the correct alerts', function(done) {
       expect($controller.loadingDone).toBeFalsy();

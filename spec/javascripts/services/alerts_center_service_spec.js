@@ -148,15 +148,15 @@ describe('alertsCenterService', function() {
       expect(alertsList.length).toBe(4);
 
       expect(alertsList[0].objectType).toBe("Hawkular");
-      expect(alertsList[0].objectTypeImg).toBe("/assets/svg/vendor-hawkular.svg");
+      expect(alertsList[0].objectTypeImg).toMatch(/svg\/vendor-hawkular/);
       expect(alertsList[0].assigned).toBe(true);
 
       expect(alertsList[1].objectType).toBe("Hawkular");
-      expect(alertsList[1].objectTypeImg).toBe("/assets/svg/vendor-hawkular.svg");
+      expect(alertsList[1].objectTypeImg).toMatch(/svg\/vendor-hawkular/);
       expect(alertsList[1].assigned).toBe(false);
 
       expect(alertsList[2].objectType).toBe("Openshift");
-      expect(alertsList[2].objectTypeImg).toBe("/assets/svg/vendor-openshift.svg");
+      expect(alertsList[2].objectTypeImg).toMatch(/svg\/vendor-openshift/);
       expect(alertsList[2].assigned).toBe(true);
     });
 

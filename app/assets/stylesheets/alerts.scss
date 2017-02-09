@@ -26,6 +26,11 @@
       margin-left: 0;
     }
   }
+  .list-view-pf-view {
+    margin-top: -1px;
+    margin-left: -20px;
+    margin-right: -20px;
+  }
   .list-view-container, .row-tile-pf {
     height: calc(100vh - 196px);
     overflow-y: auto;
@@ -104,6 +109,7 @@
   .list-group-item {
     &.alert {
       padding-left: 15px;
+      margin-bottom: -1px;
       &.alert-danger {
         background-color: $alert-danger-bg;
       }
@@ -167,7 +173,7 @@
   .group-toolbar-actions {
     .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
       margin: 0 10px 0 5px;
-      width: 115px;
+      width: 135px;
     }
     .bootstrap-select:last-of-type {
       margin-right: 0;
