@@ -429,8 +429,11 @@
               miqSelectPickerEvent("#{field_id}", "#{url}")
           - else
             -# Just show the field value
-            -# Description is in the second, last, array element
-            = options[field].last
+            -# Description is in the second, last, if it is an array element, or possible single value from the API
+            -if options[field].kind_of?(Array)
+              = options[field].last
+            - else
+              = options[field]
           - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
             -# Display notes if available
             = field_hash[:notes]
