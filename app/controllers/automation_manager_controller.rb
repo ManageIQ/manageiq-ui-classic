@@ -147,7 +147,7 @@ class AutomationManagerController < ApplicationController
     else
       @nodetype, id = parse_nodetype_and_id(valid_active_node(x_node))
 
-      if x_active_tree == :cs_filter_tree && @nodetype == "xx-csa"
+      if x_active_tree == :automation_manager_cs_filter_tree && @nodetype == "xx-csa"
         search_id = @nodetype == "root" ? 0 : from_cid(id)
         listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
         if @edit[:adv_search_applied] &&

@@ -123,6 +123,13 @@ module Mixins
       replace_right_cell
     end
 
+    def cs_edit_get_form_vars
+      @edit[:new][:name] = params[:name] if params[:name]
+      @edit[:new][:description] = params[:description] if params[:description]
+      @edit[:new][:draft] = params[:draft] == "true" if params[:draft]
+      @edit[:new][:dialog_name] = params[:dialog_name] if params[:dialog_name]
+    end
+
     def cs_form_field_changed
       id = params[:id]
       return unless load_edit("cs_edit__#{id}", "replace_cell__explorer")

@@ -263,7 +263,7 @@ module ApplicationHelper
           elsif %w(ManageIQ::Providers::AutomationManager::InventoryGroup EmsFolder).include?(view.db) &&
                 request.parameters[:controller] == "automation_manager"
             return url_for(:action => action, :id => nil) + "/"
-          elsif %w(ConfiguredSystem).include?(view.db) && ( request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
+          elsif %w(ConfiguredSystem).include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
             return url_for(:action => action, :id => nil) + "/"
           else
             return url_for(:action => action) + "/" # In explorer, don't jump to other controllers

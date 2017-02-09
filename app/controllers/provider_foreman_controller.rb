@@ -169,7 +169,7 @@ class ProviderForemanController < ApplicationController
     else
       @nodetype, id = parse_nodetype_and_id(valid_active_node(x_node))
 
-      if x_active_tree == :configuration_manager_cs_filter_tree
+      if x_active_tree == :cs_filter_tree && @nodetype == "xx-csf"
         search_id = @nodetype == "root" ? 0 : from_cid(id)
         listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
         if @edit[:adv_search_applied] &&
@@ -197,7 +197,7 @@ class ProviderForemanController < ApplicationController
     @record =
       case x_active_tree
       when :configuration_manager_providers_tree then configuration_manager_providers_tree_rec
-      when :configuration_manager_cs_filter_tree then cs_filter_tree_rec
+      when :configuration_manager_cs_filter_tree then configuration_manager_cs_filter_tree_rec
       end
   end
 
@@ -403,7 +403,7 @@ class ProviderForemanController < ApplicationController
     if replace_trees
       trees[:configuration_manager_providers] = build_configuration_manager_tree(:configuration_manager_providers,
                                                                                  :configuration_manager_providers_tree) if replace_trees.include?(:configuration_manager_providers)
-      trees[:configuration_manager_cs_filter] = build_configuration_manager_tree (:configuration_manager_cs_filter, :configuration_manager_cs_filter_tree) if replace_trees.include?(:configuration_manager_cs_filter)
+      trees[:configuration_manager_cs_filter] = build_configuration_manager_tree(:configuration_manager_cs_filter, :configuration_manager_cs_filter_tree) if replace_trees.include?(:configuration_manager_cs_filter)
     end
     trees
   end
