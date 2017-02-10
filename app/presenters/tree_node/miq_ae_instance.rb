@@ -1,5 +1,5 @@
 module TreeNode
   class MiqAeInstance < MiqAeNode
-    set_attribute(:icon, 'product product-ae_instance')
+    set_attribute(:icon, 'fa fa-file-text-o')
   end
 end

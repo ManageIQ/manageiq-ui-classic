@@ -373,7 +373,7 @@ class MiqAeClassController < ApplicationController
       glyphicon = "pficon pficon-folder-open"
     when "MiqAeInstance"
       cls = "aei"
-      glyphicon = "product product-ae_instance"
+      glyphicon = "fa fa-file-text-o"
     when "MiqAeField"
       cls = "Field"
       glyphicon = "product product-ae_field"
