@@ -26,10 +26,6 @@ class EmsDatawarehouseController < ApplicationController
     ems_datawarehouse_path(*args)
   end
 
-  def listicon_image(item, _view)
-    item.decorate.try(:listicon_image)
-  end
-
   def new_ems_path
     new_ems_datawarehouse_path
   end

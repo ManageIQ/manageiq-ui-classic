@@ -835,6 +835,7 @@ module ApplicationHelper
        container_route
        container_service
        container_template
+       datawarehouse_node
        ems_cloud
        ems_cluster
        ems_container
@@ -1250,6 +1251,7 @@ module ApplicationHelper
                         container_service
                         container_template
                         container_topology
+                        datawarehouse_node
                         ems_cloud
                         ems_cluster
                         ems_container
@@ -1351,6 +1353,7 @@ module ApplicationHelper
           container_route
           container_service
           container_template
+          datawarehouse_node
           ems_cloud
           ems_cluster
           ems_container
@@ -1417,6 +1420,7 @@ module ApplicationHelper
              container_route
              container_service
              container_template
+             datawarehouse_node
              ems_cloud
              ems_cluster
              ems_container
@@ -1482,6 +1486,7 @@ module ApplicationHelper
       container_route
       container_service
       container_template
+      datawarehouse_node
       ems_cloud
       ems_cluster
       ems_container
