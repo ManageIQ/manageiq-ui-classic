@@ -19,6 +19,32 @@ class AnsibleRepositoryController < ApplicationController
     ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource
   end
 
+  def get_session_data
+    @center_toolbar = 'ansible_repositories'
+    super
+  end
+
+  def edit
+    @in_a_form = true
+  end
+
+  def new
+    @in_a_form = true
+  end
+
+  def dummy_data
+    @record = ConfigurationScriptSource.all[0]
+    render :json => { :name => @record.name,
+                      :description => @record.description,
+                      scm_type: 'Troll',
+                      url: 'localhost:3000',
+                      scm_credentials: 'nope',
+                      branch: 'none',
+                      clean: true,
+                      deleteOnUpdate: true,
+                      updateOnLaunch: true,}
+  end
+
   def display_playbooks
     nested_list("ansible_playbook", ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
   end

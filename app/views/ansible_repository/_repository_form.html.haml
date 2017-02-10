@@ -1,0 +1,96 @@
+#main_div
+  %br
+  %br
+
+  .form-horizontal
+    %form#form_div{:name           => "angularForm",
+                   'ng-controller' => "repositoryFormController as vm",
+                   'ng-show'       => "vm.afterGet",
+                   :novalidate     => true}
+      = render :partial => "layouts/flash_msg"
+      .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
+        %label.col-md-2.control-label
+          = _('Name')
+        .col-md-8
+          %input.form-control{:type              => "text",
+                                :name            => "name",
+                                "id"             => "name",
+                                'ng-model'       => "vm.repositoryModel.name",
+                                :maxlength       => MAX_NAME_LEN,
+                                :required        => "",
+                                :checkchange     => true,
+                                "auto-focus"     => ""}
+          %span.help-block{"ng-show" => "angularForm.name.$error.required"}
+            = _("Required")
+      .form-group
+        %label.col-md-2.control-label
+          = _('Description')
+        .col-md-8
+          %input.form-control{:type            => "text",
+                              :name            => "description",
+                              "id"             => "description",
+                              'ng-model'       => "vm.repositoryModel.description",
+                              :checkchange     => true}
+      .form-group
+        %label.col-md-2.control-label
+          = _('SCM type')
+        .col-md-8
+          = select_tag('scm_type',
+                       options_for_select([["#{_('git')}", "git"]], 'git'),
+                       "ng-model" => "vm.repositoryModel.scm_type",
+                       :disabled => true)
+      .form-group
+        %label.col-md-2.control-label
+          = _('URL')
+        .col-md-8
+          %input.form-control{:type              => "url",
+                                :name            => "url",
+                                :id             => "url",
+                                'ng-model'       => "vm.repositoryModel.url",
+                                :required        => "",
+                                :checkchange     => true}
+          %span.help-block{"ng-show" => "angularForm.description.$error.required"}
+            = _("Required")
+      .form-group
+        %label.col-md-2.control-label
+          = _('SCM credentials')
+        .col-md-8
+          = select_tag('scm_credentials',
+                         options_for_select([["#{_('whatever')}", "wharever"]]),
+                         "ng-model"                    => "vm.repositoryModel.scm_credentials",
+                         "checkchange"                 => "",
+                         "pf-select" => "")
+      .form-group
+        %label.col-md-2.control-label
+          = _('SCM Branch')
+        .col-md-8
+          %input.form-control{:type            => "text",
+                              :name            => "branch",
+                              "id"             => "branch",
+                              'ng-model'       => "vm.repositoryModel.branch",
+                              :checkchange     => true}
+      .form-group
+        %label.col-md-2.control-label
+          = _('SCM Update Options')
+        .col-md-8
+          %div
+            %label
+              = check_box_tag("clean", "1", false, 'ng-model' => "vm.repositoryModel.clean")
+              = _('Clean')
+            %i.pficon.pficon-info
+          %div
+            %label
+              = check_box_tag("clean", "1", false, 'ng-model' => 'vm.repositoryModel.deleteOnUpdate')
+              = _('Delete on Update')
+            %i.pficon.pficon-info
+          %div
+            %label
+              = check_box_tag("clean", "1", false, 'ng-model' => 'vm.repositoryModel.updateOnLaunch')
+              = _('Update on Launch')
+            %i.pficon.pficon-info
+
+      = render :partial => "layouts/angular/x_edit_buttons_angular"
+
+:javascript
+  ManageIQ.angular.app.value('repositoryId', '#{@record.try(:id) || 'new'}');
+  miq_bootstrap('#form_div');
