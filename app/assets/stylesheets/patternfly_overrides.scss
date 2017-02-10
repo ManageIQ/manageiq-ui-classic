@@ -744,3 +744,7 @@ div.disabled {
 .miq-tile-section .card .card-content {
   padding-right: 0 !important;
 }
+
+#form_buttons_div ~ .miq-pagination {
+  width: 94%;
+}
