@@ -1,5 +1,5 @@
 class ApplicationHelper::Button::MiqAlertDelete < ApplicationHelper::Button::Basic
-  needs @record
+  needs :@record
 
   def disabled?
     @error_message = N_("Alerts referenced by Actions can not be deleted") unless @record.owning_miq_actions.empty?
