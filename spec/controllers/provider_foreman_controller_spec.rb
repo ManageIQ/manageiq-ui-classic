@@ -390,9 +390,21 @@ describe ProviderForemanController do
       allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
       allow(controller).to receive(:build_listnav_search_list)
       controller.instance_variable_set(:@_params, :id => "configuration_manager_cs_filter_accord")
-      expect(controller).to receive(:get_view).with("ConfiguredSystem", :dbname => :cm_configured_systems).and_call_original
+      expect(controller).to receive(:get_view).with("ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem", :dbname => :cm_configured_systems).and_call_original
       allow(controller).to receive(:build_listnav_search_list)
       controller.send(:accordion_select)
+    end
+
+    it "does not display an automation manger configured system in the Configured Systems accordion" do
+      stub_user(:features => :all)
+      FactoryGirl.create(:configured_system_ansible_tower)
+      allow(controller).to receive(:x_active_tree).and_return(:configuration_manager_cs_filter_tree)
+      allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
+      allow(controller).to receive(:build_listnav_search_list)
+      controller.instance_variable_set(:@_params, :id => "configuration_manager_cs_filter_accord")
+      controller.send(:accordion_select)
+      view = controller.instance_variable_get(:@view)
+      expect(view.table.data.size).to eq(5)
     end
   end
 
