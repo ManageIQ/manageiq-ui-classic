@@ -42,22 +42,19 @@ class MiqTaskController < ApplicationController
     if role_allows?(:feature => "miq_task_all_ui")
       @tabs.push(["4", _("All Other Tasks")])
     end
-
-    @active_tab = @tabform.split("_").last
   end
 
   # Show job list for the current user
   def jobs
     build_jobs_tab
     @title = _("Tasks for %{name}") % {:name => current_user.name}
-    @breadcrumbs = []
     @lastaction = "jobs"
 
     @edit = {}
     @edit[:opts] = {}
     @edit[:opts] = copy_hash(@tasks_options[@tabform])   # Backup current settings
 
-    get_jobs
+    list_jobs
     if pagination_request?
       render :update do |page|
         page << javascript_prologue
@@ -72,27 +69,18 @@ class MiqTaskController < ApplicationController
     end
   end
 
-  def get_jobs
+  def list_jobs
     @lastaction = "jobs"
-    
-    if @tabform == "tasks_1"
-      @layout = "my_tasks"
+    @active_tab = @tabform.split("_").last
 
-    elsif @tabform == "tasks_2"
-      # My UI Tasks
-      @layout = "my_ui_tasks"
-
-
-    elsif @tabform == "tasks_3" || @tabform == "alltasks_1"
-      @layout = "all_tasks"
-      @user_names = Job.distinct("userid").pluck("userid").delete_if(&:blank?)
-
-    elsif @tabform == "tasks_4" || @tabform == "alltasks_2"
-      # All UI Tasks
-      @layout = "all_ui_tasks"
-      @user_names = MiqTask.distinct("userid").pluck("userid").delete_if(&:blank?)
+    case @tabform
+    when "tasks_1" then @layout = "my_tasks"
+    when "tasks_2" then @layout = "my_ui_tasks"
+    when "tasks_3", "alltasks_1" then @layout = "all_tasks"
+    when "tasks_4", "alltasks_2" then @layout = "all_ui_tasks"
     end
 
+    @user_names = db_class.distinct("userid").pluck("userid").delete_if(&:blank?) if @active_tab.to_i > 2
     @view, @pages = get_view(db_class, :conditions => tasks_condition(@tasks_options[@tabform]))
   end
 
@@ -281,7 +269,7 @@ class MiqTaskController < ApplicationController
       @edit[:opts] = copy_hash(@tasks_options[@tabform]) # Backup current settings
     end
 
-    get_jobs # Get the jobs based on the latest options
+    list_jobs # Get the jobs based on the latest options
     @pp_choices = PPCHOICES2                             # Get special pp choices for jobs/tasks lists
 
     render :update do |page|
@@ -411,10 +399,10 @@ class MiqTaskController < ApplicationController
   end
 
   def build_query_for_status_none_selected
-    sql = "(#{db_table}status!=? AND #{db_table}status!=? AND #{db_table}status!=? AND " +
+    sql = "(#{db_table}status!=? AND #{db_table}status!=? AND #{db_table}status!=? AND "\
           "#{db_table}state!=? AND #{db_table}state!=?)"
     if vm_analysis_task?
-      [sql , %w(ok error warn finished waiting_to_start)]
+      [sql, %w(ok error warn finished waiting_to_start)]
     else
       [sql, %w(Ok Error Warn Finished Queued)]
     end

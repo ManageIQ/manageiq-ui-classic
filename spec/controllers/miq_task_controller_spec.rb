@@ -842,10 +842,6 @@ describe MiqTaskController do
         controller.instance_variable_set(:@settings, :perpage => {})
         allow(controller).to receive(:role_allows?).and_return(true)
       end
-      it 'sets the active tab' do
-        controller.build_jobs_tab
-        expect(assigns(:active_tab)).to eq("2")
-      end
 
       it 'sets the available tabs' do
         controller.build_jobs_tab
@@ -855,6 +851,17 @@ describe MiqTaskController do
                                        ["3", _("All VM and Container Analysis Tasks")],
                                        ["4", _("All Other Tasks")]
                                      ])
+      end
+    end
+
+    describe "#list_jobs" do
+      it 'sets the active tab' do
+        controller.instance_variable_set(:@tabform, "ui_2")
+        controller.instance_variable_set(:@tasks_options, {})
+        allow(controller).to receive(:tasks_condition)
+        allow(controller).to receive(:get_view)
+        controller.list_jobs
+        expect(assigns(:active_tab)).to eq("2")
       end
     end
 
