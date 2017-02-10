@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attrs', 'hostFormId', 'miqService', function($http, vm, $attrs, hostFormId, miqService) {
+ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attrs', 'hostFormId', 'miqService', function($http, $scope, $attrs, hostFormId, miqService) {
   var vm = this;
 
   var init = function() {
@@ -103,37 +103,37 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
   };
 
   $scope.resetClicked = function() {
-    vm.$broadcast ('resetClicked');
+    $scope.$broadcast ('resetClicked');
     vm.hostModel = angular.copy( vm.modelCopy );
-    vm.angularForm.$setUntouched(true);
-    vm.angularForm.$setPristine(true);
+    $scope.angularForm.$setUntouched(true);
+    $scope.angularForm.$setPristine(true);
     miqService.miqFlash("warn", __("All changes have been reset"));
   };
 
   vm.isBasicInfoValid = function() {
     if((vm.currentTab == "default") &&
       (vm.hostModel.hostname || vm.hostModel.validate_id) &&
-      (vm.hostModel.default_userid != '' && vm.angularForm.default_userid.$valid &&
-      vm.angularForm.default_password.$valid &&
-      vm.angularForm.default_verify.$valid)) {
+      (vm.hostModel.default_userid != '' && $scope.angularForm.default_userid.$valid &&
+      $scope.angularForm.default_password.$valid &&
+      $scope.angularForm.default_verify.$valid)) {
       return true;
     } else if((vm.currentTab == "remote") &&
       (vm.hostModel.hostname || vm.hostModel.validate_id) &&
-      (vm.hostModel.remote_userid != '' && vm.angularForm.remote_userid.$valid &&
-      vm.angularForm.remote_password.$valid &&
-      vm.angularForm.remote_verify.$valid)) {
+      (vm.hostModel.remote_userid != '' && $scope.angularForm.remote_userid.$valid &&
+      $scope.angularForm.remote_password.$valid &&
+      $scope.angularForm.remote_verify.$valid)) {
       return true;
     } else if((vm.currentTab == "ws") &&
       (vm.hostModel.hostname || vm.hostModel.validate_id) &&
-      (vm.hostModel.ws_userid != '' && vm.angularForm.ws_userid.$valid &&
-      vm.angularForm.ws_password.$valid &&
-      vm.angularForm.ws_verify.$valid)) {
+      (vm.hostModel.ws_userid != '' && $scope.angularForm.ws_userid.$valid &&
+      $scope.angularForm.ws_password.$valid &&
+      $scope.angularForm.ws_verify.$valid)) {
       return true;
     } else if((vm.currentTab == "ipmi") &&
       (vm.hostModel.ipmi_address) &&
-      (vm.hostModel.ipmi_userid != '' && vm.angularForm.ipmi_userid.$valid &&
-      vm.angularForm.ipmi_password.$valid &&
-      vm.angularForm.ipmi_verify.$valid)) {
+      (vm.hostModel.ipmi_userid != '' && $scope.angularForm.ipmi_userid.$valid &&
+      $scope.angularForm.ipmi_password.$valid &&
+      $scope.angularForm.ipmi_verify.$valid)) {
       return true;
     } else
       return false;
@@ -155,28 +155,28 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
 
   vm.validateFieldsDirty = function () {
     if((vm.currentTab == "default") &&
-      ((vm.angularForm.hostname.$dirty || vm.angularForm.validate_id.$dirty) &&
-      vm.angularForm.default_userid.$dirty &&
-      vm.angularForm.default_password.$dirty &&
-      vm.angularForm.default_verify.$dirty)) {
+      (($scope.angularForm.hostname.$dirty || $scope.angularForm.validate_id.$dirty) &&
+      $scope.angularForm.default_userid.$dirty &&
+      $scope.angularForm.default_password.$dirty &&
+      $scope.angularForm.default_verify.$dirty)) {
       return true;
     } else if((vm.currentTab == "remote") &&
-      ((vm.angularForm.hostname.$dirty || vm.angularForm.validate_id.$dirty) &&
-      vm.angularForm.remote_userid.$dirty &&
-      vm.angularForm.remote_password.$dirty &&
-      vm.angularForm.remote_verify.$dirty)) {
+      (($scope.angularForm.hostname.$dirty || $scope.angularForm.validate_id.$dirty) &&
+      $scope.angularForm.remote_userid.$dirty &&
+      $scope.angularForm.remote_password.$dirty &&
+      $scope.angularForm.remote_verify.$dirty)) {
       return true;
     } else if((vm.currentTab == "ws") &&
-      ((vm.angularForm.hostname.$dirty || vm.angularForm.validate_id.$dirty) &&
-      vm.angularForm.ws_userid.$dirty &&
-      vm.angularForm.ws_password.$dirty &&
-      vm.angularForm.ws_verify.$dirty)) {
+      (($scope.angularForm.hostname.$dirty || $scope.angularForm.validate_id.$dirty) &&
+      $scope.angularForm.ws_userid.$dirty &&
+      $scope.angularForm.ws_password.$dirty &&
+      $scope.angularForm.ws_verify.$dirty)) {
       return true;
     } else if((vm.currentTab == "ipmi") &&
-      (vm.angularForm.ipmi_address.$dirty &&
-      vm.angularForm.ipmi_userid.$dirty &&
-      vm.angularForm.ipmi_password.$dirty &&
-      vm.angularForm.ipmi_verify.$dirty)) {
+      ($scope.angularForm.ipmi_address.$dirty &&
+      $scope.angularForm.ipmi_userid.$dirty &&
+      $scope.angularForm.ipmi_password.$dirty &&
+      $scope.angularForm.ipmi_verify.$dirty)) {
       return true;
     } else
       return false;
