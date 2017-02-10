@@ -48,36 +48,20 @@ class ConfigurationJobController < ApplicationController
   end
 
   # handle buttons pressed on the button bar
-  # handle buttons pressed on the button bar
   def button
     restore_edit_for_search
     save_current_page_for_refresh
     set_default_refresh_div
 
-    case params[:pressed]
-    when "configuration_job_delete"
-      configuration_job_delete
-    when "configuration_job_tag"
-      tag(ManageIQ::Providers::AnsibleTower::AutomationManager::Job)
-
+    handle_button_pressed(params[:pressed])
+    handle_tag_presses(params[:pressed]) do
       return if @flash_array.nil? # Tag screen showing, so return
     end
 
-    if button_not_handled?
-      set_refresh_and_alert_not_implemented
-    elsif @flash_array && @lastaction == "show"
-      @configuration_job = @record = identify_record(params[:id])
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    end
+    check_if_button_is_implemented
+    @configuration_job = @record
 
-    if !@flash_array.nil? && params[:pressed] == "configurations_job_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
-    elsif button_replace_gtl_main?
-      replace_gtl_main_div
-    else
-      render_flash
-    end
+    button_render_fallback
   end
 
   def title
@@ -90,6 +74,15 @@ class ConfigurationJobController < ApplicationController
     [%i(properties relationships), %i(tags)]
   end
   helper_method :textual_group_list
+
+  def handled_buttons
+    %w(configuration_job_delete)
+  end
+
+  def handle_configuration_job_delete
+    configuration_job_delete
+    redirect_to_retire_screen_if_single_delete
+  end
 
   menu_section :conf
 end

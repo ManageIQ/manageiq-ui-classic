@@ -99,54 +99,27 @@ class StorageController < ApplicationController
   def button
     restore_edit_for_search
     copy_sub_item_display_value_to_params
+    set_default_refresh_div
+
+    handle_tag_presses(params[:pressed]) { return if @flash_array.nil? }
+    handle_host_power_press(params[:pressed])
+
+    handle_button_pressed(params[:pressed]) do |pressed|
+      return unless pressed == "host_check_compliance"
+    end
 
     handle_sub_item_presses(params[:pressed]) do |pfx|
-      case params[:pressed]
-      when "host_scan" then scanhosts
-      when "host_analyze_check_compliance" then analyze_check_compliance_hosts
-      when "host_check_compliance" then check_compliance_hosts
-      when "host_refresh" then refreshhosts
-      when "host_tag" then tag(Host)
-      when "host_protect" then assign_policies(Host)
-      when "host_edit" then edit_record
-      when "host_delete" then deletehosts
-      end
+      process_vm_buttons(pfx)
 
-      if button_power_press?(params[:pressed])
-        handle_host_power_press(params[:pressed])
-      else
-        process_vm_buttons(pfx)
+      return if button_control_transferred?(params[:pressed])
 
-        return if button_control_transferred?(params[:pressed])
-
-        unless button_has_redirect_suffix?(params[:pressed])
-          set_refresh_and_show
-          @display = "vms"
-        end
+      unless button_has_redirect_suffix?(params[:pressed])
+        @display = "vms" # => used in show action
+        set_refresh_and_show
       end
     end
 
-    unless params[:pressed].starts_with?(*button_sub_item_prefixes)
-      set_default_refresh_div
-
-      case params[:pressed]
-      when "storage_refresh" then refreshstorage
-      when "storage_scan" then scanstorage
-      when "storage_delete"
-        deletestorages
-
-        if !@flash_array.nil? && @single_delete
-          javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
-          return
-        end
-      when "custom_button"
-        custom_buttons
-        return
-      when "storage_tag"
-        tag(Storage)
-        return if @flash_array.nil? # Tag screen showing, so return
-      end
-    end
+    return if performed?
 
     check_if_button_is_implemented
 
@@ -369,8 +342,15 @@ class StorageController < ApplicationController
     render_tagging_form
   end
 
+  # Used by x_button
   def storage_delete
     deletestorages
+  end
+
+  # Used by button
+  def handle_storage_delete
+    deletestorages
+    redirect_to_retire_screen_if_single_delete
   end
 
   def features
@@ -611,6 +591,23 @@ class StorageController < ApplicationController
     ]
   end
   helper_method :textual_group_list
+
+  def handled_buttons
+    [
+      "custom_button",
+      handled_storage_buttons,
+      handled_host_buttons
+    ].flatten
+  end
+
+  def button_sub_item_prefixes
+    %w(
+      vm_
+      miq_template_
+      guest_
+      host_
+    )
+  end
 
   menu_section :inf
   has_custom_buttons

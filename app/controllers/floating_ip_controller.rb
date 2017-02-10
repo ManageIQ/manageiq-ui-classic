@@ -22,22 +22,10 @@ class FloatingIpController < ApplicationController
     save_current_page_for_refresh
     set_default_refresh_div
 
-    case params[:pressed]
-    when "floating_ip_tag"
-      tag("FloatingIp")
-    when 'floating_ip_delete'
-      delete_floating_ips
-    when "floating_ip_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id(params)
-    when "floating_ip_new"
-      javascript_redirect :action => "new"
-    else
-      if !flash_errors? && button_replace_gtl_main?
-        replace_gtl_main_div
-      else
-        render_flash
-      end
-    end
+    handle_tag_presses(params[:pressed])
+    handle_button_pressed(params[:pressed])
+
+    button_render_fallback unless performed?
   end
 
   def cancel_action(message)
@@ -92,7 +80,7 @@ class FloatingIpController < ApplicationController
     javascript_redirect :action => "show_list"
   end
 
-  def delete_floating_ips
+  def handle_floating_ip_delete
     assert_privileges("floating_ip_delete")
 
     floating_ips = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "floating_ip")
@@ -268,5 +256,21 @@ class FloatingIpController < ApplicationController
                    "Delete initiated for %{number} Floating IPs.",
                    floating_ips.length) % {:number => floating_ips.length})
     end
+  end
+
+  def handled_buttons
+    %w(
+      floating_ip_new
+      floating_ip_edit
+      floating_ip_delete
+    )
+  end
+
+  def handle_floating_ip_new
+    javascript_redirect :action => "new"
+  end
+
+  def handle_floating_ip_edit
+    javascript_redirect :action => "edit", :id => checked_item_id(params)
   end
 end

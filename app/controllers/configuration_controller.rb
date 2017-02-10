@@ -33,19 +33,12 @@ class ConfigurationController < ApplicationController
   # handle buttons pressed on the button bar
   def button
     set_default_refresh_div
+    handle_button_pressed(params[:pressed])
 
-    case params[:pressed]
-    when "tp_delete" then timeprofile_delete
-    when "tp_copy"   then copy_record
-    when "tp_edit"   then edit_record
-    end
-
-    if button_not_handled?
-      set_refresh_and_alert_not_implemented
-    end
+    check_if_button_is_implemented
 
     if button_has_redirect_suffix?
-      javascript_redirect :action => @refresh_partial, :id => @redirect_id
+      js_redirect_with_partial_and_id
     else
       configuration_render_update
     end
@@ -285,7 +278,7 @@ class ConfigurationController < ApplicationController
   end
 
   # Delete all selected or single displayed VM(s)
-  def timeprofile_delete
+  def handle_tp_delete
     assert_privileges("tp_delete")
     timeprofiles = []
     unless params[:id] # showing a list, scan all selected timeprofiles
@@ -464,14 +457,14 @@ class ConfigurationController < ApplicationController
   private ############################
 
   # copy single selected Object
-  def edit_record
+  def handle_tp_edit
     obj = find_checked_items
     @refresh_partial = "timeprofile_edit"
     @redirect_id = obj[0]
   end
 
   # copy single selected Object
-  def copy_record
+  def handle_tp_copy
     obj = find_checked_items
     @refresh_partial = "timeprofile_copy"
     @redirect_id = obj[0]
@@ -638,6 +631,14 @@ class ConfigurationController < ApplicationController
     s[:views].delete(:dashboards)           # :dashboards is obsolete now
 
     s
+  end
+
+  def handled_buttons
+    %w(
+      tp_delete
+      tp_edit
+      tp_copy
+    )
   end
 
   menu_section :set

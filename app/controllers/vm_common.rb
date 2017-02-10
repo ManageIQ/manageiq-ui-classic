@@ -23,19 +23,9 @@ module VmCommon
     save_current_page_for_refresh
     set_default_refresh_div
 
-    case params[:pressed]
-    when 'custom_button'
-      custom_buttons
-      return
-    when 'perf_reload'
-      perf_chart_chooser
-      # VM sub-screen is showing, so return
-      return if @flash_array.nil?
-    when 'perf_refresh'
-      perf_refresh_data
-    when 'remove_service'
-      remove_service
-    end
+    handle_button_pressed(params[:pressed])
+
+    return if performed?
 
     check_if_button_is_implemented
     vm_common_javascript_redirect
@@ -1755,5 +1745,26 @@ module VmCommon
 
   def breadcrumb_prohibited_for_action?
     !%w(accordion_select explorer tree_select).include?(action_name)
+  end
+
+  def handled_buttons
+    %w(
+      custom_button
+      perf_reload
+      perf_refresh
+      remove_service
+    )
+  end
+
+  def handle_perf_reload
+    perf_chart_chooser
+  end
+
+  def handle_perf_refresh
+    perf_refresh_data
+  end
+
+  def handle_remove_service
+    remove_service
   end
 end

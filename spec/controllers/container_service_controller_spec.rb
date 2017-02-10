@@ -53,4 +53,8 @@ describe ContainerServiceController do
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
   end
+
+  describe "#button" do
+    include_examples :container_button_examples, "container_service"
+  end
 end

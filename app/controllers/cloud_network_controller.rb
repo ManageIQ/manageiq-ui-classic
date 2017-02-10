@@ -23,24 +23,27 @@ class CloudNetworkController < ApplicationController
     %w(instances cloud_networks network_routers cloud_subnets)
   end
 
+  def self.table_name
+    "cloud_network"
+  end
+
+  def self.model
+    CloudNetwork
+  end
+
   def button
     restore_edit_for_search
     copy_sub_item_display_value_to_params
     save_current_page_for_refresh
     set_default_refresh_div
 
-    case params[:pressed]
-    when "cloud_network_tag"
-      return tag("CloudNetwork")
-    when 'cloud_network_delete'
-      delete_networks
-    when "cloud_network_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id
-    when "cloud_network_new"
-      javascript_redirect :action => "new"
-    else
-      button_render_fallback
+    handle_tag_presses(params[:pressed]) do
+      return if @flash_array.nil?
     end
+
+    handle_button_pressed(params[:pressed])
+
+    button_render_fallback
   end
 
   def cloud_network_form_fields
@@ -108,7 +111,7 @@ class CloudNetworkController < ApplicationController
     javascript_redirect :action => "show_list"
   end
 
-  def delete_networks
+  def handle_cloud_network_delete
     assert_privileges("cloud_network_delete")
 
     networks = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_network") || @lastaction.nil?
@@ -291,6 +294,22 @@ class CloudNetworkController < ApplicationController
                    "Delete initiated for %{number} Cloud Networks.",
                    networks.length) % {:number => networks.length})
     end
+  end
+
+  def handled_buttons
+    %w(
+      cloud_network_delete
+      cloud_network_edit
+      cloud_network_new
+    )
+  end
+
+  def handle_cloud_network_edit
+    javascript_redirect :action => "edit", :id => checked_item_id
+  end
+
+  def handle_cloud_network_new
+    javascript_redirect :action => "new"
   end
 
   menu_section :net

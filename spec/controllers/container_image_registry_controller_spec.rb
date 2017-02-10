@@ -56,4 +56,8 @@ describe ContainerImageRegistryController do
   end
 
   include_examples '#download_summary_pdf', :container_image_registry
+
+  describe "#button" do
+    include_examples :container_button_examples, "container_image_registry"
+  end
 end

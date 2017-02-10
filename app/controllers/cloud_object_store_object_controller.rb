@@ -5,6 +5,7 @@ class CloudObjectStoreObjectController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericListMixin
+  include Mixins::GenericButtonMixin
   include Mixins::GenericSessionMixin
 
   def breadcrumb_name(_model)
@@ -14,6 +15,8 @@ class CloudObjectStoreObjectController < ApplicationController
   def button
     restore_edit_for_search
     save_current_page_for_refresh
+
+    handle_tag_presses(params[:pressed])
 
     process_cloud_object_storage_buttons(params[:pressed])
 

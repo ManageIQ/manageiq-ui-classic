@@ -90,6 +90,9 @@ class OrchestrationStackController < ApplicationController
     save_current_page_for_refresh
     set_default_refresh_div
 
+    handle_tag_presses(params[:pressed])
+    handle_button_pressed(params[:pressed])
+
     handle_sub_item_presses(params[:pressed]) do |pfx|
       process_vm_buttons(pfx)
 
@@ -100,32 +103,7 @@ class OrchestrationStackController < ApplicationController
       end
     end
 
-    unless params[:pressed].starts_with?("instance_")
-      case params[:pressed]
-      when "make_ot_orderable"
-        make_ot_orderable
-        return
-      when "orchestration_template_copy"
-        orchestration_template_copy
-        return
-      when "orchestration_templates_view"
-        orchestration_templates_view
-        return
-      when "orchestration_stack_delete"
-        orchestration_stack_delete
-        if !@flash_array.nil? && @single_delete
-          javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
-        end
-      when "orchestration_stack_retire"
-        orchestration_stack_retire
-        return if @flash_array.nil?
-      when "orchestration_stack_retire_now"
-        orchestration_stack_retire_now
-      when "orchestration_stack_tag"
-        tag(OrchestrationStack)
-        return if @flash_array.nil?
-      end
-    end
+    return if performed?
 
     check_if_button_is_implemented
 
@@ -163,7 +141,7 @@ class OrchestrationStackController < ApplicationController
   end
   helper_method :textual_group_list
 
-  def make_ot_orderable
+  def handle_make_ot_orderable
     stack = find_by_id_filtered(OrchestrationStack, params[:id])
     template = stack.orchestration_template
     if template.orderable?
@@ -189,7 +167,7 @@ class OrchestrationStackController < ApplicationController
     end
   end
 
-  def orchestration_template_copy
+  def handle_orchestration_template_copy
     @record = find_by_id_filtered(OrchestrationStack, params[:id])
     if @record.orchestration_template.orderable?
       add_flash(_("Orchestration template \"%{name}\" is already orderable") %
@@ -250,13 +228,37 @@ class OrchestrationStackController < ApplicationController
     end
   end
 
-  def orchestration_templates_view
+  def handle_orchestration_templates_view
     template = find_by_id_filtered(OrchestrationStack, params[:id]).orchestration_template
     javascript_redirect :controller => 'catalog', :action => 'ot_show', :id => template.id
   end
 
   def title
     _("Stack")
+  end
+
+  def handled_buttons
+    %w(
+      make_ot_orderable
+      orchestration_template_copy
+      orchestration_templates_view
+      orchestration_stack_delete
+      orchestration_stack_retire
+      orchestration_stack_retire_now
+    )
+  end
+
+  def handle_orchestration_stack_delete
+    orchestration_stack_delete
+    redirect_to_retire_screen_if_single_delete
+  end
+
+  def handle_orchestration_stack_retire
+    orchestration_stack_retire
+  end
+
+  def handle_orchestration_stack_retire_now
+    orchestration_stack_retire_now
   end
 
   menu_section :clo

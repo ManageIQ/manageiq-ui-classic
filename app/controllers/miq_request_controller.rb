@@ -18,9 +18,7 @@ class MiqRequestController < ApplicationController
     save_current_page_for_refresh
     set_default_refresh_div
 
-    if handled_buttons.include?(params[:pressed])
-      self.send("handle_#{params[:pressed]}".to_sym)
-    end
+    handle_button_pressed(params[:pressed])
 
     return if @refresh_partial == "reconfigure" || performed?
 
@@ -38,26 +36,6 @@ class MiqRequestController < ApplicationController
       miq_request_render_update
     end
   end
-
-  # def request_edit
-  #   assert_privileges("miq_request_edit")
-  #   provision_request = MiqRequest.find_by_id(params[:id])
-  #   if provision_request.workflow_class || provision_request.kind_of?(MiqProvisionConfiguredSystemRequest)
-  #     request_edit_settings(provision_request)
-  #   else
-  #     session[:checked_items] = provision_request.options[:src_ids]
-  #     @refresh_partial = "reconfigure"
-  #     @_params[:controller] = "vm"
-  #     reconfigurevms
-  #   end
-  # end
-
-  # def request_copy
-  #   assert_privileges("miq_request_copy")
-  #   provision_request = MiqRequest.find_by_id(params[:id])
-  #   @refresh_partial = "prov_copy"
-  #   request_settings_for_edit_or_copy(provision_request)
-  # end
 
   # Show the main Requests list view
   def show_list
@@ -467,33 +445,6 @@ class MiqRequestController < ApplicationController
     # TODO: this should be current_user
     User.current_user.role_allows?(:identifier => 'miq_request_approval')
   end
-
-  # Delete all selected or single displayed action(s)
-  # def deleterequests
-  #   assert_privileges("miq_request_delete")
-  #   miq_requests = []
-  #   if @lastaction == "show_list" # showing a list
-  #     miq_requests = find_checked_items
-  #     if miq_requests.empty?
-  #       add_flash(_("No %{model} were selected for deletion") % {:model => ui_lookup(:tables => "miq_request")}, :error)
-  #     end
-  #     process_requests(miq_requests, "destroy") unless miq_requests.empty?
-  #     add_flash(_("The selected %{tables} were deleted") %
-  #       {:tables => ui_lookup(:tables => "miq_request")}) unless flash_errors?
-  #   else # showing 1 request, delete it
-  #     if params[:id].nil? || MiqRequest.find_by_id(params[:id]).nil?
-  #       add_flash(_("%{table} no longer exists") % {:table => ui_lookup(:table => "miq_request")}, :error)
-  #     else
-  #       miq_requests.push(params[:id])
-  #     end
-  #     @single_delete = true
-  #     process_requests(miq_requests, "destroy") unless miq_requests.empty?
-  #     add_flash(_("The selected %{table} was deleted") %
-  #       {:table => ui_lookup(:table => "miq_request")}) unless flash_errors?
-  #   end
-  #   show_list
-  #   @refresh_partial = "layouts/gtl"
-  # end
 
   # Common Request button handler routines
   def process_requests(miq_requests, task)

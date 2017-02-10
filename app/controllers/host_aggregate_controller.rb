@@ -78,6 +78,14 @@ class HostAggregateController < ApplicationController
     copy_sub_item_display_value_to_params
     save_current_page_for_refresh
 
+    handle_tag_presses(params[:pressed]) do
+      return if @flash_array.nil?
+    end
+
+    handle_button_pressed(params[:pressed])
+
+    return if performed?
+
     handle_sub_item_presses(params[:pressed]) do |pfx|
       process_vm_buttons(pfx)
 
@@ -88,54 +96,15 @@ class HostAggregateController < ApplicationController
       end
     end
 
-    if !params[:pressed].starts_with?(*button_sub_item_prefixes)
-      tag(HostAggregate) if params[:pressed] == "host_aggregate_tag"
-      return if ["host_aggregate_tag"].include?(params[:pressed]) &&
-                @flash_array.nil? # Tag screen showing, so return
-    end
-
-    case params[:pressed]
-    when "host_aggregate_new"
-      javascript_redirect :action => "new"
-      return
-    when "host_aggregate_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id
-      return
-    when 'host_aggregate_delete'
-      delete_host_aggregates
-      render_flash
-      return
-    when "host_aggregate_add_host"
-      javascript_redirect :action => "add_host_select", :id => checked_item_id
-      return
-    when "host_aggregate_remove_host"
-      javascript_redirect :action => "remove_host_select", :id => checked_item_id
-      return
-    end
+    check_if_button_is_implemented
 
     if button_has_redirect_suffix?(params[:pressed])
       render_or_redirect_partial_for(params[:pressed])
     elsif button_replace_gtl_main?
       replace_gtl_main_div
     else
-      render :update do |page|
-        page << javascript_prologue
-        unless @refresh_partial.nil?
-          if @refresh_div == "flash_msg_div"
-            page.replace(@refresh_div, :partial => @refresh_partial)
-          elsif %w(images instances).include?(@display) # If displaying vms, action_url s/b show
-            page << "miqSetButtons(0, 'center_tb');"
-            page.replace_html("main_div",
-                              :partial => "layouts/gtl",
-                              :locals  => {:action_url => "show/#{@host_aggregate.id}"})
-          else
-            page.replace_html(@refresh_div, :partial => @refresh_partial)
-          end
-        end
-      end
+      host_aggregate_javascript_redirect
     end
-
-    check_if_button_is_implemented
   end
 
   def new
@@ -589,6 +558,37 @@ class HostAggregateController < ApplicationController
 
   def button_sub_item_prefixes
     %w(image_ instance_)
+  end
+
+  def handled_buttons
+    %(
+      host_aggregate_new
+      host_aggregate_edit
+      host_aggregate_delete
+      host_aggregate_add_host
+      host_aggregate_remove_host
+    )
+  end
+
+  def handle_host_aggregate_new
+    javascript_redirect :action => "new"
+  end
+
+  def handle_host_aggregate_edit
+    javascript_redirect :action => "edit", :id => checked_item_id
+  end
+
+  def handle_host_aggregate_delete
+    delete_host_aggregates
+    render_flash
+  end
+
+  def handle_host_aggregate_add_host
+    javascript_redirect :action => "add_host_select", :id => checked_item_id
+  end
+
+  def handle_host_aggregate_remove_host
+    javascript_redirect :action => "remove_host_select", :id => checked_item_id
   end
 
   menu_section :clo

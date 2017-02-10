@@ -1,23 +1,68 @@
 describe StorageManagerController do
-  render_views
-  before(:each) do
-    @zone = EvmSpecHelper.local_miq_server.zone
-    stub_user(:features => :all)
+  let!(:user) { stub_user(:features => :all) }
+  let(:manager) { FactoryGirl.create(:storage_manager, :name => "foo") }
+
+  before do
+    EvmSpecHelper.local_miq_server.zone
   end
 
-  it "renders index" do
-    get :index
-    expect(response.status).to eq(302)
-    expect(response).to redirect_to(:action => 'show_list')
+  describe '#button' do
+    it 'handles storage_manager_new' do
+      expect(controller).to receive(:handle_storage_manager_new).and_call_original
+      post :button, :params => { :pressed => "storage_manager_new", :format => :js }
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to(:action => 'new')
+    end
+
+    it 'handles storage_manager_edit' do
+      expect(controller).to receive(:handle_storage_manager_edit).and_call_original
+      post :button, :params => { :pressed => "storage_manager_edit", :format => :js, :id => manager.id }
+      expect(response.status).to eq(200)
+    end
+
+    it 'handles storage_manager_refresh_inventory' do
+      expect(controller).to receive(:handle_storage_manager_refresh_inventory).and_call_original
+      post :button, :params => { :pressed => "storage_manager_refresh_inventory", :format => :js, :id => manager.id }
+      expect(response.status).to eq(200)
+    end
+
+    it 'handles storage_manager_refresh_status' do
+      expect(controller).to receive(:handle_storage_manager_refresh_status).and_call_original
+      post :button, :params => { :pressed => "storage_manager_refresh_status", :format => :js, :id => manager.id }
+      expect(response.status).to eq(200)
+    end
+
+    it 'handles storage_manager_delete' do
+      expect(controller).to receive(:handle_storage_manager_delete).and_call_original
+      post :button, :params => { :pressed => "storage_manager_delete", :format => :js, :id => manager.id }
+      expect(response.status).to eq(200)
+    end
   end
 
-  it "renders a new page" do
-    set_view_10_per_page
-    post :new, :format => :js
-    expect(response.status).to eq(200)
+  describe '#index' do
+    render_views
+
+    it "renders index" do
+      get :index
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to(:action => 'show_list')
+    end
   end
 
-  context "@edit password fields" do
+  describe '#new' do
+    render_views
+
+    before do
+      set_view_10_per_page
+    end
+
+    it "renders a new page" do
+      post :new, :format => :js
+      expect(response.status).to eq(200)
+    end
+  end
+
+  describe "@edit password fields" do
     it "sets @edit password fields to blank when change password is clicked" do
       sm = StorageManager.create(:name => "foo")
       auth = Authentication.create(:userid        => "userid",
@@ -47,7 +92,7 @@ describe StorageManagerController do
     end
   end
 
-  context "Validate" do
+  describe "Validate" do
     let(:mocked_sm) { double(StorageManager) }
 
     it "uses @edit password value for validation" do

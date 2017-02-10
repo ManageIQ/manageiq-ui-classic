@@ -34,5 +34,44 @@ class ContainerImageController < ApplicationController
     send_data(@record.openscap_result.html, :filename => "openscap_result.html")
   end
 
+  def handled_buttons
+    %(
+      container_image_scan
+      container_image_protect
+      container_image_check_compliance
+    )
+  end
+
+  def handle_container_image_protect
+    assign_policies(ContainerImage)
+  end
+
+  def handle_container_image_check_compliance
+    check_compliance(ContainerImage)
+  end
+
+  # Scan all selected or single displayed image(s)
+  def handle_container_image_scan
+    assert_privileges("image_scan")
+    showlist = @lastaction == "show_list"
+    ids = showlist ? find_checked_items : find_current_item(ContainerImage)
+
+    if ids.empty?
+      add_flash(_("No %{model} were selected for Analysis") % {:model => ui_lookup(:tables => "container_image")},
+                :error)
+    else
+      process_scan_images(ids)
+    end
+
+    showlist ? show_list : show
+    ids.count
+
+    if @lastaction == "show"
+      javascript_flash
+    else
+      replace_main_div :partial => "layouts/gtl"
+    end
+  end
+
   menu_section :cnt
 end

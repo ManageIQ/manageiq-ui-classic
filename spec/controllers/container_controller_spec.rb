@@ -136,4 +136,8 @@ describe ContainerController do
       expect(response.status).to eq(200)
     end
   end
+
+  describe "#button" do
+    include_examples :container_button_examples, "container"
+  end
 end

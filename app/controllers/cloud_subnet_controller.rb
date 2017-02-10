@@ -21,18 +21,10 @@ class CloudSubnetController < ApplicationController
     save_current_page_for_refresh
     set_default_refresh_div
 
-    case params[:pressed]
-    when "cloud_subnet_tag"
-      return tag("CloudSubnet")
-    when 'cloud_subnet_delete'
-      delete_subnets
-    when "cloud_subnet_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id
-    when "cloud_subnet_new"
-      javascript_redirect :action => "new"
-    else
-      button_render_fallback
-    end
+    handle_tag_presses(params[:pressed])
+    handle_button_pressed(params[:pressed])
+
+    button_render_fallback unless performed?
   end
 
   def cloud_subnet_form_fields
@@ -128,7 +120,7 @@ class CloudSubnetController < ApplicationController
     javascript_redirect :action => "show_list"
   end
 
-  def delete_subnets
+  def handle_cloud_subnet_delete
     assert_privileges("cloud_subnet_delete")
 
     subnets = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_subnet") || @lastaction.nil?
@@ -297,6 +289,22 @@ class CloudSubnetController < ApplicationController
         subnet.delete_cloud_subnet_queue(session[:userid])
       end
     end
+  end
+
+  def handle_cloud_subnet_edit
+    javascript_redirect :action => "edit", :id => checked_item_id
+  end
+
+  def handle_cloud_subnet_new
+    javascript_redirect :action => "new"
+  end
+
+  def handled_buttons
+    %w(
+      cloud_subnet_delete
+      cloud_subnet_edit
+      cloud_subnet_new
+    )
   end
 
   menu_section :net

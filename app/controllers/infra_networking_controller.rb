@@ -76,9 +76,8 @@ class InfraNetworkingController < ApplicationController
     save_current_page_for_refresh
     set_default_refresh_div
 
-    if params[:pressed] == "infra_networking_tag"
-      tag(Switch)
-      return if @flash_array.nil? # Tag screen showing, so return
+    handle_tag_presses(params[:pressed]) do
+      return if @flash_array.nil?
     end
 
     check_if_button_is_implemented

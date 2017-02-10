@@ -64,4 +64,8 @@ describe PersistentVolumeController do
       end
     end
   end
+
+  describe "#button" do
+    include_examples :container_button_examples, "persistent_volume"
+  end
 end

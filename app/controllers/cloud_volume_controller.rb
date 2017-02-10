@@ -15,6 +15,10 @@ class CloudVolumeController < ApplicationController
     restore_edit_for_search
     copy_sub_item_display_value_to_params
     save_current_page_for_refresh
+    set_default_refresh_div
+
+    handle_tag_presses(params[:pressed])
+    handle_button_pressed(params[:pressed])
 
     handle_sub_item_presses(params[:pressed]) do |pfx|
       process_vm_buttons(pfx)
@@ -26,49 +30,14 @@ class CloudVolumeController < ApplicationController
       end
     end
 
-    unless params[:pressed].starts_with?("instance_")
-      set_default_refresh_div
+    return if performed?
 
-      if params[:pressed] == "cloud_volume_tag"
-        return tag("CloudVolume")
-      end
-
-      if params[:pressed] == 'cloud_volume_delete'
-        delete_volumes
-      end
-    end
-
-    case params[:pressed]
-    when "cloud_volume_attach"
-      javascript_redirect :action => "attach", :id => checked_item_id
-    when "cloud_volume_detach"
-      @volume = find_by_id_filtered(CloudVolume, checked_item_id)
-      if @volume.attachments.empty?
-        render_flash(_("%{volume} \"%{volume_name}\" is not attached to any %{instances}") % {
-                     :volume      => ui_lookup(:table => 'cloud_volume'),
-                     :volume_name => @volume.name,
-                     :instances   => ui_lookup(:tables => 'vm_cloud')}, :error)
-      else
-        javascript_redirect :action => "detach", :id => checked_item_id
-      end
-    when "cloud_volume_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id
-    when "cloud_volume_snapshot_create"
-      javascript_redirect :action => "snapshot_new", :id => checked_item_id
-    when "cloud_volume_new"
-      javascript_redirect :action => "new"
-    when "cloud_volume_backup_create"
-      javascript_redirect :action => "backup_new", :id => checked_item_id
-    when "cloud_volume_backup_restore"
-      javascript_redirect :action => "backup_select", :id => checked_item_id
+    if !flash_errors? && button_replace_gtl_main?
+      replace_gtl_main_div
+    elsif button_has_redirect_suffix?(params[:pressed])
+      render_or_redirect_partial(pfx)
     else
-      if !flash_errors? && button_replace_gtl_main?
-        replace_gtl_main_div
-      elsif button_has_redirect_suffix?(params[:pressed])
-        render_or_redirect_partial(pfx)
-      else
-        render_flash
-      end
+      render_flash
     end
   end
 
@@ -434,7 +403,7 @@ class CloudVolumeController < ApplicationController
   end
 
   # delete selected volumes
-  def delete_volumes
+  def handle_cloud_volume_delete
     assert_privileges("cloud_volume_delete")
     volumes = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_volume")
                 find_checked_items
@@ -751,6 +720,55 @@ class CloudVolumeController < ApplicationController
                    "Delete initiated for %{number} Cloud Volumes.",
                    volumes.length) % {:number => volumes.length})
     end
+  end
+
+  def handled_buttons
+    %w(
+      cloud_volume_backup_create
+      cloud_volume_delete
+      cloud_volume_attach
+      cloud_volume_detach
+      cloud_volume_edit
+      cloud_volume_snapshot_create
+      cloud_volume_new
+      cloud_volume_backup_restore
+    )
+  end
+
+  def handle_cloud_volume_backup_create
+    javascript_redirect :action => "backup_new", :id => checked_item_id
+  end
+
+  def handle_cloud_volume_attach
+    javascript_redirect :action => "attach", :id => checked_item_id
+  end
+
+  def handle_cloud_volume_detach
+    @volume = find_by_id_filtered(CloudVolume, checked_item_id)
+    if @volume.attachments.empty?
+      render_flash(_("%{volume} \"%{volume_name}\" is not attached to any %{instances}") % {
+                   :volume      => ui_lookup(:table => 'cloud_volume'),
+                   :volume_name => @volume.name,
+                   :instances   => ui_lookup(:tables => 'vm_cloud')}, :error)
+    else
+      javascript_redirect :action => "detach", :id => checked_item_id
+    end
+  end
+
+  def handle_cloud_volume_edit
+    javascript_redirect :action => "edit", :id => checked_item_id
+  end
+
+  def handle_cloud_volume_snapshot_create
+    javascript_redirect :action => "snapshot_new", :id => checked_item_id
+  end
+
+  def handle_cloud_volume_new
+    javascript_redirect :action => "new"
+  end
+
+  def handle_cloud_volume_backup_restore
+    javascript_redirect :action => "backup_select", :id => checked_item_id
   end
 
   menu_section :bst

@@ -19,10 +19,7 @@ class MiqAeToolsController < ApplicationController
     restore_edit_for_search
     set_default_refresh_div
 
-    if params[:pressed] == "refresh_log"
-      refresh_log
-      return
-    end
+    handle_button_pressed(params[:pressed]) { return }
 
     check_if_button_is_implemented
   end
@@ -39,7 +36,7 @@ class MiqAeToolsController < ApplicationController
     render :action => "show"
   end
 
-  def refresh_log
+  def handle_refresh_log
     assert_privileges("refresh_log")
     @log = $miq_ae_logger.contents if $miq_ae_logger
     add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => I18n.t('product.name')}, :warning) if @log.blank?
@@ -457,6 +454,10 @@ Methods updated/added: %{method_stats}") % stat_options)
 
   def set_session_data
     session[:resolve_tools] = @resolve if @resolve
+  end
+
+  def handled_buttons
+    %w(refresh_log)
   end
 
   menu_section :automate

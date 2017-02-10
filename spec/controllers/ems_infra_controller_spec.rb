@@ -3,94 +3,38 @@ describe EmsInfraController do
 
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
   let(:zone) { FactoryGirl.build(:zone) }
-  context "#button" do
-    before(:each) do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
 
+  describe "#button" do
+    let!(:user) { stub_user(:features => :all) }
+
+    let(:ems_vmware) { FactoryGirl.create(:ems_vmware) }
+    let(:ems_infra)  { FactoryGirl.create(:ext_management_system) }
+
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
       ApplicationController.handle_exceptions = true
     end
 
+    include_examples :ems_common_button_examples
+    include_examples :host_vm_button_examples
+
     it "EmsInfra check compliance is called when Compliance is pressed" do
-      ems_infra = FactoryGirl.create(:ems_vmware)
       expect(controller).to receive(:check_compliance)
-      post :button, :params => {:pressed => "ems_infra_check_compliance", :format => :js, :id => ems_infra.id}
-    end
-
-    it "when VM Right Size Recommendations is pressed" do
-      expect(controller).to receive(:vm_right_size)
-      post :button, :params => { :pressed => "vm_right_size", :format => :js }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when VM Migrate is pressed" do
-      expect(controller).to receive(:prov_redirect).with("migrate")
-      post :button, :params => { :pressed => "vm_migrate", :format => :js }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when VM Migrate is pressed" do
-      ems = FactoryGirl.create(:ems_vmware)
-      vm = FactoryGirl.create(:vm_vmware, :ext_management_system => ems)
-      post :button, :params => { :pressed => "vm_migrate", :format => :js, "check_#{vm.id}" => 1, :id => ems.id }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-      expect(response.body).to include("/miq_request/prov_edit?")
-      expect(response.status).to eq(200)
-    end
-
-    it "when VM Retire is pressed" do
-      expect(controller).to receive(:retirevms).once
-      post :button, :params => { :pressed => "vm_retire", :format => :js }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when VM Manage Policies is pressed" do
-      expect(controller).to receive(:assign_policies).with(VmOrTemplate)
-      post :button, :params => { :pressed => "vm_protect", :format => :js }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when MiqTemplate Manage Policies is pressed" do
-      expect(controller).to receive(:assign_policies).with(VmOrTemplate)
-      post :button, :params => { :pressed => "miq_template_protect", :format => :js }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when VM Tag is pressed" do
-      expect(controller).to receive(:tag).with(VmOrTemplate)
-      post :button, :params => { :pressed => "vm_tag", :format => :js }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when MiqTemplate Tag is pressed" do
-      expect(controller).to receive(:tag).with(VmOrTemplate)
-      post :button, :params => { :pressed => 'miq_template_tag', :format => :js }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
+      post :button, :params => {:pressed => "ems_infra_check_compliance", :format => :js, :id => ems_vmware.id}
     end
 
     it "should set correct VM for right-sizing when on list of VM's of another CI" do
-      ems_infra = FactoryGirl.create(:ext_management_system)
       post :button, :params => { :pressed => "vm_right_size", :id => ems_infra.id, :display => 'vms', :check_10r839 => '1' }
       expect(controller.send(:flash_errors?)).not_to be_truthy
       expect(response.body).to include("/vm/right_size/#{ApplicationRecord.uncompress_id('10r839')}")
     end
-
-    it "when Host Analyze then Check Compliance is pressed" do
-      ems_infra = FactoryGirl.create(:ems_vmware)
-      expect(controller).to receive(:analyze_check_compliance_hosts)
-      post :button, :params => {:pressed => "host_analyze_check_compliance", :id => ems_infra.id, :format => :js}
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
   end
 
-  describe "#create" do
-    before do
-      user = FactoryGirl.create(:user, :features => "ems_infra_new")
+  describe "#new" do
+    let!(:user) { stub_user(:features => :all) }
 
+    before do
       allow(user).to receive(:server_timezone).and_return("UTC")
-      allow_any_instance_of(described_class).to receive(:set_user_time_zone)
-      allow(controller).to receive(:check_privileges).and_return(true)
-      login_as user
     end
 
     it "adds a new provider" do

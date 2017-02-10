@@ -21,20 +21,10 @@ class NetworkRouterController < ApplicationController
     save_current_page_for_refresh
     set_default_refresh_div
 
-    case params[:pressed]
-    when "network_router_tag" then return tag("NetworkRouter")
-    when "network_router_delete" then delete_network_routers
-    when "network_router_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id
-    when "network_router_new"
-      javascript_redirect :action => "new"
-    when "network_router_add_interface"
-      javascript_redirect :action => "add_interface_select", :id => checked_item_id
-    when "network_router_remove_interface"
-      javascript_redirect :action => "remove_interface_select", :id => checked_item_id
-    else
-      button_render_fallback
-    end
+    handle_tag_presses(params[:pressed]) { return }
+    handle_button_pressed(params[:pressed])
+
+    button_render_fallback unless performed?
   end
 
   def network_router_form_fields
@@ -120,7 +110,7 @@ class NetworkRouterController < ApplicationController
     javascript_redirect :action => "show_list"
   end
 
-  def delete_network_routers
+  def handle_network_router_delete
     assert_privileges("network_router_delete")
 
     routers = if @lastaction == "show_list" ||
@@ -448,6 +438,32 @@ class NetworkRouterController < ApplicationController
                    "Delete initiated for %{number} Network Routers.",
                    routers.length) % {:number => routers.length})
     end
+  end
+
+  def handled_buttons
+    %w(
+      network_router_delete
+      network_router_edit
+      network_router_new
+      network_router_add_interface
+      network_router_remove_interface
+    )
+  end
+
+  def handle_network_router_edit
+    javascript_redirect :action => "edit", :id => checked_item_id
+  end
+
+  def handle_network_router_new
+    javascript_redirect :action => "new"
+  end
+
+  def handle_network_router_add_interface
+    javascript_redirect :action => "add_interface_select", :id => checked_item_id
+  end
+
+  def handle_network_router_remove_interface
+    javascript_redirect :action => "remove_interface_select", :id => checked_item_id
   end
 
   menu_section :net

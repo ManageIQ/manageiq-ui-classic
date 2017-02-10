@@ -47,5 +47,9 @@ class EmsDatawarehouseController < ApplicationController
     ems_form_fields
   end
 
+  def handled_buttons
+    middleware_handled_buttons
+  end
+
   menu_section :dwh
 end

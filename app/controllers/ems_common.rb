@@ -24,7 +24,7 @@ module EmsCommon
 
   def textual_group_list
     [
-      %i(properties status) + (@record.respond_to?(:arbitration_profiles) ? %i(configuration_relationships) : []),
+      %i(properties status),
       %i(relationships topology smart_management)
     ]
   end
@@ -323,70 +323,35 @@ module EmsCommon
       process_cloud_object_storage_buttons(params[:pressed])
     end
 
+    handle_tag_presses(params[:pressed]) { return if @flash_array.nil? }
+    handle_host_power_press(params[:pressed])
+    handle_button_pressed(params[:pressed])
+
     # Handle buttons from sub-items screen
     handle_sub_item_presses(params[:pressed]) do |pfx|
-      case params[:pressed]
-      # Clusters
-      when "ems_cluster_compare"              then comparemiq
-      when "ems_cluster_delete"               then deleteclusters
-      when "ems_cluster_protect"              then assign_policies(EmsCluster)
-      when "ems_cluster_scan"                 then scanclusters
-      when "ems_cluster_tag"                  then tag(EmsCluster)
-      # Hosts
-      when "host_analyze_check_compliance"    then analyze_check_compliance_hosts
-      when "host_check_compliance"            then check_compliance_hosts
-      when "host_compare"                     then comparemiq
-      when "host_delete"                      then deletehosts
-      when "host_edit"                        then edit_record
-      when "host_protect"                     then assign_policies(Host)
-      when "host_refresh"                     then refreshhosts
-      when "host_scan"                        then scanhosts
-      when "host_tag"                         then tag(Host)
-      when "host_manageable"                  then sethoststomanageable
-      when "host_introspect"                  then introspecthosts
-      when "host_provide"                     then providehosts
-      # Storages
-      when "storage_delete"                   then deletestorages
-      when "storage_refresh"                  then refreshstorage
-      when "storage_scan"                     then scanstorage
-      when "storage_tag"                      then tag(Storage)
-      # Edit Tags for Network Manager Relationship pages
-      when "availability_zone_tag"            then tag(AvailabilityZone)
-      when "cloud_network_tag"                then tag(CloudNetwork)
-      when "cloud_object_store_container_tag" then tag(CloudObjectStoreContainer)
-      when "cloud_subnet_tag"                 then tag(CloudSubnet)
-      when "cloud_tenant_tag"                 then tag(CloudTenant)
-      when "cloud_volume_tag"                 then tag(CloudVolume)
-      when "flavor_tag"                       then tag(Flavor)
-      when "floating_ip_tag"                  then tag(FloatingIp)
-      when "load_balancer_tag"                then tag(LoadBalancer)
-      when "network_port_tag"                 then tag(NetworkPort)
-      when "network_router_tag"               then tag(NetworkRouter)
-      when "orchestration_stack_tag"          then tag(OrchestrationStack)
-      when "security_group_tag"               then tag(SecurityGroup)
-      end
+      process_vm_buttons(pfx)
 
-      if button_power_press?(params[:pressed])
-        handle_host_power_press(params[:pressed])
-      else
-        process_vm_buttons(pfx)
+      return if button_control_transferred?(params[:pressed])
 
-        return if button_control_transferred?(params[:pressed])
-
-        unless button_has_redirect_suffix?(params[:pressed])
-          set_refresh_and_show
-        end
+      unless button_has_redirect_suffix?(params[:pressed])
+        set_refresh_and_show
       end
     end
 
     unless params[:pressed].starts_with?(*button_sub_item_prefixes)
       set_default_refresh_div
 
+      @display ||= "" # otherwise nil @display will break below
+
       case params[:pressed]
+      when "new"                             then redirect_to :action => "new"
+      when "#{@display.singularize}_tag"
+        if @display != 'main'
+          tag(@display.camelize.singularize)
+        end
       when "#{@table_name}_refresh"          then refreshemss
       when "#{@table_name}_edit"             then edit_record
       when "#{@table_name}_check_compliance" then check_compliance(model)
-      when "new"                             then redirect_to :action => "new"
       when "#{@table_name}_protect"
         assign_policies(model)
         return if @flash_array.nil?
@@ -420,62 +385,23 @@ module EmsCommon
       when "#{@table_name}_delete"
         deleteemss
 
-        # redirect to build the retire screen
         if !@flash_array.nil? && @single_delete
-          javascript_redirect :action      => 'show_list',
-                              :flash_msg   => @flash_array[0][:message],
-                              :flash_error => @flash_array[0][:level] == :error
-
-          return
-        end
-      when "#{@display.singularize}_tag"
-        if @display && @display != 'main'
-          tag(@display.camelize.singularize)
+          redirect_to_retire_screen_if_single_delete
         end
       when "refresh_server_summary"
         javascript_redirect :back
-        return
       when "ems_cloud_recheck_auth_status", "ems_infra_recheck_auth_status",
            "ems_middleware_recheck_auth_status", "ems_container_recheck_auth_status",
            "ems_physical_infra_recheck_auth_status"
-        if params[:id]
-          table_key = :table
-          _result, details = recheck_authentication
-          add_flash(_("Re-checking Authentication status for this %{controller_name} was not successful: %{details}") %
-                      {:controller_name => ui_lookup(:table => controller_name), :details => details}, :error) if details
-        else
-          table_key = :tables
-          ems_ids = find_checked_items
-          ems_ids.each do |ems_id|
-            _result, details = recheck_authentication(ems_id)
-            add_flash(_("Re-checking Authentication status for the selected %{controller_name} %{name} was not successful: %{details}") %
-                          {:controller_name => ui_lookup(:table => controller_name),
-                           :name            => @record.name,
-                           :details         => details}, :error) if details
-          end
-        end
-        add_flash(_("Authentication status will be saved and workers will be restarted for the selected %{controller_name}") %
-                     {:controller_name => ui_lookup(table_key => controller_name)})
-        render_flash
-        return
-      when "host_aggregate_edit"
-        javascript_redirect :controller => "host_aggregate", :action => "edit", :id => find_checked_items[0]
-        return
-      when "cloud_tenant_edit"
-        javascript_redirect :controller => "cloud_tenant", :action => "edit", :id => find_checked_items[0]
-        return
-      when "cloud_volume_edit"
-        javascript_redirect :controller => "cloud_volume", :action => "edit", :id => find_checked_items[0]
-        return
+        recheck_auth_status
       when "custom_button"
         custom_buttons
-        return
       end
-
-      check_if_button_is_implemented
     end
 
     return if performed?
+
+    check_if_button_is_implemented
 
     if button_has_redirect_suffix?(params[:pressed])
       render_or_redirect_partial(button_prefix(params[:pressed]))
@@ -504,6 +430,7 @@ module EmsCommon
     showlist ? show_list : show
   end
 
+  # FIXME: This no longer works.
   def provider_documentation_url
     "http://manageiq.org/documentation/getting-started/#adding-a-provider"
   end
@@ -1064,32 +991,78 @@ module EmsCommon
   end
 
   def button_sub_item_display_values
-    ["vms", "hosts", "storages", "instances", "images", "orchestration_stacks"]
+    %w(vms hosts storages instances images orchestration_stacks)
   end
 
   def button_sub_item_prefixes
+    %w(
+      availability_zone_
+      cloud_network_
+      cloud_object_store_container_
+      cloud_subnet_
+      cloud_tenant_
+      cloud_volume_
+      ems_cluster_
+      flavor_
+      floating_ip_
+      guest_
+      host_
+      image_
+      instance_
+      load_balancer_
+      miq_template_
+      network_port_
+      network_router_
+      orchestration_stack_
+      security_group_
+      storage_
+      vm_
+    )
+  end
+
+  def handled_buttons
     [
-      "availability_zone_",
-      "cloud_network_",
-      "cloud_object_store_container_",
-      "cloud_subnet_",
-      "cloud_tenant_",
-      "cloud_volume_",
-      "ems_cluster_",
-      "flavor_",
-      "floating_ip_",
-      "guest_",
-      "host_",
-      "image_",
-      "instance_",
-      "load_balancer_",
-      "miq_template_",
-      "network_port_",
-      "network_router_",
-      "orchestration_stack_",
-      "security_group_",
-      "storage_",
-      "vm_"
-    ]
+      "host_aggregate_edit",
+      "cloud_tenant_edit",
+      "cloud_volume_edit",
+      "custom_button",
+      handled_host_buttons,
+      handled_ems_cluster_buttons,
+      handled_storage_buttons
+    ].flatten
+  end
+
+  def handle_host_aggregate_edit
+    javascript_redirect :controller => "host_aggregate", :action => "edit", :id => find_checked_items[0]
+  end
+
+  def handle_cloud_tenant_edit
+    javascript_redirect :controller => "cloud_tenant", :action => "edit", :id => find_checked_items[0]
+  end
+
+  def handle_cloud_volume_edit
+    javascript_redirect :controller => "cloud_volume", :action => "edit", :id => find_checked_items[0]
+  end
+
+  def recheck_auth_status
+    if params[:id]
+      table_key = :table
+      _result, details = recheck_authentication
+      add_flash(_("Re-checking Authentication status for this %{controller_name} was not successful: %{details}") %
+                  {:controller_name => ui_lookup(:table => controller_name), :details => details}, :error) if details
+    else
+      table_key = :tables
+      ems_ids = find_checked_items
+      ems_ids.each do |ems_id|
+        _result, details = recheck_authentication(ems_id)
+        add_flash(_("Re-checking Authentication status for the selected %{controller_name} %{name} was not successful: %{details}") %
+                      {:controller_name => ui_lookup(:table => controller_name),
+                       :name            => @record.name,
+                       :details         => details}, :error) if details
+      end
+    end
+    add_flash(_("Authentication status will be saved and workers will be restarted for the selected %{controller_name}") %
+                 {:controller_name => ui_lookup(table_key => controller_name)})
+    render_flash
   end
 end

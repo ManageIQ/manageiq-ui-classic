@@ -30,7 +30,7 @@ describe ContainerNodeController do
       @node = FactoryGirl.create(:container_node)
     end
 
-    subject { get :show, :id => @node.id }
+    subject { get :show, :params => { :id => @node.id } }
 
     context "render" do
       render_views
@@ -54,4 +54,9 @@ describe ContainerNodeController do
   end
 
   include_examples '#download_summary_pdf', :container_node
+
+  describe "#button" do
+    render_views false
+    include_examples :container_button_examples, "container_node"
+  end
 end

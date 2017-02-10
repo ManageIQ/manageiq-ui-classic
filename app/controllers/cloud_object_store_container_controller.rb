@@ -13,7 +13,6 @@ class CloudObjectStoreContainerController < ApplicationController
     ui_lookup(:tables => "cloud_object_store_container")
   end
 
-  # handle buttons pressed on the button bar
   def button
     restore_edit_for_search
     save_current_page_for_refresh
@@ -27,6 +26,8 @@ class CloudObjectStoreContainerController < ApplicationController
     elsif !@flash_array.nil?
       render_flash unless performed?
     end
+
+    # handle_tag_presses(params[:pressed])
   end
 
   def self.display_methods

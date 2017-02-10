@@ -1,92 +1,99 @@
 describe HostController do
-  context "#button" do
-    render_views
+  let!(:user) { stub_user(:features => :all) }
+  let(:host)  { FactoryGirl.create(:host) }
+  let(:host2) { FactoryGirl.create(:host) }
+  let(:hardware) { FactoryGirl.create(:hardware, :provision_state => "manageable") }
 
-    before(:each) do
-      stub_user(:features => :all)
+  describe "Shared button examples" do
+
+  end
+
+  describe "#button" do
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
-
-      ApplicationController.handle_exceptions = true
     end
 
+    # Button presses covered by shared examples:
+    # host_scan
+    # host_check_compliance
+    # host_refresh
+    # host_protect
+    # host_edit
+    # host_delete
+    # host_cloud_service_scheduling_toggle
+    # host_compare
+    # host_introspect
+    # host_manageable
+    # host_miq_request_new
+    # host_provide
+    # host_toggle_maintenance
+    # host_analyze_check_compliance
+    # host_tag
+    # vm_right_size
+    # vm_migrate
+    # vm_retire
+    # vm_protect
+    # miq_template_protect
+    # vm_tag
+    # miq_template_tag
+
+    include_examples :host_vm_button_examples
+    include_examples :common_host_button_examples
+    include_examples :special_host_button_examples
+
+    %w(
+      common_drift
+      perf_refresh
+      perf_reload
+      storage_refresh
+      storage_scan
+    ).each do |pressed|
+      it "handles #{pressed}" do
+        expect(controller).to receive("handle_#{pressed}".to_sym)
+        post :button, :params => { :pressed => pressed, :format => :js, :id => host.id }
+        expect(assigns(:flash_array)).to be_nil
+      end
+    end
+
+    it "handles storage_tag" do
+      expect(controller).to receive(:tag).with(Storage).and_call_original
+      post :button, :params => { :pressed => "storage_tag", :format => :js }
+      expect(assigns(:flash_array)).to be_nil
+    end
+
+    let(:dialog) { FactoryGirl.create(:dialog, :label => "Some Label") }
+    let(:dialog_tab) { FactoryGirl.create(:dialog_tab, :label => "Some Tab", :order => 0) }
+    let(:custom_button) { FactoryGirl.create(:custom_button, :applies_to_class => "Host") }
+    let(:resource_action) { FactoryGirl.create(:resource_action, :dialog_id => dialog.id) }
+
+    it "handles when Custom Button is pressed" do
+      dialog.dialog_tabs << dialog_tab
+      custom_button.resource_action = resource_action
+      custom_button.save
+      expect(controller).to receive(:handle_custom_button).and_call_original
+
+      post :button, :params => { :pressed => "custom_button", :id => host.id, :button_id => custom_button.id }
+
+      expect(response.status).to eq(200)
+      expect(assigns(:flash_array)).to be_nil
+    end
+  end
+
+  describe "#edit" do
     it "doesn't break" do
-      h1 = FactoryGirl.create(:host)
-      h2 = FactoryGirl.create(:host)
-      session[:host_items] = [h1.id, h2.id]
+      session[:host_items] = [host.id, host2.id]
       session[:settings] = {:views     => {:host => 'grid'},
                             :display   => {:quad_truncate => 'f'},
                             :quadicons => {:host => 'foo'}}
       get :edit
       expect(response.status).to eq(200)
     end
-
-    it "when VM Right Size Recommendations is pressed" do
-      expect(controller).to receive(:vm_right_size)
-      post :button, :params => { :pressed => 'vm_right_size', :format => :js }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when VM Migrate is pressed" do
-      expect(controller).to receive(:prov_redirect).with("migrate")
-      post :button, :params => { :pressed => 'vm_migrate', :format => :js }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when VM Retire is pressed" do
-      expect(controller).to receive(:retirevms).once
-      post :button, :params => { :pressed => 'vm_retire', :format => :js }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when VM Manage Policies is pressed" do
-      expect(controller).to receive(:assign_policies).with(VmOrTemplate)
-      post :button, :params => { :pressed => 'vm_protect', :format => :js }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when MiqTemplate Manage Policies is pressed" do
-      expect(controller).to receive(:assign_policies).with(VmOrTemplate)
-      post :button, :params => { :pressed => 'miq_template_protect', :format => :js }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when VM Tag is pressed" do
-      expect(controller).to receive(:tag).with(VmOrTemplate)
-      post :button, :params => { :pressed => 'vm_tag', :format => :js }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when MiqTemplate Tag is pressed" do
-      expect(controller).to receive(:tag).with(VmOrTemplate)
-      post :button, :params => { :pressed => 'miq_template_tag', :format => :js }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when Custom Button is pressed" do
-      host = FactoryGirl.create(:host)
-      custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "Host")
-      d = FactoryGirl.create(:dialog, :label => "Some Label")
-      dt = FactoryGirl.create(:dialog_tab, :label => "Some Tab", :order => 0)
-      d.dialog_tabs << dt
-      ra = FactoryGirl.create(:resource_action, :dialog_id => d.id)
-      custom_button.resource_action = ra
-      custom_button.save
-      post :button, :params => { :pressed => "custom_button", :id => host.id, :button_id => custom_button.id }
-      expect(response.status).to eq(200)
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when Drift button is pressed" do
-      expect(controller).to receive(:drift_analysis)
-      post :button, :params => { :pressed => 'common_drift', :format => :js }
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
   end
 
-  context "#create" do
+  describe "#create" do
     it "can create a host with custom id and no host name" do
-      stub_user(:features => :all)
       controller.instance_variable_set(:@breadcrumbs, [])
+
 
       controller.instance_variable_set(:@_params,
                                        :button   => "add",
@@ -103,9 +110,9 @@ describe HostController do
     end
 
     it "doesn't crash when trying to validate a new host" do
-      stub_user(:features => :all)
       controller.instance_variable_set(:@breadcrumbs, [])
       controller.new
+
 
       controller.instance_variable_set(:@_params,
                                        :button           => "validate",
@@ -124,11 +131,13 @@ describe HostController do
     end
   end
 
-  context "#set_record_vars" do
+
+  describe "#set_record_vars" do
+
     it "strips leading/trailing whitespace from hostname/ipaddress when adding infra host" do
-      stub_user(:features => :all)
       controller.instance_variable_set(:@_params,
                                        :name     => 'EMS 2',
+
                                        :emstype  => 'rhevm',
                                        :hostname => '  10.10.10.10  '
                                       )
@@ -138,11 +147,13 @@ describe HostController do
     end
   end
 
-  context "#show_association" do
+
+  describe "#show_association" do
+
     before(:each) do
-      stub_user(:features => :all)
       @host = FactoryGirl.create(:host, :name =>'hostname1')
       @guest_application = FactoryGirl.create(:guest_application, :name => "foo", :host_id => @host.id)
+
       @datastore = FactoryGirl.create(:storage, :name => 'storage_name')
       @datastore.parent = @host
     end
@@ -194,7 +205,7 @@ describe HostController do
 
   include_examples '#download_summary_pdf', :host
 
-  context "#set_credentials" do
+  describe "#set_credentials" do
     let(:mocked_host) { double(Host) }
     it "uses params[:default_password] for validation if one exists" do
       controller.instance_variable_set(:@_params,
@@ -264,12 +275,14 @@ describe HostController do
     end
   end
 
-  context "#render pages" do
+  describe "#render pages" do
+
     render_views
+
     before do
-      stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
     end
+
     it "renders a new page with ng-required condition set to false for password" do
       get :new
       expect(response.status).to eq(200)

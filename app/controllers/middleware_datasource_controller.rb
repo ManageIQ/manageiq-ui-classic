@@ -30,5 +30,9 @@ class MiddlewareDatasourceController < ApplicationController
   end
   helper_method :textual_group_list
 
+  def handled_buttons
+    middleware_handled_buttons
+  end
+
   menu_section :mdl
 end

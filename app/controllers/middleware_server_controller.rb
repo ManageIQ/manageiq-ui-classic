@@ -292,5 +292,9 @@ class MiddlewareServerController < ApplicationController
     end
   end
 
+  def handled_buttons
+    middleware_handled_buttons
+  end
+
   menu_section :mdl
 end

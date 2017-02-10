@@ -34,19 +34,15 @@ class AuthKeyPairCloudController < ApplicationController
     restore_edit_for_search
     save_current_page_for_refresh
 
-    case params[:pressed]
-    when 'auth_key_pair_cloud_tag'
-      return tag("ManageIQ::Providers::CloudManager::AuthKeyPair")
-    when 'auth_key_pair_cloud_delete'
-      handle_delete_button
-    when 'auth_key_pair_cloud_new'
-      handle_new_button
+    handle_tag_presses(params[:pressed])
+    handle_button_pressed(params[:pressed])
+
+    return if performed?
+
+    if button_replace_gtl_main?
+      replace_gtl_main_div
     else
-      if button_replace_gtl_main?
-        replace_gtl_main_div
-      else
-        render_flash
-      end
+      render_flash
     end
   end
 
@@ -235,7 +231,7 @@ class AuthKeyPairCloudController < ApplicationController
 
   private
 
-  def handle_delete_button
+  def handle_auth_key_pair_cloud_delete
     delete_auth_key_pairs
 
     if @flash_array.present? && @single_delete
@@ -243,7 +239,7 @@ class AuthKeyPairCloudController < ApplicationController
     end
   end
 
-  def handle_new_button
+  def handle_auth_key_pair_cloud_new
     new
 
     if @flash_array.present?
@@ -252,5 +248,12 @@ class AuthKeyPairCloudController < ApplicationController
     else
       javascript_redirect :action => "new"
     end
+  end
+
+  def handled_buttons
+    %w(
+      auth_key_pair_cloud_delete
+      auth_key_pair_cloud_new
+    )
   end
 end

@@ -38,11 +38,15 @@ class EmsMiddlewareController < ApplicationController
     true
   end
 
+  public :restful?
+
   def ems_middleware_form_fields
     ems_form_fields
   end
 
-  public :restful?
+  def handled_buttons
+    middleware_handled_buttons
+  end
 
   menu_section :mdl
 end

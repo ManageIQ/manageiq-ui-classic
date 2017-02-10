@@ -78,10 +78,11 @@ class MiqPolicyController < ApplicationController
     restore_edit_for_search
     set_default_refresh_div
 
-    if params[:pressed] == "refresh_log"
-      refresh_log
-      return
-    end
+    # if params[:pressed] == "refresh_log"
+    #   refresh_log
+    #   return
+    # end
+    handle_button_pressed(params[:pressed]) { return }
 
     check_if_button_is_implemented
   end
@@ -1111,6 +1112,10 @@ class MiqPolicyController < ApplicationController
     ].map do |hsh|
       ApplicationController::Feature.new_with_hash(hsh)
     end
+  end
+
+  def handled_buttons
+    %w(refresh_log)
   end
 
   menu_section :con

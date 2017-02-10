@@ -1,5 +1,7 @@
 require 'kubeclient'
 
+# Button examples moved to shared_ems_common_mixin_examples.rb
+
 describe EmsCloudController do
   context "::EmsCommon" do
     context "#get_form_vars" do
@@ -124,39 +126,6 @@ describe EmsCloudController do
           expect(controller).to receive(:render_flash)
           controller.send(:update_button_validate)
         end
-      end
-    end
-
-    context "#button" do
-      before(:each) do
-        stub_user(:features => :all)
-        EvmSpecHelper.create_guid_miq_server_zone
-      end
-
-      it "when Retire Button is pressed for a Cloud provider Instance" do
-        allow(controller).to receive(:role_allows?).and_return(true)
-        ems = FactoryGirl.create("ems_vmware")
-        vm = FactoryGirl.create(:vm_vmware,
-                                :ext_management_system => ems,
-                                :storage               => FactoryGirl.create(:storage)
-                               )
-        post :button, :params => { :pressed => "instance_retire", "check_#{vm.id}" => "1", :format => :js, :id => ems.id, :display => 'instances' }
-        expect(response.status).to eq 200
-        expect(response.body).to include('vm/retire')
-      end
-
-      it "when Retire Button is pressed for an Orchestration Stack" do
-        allow(controller).to receive(:role_allows?).and_return(true)
-        ems = FactoryGirl.create("ems_amazon")
-        ost = FactoryGirl.create(:orchestration_stack_cloud, :ext_management_system => ems)
-        post :button, :params => { :pressed => "orchestration_stack_retire", "check_#{ost.id}" => "1", :format => :js, :id => ems.id, :display => 'orchestration_stacks' }
-        expect(response.status).to eq 200
-        expect(response.body).to include('orchestration_stack/retire')
-      end
-
-      it "when Delete Button is pressed for CloudObjectStoreContainer" do
-        expect(controller).to receive(:process_cloud_object_storage_buttons)
-        post :button, :params => { :pressed => "cloud_object_store_container_delete" }
       end
     end
   end
@@ -297,38 +266,6 @@ describe EmsContainerController do
           test_setting_few_fields
           expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('myhawkularroute.com')
         end
-      end
-    end
-
-    context "#button" do
-      before(:each) do
-        stub_user(:features => :all)
-        EvmSpecHelper.create_guid_miq_server_zone
-      end
-
-      it "when VM Migrate is pressed for unsupported type" do
-        allow(controller).to receive(:role_allows?).and_return(true)
-        vm = FactoryGirl.create(:vm_microsoft)
-        post :button, :params => { :pressed => "vm_migrate", :format => :js, "check_#{vm.id}" => "1" }
-        expect(controller.send(:flash_errors?)).to be_truthy
-        expect(assigns(:flash_array).first[:message]).to include('does not apply')
-      end
-
-      let(:ems)     { FactoryGirl.create(:ext_management_system) }
-      let(:storage) { FactoryGirl.create(:storage) }
-
-      it "when VM Migrate is pressed for supported type" do
-        allow(controller).to receive(:role_allows?).and_return(true)
-        vm = FactoryGirl.create(:vm_vmware, :storage => storage, :ext_management_system => ems)
-        post :button, :params => { :pressed => "vm_migrate", :format => :js, "check_#{vm.id}" => "1" }
-        expect(controller.send(:flash_errors?)).not_to be_truthy
-      end
-
-      it "when VM Migrate is pressed for supported type" do
-        allow(controller).to receive(:role_allows?).and_return(true)
-        vm = FactoryGirl.create(:vm_vmware)
-        post :button, :params => { :pressed => "vm_edit", :format => :js, "check_#{vm.id}" => "1" }
-        expect(controller.send(:flash_errors?)).not_to be_truthy
       end
     end
 

@@ -2816,47 +2816,6 @@ module ApplicationController::CiProcessing
     end
   end
 
-  def process_vm_buttons(pfx)
-    case params[:pressed]
-    when "#{pfx}_policy_sim"                then polsimvms
-    when "#{pfx}_compare"                   then comparemiq
-    when "#{pfx}_scan"                      then scanvms
-    when "#{pfx}_collect_running_processes" then getprocessesvms
-    when "#{pfx}_sync"                      then syncvms
-    when "#{pfx}_tag"                       then tag(VmOrTemplate)
-    when "#{pfx}_delete"                    then deletevms
-    when "#{pfx}_protect"                   then assign_policies(VmOrTemplate)
-    when "#{pfx}_edit"                      then edit_record
-    when "#{pfx}_refresh"                   then refreshvms
-    when "#{pfx}_start"                     then startvms
-    when "#{pfx}_stop"                      then stopvms
-    when "#{pfx}_suspend"                   then suspendvms
-    when "#{pfx}_pause"                     then pausevms
-    when "#{pfx}_shelve"                    then shelvevms
-    when "#{pfx}_shelveoffloadvms"          then shelveoffloadvms
-    when "#{pfx}_reset"                     then resetvms
-    when "#{pfx}_check_compliance"          then check_compliance_vms
-    when "#{pfx}_reconfigure"               then reconfigurevms
-    when "#{pfx}_resize"                    then resizevms
-    when "#{pfx}_evacuate"                  then evacuatevms
-    when "#{pfx}_live_migrate"              then livemigratevms
-    when "#{pfx}_associate_floating_ip"     then associate_floating_ip_vms
-    when "#{pfx}_disassociate_floating_ip"  then disassociate_floating_ip_vms
-    when "#{pfx}_retire"                    then retirevms
-    when "#{pfx}_retire_now"                then retirevms_now
-    when "#{pfx}_right_size"                then vm_right_size
-    when "#{pfx}_ownership"                 then set_ownership
-    when "#{pfx}_guest_shutdown"            then guestshutdown
-    when "#{pfx}_guest_standby"             then gueststandby
-    when "#{pfx}_guest_restart"             then guestreboot
-    when "#{pfx}_miq_request_new"           then prov_redirect
-    when "#{pfx}_clone"                     then prov_redirect("clone")
-    when "#{pfx}_migrate"                   then prov_redirect("migrate")
-    when "#{pfx}_publish"                   then prov_redirect("publish")
-    when "#{pfx}_terminate"                 then terminatevms
-    end
-  end
-
   def owner_changed?(owner)
     return false if @edit[:new][owner].blank?
     @edit[:new][owner] != @edit[:current][owner]

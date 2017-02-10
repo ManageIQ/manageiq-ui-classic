@@ -4,6 +4,10 @@ describe MiddlewareServerController do
     stub_user(:features => :all)
   end
 
+  describe '#button' do
+    include_examples :ems_common_button_examples
+  end
+
   it 'renders index' do
     get :index
     expect(response.status).to eq(302)

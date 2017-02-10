@@ -22,21 +22,10 @@ class SecurityGroupController < ApplicationController
     save_current_page_for_refresh
     set_default_refresh_div
 
-    case params[:pressed]
-    when "security_group_tag"
-      return tag("SecurityGroup")
-    when 'security_group_delete'
-      delete_security_groups
-    when "security_group_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id(params)
-    else
-      if params[:pressed] == "security_group_new"
-        javascript_redirect :action => "new"
-        return
-      end
+    handle_tag_presses(params[:pressed])
+    handle_button_pressed(params[:pressed])
 
-      button_render_fallback
-    end
+    button_render_fallback unless performed?
   end
 
   def cancel_action(message)
@@ -109,7 +98,7 @@ class SecurityGroupController < ApplicationController
     javascript_redirect :action => "show_list"
   end
 
-  def delete_security_groups
+  def handle_security_group_delete
     assert_privileges("security_group_delete")
 
     security_groups = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "security_group")
@@ -263,5 +252,21 @@ class SecurityGroupController < ApplicationController
                    "Delete initiated for %{number} Security Groups.",
                    security_groups.length) % {:number => security_groups.length})
     end
+  end
+
+  def handled_buttons
+    %w(
+      security_group_delete
+      security_group_edit
+      security_group_new
+    )
+  end
+
+  def handle_security_group_edit
+    javascript_redirect :action => "edit", :id => checked_item_id(params)
+  end
+
+  def handle_security_group_new
+    javascript_redirect :action => "new"
   end
 end

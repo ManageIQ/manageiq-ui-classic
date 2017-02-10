@@ -3,11 +3,17 @@ describe EmsContainerController do
     stub_user(:features => :all)
   end
 
-  it "#new" do
-    controller.instance_variable_set(:@breadcrumbs, [])
-    get :new
+  describe '#button' do
+    include_examples :ems_common_button_examples
+  end
 
-    expect(response.status).to eq(200)
+  describe "#new" do
+    it 'responds with ok' do
+      controller.instance_variable_set(:@breadcrumbs, [])
+      get :new
+
+      expect(response.status).to eq(200)
+    end
   end
 
   describe "#show" do

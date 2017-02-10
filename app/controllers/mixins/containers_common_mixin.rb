@@ -16,55 +16,16 @@ module ContainersCommonMixin
   end
 
   def button
-    restore_edit_for_search
-    copy_sub_item_display_value_to_params
-    save_current_page_for_refresh
-    set_default_refresh_div
+    generic_button_setup
 
-    # Handle Toolbar Policy Tag Button
-
-    model = self.class.model
-    if params[:pressed] == "#{params[:controller]}_tag"
-      tag(model)
-
-      return if @flash_array.nil? # Tag screen showing
+    handle_tag_presses(params[:pressed]) do
+      return if @flash_array.nil?
     end
 
-    if [ContainerReplicator, ContainerGroup, ContainerNode, ContainerImage].include?(model)
-      assign_policies(model) if params[:pressed] == "#{model.name.underscore}_protect"
-      check_compliance(model) if params[:pressed] == "#{model.name.underscore}_check_compliance"
-    end
-
-    # Handle scan
-    if params[:pressed] == "container_image_scan"
-      scan_images
-
-      if @lastaction == "show"
-        javascript_flash
-      else
-        replace_main_div :partial => "layouts/gtl"
-      end
-    end
+    handle_button_pressed(params[:pressed])
   end
 
   private
-
-  # Scan all selected or single displayed image(s)
-  def scan_images
-    assert_privileges("image_scan")
-    showlist = @lastaction == "show_list"
-    ids = showlist ? find_checked_items : find_current_item(ContainerImage)
-
-    if ids.empty?
-      add_flash(_("No %{model} were selected for Analysis") % {:model => ui_lookup(:tables => "container_image")},
-                :error)
-    else
-      process_scan_images(ids)
-    end
-
-    showlist ? show_list : show
-    ids.count
-  end
 
   def check_compliance(model)
     assert_privileges("#{model.name.underscore}_check_compliance")

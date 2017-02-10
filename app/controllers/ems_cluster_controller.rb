@@ -96,73 +96,30 @@ class EmsClusterController < ApplicationController
   def button
     restore_edit_for_search
     copy_sub_item_display_value_to_params
+    set_default_refresh_div
+
+    handle_tag_presses(params[:pressed]) { return if @flash_array.nil? }
+    handle_host_power_press(params[:pressed])
+    handle_button_pressed(params[:pressed])
 
     # Handle buttons from sub-items screen
     handle_sub_item_presses(params[:pressed]) do |pfx|
-      case params[:pressed]
-      when "host_analyze_check_compliance" then analyze_check_compliance_hosts
-      when "host_check_compliance"         then check_compliance_hosts
-      when "host_compare"                  then comparemiq
-      when "host_delete"                   then deletehosts
-      when "host_edit"                     then edit_record
-      when "host_protect"                  then assign_policies(Host)
-      when "host_refresh"                  then refreshhosts
-      when "host_scan"                     then scanhosts
-      when "host_tag"                      then tag(Host)
-      when "rp_tag"                        then tag(ResourcePool)
-      end
+      process_vm_buttons(pfx)
+      return if button_control_transferred?(params[:pressed])
 
-      # Handle Host power buttons
-      if button_power_press?(params[:pressed])
-        handle_host_power_press(params[:pressed])
-      else
-        process_vm_buttons(pfx)
-        return if button_control_transferred?(params[:pressed])
-
-        unless button_has_redirect_suffix?(params[:pressed])
-          set_refresh_and_show
-        end
+      unless button_has_redirect_suffix?(params[:pressed])
+        set_refresh_and_show
       end
     end
 
-    unless params[:pressed].starts_with?(*button_sub_item_prefixes)
-      set_default_refresh_div
+    return if performed?
 
-      case params[:pressed]
-      when "common_drift"        then drift_analysis
-      when "ems_cluster_compare" then comparemiq
-      when "ems_cluster_protect" then assign_policies(EmsCluster)
-      when "ems_cluster_scan"    then scanclusters
-      when "ems_cluster_tag"     then tag(EmsCluster)
-      when "custom_button"
-        custom_buttons
-        return # let custom_buttons method handle everything
-      when "ems_cluster_delete"
-        deleteclusters
-
-        if @flash_array.present? && @single_delete
-          javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
-        end
-      when "ems_cluster_tag", "ems_cluster_compare", "common_drift", "ems_cluster_protect"
-        if @flash_array.nil?
-          return # Tag screen showing, so return
-        end
-      end
-    end
-
-    if button_not_handled?
-      add_flash(_("Button not yet implemented"), :error)
-    elsif lastaction_is_show_and_flash_present?
-      @ems_cluster = @record = identify_record(params[:id])
-    end
-
-    @refresh_partial = "layouts/flash_msg"
-    @refresh_div = "flash_msg_div"
+    check_if_button_is_implemented
 
     if button_has_redirect_suffix?(params[:pressed])
       render_or_redirect_partial(button_prefix(params[:pressed]))
     else
-      if @refresh_div == "main_div" && @lastaction == "show_list"
+      if button_replace_gtl_main?
         replace_gtl_main_div
       else
         render_flash
@@ -247,8 +204,42 @@ class EmsClusterController < ApplicationController
     ["all_vms", "vms", "hosts", "resource_pools"]
   end
 
+  # Overrides generic button value
   def button_sub_item_prefixes
     ["vm_", "miq_template_", "guest_", "host_", "rp_"]
+  end
+
+  def handled_buttons
+    [
+      "custom_button",
+      "common_drift",
+      "ems_cluster_compare",
+      "ems_cluster_protect",
+      "ems_cluster_scan",
+      "ems_cluster_delete",
+      handled_host_buttons
+    ].flatten
+  end
+
+  def handle_common_drift
+    drift_analysis
+  end
+
+  def handle_ems_cluster_compare
+    comparemiq
+  end
+
+  def handle_ems_cluster_protect
+    assign_policies(EmsCluster)
+  end
+
+  def handle_ems_cluster_scan
+    scanclusters
+  end
+
+  def handle_ems_cluster_delete
+    deleteclusters
+    redirect_to_retire_screen_if_single_delete
   end
 
   menu_section :inf

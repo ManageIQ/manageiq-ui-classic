@@ -1,6 +1,12 @@
 describe MiqPolicyController do
-  before(:each) do
-    stub_user(:features => :all)
+  let!(:user) { stub_user(:features => :all) }
+
+  describe "#button" do
+    it 'handles refresh_log' do
+      expect(controller).to receive(:handle_refresh_log)
+      post :button, :params => { :pressed => "refresh_log" }
+      expect(assigns(:flash_array)).to be_nil
+    end
   end
 
   describe "#import" do

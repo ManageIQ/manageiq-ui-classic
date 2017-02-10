@@ -409,17 +409,19 @@ class HostController < ApplicationController
   def button
     restore_edit_for_search
     copy_sub_item_display_value_to_params
+    save_current_page_for_refresh
+    set_default_refresh_div
+
+    handle_tag_presses(params[:pressed])
+    handle_host_power_press(params[:pressed])
+    handle_button_pressed(params[:pressed])
+
+    return if performed?
 
     handle_sub_item_presses(params[:pressed]) do |pfx|
       process_vm_buttons(pfx)
 
-      case params[:pressed]
-      when "storage_scan"    then scanstorage
-      when "storage_refresh" then refreshstorage
-      when "storage_tag"     then tag(Storage)
-      end
-
-      return if button_control_transferred?
+      return if button_control_transferred?(params[:pressed])
 
       unless button_has_redirect_suffix?(params[:pressed])
         set_refresh_and_show
@@ -428,58 +430,9 @@ class HostController < ApplicationController
 
     # Handle Host buttons
     unless params[:pressed].starts_with?(*button_sub_item_prefixes)
-      save_current_page_for_refresh
-      set_default_refresh_div
-
-      case params[:pressed]
-      when "common_drift"                         then drift_analysis
-      when "host_analyze_check_compliance"        then analyze_check_compliance_hosts
-      when "host_check_compliance"                then check_compliance_hosts
-      when "host_cloud_service_scheduling_toggle" then toggleservicescheduling
-      when "host_compare"                         then comparemiq
-      when "host_edit"                            then edit_record
-      when "host_introspect"                      then introspecthosts
-      when "host_manageable"                      then sethoststomanageable
-      when "host_protect"                         then assign_policies(Host)
-      when "host_provide"                         then providehosts
-      when "host_refresh"                         then refreshhosts
-      when "host_scan"                            then scanhosts
-      when "host_tag"                             then tag(Host)
-      when "host_toggle_maintenance"              then maintenancehosts
-      when "new"                                  then redirect_to :action => "new"
-      when "perf_reload"                          then perf_chart_chooser
-      when "perf_refresh"                         then perf_refresh_data
-      when "custom_button"
-        custom_buttons
-        return # let custom_buttons method handle everything
-      when "host_miq_request_new"
-        prov_redirect
-
-        if @lastaction == "show"
-          @host = @record = identify_record(params[:id])
-        end
-      when "host_delete"
-        deletehosts
-
-        if !@flash_array.nil? && @single_delete
-          javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
-        end
-      end
-
-      # Handle Host power buttons
-      if button_power_press?(params[:pressed])
-        handle_host_power_press(params[:pressed])
-      end
-
       return if button_control_transferred?(params[:pressed])
 
       check_if_button_is_implemented unless params[:pressed] == "host_miq_request_new"
-
-      if lastaction_is_show_and_flash_present?
-        @host = @record = identify_record(params[:id])
-        @refresh_partial = "layouts/flash_msg"
-        @refresh_div = "flash_msg_div"
-      end
     end
 
     if button_has_redirect_suffix?(params[:pressed])
@@ -642,6 +595,35 @@ class HostController < ApplicationController
 
   def button_sub_item_prefixes
     %w(vm_ miq_template_ guest_ storage_)
+  end
+
+  def handled_buttons
+    ctrlr_buttons = %w(
+      storage_scan
+      storage_refresh
+      common_drift
+      new
+      perf_reload
+      perf_refresh
+      custom_button
+    )
+    ctrlr_buttons += handled_host_buttons
+  end
+
+  def handle_common_drift
+    drift_analysis
+  end
+
+  def handle_new
+    redirect_to :action => "new"
+  end
+
+  def handle_perf_reload
+    perf_chart_chooser
+  end
+
+  def handle_perf_refresh
+    perf_refresh_data
   end
 
   menu_section :inf

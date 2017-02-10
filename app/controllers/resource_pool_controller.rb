@@ -17,34 +17,22 @@ class ResourcePoolController < ApplicationController
   def button
     restore_edit_for_search
     copy_sub_item_display_value_to_params
+    set_default_refresh_div
 
-    if button_sub_item_display_values.include?(@display) # Need to check, since RPs contain RPs
-      handle_sub_item_presses(params[:pressed]) do |pfx|
-        process_vm_buttons(pfx)
+    handle_tag_presses(params[:pressed])
+    handle_button_pressed(params[:pressed])
 
-        return if button_control_transferred?(params[:pressed])
+    handle_sub_item_presses(params[:pressed]) do |pfx|
+      process_vm_buttons(pfx)
 
-        unless button_has_redirect_suffix?(params[:pressed])
-          set_refresh_and_show
-        end
-      end
-    else
-      set_default_refresh_div
+      return if button_control_transferred?(params[:pressed])
 
-      case params[:pressed]
-      when "resource_pool_delete"
-        deleteresourcepools
-        if !@flash_array.nil? && @single_delete
-          javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
-        end
-      when "resource_pool_tag"
-        tag(ResourcePool)
-        return if @flash_array.nil?
-      when "resource_pool_protect"
-        assign_policies(ResourcePool)
-        return if @flash_array.nil?
+      unless button_has_redirect_suffix?(params[:pressed])
+        set_refresh_and_show
       end
     end
+
+    return if response && performed?
 
     check_if_button_is_implemented
 
@@ -58,6 +46,19 @@ class ResourcePoolController < ApplicationController
   end
 
   private
+
+  def handled_buttons
+    %w(resource_pool_delete resource_pool_protect)
+  end
+
+  def handle_resource_pool_delete
+    deleteresourcepools
+    redirect_to_retire_screen_if_single_delete
+  end
+
+  def handle_resource_pool_protect
+    assign_policies(ResourcePool)
+  end
 
   def textual_group_list
     [%i(properties relationships), %i(configuration smart_management)]
