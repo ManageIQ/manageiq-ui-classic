@@ -184,6 +184,7 @@
   };
 
   ReportDataController.prototype.initObjects = function(initObject) {
+    initObject.gtlType = initObject.gtlType || 'grid';
     this.gtlData = { cols: [], rows: [] };
     this.initObject = initObject;
     this.gtlType = initObject.gtlType;
@@ -251,7 +252,6 @@
   };
 
   ReportDataController.prototype.setExtraClasses = function(viewType) {
-    console.log(this);
     var mainContent = this.$document.getElementById(MAIN_CONTETN_ID);
     if (mainContent) {
       angular.element(mainContent).removeClass('miq-sand-paper');
