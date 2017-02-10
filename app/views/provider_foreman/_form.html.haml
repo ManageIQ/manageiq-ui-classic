@@ -103,7 +103,7 @@
                           :ng_reqd_password  => true,
                           :ng_reqd_verify    => true,
                           :validate_url      => "authentication_validate",
-                          :id                => @provider_cfgmgmt.id || "new",
+                          :id                => @provider_manager.id || "new",
                           :valtype           => nil,
                           :basic_info_needed => true}
 
@@ -111,5 +111,5 @@
     %span{:style => "color:black"}= _("Required. Should have privileged access, such as root or administrator.")
 
 :javascript
-  ManageIQ.angular.app.value('providerForemanFormId', '#{@provider_cfgmgmt.id || "new"}');
+  ManageIQ.angular.app.value('providerForemanFormId', '#{@provider_manager.id || "new"}');
   miq_bootstrap('#form_div');

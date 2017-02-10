@@ -14,8 +14,8 @@ module TreeBuilderArchived
 
   def x_get_tree_arch_orph_nodes(model_name)
     [
-      {:id => "arch", :text => _("<Archived>"), :image => "100/currentstate-archived.png", :tip => _("Archived %{model}") % {:model => model_name}},
-      {:id => "orph", :text => _("<Orphaned>"), :image => "100/currentstate-orphaned.png", :tip => _("Orphaned %{model}") % {:model => model_name}}
+      {:id => "arch", :text => _("<Archived>"), :image => "svg/currentstate-archived.svg", :tip => _("Archived %{model}") % {:model => model_name}},
+      {:id => "orph", :text => _("<Orphaned>"), :image => "svg/currentstate-orphaned.svg", :tip => _("Orphaned %{model}") % {:model => model_name}}
     ]
   end
 end

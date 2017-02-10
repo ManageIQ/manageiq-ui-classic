@@ -15,17 +15,17 @@ ManageIQ.angular.app.directive('minTimeCheck', function() {
       var setSomePeriodCheckedValidity = function(ctrl, attrs) {
         if (attrs.timeType === "day") {
           if (allDaysUnchecked(attrs.minTimeCheck)) {
-            scope.timeProfileModel.some_days_checked = false;
+            scope.vm.timeProfileModel.some_days_checked = false;
           } else {
-            scope.timeProfileModel.some_days_checked = true;
-            scope.timeProfileModel.all_days = false;
+            scope.vm.timeProfileModel.some_days_checked = true;
+            scope.vm.timeProfileModel.all_days = false;
           }
         } else if (attrs.timeType === "hour") {
           if (allHoursUnchecked(attrs.minTimeCheck)) {
-            scope.timeProfileModel.some_hours_checked = false;
+            scope.vm.timeProfileModel.some_hours_checked = false;
           } else {
-            scope.timeProfileModel.some_hours_checked = true;
-            scope.timeProfileModel.all_hours = false;
+            scope.vm.timeProfileModel.some_hours_checked = true;
+            scope.vm.timeProfileModel.all_hours = false;
           }
         }
       };
@@ -33,7 +33,7 @@ ManageIQ.angular.app.directive('minTimeCheck', function() {
       var allDaysUnchecked = function(i) {
         var dayValues = _.times(7, _.constant(false));
         dayValues[i] = true;
-        return angular.equals(scope.timeProfileModel.dayValues, dayValues);
+        return angular.equals(scope.vm.timeProfileModel.dayValues, dayValues);
       };
 
       var allHoursUnchecked = function(i) {
@@ -46,25 +46,25 @@ ManageIQ.angular.app.directive('minTimeCheck', function() {
       var allFirstHalfAMHoursUnchecked = function(i) {
         var hourFirstHalfAMValues = _.times(6, _.constant(false));
         hourFirstHalfAMValues[i] = true;
-        return angular.equals(scope.timeProfileModel.hourValuesAMFirstHalf, hourFirstHalfAMValues);
+        return angular.equals(scope.vm.timeProfileModel.hourValuesAMFirstHalf, hourFirstHalfAMValues);
       };
 
       var allSecondHalfAMHoursUnchecked = function(i) {
         var hourSecondHalfAMValues = _.times(6, _.constant(false));
         hourSecondHalfAMValues[i] = true;
-        return angular.equals(scope.timeProfileModel.hourValuesAMSecondHalf, hourSecondHalfAMValues);
+        return angular.equals(scope.vm.timeProfileModel.hourValuesAMSecondHalf, hourSecondHalfAMValues);
       };
 
       var allFirstHalfPMHoursUnchecked = function(i) {
         var hourFirstHalfPMValues = _.times(6, _.constant(false));
         hourFirstHalfPMValues[i] = true;
-        return angular.equals(scope.timeProfileModel.hourValuesPMFirstHalf, hourFirstHalfPMValues);
+        return angular.equals(scope.vm.timeProfileModel.hourValuesPMFirstHalf, hourFirstHalfPMValues);
       };
 
       var allSecondHalfPMHoursUnchecked = function(i) {
         var hourSecondHalfPMValues = _.times(6, _.constant(false));
         hourSecondHalfPMValues[i] = true;
-        return angular.equals(scope.timeProfileModel.hourValuesPMSecondHalf, hourSecondHalfPMValues);
+        return angular.equals(scope.vm.timeProfileModel.hourValuesPMSecondHalf, hourSecondHalfPMValues);
       };
     }
   }

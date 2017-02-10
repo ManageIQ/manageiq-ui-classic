@@ -263,7 +263,10 @@ module ApplicationHelper
           elsif %w(ConfigurationProfile EmsFolder).include?(view.db) &&
                 request.parameters[:controller] == "provider_foreman"
             return url_for(:action => action, :id => nil) + "/"
-          elsif %w(ConfiguredSystem).include?(view.db) && request.parameters[:controller] == "provider_foreman"
+          elsif %w(ManageIQ::Providers::AutomationManager::InventoryGroup EmsFolder).include?(view.db) &&
+                request.parameters[:controller] == "automation_manager"
+            return url_for(:action => action, :id => nil) + "/"
+          elsif %w(ConfiguredSystem).include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
             return url_for(:action => action, :id => nil) + "/"
           else
             return url_for(:action => action) + "/" # In explorer, don't jump to other controllers
@@ -817,6 +820,7 @@ module ApplicationHelper
   def display_adv_search?
     %w(auth_key_pair_cloud
        availability_zone
+       automation_manager
        cim_base_storage_extent
        cloud_network
        cloud_object_store_container
@@ -1470,6 +1474,7 @@ module ApplicationHelper
     show_search = %w(
       auth_key_pair_cloud
       availability_zone
+      automation_manager
       cim_base_storage_extent
       cloud_network
       cloud_object_store_container
@@ -1611,9 +1616,11 @@ module ApplicationHelper
   end
 
   def tree_with_advanced_search?
-    %i(containers
+    %i(automation_manager_providers
+       automation_manager_cs_filter
+       containers
        containers_filter
-       cs_filter
+       configuration_manager_cs_filter
        configuration_scripts
        configuration_manager_providers
        images

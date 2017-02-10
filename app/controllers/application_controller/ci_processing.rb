@@ -1944,7 +1944,7 @@ module ApplicationController::CiProcessing
        :models  => ui_lookup(:models => klass.to_s)})
   end
 
-  def foreman_button_operation(method, display_name)
+  def manager_button_operation(method, display_name)
     items = []
     if params[:id]
       if params[:id].nil? || !ExtManagementSystem.where(:id => params[:id]).exists?
@@ -1959,25 +1959,30 @@ module ApplicationController::CiProcessing
     if items.empty?
       add_flash(_("No providers were selected for %{task}") % {:task  => display_name}, :error)
     else
-      process_cfgmgr(items, method) unless items.empty? && !flash_errors?
+      process_managers(items, method) unless items.empty? && !flash_errors?
     end
   end
 
-  def process_cfgmgr(providers, task)
-    providers, _services_out_region = filter_ids_in_region(providers, "ManageIQ::Providers::ConfigurationManager")
-    return if providers.empty?
+  def process_managers(managers, task)
+    controller_class = request.parameters[:controller]
+    provider_class = case controller_class
+                     when 'provider_foreman' then ManageIQ::Providers::ConfigurationManager
+                     when 'automation_manager' then ManageIQ::Providers::AutomationManager
+                     end
 
-    options = {:ids => providers, :task => task, :userid => session[:userid]}
-    kls = ManageIQ::Providers::ConfigurationManager.find_by_id(providers.first).class
+    manager_ids, _services_out_region = filter_ids_in_region(managers, provider_class.to_s)
+    return if manager_ids.empty?
+
+    options = {:ids => manager_ids, :task => task, :userid => session[:userid]}
+    kls = provider_class.find_by(:id => manager_ids.first).class
     kls.process_tasks(options)
   rescue => err
     add_flash(_("Error during '%{task}': %{message}") % {:task => task, :message => err.message}, :error)
   else
-    add_flash(n_("%{task} initiated for %{count} provider (%{controller})",
-                 "%{task} initiated for %{count} providers (%{controller})", providers.length) %
-                {:task       => task_name(task),
-                 :controller => ProviderForemanController.model_to_name(kls.to_s),
-                 :count      => providers.length})
+    add_flash(n_("%{task} initiated for %{count} provider",
+                 "%{task} initiated for %{count} providers)", manager_ids.length) %
+                {:task  => task_name(task),
+                 :count => manager_ids.length})
   end
 
   # Delete all selected or single displayed VM(s)
@@ -2399,11 +2404,11 @@ module ApplicationController::CiProcessing
       end
     when "manageable"
       each_host(hosts, task_name) do |host|
-        if ["available", "adoptfail", "inspectfail", "cleanfail"].include?(host.hardware.provision_state)
+        if %w(enroll available adoptfail inspectfail cleanfail).include?(host.hardware.provision_state)
           host.manageable_queue(session[:userid])
           add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => (display_name || task)})
         else
-          add_flash(_("\"%{task}\": not available for %{hostname}. %{hostname}'s provision state must be in \"available\", \"adoptfail\", \"cleanfail\", or \"inspectfail\"") % {:hostname => host.name, :task => (display_name || task)}, :error)
+          add_flash(_("\"%{task}\": not available for %{hostname}. %{hostname}'s provision state must be in \"available\", \"adoptfail\", \"cleanfail\", \"enroll\", or \"inspectfail\"") % {:hostname => host.name, :task => (display_name || task)}, :error)
         end
       end
     when "introspect"

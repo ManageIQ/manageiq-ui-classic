@@ -20,14 +20,14 @@ module TreeNode
                    end
       end
       if @object.active? && @object.miq_server.started?
-        image = '100/on.png'
+        image = 'svg/currentstate-on.svg'
         title += _(" (%{priority}active, PID=%{number})") % {:priority => priority, :number => @object.miq_server.pid}
       else
         if @object.miq_server.started?
-          image = '100/suspended.png'
+          image = 'svg/currentstate-suspended.svg'
           title += _(" (%{priority}available, PID=%{number})") % {:priority => priority, :number => @object.miq_server.pid}
         else
-          image = '100/off.png'
+          image = 'svg/currentstate-off.svg'
           title += _(" (%{priority}unavailable)") % {:priority => priority}
         end
         klass = "red" if @object.priority == 1

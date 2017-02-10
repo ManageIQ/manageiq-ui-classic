@@ -4,7 +4,7 @@ class TreeBuilderConfigurationManagerConfiguredSystems < TreeBuilder
   private
 
   def tree_init_options(_tree_name)
-    {:leaf => "ConfiguredSystem"}
+    {:leaf => "ManageIQ::Providers::ForemanProvider::ConfigurationManager::ConfiguredSystem"}
   end
 
   def set_locals_for_render
@@ -26,11 +26,6 @@ class TreeBuilderConfigurationManagerConfiguredSystems < TreeBuilder
                  :text          => _("%{name} Configured Systems") % {:name => ui_lookup(:ui_title => 'foreman')},
                  :icon          => "pficon pficon-folder-close",
                  :tip           => _("%{name} Configured Systems") % {:name => ui_lookup(:ui_title => 'foreman')},
-                 :load_children => true)
-    objects.push(:id            => "csa",
-                 :text          => _("Ansible Tower Configured Systems"),
-                 :icon          => "pficon pficon-folder-close",
-                 :tip           => _("Ansible Tower Configured Systems"),
                  :load_children => true)
     objects.push(:id          => "global",
                  :text        => _("Global Filters"),

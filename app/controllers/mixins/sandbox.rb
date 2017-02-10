@@ -39,6 +39,8 @@ module Sandbox
     alert_profile_tree
     alert_tree
     automate_tree
+    automation_manager_providers_tree
+    automation_manager_cs_filter_tree
     bottlenecks_tree
     cb_assignments_tree
     cb_rates_tree
@@ -48,7 +50,8 @@ module Sandbox
     condition_tree
     containers_tree
     containers_filter_tree
-    cs_filter_tree
+    configuration_manager_cs_filter_tree
+    configuration_manager_providers_tree
     customization_templates_tree
     datacenter_tree
     datastore_tree
@@ -110,6 +113,9 @@ module Sandbox
     action
     alert
     alert_profile
+    automation_manager_providers
+    automation_manager_cs_filter
+    automation_manager_configuration_scripts
     cb_assignments
     cb_rates
     cb_reports
@@ -117,7 +123,8 @@ module Sandbox
     condition
     containers
     containers_filter
-    cs_filter
+    configuration_manager_cs_filter
+    configuration_manager_providers
     customization_templates
     datastores
     db

@@ -43,7 +43,7 @@ module ConfigurationJobHelper::TextualSummary
   end
 
   def textual_provider
-    h = {:label => _("Provider"), :image => "svg/vendor-ansible_tower_configuration.svg"}
+    h = {:label => _("Provider"), :image => "svg/vendor-automation_manager_configuration.svg"}
     provider = @record.ext_management_system
     if provider.nil?
       h[:value] = _("None")

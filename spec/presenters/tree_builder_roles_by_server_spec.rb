@@ -57,13 +57,13 @@ describe TreeBuilderRolesByServer do
                 'icon'    => "pficon pficon-server",
                 'text'    => "<strong>Server: #{@miq_server.name} [#{@miq_server.id}] (current) (started)</strong>",
                 'nodes'   => [{'key'   => "asr-#{MiqRegion.compress_id(@assigned_server_role1.id)}",
-                               'image' => ActionController::Base.helpers.image_path('100/on.png'),
+                               'image' => ActionController::Base.helpers.image_path('svg/currentstate-on.svg'),
                                'text'  => "<strong>Role: SmartProxy</strong> (primary, active, PID=)",
                                'state' => {'expanded' => true},
                                'class' => ''
                                },
                               {'key'   => "asr-#{MiqRegion.compress_id(@assigned_server_role2.id)}",
-                               'image' => ActionController::Base.helpers.image_path('100/on.png'),
+                               'image' => ActionController::Base.helpers.image_path('svg/currentstate-on.svg'),
                                'text'  => "<strong>Role: SmartProxy</strong> (secondary, active, PID=)",
                                'state' => {'expanded' => true},
                                'class' => ''

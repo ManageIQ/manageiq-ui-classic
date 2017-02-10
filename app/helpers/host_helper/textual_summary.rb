@@ -190,7 +190,7 @@ module HostHelper::TextualSummary
   def textual_power_state
     state = @record.state.to_s.downcase
     state = "unknown" if state.blank?
-    {:label => _("Power State"), :image => "100/currentstate-#{state}.png", :value => state}
+    {:label => _("Power State"), :image => "svg/currentstate-#{state}.svg", :value => state}
   end
 
   def textual_lockdown_mode

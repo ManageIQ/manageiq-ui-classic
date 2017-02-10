@@ -36,11 +36,11 @@ describe TreeBuilderImages do
     expect(providers).to eq([@template_cloud_with_az.ext_management_system,
                              {:id    => "arch",
                               :text  => "<Archived>",
-                              :image => "100/currentstate-archived.png",
+                              :image => "svg/currentstate-archived.svg",
                               :tip   => "Archived Images"},
                              {:id    => "orph",
                               :text  => "<Orphaned>",
-                              :image => "100/currentstate-orphaned.png",
+                              :image => "svg/currentstate-orphaned.svg",
                               :tip   => "Orphaned Images"}])
   end
 

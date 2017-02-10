@@ -383,8 +383,17 @@ class ConfigurationController < ApplicationController
       session[:flash_msgs] = @flash_array.dup                 # Put msgs in session for next transaction
       javascript_redirect :action => 'change_tab', :typ => "timeprofiles", :tab => 4, :id => @timeprofile.id.to_s
     elsif params[:button] == "save"
-      params[:all_days] ? days = (0..6).to_a : days = params[:days] ? params[:days].collect{|i| i.to_i} : []
-      params[:all_hours] ? hours = (0..23).to_a : hours = params[:hours] ? params[:hours].collect{|i| i.to_i} : []
+      if params[:all_days] == 'true'
+        days = (0..6).to_a
+      else
+        days = params[:dayValues].each_with_index.map { |item, index| item == 'true' ? index : nil }.compact
+      end
+      if params[:all_hours] == 'true'
+        hours = (0..23).to_a
+      else
+        all_hours = params[:hourValuesAMFirstHalf] + params[:hourValuesAMSecondHalf] + params[:hourValuesPMFirstHalf] + params[:hourValuesPMSecondHalf]
+        hours = all_hours.each_with_index.map { |item, index| item == 'true' ? index : nil }.compact
+      end
       @timeprofile.description = params[:description]
       @timeprofile.profile_key = params[:profile_type] == "user" ? session[:userid] : nil
       @timeprofile.profile_type = params[:profile_type]
