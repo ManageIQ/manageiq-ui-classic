@@ -163,7 +163,6 @@ module Mixins
     def tag_for_pressed(pressed)
       case pressed
       when "#{self.class.table_name}_tag"  then tag(self.class.model)
-      when 'cloud_network_tag'             then tag(CloudNetwork)
       when 'cloud_object_store_object_tag' then tag(CloudObjectStoreObject)
       when 'cloud_subnet_tag'              then tag(CloudSubnet)
       when 'cloud_tenant_tag'              then tag(CloudTenant)
