@@ -22,6 +22,8 @@ module ApplicationController::CiProcessing
                  else
                    request.parameters[:controller]
                  end
+    @edit ||= {}
+    @edit[:controller] = controller
     recs = []
     if !session[:checked_items].nil? && @lastaction == "set_checked_items"
       recs = session[:checked_items]
@@ -31,6 +33,7 @@ module ApplicationController::CiProcessing
     if recs.blank?
       recs = [params[:id].to_i]
     end
+    @edit[:object_ids] = recs
     if recs.length < 1
       add_flash(_("One or more %{model} must be selected to Set Ownership") % {
         :model => Dictionary.gettext(db.to_s, :type => :model, :notfound => :titleize, :plural => true)}, :error)
@@ -2120,6 +2123,7 @@ module ApplicationController::CiProcessing
       if @explorer
         @edit ||= {}
         @edit[:explorer] = true       # Since no @edit, create @edit and save explorer to use while building url for vms in policy sim grid
+        @edit[:pol_items] = vms
         session[:edit] = @edit
         policy_sim
         @refresh_partial = "layouts/policy_sim"

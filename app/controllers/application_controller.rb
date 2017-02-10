@@ -1595,6 +1595,10 @@ class ApplicationController < ActionController::Base
 
   # Create view and paginator for a DB records with/without tags
   def get_view(db, options = {})
+    unless @edit.nil?
+      object_ids = @edit[:object_ids] unless @edit[:object_ids].nil?
+      object_ids = @edit[:pol_items] unless @edit[:pol_items].nil?
+    end
     object_ids   = @edit[:object_ids] if !@edit.nil? && !@edit[:object_ids].nil?
     db           = db.to_s
     dbname       = options[:dbname] || db.gsub('::', '_').downcase # Get db name as text
