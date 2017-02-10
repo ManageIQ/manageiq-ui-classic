@@ -387,7 +387,7 @@ class ProviderForemanController < ApplicationController
       process_show_list(options)
       @right_cell_text = _("All Configuration Management Providers")
     elsif x_active_tree == :configuration_manager_cs_filter_tree
-      options = {:model => "ConfiguredSystem"}
+      options = {:model => "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem"}
       process_show_list(options)
       @right_cell_text = _("All Configured Systems")
     end
