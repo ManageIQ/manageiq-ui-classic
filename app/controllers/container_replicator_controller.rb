@@ -10,7 +10,6 @@ class ContainerReplicatorController < ApplicationController
 
   private
 
-  # app/views/container_replicator/_main.html.haml
   def textual_group_list
     [%i(properties container_labels container_selectors compliance), %i(relationships smart_management)]
   end

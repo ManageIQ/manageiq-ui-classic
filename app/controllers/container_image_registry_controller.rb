@@ -10,7 +10,6 @@ class ContainerImageRegistryController < ApplicationController
 
   private
 
-  # app/views/container_image_registry/_main.html.haml
   def textual_group_list
     [%i(properties), %i(relationships smart_management)]
   end
