@@ -99,7 +99,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
     } else {
       var url = vm.updateUrl + hostFormId + '?button=save';
     }
-    miqService.miqAjaxButton(url, true);
+    miqService.miqAjaxButton(url, vm.hostModel);
   };
 
   $scope.resetClicked = function() {
@@ -185,18 +185,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
   function getHostFormDataComplete(response) {
     var data = response.data;
 
-    vm.hostModel.name = data.name;
-    vm.hostModel.hostname = data.hostname;
-    vm.hostModel.ipmi_address = data.ipmi_address;
-    vm.hostModel.custom_1 = data.custom_1;
-    vm.hostModel.user_assigned_os = data.user_assigned_os;
-    vm.hostModel.operating_system = data.operating_system;
-    vm.hostModel.mac_address = data.mac_address;
-    vm.hostModel.default_userid = data.default_userid;
-    vm.hostModel.remote_userid = data.remote_userid;
-    vm.hostModel.ws_userid = data.ws_userid;
-    vm.hostModel.ipmi_userid = data.ipmi_userid;
-    vm.hostModel.validate_id = data.validate_id;
+    Object.assign(vm.hostModel, data);
 
     if (vm.hostModel.default_userid !== '') {
       vm.hostModel.default_password = vm.hostModel.default_verify = miqService.storedPasswordPlaceholder;

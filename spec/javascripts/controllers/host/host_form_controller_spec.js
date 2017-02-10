@@ -169,7 +169,7 @@ describe('hostFormController', function() {
     });
 
     it('delegates to miqService.miqAjaxButton', function() {
-      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/host/update/new?button=save', true);
+      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/host/update/new?button=save', $scope.vm.hostModel);
     });
   });
 
