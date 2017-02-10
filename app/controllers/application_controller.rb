@@ -1599,7 +1599,6 @@ class ApplicationController < ActionController::Base
       object_ids = @edit[:object_ids] unless @edit[:object_ids].nil?
       object_ids = @edit[:pol_items] unless @edit[:pol_items].nil?
     end
-    object_ids   = @edit[:object_ids] if !@edit.nil? && !@edit[:object_ids].nil?
     db           = db.to_s
     dbname       = options[:dbname] || db.gsub('::', '_').downcase # Get db name as text
     db_sym       = (options[:gtl_dbname] || dbname).to_sym # Get db name as symbol

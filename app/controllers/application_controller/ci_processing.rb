@@ -90,6 +90,7 @@ module ApplicationController::CiProcessing
   DONT_CHANGE_OWNER = "0"
 
   def build_ownership_info(ownership_items)
+    @edit ||= {}
     klass = get_class_from_controller_param(params[:controller])
     record = klass.find(ownership_items[0])
     user = record.evm_owner if ownership_items.length == 1
@@ -104,8 +105,10 @@ module ApplicationController::CiProcessing
     @user = @group = DONT_CHANGE_OWNER if ownership_items.length > 1
 
     @ownershipitems = klass.find(ownership_items).sort_by(&:name)
+    @edit[:object_ids] = @ownershipitems
     @view = get_db_view(klass == VmOrTemplate ? Vm : klass) # Instantiate the MIQ Report view object
     @view.table = MiqFilter.records2table(@ownershipitems, @view.cols + ['id'])
+    session[:edit] = @edit
   end
 
   # Build the ownership assignment screen

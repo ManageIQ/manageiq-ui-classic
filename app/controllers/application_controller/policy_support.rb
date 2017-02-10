@@ -247,7 +247,9 @@ module ApplicationController::PolicySupport
 
   # Build the policy simulation screen
   def policy_sim_build_screen
+    @edit ||= {}
     @tagitems = session[:tag_db].find(session[:tag_items]).sort_by(&:name)  # Get the db records that are being tagged
+    @edit[:pol_items] = session[:tag_items]
     @catinfo = {}
     @lastaction = "policy_sim"
     @pol_view = get_db_view(session[:tag_db])       # Instantiate the MIQ Report view object
