@@ -110,7 +110,7 @@
                 %div{:class => "btn-container"}
                   %button{:class => "btn btn-link",
                   :type => "button",
-                  "ng-click" => "addKeyValue('#{prefix}')",
+                  "ng-click" => "vm.addKeyValue('#{prefix}')",
                   "ng-disabled" => "(#{ng_model}.#{prefix}_key == '' || #{ng_model}.#{prefix}_value == '')"}
                     %span{:class => "fa fa-plus tag-add"}
 
@@ -136,15 +136,15 @@
               -#  %div{:class => "btn-container"}
               %td
                 %div{"ng-if" => "#{ng_model}.#{prefix}_editMode && $index === #{ng_model}.s_index"}
-                  %button{:class => "btn btn-primary", :type => "button", "ng-disabled" => "(#{ng_model}.key === '' || #{ng_model}.key_value === '')", "ng-click" => "saveKeyValue('#{prefix}', $index)"}
+                  %button{:class => "btn btn-primary", :type => "button", "ng-disabled" => "(#{ng_model}.key === '' || #{ng_model}.key_value === '')", "ng-click" => "vm.saveKeyValue('#{prefix}', $index)"}
                     =_("Save")
-                  %button{:class => "btn btn-default", :type => "button", "ng-click" => "cancelKeyValue('#{prefix}', this.key, this.key_value, $index)"}
+                  %button{:class => "btn btn-default", :type => "button", "ng-click" => "vm.cancelKeyValue('#{prefix}', this.key, this.key_value, $index)"}
                     =_("Cancel")
 
                 %div{"ng-if" => "!#{ng_model}.#{prefix}_editMode || (#{ng_model}.#{prefix}_editMode && $index !== #{ng_model}.s_index)", :class => "btn-container"}
-                  %button{:class => "btn btn-link", :type => "button", "ng-click" => "editKeyValue('#{prefix}', this.key, this.key_value, $index)", "ng-disabled" => "#{ng_model}.#{prefix}_editMode"}
+                  %button{:class => "btn btn-link", :type => "button", "ng-click" => "vm.editKeyValue('#{prefix}', this.key, this.key_value, $index)", "ng-disabled" => "#{ng_model}.#{prefix}_editMode"}
                     %span{:class => "pficon pficon-edit"}
-                  %button{:class => "btn btn-link", :type => "button", "ng-click" => "removeKeyValue('#{prefix}', this.key, this.key_value, $index)", "ng-disabled" => "#{ng_model}.#{prefix}_editMode"}
+                  %button{:class => "btn btn-link", :type => "button", "ng-click" => "vm.removeKeyValue('#{prefix}', this.key, this.key_value, $index)", "ng-disabled" => "#{ng_model}.#{prefix}_editMode"}
                     %span{:class => "pficon pficon-delete"}
 
     .form-group
@@ -162,8 +162,8 @@
         .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_dialog_id.$invalid}", "ng-if" => "#{ng_model}.#{prefix}_dialog_existing == 'existing'"}
           %select{"ng-model"    => "vm._#{prefix}_dialog",
                   "name"        => "#{prefix}_dialog_id",
-                  'ng-options'  => 'dialog as dialog.label for dialog in dialogs',
-                  "ng-required" => "fieldsRequired('#{prefix}') && #{ng_model}.#{prefix}_dialog_existing == 'existing'",
+                  'ng-options'  => 'dialog as dialog.label for dialog in vm.dialogs',
+                  "ng-required" => "vm.fieldsRequired('#{prefix}') && #{ng_model}.#{prefix}_dialog_existing == 'existing'",
                   :checkchange  => true,
                   'pf-select'   => true}
             %option{"value" => ""}
@@ -176,7 +176,7 @@
                               'ng-model'    => "#{ng_model}.#{prefix}_dialog_name",
                               :name         => "vm.#{prefix}_dialog_name",
                               :maxlength    => 50,
-                              "ng-required" => "fieldsRequired('#{prefix}') && #{ng_model}.#{prefix}_dialog_existing == 'create'",
+                              "ng-required" => "vm.fieldsRequired('#{prefix}') && #{ng_model}.#{prefix}_dialog_existing == 'create'",
                               "checkchange" => ""}
             %span.help-block{"ng-show" => "angularForm.#{prefix}_dialog_name.$error.$invalid"}
               = _("Required")

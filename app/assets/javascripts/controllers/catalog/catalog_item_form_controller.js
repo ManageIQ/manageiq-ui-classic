@@ -44,7 +44,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     ManageIQ.angular.scope = $scope;
 
     if (catalogItemFormId == 'new') {
-      vm.newRecord                    = true;
+      $scope.newRecord                = true;
       vm.catalogItemModel.name        = '';
       vm.catalogItemModel.description = '';
       vm.catalogItemModel.catalog_id  = '';
@@ -58,7 +58,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     } else {
       vm.newRecord = false;
       catalogItemDataFactory.getCatalogItemData(catalogItemFormId).then(function (catalogItemData) {
-        vm.newRecord = false;
+        $scope.newRecord = false;
         vm.catalogItemModel.name = catalogItemData.name;
         vm.catalogItemModel.description = catalogItemData.description;
         vm.catalogItemModel.display = catalogItemData.display;
