@@ -75,6 +75,7 @@ class MiqTaskController < ApplicationController
   def get_jobs
     @lastaction = "jobs"
 
+    # Do we use @layout outside of this class, can it be removed ?
     if @tabform == "tasks_1"
       @layout = "my_tasks"
       drop_breadcrumb(:name => _("My VM and Container Analysis Tasks"), :url => "/miq_task/index?jobs_tab=tasks")
@@ -95,7 +96,7 @@ class MiqTaskController < ApplicationController
       drop_breadcrumb(:name => _("All Other Tasks"), :url => "/miq_task/index?jobs_tab=alltasks")
       @user_names = MiqTask.distinct("userid").pluck("userid").delete_if(&:blank?)
     end
-    
+
     @view, @pages = get_view(db_class, :conditions => tasks_condition(@tasks_options[@tabform]))
   end
 
@@ -284,7 +285,7 @@ class MiqTaskController < ApplicationController
       @edit[:opts] = copy_hash(@tasks_options[@tabform]) # Backup current settings
     end
 
-    get_jobs  # Get the jobs based on the latest options
+    get_jobs # Get the jobs based on the latest options
     @pp_choices = PPCHOICES2                             # Get special pp choices for jobs/tasks lists
 
     render :update do |page|
@@ -304,19 +305,19 @@ class MiqTaskController < ApplicationController
   private ############################
 
   def db_class
-    case @layout
-    when 'my_tasks', 'all_tasks'       then Job
-    when 'my_ui_tasks', 'all_ui_tasks' then MiqTask
+    case @tabform
+    when 'tasks_1', 'tasks_3' then Job
+    when 'tasks_2', 'tasks_4' then MiqTask
     end
   end
 
   def db_table
-    case @layout
-      when 'my_tasks', 'all_tasks'       then %Q["jobs"]
-      when 'my_ui_tasks', 'all_ui_tasks' then %Q["miq_tasks"]
+    case @tabform
+    when 'tasks_1', 'tasks_3' then ""
+    when 'tasks_2', 'tasks_4' then "miq_tasks."
     end
   end
-  
+
   # Set all task options to default
   def tasks_set_default_options
     @tasks_options[@tabform] = {
@@ -337,9 +338,9 @@ class MiqTaskController < ApplicationController
   # Create a condition from the passed in options
   def tasks_condition(opts, use_times = true)
     cond = [[]]
-    
-    cond = add_to_condition(cond, "\"jobs\".\"guid\" IS NULL", nil) unless vm_analysis_task?
-    
+
+    cond = add_to_condition(cond, "jobs.guid IS NULL", nil) unless vm_analysis_task?
+
     cond = add_to_condition(cond, *build_query_for_userid(opts))
 
     if !opts[:ok] && !opts[:queued] && !opts[:error] && !opts[:warn] && !opts[:running]
@@ -368,8 +369,8 @@ class MiqTaskController < ApplicationController
   end
 
   def build_query_for_userid(opts)
-    return ["#{db_table}.\"userid\"=?", session[:userid]] if %w(tasks_1 tasks_2).include?(@tabform)
-    return ["#{db_table}.\"userid\"=?", opts[:user_choice]] if opts[:user_choice] && opts[:user_choice] != "all"
+    return ["#{db_table}userid=?", session[:userid]] if %w(tasks_1 tasks_2).include?(@tabform)
+    return ["#{db_table}userid=?", opts[:user_choice]] if opts[:user_choice] && opts[:user_choice] != "all"
     return nil, nil
   end
 
@@ -384,7 +385,7 @@ class MiqTaskController < ApplicationController
   end
 
   def build_query_for_queued
-    ["(#{db_table}.\"state\"=? OR #{db_table}.\"state\"=?)", %w(waiting_to_start Queued)]
+    ["(#{db_table}state=? OR #{db_table}state=?)", %w(waiting_to_start Queued)]
   end
 
   def build_query_for_ok
@@ -400,32 +401,34 @@ class MiqTaskController < ApplicationController
   end
 
   def build_query_for_status_completed(status)
-    return ["(#{db_table}.\"state\"=? AND #{db_table}.\"status\"=?)", ["finished", status]] if vm_analysis_task?
-    ["(#{db_table}.\"state\"=? AND #{db_table}.\"status\"=?)", ["Finished", status.capitalize]]
+    return ["(#{db_table}state=? AND #{db_table}status=?)", ["finished", status]] if vm_analysis_task?
+    ["(#{db_table}state=? AND #{db_table}status=?)", ["Finished", status.capitalize]]
   end
 
   def build_query_for_running
-    return ["(#{db_table}.\"state\"!=? AND #{db_table}.\"state\"!=? AND #{db_table}.\"state\"!=?)", %w(finished waiting_to_start queued)] if vm_analysis_task?
-    ["(#{db_table}.\"state\"!=? AND #{db_table}.\"state\"!=? AND #{db_table}.\"state\"!=?)", %w(Finished waiting_to_start Queued)]
+    return ["(#{db_table}state!=? AND #{db_table}state!=? AND #{db_table}state!=?)", %w(finished waiting_to_start queued)] if vm_analysis_task?
+    ["(#{db_table}state!=? AND #{db_table}state!=? AND #{db_table}state!=?)", %w(Finished waiting_to_start Queued)]
   end
 
   def build_query_for_status_none_selected
-    return ["(#{db_table}.\"status\"!=? AND #{db_table}.\"status\"!=? AND #{db_table}.\"status\"!=? AND #{db_table}\"state\"!=? AND #{db_table}.\"state\"!=?)",
-            %w(ok error warn finished waiting_to_start)] if vm_analysis_task?
-    ["(#{db_table}.\"status\"!=? AND #{db_table}.\"status\"!=? AND #{db_table}.\"status\"!=? AND #{db_table}.\"state\"!=? AND #{db_table}.\"state\"!=?)", %w(Ok Error Warn Finished Queued)]
+    if vm_analysis_task?
+      return ["(#{db_table}status!=? AND #{db_table}status!=? AND #{db_table}status!=? AND #{db_table}state!=? AND #{db_table}state!=?)",
+              %w(ok error warn finished waiting_to_start)]
+    end
+    ["(#{db_table}status!=? AND #{db_table}status!=? AND #{db_table}status!=? AND #{db_table}state!=? AND #{db_table}state!=?)", %w(Ok Error Warn Finished Queued)]
   end
 
   def build_query_for_time_period(opts)
     t = format_timezone(opts[:time_period].to_i != 0 ? opts[:time_period].days.ago : Time.now, Time.zone, "raw")
-    ["#{db_table}.\"updated_on\">=? AND #{db_table}.\"updated_on\"<=?", [t.beginning_of_day, t.end_of_day]]
+    ["#{db_table}updated_on>=? AND #{db_table}updated_on<=?", [t.beginning_of_day, t.end_of_day]]
   end
 
   def build_query_for_zone(opts)
-    ["#{db_table}.\"zone\"=?", opts[:zone]]
+    ["#{db_table}zone=?", opts[:zone]]
   end
 
   def build_query_for_state(opts)
-    ["#{db_table}.\"state\"=?", opts[:state_choice]]
+    ["#{db_table}state=?", opts[:state_choice]]
   end
 
   def vm_analysis_task?
