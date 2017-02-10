@@ -1,6 +1,7 @@
 ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalogItemFormId', 'miqService', 'postService', 'API', 'catalogItemDataFactory', function($scope, catalogItemFormId, miqService, postService, API, catalogItemDataFactory) {
+  var vm = this;
   var init = function() {
-    $scope.catalogItemModel = {
+    vm.catalogItemModel = {
       name: '',
       description: '',
       display: false,
@@ -35,38 +36,38 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       retirement_variables: {"r_var1": "r_val1", "r_var2": "r_val2"},
       retirement_editMode: false
     };
-    $scope.formId = catalogItemFormId;
-    $scope.afterGet = false;
-    $scope.modelCopy = angular.copy( $scope.catalogItemModel );
-    $scope.model = "catalogItemModel";
+    vm.formId = catalogItemFormId;
+    vm.afterGet = false;
+    vm.modelCopy = angular.copy( vm.catalogItemModel );
+    vm.model = "catalogItemModel";
 
     ManageIQ.angular.scope = $scope;
 
     if (catalogItemFormId == 'new') {
-      $scope.newRecord                    = true;
-      $scope.catalogItemModel.name        = '';
-      $scope.catalogItemModel.description = '';
-      $scope.catalogItemModel.catalog_id  = '';
-      $scope.catalogItemModel.display     = false;
-      $scope.catalogItemModel.provisioning_dialog_id  = '';
-      $scope.catalogItemModel.retirement_dialog_id  = '';
-      $scope.catalogItemModel.prov_type   = 'generic_ansible_playbook';
-      $scope.formOptions();
-      $scope.afterGet  = true;
-      $scope.modelCopy = angular.copy( $scope.catalogItemModel );
+      vm.newRecord                    = true;
+      vm.catalogItemModel.name        = '';
+      vm.catalogItemModel.description = '';
+      vm.catalogItemModel.catalog_id  = '';
+      vm.catalogItemModel.display     = false;
+      vm.catalogItemModel.provisioning_dialog_id  = '';
+      vm.catalogItemModel.retirement_dialog_id  = '';
+      vm.catalogItemModel.prov_type   = 'generic_ansible_playbook';
+      vm.formOptions();
+      vm.afterGet  = true;
+      vm.modelCopy = angular.copy( vm.catalogItemModel );
     } else {
-      $scope.newRecord = false;
+      vm.newRecord = false;
       catalogItemDataFactory.getCatalogItemData(catalogItemFormId).then(function (catalogItemData) {
-        $scope.newRecord = false;
-        $scope.catalogItemModel.name = catalogItemData.name;
-        $scope.catalogItemModel.description = catalogItemData.description;
-        $scope.catalogItemModel.display = catalogItemData.display;
-        $scope.catalogItemModel.catalog_id = catalogItemData.service_template_catalog_id;
-        $scope.catalogItemModel.provisioning_dialog_id  = catalogItemData.provisioning_dialog_id;;
-        $scope.catalogItemModel.retirement_dialog_id  = catalogItemData.retirement_dialog_id;;
-        $scope.formOptions();
-        $scope.afterGet = true;
-        $scope.modelCopy = angular.copy($scope.catalogItemModel);
+        vm.newRecord = false;
+        vm.catalogItemModel.name = catalogItemData.name;
+        vm.catalogItemModel.description = catalogItemData.description;
+        vm.catalogItemModel.display = catalogItemData.display;
+        vm.catalogItemModel.catalog_id = catalogItemData.service_template_catalog_id;
+        vm.catalogItemModel.provisioning_dialog_id  = catalogItemData.provisioning_dialog_id;;
+        vm.catalogItemModel.retirement_dialog_id  = catalogItemData.retirement_dialog_id;;
+        vm.formOptions();
+        vm.afterGet = true;
+        vm.modelCopy = angular.copy(vm.catalogItemModel);
       });
     }
   };
@@ -103,131 +104,152 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
   };
 
   // list of service catalogs
-  $scope.formOptions = function() {
+  vm.formOptions = function() {
     API.get("/api/service_catalogs/?expand=resources&attributes=id,name").then(function(data) {
-      $scope.catalogs = data.resources;
-      $scope._catalog = _.find($scope.catalogs, {id: $scope.catalogItemModel.catalog_id})
+      vm.catalogs = data.resources;
+      vm._catalog = _.find(vm.catalogs, {id: vm.catalogItemModel.catalog_id})
     })
 
     // list of service dailaogs
     API.get("/api/service_dialogs/?expand=resources&attributes=id,label").then(function (data) {
-      $scope.dialogs = data.resources
-      $scope._retirement_dialog = _.find($scope.dialogs, {id: $scope.catalogItemModel.retirement_dialog_id})
-      $scope._provisioning_dialog = _.find($scope.dialogs, {id: $scope.catalogItemModel.provisioning_dialog_id})
+      vm.dialogs = data.resources
+      vm._retirement_dialog = _.find(vm.dialogs, {id: vm.catalogItemModel.retirement_dialog_id})
+      vm._provisioning_dialog = _.find(vm.dialogs, {id: vm.catalogItemModel.provisioning_dialog_id})
     })
 
     // list of repositories
     API.get("/api/configuration_script_sources/?expand=resources&attributes=id,name").then(function (data) {
-      $scope.repositories = data.resources;
-      $scope._retirement_repository = _.find($scope.repositories, {id: $scope.catalogItemModel.retirement_repository_id})
-      $scope._provisioning_repository = _.find($scope.repositories, {id: $scope.catalogItemModel.provisioning_repository_id})
+      vm.repositories = data.resources;
+      vm._retirement_repository = _.find(vm.repositories, {id: vm.catalogItemModel.retirement_repository_id})
+      vm._provisioning_repository = _.find(vm.repositories, {id: vm.catalogItemModel.provisioning_repository_id})
     })
 
     // list of machine credentials
     // check if the type of credentials can be specified in the API
     //API.get("/api/automation_manager_authentications/?expand=resources&attributes=id,name")
     API.get("/api/service_catalogs/?expand=resources&attributes=id,name").then(function (data) {
-      $scope.machine_credentials = data.resources;
-      $scope._retirement_machine_credential = _.find($scope.machine_credentials, {id: $scope.catalogItemModel.retirement_machine_credential_id})
-      $scope._provisioning_machine_credential = _.find($scope.machine_credentials, {id: $scope.catalogItemModel.provisioning_machine_credential_id})
+      vm.machine_credentials = data.resources;
+      vm._retirement_machine_credential = _.find(vm.machine_credentials, {id: vm.catalogItemModel.retirement_machine_credential_id})
+      vm._provisioning_machine_credential = _.find(vm.machine_credentials, {id: vm.catalogItemModel.provisioning_machine_credential_id})
     })
 
     // list of network credentials
     // check if the type of credentials can be specified in the API
     //API.get("/api/automation_manager_authentications/?expand=resources&attributes=id,name")
      API.get("/api/service_catalogs/?expand=resources&attributes=id,name").then(function (data) {
-      $scope.network_credentials = data.resources;
-      $scope._retirement_network_credential = _.find($scope.network_credentials, {id: $scope.catalogItemModel.retirement_network_credential_id})
-      $scope._provisioning_network_credential = _.find($scope.network_credentials, {id: $scope.catalogItemModel.provisioning_network_credential_id})
+      vm.network_credentials = data.resources;
+      vm._retirement_network_credential = _.find(vm.network_credentials, {id: vm.catalogItemModel.retirement_network_credential_id})
+      vm._provisioning_network_credential = _.find(vm.network_credentials, {id: vm.catalogItemModel.provisioning_network_credential_id})
     })
 
     // list of cloud credentials
     // check if the type of credentials can be specified in the API
     //API.get("/api/automation_manager_authentications/?expand=resources&attributes=id,name")
     API.get("/api/service_catalogs/?expand=resources&attributes=id,name").then(function (data) {
-      $scope.cloud_credentials = data.resources;
-      $scope._retirement_cloud_credential = _.find($scope.cloud_credentials, {id: $scope.catalogItemModel.retirement_cloud_credential_id})
-      $scope._provisioning_cloud_credential = _.find($scope.cloud_credentials, {id: $scope.catalogItemModel.provisioning_cloud_credential_id})
+      vm.cloud_credentials = data.resources;
+      vm._retirement_cloud_credential = _.find(vm.cloud_credentials, {id: vm.catalogItemModel.retirement_cloud_credential_id})
+      vm._provisioning_cloud_credential = _.find(vm.cloud_credentials, {id: vm.catalogItemModel.provisioning_cloud_credential_id})
     })
   };
 
   // get playbooks for selected repository
-  $scope.repositoryChanged = function(prefix, id) {
+  vm.repositoryChanged = function(prefix, id) {
     API.get("/api/configuration_script_sources/" + id + "?attributes=configuration_script_payloads").then(function(data){
-      $scope.catalogItemModel[prefix + '_playbook_id'] = '';
-      $scope.catalogItemModel[prefix + '_repository_id'] = id;
-      $scope[prefix + '_playbooks']  = data.configuration_script_payloads;
+      vm.catalogItemModel[prefix + '_playbook_id'] = '';
+      vm.catalogItemModel[prefix + '_repository_id'] = id;
+      vm[prefix + '_playbooks']  = data.configuration_script_payloads;
     })
   };
 
-  $scope.$watch('_provisioning_repository', function(value) {
+  $scope.$watch('vm._provisioning_repository', function(value) {
     if (value) {
-      $scope.repositoryChanged("provisioning", value.id)
+      vm.repositoryChanged("provisioning", value.id)
     } else
-      $scope.catalogItemModel['provisioning_repository_id'] = ''
+      vm.catalogItemModel['provisioning_repository_id'] = ''
   });
 
-  $scope.$watch('_retirement_repository', function(value) {
+  $scope.$watch('vm._retirement_repository', function(value) {
     if (value) {
-      $scope.repositoryChanged("retirement", value.id)
+      vm.repositoryChanged("retirement", value.id)
     } else
-      $scope.catalogItemModel['retirement_repository_id'] = ''
+      vm.catalogItemModel['retirement_repository_id'] = ''
   });
 
-  $scope.$watch('catalogItemModel.display', function(value) {
-    $scope.catalogItemModel.display = value;
-    return $scope.catalogItemModel.display;
+  $scope.$watch('vm.catalogItemModel.display', function(value) {
+    vm.catalogItemModel.display = value;
+    return vm.catalogItemModel.display;
   })
 
-  $scope.addKeyValue = function(prefix) {
-    $scope.catalogItemModel[prefix + "_variables"][$scope.catalogItemModel[prefix + "_key"]] =  $scope.catalogItemModel[prefix + "_value"]
-    $scope.catalogItemModel[prefix + "_key"] = '';
-    $scope.catalogItemModel[prefix + "_value"] = '';
+  vm.addKeyValue = function(prefix) {
+    vm.catalogItemModel[prefix + "_variables"][vm.catalogItemModel[prefix + "_key"]] =  vm.catalogItemModel[prefix + "_value"]
+    vm.catalogItemModel[prefix + "_key"] = '';
+    vm.catalogItemModel[prefix + "_value"] = '';
   }
 
-  $scope.provisioning_repository_selected = function() {
-    return $scope.catalogItemModel.provisioning_repository_id !== '';
+  vm.provisioning_repository_selected = function() {
+    return vm.catalogItemModel.provisioning_repository_id !== '';
   }
 
-  $scope.retirement_repository_selected = function() {
-    return $scope.catalogItemModel.retirement_repository_id !== '';
+  vm.retirement_repository_selected = function() {
+    return vm.catalogItemModel.retirement_repository_id !== '';
   }
 
-  $scope.removeKeyValue = function(prefix, key) {
-    delete $scope.catalogItemModel[prefix + "_variables"][key];
+  vm.removeKeyValue = function(prefix, key) {
+    delete vm.catalogItemModel[prefix + "_variables"][key];
   }
 
-  $scope.editKeyValue = function(prefix, key, key_value, index) {
-    $scope.catalogItemModel[prefix + "_editMode"] = true;
-    $scope.catalogItemModel.s_index = index;
-    $scope.catalogItemModel.key = key;
-    $scope.catalogItemModel.key_value = key_value;
-    $scope.catalogItemModel.original_key = key;
-    $scope.catalogItemModel.original_key_value = key_value;
+  vm.editKeyValue = function(prefix, key, key_value, index) {
+    vm.catalogItemModel[prefix + "_editMode"] = true;
+    vm.catalogItemModel.s_index = index;
+    vm.catalogItemModel.key = key;
+    vm.catalogItemModel.key_value = key_value;
+    vm.catalogItemModel.original_key = key;
+    vm.catalogItemModel.original_key_value = key_value;
   }
 
-  $scope.cancelKeyValue = function(prefix, key, key_value, index) {
-    $scope.catalogItemModel[prefix + "_editMode"] = false;
-    $scope.catalogItemModel.s_index = '';
-    $scope.catalogItemModel[prefix + "_variables"][$scope.catalogItemModel.original_key] = $scope.catalogItemModel.original_key_value;
+  vm.cancelKeyValue = function(prefix, key, key_value, index) {
+    vm.catalogItemModel[prefix + "_editMode"] = false;
+    vm.catalogItemModel.s_index = '';
+    vm.catalogItemModel[prefix + "_variables"][vm.catalogItemModel.original_key] = vm.catalogItemModel.original_key_value;
   }
 
-  $scope.saveKeyValue = function(prefix, index) {
-    $scope.catalogItemModel[prefix + "_editMode"] = false;
-    $scope.catalogItemModel.s_index = '';
+  vm.saveKeyValue = function(prefix, index) {
+    vm.catalogItemModel[prefix + "_editMode"] = false;
+    vm.catalogItemModel.s_index = '';
     // delete key if key name was edited, and a add new key to hash with new name
-    if ($scope.catalogItemModel.original_key !== $scope.catalogItemModel.key)
-      delete $scope.catalogItemModel[prefix + "_variables"][$scope.catalogItemModel.original_key];
+    if (vm.catalogItemModel.original_key !== vm.catalogItemModel.key)
+      delete vm.catalogItemModel[prefix + "_variables"][vm.catalogItemModel.original_key];
 
-    $scope.catalogItemModel[prefix + "_variables"][$scope.catalogItemModel.key] = $scope.catalogItemModel.key_value;
+    vm.catalogItemModel[prefix + "_variables"][vm.catalogItemModel.key] = vm.catalogItemModel.key_value;
   }
 
-  $scope.toggleDialogSelection = function(prefix, selected_value) {
-    $scope.catalogItemModel[prefix + "_dialog_existing"] = selected_value
+  vm.toggleDialogSelection = function(prefix, selected_value) {
+    vm.catalogItemModel[prefix + "_dialog_existing"] = selected_value
   };
 
-  $scope.fieldsRequired = function(prefix) {
+  vm.fieldsRequired = function(prefix) {
     return prefix == "provisioning";
+  };
+
+  $scope.cancelClicked = function() {
+    catalogItemEditButtonClicked('cancel');
+    $scope.angularForm.$setPristine(true);
+  };
+
+  $scope.resetClicked = function() {
+    vm.catalogItemModel = angular.copy( vm.modelCopy );
+    $scope.angularForm.$setUntouched(true);
+    $scope.angularForm.$setPristine(true);
+    miqService.miqFlash("warn", __("All changes have been reset"));
+  };
+
+  $scope.saveClicked = function() {
+    catalogItemEditButtonClicked('save', true);
+    $scope.angularForm.$setPristine(true);
+  };
+
+  $scope.addClicked = function() {
+    $scope.saveClicked();
   };
 
   init();

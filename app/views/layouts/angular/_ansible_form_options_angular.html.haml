@@ -2,26 +2,26 @@
 .row
   .col-md-12.col-lg-6
     .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_repository_id.$invalid}"}
-      %label.col-md-2.control-label{"for" => "#{prefix}_repository_id"}
+      %label.col-md-2.control-label{"for" => "vm.#{prefix}_repository_id"}
         = _('Repository')
       .col-md-8
-        %select{"ng-model"    => "_#{prefix}_repository",
+        %select{"ng-model"    => "vm._#{prefix}_repository",
                 "name"        => "#{prefix}_repository_id",
-                'ng-options'  => 'repository as repository.name for repository in repositories',
-                "ng-required" => "fieldsRequired('#{prefix}')",
-                'ng_change'   => "repository_changed()",
+                'ng-options'  => 'repository as repository.name for repository in vm.repositories',
+                "ng-required" => "vm.fieldsRequired('#{prefix}')",
+                'ng_change'   => "vm.repository_changed()",
                 'pf-select'   => true}
           %option{"value" => ""}
             = "<#{_('Choose')}>"
 
-    #playbook_div{"ng-if" => "#{prefix}_repository_selected()"}
+    #playbook_div{"ng-if" => "vm.#{prefix}_repository_selected()"}
       .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_playbook_id.$invalid}"}
-        %label.col-md-2.control-label{"for" => "#{prefix}_playbook_id"}
+        %label.col-md-2.control-label{"for" => "vm.#{prefix}_playbook_id"}
           = _('Playbook')
         .col-md-8
-          %select{"ng-model"    => "_#{prefix}_playbook",
+          %select{"ng-model"    => "vm._#{prefix}_playbook",
                   "name"        => "#{prefix}_playbook_id",
-                  'ng-options'  => "playbook as playbook.name for playbook in #{prefix}_playbooks",
+                  'ng-options'  => "playbook as playbook.name for playbook in vm.#{prefix}_playbooks",
                   "required"    => "",
                   :miqrequired  => true,
                   :checkchange  => true,
@@ -29,14 +29,14 @@
             %option{"value" => ""}
               = "<#{_('Choose')}>"
 
-      #credentials_div{"ng-show" => "#{prefix}_repository_selected()"}
+      #credentials_div{"ng-show" => "vm.#{prefix}_repository_selected()"}
         .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_machine_credential_id.$invalid}"}
           %label.col-md-2.control-label{"for" => "#{prefix}_machine_credential_id"}
             = _('Machine Credentials')
           .col-md-8
-            %select{"ng-model"    => "_#{prefix}_machine_credential",
+            %select{"ng-model"    => "vm._#{prefix}_machine_credential",
                     "name"        => "#{prefix}_machine_credential_id",
-                    'ng-options'  => 'machine_credential as machine_credential.name for machine_credential in machine_credentials',
+                    'ng-options'  => 'machine_credential as machine_credential.name for machine_credential in vm.machine_credentials',
                     "required"    => "",
                     :miqrequired  => true,
                     :checkchange  => true,
@@ -45,24 +45,24 @@
                 = "<#{_('Choose')}>"
 
         .form-group
-          %label.col-md-2.control-label{"for" => "#{prefix}_network_credential_id"}
+          %label.col-md-2.control-label{"for" => "vm.#{prefix}_network_credential_id"}
             = _('Network Credentials')
           .col-md-8
-            %select{"ng-model"    => "_#{prefix}_network_credential",
+            %select{"ng-model"    => "vm._#{prefix}_network_credential",
                     "name"        => "#{prefix}_network_credential_id",
-                    'ng-options'  => 'network_credential as network_credential.name for network_credential in network_credentials',
+                    'ng-options'  => 'network_credential as network_credential.name for network_credential in vm.network_credentials',
                     :checkchange  => true,
                     'pf-select'   => true}
               %option{"value" => ""}
                 = "<#{_('Choose')}>"
 
         .form-group
-          %label.col-md-2.control-label{"for" => "#{prefix}_cloud_credential_id"}
+          %label.col-md-2.control-label{"for" => "vm.#{prefix}_cloud_credential_id"}
             = _('Cloud Credentials')
           .col-md-8
-            %select{"ng-model"    => "_#{prefix}_cloud_credential",
+            %select{"ng-model"    => "vm._#{prefix}_cloud_credential",
                     "name"        => "#{prefix}_cloud_credential_id",
-                    'ng-options'  => 'cloud_credential as cloud_credential.name for cloud_credential in cloud_credentials',
+                    'ng-options'  => 'cloud_credential as cloud_credential.name for cloud_credential in vm.cloud_credentials',
                     :checkchange  => true,
                     'pf-select'   => true}
               %option{"value" => ""}
@@ -73,7 +73,7 @@
         = _("Inventory")
       .col-md-8
         %input.form-control{:type         => "text",
-                            'ng-model'    => "#{ng_model}.#{prefix}_inventory",
+                            'ng-model'    => "vm.#{ng_model}.#{prefix}_inventory",
                             :name         => "#{prefix}_inventory",
                             :maxlength    => 50,
                             "miqrequired" => "",
@@ -153,14 +153,14 @@
         {{#{ng_model}.#{prefix}_dialog_existing}}
       .col-md-4
         %label.radio
-          %input{"ng-model" => "#{prefix}_dialog_existing", :type => "radio", :value => "existing", "ng-click" => "toggleDialogSelection('#{prefix}', 'existing')", "ng-checked" => "#{ng_model}.#{prefix}_dialog_existing == 'existing'"}
+          %input{"ng-model" => "vm.#{prefix}_dialog_existing", :type => "radio", :value => "existing", "ng-click" => "vm.toggleDialogSelection('#{prefix}', 'existing')", "ng-checked" => "#{ng_model}.#{prefix}_dialog_existing == 'existing'"}
           = _("Use Existing")
         %label.radio
-          %input{"ng-model" => "#{prefix}_dialog_existing", :type => "radio", :value => "create", "ng-click" => "toggleDialogSelection('#{prefix}', 'create')", "ng-checked" => ("#{ng_model}.#{prefix}_dialog_existing == 'create'")}
+          %input{"ng-model" => "vm.#{prefix}_dialog_existing", :type => "radio", :value => "create", "ng-click" => "vm.toggleDialogSelection('#{prefix}', 'create')", "ng-checked" => ("#{ng_model}.#{prefix}_dialog_existing == 'create'")}
           = _("Create New")
       .col-md-4
         .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_dialog_id.$invalid}", "ng-if" => "#{ng_model}.#{prefix}_dialog_existing == 'existing'"}
-          %select{"ng-model"    => "_#{prefix}_dialog",
+          %select{"ng-model"    => "vm._#{prefix}_dialog",
                   "name"        => "#{prefix}_dialog_id",
                   'ng-options'  => 'dialog as dialog.label for dialog in dialogs',
                   "ng-required" => "fieldsRequired('#{prefix}') && #{ng_model}.#{prefix}_dialog_existing == 'existing'",
@@ -174,7 +174,7 @@
         .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_dialog_name.$invalid}", "ng-if" => "#{ng_model}.#{prefix}_dialog_existing == 'create'"}
           %input.form-control{:type         => "text",
                               'ng-model'    => "#{ng_model}.#{prefix}_dialog_name",
-                              :name         => "#{prefix}_dialog_name",
+                              :name         => "vm.#{prefix}_dialog_name",
                               :maxlength    => 50,
                               "ng-required" => "fieldsRequired('#{prefix}') && #{ng_model}.#{prefix}_dialog_existing == 'create'",
                               "checkchange" => ""}

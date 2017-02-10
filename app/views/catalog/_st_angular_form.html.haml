@@ -1,8 +1,10 @@
 - @angular_form = true
 
 %form.form-horizontal#form_div{"name"          => "angularForm",
-               "ng-controller" => "catalogItemFormController",
-               "ng-show"       => "afterGet"}
+               "ng-controller" => "catalogItemFormController as vm",
+               "miq-form"      => 'true',
+               "ng-show"       => "vm.afterGet",
+               "model-copy"    => 'vm.modelCopy'}
   = render :partial => "layouts/flash_msg"
   %div
     %div
@@ -13,7 +15,7 @@
           %input.form-control{"type"           => "text",
                               "id"             => "name",
                               "name"           => "name",
-                              "ng-model"       => "catalogItemModel.name",
+                              "ng-model"       => "vm.catalogItemModel.name",
                               "maxlength"      => "#{MAX_NAME_LEN}",
                               "miqrequired"    => "",
                               "checkchange"    => "",
@@ -27,7 +29,7 @@
           %input.form-control{"type"        => "text",
                               "id"          => "description",
                               "name"        => "description",
-                              "ng-model"    => "catalogItemModel.description",
+                              "ng-model"    => "vm.catalogItemModel.description",
                               "maxlength"   => "#{MAX_DESC_LEN}",
                               "miqrequired" => "",
                               "checkchange" => ""}
@@ -40,18 +42,18 @@
           %input#use_config{"bs-switch"       => "",
                             "type"            => "checkbox",
                             "name"            => "display",
-                            "ng-model"        => "catalogItemModel.display",
+                            "ng-model"        => "vm.catalogItemModel.display",
                             "switch-on-text"  => "Yes",
                             "switch-off-text" => "No",
                             "checkchange" => ""}
 
-    .form-group{"ng-class" => "{'has-error': catalogItemModel.display}"}
+    .form-group{"ng-class" => "{'has-error': vm.catalogItemModel.display}"}
       %label.col-md-2.control-label{"for" => "catalog_id"}
         = _('Catalog')
       .col-md-8
-        %select{"ng-model"    => "_catalog",
+        %select{"ng-model"    => "vm._catalog",
                 "name"        => "catalog_id",
-                "ng-required" => "catalogItemModel.display",
+                "ng-required" => "vm.catalogItemModel.display",
                 'ng-options'  => 'catalog as catalog.name for catalog in catalogs',
                 'pf-select'   => true}
           %option{"value" => ""}
@@ -60,7 +62,7 @@
           = _("Required")
 
   = render :partial => "layouts/angular/multi_tab_ansible_form_options",
-           :locals  => {:record => @record, :ng_model => "catalogItemModel"}
+           :locals  => {:record => @record, :ng_model => "vm.catalogItemModel"}
   = render :partial => "layouts/angular/x_edit_buttons_angular"
 
 :javascript
