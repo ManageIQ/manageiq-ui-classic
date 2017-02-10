@@ -127,6 +127,16 @@ module Mixins
       end
     end
 
+    ### Dispatch to handlers
+    ############################################################################
+
+    # Ideal method to use
+    def handle_button_pressed(pressed)
+      if handled_buttons.include?(params[:pressed])
+        self.send("handle_#{params[:pressed]}".to_sym)
+      end
+    end
+
     # Handle buttons from sub-item (unrelated to this controller) screens
     def handle_sub_item_presses(pressed, &block)
       if pressed.starts_with?(*button_sub_item_prefixes)
@@ -144,19 +154,8 @@ module Mixins
       end
     end
 
-    def button_set_refresh
-      @refresh_div = "main_div"
-      @refresh_partial = "layouts/gtl"
-    end
-
-    def set_refresh_and_show
-      button_set_refresh
-      show # Handle VMs buttons
-    end
-
-    def set_refresh_and_alert_not_implemented
-      add_flash(_("Button not yet implemented"), :error)
-      button_set_refresh
+    def handle_host_power_press(pressed)
+      powerbutton_hosts(button_remove_prefix(pressed))
     end
 
     def tag_for_pressed(pressed)
@@ -174,23 +173,6 @@ module Mixins
       when 'network_router_tag'            then tag(NetworkRouter)
       when 'security_group_tag'            then tag(SecurityGroup)
       end
-    end
-
-    def render_or_redirect_partial_for(pressed)
-      pfx = button_prefix(pressed)
-      render_or_redirect_partial(pfx)
-    end
-
-    def button_render_fallback
-      if !flash_errors? && button_replace_gtl_main?
-        replace_gtl_main_div
-      else
-        render_flash # javascript_flash, renders json
-      end
-    end
-
-    def handle_host_power_press(pressed)
-      powerbutton_hosts(button_remove_prefix(pressed))
     end
 
     ### Predicates
@@ -310,17 +292,48 @@ module Mixins
       )
     end
 
-    ### Other magic strings
+    ### Other arrays of magic strings
     ############################################################################
 
     def button_sub_item_display_values
       %w(all_vms vms images instances)
     end
 
-    ### Complex code moved for comparison
+    # Should be implemented in controller
+    def handled_buttons
+      []
+    end
+
+    ### Refreshes and redirects
     ############################################################################
 
-    # Helpers to break up the complex bits
+    def button_set_refresh
+      @refresh_div = "main_div"
+      @refresh_partial = "layouts/gtl"
+    end
+
+    def set_refresh_and_show
+      button_set_refresh
+      show # Handle VMs buttons
+    end
+
+    def set_refresh_and_alert_not_implemented
+      add_flash(_("Button not yet implemented"), :error)
+      button_set_refresh
+    end
+
+    def render_or_redirect_partial_for(pressed)
+      pfx = button_prefix(pressed)
+      render_or_redirect_partial(pfx)
+    end
+
+    def button_render_fallback
+      if !flash_errors? && button_replace_gtl_main?
+        replace_gtl_main_div
+      else
+        render_flash # javascript_flash, renders json
+      end
+    end
 
     def refresh_flash_msg_or_block(page)
       if refreshing_flash_msg?
@@ -371,6 +384,9 @@ module Mixins
 
       javascript_redirect(args)
     end
+
+    ### Complex code moved for comparison
+    ############################################################################
 
     # These seem to be last resorts, and seem to do similar things in different ways
 
