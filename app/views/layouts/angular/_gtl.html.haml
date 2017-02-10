@@ -1,5 +1,6 @@
 - current_model = controller.class.model if controller.class.respond_to?("model") && !controller.class.model.nil?
 - current_model = params[:db].nil? ? current_model.to_s.tableize : h(j_str(params[:db]))
+- current_model = current_model && (@display.nil? || @display == "main") ? current_model : @display
 - gtl_type_string = j_str(@gtl_type)
 #miq-gtl-view{"ng-controller" => "reportDataController as dataCtrl"}
   .msg-info{"ng-show" => "dataCtrl.showMessage && dataCtrl.showMessage !== ''"}
@@ -33,7 +34,7 @@
   sendDataWithRx({initController: {
     name: 'reportDataController',
     data: {
-      modelName: '#{h(j_str(@display.nil? && current_model ? current_model : @display))}',
+      modelName: '#{h(j_str(current_model))}',
       activeTree: '#{x_active_tree}',
       gtlType: '#{h(gtl_type_string)}',
       currId: '#{h(j_str(params[:id])) unless @display.nil?}',
