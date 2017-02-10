@@ -47,7 +47,7 @@ describe VmInfraController do
 
       post :tree_select, :params => { :id => "v-#{vm.compressed_id}", :format => :js }
 
-      expect(response).to render_template('vm_common/_main')
+      expect(response).to render_template(:partial => 'layouts/_textual_groups_generic')
       expect(response).to render_template('shared/summary/_textual_tags')
       expect(response.status).to eq(200)
     end
@@ -60,7 +60,7 @@ describe VmInfraController do
 
       post :tree_select, :params => { :id => "t-#{template.compressed_id}", :format => :js }
 
-      expect(response).to render_template('vm_common/_main')
+      expect(response).to render_template(:partial => 'layouts/_textual_groups_generic')
       expect(response).to render_template('shared/summary/_textual_tags')
       expect(response.status).to eq(200)
     end

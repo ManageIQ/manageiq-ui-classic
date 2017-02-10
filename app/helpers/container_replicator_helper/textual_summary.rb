@@ -4,17 +4,20 @@ module ContainerReplicatorHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name creation_timestamp resource_version
-       replicas current_replicas)
+    TextualGroup.new(
+      _("Properties"),
+      %i(name creation_timestamp resource_version replicas current_replicas)
+    )
   end
 
   def textual_group_relationships
-    %i(ems container_project container_groups container_nodes)
+    TextualGroup.new(_("Relationships"), %i(ems container_project container_groups container_nodes))
   end
 
   def textual_group_smart_management
     items = %w(tags)
-    items.collect { |m| send("textual_#{m}") }.flatten.compact
+    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
+    TextualTags.new(_("Smart Management"), i)
   end
 
   #

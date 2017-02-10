@@ -206,7 +206,15 @@ class EmsClusterController < ApplicationController
     end
   end
 
-  private ############################
+  private
+
+  def textual_group_list
+    [
+      %i(relationships) + (::Settings.product.storage ? storage_relationships : []),
+      %i(host_totals vm_totals configuration tags openstack_status)
+    ]
+  end
+  helper_method :textual_group_list
 
   def hosts_subsets
     condition         = nil

@@ -30,6 +30,6 @@ module CatalogHelper::TextualSummary
   end
 
   def textual_group_smart_management
-    %i(tags)
+    TextualTags.new(_("Smart Management"), %i(tags))
   end
 end

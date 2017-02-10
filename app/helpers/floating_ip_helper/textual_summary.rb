@@ -6,11 +6,11 @@ module FloatingIpHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(address type fixed_ip_address status)
+    TextualGroup.new(_("Properties"), %i(address type fixed_ip_address status))
   end
 
   def textual_group_relationships
-    %i(parent_ems_cloud ems_network cloud_tenant instance network_port)
+    TextualGroup.new(_("Relationships"), %i(parent_ems_cloud ems_network cloud_tenant instance network_port))
   end
 
   #

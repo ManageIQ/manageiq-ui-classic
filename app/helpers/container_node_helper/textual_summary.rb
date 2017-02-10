@@ -4,13 +4,24 @@ module ContainerNodeHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name creation_timestamp resource_version num_cpu_cores memory
-       max_container_groups identity_system identity_machine identity_infra container_runtime_version
-       kubernetes_kubelet_version kubernetes_proxy_version os_distribution kernel_version)
+    TextualGroup.new(
+      _("Properties"),
+      %i(
+        name creation_timestamp resource_version num_cpu_cores memory
+        max_container_groups identity_system identity_machine identity_infra container_runtime_version
+        kubernetes_kubelet_version kubernetes_proxy_version os_distribution kernel_version
+      )
+    )
   end
 
   def textual_group_relationships
-    %i(ems container_routes container_services container_replicators container_groups containers lives_on container_images)
+    TextualGroup.new(
+      _("Relationships"),
+      %i(
+        ems container_routes container_services container_replicators container_groups containers
+        lives_on container_images
+      )
+    )
   end
 
   def textual_group_conditions
@@ -24,12 +35,13 @@ module ContainerNodeHelper::TextualSummary
         (condition.reason || "")
       ]
     end
-    h
+    TextualGroup.new(_("Conditions"), h)
   end
 
   def textual_group_smart_management
     items = %w(tags)
-    items.collect { |m| send("textual_#{m}") }.flatten.compact
+    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
+    TextualGroup.new(_("Smart Management"), i)
   end
 
   #
@@ -42,12 +54,11 @@ module ContainerNodeHelper::TextualSummary
   end
 
   def textual_memory
-    if @record.try(:hardware).try(:memory_mb)
-      memory = number_to_human_size(
-        @record.hardware.memory_mb * 1.megabyte, :precision => 0)
-    else
-      memory = _("N/A")
-    end
+    memory = if @record.try(:hardware).try(:memory_mb)
+               number_to_human_size(@record.hardware.memory_mb * 1.megabyte, :precision => 0)
+             else
+               _("N/A")
+             end
     {:label => _("Memory"), :value => memory}
   end
 
@@ -101,11 +112,11 @@ module ContainerNodeHelper::TextualSummary
   end
 
   def textual_os_distribution
-    if @record.computer_system.nil? || @record.computer_system.operating_system.nil?
-      distribution = _("N/A")
-    else
-      distribution = @record.computer_system.operating_system.distribution
-    end
+    distribution = if @record.computer_system.nil? || @record.computer_system.operating_system.nil?
+                     _("N/A")
+                   else
+                     @record.computer_system.operating_system.distribution
+                   end
     {:label => _("Operating System Distribution"), :value => distribution}
   end
 

@@ -519,9 +519,7 @@ class StorageController < ApplicationController
     if record_showing
       get_tagdata(@record)
       presenter.hide(:form_buttons_div)
-      path_dir = "storage"
-      presenter.update(:main_div, r[:partial => "#{path_dir}/main",
-                                    :locals => {:controller => 'storage'}])
+      presenter.update(:main_div, r[:partial => "layouts/textual_groups_generic"])
     elsif valid_storage_record?(@record)
       presenter.hide(:form_buttons_div)
       presenter.update(:main_div, r[:partial => "storage_list",
@@ -640,6 +638,15 @@ class StorageController < ApplicationController
   end
 
   private
+
+  def textual_group_list
+    [
+      %i(properties registered_vms relationships),
+      (::Settings.product.storage ? %i(storage_relationships) : []) +
+        %i(content smart_management)
+    ]
+  end
+  helper_method :textual_group_list
 
   menu_section :inf
 end

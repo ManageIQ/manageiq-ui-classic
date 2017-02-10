@@ -4,7 +4,7 @@ module StorageManagerHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(hostname ipaddress agent_type port zone_name last_update_status_str)
+    TextualGroup.new(_("Properties"), %i(hostname ipaddress agent_type port zone_name last_update_status_str))
   end
 
   #

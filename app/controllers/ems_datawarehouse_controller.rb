@@ -10,6 +10,11 @@ class EmsDatawarehouseController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  def textual_group_list
+    [%i(properties status), %i(smart_management)]
+  end
+  helper_method :textual_group_list
+
   def self.model
     ManageIQ::Providers::DatawarehouseManager
   end

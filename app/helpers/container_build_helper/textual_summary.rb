@@ -5,30 +5,33 @@ module ContainerBuildHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name creation_timestamp resource_version)
+    TextualGroup.new(_("Properties"), %i(name creation_timestamp resource_version))
   end
 
   def textual_group_relationships
-    %i(ems container_project )
+    TextualGroup.new(_("Relationships"), %i(ems container_project))
   end
 
   def textual_group_smart_management
     items = %w(tags)
-    items.collect { |m| send("textual_#{m}") }.flatten.compact
+    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
+    TextualTags.new(_("Smart Management"), i)
   end
 
   def textual_group_build_instances
-    {
+    TextualMultilabel.new(
+      _("Build Instances"),
       :additional_table_class => "table-fixed",
-      :labels                 => [_("Name"), _("Phase"),
-                                  _("Message"), _("Reason"),
-                                  _("Pod"), _("Output Image"),
-                                  _("Start Timestamp"),
-                                  {:value => _("Completion Timestamp"), :sortable => :desc},
-                                  _("Duration"),
-                                 ],
       :values                 => collect_build_pods,
-    }
+      :labels                 => [
+        _("Name"), _("Phase"),
+        _("Message"), _("Reason"),
+        _("Pod"), _("Output Image"),
+        _("Start Timestamp"),
+        {:value => _("Completion Timestamp"), :sortable => :desc},
+        _("Duration"),
+      ],
+    )
   end
 
   def collect_build_pods
@@ -36,7 +39,7 @@ module ContainerBuildHelper::TextualSummary
       [
         build_pod.name,
         build_pod.phase,
-        {:value =>  build_pod.message, :expandable => true},
+        {:value => build_pod.message, :expandable => true},
         build_pod.reason,
         link_to_pod(build_pod.container_group),
         {:value => build_pod.output_docker_image_reference, :expandable => true},

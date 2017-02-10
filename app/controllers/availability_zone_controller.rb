@@ -135,5 +135,12 @@ class AvailabilityZoneController < ApplicationController
     end
   end
 
+  private
+
+  def textual_group_list
+    [%i(relationships), %i(availability_zone_totals tags)]
+  end
+  helper_method :textual_group_list
+
   menu_section :clo
 end

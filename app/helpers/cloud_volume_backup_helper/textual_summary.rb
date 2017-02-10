@@ -4,11 +4,11 @@ module CloudVolumeBackupHelper::TextualSummary
   include TextualMixins::TextualName
 
   def textual_group_properties
-    %i(name status size)
+    TextualGroup.new(_("Properties"), %i(name status size))
   end
 
   def textual_group_relationships
-    %i(parent_ems_cloud ems_storage cloud_volume cloud_tenant)
+    TextualGroup.new(_("Relationships"), %i(parent_ems_cloud ems_storage cloud_volume cloud_tenant))
   end
 
   def textual_status

@@ -6,6 +6,16 @@ class ContainerImageController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  # app/views/container_image/_main.html.haml
+  def textual_group_list
+    [
+      %i(properties container_labels compliance),
+      %i(relationships smart_management configuration openscap_failed_rules),
+      %i(env container_docker_labels)
+    ]
+  end
+  helper_method :textual_group_list
+
   def show_list
     process_show_list(:where_clause => 'container_images.deleted_on IS NULL')
   end

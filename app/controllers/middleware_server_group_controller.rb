@@ -42,4 +42,11 @@ class MiddlewareServerGroupController < ApplicationController
     else show_middleware
     end
   end
+
+  private
+
+  def textual_group_list
+    [%i(properties), %i(relationships smart_management)]
+  end
+  helper_method :textual_group_list
 end

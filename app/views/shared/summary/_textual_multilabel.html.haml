@@ -1,10 +1,10 @@
-- if items && items[:values].present?
-  %table.table.table-bordered.table-striped.table-summary-screen{:class => items[:additional_table_class] || ""}
+- if values.present?
+  %table.table.table-bordered.table-striped.table-summary-screen{:class => additional_table_class || ""}
     %thead
       %tr
-        %th{:colspan => items[:labels].count, :align => "left"}
+        %th{:colspan => labels.count, :align => "left"}
           = title
-    - items[:labels].each do |label|
+    - labels.each do |label|
       %td
         %strong
           - if (label.kind_of? Hash) && label[:sortable]
@@ -14,7 +14,7 @@
               %i{:class => label[:sortable] == :asc ? "fa-sort-asc" : "fa-sort-desc"}
           - else
             = label
-    - items[:values].each do |item|
+    - values.each do |item|
       %tr
         - item.each do |value|
           %td

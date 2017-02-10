@@ -5,22 +5,23 @@ module EmsSwiftHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(provider_region hostname ipaddress type port guid)
+    TextualGroup.new(_("Properties"), %i(provider_region hostname ipaddress type port guid))
   end
 
   def textual_group_relationships
-    %i(parent_ems_cloud cloud_object_store_containers cloud_object_store_objects)
+    TextualGroup.new(_("Relationships"), %i(parent_ems_cloud cloud_object_store_containers cloud_object_store_objects))
   end
 
   def textual_group_status
-    textual_authentications(@record.authentication_for_summary) + %i(refresh_status)
+    TextualGroup.new(_("Status"), textual_authentications(@record.authentication_for_summary) + %i(refresh_status))
   end
 
   def textual_group_smart_management
-    %i(zone tags)
+    TextualTags.new(_("Smart Management"), %i(zone tags))
   end
 
   def textual_group_topology
+    nil
   end
 
   #

@@ -96,6 +96,11 @@ class ContainerController < ApplicationController
 
   private
 
+  def textual_group_list
+    [%i(properties relationships smart_management), %i(env)]
+  end
+  helper_method :textual_group_list
+
   def features
     [{:role     => "container_accord",
       :role_any => true,

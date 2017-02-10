@@ -7,4 +7,12 @@ class ContainerReplicatorController < ApplicationController
   after_action :set_session_data
 
   menu_section :cnt
+
+  private
+
+  # app/views/container_replicator/_main.html.haml
+  def textual_group_list
+    [%i(properties container_labels container_selectors compliance), %i(relationships smart_management)]
+  end
+  helper_method :textual_group_list
 end

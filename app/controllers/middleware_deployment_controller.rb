@@ -44,6 +44,11 @@ class MiddlewareDeploymentController < ApplicationController
     OPERATIONS
   end
 
+  def textual_group_list
+    [%i(properties), %i(relationships smart_management)]
+  end
+  helper_method :textual_group_list
+
   def trigger_mw_operation(operation, mw_deployment, _params = nil)
     mw_manager = mw_deployment.ext_management_system
     op = mw_manager.public_method operation

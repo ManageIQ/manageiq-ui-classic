@@ -37,6 +37,11 @@ class EmsContainerController < ApplicationController
 
   private
 
+  def textual_group_list
+    [%i(properties endpoints status miq_custom_attributes), %i(relationships topology smart_management)]
+  end
+  helper_method :textual_group_list
+
   ############################
   # Special EmsCloud link builder for restful routes
   def show_link(ems, options = {})

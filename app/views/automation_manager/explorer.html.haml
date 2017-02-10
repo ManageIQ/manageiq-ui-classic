@@ -10,7 +10,7 @@
 
 - elsif @configured_system_record
   #main_div
-    = render(:partial => 'automation_manager/main', :locals => {:controller => "automation_manager"})
+    = render :partial => "layouts/textual_groups_generic"
 - elsif @configuration_script_record
   #main_div
     = render(:partial => 'automation_manager/configuration_script', :locals => {:controller => "automation_manager"})

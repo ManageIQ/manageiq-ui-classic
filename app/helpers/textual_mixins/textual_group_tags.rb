@@ -1,5 +1,5 @@
 module TextualMixins::TextualGroupTags
   def textual_group_tags
-    %i(tags)
+    TextualTags.new(_("Smart Management"), %i(tags))
   end
 end

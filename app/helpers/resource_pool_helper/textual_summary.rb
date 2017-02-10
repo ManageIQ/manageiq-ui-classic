@@ -4,19 +4,34 @@ module ResourcePoolHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(vapp aggregate_cpu_speed aggregate_cpu_memory aggregate_physical_cpus aggregate_cpu_total_cores aggregate_vm_memory aggregate_vm_cpus)
+    TextualGroup.new(
+      _("Properties"),
+      %i(
+        vapp aggregate_cpu_speed aggregate_cpu_memory aggregate_physical_cpus aggregate_cpu_total_cores
+        aggregate_vm_memory aggregate_vm_cpus
+      )
+    )
   end
 
   def textual_group_relationships
-    %i(parent_datacenter parent_cluster parent_host direct_vms allvms_size total_vms)
+    TextualGroup.new(
+      _("Relationships"),
+      %i(parent_datacenter parent_cluster parent_host direct_vms allvms_size total_vms)
+    )
   end
 
   def textual_group_configuration
-    %i(memory_reserve memory_reserve_expand memory_limit memory_shares memory_shares_level cpu_reserve cpu_reserve_expand cpu_limit cpu_shares cpu_shares_level)
+    TextualGroup.new(
+      _("Configuration"),
+      %i(
+        memory_reserve memory_reserve_expand memory_limit memory_shares memory_shares_level cpu_reserve
+        cpu_reserve_expand cpu_limit cpu_shares cpu_shares_level
+      )
+    )
   end
 
   def textual_group_smart_management
-    %i(tags)
+    TextualTags.new(_("Smart Management"), %i(tags))
   end
 
   #

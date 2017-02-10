@@ -1,0 +1,14 @@
+%table.table.table-bordered.table-striped.table-summary-screen
+  %thead
+    %tr
+      %th{:colspan => labels.count, :align => "left"}
+        = title
+  - labels.each do |label|
+    %td
+      %strong
+        = label
+  - rows.each do |row|
+    %tr
+      - row.each do |value|
+        %td
+          = value

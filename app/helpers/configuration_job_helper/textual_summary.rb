@@ -7,11 +7,11 @@ module ConfigurationJobHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name description type status status_reason)
+    TextualGroup.new(_("Properties"), %i(name description type status status_reason))
   end
 
   def textual_group_relationships
-    %i(provider service parameters status)
+    TextualGroup.new(_("Relationships"), %i(provider service parameters status))
   end
 
   #

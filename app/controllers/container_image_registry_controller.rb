@@ -7,4 +7,12 @@ class ContainerImageRegistryController < ApplicationController
   after_action :set_session_data
 
   menu_section :cnt
+
+  private
+
+  # app/views/container_image_registry/_main.html.haml
+  def textual_group_list
+    [%i(properties), %i(relationships smart_management)]
+  end
+  helper_method :textual_group_list
 end

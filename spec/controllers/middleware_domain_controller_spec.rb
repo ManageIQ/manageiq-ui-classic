@@ -35,7 +35,7 @@ describe MiddlewareDomainController do
       it do
         is_expected.to have_http_status 200
         is_expected.to render_template(:partial => 'layouts/listnav/_middleware_domain')
-        is_expected.to render_template(:partial => 'middleware_domain/_main')
+        is_expected.to render_template(:partial => 'layouts/_textual_groups_generic')
       end
     end
   end

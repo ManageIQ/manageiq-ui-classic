@@ -101,4 +101,39 @@ describe ContainerController do
       expect(response).to render_template('layouts/_perf_charts')
     end
   end
+
+  let(:ems) { FactoryGirl.create(:ems_kubernetes) }
+  let(:container_project) { ContainerProject.create(:ext_management_system => ems) }
+
+  let(:container_group) do
+    ContainerGroup.create(:ext_management_system => ems,
+                          :container_project     => container_project)
+  end
+
+  let(:container_definition) { ContainerDefinition.create(:name => "ruby-example") }
+
+  let(:container) do
+    FactoryGirl.create(:container,
+                       :name                  => "container-01",
+                       :container_group       => container_group,
+                       :container_definition  => container_definition,
+                       :ext_management_system => ems)
+  end
+
+  context "#tree_select" do
+    it "renders container details for container node" do
+      session[:settings] = {}
+      seed_session_trees('containers', 'containers_tree')
+
+      post :tree_select,
+           :params => {
+             :id     => "xx-10000000000001_cnt-#{container.compressed_id}",
+             :format => :js
+           }
+
+      expect(response).to render_template('layouts/_textual_groups_generic')
+      expect(response).to render_template('shared/summary/_textual_tags')
+      expect(response.status).to eq(200)
+    end
+  end
 end

@@ -2,12 +2,10 @@ module AutomationManagerHelper
   include TextualMixins::TextualGroupTags
 
   def textual_group_properties
-    %i(hostname
-       ipmi_present
-       ipaddress
-       mac_address
-       provider_name
-       zone)
+    TextualGroup.new(
+      _("Properties"),
+      %i(hostname ipmi_present ipaddress mac_address provider_name zone)
+    )
   end
 
   def textual_hostname

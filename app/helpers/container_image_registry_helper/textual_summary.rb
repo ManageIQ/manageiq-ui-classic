@@ -5,16 +5,17 @@ module ContainerImageRegistryHelper
     #
 
     def textual_group_properties
-      %i(host port)
+      TextualGroup.new(_("Properties"), %i(host port))
     end
 
     def textual_group_relationships
-      %i(ems container_services container_groups container_images containers)
+      TextualGroup.new(_("Relationships"), %i(ems container_services container_groups container_images containers))
     end
 
     def textual_group_smart_management
       items = %w(tags)
-      items.collect { |m| send("textual_#{m}") }.flatten.compact
+      i = items.collect { |m| send("textual_#{m}") }.flatten.compact
+      TextualGroup.new(_("Smart Management"), i)
     end
 
     #

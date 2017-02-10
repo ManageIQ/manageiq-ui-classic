@@ -7,7 +7,7 @@
     = render(:partial => 'storage/storage_pod_list')
 - elsif @record
   #main_div
-    = render(:partial => 'storage/main', :locals => {:controller => "storage"})
+    = render :partial => "layouts/textual_groups_generic"
 - else
   #main_div
     = render(:partial => 'layouts/x_gtl')

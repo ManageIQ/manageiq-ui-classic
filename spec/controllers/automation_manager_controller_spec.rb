@@ -424,6 +424,24 @@ describe AutomationManagerController do
     end
   end
 
+  context "configured systems accordion" do
+    it "renders textual summary for a configured system" do
+      stub_user(:features => :all)
+
+      tree_node_id = ApplicationRecord.compress_id(@ans_configured_system.id)
+
+      # post to x_show sets session variables and redirects to explorer
+      # then get to explorer renders the data for the active node
+      # we test the textual_summary for a configured system
+
+      seed_session_trees('automation_manager', :automation_manager_cs_filter_tree, "cs-#{tree_node_id}")
+      get :explorer
+
+      expect(response.status).to eq(200)
+      expect(response).to render_template(:partial => 'layouts/_textual_groups_generic')
+    end
+  end
+
   context "ansible tower job template accordion " do
     before do
       login_as user_with_feature(%w(automation_manager_providers nsible_tower_cs_filter_accord automation_manager_configuration_scripts_accord))

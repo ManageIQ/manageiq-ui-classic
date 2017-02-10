@@ -50,5 +50,12 @@ class CloudObjectStoreObjectController < ApplicationController
     _("Cloud Objects")
   end
 
+  private
+
+  def textual_group_list
+    [%i(properties relationships), %i(tags)]
+  end
+  helper_method :textual_group_list
+
   menu_section :ost
 end

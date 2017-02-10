@@ -10,7 +10,15 @@ class ContainerGroupController < ApplicationController
     process_show_list(:where_clause => 'container_groups.deleted_on IS NULL')
   end
 
-  private ############################
+  private
+
+  def textual_group_list
+    [
+      %i(properties container_labels container_node_selectors volumes),
+      %i(relationships conditions smart_management container_statuses_summary)
+    ]
+  end
+  helper_method :textual_group_list
 
   def display_name
     "Pods"

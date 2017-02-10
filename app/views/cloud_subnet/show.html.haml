@@ -2,4 +2,4 @@
   - if ["instances", "cloud_subnets"].include?(@display) && @showtype != "compare"
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
   - elsif @showtype == 'main'
-    = render(:partial => 'main')
+    = render :partial => "layouts/textual_groups_generic"

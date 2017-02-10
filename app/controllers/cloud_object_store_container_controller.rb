@@ -23,5 +23,12 @@ class CloudObjectStoreContainerController < ApplicationController
     %w(cloud_object_store_objects)
   end
 
+  private
+
+  def textual_group_list
+    [%i(properties relationships), %i(tags)]
+  end
+  helper_method :textual_group_list
+
   menu_section :ost
 end
