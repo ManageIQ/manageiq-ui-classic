@@ -18,7 +18,7 @@ module Mixins
     end
 
     def show_main
-      get_tagdata(@record)
+      get_tagdata(@record) if @record.try(:taggings)
       drop_breadcrumb({:name => ui_lookup(:models => self.class.model.to_s),
                        :url  => "/#{controller_name}/show_list?page=#{@current_page}&refresh=y"},
                       true)
