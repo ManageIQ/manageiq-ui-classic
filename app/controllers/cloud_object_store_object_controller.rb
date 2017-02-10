@@ -5,6 +5,7 @@ class CloudObjectStoreObjectController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericListMixin
+  include Mixins::GenericButtonMixin
   include Mixins::GenericSessionMixin
 
   def breadcrumb_name(_model)
@@ -14,8 +15,7 @@ class CloudObjectStoreObjectController < ApplicationController
   def button
     restore_edit_for_search
     save_current_page_for_refresh
-
-    return tag("CloudObjectStoreObject") if params[:pressed] == 'cloud_object_store_object_tag'
+    handle_tag_presses(params[:pressed])
   end
 
   def show
