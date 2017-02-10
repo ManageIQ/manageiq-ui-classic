@@ -1,3 +1,4 @@
+
 module Mixins
   # NOTE: ivars and estimated purpose
   # @current_page
@@ -131,9 +132,10 @@ module Mixins
     ############################################################################
 
     # Ideal method to use
+    # This send is white-listed by `handled_buttons`
     def handle_button_pressed(pressed)
-      if handled_buttons.include?(params[:pressed])
-        self.send("handle_#{params[:pressed]}".to_sym)
+      if handled_buttons.include?(pressed)
+        self.send("handle_#{pressed}".to_sym)
       end
     end
 
