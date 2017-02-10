@@ -35,12 +35,9 @@ class AuthKeyPairCloudController < ApplicationController
     save_current_page_for_refresh
 
     handle_tag_presses(params[:pressed])
-    return if performed?
+    handle_button_pressed(params[:pressed])
 
-    if handled_buttons.include?(params[:pressed])
-      self.send("handle_#{params[:pressed]}".to_sym)
-      return
-    end
+    return if performed?
 
     if button_replace_gtl_main?
       replace_gtl_main_div
