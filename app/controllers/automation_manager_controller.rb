@@ -26,18 +26,8 @@ class AutomationManagerController < ApplicationController
     end
   end
 
-  def self.model_to_type_name(provmodel)
-    if provmodel.include?("ManageIQ::Providers::AnsibleTower")
-      'ansible_tower'
-    end
-  end
-
   def model_to_name(provmodel)
     AutomationManagerController.model_to_name(provmodel)
-  end
-
-  def model_to_type_name(provmodel)
-    AutomationManagerController.model_to_type_name(provmodel)
   end
 
   def managed_group_kls
