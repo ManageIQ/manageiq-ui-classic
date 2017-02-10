@@ -171,7 +171,7 @@ module ApplicationController::PolicySupport
       protect
       @refresh_partial = "layouts/protect"
     else
-      javascript_redirect :action => 'protect' # redirect to build policy screen
+      javascript_redirect :action => 'protect', :db => db # redirect to build policy screen
     end
   end
   %w(image instance vm miq_template
