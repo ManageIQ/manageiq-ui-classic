@@ -22,22 +22,12 @@ class ProviderForemanController < ApplicationController
     end
   end
 
-  def self.model_to_type_name(provmodel)
-    if provmodel.include?("ManageIQ::Providers::Foreman")
-      'foreman'
-    end
-  end
-
   def manager_prefix
     'configuration_manager'
   end
 
   def model_to_name(provmodel)
     ProviderForemanController.model_to_name(provmodel)
-  end
-
-  def model_to_type_name(provmodel)
-    ProviderForemanController.model_to_type_name(provmodel)
   end
 
   def new
