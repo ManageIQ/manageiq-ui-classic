@@ -74,8 +74,7 @@ class MiqTaskController < ApplicationController
 
   def get_jobs
     @lastaction = "jobs"
-
-    # Do we use @layout outside of this class, can it be removed ?
+    
     if @tabform == "tasks_1"
       @layout = "my_tasks"
       drop_breadcrumb(:name => _("My VM and Container Analysis Tasks"), :url => "/miq_task/index?jobs_tab=tasks")
@@ -406,16 +405,22 @@ class MiqTaskController < ApplicationController
   end
 
   def build_query_for_running
-    return ["(#{db_table}state!=? AND #{db_table}state!=? AND #{db_table}state!=?)", %w(finished waiting_to_start queued)] if vm_analysis_task?
-    ["(#{db_table}state!=? AND #{db_table}state!=? AND #{db_table}state!=?)", %w(Finished waiting_to_start Queued)]
+    sql = "(#{db_table}state!=? AND #{db_table}state!=? AND #{db_table}state!=?)"
+    if vm_analysis_task?
+      [sql, %w(finished waiting_to_start queued)]
+    else
+      [sql, %w(Finished waiting_to_start Queued)]
+    end
   end
 
   def build_query_for_status_none_selected
+    sql = "(#{db_table}status!=? AND #{db_table}status!=? AND #{db_table}status!=? AND " +
+          "#{db_table}state!=? AND #{db_table}state!=?)"
     if vm_analysis_task?
-      return ["(#{db_table}status!=? AND #{db_table}status!=? AND #{db_table}status!=? AND #{db_table}state!=? AND #{db_table}state!=?)",
-              %w(ok error warn finished waiting_to_start)]
+      [sql , %w(ok error warn finished waiting_to_start)]
+    else
+      [sql, %w(Ok Error Warn Finished Queued)]
     end
-    ["(#{db_table}status!=? AND #{db_table}status!=? AND #{db_table}status!=? AND #{db_table}state!=? AND #{db_table}state!=?)", %w(Ok Error Warn Finished Queued)]
   end
 
   def build_query_for_time_period(opts)
