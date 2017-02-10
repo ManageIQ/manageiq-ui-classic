@@ -147,10 +147,6 @@ module Mixins
     def button_set_refresh
       @refresh_div = "main_div"
       @refresh_partial = "layouts/gtl"
-
-      # Also seen
-      # @refresh_partial = "layouts/flash_msg"
-      # @refresh_div = "flash_msg_div"
     end
 
     def set_refresh_and_show

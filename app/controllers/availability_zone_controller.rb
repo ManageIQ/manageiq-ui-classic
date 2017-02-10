@@ -8,6 +8,14 @@ class AvailabilityZoneController < ApplicationController
   include Mixins::GenericButtonMixin
   include Mixins::GenericSessionMixin
 
+  def self.table_name
+    "availability_zone"
+  end
+
+  def self.model
+    AvailabilityZone
+  end
+
   def show
     return if perfmenu_click?
     @display = params[:display] || "main" unless pagination_or_gtl_request?
@@ -87,9 +95,7 @@ class AvailabilityZoneController < ApplicationController
       end
     end
 
-    if params[:pressed] == "availability_zone_tag"
-      tag(AvailabilityZone)
-
+    handle_tag_presses(params[:pressed]) do
       return if @flash_array.nil?
     end
 
