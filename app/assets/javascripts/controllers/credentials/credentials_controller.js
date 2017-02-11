@@ -43,7 +43,15 @@ ManageIQ.angular.app.controller('CredentialsController', ['$scope', function($sc
   };
 
   vm.showChangePasswordLinks = function(userid) {
-    return !vm.newRecord && $scope.modelCopy[userid] != '';
+    var userid;
+
+    if ($scope.$parent.vm) {
+      userid = $scope.$parent.vm.modelCopy[userid];
+    } else {
+      userid = $scope.modelCopy[userid];
+    }
+
+    return !vm.newRecord && userid !== '';
   };
 
   vm.resetClicked = function() {
