@@ -1,11 +1,10 @@
-ManageIQ.angular.app.controller('buttonGroupController', ['$scope', 'miqService', function($scope, miqService) {
-  var init = function() {
-    $scope.saveable = miqService.saveable;
-    $scope.disabledClick = miqService.disabledClick;
-    $scope.addText = __("Add");
-    $scope.saveText = __("Save");
-    $scope.resetText = __("Reset");
-    $scope.cancelText = __("Cancel");
-  };
-  init();
+ManageIQ.angular.app.controller('buttonGroupController', ['miqService', function(miqService) {
+  var vm = this;
+
+  vm.saveable = miqService.saveable;
+  vm.disabledClick = miqService.disabledClick;
+  vm.addText = __("Add");
+  vm.saveText = __("Save");
+  vm.resetText = __("Reset");
+  vm.cancelText = __("Cancel");
 }]);
