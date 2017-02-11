@@ -1,3 +1,5 @@
+- vm_scope ||= false
+
 - if !session[:host_items].nil?
   - verify_title_on ||= _("Validate the credentials by logging into the selected %{title_for_host}") % {:title_for_host => title_for_host}
   - verify_title_off ||= _("%{host} to validate against, Username and matching password fields are needed to perform verification of credentials") % {:host => title_for_host}
@@ -5,21 +7,32 @@
   - verify_title_on = _("Validate the credentials by logging into the Server")
   - verify_title_off ||= _("Server information, Username and matching password fields are needed to perform verification of credentials")
 - if controller.send(:restful?)
-  - validate = "validateClicked($event, '#{valtype}', true)"
+  - if vm_scope
+    - validate = "$parent.vm.validateClicked($event, '#{valtype}', true)"
+  - else
+    - validate = "validateClicked($event, '#{valtype}', true)"
 - else
-  - validate = "validateClicked('#{url_for(:action => validate_url, :id => id, :type => valtype, :button => "validate")}')"
+  - if vm_scope
+    - validate = "$parent.vm.validateClicked('#{url_for(:action => validate_url, :id => id, :type => valtype, :button => "validate")}')"
+  - else
+    - validate = "validateClicked('#{url_for(:action => validate_url, :id => id, :type => valtype, :button => "validate")}')"
+
 %div{"ng-show" => ng_show}
-  = button_tag(_("Validate"),
-                 :class     => "btn btn-primary btn-xs disabled",
-                 :alt       => verify_title_off,
-                 :title     => verify_title_off,
-                 "ng-show"  => basic_info_needed ? "!canValidateBasicInfo()" : "!canValidate()")
-  = button_tag(_("Validate"),
-                 :class     => "btn btn-primary btn-xs",
-                 :alt       => verify_title_on,
-                 :title     => verify_title_on,
-                 "ng-show"  => basic_info_needed ? "canValidateBasicInfo()" : "canValidate()",
-                 "ng-click" => validate)
+  - validate_button_disabled = {:class     => "btn btn-primary btn-xs disabled",
+                                :alt       => verify_title_off,
+                                :title     => verify_title_off,
+                                "ng-show"  => basic_info_needed ? "!canValidateBasicInfo()" : "!canValidate()"}
+  - validate_button_disabled['ng-show'] = basic_info_needed ? "!$parent.vm.canValidateBasicInfo()" : "!$parent.vm.canValidate()" if vm_scope
+  = button_tag(_("Validate"), validate_button_disabled)
+
+  - validate_button = {:class     => "btn btn-primary btn-xs",
+                       :alt       => verify_title_on,
+                       :title     => verify_title_on,
+                       "ng-show"  => basic_info_needed ? "canValidateBasicInfo()" : "canValidate()",
+                       "ng-click" => validate}
+  - validate_button['ng-show'] = basic_info_needed ? "$parent.vm.canValidateBasicInfo()" : "$parent.vm.canValidate()" if vm_scope
+  = button_tag(_("Validate"), validate_button)
+
   %div{"ng-if" => "checkAuthentication"}
     .form-group{"ng-class" => "{'has-error': angularForm.#{valtype}_auth_status.$error.validationRequired}"}
       .col-md-8
@@ -33,4 +46,3 @@
                             "ng-show"             => false}
         %span.help-block{"ng-if" => "angularForm.#{valtype}_auth_status.$error.validationRequired"}
           = _("Validation Required")
-
