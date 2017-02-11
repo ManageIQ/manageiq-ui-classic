@@ -73,7 +73,7 @@ module Mixins
     def options_for_center_div_render
       case @showtype
       when 'main'
-        {:template => "#{controller_name}/_main"}
+        {:template => "layouts/_textual_groups_generic"}
       when 'item' # FIXME: remove this
         {:template => 'layouts/_item'}
       else
