@@ -82,12 +82,11 @@
     };
 
     var getLatestData = function(item) {
-      dash.item = item;
-      var params = '&query=get_data&type=' + dash.item.type + '&metric_id=' + dash.item.id +
+      var params = '&query=get_data&type=' + item.type + '&metric_id=' + item.id +
         '&limit=5&order=DESC';
 
       $http.get(dash.url + params)
-        .then(getContainerDashboardData)
+        .then(function(response) { getContainerDashboardData(item, response); })
         .catch(miqService.handleFailure);
     };
 
@@ -230,25 +229,25 @@
       }
     }
 
-    function getContainerDashboardData(response) {
+    function getContainerDashboardData(item, response) {
       'use strict';
       if (response.data.error) {
         add_flash(response.data.error, 'error');
       } else {
         var data = response.data.data;
 
-        dash.item.lastValues = {};
+        item.lastValues = {};
         angular.forEach(data, function(d) {
-          dash.item.lastValues[d.timestamp] = numeral(d.value).format('0,0.00a');
+          item.lastValues[d.timestamp] = numeral(d.value).format('0,0.00a');
         });
 
         if (data.length > 0) {
           var lastValue = data[0].value;
-          dash.item.last_value = numeral(lastValue).format('0,0.00a');
-          dash.item.last_timestamp = data[0].timestamp;
+          item.last_value = numeral(lastValue).format('0,0.00a');
+          item.last_timestamp = data[0].timestamp;
         } else {
-          dash.item.last_value = '-';
-          dash.item.last_timestamp = '-';
+          item.last_value = '-';
+          item.last_timestamp = '-';
         }
 
         if (data.length > 1) {
@@ -262,7 +261,7 @@
             } else {
               change = 0;
             }
-            dash.item.percent_change = '(' + numeral(change).format('0,0.00%') + ')';
+            item.percent_change = '(' + numeral(change).format('0,0.00%') + ')';
           }
         }
       }
