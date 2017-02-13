@@ -33,6 +33,8 @@ class MiqActionDecorator < Draper::Decorator
       'fa fa-tag'
     when 'vm_collect_running_processes'
       'fa fa-cogs'
+    when 'run_an_ansible_playbook'
+      'product product-action'
     when 'default'
       'product product-action'
     end

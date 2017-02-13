@@ -120,6 +120,18 @@ module MiqPolicyController::MiqActions
     end
     @snmp_trap_refresh = build_snmp_options(:options, @edit[:new][:action_type] == "snmp_trap")
     @edit[:new][:options][:scan_item_set_name] = params[:analysis_profile] if params[:analysis_profile]
+    @refresh_inventory = false
+    if params[:inventory_manual] || params[:inventory_localhost] || params[:inventory_event_target]
+      @refresh_inventory = true
+    end
+
+    @edit[:new][:options][:service_template_id] = params[:service_template_id] if params[:service_template_id]
+    @edit[:new][:inventory_type] = params[:inventory_manual] if params[:inventory_manual]
+    @edit[:new][:inventory_type] = params[:inventory_localhost] if params[:inventory_localhost]
+    @edit[:new][:inventory_type] = params[:inventory_event_target] if params[:inventory_event_target]
+    @edit[:new][:options][:use_event_target] = @edit[:new][:inventory_type] == 'event_target'
+    @edit[:new][:options][:use_localhost] = @edit[:new][:inventory_type] == 'localhost'
+    @edit[:new][:options][:hosts] = params[:hosts] if params[:hosts]
 
     if params[:miq_action_type] && params[:miq_action_type] != @edit[:new][:action_type]  # action type was changed
       @edit[:new][:action_type] = params[:miq_action_type]
@@ -276,6 +288,9 @@ module MiqPolicyController::MiqActions
                                 ].sort_by { |x| x.first.downcase }
     @edit[:cats] = MiqAction.inheritable_cats.sort_by { |c| c.description.downcase }.collect { |c| [c.name, c.description] }
 
+    @edit[:ansible_playbooks] = ServiceTemplateAnsiblePlaybook.order(:name).pluck(:name, :id) || {}
+    action_build_playbook_variables if @action.action_type == "run_an_ansible_playbook"
+
     @edit[:current] = copy_hash(@edit[:new])
     get_tags_tree
     @in_a_form = true
@@ -327,6 +342,12 @@ module MiqPolicyController::MiqActions
     end
   end
 
+  def action_build_playbook_variables
+    @edit[:new][:inventory_type] = 'manual' if @edit[:new][:options][:hosts]
+    @edit[:new][:inventory_type] = 'event_target' if @edit[:new][:options][:use_event_target]
+    @edit[:new][:inventory_type] ||= 'localhost'
+  end
+
   # Check action record variables
   def action_valid_record?(rec)
     edit = @edit[:new]
@@ -365,10 +386,20 @@ module MiqPolicyController::MiqActions
         rec[:options][:variables] = options[:variables].reject { |var| var[:oid].blank? }
       end
     end
+
+    validate_playbook_options(options) if edit[:action_type] == "run_an_ansible_playbook"
+
     if edit[:action_type] == "tag" && options[:tags].blank?
       add_flash(_("At least one Tag must be selected"), :error)
     end
     @flash_array.nil?
+  end
+
+  def validate_playbook_options(options)
+    add_flash(_("An Ansible Playbook must be selected"), :error) if options[:service_template_id].blank?
+    if @edit[:new][:inventory_type] == 'manual' && options[:hosts].blank?
+      add_flash(_("At least one host must be specified for manual mode"), :error)
+    end
   end
 
   # Get information for an action
