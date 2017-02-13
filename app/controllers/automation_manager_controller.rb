@@ -9,7 +9,7 @@ class AutomationManagerController < ApplicationController
   include Mixins::ManagerControllerMixin
 
   def self.model
-    ManageIQ::Providers::AnsibleTower
+    ManageIQ::Providers::AutomationManager
   end
 
   def self.table_name
