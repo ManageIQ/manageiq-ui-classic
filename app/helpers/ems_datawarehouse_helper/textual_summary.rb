@@ -5,20 +5,15 @@ module EmsDatawarehouseHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name type hostname port)
-  end
-
-  def textual_group_relationships
-    # Order of items should be from parent to child
-    []
+    TextualGroup.new(_("Properties"), %i(name type hostname port))
   end
 
   def textual_group_status
-    %i(refresh_status)
+    TextualGroup.new(_("Status"), %i(refresh_status))
   end
 
   def textual_group_smart_management
-    %i(tags)
+    TextualTags.new(_("Smart Management"), %i(tags))
   end
 
   #

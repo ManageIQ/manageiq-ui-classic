@@ -6,35 +6,43 @@ module HostHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(hostname ipaddress ipmi_ipaddress custom_1 vmm_vendor_display model asset_tag service_tag osinfo
-       power_state lockdown_mode maintenance_mode devices network storage_adapters num_cpu num_cpu_cores
-       cpu_cores_per_socket memory guid)
+    TextualGroup.new(
+      _("Properties"),
+      %i(
+        hostname ipaddress ipmi_ipaddress custom_1 vmm_vendor_display model asset_tag service_tag osinfo
+        power_state lockdown_mode maintenance_mode devices network storage_adapters num_cpu num_cpu_cores
+        cpu_cores_per_socket memory guid
+      )
+    )
   end
 
   def textual_group_relationships
-    %i(ems cluster availability_zone used_tenants storages resource_pools vms templates drift_history physical_server)
+    TextualGroup.new(
+      _("Relationships"),
+      %i(ems cluster availability_zone used_tenants storages resource_pools vms templates drift_history physical_servers)
+    )
   end
 
   def textual_group_storage_relationships
-    %i(storage_systems storage_volumes logical_disks file_shares)
+    TextualGroup.new(_("Storage Relationships"), %i(storage_systems storage_volumes logical_disks file_shares))
   end
 
   def textual_group_security
     return nil if @record.is_vmware_esxi?
-    %i(users groups patches firewall_rules ssh_root)
+    TextualGroup.new(_("Security"), %i(users groups patches firewall_rules ssh_root))
   end
 
   def textual_group_configuration
-    %i(guest_applications host_services filesystems advanced_settings)
+    TextualGroup.new(_("Configuration"), %i(guest_applications host_services filesystems advanced_settings))
   end
 
   def textual_group_diagnostics
     return nil unless ::Settings.product.proto
-    %i(esx_logs)
+    TextualGroup.new(_("Diagnostics"), %i(esx_logs))
   end
 
   def textual_group_smart_management
-    %i(tags)
+    TextualTags.new(_("Smart Management"), %i(tags))
   end
   
   def textual_physical_server
@@ -42,29 +50,32 @@ module HostHelper::TextualSummary
   end
 
   def textual_group_miq_custom_attributes
-    textual_miq_custom_attributes
+    TextualGroup.new(_("Custom Attributes"), textual_miq_custom_attributes)
   end
 
   def textual_group_ems_custom_attributes
-    textual_ems_custom_attributes
+    TextualGroup.new(_("VC Custom Attributes"), textual_ems_custom_attributes)
   end
 
   def textual_group_authentications
-    textual_authentications(@record.authentication_userid_passwords + @record.authentication_key_pairs)
+    TextualGroup.new(
+      _("Authentication Status"),
+      textual_authentications(@record.authentication_userid_passwords + @record.authentication_key_pairs)
+    )
   end
 
   def textual_group_cloud_services
-    textual_openstack_nova_scheduler if @record.openstack_host?
+    TextualGroup.new(_("Cloud Services"), textual_openstack_nova_scheduler) if @record.openstack_host?
   end
 
   def textual_group_openstack_service_status
     return nil unless @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
-    textual_generate_openstack_status
+    TextualGroup.new(_("OpenStack Service Status"), textual_generate_openstack_status)
   end
 
   def textual_group_openstack_hardware_status
     return nil unless @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
-    %i(introspected provision_state)
+    TextualGroup.new(_("Openstack Hardware"), %i(introspected provision_state))
   end
 
   #

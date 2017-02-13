@@ -22,22 +22,12 @@ class ProviderForemanController < ApplicationController
     end
   end
 
-  def self.model_to_type_name(provmodel)
-    if provmodel.include?("ManageIQ::Providers::Foreman")
-      'foreman'
-    end
-  end
-
   def manager_prefix
     'configuration_manager'
   end
 
   def model_to_name(provmodel)
     ProviderForemanController.model_to_name(provmodel)
-  end
-
-  def model_to_type_name(provmodel)
-    ProviderForemanController.model_to_type_name(provmodel)
   end
 
   def new
@@ -267,7 +257,12 @@ class ProviderForemanController < ApplicationController
                     end
   end
 
-  private ###########
+  private
+
+  def textual_group_list
+    [%i(properties environment os), %i(tenancy tags)]
+  end
+  helper_method :textual_group_list
 
   def find_or_build_provider
     @provider = provider_class_from_provtype.new if params[:id] == "new"
@@ -392,7 +387,7 @@ class ProviderForemanController < ApplicationController
       process_show_list(options)
       @right_cell_text = _("All Configuration Management Providers")
     elsif x_active_tree == :configuration_manager_cs_filter_tree
-      options = {:model => "ConfiguredSystem"}
+      options = {:model => "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem"}
       process_show_list(options)
       @right_cell_text = _("All Configured Systems")
     end
@@ -440,9 +435,7 @@ class ProviderForemanController < ApplicationController
     if record_showing && valid_configured_system_record?(@configured_system_record)
       get_tagdata(@record)
       presenter.hide(:form_buttons_div)
-      path_dir = controller_name
-      presenter.update(:main_div, r[:partial => "#{path_dir}/main",
-                                    :locals  => {:controller => controller_name}])
+      presenter.update(:main_div, r[:partial => "layouts/textual_groups_generic"])
     elsif @in_a_form
       partial_locals = {:controller => controller_name}
       @right_cell_text =

@@ -7,7 +7,7 @@ module EmsContainerHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name type hostname port cpu_cores memory_resources)
+    TextualGroup.new(_("Properties"), %i(name type hostname port cpu_cores memory_resources))
   end
 
   def textual_group_relationships
@@ -17,11 +17,14 @@ module EmsContainerHelper::TextualSummary
     items.concat(%i(container_routes)) if @record.respond_to?(:container_routes)
     items.concat(%i(container_services container_replicators container_groups containers container_nodes
                     container_image_registries container_images volumes container_builds container_templates))
-    items
+    TextualGroup.new(_("Relationships"), items)
   end
 
   def textual_group_status
-    textual_authentications_status + %i(authentications_status metrics_status refresh_status)
+    TextualGroup.new(
+      _("Status"),
+      textual_authentications_status + %i(authentications_status metrics_status refresh_status)
+    )
   end
 
   def textual_group_component_statuses
@@ -34,16 +37,17 @@ module EmsContainerHelper::TextualSummary
         (cs.error || "")
       ]
     end
-    h
+    TextualGroup.new(_("Component Statuses"), h)
   end
 
   def textual_group_smart_management
-    %i(zone tags)
+    TextualTags.new(_("Smart Management"), %i(zone tags))
   end
 
   def textual_group_topology
     items = %w(topology)
-    items.collect { |m| send("textual_#{m}") }.flatten.compact
+    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
+    TextualGroup.new(_("Overview"), i)
   end
   #
   # Items
@@ -98,13 +102,26 @@ module EmsContainerHelper::TextualSummary
     h
   end
 
-  def textual_endpoints
+  def textual_group_endpoints
     return unless @record.connection_configurations.hawkular
 
-    [{:label => _('Hawkular Host Name'),
-      :value => @record.connection_configurations.hawkular.endpoint.hostname},
-     {:label => _('Hawkular API Port'),
-      :value => @record.connection_configurations.hawkular.endpoint.port}]
+    TextualGroup.new(
+      _("Endpoints"),
+      [
+        {
+          :label => _('Hawkular Host Name'),
+          :value => @record.connection_configurations.hawkular.endpoint.hostname
+        },
+        {
+          :label => _('Hawkular API Port'),
+          :value => @record.connection_configurations.hawkular.endpoint.port
+        }
+      ]
+    )
+  end
+
+  def textual_group_miq_custom_attributes
+    TextualGroup.new(_("Custom Attributes"), textual_miq_custom_attributes)
   end
 
   def textual_miq_custom_attributes

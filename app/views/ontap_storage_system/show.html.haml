@@ -2,7 +2,7 @@
   - if @create_ld
     = render :partial => "create_logical_disk"
   - elsif @display == "main"
-    = render :partial => @showtype
+    = render :partial => "layouts/textual_groups_generic"
   - elsif @showtype == "item"
     = render :partial => "layouts/item"
   - elsif @display == "show_statistics"

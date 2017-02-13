@@ -3,11 +3,10 @@
 - if nodetypes.include?(TreeBuilder.get_model_for_prefix(@nodetype)) && !@view
   #main_div
     - if TreeBuilder.get_model_for_prefix(@nodetype) == "MiqTemplate"
-      = render(:partial => "vm_common/main",
-               :locals  => {:controller => "vm"})
+      = render :partial => "layouts/textual_groups_generic"
     - else
       = render(:partial => "#{x_active_tree}_show",
-               :locals  => {:controller => "catalog"})
+        :locals  => {:controller => "catalog"})
 - else
   #main_div
     - if @sb[:buttons_node]

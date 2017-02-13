@@ -10,7 +10,7 @@ module MiddlewareSummaryHelper
   end
 
   def textual_group_smart_management
-    %i(tags)
+    TextualTags.new(_("Smart Management"), %i(tags))
   end
 
   def textual_middleware_servers

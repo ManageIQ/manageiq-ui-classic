@@ -34,7 +34,12 @@ class OntapFileShareController < CimInstanceController
     head :ok                                 # No response needed
   end
 
-  private ############################
+  private
+
+  def textual_group_list
+    [%i(properties tags), %i(relationships infrastructure_relationships)]
+  end
+  helper_method :textual_group_list
 
   # Handle the create_datastore button
   def create_datastore

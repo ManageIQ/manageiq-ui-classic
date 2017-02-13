@@ -194,6 +194,16 @@ module Mixins
       replace_right_cell(:replace_trees => [x_active_accord])
     end
 
+    def model_to_type_name(provmodel)
+      if provmodel.include?("ManageIQ::Providers::AnsibleTower")
+        'ansible_tower'
+      elsif provmodel.include?("ManageIQ::Providers::Foreman")
+        'foreman'
+      else
+        raise "Unknown provmodel value: #{provmodel}"
+      end
+    end
+
     private ###########
 
     def replace_right_cell(options = {})

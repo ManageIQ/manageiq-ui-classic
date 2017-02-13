@@ -1,5 +1,7 @@
 - if %w( container_routes container_services container_groups container_nodes).include?(@display)
   = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
+- elsif @showtype == "main"
+  = render :partial => "layouts/textual_groups_generic"
 - elsif @showtype == "performance"
   = render(:partial => "layouts/performance")
   :javascript

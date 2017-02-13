@@ -28,7 +28,7 @@
   - elsif @showtype == "config"
     = render :partial => "shared/views/ems_common/config"
   - elsif @showtype == 'main'
-    = render :partial => 'main'
+    = render :partial => "layouts/textual_groups_generic"
   - elsif @showtype == 'dashboard'
     = raise 'show_dashboard partial called through "show"'
     = render :partial => 'show_dashboard'

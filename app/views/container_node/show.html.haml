@@ -10,5 +10,7 @@
     ManageIQ.afterOnload = "miqAsyncAjax('#{url_for(:action => @ajax_action, :id => @record)}');"
 - elsif @showtype == "compliance_history"
   = render :partial => "shared/views/#{@showtype}"
+- elsif @showtype == "main"
+  = render :partial => "layouts/textual_groups_generic"
 - else
   = render :partial => @showtype

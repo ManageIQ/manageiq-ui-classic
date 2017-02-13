@@ -8,6 +8,7 @@
     = render(:partial => "layouts/#{@showtype}")
   - when "compliance_history"
     = render(:partial => "shared/views/#{@showtype}")
-
+  - when "main"
+    = render :partial => "layouts/textual_groups_generic"
   - else
     = render :partial => @showtype

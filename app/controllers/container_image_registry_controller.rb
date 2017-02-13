@@ -7,4 +7,11 @@ class ContainerImageRegistryController < ApplicationController
   after_action :set_session_data
 
   menu_section :cnt
+
+  private
+
+  def textual_group_list
+    [%i(properties), %i(relationships smart_management)]
+  end
+  helper_method :textual_group_list
 end

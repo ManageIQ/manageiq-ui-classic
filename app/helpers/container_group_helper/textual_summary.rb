@@ -4,12 +4,21 @@ module ContainerGroupHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name phase message reason creation_timestamp resource_version restart_policy dns_policy ip)
+    TextualGroup.new(
+      _("Properties"),
+      %i(name phase message reason creation_timestamp resource_version restart_policy dns_policy ip)
+    )
   end
 
   def textual_group_relationships
     # Order of items should be from parent to child
-    %i(ems container_project container_services container_replicator containers container_node lives_on container_images)
+    TextualGroup.new(
+      _("Relationships"),
+      %i(
+        ems container_project container_services container_replicator containers container_node
+        lives_on container_images
+      )
+    )
   end
 
   def textual_group_conditions
@@ -21,12 +30,13 @@ module ContainerGroupHelper::TextualSummary
         condition.status,
       ]
     end
-    h
+    TextualGroup.new(_("Conditions"), h)
   end
 
   def textual_group_smart_management
     items = %w(tags)
-    items.collect { |m| send("textual_#{m}") }.flatten.compact
+    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
+    TextualTags.new(_("Smart Management"), i)
   end
 
   @@key_dictionary = [
@@ -63,7 +73,7 @@ module ContainerGroupHelper::TextualSummary
       volume_values[0][0] = volume.name if volume_values.length > 0
       h[:values] += volume_values
     end
-    h
+    TextualGroup.new(_("Volumes"), h)
   end
 
   #
@@ -111,8 +121,8 @@ module ContainerGroupHelper::TextualSummary
     }
   end
 
-  def textual_container_statuses_summary
-    %i(waiting running terminated)
+  def textual_group_container_statuses_summary
+    TextualGroup.new(_("Container Statuses Summary"), %i(waiting running terminated))
   end
 
   def container_statuses_summary

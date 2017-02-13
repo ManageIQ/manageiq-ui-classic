@@ -2,7 +2,7 @@
   - if @showtype == "item"
     = render(:partial => "layouts/item")
   - elsif @display == "main"
-    = render(:partial => @showtype)
+    = render :partial => "layouts/textual_groups_generic"
   - elsif @showtype == "performance"
     = render(:partial => "layouts/performance")
     :javascript

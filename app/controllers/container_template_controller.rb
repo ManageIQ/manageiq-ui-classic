@@ -6,5 +6,12 @@ class ContainerTemplateController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  private
+
+  def textual_group_list
+    [%i(properties objects parameters), %i(relationships container_labels smart_management)]
+  end
+  helper_method :textual_group_list
+
   menu_section :cnt
 end

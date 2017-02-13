@@ -4,11 +4,11 @@ module CloudVolumeSnapshotHelper::TextualSummary
   include TextualMixins::TextualName
 
   def textual_group_properties
-    %i(name size description)
+    TextualGroup.new(_("Properties"), %i(name size description))
   end
 
   def textual_group_relationships
-    %i(parent_ems_cloud ems cloud_volume based_volumes cloud_tenant)
+    TextualGroup.new(_("Relationships"), %i(parent_ems_cloud ems cloud_volume based_volumes cloud_tenant))
   end
 
   def textual_size

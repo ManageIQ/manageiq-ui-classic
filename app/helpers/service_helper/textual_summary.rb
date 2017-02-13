@@ -7,25 +7,30 @@ module ServiceHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name description guid)
+    TextualGroup.new(_("Properties"), %i(name description guid))
   end
 
   def textual_group_vm_totals
-    %i(aggregate_all_vm_cpus aggregate_all_vm_memory
-       aggregate_all_vm_disk_count aggregate_all_vm_disk_space_allocated
-       aggregate_all_vm_disk_space_used aggregate_all_vm_memory_on_disk)
+    TextualGroup.new(
+      _("Totals for Service VMs"),
+      %i(
+        aggregate_all_vm_cpus aggregate_all_vm_memory
+        aggregate_all_vm_disk_count aggregate_all_vm_disk_space_allocated
+        aggregate_all_vm_disk_space_used aggregate_all_vm_memory_on_disk
+      )
+    )
   end
 
   def textual_group_lifecycle
-    %i(retirement_date retirement_state owner group created)
+    TextualGroup.new(_("Lifecycle"), %i(retirement_date retirement_state owner group created))
   end
 
   def textual_group_relationships
-    %i(catalog_item parent_service orchestration_stack job)
+    TextualGroup.new(_("Relationships"), %i(catalog_item parent_service orchestration_stack job))
   end
 
   def textual_group_miq_custom_attributes
-    textual_miq_custom_attributes
+    TextualGroup.new(_("Custom Attributes"), textual_miq_custom_attributes)
   end
 
   #

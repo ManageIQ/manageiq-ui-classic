@@ -227,7 +227,12 @@ class InfraNetworkingController < ApplicationController
     render_tagging_form
   end
 
-  private ###########
+  private
+
+  def textual_group_list
+    [%i(relationships), %i(smart_management)]
+  end
+  helper_method :textual_group_list
 
   def hosts_list
     condition         = nil
@@ -470,7 +475,7 @@ class InfraNetworkingController < ApplicationController
 
     if record_showing
       presenter.hide(:form_buttons_div)
-      presenter.update(:main_div, r[:partial => "main"])
+      presenter.update(:main_div, r[:partial => "layouts/textual_groups_generic"])
     elsif @sb[:action] || params[:display]
       partial_locals = {:controller =>'infra_networking'}
       if partial == 'layouts/x_gtl'
@@ -566,9 +571,7 @@ class InfraNetworkingController < ApplicationController
     if record_showing && valid_switch_record?(@record)
       get_tagdata(@record)
       presenter.hide(:form_buttons_div)
-      path_dir = "infra_networking"
-      presenter.update(:main_div, r[:partial => "#{path_dir}/main",
-                                    :locals  => {:controller => 'infra_networking'}])
+      presenter.update(:main_div, r[:partial => "layouts/textual_groups_generic"])
     else
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     end
@@ -636,8 +639,7 @@ class InfraNetworkingController < ApplicationController
       c_tb = build_toolbar(center_toolbar_filename)
       render :update do |page|
         page << javascript_prologue
-        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-        page.replace_html("main_div", :partial => "show") # Replace the main div area contents
+        page.replace_html("main_div", :partial => "layouts/textual_groups_generic")
         page << javascript_pf_toolbar_reload('center_tb', c_tb)
       end
     else

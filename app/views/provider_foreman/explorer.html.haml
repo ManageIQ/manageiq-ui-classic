@@ -14,7 +14,7 @@
 
 - elsif @configured_system_record
   #main_div
-    = render(:partial => 'provider_foreman/main', :locals => {:controller => "provider_foreman"})
+    = render :partial => "layouts/textual_groups_generic"
 - elsif @configuration_script_record
   #main_div
     = render(:partial => 'provider_foreman/configuration_script', :locals => {:controller => "provider_foreman"})

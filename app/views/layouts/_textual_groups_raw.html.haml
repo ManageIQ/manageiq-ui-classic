@@ -1,0 +1,6 @@
+.row
+  - textual_group_list.each do |big_group|
+    .col-md-12.col-lg-6
+      - big_group.each do |group|
+        - render_options = textual_group_render_options(group)
+        = render textual_group_render_options(group) if render_options.present?

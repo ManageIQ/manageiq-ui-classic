@@ -3,6 +3,16 @@ module EmsCommon
 
   included do
     include Mixins::GenericSessionMixin
+
+    helper_method :textual_group_list
+    private :textual_group_list
+  end
+
+  def textual_group_list
+    [
+      %i(properties status) + (@record.respond_to?(:arbitration_profiles) ? %i(configuration_relationships) : []),
+      %i(relationships topology smart_management)
+    ]
   end
 
   def show_props

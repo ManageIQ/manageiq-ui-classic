@@ -39,7 +39,12 @@ class OntapStorageSystemController < CimInstanceController
     head :ok                                 # No response needed
   end
 
-  private ############################
+  private
+
+  def textual_group_list
+    [%i(properties smart_management), %i(relationships infrastructure_relationships)]
+  end
+  helper_method :textual_group_list
 
   # Handle the create_logical_disk button
   def create_logical_disk

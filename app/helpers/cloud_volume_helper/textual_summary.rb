@@ -4,12 +4,17 @@ module CloudVolumeHelper::TextualSummary
   include TextualMixins::TextualName
 
   def textual_group_properties
-    %i(name size bootable description)
+    TextualGroup.new(_("Properties"), %i(name size bootable description))
   end
 
   def textual_group_relationships
-    %i(parent_ems_cloud ems availability_zone cloud_tenant base_snapshot cloud_volume_backups
-       cloud_volume_snapshots attachments)
+    TextualGroup.new(
+      _("Relationships"),
+      %i(
+        parent_ems_cloud ems availability_zone cloud_tenant base_snapshot cloud_volume_backups
+        cloud_volume_snapshots attachments
+      )
+    )
   end
 
   def textual_size

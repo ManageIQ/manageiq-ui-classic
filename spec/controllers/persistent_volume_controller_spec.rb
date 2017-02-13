@@ -22,10 +22,11 @@ describe PersistentVolumeController do
     expect(response.body).to_not be_empty
   end
 
+  let(:ems) { FactoryGirl.create(:ems_openshift) }
+  let(:persistent_volume) { PersistentVolume.create(:parent => ems, :name => "Test Volume") }
+
   it "renders grid view" do
     EvmSpecHelper.create_guid_miq_server_zone
-    ems = FactoryGirl.create(:ems_openshift)
-    persistent_volume = PersistentVolume.create(:parent => ems, :name => "Test Volume")
 
     session[:settings] = {
       :views => {:persistentvolume => "grid"}
@@ -43,5 +44,24 @@ describe PersistentVolumeController do
       expect(controller.instance_variable_get(:@settings)).to include(:views => {:persistentvolume => "tile"})
     end
     controller.send(:get_view, "PersistentVolume", :gtl_dbname => :persistentvolume)
+  end
+
+  describe "#show" do
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    subject do
+      get :show, :params => {:id => persistent_volume.id}
+    end
+
+    context "render" do
+      render_views
+      it do
+        is_expected.to have_http_status 200
+        is_expected.to render_template(:partial => 'layouts/_textual_groups_generic')
+        is_expected.to render_template(:partial => 'layouts/listnav/_persistent_volume')
+      end
+    end
   end
 end

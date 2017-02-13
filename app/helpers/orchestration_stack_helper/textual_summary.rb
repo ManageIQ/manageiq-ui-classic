@@ -8,15 +8,21 @@ module OrchestrationStackHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name description type status status_reason)
+    TextualGroup.new(_("Properties"), %i(name description type status status_reason))
   end
 
   def textual_group_lifecycle
-    %i(retirement_date)
+    TextualGroup.new(_("Lifecycle"), %i(retirement_date))
   end
 
   def textual_group_relationships
-    %i(ems_cloud service parent_orchestration_stack child_orchestration_stack orchestration_template instances security_groups cloud_networks parameters outputs resources)
+    TextualGroup.new(
+      _("Relationships"),
+      %i(
+        ems_cloud service parent_orchestration_stack child_orchestration_stack orchestration_template
+        instances security_groups cloud_networks parameters outputs resources
+      )
+    )
   end
 
   #

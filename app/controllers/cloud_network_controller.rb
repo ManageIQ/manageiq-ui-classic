@@ -228,6 +228,11 @@ class CloudNetworkController < ApplicationController
 
   private
 
+  def textual_group_list
+    [%i(properties relationships), %i(tags)]
+  end
+  helper_method :textual_group_list
+
   def switch_to_bol(option)
     return true if option && option =~ /on|true/i
     return false

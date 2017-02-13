@@ -7,11 +7,14 @@ module NetworkRouterHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name type status)
+    TextualGroup.new(_("Properties"), %i(name type status))
   end
 
   def textual_group_relationships
-    %i(parent_ems_cloud ems_network cloud_tenant instances cloud_subnets external_gateway)
+    TextualGroup.new(
+      _("Relationships"),
+      %i(parent_ems_cloud ems_network cloud_tenant instances cloud_subnets external_gateway)
+    )
   end
 
   #

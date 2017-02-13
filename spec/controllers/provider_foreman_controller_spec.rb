@@ -390,9 +390,21 @@ describe ProviderForemanController do
       allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
       allow(controller).to receive(:build_listnav_search_list)
       controller.instance_variable_set(:@_params, :id => "configuration_manager_cs_filter_accord")
-      expect(controller).to receive(:get_view).with("ConfiguredSystem", :dbname => :cm_configured_systems).and_call_original
+      expect(controller).to receive(:get_view).with("ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem", :dbname => :cm_configured_systems).and_call_original
       allow(controller).to receive(:build_listnav_search_list)
       controller.send(:accordion_select)
+    end
+
+    it "does not display an automation manger configured system in the Configured Systems accordion" do
+      stub_user(:features => :all)
+      FactoryGirl.create(:configured_system_ansible_tower)
+      allow(controller).to receive(:x_active_tree).and_return(:configuration_manager_cs_filter_tree)
+      allow(controller).to receive(:x_active_accord).and_return(:configuration_manager_cs_filter)
+      allow(controller).to receive(:build_listnav_search_list)
+      controller.instance_variable_set(:@_params, :id => "configuration_manager_cs_filter_accord")
+      controller.send(:accordion_select)
+      view = controller.instance_variable_get(:@view)
+      expect(view.table.data.size).to eq(5)
     end
   end
 
@@ -449,6 +461,22 @@ describe ProviderForemanController do
       expect(response.status).to eq(200)
       expect(response.body).not_to include('<div class=\"hidden btn-group dropdown\"><button data-explorer=\"true\" title=\"Configuration\"')
     end
+  end
+
+  it "renders textual summary for a configured system" do
+    stub_user(:features => :all)
+
+    tree_node_id = ApplicationRecord.compress_id(@configured_system.id)
+
+    # post to x_show sets session variables and redirects to explorer
+    # then get to explorer renders the data for the active node
+    # we test the textual_summary for a configured system
+
+    seed_session_trees('provider_foreman', 'cs_tree', "cs-#{tree_node_id}")
+    get :explorer
+
+    expect(response.status).to eq(200)
+    expect(response).to render_template(:partial => 'layouts/_textual_groups_generic')
   end
 
   context "fetches the list setting:Grid/Tile/List from settings" do

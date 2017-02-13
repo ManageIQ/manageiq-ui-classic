@@ -1,6 +1,6 @@
 module ComplianceSummaryHelper
   def textual_group_compliance
-    %i(compliance_status compliance_history)
+    TextualGroup.new(_("Compliance"), %i(compliance_status compliance_history))
   end
 
   def textual_compliance_status

@@ -176,7 +176,12 @@ class OrchestrationStackController < ApplicationController
     end
   end
 
-  private ############################
+  private
+
+  def textual_group_list
+    [%i(properties lifecycle relationships), %i(tags)]
+  end
+  helper_method :textual_group_list
 
   def make_ot_orderable
     stack = find_by_id_filtered(OrchestrationStack, params[:id])

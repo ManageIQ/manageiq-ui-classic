@@ -4,24 +4,31 @@ module ContainerProjectHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name display_name creation_timestamp resource_version)
+    TextualGroup.new(_("Properties"), %i(name display_name creation_timestamp resource_version))
   end
 
   def textual_group_relationships
-    %i(ems container_routes container_services container_replicators container_groups container_nodes container_images
-       container_templates)
+    TextualGroup.new(
+      _("Relationships"),
+      %i(
+        ems container_routes container_services container_replicators container_groups
+        container_nodes container_images container_templates
+      )
+    )
   end
 
   def textual_group_smart_management
     items = %w(tags)
-    items.collect { |m| send("textual_#{m}") }.flatten.compact
+    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
+    TextualTags.new(_("Smart Management"), i)
   end
 
-  def textual_quota
-    {
+  def textual_group_quota
+    TextualMultilabel.new(
+      _("Resource Quota"),
       :labels => [_("Name"), _("Resource"), _("Desired"), _("Enforced"), _("Observed")],
       :values => collect_quota_items
-    }
+    )
   end
 
   def collect_quota_items
@@ -38,12 +45,13 @@ module ContainerProjectHelper::TextualSummary
     rows
   end
 
-  def textual_limits
-    {
+  def textual_group_limits
+    TextualMultilabel.new(
+      _("Limit Ranges"),
       :labels => [_("Name"), _("Type"), _("Resource"), _("Max"), _("Min"), _("Default Limit"),
                   _("Default Request"), _("Limit Request Ratio")],
       :values => collect_limit_items
-    }
+    )
   end
 
   def collect_limit_items

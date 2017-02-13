@@ -4,19 +4,28 @@ module OntapStorageSystemHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name element_name vendor zone_name description operational_status health_state other_identifying_info last_update_status)
+    TextualGroup.new(
+      _("Properties"),
+      %i(
+        name element_name vendor zone_name description operational_status health_state
+        other_identifying_info last_update_status
+      )
+    )
   end
 
   def textual_group_relationships
-    %i(storage_volumes hosted_file_shares local_file_systems logical_disks base_storage_extents)
+    TextualGroup.new(
+      _("Relationships"),
+      %i(storage_volumes hosted_file_shares local_file_systems logical_disks base_storage_extents)
+    )
   end
 
   def textual_group_infrastructure_relationships
-    %i(vms hosts datastores)
+    TextualGroup.new(_("Infrastructure Relationships"), %i(vms hosts datastores))
   end
 
   def textual_group_smart_management
-    %i(tags)
+    TextualTags.new(_("Smart Management"), %i(tags))
   end
 
   #

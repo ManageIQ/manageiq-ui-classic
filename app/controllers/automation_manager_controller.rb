@@ -26,18 +26,8 @@ class AutomationManagerController < ApplicationController
     end
   end
 
-  def self.model_to_type_name(provmodel)
-    if provmodel.include?("ManageIQ::Providers::AnsibleTower")
-      'ansible_tower'
-    end
-  end
-
   def model_to_name(provmodel)
     AutomationManagerController.model_to_name(provmodel)
-  end
-
-  def model_to_type_name(provmodel)
-    AutomationManagerController.model_to_type_name(provmodel)
   end
 
   def managed_group_kls
@@ -244,7 +234,12 @@ class AutomationManagerController < ApplicationController
     end
   end
 
-  private ###########
+  private
+
+  def textual_group_list
+    [%i(properties tags)]
+  end
+  helper_method :textual_group_list
 
   def provider_class
     ManageIQ::Providers::AnsibleTower::Provider
@@ -454,9 +449,7 @@ class AutomationManagerController < ApplicationController
     if record_showing && valid_configured_system_record?(@configured_system_record)
       get_tagdata(@record)
       presenter.hide(:form_buttons_div)
-      path_dir = controller_name
-      presenter.update(:main_div, r[:partial => "#{path_dir}/main",
-                                    :locals  => {:controller => controller_name}])
+      presenter.update(:main_div, r[:partial => "layouts/textual_groups_generic"])
     elsif @in_a_form
       partial_locals = {:controller => controller_name}
       @right_cell_text =

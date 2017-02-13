@@ -6,11 +6,11 @@ module AvailabilityZoneHelper::TextualSummary
   #
 
   def textual_group_relationships
-    %i(ems_cloud instances cloud_volumes)
+    TextualGroup.new(_("Relationships"), %i(ems_cloud instances cloud_volumes))
   end
 
   def textual_group_availability_zone_totals
-    %i(block_storage_disk_capacity block_storage_disk_usage)
+    TextualGroup.new(_("Totals for Availability Zone"), %i(block_storage_disk_capacity block_storage_disk_usage))
   end
 
   #

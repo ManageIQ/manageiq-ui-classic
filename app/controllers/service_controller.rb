@@ -131,6 +131,11 @@ class ServiceController < ApplicationController
 
   private
 
+  def textual_group_list
+    [%i(properties lifecycle relationships miq_custom_attributes), %i(vm_totals tags)]
+  end
+  helper_method :textual_group_list
+
   def features
     [ApplicationController::Feature.new_with_hash(:role     => "service",
                                                   :role_any => true,

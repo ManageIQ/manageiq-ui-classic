@@ -4,12 +4,12 @@ module MiddlewareDatasourceHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(name nativeid driver_name jndi_name connection_url enabled)
+    TextualGroup.new(_("Properties"), %i(name nativeid driver_name jndi_name connection_url enabled))
   end
 
   def textual_group_relationships
     # Order of items should be from parent to child
-    %i(ems middleware_server)
+    TextualGroup.new(_("Relationships"), %i(ems middleware_server))
   end
 
   def textual_driver_name

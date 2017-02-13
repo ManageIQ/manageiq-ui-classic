@@ -586,6 +586,15 @@ describe CatalogController do
         expect(response).to render_template('layouts/gtl/_grid')
       end
     end
+
+    it "Renders an orchestration template textual summary" do
+      ot = FactoryGirl.create(:orchestration_template_cfn)
+      seed_session_trees('catalog', :ot_tree, "xx-otcfn_ot-#{controller.to_cid(ot.id)}")
+      post :explorer
+
+      expect(response).to have_http_status 200
+      expect(response).to render_template(:partial => 'catalog/_ot_tree_show')
+    end
   end
 
   context "#set_resource_action" do
