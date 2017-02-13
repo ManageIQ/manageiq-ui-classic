@@ -426,25 +426,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         it_behaves_like 'default case'
       end
 
-      context "and id = host_miq_request_new" do
-        before do
-          @id = "host_miq_request_new"
-          allow(@record).to receive(:mac_address).and_return("00:0D:93:13:51:1A")
-          allow(PxeServer).to receive(:all).and_return(%w(p1 p2))
-        end
-        it "when without mac address" do
-          allow(@record).to receive(:mac_address).and_return(false)
-          expect(subject).to eq("This Host can not be provisioned because the MAC address is not known")
-        end
-
-        it "when no PXE servers" do
-          allow(PxeServer).to receive(:all).and_return([])
-          expect(subject).to eq("No PXE Servers are available for Host provisioning")
-        end
-
-        it_behaves_like 'default case'
-      end
-
       context "and id = host_timeline" do
         before do
           @id = "host_timeline"
