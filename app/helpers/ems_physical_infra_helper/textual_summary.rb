@@ -5,24 +5,39 @@ module EmsPhysicalInfraHelper::TextualSummary
   #
 
   def textual_group_properties
-    %i(hostname ipaddress type port guid)
+   TextualGroup.new(
+	_("Properties"),
+        %i(hostname ipaddress type port guid)
+   )
   end
 
   def textual_group_relationships
-    %i(physical_servers datastores vms)
+   TextualGroup.new(
+          _("Relationships"),
+ 	  %i(physical_servers datastores vms)
+   )
   end
 
   def textual_group_status
-    textual_authentications(@ems.authentication_userid_passwords) + %i(refresh_status orchestration_stacks_status)
+   TextualGroup.new(
+	_("Authentications"),
+        textual_authentications(@ems.authentication_userid_passwords) + %i(refresh_status orchestration_stacks_status)
+   )
   end
 
   def textual_group_smart_management
-    %i(zone tags)
+   TextualGroup.new(
+	_("Smart Management"),
+	%i(zone tags)
+   )
   end
 
   def textual_group_topology
     items = %w(topology)
-    items.collect { |m| send("textual_#{m}") }.flatten.compact
+    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
+    TextualTags.new(
+        _("Topology"), i
+    )
   end
 
   #
