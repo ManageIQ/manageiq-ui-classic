@@ -133,9 +133,11 @@ module Mixins
 
     # Ideal method to use
     # This send is white-listed by `handled_buttons`
-    def handle_button_pressed(pressed)
+    def handle_button_pressed(pressed, &block)
       if handled_buttons.include?(pressed)
         self.send("handle_#{pressed}".to_sym)
+
+        yield(pressed) if block_given?
       end
     end
 
@@ -172,7 +174,19 @@ module Mixins
       when 'network_port_tag'              then tag(NetworkPort)
       when 'network_router_tag'            then tag(NetworkRouter)
       when 'security_group_tag'            then tag(SecurityGroup)
+      when 'instance_tag'                  then tag(VmOrTemplate)
       end
+    end
+
+    ### Common handlers
+    ############################################################################
+
+    def handle_custom_button
+      custom_button
+    end
+
+    def handle_instance_retire
+      retirevms
     end
 
     ### Predicates
@@ -576,6 +590,31 @@ module Mixins
           options
           partial_replace(@refresh_div, "vm_common/#{@refresh_partial}")
         end
+      end
+    end
+
+    def cloud_tenant_javascript_redirect
+      if params[:pressed].starts_with?(*editable_objects)
+        target_controller = editable_objects.detect { |n| params[:pressed].starts_with?(n) }
+        action = params[:pressed].sub("#{target_controller}_", '')
+
+        if action == 'delete'
+          action = "#{action}_#{target_controller.sub('cloud_','').pluralize}"
+        end
+
+        if action == 'detach'
+          volume = find_by_id_filtered(CloudVolume, from_cid(params[:miq_grid_checks]))
+
+          if volume.attachments.empty?
+            render_flash(_("%{volume} \"%{volume_name}\" is not attached to any %{instances}") % {
+                :volume      => ui_lookup(:table => 'cloud_volume'),
+                :volume_name => volume.name,
+                :instances   => ui_lookup(:tables => 'vm_cloud')}, :error)
+            return
+          end
+        end
+
+        javascript_redirect :controller => target_controller, :miq_grid_checks => params[:miq_grid_checks], :action => action
       end
     end
 

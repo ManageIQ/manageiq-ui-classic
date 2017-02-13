@@ -25,43 +25,10 @@ class CloudTenantController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    case params[:pressed]
-    when "cloud_tenant_new"
-      javascript_redirect :action => "new"
-    when "cloud_tenant_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id
-    when 'cloud_tenant_delete'
-      delete_cloud_tenants
-    when "custom_button"
-      # custom button screen, so return, let custom_buttons method handle everything
-      custom_buttons
-    else
-      if params[:pressed].starts_with?(*editable_objects)
-        target_controller = editable_objects.detect { |n| params[:pressed].starts_with?(n) }
-        action = params[:pressed].sub("#{target_controller}_", '')
+    handle_tag_presses(params[:pressed])
+    handle_button_pressed(params[:pressed])
 
-        if action == 'delete'
-          action = "#{action}_#{target_controller.sub('cloud_','').pluralize}"
-        end
-
-        if action == 'detach'
-          volume = find_by_id_filtered(CloudVolume, from_cid(params[:miq_grid_checks]))
-
-          if volume.attachments.empty?
-            render_flash(_("%{volume} \"%{volume_name}\" is not attached to any %{instances}") % {
-                :volume      => ui_lookup(:table => 'cloud_volume'),
-                :volume_name => volume.name,
-                :instances   => ui_lookup(:tables => 'vm_cloud')}, :error)
-            return
-          end
-        end
-
-        javascript_redirect :controller => target_controller, :miq_grid_checks => params[:miq_grid_checks], :action => action
-      else
-        # calling the method from Mixins::GenericButtonMixin
-        super
-      end
-    end
+    cloud_tenant_javascript_redirect
   end
 
   def new
@@ -199,7 +166,7 @@ class CloudTenantController < ApplicationController
     }
   end
 
-  def delete_cloud_tenants
+  def handle_cloud_tenant_delete
     assert_privileges("cloud_tenant_delete")
 
     tenants = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_tenant")
@@ -286,6 +253,23 @@ class CloudTenantController < ApplicationController
 
   def editable_objects
     DISPLAY_METHODS.map(&:singularize)
+  end
+
+  def handle_cloud_tenant_new
+    javascript_redirect :action => "new"
+  end
+
+  def handle_cloud_tenant_edit
+    javascript_redirect :action => "edit", :id => checked_item_id
+  end
+
+  def handled_buttons
+    %w(
+      cloud_tenant_new
+      cloud_tenant_edit
+      cloud_tenant_delete
+      instance_retire
+    )
   end
 
   menu_section :clo
