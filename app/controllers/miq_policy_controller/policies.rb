@@ -108,7 +108,7 @@ module MiqPolicyController::Policies
       add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "MiqPolicy"), :name => new_desc})
       @new_policy_node = policy_node(policy)
       get_node_info(@new_policy_node)
-      replace_right_cell(:nodetype => "p", :replace_tres => [:policy])
+      replace_right_cell(:nodetype => "p", :replace_trees => [:policy])
     end
   end
 
@@ -128,7 +128,7 @@ module MiqPolicyController::Policies
     add_flash(_("The selected %{models} was deleted") %
       {:models => ui_lookup(:models => "MiqPolicy")}) if @flash_array.nil?
     get_node_info(@new_policy_node)
-    replace_right_cell(:nodetype => "xx", :replace_tres => [:policy, :policy_profile])
+    replace_right_cell(:nodetype => "xx", :replace_trees => [:policy, :policy_profile])
   end
 
   def policy_field_changed
