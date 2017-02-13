@@ -1,9 +1,6 @@
 require 'ostruct'
 
 describe ApplicationController do
-  example ".model" do
-    expect(CimStorageExtentController.model).to eq CimStorageExtent
-  end
 
   context "#find_by_id_filtered" do
     before do

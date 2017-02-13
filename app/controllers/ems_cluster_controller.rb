@@ -90,34 +90,6 @@ class EmsClusterController < ApplicationController
                       :url  => "/ems_cluster/show/#{@ems_cluster.id}?display=storage")
       @view, @pages = get_view(Storage, :parent => @ems_cluster)  # Get the records (into a view) and the paginator
       @showtype = "storage"
-
-    when "storage_extents"
-      drop_breadcrumb(:name => @ems_cluster.name + _(" (All %{tables})") %
-        {:tables => ui_lookup(:tables => "cim_base_storage_extent")},
-                      :url  => "/ems_cluster/show/#{@ems_cluster.id}?display=storage_extents")
-      @view, @pages = get_view(CimBaseStorageExtent, :parent => @ems_cluster, :parent_method => :base_storage_extents)  # Get the records (into a view) and the paginator
-      @showtype = "storage_extents"
-
-    when "storage_systems"
-      drop_breadcrumb(:name => @ems_cluster.name + _(" (All %{tables})") %
-        {:tables => ui_lookup(:tables => "ontap_storage_system")},
-                      :url  => "/ems_cluster/show/#{@ems_cluster.id}?display=storage_systems")
-      @view, @pages = get_view(OntapStorageSystem, :parent => @ems_cluster, :parent_method => :storage_systems) # Get the records (into a view) and the paginator
-      @showtype = "storage_systems"
-
-    when "ontap_storage_volumes"
-      drop_breadcrumb(:name => @ems_cluster.name + _(" (All %{tables})") %
-        {:tables => ui_lookup(:tables => "ontap_storage_volume")},
-                      :url  => "/ems_cluster/show/#{@ems_cluster.id}?display=ontap_storage_volumes")
-      @view, @pages = get_view(OntapStorageVolume, :parent => @ems_cluster, :parent_method => :storage_volumes) # Get the records (into a view) and the paginator
-      @showtype = "ontap_storage_volumes"
-
-    when "ontap_file_shares"
-      drop_breadcrumb(:name => @ems_cluster.name + _(" (All %{tables})") %
-        {:tables => ui_lookup(:tables => "ontap_file_share")},
-                      :url  => "/ems_cluster/show/#{@ems_cluster.id}?display=ontap_file_shares")
-      @view, @pages = get_view(OntapFileShare, :parent => @ems_cluster, :parent_method => :file_shares) # Get the records (into a view) and the paginator
-      @showtype = "ontap_file_shares"
     end
 
     set_config(@ems_cluster)

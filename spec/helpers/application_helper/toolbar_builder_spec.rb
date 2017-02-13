@@ -416,6 +416,25 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       expect(subject).to match(/No.*are available/)
     end
 
+    context "when record class = EmsCluster" do
+      before do
+        @record = EmsCluster.new
+        allow(@record).to receive_messages(:has_perf_data? => true, :has_events? => true)
+      end
+
+      context "and id = ems_cluster_perf" do
+        before { @id = "ems_cluster_perf" }
+        it_behaves_like 'record without perf data', "No Capacity & Utilization data has been collected for this Cluster"
+        it_behaves_like 'default case'
+      end
+
+      context "and id = ems_cluster_timeline" do
+        before { @id = "ems_cluster_timeline" }
+        it_behaves_like 'record without ems events and policy events', "No Timeline data has been collected for this Cluster"
+        it_behaves_like 'default case'
+      end
+    end
+
     context "when record class = Host" do
       before do
         @record = Host.new

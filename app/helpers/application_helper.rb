@@ -200,10 +200,6 @@ module ApplicationHelper
                     )
     elsif @host && ["Patch", "GuestApplication"].include?(db)
       return url_for(:controller => "host", :action => @lastaction, :id => @host, :show => @id)
-    elsif db == "MiqCimInstance" && @db && @db == "snia_local_file_system"
-      return url_for(:controller => @record.class.to_s.underscore, :action => "snia_local_file_systems", :id => @record, :show => @id)
-    elsif db == "MiqCimInstance" && @db && @db == "cim_base_storage_extent"
-      return url_for(:controller => @record.class.to_s.underscore, :action => "cim_base_storage_extents", :id => @record, :show => @id)
     elsif %w(ConfiguredSystem ConfigurationProfile EmsFolder).include?(db)
       return url_for(:controller => "provider_foreman", :action => @lastaction, :id => @record, :show => @id)
     else
@@ -235,44 +231,36 @@ module ApplicationHelper
       if controller == "ems_network" && action == "show"
         return ems_networks_path
       end
-      if parent && parent.class.base_model.to_s == "MiqCimInstance" && ["CimBaseStorageExtent", "SniaLocalFileSystem"].include?(view.db)
-        return url_for(:controller => controller, :action => action, :id => parent.id) + "?show="
-      else
-        if @explorer
-          # showing a list view of another CI inside vmx
-          if %w(OntapStorageSystem
-                OntapLogicalDisk
-                OntapStorageVolume
-                OntapFileShare
-                SecurityGroup
-                FloatingIp
-                NetworkRouter
-                NetworkPort
-                CloudNetwork
-                CloudSubnet
-                LoadBalancer
-                CloudVolume
-                ).include?(view.db)
-            return url_for(:controller => controller, :action => "show") + "/"
-          elsif ["Vm"].include?(view.db) && parent && request.parameters[:controller] != "vm"
-            # this is to handle link to a vm in vm explorer from service explorer
-            return url_for(:controller => "vm_or_template", :action => "show") + "/"
-          elsif %w(ConfigurationProfile EmsFolder).include?(view.db) &&
-                request.parameters[:controller] == "provider_foreman"
-            return url_for(:action => action, :id => nil) + "/"
-          elsif %w(ManageIQ::Providers::AutomationManager::InventoryGroup EmsFolder).include?(view.db) &&
-                request.parameters[:controller] == "automation_manager"
-            return url_for(:action => action, :id => nil) + "/"
-          elsif %w(ConfiguredSystem).include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
-            return url_for(:action => action, :id => nil) + "/"
-          else
-            return url_for(:action => action) + "/" # In explorer, don't jump to other controllers
-          end
+      if @explorer
+        # showing a list view of another CI inside vmx
+        if %w(SecurityGroup
+              FloatingIp
+              NetworkRouter
+              NetworkPort
+              CloudNetwork
+              CloudSubnet
+              LoadBalancer
+              CloudVolume
+              ).include?(view.db)
+          return url_for(:controller => controller, :action => "show") + "/"
+        elsif ["Vm"].include?(view.db) && parent && request.parameters[:controller] != "vm"
+          # this is to handle link to a vm in vm explorer from service explorer
+          return url_for(:controller => "vm_or_template", :action => "show") + "/"
+        elsif %w(ConfigurationProfile EmsFolder).include?(view.db) &&
+              request.parameters[:controller] == "provider_foreman"
+          return url_for(:action => action, :id => nil) + "/"
+        elsif %w(ManageIQ::Providers::AutomationManager::InventoryGroup EmsFolder).include?(view.db) &&
+              request.parameters[:controller] == "automation_manager"
+          return url_for(:action => action, :id => nil) + "/"
+        elsif %w(ConfiguredSystem).include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
+          return url_for(:action => action, :id => nil) + "/"
         else
-          controller = "vm_cloud" if controller == "template_cloud"
-          controller = "vm_infra" if controller == "template_infra"
-          return url_for(:controller => controller, :action => action, :id => nil) + "/"
+          return url_for(:action => action) + "/" # In explorer, don't jump to other controllers
         end
+      else
+        controller = "vm_cloud" if controller == "template_cloud"
+        controller = "vm_infra" if controller == "template_infra"
+        return url_for(:controller => controller, :action => action, :id => nil) + "/"
       end
 
     else
@@ -312,9 +300,6 @@ module ApplicationHelper
     when "AutomationRequest"
       controller = "miq_request"
       action = "show"
-    when "CimBaseStorageExtent"
-      controller = request.parameters[:controller]
-      action = "cim_base_storage_extents"
     when "ConditionSet"
       controller = "condition"
     when "ScanItemSet"
@@ -346,17 +331,11 @@ module ApplicationHelper
     when "MiqAeInstance"
       controller = "miq_ae_class"
       action = "show_details"
-    when "MiqCimInstance"
-      controller = @view ? @view.db.underscore : @record.class.to_s.underscore
-      action = "show"
     when "SecurityGroup"
       controller = "security_group"
       action = "show"
     when "ServiceResource", "ServiceTemplate"
       controller = "catalog"
-    when "SniaLocalFileSystem"
-      controller = request.parameters[:controller]
-      action = "snia_local_file_systems"
     when "MiqWorker"
       controller = request.parameters[:controller]
       action = "diagnostics_worker_selected"
@@ -486,9 +465,6 @@ module ApplicationHelper
       title += _(": Optimize")
     elsif layout.starts_with?("miq_request")
       title += _(": Requests")
-    elsif layout.starts_with?("cim_",
-                              "snia_")
-      title += _(": Storage - %{tables}") % {:tables => ui_lookup(:tables => layout)}
     elsif layout == "login"
       title += _(": Login")
     # Assume layout is a table name and look up the plural version
@@ -602,11 +578,6 @@ module ApplicationHelper
     @perf_options[:model] == "VmOrTemplate" &&
       @perf_options[:typ] != "realtime" &&
       VALID_PERF_PARENTS.keys.include?(@perf_options[:parent])
-  end
-
-  # Check if a parent chart has been selected and applies
-  def perf_compare_vm?
-    @perf_options[:model] == "OntapLogicalDisk" && @perf_options[:typ] != "realtime" && !@perf_options[:compare_vm].nil?
   end
 
   # Determine the type of report (performance/trend/chargeback) based on the model
@@ -806,8 +777,7 @@ module ApplicationHelper
     # evm_display_name column, i.e MiqProvisionRequest
     if (@lastaction != "show" || (@lastaction == "show" && @display != "main")) &&
        @record &&
-       ((@layout == "cim_base_storage_extent" && !@record.evm_display_name.nil?) ||
-         (@layout != "cim_base_storage_extent" && @record.respond_to?('name') && !@record.name.nil?))
+       (@record.respond_to?('name') && !@record.name.nil?)
       return true
     else
       return false
@@ -818,7 +788,6 @@ module ApplicationHelper
     %w(auth_key_pair_cloud
        availability_zone
        automation_manager
-       cim_base_storage_extent
        cloud_network
        cloud_object_store_container
        cloud_subnet
@@ -856,10 +825,6 @@ module ApplicationHelper
        network_port
        network_router
        offline
-       ontap_file_share
-       ontap_logical_disk
-       ontap_storage_system
-       ontap_storage_volume
        orchestration_stack
        persistent_volume
        provider_foreman
@@ -867,7 +832,6 @@ module ApplicationHelper
        retired
        security_group
        service
-       snia_local_file_system
        storage
        storage_manager
        templates
@@ -1226,7 +1190,6 @@ module ApplicationHelper
   GTL_VIEW_LAYOUTS = %w(action
                         auth_key_pair_cloud
                         availability_zone
-                        cim_base_storage_extent
                         cloud_network
                         cloud_object_store_container
                         cloud_object_store_object
@@ -1278,10 +1241,6 @@ module ApplicationHelper
                         network_router
                         network_topology
                         offline
-                        ontap_file_share
-                        ontap_logical_disk
-                        ontap_storage_system
-                        ontap_storage_volume
                         orchestration_stack
                         persistent_volume
                         policy
@@ -1292,7 +1251,6 @@ module ApplicationHelper
                         scan_profile
                         security_group
                         service
-                        snia_local_file_system
                         storage
                         storage_manager
                         templates
@@ -1396,7 +1354,6 @@ module ApplicationHelper
     elsif %w(action
              auth_key_pair_cloud
              availability_zone
-             cim_base_storage_extent
              cloud_network
              cloud_object_store_container
              cloud_object_store_object
@@ -1440,10 +1397,6 @@ module ApplicationHelper
              miq_template
              network_port
              network_router
-             ontap_file_share
-             ontap_logical_disk
-             ontap_storage_system
-             ontap_storage_volume
              orchestration_stack
              persistent_volume
              policy
@@ -1451,7 +1404,6 @@ module ApplicationHelper
              scan_profile
              security_group
              service
-             snia_local_file_system
              storage_manager
              timeline).include?(@layout)
       @layout
@@ -1463,7 +1415,6 @@ module ApplicationHelper
       auth_key_pair_cloud
       availability_zone
       automation_manager
-      cim_base_storage_extent
       cloud_network
       cloud_object_store_container
       cloud_subnet
@@ -1503,10 +1454,6 @@ module ApplicationHelper
       network_port
       network_router
       offline
-      ontap_file_share
-      ontap_logical_disk
-      ontap_storage_system
-      ontap_storage_volume
       orchestration_stack
       persistent_volume
       provider_foreman
@@ -1514,7 +1461,6 @@ module ApplicationHelper
       retired
       security_group
       service
-      snia_local_file_system
       storage_manager
       templates
       vm
