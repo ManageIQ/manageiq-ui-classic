@@ -76,6 +76,8 @@ module Mixins
         {:template => "layouts/_textual_groups_generic"}
       when 'item' # FIXME: remove this
         {:template => 'layouts/_item'}
+      when 'performance'
+        {:template => 'layouts/_peformance_async'}
       else
         {:template => "layouts/_gtl", :locals => {:action_url => "show/#{@record.id}"}}
       end
