@@ -4,6 +4,10 @@
     function($http, $window, miqService) {
     var dash = this;
     dash.tenant = '_ops';
+    dash.minBucketDurationInSecondes = 20 * 60;
+
+    var NUMBER_OF_MILISEC_IN_HOUR = 60 * 60 * 1000;
+    var NUMBER_OF_MILISEC_IN_SEC = 1000;
 
     // get the pathname and remove trailing / if exist
     var pathname = $window.location.pathname.replace(/\/$/, '');
@@ -99,15 +103,23 @@
     };
 
     dash.refresh_graph = function(metricId, metricType, currentItem) {
-      // TODO: replace with a datetimepicker, until then add 24 hours to the date
+      var numberOfBucketsInChart = 300;
+
       dash.metricId = metricId;
       dash.currentItem = currentItem;
-      var ends = dash.timeFilter.date.valueOf() + 24 * 60 * 60;
-      var diff = dash.timeFilter.time_range * dash.timeFilter.range_count * 60 * 60 * 1000; // time_range is in hours
+      var ends = dash.timeFilter.date.valueOf(); // javascript time is in milisec
+      var diff = dash.timeFilter.time_range * dash.timeFilter.range_count * NUMBER_OF_MILISEC_IN_HOUR; // time_range is in hours
       var starts = ends - diff;
-      var bucket_duration = parseInt(diff / 1000 / 200); // bucket duration is in seconds
+      var bucket_duration = parseInt(diff / NUMBER_OF_MILISEC_IN_SEC / numberOfBucketsInChart); // bucket duration is in seconds
+
+      // make sure backet duration is not smaller then minBucketDurationInSecondes seconds
+      if (bucket_duration < dash.minBucketDurationInSecondes) {
+        bucket_duration = dash.minBucketDurationInSecondes;
+      }
+
+      // hawkular time is in milisec (hawkular bucket_duration is in seconds)
       var params = '&query=get_data&type=' + metricType + '&metric_id=' + dash.metricId + '&ends=' + ends +
-                   '&starts=' + starts+ '&bucket_duration=' + bucket_duration + 's';
+                   '&starts=' + starts + '&bucket_duration=' + bucket_duration + 's';
 
       $http.get(dash.url + params)
         .then(getContainerParamsData)
