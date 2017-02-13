@@ -155,7 +155,7 @@ class ApplicationController < ActionController::Base
     @record = identify_record(params[:id])
     yield if block_given?
     return if record_no_longer_exists?(@record)
-    get_tagdata(@record)
+    get_tagdata(@record) if @record.try(:taggings)
     @display = "download_pdf"
     set_summary_pdf_data
   end
