@@ -1936,13 +1936,13 @@ module ApplicationController::Compare
       else
         if base_val == val
           img_bkg = "cell-stripe"
-          img = "compare-same"
+          img = "100/compare-same.png"
         else
           img_bkg = ""
-          img = "compare-diff"
+          img = "100/compare-diff.png"
           unset_same_flag
         end
-        row.merge!(drift_add_image_col(idx, "100/#{img}.png", img_bkg, val))
+        row.merge!(drift_add_image_col(idx, img, img_bkg, val))
       end
     end
     row
