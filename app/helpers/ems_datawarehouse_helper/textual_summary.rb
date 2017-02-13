@@ -42,22 +42,22 @@ module EmsDatawarehouseHelper::TextualSummary
   end
 
   def textual_cluster_status
-    @ems.advanced_settings.find_by(:name => "health-status").value
+    @ems.cluster_attributes.find_by(:name => "health-status").value
   end
 
   def textual_lucene_version
-    @ems.advanced_settings.find_by(:name => "version-lucene_version").value
+    @ems.cluster_attributes.find_by(:name => "version-lucene_version").value
   end
 
   def textual_elastic_version
-    @ems.advanced_settings.find_by(:name => "version-number").value
+    @ems.cluster_attributes.find_by(:name => "version-number").value
   end
 
   def textual_cluster_name
-    @ems.advanced_settings.find_by(:name => "version-cluster_name").value
+    @ems.cluster_attributes.find_by(:name => "version-cluster_name").value
   end
 
   def textual_active_shards
-    @ems.advanced_settings.find_by(:name => "health-active_shards").value
+    @ems.cluster_attributes.find_by(:name => "health-active_shards").value
   end
 end
