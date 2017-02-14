@@ -17,7 +17,7 @@ describe ContainerProjectController do
     get :show, :params => { :id => container_project.id }
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
-    expect(assigns(:breadcrumbs)).to eq([{:name => "Container Projects",
+    expect(assigns(:breadcrumbs)).to eq([{:name => "Projects",
                                           :url  => "/container_project/show_list?page=&refresh=y"},
                                          {:name => "Test Project (Summary)",
                                           :url  => "/container_project/show/#{container_project.id}"}])
