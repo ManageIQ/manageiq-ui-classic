@@ -324,7 +324,7 @@ module QuadiconHelper
   #
   def quadicon_reflection_img(options = {})
     size = options.delete(:size) || 72
-    path = options.delete(:path) || "#{size}/reflection.png"
+    path = options.delete(:path) || "layout/reflection.png"
 
     options = {
       :border => 0,
@@ -394,7 +394,7 @@ module QuadiconHelper
   end
 
   def flobj_img_simple(size, image = nil, cls = '')
-    image ||= "#{size}/base-single.png"
+    image ||= "layout/base-single.png"
 
     content_tag(:div, :class => "flobj #{cls}") do
       tag(:img, :border => 0, :src => ActionController::Base.helpers.image_path(image),
@@ -465,10 +465,10 @@ module QuadiconHelper
     output = []
 
     if settings(:quadicons, :host)
-      output << flobj_img_simple(size, "#{size}/base.png")
+      output << flobj_img_simple(size, "layout/base.png")
 
       output << flobj_p_simple("a#{size}", item.vms.size)
-      output << flobj_img_simple(size, "72/currentstate-#{h(item.normalized_state.downcase)}.png", "b#{size}")
+      output << flobj_img_simple(size, "svg/currentstate-#{h(item.normalized_state.downcase)}.svg", "b#{size}")
       output << flobj_img_simple(size, img_for_host_vendor(item), "c#{size}")
       output << flobj_img_simple(size, img_for_auth_status(item), "d#{size}")
       output << flobj_img_simple(size, '100/shield.png', "g#{size}") unless item.get_policies.empty?
@@ -480,7 +480,7 @@ module QuadiconHelper
     if options[:typ] == :listnav
       # Listnav, no href needed
       output << content_tag(:div, :class => 'flobj') do
-        tag(:img, :src => ActionController::Base.helpers.image_path("#{options[:size]}/reflection.png"), :border => 0)
+        tag(:img, :src => ActionController::Base.helpers.image_path("layout/reflection.png"), :border => 0)
       end
     else
       href = if quadicon_show_links?
@@ -506,19 +506,19 @@ module QuadiconHelper
     output = []
 
     if settings(:quadicons, db_for_quadicon)
-      output << flobj_img_simple(size, "#{size}/base.png")
+      output << flobj_img_simple(size, "layout/base.png")
       output << flobj_p_simple("a#{size}", item.kind_of?(EmsCloud) ? item.total_vms : item.hosts.size)
       output << flobj_p_simple("b#{size}", item.total_miq_templates) if item.kind_of?(EmsCloud)
       output << flobj_img_simple(size, "svg/vendor-#{h(item.image_name)}.svg", "c#{size}")
       output << flobj_img_simple(size, img_for_auth_status(item), "d#{size}")
       output << flobj_img_simple(size, '100/shield.png', "g#{size}") unless item.get_policies.empty?
     else
-      output << flobj_img_simple(size, "#{size}/base-single.png")
+      output << flobj_img_simple(size, "layout/base-single.png")
       output << flobj_img_simple(width * 1.8, "svg/vendor-#{h(item.image_name)}.svg", "e#{size}")
     end
 
     if options[:typ] == :listnav
-      output << flobj_img_simple(size, "#{size}/reflection.png")
+      output << flobj_img_simple(size, "layout/reflection.png")
     else
       output << content_tag(:div, :class => 'flobj') do
         title = _("Name: %{name} | Hostname: %{hostname} | Refresh Status: %{status}") %
@@ -540,7 +540,7 @@ module QuadiconHelper
     size = options[:size]
     output = []
 
-    output << flobj_img_simple(size, "#{size}/base-single.png")
+    output << flobj_img_simple(size, "layout/base-single.png")
     output << flobj_img_simple(size * 1.8, "100/emscluster.png", "e#{size}")
     output << flobj_img_simple(size, "100/shield.png", "g#{size}") unless item.get_policies.empty?
 
@@ -567,7 +567,7 @@ module QuadiconHelper
                  "100/#{item.class.base_class.to_s.underscore}.png"
                end
 
-    output << flobj_img_simple(size, "#{size}/base-single.png")
+    output << flobj_img_simple(size, "layout/base-single.png")
     output << flobj_img_simple(size, img_path, "e#{size}")
 
     unless options[:typ] == :listnav
@@ -607,7 +607,7 @@ module QuadiconHelper
     size = options[:size]
     output = []
 
-    output << flobj_img_simple(size, "#{size}/base-single.png")
+    output << flobj_img_simple(size, "layout/base-single.png")
     output << flobj_img_simple(size * 1.8, "100/#{@listicon}.png", "e#{size}")
 
     unless options[:typ] == :listnav
@@ -655,7 +655,7 @@ module QuadiconHelper
     output = []
 
     if settings(:quadicons, :storage)
-      output << flobj_img_simple(size, "#{size}/base.png")
+      output << flobj_img_simple(size, "layout/base.png")
       output << flobj_img_simple(size, "100/storagetype-#{item.store_type.nil? ? "unknown" : h(item.store_type.to_s.downcase)}.png", "a#{size}")
       output << flobj_p_simple("b#{size}", item.v_total_vms)
       output << flobj_p_simple("c#{size}", item.v_total_hosts)
@@ -664,12 +664,12 @@ module QuadiconHelper
       output << flobj_img_simple(size, "100/piecharts/datastore/#{h(space_percent)}.png", "d#{size}")
     else
       space_percent = (item.used_space_percent_of_total.to_i + 9) / 10
-      output << flobj_img_simple(size, "#{size}/base-single.png")
+      output << flobj_img_simple(size, "layout/base-single.png")
       output << flobj_img_simple(size, "100/datastore-#{h(space_percent)}.png", "e#{size}")
     end
 
     if options[:typ] == :listnav
-      output << flobj_img_simple(size, "#{size}/reflection.png")
+      output << flobj_img_simple(size, "layout/reflection.png")
     else
       output << content_tag(:div, :class => 'flobj') do
         quadicon_link_to(quadicon_storage_url(item), **quadicon_storage_link_options) do
@@ -725,9 +725,9 @@ module QuadiconHelper
     output = []
 
     if settings(:quadicons, item.class.base_model.name.underscore.to_sym)
-      output << flobj_img_simple(size, "#{size}/base.png")
+      output << flobj_img_simple(size, "layout/base.png")
       output << flobj_img_simple(size, "svg/os-#{h(item.os_image_name.downcase)}.svg", "a#{size}")
-      output << flobj_img_simple(size, "72/currentstate-#{h(item.normalized_state.downcase)}.png", "b#{size}")
+      output << flobj_img_simple(size, "svg/currentstate-#{h(item.normalized_state.downcase)}.svg", "b#{size}")
       output << flobj_img_simple(size, "svg/vendor-#{h(item.vendor.downcase)}.svg", "c#{size}")
 
       unless item.get_policies.empty?
@@ -745,7 +745,7 @@ module QuadiconHelper
       width = options[:size] == 150 ? 54 : 35
       adjusted_width = width * 1.8
 
-      output << flobj_img_simple(size, "#{size}/base-single.png")
+      output << flobj_img_simple(size, "layout/base-single.png")
 
       if quadicon_policy_sim? && !session[:policies].empty?
         output << flobj_img_simple(adjusted_width, img_for_compliance(item), "e#{size}")
