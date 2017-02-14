@@ -7,19 +7,6 @@ describe DashboardController do
       stub_user(:features => :all)
     end
 
-    context 'cim_storage_extent_show_list' do
-      subject { subj.call('cim_storage_extent_show_list') }
-
-      it 'should return true for storage start pages when product flag is set' do
-        stub_settings(:product => {:storage => true})
-        is_expected.to be_truthy
-      end
-
-      it 'should return false for storage start pages when product flag is not set' do
-        is_expected.to be_falsey
-      end
-    end
-
     context 'ems_container_show_list' do
       subject { subj.call('ems_container_show_list') }
 

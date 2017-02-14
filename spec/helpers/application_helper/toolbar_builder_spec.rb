@@ -416,6 +416,25 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       expect(subject).to match(/No.*are available/)
     end
 
+    context "when record class = EmsCluster" do
+      before do
+        @record = EmsCluster.new
+        allow(@record).to receive_messages(:has_perf_data? => true, :has_events? => true)
+      end
+
+      context "and id = ems_cluster_perf" do
+        before { @id = "ems_cluster_perf" }
+        it_behaves_like 'record without perf data', "No Capacity & Utilization data has been collected for this Cluster"
+        it_behaves_like 'default case'
+      end
+
+      context "and id = ems_cluster_timeline" do
+        before { @id = "ems_cluster_timeline" }
+        it_behaves_like 'record without ems events and policy events', "No Timeline data has been collected for this Cluster"
+        it_behaves_like 'default case'
+      end
+    end
+
     context "when record class = Host" do
       before do
         @record = Host.new
@@ -425,25 +444,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       context "and id = host_perf" do
         before { @id = "host_perf" }
         it_behaves_like 'record without perf data', "No Capacity & Utilization data has been collected for this Host"
-        it_behaves_like 'default case'
-      end
-
-      context "and id = host_miq_request_new" do
-        before do
-          @id = "host_miq_request_new"
-          allow(@record).to receive(:mac_address).and_return("00:0D:93:13:51:1A")
-          allow(PxeServer).to receive(:all).and_return(%w(p1 p2))
-        end
-        it "when without mac address" do
-          allow(@record).to receive(:mac_address).and_return(false)
-          expect(subject).to eq("This Host can not be provisioned because the MAC address is not known")
-        end
-
-        it "when no PXE servers" do
-          allow(PxeServer).to receive(:all).and_return([])
-          expect(subject).to eq("No PXE Servers are available for Host provisioning")
-        end
-
         it_behaves_like 'default case'
       end
 
@@ -649,6 +649,27 @@ describe ApplicationHelper, "::ToolbarBuilder" do
 
         it "should be not be available for non-vmware storages" do
           expect(subject).to include('cannot be performed on selected')
+        end
+      end
+
+      context "and id = vm_vnc_console" do
+        before :each do
+          @id = 'vm_vnc_console'
+          @record = FactoryGirl.create(:vm_vmware)
+        end
+
+        it "should not be available for vmware hosts with an api version greater or equal to 6.5" do
+          @ems = FactoryGirl.create(:ems_vmware, :api_version => '6.5')
+          allow(@record).to receive(:ems_id).and_return(@ems.id)
+          expect(subject).to include('VNC consoles are unsupported on VMware ESXi 6.5 and later.')
+        end
+
+        %w(5.1 5.5 6.0).each do |version|
+          it "should be available for vmware hosts with an api version #{version}" do
+            @ems = FactoryGirl.create(:ems_vmware, :api_version => version)
+            allow(@record).to receive(:ems_id).and_return(@ems.id)
+            expect(subject).to be(false)
+          end
         end
       end
     end # end of Vm class

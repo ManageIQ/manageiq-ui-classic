@@ -5,9 +5,7 @@ module VmCommon
 
   def textual_group_list
     [
-      %i(properties lifecycle relationships) +
-        (::Settings.product.storage ? %i(storage_relationships) : []) +
-        %i(vmsafe normal_operating_ranges miq_custom_attributes ems_custom_attributes),
+      %i(properties lifecycle relationships vmsafe normal_operating_ranges miq_custom_attributes ems_custom_attributes),
       %i(compliance power_management security configuration datastore_allocation datastore_usage diagnostics tags)
     ]
   end
@@ -262,30 +260,6 @@ module VmCommon
       disks
       drop_breadcrumb(:name => _("%{name} (Disks)") % {:name => @record.name},
                       :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
-    elsif @display == "ontap_logical_disks"
-      drop_breadcrumb(:name => @record.name + _(" (All %{tables})") %
-        {:tables => ui_lookup(:tables => "ontap_logical_disk")},
-                      :url  => "/#{rec_cls}/show/#{@record.id}?display=ontap_logical_disks")
-      @view, @pages = get_view(OntapLogicalDisk, :parent => @record, :parent_method => :logical_disks)  # Get the records (into a view) and the paginator
-      @showtype = "ontap_logical_disks"
-    elsif @display == "ontap_storage_systems"
-      drop_breadcrumb(:name => @record.name + _(" (All %{storages})") %
-        {:storages => ui_lookup(:tables => "ontap_storage_system")},
-                      :url  => "/#{rec_cls}/show/#{@record.id}?display=ontap_storage_systems")
-      @view, @pages = get_view(OntapStorageSystem, :parent => @record, :parent_method => :storage_systems)  # Get the records (into a view) and the paginator
-      @showtype = "ontap_storage_systems"
-    elsif @display == "ontap_storage_volumes"
-      drop_breadcrumb(:name => @record.name + _(" (All %{storage_volumes})") %
-        {:storage_volumes => ui_lookup(:tables => "ontap_storage_volume")},
-                      :url  => "/#{rec_cls}/show/#{@record.id}?display=ontap_storage_volumes")
-      @view, @pages = get_view(OntapStorageVolume, :parent => @record, :parent_method => :storage_volumes)  # Get the records (into a view) and the paginator
-      @showtype = "ontap_storage_volumes"
-    elsif @display == "ontap_file_shares"
-      drop_breadcrumb(:name => @record.name + _(" (All %{file_shares})") %
-        {:file_shares => ui_lookup(:tables => "ontap_file_share")},
-                      :url  => "/#{rec_cls}/show/#{@record.id}?display=ontap_file_shares")
-      @view, @pages = get_view(OntapFileShare, :parent => @record, :parent_method => :file_shares)  # Get the records (into a view) and the paginator
-      @showtype = "ontap_file_shares"
     end
 
     set_config(@record)
@@ -1304,10 +1278,7 @@ module VmCommon
         presenter.show(:custom_left_cell).hide(:default_left_cell)
       end
     elsif @sb[:action] || params[:display]
-      partial_locals = {
-        :controller => ['ontap_storage_volumes', 'ontap_file_shares', 'ontap_logical_disks',
-                        'ontap_storage_systems'].include?(@showtype) ? @showtype.singularize : 'vm'
-      }
+      partial_locals = { :controller => 'vm' }
       if partial == 'layouts/x_gtl'
         partial_locals[:action_url]  = @lastaction
         presenter[:parent_id]    = @record.id           # Set parent rec id for JS function miqGridSort to build URL
@@ -1646,15 +1617,15 @@ module VmCommon
       action = nil
     else
       # now take care of links on summary screen
-      if ["details", "ontap_storage_volumes", "ontap_file_shares", "ontap_logical_disks", "ontap_storage_systems"].include?(@showtype)
-        partial = "layouts/x_gtl"
-      elsif @showtype == "item"
-        partial = "layouts/item"
-      elsif @showtype == "drift_history"
-        partial = "layouts/#{@showtype}"
-      else
-        partial = "#{@showtype == "compliance_history" ? "shared/views" : "vm_common"}/#{@showtype}"
-      end
+      partial = if @showtype == "details"
+                  "layouts/x_gtl"
+                elsif @showtype == "item"
+                  "layouts/item"
+                elsif @showtype == "drift_history"
+                  "layouts/#{@showtype}"
+                else
+                  "#{@showtype == "compliance_history" ? "shared/views" : "vm_common"}/#{@showtype}"
+                end
       if @showtype == "item"
         header = _("%{action} \"%{item_name}\" for %{vm_or_template} \"%{name}\"") % {
           :vm_or_template => ui_lookup(:table => table),

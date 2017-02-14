@@ -70,9 +70,6 @@ describe VmOrTemplateController do
     guest_applications
     kernel_drivers
     linux_initprocesses
-    ontap_file_shares
-    ontap_logical_disks
-    ontap_storage_systems
     ownership_field_changed
     ownership_update
     patches

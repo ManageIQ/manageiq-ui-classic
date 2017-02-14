@@ -28,7 +28,7 @@ module QuadiconHelper
   end
 
   def quadicon_vm_attributes(item)
-    @quad_vm_attrs ||= vm_quad_link_attributes(item)
+    vm_quad_link_attributes(item)
   end
 
   def quadicon_vm_attributes_present?(item)
@@ -199,13 +199,12 @@ module QuadiconHelper
   end
 
   def img_for_auth_status(item)
-    img = case item.authentication_status
-          when "Invalid" then "x"
-          when "Valid"   then "checkmark"
-          when "None"    then "unknown"
-          else "exclamationpoint"
-          end
-    "100/#{h(img)}.png"
+    case item.authentication_status
+    when "Invalid" then "100/x.png"
+    when "Valid"   then "100/checkmark.png"
+    when "None"    then "100/unknown.png"
+    else                "100/exclamationpoint.png"
+    end
   end
 
   def render_quadicon_text(item, row)
@@ -437,13 +436,13 @@ module QuadiconHelper
   # Renders a quadicon for resource_pools
   #
   def render_resource_pool_quadicon(item, options)
-    img = item.vapp ? "vapp.png" : "resource_pool.png"
+    img = item.vapp ? "100/vapp.png" : "100/resource_pool.png"
     size = options[:size]
     width = options[:size] == 150 ? 54 : 35
     output = []
 
     output << flobj_img_simple(options[:size])
-    output << flobj_img_simple(width * 1.8, "100/#{img}", "e#{size}")
+    output << flobj_img_simple(width * 1.8, img, "e#{size}")
     output << flobj_img_simple(size, '100/shield.png', "g#{size}") unless item.get_policies.empty?
 
     unless options[:typ] == :listnav
@@ -609,13 +608,7 @@ module QuadiconHelper
     size = options[:size]
     output = []
 
-    img_path = if item.kind_of?(MiqCimInstance)
-                 if item.kind_of?(CimStorageExtent)
-                   "100/cim_base_storage_extent.png"
-                 else
-                   "100/#{item.class.to_s.underscore}.png"
-                 end
-               elsif item.respond_to?(:decorator_class?) && item.decorator_class?
+    img_path = if item.respond_to?(:decorator_class?) && item.decorator_class?
                  item.decorate.try(:listicon_image)
                else
                  "100/#{item.class.base_class.to_s.underscore}.png"
@@ -625,7 +618,7 @@ module QuadiconHelper
     output << flobj_img_simple(size, img_path, "e#{size}")
 
     unless options[:typ] == :listnav
-      name = item.kind_of?(MiqCimInstance) ? item.evm_display_name : item.name
+      name = item.name
 
       img_opts = {
         :size  => size,

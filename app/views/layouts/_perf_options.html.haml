@@ -127,20 +127,6 @@
                            :class    => "selectpicker")
             :javascript
               miqSelectPickerEvent("compare_to", "#{url}")
-
-      - elsif @perf_options[:model] == "OntapLogicalDisk" && @perf_options[:typ] != "realtime"
-        - compare_choices = @perf_record.vms.sort_by(&:name).collect { |v| [v.name, v.id] }
-        - unless compare_choices.empty?
-          %dt
-            = _("Show VM")
-          %dd
-            = select_tag("compare_vm",
-                         options_for_select([["<None>", nil]] + compare_choices,
-                         @perf_options[:compare_vm]),
-                         "data-miq_sparkle_on" => true,
-                         :class    => "selectpicker")
-          :javascript
-            miqSelectPickerEvent("compare_vm", "#{url}")
       - if @perf_options[:typ] == "Daily"
         %dt
         %dd= _("* Daily charts only include days for which all 24 hours of data has been collected.")

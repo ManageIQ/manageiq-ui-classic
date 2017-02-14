@@ -455,6 +455,10 @@ class ApplicationHelper::ToolbarBuilder
     return true if @gtl_type && id.starts_with?("view_") && id.ends_with?(@gtl_type)  # GTL view buttons
     return true if id == "view_dashboard" && (@showtype == "dashboard")
     return true if id == "view_summary" && (@showtype != "dashboard")
+    if id == 'vm_vnc_console' && @record.vendor == 'vmware' &&
+       ExtManagementSystem.find_by(:id => @record.ems_id).api_version.to_f >= 6.5
+      return N_("VNC consoles are unsupported on VMware ESXi 6.5 and later.")
+    end
 
     # need to add this here, since this button is on list view screen
     if disable_new_iso_datastore?(id)
@@ -463,6 +467,26 @@ class ApplicationHelper::ToolbarBuilder
     end
 
     case get_record_cls(@record)
+    when "AvailabilityZone"
+      case id
+      when "availability_zone_perf"
+        unless @record.has_perf_data?
+          return N_("No Capacity & Utilization data has been collected for this Availability Zone")
+        end
+      when "availability_zone_timeline"
+        unless @record.has_events? # || @record.has_events?(:policy_events), may add this check back in later
+          return N_("No Timeline data has been collected for this Availability Zone")
+        end
+      end
+    when "EmsCluster"
+      case id
+      when "ems_cluster_perf"
+        return N_("No Capacity & Utilization data has been collected for this Cluster") unless @record.has_perf_data?
+      when "ems_cluster_timeline"
+        unless @record.has_events? || @record.has_events?(:policy_events)
+          return N_("No Timeline data has been collected for this Cluster")
+        end
+      end
     when "Host"
       case id
       when "host_analyze_check_compliance", "host_check_compliance"
@@ -477,14 +501,6 @@ class ApplicationHelper::ToolbarBuilder
         unless @record.has_events? || @record.has_events?(:policy_events)
           return N_("No Timeline data has been collected for this Host")
         end
-      end
-    when "MiqAction"
-      case id
-      when "action_edit"
-        return N_("Default actions can not be changed.") if @record.action_type == "default"
-      when "action_delete"
-        return N_("Default actions can not be deleted.") if @record.action_type == "default"
-        return N_("Actions assigned to Policies can not be deleted") unless @record.miq_policies.empty?
       end
     when "MiqGroup"
       case id

@@ -40,30 +40,6 @@ describe 'routes for VmInfra' do
     end
   end
 
-  describe '#ontap_file_shares' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/ontap_file_shares")).to route_to("#{controller_name}#ontap_file_shares")
-    end
-  end
-
-  describe '#ontap_logical_disks' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/ontap_logical_disks")).to route_to("#{controller_name}#ontap_logical_disks")
-    end
-  end
-
-  describe '#ontap_storage_systems' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/ontap_storage_systems")).to route_to("#{controller_name}#ontap_storage_systems")
-    end
-  end
-
-  describe '#ontap_storage_volume' do
-    it 'routes with POST' do
-      expect(post("/#{controller_name}/ontap_storage_volume")).to route_to("#{controller_name}#ontap_storage_volume")
-    end
-  end
-
   describe '#policies' do
     it 'routes with GET' do
       expect(get("/#{controller_name}/policies")).to route_to("#{controller_name}#policies")

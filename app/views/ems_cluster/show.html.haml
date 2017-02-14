@@ -1,5 +1,5 @@
 #main_div
-  - list = %w(vms all_vms hosts miq_templates resource_pools storage storage_extents storage_systems ontap_storage_volumes ontap_file_shares)
+  - list = %w(vms all_vms hosts miq_templates resource_pools storage storage_extents storage_systems)
   - if list.include?(@display) && !%w(compare drift_history).include?(@showtype)
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@ems_cluster.id}"}
   - else

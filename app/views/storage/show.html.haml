@@ -1,7 +1,7 @@
 #main_div
   - if @dialog_prov
     = render :partial => "shared/dialogs/dialog_provision"
-  - elsif %w(all_vms hosts miq_proxies all_miq_templates storage_extents storage_systems ontap_storage_volumes).include?(@display) && @showtype != "compare"
+  - elsif %w(all_vms hosts miq_proxies all_miq_templates storage_extents storage_systems).include?(@display) && @showtype != "compare"
     = render :partial => "layouts/x_gtl", :locals => {:action_url => "show/#{@storage.id}"}
   - else
     - case @showtype

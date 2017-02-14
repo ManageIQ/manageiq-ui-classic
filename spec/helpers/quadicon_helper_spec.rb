@@ -132,42 +132,6 @@ describe QuadiconHelper do
       end
     end
 
-    context "when storage-related objects" do
-      before(:each) do
-        helper.instance_variable_set(:@view, FactoryGirl.build(:miq_report))
-      end
-
-      %w(
-        cim_storage_extent
-        ontap_file_share
-        ontap_logical_disk
-        ontap_storage_system
-        ontap_storage_volume
-        snia_local_file_system
-      ).each do |obj|
-        it "renders a quadicon for #{obj}" do
-          item = FactoryGirl.create(obj, :obj => WBEM::CIMInstance.new("ONTAP_StorageSystem"))
-          subject = helper.render_quadicon(item, :mode => :icon)
-
-          expect(subject).to have_selector('div.quadicon')
-        end
-      end
-
-      # It seems as though Quadicons are no longer generated for this type,
-      # but it's in the list, so with a little cheating ...
-      it "renders a quadicon for CimBaseStorageExtent" do
-        item = CimBaseStorageExtent.new
-
-        allow(item).to receive(:name) { 'cim_base_storage_extent' }
-        allow(helper).to receive(:restful_routed?) { false }
-        allow(helper).to receive(:url_for_db) { "/vm_infra" }
-
-        subject = helper.render_quadicon(item, :mode => :icon)
-
-        expect(subject).to have_selector('div.quadicon')
-      end
-    end
-
     context "when service related objects" do
       before(:each) do
         allow(controller).to receive(:default_url_options) do
@@ -281,14 +245,6 @@ describe QuadiconHelper do
         @embedded = true
       end
 
-      let(:cim) do
-        FactoryGirl.build(:miq_cim_instance)
-      end
-
-      let(:cim_row) do
-        Ruport::Data::Record.new(:id => rand(9999), "evm_display_name" => "Foo")
-      end
-
       let(:sys) do
         FactoryGirl.build(:configured_system)
       end
@@ -298,7 +254,6 @@ describe QuadiconHelper do
       end
 
       it "renders a span tag with truncated text" do
-        expect(helper.render_quadicon_text(cim, cim_row)).to include("Foo")
         expect(helper.render_quadicon_text(sys, sys_row)).to include("Bar")
         expect(helper.render_quadicon_text(item, row)).to include("Baz")
       end
@@ -916,34 +871,6 @@ describe QuadiconHelper do
 
     context "when @listicon is nil" do
       include_examples :has_base_single
-
-      context "when item is MiqCimInstance" do
-        let(:item) do
-          obj = WBEM::CIMInstance.new("ONTAP_StorageSystem")
-          obj["Name"] = "FooBar"
-
-          FactoryGirl.create(:miq_cim_instance, :obj => obj)
-        end
-
-        it 'includes a miq_cim_instance img' do
-          expect(single_quad).to have_selector("img[src*='miq_cim_instance']")
-        end
-
-        it 'is named after the evm_display_name' do
-          expect(single_quad).to include(item.evm_display_name)
-        end
-      end
-
-      context "when item is CimStorageExtent" do
-        let(:item) do
-          obj = WBEM::CIMInstance.new("ONTAP_StorageSystem")
-          FactoryGirl.create(:cim_storage_extent, :obj => obj)
-        end
-
-        it 'includes a cim_base_storage_extent img' do
-          expect(single_quad).to have_selector("img[src*='cim_base_storage_extent']")
-        end
-      end
 
       context "when item is decorated" do
         context "when item is a config manager foreman" do
