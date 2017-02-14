@@ -572,11 +572,10 @@ class HostController < ApplicationController
   def textual_group_list
     [
       %i(properties relationships),
-      (::Settings.product.storage ? %i(storage_relationships) : []) +
-        %i(
-          compliance security configuration diagnostics smart_management miq_custom_attributes
-          ems_custom_attributes authentications cloud_services openstack_hardware_status openstack_service_status
-        )
+      %i(
+        compliance security configuration diagnostics smart_management miq_custom_attributes
+        ems_custom_attributes authentications cloud_services openstack_hardware_status openstack_service_status
+      )
     ]
   end
   helper_method :textual_group_list
