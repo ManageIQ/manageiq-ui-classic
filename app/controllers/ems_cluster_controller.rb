@@ -182,7 +182,7 @@ class EmsClusterController < ApplicationController
 
   def textual_group_list
     [
-      %i(relationships) + (::Settings.product.storage ? storage_relationships : []),
+      %i(relationships),
       %i(host_totals vm_totals configuration tags openstack_status)
     ]
   end
