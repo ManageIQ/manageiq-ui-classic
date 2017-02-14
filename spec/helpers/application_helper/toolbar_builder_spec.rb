@@ -670,6 +670,27 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           expect(subject).to include('cannot be performed on selected')
         end
       end
+
+      context "and id = vm_vnc_console" do
+        before :each do
+          @id = 'vm_vnc_console'
+          @record = FactoryGirl.create(:vm_vmware)
+        end
+
+        it "should not be available for vmware hosts with an api version greater or equal to 6.5" do
+          @ems = FactoryGirl.create(:ems_vmware, :api_version => '6.5')
+          allow(@record).to receive(:ems_id).and_return(@ems.id)
+          expect(subject).to include('VNC consoles are unsupported on VMware ESXi 6.5 and later.')
+        end
+
+        %w(5.1 5.5 6.0).each do |version|
+          it "should be available for vmware hosts with an api version #{version}" do
+            @ems = FactoryGirl.create(:ems_vmware, :api_version => version)
+            allow(@record).to receive(:ems_id).and_return(@ems.id)
+            expect(subject).to be(false)
+          end
+        end
+      end
     end # end of Vm class
 
   end # end of disable button
