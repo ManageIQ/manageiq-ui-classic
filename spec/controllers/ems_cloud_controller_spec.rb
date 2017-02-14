@@ -138,6 +138,55 @@ describe EmsCloudController do
       edit = controller.instance_variable_get(:@edit)
       expect(edit[:new][:azure_tenant_id]).to eq("azure")
     end
+
+    describe "creates on post (ems with provider)" do
+      it 'creates on post' do
+        post :create, :params => {
+          "button"                    => "add",
+          "cred_type"                 => "default",
+          "name"                      => "foo",
+          "emstype"                   => "ec2",
+          "provider_region"           => "ap-southeast-1",
+          "zone"                      => zone.name,
+          "default_userid"            => "foo",
+          "default_password"          => "[FILTERED]",
+          "default_verify"            => "[FILTERED]",
+        }
+        expect(response.code).to eq("200")
+        expect(ManageIQ::Providers::Amazon::Provider.count).to eq(1)
+        expect(ManageIQ::Providers::Amazon::CloudManager.count).to eq(1)
+        expect(Authentication.count).to eq(1)
+        expect(Endpoint.count).to eq(1)
+
+        provider = ManageIQ::Providers::Amazon::Provider.first
+        auth = Authentication.first
+
+        expect(auth.resource).to eq(provider)
+      end
+
+      it 'creates on post, multiple provider regions' do
+        post :create, :params => {
+          "button"                    => "add",
+          "cred_type"                 => "default",
+          "name"                      => "foo",
+          "emstype"                   => "ec2",
+          "provider_region"           => "us-east-1,us-west-1,ap-southeast-1",
+          "zone"                      => zone.name,
+          "default_userid"            => "foo",
+          "default_password"          => "[FILTERED]",
+          "default_verify"            => "[FILTERED]",
+        }
+        expect(response.code).to eq("200")
+        expect(ManageIQ::Providers::Amazon::Provider.count).to eq(1)
+        expect(ManageIQ::Providers::Amazon::CloudManager.count).to eq(3)
+        expect(Authentication.count).to eq(1)
+        expect(Endpoint.count).to eq(1)
+
+        provider = ManageIQ::Providers::Amazon::Provider.first
+
+        expect(provider.provider_regions).to eq(["us-east-1", "us-west-1", "ap-southeast-1"])
+      end
+    end
   end
 
   describe "#ems_cloud_form_fields" do

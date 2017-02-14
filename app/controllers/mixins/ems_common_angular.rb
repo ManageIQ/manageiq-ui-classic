@@ -53,7 +53,14 @@ module Mixins
 
     def update_ems_button_validate(verify_ems = nil)
       verify_ems ||= find_by_id_filtered(model, params[:id])
+
+      if verify_ems.respond_to? :provider_class
+        # validate credentials on provider instead on ems
+        verify_ems.provider = verify_ems.provider_class.new(:zone => Zone.find_by_name(params[:zone]))
+      end
+
       set_ems_record_vars(verify_ems, :validate)
+
       @in_a_form = true
       result, details = verify_ems.authentication_check(params[:cred_type],
                                                         :save     => false,
@@ -80,23 +87,45 @@ module Mixins
 
     def create_ems_button_add
       ems = model.model_from_emstype(params[:emstype]).new
-      set_ems_record_vars(ems) unless @flash_array
-      if ems.valid? && ems.save
-        construct_edit_for_audit(ems)
-        AuditEvent.success(build_created_audit(ems, @edit))
-        flash_msg = _("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:tables => @table_name),
-                                                           :name  => ems.name}
-        javascript_redirect :action    => 'show_list',
-                            :flash_msg => flash_msg
-      else
-        @in_a_form = true
-        ems.errors.each do |field, msg|
-          add_flash("#{ems.class.human_attribute_name(field)} #{msg}", :error)
-        end
+      provider = ems.provider_class.new if ems.respond_to? :provider_class
 
-        drop_breadcrumb(:name => _("Add New %{tables}") % {:tables => ui_lookup(:tables => table_name)},
-                        :url  => new_ems_path)
-        javascript_flash
+      if provider.nil? # create cloud manager
+        set_ems_record_vars(ems) unless @flash_array
+        if ems.valid? && ems.save
+          construct_edit_for_audit(ems)
+          AuditEvent.success(build_created_audit(ems, @edit))
+          flash_msg = _("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:tables => @table_name),
+                                                             :name  => ems.name}
+          javascript_redirect :action    => 'show_list',
+                              :flash_msg => flash_msg
+        else
+          @in_a_form = true
+          ems.errors.each do |field, msg|
+            add_flash("#{ems.class.human_attribute_name(field)} #{msg}", :error)
+          end
+
+          drop_breadcrumb(:name => _("Add New %{tables}") % {:tables => ui_lookup(:tables => table_name)},
+                          :url  => new_ems_path)
+          javascript_flash
+        end
+      else # create provider
+        set_provider_record_vars(provider) unless @flash_array
+
+        if provider.valid? && provider.save
+          # TODO: audit event like in case of ems
+          flash_msg = _("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:tables => @table_name),
+                                                             :name  => provider.name}
+          javascript_redirect :action    => 'show_list', :flash_msg => flash_msg
+        else
+          @in_a_form = true
+          provider.errors.each do |field, msg|
+            add_flash("#{provider.class.human_attribute_name(field)} #{msg}", :error)
+          end
+
+          drop_breadcrumb(:name => _("Add New %{tables}") % {:tables => ui_lookup(:tables => table_name)},
+                          :url  => new_ems_path)
+          javascript_flash
+        end
       end
     end
 
@@ -430,6 +459,26 @@ module Mixins
                    :hawkular    => hawkular_endpoint}
 
       build_connection(ems, endpoints, mode)
+    end
+
+    def set_provider_record_vars(provider, mode = nil)
+      provider.name = params[:name]
+      provider.zone = Zone.find_by_name(params[:zone])
+
+      if provider.kind_of?(ManageIQ::Providers::Amazon::Provider)
+        # TODO: update GUI to put a list of regions, not just single one
+        provider.provider_regions = [params[:provider_region]]
+      end
+
+      endpoints = {:default     => {},
+                   :ceilometer  => {},
+                   :amqp        => {},
+                   :ssh_keypair => {},
+                   :metrics     => {},
+                   :hawkular    => {}
+      }
+
+      build_connection(provider, endpoints, mode)
     end
 
     def get_hostname_from_routes(ems, hostname, port, token)
