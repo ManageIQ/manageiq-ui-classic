@@ -7,7 +7,7 @@ module TreeNode
       # rubocop:disable LiteralInCondition
       case true
       when !@object.domain?
-        icon = 'pficon pficon-folder-close'
+        icon = @object.decorate.fonticon
       when @object.git_enabled?
         image = 'svg/ae_git_domain.svg'
       when @object.name == MiqAeDatastore::MANAGEIQ_DOMAIN
