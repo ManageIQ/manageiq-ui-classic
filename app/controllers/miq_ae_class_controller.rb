@@ -379,7 +379,7 @@ class MiqAeClassController < ApplicationController
       glyphicon = "product product-ae_field"
     when "MiqAeMethod"
       cls = "aem"
-      glyphicon = "product product-ae_method"
+      glyphicon = "product product-method"
     end
     return cls, glyphicon
   end
