@@ -73,4 +73,16 @@ class VmInfraController < ApplicationController
 
   menu_section :inf
   has_custom_buttons
+
+  def vm_transform
+    vm = Vm.find_by(:id => params[:id].to_i)
+    @right_cell_text = _("Transform VM %{name} to RHV") % {:name => vm.name}
+    dialog = Dialog.find_by(:label => 'Transform VM')
+    dialog_initialize(
+      dialog.resource_actions.first,
+      :header     => @right_cell_text,
+      :target_id  => vm.id,
+      :target_kls => Vm.name
+    )
+  end
 end

@@ -52,7 +52,7 @@ module ApplicationController::Explorer
     'retire'       => :s2, 'right_size'       => :s2, 'snapshot_add'    => :s2,
     'tag'          => :s2, 'timeline'         => :s2, 'resize'          => :s2,
     'live_migrate' => :s2, 'attach'           => :s2, 'detach'          => :s2,
-    'evacuate'     => :s2, 'service_dialog'   => :s2,
+    'evacuate'     => :s2, 'service_dialog'   => :s2, 'transform'       => :s2,
     'associate_floating_ip'    => :s2,
     'disassociate_floating_ip' => :s2,
 
