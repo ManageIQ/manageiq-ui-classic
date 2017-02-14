@@ -37,7 +37,10 @@
         ManageIQ.browser = "#{j browser_info(:name_ui)}";
         ManageIQ.controller = "#{j controller_name}";
         API.autorenew();
-        miqInitNotifications(); // ActionCable causes live reload crashes
+
+      - if ::Settings.server.asynchronous_notifications
+        :javascript
+          miqInitNotifications();
 
     %body{:onload => is_browser_ie? ? '' : 'miqOnLoad();', 'data-controller' => controller_name}
       = render :partial => "layouts/header"
