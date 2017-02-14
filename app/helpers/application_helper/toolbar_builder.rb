@@ -502,14 +502,6 @@ class ApplicationHelper::ToolbarBuilder
           return N_("No Timeline data has been collected for this Host")
         end
       end
-    when "MiqAction"
-      case id
-      when "action_edit"
-        return N_("Default actions can not be changed.") if @record.action_type == "default"
-      when "action_delete"
-        return N_("Default actions can not be deleted.") if @record.action_type == "default"
-        return N_("Actions assigned to Policies can not be deleted") unless @record.miq_policies.empty?
-      end
     when "MiqGroup"
       case id
       when "rbac_group_delete"
