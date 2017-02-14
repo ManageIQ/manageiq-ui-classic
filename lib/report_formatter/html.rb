@@ -50,20 +50,6 @@ module ReportFormatter
         # Following line commented for now - for not showing repeating column values
         #       prev_data = String.new                # Initialize the prev_data variable
 
-        precision_by_column = ::Settings.reporting.precision_by_column # get the column overrides
-        precisions = {} # Hash to store columns we hit
-
-        # derive a default precision by looking at the suffixes of the column hearers
-        zero_precision_suffixes = ["(ms)", "(mb)", "(seconds)", "(b)"]
-        mri.headers.each_index do |i|
-          zero_precision_suffixes.each do |s|
-            if  mri.headers[i].downcase.ends_with?(s) && precision_by_column[mri.col_order[i]].blank?
-              precisions[mri.col_order[i]] = 0
-              break
-            end
-          end
-        end
-
         row_limit = mri.rpt_options && mri.rpt_options[:row_limit] ? mri.rpt_options[:row_limit] : 0
         save_val = :_undefined_                                 # Hang on to the current group value
         group_text = nil                                        # Optionally override what gets displayed for the group (i.e. Chargeback)
