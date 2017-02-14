@@ -46,10 +46,6 @@ module ReportFormatter
       counter = 0
       row = 0
       unless mri.table.nil?
-
-        # Following line commented for now - for not showing repeating column values
-        #       prev_data = String.new                # Initialize the prev_data variable
-
         row_limit = mri.rpt_options && mri.rpt_options[:row_limit] ? mri.rpt_options[:row_limit] : 0
         save_val = :_undefined_                                 # Hang on to the current group value
         group_text = nil                                        # Optionally override what gets displayed for the group (i.e. Chargeback)
