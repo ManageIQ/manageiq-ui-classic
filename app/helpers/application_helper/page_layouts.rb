@@ -27,6 +27,7 @@ module ApplicationHelper::PageLayouts
       my_tasks
       my_ui_tasks
       ops
+      physical_infra_topology
       pxe
       report
       rss

@@ -1019,6 +1019,13 @@ Rails.application.routes.draw do
       )
     },
 
+    :physical_infra_topology         => {
+      :get => %w(
+        show
+        data
+      )
+    },
+
     :container_dashboard      => {
       :get => %w(
         show
@@ -1162,8 +1169,6 @@ Rails.application.routes.draw do
         protect
         show_list
         tagging_edit
-        scaling
-        scaledown
       ) +
                compare_get,
       :post => %w(
@@ -1185,6 +1190,8 @@ Rails.application.routes.draw do
         update
         wait_for_task
         x_show
+        scaling
+        scaledown
         squash_toggle
       ) +
                adv_search_post +
@@ -1226,8 +1233,6 @@ Rails.application.routes.draw do
         tree_autoload
         update
         wait_for_task
-        scaling
-        scaledown
         x_show
         squash_toggle
       ) +

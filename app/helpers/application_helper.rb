@@ -643,6 +643,7 @@ module ApplicationHelper
            miq_policy_rsop
            network_topology
            ops
+           physical_infra_topology
            pxe
            report
            rss
@@ -1276,6 +1277,7 @@ module ApplicationHelper
                         network_topology
                         offline
                         orchestration_stack
+                        physical_infra_topology
                         persistent_volume
                         policy
                         policy_group
