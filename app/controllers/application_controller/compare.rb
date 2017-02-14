@@ -1798,13 +1798,11 @@ module ApplicationController::Compare
 
   def comp_add_record_field_missing_compressed(idx, val, base_rec)
     if @exists_mode
-      passed_img = "passed"
-      failed_img = "failed"
-      img_path = "16"
+      passed_img = "16/passed.png"
+      failed_img = "16/failed.png"
     else
-      passed_img = "compare-same"
-      failed_img = "compare-diff"
-      img_path = "100"
+      passed_img = "100/compare-same.png"
+      failed_img = "100/compare-diff.png"
     end
     row = {}
 
@@ -1814,7 +1812,7 @@ module ApplicationController::Compare
       row.merge!(drift_add_same_image(idx, val))
     else              # Not on base object
       row.merge!(drift_add_image_col(idx,
-                                     "#{img_path}/#{base_rec_found == val ? passed_img : failed_img}.png",
+                                     base_rec_found == val ? passed_img : failed_img,
                                      "",
                                      val))
     end
@@ -1823,13 +1821,11 @@ module ApplicationController::Compare
 
   def comp_add_record_field_exists_compressed(idx, val, base_rec, field)
     if @exists_mode
-      passed_img = "passed"
-      failed_img = "failed"
-      img_path = "16"
+      passed_img = "16/passed.png"
+      failed_img = "16/failed.png"
     else
-      passed_img = "compare-same"
-      failed_img = "compare-diff"
-      img_path = "100"
+      passed_img = "100/compare-same.png"
+      failed_img = "100/compare-diff.png"
     end
     row = {}
 
@@ -1839,7 +1835,10 @@ module ApplicationController::Compare
     if idx == 0   # On base object
       row.merge!(drift_add_same_image(idx, val))
     else          # Not on base object
-      row.merge!(drift_add_image_col(idx, "#{img_path}/#{base_val == val ? passed_img : failed_img}.png", "", val))
+      row.merge!(drift_add_image_col(idx,
+                                     base_val == val ? passed_img : failed_img,
+                                     "",
+                                     val))
     end
     row
   end
@@ -1936,13 +1935,13 @@ module ApplicationController::Compare
       else
         if base_val == val
           img_bkg = "cell-stripe"
-          img = "compare-same"
+          img = "100/compare-same.png"
         else
           img_bkg = ""
-          img = "compare-diff"
+          img = "100/compare-diff.png"
           unset_same_flag
         end
-        row.merge!(drift_add_image_col(idx, "100/#{img}.png", img_bkg, val))
+        row.merge!(drift_add_image_col(idx, img, img_bkg, val))
       end
     end
     row
