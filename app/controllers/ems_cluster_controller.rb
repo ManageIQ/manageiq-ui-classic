@@ -5,6 +5,7 @@ class EmsClusterController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericListMixin
+  include Mixins::MoreShowActions
 
   def drift_history
     @display = "drift_history"
@@ -70,19 +71,11 @@ class EmsClusterController < ApplicationController
       drop_breadcrumb(:name => _("Configuration"), :url => "/ems_cluster/show/#{@ems_cluster.id}?display=#{@display}")
 
     when "performance"
-      @showtype = "performance"
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @ems_cluster.name},
-                      :url  => "/ems_cluster/show/#{@ems_cluster.id}?display=#{@display}&refresh=n")
-      perf_gen_init_options               # Intialize perf chart options, charts will be generated async
+      show_performance
 
     when "timeline"
-      @showtype = "timeline"
-      session[:tl_record_id] = params[:id] if params[:id]
       @record = find_by_id_filtered(EmsCluster, session[:tl_record_id])
-      @timeline = @timeline_filter = true
-      @lastaction = "show_timeline"
-      tl_build_timeline                       # Create the timeline report
-      drop_breadcrumb(:name => _("Timelines"), :url => "/ems_cluster/show/#{@record.id}?refresh=n&display=timeline")
+      show_timeline
 
     when "storage"
       drop_breadcrumb(:name => @ems_cluster.name + _(" (All Descendant %{table}(s))") %
