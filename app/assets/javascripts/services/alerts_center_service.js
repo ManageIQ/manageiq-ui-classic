@@ -388,22 +388,14 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
   };
 
   _this.updateAlertsData = function(limit, offset, filters, sortField, sortAscending) {
-    var deferred = $q.defer();
-
     // Update data then get the alerts data
-    _this.getCurrentUser().then(function() {
-      _this.updateExistingUsers().then(function() {
-        _this.updateProviders().then(function() {
-          _this.updateTags().then(function() {
-            _this.getAlertsData(limit, offset, filters, sortField, sortAscending).then(function (response) {
-              deferred.resolve(response);
-            })
-          })
-        })
-      })
-    });
-
-    return deferred.promise;
+    return _this.getCurrentUser()
+      .then(_this.updateExistingUsers)
+      .then(_this.updateProviders)
+      .then(_this.updateTags)
+      .then(function() {
+        return _this.getAlertsData(limit, offset, filters, sortField, sortAscending);
+      });
   };
 
   _this.getAlertsData = function(limit, offset, filters, sortField, sortAscending) {

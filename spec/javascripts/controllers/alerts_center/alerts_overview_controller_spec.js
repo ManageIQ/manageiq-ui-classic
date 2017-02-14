@@ -38,9 +38,6 @@ describe('alertsOverviewController', function() {
     );
   }));
 
-  afterEach(function() {
-  });
-
   describe('data loads successfully and', function() {
     it('shows the correct summary item cards', function(done) {
       expect($controller.loadingDone).toBeFalsy();
