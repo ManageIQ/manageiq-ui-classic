@@ -4,9 +4,23 @@ module Mixins
       return unless init_show
 
       case @display
-      when "summary_only"                 then show_download
-      when "main"                         then show_main
-      when *self.class.display_methods    then display_nested_list(@display)
+      # these methods are defined right in GenericShowMixin
+      when "summary_only"
+        show_download
+      when "main"
+        show_main
+
+      # these methods are defined in MoreShowActions
+      when "timeline"
+        show_timeline if respond_to?(:timeline)
+      when "performance"
+        show_performance if respond_to?(:performance)
+      when "compliance_history"
+        show_compliance_history if respond_to?(:compliance_history)
+
+      # nested list methods as enabled by 'display_methods'
+      when *self.class.display_methods
+        display_nested_list(@display)
       end
 
       replace_gtl_main_div if pagination_request?
