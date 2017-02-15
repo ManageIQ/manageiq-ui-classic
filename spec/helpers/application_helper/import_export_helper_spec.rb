@@ -4,7 +4,7 @@ describe ApplicationHelper::ImportExportHelper do
       let(:exists) { true }
 
       it "returns a checkmark image path" do
-        expect(helper.status_icon_image_path(exists)).to match(%r{\/assets\/16\/checkmark.*(png)$})
+        expect(helper.status_icon_image_path(exists)).to match(%r{\/assets\/100\/checkmark.*(png)$})
       end
     end
 
