@@ -41,8 +41,6 @@ module ReportFormatter
       end
       output << '<tbody>'
 
-      # table data
-      #     save_val = nil
       row = 0
       unless mri.table.nil?
         row_limit = mri.rpt_options && mri.rpt_options[:row_limit] ? mri.rpt_options[:row_limit] : 0
