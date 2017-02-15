@@ -1,5 +1,6 @@
 module EmsCommon
   extend ActiveSupport::Concern
+  include Mixins::GenericButtonMixin
 
   included do
     include Mixins::GenericSessionMixin
@@ -392,34 +393,12 @@ module EmsCommon
 
   # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit]                                  # Restore @edit for adv search box
-
-    params[:display] = @display if ["vms", "hosts", "storages", "instances", "images", "orchestration_stacks"].include?(@display)  # Were we displaying vms/hosts/storages
-    params[:page] = @current_page unless @current_page.nil?   # Save current page for list refresh
+    restore_edit_for_search
+    copy_sub_item_display_value_to_params
+    save_current_page_for_refresh
 
     # Handle buttons from sub-items screen
-    if params[:pressed].starts_with?("availability_zone_",
-                                     "cloud_network_",
-                                     "cloud_object_store_container_",
-                                     "cloud_subnet_",
-                                     "cloud_tenant_",
-                                     "cloud_volume_",
-                                     "ems_cluster_",
-                                     "flavor_",
-                                     "floating_ip_",
-                                     "guest_",
-                                     "host_",
-                                     "image_",
-                                     "instance_",
-                                     "load_balancer_",
-                                     "miq_template_",
-                                     "network_port_",
-                                     "network_router_",
-                                     "orchestration_stack_",
-                                     "security_group_",
-                                     "storage_",
-                                     "vm_")
-
+    handle_sub_item_presses(params[:pressed]) do |pfx|
       case params[:pressed]
       # Clusters
       when "ems_cluster_compare"              then comparemiq
@@ -461,47 +440,37 @@ module EmsCommon
       when "security_group_tag"               then tag(SecurityGroup)
       end
 
-      pfx = pfx_for_vm_button_pressed(params[:pressed])
-      # Handle Host power buttons
-      if ["host_shutdown", "host_reboot", "host_standby", "host_enter_maint_mode", "host_exit_maint_mode",
-          "host_start", "host_stop", "host_reset"].include?(params[:pressed])
-        powerbutton_hosts(params[:pressed].split("_")[1..-1].join("_")) # Handle specific power button
+      if button_power_press?(params[:pressed])
+        handle_host_power_press(params[:pressed])
       else
         process_vm_buttons(pfx)
-        # Control transferred to another screen, so return
-        return if ["host_tag", "#{pfx}_policy_sim", "host_scan", "host_refresh", "host_protect",
-                   "host_compare", "#{pfx}_compare", "#{pfx}_tag", "#{pfx}_retire",
-                   "#{pfx}_protect", "#{pfx}_ownership", "#{pfx}_refresh", "#{pfx}_right_size",
-                   "#{pfx}_reconfigure", "storage_tag", "ems_cluster_compare",
-                   "ems_cluster_protect", "ems_cluster_tag", "#{pfx}_resize", "#{pfx}_live_migrate",
-                   "#{pfx}_evacuate"].include?(params[:pressed]) &&
-                  @flash_array.nil?
 
-        unless ["host_edit", "#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone",
-                "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
-          @refresh_div = "main_div"
-          @refresh_partial = "layouts/gtl"
-          show                                                        # Handle EMS buttons
+        return if button_control_transferred?(params[:pressed])
+
+        unless button_has_redirect_suffix?(params[:pressed])
+          set_refresh_and_show
         end
       end
-    else
-      @refresh_div = "main_div" # Default div for button.rjs to refresh
-      redirect_to :action => "new" if params[:pressed] == "new"
-      deleteemss if params[:pressed] == "#{@table_name}_delete"
-      arbitration_profile_edit if params[:pressed] == "arbitration_profile_new"
-      arbitration_profile_edit if params[:pressed] == "arbitration_profile_edit"
-      arbitration_profile_delete if params[:pressed] == "arbitration_profile_delete"
-      refreshemss if params[:pressed] == "#{@table_name}_refresh"
-      #     scanemss if params[:pressed] == "scan"
-      tag(model) if params[:pressed] == "#{@table_name}_tag"
+    end
 
-      # Edit Tags for Middleware Manager Relationship pages
-      tag(@display.camelize.singularize) if @display && @display != 'main' &&
-                                            params[:pressed] == "#{@display.singularize}_tag"
-      assign_policies(model) if params[:pressed] == "#{@table_name}_protect"
-      check_compliance(model) if params[:pressed] == "#{@table_name}_check_compliance"
-      edit_record if params[:pressed] == "#{@table_name}_edit"
-      if params[:pressed] == "#{@table_name}_timeline"
+    unless params[:pressed].starts_with?(*button_sub_item_prefixes)
+      set_default_refresh_div
+
+      case params[:pressed]
+      when "#{@table_name}_refresh"          then refreshemss
+      when "#{@table_name}_edit"             then edit_record
+      when "#{@table_name}_check_compliance" then check_compliance(model)
+      when "arbitration_profile_delete"      then arbitration_profile_delete
+      when "arbitration_profile_edit"        then arbitration_profile_edit
+      when "arbitration_profile_new"         then arbitration_profile_edit
+      when "new"                             then redirect_to :action => "new"
+      when "#{@table_name}_protect"
+        assign_policies(model)
+        return if @flash_array.nil?
+      when "#{@table_name}_tag"
+        tag(model)
+        return if @flash_array.nil?
+      when "#{@table_name}_timeline"
         @showtype = "timeline"
         @record = find_by_id_filtered(model, params[:id])
         @timeline = @timeline_filter = true
@@ -511,8 +480,7 @@ module EmsCommon
         session[:tl_record_id] = @record.id
         javascript_redirect polymorphic_path(@record, :display => 'timeline')
         return
-      end
-      if params[:pressed] == "#{@table_name}_perf"
+      when "#{@table_name}_perf"
         @showtype = "performance"
         @record = find_by_id_filtered(model, params[:id])
         drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @record.name},
@@ -520,27 +488,32 @@ module EmsCommon
         perf_gen_init_options # Intialize options, charts are generated async
         javascript_redirect polymorphic_path(@record, :display => "performance")
         return
-      end
-      if params[:pressed] == "#{@table_name}_ad_hoc_metrics"
+      when "#{@table_name}_ad_hoc_metrics"
         @showtype = "ad_hoc_metrics"
         @record = find_by_id_filtered(model, params[:id])
         drop_breadcrumb(:name => @record.name + _(" (Ad hoc Metrics)"), :url => show_link(@record))
         javascript_redirect polymorphic_path(@record, :display => "ad_hoc_metrics")
         return
-      end
-      if params[:pressed] == "refresh_server_summary"
+      when "#{@table_name}_delete"
+        deleteemss
+        if !@flash_array.nil? && @single_delete
+          javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
+          return
+        end
+      when "#{@display.singularize}_tag"
+        if @display && @display != 'main'
+          tag(@display.camelize.singularize)
+        end
+      when "refresh_server_summary"
         javascript_redirect :back
         return
-      end
-      if params[:pressed] == "ems_cloud_recheck_auth_status"     ||
-         params[:pressed] == "ems_infra_recheck_auth_status"     ||
-         params[:pressed] == "ems_middleware_recheck_auth_status" ||
-         params[:pressed] == "ems_container_recheck_auth_status"
+      when "ems_cloud_recheck_auth_status", "ems_infra_recheck_auth_status",
+           "ems_middleware_recheck_auth_status", "ems_container_recheck_auth_status"
         if params[:id]
           table_key = :table
           _result, details = recheck_authentication
           add_flash(_("Re-checking Authentication status for this %{controller_name} was not successful: %{details}") %
-                        {:controller_name => ui_lookup(:table => controller_name), :details => details}, :error) if details
+                      {:controller_name => ui_lookup(:table => controller_name), :details => details}, :error) if details
         else
           table_key = :tables
           ems_ids = find_checked_items
@@ -553,32 +526,32 @@ module EmsCommon
           end
         end
         add_flash(_("Authentication status will be saved and workers will be restarted for the selected %{controller_name}") %
-                      {:controller_name => ui_lookup(table_key => controller_name)})
+                     {:controller_name => ui_lookup(table_key => controller_name)})
         render_flash
+        return
+      when "host_aggregate_edit"
+        javascript_redirect :controller => "host_aggregate", :action => "edit", :id => find_checked_items[0]
+        return
+      when "cloud_tenant_edit"
+        javascript_redirect :controller => "cloud_tenant", :action => "edit", :id => find_checked_items[0]
+        return
+      when "cloud_volume_edit"
+        javascript_redirect :controller => "cloud_volume", :action => "edit", :id => find_checked_items[0]
+        return
+      when "custom_button"
+        custom_buttons
         return
       end
 
-      custom_buttons if params[:pressed] == "custom_button"
-
-      return if ["custom_button"].include?(params[:pressed])    # custom button screen, so return, let custom_buttons method handle everything
-      return if ["#{@table_name}_tag", "#{@table_name}_protect", "#{@table_name}_timeline"].include?(params[:pressed]) &&
-                @flash_array.nil? # Tag screen showing, so return
       check_if_button_is_implemented
     end
 
-    if !@flash_array.nil? && params[:pressed] == "#{@table_name}_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
-    elsif params[:pressed] == "host_aggregate_edit"
-      javascript_redirect :controller => "host_aggregate", :action => "edit", :id => find_checked_items[0]
-    elsif params[:pressed] == "cloud_tenant_edit"
-      javascript_redirect :controller => "cloud_tenant", :action => "edit", :id => find_checked_items[0]
-    elsif params[:pressed] == "cloud_volume_edit"
-      javascript_redirect :controller => "cloud_volume", :action => "edit", :id => find_checked_items[0]
-    elsif params[:pressed].ends_with?("_edit") || ["arbitration_profile_new", "#{pfx}_miq_request_new", "#{pfx}_clone",
-                                                   "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
-      render_or_redirect_partial(pfx)
+    return if performed?
+
+    if button_has_redirect_suffix?(params[:pressed])
+      render_or_redirect_partial(button_prefix(params[:pressed]))
     else
-      if @refresh_div == "main_div" && @lastaction == "show_list"
+      if button_replace_gtl_main?
         replace_gtl_main_div
       else
         render_flash unless performed?
@@ -1222,5 +1195,35 @@ module EmsCommon
     if params[:bearer_token]
       @edit[:new][:bearer_token] = @edit[:new][:bearer_verify] = @ems.authentication_token(:bearer)
     end
+  end
+
+  def button_sub_item_display_values
+    ["vms", "hosts", "storages", "instances", "images", "orchestration_stacks"]
+  end
+
+  def button_sub_item_prefixes
+    [
+      "availability_zone_",
+      "cloud_network_",
+      "cloud_object_store_container_",
+      "cloud_subnet_",
+      "cloud_tenant_",
+      "cloud_volume_",
+      "ems_cluster_",
+      "flavor_",
+      "floating_ip_",
+      "guest_",
+      "host_",
+      "image_",
+      "instance_",
+      "load_balancer_",
+      "miq_template_",
+      "network_port_",
+      "network_router_",
+      "orchestration_stack_",
+      "security_group_",
+      "storage_",
+      "vm_"
+    ]
   end
 end

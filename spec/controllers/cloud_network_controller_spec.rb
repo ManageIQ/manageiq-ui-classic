@@ -1,24 +1,38 @@
 describe CloudNetworkController do
   include_examples :shared_examples_for_cloud_network_controller, %w(openstack azure google amazon)
 
-  context "#button" do
-    before(:each) do
+  describe "#button" do
+    let(:network) { FactoryGirl.create(:cloud_network, :name => "cloud-network-01") }
+
+    before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
       ApplicationController.handle_exceptions = true
     end
 
-    it "when Edit Tag is pressed" do
-      skip "No ready yet"
+    it "handles tag pressed" do
       expect(controller).to receive(:tag)
-      post :button, :params => { :pressed => "edit_tag", :format => :js }
+      post :button, :params => { :pressed => "cloud_network_tag", :id => network.id, :format => :js }
       expect(controller.send(:flash_errors?)).not_to be_truthy
+    end
+
+    it "handles cloud_network_new" do
+      expect(controller).to receive(:handle_cloud_network_new)
+      post :button, :params => { :pressed => "cloud_network_new", :format => :js }
+      expect(assigns(:flash_array)).to be_nil
+    end
+
+    it "handles cloud_network_edit" do
+      expect(controller).to receive(:handle_cloud_network_edit)
+      post :button, :params => { :pressed => "cloud_network_edit", :format => :js, :id => network.id }
+      expect(assigns(:flash_array)).to be_nil
     end
   end
 
-  context "#tags_edit" do
-    let!(:user) { stub_user(:features => :all) }
-    before(:each) do
+  describe "#tagging_edit" do
+    let(:user) { stub_user(:features => :all) }
+
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
       @ct = FactoryGirl.create(:cloud_network, :name => "cloud-network-01")
       allow(@ct).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
@@ -41,13 +55,8 @@ describe CloudNetworkController do
       session[:edit] = edit
     end
 
-    after(:each) do
+    after do
       expect(response.status).to eq(200)
-    end
-
-    it "builds tagging screen" do
-      post :button, :params => { :pressed => "cloud_network_tag", :format => :js, :id => @ct.id }
-      expect(assigns(:flash_array)).to be_nil
     end
 
     it "cancels tags edit" do
@@ -93,35 +102,28 @@ describe CloudNetworkController do
       @network = FactoryGirl.create(:cloud_network_openstack)
     end
 
-    context "#create" do
-      let(:task_options) do
-        {
-          :action => "creating Cloud Network for user %{user}" % {:user => controller.current_user.userid},
-          :userid => controller.current_user.userid
-        }
-      end
-      let(:queue_options) do
-        {
-          :class_name  => @ems.class.name,
-          :method_name => 'create_cloud_network',
-          :instance_id => @ems.id,
-          :priority    => MiqQueue::HIGH_PRIORITY,
-          :role        => 'ems_operations',
-          :zone        => @ems.my_zone,
-          :args        => [{:name => "test", :admin_state_up => false, :shared => false, :external_facing => false}]
-        }
-      end
+    let(:task_options) do
+      {
+        :action => "creating Cloud Network for user %{user}" % {:user => controller.current_user.userid},
+        :userid => controller.current_user.userid
+      }
+    end
+    let(:queue_options) do
+      {
+        :class_name  => @ems.class.name,
+        :method_name => 'create_cloud_network',
+        :instance_id => @ems.id,
+        :priority    => MiqQueue::HIGH_PRIORITY,
+        :role        => 'ems_operations',
+        :zone        => @ems.my_zone,
+        :args        => [{:name => "test", :admin_state_up => false, :shared => false, :external_facing => false}]
+      }
+    end
 
-      it "builds create screen" do
-        post :button, :params => { :pressed => "cloud_network_new", :format => :js }
-        expect(assigns(:flash_array)).to be_nil
-      end
-
-      it "queues the create action" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
-        post :create, :params => { :button => "add", :format => :js, :name => 'test',
-                                   :tenant_id => 'id', :ems_id => @ems.id }
-      end
+    it "queues the create action" do
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      post :create, :params => { :button => "add", :format => :js, :name => 'test',
+                                 :tenant_id => 'id', :ems_id => @ems.id }
     end
   end
 
@@ -152,11 +154,6 @@ describe CloudNetworkController do
         }
       end
 
-      it "builds edit screen" do
-        post :button, :params => { :pressed => "cloud_network_edit", :format => :js, :id => @network.id }
-        expect(assigns(:flash_array)).to be_nil
-      end
-
       it "queues the update action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
         post :update, :params => { :button => "save", :format => :js, :id => @network.id, :name => "test2" }
@@ -164,7 +161,7 @@ describe CloudNetworkController do
     end
   end
 
-  describe "#delete" do
+  describe "deleting" do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
@@ -173,28 +170,28 @@ describe CloudNetworkController do
       session[:cloud_network_lastaction] = 'show'
     end
 
-    context "#delete" do
-      let(:task_options) do
-        {
-          :action => "deleting Cloud Network for user %{user}" % {:user => controller.current_user.userid},
-          :userid => controller.current_user.userid
-        }
-      end
-      let(:queue_options) do
-        {
-          :class_name  => @network.class.name,
-          :method_name => 'raw_delete_cloud_network',
-          :instance_id => @network.id,
-          :priority    => MiqQueue::HIGH_PRIORITY,
-          :role        => 'ems_operations',
-          :zone        => @ems.my_zone,
-          :args        => []
-        }
-      end
-      it "queues the delete action" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
-        post :button, :params => { :id => @network.id, :pressed => "cloud_network_delete", :format => :js }
-      end
+    let(:task_options) do
+      {
+        :action => "deleting Cloud Network for user %{user}" % {:user => controller.current_user.userid},
+        :userid => controller.current_user.userid
+      }
+    end
+    let(:queue_options) do
+      {
+        :class_name  => @network.class.name,
+        :method_name => 'raw_delete_cloud_network',
+        :instance_id => @network.id,
+        :priority    => MiqQueue::HIGH_PRIORITY,
+        :role        => 'ems_operations',
+        :zone        => @ems.my_zone,
+        :args        => []
+      }
+    end
+
+    it "queues the delete action" do
+      expect(controller).to receive(:handle_cloud_network_delete).and_call_original
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      post :button, :params => { :id => @network.id, :pressed => "cloud_network_delete", :format => :js }
     end
   end
 end

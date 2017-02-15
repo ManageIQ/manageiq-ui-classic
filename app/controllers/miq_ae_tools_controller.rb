@@ -4,6 +4,8 @@ class MiqAeToolsController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericButtonMixin
+
   def index
     resolve
   end
@@ -14,18 +16,15 @@ class MiqAeToolsController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit]                                  # Restore @edit for adv search box
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
+    restore_edit_for_search
+    set_default_refresh_div
+
     if params[:pressed] == "refresh_log"
       refresh_log
       return
     end
 
-    unless @refresh_partial # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    end
+    check_if_button_is_implemented
   end
 
   def log

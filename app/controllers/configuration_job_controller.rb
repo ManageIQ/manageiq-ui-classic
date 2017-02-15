@@ -5,6 +5,7 @@ class ConfigurationJobController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericListMixin
+  include Mixins::GenericButtonMixin
   include Mixins::GenericSessionMixin
 
   def self.model
@@ -49,23 +50,21 @@ class ConfigurationJobController < ApplicationController
   # handle buttons pressed on the button bar
   # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:page] = @current_page if @current_page.nil? # Save current page for list refresh
+    restore_edit_for_search
+    save_current_page_for_refresh
+    set_default_refresh_div
 
-    params[:page] = @current_page if @current_page.nil? # Save current page for list refresh
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
     case params[:pressed]
     when "configuration_job_delete"
       configuration_job_delete
     when "configuration_job_tag"
       tag(ManageIQ::Providers::AnsibleTower::AutomationManager::Job)
-    end
-    return if %w(configuration_job_tag).include?(params[:pressed]) && @flash_array.nil? # Tag screen showing, so return
 
-    if @flash_array.nil? && !@refresh_partial # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
+      return if @flash_array.nil? # Tag screen showing, so return
+    end
+
+    if button_not_handled?
+      set_refresh_and_alert_not_implemented
     elsif @flash_array && @lastaction == "show"
       @configuration_job = @record = identify_record(params[:id])
       @refresh_partial = "layouts/flash_msg"
@@ -74,7 +73,7 @@ class ConfigurationJobController < ApplicationController
 
     if !@flash_array.nil? && params[:pressed] == "configurations_job_delete" && @single_delete
       javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
-    elsif @refresh_div == "main_div" && @lastaction == "show_list"
+    elsif button_replace_gtl_main?
       replace_gtl_main_div
     else
       render_flash

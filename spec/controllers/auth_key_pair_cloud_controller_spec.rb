@@ -1,13 +1,33 @@
 describe AuthKeyPairCloudController do
-  context "#button" do
-    before(:each) do
-      stub_user(:features => :all)
+  let(:user) { stub_user(:features => :all) }
+
+  describe "#button" do
+    let(:pair) { FactoryGirl.create(:auth_key_pair_cloud, :name => "auth-key-pair-cloud-00") }
+
+    before do
       EvmSpecHelper.create_guid_miq_server_zone
+      allow(pair).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
+    end
+
+    it "builds tagging screen" do
+      expect(controller).to receive(:tag)
+      post :button, :params => { :pressed => "auth_key_pair_cloud_tag", :format => :js, :id => pair.id }
+      expect(assigns(:flash_array)).to be_nil
+      expect(response.status).to eq(200)
+    end
+
+    it 'handles auth_key_pair_cloud_delete' do
+      expect(controller).to receive(:handle_auth_key_pair_cloud_delete)
+      post :button, :params => { :pressed => "auth_key_pair_cloud_delete", :format => :js, :id => pair.id }
+    end
+
+    it 'handles auth_key_pair_cloud_new' do
+      expect(controller).to receive(:handle_auth_key_pair_cloud_new)
+      post :button, :params => { :pressed => "auth_key_pair_cloud_new", :format => :js, :id => pair.id }
     end
   end
 
   context "#tags_edit" do
-    let!(:user) { stub_user(:features => :all) }
     before(:each) do
       EvmSpecHelper.create_guid_miq_server_zone
       @kp = FactoryGirl.create(:auth_key_pair_cloud, :name => "auth-key-pair-cloud-01")
@@ -33,11 +53,6 @@ describe AuthKeyPairCloudController do
 
     after(:each) do
       expect(response.status).to eq(200)
-    end
-
-    it "builds tagging screen" do
-      post :button, :params => { :pressed => "auth_key_pair_cloud_tag", :format => :js, :id => @kp.id }
-      expect(assigns(:flash_array)).to be_nil
     end
 
     it "cancels tags edit" do

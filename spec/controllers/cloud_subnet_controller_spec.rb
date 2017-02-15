@@ -1,29 +1,40 @@
 describe CloudSubnetController do
   include_examples :shared_examples_for_cloud_subnet_controller, %w(openstack azure google amazon)
 
-  context "#button" do
-    before(:each) do
-      stub_user(:features => :all)
-      EvmSpecHelper.create_guid_miq_server_zone
+  let(:user) { stub_user(:features => :all) }
+  let(:subnet) { FactoryGirl.create(:cloud_subnet, :name => "cloud-subnet-01") }
 
+  describe "#button" do
+    before do
+      login_as user
+      EvmSpecHelper.create_guid_miq_server_zone
       ApplicationController.handle_exceptions = true
     end
 
-    it "when Edit Tag is pressed" do
-      # TODO: Fix
-      skip "Not ready yet"
+    it "handles cloud_subnet_tag pressed" do
       expect(controller).to receive(:tag)
-      post :button, :params => { :pressed => "edit_tag", :format => :js }
+      post :button, :params => { :pressed => "cloud_subnet_tag", :format => :js, :id => subnet.id }
       expect(controller.send(:flash_errors?)).not_to be_truthy
+    end
+
+    it "handles cloud_subnet_new pressed" do
+      expect(controller).to receive(:handle_cloud_subnet_new)
+      post :button, :params => { :pressed => "cloud_subnet_new", :format => :js }
+      expect(assigns(:flash_array)).to be_nil
+    end
+
+    it "handles cloud_subnet_edit pressed" do
+      expect(controller).to receive(:handle_cloud_subnet_edit)
+      post :button, :params => { :pressed => "cloud_subnet_edit", :format => :js, :id => subnet.id }
+      expect(assigns(:flash_array)).to be_nil
     end
   end
 
-  context "#tags_edit" do
-    let!(:user) { stub_user(:features => :all) }
+  describe "#tagging_edit" do
     before(:each) do
       EvmSpecHelper.create_guid_miq_server_zone
-      @ct = FactoryGirl.create(:cloud_subnet, :name => "cloud-subnet-01")
-      allow(@ct).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
+      # @ct = FactoryGirl.create(:cloud_subnet, :name => "cloud-subnet-01")
+      allow(subnet).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
       classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
       @tag1 = FactoryGirl.create(:classification_tag,
                                  :name   => "tag1",
@@ -31,12 +42,12 @@ describe CloudSubnetController do
       @tag2 = FactoryGirl.create(:classification_tag,
                                  :name   => "tag2",
                                  :parent => classification)
-      allow(Classification).to receive(:find_assigned_entries).with(@ct).and_return([@tag1, @tag2])
+      allow(Classification).to receive(:find_assigned_entries).with(subnet).and_return([@tag1, @tag2])
       session[:tag_db] = "CloudSubnet"
       edit = {
-        :key        => "CloudSubnet_edit_tags__#{@ct.id}",
+        :key        => "CloudSubnet_edit_tags__#{subnet.id}",
         :tagging    => "CloudSubnet",
-        :object_ids => [@ct.id],
+        :object_ids => [subnet.id],
         :current    => {:assignments => []},
         :new        => {:assignments => [@tag1.id, @tag2.id]}
       }
@@ -47,21 +58,16 @@ describe CloudSubnetController do
       expect(response.status).to eq(200)
     end
 
-    it "builds tagging screen" do
-      post :button, :params => { :pressed => "cloud_subnet_tag", :format => :js, :id => @ct.id }
-      expect(assigns(:flash_array)).to be_nil
-    end
-
     it "cancels tags edit" do
-      session[:breadcrumbs] = [{:url => "cloud_subnet/show/#{@ct.id}"}, 'placeholder']
-      post :tagging_edit, :params => { :button => "cancel", :format => :js, :id => @ct.id }
+      session[:breadcrumbs] = [{:url => "cloud_subnet/show/#{subnet.id}"}, 'placeholder']
+      post :tagging_edit, :params => { :button => "cancel", :format => :js, :id => subnet.id }
       expect(assigns(:flash_array).first[:message]).to include("was cancelled by the user")
       expect(assigns(:edit)).to be_nil
     end
 
     it "save tags" do
-      session[:breadcrumbs] = [{:url => "cloud_subnet/show/#{@ct.id}"}, 'placeholder']
-      post :tagging_edit, :params => { :button => "save", :format => :js, :id => @ct.id }
+      session[:breadcrumbs] = [{:url => "cloud_subnet/show/#{subnet.id}"}, 'placeholder']
+      post :tagging_edit, :params => { :button => "save", :format => :js, :id => subnet.id }
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
     end
@@ -114,11 +120,6 @@ describe CloudSubnetController do
         }
       end
 
-      it "builds create screen" do
-        post :button, :params => { :pressed => "cloud_subnetnew", :format => :js }
-        expect(assigns(:flash_array)).to be_nil
-      end
-
       it "queues the create action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
         post :create, :params => { :button => "add", :format => :js, :name => 'test',
@@ -154,11 +155,6 @@ describe CloudSubnetController do
         }
       end
 
-      it "builds edit screen" do
-        post :button, :params => { :pressed => "cloud_subnet_edit", :format => :js, :id => @cloud_subnet.id }
-        expect(assigns(:flash_array)).to be_nil
-      end
-
       it "queues the update action" do
         expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
         post :update, :params => { :button => "save", :format => :js, :id => @cloud_subnet.id, :name => "foo2" }
@@ -166,7 +162,7 @@ describe CloudSubnetController do
     end
   end
 
-  describe "#delete" do
+  describe "deleting" do
     before do
       stub_user(:features => :all)
       EvmSpecHelper.create_guid_miq_server_zone
@@ -175,29 +171,27 @@ describe CloudSubnetController do
       session[:cloud_subnet_lastaction] = 'show'
     end
 
-    context "#delete" do
-      let(:task_options) do
-        {
-          :action => "deleting Cloud Subnet for user %{user}" % {:user => controller.current_user.userid},
-          :userid => controller.current_user.userid
-        }
-      end
-      let(:queue_options) do
-        {
-          :class_name  => @cloud_subnet.class.name,
-          :method_name => 'raw_delete_cloud_subnet',
-          :instance_id => @cloud_subnet.id,
-          :priority    => MiqQueue::HIGH_PRIORITY,
-          :role        => 'ems_operations',
-          :zone        => @ems.my_zone,
-          :args        => []
-        }
-      end
+    let(:task_options) do
+      {
+        :action => "deleting Cloud Subnet for user %{user}" % {:user => controller.current_user.userid},
+        :userid => controller.current_user.userid
+      }
+    end
+    let(:queue_options) do
+      {
+        :class_name  => @cloud_subnet.class.name,
+        :method_name => 'raw_delete_cloud_subnet',
+        :instance_id => @cloud_subnet.id,
+        :priority    => MiqQueue::HIGH_PRIORITY,
+        :role        => 'ems_operations',
+        :zone        => @ems.my_zone,
+        :args        => []
+      }
+    end
 
-      it "queues the delete action" do
-        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
-        post :button, :params => { :id => @cloud_subnet.id, :pressed => "cloud_subnet_delete", :format => :js }
-      end
+    it "queues the delete action" do
+      expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+      post :button, :params => { :id => @cloud_subnet.id, :pressed => "cloud_subnet_delete", :format => :js }
     end
   end
 
