@@ -214,7 +214,12 @@
     this.initObjects(initObject);
     this.setExtraClasses(initObject.gtlType);
     this.showMessage = this.$location.search().flash_msg;
-    return this.getData(initObject.modelName, initObject.activeTree, initObject.currId, initObject.isExplorer, this.settings)
+    return this.getData(initObject.modelName,
+                        initObject.activeTree,
+                        initObject.currId,
+                        initObject.isExplorer,
+                        this.settings,
+                        initObject.records)
       .then(function(data) {
         var start = (this.settings.current - 1) * this.settings.perpage;
         this.setPaging(start, this.settings.perpage);
@@ -244,7 +249,7 @@
     this.settings.scrollElement = MAIN_CONTETN_ID;
     this.settings.dropDownClass = ['dropup'];
     this.settings.translateTotalOf = function(start, end, total) {
-      if (start, end, total) {
+      if (start && end && total) {
         return sprintf(__('%d - %d of %d'), start, end, total);
       }
       return start + ' - ' + end + ' of ' + total;
@@ -286,10 +291,11 @@
   * @param {Number} currId current Id, if some nested items are displayed.
   * @param {Boolean} isExplorer true | false if we are in explorer part of application.
   * @param {Object} settings settings object.
+  * @param {Array} records array of reccords.
   * @returns {Object} promise of retriveRowsAndColumnsFromUrl of MiQDataTableService.
   */
-  ReportDataController.prototype.getData = function(modelName, activeTree, currId, isExplorer, settings) {
-    return this.MiQDataTableService.retrieveRowsAndColumnsFromUrl(modelName, activeTree, currId, isExplorer, settings)
+  ReportDataController.prototype.getData = function(modelName, activeTree, currId, isExplorer, settings, records) {
+    return this.MiQDataTableService.retrieveRowsAndColumnsFromUrl(modelName, activeTree, currId, isExplorer, settings, records)
       .then(function(gtlData) {
         this.gtlData = gtlData;
         this.perPage.text = gtlData.settings.perpage;
