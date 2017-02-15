@@ -298,6 +298,9 @@ module QuadiconHelper
     # Fix this with methods in these classes (if necessary)
     if item.class.respond_to?(:db_name)
       item.class.db_name
+    # FIXME: quadicon_model_name() and url_for_record() need to be unified, since both do basically the same thing
+    elsif item.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook)
+      'ansible_playbook'
     else
       item.class.base_model.name
     end
