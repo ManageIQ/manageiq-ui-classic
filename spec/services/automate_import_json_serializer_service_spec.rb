@@ -11,31 +11,31 @@ describe AutomateImportJsonSerializerService do
         {
           'text'       => 'Customer',
           'key'        => 'Customer',
-          'image'      => ActionController::Base.helpers.image_path('100/ae_domain.png'),
+          'icon'       => 'fa fa-globe',
           'selectable' => false,
           'nodes'      => [
             {
               'text'       => 'EVMApplications',
               'key'        => 'EVMApplications',
-              'image'      => ActionController::Base.helpers.image_path('100/ae_namespace.png'),
+              'icon'       => 'pficon pficon-folder-close',
               'selectable' => false,
               'nodes'      => [
                 {
                   'text'       => 'Operations',
                   'key'        => 'EVMApplications/Operations',
-                  'image'      => ActionController::Base.helpers.image_path('100/ae_namespace.png'),
+                  'icon'       => 'pficon pficon-folder-close',
                   'selectable' => false,
                   'nodes'      => [
                     {
                       'text'       => 'Profile',
                       'key'        => 'EVMApplications/Operations/Profile',
-                      'image'      => ActionController::Base.helpers.image_path('100/ae_namespace.png'),
+                      'icon'       => 'pficon pficon-folder-close',
                       'selectable' => false,
                       'nodes'      => []
                     }, {
                       'text'       => 'Profile.class',
                       'key'        => 'EVMApplications/Operations/Profile.class',
-                      'image'      => ActionController::Base.helpers.image_path('100/ae_class.png'),
+                      'icon'       => 'product product-ae_class',
                       'selectable' => false
                     }
                   ]
@@ -46,7 +46,7 @@ describe AutomateImportJsonSerializerService do
         }, {
           'text'       => 'ManageIQ',
           'key'        => 'ManageIQ',
-          'image'      => ActionController::Base.helpers.image_path('100/ae_domain.png'),
+          'icon'       => 'fa fa-globe',
           'selectable' => false,
           'nodes'      => [],
         }

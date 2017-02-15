@@ -13,7 +13,7 @@ class AutomateImportJsonSerializerService
       {
         :text       => File.dirname(domain),
         :key        => File.dirname(domain),
-        :image      => ActionController::Base.helpers.image_path('100/ae_domain.png'),
+        :icon       => 'fa fa-globe',
         :nodes      => children(ae_import, File.dirname(domain)),
         :selectable => false
       }
@@ -34,7 +34,7 @@ class AutomateImportJsonSerializerService
       {
         :text       => namespace_name.split("/").last,
         :key        => namespace_name.split("/")[1..-1].join("/"),
-        :image      => ActionController::Base.helpers.image_path('100/ae_namespace.png'),
+        :icon       => 'pficon pficon-folder-close',
         :nodes      => children(ae_import, namespace_name),
         :selectable => false
       }
@@ -47,7 +47,7 @@ class AutomateImportJsonSerializerService
       {
         :text       => class_name.split("/").last,
         :key        => class_name.split("/")[1..-1].join("/"),
-        :image      => ActionController::Base.helpers.image_path('100/ae_class.png'),
+        :icon       => 'product product-ae_class',
         :selectable => false
       }
     end
