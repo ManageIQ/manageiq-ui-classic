@@ -321,8 +321,8 @@ class ApplicationController < ActionController::Base
     @title    = @report.title
 
     @zgraph = case @ght_type
-              when 'tabular'         then nil
-              when 'graph', 'hybrid' then true
+              when 'tabular' then nil
+              when 'hybrid'  then true
               end
 
     render controller_name == 'report' ? 'show' : 'shared/show_report'
