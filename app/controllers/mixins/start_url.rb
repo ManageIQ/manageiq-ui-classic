@@ -2,11 +2,6 @@ module StartUrl
   extend ActiveSupport::Concern
 
   STORAGE_START_PAGES = %w(storage_manager_show_list).to_set.freeze
-  CONTAINERS_START_PAGES = %w(ems_container_show_list
-                              container_node_show_list
-                              container_group_show_list
-                              container_service_show_list
-                              container_view).to_set.freeze
 
   included do
     helper_method :start_page_options
@@ -41,7 +36,6 @@ module StartUrl
 
   def start_page_allowed?(start_page)
     return false if STORAGE_START_PAGES.include?(start_page)
-    return false if CONTAINERS_START_PAGES.include?(start_page) && !::Settings.product.containers
     role_allows?(:feature => start_page, :any => true)
   end
 end
