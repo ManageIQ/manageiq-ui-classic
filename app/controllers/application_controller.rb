@@ -284,11 +284,12 @@ class ApplicationController < ActionController::Base
 
     if params[:active_tree]
       node_info = get_node_info(x_node, false)
-      options.merge!(node_info) unless node_info.nil?
+      options.merge!(node_info) unless !node_info.is_a?(Hash)
     end
 
     options[:parent] = identify_record(params[:model_id]) if params[:model_id] && options[:parent].nil?
     options[:parent] = options[:parent] || @parent
+    options[:selected_ids] = params[:records]
     options
   end
   private :process_params_options
@@ -1599,6 +1600,7 @@ class ApplicationController < ActionController::Base
       object_ids = @edit[:object_ids] unless @edit[:object_ids].nil?
       object_ids = @edit[:pol_items] unless @edit[:pol_items].nil?
     end
+    object_ids   = options[:selected_ids]
     db           = db.to_s
     dbname       = options[:dbname] || db.gsub('::', '_').downcase # Get db name as text
     db_sym       = (options[:gtl_dbname] || dbname).to_sym # Get db name as symbol

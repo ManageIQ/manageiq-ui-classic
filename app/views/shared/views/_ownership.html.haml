@@ -41,11 +41,6 @@
   %hr
   %h3
     = _('Affected Items')
-  - if @ownershipitems
-    - @embedded = true
-    - @quadicon_no_url = true
-    - @gtl_type = settings(:views, :tagging)
-    = render :partial => "layouts/gtl"
 
     %div_for_paging{'ng-controller'                  => "pagingDivButtonGroupController",
                   'paging_div_buttons_state_enabled' => true,
@@ -54,6 +49,11 @@
   - unless @explorer
     = render :partial => "layouts/angular/x_edit_buttons_angular"
 
+- if @ownershipitems
+  - @embedded = true
+  - @quadicon_no_url = true
+  - @gtl_type = settings(:views, :tagging)
+  = render :partial => "layouts/gtl"
 :javascript
   ManageIQ.angular.app.value('ownershipFormId', '#{"ownership"}');
   ManageIQ.angular.app.value('objectIds', #{ @ownershipitems.collect(&:id) });
