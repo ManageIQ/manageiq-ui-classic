@@ -47,5 +47,42 @@ describe MiqPolicyController do
         expect(assigns(:alert).id).to eq(@miq_alert.id)
       end
     end
+
+    context 'test click on toolbar button' do
+      before do
+        EvmSpecHelper.local_miq_server
+        login_as FactoryGirl.create(:user, :features => %w(alert_edit alert_profile_assign alert_delete alert_copy alert_profile_new))
+        #login_as FactoryGirl.create(:user, :features => "alert_admin")
+        @miq_alert = FactoryGirl.create(:miq_alert)
+        allow(controller).to receive(:x_active_tree).and_return(:alert_tree)
+        controller.instance_variable_set(:@sb,
+                                         :trees       => {:alert_tree => {:active_node => "al-#{@miq_alert.id}"}},
+                                         :active_tree => :alert_tree,
+                                        )
+      end
+
+      let(:alert) { FactoryGirl.create(:miq_alert, :read_only => false) }
+
+      it "alert edit" do
+        post :x_button, :pressed => 'alert_edit', :id => alert.id
+        expect(response.status).to eq(200)
+      end
+
+      it "alert copy" do
+        post :x_button, :pressed => 'alert_copy', :id => alert.id
+        expect(response.status).to eq(200)
+      end
+
+      it "alert new" do
+        post :x_button, :pressed => 'alert_profile_new'
+        expect(response.status).to eq(200)
+      end
+
+      it "tree select" do
+        post :tree_select, :id => "al-#{@miq_alert.id}"
+        expect(response.status).to eq(200)
+        expect(response).to render_template(:partial => 'miq_policy/_alert_details')
+      end
+    end
   end
 end
