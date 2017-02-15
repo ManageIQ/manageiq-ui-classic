@@ -6,8 +6,8 @@
     dash.tenant = '_ops';
     dash.minBucketDurationInSecondes = 20 * 60;
 
-    var NUMBER_OF_MILISEC_IN_HOUR = 60 * 60 * 1000;
-    var NUMBER_OF_MILISEC_IN_SEC = 1000;
+    var NUMBER_OF_MILLISEC_IN_HOUR = 60 * 60 * 1000;
+    var NUMBER_OF_MILLISEC_IN_SEC = 1000;
 
     // get the pathname and remove trailing / if exist
     var pathname = $window.location.pathname.replace(/\/$/, '');
@@ -108,11 +108,11 @@
       dash.metricId = metricId;
       dash.currentItem = currentItem;
       var ends = dash.timeFilter.date.valueOf(); // javascript time is in milisec
-      var diff = dash.timeFilter.time_range * dash.timeFilter.range_count * NUMBER_OF_MILISEC_IN_HOUR; // time_range is in hours
+      var diff = dash.timeFilter.time_range * dash.timeFilter.range_count * NUMBER_OF_MILLISEC_IN_HOUR; // time_range is in hours
       var starts = ends - diff;
-      var bucket_duration = parseInt(diff / NUMBER_OF_MILISEC_IN_SEC / numberOfBucketsInChart); // bucket duration is in seconds
+      var bucket_duration = parseInt(diff / NUMBER_OF_MILLISEC_IN_SEC / numberOfBucketsInChart); // bucket duration is in seconds
 
-      // make sure backet duration is not smaller then minBucketDurationInSecondes seconds
+      // make sure bucket duration is not smaller then minBucketDurationInSecondes seconds
       if (bucket_duration < dash.minBucketDurationInSecondes) {
         bucket_duration = dash.minBucketDurationInSecondes;
       }
