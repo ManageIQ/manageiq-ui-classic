@@ -1,9 +1,11 @@
 class AutomateImportJsonSerializerService
   def serialize(import_file_upload)
-    File.open("automate_temporary_zip.zip", "wb") { |file| file.write(import_file_upload.binary_blob.binary) }
-    ae_import = MiqAeImport.new("*", "zip_file" => "automate_temporary_zip.zip")
+    temp_file = Tempfile.new(['automate_temporary_zip', '.zip'])
+    temp_file.binmode
+    temp_file.write(import_file_upload.binary_blob.binary)
+    ae_import = MiqAeImport.new("*", "zip_file" => temp_file.path)
 
-    File.delete("automate_temporary_zip.zip")
+    temp_file.unlink
 
     domains = ae_import.domain_entries("*")
 
