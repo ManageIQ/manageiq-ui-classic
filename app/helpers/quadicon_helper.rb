@@ -453,7 +453,7 @@ module QuadiconHelper
         url = quadicon_show_links? ? url_for_record(item) : ""
 
         link_to(url, :title => h(item.name)) do
-          quadicon_reflection_img(:path => "clearpix.gif", :size => size)
+          quadicon_reflection_img(:path => "layout/clearpix.gif", :size => size)
         end
       end
     end
@@ -579,7 +579,7 @@ module QuadiconHelper
       img_opts = {
         :size  => size,
         :title => h(name),
-        :path  => "clearpix.gif"
+        :path  => "layout/clearpix.gif"
       }
 
       link_opts = {}
