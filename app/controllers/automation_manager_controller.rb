@@ -217,7 +217,7 @@ class AutomationManagerController < ApplicationController
     tree
   end
 
-  def get_node_info(treenodeid)
+  def get_node_info(treenodeid, _show_list = true)
     @sb[:action] = nil
     @nodetype, id = parse_nodetype_and_id(valid_active_node(treenodeid))
 
@@ -250,6 +250,7 @@ class AutomationManagerController < ApplicationController
     else
       x_history_add_item(:id => treenodeid, :text => @right_cell_text) # Add to history pulldown array
     end
+    {:view => @view, :pages => @pages}
   end
 
   def provider_node(id, model)

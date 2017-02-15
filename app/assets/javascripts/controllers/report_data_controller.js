@@ -150,8 +150,14 @@
     event.preventDefault();
     var prefix;
     if (this.initObject.isExplorer) {
-      prefix = '/' + ManageIQ.controller;
-      $.post(prefix + '/x_show/' + item.id)
+      var url;
+      if (this.initObject.showUrl.indexOf('?id=') !== -1 ){
+        url = this.initObject.showUrl + '_-' + item.id;
+      } else {
+        prefix = '/' + ManageIQ.controller;
+        url = prefix + '/x_show/' + item.id
+      }
+      $.post(url)
         .always(function() {
           this.setExtraClasses();
         }.bind(this));
@@ -221,6 +227,7 @@
                         this.settings,
                         initObject.records)
       .then(function(data) {
+        this.settings.hideSelect = initObject.hideSelect;
         var start = (this.settings.current - 1) * this.settings.perpage;
         this.setPaging(start, this.settings.perpage);
         var sortId = _.findIndex(this.gtlData.cols, {col_idx: parseInt(this.settings.sort_col, 10)});
