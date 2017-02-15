@@ -292,6 +292,8 @@ module ApplicationHelper
           return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w(ConfiguredSystem).include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
           return url_for_only_path(:action => action, :id => nil) + "/"
+        elsif %w(MiqWidget).include?(view.db) && request.parameters[:controller] == "report"
+          return "/report/tree_select/?id=" + request.parameters[:id]
         else
           return url_for_only_path(:action => action) + "/" # In explorer, don't jump to other controllers
         end
@@ -1581,40 +1583,42 @@ module ApplicationHelper
     end
   end
 
-  def listicon_glyphicon_tag(db, row)
-    glyphicon2 = nil
+  def listicon_glyphicon(db, row)
     case db
     when "MiqSchedule"
-      glyphicon = "fa fa-clock-o"
+      "fa fa-clock-o"
     when "MiqReportResult"
       case row['status'].downcase
       when "error"
-        glyphicon = "pficon pficon-warning-triangle-o"
+        "pficon pficon-warning-triangle-o"
       when "finished"
-        glyphicon = "pficon pficon-ok"
+        "pficon pficon-ok"
       when "running"
-        glyphicon = "pficon pficon-running"
+        "pficon pficon-running"
       when "queued"
-        glyphicon = "fa fa-pause"
+        "fa fa-pause"
       else
-        glyphicon = "fa fa-arrow-right"
+        "fa fa-arrow-right"
       end
     when "MiqUserRole"
-      glyphicon = "product product-role"
+      "product product-role"
     when "MiqWidget"
-      case row['content_type'].downcase
+      glyphicon = case row['content_type'].downcase
       when "chart"
-        glyphicon = "fa fa-pie-chart"
+        "fa fa-pie-chart"
       when "menu"
-        glyphicon = "fa fa-share-square-o"
+        "fa fa-share-square-o"
       when "report"
-        glyphicon = "fa fa-file-text-o"
+        "fa fa-file-text-o"
       when "rss"
-        glyphicon = "fa fa-rss"
+        "fa fa-rss"
       end
-      # for second icon to show status in widget list
-      glyphicon2 = listicon_glyphicon_tag_for_widget(row)
+      [glyphicon, listicon_glyphicon_tag_for_widget(row)]
     end
+  end
+
+  def listicon_glyphicon_tag(db, row)
+    glyphicon, glyphicon2 = listicon_glyphicon(db, row)
 
     content_tag(:i, nil, :class => glyphicon) do
       content_tag(:i, nil, :class => glyphicon2) if glyphicon2

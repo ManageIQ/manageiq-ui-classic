@@ -985,10 +985,11 @@ class ApplicationController < ActionController::Base
         item = listicon_item(view, row['id'])
         image = listicon_image(item, view)
         new_row[:img_url] = ActionController::Base.helpers.image_path(listicon_image(item, view).to_s)
-        icon = listicon_icon(item) || listicon_glyphicon_tag_for_widget(row) if LIST_ICON_FOR.include?(view.db)
+        icon, icon2 = listicon_icon(item) || listicon_glyphicon(view.db, row)
         new_row[:cells] << {:title => _('View this item'),
                             :image => image,
-                            :icon  => icon}
+                            :icon  => icon,
+                            :icon2 => icon2}
 
       end
 
@@ -1600,7 +1601,7 @@ class ApplicationController < ActionController::Base
       object_ids = @edit[:object_ids] unless @edit[:object_ids].nil?
       object_ids = @edit[:pol_items] unless @edit[:pol_items].nil?
     end
-    object_ids   = options[:selected_ids]
+    object_ids   = options[:selected_ids] unless options[:selected_ids]
     db           = db.to_s
     dbname       = options[:dbname] || db.gsub('::', '_').downcase # Get db name as text
     db_sym       = (options[:gtl_dbname] || dbname).to_sym # Get db name as symbol

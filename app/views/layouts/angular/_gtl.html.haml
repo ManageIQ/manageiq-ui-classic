@@ -2,6 +2,10 @@
 - current_model = params[:db].nil? ? current_model.to_s.tableize : h(j_str(params[:db]))
 - current_model = current_model && (@display.nil? || @display == "main") ? current_model : @display
 - gtl_type_string = j_str(@gtl_type)
+- selected_records = @edit[:object_ids] unless @edit.nil? || @edit[:object_ids].nil?
+- selected_records = @edit[:pol_items] unless @edit.nil? || @edit[:pol_items].nil?
+- selected_records = params[:rec_ids] unless params.nil? || params[:rec_ids].nil?
+- selected_records = selected_records.map(&:id) if !selected_records.nil? && !selected_records.first.kind_of?(Integer)
 #miq-gtl-view{"ng-controller" => "reportDataController as dataCtrl"}
   .msg-info{"ng-show" => "dataCtrl.showMessage && dataCtrl.showMessage !== ''"}
     = render(:partial => "layouts/info_msg",
@@ -41,7 +45,8 @@
       sortColIdx: '#{@sortcol}',
       sortDir: '#{@sortdir}',
       isExplorer: '#{@explorer}' === 'true' ? true : false,
-      records: #{!params.nil? && !params[:rec_ids].nil? ? params[:rec_ids] : "\'\'"},
+      records: #{!selected_records.nil? ? selected_records : "\'\'"},
+      hideSelect: #{selected_records.kind_of?(Array)},
       showUrl: '#{view_to_url(@view, @parent) if @view.present? && @view.db.present?}'
     }
   }});

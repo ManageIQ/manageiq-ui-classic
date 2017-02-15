@@ -487,6 +487,7 @@ class OpsController < ApplicationController
                          when :rbac_tree        then _("Access Control %{text}") % {:text => region_text}
                          when :vmdb_tree        then _("Database []")
                          end
+    {:view => @view, :pages => @pages}
   end
 
   def open_parent_nodes
