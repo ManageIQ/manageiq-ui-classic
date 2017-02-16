@@ -17,15 +17,13 @@
           - if settings(:quadicons, :vm)
             .flobj
               %img{:src => image_path("layout/base.png")}
-            - if @drift_obj.template?
-              - if @drift_obj.host
-                %div{:class => "flobj b72"}
+            %div{:class => "flobj b72"}
+              - if @drift_obj.template?
+                - if @drift_obj.host
                   %img{:src => image_path('100/template.png')}
-              - else
-                %div{:class => "flobj b72"}
+                - else
                   %img{:src => image_path('100/template-no-host.png')}
-            - else
-              %div{:class => "flobj b72"}
+              - else
                 %img{:src => image_path("svg/currentstate-#{h(@drift_obj.current_state.downcase)}.svg")}
             %div{:class => "flobj c72"}
               %img{:src => image_path("svg/vendor-#{h(@drift_obj.vendor.downcase)}.svg")}
