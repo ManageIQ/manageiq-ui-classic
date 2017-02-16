@@ -410,15 +410,6 @@ module ApplicationHelper
     (dbs.include?(".") ? "#{dbs.split(".").last}.#{fld}" : fld)
   end
 
-  # Get the dynamic list of tags for the expression atom editor
-  def exp_available_tags(model, use_mytags = false)
-    # Generate tag list unless already generated during this transaction
-    @exp_available_tags ||= MiqExpression.model_details(model, :typ             => "tag",
-                                                               :include_model   => true,
-                                                               :include_my_tags => use_mytags,
-                                                               :userid          => session[:userid])
-  end
-
   # Derive the browser title text based on the layout value
   def title_from_layout(layout)
     # TODO: leave I18n until we have productization capability in gettext
