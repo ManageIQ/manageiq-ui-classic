@@ -289,7 +289,7 @@ module MiqPolicyController::MiqActions
     @edit[:cats] = MiqAction.inheritable_cats.sort_by { |c| c.description.downcase }.collect { |c| [c.name, c.description] }
 
     @edit[:ansible_playbooks] = ServiceTemplateAnsiblePlaybook.order(:name).pluck(:name, :id) || {}
-    action_build_playbook_variables if @action.action_type == "run_an_ansible_playbook"
+    action_build_playbook_variables if @action.action_type == "run_ansible_playbook"
 
     @edit[:current] = copy_hash(@edit[:new])
     get_tags_tree
@@ -387,7 +387,7 @@ module MiqPolicyController::MiqActions
       end
     end
 
-    validate_playbook_options(options) if edit[:action_type] == "run_an_ansible_playbook"
+    validate_playbook_options(options) if edit[:action_type] == "run_ansible_playbook"
 
     if edit[:action_type] == "tag" && options[:tags].blank?
       add_flash(_("At least one Tag must be selected"), :error)

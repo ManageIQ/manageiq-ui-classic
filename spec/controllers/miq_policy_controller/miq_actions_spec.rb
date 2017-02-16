@@ -65,7 +65,7 @@ describe MiqPolicyController do
         controller.instance_variable_set(:@_params, :id => @action.id)
         controller.action_edit
         edit = controller.instance_variable_get(:@edit)
-        edit[:new][:action_type] = "run_an_ansible_playbook"
+        edit[:new][:action_type] = "run_ansible_playbook"
         edit[:new][:inventory_type] = 'manual'
         edit[:new][:options][:hosts] = 'host1, host2'
         edit[:new][:options][:service_template_id] = '01'
@@ -82,7 +82,7 @@ describe MiqPolicyController do
         controller.instance_variable_set(:@_params, :id => @action.id)
         controller.action_edit
         edit = controller.instance_variable_get(:@edit)
-        edit[:new][:action_type] = "run_an_ansible_playbook"
+        edit[:new][:action_type] = "run_ansible_playbook"
         edit[:new][:inventory_type] = 'event_target'
         edit[:new][:options][:use_event_target] = true
         edit[:new][:options][:use_event_localhost] = false
@@ -98,7 +98,7 @@ describe MiqPolicyController do
         controller.instance_variable_set(:@_params, :id => @action.id)
         controller.action_edit
         edit = controller.instance_variable_get(:@edit)
-        edit[:new][:action_type] = "run_an_ansible_playbook"
+        edit[:new][:action_type] = "run_ansible_playbook"
         edit[:new][:inventory_type] = 'manual'
         edit[:new][:options][:service_template_id] = '01'
         session[:edit] = assigns(:edit)

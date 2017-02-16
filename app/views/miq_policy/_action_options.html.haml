@@ -320,7 +320,7 @@
                   %td{:align => "left", :valign => "top", :nowrap => 1}
                     = check_box_tag("cat_#{cat.first}", "1", checked, "data-miq_observe_checkbox" => observe)
                     = h(cat.last)
-  - when "run_an_ansible_playbook"
+  - when "run_ansible_playbook"
     %h3
       = _("Run an Ansible Playbook")
     .form-horizontal
