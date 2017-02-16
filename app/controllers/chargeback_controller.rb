@@ -508,6 +508,7 @@ class ChargebackController < ApplicationController
 
     rate_details.each_with_index do |detail, detail_index|
       temp = detail.slice(*ChargebackRateDetail::FORM_ATTRIBUTES)
+      temp[:group] = detail.chargeable_field.group
       temp[:per_time] ||= "hourly"
 
       temp[:currency] = detail.detail_currency.id
