@@ -1,8 +1,6 @@
 #main_div
   - if @showtype == "performance"
-    = render :partial => "layouts/performance"
-    :javascript
-      ManageIQ.afterOnload = "miqAsyncAjax('#{ url_for(:action => @ajax_action, :id => @record.id)}');"
+    = render :partial => "layouts/performance_async"
   - else
     - arr = %w(floating_ips network_ports cloud_tenants cloud_networks cloud_subnets network_routers instances images)
     - arr.concat(%w(security_groups cloud_object_store_containers cloud_volumes cloud_volume_snapshots))
@@ -19,8 +17,6 @@
     - elsif @showtype == "item"
       = render :partial => "layouts/item"
     - elsif @showtype == "timeline"
-      = render :partial => "layouts/tl_show"
-      :javascript
-        ManageIQ.afterOnload = "miqAsyncAjax('#{ url_for(:action => @ajax_action, :id => @record.id)}');"
+      = render :partial => "layouts/tl_show_async"
     - elsif @showtype == 'main'
       = render :partial => "layouts/textual_groups_generic"

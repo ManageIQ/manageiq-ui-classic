@@ -16,9 +16,7 @@
     - when "compare", "drift_history", "drift", "item"
       = render :partial => "layouts/#{@showtype}"
     - when "performance"
-      = render :partial => "layouts/performance"
-      :javascript
-        ManageIQ.afterOnload = "miqAsyncAjax('#{url_for(:action => @ajax_action, :id => @record)}');"
+      = render :partial => "layouts/performance_async"
     - when "performance_summary"
       = render :partial => "layouts/performance_summary"
     - when "timeline"
