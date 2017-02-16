@@ -225,6 +225,7 @@ module Menu
 
       def ansible_menu_section
         Menu::Section.new(:ansible, N_("Ansible"), 'fa fa-recycle', [
+          Menu::Item.new('ansible_credentials', N_('Credentials'), 'embedded_automation_manager_credentials', {:feature => 'embedded_automation_manager_credentials'}, '/ansible_credential'),
           Menu::Item.new('ansible_playbooks', N_('Playbooks'), 'embedded_configuration_script_payload', {:feature => 'embedded_configuration_script_payload'}, '/ansible_playbook'),
           Menu::Item.new('ansible_repositories', N_('Repositories'), 'embedded_configuration_script_source', {:feature => 'embedded_configuration_script_source'}, '/ansible_repository'),
         ])
