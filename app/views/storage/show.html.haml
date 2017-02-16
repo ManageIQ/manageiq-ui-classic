@@ -7,14 +7,11 @@
     - case @showtype
     - when "details"
       = render :partial => "layouts/x_gtl", :locals => {:action_url => @lastaction}
-    - when "compare", "item"
-      = raise 'compare partial called through "show"' if @showtype == 'compare'
-      = render :partial => "layouts/#{@showtype}"
+    - when "item"
+      = render :partial => "layouts/item"
     - when "performance"
       = render :partial => "layouts/performance_async"
     - when "dialog_provision"
       = render :partial => "shared/dialogs/dialog_provision"
     - when "main"
       = render :partial => "layouts/textual_groups_generic"
-    - else
-      = render :partial => @showtype

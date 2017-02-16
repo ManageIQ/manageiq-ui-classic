@@ -9,14 +9,16 @@
     - when "details"
       = render(:partial => "layouts/gtl", :locals => {:action_url => @lastaction})
     - when "compare", "drift"
-      = render(:partial => "layouts/compare")
-    - when "drift_history", "item"
-      = render(:partial => "layouts/#{@showtype}")
+      = render :partial => "layouts/compare"
+    - when "drift_history"
+      = render :partial => "layouts/drift_history"
+    - when "item"
+      = render :partial => "layouts/item"
     - when "timeline"
       = render(:partial => "layouts/tl_show_async")
     - when "dialog_provision"
       = render(:partial => "shared/dialogs/dialog_provision")
     - when "main"
       = render :partial => "layouts/textual_groups_generic"
-    - else
-      = render(:partial => @showtype)
+    - when "config"
+      = render :partial => "config"

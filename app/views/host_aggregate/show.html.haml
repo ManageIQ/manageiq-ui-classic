@@ -5,8 +5,6 @@
     - if %w(instances hosts).include?(@display)
       = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@host_aggregate.id}"}
     - elsif @showtype == "item"
-      = render :partial => "layouts/#{@showtype}"
+      = render :partial => "layouts/item"
     - elsif @showtype == "main"
       = render :partial => "layouts/textual_groups_generic"
-    - else
-      = render :partial => @showtype

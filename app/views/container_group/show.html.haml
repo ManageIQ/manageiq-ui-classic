@@ -9,6 +9,4 @@
     - when "performance"
         = render :partial => "layouts/performance_async"
     - when "compliance_history"
-        = render :partial => "shared/views/#{@showtype}"
-    - else
-        = render :partial => @showtype
+        = render :partial => "shared/views/compliance_history"
