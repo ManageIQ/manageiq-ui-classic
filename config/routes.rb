@@ -1242,6 +1242,7 @@ Rails.application.routes.draw do
       ) + compare_get,
 
       :post   =>  %w(
+        button
         show_list
         create
         update
