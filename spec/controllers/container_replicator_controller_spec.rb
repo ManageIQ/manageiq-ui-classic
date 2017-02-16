@@ -21,7 +21,7 @@ describe ContainerReplicatorController do
     get :show, :params => { :id => container_replicator.id }
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
-    expect(assigns(:breadcrumbs)).to eq([{:name => "Container Replicators",
+    expect(assigns(:breadcrumbs)).to eq([{:name => "Replicators",
                                           :url  => "/container_replicator/show_list?page=&refresh=y"},
                                          {:name => "Test Replicator (Summary)",
                                           :url  => "/container_replicator/show/#{container_replicator.id}"}])

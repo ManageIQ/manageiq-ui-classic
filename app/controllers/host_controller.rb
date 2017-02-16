@@ -5,6 +5,7 @@ class HostController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericListMixin
+  include Mixins::MoreShowActions
 
   def show_association(action, display_name, listicon, method, klass, association = nil, conditions = nil)
     set_config(identify_record(params[:id]))
@@ -59,36 +60,13 @@ class HostController < ApplicationController
       self.x_active_tree = :network_tree
 
     when "performance"
-      @showtype = "performance"
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @host.name},
-                      :url  => "/host/show/#{@host.id}?display=#{@display}&refresh=n")
-      perf_gen_init_options               # Intialize perf chart options, charts will be generated async
+      show_performance
 
     when "timeline"
-      @showtype = "timeline"
-      session[:tl_record_id] = params[:id] if params[:id]
-      @record = find_by_id_filtered(Host, session[:tl_record_id])
-      @timeline = @timeline_filter = true
-      @lastaction = "show_timeline"
-      tl_build_timeline                       # Create the timeline report
-      drop_breadcrumb(:name => _("Timelines"), :url => "/host/show/#{@record.id}?refresh=n&display=timeline")
+      show_timeline
 
     when "compliance_history"
-      count = params[:count] ? params[:count].to_i : 10
-      @ch_tree = TreeBuilderComplianceHistory.new(:ch_tree, :ch, @sb, true, @host)
-      session[:ch_tree] = @ch_tree.tree_nodes
-
-      session[:tree_name] = "ch_tree"
-      session[:squash_open] = (count == 1)
-      drop_breadcrumb({:name => @host.name, :url => "/host/show/#{@host.id}"}, true)
-      if count == 1
-        drop_breadcrumb(:name => _("%{name} (Latest Compliance Check)") % {:name => @host.name},
-                        :url  => "/host/show/#{@host.id}?display=#{@display}")
-      else
-        drop_breadcrumb(:name => _("%{name} (Compliance History - Last %{number} Checks)") % {:name => @host.name,:number => count},
-                        :url  => "/host/show/#{@host.id}?display=#{@display}")
-      end
-      @showtype = @display
+      show_compliance_history
 
     when "storage_adapters"
       drop_breadcrumb(:name => _("%{name} (Storage Adapters)") % {:name => @host.name},
