@@ -369,32 +369,7 @@ class ApplicationHelper::ToolbarBuilder
     when :settings_tree
       return false
     when :diagnostics_tree
-      case @sb[:active_tab]
-      when "diagnostics_audit_log"
-        return !["fetch_audit_log", "refresh_audit_log"].include?(id)
-      when "diagnostics_collect_logs"
-        return !%w(collect_current_logs collect_logs log_depot_edit
-                  zone_collect_current_logs zone_collect_logs
-                  zone_log_depot_edit).include?(id)
-      when "diagnostics_evm_log"
-        return !["fetch_log", "refresh_log"].include?(id)
-      when "diagnostics_production_log"
-        return !["fetch_production_log", "refresh_production_log"].include?(id)
-      when "diagnostics_roles_servers", "diagnostics_servers_roles"
-        case id
-        when "reload_server_tree"
-          return false
-        when "zone_collect_current_logs", "zone_collect_logs", "zone_log_depot_edit"
-          return true
-        end
-        return false
-      when "diagnostics_summary"
-        return !["refresh_server_summary", "restart_server"].include?(id)
-      when "diagnostics_workers"
-        return !%w(restart_workers refresh_workers).include?(id)
-      else
-        return true
-      end
+      return false
     when :rbac_tree
       return true unless role_allows?(:feature => rbac_common_feature_for_buttons(id))
       return true if %w(rbac_project_add rbac_tenant_add).include?(id) && @record.project?

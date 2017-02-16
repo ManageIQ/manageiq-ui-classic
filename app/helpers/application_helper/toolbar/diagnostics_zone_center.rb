@@ -109,14 +109,14 @@ class ApplicationHelper::Toolbar::DiagnosticsZoneCenter < ApplicationHelper::Too
           'fa fa-filter fa-lg',
           N_('Collect the current logs from the selected Zone'),
           N_('Collect current logs'),
-          :klass => ApplicationHelper::Button::CollectLogs
+          :klass => ApplicationHelper::Button::ZoneLogDepotEdit
         ),
         button(
           :zone_collect_logs,
           'fa fa-filter fa-lg',
           N_('Collect all logs from the selected Zone'),
           N_('Collect all logs'),
-          :klass => ApplicationHelper::Button::CollectLogs
+          :klass => ApplicationHelper::Button::ZoneLogDepotEdit
         ),
       ]
     ),
@@ -124,6 +124,7 @@ class ApplicationHelper::Toolbar::DiagnosticsZoneCenter < ApplicationHelper::Too
       :zone_log_depot_edit,
       'pficon pficon-edit fa-lg',
       N_('Edit the Log Depot settings for the selected Zone'),
-      N_('Edit')),
+      N_('Edit'),
+      :klass => ApplicationHelper::Button::ZoneLogDepotEdit),
   ])
 end
