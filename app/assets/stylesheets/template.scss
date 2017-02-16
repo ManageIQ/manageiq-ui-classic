@@ -54,6 +54,18 @@ img.tiny { margin: 0; padding: 0;width:20px;height:20px; border: 0; vertical-ali
 .quadicon { position:relative;float:left;padding: 0 1px 1px 0;width: 72px; height: 80px;color: #e3e4e4;text-transform: none;}
 .quadicon:hover{ padding: 1px 0 0 1px;}
 
+// adjust power state images for use in quad icon //
+.quadicon img[src*="currentstate"] {
+  clip-path: inset(0 0 2px 0 round 0 12px 0 0);
+  -webkit-clip-path: inset(0 0 2px 0 round 0 12px 0 0);
+}
+
+.quadicon img[src*="archived"], .quadicon img[src*="template"], .quadicon img[src*="disconnected"], .quadicon img[src*="orphaned"], .quadicon img[src*="never"], img[src*="retired"], .quadicon img[src*="unknown"] {
+  width: 24px; 
+  height: 24px;
+  margin-left: 4px;
+}
+
 .flobj { position: absolute;z-index: auto;width: 72px;}
 .flobj p { margin: 5px 0 0 0;padding: 0;color: #e3e4e4;vertical-align: middle;text-align:center;text-transform: none;text-shadow: 0 0 3px #000;font: normal 16px OpenSansSemibold,Arial,Helvetica,sans-serif !important;}
 .a72 { padding: 3px  0 0 5px; width: 28px; height: 28px;font-size: 1.3em;line-height: 1.8em;}
