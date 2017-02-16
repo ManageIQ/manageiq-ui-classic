@@ -2,7 +2,7 @@ module Menu
   class DefaultMenu
     class << self
       def compute_menu_section
-        Menu::Section.new(:compute, N_("Compute"), 'pficon pficon-cpu fa-2x', [
+        Menu::Section.new(:compute, N_("Compute"), 'pficon pficon-cpu', [
           clouds_menu_section,
           infrastructure_menu_section,
           container_menu_section
@@ -10,13 +10,13 @@ module Menu
       end
 
       def configuration_menu_section
-        Menu::Section.new(:conf, N_("Configuration"), 'fa fa-cog  fa-2x', [
+        Menu::Section.new(:conf, N_("Configuration"), 'fa fa-cog', [
           Menu::Item.new('provider_foreman',  N_('Management'), 'provider_foreman_explorer', {:feature => 'provider_foreman_explorer', :any => true}, '/provider_foreman/explorer'),
         ])
       end
 
       def cloud_inteligence_menu_section
-        Menu::Section.new(:vi, N_("Cloud Intel"), 'fa fa-dashboard fa-2x', [
+        Menu::Section.new(:vi, N_("Cloud Intel"), 'fa fa-dashboard', [
           Menu::Item.new('dashboard',  N_('Dashboard'),  'dashboard',  {:feature => 'dashboard_view'},           '/dashboard/show'),
           Menu::Item.new('report',     N_('Reports'),    'miq_report', {:feature => 'miq_report', :any => true}, '/report/explorer'),
           # Menu::Item.new('usage',    N_('Usage'),      'usage',      {:feature => 'usage'},                    '/report/usage/'), #  / Hiding usage for now - release 5.2
@@ -28,13 +28,13 @@ module Menu
       end
 
       def consumption_menu_section
-        Menu::Section.new(:cons, N_("Consumption"), 'fa fa-plus fa-2x', [
+        Menu::Section.new(:cons, N_("Consumption"), 'fa fa-plus', [
           Menu::Item.new('consumption', N_('Dashboard'), 'consumption', {:feature => 'consumption', :any => true}, '/consumption/show')
         ])
       end
 
       def services_menu_section
-        Menu::Section.new(:svc, N_("Services"), 'pficon pficon-service fa-2x', [
+        Menu::Section.new(:svc, N_("Services"), 'pficon pficon-service', [
           Menu::Item.new('services',       N_('My Services'), 'service',     {:feature => 'service', :any => true},     '/service/explorer'),
           Menu::Item.new('catalogs',       N_('Catalogs'),    'catalog',     {:feature => 'catalog', :any => true},     '/catalog/explorer'),
           Menu::Item.new('vm_or_template', N_('Workloads'),   'vm_explorer', {:feature => 'vm_explorer', :any => true}, '/vm_or_template/explorer'),
@@ -43,7 +43,7 @@ module Menu
       end
 
       def clouds_menu_section
-        Menu::Section.new(:clo, N_("Clouds"), 'fa fa-plus fa-2x', [
+        Menu::Section.new(:clo, N_("Clouds"), 'fa fa-plus', [
           Menu::Item.new('ems_cloud',           N_('Providers'),          'ems_cloud',           {:feature => 'ems_cloud_show_list'},             '/ems_cloud'),
           Menu::Item.new('availability_zone',   N_('Availability Zones'), 'availability_zone',   {:feature => 'availability_zone_show_list'},     '/availability_zone'),
           Menu::Item.new('host_aggregate',      N_('Host Aggregates'),    'host_aggregate',      {:feature => 'host_aggregate_show_list'},        '/host_aggregate'),
@@ -60,7 +60,7 @@ module Menu
         hosts_name    = hybrid_name(Host,       N_("Hosts"),    N_("Nodes"),            N_("Hosts / Nodes"))
         clusters_name = hybrid_name(EmsCluster, N_("Clusters"), N_("Deployment Roles"), N_("Clusters / Deployment Roles"))
 
-        Menu::Section.new(:inf, N_("Infrastructure"), 'fa fa-plus fa-2x', [
+        Menu::Section.new(:inf, N_("Infrastructure"), 'fa fa-plus', [
           Menu::Item.new('ems_infra',        N_('Providers'),        'ems_infra',                  {:feature => 'ems_infra_show_list'},             '/ems_infra'),
           Menu::Item.new('ems_cluster',      clusters_name,          'ems_cluster',                {:feature => 'ems_cluster_show_list'},           '/ems_cluster'),
           Menu::Item.new('host',             hosts_name,             'host',                       {:feature => 'host_show_list'},                  '/host'),
@@ -86,7 +86,7 @@ module Menu
       private :hybrid_name
 
       def container_menu_section
-        Menu::Section.new(:cnt, N_("Containers"), 'fa fa-plus fa-2x', [
+        Menu::Section.new(:cnt, N_("Containers"), 'fa fa-plus', [
           Menu::Item.new('container_dashboard',      N_('Overview'),            'container_dashboard',      {:feature => 'container_dashboard'},                       '/container_dashboard'),
           Menu::Item.new('ems_container',            N_('Providers'),           'ems_container',            {:feature => 'ems_container_show_list'},                   '/ems_container'),
           Menu::Item.new('container_project',        N_('Projects'),            'container_project',        {:feature => 'container_project_show_list'},               '/container_project'),
@@ -107,7 +107,7 @@ module Menu
 
       def datawarehouse_menu_section
         if ::Settings.product.datawarehouse_manager
-          Menu::Section.new(:dwh, N_("Datawarehouse"), 'fa product-datawarehouse fa-2x', [
+          Menu::Section.new(:dwh, N_("Datawarehouse"), 'fa product-datawarehouse', [
             Menu::Item.new('ems_datawarehouse', N_('Providers'), 'ems_datawarehouse',
                            {:feature => 'ems_datawarehouse_show_list'}, '/ems_datawarehouse')
             ])
@@ -115,7 +115,7 @@ module Menu
       end
 
       def middleware_menu_section
-        Menu::Section.new(:mdl, N_("Middleware"), 'pficon pficon-middleware fa-2x', [
+        Menu::Section.new(:mdl, N_("Middleware"), 'pficon pficon-middleware', [
           Menu::Item.new('ems_middleware',        N_('Providers'),   'ems_middleware',        {:feature => 'ems_middleware_show_list'},          '/ems_middleware'),
           Menu::Item.new('middleware_domain',     N_('Domains'),     'middleware_domain',     {:feature => 'middleware_domain_show_list'},       '/middleware_domain'),
           Menu::Item.new('middleware_server',     N_('Servers'),     'middleware_server',     {:feature => 'middleware_server_show_list'},       '/middleware_server'),
@@ -128,7 +128,7 @@ module Menu
       end
 
       def network_menu_section
-        Menu::Section.new(:net, N_("Networks"), 'pficon pficon-network fa-2x', [
+        Menu::Section.new(:net, N_("Networks"), 'pficon pficon-network', [
           Menu::Item.new('ems_network',      N_('Providers'),       'ems_network',      {:feature => 'ems_network_show_list'},    '/ems_network'),
           Menu::Item.new('cloud_network',    N_('Networks'),        'cloud_network',    {:feature => 'cloud_network_show_list'},  '/cloud_network'),
           Menu::Item.new('cloud_subnet',     N_('Subnets'),         'cloud_subnet',     {:feature => 'cloud_subnet_show_list'},   '/cloud_subnet'),
@@ -142,14 +142,14 @@ module Menu
       end
 
       def storage_menu_section
-        Menu::Section.new(:sto, N_("Storage"), 'fa fa-database fa-2x', [
+        Menu::Section.new(:sto, N_("Storage"), 'fa fa-database', [
                             block_storage_menu_section,
                             object_storage_menu_section,
                           ])
       end
 
       def block_storage_menu_section
-        Menu::Section.new(:bst, N_("Block Storage"), 'fa fa-database fa-2x', [
+        Menu::Section.new(:bst, N_("Block Storage"), 'fa fa-database', [
                             Menu::Item.new('ems_block_storage',
                                            N_('Managers'),
                                            'ems_block_storage',
@@ -174,7 +174,7 @@ module Menu
       end
 
       def object_storage_menu_section
-        Menu::Section.new(:ost, N_("Object Storage"), 'fa fa-database fa-2x', [
+        Menu::Section.new(:ost, N_("Object Storage"), 'fa fa-database', [
                             Menu::Item.new('ems_object_storage',
                                            N_('Managers'),
                                            'ems_object_storage',
@@ -194,13 +194,13 @@ module Menu
       end
 
       def netapp_storage_menu_section
-        Menu::Section.new(:nap, N_("NetApp"), 'fa fa-plus fa-2x', [
+        Menu::Section.new(:nap, N_("NetApp"), 'fa fa-plus', [
           Menu::Item.new('storage_manager',      N_('Storage Managers'), 'storage_manager',      {:feature => 'storage_manager_show_list'},      '/storage_manager')
         ])
       end
 
       def control_menu_section
-        Menu::Section.new(:con, N_("Control"), 'fa fa-shield fa-2x', [
+        Menu::Section.new(:con, N_("Control"), 'fa fa-shield', [
           Menu::Item.new('miq_policy',        N_('Explorer'),        'control_explorer',     {:feature => 'control_explorer_view'}, '/miq_policy/explorer'),
           Menu::Item.new('miq_policy_rsop',   N_('Simulation'),      'policy_simulation',    {:feature => 'policy_simulation'},     '/miq_policy/rsop'),
           Menu::Item.new('miq_policy_export', N_('Import / Export'), 'policy_import_export', {:feature => 'policy_import_export'},  '/miq_policy/export'),
@@ -209,7 +209,7 @@ module Menu
       end
 
       def automation_menu_section
-        Menu::Section.new(:aut, N_("Automation"), 'fa fa-recycle fa-2x', [
+        Menu::Section.new(:aut, N_("Automation"), 'fa fa-recycle', [
           automate_menu_section,
           ansible_menu_section,
           automation_manager_menu_section
@@ -217,14 +217,14 @@ module Menu
       end
 
       def automation_manager_menu_section
-        Menu::Section.new(:at, N_("Ansible Tower"), 'fa fa-cog  fa-2x', [
+        Menu::Section.new(:at, N_("Ansible Tower"), 'fa fa-cog', [
           Menu::Item.new('automation_manager', N_('Explorer'), 'automation_manager', {:feature => 'automation_manager', :any => true}, '/automation_manager/explorer'),
           Menu::Item.new('configuration_job',  N_('Jobs'),     'configuration_job',  {:feature => 'configuration_job_show_list'},      '/configuration_job')
         ])
       end
 
       def ansible_menu_section
-        Menu::Section.new(:ansible, N_("Ansible"), 'fa fa-recycle fa-2x', [
+        Menu::Section.new(:ansible, N_("Ansible"), 'fa fa-recycle', [
           Menu::Item.new('ansible_playbooks', N_('Playbooks'), 'embedded_configuration_script_payload', {:feature => 'embedded_configuration_script_payload'}, '/ansible_playbook'),
           Menu::Item.new('ansible_repositories', N_('Repositories'), 'embedded_configuration_script_source', {:feature => 'embedded_configuration_script_source'}, '/ansible_repository'),
         ])
@@ -236,7 +236,7 @@ module Menu
         else
           nil
         end
-        Menu::Section.new(:automate, N_("Automate"), 'fa fa-recycle fa-2x', [
+        Menu::Section.new(:automate, N_("Automate"), 'fa fa-recycle', [
           Menu::Item.new('miq_ae_class',         N_('Explorer'),        'miq_ae_class_explorer',         {:feature => 'miq_ae_domain_view'},            '/miq_ae_class/explorer'),
           Menu::Item.new('miq_ae_tools',         N_('Simulation'),      'miq_ae_class_simulation',       {:feature => 'miq_ae_class_simulation'},       '/miq_ae_tools/resolve'),
           Menu::Item.new('miq_ae_customization', N_('Customization'),   'miq_ae_customization_explorer', {:feature => 'miq_ae_customization_explorer'}, '/miq_ae_customization/explorer'),
@@ -248,7 +248,7 @@ module Menu
       end
 
       def optimize_menu_section
-        Menu::Section.new(:opt, N_("Optimize"), 'fa fa-lightbulb-o fa-2x', [
+        Menu::Section.new(:opt, N_("Optimize"), 'fa fa-lightbulb-o', [
           Menu::Item.new('miq_capacity_utilization', N_('Utilization'), 'utilization', {:feature => 'utilization'}, '/miq_capacity'),
           Menu::Item.new('miq_capacity_planning',    N_('Planning'),    'planning',    {:feature => 'planning'},    '/miq_capacity/planning'),
           Menu::Item.new('miq_capacity_bottlenecks', N_('Bottlenecks'), 'bottlenecks', {:feature => 'bottlenecks'}, '/miq_capacity/bottlenecks')
@@ -256,7 +256,7 @@ module Menu
       end
 
       def settings_menu_section
-        Menu::Section.new(:set, N_("Settings"), 'pficon pficon-settings fa-2x', [
+        Menu::Section.new(:set, N_("Settings"), 'pficon pficon-settings', [
           Menu::Item.new('configuration', N_('My Settings'),   'my_settings',  {:feature => 'my_settings', :any => true},  '/configuration/index'),
           Menu::Item.new('my_tasks',      N_('Tasks'),         'tasks',        {:feature => 'tasks', :any => true},        '/miq_task/index?jobs_tab=tasks'),
           Menu::Item.new('ops',           N_('Configuration'), 'ops_explorer', {:feature => 'ops_explorer', :any => true}, '/ops/explorer')
