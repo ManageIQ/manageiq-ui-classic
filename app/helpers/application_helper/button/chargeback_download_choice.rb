@@ -4,4 +4,8 @@ class ApplicationHelper::Button::ChargebackDownloadChoice < ApplicationHelper::B
                                                               @report && !@report.contains_records?
     @error_message.present?
   end
+
+  def visible?
+    @view_context.x_active_tree == :cb_reports_tree
+  end
 end
