@@ -105,8 +105,6 @@
     dash.refresh_graph = function(metricId, metricType, currentItem) {
       var numberOfBucketsInChart = 300;
 
-      dash.metricId = metricId;
-      dash.currentItem = currentItem;
       var ends = dash.timeFilter.date.valueOf(); // javascript time is in milisec
       var diff = dash.timeFilter.time_range * dash.timeFilter.range_count * NUMBER_OF_MILLISEC_IN_HOUR; // time_range is in hours
       var starts = ends - diff;
@@ -118,11 +116,11 @@
       }
 
       // hawkular time is in milisec (hawkular bucket_duration is in seconds)
-      var params = '&query=get_data&type=' + metricType + '&metric_id=' + dash.metricId + '&ends=' + ends +
+      var params = '&query=get_data&type=' + metricType + '&metric_id=' + metricId + '&ends=' + ends +
                    '&starts=' + starts + '&bucket_duration=' + bucket_duration + 's';
 
       $http.get(dash.url + params)
-        .then(getContainerParamsData)
+        .then(function(response) { getContainerParamsData(metricId, currentItem, response); })
         .catch(miqService.handleFailure);
     };
 
@@ -299,7 +297,7 @@
       dash.filterConfig.resultsCount = dash.items.length;
     }
 
-    function getContainerParamsData(response) {
+    function getContainerParamsData(metricId, currentItem, response) {
       'use strict';
 
       if (response.data.error) {
@@ -312,11 +310,10 @@
       var yData = data.map(function(d) { return d.avg || null; });
 
       xData.unshift('time');
-      yData.unshift(dash.metricId);
+      yData.unshift(metricId);
 
-      // TODO: Use time buckets
       dash.chartData.xData = xData;
-      dash.chartData['yData'+ dash.currentItem] = yData;
+      dash.chartData['yData'+ currentItem] = yData;
 
       dash.chartDataInit = true;
       dash.loadCount++;
