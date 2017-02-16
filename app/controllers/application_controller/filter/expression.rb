@@ -53,12 +53,12 @@ module ApplicationController::Filter
     end
 
     # Get the dynamic list of tags for the expression atom editor
-    def exp_available_tags
+    def available_tags
       # Generate tag list unless already generated during this transaction
-      self.exp_available_tags ||= MiqExpression.model_details(exp_model, :typ             => "tag",
-                                                                         :include_model   => true,
-                                                                         :include_my_tags => use_mytags,
-                                                                         :userid          => User.current_user.userid)
+      self.available_tags ||= MiqExpression.model_details(exp_model, :typ             => "tag",
+                                                                     :include_model   => true,
+                                                                     :include_my_tags => use_mytags,
+                                                                     :userid          => User.current_user.userid)
     end
 
     def available_adv_searches
