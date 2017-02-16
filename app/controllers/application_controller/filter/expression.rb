@@ -56,17 +56,11 @@ module ApplicationController::Filter
       if exp_model == '_display_filter_'
         exp_available_tags
       else
-        available_tags
+        self.available_tags ||= MiqExpression.model_details(exp_model, :typ             => "tag",
+                                                                       :include_model   => true,
+                                                                       :include_my_tags => use_mytags,
+                                                                       :userid          => User.current_user.userid)
       end
-    end
-
-    # Get the dynamic list of tags for the expression atom editor
-    def available_tags
-      # Generate tag list unless already generated during this transaction
-      self.available_tags ||= MiqExpression.model_details(exp_model, :typ             => "tag",
-                                                                     :include_model   => true,
-                                                                     :include_my_tags => use_mytags,
-                                                                     :userid          => User.current_user.userid)
     end
 
     def available_adv_searches
