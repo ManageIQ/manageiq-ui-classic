@@ -76,6 +76,37 @@ describe MiqPolicyController do
         expect(assigns(:flash_array).first[:message]).to include("saved")
         expect(controller.send(:flash_errors?)).not_to be_truthy
       end
+
+      it "displays an error if no Ansible playbook is selected" do
+        allow(controller).to receive(:javascript_flash)
+        controller.instance_variable_set(:@_params, :id => @action.id)
+        controller.action_edit
+        edit = controller.instance_variable_get(:@edit)
+        edit[:new][:action_type] = "run_an_ansible_playbook"
+        edit[:new][:inventory_type] = 'event_target'
+        edit[:new][:options][:use_event_target] = true
+        edit[:new][:options][:use_event_localhost] = false
+        session[:edit] = assigns(:edit)
+        controller.instance_variable_set(:@_params, :id => @action.id, :button => "save")
+        controller.action_edit
+        expect(assigns(:flash_array).first[:message]).to include("An Ansible Playbook must be selected")
+        expect(controller.send(:flash_errors?)).to be_truthy
+      end
+
+      it "displays an error if no hosts are slected for an Ansible playbook with 'manual' inventory" do
+        allow(controller).to receive(:javascript_flash)
+        controller.instance_variable_set(:@_params, :id => @action.id)
+        controller.action_edit
+        edit = controller.instance_variable_get(:@edit)
+        edit[:new][:action_type] = "run_an_ansible_playbook"
+        edit[:new][:inventory_type] = 'manual'
+        edit[:new][:options][:service_template_id] = '01'
+        session[:edit] = assigns(:edit)
+        controller.instance_variable_set(:@_params, :id => @action.id, :button => "save")
+        controller.action_edit
+        expect(assigns(:flash_array).first[:message]).to include("At least one host must be specified for manual mode")
+        expect(controller.send(:flash_errors?)).to be_truthy
+      end
     end
 
     describe "#action_get_info" do
