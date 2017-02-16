@@ -172,7 +172,7 @@ module QuadiconHelper
     when 'storage'               then render_storage_quadicon(item, options)
     when 'vm_or_template'        then render_vm_or_template_quadicon(item, options)
     else
-      flobj_img_simple(options[:size], "#{options[:size]}/#{partial_name}.png")
+      raise "unknown quadicon kind - #{quadicon_builder_name_from(item)}"
     end
   end
 
