@@ -1640,7 +1640,7 @@ module ApplicationHelper
     when 'complete' then 'pficon pficon-ok'
     when 'queued'   then 'fa fa-pause'
     when 'running'  then 'pficon pficon-running'
-    when 'error'    then 'fa fa-warning'
+    when 'error'    then 'pficon pficon-warning-triangle-o'
     end
   end
 
@@ -1652,7 +1652,7 @@ module ApplicationHelper
     when "MiqReportResult"
       case row['status'].downcase
       when "error"
-        glyphicon = "fa fa-warning"
+        glyphicon = "pficon pficon-warning-triangle-o"
       when "finished"
         glyphicon = "pficon pficon-ok"
       when "running"
