@@ -123,24 +123,38 @@ describe VmOrTemplateController do
       expect(response).to redirect_to(:controller => "dashboard", :action => 'show')
     end
 
-    it 'set session[:snap_selected] to nil if Snapshot does not exist' do
-      tree_hash = {
-        :trees         => {
-          :vandt_tree => {
-            :active_node => "v-#{@vm.id}"
-          }
-        },
-        :active_tree   => :vandt_tree,
-        :active_accord => :vandt
-      }
-      session[:sandboxes] = {'vm_or_template' => tree_hash}
-      @lastaction = 'show'
-      @display = 'snapshot_info'
-      @request.env['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'
+    context 'set session[:snap_selected]' do
+      before :each do
+        tree_hash = {
+          :trees         => {
+            :vandt_tree => {
+              :active_node => "v-#{@vm.id}"
+            }
+          },
+          :active_tree   => :vandt_tree,
+          :active_accord => :vandt
+        }
+        session[:sandboxes] = {'vm_or_template' => tree_hash}
+        @lastaction = 'show'
+        @display = 'snapshot_info'
+        @request.env['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'
+      end
 
-      session[:snap_selected] = '21'
-      get :show, :params => {:id => @vm.id, :display => 'snapshot_info'}
-      expect(session[:snap_selected]).to be(nil)
+      it 'to snap_selected.id if a Snapshot exists' do
+        @snapshot = FactoryGirl.create(:snapshot,
+                                       :vm_or_template_id => @vm.id,
+                                       :name              => 'EvmSnapshot',
+                                       :description       => 'Some Description')
+        @vm.snapshots = [@snapshot]
+        post :show, :params => {:id => @vm.id, :display => 'snapshot_info'}
+        expect(session[:snap_selected]).to eq(@snapshot.id)
+      end
+
+      it 'to nil if Snapshot does not exist' do
+        session[:snap_selected] = '21'
+        get :show, :params => {:id => @vm.id, :display => 'snapshot_info'}
+        expect(session[:snap_selected]).to be(nil)
+      end
     end
   end
 
