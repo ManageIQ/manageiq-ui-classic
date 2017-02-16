@@ -126,42 +126,6 @@ class CatalogController < ApplicationController
     end
   end
 
-  def catalog_item_edit
-    assert_privileges("atomic_catalogitem_edit")
-    case params[:button]
-    when "cancel"
-      service_template = ServiceTemplate.find_by_id(params[:id])
-      if service_template.try(:id).nil?
-        add_flash(_("Add of new Catalog Item was cancelled by the user"))
-      else
-        add_flash(_("Edit of Catalog Item \"%{name}\" was cancelled by the user") %
-                    {:name => service_template.name})
-      end
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => x_node)
-    when "save", "add"
-      service_template = params[:id] != "new" ? ServiceTemplate.find_by_id(params[:id]) : ServiceTemplate.new
-
-      # This should be changed to something like service_template.changed? and service_template.changes
-      # when we have a version of Rails that supports detecting changes on serialized
-      # fields
-      old_service_template_attributes = service_template.attributes.clone
-      service_template_set_record_vars(service_template)
-
-      begin
-        service_template.save!
-      rescue => bang
-        add_flash(_("Error when adding a new Catalog Item: %{message}") % {:message => bang.message}, :error)
-        javascript_flash
-      else
-        AuditEvent.success(build_saved_audit_hash(old_service_template_attributes, service_template, params[:button] == "add"))
-        add_flash(_("Catalog Item \"%{name}\" was saved") %
-                    {:name => service_template.name})
-        replace_right_cell(:replace_trees => trees_to_replace([:sandt, :svccat, :stcat]))
-      end
-    end
-  end
-
   def atomic_form_field_changed
     # need to check req_id in session since we are using common code for prov requests and atomic ST screens
     id = session[:edit][:req_id] || "new"
@@ -241,7 +205,7 @@ class CatalogController < ApplicationController
 
     build_accordions_and_trees
 
-    if params[:id]  # If a tree node id came in, show in one of the trees
+    if params[:id] && !params[:button]  # If a tree node id came in, show in one of the trees
       @nodetype, id = parse_nodetype_and_id(params[:id])
       self.x_active_tree   = 'sandt_tree'
       self.x_active_accord = 'sandt'

@@ -47,7 +47,7 @@
                             "switch-off-text" => "No",
                             "checkchange" => ""}
 
-    .form-group{"ng-class" => "{'has-error': vm.catalogItemModel.display}"}
+    .form-group{"ng-class" => "{'has-error': vm.catalogItemModel.display && angularForm.catalog_id.$invalid}"}
       %label.col-md-2.control-label{"for" => "catalog_id"}
         = _('Catalog')
       .col-md-8

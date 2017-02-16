@@ -9,14 +9,13 @@
                 "name"        => "#{prefix}_repository_id",
                 'ng-options'  => 'repository as repository.name for repository in vm.repositories',
                 "ng-required" => "vm.fieldsRequired('#{prefix}')",
-                'ng_change'   => "vm.repository_changed()",
                 'pf-select'   => true}
           %option{"value" => ""}
             = "<#{_('Choose')}>"
 
     #playbook_div{"ng-if" => "vm.#{prefix}_repository_selected()"}
       .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_playbook_id.$invalid}"}
-        %label.col-md-2.control-label{"for" => "vm.#{prefix}_playbook_id"}
+        %label.col-md-2.control-label{"for" => "#{prefix}_playbook_id"}
           = _('Playbook')
         .col-md-8
           %select{"ng-model"    => "vm._#{prefix}_playbook",
@@ -57,20 +56,34 @@
                 = "<#{_('Choose')}>"
 
         .form-group
-          %label.col-md-2.control-label{"for" => "vm.#{prefix}_cloud_credential_id"}
-            = _('Cloud Credentials')
+          %label.col-md-2.control-label{"for" => "vm.#{prefix}_cloud_type"}
+            = _('Cloud Type')
           .col-md-8
-            %select{"ng-model"    => "vm._#{prefix}_cloud_credential",
-                    "name"        => "#{prefix}_cloud_credential_id",
-                    'ng-options'  => 'cloud_credential as cloud_credential.name for cloud_credential in vm.cloud_credentials',
-                    :checkchange  => true,
-                    'pf-select'   => true}
+            %select{"ng-model"    => "#{ng_model}.#{prefix}_cloud_type",
+                    "name"        => "#{prefix}_cloud_type",
+                    'ng-options'  => "cloud_type for cloud_type in #{ng_model}.cloud_types",
+                    "ng-change"   => "cloudTypeChanged('#{prefix}')",
+                    :checkchange => "",
+                    "pf-select"   => true}
               %option{"value" => ""}
                 = "<#{_('Choose')}>"
 
+        #cloud_credentials_div{"ng-show" => "#{ng_model}.#{prefix}_cloud_type !== ''"}
+          .form-group
+            %label.col-md-2.control-label{"for" => "vm.#{prefix}_cloud_credential_id"}
+              = _('Cloud Credentials')
+            .col-md-8
+              %select{"ng-model"    => "vm._#{prefix}_cloud_credential",
+                      "name"        => "#{prefix}_cloud_credential_id",
+                      'ng-options'  => 'cloud_credential as cloud_credential.name for cloud_credential in vm.cloud_credentials',
+                      :checkchange  => true,
+                      'pf-select'   => true}
+                %option{"value" => ""}
+                  = "<#{_('Choose')}>"
+
     .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_inventory.$invalid}"}
       %label.col-md-2.control-label
-        = _("Inventory")
+        = _("Hosts")
       .col-md-8
         %input.form-control{:type         => "text",
                             'ng-model'    => "vm.#{ng_model}.#{prefix}_inventory",
@@ -132,13 +145,11 @@
                                     "ng-change" => "",
                                     "miqrequired" => ""}
 
-              -#%td{:class => "action-cell", :style => "width: 15px"}
-              -#  %div{:class => "btn-container"}
               %td
                 %div{"ng-if" => "#{ng_model}.#{prefix}_editMode && $index === #{ng_model}.s_index"}
                   %button{:class => "btn btn-primary", :type => "button", "ng-disabled" => "(#{ng_model}.key === '' || #{ng_model}.key_value === '')", "ng-click" => "vm.saveKeyValue('#{prefix}', $index)"}
                     =_("Save")
-                  %button{:class => "btn btn-default", :type => "button", "ng-click" => "vm.cancelKeyValue('#{prefix}', this.key, this.key_value, $index)"}
+                  %button{:class => "btn btn-default", :type => "button", "ng-click" => "vm.cancelKeyValue('#{prefix}')"}
                     =_("Cancel")
 
                 %div{"ng-if" => "!#{ng_model}.#{prefix}_editMode || (#{ng_model}.#{prefix}_editMode && $index !== #{ng_model}.s_index)", :class => "btn-container"}
