@@ -29,18 +29,13 @@ describe ApplicationHelper::Button::VmSnapshotRevert do
 
   describe '#calculate_properties' do
     before { button.calculate_properties }
-    context 'when snapshot is active' do
-      it_behaves_like 'a disabled button', 'Select a snapshot that is not the active one'
+
+    context 'when reverting to a snapshot is available' do
+      it_behaves_like 'an enabled button'
     end
-    context 'when snapshot is not active' do
-      let(:active) { false }
-      context 'and reverting to a snapshot is available' do
-        it_behaves_like 'an enabled button'
-      end
-      context 'and reverting to a snapshot is not available' do
-        let(:record) { FactoryGirl.create(:vm_amazon) }
-        it_behaves_like 'a disabled button', 'Revert Snapshot operation not supported for Amazon VM'
-      end
+    context 'when reverting to a snapshot is not available' do
+      let(:record) { FactoryGirl.create(:vm_amazon) }
+      it_behaves_like 'a disabled button', 'Revert Snapshot operation not supported for Amazon VM'
     end
   end
 end
