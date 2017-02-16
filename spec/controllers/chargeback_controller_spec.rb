@@ -197,6 +197,7 @@ describe ChargebackController do
       EvmSpecHelper.local_miq_server
       allow_any_instance_of(described_class).to receive(:center_toolbar_filename).and_return("chargeback_center_tb")
       seed_session_trees('chargeback', :cb_rates_tree, "xx-Compute")
+      [ChargebackRateDetailMeasure, ChargeableField].each(&:seed)
     end
 
     def expect_input(body, selector, value)
@@ -373,7 +374,7 @@ describe ChargebackController do
       end
 
       before do
-        [ChargebackRateDetailMeasure, ChargebackRateDetailCurrency, ChargeableField, ChargebackRate].each do |k|
+        [ChargebackRateDetailCurrency, ChargebackRate].each do |k|
           # This is unfortunate try and I am sorry. After repo split, some design clean-ups are more difficult
           # than before. I'll remove the `try` asap (after other prs are merged, no eta obviously).
           k.try(:seed)
