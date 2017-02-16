@@ -396,7 +396,7 @@ module QuadiconHelper
     value.first(trunc_to / 2) + "..." + value.last(trunc_to / 2)
   end
 
-  def flobj_img_simple(size, image = nil, cls = '')
+  def flobj_img_simple(size = 72, image = nil, cls = '')
     image ||= "layout/base-single.png"
 
     content_tag(:div, :class => "flobj #{cls}") do
@@ -442,7 +442,7 @@ module QuadiconHelper
     size = options[:size]
     output = []
 
-    output << flobj_img_simple(options[:size])
+    output << flobj_img_simple(size)
     output << flobj_img_simple(adjusted_quad_size, img, "e72")
     output << flobj_img_simple(size, '100/shield.png', "g72") unless item.get_policies.empty?
 
