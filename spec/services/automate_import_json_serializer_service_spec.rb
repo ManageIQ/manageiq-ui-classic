@@ -61,7 +61,9 @@ describe AutomateImportJsonSerializerService do
       allow(tempfile).to receive(:binmode)
       allow(Tempfile).to receive(:new).with(['automate_temporary_zip', '.zip']).and_return(tempfile)
       allow(MiqAeImport).to receive(:new).with('*', 'zip_file' => tempfile.path).and_return(miq_ae_yaml_import_zipfs)
-      allow(miq_ae_yaml_import_zipfs).to receive(:domain_entries).with('*').and_return(['Customer/test1.yml', 'ManageIQ/test2.yml'])
+      allow(miq_ae_yaml_import_zipfs).to receive(:domain_entries).with('*').and_return(
+        ['Customer/test1.yml', 'ManageIQ/test2.yml']
+      )
       allow(miq_ae_yaml_import_zipfs).to receive(:namespace_files).with('Customer').and_return(
         ['Customer/EVMApplications/test.yml']
       )
@@ -69,17 +71,23 @@ describe AutomateImportJsonSerializerService do
       allow(miq_ae_yaml_import_zipfs).to receive(:namespace_files).with('Customer/EVMApplications').and_return(
         ['Customer/EVMApplications/Operations/test.yml']
       )
-      allow(miq_ae_yaml_import_zipfs).to receive(:namespace_files).with('Customer/EVMApplications/Operations').and_return(
+      allow(miq_ae_yaml_import_zipfs).to receive(:namespace_files).with(
+        'Customer/EVMApplications/Operations'
+      ).and_return(
         ['Customer/EVMApplications/Operations/Profile/test.yml']
       )
-      allow(miq_ae_yaml_import_zipfs).to receive(:namespace_files).with('Customer/EVMApplications/Operations/Profile').and_return([])
+      allow(miq_ae_yaml_import_zipfs).to receive(:namespace_files).with(
+        'Customer/EVMApplications/Operations/Profile'
+      ).and_return([])
 
       allow(miq_ae_yaml_import_zipfs).to receive(:class_files).with('Customer').and_return([])
       allow(miq_ae_yaml_import_zipfs).to receive(:class_files).with('Customer/EVMApplications').and_return([])
       allow(miq_ae_yaml_import_zipfs).to receive(:class_files).with('Customer/EVMApplications/Operations').and_return(
         ['Customer/EVMApplications/Operations/Profile.class/test.yml']
       )
-      allow(miq_ae_yaml_import_zipfs).to receive(:class_files).with('Customer/EVMApplications/Operations/Profile').and_return([])
+      allow(miq_ae_yaml_import_zipfs).to receive(:class_files).with(
+        'Customer/EVMApplications/Operations/Profile'
+      ).and_return([])
       allow(miq_ae_yaml_import_zipfs).to receive(:class_files).with('ManageIQ').and_return([])
     end
 
