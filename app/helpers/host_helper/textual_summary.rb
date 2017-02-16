@@ -41,7 +41,7 @@ module HostHelper::TextualSummary
     TextualTags.new(_("Smart Management"), %i(tags))
   end
   
-  def textual_physical_server
+  def textual_physical_servers
     {:label =>  _("Physical Server"), :value  =>  @record.physical_server.name, :icon =>  "pficon pficon-server", :link => url_for(:controller  =>  'physical_server',  :action =>  'show', :id =>  @record.physical_server.id) }
   end
 
