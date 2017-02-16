@@ -63,7 +63,7 @@
                     "name"        => "#{prefix}_cloud_type",
                     'ng-options'  => "cloud_type for cloud_type in #{ng_model}.cloud_types",
                     "ng-change"   => "cloudTypeChanged('#{prefix}')",
-                    :checkchange => "",
+                    :checkchange  => true,
                     "pf-select"   => true}
               %option{"value" => ""}
                 = "<#{_('Choose')}>"
