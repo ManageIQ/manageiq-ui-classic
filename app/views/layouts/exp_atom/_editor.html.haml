@@ -51,7 +51,7 @@
         - when '_display_filter_'
           - unless @edit[@expkey][:exp_available_fields].empty?
             - opts.push([_('Field'), 'field'])
-          - unless @edit[@expkey][:exp_available_tags] && @edit[@expkey][:exp_available_tags].empty? || exp_available_tags(exp_model, @edit[@expkey][:use_mytags]).empty?
+          - unless @edit[@expkey][:exp_available_tags] && @edit[@expkey][:exp_available_tags].empty?
             - opts.push([_('Tag'), 'tag'])
         - else
           - opts += exptypes
