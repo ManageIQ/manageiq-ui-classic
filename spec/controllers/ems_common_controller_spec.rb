@@ -1,3 +1,5 @@
+require 'kubeclient'
+
 describe EmsCloudController do
   context "::EmsCommon" do
     context "#get_form_vars" do
@@ -178,28 +180,61 @@ describe EmsCloudController do
 end
 
 describe EmsContainerController do
-  before :each do
-    allow(controller).to receive(:get_hostname_from_routes).and_return("myhawkularoute.com")
+  let(:myhawkularroute) { RecursiveOpenStruct.new(:spec => {:host => "myhawkularroute.com"}) }
+
+  def expect_get_route(&block)
+    mock_client = double('kubeclient')
+    allow(Kubeclient::Client).to receive(:new).and_return(mock_client)
+    expect(mock_client).to receive(:get_route).with('hawkular-metrics', 'openshift-infra', &block)
   end
+
   context "::EmsCommon" do
-    context "#create" do
-      it "adding new provider without hawkular endpoint" do
+    context "adding new provider without hawkular endpoint" do
+      def test_creating(emstype)
+        @ems = ExtManagementSystem.model_from_emstype(emstype).new
         controller.instance_variable_set(:@_params,
                                          :name             => 'NimiCule',
                                          :default_userid   => '_',
                                          :default_hostname => 'mytest.com',
                                          :default_api_port => '8443',
                                          :default_password => 'valid-token',
-                                         :emstype          => @type)
-        ems = ManageIQ::Providers::Openshift::ContainerManager.new
-        controller.send(:set_ems_record_vars, ems)
-        expect(ems.connection_configurations.hawkular.endpoint.hostname).to eq('myhawkularoute.com')
+                                         :emstype          => emstype)
+        controller.send(:set_ems_record_vars, @ems)
+        expect(@flash_array).to be_nil
+      end
+
+      it "doesn't probe routes for kubernetes" do
+        test_creating('kubernetes')
+        expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq(nil)
+      end
+
+      it "fetches hawkular-metrics route" do
+        expect_get_route { myhawkularroute }
+        test_creating('openshift')
+        expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('myhawkularroute.com')
+      end
+
+      it "tolerates missing hawkular-metrics route" do
+        expect_get_route { nil }
+        test_creating('openshift')
+        expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq(nil)
+      end
+
+      it "tolerates errors fetching hawkular-metrics route" do
+        expect_get_route { raise KubeException.new(418, "I'm a Teapot", double('response')) }
+        test_creating('openshift')
+        expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq(nil)
       end
     end
+
     context "#update" do
       context "updates provider with new token" do
-        after :each do
+        before :each do
           stub_user(:features => :all)
+          session[:edit] = assigns(:edit)
+        end
+
+        def test_setting_many_fields
           controller.instance_variable_set(:@_params, :name              => 'EMS 2',
                                                       :default_userid    => '_',
                                                       :default_hostname  => '10.10.10.11',
@@ -208,8 +243,8 @@ describe EmsContainerController do
                                                       :hawkular_hostname => '10.10.10.10',
                                                       :hawkular_api_port => '8443',
                                                       :emstype           => @type)
-          session[:edit] = assigns(:edit)
           controller.send(:set_ems_record_vars, @ems)
+          expect(@flash_array).to be_nil
           expect(@ems.connection_configurations.default.endpoint.hostname).to eq('10.10.10.11')
           expect(@ems.connection_configurations.default.endpoint.port).to eq(5000)
           expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('10.10.10.10')
@@ -217,22 +252,35 @@ describe EmsContainerController do
           expect(@ems.authentication_token("bearer")).to eq('valid-token')
           expect(@ems.authentication_type("default")).to be_nil
           expect(@ems.hostname).to eq('10.10.10.11')
+        end
 
+        def test_setting_few_fields
           controller.remove_instance_variable(:@_params)
           controller.instance_variable_set(:@_params, :name => 'EMS 3', :default_userid => '_')
           controller.send(:set_ems_record_vars, @ems)
+          expect(@flash_array).to be_nil
           expect(@ems.authentication_token("bearer")).to eq('valid-token')
           expect(@ems.authentication_type("default")).to be_nil
         end
 
-        it "when adding kubernetes EMS" do
+        it "when editing kubernetes EMS" do
           @type = 'kubernetes'
           @ems  = ManageIQ::Providers::Kubernetes::ContainerManager.new
+          test_setting_many_fields
+
+          # kubernetes should not probe hawkular-metrics route
+          test_setting_few_fields
+          expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq(nil)
         end
 
-        it "when adding openshift EMS" do
+        it "when editing openshift EMS" do
           @type = 'openshift'
           @ems  = ManageIQ::Providers::Openshift::ContainerManager.new
+          test_setting_many_fields
+
+          expect_get_route { myhawkularroute }
+          test_setting_few_fields
+          expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('myhawkularroute.com')
         end
       end
     end

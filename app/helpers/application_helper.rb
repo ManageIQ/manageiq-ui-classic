@@ -181,6 +181,8 @@ module ApplicationHelper
             controller_for_vm(model_for_vm(record))
           elsif record.class.respond_to?(:db_name)
             record.class.db_name
+          elsif record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook)
+            "ansible_playbook"
           else
             record.class.base_class.to_s
           end
@@ -339,10 +341,13 @@ module ApplicationHelper
       action = "show"
     when "ServiceResource", "ServiceTemplate"
       controller = "catalog"
+    when "ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook"
+      controller = "ansible_playbook"
     when "MiqWorker"
       controller = request.parameters[:controller]
       action = "diagnostics_worker_selected"
     when "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
+        "ConfigurationScriptSource",
         "ManageIQ::Providers::CloudManager::OrchestrationStack",
         "ManageIQ::Providers::AnsibleTower::AutomationManager::Job"
       controller = request.parameters[:controller]
@@ -470,6 +475,10 @@ module ApplicationHelper
       title += _(": Requests")
     elsif layout == "login"
       title += _(": Login")
+    elsif layout == "manageiq/providers/ansible_tower/automation_manager/playbook"
+      title += ": Playbooks (Ansible Tower)"
+    elsif layout == "configuration_script_source"
+      title += ": Repositories"
     # Assume layout is a table name and look up the plural version
     else
       title += ": #{ui_lookup(:tables => layout)}"
@@ -1205,6 +1214,7 @@ module ApplicationHelper
                         cloud_volume_snapshot
                         condition
                         configuration_job
+                        configuration_script_source
                         container_build
                         container_dashboard
                         container_group
@@ -1233,6 +1243,7 @@ module ApplicationHelper
                         host
                         host_aggregate
                         load_balancer
+                        manageiq/providers/ansible_tower/automation_manager/playbook
                         middleware_datasource
                         middleware_deployment
                         middleware_domain

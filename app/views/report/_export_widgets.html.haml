@@ -21,9 +21,9 @@
             %td.treegrid-node
               = item[:name]
             %td
-              %img{:src => item[:status_icon]}
+              %img{:src => status_icon_image_path(item[:exists])}
               &nbsp;
-              = item[:status]
+              = status_description(item[:exists])
     = hidden_field_tag(:import_file_upload_id, @import_file_upload_id)
 
     .pull-right

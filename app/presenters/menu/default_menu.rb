@@ -217,14 +217,24 @@ module Menu
       end
 
       def automation_menu_section
-        Menu::Section.new(:aut, N_("Automation"), 'fa fa-recycle fa-2x', [automate_menu_section,
-                                                                          automation_manager_menu_section])
+        Menu::Section.new(:aut, N_("Automation"), 'fa fa-recycle fa-2x', [
+          automate_menu_section,
+          ansible_menu_section,
+          automation_manager_menu_section
+        ])
       end
 
       def automation_manager_menu_section
         Menu::Section.new(:at, N_("Ansible Tower"), 'fa fa-cog  fa-2x', [
           Menu::Item.new('automation_manager', N_('Explorer'), 'automation_manager', {:feature => 'automation_manager', :any => true}, '/automation_manager/explorer'),
           Menu::Item.new('configuration_job',  N_('Jobs'),     'configuration_job',  {:feature => 'configuration_job_show_list'},      '/configuration_job')
+        ])
+      end
+
+      def ansible_menu_section
+        Menu::Section.new(:ansible, N_("Ansible"), 'fa fa-recycle fa-2x', [
+          Menu::Item.new('ansible_playbooks', N_('Playbooks'), 'embedded_configuration_script_payload', {:feature => 'embedded_configuration_script_payload'}, '/ansible_playbook'),
+          Menu::Item.new('ansible_repositories', N_('Repositories'), 'embedded_configuration_script_source', {:feature => 'embedded_configuration_script_source'}, '/ansible_repository'),
         ])
       end
 

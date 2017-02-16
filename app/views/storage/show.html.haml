@@ -11,9 +11,7 @@
       = raise 'compare partial called through "show"' if @showtype == 'compare'
       = render :partial => "layouts/#{@showtype}"
     - when "performance"
-      = render :partial => "layouts/performance"
-      :javascript
-        ManageIQ.afterOnload = "miqAsyncAjax('#{url_for(:action => @ajax_action, :id => @record)}');"
+      = render :partial => "layouts/performance_async"
     - when "dialog_provision"
       = render :partial => "shared/dialogs/dialog_provision"
     - when "main"

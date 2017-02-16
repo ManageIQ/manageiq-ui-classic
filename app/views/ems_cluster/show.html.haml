@@ -5,9 +5,7 @@
   - else
     - case @showtype
     - when "performance"
-      = render(:partial => "layouts/performance")
-      :javascript
-        ManageIQ.afterOnload = "miqAsyncAjax('#{url_for(:action => @ajax_action, :id => @record)}');"
+      = render(:partial => "layouts/performance_async")
     - when "details"
       = render(:partial => "layouts/gtl", :locals => {:action_url => @lastaction})
     - when "compare", "drift"
@@ -15,9 +13,7 @@
     - when "drift_history", "item"
       = render(:partial => "layouts/#{@showtype}")
     - when "timeline"
-      = render(:partial => "layouts/tl_show")
-      :javascript
-        ManageIQ.afterOnload = "miqAsyncAjax('#{url_for(:action => @ajax_action, :id => @record)}');"
+      = render(:partial => "layouts/tl_show_async")
     - when "dialog_provision"
       = render(:partial => "shared/dialogs/dialog_provision")
     - when "main"

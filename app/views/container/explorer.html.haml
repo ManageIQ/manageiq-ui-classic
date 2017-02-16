@@ -3,13 +3,9 @@
   = render(:partial => 'layouts/quick_search')
 #main_div
   - if @showtype == "timeline"
-    = render(:partial => "layouts/tl_show")
-    :javascript
-      ManageIQ.afterOnload = "miqAsyncAjax('#{url_for(:action => @ajax_action, :id => @record)}');"
+    = render(:partial => "layouts/tl_show_async")
   - elsif @showtype == "performance"
-    = render(:partial => "layouts/performance")
-    :javascript
-      ManageIQ.afterOnload = "miqAsyncAjax('#{url_for(:action => @ajax_action, :id => @record)}');"
+    = render(:partial => "layouts/performance_async")
   - elsif TreeBuilder.get_model_for_prefix(@nodetype) == "Container"
     -# Showing a specific Service
     = render :partial => "container_show", :locals => {:controller => "container"}

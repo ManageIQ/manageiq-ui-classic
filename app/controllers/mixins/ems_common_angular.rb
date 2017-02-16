@@ -442,8 +442,12 @@ module Mixins
     end
 
     def get_hostname_from_routes(ems, hostname, port, token)
-      client = ems.class.raw_connect(hostname, port, :bearer => token)
+      return nil unless ems.class.respond_to?(:openshift_connect)
+      client = ems.class.openshift_connect(hostname, port, :bearer => token)
       client.get_route('hawkular-metrics', 'openshift-infra').try(:spec).try(:host)
+    rescue KubeException => e
+      $log.warn("MIQ(#{controller_name}_controller-#{action_name}): get_hostname_from_routes error: #{e}")
+      nil
     end
 
     def build_connection(ems, endpoints, mode)

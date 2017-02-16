@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased - as of Sprint 54 end 2017-02-13
+
+### [Added](https://github.com/ManageIQ/manageiq-ui-classic/pulls?utf8=%E2%9C%93&q=is%3Apr%20is%3Aclosed%20milestone%3A%22Sprint%2054%20Ending%20Feb%2013%2C%202017%22%20label%3Aenhancement)
+
+- Move the Ansible Tower UI to the Automation tab [(#170)](https://github.com/ManageIQ/manageiq-ui-classic/pull/170)
+- Allow reselection of node for Workload tree [(#300)](https://github.com/ManageIQ/manageiq-ui-classic/pull/300)
+- Add service_action to resource_action ae_attributes. [(#297)](https://github.com/ManageIQ/manageiq-ui-classic/pull/297)
+- Add icon for node alerts [(#277)](https://github.com/ManageIQ/manageiq-ui-classic/pull/277)
+- Add Live Migrate actions to the task queue. [(#208)](https://github.com/ManageIQ/manageiq-ui-classic/pull/208)
+- Added changes to show Catalog Item type [(#165)](https://github.com/ManageIQ/manageiq-ui-classic/pull/165)
+- UI for server group deployments [(#23)](https://github.com/ManageIQ/manageiq-ui-classic/pull/23)
+- Display a more informative message on single datasource deletion. [(#353)](https://github.com/ManageIQ/manageiq-ui-classic/pull/353)
+
+
+
+### [Changed](https://github.com/ManageIQ/manageiq-ui-classic/pulls?utf8=%E2%9C%93&q=is%3Apr%20is%3Aclosed%20milestone%3A%22Sprint%2054%20Ending%20Feb%2013%2C%202017%22%20label%3Aenhancement)
+
+- Unified the layout for VNC/SPICE remote consoles [(#186)](https://github.com/ManageIQ/manageiq-ui-classic/pull/186)
+- Update ui-components to 0.0.12 (dialog editor) [(#288)](https://github.com/ManageIQ/manageiq-ui-classic/pull/288)
+- Enable 'Provision VMs' button in Datastores and Clusters [(#298)](https://github.com/ManageIQ/manageiq-ui-classic/pull/298)
+- Don't invoke get_tagdata() for non-taggable objects [(#348)](https://github.com/ManageIQ/manageiq-ui-classic/pull/348)
+
+### [Fixed](https://github.com/ManageIQ/manageiq-ui-classic/pulls?utf8=%E2%9C%93&q=is%3Apr%20is%3Aclosed%20milestone%3A%22Sprint%2054%20Ending%20Feb%2013%2C%202017%22%20label%3Abug)
+
+- Cascading Auto Refresh for dialog fields [(#264)](https://github.com/ManageIQ/manageiq-ui-classic/pull/264)
+- Add list of roles to rbac [(#271)](https://github.com/ManageIQ/manageiq-ui-classic/pull/271)
+- Fix assigning roles in group form [(#296)](https://github.com/ManageIQ/manageiq-ui-classic/pull/296)
+- Fix search box display for Configuration management providers [(#295)](https://github.com/ManageIQ/manageiq-ui-classic/pull/295)
+- Use correct route to derive unfilled hawkular hostname [(#265)](https://github.com/ManageIQ/manageiq-ui-classic/pull/265)
+- Fix "Provider Conditions" title in tree builder conditions [(#268)](https://github.com/ManageIQ/manageiq-ui-classic/pull/268)
+- Fix typo in class name [(#334)](https://github.com/ManageIQ/manageiq-ui-classic/pull/334)
+- Fixed DOM element names for Utilization & Bottleneck tree select [(#324)](https://github.com/ManageIQ/manageiq-ui-classic/pull/324)
+- Fix buttons AND OR NOT REMOVE in exp editor [(#258)](https://github.com/ManageIQ/manageiq-ui-classic/pull/258)
+- Topology: Fix second search [(#313)](https://github.com/ManageIQ/manageiq-ui-classic/pull/313)
+- Network Provider timelines button fix. [(#316)](https://github.com/ManageIQ/manageiq-ui-classic/pull/316)
+- Update the model for the ConfiguredSystems displayed in the Configuration managers Ui [(#358)](https://github.com/ManageIQ/manageiq-ui-classic/pull/358)
+- AutomationManagerController & ProviderForemanController - unify model_to_type_name fixing toolbars [(#350)](https://github.com/ManageIQ/manageiq-ui-classic/pull/350)
+- Fix race condition in container_live_dashboard_controlle controller [(#362)](https://github.com/ManageIQ/manageiq-ui-classic/pull/362)
+
+
 ## Unreleased - as of Sprint 53 end 2017-01-30
 
 ### [Added](https://github.com/ManageIQ/manageiq-ui-classic/pulls?utf8=%E2%9C%93&q=is%3Apr%20is%3Aclosed%20milestone%3A%22Sprint%2053%20Ending%20Jan%2030%2C%202017%22%20label%3Aenhancement)

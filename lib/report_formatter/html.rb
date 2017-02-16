@@ -26,7 +26,6 @@ module ReportFormatter
 
     def build_document_body
       mri = options.mri
-      tz = mri.get_time_zone(Time.zone.name)
       output << "<table class='table table-striped table-bordered'>"
       output << "<thead>"
       output << "<tr>"
@@ -41,15 +40,16 @@ module ReportFormatter
       end
       output << '<tbody>'
 
-      # table data
-      #     save_val = nil
-      counter = 0
+      build_html_rows(mri, output)
+
+      output << '</tbody>'
+    end
+
+    def build_html_rows(mri, output)
+      # This is similar to MiqReport.build_html_rows, needs to be unified
+      tz = mri.get_time_zone(Time.zone.name)
       row = 0
       unless mri.table.nil?
-
-        # Following line commented for now - for not showing repeating column values
-        #       prev_data = String.new                # Initialize the prev_data variable
-
         row_limit = mri.rpt_options && mri.rpt_options[:row_limit] ? mri.rpt_options[:row_limit] : 0
         save_val = :_undefined_                                 # Hang on to the current group value
         group_text = nil                                        # Optionally override what gets displayed for the group (i.e. Chargeback)
@@ -102,9 +102,8 @@ module ReportFormatter
         output << group_rows(save_val, mri.col_order.length, group_text)
         output << group_rows(:_total_, mri.col_order.length)
       end
-
-      output << '</tbody>'
     end
+    private :build_html_rows
 
     # Generate grouping rows for the passed in grouping value
     def group_rows(group, col_count, group_text = nil)

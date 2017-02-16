@@ -1,18 +1,6 @@
 module ContainersCommonMixin
   extend ActiveSupport::Concern
 
-  def show
-    # fix breadcrumbs - remove displaying 'topology' when navigating to any container related entity summary page
-    if @breadcrumbs.present? && (@breadcrumbs.last[:name].eql? 'Topology')
-      @breadcrumbs.clear
-    end
-    @display = params[:display] || "main" unless pagination_or_gtl_request?
-    @lastaction = "show"
-    @showtype = "main"
-    @record = identify_record(params[:id])
-    show_container(@record, controller_name, display_name)
-  end
-
   def button
     @edit = session[:edit]                          # Restore @edit for adv search box
     params[:display] = @display if ["#{params[:controller]}s"].include?(@display)  # displaying container_*
@@ -41,99 +29,6 @@ module ContainersCommonMixin
   end
 
   private
-
-  def display_name
-    ui_lookup(:tables => @record.class.base_class.name)
-  end
-
-  def show_container(record, controller_name, display_name)
-    return if record_no_longer_exists?(record)
-
-    @gtl_url = "/show"
-    drop_breadcrumb({:name => display_name,
-                     :url  => "/#{controller_name}/show_list?page=#{@current_page}&refresh=y"},
-                    true)
-    if %w(main summary_only).include? @display
-      get_tagdata(@record)
-      drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => record.name},
-                      :url  => "/#{controller_name}/show/#{record.id}")
-      set_summary_pdf_data if @display == 'summary_only'
-    elsif @display == "timeline"
-      @showtype = "timeline"
-      session[:tl_record_id] = params[:id] if params[:id]
-      @lastaction = "show_timeline"
-      @timeline = @timeline_filter = true
-      tl_build_timeline # Create the timeline report
-      drop_breadcrumb(:name => _("Timelines"),
-                      :url  => "/#{controller_name}/show/#{record.id}" \
-                               "?refresh=n&display=timeline")
-    elsif @display == "performance"
-      @showtype = "performance"
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => record.name},
-                      :url  => "/#{controller_name}/show/#{record.id}" \
-                               "?display=#{@display}&refresh=n")
-      perf_gen_init_options # Intialize options, charts are generated async
-    elsif @display == "compliance_history"
-      count = params[:count] ? params[:count].to_i : 10
-      update_session_for_compliance_history(record, count)
-      drop_breadcrumb_for_compliance_history(record, controller_name, count)
-      @showtype = @display
-    elsif @display == "container_groups" || session[:display] == "container_groups" && params[:display].nil?
-      show_container_display(record, "container_groups", ContainerGroup)
-    elsif @display == "containers"
-      show_container_display(record, "containers", Container, "container_group")
-    elsif @display == "container_services" || session[:display] == "container_services" && params[:display].nil?
-      show_container_display(record, "container_services", ContainerService)
-    elsif @display == "container_routes" || session[:display] == "container_routes" && params[:display].nil?
-      show_container_display(record, "container_routes", ContainerRoute)
-    elsif @display == "container_replicators" || session[:display] == "container_replicators" && params[:display].nil?
-      show_container_display(record, "container_replicators", ContainerReplicator)
-    elsif @display == "container_projects" || session[:display] == "container_projects" && params[:display].nil?
-      show_container_display(record, "container_projects", ContainerProject)
-    elsif @display == "container_images" || session[:display] == "container_images" && params[:display].nil?
-      show_container_display(record, "container_images", ContainerImage)
-    elsif @display == "container_image_registries" ||
-          session[:display] == "container_image_registries" &&
-          params[:display].nil?
-      show_container_display(record, "container_image_registries", ContainerImageRegistry)
-    elsif @display == "container_nodes" || session[:display] == "container_nodes" && params[:display].nil?
-      show_container_display(record, "container_nodes", ContainerNode)
-    elsif @display == "persistent_volumes" || session[:display] == "persistent_volumes" && params[:display].nil?
-      show_container_display(record, "persistent_volumes", PersistentVolume)
-    elsif @display == "container_builds" || session[:display] == "container_builds" && params[:display].nil?
-      show_container_display(record, "container_builds", ContainerBuild)
-    elsif @display == "container_templates" || session[:display] == "container_templates" && params[:display].nil?
-      show_container_display(record, "container_templates", ContainerTemplate)
-    end
-
-    replace_gtl_main_div if pagination_request?
-  end
-
-  def update_session_for_compliance_history(record, count)
-    @ch_tree = TreeBuilderComplianceHistory.new(:ch_tree, :ch, @sb, true, record)
-    session[:ch_tree] = @ch_tree.tree_nodes
-    session[:tree_name] = "ch_tree"
-    session[:squash_open] = (count == 1)
-  end
-
-  def drop_breadcrumb_for_compliance_history(record, controller_name, count)
-    if count == 1
-      drop_breadcrumb(:name => _("%{name} (Latest Compliance Check)") % {:name => record.name},
-                      :url  => "/#{controller_name}/show/#{record.id}?display=#{@display}&refresh=n")
-    else
-      drop_breadcrumb(
-        :name => _("%{name} (Compliance History - Last %{number} Checks)") % {:name => record.name, :number => count},
-        :url  => "/#{controller_name}/show/#{record.id}?display=#{@display}&refresh=n")
-    end
-  end
-
-  def show_container_display(record, display, klass, alt_controller_name = nil)
-    title = ui_lookup(:tables => display)
-    drop_breadcrumb(:name => _("%{name} (All %{title})") % {:name => record.name, :title => title},
-                    :url  => "/#{alt_controller_name || controller_name}/show/#{record.id}?display=#{@display}")
-    @view, @pages = get_view(klass, :parent => record)  # Get the records (into a view) and the paginator
-    @showtype = @display
-  end
 
   # Scan all selected or single displayed image(s)
   def scan_images
@@ -213,8 +108,19 @@ module ContainersCommonMixin
   included do
     menu_section :cnt
 
-    # include also generic show_list and index methods
     include Mixins::GenericListMixin
     include Mixins::GenericSessionMixin
+    include Mixins::GenericShowMixin
+    include Mixins::MoreShowActions
+  end
+
+  class_methods do
+    def display_methods
+      %w(
+        container_groups containers container_services container_routes container_replicators
+        container_projects container_images container_image_registries container_nodes
+        persistent_volumes container_builds container_templates
+      )
+    end
   end
 end

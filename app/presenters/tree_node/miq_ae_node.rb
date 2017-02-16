@@ -2,6 +2,7 @@ module TreeNode
   class MiqAeNode < Node
     set_attribute(:title) { text }
     set_attribute(:tooltip) { "#{ui_lookup(:model => model)}: #{text}" }
+    set_attribute(:icon) { @object.decorate.fonticon }
 
     private
 

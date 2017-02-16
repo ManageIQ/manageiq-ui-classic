@@ -29,10 +29,7 @@ class HostAggregateController < ApplicationController
       set_summary_pdf_data if @display == 'summary_only'
 
     when "performance"
-      @showtype = "performance"
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @host_aggregate.name},
-                      :url  => "/host_aggregate/show/#{@host_aggregate.id}?display=#{@display}&refresh=n")
-      perf_gen_init_options # Intialize perf chart options, charts will be generated async
+      show_performance
 
     when "ems_cloud"
       drop_breadcrumb(:name => _("%{name} (%{table}(s))") % {:name  => @host_aggregate.name,
@@ -58,14 +55,8 @@ class HostAggregateController < ApplicationController
       @showtype = @display
 
     when "timeline"
-      @showtype = "timeline"
-      session[:tl_record_id] = params[:id] if params[:id]
       @record = find_by_id_filtered(HostAggregate, session[:tl_record_id])
-      @timeline = @timeline_filter = true
-      @lastaction = "show_timeline"
-      tl_build_timeline # Create the timeline report
-      drop_breadcrumb(:name => _("Timelines"),
-                      :url  => "/host_aggregate/show/#{@record.id}?refresh=n&display=timeline")
+      show_timeline
     end
 
     replace_gtl_main_div if pagination_request?

@@ -1,0 +1,4 @@
+= render(:partial => "layouts/performance")
+
+:javascript
+  ManageIQ.afterOnload = "miqAsyncAjax('#{url_for(:action => @ajax_action, :id => @record.id)}');"

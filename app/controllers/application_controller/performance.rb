@@ -1441,7 +1441,7 @@ module ApplicationController::Performance
     rpt ||= @sb[:chart_reports]               # Set default if not passed in
     title = rpt.title
     rpt.title = @title.gsub(/Capacity & Utilization/, "#{@perf_options[:typ]} C & U") + " - #{title}"
-    return if @perf_options[:ght_type] == "graph" || @perf_options[:index].nil? # Don't show html for graph setting or if multiple charts are showing
+    return if @perf_options[:index].nil? # Don't show html for graph setting or if multiple charts are showing
     report = rpt.class == Array ? rpt.first : rpt # Get the first or only report
     report = perf_remove_report_cols(report, charts)  # Remove cols that are not in the current chart
     report.to_html                     # Create html from the chart report

@@ -5,6 +5,6 @@ describe TreeNode::MiqAeInstance do
   let(:object) { FactoryGirl.create(:miq_ae_instance) }
 
   include_examples 'TreeNode::Node#key prefix', 'aei-'
-  include_examples 'TreeNode::Node#icon', 'product product-ae_instance'
+  include_examples 'TreeNode::Node#icon', 'fa fa-file-text-o'
   include_examples 'TreeNode::Node#tooltip prefix', 'Automate Instance'
 end

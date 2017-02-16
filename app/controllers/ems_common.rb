@@ -3,6 +3,7 @@ module EmsCommon
 
   included do
     include Mixins::GenericSessionMixin
+    include Mixins::MoreShowActions
 
     helper_method :textual_group_list
     private :textual_group_list
@@ -34,16 +35,6 @@ module EmsCommon
     self.x_active_tree = :vat_tree
   end
 
-  def show_timeline
-    @showtype = "timeline"
-    session[:tl_record_id] = params[:id] if params[:id]
-    @record = find_by_id_filtered(model, session[:tl_record_id])
-    @timeline = @timeline_filter = true
-    @lastaction = "show_timeline"
-    tl_build_timeline # Create the timeline report
-    drop_breadcrumb(:name => _("Timelines"), :url => show_link(@record, :refresh => "n", :display => "timeline"))
-  end
-
   def show_dashboard
     @showtype = "dashboard"
     @lastaction = "show_dashboard"
@@ -67,13 +58,6 @@ module EmsCommon
     @showtype = "topology"
     @lastaction = "show_topology"
     drop_breadcrumb(:name => @ems.name + _(" (Topology)"), :url => show_link(@ems))
-  end
-
-  def show_performance
-    @showtype = "performance"
-    drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @record.name},
-                    :url  => "/#{@table_name}/show/#{@record.id}?display=#{@display}&refresh=n")
-    perf_gen_init_options # Initialize perf chart options, charts will be generated async
   end
 
   def view_setup_params
