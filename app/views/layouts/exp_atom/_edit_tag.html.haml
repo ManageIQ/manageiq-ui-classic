@@ -5,11 +5,7 @@
     exp_model       Model in use for this expression
 
 - opts = ["<#{_('Choose')}>"]
-- if exp_model == '_display_filter_'
-  -# Use list in @edit for reporting display filter
-  - opts += @edit[@expkey][:exp_available_tags]
-- else
-  - opts += @edit[@expkey].exp_available_tags
+- opts += @edit[@expkey].tags_for_display_filters
 
 %br
 

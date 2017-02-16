@@ -52,6 +52,14 @@ module ApplicationController::Filter
       end
     end
 
+    def tags_for_display_filters
+      if exp_model == '_display_filter_'
+        exp_available_tags
+      else
+        available_tags
+      end
+    end
+
     # Get the dynamic list of tags for the expression atom editor
     def available_tags
       # Generate tag list unless already generated during this transaction
