@@ -374,11 +374,7 @@ describe ChargebackController do
       end
 
       before do
-        [ChargebackRateDetailCurrency, ChargebackRate].each do |k|
-          # This is unfortunate try and I am sorry. After repo split, some design clean-ups are more difficult
-          # than before. I'll remove the `try` asap (after other prs are merged, no eta obviously).
-          k.try(:seed)
-        end
+        [ChargebackRateDetailCurrency, ChargebackRate].each(&:seed)
       end
 
       it "adds new chargeback rate using default values" do
