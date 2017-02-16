@@ -5,13 +5,9 @@
     - when "main"
         = render :partial => "layouts/textual_groups_generic"
     - when "timeline"
-        = render :partial => "layouts/tl_show"
-        :javascript
-            ManageIQ.afterOnload = "miqAsyncAjax('#{url_for(:action => @ajax_action, :id => @record)}');"
+        = render :partial => "layouts/tl_show_async"
     - when "performance"
-        = render :partial => "layouts/performance"
-        :javascript
-            ManageIQ.afterOnload = "miqAsyncAjax('#{url_for(:action => @ajax_action, :id => @record)}');"
+        = render :partial => "layouts/performance_async"
     - when "compliance_history"
         = render :partial => "shared/views/#{@showtype}"
     - else

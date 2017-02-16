@@ -16,13 +16,9 @@
     = raise 'compare partial called through "show"'
     = render :partial => "layouts/compare"
   - elsif @showtype == "timeline"
-    = render :partial => "layouts/tl_show"
-    :javascript
-      ManageIQ.afterOnload = "miqAsyncAjax('#{url_for(:action => @ajax_action, :id => @record)}');"
+    = render :partial => "layouts/tl_show_async"
   - elsif @showtype == "performance"
-    = render(:partial => "layouts/performance")
-    :javascript
-      ManageIQ.afterOnload = "miqAsyncAjax('#{url_for(:action => @ajax_action, :id => @record)}');"
+    = render(:partial => "layouts/performance_async")
   - elsif @showtype == "dialog_provision"
     = render :partial => "shared/dialogs/dialog_provision"
   - elsif @showtype == "config"
