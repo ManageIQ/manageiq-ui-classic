@@ -440,11 +440,10 @@ module QuadiconHelper
   def render_resource_pool_quadicon(item, options)
     img = item.vapp ? "100/vapp.png" : "100/resource_pool.png"
     size = options[:size]
-    width = options[:size] == 150 ? 54 : 35
     output = []
 
     output << flobj_img_simple(options[:size])
-    output << flobj_img_simple(width * 1.8, img, "e72")
+    output << flobj_img_simple(adjusted_quad_size, img, "e72")
     output << flobj_img_simple(size, '100/shield.png', "g72") unless item.get_policies.empty?
 
     unless options[:typ] == :listnav
@@ -464,7 +463,6 @@ module QuadiconHelper
   #
   def render_host_quadicon(item, options)
     size = options[:size]
-    width = options[:size] == 150 ? 54 : 35
     output = []
 
     if settings(:quadicons, :host)
@@ -477,7 +475,7 @@ module QuadiconHelper
       output << flobj_img_simple(size, '100/shield.png', "g72") unless item.get_policies.empty?
     else
       output << flobj_img_simple(size)
-      output << flobj_img_simple(width * 1.8, img_for_host_vendor(item), "e72")
+      output << flobj_img_simple(adjusted_quad_size, img_for_host_vendor(item), "e72")
     end
 
     if options[:typ] == :listnav
@@ -505,7 +503,6 @@ module QuadiconHelper
   #
   def render_ext_management_system_quadicon(item, options)
     size = options[:size]
-    width = options[:size] == 150 ? 54 : 35
     output = []
 
     if settings(:quadicons, db_for_quadicon)
@@ -517,7 +514,7 @@ module QuadiconHelper
       output << flobj_img_simple(size, '100/shield.png', "g72") unless item.get_policies.empty?
     else
       output << flobj_img_simple(size, "layout/base-single.png")
-      output << flobj_img_simple(width * 1.8, "svg/vendor-#{h(item.image_name)}.svg", "e72")
+      output << flobj_img_simple(adjusted_quad_size, "svg/vendor-#{h(item.image_name)}.svg", "e72")
     end
 
     if options[:typ] == :listnav
@@ -544,7 +541,7 @@ module QuadiconHelper
     output = []
 
     output << flobj_img_simple(size, "layout/base-single.png")
-    output << flobj_img_simple(size * 1.8, "100/emscluster.png", "e72")
+    output << flobj_img_simple(adjusted_quad_size, "100/emscluster.png", "e72")
     output << flobj_img_simple(size, "100/shield.png", "g72") unless item.get_policies.empty?
 
     unless options[:typ] == :listnav
@@ -611,7 +608,7 @@ module QuadiconHelper
     output = []
 
     output << flobj_img_simple(size, "layout/base-single.png")
-    output << flobj_img_simple(size * 1.8, "100/#{@listicon}.png", "e72")
+    output << flobj_img_simple(adjusted_quad_size, "100/#{@listicon}.png", "e72")
 
     unless options[:typ] == :listnav
       title = case @listicon
@@ -745,15 +742,13 @@ module QuadiconHelper
         output << flobj_p_simple("d72", h(item.v_total_snapshots))
       end
     else
-      width = options[:size] == 150 ? 54 : 35
-      adjusted_width = width * 1.8
       output << flobj_img_simple(size, "layout/base-single.png")
 
       if quadicon_policy_sim? && !session[:policies].empty?
-        output << flobj_img_simple(adjusted_width, img_for_compliance(item), "e72")
+        output << flobj_img_simple(adjusted_quad_size, img_for_compliance(item), "e72")
       end
 
-      output << flobj_img_simple(adjusted_width, img_for_vendor(item), "e72")
+      output << flobj_img_simple(adjusted_quad_size, img_for_vendor(item), "e72")
     end
 
     unless options[:typ] == :listnav
@@ -882,5 +877,10 @@ module QuadiconHelper
       attributes[:id] = "v-#{record.id}"
     end
     attributes
+  end
+
+  # single quadicon width and height in pixels; also used from _compare_sections
+  def self.adjusted_quad_size
+    64
   end
 end

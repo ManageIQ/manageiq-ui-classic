@@ -14,8 +14,6 @@
         - height = "100px"
       %div{:style => "position: relative; width: 152px; height: #{height}; z-index: 0; margin: 0px auto;"}
         - if %w(MiqTemplate VmOrTemplate Vm).include?(@sb[:compare_db])
-          - width = size == 150 ? 54 : 35
-          - height = width
           - if settings(:quadicons, :vm)
             .flobj
               %img{:src => image_path("layout/base.png")}
@@ -40,15 +38,13 @@
             .flobj
               %img{:src => image_path("layout/base-single.png")}
             %div{:class => "flobj e72"}
-              %img{:src => image_path("svg/vendor-#{h(@drift_obj.vendor.downcase)}.svg"), :width => "#{width * 1.8}", :height => "#{height * 1.8}"}
+              %img{:src => image_path("svg/vendor-#{h(@drift_obj.vendor.downcase)}.svg"), :width => QuadiconHelper.adjusted_quad_size, :height => QuadiconHelper.adjusted_quad_size}
           - if @drift_obj.get_policies.length > 0
             %div{:class => "flobj g72"}
               %img{:src => image_path('100/shield.png')}
           .flobj
             %img{:src => image_path("layout/reflection.png")}
         - elsif @sb[:compare_db] == "Host"
-          - width = size == 150 ? 54 : 35
-          - height = width
           - if settings(:quadicons, :host)
             .flobj
               %img{:src => image_path("layout/base.png")}
@@ -64,7 +60,7 @@
             .flobj
               %img{:src => image_path("layout/base-single.png")}
             %div{:class => "flobj e72"}
-              %img{:src => image_path("svg/vendor-#{h(@host.vmm_vendor_display.downcase)}.svg"), :width => "#{width * 1.8}", :height => "#{height * 1.8}"}
+              %img{:src => image_path("svg/vendor-#{h(@host.vmm_vendor_display.downcase)}.svg"), :width => QuadiconHelper.adjusted_quad_size, :height => QuadiconHelper.adjusted_quad_size}
           - if @host.number_of(:get_policies) > 0
             %div{:class => "flobj g72"}
               %img{:src => image_path('100/shield.png')}
