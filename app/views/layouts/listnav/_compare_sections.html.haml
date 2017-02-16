@@ -35,8 +35,7 @@
           - else
             .flobj
               %img{:src => image_path("layout/base-single.png")}
-            %div{:class => "flobj e72"}
-              %img{:src => image_path("svg/vendor-#{h(@drift_obj.vendor.downcase)}.svg"), :width => QuadiconHelper.adjusted_quad_size, :height => QuadiconHelper.adjusted_quad_size}
+            = flobj_img_small("svg/vendor-#{h(@drift_obj.vendor.downcase)}.svg", "e72")
           - if @drift_obj.get_policies.length > 0
             %div{:class => "flobj g72"}
               %img{:src => image_path('100/shield.png')}
@@ -57,8 +56,7 @@
           - else
             .flobj
               %img{:src => image_path("layout/base-single.png")}
-            %div{:class => "flobj e72"}
-              %img{:src => image_path("svg/vendor-#{h(@host.vmm_vendor_display.downcase)}.svg"), :width => QuadiconHelper.adjusted_quad_size, :height => QuadiconHelper.adjusted_quad_size}
+            = flobj_img_small("svg/vendor-#{h(@host.vmm_vendor_display.downcase)}.svg", "e72")
           - if @host.number_of(:get_policies) > 0
             %div{:class => "flobj g72"}
               %img{:src => image_path('100/shield.png')}

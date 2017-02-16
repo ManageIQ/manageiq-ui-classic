@@ -397,7 +397,7 @@ module QuadiconHelper
   end
 
   def flobj_img_small(image = nil, cls = '')
-    flobj_img_simple(image, cls, adjusted_quad_size)
+    flobj_img_simple(image, cls, 64)
   end
 
   def flobj_p_simple(cls, text)
@@ -858,10 +858,5 @@ module QuadiconHelper
       attributes[:id] = "v-#{record.id}"
     end
     attributes
-  end
-
-  # single quadicon width and height in pixels; also used from _compare_sections
-  def self.adjusted_quad_size
-    64
   end
 end
