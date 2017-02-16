@@ -28,7 +28,7 @@
                 - if chart_data[chart_index][:zoom_url]
                   %div
                     %a{:href => '#', :onClick => chart_data[chart_index][:zoom_url]}
-                      %img{:src => image_path(zoom_icon(chart_data[chart_index][:zoom_url]))}
+                      %i{:class => zoom_icon(chart_data[chart_index][:zoom_url])}
           %ul.dropdown-menu{"role"            => "menu",
                           "aria-labelledby" => "miq_chart_#{chart_set}_#{chart_index}_2",
                           "id"              => "miq_chartmenu_#{chart_set}_#{chart_index}_2",
@@ -51,7 +51,7 @@
           - if chart_data[chart_index][:zoom_url]
             %div
               %a{:href => '#', :onClick => chart_data[chart_index][:zoom_url]}
-                %img{:src => image_path(zoom_icon(chart_data[chart_index][:zoom_url]))}
+                %i{:class => zoom_icon(chart_data[chart_index][:zoom_url])}
       %ul.dropdown-menu{"role"            => "menu",
                         "aria-labelledby" => "miq_chart_#{chart_set}_#{chart_index}",
                         "id"              => "miq_chartmenu_#{chart_set}_#{chart_index}",
