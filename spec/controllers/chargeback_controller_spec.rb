@@ -353,9 +353,9 @@ describe ChargebackController do
         expect(rate_detail.detail_currency.name).to eq(rate_detail_hash[:type_currency])
 
         if rate_detail_hash[:measure].nil?
-          expect(rate_detail.detail_measure).to be_nil
+          expect(rate_detail.chargeable_field.detail_measure).to be_nil
         else
-          expect(rate_detail.detail_measure.name).to eq(rate_detail_hash[:measure])
+          expect(rate_detail.chargeable_field.detail_measure.name).to eq(rate_detail_hash[:measure])
         end
 
         rate_detail.chargeback_tiers.each_with_index do |tier, tier_index|
@@ -466,7 +466,7 @@ describe ChargebackController do
           rate_detail_hash[:tiers].push(tier_hash)
         end
 
-        rate_detail_hash[:measure] = rate_detail.detail_measure.name
+        rate_detail_hash[:measure] = rate_detail.chargeable_field.detail_measure.name
         rate_detail_hash[:type_currency] = rate_detail.detail_currency.name
         origin_chargeback_rate_hash[:rates].push(rate_detail_hash)
       end
