@@ -326,7 +326,7 @@
     .form-horizontal
       .form-group
         %label.control-label.col-md-2
-          = _("Ansible Playbook:")
+          = _("Playbook Catalog Item")
         .col-md-8
           = select_tag('service_template_id',
           options_for_select([["<#{_('Choose')}>", nil]] + @edit[:ansible_playbooks],
@@ -338,7 +338,7 @@
             miqSelectPickerEvent('service_template_id', '#{url}')
       .form-group
         %label.control-label.col-md-2
-          = _("Inventory:")
+          = _("Inventory")
         .col-md-8
           = radio_button_tag('inventory', "localhost", true,
             "title"            => _('Run on localhost'),
