@@ -1,13 +1,13 @@
 - auth_mode = ::Settings.authentication.mode
 
 %span#badge
-  %img{:src => ::Settings.server.custom_logo ? '/upload/custom_logo.png' : image_path("login-screen-logo.png")}
+  %img{:src => ::Settings.server.custom_logo ? '/upload/custom_logo.png' : image_path("layout/login-screen-logo.png")}
 
 .container
   .row
     .col-md-12
       #brand
-        %img{:src => image_path("brand.svg"), :alt => "ManageIQ"}
+        %img{:src => image_path("layout/brand.svg"), :alt => "ManageIQ"}
 
     .col-md-6.col-lg-5.login
       .form-horizontal#login_div

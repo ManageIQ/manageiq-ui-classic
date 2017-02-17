@@ -78,13 +78,13 @@ describe MiqAeToolsController do
   describe "#automate_json" do
     include_context "valid session"
 
-    let(:automate_import_json_serializer) { double("AutomateImportJsonSerializer") }
+    let(:automate_import_json_serializer) { double("AutomateImportJsonSerializerService") }
     let(:import_file_upload) { double("ImportFileUpload") }
     let(:params) { {:import_file_upload_id => "123"} }
 
     before do
       bypass_rescue
-      allow(AutomateImportJsonSerializer).to receive(:new).and_return(automate_import_json_serializer)
+      allow(AutomateImportJsonSerializerService).to receive(:new).and_return(automate_import_json_serializer)
       allow(ImportFileUpload).to receive(:find).with("123").and_return(import_file_upload)
       allow(automate_import_json_serializer).to receive(:serialize).with(import_file_upload).and_return("the json")
     end

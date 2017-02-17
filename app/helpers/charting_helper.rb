@@ -32,6 +32,6 @@ module ChartingHelper
 
   def zoom_icon(zoom_url)
     # could be just url or something like "javascript:miqAsyncAjax('/host/perf_chart_chooser/10000000000017?chart_idx=0')"
-    zoom_url =~ /clear('\))?$/ ? '24/chart_unzoom.png' : '16/chart_zoom.png'
+    zoom_url =~ /clear('\))?$/ ? 'fa fa-search-minus fa-lg' : 'fa fa-search-plus fa-lg'
   end
 end
