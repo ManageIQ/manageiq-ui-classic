@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', '$scope', 'pglogicalReplicationFormId', 'miqService', '$modal', function($http, $scope, pglogicalReplicationFormId, miqService, $modal) {
+ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', '$scope', 'pglogicalReplicationFormId', 'miqService', function($http, $scope, pglogicalReplicationFormId, miqService) {
   var init = function() {
     $scope.pglogicalReplicationModel = {
       replication_type: 'none',
@@ -297,69 +297,6 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
       return false;
   };
 
-  var $ctrl = this;
-
-  $ctrl.animationsEnabled = true;
-  $ctrl.ssh_params = {ssh_host: "", ssh_user: "", ssh_password: ""};
-
-  $scope.isCentralAdminEnabled = function(idx) {
-    return $scope.pglogicalReplicationModel.subscriptions[idx].auth_key_configured;
-  };
-
-  $scope.enableCentralAdmin = function(idx) {
-    var data = {};
-    data["provider_region"] = $scope.pglogicalReplicationModel.subscriptions[idx].provider_region;
-    data["ssh_host"] = $ctrl.ssh_params.ssh_host;
-    data["ssh_user"] = $ctrl.ssh_params.ssh_user;
-    data["ssh_password"] = $ctrl.ssh_params.ssh_password;
-
-    miqService.sparkleOn();
-    var url = "/ops/enable_central_admin";
-    miqService.miqAjaxButton(url, data);
-  };
-
-  $scope.disableCentralAdmin = function(idx) {
-    if (confirm("Are you sure you want to Disable Central Admin for this Region?")){
-      miqService.sparkleOn();
-      var url = "/ops/disable_central_admin/";
-      var data = {};
-      data["provider_region"] = $scope.pglogicalReplicationModel.subscriptions[idx].provider_region;
-      miqService.miqAjaxButton(url, data);
-    }
-  };
-
-  $scope.launchAuthKeyModal = function (idx) {
-    $ctrl.ssh_params.ssh_host = $scope.pglogicalReplicationModel.subscriptions[idx].remote_ws_address;
-    $ctrl.ssh_params.ssh_user = "";
-    $ctrl.ssh_params.ssh_password = "";
-
-    var modalInstance = $modal.open({
-      animation: $ctrl.animationsEnabled,
-      ariaLabelledBy: 'modal-title',
-      ariaDescribedBy: 'modal-body',
-      templateUrl: 'authkeyModalForm.html',
-      controller: 'authkeyModalFormController',
-      controllerAs: '$ctrl',
-      resolve: {
-        ssh_params: function () {
-          return $ctrl.ssh_params;
-        }
-      }
-    });
-
-    modalInstance.result.then(function (ssh_params) {
-      $ctrl.ssh_params.ssh_host = ssh_params.ssh_host;
-      $ctrl.ssh_params.ssh_user = ssh_params.ssh_user;
-      $ctrl.ssh_params.ssh_password = ssh_params.ssh_password;
-      $scope.enableCentralAdmin(idx);
-    }, function () {
-      var dismissed_at = new Date();
-    });
-  };
-
-  $ctrl.toggleAnimation = function () {
-    $ctrl.animationsEnabled = !$ctrl.animationsEnabled;
-  };
 
   function getPgLogicalFormData(response) {
     var data = response.data;
