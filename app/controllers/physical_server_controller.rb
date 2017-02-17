@@ -45,28 +45,66 @@ class PhysicalServerController  < ApplicationController
         servers.push(PhysicalServer.find_by_id(server_id))
       end
       if server_ids.empty?
-        _log.error("No servers to perform the #{button_pressed} action on")
+        display_error_message("No server IDs found for the selected servers")
       end
     # A single server
     else 
       if server_id.nil? || PhysicalServer.find_by_id(server_id).nil?
-        _log.error("No server to perform the #{button_pressed} action on")
+        display_error_message("No server ID found for the current server")
       else
         servers.push(PhysicalServer.find_by_id(server_id))
       end
     end
 
     # Apply the selected action to the servers
+    action_str = ""
     servers.each do |server|
       case button_pressed
-        when "physical_server_power_on" then server.power_on
-        when "physical_server_power_off" then server.power_off
-        when "physical_server_restart" then server.restart
-        when "physical_server_blink_loc_led" then server.blink_loc_led
-        when "physical_server_turn_on_loc_led" then server.turn_on_loc_led
-        when "physical_server_turn_off_loc_led" then server.turn_off_loc_led
-        else _log.error("Unknown action: #{button_pressed}")
+        when "physical_server_power_on"
+          server.power_on
+          action_str = "Power On"
+        when "physical_server_power_off"
+          server.power_off
+          action_str = "Power Off"
+        when "physical_server_restart" 
+          server.restart
+          action_str = "Restart"
+        when "physical_server_blink_loc_led" 
+          server.blink_loc_led
+          action_str = "Blink LED"
+        when "physical_server_turn_on_loc_led"
+          server.turn_on_loc_led
+          action_str = "Turn On LED"
+        when "physical_server_turn_off_loc_led" 
+          server.turn_off_loc_led
+          action_str = "Turn Off LED"
+        else
+          display_error_message("Unknown action: #{button_pressed}")
       end
     end
+
+    # If the action string is not empty, the action was successfully initiated
+    if action_str != ""
+      msg = "Successfully initiated the #{action_str} action"
+      display_success_message(msg)
+    end
+  end
+
+  private
+
+  # Display an error message
+  def display_error_message(msg)
+    display_message(msg, :error)
+  end
+
+  # Display a success message
+  def display_success_message(msg)
+    display_message(msg, :success)
+  end
+
+  # Display a message
+  def display_message(msg, level)
+    add_flash(_(msg), level)
+    render_flash
   end
 end
