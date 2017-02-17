@@ -191,7 +191,7 @@ class MiddlewareServerController < ApplicationController
       operation_info = ALL_OPERATIONS.fetch(operation)
       run_server_param_operation(operation_info, selected_servers)
     else
-      msg = _("Unknown server operation: ") + operation.to_s
+      msg = _("Unknown server operation: %{operation}") % {:operation => operation.to_s}
       render :json => {:status => :error, :msg => msg}
     end
   end

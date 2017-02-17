@@ -195,7 +195,8 @@ function ServerGroupOpsService($http, $q) {
 
 function ServerOpsServiceFactory($http, $q, isGroup) {
   var runOperation = function runOperation(id, operation, timeout) {
-    var errorMsg = _('Error running operation on this server' + (isGroup ? '.' : ' group.'));
+    var errorMsg = isGroup ? _('Error running operation on this server.') 
+                           : _('Error running operation on this server group.');
     var deferred = $q.defer();
     var payload = {
       'id': id,
