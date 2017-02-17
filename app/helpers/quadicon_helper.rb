@@ -420,7 +420,7 @@ module QuadiconHelper
       link_opts = {:sparkle => true, :remote => true}
     end
 
-    output << content_tag(:div, :class => "flobj e72") do
+    output << content_tag(:div, :class => "flobj e") do
       quadicon_link_to(url, **link_opts) do
         quadicon_reflection_img(:path => item.decorate.listicon_image)
       end
@@ -436,8 +436,8 @@ module QuadiconHelper
     output = []
 
     output << flobj_img_simple
-    output << flobj_img_small(img, "e72")
-    output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
+    output << flobj_img_small(img, "e")
+    output << flobj_img_simple('100/shield.png', "g") unless item.get_policies.empty?
 
     unless options[:typ] == :listnav
       # listnav, no clear image needed
@@ -460,14 +460,14 @@ module QuadiconHelper
     if settings(:quadicons, :host)
       output << flobj_img_simple("layout/base.png")
 
-      output << flobj_p_simple("a72", item.vms.size)
-      output << flobj_img_simple("svg/currentstate-#{h(item.normalized_state.downcase)}.svg", "b72")
-      output << flobj_img_simple(img_for_host_vendor(item), "c72")
-      output << flobj_img_simple(img_for_auth_status(item), "d72")
-      output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
+      output << flobj_p_simple("a", item.vms.size)
+      output << flobj_img_simple("svg/currentstate-#{h(item.normalized_state.downcase)}.svg", "b")
+      output << flobj_img_simple(img_for_host_vendor(item), "c")
+      output << flobj_img_simple(img_for_auth_status(item), "d")
+      output << flobj_img_simple('100/shield.png', "g") unless item.get_policies.empty?
     else
       output << flobj_img_simple
-      output << flobj_img_small(img_for_host_vendor(item), "e72")
+      output << flobj_img_small(img_for_host_vendor(item), "e")
     end
 
     if options[:typ] == :listnav
@@ -498,14 +498,14 @@ module QuadiconHelper
 
     if settings(:quadicons, db_for_quadicon)
       output << flobj_img_simple("layout/base.png")
-      output << flobj_p_simple("a72", item.kind_of?(EmsCloud) ? item.total_vms : item.hosts.size)
-      output << flobj_p_simple("b72", item.total_miq_templates) if item.kind_of?(EmsCloud)
-      output << flobj_img_simple("svg/vendor-#{h(item.image_name)}.svg", "c72")
-      output << flobj_img_simple(img_for_auth_status(item), "d72")
-      output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
+      output << flobj_p_simple("a", item.kind_of?(EmsCloud) ? item.total_vms : item.hosts.size)
+      output << flobj_p_simple("b", item.total_miq_templates) if item.kind_of?(EmsCloud)
+      output << flobj_img_simple("svg/vendor-#{h(item.image_name)}.svg", "c")
+      output << flobj_img_simple(img_for_auth_status(item), "d")
+      output << flobj_img_simple('100/shield.png', "g") unless item.get_policies.empty?
     else
       output << flobj_img_simple("layout/base-single.png")
-      output << flobj_img_small("svg/vendor-#{h(item.image_name)}.svg", "e72")
+      output << flobj_img_small("svg/vendor-#{h(item.image_name)}.svg", "e")
     end
 
     if options[:typ] == :listnav
@@ -531,8 +531,8 @@ module QuadiconHelper
     output = []
 
     output << flobj_img_simple("layout/base-single.png")
-    output << flobj_img_small("100/emscluster.png", "e72")
-    output << flobj_img_simple("100/shield.png", "g72") unless item.get_policies.empty?
+    output << flobj_img_small("100/emscluster.png", "e")
+    output << flobj_img_simple("100/shield.png", "g") unless item.get_policies.empty?
 
     unless options[:typ] == :listnav
       # Listnav, no clear image needed
@@ -557,7 +557,7 @@ module QuadiconHelper
                end
 
     output << flobj_img_simple("layout/base-single.png")
-    output << flobj_img_simple(img_path, "e72")
+    output << flobj_img_simple(img_path, "e")
 
     unless options[:typ] == :listnav
       name = item.name
@@ -595,7 +595,7 @@ module QuadiconHelper
     output = []
 
     output << flobj_img_simple("layout/base-single.png")
-    output << flobj_img_small("100/#{@listicon}.png", "e72")
+    output << flobj_img_small("100/#{@listicon}.png", "e")
 
     unless options[:typ] == :listnav
       title = case @listicon
@@ -642,16 +642,16 @@ module QuadiconHelper
 
     if settings(:quadicons, :storage)
       output << flobj_img_simple("layout/base.png")
-      output << flobj_img_simple("100/storagetype-#{item.store_type.nil? ? "unknown" : h(item.store_type.to_s.downcase)}.png", "a72")
-      output << flobj_p_simple("b72", item.v_total_vms)
-      output << flobj_p_simple("c72", item.v_total_hosts)
+      output << flobj_img_simple("100/storagetype-#{item.store_type.nil? ? "unknown" : h(item.store_type.to_s.downcase)}.png", "a")
+      output << flobj_p_simple("b", item.v_total_vms)
+      output << flobj_p_simple("c", item.v_total_hosts)
 
       space_percent = item.free_space_percent_of_total == 100 ? 20 : ((item.free_space_percent_of_total.to_i + 2) / 5.25).round
-      output << flobj_img_simple("100/piecharts/datastore/#{h(space_percent)}.png", "d72")
+      output << flobj_img_simple("100/piecharts/datastore/#{h(space_percent)}.png", "d")
     else
       space_percent = (item.used_space_percent_of_total.to_i + 9) / 10
       output << flobj_img_simple("layout/base-single.png")
-      output << flobj_img_simple("100/datastore-#{h(space_percent)}.png", "e72")
+      output << flobj_img_simple("100/datastore-#{h(space_percent)}.png", "e")
     end
 
     if options[:typ] == :listnav
@@ -709,29 +709,29 @@ module QuadiconHelper
 
     if settings(:quadicons, item.class.base_model.name.underscore.to_sym)
       output << flobj_img_simple("layout/base.png")
-      output << flobj_img_simple("svg/os-#{h(item.os_image_name.downcase)}.svg", "a72")
-      output << flobj_img_simple("svg/currentstate-#{h(item.normalized_state.downcase)}.svg", "b72")
-      output << flobj_img_simple("svg/vendor-#{h(item.vendor.downcase)}.svg", "c72")
+      output << flobj_img_simple("svg/os-#{h(item.os_image_name.downcase)}.svg", "a")
+      output << flobj_img_simple("svg/currentstate-#{h(item.normalized_state.downcase)}.svg", "b")
+      output << flobj_img_simple("svg/vendor-#{h(item.vendor.downcase)}.svg", "c")
 
       unless item.get_policies.empty?
-        output << flobj_img_simple("100/shield.png", "g72")
+        output << flobj_img_simple("100/shield.png", "g")
       end
 
       if quadicon_policy_sim? && !session[:policies].empty? && quadicon_lastaction_is_policy_sim?
-        output << flobj_img_simple(img_for_compliance(item), "d72")
+        output << flobj_img_simple(img_for_compliance(item), "d")
       end
 
       unless quadicon_lastaction_is_policy_sim?
-        output << flobj_p_simple("d72", h(item.v_total_snapshots))
+        output << flobj_p_simple("d", h(item.v_total_snapshots))
       end
     else
       output << flobj_img_simple("layout/base-single.png")
 
       if quadicon_policy_sim? && !session[:policies].empty?
-        output << flobj_img_small(img_for_compliance(item), "e72")
+        output << flobj_img_small(img_for_compliance(item), "e")
       end
 
-      output << flobj_img_small(img_for_vendor(item), "e72")
+      output << flobj_img_small(img_for_vendor(item), "e")
     end
 
     unless options[:typ] == :listnav
