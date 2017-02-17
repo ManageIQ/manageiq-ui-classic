@@ -528,7 +528,7 @@ describe ChargebackController do
       flash_messages = assigns(:flash_array)
 
       expect(flash_messages.count).to eq(1)
-      expected_message = "'Allocated Memory in MB' chargeback tiers must start at zero and "
+      expected_message = "'Allocated Memory' chargeback tiers must start at zero and "
       expected_message += "not contain any gaps between start and prior end value."
       expect(flash_messages[0][:message]).to eq(expected_message)
     end
@@ -543,7 +543,7 @@ describe ChargebackController do
       flash_messages = assigns(:flash_array)
 
       expect(flash_messages.count).to eq(1)
-      expect(flash_messages[0][:message]).to eq("'Allocated Memory in MB' start is not a number")
+      expect(flash_messages[0][:message]).to eq("'Allocated Memory' start is not a number")
     end
 
     it "doesn't store rate and displays validation message with invalid input of tiers(ambiguous tiers)" do
@@ -559,7 +559,7 @@ describe ChargebackController do
       flash_messages = assigns(:flash_array)
 
       expect(flash_messages.count).to eq(1)
-      expected_message = "'Allocated Memory in MB' finish value must be greater than start value."
+      expected_message = "'Allocated Memory' finish value must be greater than start value."
       expect(flash_messages[0][:message]).to eq(expected_message)
     end
   end
