@@ -3,7 +3,8 @@ class ApplicationHelper::Button::GenericFeatureButton < ApplicationHelper::Butto
 
   def initialize(view_context, view_binding, instance_data, props)
     super
-    @feature = props[:options][:feature]
+    # TODO: use #dig when ruby2.2 is no longer supported
+    @feature = props.fetch(:options, {}).fetch(:feature, nil)
   end
 
   def visible?
