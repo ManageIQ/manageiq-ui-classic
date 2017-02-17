@@ -78,6 +78,8 @@ module Mixins
         {:template => 'layouts/_item'}
       when 'performance'
         {:template => 'layouts/_peformance_async'}
+      when 'timeline'
+        {:template => 'layouts/_tl_show_async'}
       else
         {:template => "layouts/_gtl", :locals => {:action_url => "show/#{@record.id}"}}
       end
