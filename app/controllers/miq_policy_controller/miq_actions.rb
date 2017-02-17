@@ -125,7 +125,7 @@ module MiqPolicyController::MiqActions
       @refresh_inventory = true
     end
 
-    @edit[:new][:options][:service_template_id] = params[:service_template_id] if params[:service_template_id]
+    @edit[:new][:options][:service_template_id] = params[:service_template_id].to_i if params[:service_template_id]
     @edit[:new][:inventory_type] = params[:inventory_manual] if params[:inventory_manual]
     @edit[:new][:inventory_type] = params[:inventory_localhost] if params[:inventory_localhost]
     @edit[:new][:inventory_type] = params[:inventory_event_target] if params[:inventory_event_target]
