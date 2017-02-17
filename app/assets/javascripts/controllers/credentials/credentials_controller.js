@@ -1,55 +1,58 @@
-ManageIQ.angular.app.controller('CredentialsController', ['$scope', function($scope) {
-  var init = function() {
-    $scope.bChangeStoredPassword = undefined;
-    $scope.bCancelPasswordChange = undefined;
+ManageIQ.angular.app.controller('CredentialsController', ['$scope', '$attrs', function($scope, $attrs) {
+  var vm = this;
+
+  vm.vmScope = function() {
+    return $scope.$eval($attrs.vmScope);
+  };
+
+
+    vm.bChangeStoredPassword = undefined;
+    vm.bCancelPasswordChange = undefined;
 
     $scope.$on('resetClicked', function(_e) {
-      $scope.resetClicked();
+      vm.resetClicked();
     });
 
     $scope.$on('setNewRecord', function(_event, args) {
-      $scope.newRecord = args ? args.newRecord : true;
+      vm.vmScope().newRecord = args ? args.newRecord : true;
     });
 
     $scope.$on('setUserId', function(_event, args) {
       if (args) {
-        $scope.modelCopy[args.userIdName] = args.userIdValue;
+        vm.vmScope().modelCopy[args.userIdName] = args.userIdValue;
       }
     });
 
-    if ($scope.formId == 'new') {
-      $scope.newRecord = true;
+    if (vm.vmScope().formId == 'new') {
+      vm.newRecord = true;
     } else {
-      $scope.newRecord = false;
-      $scope.bChangeStoredPassword = false;
-      $scope.bCancelPasswordChange = false;
+      vm.newRecord = false;
+      vm.bChangeStoredPassword = false;
+      vm.bCancelPasswordChange = false;
+    }
+
+  vm.changeStoredPassword = function() {
+    vm.bChangeStoredPassword = true;
+    vm.bCancelPasswordChange = false;
+  };
+
+  vm.cancelPasswordChange = function() {
+    if (vm.bChangeStoredPassword) {
+      vm.bCancelPasswordChange = true;
+      vm.bChangeStoredPassword = false;
     }
   };
 
-  $scope.changeStoredPassword = function() {
-    $scope.bChangeStoredPassword = true;
-    $scope.bCancelPasswordChange = false;
+  vm.showVerify = function(userid) {
+    return vm.vmScope().newRecord || (!vm.showChangePasswordLinks(userid)) || vm.bChangeStoredPassword;
   };
 
-  $scope.cancelPasswordChange = function() {
-    if ($scope.bChangeStoredPassword) {
-      $scope.bCancelPasswordChange = true;
-      $scope.bChangeStoredPassword = false;
-    }
+  vm.showChangePasswordLinks = function(userid) {
+    return !vm.vmScope().newRecord && vm.vmScope().modelCopy[userid] != '';
   };
 
-  $scope.showVerify = function(userid) {
-    return $scope.newRecord || (!$scope.showChangePasswordLinks(userid)) || $scope.bChangeStoredPassword;
+  vm.resetClicked = function() {
+    vm.newRecord = false;
+    vm.cancelPasswordChange();
   };
-
-  $scope.showChangePasswordLinks = function(userid) {
-    return !$scope.newRecord && $scope.modelCopy[userid] != '';
-  };
-
-  $scope.resetClicked = function() {
-    $scope.newRecord = false;
-    $scope.cancelPasswordChange();
-  };
-
-  init();
 }]);

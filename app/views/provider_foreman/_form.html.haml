@@ -108,6 +108,7 @@
                           :validate_url      => "authentication_validate",
                           :id                => @provider_manager.id || "new",
                           :valtype           => nil,
+                          :vm_scope          => true,
                           :basic_info_needed => true}
 
     = render :partial => "layouts/angular/x_edit_buttons_angular"
