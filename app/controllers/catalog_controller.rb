@@ -138,11 +138,12 @@ class CatalogController < ApplicationController
       @_params[:org_controller] = "service_template"
       if ansible_playbook?
         @record = ServiceTemplate.new
-        if false
-          add_flash(_("Before adding Ansible Service, at least 1 repository, 1 playbook, 1 credential must exist in VMDB"), :error)
-          javascript_flash
-          return
-        end
+        # waiting for back-end PR to be merged to implement this
+        # if false
+        #   add_flash(_("Before adding Ansible Service, at least 1 repository, 1 playbook, 1 credential must exist in VMDB"), :error)
+        #   javascript_flash
+        #   return
+        # end
       else
         prov_set_form_vars if need_prov_dialogs?(params[:st_prov_type])
         @record = class_service_template(params[:st_prov_type]).new
@@ -157,15 +158,17 @@ class CatalogController < ApplicationController
     end
     render :update do |page|
       page << javascript_prologue
-      if ansible_playbook?
+      if @edit[:new][:st_prov_type] == "generic_ansible_playbook"
         page.replace("form_div", :partial => "st_angular_form")
         page << javascript_hide("form_buttons_div")
       else
-        # for generic/orchestration type tabs do not show up on screen as there is only a single tab when form is initialized
+        # for generic/orchestration type tabs do not show up on screen
+        # as there is only a single tab when form is initialized
         # when display in catalog is checked, replace div so tabs can be redrawn
         page.replace("form_div", :partial => "st_form") if params[:st_prov_type] ||
           (params[:display] && @edit[:new][:st_prov_type].starts_with?("generic"))
-        page.replace_html("basic_info_div", :partial => "form_basic_info") if params[:display] || params[:template_id] || params[:manager_id]
+        page.replace_html("basic_info_div", :partial => "form_basic_info") if params[:display] ||
+          params[:template_id] || params[:manager_id]
         if params[:display]
           page << "miq_tabs_show_hide('#details_tab', '#{(params[:display] == "1")}')"
         end
@@ -205,7 +208,7 @@ class CatalogController < ApplicationController
 
     build_accordions_and_trees
 
-    if params[:id] && !params[:button]  # If a tree node id came in, show in one of the trees
+    if params[:id] && !params[:button] # If a tree node id came in, show in one of the trees
       @nodetype, id = parse_nodetype_and_id(params[:id])
       self.x_active_tree   = 'sandt_tree'
       self.x_active_accord = 'sandt'
