@@ -715,6 +715,9 @@ class MiqPolicyController < ApplicationController
     render :update do |page|
       page << javascript_prologue
       if @edit
+        if @refresh_inventory
+          page.replace("action_options_div", :partial => "action_options")
+        end
         if @action_type_changed || @snmp_trap_refresh
           page.replace("action_options_div", :partial => "action_options")
         elsif @alert_refresh

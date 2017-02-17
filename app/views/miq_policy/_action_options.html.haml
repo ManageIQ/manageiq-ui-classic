@@ -1,7 +1,6 @@
 - url = url_for(:action => 'action_field_changed', :id => "#{@action.id || 'new'}")
 - observe_with_interval = {:interval => '.5', :url => url}.to_json
 - observe = {:url => url}.to_json
-
 #action_options_div
   - case @edit[:new][:action_type]
   - when "email"
@@ -321,3 +320,54 @@
                   %td{:align => "left", :valign => "top", :nowrap => 1}
                     = check_box_tag("cat_#{cat.first}", "1", checked, "data-miq_observe_checkbox" => observe)
                     = h(cat.last)
+  - when "run_ansible_playbook"
+    %h3
+      = _("Run an Ansible Playbook")
+    .form-horizontal
+      .form-group
+        %label.control-label.col-md-2
+          = _("Ansible Playbook:")
+        .col-md-8
+          = select_tag('service_template_id',
+          options_for_select([["<#{_('Choose')}>", nil]] + @edit[:ansible_playbooks],
+          @edit[:new][:options][:service_template_id]),
+          :style             => "width:150px",
+          :class             => "selectpicker")
+          :javascript
+            miqInitSelectPicker();
+            miqSelectPickerEvent('service_template_id', '#{url}')
+      .form-group
+        %label.control-label.col-md-2
+          = _("Inventory:")
+        .col-md-8
+          = radio_button_tag('inventory', "localhost", true,
+            "title"            => _('Run on localhost'),
+            "checked"          => @edit[:new][:inventory_type] == "localhost",
+            "data-miq_observe" => observe)
+          = label_tag('inventory_localhost', _("Localhost"), "title" => _('Run on localhost'))
+          %br
+          = radio_button_tag('inventory', "event_target", false,
+            "title"            => _('Run on the target machine of the alert'),
+            "checked"          => @edit[:new][:inventory_type] == "event_target",
+            "data-miq_observe" => observe)
+          = label_tag('inventory_event_target', _("Target Machine"), "title" => _('Run on the target machine of the alert'))
+          %br
+          = radio_button_tag('inventory', "manual", false,
+            "title" => _('Enter a comma separated list of IP or DNS names'),
+            "checked" => @edit[:new][:inventory_type] == "manual",
+            "data-miq_observe" => observe)
+          = label_tag('inventory_manual', _("Specific Hosts"), "title" => _('Enter a comma separated list of IP or DNS names'))
+          #manual_inventory_div{:style => @edit[:new][:inventory_type] == "manual" ? "" : "display:none"}
+            .form-group
+              .col-md-8
+                = text_field_tag("hosts",
+                  @edit[:new][:options][:hosts],
+                  :maxlength         => MAX_DESC_LEN,
+                  :class             => "form-control",
+                  "data-miq_observe" => observe_with_interval)
+                = _('Enter a comma separated list of IP or DNS names')
+
+
+
+
+
