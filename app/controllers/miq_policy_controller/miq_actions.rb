@@ -123,14 +123,9 @@ module MiqPolicyController::MiqActions
     @refresh_inventory = false
     if params[:inventory_manual] || params[:inventory_localhost] || params[:inventory_event_target]
       @refresh_inventory = true
+      update_playbook_variables(params)
     end
-
     @edit[:new][:options][:service_template_id] = params[:service_template_id].to_i if params[:service_template_id]
-    @edit[:new][:inventory_type] = params[:inventory_manual] if params[:inventory_manual]
-    @edit[:new][:inventory_type] = params[:inventory_localhost] if params[:inventory_localhost]
-    @edit[:new][:inventory_type] = params[:inventory_event_target] if params[:inventory_event_target]
-    @edit[:new][:options][:use_event_target] = @edit[:new][:inventory_type] == 'event_target'
-    @edit[:new][:options][:use_localhost] = @edit[:new][:inventory_type] == 'localhost'
     @edit[:new][:options][:hosts] = params[:hosts] if params[:hosts]
 
     if params[:miq_action_type] && params[:miq_action_type] != @edit[:new][:action_type]  # action type was changed
@@ -138,6 +133,7 @@ module MiqPolicyController::MiqActions
       @edit[:new][:options] = {}  # Clear out the options
       action_build_alert_choices if params[:miq_action_type] == "evaluate_alerts"         # Build alert choices hash
       action_build_snmp_variables if params[:miq_action_type] == "snmp_trap"            # Build snmp_trap variables hash
+      action_initialize_playbook_variables
       if params[:miq_action_type] == "tag"
         get_tags_tree
       end
@@ -145,6 +141,20 @@ module MiqPolicyController::MiqActions
     end
 
     send_button_changes
+  end
+
+  def action_initialize_playbook_variables
+    @edit[:new][:options][:use_event_target] = @edit[:new][:inventory_type] == 'event_target'
+    @edit[:new][:options][:use_localhost] = @edit[:new][:inventory_type] == 'localhost'
+  end
+
+  def update_playbook_variables(params)
+    @edit[:new][:inventory_type] = params[:inventory_manual] if params[:inventory_manual]
+    @edit[:new][:inventory_type] = params[:inventory_localhost] if params[:inventory_localhost]
+    @edit[:new][:inventory_type] = params[:inventory_event_target] if params[:inventory_event_target]
+    @edit[:new][:options][:hosts] = '' if params[:inventory_localhost] || params[:inventory_event_target]
+    @edit[:new][:options][:use_event_target] = @edit[:new][:inventory_type] == 'event_target'
+    @edit[:new][:options][:use_localhost] = @edit[:new][:inventory_type] == 'localhost'
   end
 
   def action_tag_pressed
@@ -289,6 +299,7 @@ module MiqPolicyController::MiqActions
     @edit[:cats] = MiqAction.inheritable_cats.sort_by { |c| c.description.downcase }.collect { |c| [c.name, c.description] }
 
     @edit[:ansible_playbooks] = ServiceTemplateAnsiblePlaybook.order(:name).pluck(:name, :id) || {}
+    @edit[:new][:inventory_type] = 'localhost'
     action_build_playbook_variables if @action.action_type == "run_ansible_playbook"
 
     @edit[:current] = copy_hash(@edit[:new])
@@ -345,7 +356,7 @@ module MiqPolicyController::MiqActions
   def action_build_playbook_variables
     @edit[:new][:inventory_type] = 'manual' if @edit[:new][:options][:hosts]
     @edit[:new][:inventory_type] = 'event_target' if @edit[:new][:options][:use_event_target]
-    @edit[:new][:inventory_type] ||= 'localhost'
+    @edit[:new][:inventory_type] = 'localhost' if @edit[:new][:options][:use_localhost]
   end
 
   # Check action record variables
