@@ -1840,6 +1840,49 @@ module ApplicationController::CiProcessing
     vms.count
   end
 
+  def process_cloud_object_storage_buttons(pressed)
+    assert_privileges(pressed)
+
+    klass = get_rec_cls
+    task = pressed.sub("#{klass.name.underscore.to_sym}_", "")
+
+    return tag(klass) if task == "tag"
+
+    cloud_object_store_button_operation(klass, task)
+  end
+
+  def cloud_object_store_button_operation(klass, task)
+    method = "#{task}_#{klass.name.underscore.to_sym}"
+    display_name = _(task.capitalize)
+
+    items = []
+
+    # Either a list or coming from a different controller
+    if @lastaction == "show_list" || !%w(cloud_object_store_container).include?(request.parameters["controller"])
+      items = find_checked_items
+      if items.empty?
+        add_flash(_("No %{model} were selected for %{task}") %
+                    {:model => ui_lookup(:models => klass.name), :task => display_name}, :error)
+      elsif klass.find(items).any? { |item| !item.supports?(task) }
+        add_flash(_("%{task} does not apply to at least one of the selected items") %
+                    {:task => display_name}, :error)
+      else
+        process_objects(items, method, display_name)
+      end
+    elsif params[:id].nil? || klass.find_by(:id => params[:id]).nil?
+      add_flash(_("%{record} no longer exists") %
+                  {:record => ui_lookup(:table => request.parameters["controller"])}, :error)
+      show_list unless @explorer
+      @refresh_partial = "layouts/gtl"
+    elsif !klass.find_by(:id => params[:id]).supports?(task)
+      add_flash(_("%{task} does not apply to this item") %
+                  {:task => display_name}, :error)
+    else
+      items.push(params[:id])
+      process_objects(items, method, display_name) unless items.empty?
+    end
+  end
+
   def get_rec_cls
     case request.parameters["controller"]
     when "miq_template"
@@ -1848,6 +1891,10 @@ module ApplicationController::CiProcessing
       return OrchestrationStack
     when "service"
       return Service
+    when "cloud_object_store_container"
+      CloudObjectStoreContainer
+    when "ems_storage"
+      CloudObjectStoreContainer
     else
       return VmOrTemplate
     end
@@ -1864,6 +1911,9 @@ module ApplicationController::CiProcessing
     when "VmOrTemplate"
       objs, _objs_out_reg = filter_ids_in_region(objs, "VM") unless VmOrTemplate::REMOTE_REGION_TASKS.include?(task)
       klass = Vm
+    when "CloudObjectStoreContainer"
+      objs, _objs_out_reg = filter_ids_in_region(objs, "CloudObjectStoreContainer")
+      klass = CloudObjectStoreContainer
     end
 
     assert_rbac(current_user, get_rec_cls, objs)
