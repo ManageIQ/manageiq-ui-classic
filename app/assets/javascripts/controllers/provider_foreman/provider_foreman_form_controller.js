@@ -1,6 +1,6 @@
 ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$scope', 'providerForemanFormId', 'miqService', function($http, $scope, providerForemanFormId, miqService) {
-    var init = function() {
-      $scope.providerForemanModel = {
+    var vm = this;
+      vm.providerForemanModel = {
         provtype: '',
         name: '',
         url: '',
@@ -10,22 +10,23 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
         log_password: '',
         log_verify: ''
       };
-      $scope.formId = providerForemanFormId;
-      $scope.afterGet = false;
-      $scope.validateClicked = miqService.validateWithAjax;
-      $scope.modelCopy = angular.copy( $scope.providerForemanModel );
-      $scope.model = 'providerForemanModel';
+      vm.formId = providerForemanFormId;
+      vm.afterGet = false;
+      vm.validateClicked = miqService.validateWithAjax;
+      vm.modelCopy = angular.copy( vm.providerForemanModel );
+      vm.model = 'providerForemanModel';
 
-      ManageIQ.angular.scope = $scope;
+      ManageIQ.angular.scope = vm;
 
-      if (providerForemanFormId == 'new') {
-        $scope.newRecord = true;
+
+  if (providerForemanFormId == 'new') {
+        vm.newRecord = true;
 
         $http.get('/provider_foreman/provider_foreman_form_fields/' + providerForemanFormId)
           .then(getProviderForemanFormData)
           .catch(miqService.handleFailure);
       } else {
-        $scope.newRecord = false;
+        vm.newRecord = false;
 
         miqService.sparkleOn();
 
@@ -33,20 +34,19 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
           .then(getProviderForemanFormData)
           .catch(miqService.handleFailure);
       }
-    };
 
-    $scope.canValidateBasicInfo = function () {
-      if ($scope.isBasicInfoValid())
+    vm.canValidateBasicInfo = function () {
+      if (vm.isBasicInfoValid())
         return true;
       else
         return false;
     }
 
-    $scope.isBasicInfoValid = function() {
-      if($scope.angularForm.url.$valid &&
-         $scope.angularForm.log_userid.$valid &&
-         $scope.angularForm.log_password.$valid &&
-         $scope.angularForm.log_verify.$valid)
+    vm.isBasicInfoValid = function() {
+      if(angularForm.url.$valid &&
+        angularForm.log_userid.$valid &&
+        angularForm.log_password.$valid &&
+        angularForm.log_verify.$valid)
         return true;
       else
         return false;
@@ -62,49 +62,48 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
       }
     };
 
-    $scope.cancelClicked = function() {
+    vm.cancelClicked = function() {
       providerForemanEditButtonClicked('cancel');
-      $scope.angularForm.$setPristine(true);
+      angularForm.$setPristine(true);
     };
 
-    $scope.resetClicked = function() {
+    vm.resetClicked = function() {
       $scope.$broadcast ('resetClicked');
-      $scope.providerForemanModel = angular.copy( $scope.modelCopy );
-      $scope.angularForm.$setPristine(true);
+      vm.providerForemanModel = angular.copy( vm.modelCopy );
+      angularForm.$setPristine(true);
       miqService.miqFlash("warn", __("All changes have been reset"));
     };
 
-    $scope.saveClicked = function() {
+    vm.saveClicked = function() {
       providerForemanEditButtonClicked('save', true);
-      $scope.angularForm.$setPristine(true);
+      angularForm.$setPristine(true);
     };
 
-    $scope.addClicked = function() {
-      $scope.saveClicked();
+    vm.addClicked = function() {
+      vm.saveClicked();
     };
 
     function getProviderForemanFormData(response) {
       var data = response.data;
 
-      if (! $scope.newRecord) {
-        $scope.providerForemanModel.provtype = data.provtype;
-        $scope.providerForemanModel.name = data.name;
-        $scope.providerForemanModel.url = data.url;
-        $scope.providerForemanModel.verify_ssl = data.verify_ssl === 1;
+      if (! vm.newRecord) {
+        vm.providerForemanModel.provtype = data.provtype;
+        vm.providerForemanModel.name = data.name;
+        vm.providerForemanModel.url = data.url;
+        vm.providerForemanModel.verify_ssl = data.verify_ssl === 1;
 
-        $scope.providerForemanModel.log_userid = data.log_userid;
+        vm.providerForemanModel.log_userid = data.log_userid;
 
-        if ($scope.providerForemanModel.log_userid !== '') {
-          $scope.providerForemanModel.log_password = $scope.providerForemanModel.log_verify = miqService.storedPasswordPlaceholder;
+        if (vm.providerForemanModel.log_userid !== '') {
+          vm.providerForemanModel.log_password = vm.providerForemanModel.log_verify = miqService.storedPasswordPlaceholder;
         }
       }
 
-      $scope.providerForemanModel.zone = data.zone;
-      $scope.afterGet = true;
-      $scope.modelCopy = angular.copy( $scope.providerForemanModel );
+      vm.providerForemanModel.zone = data.zone;
+      vm.afterGet = true;
+      vm.modelCopy = angular.copy( vm.providerForemanModel );
 
       miqService.sparkleOff();
     }
 
-    init();
 }]);
