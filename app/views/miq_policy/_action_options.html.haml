@@ -326,7 +326,7 @@
     .form-horizontal
       .form-group
         %label.control-label.col-md-2
-          = _("Ansible Playbooks")
+          = _("Ansible Playbook:")
         .col-md-8
           = select_tag('service_template_id',
           options_for_select([["<#{_('Choose')}>", nil]] + @edit[:ansible_playbooks],
@@ -338,7 +338,7 @@
             miqSelectPickerEvent('service_template_id', '#{url}')
       .form-group
         %label.control-label.col-md-2
-          = _("Inventory")
+          = _("Inventory:")
         .col-md-8
           = radio_button_tag('inventory', "localhost", true,
             "title"            => _('Run on localhost'),
@@ -356,18 +356,16 @@
             "title" => _('Enter a comma separated list of IP or DNS names'),
             "checked" => @edit[:new][:inventory_type] == "manual",
             "data-miq_observe" => observe)
-          = label_tag('inventory_manual', _("Manual"), "title" => _('Enter a comma separated list of IP or DNS names'))
-      #manual_inventory_div{:style => @edit[:new][:inventory_type] == "manual" ? "" : "display:none"}
-        .form-group
-          %label.control-label.col-md-2
-            = _("Target Hosts")
-          .col-md-8
-            = text_field_tag("hosts",
-              @edit[:new][:options][:hosts],
-              :maxlength         => MAX_DESC_LEN,
-              :class             => "form-control",
-              "data-miq_observe" => observe_with_interval)
-            = _('Enter a comma separated list of IP or DNS names')
+          = label_tag('inventory_manual', _("Specific Hosts"), "title" => _('Enter a comma separated list of IP or DNS names'))
+          #manual_inventory_div{:style => @edit[:new][:inventory_type] == "manual" ? "" : "display:none"}
+            .form-group
+              .col-md-8
+                = text_field_tag("hosts",
+                  @edit[:new][:options][:hosts],
+                  :maxlength         => MAX_DESC_LEN,
+                  :class             => "form-control",
+                  "data-miq_observe" => observe_with_interval)
+                = _('Enter a comma separated list of IP or DNS names')
 
 
 
