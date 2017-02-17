@@ -7,11 +7,11 @@ function miqRowClick(row_id, row_url, row_url_ajax) {
 
   console.debug('miqRowClick');
   //miqJqueryRequest(row_url + row_id, {beforeSend: true, complete: true, type: 'GET'});
-  if (row_url_ajax) {
-    miqJqueryRequest(row_url + row_id, {beforeSend: true, complete: true});
-  } else {
+  //if (row_url_ajax) {
+  //  miqJqueryRequest(row_url + row_id, {beforeSend: true, complete: true});
+  //} else {
     DoNav(row_url + row_id);
-  }
+  //}
 }
 
 function checkboxItemId($elem) {

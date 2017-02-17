@@ -41,6 +41,7 @@ module Mixins
 
       return if performed?
 
+      binding.pry
       if request.xml_http_request? && respond_to?(:replace_center_div)
         replace_center_div
       else
