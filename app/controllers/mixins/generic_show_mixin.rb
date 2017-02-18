@@ -87,14 +87,24 @@ module Mixins
       nested_list("template_cloud", ManageIQ::Providers::CloudManager::Template)
     end
 
-    def nested_list(table_name, model)
-      title = ui_lookup(:tables => table_name)
+    # options:
+    #   breadcrumb_title -- title for the breadcrumb, defaults to
+    #                       ui_lookup(:tables => table_name)
+    #   parent_method    -- parent_method to be passed to get_view call
+    #
+    def nested_list(table_name, model, options = {})
+      title = options[:breadcrumb_title] || ui_lookup(:tables => table_name)
+
       drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @record.name},
                       :url  => "/#{self.class.table_name}/show/#{@record.id}")
       drop_breadcrumb(:name => _("%{name} (All %{title})") % {:name => @record.name, :title => title},
                       :url  => "/#{self.class.table_name}/show/#{@record.id}?display=#{@display}")
-      @view, @pages = get_view(model, :parent => @record) # Get the records (into a view) and the paginator
-      @showtype     = @display
+
+      view_options = {:parent => @record}
+      view_options[:parent_method] = options[:parent_method] if options.key?(:parent_method)
+
+      @view, @pages = get_view(model, view_options)
+      @showtype = @display
     end
   end
 end
