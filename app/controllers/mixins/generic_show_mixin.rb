@@ -48,12 +48,25 @@ module Mixins
       restful? ? '/' : '/show'
     end
 
+    # value for @display when not given explicit through params[:display]
+    #
+    def default_display
+      if respond_to?(:dashboard_view) && dashboard_view
+        'dashboard'
+      else
+        'main'
+      end
+    end
+
     def init_show(model_class = self.class.model)
       @record = identify_record(params[:id], model_class)
       return false if record_no_longer_exists?(@record)
       @lastaction = 'show'
       @gtl_url = gtl_url
-      @display = params[:display] || 'main' unless pagination_or_gtl_request?
+
+      if !pagination_or_gtl_request?
+        @display = params[:display] || default_display
+      end
       true
     end
 
