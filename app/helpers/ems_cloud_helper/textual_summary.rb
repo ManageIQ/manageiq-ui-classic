@@ -21,10 +21,6 @@ module EmsCloudHelper::TextualSummary
     )
   end
 
-  def textual_group_configuration_relationships
-    TextualGroup.new(_("Configuration"), %i(arbitration_profiles))
-  end
-
   def textual_group_status
     TextualGroup.new(_("Status"), textual_authentications(@record.authentication_for_summary) + %i(refresh_status))
   end
@@ -149,20 +145,6 @@ module EmsCloudHelper::TextualSummary
     if num > 0 && role_allows?(:feature => "security_group_show_list")
       h[:link] = ems_cloud_path(@record.id, :display => 'security_groups')
       h[:title] = _("Show all %{label}") % {:label => label}
-    end
-    h
-  end
-
-  def textual_arbitration_profiles
-    num = @record.number_of(:arbitration_profiles)
-    h = {:label => _("Arbitration Profiles"), :icon => "fa fa-list-ul", :value => num}
-    if num > 0
-      h[:title] = n_("Show Arbitration Profiles for this Provider",
-                     "Show Arbitration Profiles for this Provider", num)
-      h[:link]  = url_for(:controller => controller.controller_name,
-                          :action     => 'arbitration_profiles',
-                          :id         => @record,
-                          :db         => controller.controller_name)
     end
     h
   end
