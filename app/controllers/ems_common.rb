@@ -60,63 +60,43 @@ module EmsCommon
     drop_breadcrumb(:name => @ems.name + _(" (Topology)"), :url => show_link(@ems))
   end
 
-  def view_setup_params
-    {
-      "instances"                     => [ManageIQ::Providers::CloudManager::Vm, _("Instances")],
-      "images"                        => [ManageIQ::Providers::CloudManager::Template, _("Images")],
-      "block_storage_managers"        => [ManageIQ::Providers::StorageManager,
-                                          _("Block Storage Managers"),
-                                          :block_storage_managers],
-      "object_storage_managers"       => [ManageIQ::Providers::StorageManager,
-                                          _("Object Storage Managers"),
-                                          :object_storage_managers],
-      "storage_managers"              => [ManageIQ::Providers::StorageManager,
-                                          _("Storage Managers"),
-                                          :storage_managers],
-      "miq_templates"                 => [MiqTemplate,            _("Templates")],
-      "vms"                           => [Vm,                     _("VMs")],
-      "orchestration_stacks"          => [OrchestrationStack,     _("Stacks")],
-      # "configuration_jobs"            => [ConfigurationJob, _("Configuration Jobs")],
-      "cloud_object_store_containers" => [CloudObjectStoreContainer, _('Cloud Object Store Containers')],
-      'containers'                    => [Container,              _('Containers')],
-      'container_replicators'         => [ContainerReplicator,    _('Container Replicators')],
-      'container_nodes'               => [ContainerNode,          _('Container Nodes')],
-      'container_groups'              => [ContainerGroup,         _('Pods')],
-      'container_services'            => [ContainerService,       _('Container Services')],
-      'container_images'              => [ContainerImage,         _('Container Images')],
-      'container_routes'              => [ContainerRoute,         _('Container Routes')],
-      'container_builds'              => [ContainerBuild,         _('Container Builds')],
-      'container_projects'            => [ContainerProject,       _('Container Projects')],
-      'container_image_registries'    => [ContainerImageRegistry, _('Container Image Registries')],
-      'container_templates'           => [ContainerTemplate,      _('Container Templates')],
-      'availability_zones'            => [AvailabilityZone,       _('Availability Zones')],
-      'host_aggregates'               => [HostAggregate,          _('Host Aggregates')],
-      'middleware_servers'            => [MiddlewareServer,       _('Middleware Servers')],
-      'middleware_deployments'        => [MiddlewareDeployment,   _('Middleware Deployments')],
-      'middleware_datasources'        => [MiddlewareDatasource,   _('Middleware Datasources')],
-      'middleware_domains'            => [MiddlewareDomain,       _('Middleware Domains')],
-      'middleware_server_groups'      => [MiddlewareServerGroup,  _('Middleware Server Groups')],
-      'middleware_messagings'         => [MiddlewareMessaging,    _('Middleware Messagings')],
-      'cloud_tenants'                 => [CloudTenant,            _('Cloud Tenants')],
-      'cloud_volumes'                 => [CloudVolume,            _('Cloud Volumes')],
-      'cloud_volume_snapshots'        => [CloudVolumeSnapshot,    _('Cloud Volume Snapshots')],
-      'flavors'                       => [Flavor,                 _('Flavors')],
-      'security_groups'               => [SecurityGroup,          _('Security Groups')],
-      'floating_ips'                  => [FloatingIp,             _('Floating IPs')],
-      'network_routers'               => [NetworkRouter,          _('Network Routers')],
-      'network_ports'                 => [NetworkPort,            _('Network Ports')],
-      'cloud_subnets'                 => [CloudSubnet,            _('Cloud Subnets')],
-      'cloud_networks'                => [CloudNetwork,           _('Cloud Networks')],
-      'load_balancers'                => [LoadBalancer,           _('Load Balancers')],
-      'storages'                      => [Storage,                _('Managed Datastores')],
-      'ems_clusters'                  => [EmsCluster,             title_for_clusters],
-      'persistent_volumes'            => [PersistentVolume,       _('Volumes'), :persistent_volumes],
-      'hosts'                         => [Host,                   _("Managed Hosts")],
-    }
+  def display_block_storage_managers
+    nested_list('block_storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :block_storage_managers)
   end
 
-  def show_entities(display)
-    view_setup_helper(display, *view_setup_params[display])
+  def display_object_storage_managers
+    nested_list('object_storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :object_storage_managers)
+  end
+
+  def display_storage_managers
+    nested_list('storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :storage_managers)
+  end
+
+  def display_ems_clusters
+    nested_list('ems_cluster', EmsCluster, :breadcrumb_title => title_for_clusters)
+  end
+
+  def display_persistent_volumes
+    nested_list('persistent_volume', PersistentVolume, :parent_method => :persistent_volumes)
+  end
+
+  def display_hosts
+    nested_list('hosts', Host, :breadcrumb_title => _("Managed Hosts"))
+  end
+
+  class_methods do
+    def display_methods
+      %w(
+        instances images block_storage_managers object_storage_managers storage_managers miq_templates
+        vms orchestration_stacks configuration_jobs cloud_object_store_containers containers
+        container_replicators container_nodes container_groups container_services container_images
+        container_routes container_builds container_projects container_image_registries container_templates
+        availability_zones host_aggregates middleware_servers middleware_deployments middleware_datasources
+        middleware_domains middleware_server_groups middleware_messagings cloud_tenants cloud_volumes
+        cloud_volume_snapshots flavors security_groups floating_ips network_routers network_ports
+        cloud_subnets cloud_networks load_balancers storages ems_clusters persistent_volumes hosts
+      )
+    end
   end
 
   def show
@@ -125,42 +105,24 @@ module EmsCommon
     @summary_view = session[:vm_summary_cool]
     @ems = @record
 
-    drop_breadcrumb({:name => ui_lookup(:tables => @table_name), :url => "/#{@table_name}/show_list?page=#{@current_page}&refresh=y"}, true)
-    case params[:display]
-    when 'main'                          then show_main
-    when 'summary_only'                  then show_download
-    when 'props'                         then show_props
-    when 'ems_folders'                   then show_ems_folders
-    when 'timeline'                      then show_timeline
-    when 'dashboard'                     then show_dashboard
-    when 'ad_hoc_metrics'                then show_ad_hoc_metrics
-    when 'topology'                      then show_topology
-    when 'performance'                   then show_performance
-    when nil
-      if pagination_or_gtl_request? # pagination controls
-        show_entities(@display) # display loaded from session
-      else                 # or default display
-        dashboard_view ? show_dashboard : show_main
-      end
-    else show_entities(params[:display])
+    case @display
+    when 'dashboard'      then show_dashboard
+    when 'main'           then show_main
+    when 'summary_only'   then show_download
+    when 'props'          then show_props
+    when 'ems_folders'    then show_ems_folders
+    when 'timeline'       then show_timeline
+    when 'dashboard'      then show_dashboard
+    when 'ad_hoc_metrics' then show_ad_hoc_metrics
+    when 'topology'       then show_topology
+    when 'performance'    then show_performance
+    when *self.class.display_methods
+      display_nested_list(@display)
     end
 
-    @lastaction = "show"
-    session[:tl_record_id] = @record.id
-
     replace_gtl_main_div if pagination_request?
+
     render :template => "shared/views/ems_common/show" if params[:action] == 'show' && !performed?
-  end
-
-  def view_setup_helper(display, kls, title, parent_method = nil)
-    drop_breadcrumb(:name => @ems.name + _(" (All %{title})") % {:title => title},
-                    :url  => show_link(@ems, :display => display))
-    opts = {:parent => @ems}
-    opts[:parent_method] = parent_method if parent_method
-    @view, @pages = get_view(kls, **opts)
-
-    # display need's to be set so that it's stored in the session
-    @showtype = @display = display
   end
 
   def new
@@ -1119,15 +1081,13 @@ module EmsCommon
   def show_link(ems, options = {})
     url_for(options.merge(:controller => @table_name,
                           :action     => "show",
-                          :id         => ems.id,
-                          :only_path  => true))
+                          :id         => ems.id))
   end
 
   def show_list_link(ems, options = {})
     url_for(options.merge(:controller => @table_name,
                           :action     => "show_list",
-                          :id         => ems.id,
-                          :only_path  => true))
+                          :id         => ems.id))
   end
 
   def restore_password
