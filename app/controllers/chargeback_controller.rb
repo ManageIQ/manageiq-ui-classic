@@ -508,6 +508,7 @@ class ChargebackController < ApplicationController
 
     rate_details.each_with_index do |detail, detail_index|
       temp = detail.slice(*ChargebackRateDetail::FORM_ATTRIBUTES)
+      temp[:group] = detail.chargeable_field.group
       temp[:per_time] ||= "hourly"
 
       temp[:currency] = detail.detail_currency.id
@@ -928,7 +929,7 @@ class ChargebackController < ApplicationController
   end
 
   def display_detail_errors(detail, errors)
-    errors.each { |field, msg| add_flash("'#{detail.description}' #{field.to_s.humanize.downcase} #{msg}", :error) }
+    errors.each { |field, msg| add_flash("'#{detail.chargeable_field.description}' #{field.to_s.humanize.downcase} #{msg}", :error) }
   end
 
   def add_row(i, pos, code_currency)
