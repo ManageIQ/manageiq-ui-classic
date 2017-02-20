@@ -1227,6 +1227,7 @@ Rails.application.routes.draw do
         quick_search
         show
         show_list
+        squash_toggle
         tag_edit_form_field_changed
         tagging_edit
         tl_chooser
@@ -1234,7 +1235,6 @@ Rails.application.routes.draw do
         update
         wait_for_task
         x_show
-        squash_toggle
       ) +
                adv_search_post +
                compare_post +
