@@ -88,13 +88,15 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           'fa fa-search fa-lg',
           N_('Check Compliance of the last known configuration for this item'),
           N_('Check Compliance of Last Known Configuration'),
-          :confirm => N_("Initiate Check Compliance of the last known configuration for this item?")),
+          :confirm => N_("Initiate Check Compliance of the last known configuration for this item?"),
+          :klass   => ApplicationHelper::Button::HostCheckCompliance),
         button(
           :host_analyze_check_compliance,
           'fa fa-search fa-lg',
           N_('Analyze then Check Compliance for this item'),
           N_('Analyze then Check Compliance'),
-          :confirm => N_("Analyze then Check Compliance for this item?")),
+          :confirm => N_("Analyze then Check Compliance for this item?"),
+          :klass   => ApplicationHelper::Button::HostCheckCompliance),
       ]
     ),
   ])
@@ -109,7 +111,8 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           :host_miq_request_new,
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Provision this item'),
-          t),
+          t,
+          :klass => ApplicationHelper::Button::HostMiqRequestNew),
       ]
     ),
   ])
@@ -126,14 +129,16 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           N_('Show Capacity & Utilization data for this item'),
           N_('Utilization'),
           :url       => "/show",
-          :url_parms => "?display=performance"),
+          :url_parms => "?display=performance",
+          :klass   => ApplicationHelper::Button::HostPerformance),
         button(
           :host_timeline,
           'product product-timeline fa-lg',
           N_('Show Timelines for this item'),
           N_('Timelines'),
           :url       => "/show",
-          :url_parms => "?display=timeline"),
+          :url_parms => "?display=timeline",
+          :klass   => ApplicationHelper::Button::HostTimeline),
       ]
     ),
   ])
