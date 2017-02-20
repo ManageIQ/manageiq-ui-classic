@@ -16,7 +16,7 @@
           :javascript
             miqInitSelectPicker();
             miqSelectPickerEvent("chosen_zone", "#{url}");
-    - if @lastaction == "all_jobs" || @lastaction == "all_ui_jobs"
+    - if @tabform == "tasks_3" || @tabform == "tasks_4"
       .form-group
         %label.control-label.col-md-2
           = _("User")
