@@ -8,7 +8,6 @@ module ApplicationController::Compare
 
   def create_compare_view
     @sb[:miq_temp_params] = "all"
-    # @sb[:miq_squashed] = false # added to control expand/collapse all
 
     rpt = get_compare_report(@sb[:compare_db])
     session[:miq_sections] = MiqCompare.sections(rpt)
@@ -20,12 +19,6 @@ module ApplicationController::Compare
     get_formatted_time("_model_", "compare")
     session[:compare_state] = {}
     @compare
-  end
-
-  # Return the xml version of the list view via Ajax
-  def compare_grid_xml
-    render :xml => session[:xml]
-    session[:xml] = nil
   end
 
   # Compare multiple VMs
@@ -262,169 +255,6 @@ module ApplicationController::Compare
     render_pdf(rpt)
   end
 
-  def column_names_for_compare_or_drift_report(mode)
-    # Collect the column names from the @compare object
-    column_names = ["Section", "Entry", "Sub-Entry"]
-
-    if mode == :compare
-      column_names << @compare.records[0].name
-      @compare.records[1..-1].each do |r|
-        column_names.push(r["name"]) unless r["id"] == @compare.records[0]["id"]
-      end
-    else
-      @compare.ids.each do |r|
-        t = r.getgm
-        column_names.push(t.strftime("%m/%d/%y") + " " + t.strftime("%H:%M ") + t.zone)
-      end
-    end
-
-    column_names
-  end
-  private :column_names_for_compare_or_drift_report
-
-  def prepare_data_for_compare_or_drift_report(mode, csv)
-    sb_key = (mode == :compare) ? :miq_temp_params : :miq_drift_params
-
-    # Collect the data from the @compare object
-    @data = []
-    @compare.master_list.each_slice(3) do |section, records, fields| # section is a symbol, records and fields are arrays
-      if @compare.include[section[:name]][:checked]     # Only grab the sections that are checked
-        if !records.nil? && !records.empty?
-          records.each do |attr|
-            cols = [section[:header].to_s, attr, ""]      # Start the row with section and attribute names
-            # Grab the base VM's value
-            if records.include?(attr)
-              bas = "Found"
-            else
-              bas = "Missing"
-            end
-            cols.push(bas)
-
-            # Grab the other VMs values
-            # @compare.results.each do |r|         # Go thru each of the VMs
-            @compare.ids.each_with_index do |r, idx|         # Go thru each of the VMs
-              # unless r[0] == @compare.records[0]["id"] # Skip the base VM
-              unless idx == 0 # Skip the base VM
-                if @compare.results[r][section[:name]].include?(attr)                         # Set the report value
-                  rval = "Found"
-                  val = "Found"
-                else
-                  rval = "Missing"
-                  val = "Missing"
-                end
-                if mode == :compare
-                  rval = "* " + rval if bas.to_s != val.to_s      # Mark the ones that don't match the base
-                else
-                  rval = "* " + rval if @compare.results[r][section[:name]][attr] && !@compare.results[r][section[:name]][attr][:_match_]     # Mark the ones that don't match the base
-                end
-                cols.push(rval)
-              end
-            end
-            build_download_rpt(cols, csv, @sb[sb_key])                       # Add the row to the data array
-          end
-        end
-
-        if records.nil? && !fields.nil? && !fields.empty?
-          fields.each do |attr|
-            cols = [section[:header].to_s, attr[:header].to_s, ""]     # Start the row with section and attribute names
-            @compare.ids.each_with_index do |r, idx|         # Go thru each of the VMs
-              if !@compare.results[r][section[:name]].nil?
-                rval = @compare.results[r][section[:name]][attr[:name]][:_value_]
-              else
-                rval = "(missing)"
-              end
-              unless idx == 0                             # If not generating CSV
-                if mode == :compare
-                  rval = "* " + rval.to_s if @compare.results[@compare.ids[0]][section[:name]][attr[:name]][:_value_].to_s != rval.to_s     # Mark the ones that don't match the base
-                else
-                  rval = "* " + rval.to_s unless @compare.results[@compare.ids[idx]][section[:name]][attr[:name]][:_match_]      # Mark the ones that don't match the base
-                end
-              end
-              cols.push(rval)
-            end
-            build_download_rpt(cols, csv, @sb[sb_key])                       # Add the row to the data array
-          end
-        end
-
-        if !records.nil? && !fields.nil? && !fields.empty?
-          records.each do |level2|
-            fields.each do |attr|
-              cols = [section[:header].to_s, level2, attr[:header]]     # Start the row with section and attribute names
-              @compare.ids.each_with_index do |r, idx|         # Go thru each of the VMs
-                if !@compare.results[r][section[:name]][level2].nil?
-                  rval = @compare.results[r][section[:name]][level2][attr[:name]][:_value_].to_s
-                else
-                  rval = "(missing)"
-                end
-                if idx > 0
-                  if mode == :compare
-                    rval = "* " + rval.to_s  if !@compare.results[@compare.ids[0]][section[:name]][level2].nil? && @compare.results[@compare.ids[0]][section[:name]][level2][attr[:name]][:_value_].to_s != rval.to_s     # Mark the ones that don't match the base
-                    rval = "* " + rval.to_s  if @compare.results[@compare.ids[0]][section[:name]][level2].nil? && rval.to_s != "(missing)"      # Mark the ones that don't match the base
-                  else
-                    # Mark the ones that don't match the prior VM
-                    rval = "* " + rval if @compare.results[r][section[:name]][level2] && @compare.results[r][section[:name]][level2][attr[:name]] && !@compare.results[r][section[:name]][level2][attr[:name]][:_match_]
-                  end
-                end
-                cols.push(rval)
-              end
-              build_download_rpt(cols, csv, @sb[sb_key])                       # Add the row to the data array
-            end
-          end
-        end
-
-        unless csv                              # Don't generate % lines for csv output
-          if mode == :compare
-            cols = ["#{section[:header]} - % Match:", "", "", "Base"]    # Generate % line, first 3 cols
-          else
-            cols = ["#{section[:header]} - Changed:", "", ""]            # Generate % line, first 3 cols
-          end
-
-          @compare.results.each do |r|            # Go thru each of the VMs
-            if mode == :compare
-              next if r[0] == @compare.records[0]["id"] # Skip the base VM
-              cols.push(r[1][section[:name]][:_match_].to_s + "%")  # Grab the % value for this attr for this VM
-            else
-              if r[1][section[:name]][:_match_]  # Does it match?
-                cols.push("")                     # Yes, push a blank string
-              else
-                cols.push("*")                    # No, mark it with an *
-              end
-            end
-          end
-          build_download_rpt(cols, csv, "all")                        # Add the row to the data array
-        end
-      end
-    end # end of all includes/sections
-  end
-  private :prepare_data_for_compare_or_drift_report
-
-
-  # Create an MIQ_Report object from a compare object
-  def create_compare_or_drift_report(mode, csv = false)
-    column_names  = column_names_for_compare_or_drift_report(mode)
-    prepare_data_for_compare_or_drift_report(mode, csv) # fills @data
-
-    rpt           = MiqReport.new
-    rpt.table     = Ruport::Data::Table.new(:data => @data, :column_names => column_names)
-    rpt.cols      = column_names
-    rpt.col_order = column_names
-    rpt.headers   = column_names
-    rpt.sortby    = [column_names[0]]      # Set sortby to the first column
-
-    if mode == :compare
-      rpt.db = "<compare>"            # Set special db setting for report formatter
-      rpt.title = _("%{name} Compare Report (* = Value does not match base)") %
-                    {:name => ui_lookup(:model => @sb[:compare_db])}
-    else
-      rpt.db = "<drift>"            # Set special db setting for report formatter
-      rpt.title = _("%{name} '%{vm_name}' Drift Report") % {:name    => ui_lookup(:model => @sb[:compare_db]),
-                                                            :vm_name => @sb[:miq_vm_name]}
-    end
-
-    rpt
-  end
-  private :create_compare_or_drift_report
-
   # Create an MIQ_Report object from a compare object
   def create_compare_report(csv = false)
     create_compare_or_drift_report(:compare, csv)
@@ -574,12 +404,6 @@ module ApplicationController::Compare
         render :template => "compare"
       end
     end
-  end
-
-  # Return the xml version of the list view via Ajax
-  def drift_grid_xml
-    render :xml => session[:xml]
-    session[:xml] = nil
   end
 
   def drift_all_same_dff
@@ -763,11 +587,166 @@ module ApplicationController::Compare
     end
   end
 
-  ##### End of compare & Drift methods
+  private
 
-  private ############################
+  def prepare_data_for_compare_or_drift_report(mode, csv)
+    sb_key = (mode == :compare) ? :miq_temp_params : :miq_drift_params
 
-  ### Start of compare & drift related private methods
+    # Collect the data from the @compare object
+    @data = []
+    @compare.master_list.each_slice(3) do |section, records, fields| # section is a symbol, records and fields are arrays
+      if @compare.include[section[:name]][:checked]     # Only grab the sections that are checked
+        if !records.nil? && !records.empty?
+          records.each do |attr|
+            cols = [section[:header].to_s, attr, ""]      # Start the row with section and attribute names
+            # Grab the base VM's value
+            if records.include?(attr)
+              bas = "Found"
+            else
+              bas = "Missing"
+            end
+            cols.push(bas)
+
+            # Grab the other VMs values
+            # @compare.results.each do |r|         # Go thru each of the VMs
+            @compare.ids.each_with_index do |r, idx|         # Go thru each of the VMs
+              # unless r[0] == @compare.records[0]["id"] # Skip the base VM
+              unless idx == 0 # Skip the base VM
+                if @compare.results[r][section[:name]].include?(attr)                         # Set the report value
+                  rval = "Found"
+                  val = "Found"
+                else
+                  rval = "Missing"
+                  val = "Missing"
+                end
+                if mode == :compare
+                  rval = "* " + rval if bas.to_s != val.to_s      # Mark the ones that don't match the base
+                else
+                  rval = "* " + rval if @compare.results[r][section[:name]][attr] && !@compare.results[r][section[:name]][attr][:_match_]     # Mark the ones that don't match the base
+                end
+                cols.push(rval)
+              end
+            end
+            build_download_rpt(cols, csv, @sb[sb_key])                       # Add the row to the data array
+          end
+        end
+
+        if records.nil? && !fields.nil? && !fields.empty?
+          fields.each do |attr|
+            cols = [section[:header].to_s, attr[:header].to_s, ""]     # Start the row with section and attribute names
+            @compare.ids.each_with_index do |r, idx|         # Go thru each of the VMs
+              if !@compare.results[r][section[:name]].nil?
+                rval = @compare.results[r][section[:name]][attr[:name]][:_value_]
+              else
+                rval = "(missing)"
+              end
+              unless idx == 0                             # If not generating CSV
+                if mode == :compare
+                  rval = "* " + rval.to_s if @compare.results[@compare.ids[0]][section[:name]][attr[:name]][:_value_].to_s != rval.to_s     # Mark the ones that don't match the base
+                else
+                  rval = "* " + rval.to_s unless @compare.results[@compare.ids[idx]][section[:name]][attr[:name]][:_match_]      # Mark the ones that don't match the base
+                end
+              end
+              cols.push(rval)
+            end
+            build_download_rpt(cols, csv, @sb[sb_key])                       # Add the row to the data array
+          end
+        end
+
+        if !records.nil? && !fields.nil? && !fields.empty?
+          records.each do |level2|
+            fields.each do |attr|
+              cols = [section[:header].to_s, level2, attr[:header]]     # Start the row with section and attribute names
+              @compare.ids.each_with_index do |r, idx|         # Go thru each of the VMs
+                if !@compare.results[r][section[:name]][level2].nil?
+                  rval = @compare.results[r][section[:name]][level2][attr[:name]][:_value_].to_s
+                else
+                  rval = "(missing)"
+                end
+                if idx > 0
+                  if mode == :compare
+                    rval = "* " + rval.to_s  if !@compare.results[@compare.ids[0]][section[:name]][level2].nil? && @compare.results[@compare.ids[0]][section[:name]][level2][attr[:name]][:_value_].to_s != rval.to_s     # Mark the ones that don't match the base
+                    rval = "* " + rval.to_s  if @compare.results[@compare.ids[0]][section[:name]][level2].nil? && rval.to_s != "(missing)"      # Mark the ones that don't match the base
+                  else
+                    # Mark the ones that don't match the prior VM
+                    rval = "* " + rval if @compare.results[r][section[:name]][level2] && @compare.results[r][section[:name]][level2][attr[:name]] && !@compare.results[r][section[:name]][level2][attr[:name]][:_match_]
+                  end
+                end
+                cols.push(rval)
+              end
+              build_download_rpt(cols, csv, @sb[sb_key])                       # Add the row to the data array
+            end
+          end
+        end
+
+        unless csv                              # Don't generate % lines for csv output
+          if mode == :compare
+            cols = ["#{section[:header]} - % Match:", "", "", "Base"]    # Generate % line, first 3 cols
+          else
+            cols = ["#{section[:header]} - Changed:", "", ""]            # Generate % line, first 3 cols
+          end
+
+          @compare.results.each do |r|            # Go thru each of the VMs
+            if mode == :compare
+              next if r[0] == @compare.records[0]["id"] # Skip the base VM
+              cols.push(r[1][section[:name]][:_match_].to_s + "%")  # Grab the % value for this attr for this VM
+            else
+              if r[1][section[:name]][:_match_]  # Does it match?
+                cols.push("")                     # Yes, push a blank string
+              else
+                cols.push("*")                    # No, mark it with an *
+              end
+            end
+          end
+          build_download_rpt(cols, csv, "all")                        # Add the row to the data array
+        end
+      end
+    end # end of all includes/sections
+  end
+
+  def column_names_for_compare_or_drift_report(mode)
+    # Collect the column names from the @compare object
+    column_names = ["Section", "Entry", "Sub-Entry"]
+
+    if mode == :compare
+      column_names << @compare.records[0].name
+      @compare.records[1..-1].each do |r|
+        column_names.push(r["name"]) unless r["id"] == @compare.records[0]["id"]
+      end
+    else
+      @compare.ids.each do |r|
+        t = r.getgm
+        column_names.push(t.strftime("%m/%d/%y") + " " + t.strftime("%H:%M ") + t.zone)
+      end
+    end
+
+    column_names
+  end
+
+  # Create an MIQ_Report object from a compare object
+  def create_compare_or_drift_report(mode, csv = false)
+    column_names  = column_names_for_compare_or_drift_report(mode)
+    prepare_data_for_compare_or_drift_report(mode, csv) # fills @data
+
+    rpt           = MiqReport.new
+    rpt.table     = Ruport::Data::Table.new(:data => @data, :column_names => column_names)
+    rpt.cols      = column_names
+    rpt.col_order = column_names
+    rpt.headers   = column_names
+    rpt.sortby    = [column_names[0]]      # Set sortby to the first column
+
+    if mode == :compare
+      rpt.db = "<compare>"            # Set special db setting for report formatter
+      rpt.title = _("%{name} Compare Report (* = Value does not match base)") %
+                    {:name => ui_lookup(:model => @sb[:compare_db])}
+    else
+      rpt.db = "<drift>"            # Set special db setting for report formatter
+      rpt.title = _("%{name} '%{vm_name}' Drift Report") % {:name    => ui_lookup(:model => @sb[:compare_db]),
+                                                            :vm_name => @sb[:miq_vm_name]}
+    end
+
+    rpt
+  end
 
   # Initialize the VM compare array
   def compare_init(mode)
