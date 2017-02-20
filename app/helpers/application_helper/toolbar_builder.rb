@@ -373,7 +373,7 @@ class ApplicationHelper::ToolbarBuilder
     when :rbac_tree
       return false
     when :vmdb_tree
-      return !["db_connections", "db_details", "db_indexes", "db_settings"].include?(@sb[:active_tab])
+      return false
     else
       return true
     end
