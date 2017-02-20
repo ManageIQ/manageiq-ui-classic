@@ -79,7 +79,6 @@ module EmsPhysicalInfraHelper::TextualSummary
   end
 
   def textual_physical_infrastructure_folders
-    return nil if @record.kind_of?(ManageIQ::Providers::PhysicalInfraManager)
     label     = "#{title_for_hosts} & #{title_for_clusters}"
     available = @record.number_of(:ems_folders) > 0 && @record.ems_folder_root
     h         = {:label => label, :icon => "pficon pficon-virtual-machine", :value => available ? _("Available") : _("N/A")}
@@ -91,7 +90,6 @@ module EmsPhysicalInfraHelper::TextualSummary
   end
 
   def textual_folders
-    return nil if @record.kind_of?(ManageIQ::Providers::PhysicalInfraManager)
     label     = _("VMs & Templates")
     available = @record.number_of(:ems_folders) > 0 && @record.ems_folder_root
     h         = {:label => label, :icon => "pficon pficon-virtual-machine", :value => available ? _("Available") : _("N/A")}
