@@ -364,21 +364,6 @@ class ApplicationHelper::ToolbarBuilder
     img
   end
 
-  def hide_button_ops(id)
-    case x_active_tree
-    when :settings_tree
-      return false
-    when :diagnostics_tree
-      return false
-    when :rbac_tree
-      return false
-    when :vmdb_tree
-      return false
-    else
-      return true
-    end
-  end
-
   # Determine if a button should be hidden
   def hide_button?(id)
     # need to hide add buttons when on sub-list view screen of a CI.
@@ -397,11 +382,6 @@ class ApplicationHelper::ToolbarBuilder
     return false if id == "miq_request_reload" && # Show the request reload button
                     (@lastaction == "show_list" || @showtype == "miq_provisions")
 
-    if @layout == "ops"
-      res = hide_button_ops(id)
-      return res
-    end
-
     return false if id.starts_with?("miq_capacity_") && @sb[:active_tab] == "report"
 
     # don't check for feature RBAC if id is miq_request_approve/deny
@@ -409,7 +389,8 @@ class ApplicationHelper::ToolbarBuilder
       return true if !role_allows?(:feature => id) && !["miq_request_approve", "miq_request_deny"].include?(id) &&
                      id !~ /^history_\d*/ &&
                      !id.starts_with?("dialog_") && !id.starts_with?("miq_task_") &&
-                     !(id == "show_summary" && !@explorer) && id != "summary_reload"
+                     !(id == "show_summary" && !@explorer) && id != "summary_reload" &&
+                     @layout != "ops"
     end
 
     # Check buttons with other restriction logic
