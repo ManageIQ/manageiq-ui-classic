@@ -1,7 +1,5 @@
-class ApplicationHelper::Button::TenantEdit < ApplicationHelper::Button::Basic
-  needs :@record
-
+class ApplicationHelper::Button::TenantEdit < ApplicationHelper::Button::RbacCommonFeatureButton
   def disabled?
-    @record.source
+    @record.try!(:source)
   end
 end

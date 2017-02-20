@@ -633,34 +633,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
 
   end # end of disable button
 
-  describe "#hide_button_ops" do
-    subject { toolbar_builder.hide_button_ops(@id) }
-    before do
-      @record = FactoryGirl.create(:tenant, :parent => Tenant.seed)
-      feature = EvmSpecHelper.specific_product_features(%w(ops_rbac rbac_group_add rbac_tenant_add rbac_tenant_delete))
-      login_as FactoryGirl.create(:user, :features => feature)
-      @sb = {:active_tree => :rbac_tree}
-    end
-
-    %w(rbac_group_add rbac_project_add rbac_tenant_add rbac_tenant_delete).each do |id|
-      context "when with #{id} button should be visible" do
-        before { @id = id }
-        it "and record_id" do
-          expect(subject).to be_falsey
-        end
-      end
-    end
-
-    %w(rbac_group_edit rbac_role_edit).each do |id|
-      context "when with #{id} button should not be visible as user does not have access to these features" do
-        before { @id = id }
-        it "and record_id" do
-          expect(subject).to be_truthy
-        end
-      end
-    end
-  end
-
   describe "#get_record_cls" do
     subject { toolbar_builder.get_record_cls(record) }
     context "when record not exist" do

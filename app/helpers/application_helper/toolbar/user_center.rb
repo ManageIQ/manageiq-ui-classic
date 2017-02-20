@@ -10,19 +10,22 @@ class ApplicationHelper::Toolbar::UserCenter < ApplicationHelper::Toolbar::Basic
           :rbac_user_edit,
           'pficon pficon-edit fa-lg',
           t = N_('Edit this User'),
-          t),
+          t,
+          :klass => ApplicationHelper::Button::RbacCommonFeatureButton),
         button(
           :rbac_user_copy,
           'fa fa-files-o fa-lg',
           t = N_('Copy this User to a new User'),
-          t),
+          t,
+          :klass => ApplicationHelper::Button::RbacCommonFeatureButton),
         button(
           :rbac_user_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Delete this User'),
           t,
           :url_parms => "&refresh=y",
-          :confirm   => N_("Are you sure you want to delete this User?")),
+          :confirm   => N_("Are you sure you want to delete this User?"),
+          :klass     => ApplicationHelper::Button::RbacCommonFeatureButton),
       ]
     ),
   ])
@@ -39,7 +42,8 @@ class ApplicationHelper::Toolbar::UserCenter < ApplicationHelper::Toolbar::Basic
           t = proc do
             _('Edit \'%{customer_name}\' Tags for this User') % {:customer_name => @view_context.session[:customer_name]}
           end,
-          t),
+          t,
+          :klass => ApplicationHelper::Button::RbacCommonFeatureButton),
       ]
     ),
   ])

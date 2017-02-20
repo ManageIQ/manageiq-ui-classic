@@ -371,8 +371,6 @@ class ApplicationHelper::ToolbarBuilder
     when :diagnostics_tree
       return false
     when :rbac_tree
-      return true unless role_allows?(:feature => rbac_common_feature_for_buttons(id))
-      return true if %w(rbac_project_add rbac_tenant_add).include?(id) && @record.project?
       return false
     when :vmdb_tree
       return !["db_connections", "db_details", "db_indexes", "db_settings"].include?(@sb[:active_tab])
