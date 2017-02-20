@@ -56,12 +56,12 @@ class PhysicalInfraTopologyService < TopologyService
 
   def entity_status(entity)
     case entity
-      when ManageIQ::Providers::PhysicalInfraManager
-        entity.authentications.blank? ? 'Unknown' : entity.authentications.first.status.try(:capitalize)
-      when Host
-        entity.state ? entity.state.downcase.capitalize : 'Unknown'
-      else
-        'Unknown'
+    when ManageIQ::Providers::PhysicalInfraManager
+      entity.authentications.blank? ? 'Unknown' : entity.authentications.first.status.try(:capitalize)
+    when Host
+      entity.state ? entity.state.downcase.capitalize : 'Unknown'
+    else
+      'Unknown'
     end
   end
 
