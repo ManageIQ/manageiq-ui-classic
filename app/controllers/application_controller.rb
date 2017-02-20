@@ -1690,8 +1690,6 @@ class ApplicationController < ActionController::Base
         javascript_redirect edit_ems_datawarehouse_path(params[:id])
       elsif params[:pressed] == "ems_network_edit" && params[:id]
         javascript_redirect edit_ems_network_path(params[:id])
-      elsif %w(arbitration_profile_edit arbitration_profile_new).include?(params[:pressed]) && params[:id]
-        javascript_redirect :action => @refresh_partial, :id => params[:id], :show => @redirect_id
       else
         javascript_redirect :action => @refresh_partial, :id => @redirect_id
       end

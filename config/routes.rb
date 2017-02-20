@@ -1062,8 +1062,6 @@ Rails.application.routes.draw do
 
     :ems_cloud                => {
       :get  => %w(
-        arbitration_profiles
-        arbitration_profile_edit
         dialog_load
         discover
         download_data
@@ -1075,8 +1073,6 @@ Rails.application.routes.draw do
       ) +
                compare_get,
       :post => %w(
-        arbitration_profiles
-        arbitration_profile_edit
         button
         create
         dynamic_checkbox_refresh
