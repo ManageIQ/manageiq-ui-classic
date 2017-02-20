@@ -9,6 +9,17 @@ class ApplicationHelper::Toolbar::CloudObjectStoreContainerCenter < ApplicationH
         t,
         :items => [
           button(
+            :cloud_object_store_container_clear,
+            'pficon pficon-delete fa-lg',
+            N_('Clear Object Storage Container'),
+            N_('Clear Object Storage Container'),
+            :url_parms => "main_div",
+            :confirm   => N_("Warning: ALL Objects will be permanently removed from the Object Storage Container!"),
+            :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+            :options   => {:feature => :cloud_object_store_container_clear}
+          ),
+          separator,
+          button(
             :cloud_object_store_container_delete,
             'pficon pficon-delete fa-lg',
             N_('Remove Object Storage Container'),

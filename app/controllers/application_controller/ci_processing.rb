@@ -1852,8 +1852,15 @@ module ApplicationController::CiProcessing
   end
 
   def cloud_object_store_button_operation(klass, task)
-    method = "#{task}_#{klass.name.underscore.to_sym}"
-    display_name = _(task.capitalize)
+    # Map to instance method name
+    case task
+    when "delete"
+      method = "#{task}_#{klass.name.underscore.to_sym}"
+      display_name = _(task.capitalize)
+    else
+      display_name = _(task.capitalize)
+      method = task = "#{klass.name.underscore.to_sym}_#{task}"
+    end
 
     items = []
 

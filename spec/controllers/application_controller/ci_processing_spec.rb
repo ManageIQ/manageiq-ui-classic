@@ -334,6 +334,163 @@ describe ApplicationController do
     end
   end
 
+  context "Clear object store container" do
+    before do
+      allow(controller).to receive(:assert_rbac).and_return(nil)
+      allow_any_instance_of(CloudObjectStoreContainer).to receive(:supports?).and_return(true)
+    end
+
+    let :container1 do
+      FactoryGirl.create(:cloud_object_store_container)
+    end
+
+    let :container2 do
+      FactoryGirl.create(:cloud_object_store_container)
+    end
+
+    context "from list view" do
+      before do
+        controller.params[:pressed] = "cloud_object_store_container_clear"
+        request.parameters["controller"] = "ems_storage"
+        controller.instance_variable_set(:@display, "cloud_object_store_containers")
+      end
+
+      it "get_rec_cls" do
+        expect(controller.send(:get_rec_cls)).to eq(CloudObjectStoreContainer)
+      end
+
+      it "invokes cloud_object_store_button_operation" do
+        expect(controller).to receive(:cloud_object_store_button_operation).with(
+          CloudObjectStoreContainer,
+          'clear'
+        )
+        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
+      end
+
+      it "invokes process_objects" do
+        controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
+        expect(controller).to receive(:process_objects).with(
+          [container1.id, container2.id],
+          'cloud_object_store_container_clear',
+          'Clear'
+        )
+        controller.send(:cloud_object_store_button_operation, CloudObjectStoreContainer, 'clear')
+      end
+
+      it "invokes process_tasks on container class" do
+        expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
+          :ids    => [container1.id, container2.id],
+          :task   => 'cloud_object_store_container_clear',
+          :userid => anything
+        )
+        controller.send(:process_objects, [container1.id, container2.id], 'cloud_object_store_container_clear',
+                        'clear')
+      end
+
+      it "invokes process_tasks overall (when selected)" do
+        controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
+        expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
+          :ids    => [container1.id, container2.id],
+          :task   => 'cloud_object_store_container_clear',
+          :userid => anything
+        )
+        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
+      end
+
+      it "does not invoke process_tasks overall when nothing selected" do
+        controller.params[:miq_grid_checks] = ''
+        expect(CloudObjectStoreContainer).not_to receive(:process_tasks)
+        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
+      end
+
+      it "flash - nothing selected" do
+        controller.params[:miq_grid_checks] = ''
+        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
+        expect(assigns(:flash_array).first[:message]).to include(
+          "No Cloud Object Store Containers were selected for Clear"
+        )
+      end
+
+      it "flash - task not supported" do
+        controller.params[:miq_grid_checks] = "#{container1.id}, #{container2.id}"
+        allow_any_instance_of(CloudObjectStoreContainer).to receive(:supports?).and_return(false)
+        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
+        expect(assigns(:flash_array).first[:message]).to include(
+          "Clear does not apply to at least one of the selected items"
+        )
+      end
+    end
+
+    context "from details view" do
+      before do
+        allow(controller).to receive(:show_list).and_return(nil)
+        controller.params[:pressed] = "cloud_object_store_container_clear"
+        request.parameters["controller"] = "cloud_object_store_container"
+      end
+
+      let :container do
+        FactoryGirl.create(:cloud_object_store_container)
+      end
+
+      it "get_rec_cls" do
+        expect(controller.send(:get_rec_cls)).to eq(CloudObjectStoreContainer)
+      end
+
+      it "invokes cloud_object_store_button_operation" do
+        expect(controller).to receive(:cloud_object_store_button_operation).with(
+          CloudObjectStoreContainer,
+          'clear'
+        )
+        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
+      end
+
+      it "invokes process_objects" do
+        controller.params[:id] = container.id
+        expect(controller).to receive(:process_objects).with(
+          [container.id],
+          'cloud_object_store_container_clear',
+          'Clear'
+        )
+        controller.send(:cloud_object_store_button_operation, CloudObjectStoreContainer, 'clear')
+      end
+
+      it "invokes process_tasks on container class" do
+        expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
+          :ids    => [container.id],
+          :task   => 'cloud_object_store_container_clear',
+          :userid => anything
+        )
+        controller.send(:process_objects, [container.id], 'cloud_object_store_container_clear', 'clear')
+      end
+
+      it "invokes process_tasks overall" do
+        controller.params[:id] = container.id
+        expect(CloudObjectStoreContainer).to receive(:process_tasks).with(
+          :ids    => [container.id],
+          :task   => 'cloud_object_store_container_clear',
+          :userid => anything
+        )
+        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
+      end
+
+      it "flash - container no longer exists" do
+        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
+        expect(assigns(:flash_array).first[:message]).to include(
+          "Cloud Object Store Container no longer exists"
+        )
+      end
+
+      it "flash - task not supported" do
+        controller.params[:id] = container.id
+        allow_any_instance_of(CloudObjectStoreContainer).to receive(:supports?).and_return(false)
+        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
+        expect(assigns(:flash_array).first[:message]).to include(
+          "Clear does not apply to this item"
+        )
+      end
+    end
+  end
+
   # some methods should not be accessible through the legacy routes
   # either by being private or through the hide_action mechanism
   it 'should not allow call of hidden/private actions' do
