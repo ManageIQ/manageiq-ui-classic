@@ -80,7 +80,7 @@ class MiqTaskController < ApplicationController
     when "tasks_4", "alltasks_2" then @layout = "all_ui_tasks"
     end
 
-    @user_names = db_class.distinct("userid").pluck("userid").delete_if(&:blank?) if @active_tab.to_i > 2
+    @user_names = db_class.distinct.pluck("userid").delete_if(&:blank?) if @active_tab.to_i > 2
     @view, @pages = get_view(db_class, :conditions => tasks_condition(@tasks_options[@tabform]))
   end
 
@@ -353,9 +353,14 @@ class MiqTaskController < ApplicationController
   end
 
   def build_query_for_userid(opts)
-    return ["#{db_table}userid=?", session[:userid]] if %w(tasks_1 tasks_2).include?(@tabform)
-    return ["#{db_table}userid=?", opts[:user_choice]] if opts[:user_choice] && opts[:user_choice] != "all"
-    return nil, nil
+    sql = "#{db_table}userid=?"
+    if %w(tasks_1 tasks_2).include?(@tabform)
+      [sql, session[:userid]]
+    elsif opts[:user_choice] && opts[:user_choice] != "all"
+      [sql, opts[:user_choice]]
+    else
+      [nil, nil]
+    end
   end
 
   def build_query_for_status(opts)
@@ -385,8 +390,12 @@ class MiqTaskController < ApplicationController
   end
 
   def build_query_for_status_completed(status)
-    return ["(#{db_table}state=? AND #{db_table}status=?)", ["finished", status]] if vm_analysis_task?
-    ["(#{db_table}state=? AND #{db_table}status=?)", ["Finished", status.capitalize]]
+    sql = "(#{db_table}state=? AND #{db_table}status=?)"
+    if vm_analysis_task?
+      [sql, ["finished", status]]
+    else
+      [sql, ["Finished", status.capitalize]]
+    end
   end
 
   def build_query_for_running
