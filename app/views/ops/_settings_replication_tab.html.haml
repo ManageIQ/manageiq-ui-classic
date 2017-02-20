@@ -203,6 +203,7 @@
                    :alt       => _("Save"),
                    "ng-click" => "saveClicked()",
                    "ng-show"  => "saveEnabled(angularForm)")
+      %miq-button{:name => _("Save"), :title => _("Save"), :alt => _("Save"), :enabled => "saveEnabled(angularForm)", 'on-click' => "saveClicked()"}
       = button_tag(_("Reset"),
                    :class     => "btn btn-default disabled",
                    :alt       => _("Reset changes"),
@@ -213,6 +214,7 @@
                    :alt       => _("Reset changes"),
                    "ng-click" => "resetClicked()",
                    "ng-show"  => "saveEnabled(angularForm)")
+      %miq-button{:name => _("Reset"), :title => _("Reset"), :alt => _("Reset"), :enabled => "saveEnabled(angularForm)", 'on-click' => "resetClicked()"}
   :javascript
     ManageIQ.angular.app.value('pglogicalReplicationFormId', 'new');
     miq_bootstrap('#form_div');
