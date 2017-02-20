@@ -243,30 +243,8 @@
   %table{:width => "100%", :align => "bottom"}
     %tr
       %td#buttons_on{:align => "right"}
-        = button_tag(_("Submit"),
-                     :class     => "btn btn-primary disabled",
-                     :alt       => _("Submit"),
-                     "ng-click" => "disabledClick($event)",
-                     "ng-show"  => "(angularForm.$pristine && !cb_disks) || angularForm.$invalid || (!cb_memory && !cb_cpu && !cb_disks)")
-        = button_tag(_("Submit"),
-                     :class     => "btn btn-primary",
-                     :alt       => _("Submit"),
-                     "ng-click" => "submitClicked()",
-                     "ng-show"  => "!((angularForm.$pristine && !cb_disks) || angularForm.$invalid || (!cb_memory && !cb_cpu && !cb_disks))")
         %miq-button{:name => _('Submit'), :title =>  _('Submit'), :alt =>  _('Submit'), :enabled => "!((angularForm.$pristine && !cb_disks) || angularForm.$invalid || (!cb_memory && !cb_cpu && !cb_disks))", 'on-click' => "submitClicked()", :primary => 'true'}
-        = button_tag(_("Reset"),
-             :class        => "btn btn-default disabled",
-             :alt          => _("Reset changes"),
-             :title        => _("Reset changes"),
-             "ng-class"    => "{ disabled: angularForm.$pristine && !cb_disks}",
-             "ng-click"    => "resetClicked()",
-             "ng-disabled" => "angularForm.$pristine && !cb_disks",
-             "ng-hide"     => "newRecord")
         %miq-button{:name => _('Reset'), :title => _('Reset'), :alt => _('Reset'), :enabled => "!(angularForm.$pristine && !cb_disks)", 'on-click' => "resetClicked()", 'ng-show' => '!newRecord'}
-        = button_tag(_("Cancel"),
-                     :class     => "btn btn-default",
-                     :alt       => _("Cancel"),
-                     "ng-click" => "cancelClicked()")
         %miq-button{:name => _('Cancel'), :title => _('Cancel'), :alt => _('Cancel'), :enabled => "true", 'on-click' => "cancelClicked()"}
 
 :javascript

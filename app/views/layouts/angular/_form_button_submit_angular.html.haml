@@ -3,17 +3,5 @@
 - confirm ||= ""
 - ng_show ||= true
 
-%div{"ng-show" => ng_show, "ng-controller" => "buttonGroupController"}
-  = button_tag(_("Submit"),
-                 :class     => "btn btn-primary disabled",
-                 :alt       => submit_title_off,
-                 :title     => submit_title_off,
-                 "ng-show"  => "!saveable(angularForm)",
-                 "ng-click" => "disabledClick($event)")
-  = button_tag(_("Submit"),
-                 :class     => "btn btn-primary",
-                 :alt       => submit_title_on,
-                 :title     => submit_title_on,
-                 "ng-show"  => "saveable(angularForm)",
-                 "ng-click" => "submitButtonClicked('#{confirm}')")
+%div{"ng-show" => ng_show}
   %miq-button{:name => _("Submit"), "disabled-title" => submit_title_off, "enabled-title" => submit_title_on, :enabled => "saveable(angularForm)", 'on-click' => "submitButtonClicked('#{confirm}')", :primary => 'true'}
