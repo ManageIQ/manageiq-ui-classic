@@ -257,7 +257,7 @@
     this.settings.dropDownClass = ['dropup'];
     this.settings.translateTotalOf = function(start, end, total) {
       if (start && end && total) {
-        return sprintf(__('%d - %d of %d'), start, end, total);
+        return sprintf(__('%d - %d of %d'), start + 1, end + 1, total);
       }
       return start + ' - ' + end + ' of ' + total;
     };
