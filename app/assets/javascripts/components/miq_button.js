@@ -13,15 +13,20 @@ ManageIQ.angular.app.component('miqButton', {
         this.onClick();
       }
     };
+    this.setTitle = function() {
+      if (this.enabledTitle || this.disabledTitle) {
+        this.title = this.enabled ? this.enabledTitle : this.disabledTitle;
+      }
+    };
     this.$onInit = function() {
-
+      this.setTitle();
     };
     this.$onChanges = function(changes) {
       if (changes.enabled) {
         this.enabled = changes.enabled.currentValue;
-
+        this.setTitle();
       }
     };
   },
-  template: '<button name="button" type="submit" ng-class="{btn: true, \'btn-primary\': $ctrl.primary, \'btn-default\': !$ctrl.primary, disabled: !$ctrl.enabled}" ng-click="$ctrl.buttonClicked()">{{$ctrl.name}}</button>'
+  templateUrl: '/static/miq-button.html.haml'
 });
