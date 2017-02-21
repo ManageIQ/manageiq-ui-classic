@@ -119,11 +119,6 @@ module Mixins
       @ems = find_by_id_filtered(model, params[:id]) if params[:id] != 'new'
       default_security_protocol = @ems.default_endpoint.security_protocol ? @ems.default_endpoint.security_protocol : 'ssl'
 
-      if @ems.zone.nil? || @ems.my_zone == ""
-        zone = "default"
-      else
-        zone = @ems.my_zone
-      end
       amqp_userid = ""
       amqp_hostname = ""
       amqp_port = ""
@@ -201,8 +196,6 @@ module Mixins
         service_account_auth_status = @ems.authentication_status_ok?
       end
 
-      default_auth_status = @ems.authentication_status_ok? unless @ems.kind_of?(ManageIQ::Providers::Google::CloudManager)
-
       render :json => {:name                            => @ems.name,
                        :emstype                         => @ems.emstype,
                        :zone                            => zone,
@@ -265,20 +258,6 @@ module Mixins
                         :metrics_auth_status           => metrics_auth_status.nil? ? true : metrics_auth_status,
                         :ssh_keypair_auth_status       => ssh_keypair_auth_status.nil? ? true : ssh_keypair_auth_status
       } if controller_name == "ems_infra"
-
-      render :json => {
-        :name                => @ems.name,
-        :emstype             => @ems.emstype,
-        :zone                => zone,
-        :provider_id         => @ems.provider_id ? @ems.provider_id : "",
-        :hostname            => @ems.hostname,
-        :default_hostname    => @ems.connection_configurations.default.endpoint.hostname,
-        :default_api_port    => @ems.connection_configurations.default.endpoint.port,
-        :provider_region     => @ems.provider_region,
-        :default_userid      => @ems.authentication_userid ? @ems.authentication_userid : "",
-        :ems_controller      => controller_name,
-        :default_auth_status => default_auth_status,
-      } if controller_name == "ems_physical_infra"
 
       render :json => {:name                      => @ems.name,
                        :emstype                   => @ems.emstype,
@@ -563,6 +542,18 @@ module Mixins
       }
 
       @edit[:new][:tenant_mapping_enabled] = params[:tenant_mapping_enabled] if ems.class.supports_cloud_tenant_mapping?
+    end
+
+    def zone
+      if @ems.zone.nil? || @ems.my_zone == ""
+        "default"
+      else
+        @ems.my_zone
+      end
+    end
+
+    def default_auth_status
+      @ems.authentication_status_ok? unless @ems.kind_of?(ManageIQ::Providers::Google::CloudManager)
     end
   end
 end
