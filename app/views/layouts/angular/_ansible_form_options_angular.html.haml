@@ -86,7 +86,7 @@
         = _("Hosts")
       .col-md-8
         %input.form-control{:type         => "text",
-                            'ng-model'    => "vm.#{ng_model}.#{prefix}_inventory",
+                            'ng-model'    => "#{ng_model}.#{prefix}_inventory",
                             :name         => "#{prefix}_inventory",
                             :maxlength    => 50,
                             "miqrequired" => "",
@@ -161,7 +161,6 @@
     .form-group
       %label.col-md-2.control-label
         = _("Dialog")
-        {{#{ng_model}.#{prefix}_dialog_existing}}
       .col-md-4
         %label.radio
           %input{"ng-model" => "vm.#{prefix}_dialog_existing", :type => "radio", :value => "existing", "ng-click" => "vm.toggleDialogSelection('#{prefix}', 'existing')", "ng-checked" => "#{ng_model}.#{prefix}_dialog_existing == 'existing'"}

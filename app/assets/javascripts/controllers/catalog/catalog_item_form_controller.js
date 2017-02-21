@@ -74,7 +74,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.catalogItemModel.provisioning_machine_credential_id = configData.provision.credential_id;
     vm.catalogItemModel.provisioning_network_credential_id = configData.provision.network_credential_id;
     vm.catalogItemModel.provisioning_cloud_credential_id = configData.provision.cloud_credential_id;
-    vm.catalogItemModel.provisioning_inventory = configData.provision.inventory;
+    vm.catalogItemModel.provisioning_inventory = configData.provision.hosts;
     vm.catalogItemModel.provisioning_dialog_existing = configData.provision.dialog_id ? "existing" : "create";
     vm.catalogItemModel.provisioning_dialog_id = configData.provision.dialog_id;
     vm.catalogItemModel.provisioning_dialog_name = configData.provision.new_dialog_name;
@@ -88,7 +88,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       vm.catalogItemModel.retirement_machine_credential_id = configData.retirement.credential_id;
       vm.catalogItemModel.retirement_network_credential_id = configData.retirement.network_credential_id;
       vm.catalogItemModel.retirement_cloud_credential_id = configData.retirement.cloud_credential_id;
-      vm.catalogItemModel.retirement_inventory = configData.retirement.inventory;
+      vm.catalogItemModel.retirement_inventory = configData.retirement.hosts;
       vm.catalogItemModel.retirement_dialog_existing = configData.retirement.dialog_id ? "existing" : "create";
       vm.catalogItemModel.retirement_dialog_id = configData.retirement.dialog_id;
       vm.catalogItemModel.retirement_dialog_name = configData.retirement.new_dialog_name;
