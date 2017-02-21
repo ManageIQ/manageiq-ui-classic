@@ -1,18 +1,18 @@
 .clearfix
-.pull-right.button-group
+.pull-right.button-group.edit_buttons{"ng-controller" => "buttonGroupController"}
   %miq-button{:name      => t = _("Add"),
               :title     => t,
               :alt       => t,
               'ng-show'  => 'newRecord',
-              :enabled   => "newRecord && saveable(angularForm)",
-              'on-click' => "addClicked($event, true)",
+              :enabled   => "saveable(angularForm)",
+              'on-click' => "addClicked({target: '.edit_buttons'}, true)",
               :primary   => 'true'}
   %miq-button{:name      => t = _("Save"),
               :title     => t,
               :alt       => t,
               'ng-show'  => '!newRecord',
-              :enabled   => "saveable(angularForm)",
-              'on-click' => "saveClicked($event, true)",
+              :enabled   => "miqService.saveable(angularForm)",
+              'on-click' => "saveClicked({target: '.edit_buttons'}, true)",
               :primary   => 'true'}
   %miq-button{:name      => t = _("Reset"),
               :title     => t,
@@ -24,4 +24,4 @@
               :title     => t,
               :alt       => t,
               :enabled   => "true",
-              'on-click' => "cancelClicked($event)"}
+              'on-click' => "cancelClicked({target: '.edit_buttons'})"}
