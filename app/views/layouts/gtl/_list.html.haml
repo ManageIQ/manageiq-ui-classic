@@ -173,23 +173,13 @@
                   - click = "DoNav('/vm/show/#{to_cid(rec.destination_id)}');"
                   - title = _("Click to view this VM")
               - elsif view.db == "Job"
-                - if col.include?("agent_")
-                  - if !row['agent_class'].nil? && row['agent_class'] != ""
-                    - a_rec = @targets_hash[row['agent_id']] if @targets_hash
-                    - if a_rec.nil?
-                      - title = _("%{agent} record no longer exists") % {:agent => row['agent_class']}
-                    - else
-                      - if row['agent_class'] != "MiqServer"
-                        - click = "DoNav('/#{row['agent_class'].underscore}/show/#{to_cid(row['agent_id'])}');"
-                        - title = _("Click to view %{record}") % {:record => h("#{row['agent_class']}<#{a_rec.name}>")}
+                - if row['target_id'].blank?
+                  - title = _("No task target captured")
                 - else
-                  - if row['target_id'].blank?
-                    - title = _("No task target captured")
-                  - else
-                    - target_class = row['target_class']
-                    - action = target_class.to_s == "VmOrTemplate" ? "vm_show" : "show"
-                    - click = "DoNav('/#{target_class.constantize.base_class.name.underscore.downcase}/#{action}/#{to_cid(row['target_id'])}');"
-                    - title = _("Click to view target %{model}") % {:model => h(ui_lookup(:model => target_class.constantize.base_class.name))}
+                  - target_class = row['target_class']
+                  - action = target_class.to_s == "VmOrTemplate" ? "vm_show" : "show"
+                  - click = "DoNav('/#{target_class.constantize.base_class.name.underscore.downcase}/#{action}/#{to_cid(row['target_id'])}');"
+                  - title = _("Click to view target %{model}") % {:model => h(ui_lookup(:model => target_class.constantize.base_class.name))}
               - elsif %w(total_space free_space).include?(col)
                 - title = _("%{number} bytes") % {:number => number_with_delimiter(h(row[col]), :delimiter => ",", :separator => ".")}
               - else
@@ -280,13 +270,6 @@
                   = h(row[col].capitalize)
               - elsif col == "enabled" && row[col].nil? && view.db == "MiqSchedule"
                 = (!!row[col]).to_s.capitalize
-              - elsif col == "agent_class" && row[col].nil? && view.db == "Job"
-                - unless row['agent_class'].blank?
-                  - if a_rec.nil?
-                    = _("%{agent} record no longer exists") % {:agent => row['agent_class']}
-                  - else
-                    %center
-                      = h(a_rec.name)
               - elsif %w(free_space total_space size).include?(col) && row[col].nil?
                 %center
                   = h(number_to_human_size(row[col], :precision => 2))
