@@ -36,6 +36,7 @@
           %th= _('Username')
           %th= _('Password')
           %th= _('Port')
+          %th= _('Backlog')
           %th{:colspan => 2}=_('Actions')
         %tbody
           %tr{"ng-if" => "pglogicalReplicationModel.addEnabled"}
@@ -73,6 +74,7 @@
                                   "id"          => "port",
                                   "name"        => "port",
                                   "ng-model"    => "pglogicalReplicationModel.port"}
+            %td
             %td{:class => "action-cell"}
               %button.btn.btn-default.btn-block.btn-sm{:type => "button", "ng-disabled" => "!subscriptionValid()",  "ng-click" => "addSubscription()"}= _('Accept')
 
@@ -142,6 +144,8 @@
                                   "name"        => "port",
                                   "ng-model"    => "pglogicalReplicationModel.port"}
 
+            %td
+              {{subscription.backlog}}
             %td{:class => "action-cell", "ng-show" => "showCancelDelete($index)"}
               %button.btn.btn-default.btn-sm{:type => "button", "ng-click" => "cancelDelete($index)"}= _('Cancel Delete')
 
