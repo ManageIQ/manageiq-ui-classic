@@ -506,6 +506,7 @@ module ReportController::Reports::Editor
         @edit[:new][:cb_end_interval_offset] ||= 1
         @edit[:new][:cb_groupby] ||= "date"                     # Default to Date grouping
         @edit[:new][:tz] = session[:user_tz]
+        @edit[:new][:cb_include_metrics] = true if @edit[:new][:model] == 'ChargebackVm'
       end
       reset_report_col_fields
       build_edit_screen
@@ -597,6 +598,8 @@ module ReportController::Reports::Editor
         @edit[:new][:cb_tag_cat] = params[:cb_tag_cat]
         @edit[:cb_tags] = entries_hash(params[:cb_tag_cat])
       end
+    elsif params.key?(:cb_include_metrics)
+      @edit[:new][:cb_include_metrics] = params[:cb_include_metrics] == 'true'
     elsif params.key?(:cb_owner_id)
       @edit[:new][:cb_owner_id] = params[:cb_owner_id].blank? ? nil : params[:cb_owner_id]
     elsif params.key?(:cb_tenant_id)
@@ -988,6 +991,7 @@ module ReportController::Reports::Editor
         options[:entity_id] = @edit[:new][:cb_entity_id]
       end
 
+      options[:include_metrics] = @edit[:new][:cb_include_metrics]
       options[:groupby] = @edit[:new][:cb_groupby]
       options[:groupby_tag] = @edit[:new][:cb_groupby] == 'tag' ? @edit[:new][:cb_groupby_tag] : nil
 
@@ -1266,6 +1270,8 @@ module ReportController::Reports::Editor
         @edit[:new][:cb_provider_id] = options[:provider_id]
       end
 
+      # @edit[:new][:cb_include_metrics] = nil - it means YES (YES is default value for new and legacy reports)
+      @edit[:new][:cb_include_metrics] = options[:include_metrics].nil? || options[:include_metrics]
       @edit[:new][:cb_groupby_tag] = options[:groupby_tag] if options.key?(:groupby_tag)
       @edit[:new][:cb_model] = Chargeback.report_cb_model(@rpt.db)
       @edit[:new][:cb_interval] = options[:interval]
