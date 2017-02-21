@@ -193,8 +193,16 @@
                   'checkchange'   => ''}
 
     .button-group{:align => "right"}
-      %miq-button{:name => _("Save"), :title => _("Save"), :alt => _("Save"), :enabled => "saveEnabled(angularForm)", 'on-click' => "saveClicked()"}
-      %miq-button{:name => _("Reset"), :title => _("Reset"), :alt => _("Reset"), :enabled => "saveEnabled(angularForm)", 'on-click' => "resetClicked()"}
+      %miq-button{:name      => t = _("Save"),
+                  :title     => t,
+                  :alt       => t,
+                  :enabled   => "saveEnabled(angularForm)",
+                  'on-click' => "saveClicked()"}
+      %miq-button{:name      => t = _("Reset"),
+                  :title     => t,
+                  :alt       => t,
+                  :enabled   => "saveEnabled(angularForm)",
+                  'on-click' => "resetClicked()"}
   :javascript
     ManageIQ.angular.app.value('pglogicalReplicationFormId', 'new');
     miq_bootstrap('#form_div');

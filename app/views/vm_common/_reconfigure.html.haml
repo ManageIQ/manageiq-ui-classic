@@ -243,9 +243,23 @@
   %table{:width => "100%", :align => "bottom"}
     %tr
       %td#buttons_on{:align => "right"}
-        %miq-button{:name => _('Submit'), :title =>  _('Submit'), :alt =>  _('Submit'), :enabled => "!((angularForm.$pristine && !cb_disks) || angularForm.$invalid || (!cb_memory && !cb_cpu && !cb_disks))", 'on-click' => "submitClicked()", :primary => 'true'}
-        %miq-button{:name => _('Reset'), :title => _('Reset'), :alt => _('Reset'), :enabled => "!(angularForm.$pristine && !cb_disks)", 'on-click' => "resetClicked()", 'ng-show' => '!newRecord'}
-        %miq-button{:name => _('Cancel'), :title => _('Cancel'), :alt => _('Cancel'), :enabled => "true", 'on-click' => "cancelClicked()"}
+        %miq-button{:name      => t = _('Submit'),
+                    :title     => t,
+                    :alt       => t,
+                    :enabled   => "!((angularForm.$pristine && !cb_disks) || angularForm.$invalid || (!cb_memory && !cb_cpu && !cb_disks))",
+                    'on-click' => "submitClicked()",
+                    :primary   => 'true'}
+        %miq-button{:name      => t = _('Reset'),
+                    :title     => t,
+                    :alt       => t,
+                    :enabled   => "!(angularForm.$pristine && !cb_disks)",
+                    'on-click' => "resetClicked()",
+                    'ng-show'  => '!newRecord'}
+        %miq-button{:name      => t = _('Cancel'),
+                    :title     => t,
+                    :alt       => t,
+                    :enabled   => "true",
+                    'on-click' => "cancelClicked()"}
 
 :javascript
   ManageIQ.angular.app.value('reconfigureFormId', '#{@request_id || "new"}');

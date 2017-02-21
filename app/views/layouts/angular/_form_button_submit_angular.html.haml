@@ -4,4 +4,9 @@
 - ng_show ||= true
 
 %div{"ng-show" => ng_show}
-  %miq-button{:name => _("Submit"), "disabled-title" => submit_title_off, "enabled-title" => submit_title_on, :enabled => "saveable(angularForm)", 'on-click' => "submitButtonClicked('#{confirm}')", :primary => 'true'}
+  %miq-button{:name            => _("Submit"),
+              "disabled-title" => submit_title_off,
+              "enabled-title"  => submit_title_on,
+              :enabled         => "saveable(angularForm)",
+              'on-click'       => "submitButtonClicked('#{confirm}')",
+              :primary         => 'true'}
