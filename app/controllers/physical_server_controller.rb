@@ -26,8 +26,13 @@ class PhysicalServerController  < ApplicationController
     session[:physical_server_lastaction] = @lastaction
   end
 
-
   def show_list
+    # Disable the cache to prevent a caching problem that occurs when
+    # pressing the browser's back arrow button to return to the show_list
+    # page while on the Physical Server's show page. Disabling the cache
+    # causes the page and its session variables to actually be reloaded.
+    disable_client_cache
+
     process_show_list
   end
 
@@ -38,8 +43,8 @@ class PhysicalServerController  < ApplicationController
     server_ids = []
     servers = []
 
-    # Either a list of servers or coming from a different controller
-    if @lastaction == "show_list" || @layout != "physical_server"
+    # A list of servers
+    if @lastaction == "show_list"
       server_ids = find_checked_items
       server_ids.each do |server_id|
         servers.push(PhysicalServer.find_by_id(server_id))
