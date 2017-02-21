@@ -9,9 +9,6 @@
 .fa-1xplus { //custom resize for fa-tachometer on dashboard summary toggle
   font-size: 1.18em;
 }
-.fa-play:before {
-  color: #57a81c;
-}
 .fa-pause:before {
   color: #eb7720;
 }
@@ -29,6 +26,33 @@
 
 .fa-inactive, .product-inactive, .pficon-inactive { // add styling to show inactive icon (policies, etc)//
 opacity:0.6;
+}
+
+.compare-same {
+  @extend .fa, .fa-lg, .fa-check;
+  color: #403990;
+}
+
+.compare-diff {
+  @extend .fa, .fa-lg, .fa-times;
+  color: #21a0ec;
+}
+
+.drift-delta {
+  @extend .fa, .fa-play, .fa-rotate-270;
+  color: #21a0ec;
+}
+
+.green > i {
+  color: #2d7623; //pf-green-500
+}
+
+.red > i {
+  color: #cc0000; //pf-red-100
+}
+
+.orange > i {
+  color: #ec7a08; //pf-orange-400
 }
 
 

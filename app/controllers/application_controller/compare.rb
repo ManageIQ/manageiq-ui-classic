@@ -1088,7 +1088,7 @@ module ApplicationController::Compare
         @same = false
         row.merge!(drift_add_diff_image(idx, val))
       else
-        img_src = "16/plus-black.png"              # Base doesn't have the record, match
+        img_src = "fa fa-plus" # Base doesn't have the record, match
         img_bkg = ""
         row.merge!(drift_add_image_col(idx, img_src, img_bkg, val))
       end
@@ -1099,23 +1099,21 @@ module ApplicationController::Compare
   def drift_record_existmode(idx, val, basval)
     row = {}
     if val == "Found"                                             # This object has the record
-      img_bkg = ""
       if basval == "Found"                                        # Base has the record
-        img_src = "16/plus-black.png"
+        img_bkg = ''
       else                                                        # Base doesn't have the record
         @same = false
-        img_src = "16/plus-orange.png"
+        img_bkg = 'orange'
       end
-      row.merge!(drift_add_image_col(idx, img_src, img_bkg, val))
+      row.merge!(drift_add_image_col(idx, 'fa fa-plus', img_bkg, val))
     else                                                          # Record is missing from this object
-      img_bkg = ""
       if basval == "Found"                                        # Base has the record, no match
         @same = false
-        img_src = "16/minus-orange.png"
+        img_bkg = 'orange'
       else                                                        # Base doesn't have the record, match
-        img_src = "16/minus-black.png"
+        img_bkg = ''
       end
-      row.merge!(drift_add_image_col(idx, img_src, img_bkg, val))
+      row.merge!(drift_add_image_col(idx, 'fa fa-minus', img_bkg, val))
     end
     row
   end
@@ -1302,23 +1300,22 @@ module ApplicationController::Compare
   end
 
   def drift_add_same_image(idx, val)
-    img_src = "100/compare-same.png"
+    img_src = "compare-same"
     img_bkg = "cell-stripe"
     drift_add_image_col(idx, img_src, img_bkg, val)
   end
 
   def drift_add_diff_image(idx, val)
-    img_src = "100/drift-delta.png"
+    img_src = "drift-delta"
     img_bkg = "cell-plain"
     drift_add_image_col(idx, img_src, img_bkg, val)
   end
 
   def drift_add_image_col(idx, img_src, img_bkg, val)
-    html_text = "<div class='#{img_bkg}'>
-                   <img src=\"#{ActionController::Base.helpers.image_path(img_src)}\" width=\"20\" height=\"20\"
-                    border=\"0\" align=\"middle\" alt=\"#{val}\" title=\"#{val}\"/>
-                 </div>"
-    {"col#{idx + 1}".to_sym => html_text}
+    html = ViewHelper.content_tag(:div, :class => img_bkg) do
+      ViewHelper.tag(:i, :class => img_src, :title => val)
+    end
+    {"col#{idx + 1}".to_sym => html}
   end
 
   def drift_add_txt_col(idx, col, img_bkg)
@@ -1469,11 +1466,10 @@ module ApplicationController::Compare
         if idx != 0
           url = "/#{controller_name}/compare_remove/#{view.records[idx].id}"
           title = _("Remove this %{title} from the comparison") % {:title => session[:db_title].singularize}
-          html_text = "<a onclick=\"miqJqueryRequest('#{url}', {beforeSend: true, complete: true}); return false;\"
-                       title=\"#{title}\" href=\"#\">
-                         <img src=\"#{ActionController::Base.helpers.image_path('toolbars/delete.png')}\"
-                         width=\"24\" alt=\"#{title}\" title=\"#{title}\" align=\"middle\" border=\"0\" />
-                       </a>"
+          onclick = "miqJqueryRequest('#{url}', {beforeSend: true, complete: true}); return false;"
+          html_text = ViewHelper.content_tag(:button, :class => 'btn btn-default', :onclick => onclick) do
+            ViewHelper.tag(:i, :class => 'pficon pficon-delete', :title => title, :alt => title)
+          end
           row.merge!("col#{idx + 1}".to_sym => html_text)
         end
       end
@@ -1504,12 +1500,12 @@ module ApplicationController::Compare
   end
 
   def compare_add_same_image(idx, val, img_bkg = "")
-    img_src = "100/compare-same.png"
+    img_src = "compare-same"
     drift_add_image_col(idx, img_src, img_bkg, val)
   end
 
   def compare_add_diff_image(idx, val)
-    img_src = "100/compare-diff.png"
+    img_src = "compare-diff"
     img_bkg = ""
     drift_add_image_col(idx, img_src, img_bkg, val)
   end
@@ -1629,7 +1625,7 @@ module ApplicationController::Compare
   def comp_record_data_compressed_existsmode(idx, _match, val, basval)
     row = {}
     if idx == 0                                                     # On the base?
-      row.merge!(drift_add_image_col(idx, "100/blank.gif", "cell-stripe", val))
+      row.merge!(drift_add_image_col(idx, "", "cell-stripe", val)) # no icon
     else
       if val == basval  # Compare this object's value to the base
         row.merge!(compare_add_same_image(idx, val))
@@ -1689,25 +1685,25 @@ module ApplicationController::Compare
     row = {}
     if idx == 0                                                     # On the base?
       if val == "Found"                                           # Base has the record
-        row.merge!(drift_add_image_col(idx, "16/plus-black.png", "cell-stripe", val))
+        row.merge!(drift_add_image_col(idx, "fa fa-plus", "cell-stripe", val))
       else                                                          # Base doesn't have the record
         unset_same_flag
-        row.merge!(drift_add_image_col(idx, "16/minus-black.png", "cell-stripe", val))
+        row.merge!(drift_add_image_col(idx, "fa fa-minus", "cell-stripe", val))
       end
     else
       if val == "Found"                                             # This object has the record
         if basval == "Found"                                        # Base has the record
-          row.merge!(drift_add_image_col(idx, "16/plus-green.png", "", val))
+          row.merge!(drift_add_image_col(idx, "fa fa-plus", "green", val))
         else                                                        # Base doesn't have the record
           unset_same_flag
-          row.merge!(drift_add_image_col(idx, "16/plus-red.png", "", val))
+          row.merge!(drift_add_image_col(idx, "fa fa-plus", "red", val))
         end
       else                                                          # Record is missing from this object
         if basval == "Found"                                        # Base has the record, no match
           unset_same_flag
-          row.merge!(drift_add_image_col(idx, "16/minus-red.png", "", val))
+          row.merge!(drift_add_image_col(idx, "fa fa-minus", "red", val))
         else                                                        # Base doesn't have the record, match
-          row.merge!(drift_add_image_col(idx, "16/minus-green.png", "", val))
+          row.merge!(drift_add_image_col(idx, "fa fa-minus", "green", val))
         end
       end
     end
@@ -1763,11 +1759,11 @@ module ApplicationController::Compare
 
   def comp_add_record_field_missing_compressed(idx, val, base_rec)
     if @exists_mode
-      passed_img = "16/passed.png"
-      failed_img = "16/failed.png"
+      passed_img = "fa fa-check"
+      failed_img = "fa fa-times"
     else
-      passed_img = "100/compare-same.png"
-      failed_img = "100/compare-diff.png"
+      passed_img = "compare-same"
+      failed_img = "compare-diff"
     end
     row = {}
 
@@ -1786,11 +1782,11 @@ module ApplicationController::Compare
 
   def comp_add_record_field_exists_compressed(idx, val, base_rec, field)
     if @exists_mode
-      passed_img = "16/passed.png"
-      failed_img = "16/failed.png"
+      passed_img = "fa fa-check"
+      failed_img = "fa fa-times"
     else
-      passed_img = "100/compare-same.png"
-      failed_img = "100/compare-diff.png"
+      passed_img = "compare-same"
+      failed_img = "compare-diff"
     end
     row = {}
 
@@ -1900,10 +1896,10 @@ module ApplicationController::Compare
       else
         if base_val == val
           img_bkg = "cell-stripe"
-          img = "100/compare-same.png"
+          img = "compare-same"
         else
           img_bkg = ""
-          img = "100/compare-diff.png"
+          img = "compare-diff"
           unset_same_flag
         end
         row.merge!(drift_add_image_col(idx, img, img_bkg, val))
