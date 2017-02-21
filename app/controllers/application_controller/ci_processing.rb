@@ -194,6 +194,9 @@ module ApplicationController::CiProcessing
   def retirevms
     assert_privileges(params[:pressed])
     vms = find_checked_items
+    @edit ||= {}
+    @edit[:object_ids] = vms
+    session[:edit] = @edit
     if !%w(orchestration_stack service).include?(request.parameters["controller"]) && !%w(orchestration_stacks).include?(params[:display]) &&
        VmOrTemplate.find(vms).any? { |vm| !vm.supports_retire? }
       add_flash(_("Set Retirement Date does not apply to selected %{model}") %
@@ -325,6 +328,9 @@ module ApplicationController::CiProcessing
     session[:retire_date] = t.nil? ? nil : "#{t.month}/#{t.day}/#{t.year}"
     session[:retire_warn] = w
     @in_a_form = true
+    @edit ||= {}
+    @edit[:object_ids] = @retireitems
+    session[:edit] = @edit
     @refresh_partial = "shared/views/retire" if @explorer || @layout == "orchestration_stack"
   end
 
