@@ -79,20 +79,6 @@ module ApplicationController::Compare
     compare_all_diff_same
   end
 
-  def compare_squash
-    @sb[:miq_squashed] = ! @sb[:miq_squashed]
-    if @sb[:miq_squashed]
-      img_src = "close"
-    else
-      img_src = "squashed-all-true"
-    end
-    render :update do |page|
-      page << javascript_prologue
-      asset = ActionController::Base.helpers.image_path("toolbars/#{img_src}.png")
-      page << "$('#expand_collapse').prop('src', '#{asset}');"
-    end
-  end
-
   def compare_all_diff_same
     @compare = Marshal.load(session[:miq_compare])
     @compressed = session[:miq_compressed]
