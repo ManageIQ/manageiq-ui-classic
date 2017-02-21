@@ -2,7 +2,7 @@ class ApplicationHelper::Button::HostCheckCompliance < ApplicationHelper::Button
   needs :@record
 
   def disabled?
-    @error_message = N_("No Compliance Policies assigned to this Host") unless @record.has_compliance_policies?
+    @error_message = _("No Compliance Policies assigned to this Host") unless @record.has_compliance_policies?
     @error_message.present?
   end
 end
