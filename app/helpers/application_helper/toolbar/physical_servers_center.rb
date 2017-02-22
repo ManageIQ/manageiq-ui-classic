@@ -14,7 +14,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Refresh relationships and power states for all items related to the selected items?"),
           :enabled   => false,
-          :onwhen    => "1+"),
+          :onwhen    => "1+"
+        ),
         button(
           :host_scan,
           'fa fa-search fa-lg',
@@ -23,7 +24,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Perform SmartState Analysis on the selected items?"),
           :enabled   => false,
-          :onwhen    => "1+"),
+          :onwhen    => "1+"
+        ),
         button(
           :host_compare,
           'product product-compare fa-lg',
@@ -31,14 +33,16 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           N_('Compare Selected items'),
           :url_parms => "main_div",
           :enabled   => false,
-          :onwhen    => "2+"),
+          :onwhen    => "2+"
+        ),
         button(
           :host_register_nodes,
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Register Nodes'),
           t,
           :url   => "/register_nodes",
-          :klass => ApplicationHelper::Button::HostRegisterNodes),
+          :klass => ApplicationHelper::Button::HostRegisterNodes
+        ),
         button(
           :host_manageable,
           'pficon pficon-edit fa-lg',
@@ -47,7 +51,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Set selected items to manageable state?"),
           :onwhen    => "1+",
-          :klass     => ApplicationHelper::Button::HostManageable),
+          :klass     => ApplicationHelper::Button::HostManageable
+        ),
         button(
           :host_introspect,
           'pficon pficon-edit fa-lg',
@@ -56,7 +61,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Introspect selected items?"),
           :onwhen    => "1+",
-          :klass     => ApplicationHelper::Button::HostIntrospectProvide),
+          :klass     => ApplicationHelper::Button::HostIntrospectProvide
+        ),
         button(
           :host_provide,
           'pficon pficon-edit fa-lg',
@@ -65,21 +71,24 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Provide selected items?"),
           :onwhen    => "1+",
-          :klass     => ApplicationHelper::Button::HostIntrospectProvide),
+          :klass     => ApplicationHelper::Button::HostIntrospectProvide
+        ),
         button(
           :host_discover,
           'fa fa-search fa-lg',
           t = N_('Discover items'),
           t,
           :url       => "/discover",
-          :url_parms => "?discover_type=hosts"),
+          :url_parms => "?discover_type=hosts"
+        ),
         separator,
         button(
           :host_new,
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Add a New item'),
           t,
-          :url => "/new"),
+          :url => "/new"
+        ),
         button(
           :host_edit,
           'pficon pficon-edit fa-lg',
@@ -87,7 +96,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           t,
           :url_parms => "main_div",
           :enabled   => false,
-          :onwhen    => "1+"),
+          :onwhen    => "1+"
+        ),
         button(
           :host_delete,
           'pficon pficon-delete fa-lg',
@@ -96,7 +106,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Warning: The selected items and ALL of their components will be permanently removed!?"),
           :enabled   => false,
-          :onwhen    => "1+"),
+          :onwhen    => "1+"
+        ),
       ]
     ),
   ])
@@ -116,7 +127,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           N_('Manage Policies'),
           :url_parms => "main_div",
           :enabled   => false,
-          :onwhen    => "1+"),
+          :onwhen    => "1+"
+        ),
         button(
           :host_tag,
           'pficon pficon-edit fa-lg',
@@ -124,7 +136,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           N_('Edit Tags'),
           :url_parms => "main_div",
           :enabled   => false,
-          :onwhen    => "1+"),
+          :onwhen    => "1+"
+        ),
         button(
           :host_check_compliance,
           'fa fa-search fa-lg',
@@ -133,7 +146,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Initiate Check Compliance of the last known configuration for the selected items?"),
           :enabled   => false,
-          :onwhen    => "1+"),
+          :onwhen    => "1+"
+        ),
         button(
           :host_analyze_check_compliance,
           'fa fa-search fa-lg',
@@ -142,7 +156,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Analyze then Check Compliance for the selected items?"),
           :enabled   => false,
-          :onwhen    => "1+"),
+          :onwhen    => "1+"
+        ),
       ]
     ),
   ])
@@ -160,7 +175,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           N_('Provision items'),
           :url_parms => "main_div",
           :enabled   => false,
-          :onwhen    => "1+"),
+          :onwhen    => "1+"
+        ),
       ]
     ),
   ])
@@ -182,7 +198,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Power on the server?"),
           :klass     => ApplicationHelper::Button::HostFeatureButton,
-          :options   => {:feature => :power_on}),
+          :options   => {:feature => :power_on}
+        ),
         button(
           :physical_server_power_off,
           nil,
@@ -192,7 +209,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Power off the server?"),
           :klass     => ApplicationHelper::Button::HostFeatureButton,
-          :options   => {:feature => :power_off}),
+          :options   => {:feature => :power_off}
+        ),
         button(
           :physical_server_restart,
           nil,
@@ -202,7 +220,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Restart the server?"),
           :klass     => ApplicationHelper::Button::HostFeatureButton,
-          :options   => {:feature => :restart}),
+          :options   => {:feature => :restart}
+        ),
       ]
     ),
     select(
@@ -222,7 +241,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Blink the Identify LED?"),
           :klass     => ApplicationHelper::Button::HostFeatureButton,
-          :options   => {:feature => :blink_loc_led}),
+          :options   => {:feature => :blink_loc_led}
+        ),
         button(
           :physical_server_turn_on_loc_led,
           nil,
@@ -232,7 +252,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Turn on the Identify LED?"),
           :klass     => ApplicationHelper::Button::HostFeatureButton,
-          :options   => {:feature => :turn_on_loc_led}),
+          :options   => {:feature => :turn_on_loc_led}
+        ),
         button(
           :physical_server_turn_off_loc_led,
           nil,
@@ -242,7 +263,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Turn off the Identify LED?"),
           :klass     => ApplicationHelper::Button::HostFeatureButton,
-          :options   => {:feature => :turn_off_loc_led}),
+          :options   => {:feature => :turn_off_loc_led}
+        ),
       ]
     ),
   ])
