@@ -1067,7 +1067,8 @@ module EmsCommon
   def show_list_link(ems, options = {})
     url_for(options.merge(:controller => @table_name,
                           :action     => "show_list",
-                          :id         => ems.id))
+                          :id         => ems.id,
+                          :only_path  => true))
   end
 
   def restore_password

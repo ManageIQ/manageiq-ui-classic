@@ -49,7 +49,8 @@ module Mixins
       opts = options.merge(
         :controller => self.class.table_name,
         :id         => record.id,
-        :action     => restful? ? :index : :show
+        :action     => restful? ? :index : :show,
+        :only_path  => true,
       )
       url_for(opts)
     end
