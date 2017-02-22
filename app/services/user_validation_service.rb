@@ -5,7 +5,7 @@ class UserValidationService
 
   extend Forwardable
   delegate [:session, :url_for, :initiate_wait_for_task, :session_init, :clear_current_user,
-            :session_reset, :start_url_for_user] => :@controller
+            :session_reset, :start_url_for_user, :url_for_only_path] => :@controller
 
   ValidateResult = Struct.new(:result, :flash_msg, :url)
 
