@@ -99,7 +99,6 @@ module EmsCommon
     when 'props'          then show_props
     when 'ems_folders'    then show_ems_folders
     when 'timeline'       then show_timeline
-    when 'dashboard'      then show_dashboard
     when 'ad_hoc_metrics' then show_ad_hoc_metrics
     when 'topology'       then show_topology
     when 'performance'    then show_performance

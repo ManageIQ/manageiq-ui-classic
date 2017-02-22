@@ -74,7 +74,7 @@ module Mixins
       @lastaction = 'show'
       @gtl_url = gtl_url
 
-      if !pagination_or_gtl_request?
+      unless pagination_or_gtl_request?
         @display = params[:display] || default_display
       end
       true
