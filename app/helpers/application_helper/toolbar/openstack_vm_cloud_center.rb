@@ -125,8 +125,7 @@ class ApplicationHelper::Toolbar::OpenstackVmCloudCenter < ApplicationHelper::To
           :instance_retire,
           'fa fa-clock-o fa-lg',
           N_('Set Retirement Dates for this Instance'),
-          N_('Set Retirement Date'),
-          :klass   => ApplicationHelper::Button::InstanceRetire),
+          N_('Set Retirement Date')),
         button(
           :instance_retire_now,
           'fa fa-clock-o fa-lg',
