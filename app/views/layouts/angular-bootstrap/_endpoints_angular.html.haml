@@ -115,7 +115,7 @@
                        "prefix"                      => "#{prefix}",
                        "reset-validation-status"     => "#{prefix}_auth_status")
 
-%div{"ng-if" => defined?(tls_hide) ? false : true}
+%div{"ng-if" => defined?(tls_verify_hide) ? false : true}
   .form-group{"ng-if"=> "emsCommonModel.emstype == 'rhevm'"}
     %label.col-md-2.control-label{"for" => "#{prefix}_tls_verify"}
       = _('Verify TLS Certificates')
@@ -131,7 +131,7 @@
              "ng-model"        => "#{ng_model}.#{prefix}_tls_verify",
              "prefix"          => "#{prefix}"}
 
-%div{"ng-if" => defined?(tls_hide) ? false : true}
+%div{"ng-if" => defined?(tls_ca_certs_hide) ? false : true}
   .form-group{"ng-if"=> "emsCommonModel.emstype == 'rhevm'"}
     %label.col-md-2.control-label{"for" => "#{prefix}_tls_ca_certs"}
       = _('Trusted CA Certificates')
