@@ -129,7 +129,7 @@ describe VmCloudController do
       controller.instance_variable_set(:@edit,
                                        :new      => {},
                                        :explorer => false)
-      expect_any_instance_of(VmCloud).to receive(:evacuate)
+      expect(VmCloud).to receive(:evacuate_queue)
       post :evacuate_vm, :params => {
         :button => 'submit',
         :id     => vm_openstack.id

@@ -597,7 +597,7 @@ module ApplicationController::CiProcessing
 
   def evacuate_vm
     assert_privileges("instance_evacuate")
-    @record = VmOrTemplate.find_by_id(params[:id])
+    @record = VmOrTemplate.find_by(:id => params[:id])
 
     case params[:button]
     when "cancel"
@@ -606,38 +606,54 @@ module ApplicationController::CiProcessing
       @record = @sb[:action] = nil
     when "submit"
       if @record.supports_evacuate?
-        if params['auto_select_host'] == 'on'
-          hostname = nil
-        else
-          hostname = params[:destination_host]
+        options = {
+          :hostname          => params['auto_select_host'] == 'on' ? nil : params[:destination_host],
+          :on_shared_storage => params['on_shared_storage'] == 'on',
+          :admin_password    => params['on_shared_storage'] == 'on' ? nil : params['admin_password']
+        }
+        task_id = @record.class.evacuate_queue(session[:userid], @record, options)
+        unless task_id.kind_of?(Integer)
+          add_flash(_("Instance host evacuation task failed."), :error)
         end
-        on_shared_storage = params[:on_shared_storage] == 'on'
-        admin_password = on_shared_storage ? nil : params[:admin_password]
-        begin
-          @record.evacuate(
-            :hostname          => hostname,
-            :on_shared_storage => on_shared_storage,
-            :admin_password    => admin_password
-          )
-          add_flash(_("Evacuating %{instance} \"%{name}\"") % {
-            :instance => ui_lookup(:table => 'vm_cloud'),
-            :name     => @record.name})
-        rescue => ex
-          add_flash(_("Unable to evacuate %{instance} \"%{name}\": %{details}") % {
-            :instance => ui_lookup(:table => 'vm_cloud'),
-            :name     => @record.name,
-            :details  => get_error_message_from_fog(ex)}, :error)
-        end
+
+        return javascript_flash(:spinner_off => true) if @flash_array
+        return initiate_wait_for_task(:task_id => task_id, :action => "evacuate_finished")
       else
         add_flash(_("Unable to evacuate %{instance} \"%{name}\": %{details}") % {
           :instance => ui_lookup(:table => 'vm_cloud'),
           :name     => @record.name,
           :details  => @record.unsupported_reason(:evacuate)}, :error)
+        params[:id] = @record.id.to_s # reset id in params for show
+        @record = nil
+        @sb[:action] = nil
       end
-      params[:id] = @record.id.to_s # reset id in params for show
-      @record = nil
-      @sb[:action] = nil
     end
+    if @sb[:explorer]
+      replace_right_cell
+    else
+      session[:flash_msgs] = @flash_array.dup
+      javascript_redirect previous_breadcrumb_url
+    end
+  end
+
+  def evacuate_finished
+    task_id = session[:async][:params][:task_id]
+    vm_id = session[:async][:params][:id]
+    vm = VmOrTemplate.find_by(:id => vm_id)
+    task = MiqTask.find(task_id)
+    if MiqTask.status_ok?(task.status)
+      add_flash(_("Host evacuation of Instance \"%{name}\" complete.") % {:name => vm.name})
+    else
+      add_flash(_("Unable to evacuate Instance \"%{name}\": %{details}") % {
+        :name    => vm.name,
+        :details => get_error_message_from_fog(task.message)
+      }, :error)
+    end
+    @breadcrumbs.pop if @breadcrumbs
+    session[:edit] = nil
+    params[:id] = vm.id.to_s # reset id in params for show
+    @record = nil
+    @sb[:action] = nil
     if @sb[:explorer]
       replace_right_cell
     else
