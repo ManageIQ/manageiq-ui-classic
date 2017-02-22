@@ -7,8 +7,8 @@ class ApplicationHelper::Button::VmSnapshotRevert < ApplicationHelper::Button::B
   end
 
   def disabled?
-    @error_message = unless @record.is_available?(:revert_to_snapshot)
-                       @record.is_available_now_error_message(:revert_to_snapshot)
+    @error_message = unless @record.supports_revert_to_snapshot?
+                       @record.unsupported_reason(:revert_to_snapshot)
                      end
     @error_message.present?
   end

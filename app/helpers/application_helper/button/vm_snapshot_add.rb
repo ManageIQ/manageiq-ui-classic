@@ -3,7 +3,7 @@ class ApplicationHelper::Button::VmSnapshotAdd < ApplicationHelper::Button::Basi
     @error_message = if records_and_role_allows? && !@active
                        _('Select the Active snapshot to create a new snapshot for this VM')
                      else
-                       @record.is_available_now_error_message(:create_snapshot)
+                       @record.unsupported_reason(:snapshot_create)
                      end
     @error_message.present?
   end
@@ -11,6 +11,6 @@ class ApplicationHelper::Button::VmSnapshotAdd < ApplicationHelper::Button::Basi
   private
 
   def records_and_role_allows?
-    @record.is_available?(:create_snapshot)
+    @record.supports_snapshot_create?
   end
 end
