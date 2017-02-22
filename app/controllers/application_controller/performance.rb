@@ -1428,10 +1428,9 @@ module ApplicationController::Performance
   # Build the chart zoom url
   def perf_zoom_url(action, idx)
     url = "javascript:miqAsyncAjax('" +
-          url_for_only_path(:only_path => true,
-                  :action    => action,
-                  :id        => @perf_record.id,
-                  :chart_idx => idx) +
+          url_for_only_path(:action    => action,
+                            :id        => @perf_record.id,
+                            :chart_idx => idx) +
           "')"
     url
   end
