@@ -1,5 +1,5 @@
 - if @edit && @edit[:stamp_typ]
-  - url = url_for(:action => 'stamp_field_changed')
+  - url = url_for_only_path(:action => 'stamp_field_changed')
 
 %fieldset
   %h3

@@ -1,4 +1,4 @@
-- url = url_for(:action => 'group_form_field_changed', :id => "#{@custom_button_set.id || 'new'}")
+- url = url_for_only_path(:action => 'group_form_field_changed', :id => "#{@custom_button_set.id || 'new'}")
 #group_form_div
   = render :partial => "layouts/flash_msg"
   %h3

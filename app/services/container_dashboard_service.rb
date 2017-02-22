@@ -107,7 +107,7 @@ class ContainerDashboardService
     if @ems.present?
       @controller.polymorphic_url(@ems, :display => entity.to_s.pluralize)
     else
-      @controller.url_for(:action     => 'show_list',
+      @controller.url_for_only_path(:action     => 'show_list',
                           :controller => entity)
     end
   end

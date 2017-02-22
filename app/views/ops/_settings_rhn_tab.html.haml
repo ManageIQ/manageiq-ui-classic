@@ -20,7 +20,7 @@
       = button_tag(_('Edit Registration'),
                   :id      => 'settings_rhn_edit',
                   :class   => 'btn btn-default',
-                  :onclick => "miqAjaxButton('#{url_for(:action => 'edit_rhn')}');")
+                  :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'edit_rhn')}');")
 
 
   - if @customer.registered

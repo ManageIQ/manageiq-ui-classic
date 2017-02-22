@@ -17,7 +17,7 @@
               - text = _("Continue this provisioning request")
             - action       = button == :continue ? 'prov_continue' : 'prov_edit'
             - button_class = button == :cancel ? 'default' : 'primary'
-            - url          = url_for(:action => action, :id => "#{@edit[:req_id] || 'new'}", :button => button)
+            - url          = url_for_only_path(:action => action, :id => "#{@edit[:req_id] || 'new'}", :button => button)
             = button_tag(button_name,
               :class   => "btn btn-#{button_class}",
               :alt     => text,
@@ -32,7 +32,7 @@
             - when :submit
               = button_tag(_("Submit"), :class => "btn btn-primary disabled")
             - when :cancel
-              - url = url_for(:action => 'prov_edit', :id => "#{@edit[:req_id] || 'new'}", :button => button)
+              - url = url_for_only_path(:action => 'prov_edit', :id => "#{@edit[:req_id] || 'new'}", :button => button)
               = button_tag(_("Cancel"),
                 :class   => "btn btn-default",
                 :alt     => (t = _("Cancel this provisioning request")),

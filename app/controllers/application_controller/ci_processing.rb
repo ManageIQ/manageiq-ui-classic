@@ -1567,7 +1567,7 @@ module ApplicationController::CiProcessing
     @view, @pages = get_view(model || self.class.model, options)  # Get the records (into a view) and the paginator
     if session[:bc] && session[:menu_click]               # See if we came from a perf chart menu click
       drop_breadcrumb(:name => session[:bc],
-                      :url  => url_for(:controller    => self.class.table_name,
+                      :url  => url_for_only_path(:controller    => self.class.table_name,
                                        :action        => "show_list",
                                        :bc            => session[:bc],
                                        :sb_controller => params[:sb_controller],

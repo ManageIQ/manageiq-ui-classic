@@ -110,7 +110,7 @@ module ContainerSummaryHelper
   def textual_guest_applications
     textual_link(@record.guest_applications, :feature => "container_image_show",
                                              :label   => _("Packages"),
-                                             :link    => url_for(:controller => controller.controller_name,
+                                             :link    => url_for_only_path(:controller => controller.controller_name,
                                                                  :action     => 'guest_applications',
                                                                  :id         => @record,
                                                                  :db         => controller.controller_name))
@@ -121,7 +121,7 @@ module ContainerSummaryHelper
       @record.openscap_rule_results,
       :feature => "container_image_show",
       :label   => _("OpenSCAP Results"),
-      :link    => url_for(
+      :link    => url_for_only_path(
         :controller => controller.controller_name,
         :action     => 'openscap_rule_results',
         :id         => @record,
@@ -138,7 +138,7 @@ module ContainerSummaryHelper
     h = {:label => _("OpenSCAP HTML")}
     if @record.openscap_result
       h[:value] = _('Available')
-      h[:link] = url_for(
+      h[:link] = url_for_only_path(
         :id         => @record,
         :controller => controller.controller_name,
         :action     => 'openscap_html'

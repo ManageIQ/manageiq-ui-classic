@@ -156,7 +156,7 @@ module EmsCloudHelper::TextualSummary
   def textual_topology
     {:label => _('Topology'),
      :icon  => "pficon pficon-topology",
-     :link  => url_for(:controller => 'cloud_topology', :action => 'show', :id => @record.id),
+     :link  => url_for_only_path(:controller => 'cloud_topology', :action => 'show', :id => @record.id),
      :title => _("Show topology")}
   end
 end

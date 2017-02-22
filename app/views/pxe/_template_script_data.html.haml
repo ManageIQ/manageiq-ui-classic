@@ -7,5 +7,5 @@
   :locals => {:text_area_id => "script_data",
     :mode => @edit[:new][:typ] == "CustomizationTemplateKickstart" ? "shell" : "xml",
     :line_numbers => true,
-    :url => url_for(:action => 'template_form_field_changed',
+    :url => url_for_only_path(:action => 'template_form_field_changed',
       :id => "#{@ct.id || "new"}", :transOne => '1')})

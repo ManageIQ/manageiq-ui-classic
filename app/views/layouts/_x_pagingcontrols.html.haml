@@ -6,7 +6,7 @@
     - if action_url.include?("/")
       - action_method = action_url.split("/").first
       - action_id = action_url.split("/").last
-    - url = action_id ? url_for(:action => action_method, :id => action_id) : url_for(:action => action_url)
+    - url = action_id ? url_for_only_path(:action => action_method, :id => action_id) : url_for_only_path(:action => action_url)
     - @pc_occ ||= 0
     - @pc_occ += 1
 

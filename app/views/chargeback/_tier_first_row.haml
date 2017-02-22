@@ -1,6 +1,6 @@
 - i = params[:detail_index]
 - r = @edit[:new][:details][i.to_i]
-- url = url_for(:action => 'cb_rate_form_field_changed', :id => "#{@edit[:rec_id] || "new"}")
+- url = url_for_only_path(:action => 'cb_rate_form_field_changed', :id => "#{@edit[:rec_id] || "new"}")
 - n = @edit[:new][:num_tiers][i.to_i]
 
 %tr.rdetail{:id => "rate_detail_row_#{i}_0"}
@@ -27,6 +27,6 @@
                  :class   => "btn btn-default",
                  :alt     => t = _("Add a new tier"),
                  :title   => t,
-                 :onclick => "miqAjaxButton('#{url_for(:action       => "cb_tier_add",
+                 :onclick => "miqAjaxButton('#{url_for_only_path(:action       => "cb_tier_add",
                                                        :detail_index => i,
                                                        :button       => "add")}');")

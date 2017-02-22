@@ -1,6 +1,6 @@
 - action ||= "log_depot_field_changed"
 - record    = @schedule || @record
-- url       = url_for(:action => action, :id => (record.try(:id) || "new"))
+- url       = url_for_only_path(:action => action, :id => (record.try(:id) || "new"))
 
 #form_filter_div
   = render :partial => "layouts/flash_msg"

@@ -139,7 +139,7 @@ module ApplicationController::Performance
       end
     else
       drop_breadcrumb(:name => params[:bc],
-                      :url  => url_for(:id     => @perf_record.id,
+                      :url  => url_for_only_path(:id     => @perf_record.id,
                                        :action => "perf_top_chart",
                                        :bc     => params[:bc],
                                        :escape => false))
@@ -595,10 +595,10 @@ module ApplicationController::Performance
     if @perf_options[:cat]
       drop_breadcrumb(:name => _("%{name} Capacity & Utilization (by %{option}:%{model})") %
         {:name => name, :option => @perf_options[:cats][@perf_options[:cat_model]], :model => @perf_options[:cat]},
-                      :url  => url_for(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
+                      :url  => url_for_only_path(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
     else
       drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => name},
-                      :url  => url_for(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
+                      :url  => url_for_only_path(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
     end
     @ajax_action = "perf_chart_chooser"
   end
@@ -610,10 +610,10 @@ module ApplicationController::Performance
         {:name   => @perf_record.name,
          :option => @perf_options[:cats][@perf_options[:cat_model]],
          :model  => @perf_options[:cat]},
-                      :url  => url_for(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
+                      :url  => url_for_only_path(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
     else
       drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @perf_record.name},
-                      :url  => url_for(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
+                      :url  => url_for_only_path(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
     end
 
     unless @perf_options[:typ] == "realtime"
@@ -1428,7 +1428,7 @@ module ApplicationController::Performance
   # Build the chart zoom url
   def perf_zoom_url(action, idx)
     url = "javascript:miqAsyncAjax('" +
-          url_for(:only_path => true,
+          url_for_only_path(:only_path => true,
                   :action    => action,
                   :id        => @perf_record.id,
                   :chart_idx => idx) +

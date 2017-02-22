@@ -1,5 +1,5 @@
 - if @sb[:active_tab] == "diagnostics_cu_repair"
-  - url = url_for(:action => 'cu_repair_field_changed')
+  - url = url_for_only_path(:action => 'cu_repair_field_changed')
   - url_json = {:url => url}.to_json
   -# Create from/to date JS vars to limit calendar starting from
   :javascript

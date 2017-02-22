@@ -71,14 +71,14 @@ class UserValidationService
   private
 
   def validate_user_handle_no_records
-    ValidateResult.new(:pass, nil, url_for(
+    ValidateResult.new(:pass, nil, url_for_only_path(
                                      :controller    => "ems_infra",
                                      :action        => 'show_list'))
   end
 
   def validate_user_handle_not_ready(db_user)
     if db_user.super_admin_user?
-      ValidateResult.new(:pass, nil, url_for(
+      ValidateResult.new(:pass, nil, url_for_only_path(
                                        :controller    => "ops",
                                        :action        => 'explorer',
                                        :flash_warning => true,

@@ -69,7 +69,7 @@ module MiddlewareServerHelper::TextualSummary
       :label => "Underlying #{lives_on_entity_name}",
       :image => "svg/vendor-#{lives_on_ems.image_name}.svg",
       :value => @record.lives_on.name.to_s,
-      :link  => url_for(
+      :link  => url_for_only_path(
         :action     => 'show',
         :controller => 'vm_or_template',
         :id         => @record.lives_on.id

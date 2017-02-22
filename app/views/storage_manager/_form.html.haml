@@ -1,4 +1,4 @@
-- url = url_for(:action => 'form_field_changed', :id => "#{@sm.id || "new"}")
+- url = url_for_only_path(:action => 'form_field_changed', :id => "#{@sm.id || "new"}")
 - validate_url ||= %w(new create).include?(controller.action_name) ? "create" : "update"
 - change_stored_password ||= _("Change stored password")
 - cancel_password_change ||= _("Cancel password change")
@@ -132,11 +132,11 @@
               :class => "btn btn-primary",
               :alt => (t = _("Add this Storage Manager")),
               :title => t,
-              :onclick => "miqAjaxButton('#{url_for(:action => "create", :id => "new", :button => "add")}');")
+              :onclick => "miqAjaxButton('#{url_for_only_path(:action => "create", :id => "new", :button => "add")}');")
             = button_tag((t = _('Cancel')),
               :class => "btn btn-default",
               :alt => t,
               :title => t,
-              :onclick => "miqAjaxButton('#{url_for(:action => "create", :id => "new", :button => "cancel")}');")
+              :onclick => "miqAjaxButton('#{url_for_only_path(:action => "create", :id => "new", :button => "cancel")}');")
   - else
     = render(:partial => '/layouts/edit_form_buttons', :locals => {:record_id => @sm.id, :ajax_buttons => true})

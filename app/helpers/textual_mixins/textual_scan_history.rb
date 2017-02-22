@@ -8,7 +8,7 @@ module TextualMixins::TextualScanHistory
       h[:value] = num
       h[:title] = _("Show virtual machine analysis history")
       h[:explorer] = true
-      h[:link] = url_for(:controller => controller.controller_name, :action => 'scan_histories', :id => @record)
+      h[:link] = url_for_only_path(:controller => controller.controller_name, :action => 'scan_histories', :id => @record)
     end
     h
   end

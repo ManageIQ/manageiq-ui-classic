@@ -1,4 +1,4 @@
-- url = url_for(:action => action_url, :id => "#{record.id || "new"}")
+- url = url_for_only_path(:action => action_url, :id => "#{record.id || "new"}")
 #edit_to_email_div
   %br
     .form-horizontal
@@ -55,6 +55,6 @@
                              :class             => "form-control",
                              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
             %span.input-group-btn
-              .btn.btn-default{:alt => t = _("Add"), :title => t, :onclick => "miqAjaxButton('#{url_for(:action => action_url, :button => "add_email", :id => "#{record.id || "new"}")}');"}
+              .btn.btn-default{:alt => t = _("Add"), :title => t, :onclick => "miqAjaxButton('#{url_for_only_path(:action => action_url, :button => "add_email", :id => "#{record.id || "new"}")}');"}
                 %i.fa.fa-plus
 

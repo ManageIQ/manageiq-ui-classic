@@ -1,5 +1,5 @@
 - scan_id = "#{@scan.id || 'new'}"
-- url = url_for(:action => 'ap_edit',
+- url = url_for_only_path(:action => 'ap_edit',
                 :id     => scan_id)
 %h3= _("Event Log Entry")
 %table.table.table-striped.table-bordered.table-hover
@@ -50,7 +50,7 @@
             "value"    => session[:nteventlog_data][:numdays],
             :style     => "width: 100%;")
         %td.action-cell
-          - url = url_for(:action    => 'ap_edit',
+          - url = url_for_only_path(:action    => 'ap_edit',
                           :id        => scan_id,
                           :accept    => 'accept',
                           :item_type => 'nteventlog')
@@ -93,7 +93,7 @@
                 :style     => "width: 100%;")
 
             %td.action-cell
-              - url = url_for(:action     => 'ap_edit',
+              - url = url_for_only_path(:action     => 'ap_edit',
                               :id         => scan_id,
                               :accept     => 'accept',
                               :edit_entry => 'edit_entry_nteventlog',

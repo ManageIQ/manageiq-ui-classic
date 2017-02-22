@@ -61,12 +61,12 @@
             :class   => "btn btn-primary",
             :alt     => t,
             :title   => t,
-            :onclick => "miqAjaxButton('#{url_for(:action => "live_migrate_vm", :id => "#{@record.id}", :button => "submit")}');")
+            :onclick => "miqAjaxButton('#{url_for_only_path(:action => "live_migrate_vm", :id => "#{@record.id}", :button => "submit")}');")
           = button_tag(t = _('Cancel'),
             :class   => "btn btn-default",
             :alt     => t,
             :title   => t,
-            :onclick => "miqAjaxButton('#{url_for(:action => "live_migrate_vm", :id => "#{@record.id}", :button => "cancel")}');")
+            :onclick => "miqAjaxButton('#{url_for_only_path(:action => "live_migrate_vm", :id => "#{@record.id}", :button => "cancel")}');")
 
 
 

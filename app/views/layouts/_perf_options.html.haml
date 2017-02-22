@@ -1,4 +1,4 @@
-- url = url_for(:action => 'perf_chart_chooser',
+- url = url_for_only_path(:action => 'perf_chart_chooser',
                 :id     => @record.id)
 #perf_options_div{:onclick => "if (typeof miqMenu != 'undefined') miqMenu.hideContextMenu();"}
   - if @charts || @perf_options[:chart_type] != :performance

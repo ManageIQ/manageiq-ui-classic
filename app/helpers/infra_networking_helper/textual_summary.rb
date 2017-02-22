@@ -24,7 +24,7 @@ module InfraNetworkingHelper::TextualSummary
     if num > 0 && role_allows?(:feature => "host_show_list")
       h = {:label => title_for_hosts, :icon => "pficon pficon-screen", :value => num}
       h[:explorer] = true
-      h[:link] = url_for(:action => 'hosts', :id => @record, :db => 'switch')
+      h[:link] = url_for_only_path(:action => 'hosts', :id => @record, :db => 'switch')
     end
     h
   end

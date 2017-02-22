@@ -1,5 +1,5 @@
 - if @edit
-  - url = url_for(:action => 'alert_field_changed', :id => "#{@alert.id || 'new'}")
+  - url = url_for_only_path(:action => 'alert_field_changed', :id => "#{@alert.id || 'new'}")
   - observe = {:url => url}.to_json
 #alert_details_div
   - if @assign

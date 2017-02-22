@@ -513,7 +513,7 @@ class DashboardController < ApplicationController
       render :update do |page|
         page << javascript_prologue
         if @ajax_action
-          page << "miqAsyncAjax('#{url_for(:action => @ajax_action, :id => @record)}');"
+          page << "miqAsyncAjax('#{url_for_only_path(:action => @ajax_action, :id => @record)}');"
         end
       end
     else
@@ -590,7 +590,7 @@ class DashboardController < ApplicationController
     session_reset
     session_init(db_user)
     session[:group_changed] = true
-    url = start_url_for_user(nil) || url_for(:controller => params[:controller], :action => 'show')
+    url = start_url_for_user(nil) || url_for_only_path(:controller => params[:controller], :action => 'show')
     javascript_redirect url
   end
 

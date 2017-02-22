@@ -1,5 +1,5 @@
 #main_div
-  - url = url_for(:action => 'form_field_changed', :id => "#{@record.id || "new"}")
+  - url = url_for_only_path(:action => 'form_field_changed', :id => "#{@record.id || "new"}")
 
   = render :partial => "layouts/flash_msg"
 

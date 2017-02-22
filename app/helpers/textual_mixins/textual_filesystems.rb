@@ -5,7 +5,7 @@ module TextualMixins::TextualFilesystems
     if num > 0
       h[:title] = n_("Show the File installed on this VM", "Show the Files installed on this VM", num)
       h[:explorer] = true
-      h[:link] = url_for(:controller => controller.controller_name, :action => 'filesystems', :id => @record)
+      h[:link] = url_for_only_path(:controller => controller.controller_name, :action => 'filesystems', :id => @record)
     end
     h
   end

@@ -8,7 +8,7 @@ module TextualMixins::TextualInitProcesses
     if num > 0
       h[:title] = n_("Show the Init Process installed on this VM", "Show the Init Processes installed on this VM", num)
       h[:explorer] = true
-      h[:link] = url_for(:controller => controller.controller_name, :action => 'linux_initprocesses', :id => @record)
+      h[:link] = url_for_only_path(:controller => controller.controller_name, :action => 'linux_initprocesses', :id => @record)
     end
     h
   end

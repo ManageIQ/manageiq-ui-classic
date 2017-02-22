@@ -7,7 +7,7 @@
           = ae
           %br
 - else
-  - url = url_for(:action => 'exp_changed')
+  - url = url_for_only_path(:action => 'exp_changed')
   -# Grab the model for this expression
   - exp_model = @edit[@expkey][:exp_model]
 
@@ -26,14 +26,14 @@
           - t = _('Commit expression element changes')
           %button.btn.btn-default{"data-method" => :post,
           "data-miq_sparkle_on" => true,
-          :onclick              => "miqAjaxButton('#{url_for(:action => 'exp_button', :pressed => 'commit')}');",
+          :onclick              => "miqAjaxButton('#{url_for_only_path(:action => 'exp_button', :pressed => 'commit')}');",
           :remote               => true,
           :title                => t}
             %i.fa.fa-lg.fa-check
           - t = _("Discard expression element changes")
           %button.btn.btn-default{"data-method" => :post,
           "data-miq_sparkle_on" => true,
-          :onclick              => "miqAjaxButton('#{url_for(:action => 'exp_button', :pressed => 'discard')}');",
+          :onclick              => "miqAjaxButton('#{url_for_only_path(:action => 'exp_button', :pressed => 'discard')}');",
           :remote               => true,
           :title                => t}
             %i.fa-lg.pficon.pficon-close

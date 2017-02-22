@@ -468,7 +468,7 @@ module ReportController::Schedules
     schedule.enabled = @edit[:new][:enabled]
     schedule.towhat = "MiqReport"                           # Default schedules apply to MiqReport model for now
 
-    email_url_prefix = url_for(:controller => "report", :action => "show_saved") + "/"
+    email_url_prefix = url_for_only_path(:controller => "report", :action => "show_saved") + "/"
     schedule_options = {
       :send_email       => @edit[:new][:send_email],
       :email_url_prefix => email_url_prefix,

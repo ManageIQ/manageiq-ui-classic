@@ -82,7 +82,7 @@ module ServiceHelper::TextualSummary
     s = {:label => _("Parent Catalog Item"), :icon => "product product-template", :value => (st.nil? ? _("None") : st.name)}
     if st && role_allows?(:feature => "catalog_items_accord")
       s[:title] = _("Show this Service's Parent Service Catalog")
-      s[:link]  = url_for(:controller => 'catalog', :action => 'show', :id => st)
+      s[:link]  = url_for_only_path(:controller => 'catalog', :action => 'show', :id => st)
     end
     s
   end
@@ -95,7 +95,7 @@ module ServiceHelper::TextualSummary
       :icon  => parent.picture ? nil : "pficon pficon-service",
       :value => parent.name,
       :title => _("Show this Service's Parent Service"),
-      :link  => url_for(:controller => 'service', :action => 'show', :id => parent)
+      :link  => url_for_only_path(:controller => 'service', :action => 'show', :id => parent)
     } if parent
   end
 
@@ -120,7 +120,7 @@ module ServiceHelper::TextualSummary
       :icon  => "product product-orchestration_stack",
       :value => job.name,
       :title => _("Show this Service's Job"),
-      :link  => url_for(:controller => 'configuration_job', :action => 'show', :id => job.id)
+      :link  => url_for_only_path(:controller => 'configuration_job', :action => 'show', :id => job.id)
     } if job
   end
 
