@@ -1,4 +1,4 @@
-/* global dialogFieldRefresh jqplot_bind_events miqBrowserDetect miqExpressionPrefill miqGridCheckAll miqGridGetCheckedRows miqLoadTL miqMenu miqValueStylePrefill performFiltering */
+/* global dialogFieldRefresh miqBrowserDetect miqExpressionPrefill miqGridCheckAll miqGridGetCheckedRows miqLoadTL miqMenu miqValueStylePrefill performFiltering */
 
 // MIQ specific JS functions
 
@@ -624,9 +624,7 @@ function miqBuildChartMenu(col, row, _value, category, series, id, _message) {
 }
 
 function miqChartBindEvents(chart_set, chart_index) {
-  if (ManageIQ.charts.provider == 'jqplot') {
-    jqplot_bind_events(chart_set, chart_index);
-  } else if (ManageIQ.charts.provider == 'c3') {
+  if (ManageIQ.charts.provider == 'c3') {
     // noop
   }
 }
