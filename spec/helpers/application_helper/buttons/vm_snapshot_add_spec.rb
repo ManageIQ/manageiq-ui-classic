@@ -42,7 +42,7 @@ describe ApplicationHelper::Button::VmSnapshotAdd do
     end
     context 'when creating snapshots is not available' do
       let(:record) { FactoryGirl.create(:vm_amazon) }
-      it_behaves_like 'a disabled button', 'Create Snapshot operation not supported for Amazon VM'
+      it_behaves_like 'a disabled button', 'Operation not supported'
     end
   end
 end
