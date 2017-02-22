@@ -136,31 +136,48 @@ class CatalogController < ApplicationController
     build_ae_tree(:catalog, :automate_tree) if params[:display] || params[:template_id] || params[:manager_id]
     if params[:st_prov_type] # build request screen for selected item type
       @_params[:org_controller] = "service_template"
-      prov_set_form_vars if need_prov_dialogs?(params[:st_prov_type])
-      @record = class_service_template(params[:st_prov_type]).new
-      set_form_vars
-      @edit[:new][:st_prov_type] = params[:st_prov_type] if params[:st_prov_type]
-      @edit[:new][:service_type] = "atomic"
-      default_entry_point(@edit[:new][:st_prov_type],
-                          @edit[:new][:service_type])
-      @edit[:rec_id] = @record.try(:id)
-      @tabactive = @edit[:new][:current_tab_key]
+      if ansible_playbook?
+        @record = ServiceTemplate.new
+        # waiting for back-end PR to be merged to implement this
+        # if false
+        #   add_flash(_("Before adding Ansible Service, at least 1 repository, 1 playbook, 1 credential must exist in VMDB"), :error)
+        #   javascript_flash
+        #   return
+        # end
+      else
+        prov_set_form_vars if need_prov_dialogs?(params[:st_prov_type])
+        @record = class_service_template(params[:st_prov_type]).new
+        set_form_vars
+        @edit[:new][:st_prov_type] = params[:st_prov_type] if params[:st_prov_type]
+        @edit[:new][:service_type] = "atomic"
+        default_entry_point(@edit[:new][:st_prov_type],
+                            @edit[:new][:service_type])
+        @edit[:rec_id] = @record.try(:id)
+        @tabactive = @edit[:new][:current_tab_key]
+      end
     end
     render :update do |page|
       page << javascript_prologue
-      # for generic/orchestration type tabs do not show up on screen as there is only a single tab when form is initialized
-      # when display in catalog is checked, replace div so tabs can be redrawn
-      page.replace("form_div", :partial => "st_form") if params[:st_prov_type] ||
-        (params[:display] && @edit[:new][:st_prov_type].starts_with?("generic"))
-      page.replace_html("basic_info_div", :partial => "form_basic_info") if params[:display] || params[:template_id] || params[:manager_id]
-      if params[:display]
-        page << "miq_tabs_show_hide('#details_tab', '#{(params[:display] == "1")}')"
+      if @edit[:new][:st_prov_type] == "generic_ansible_playbook"
+        page.replace("form_div", :partial => "st_angular_form")
+        page << javascript_hide("form_buttons_div")
+      else
+        # for generic/orchestration type tabs do not show up on screen
+        # as there is only a single tab when form is initialized
+        # when display in catalog is checked, replace div so tabs can be redrawn
+        page.replace("form_div", :partial => "st_form") if params[:st_prov_type] ||
+          (params[:display] && @edit[:new][:st_prov_type].starts_with?("generic"))
+        page.replace_html("basic_info_div", :partial => "form_basic_info") if params[:display] ||
+          params[:template_id] || params[:manager_id]
+        if params[:display]
+          page << "miq_tabs_show_hide('#details_tab', '#{(params[:display] == "1")}')"
+        end
+        if changed != session[:changed]
+          page << javascript_for_miq_button_visibility(changed)
+          session[:changed] = changed
+        end
+        page << set_spinner_off
       end
-      if changed != session[:changed]
-        page << javascript_for_miq_button_visibility(changed)
-        session[:changed] = changed
-      end
-      page << set_spinner_off
     end
   end
 
@@ -191,7 +208,7 @@ class CatalogController < ApplicationController
 
     build_accordions_and_trees
 
-    if params[:id]  # If a tree node id came in, show in one of the trees
+    if params[:id] && !params[:button] # If a tree node id came in, show in one of the trees
       @nodetype, id = parse_nodetype_and_id(params[:id])
       self.x_active_tree   = 'sandt_tree'
       self.x_active_accord = 'sandt'
@@ -802,6 +819,12 @@ class CatalogController < ApplicationController
   end
 
   private
+
+  def ansible_playbook?
+    prov_type = params[:st_prov_type] ? params[:st_prov_type] : @record.prov_type
+    prov_type == "generic_ansible_playbook"
+  end
+  helper_method :ansible_playbook?
 
   def features
     [{:role     => "svc_catalog_accord",
@@ -1864,7 +1887,7 @@ class CatalogController < ApplicationController
         action_url = x_active_tree == :ot_tree ? "ot_tags_edit" : "st_tags_edit"
         r[:partial => "layouts/x_tagging", :locals => {:action_url => action_url}]
       elsif action && ["at_st_new", "st_new"].include?(action)
-        r[:partial => "st_form"]
+        r[:partial => ansible_playbook? ? "st_angular_form" : "st_form"]
       elsif action && ["st_catalog_new", "st_catalog_edit"].include?(action)
         r[:partial => "stcat_form"]
       elsif action == "dialog_provision"
@@ -1909,7 +1932,8 @@ class CatalogController < ApplicationController
           'st_new', 'st_catalog_new', 'st_catalog_edit'].include?(action)
         presenter.hide(:toolbar).show(:paging_div)
         # incase it was hidden for summary screen, and incase there were no records on show_list
-        presenter.show(:form_buttons_div).hide(:pc_div_1)
+        presenter.hide(:pc_div_1)
+        ansible_playbook? ? presenter.hide(:form_buttons_div) : presenter.show(:form_buttons_div)
         locals = {:record_id => @edit[:rec_id]}
         case action
         when 'group_edit'

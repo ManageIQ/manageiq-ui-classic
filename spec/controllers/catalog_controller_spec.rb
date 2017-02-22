@@ -68,6 +68,7 @@ describe CatalogController do
   context "#atomic_form_field_changed" do
     before :each do
       controller.instance_variable_set(:@sb, {})
+      controller.instance_variable_set(:@record, ServiceTemplate.new(:prov_type => "generic"))
       edit = {
         :key          => "prov_edit__new",
         :rec_id       => 1,

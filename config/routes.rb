@@ -259,6 +259,7 @@ Rails.application.routes.draw do
 
     :catalog                  => {
       :get  => %w(
+        catalog_item_form_fields
         download_data
         explorer
         ot_edit
