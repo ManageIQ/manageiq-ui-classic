@@ -6,7 +6,7 @@ class C3Charting < Charting
 
   # for Charting.detect_available_plugin
   def self.priority
-    1000 # TODO: set to value > JqplotCharting.priority to take effect
+    1000
   end
 
   # backend identifier
