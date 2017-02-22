@@ -2007,6 +2007,7 @@ Rails.application.routes.draw do
         dialog_accordion_json
         explorer
         export_service_dialogs
+        show
       ),
       :post => %w(
         ab_group_reorder

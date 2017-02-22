@@ -6,7 +6,7 @@
       = render :partial => "layouts/textual_groups_generic"
     - else
       = render(:partial => "#{x_active_tree}_show",
-        :locals  => {:controller => "catalog"})
+        :locals  => locals)
 - else
   #main_div
     - if @sb[:buttons_node]

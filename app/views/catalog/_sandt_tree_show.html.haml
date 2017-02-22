@@ -35,11 +35,12 @@
               = _('Catalog')
             .col-md-8
               = h(@record.service_template_catalog ? @record.service_template_catalog.name : "<#{_('Unassigned')}>")
-        .form-group
-          %label.col-md-2.control-label
-            = _('Dialog')
-          .col-md-8
-            = h(@sb[:dialog_label])
+        - unless @record.prov_type == "generic_ansible_playbook"
+          .form-group
+            %label.col-md-2.control-label
+              = _('Dialog')
+            .col-md-8
+              = h(@sb[:dialog_label])
         - if @record.prov_type
           .form-group
             %label.col-md-2.control-label
@@ -182,6 +183,152 @@
           - else
             %span{:style => "color:red"}= @no_wf_msg
 
+- if @record.prov_type == "generic_ansible_playbook"
+  #playbook_tabs
+    %ul.nav.nav-tabs
+      = miq_tab_header('provisioning') do
+        = _('Provisioning')
+      - if @record.config_info.fetch_path(:retirement)
+        = miq_tab_header('retirement') do
+          = _('Retirement')
+    .tab-content
+      = miq_tab_content('provisioning') do
+        %h3
+          = _('Provisioning Info')
+        .col-md-12.col-lg-6
+          .form-horizontal.static
+            .form-group
+              %label.col-md-2.control-label
+                = _('Repository')
+              .col-md-8
+                = h(provisioning[:repository])
+          .form-horizontal.static
+            .form-group
+              %label.col-md-2.control-label
+                = _('Playbook')
+              .col-md-8
+                = h(provisioning[:playbook])
+          .form-horizontal.static
+            .form-group
+              %label.col-md-2.control-label
+                = _('Machine Credential')
+              .col-md-8
+                = h(provisioning[:machine_credential])
+          .form-horizontal.static
+            .form-group
+              %label.col-md-2.control-label
+                = _('Network Credential')
+              .col-md-8
+                = h(provisioning[:network_credential])
+          .form-horizontal.static
+            .form-group
+              %label.col-md-2.control-label
+                = _('Cloud Credential')
+              .col-md-8
+                = h(provisioning[:cloud_credential])
+          .form-horizontal.static
+            .form-group
+              %label.col-md-2.control-label
+                = _('Hosts')
+              .col-md-8
+                = h(@record.config_info[:provision][:hosts])
+        .col-md-12.col-lg-6
+          .form-group
+            %table.table.table-striped.table-hover.table-condensed.table-bordered
+              %tbody
+                %thead
+                  %tr
+                    %th{:colspan => "3", :align => "left"}
+                      = _("Variables and Default values")
+                      - @record.config_info[:provision][:extra_vars].each do |key, value|
+                        %tr
+                          %td
+                            = h(key)
+                          %td
+                            = h(value)
+          .form-horizontal.static
+            .form-group
+              %label.col-md-2.control-label
+                = _('Dialog')
+              .col-md-8
+                - if role_allows?(:feature => "dialog_accord", :any => true)
+                  - params = {:controller => 'miq_ae_customization', :action => 'show', :id => "dg-#{to_cid(provisioning[:dialog_id])}"}
+                  = link_to(provisioning[:dialog],
+                          params,
+                          "data-miq_sparkle_on"  => true,
+                          "data-miq_sparkle_off" => true,
+                          :title                 => provisioning[:dialog])
+                - else
+                  = h(provisioning[:dialog])
+      - if @record.config_info.fetch_path(:retirement)
+        = miq_tab_content('retirement') do
+          %h3
+            = _('Retirement Info')
+          .col-md-12.col-lg-6
+            .form-horizontal.static
+              .form-group
+                %label.col-md-2.control-label
+                  = _('Repository')
+                .col-md-8
+                  = h(retirement[:repository])
+            .form-horizontal.static
+              .form-group
+                %label.col-md-2.control-label
+                  = _('Playbook')
+                .col-md-8
+                  = h(retirement[:playbook])
+            .form-horizontal.static
+              .form-group
+                %label.col-md-2.control-label
+                  = _('Machine Credential')
+                .col-md-8
+                  = h(retirement[:machine_credential])
+            .form-horizontal.static
+              .form-group
+                %label.col-md-2.control-label
+                  = _('Network Credential')
+                .col-md-8
+                  = h(retirement[:network_credential])
+            .form-horizontal.static
+              .form-group
+                %label.col-md-2.control-label
+                  = _('Cloud Credential')
+                .col-md-8
+                  = h(retirement[:cloud_credential])
+            .form-horizontal.static
+              .form-group
+                %label.col-md-2.control-label
+                  = _('Hosts')
+                .col-md-8
+                  = h(@record.config_info[:retirement][:hosts])
+          .col-md-12.col-lg-6
+            .form-group
+              %table.table.table-striped.table-hover.table-condensed.table-bordered
+                %tbody
+                  %thead
+                    %tr
+                      %th{:colspan => "3", :align => "left"}
+                        = _("Variables and Default values")
+                      - @record.config_info[:retirement][:extra_vars].each do |key, value|
+                        %tr
+                          %td = h(key)
+                          %td = h(value)
+            .form-horizontal.static
+            .form-group
+              %label.col-md-2.control-label
+                = _('Dialog')
+              .col-md-8
+                - if role_allows?(:feature => "dialog_accord", :any => true)
+                  - params = {:controller => 'miq_ae_customization', :action => 'show', :id => "dg-#{to_cid(retirement[:dialog_id])}"}
+                  = link_to(retirement[:dialog],
+                          params,
+                          "data-miq_sparkle_on"  => true,
+                          "data-miq_sparkle_off" => true,
+                          :title                 => retirement[:dialog])
+                - else
+                  = h(retirement[:dialog])
+
 :javascript
   miq_tabs_init("#st_tabs");
+  miq_tabs_init("#playbook_tabs");
   miq_bootstrap('#long_description', 'miq.helpers');
