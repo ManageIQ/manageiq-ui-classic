@@ -17,7 +17,7 @@ module EmsCommon
   end
 
   def show_props
-    drop_breadcrumb(:name => @ems.name + _(" (Properties)"), :url => show_link(@ems, :display  =>  "props"))
+    drop_breadcrumb(:name => @ems.name + _(" (Properties)"), :url => show_link(@ems, :display => "props"))
   end
 
   def show_ems_folders
@@ -33,19 +33,6 @@ module EmsCommon
     cluster = @record
     @datacenter_tree = TreeBuilderVat.new(:vat_tree, :vat, @sb, true, cluster, !!params[:vat])
     self.x_active_tree = :vat_tree
-  end
-
-  def show_dashboard
-    @showtype = "dashboard"
-    @lastaction = "show_dashboard"
-    drop_breadcrumb(:name => @ems.name + _(" (Dashboard)"), :url => show_link(@ems))
-    @sb[:summary_mode] = 'dashboard' unless @sb[:summary_mode] == 'dashboard'
-    render :action => "show_dashboard"
-  end
-
-  def show_main
-    @sb[:summary_mode] = 'textual' unless @sb[:summary_mode] == 'textual'
-    super
   end
 
   def show_ad_hoc_metrics
@@ -1076,12 +1063,6 @@ module EmsCommon
 
   def permission_prefix
     self.class.permission_prefix
-  end
-
-  def show_link(ems, options = {})
-    url_for(options.merge(:controller => @table_name,
-                          :action     => "show",
-                          :id         => ems.id))
   end
 
   def show_list_link(ems, options = {})

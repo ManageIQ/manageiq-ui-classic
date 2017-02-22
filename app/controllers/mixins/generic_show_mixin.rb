@@ -32,16 +32,26 @@ module Mixins
     end
 
     def show_main
+      # remember dashboard mode if dashboard is supported for this controller
+      @sb[:summary_mode] = 'textual' if respond_to?(:dashboard_view)
+
       get_tagdata(@record) if @record.try(:taggings)
       drop_breadcrumb({:name => breadcrumb_name(nil),
                        :url  => "/#{controller_name}/show_list?page=#{@current_page}&refresh=y"},
                       true)
 
-      show_url = restful? ? "/#{controller_name}/" : "/#{controller_name}/show/"
-
       drop_breadcrumb(:name =>  _("%{name} (Summary)") % {:name => @record.name},
-                      :url  => "#{show_url}#{@record.id}")
+                      :url  => show_link(@record))
       @showtype = "main"
+    end
+
+    def show_link(record, options = {})
+      opts = options.merge(
+        :controller => self.class.table_name,
+        :id         => record.id,
+        :action     => restful? ? :index : :show
+      )
+      url_for(opts)
     end
 
     def gtl_url
