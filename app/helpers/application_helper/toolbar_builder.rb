@@ -590,15 +590,6 @@ class ApplicationHelper::ToolbarBuilder
           return N_("Log collection is already in progress for one or more %{servers} in this Zone") %
             {:servers => ui_lookup(:tables => "miq_servers")}
         end
-      when "zone_delete"
-        if @selected_zone.name.downcase == "default"
-          return N_("'Default' zone cannot be deleted")
-        elsif @selected_zone.ext_management_systems.count > 0 ||
-              @selected_zone.storage_managers.count > 0 ||
-              @selected_zone.miq_schedules.count > 0 ||
-              @selected_zone.miq_servers.count > 0
-          return N_("Cannot delete a Zone that has Relationships")
-        end
       end
     when nil, "NilClass"
       case id
