@@ -174,6 +174,15 @@ module QuadiconHelper
     content_tag(:div, options, &block)
   end
 
+  def img_for_health_state(item)
+    case item.healthState
+    when "Normal"   then "100/healthstate-normal.png"
+    when "Critical" then "svg/healthstate-critical.svg"
+    when "None"     then "svg/healthstate-unknown.svg"
+    when "Warning"  then "100/warning.png"
+    end
+  end
+
   def img_for_compliance(item)
     case item.passes_profiles?(session[:policies].keys)
     when true  then '100/check.png'
@@ -184,6 +193,10 @@ module QuadiconHelper
 
   def img_for_vendor(item)
     "svg/vendor-#{h(item.vendor)}.svg"
+  end
+
+  def img_for_physical_vendor(item)
+    "svg/vendor-#{h(item.label_for_vendor.downcase)}.svg"
   end
 
   def img_for_host_vendor(item)
@@ -331,6 +344,7 @@ module QuadiconHelper
   end
 
   CLASSLY_NAMED_ITEMS = %w(
+    PhysicalServer
     EmsCluster
     ResourcePool
     Repository
@@ -353,6 +367,8 @@ module QuadiconHelper
                    elsif item.kind_of?(ManageIQ::Providers::ConfigurationManager)
                      "single_quad"
                    elsif quadicon_named_for_base_class?(item)
+                     item.class.base_class.name.underscore
+                   elsif item.kind_of? ManageIQ::Providers::Lenovo::PhysicalInfraManager::PhysicalServer
                      item.class.base_class.name.underscore
                    else
                      # All other models that only need single large icon and use name for hover text
@@ -498,14 +514,13 @@ module QuadiconHelper
     size = options[:size]
     width = options[:size] == 150 ? 54 : 35
     output = []
-
     if settings(:quadicons, :physical_server)
       output << flobj_img_simple(size, "#{size}/base.png")
 
-      output << flobj_p_simple("a#{size}", item.hosts.size)
-      output << flobj_img_simple(size, "72/currentstate-#{h(item.normalized_state.downcase)}.png", "b#{size}")
-      output << flobj_img_simple(size, img_for_host_vendor(item), "c#{size}")
-      output << flobj_img_simple(size, img_for_auth_status(item), "d#{size}")
+      output << flobj_p_simple("a#{size}", (item.host ? 1 : 0 )) #item.host&.size)
+      output << flobj_img_simple(size, "72/currentstate-#{h(item.powerState.downcase)}.png", "b#{size}")
+      output << flobj_img_simple(size, img_for_physical_vendor(item), "c#{size}")
+      output << flobj_img_simple(size, img_for_health_state(item), "d#{size}")
       output << flobj_img_simple(size, '100/shield.png', "g#{size}") unless item.get_policies.empty?
     else
       output << flobj_img_simple(size)
