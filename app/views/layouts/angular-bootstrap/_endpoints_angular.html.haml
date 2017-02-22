@@ -83,7 +83,8 @@
                             "emsCommonModel.emstype == 'openstack_infra' || " +                        |
                             "emsCommonModel.emstype == 'nuage_network' || " +                          |
                             "(emsCommonModel.emstype == 'vmware_cloud' && '#{prefix}' === 'amqp') || " |
-                            "emsCommonModel.emstype == 'scvmm'"}                                       |
+                            "emsCommonModel.emstype == 'scvmm' || " +                                  |
+                            "emsCommonModel.ems_controller == 'ems_container'"}                        |
     %label.col-md-2.control-label{"for" => "#{prefix}_security_protocol"}
       = _('Security Protocol')
     .col-md-8{"ng-if" => "emsCommonModel.emstype == 'openstack' || emsCommonModel.emstype == 'openstack_infra' || emsCommonModel.emstype == 'vmware_cloud'"}
@@ -114,6 +115,15 @@
                        "selectpicker-for-select-tag" => "",
                        "prefix"                      => "#{prefix}",
                        "reset-validation-status"     => "#{prefix}_auth_status")
+    .col-md-8{"ng-if" => "emsCommonModel.ems_controller == 'ems_container'"}
+      = select_tag("#{prefix}_security_protocol",
+                       options_for_select([["<#{_('Choose')}>", nil]] + @container_security_protocols, disabled: ["<#{_('Choose')}>", nil]),
+                       "ng-model"                    => "#{ng_model}.#{prefix}_security_protocol",
+                       "checkchange"                 => "",
+                       "required"                    => "",
+                       "selectpicker-for-select-tag" => "",
+                       "prefix"                      => "#{prefix}",
+                       "reset-validation-status"     => "#{prefix}_auth_status")
 
 %div{"ng-if" => defined?(tls_verify_hide) ? false : true}
   .form-group{"ng-if"=> "emsCommonModel.emstype == 'rhevm'"}
@@ -132,14 +142,16 @@
              "prefix"          => "#{prefix}"}
 
 %div{"ng-if" => defined?(tls_ca_certs_hide) ? false : true}
-  .form-group{"ng-if"=> "emsCommonModel.emstype == 'rhevm'"}
+  .form-group{"ng-if"=> "emsCommonModel.emstype == 'rhevm' || " +                                          |
+                        "(emsCommonModel.ems_controller == 'ems_container' && " +                          |
+                        " emsCommonModel.#{prefix}_security_protocol == 'ssl-with-validation-custom-ca')"} |
     %label.col-md-2.control-label{"for" => "#{prefix}_tls_ca_certs"}
       = _('Trusted CA Certificates')
     .col-md-4
       %textarea.form-control{"id"          => "#{prefix}_tls_ca_certs",
                              "name"        => "#{prefix}_tls_ca_certs",
                              "ng-model"    => "#{ng_model}.#{prefix}_tls_ca_certs",
-                             "ng-disabled" => "!#{ng_model}.#{prefix}_tls_verify",
+                             "ng-disabled" => "emsCommonModel.emstype == 'rhevm' && !#{ng_model}.#{prefix}_tls_verify",
                              "ng-required" => false,
                              "ng-trim"     => false,
                              "prefix"      => "#{prefix}"}
@@ -165,4 +177,3 @@
       = _("Required")
     %span.help-block{"ng-show" => "angularForm.realm.$error.detectedSpaces"}
       = _("Spaces are prohibited")
-
