@@ -1213,6 +1213,7 @@ Rails.application.routes.draw do
       :get  => %w(
         discover
         download_data
+        download_summary_pdf
         ems_physical_infra_form_fields
         protect
         show_list
