@@ -28,5 +28,13 @@ ManageIQ.angular.app.component('miqButton', {
       }
     };
   },
-  templateUrl: '/static/miq-button.html.haml'
+  template: [
+    '<button',
+    'ng-class="{btn: true, \'btn-primary\': $ctrl.primary, \'btn-default\': !$ctrl.primary, disabled: !$ctrl.enabled}"',
+    'ng-click="$ctrl.buttonClicked()"',
+    'ng-attr-title="{{$ctrl.title}}"',
+    'ng-attr-alt="{{$ctrl.title}}">',
+    '{{$ctrl.name}}',
+    '</button>'
+  ].join("\n")
 });
