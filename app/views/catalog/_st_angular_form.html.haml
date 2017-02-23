@@ -51,11 +51,12 @@
       %label.col-md-2.control-label{"for" => "catalog_id"}
         = _('Catalog')
       .col-md-8
-        %select{"ng-model"    => "vm._catalog",
-                "name"        => "catalog_id",
-                "ng-required" => "vm.catalogItemModel.display",
-                'ng-options'  => 'catalog as catalog.name for catalog in vm.catalogs',
-                'pf-select'   => true}
+        %select{"ng-model"         => "vm._catalog",
+                "name"             => "catalog_id",
+                "ng-required"      => "vm.catalogItemModel.display",
+                'ng-options'       => 'catalog as catalog.name for catalog in vm.catalogs',
+                "data-live-search" => "true",
+                'pf-select'        => true}
           %option{"value" => ""}
             = "<#{_('Choose')}>"
         %span.help-block{"ng-show" => "catalogItemModel.display"}
