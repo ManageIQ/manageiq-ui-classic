@@ -451,7 +451,6 @@ class ApplicationHelper::ToolbarBuilder
   # Determine if a button should be disabled. Returns either boolean or
   # string message with explanation of reason for disabling
   def disable_button(id)
-    return true if id.starts_with?("view_") && id.ends_with?("textual")  # Summary view buttons
     return true if @gtl_type && id.starts_with?("view_") && id.ends_with?(@gtl_type)  # GTL view buttons
     return true if id == "view_dashboard" && (@showtype == "dashboard")
     return true if id == "view_summary" && (@showtype != "dashboard")
