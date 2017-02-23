@@ -1,4 +1,9 @@
 describe ApplicationHelper::Button::VmInstanceTemplateScan do
+  before (:each) do
+    EvmSpecHelper.create_guid_miq_server_zone
+    SSAButtonHelper.create_server_smart_roles
+  end
+
   describe '#visible?' do
     context "when record has proxy and is not orphaned nor archived" do
       before do

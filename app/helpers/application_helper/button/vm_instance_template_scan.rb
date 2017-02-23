@@ -1,4 +1,4 @@
-class ApplicationHelper::Button::VmInstanceTemplateScan < ApplicationHelper::Button::Basic
+class ApplicationHelper::Button::VmInstanceTemplateScan < ApplicationHelper::Button::SmartStateScan
   needs :@record
 
   def visible?
@@ -6,6 +6,7 @@ class ApplicationHelper::Button::VmInstanceTemplateScan < ApplicationHelper::But
   end
 
   def disabled?
+    super
     unless @record.supports_smartstate_analysis? && @record.has_active_proxy?
       @error_message = if !@record.supports_smartstate_analysis?
                          @record.unsupported_reason(:smartstate_analysis)
