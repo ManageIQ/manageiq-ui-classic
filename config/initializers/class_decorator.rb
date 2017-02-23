@@ -6,6 +6,6 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def decorate
-    @_decorator ||= MiqDecorator.for(self.class).new(self)
+    @_decorator ||= MiqDecorator.for(self.class).try(:new, self)
   end
 end
