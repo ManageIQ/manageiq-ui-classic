@@ -62,16 +62,25 @@ module MiddlewareServerHelper::TextualSummary
   end
 
   def textual_lives_on
-    lives_on_ems = @record.try(:lives_on).try(:ext_management_system)
+    lives_on = @record.try(:lives_on)
+    lives_on_ems = lives_on.try(:ext_management_system)
     return nil if lives_on_ems.nil?
-    lives_on_entity_name = _("Virtual Machine")
+
+    if lives_on.kind_of?(Container)
+      lives_on_entity_name = _("Underlying Container")
+      lives_on_controller_name = 'container'
+    else
+      lives_on_entity_name = _("Underlying Virtual Machine")
+      lives_on_controller_name = 'vm_or_template'
+    end
+
     {
-      :label => "Underlying #{lives_on_entity_name}",
+      :label => lives_on_entity_name,
       :image => "svg/vendor-#{lives_on_ems.image_name}.svg",
       :value => @record.lives_on.name.to_s,
       :link  => url_for(
         :action     => 'show',
-        :controller => 'vm_or_template',
+        :controller => lives_on_controller_name,
         :id         => @record.lives_on.id
       )
     }
