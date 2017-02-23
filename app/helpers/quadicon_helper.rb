@@ -176,10 +176,11 @@ module QuadiconHelper
 
   def img_for_health_state(item)
     case item.healthState
-    when "Normal"   then "100/healthstate-normal.png"
+    when "Valid"    then "100/healthstate-normal.png"
     when "Critical" then "svg/healthstate-critical.svg"
     when "None"     then "svg/healthstate-unknown.svg"
     when "Warning"  then "100/warning.png"
+    else                 "svg/healthstate-unknown.svg"
     end
   end
 
