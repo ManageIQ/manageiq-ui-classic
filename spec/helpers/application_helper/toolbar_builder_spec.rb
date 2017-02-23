@@ -251,7 +251,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     end
 
     ["ems_cluster_protect", "ext_management_system_protect",
-     "host_analyze_check_compliance", "host_check_compliance",
      "host_enter_maint_mode", "host_exit_maint_mode",
      "repo_protect",
      "resource_pool_protect",
@@ -265,7 +264,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       end
     end
 
-    %w(host_miq_request_new vm_miq_request_new vm_pre_prov).each do |id|
+    %w(vm_miq_request_new vm_pre_prov).each do |id|
       it "when with #{id}" do
         @id = id
         stub_user(:features => :all)
@@ -414,48 +413,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       @id = "iso_datastore_new"
 
       expect(subject).to match(/No.*are available/)
-    end
-
-    context "when record class = EmsCluster" do
-      before do
-        @record = EmsCluster.new
-        allow(@record).to receive_messages(:has_perf_data? => true, :has_events? => true)
-      end
-
-      context "and id = ems_cluster_perf" do
-        before { @id = "ems_cluster_perf" }
-        it_behaves_like 'record without perf data', "No Capacity & Utilization data has been collected for this Cluster"
-        it_behaves_like 'default case'
-      end
-
-      context "and id = ems_cluster_timeline" do
-        before { @id = "ems_cluster_timeline" }
-        it_behaves_like 'record without ems events and policy events', "No Timeline data has been collected for this Cluster"
-        it_behaves_like 'default case'
-      end
-    end
-
-    context "when record class = Host" do
-      before do
-        @record = Host.new
-        allow(@record).to receive_messages(:has_perf_data? => true)
-      end
-
-      context "and id = host_perf" do
-        before { @id = "host_perf" }
-        it_behaves_like 'record without perf data', "No Capacity & Utilization data has been collected for this Host"
-        it_behaves_like 'default case'
-      end
-
-      context "and id = host_timeline" do
-        before do
-          @id = "host_timeline"
-          allow(@record).to receive(:has_events?).and_return(true)
-        end
-
-        it_behaves_like 'record without ems events and policy events', "No Timeline data has been collected for this Host"
-        it_behaves_like 'default case'
-      end
     end
 
     context "when record class = MiqServer" do

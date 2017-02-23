@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     # This secret is reset to a value found in the miq_databases table in
     # MiqWebServerWorkerMixin.configure_secret_token for rails server, UI, and
     # web service worker processes.
-    protect_from_forgery :secret => SecureRandom.hex(64), :except => :csp_report, :with => :exception
+    protect_from_forgery :secret => SecureRandom.hex(64), :except => [:authenticate, :csp_report], :with => :exception
   end
 
   helper ChartingHelper
@@ -1690,8 +1690,6 @@ class ApplicationController < ActionController::Base
         javascript_redirect edit_ems_datawarehouse_path(params[:id])
       elsif params[:pressed] == "ems_network_edit" && params[:id]
         javascript_redirect edit_ems_network_path(params[:id])
-      elsif %w(arbitration_profile_edit arbitration_profile_new).include?(params[:pressed]) && params[:id]
-        javascript_redirect :action => @refresh_partial, :id => params[:id], :show => @redirect_id
       else
         javascript_redirect :action => @refresh_partial, :id => @redirect_id
       end

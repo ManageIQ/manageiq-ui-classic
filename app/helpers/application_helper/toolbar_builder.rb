@@ -467,41 +467,6 @@ class ApplicationHelper::ToolbarBuilder
     end
 
     case get_record_cls(@record)
-    when "AvailabilityZone"
-      case id
-      when "availability_zone_perf"
-        unless @record.has_perf_data?
-          return N_("No Capacity & Utilization data has been collected for this Availability Zone")
-        end
-      when "availability_zone_timeline"
-        unless @record.has_events? # || @record.has_events?(:policy_events), may add this check back in later
-          return N_("No Timeline data has been collected for this Availability Zone")
-        end
-      end
-    when "EmsCluster"
-      case id
-      when "ems_cluster_perf"
-        return N_("No Capacity & Utilization data has been collected for this Cluster") unless @record.has_perf_data?
-      when "ems_cluster_timeline"
-        unless @record.has_events? || @record.has_events?(:policy_events)
-          return N_("No Timeline data has been collected for this Cluster")
-        end
-      end
-    when "Host"
-      case id
-      when "host_analyze_check_compliance", "host_check_compliance"
-        return N_("No Compliance Policies assigned to this Host") unless @record.has_compliance_policies?
-      when "host_perf"
-        return N_("No Capacity & Utilization data has been collected for this Host") unless @record.has_perf_data?
-      when "host_miq_request_new"
-        return N_("This Host can not be provisioned because the MAC address is not known") unless @record.mac_address
-        count = PxeServer.all.size
-        return N_("No PXE Servers are available for Host provisioning") if count <= 0
-      when "host_timeline"
-        unless @record.has_events? || @record.has_events?(:policy_events)
-          return N_("No Timeline data has been collected for this Host")
-        end
-      end
     when "MiqGroup"
       case id
       when "rbac_group_delete"
@@ -579,7 +544,7 @@ class ApplicationHelper::ToolbarBuilder
       when "rbac_user_copy"
         return N_("User [Administrator] can not be copied") if @record.super_admin_user?
       when "rbac_user_delete"
-        return N_("User [Administrator] can not be deleted") if @record.super_admin_user?
+        return N_("User [Administrator] can not be deleted") if @record.userid == 'admin'
       end
     when "UserRole"
       case id

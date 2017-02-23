@@ -6,7 +6,6 @@
  *= require c3
  *= require patternfly-bootstrap-treeview/dist/bootstrap-treeview.min.css
  *= require main
- *= require jquery.jqplot
  *= require automate_import_export
  *= require dialog_fields
  *= require angular
@@ -16,7 +15,6 @@
  *= require miq_tree
  *= require codemirror
  *= require codemirror/theme/eclipse
- *= require jqplot
  *= require kubernetes-topology-graph/dist/topology-graph
  *= require container_providers_dashboard
  *= require wizard

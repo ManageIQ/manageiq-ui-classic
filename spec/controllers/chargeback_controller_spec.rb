@@ -197,6 +197,7 @@ describe ChargebackController do
       EvmSpecHelper.local_miq_server
       allow_any_instance_of(described_class).to receive(:center_toolbar_filename).and_return("chargeback_center_tb")
       seed_session_trees('chargeback', :cb_rates_tree, "xx-Compute")
+      [ChargebackRateDetailMeasure, ChargeableField].each(&:seed)
     end
 
     def expect_input(body, selector, value)
@@ -352,9 +353,9 @@ describe ChargebackController do
         expect(rate_detail.detail_currency.name).to eq(rate_detail_hash[:type_currency])
 
         if rate_detail_hash[:measure].nil?
-          expect(rate_detail.detail_measure).to be_nil
+          expect(rate_detail.chargeable_field.detail_measure).to be_nil
         else
-          expect(rate_detail.detail_measure.name).to eq(rate_detail_hash[:measure])
+          expect(rate_detail.chargeable_field.detail_measure.name).to eq(rate_detail_hash[:measure])
         end
 
         rate_detail.chargeback_tiers.each_with_index do |tier, tier_index|
@@ -373,11 +374,7 @@ describe ChargebackController do
       end
 
       before do
-        [ChargebackRateDetailMeasure, ChargebackRateDetailCurrency, ChargeableField, ChargebackRate].each do |k|
-          # This is unfortunate try and I am sorry. After repo split, some design clean-ups are more difficult
-          # than before. I'll remove the `try` asap (after other prs are merged, no eta obviously).
-          k.try(:seed)
-        end
+        [ChargebackRateDetailCurrency, ChargebackRate].each(&:seed)
       end
 
       it "adds new chargeback rate using default values" do
@@ -462,6 +459,7 @@ describe ChargebackController do
       rate.chargeback_rate_details.each do |rate_detail|
         rate_detail_hash = rate_detail.slice(*ChargebackRateDetail::FORM_ATTRIBUTES)
         rate_detail_hash = Hash[rate_detail_hash.map { |(k, v)| [k.to_sym, v] }]
+        rate_detail_hash[:group] = rate_detail.chargeable_field.group
         rate_detail_hash[:tiers] = []
         rate_detail.chargeback_tiers.each do |tier|
           tier_hash = tier.slice(*ChargebackTier::FORM_ATTRIBUTES)
@@ -469,7 +467,7 @@ describe ChargebackController do
           rate_detail_hash[:tiers].push(tier_hash)
         end
 
-        rate_detail_hash[:measure] = rate_detail.detail_measure.name
+        rate_detail_hash[:measure] = rate_detail.chargeable_field.detail_measure.name
         rate_detail_hash[:type_currency] = rate_detail.detail_currency.name
         origin_chargeback_rate_hash[:rates].push(rate_detail_hash)
       end
@@ -530,7 +528,7 @@ describe ChargebackController do
       flash_messages = assigns(:flash_array)
 
       expect(flash_messages.count).to eq(1)
-      expected_message = "'Allocated Memory in MB' chargeback tiers must start at zero and "
+      expected_message = "'Allocated Memory' chargeback tiers must start at zero and "
       expected_message += "not contain any gaps between start and prior end value."
       expect(flash_messages[0][:message]).to eq(expected_message)
     end
@@ -545,7 +543,7 @@ describe ChargebackController do
       flash_messages = assigns(:flash_array)
 
       expect(flash_messages.count).to eq(1)
-      expect(flash_messages[0][:message]).to eq("'Allocated Memory in MB' start is not a number")
+      expect(flash_messages[0][:message]).to eq("'Allocated Memory' start is not a number")
     end
 
     it "doesn't store rate and displays validation message with invalid input of tiers(ambiguous tiers)" do
@@ -561,7 +559,7 @@ describe ChargebackController do
       flash_messages = assigns(:flash_array)
 
       expect(flash_messages.count).to eq(1)
-      expected_message = "'Allocated Memory in MB' finish value must be greater than start value."
+      expected_message = "'Allocated Memory' finish value must be greater than start value."
       expect(flash_messages[0][:message]).to eq(expected_message)
     end
   end

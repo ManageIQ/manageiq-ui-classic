@@ -92,6 +92,10 @@ ManageIQ.explorer.processFlash = function(data) {
 ManageIQ.explorer.replacePartials = function(data) {
   if (_.isObject(data.replacePartials)) {
     _.forEach(data.replacePartials, function (content, element) {
+      if (! miqDomElementExists(element)) {
+        console.error('replacePartials: #' + element + ' does not exist in the DOM');
+      }
+
       $('#' + element).replaceWith(content);
     });
   }
@@ -100,6 +104,10 @@ ManageIQ.explorer.replacePartials = function(data) {
 ManageIQ.explorer.updatePartials = function(data) {
   if (_.isObject(data.updatePartials)) {
     _.forEach(data.updatePartials, function (content, element) {
+      if (! miqDomElementExists(element)) {
+        console.error('updatePartials: #' + element + ' does not exist in the DOM');
+      }
+
       $('#' + element).html(content);
     });
   }

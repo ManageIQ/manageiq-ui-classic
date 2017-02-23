@@ -1,4 +1,17 @@
 - url = url_for(:action => 'form_field_changed', :id => "#{@edit[:rpt_id] || 'new'}")
+- if @edit[:new][:model] == "ChargebackVm"
+  %h3
+    = _('Chargeback Resources')
+  .form-horizontal
+    .form-group
+      %label.control-label.col-md-2
+        = _('Include Capacity & Utilization Metrics')
+      .col-md-8
+        = check_box_tag("cb_include_metrics", true, @edit[:new][:cb_include_metrics],
+                        "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true,
+                        :data => {:on_text => _('Yes'), :off_text => _('No')})
+      :javascript
+        miqInitBootstrapSwitch('cb_include_metrics', "#{url}")
 %h3
   = _('Chargeback Filters')
 .form-horizontal

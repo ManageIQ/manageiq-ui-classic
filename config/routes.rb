@@ -259,6 +259,7 @@ Rails.application.routes.draw do
 
     :catalog                  => {
       :get  => %w(
+        catalog_item_form_fields
         download_data
         explorer
         ot_edit
@@ -1062,8 +1063,6 @@ Rails.application.routes.draw do
 
     :ems_cloud                => {
       :get  => %w(
-        arbitration_profiles
-        arbitration_profile_edit
         dialog_load
         discover
         download_data
@@ -1075,8 +1074,6 @@ Rails.application.routes.draw do
       ) +
                compare_get,
       :post => %w(
-        arbitration_profiles
-        arbitration_profile_edit
         button
         create
         dynamic_checkbox_refresh
@@ -1497,6 +1494,7 @@ Rails.application.routes.draw do
         form_field_changed
         listnav_search_selected
         quick_search
+        run_operation
         sections_field_changed
         show
         show_list
@@ -2467,9 +2465,7 @@ Rails.application.routes.draw do
         diagnostics_server_list
         diagnostics_tree_select
         diagnostics_worker_selected
-        disable_central_admin
         edit_rhn
-        enable_central_admin
         explorer
         fetch_build
         fetch_target_ids
