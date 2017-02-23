@@ -1756,7 +1756,7 @@ class CatalogController < ApplicationController
                 # saving values of ServiceTemplate catalog id and resource that are needed in view to build the link
                 @sb[:stc_nodes] = {}
                 @record.service_resources.each do |r|
-                  st = ServiceTemplate.find_by_id(r.resource_id)
+                  st = ServiceTemplate.find_by(:id => r.resource_id)
                   @sb[:stc_nodes][r.resource_id] = st.service_template_catalog_id ? st.service_template_catalog_id : "Unassigned" unless st.nil?
                 end
               end
