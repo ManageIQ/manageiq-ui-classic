@@ -3,7 +3,7 @@
 - confirm ||= ""
 - ng_show ||= true
 
-%div{"ng-show" => ng_show}
+%div{"ng-show" => ng_show, "ng-controller" => "buttonGroupController"}
   %miq-button{:name            => _("Submit"),
               "disabled-title" => submit_title_off,
               "enabled-title"  => submit_title_on,

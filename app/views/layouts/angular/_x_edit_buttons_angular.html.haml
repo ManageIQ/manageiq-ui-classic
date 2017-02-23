@@ -11,7 +11,7 @@
               :title     => t,
               :alt       => t,
               'ng-show'  => '!newRecord',
-              :enabled   => "miqService.saveable(angularForm)",
+              :enabled   => "saveable(angularForm)",
               'on-click' => "saveClicked({target: '.edit_buttons'}, true)",
               :primary   => 'true'}
   %miq-button{:name      => t = _("Reset"),

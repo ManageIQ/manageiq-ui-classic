@@ -26,6 +26,7 @@ describe('miq-button', function() {
         done();
       });
     });
+    
     it('should disable button if form is invalid', function(done) {
       $scope.validForm = false;
       $scope.$digest();
@@ -62,8 +63,7 @@ describe('miq-button', function() {
           button.trigger("click");
           if (item) {
             expect($scope.miqButtonClicked).toHaveBeenCalled();
-          }
-          else {
+          } else {
             expect($scope.miqButtonClicked).not.toHaveBeenCalled();
           }
         });
@@ -87,6 +87,7 @@ describe('miq-button', function() {
       element = $compile(element)($scope);
       $scope.$digest();
     }));
+    
     it('should set button attributes and classes correctly', function(done) {
       setTimeout(function(){
         var button = element.find("miq-button > button");

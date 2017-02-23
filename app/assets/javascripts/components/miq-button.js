@@ -7,8 +7,9 @@ ManageIQ.angular.app.component('miqButton', {
     primary: '<?',
     onClick: '&',
   },
+  controllerAs: 'vm',
   controller: function() {
-    this.buttonClicked = function($event) {
+    this.buttonClicked = function() {
       if (this.enabled) {
         this.onClick();
       }
@@ -30,11 +31,12 @@ ManageIQ.angular.app.component('miqButton', {
   },
   template: [
     '<button',
-    'ng-class="{btn: true, \'btn-primary\': $ctrl.primary, \'btn-default\': !$ctrl.primary, disabled: !$ctrl.enabled}"',
-    'ng-click="$ctrl.buttonClicked()"',
-    'ng-attr-title="{{$ctrl.title}}"',
-    'ng-attr-alt="{{$ctrl.title}}">',
-    '{{$ctrl.name}}',
+    'controllerAs="vm"',
+    'ng-class="{btn: true, \'btn-primary\': vm.primary, \'btn-default\': !vm.primary, disabled: !vm.enabled}"',
+    'ng-click="vm.buttonClicked()"',
+    'ng-attr-title="{{vm.title}}"',
+    'ng-attr-alt="{{vm.title}}">',
+    '{{vm.name}}',
     '</button>'
   ].join("\n")
 });
