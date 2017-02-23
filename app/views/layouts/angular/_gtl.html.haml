@@ -5,6 +5,7 @@
 - selected_records = @edit[:object_ids] unless @edit.nil? || @edit[:object_ids].nil?
 - selected_records = @edit[:pol_items] unless @edit.nil? || @edit[:pol_items].nil?
 - selected_records = params[:rec_ids] unless params.nil? || params[:rec_ids].nil?
+- selected_records = selected_records.map(&:to_i) if !selected_records.nil? && selected_records.first.kind_of?(String)
 - selected_records = selected_records.map(&:id) if !selected_records.nil? && !selected_records.first.kind_of?(Integer)
 #miq-gtl-view{"ng-controller" => "reportDataController as dataCtrl"}
   .msg-info{"ng-show" => "dataCtrl.showMessage && dataCtrl.showMessage !== ''"}

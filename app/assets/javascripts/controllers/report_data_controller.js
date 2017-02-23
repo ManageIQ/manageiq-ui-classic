@@ -152,7 +152,8 @@
     if (this.initObject.isExplorer) {
       var url;
       if (this.initObject.showUrl.indexOf('?id=') !== -1 ){
-        url = this.initObject.showUrl + '_-' + item.id;
+        var itemId = this.initObject.showUrl.indexOf('xx-') !== -1 ? '_-' + item.id : '-' + item.id;
+        url = this.initObject.showUrl + itemId;
       } else {
         prefix = '/' + ManageIQ.controller;
         url = prefix + '/x_show/' + item.id
@@ -302,12 +303,18 @@
   * @returns {Object} promise of retriveRowsAndColumnsFromUrl of MiQDataTableService.
   */
   ReportDataController.prototype.getData = function(modelName, activeTree, currId, isExplorer, settings, records) {
+    var basicSettings = {
+      current: 1,
+      perpage: 20,
+      sort_col: 0,
+      sort_dir: "DESC",
+    };
     return this.MiQDataTableService.retrieveRowsAndColumnsFromUrl(modelName, activeTree, currId, isExplorer, settings, records)
       .then(function(gtlData) {
+        this.settings = gtlData.settings || basicSettings;
         this.gtlData = gtlData;
-        this.perPage.text = gtlData.settings.perpage;
-        this.perPage.value = gtlData.settings.perpage;
-        this.settings = gtlData.settings;
+        this.perPage.text = this.settings.perpage;
+        this.perPage.value = this.settings.perpage;
         return gtlData;
       }.bind(this));
   };
