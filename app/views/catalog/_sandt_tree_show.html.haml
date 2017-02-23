@@ -71,16 +71,17 @@
               = _('Ansible Tower Job Template')
             .col-md-9
               = h(@record.try(:job_template).try(:name))
-        - entry_points = [[_("Provisioning"), :fqname]]
-        - unless @record.prov_type.try(:start_with?, "generic_")
-          - entry_points.push([_("Reconfigure"),  :reconfigure_fqname],
-             [_("Retirement"),   :retire_fqname])
-        - entry_points.each do |entry_points_op|
-          .form-group
-            %label.col-md-3.control-label{:title => _("%{entry_point} Entry Point (NameSpace/Class/Instance)") % {:entry_point => entry_points_op[0]}}
-              #{entry_points_op[0]} #{_('Entry Point')}
-            .col-md-9
-              = h(@sb[entry_points_op[1]])
+        - unless @record.prov_type == "generic_ansible_playbook"
+          - entry_points = [[_("Provisioning"), :fqname]]
+          - unless @record.prov_type.try(:start_with?, "generic_")
+            - entry_points.push([_("Reconfigure"),  :reconfigure_fqname],
+               [_("Retirement"),   :retire_fqname])
+          - entry_points.each do |entry_points_op|
+            .form-group
+              %label.col-md-3.control-label{:title => _("%{entry_point} Entry Point (NameSpace/Class/Instance)") % {:entry_point => entry_points_op[0]}}
+                #{entry_points_op[0]} #{_('Entry Point')}
+              .col-md-9
+                = h(@sb[entry_points_op[1]])
       %hr
       %h3
         = _('Custom Image')
@@ -296,36 +297,37 @@
                 .col-md-9
                   = h(@record.config_info[:retirement][:hosts])
           .col-md-12.col-lg-6
-            .form-group
-              %label.col-md-3.control-label
-                = _("Variables & Default Values")
-              .col-md-9
-                %table.table.table-bordered.table-striped
-                  %thead
-                    %th
-                      = _("Variable")
-                    %th
-                      = _("Default value")
-                  %tbody
-                    - @record.config_info[:retirement][:extra_vars].each do |key, value|
-                      %tr
-                        %td
-                          = h(key)
-                        %td
-                          = h(value)
-            .form-group
-              %label.col-md-3.control-label
-                = _('Dialog')
-              .col-md-9
-                - if role_allows?(:feature => "dialog_accord", :any => true)
-                  - params = {:controller => 'miq_ae_customization', :action => 'show', :id => "dg-#{to_cid(retirement[:dialog_id])}"}
-                  = link_to(retirement[:dialog],
-                          params,
-                          "data-miq_sparkle_on"  => true,
-                          "data-miq_sparkle_off" => true,
-                          :title                 => retirement[:dialog])
-                - else
-                  = h(retirement[:dialog])
+            .form-horizontal.static
+              .form-group
+                %label.col-md-3.control-label
+                  = _("Variables & Default Values")
+                .col-md-9
+                  %table.table.table-bordered.table-striped
+                    %thead
+                      %th
+                        = _("Variable")
+                      %th
+                        = _("Default value")
+                    %tbody
+                      - @record.config_info[:retirement][:extra_vars].each do |key, value|
+                        %tr
+                          %td
+                            = h(key)
+                          %td
+                            = h(value)
+              .form-group
+                %label.col-md-3.control-label
+                  = _('Dialog')
+                .col-md-9
+                  - if role_allows?(:feature => "dialog_accord", :any => true)
+                    - params = {:controller => 'miq_ae_customization', :action => 'show', :id => "dg-#{to_cid(retirement[:dialog_id])}"}
+                    = link_to(retirement[:dialog],
+                            params,
+                            "data-miq_sparkle_on"  => true,
+                            "data-miq_sparkle_off" => true,
+                            :title                 => retirement[:dialog])
+                  - else
+                    = h(retirement[:dialog])
 
 :javascript
   miq_tabs_init("#st_tabs");

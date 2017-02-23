@@ -18,14 +18,6 @@
         %label.col-md-3.control-label{"for" => "#{prefix}_playbook_id"}
           = _('Playbook')
         .col-md-9
-          %select{"ng-model"    => "vm._#{prefix}_playbook",
-                  "name"        => "#{prefix}_playbook_id",
-                  'ng-options'  => "playbook as playbook.name for playbook in vm.#{prefix}_playbooks",
-                  "required"    => "",
-                  :miqrequired  => true,
-                  :checkchange  => true,
-                  'pf-select'   => true}
-        .col-md-8
           %select{"ng-model"         => "vm._#{prefix}_playbook",
                   "name"             => "#{prefix}_playbook_id",
                   'ng-options'       => "playbook as playbook.name for playbook in vm.#{prefix}_playbooks",
@@ -41,7 +33,7 @@
         .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_machine_credential_id.$invalid}"}
           %label.col-md-3.control-label{"for" => "#{prefix}_machine_credential_id"}
             = _('Machine Credentials')
-          .col-md-8
+          .col-md-9
             %select{"ng-model"         => "vm._#{prefix}_machine_credential",
                     "name"             => "#{prefix}_machine_credential_id",
                     'ng-options'       => 'machine_credential as machine_credential.name for machine_credential in vm.machine_credentials',
@@ -52,11 +44,10 @@
                     'pf-select'        => true}
               %option{"value" => ""}
                 = "<#{_('Choose')}>"
-
         .form-group
           %label.col-md-3.control-label{"for" => "vm.#{prefix}_network_credential_id"}
             = _('Network Credentials')
-          .col-md-8
+          .col-md-9
             %select{"ng-model"         => "vm._#{prefix}_network_credential",
                     "name"             => "#{prefix}_network_credential_id",
                     'ng-options'       => 'network_credential as network_credential.name for network_credential in vm.network_credentials',
@@ -78,12 +69,11 @@
                     "pf-select"   => true}
               %option{"value" => ""}
                 = "<#{_('Choose')}>"
-
         #cloud_credentials_div{"ng-show" => "#{ng_model}.#{prefix}_cloud_type !== ''"}
           .form-group
             %label.col-md-3.control-label{"for" => "vm.#{prefix}_cloud_credential_id"}
               = _('Cloud Credentials')
-            .col-md-8
+            .col-md-9
               %select{"ng-model"         => "vm._#{prefix}_cloud_credential",
                       "name"             => "#{prefix}_cloud_credential_id",
                       'ng-options'       => 'cloud_credential as cloud_credential.name for cloud_credential in vm.cloud_credentials',
@@ -117,7 +107,6 @@
                "checkchange" => ""}
         %span.help-block{"ng-show" => "(#{ng_model}.#{prefix}_key === '' && #{ng_model}.#{prefix}_value !== '')"}
           = _("Required")
-
         %input{:type         => "text",
                'ng-model'    => "#{ng_model}.#{prefix}_value",
                :name         => "#{prefix}_value",
