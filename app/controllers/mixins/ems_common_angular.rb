@@ -291,14 +291,16 @@ module Mixins
                        :hawkular_auth_status       => hawkular_auth_status.nil? ? true : hawkular_auth_status,
       } if controller_name == "ems_container"
 
-      render :json => {:name                => @ems.name,
-                       :emstype             => @ems.emstype,
-                       :zone                => zone,
-                       :default_hostname    => @ems.connection_configurations.default.endpoint.hostname,
-                       :default_api_port    => @ems.connection_configurations.default.endpoint.port,
-                       :default_userid      => @ems.authentication_userid ? @ems.authentication_userid : "",
-                       :ems_controller      => controller_name,
-                       :default_auth_status => default_auth_status,
+      render :json => {:name                      => @ems.name,
+                       :emstype                   => @ems.emstype,
+                       :zone                      => zone,
+                       :default_hostname          => @ems.connection_configurations.default.endpoint.hostname,
+                       :default_api_port          => @ems.connection_configurations.default.endpoint.port,
+                       :default_userid            => @ems.authentication_userid ? @ems.authentication_userid : "",
+                       :default_security_protocol => default_security_protocol,
+                       :default_tls_ca_certs      => default_tls_ca_certs,
+                       :ems_controller            => controller_name,
+                       :default_auth_status       => default_auth_status,
       } if controller_name == "ems_middleware"
 
       render :json => {:name                => @ems.name,
@@ -427,6 +429,7 @@ module Mixins
 
       if ems.kind_of?(ManageIQ::Providers::MiddlewareManager)
         default_endpoint = {:role => :default, :hostname => hostname, :port => port}
+        default_endpoint.merge!(container_security_options(ems.security_protocol, default_tls_ca_certs))
       end
 
       if ems.kind_of?(ManageIQ::Providers::Hawkular::DatawarehouseManager)
@@ -470,8 +473,8 @@ module Mixins
     def container_security_options(security_protocol, certificate_authority)
       {
         :security_protocol     => security_protocol,
-        :verify_ssl            => security_protocol != 'ssl-without-validation',
-        :certificate_authority => security_protocol == 'ssl-with-validation-custom-ca' ? certificate_authority : nil,
+        :verify_ssl            => %w(ssl-without-validation non-ssl).exclude?(security_protocol),
+        :certificate_authority => security_protocol == 'ssl-with-validation-custom-ca' ? certificate_authority : nil
       }
     end
 
