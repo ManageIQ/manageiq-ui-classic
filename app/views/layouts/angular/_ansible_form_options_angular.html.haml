@@ -125,55 +125,55 @@
                "checkchange" => ""}
         %span.help-block{"ng-show" => "(#{ng_model}.#{prefix}_key !== '' && #{ng_model}.#{prefix}_value === '')"}
           = _("Required")
-        %button{:class        => "btn btn-link",
-                :type         => "button",
-                "ng-click"    => "vm.addKeyValue('#{prefix}')",
-                "ng-disabled" => "(#{ng_model}.#{prefix}_key == '' || #{ng_model}.#{prefix}_value == '')"}
+        %button{:class     => "btn btn-link",
+                :type      => "button",
+                "ng-click" => "vm.addKeyValue('#{prefix}')",
+                "ng-if"    => "(#{ng_model}.#{prefix}_key != '' && #{ng_model}.#{prefix}_value != '')"}
           %span{:class => "fa fa-plus tag-add"}
 
+    #variables_div{"ng-if" => "!vm.variablesEmpty('#{prefix}')"}
+      .form-group
+        %label.col-md-3.control-label
+        .col-md-7
+          %table.table.table-bordered.table-striped
+            %thead
+              %th
+                = _("Variable")
+              %th
+                = _("Default value")
+              %th
+                = _("Actions")
+            %tbody
+              %tr{"ng-repeat" => "(key, key_value) in #{ng_model}.#{prefix}_variables track by $index", "ng-form" => "rowForm"}
+                %td{"ng-if" => "!#{ng_model}.#{prefix}_editMode || (#{ng_model}.#{prefix}_editMode && $index !== #{ng_model}.s_index)"}
+                  {{key}}
+                %td{"ng-if" => "#{ng_model}.#{prefix}_editMode && $index === #{ng_model}.s_index"}
+                  %input.form-control{:type         => "text",
+                                      :name         => "key",
+                                      'ng-model'    => "#{ng_model}.key",
+                                      "ng-change" => "",
+                                      "miqrequired" => ""}
+                %td{"ng-if" => "!#{ng_model}.#{prefix}_editMode || (#{ng_model}.#{prefix}_editMode && $index !== #{ng_model}.s_index)"}
+                  {{key_value}}
+                %td{"ng-if" => "#{ng_model}.#{prefix}_editMode && $index === #{ng_model}.s_index"}
+                  %input.form-control{:type         => "text",
+                                      :name         => "key_value",
+                                      'ng-model'    => "#{ng_model}.key_value",
+                                      "ng-change" => "",
+                                      "miqrequired" => ""}
 
-    .form-group
-      %label.col-md-3.control-label
-      .col-md-7
-        %table.table.table-bordered.table-striped
-          %thead
-            %th
-              = _("Variable")
-            %th
-              = _("Default value")
-            %th
-              = _("Actions")
-          %tbody
-            %tr{"ng-repeat" => "(key, key_value) in #{ng_model}.#{prefix}_variables track by $index", "ng-form" => "rowForm"}
-              %td{"ng-if" => "!#{ng_model}.#{prefix}_editMode || (#{ng_model}.#{prefix}_editMode && $index !== #{ng_model}.s_index)"}
-                {{key}}
-              %td{"ng-if" => "#{ng_model}.#{prefix}_editMode && $index === #{ng_model}.s_index"}
-                %input.form-control{:type         => "text",
-                                    :name         => "key",
-                                    'ng-model'    => "#{ng_model}.key",
-                                    "ng-change" => "",
-                                    "miqrequired" => ""}
-              %td{"ng-if" => "!#{ng_model}.#{prefix}_editMode || (#{ng_model}.#{prefix}_editMode && $index !== #{ng_model}.s_index)"}
-                {{key_value}}
-              %td{"ng-if" => "#{ng_model}.#{prefix}_editMode && $index === #{ng_model}.s_index"}
-                %input.form-control{:type         => "text",
-                                    :name         => "key_value",
-                                    'ng-model'    => "#{ng_model}.key_value",
-                                    "ng-change" => "",
-                                    "miqrequired" => ""}
+                %td.narrow
+                  %div{"ng-if" => "#{ng_model}.#{prefix}_editMode && $index === #{ng_model}.s_index"}
+                    %button{:class => "btn btn-link", :type => "button", "ng-disabled" => "(#{ng_model}.key === '' || #{ng_model}.key_value === '')", "ng-click" => "vm.saveKeyValue('#{prefix}', $index)"}
+                      %i.pficon.pficon-save
+                    %button{:class => "btn btn-link", :type => "button", "ng-click" => "vm.cancelKeyValue('#{prefix}')"}
+                      %i.pficon.pficon-close
 
-              %td.narrow
-                %div{"ng-if" => "#{ng_model}.#{prefix}_editMode && $index === #{ng_model}.s_index"}
-                  %button{:class => "btn btn-link", :type => "button", "ng-disabled" => "(#{ng_model}.key === '' || #{ng_model}.key_value === '')", "ng-click" => "vm.saveKeyValue('#{prefix}', $index)"}
-                    %i.pficon.pficon-save
-                  %button{:class => "btn btn-link", :type => "button", "ng-click" => "vm.cancelKeyValue('#{prefix}')"}
-                    %i.pficon.pficon-close
-
-                %div{"ng-if" => "!#{ng_model}.#{prefix}_editMode || (#{ng_model}.#{prefix}_editMode && $index !== #{ng_model}.s_index)", :class => "btn-container"}
-                  %button{:class => "btn btn-link", :type => "button", "ng-click" => "vm.editKeyValue('#{prefix}', this.key, this.key_value, $index)", "ng-disabled" => "#{ng_model}.#{prefix}_editMode"}
-                    %span{:class => "pficon pficon-edit"}
-                  %button{:class => "btn btn-link", :type => "button", "ng-click" => "vm.removeKeyValue('#{prefix}', this.key, this.key_value, $index)", "ng-disabled" => "#{ng_model}.#{prefix}_editMode"}
-                    %span{:class => "pficon pficon-delete"}
+                  %div{"ng-if" => "!#{ng_model}.#{prefix}_editMode || (#{ng_model}.#{prefix}_editMode && $index !== #{ng_model}.s_index)", :class => "btn-container"}
+                    %button{:class => "btn btn-link", :type => "button", "ng-click" => "vm.editKeyValue('#{prefix}', this.key, this.key_value, $index)", "ng-disabled" => "#{ng_model}.#{prefix}_editMode"}
+                      %span{:class => "pficon pficon-edit"}
+                    %button{:class => "btn btn-link", :type => "button", "ng-click" => "vm.removeKeyValue('#{prefix}', this.key, this.key_value, $index)", "ng-disabled" => "#{ng_model}.#{prefix}_editMode"}
+                      %span{:class => "pficon pficon-delete"}
 
     .form-group
       %label.col-md-3.control-label
