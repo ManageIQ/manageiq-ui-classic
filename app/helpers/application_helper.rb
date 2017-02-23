@@ -246,6 +246,12 @@ module ApplicationHelper
     end
   end
 
+  TREE_WITH_TAB = {
+    "diagnostics_server_list" => "svr",
+    "db_details"     => "tb",
+    "db_indexes"     => "ti"
+  }.freeze
+
   # Create a url to show a record from the passed in view
   def view_to_url(view, parent = nil)
     association = view_to_association(view, parent)
@@ -294,6 +300,14 @@ module ApplicationHelper
           return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w(MiqWidget).include?(view.db) && request.parameters[:controller] == "report"
           return "/report/tree_select/?id=" + request.parameters[:id]
+        elsif %w(MiqWidget).include?(view.db) && %w(report).include?(request.parameters[:controller])
+          return "/" + request.parameters[:controller] + "/tree_select/?id=" + request.parameters[:id]
+        elsif %w(User MiqGroup MiqUserRole Tenant).include?(view.db) &&
+              %w(ops).include?(request.parameters[:controller])
+          return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node.split("-")[1]
+        elsif %w(VmdbTableEvm VmdbIndex MiqServer).include?(view.db) &&
+              %w(ops).include?(request.parameters[:controller])
+          return "/" + request.parameters[:controller] + "/tree_select/?id=" + TREE_WITH_TAB[active_tab]
         else
           return url_for_only_path(:action => action) + "/" # In explorer, don't jump to other controllers
         end

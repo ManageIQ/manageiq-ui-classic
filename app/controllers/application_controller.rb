@@ -1089,6 +1089,8 @@ class ApplicationController < ActionController::Base
               item.decorate.listicon_image || "100/#{@listicon.downcase}.png" if @listicon.try(:downcase)
             when ManageIQ::Providers::CloudManager::AuthKeyPair
               "100/auth_key_pair.png"
+            when MiqWorker
+              "100/processmanager-#{item.normalized_type}.png" if item.try(:normalized_type)
             else
               item.decorate.try(:listicon_image)
             end
@@ -1601,7 +1603,7 @@ class ApplicationController < ActionController::Base
       object_ids = @edit[:object_ids] unless @edit[:object_ids].nil?
       object_ids = @edit[:pol_items] unless @edit[:pol_items].nil?
     end
-    object_ids   = options[:selected_ids] unless options[:selected_ids].nil?
+    object_ids   = options[:selected_ids].map(&:to_i) unless options[:selected_ids].nil?
     db           = db.to_s
     dbname       = options[:dbname] || db.gsub('::', '_').downcase # Get db name as text
     db_sym       = (options[:gtl_dbname] || dbname).to_sym # Get db name as symbol
