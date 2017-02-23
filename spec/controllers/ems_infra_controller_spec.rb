@@ -406,7 +406,7 @@ describe EmsInfraController do
         ems = FactoryGirl.create("ems_vmware")
         get :show, :params => { :id => ems.id }
         breadcrumbs = controller.instance_variable_get(:@breadcrumbs)
-        expect(breadcrumbs).to eq([{:name => "#{ems.name} (Dashboard)", :url  => "/ems_infra/#{ems.id}"}])
+        expect(breadcrumbs).to eq([{:name => "#{ems.name} (Dashboard)", :url => "/ems_infra/#{ems.id}"}])
       end
     end
   end
