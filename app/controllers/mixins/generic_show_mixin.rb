@@ -46,13 +46,17 @@ module Mixins
     end
 
     def show_link(record, options = {})
-      opts = options.merge(
-        :controller => self.class.table_name,
-        :id         => record.id,
-        :action     => restful? ? :index : :show,
-        :only_path  => true,
-      )
-      url_for(opts)
+      if restful?
+        polymorphic_path(record, options)
+      else
+        opts = options.merge(
+          :controller => self.class.table_name,
+          :id         => record.id,
+          :action     => :show,
+          :only_path  => true,
+        )
+        url_for(opts)
+      end
     end
 
     def gtl_url
@@ -122,7 +126,7 @@ module Mixins
       drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @record.name},
                       :url  => "/#{self.class.table_name}/show/#{@record.id}")
       drop_breadcrumb(:name => _("%{name} (All %{title})") % {:name => @record.name, :title => title},
-                      :url  => "/#{self.class.table_name}/show/#{@record.id}?display=#{@display}")
+                      :url  => show_link(@record, :display => @display))
 
       view_options = {:parent => @record}
       view_options[:parent_method] = options[:parent_method] if options.key?(:parent_method)
