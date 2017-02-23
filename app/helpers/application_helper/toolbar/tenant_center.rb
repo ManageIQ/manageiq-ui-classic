@@ -32,16 +32,14 @@ class ApplicationHelper::Toolbar::TenantCenter < ApplicationHelper::Toolbar::Bas
           :rbac_tenant_manage_quotas,
           'pficon pficon-edit fa-lg',
           t = N_('Manage Quotas'),
-          t,
-          :klass => ApplicationHelper::Button::RbacCommonFeatureButton),
+          t),
         button(
           :rbac_tenant_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Delete this item'),
           t,
           :url_parms => "&refresh=y",
-          :confirm   => N_("Are you sure you want to delete this item and all of it's children?"),
-          :klass     => ApplicationHelper::Button::RbacCommonFeatureButton),
+          :confirm   => N_("Are you sure you want to delete this item and all of it's children?")),
       ]
     ),
   ])
@@ -58,8 +56,7 @@ class ApplicationHelper::Toolbar::TenantCenter < ApplicationHelper::Toolbar::Bas
           t = proc do
             _('Edit \'%{customer_name}\' Tags for this Tenant') % {:customer_name => @view_context.session[:customer_name]}
           end,
-          t,
-          :klass => ApplicationHelper::Button::RbacCommonFeatureButton),
+          t),
       ]
     ),
   ])

@@ -10,8 +10,7 @@ class ApplicationHelper::Toolbar::UsersCenter < ApplicationHelper::Toolbar::Basi
           :rbac_user_add,
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Add a new User'),
-          t,
-          :klass => ApplicationHelper::Button::RbacCommonFeatureButton),
+          t),
         button(
           :rbac_user_edit,
           'pficon pficon-edit fa-lg',
@@ -19,8 +18,7 @@ class ApplicationHelper::Toolbar::UsersCenter < ApplicationHelper::Toolbar::Basi
           N_('Edit the selected User'),
           :url_parms => "main_div",
           :enabled   => false,
-          :onwhen    => "1",
-          :klass     => ApplicationHelper::Button::RbacCommonFeatureButton),
+          :onwhen    => "1"),
         button(
           :rbac_user_copy,
           'fa fa-files-o fa-lg',
@@ -28,8 +26,7 @@ class ApplicationHelper::Toolbar::UsersCenter < ApplicationHelper::Toolbar::Basi
           N_('Copy the selected User to a new User'),
           :url_parms => "main_div",
           :enabled   => false,
-          :onwhen    => "1",
-          :klass     => ApplicationHelper::Button::RbacCommonFeatureButton),
+          :onwhen    => "1"),
         button(
           :rbac_user_delete,
           'pficon pficon-delete fa-lg',
@@ -38,8 +35,7 @@ class ApplicationHelper::Toolbar::UsersCenter < ApplicationHelper::Toolbar::Basi
           :url_parms => "main_div",
           :confirm   => N_("Delete all selected Users?"),
           :enabled   => false,
-          :onwhen    => "1+",
-          :klass     => ApplicationHelper::Button::RbacCommonFeatureButton),
+          :onwhen    => "1+"),
       ]
     ),
   ])
@@ -61,8 +57,7 @@ class ApplicationHelper::Toolbar::UsersCenter < ApplicationHelper::Toolbar::Basi
           t,
           :url_parms => "main_div",
           :enabled   => false,
-          :onwhen    => "1+",
-          :klass     => ApplicationHelper::Button::RbacCommonFeatureButton),
+          :onwhen    => "1+"),
       ]
     ),
   ])

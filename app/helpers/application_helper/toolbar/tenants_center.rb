@@ -23,8 +23,7 @@ class ApplicationHelper::Toolbar::TenantsCenter < ApplicationHelper::Toolbar::Ba
           :url_parms => "main_div",
           :confirm   => N_("Delete all selected items and all of their children?"),
           :enabled   => false,
-          :onwhen    => "1+",
-          :klass     => ApplicationHelper::Button::RbacCommonFeatureButton),
+          :onwhen    => "1+"),
         button(
           :rbac_tenant_manage_quotas,
           'pficon pficon-edit fa-lg',
@@ -32,8 +31,7 @@ class ApplicationHelper::Toolbar::TenantsCenter < ApplicationHelper::Toolbar::Ba
           N_('Manage Quotas for the Selected Item'),
           :url_parms => "main_div",
           :enabled   => false,
-          :onwhen    => "1",
-          :klass     => ApplicationHelper::Button::RbacCommonFeatureButton),
+          :onwhen    => "1"),
       ]
     ),
   ])
@@ -55,8 +53,7 @@ class ApplicationHelper::Toolbar::TenantsCenter < ApplicationHelper::Toolbar::Ba
           t,
           :url_parms => "main_div",
           :enabled   => false,
-          :onwhen    => "1+",
-          :klass     => ApplicationHelper::Button::RbacCommonFeatureButton),
+          :onwhen    => "1+"),
       ]
     ),
   ])

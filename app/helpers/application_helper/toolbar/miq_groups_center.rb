@@ -10,8 +10,7 @@ class ApplicationHelper::Toolbar::MiqGroupsCenter < ApplicationHelper::Toolbar::
           :rbac_group_add,
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Add a new Group'),
-          t,
-          :klass => ApplicationHelper::Button::RbacCommonFeatureButton),
+          t),
         button(
           :rbac_group_edit,
           'pficon pficon-edit fa-lg',
@@ -19,8 +18,7 @@ class ApplicationHelper::Toolbar::MiqGroupsCenter < ApplicationHelper::Toolbar::
           N_('Edit the selected Group'),
           :url_parms => "main_div",
           :enabled   => false,
-          :onwhen    => "1",
-          :klass     => ApplicationHelper::Button::RbacCommonFeatureButton),
+          :onwhen    => "1"),
         button(
           :rbac_group_delete,
           'pficon pficon-delete fa-lg',
@@ -29,15 +27,13 @@ class ApplicationHelper::Toolbar::MiqGroupsCenter < ApplicationHelper::Toolbar::
           :url_parms => "main_div",
           :confirm   => N_("Delete all selected Groups?"),
           :enabled   => false,
-          :onwhen    => "1+",
-          :klass     => ApplicationHelper::Button::RbacCommonFeatureButton),
+          :onwhen    => "1+"),
         separator,
         button(
           :rbac_group_seq_edit,
           'pficon pficon-edit fa-lg',
           t = N_('Edit Sequence of User Groups for LDAP Look Up'),
-          t,
-          :klass => ApplicationHelper::Button::RbacCommonFeatureButton),
+          t),
       ]
     ),
   ])
@@ -59,8 +55,7 @@ class ApplicationHelper::Toolbar::MiqGroupsCenter < ApplicationHelper::Toolbar::
           t,
           :url_parms => "main_div",
           :enabled   => false,
-          :onwhen    => "1+",
-          :klass     => ApplicationHelper::Button::RbacCommonFeatureButton),
+          :onwhen    => "1+"),
       ]
     ),
   ])

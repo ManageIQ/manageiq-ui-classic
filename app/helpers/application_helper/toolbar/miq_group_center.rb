@@ -10,16 +10,14 @@ class ApplicationHelper::Toolbar::MiqGroupCenter < ApplicationHelper::Toolbar::B
           :rbac_group_edit,
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Group'),
-          t,
-          :klass => ApplicationHelper::Button::RbacCommonFeatureButton),
+          t),
         button(
           :rbac_group_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Delete this Group'),
           t,
           :url_parms => "&refresh=y",
-          :confirm   => N_("Are you sure you want to delete this Group?"),
-          :klass     => ApplicationHelper::Button::RbacCommonFeatureButton),
+          :confirm   => N_("Are you sure you want to delete this Group?")),
       ]
     ),
   ])
@@ -36,8 +34,7 @@ class ApplicationHelper::Toolbar::MiqGroupCenter < ApplicationHelper::Toolbar::B
           t = proc do
             _('Edit \'%{customer_name}\' Tags for this Group') % {:customer_name => @view_context.session[:customer_name]}
           end,
-          t,
-          :klass => ApplicationHelper::Button::RbacCommonFeatureButton),
+          t),
       ]
     ),
   ])
