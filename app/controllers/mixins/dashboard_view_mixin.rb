@@ -4,7 +4,8 @@ module Mixins
       if @sb[:summary_mode].present?
         @sb[:summary_mode] == 'dashboard'
       else
-        (@settings.fetch_path(:views, :summary_mode) || "dashboard") == 'dashboard'
+        mode = (@settings || {}).fetch_path(:views, :summary_mode)
+        mode.nil? || mode == "dashboard"
       end
     end
 
