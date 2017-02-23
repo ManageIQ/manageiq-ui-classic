@@ -19,57 +19,57 @@
         = _('Basic Information')
       .form-horizontal.static
         .form-group
-          %label.col-md-2.control-label
+          %label.col-md-3.control-label
             = _('Name / Description')
-          .col-md-8
+          .col-md-9
             #{@record.name} / #{@record.description}
         .form-group
-          %label.col-md-2.control-label
+          %label.col-md-3.control-label
             = _('Display in Catalog')
-          .col-md-8
+          .col-md-9
             &nbsp;
             = check_box_tag("display", true, @record.display, :disabled => true)
         - if @record.display
           .form-group
-            %label.col-md-2.control-label
+            %label.col-md-3.control-label
               = _('Catalog')
-            .col-md-8
+            .col-md-9
               = h(@record.service_template_catalog ? @record.service_template_catalog.name : "<#{_('Unassigned')}>")
         - unless @record.prov_type == "generic_ansible_playbook"
           .form-group
-            %label.col-md-2.control-label
+            %label.col-md-3.control-label
               = _('Dialog')
-            .col-md-8
+            .col-md-9
               = h(@sb[:dialog_label])
         - if @record.prov_type
           .form-group
-            %label.col-md-2.control-label
+            %label.col-md-3.control-label
               = _('Item Type')
-            .col-md-8
+            .col-md-9
               = h(ServiceTemplate::CATALOG_ITEM_TYPES[@record.prov_type])
         - if @record.prov_type == "generic"
           .form-group
-            %label.col-md-2.control-label
+            %label.col-md-3.control-label
               = _('Subtype')
-            .col-md-8
+            .col-md-9
               = h(ServiceTemplate::GENERIC_ITEM_SUBTYPES[@record[:generic_subtype]])
         - if @record.prov_type == "generic_orchestration"
           .form-group
-            %label.col-md-2.control-label
+            %label.col-md-3.control-label
               = _('Orchestration Template')
-            .col-md-8
+            .col-md-9
               = h(@record.try(:orchestration_template).try(:name))
           - if @record.orchestration_manager
             .form-group
-              %label.col-md-2.control-label
+              %label.col-md-3.control-label
                 = _('Provider')
-              .col-md-8
+              .col-md-9
                 = h(@record.orchestration_manager.name)
         - elsif @record.prov_type == "generic_ansible_tower"
           .form-group
-            %label.col-md-2.control-label
+            %label.col-md-3.control-label
               = _('Ansible Tower Job Template')
-            .col-md-8
+            .col-md-9
               = h(@record.try(:job_template).try(:name))
         - entry_points = [[_("Provisioning"), :fqname]]
         - unless @record.prov_type.try(:start_with?, "generic_")
@@ -77,9 +77,9 @@
              [_("Retirement"),   :retire_fqname])
         - entry_points.each do |entry_points_op|
           .form-group
-            %label.col-md-2.control-label{:title => _("%{entry_point} Entry Point (NameSpace/Class/Instance)") % {:entry_point => entry_points_op[0]}}
+            %label.col-md-3.control-label{:title => _("%{entry_point} Entry Point (NameSpace/Class/Instance)") % {:entry_point => entry_points_op[0]}}
               #{entry_points_op[0]} #{_('Entry Point')}
-            .col-md-8
+            .col-md-9
               = h(@sb[entry_points_op[1]])
       %hr
       %h3
@@ -87,10 +87,10 @@
       .form-horizontal
         - if @record.picture
           .form-group
-            .col-md-8
+            .col-md-9
               = image_tag("#{@record.picture.url_path}?#{rand(99_999_999)}",
                           :style => "width:100px; height:100px;")
-            .col-md-8{:valign => "bottom"}
+            .col-md-9{:valign => "bottom"}
               = link_to(image_tag(image_path('toolbars/remove.png'),
                                   :class => "rollover small",
                                   :alt   => t = _("Remove this Custom Image")),
@@ -123,9 +123,9 @@
           = _('Basic Information')
         .form-horizontal.static
           .form-group
-            %label.col-md-2.control-label
+            %label.col-md-3.control-label
               = _('Long Description')
-            .col-md-8#long_description
+            .col-md-9#long_description
               %miq-sanitize{:value => @record.long_description}
 
     - if @record.composite?
@@ -198,59 +198,58 @@
         .col-md-12.col-lg-6
           .form-horizontal.static
             .form-group
-              %label.col-md-2.control-label
+              %label.col-md-3.control-label
                 = _('Repository')
-              .col-md-8
+              .col-md-9
                 = h(provisioning[:repository])
-          .form-horizontal.static
             .form-group
-              %label.col-md-2.control-label
+              %label.col-md-3.control-label
                 = _('Playbook')
-              .col-md-8
+              .col-md-9
                 = h(provisioning[:playbook])
-          .form-horizontal.static
             .form-group
-              %label.col-md-2.control-label
+              %label.col-md-3.control-label
                 = _('Machine Credential')
-              .col-md-8
+              .col-md-9
                 = h(provisioning[:machine_credential])
-          .form-horizontal.static
             .form-group
-              %label.col-md-2.control-label
+              %label.col-md-3.control-label
                 = _('Network Credential')
-              .col-md-8
+              .col-md-9
                 = h(provisioning[:network_credential])
-          .form-horizontal.static
             .form-group
-              %label.col-md-2.control-label
+              %label.col-md-3.control-label
                 = _('Cloud Credential')
-              .col-md-8
+              .col-md-9
                 = h(provisioning[:cloud_credential])
-          .form-horizontal.static
             .form-group
-              %label.col-md-2.control-label
+              %label.col-md-3.control-label
                 = _('Hosts')
-              .col-md-8
+              .col-md-9
                 = h(@record.config_info[:provision][:hosts])
         .col-md-12.col-lg-6
-          .form-group
-            %table.table.table-striped.table-hover.table-condensed.table-bordered
-              %tbody
-                %thead
-                  %tr
-                    %th{:colspan => "3", :align => "left"}
-                      = _("Variables and Default values")
-                      - @record.config_info[:provision][:extra_vars].each do |key, value|
-                        %tr
-                          %td
-                            = h(key)
-                          %td
-                            = h(value)
-          .form-horizontal.static
+          .form-horizontal
             .form-group
-              %label.col-md-2.control-label
+              %label.col-md-3.control-label
+                = _("Variables & Default Values")
+              .col-md-9
+                %table.table.table-bordered.table-striped   
+                  %thead
+                    %th
+                      = _("Variable")
+                    %th
+                      = _("Default value")
+                  %tbody
+                  - @record.config_info[:provision][:extra_vars].each do |key, value|
+                    %tr
+                      %td
+                        = h(key)
+                      %td
+                        = h(value)
+            .form-group
+              %label.col-md-3.control-label
                 = _('Dialog')
-              .col-md-8
+              .col-md-9
                 - if role_allows?(:feature => "dialog_accord", :any => true)
                   - params = {:controller => 'miq_ae_customization', :action => 'show', :id => "dg-#{to_cid(provisioning[:dialog_id])}"}
                   = link_to(provisioning[:dialog],
@@ -267,57 +266,60 @@
           .col-md-12.col-lg-6
             .form-horizontal.static
               .form-group
-                %label.col-md-2.control-label
+                %label.col-md-3.control-label
                   = _('Repository')
-                .col-md-8
+                .col-md-9
                   = h(retirement[:repository])
             .form-horizontal.static
               .form-group
-                %label.col-md-2.control-label
+                %label.col-md-3.control-label
                   = _('Playbook')
-                .col-md-8
+                .col-md-9
                   = h(retirement[:playbook])
             .form-horizontal.static
               .form-group
-                %label.col-md-2.control-label
+                %label.col-md-3.control-label
                   = _('Machine Credential')
-                .col-md-8
+                .col-md-9
                   = h(retirement[:machine_credential])
             .form-horizontal.static
               .form-group
-                %label.col-md-2.control-label
+                %label.col-md-3.control-label
                   = _('Network Credential')
-                .col-md-8
+                .col-md-9
                   = h(retirement[:network_credential])
             .form-horizontal.static
               .form-group
-                %label.col-md-2.control-label
+                %label.col-md-3.control-label
                   = _('Cloud Credential')
-                .col-md-8
+                .col-md-9
                   = h(retirement[:cloud_credential])
             .form-horizontal.static
               .form-group
-                %label.col-md-2.control-label
+                %label.col-md-3.control-label
                   = _('Hosts')
-                .col-md-8
+                .col-md-9
                   = h(@record.config_info[:retirement][:hosts])
           .col-md-12.col-lg-6
             .form-group
-              %table.table.table-striped.table-hover.table-condensed.table-bordered
-                %tbody
+              %label.col-md-3.control-label
+                = _("Variables & Default Values")
+              .col-md-9
+                %table.table.table-bordered
                   %thead
+                    %th
+                      = _("Variable")
+                    %th
+                      = _("Default value")
+                  %tbody
+                  - @record.config_info[:retirement][:extra_vars].each do |key, value|
                     %tr
-                      %th{:colspan => "3", :align => "left"}
-                        = _("Variables and Default values")
-                      - @record.config_info[:retirement][:extra_vars].each do |key, value|
-                        %tr
-                          %td = h(key)
-                          %td = h(value)
-            .form-horizontal.static
+                      %td = h(key)
+                      %td = h(value)
             .form-group
-              %label.col-md-2.control-label
+              %label.col-md-3.control-label
                 = _('Dialog')
-              .col-md-8
+              .col-md-9
                 - if role_allows?(:feature => "dialog_accord", :any => true)
                   - params = {:controller => 'miq_ae_customization', :action => 'show', :id => "dg-#{to_cid(retirement[:dialog_id])}"}
                   = link_to(retirement[:dialog],
