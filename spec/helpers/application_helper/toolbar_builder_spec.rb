@@ -166,53 +166,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     end
   end # get_image
 
-  describe "#disable_button" do
-    subject { toolbar_builder.disable_button(@id) }
-    before do
-      @gtl_type = 'list'
-      @settings = {
-        :views => {
-          :compare      => 'compressed',
-          :drift        => 'compressed',
-          :compare_mode => 'exists',
-          :drift_mode   => 'exists',
-          :treesize     => '32'
-        }
-      }
-    end
-
-    def setup_firefox_with_linux
-      allow(session).to receive(:fetch_path).with(:browser, :name).and_return('firefox')
-      allow(session).to receive(:fetch_path).with(:browser, :os).and_return('linux')
-    end
-
-    context "when record class = Vm" do
-      before { @record = Vm.new }
-
-      context "and id = vm_vnc_console" do
-        before :each do
-          @id = 'vm_vnc_console'
-          @record = FactoryGirl.create(:vm_vmware)
-        end
-
-        it "should not be available for vmware hosts with an api version greater or equal to 6.5" do
-          @ems = FactoryGirl.create(:ems_vmware, :api_version => '6.5')
-          allow(@record).to receive(:ems_id).and_return(@ems.id)
-          expect(subject).to include('VNC consoles are unsupported on VMware ESXi 6.5 and later.')
-        end
-
-        %w(5.1 5.5 6.0).each do |version|
-          it "should be available for vmware hosts with an api version #{version}" do
-            @ems = FactoryGirl.create(:ems_vmware, :api_version => version)
-            allow(@record).to receive(:ems_id).and_return(@ems.id)
-            expect(subject).to be(false)
-          end
-        end
-      end
-    end # end of Vm class
-
-  end # end of disable button
-
   describe "#get_record_cls" do
     subject { toolbar_builder.get_record_cls(record) }
     context "when record not exist" do
