@@ -1,31 +1,8 @@
 describe ApplicationHelper::Button::RefreshWorkers do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:miq_server) }
+  let(:view_context) { setup_view_context_with_sandbox(:active_tree => tree, :active_tab => tab) }
+  let(:button) { described_class.new(view_context, {}, {}, {}) }
 
-  describe '#visible?' do
-    context 'when x_active_tree == diagnostics_tree and active_tab != diagnostics_workers' do
-      it 'will be skipped' do
-        button = described_class.new(view_context, {}, {'record' => record}, {})
-        button.instance_variable_set(:@sb, :active_tab => 'does not matter')
-        allow(view_context).to receive(:x_active_tree).and_return(:diagnostics_tree)
-        expect(button.visible?).to be_falsey
-      end
-    end
-    context 'when x_active_tree != diagnostics_tree and active_tab == diagnostics_workers' do
-      it 'will be skipped' do
-        button = described_class.new(view_context, {}, {'record' => record}, {})
-        button.instance_variable_set(:@sb, :active_tab => 'diagnostics_workers')
-        allow(view_context).to receive(:x_active_tree).and_return(:does_not_matter)
-        expect(button.visible?).to be_falsey
-      end
-    end
-    context 'when x_active_tree == diagnostics_tree and active_tab == diagnostics_workers' do
-      it 'will not be skipped' do
-        button = described_class.new(view_context, {}, {'record' => record}, {})
-        button.instance_variable_set(:@sb, :active_tab => 'diagnostics_workers')
-        allow(view_context).to receive(:x_active_tree).and_return(:diagnostics_tree)
-        expect(button.visible?).to be_truthy
-      end
-    end
-  end
+  it_behaves_like 'a button with correct active context', :diagnostics_tree, 'diagnostics_workers'
+  it_behaves_like 'a button with incorrect active context', :not_diagnostics_tree, 'diagnostics_workers'
+  it_behaves_like 'a button with incorrect active context', :diagnostics_tree, 'not_diagnostics_workers'
 end
