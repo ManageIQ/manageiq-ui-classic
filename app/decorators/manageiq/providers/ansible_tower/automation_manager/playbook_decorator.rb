@@ -1,5 +1,5 @@
-module ManageIQ::Providers::AnsibleTower::AutomationManager
-  class PlaybookDecorator < MiqDecorator
+module ManageIQ::Providers::AnsibleTower
+  class AutomationManager::PlaybookDecorator < MiqDecorator
     def fonticon
       nil
     end

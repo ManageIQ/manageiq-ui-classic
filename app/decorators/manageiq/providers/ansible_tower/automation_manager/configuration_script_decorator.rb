@@ -1,5 +1,5 @@
-module ManageIQ::Providers::AnsibleTower::AutomationManager
-  class ConfigurationScriptDecorator < MiqDecorator
+module ManageIQ::Providers::AnsibleTower
+  class AutomationManager::ConfigurationScriptDecorator < MiqDecorator
     def fonticon
       'product product-template'
     end

@@ -1,5 +1,5 @@
-module ManageIQ::Providers::StorageManager
-  class CinderManagerDecorator < MiqDecorator
+module ManageIQ::Providers
+  class StorageManager::CinderManagerDecorator < MiqDecorator
     def listicon_image
       "svg/vendor-openstack.svg"
     end

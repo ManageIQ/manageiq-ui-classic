@@ -1,5 +1,5 @@
-module ManageIQ::Providers::CloudManager
-  class OrchestrationStackDecorator < MiqDecorator
+module ManageIQ::Providers
+  class CloudManager::OrchestrationStackDecorator < MiqDecorator
     def fonticon
       'product product-orchestration_stack'
     end
