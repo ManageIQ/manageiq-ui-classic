@@ -217,6 +217,7 @@ class ServiceController < ApplicationController
       end
     end
     x_history_add_item(:id => treenodeid, :text => @right_cell_text)
+    {:view => @view, :pages => @pages}
   end
 
   # set partial name and cell header for edit screens
