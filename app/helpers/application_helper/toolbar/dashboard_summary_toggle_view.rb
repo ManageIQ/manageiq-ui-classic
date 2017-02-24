@@ -6,7 +6,8 @@ class ApplicationHelper::Toolbar::DashboardSummaryToggleView < ApplicationHelper
       N_('Dashboard View'),
       nil,
       :url       => "/",
-      :url_parms => "?display=dashboard"),
+      :url_parms => "?display=dashboard",
+      :klass     => ApplicationHelper::Button::ViewDashboard),
     twostate(
       :view_summary,
       'fa fa-th-list',
