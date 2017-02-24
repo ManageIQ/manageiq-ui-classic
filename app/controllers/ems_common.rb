@@ -74,14 +74,14 @@ module EmsCommon
   class_methods do
     def display_methods
       %w(
-        instances images block_storage_managers object_storage_managers storage_managers miq_templates
-        vms orchestration_stacks configuration_jobs cloud_object_store_containers containers
-        container_replicators container_nodes container_groups container_services container_images
-        container_routes container_builds container_projects container_image_registries container_templates
-        availability_zones host_aggregates middleware_servers middleware_deployments middleware_datasources
-        middleware_domains middleware_server_groups middleware_messagings cloud_tenants cloud_volumes
-        cloud_volume_snapshots flavors security_groups floating_ips network_routers network_ports
-        cloud_subnets cloud_networks load_balancers storages ems_clusters persistent_volumes hosts
+        availability_zones block_storage_managers cloud_networks cloud_object_store_containers cloud_subnets
+        cloud_tenants cloud_volumes cloud_volume_snapshots configuration_jobs container_builds container_groups
+        container_image_registries container_images container_nodes container_projects container_replicators
+        container_routes containers container_services container_templates ems_clusters flavors floating_ips
+        host_aggregates hosts images instances load_balancers middleware_datasources middleware_deployments
+        middleware_domains middleware_messagings middleware_server_groups middleware_servers miq_templates
+        network_ports network_routers object_storage_managers orchestration_stacks persistent_volumes
+        security_groups storage_managers storages vms
       )
     end
   end
