@@ -397,13 +397,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       allow(session).to receive(:fetch_path).with(:browser, :os).and_return('linux')
     end
 
-    ['list', 'tile', 'grid'].each do |g|
-      it "when with view_#{g}" do
-        @gtl_type = g
-        expect(toolbar_builder.disable_button("view_#{g}")).to be_truthy
-      end
-    end
-
     it 'disables the add new iso datastore button when no EMSes are available' do
       expect(ManageIQ::Providers::Redhat::InfraManager)
         .to(receive(:any_without_iso_datastores?))
