@@ -175,7 +175,7 @@ class CloudVolumeController < ApplicationController
       vm = find_by_id_filtered(VmCloud, options[:vm_id])
       if @volume.is_available?(:attach_volume)
         begin
-          @volume.raw_attach_volume(vm.ems_ref, options['device_path'])
+          @volume.raw_attach_volume(vm.ems_ref, options[:device_path])
           add_flash(_("Attaching %{volume} \"%{volume_name}\" to %{vm_name}") % {
             :volume      => ui_lookup(:table => 'cloud_volume'),
             :volume_name => @volume.name,
