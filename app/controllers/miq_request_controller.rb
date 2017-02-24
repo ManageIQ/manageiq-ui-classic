@@ -1,4 +1,7 @@
 class MiqRequestController < ApplicationController
+
+  include Mixins::GenericSessionMixin
+
   before_action :check_privileges, :except => :post_install_callback
   before_action :get_session_data
   after_action :cleanup_action
