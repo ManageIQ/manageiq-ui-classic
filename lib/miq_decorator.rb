@@ -12,3 +12,15 @@ class MiqDecorator < SimpleDelegator
     end
   end
 end
+
+module MiqDecorator::Instance
+  def decorate
+    @_decorator ||= MiqDecorator.for(self.class).try(:new, self)
+  end
+end
+
+module MiqDecorator::Klass
+  def decorate
+    @_decorator ||= MiqDecorator.for(self)
+  end
+end
