@@ -4,6 +4,7 @@ class HostController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include GenericSessionMixin
   include Mixins::GenericListMixin
   include Mixins::MoreShowActions
 
