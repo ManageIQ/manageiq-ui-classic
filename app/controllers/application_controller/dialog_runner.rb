@@ -83,11 +83,7 @@ module ApplicationController::DialogRunner
     return unless load_edit("dialog_edit__#{params[:id]}", "replace_cell__explorer")
     dialog_get_form_vars
 
-    # Use JS to update the display
-    render :update do |page|
-      page << javascript_prologue
-      page << "miqSparkle(false);"
-    end
+    head :ok
   end
 
   # for non-explorer screen
