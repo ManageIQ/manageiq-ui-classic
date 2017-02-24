@@ -49,7 +49,7 @@ shared_examples :shared_examples_for_network_port_controller do |providers|
         end
 
         it "show associated floating ips" do
-          assert_nested_list(@network_port, [@floating_ip], 'floating_ips', 'All Floating Ips')
+          assert_nested_list(@network_port, [@floating_ip], 'floating_ips', 'All Floating IPs')
         end
       end
 
