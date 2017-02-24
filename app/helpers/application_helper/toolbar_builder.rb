@@ -407,7 +407,6 @@ class ApplicationHelper::ToolbarBuilder
   def disable_button(id)
     return true if @gtl_type && id.starts_with?("view_") && id.ends_with?(@gtl_type)  # GTL view buttons
     return true if id == "view_dashboard" && (@showtype == "dashboard")
-    return true if id == "view_summary" && (@showtype != "dashboard")
     if id == 'vm_vnc_console' && @record.vendor == 'vmware' &&
        ExtManagementSystem.find_by(:id => @record.ems_id).api_version.to_f >= 6.5
       return N_("VNC consoles are unsupported on VMware ESXi 6.5 and later.")
