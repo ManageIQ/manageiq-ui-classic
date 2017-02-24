@@ -227,8 +227,10 @@ class CatalogController < ApplicationController
       upload_sysprep_file
       set_form_locals_for_sysprep
     end
+    template_locals = {:locals => {:controller => "catalog"}}
+    template_locals[:locals].merge!(fetch_playbook_details) if TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplate" && !@view && @record.prov_type == "generic_ansible_playbook"
 
-    render :layout => "application", :action => "explorer"
+    render :layout => "application", :action => "explorer", :locals => template_locals
   end
 
   def set_form_locals_for_sysprep
@@ -1734,27 +1736,29 @@ class CatalogController < ApplicationController
                 @miq_request = MiqRequest.find_by_id(@record.service_resources[0].resource_id)
                 prov_set_show_vars
               end
-              @sb[:dialog_label]       = _("No Dialog")
-              @sb[:fqname]             = nil
-              @sb[:reconfigure_fqname] = nil
-              @sb[:retire_fqname]      = nil
-              @record.resource_actions.each do |ra|
-                d = Dialog.where(:id => ra.dialog_id).first
-                @sb[:dialog_label] = d.label if d
-                case ra.action.downcase
-                when 'provision'
-                  @sb[:fqname] = ra.fqname
-                when 'reconfigure'
-                  @sb[:reconfigure_fqname] = ra.fqname
-                when 'retirement'
-                  @sb[:retire_fqname] = ra.fqname
+              unless @record.prov_type == "generic_ansible_playbook"
+                @sb[:dialog_label]       = _("No Dialog")
+                @sb[:fqname]             = nil
+                @sb[:reconfigure_fqname] = nil
+                @sb[:retire_fqname]      = nil
+                @record.resource_actions.each do |ra|
+                  d = Dialog.where(:id => ra.dialog_id).first
+                  @sb[:dialog_label] = d.label if d
+                  case ra.action.downcase
+                  when 'provision'
+                    @sb[:fqname] = ra.fqname
+                  when 'reconfigure'
+                    @sb[:reconfigure_fqname] = ra.fqname
+                  when 'retirement'
+                    @sb[:retire_fqname] = ra.fqname
+                  end
                 end
-              end
-              # saving values of ServiceTemplate catalog id and resource that are needed in view to build the link
-              @sb[:stc_nodes] = {}
-              @record.service_resources.each do |r|
-                st = ServiceTemplate.find_by_id(r.resource_id)
-                @sb[:stc_nodes][r.resource_id] = st.service_template_catalog_id ? st.service_template_catalog_id : "Unassigned" unless st.nil?
+                # saving values of ServiceTemplate catalog id and resource that are needed in view to build the link
+                @sb[:stc_nodes] = {}
+                @record.service_resources.each do |r|
+                  st = ServiceTemplate.find_by(:id => r.resource_id)
+                  @sb[:stc_nodes][r.resource_id] = st.service_template_catalog_id ? st.service_template_catalog_id : "Unassigned" unless st.nil?
+                end
               end
               if params[:action] == "x_show"
                 prefix = @record.service_template_catalog_id ? "stc-#{to_cid(@record.service_template_catalog_id)}" : "-Unassigned"
@@ -1768,6 +1772,34 @@ class CatalogController < ApplicationController
       end
     end
     x_history_add_item(:id => treenodeid, :text => @right_cell_text)
+  end
+
+  def fetch_playbook_details
+    playbook_details = {}
+    provision = @record.config_info[:provision]
+    playbook_details[:provisioning] = {}
+    playbook_details[:provisioning][:repository] = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScriptSource.find(provision[:repository_id]).name
+    playbook_details[:provisioning][:playbook] = ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook.find(provision[:playbook_id]).name
+    playbook_details[:provisioning][:machine_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::MachineCredential.find(provision[:credential_id]).name
+    playbook_details[:provisioning][:network_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::NetworkCredential.find(provision[:network_credential_id]).name if provision[:network_credential_id]
+    playbook_details[:provisioning][:cloud_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::CloudCredential.find(provision[:cloud_credential_id]).name if provision[:cloud_credential_id]
+    dialog = provision[:dialog_id] ? Dialog.find(provision[:dialog_id]) : Dialog.find_by(:name => provision[:dialog_name])
+    playbook_details[:provisioning][:dialog] = dialog.name
+    playbook_details[:provisioning][:dialog_id] = dialog.id
+
+    if @record.config_info[:retirement]
+      retirement = @record.config_info[:retirement]
+      playbook_details[:retirement] = {}
+      playbook_details[:retirement][:repository] = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScriptSource.find(retirement[:repository_id]).name
+      playbook_details[:retirement][:playbook] = ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook.find(retirement[:playbook_id]).name
+      playbook_details[:retirement][:machine_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::MachineCredential.find(retirement[:credential_id]).name
+      playbook_details[:retirement][:network_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::NetworkCredential.find(retirement[:network_credential_id]).name if retirement[:network_credential_id]
+      playbook_details[:retirement][:cloud_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::CloudCredential.find(retirement[:cloud_credential_id]).name if retirement[:cloud_credential_id]
+      dialog = provision[:dialog_id] ? Dialog.find(retirement[:dialog_id]) : Dialog.find_by(:name => retirement[:dialog_name])
+      playbook_details[:retirement][:dialog] = dialog.name
+      playbook_details[:retirement][:dialog_id] = dialog.id
+    end
+    playbook_details
   end
 
   def open_parent_nodes(record)
@@ -1900,7 +1932,9 @@ class CatalogController < ApplicationController
         elsif @sb[:buttons_node]
           r[:partial => "shared/buttons/ab_list"]
         else
-          r[:partial => "catalog/#{x_active_tree}_show", :locals => {:controller => "catalog"}]
+          template_locals = {:controller => "catalog"}
+          template_locals.merge!(fetch_playbook_details) if TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplate" && @record.prov_type == "generic_ansible_playbook"
+          r[:partial => "catalog/#{x_active_tree}_show", :locals => template_locals]
         end
       elsif @sb[:buttons_node]
         r[:partial => "shared/buttons/ab_list"]
