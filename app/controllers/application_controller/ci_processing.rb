@@ -1114,66 +1114,6 @@ module ApplicationController::CiProcessing
     end
   end
 
-  def snia_local_file_systems
-    @db = params[:db] ? params[:db] : request.parameters[:controller]
-    session[:db] = @db unless @db.nil?
-    @db = session[:db] unless session[:db].nil?
-
-    @record = identify_record(params[:id])
-    return if record_no_longer_exists?(@record)
-
-    @view = session[:view]                  # Restore the view from the session to get column names for the display
-    @display = "snia_local_file_systems"
-    if !params[:show].nil?
-      @item = SniaLocalFileSystem.find_by_id(from_cid(params[:show]))
-      drop_breadcrumb(:name => @record.evm_display_name + " (" + ui_lookup(:tables => "snia_local_file_system") + ")", :url => "/#{@db}/snia_local_file_systems/#{@record.id}?page=#{@current_page}")
-      drop_breadcrumb(:name => @item.evm_display_name, :url => "/#{@db}/show/#{@record.id}?show=#{@item.id}")
-      show_item
-    else
-      drop_breadcrumb(:name => @record.evm_display_name + " (" + ui_lookup(:tables => "snia_local_file_system") + ")", :url => "/#{@db}/snia_local_file_systems/#{@record.id}")
-      # generate the grid/tile/list url to come back here when gtl buttons are pressed
-      @gtl_url = "/#{@db}/snia_local_file_systems/" + @record.id.to_s + "?"
-      @showtype = "details"
-
-      table_name = "snia_local_file_systems"
-      model_name = table_name.classify.constantize
-      drop_breadcrumb(:name => @record.evm_display_name + " (All #{ui_lookup(:tables => @display.singularize)})", :url => "/#{self.class.table_name}/show/#{@record.id}?display=#{@display}")
-      @view, @pages = get_view(model_name, :parent => @record, :parent_method => :local_file_systems)  # Get the records (into a view) and the paginator
-      render :action => 'show'
-    end
-  end
-
-  def cim_base_storage_extents
-    @db = params[:db] ? params[:db] : request.parameters[:controller]
-    session[:db] = @db unless @db.nil?
-    @db = session[:db] unless session[:db].nil?
-
-    @record = identify_record(params[:id])
-    return if record_no_longer_exists?(@record)
-
-    @view = session[:view]                  # Restore the view from the session to get column names for the display
-    @display = "cim_base_storage_extents"
-    if !params[:show].nil?
-      @item = CimBaseStorageExtent.find_by_id(from_cid(params[:show]))
-      drop_breadcrumb(:name => @record.evm_display_name + " (" + ui_lookup(:tables => "cim_base_storage_extent") + ")", :url => "/#{@db}/cim_base_storage_extents/#{@record.id}?page=#{@current_page}")
-      drop_breadcrumb(:name => @item.evm_display_name, :url => "/#{@db}/show/#{@record.id}?show=#{@item.id}")
-      show_item
-    else
-      drop_breadcrumb(:name => @record.evm_display_name + " (" + ui_lookup(:tables => "cim_base_storage_extent") + ")", :url => "/#{@db}/cim_base_storage_extents/#{@record.id}")
-      # generate the grid/tile/list url to come back here when gtl buttons are pressed
-      @gtl_url = "/#{@db}/cim_base_storage_extents/" + @record.id.to_s + "?"
-      @showtype = "details"
-
-      table_name = "cim_base_storage_extents"
-      model_name = table_name.classify.constantize
-      drop_breadcrumb(:name => _("%{name} (All %{tables})") % {:name   => @record.evm_display_name,
-                                                               :tables => ui_lookup(:tables => @display.singularize)},
-                      :url  => "/#{self.class.table_name}/show/#{@record.id}?display=#{@display}")
-      @view, @pages = get_view(model_name, :parent => @record, :parent_method => :base_storage_extents)  # Get the records (into a view) and the paginator
-      render :action => 'show'
-    end
-  end
-
   def get_record(db)
     if db == "host"
       @host = @record = identify_record(params[:id], Host)

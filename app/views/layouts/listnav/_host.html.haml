@@ -118,33 +118,6 @@
             :record_id     => @record.id,
             :title         => _("Show %{host} drift history") % {:host => host_title})
 
-    - if ::Settings.product.storage
-      = miq_accordion_panel(_("Storage Relationships"), false, "host_inf_rel") do
-        %ul.nav.nav-pills.nav-stacked
-          - if role_allows?(:feature => "ontap_storage_system_show_list")
-            = li_link(:count => @record.storage_systems_size,
-              :record_id     => @record.id,
-              :tables        => 'ontap_storage_system',
-              :display       => 'ontap_storage_systems')
-
-          - if role_allows?(:feature => "ontap_storage_volume_show_list")
-            = li_link(:count => @record.storage_volumes_size,
-              :record_id     => @record.id,
-              :tables        => 'ontap_storage_volume',
-              :display       => 'ontap_storage_volumes')
-
-          - if role_allows?(:feature => "ontap_logical_disk_show_list")
-            = li_link(:count => @record.logical_disks.count,
-              :record_id     => @record.id,
-              :tables        => 'ontap_logical_disk',
-              :display       => 'ontap_logical_disks')
-
-          - if role_allows?(:feature => "ontap_file_share_show_list")
-            = li_link(:count => @record.file_shares_size,
-              :record_id     => @record.id,
-              :tables        => 'ontap_file_share',
-              :display       => 'ontap_file_shares')
-
     = miq_accordion_panel(_("Security"), false, "host_sec") do
       %ul.nav.nav-pills.nav-stacked
         = li_link(:count => @record.number_of(:users),

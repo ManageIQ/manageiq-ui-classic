@@ -158,13 +158,14 @@ module UiConstants
   # Default UI settings
   DEFAULT_SETTINGS = {
     :quadicons => { # Show quad icons, by resource type
-      :service      => true,
-      :ems          => true,
-      :ems_cloud    => true,
-      :host         => true,
-      :miq_template => true,
-      :storage      => true,
-      :vm           => true
+      :service          => true,
+      :ems              => true,
+      :ems_cloud        => true,
+      :host             => true,
+      :miq_template     => true,
+      :storage          => true,
+      :vm               => true,
+      :physical_server  => true
     },
     :views     => { # List view setting, by resource type
       :authkeypaircloud                         => "list",
@@ -188,8 +189,6 @@ module UiConstants
       :persistentvolume                         => "list",
       :containerbuild                           => "list",
       :containertemplate                        => "list",
-      :cimbasestorageextent                     => "list",
-      :cimstorageextent                         => "list",
       :cloudobjectstorecontainer                => "list",
       :cloudobjectstoreobject                   => "list",
       :cloudtenant                              => "list",
@@ -230,10 +229,6 @@ module UiConstants
       :miqreportresult                          => "list",
       :miqrequest                               => "list",
       :miqtemplate                              => "list",
-      :ontapfileshare                           => "list",
-      :ontaplogicaldisk                         => "list",
-      :ontapstoragesystem                       => "list",
-      :ontapstoragevolume                       => "list",
       :orchestrationstack                       => "list",
       :orchestrationtemplate                    => "list",
       :servicetemplate                          => "list",
@@ -245,7 +240,6 @@ module UiConstants
       :resourcepool                             => "grid",
       :service                                  => "grid",
       :scanhistory                              => "list",
-      :snialocalfilesystem                      => "list",
       :storage_files                            => "list",
       :summary_mode                             => "dashboard",
       :registryitems                            => "list",

@@ -6,6 +6,6 @@ class ResourcePoolDecorator < Draper::Decorator
   end
 
   def listicon_image
-    "100/#{vapp ? 'vapp' : 'resource_pool'}.png"
+    vapp ? '100/vapp.png' : '100/resource_pool.png'
   end
 end
