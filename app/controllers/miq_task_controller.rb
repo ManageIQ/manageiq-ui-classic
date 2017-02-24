@@ -4,6 +4,8 @@ class MiqTaskController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericSessionMixin
+
   def index
     @tabform = nil
     @tabform ||= "tasks_1" if role_allows?(:feature => "job_my_smartproxy")
