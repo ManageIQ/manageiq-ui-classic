@@ -389,7 +389,7 @@ module ApplicationController::CiProcessing
       if @record.supports_resize?
         begin
           old_flavor = @record.flavor
-          @record.resize(flavor)
+          @record.resize_queue(session[:userid], flavor)
           add_flash(_("Reconfiguring %{instance} \"%{name}\" from %{old_flavor} to %{new_flavor}") % {
             :instance   => ui_lookup(:table => 'vm_cloud'),
             :name       => @record.name,
@@ -614,7 +614,8 @@ module ApplicationController::CiProcessing
         on_shared_storage = params[:on_shared_storage] == 'on'
         admin_password = on_shared_storage ? nil : params[:admin_password]
         begin
-          @record.evacuate(
+          @record.evacuate_queue(
+            session[:userid],
             :hostname          => hostname,
             :on_shared_storage => on_shared_storage,
             :admin_password    => admin_password
@@ -730,7 +731,7 @@ module ApplicationController::CiProcessing
       if @record.supports_associate_floating_ip?
         floating_ip = params[:floating_ip]
         begin
-          @record.associate_floating_ip(floating_ip)
+          @record.associate_floating_ip_queue(session[:userid], floating_ip)
           add_flash(_("Associating Floating IP %{address} with Instance \"%{name}\"") % {
             :address => floating_ip,
             :name    => @record.name})
@@ -824,7 +825,7 @@ module ApplicationController::CiProcessing
       if @record.supports_disassociate_floating_ip?
         floating_ip = params[:floating_ip]
         begin
-          @record.disassociate_floating_ip(floating_ip)
+          @record.disassociate_floating_ip_queue(session[:userid], floating_ip)
           add_flash(_("Disassociating Floating IP %{address} from Instance \"%{name}\"") % {
             :address => floating_ip,
             :name    => @record.name})
