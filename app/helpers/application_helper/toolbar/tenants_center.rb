@@ -13,8 +13,7 @@ class ApplicationHelper::Toolbar::TenantsCenter < ApplicationHelper::Toolbar::Ba
           N_('Edit the selected item'),
           :url_parms => "main_div",
           :enabled   => false,
-          :onwhen    => "1",
-          :klass     => ApplicationHelper::Button::TenantEdit),
+          :onwhen    => "1"),
         button(
           :rbac_tenant_delete,
           'pficon pficon-delete fa-lg',

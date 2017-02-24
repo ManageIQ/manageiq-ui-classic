@@ -1,5 +1,7 @@
 class ApplicationHelper::Button::TenantEdit < ApplicationHelper::Button::Basic
+  needs :@record
+
   def disabled?
-    @record.try!(:source)
+    @record.source
   end
 end
