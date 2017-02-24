@@ -150,7 +150,7 @@ describe EmsInfraController do
 
     it "when patch operation fails, an error message should be displayed" do
       allow_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
-        .to receive(:raw_update_stack) { raise _("my error") }
+        .to receive(:update_stack_queue) { raise _("my error") }
       post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @ems.orchestration_stacks.first.id,
            @orchestration_stack_parameter_compute.name => 2 }
       expect(controller.send(:flash_errors?)).to be_truthy
@@ -219,7 +219,7 @@ describe EmsInfraController do
 
     it "when patch operation fails, an error message should be displayed" do
       allow_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
-        .to receive(:raw_update_stack) { raise _("my error") }
+        .to receive(:update_stack_queue) { raise _("my error") }
       post :scaledown, :params => {:id => @ems.id, :scaledown => "",
            :orchestration_stack_id => @ems.orchestration_stacks.first.id, :host_ids => [@ems.hosts[1].id]}
       expect(controller.send(:flash_errors?)).to be_truthy
