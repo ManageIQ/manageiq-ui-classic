@@ -13,7 +13,8 @@ class ApplicationHelper::Toolbar::DashboardSummaryToggleView < ApplicationHelper
       N_('Summary View'),
       nil,
       :url       => "/",
-      :url_parms => "?display=main"
+      :url_parms => "?display=main",
+      :klass     => ApplicationHelper::Button::ViewSummary
     ),
     twostate(
       :view_topology,
