@@ -7,21 +7,21 @@ module EmsPhysicalInfraHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(hostname ipaddress type port cpu_resources memory_resources cpus cpu_cores guid)
+      %i(hostname ipaddress type port guid)
     )
   end
 
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(physical_infrastructure_folders folders clusters hosts datastores vms templates orchestration_stacks ems_cloud)
+      %i(physical_servers datastores vms)
     )
   end
 
   def textual_group_status
     TextualGroup.new(
       _("Status"),
-      textual_authentications(@record.authentication_userid_passwords) + %i(refresh_status orchestration_stacks_status)
+      textual_authentications(@record.authentication_userid_passwords) + %i(refresh_status)
     )
   end
 
@@ -30,9 +30,7 @@ module EmsPhysicalInfraHelper::TextualSummary
   end
 
   def textual_group_topology
-    items = %w(topology)
-    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
-    TextualGroup.new(_("Overview"), i)
+    TextualGroup.new(_("Overview"), %i(topology))
   end
 
   #
@@ -55,93 +53,17 @@ module EmsPhysicalInfraHelper::TextualSummary
     @record.supports_port? ? {:label => _("API Port"), :value => @record.port} : nil
   end
 
-  def textual_cpu_resources
-    {:label => _("Aggregate %{title} CPU Resources") % {:title => title_for_host},
-     :value => mhz_to_human_size(@record.aggregate_cpu_speed)}
-  end
-
-  def textual_memory_resources
-    {:label => _("Aggregate %{title} Memory") % {:title => title_for_host},
-     :value => number_to_human_size(@record.aggregate_memory * 1.megabyte, :precision => 0)}
-  end
-
-  def textual_cpus
-    {:label => _("Aggregate %{title} CPUs") % {:title => title_for_host}, :value => @record.aggregate_physical_cpus}
-  end
-
-  def textual_cpu_cores
-    {:label => _("Aggregate %{title} CPU Cores") % {:title => title_for_host},
-     :value => @record.aggregate_cpu_total_cores}
+  def textual_physical_servers
+    available = @record.number_of(:physical_servers) > 0
+    h = {:label =>  _("Physical Servers"), :icon  =>  "pficon pficon-server", :value => @ems.number_of(:physical_servers)}
+    if available
+      h[:link] = "/ems_physical_infra/#{@ems.id}?display=physical_servers"
+    end
+    h
   end
 
   def textual_guid
     {:label => _("Management Engine GUID"), :value => @record.guid}
-  end
-
-  def textual_physical_infrastructure_folders
-    label     = "#{title_for_hosts} & #{title_for_clusters}"
-    available = @record.number_of(:ems_folders) > 0 && @record.ems_folder_root
-    h         = {:label => label, :icon => "pficon pficon-virtual-machine", :value => available ? _("Available") : _("N/A")}
-    if available
-      h[:link]  = ems_physical_infra_path(@record.id, :display => 'ems_folders')
-      h[:title] = _("Show %{label}") % {:label => label}
-    end
-    h
-  end
-
-  def textual_folders
-    label     = _("VMs & Templates")
-    available = @record.number_of(:ems_folders) > 0 && @record.ems_folder_root
-    h         = {:label => label, :icon => "pficon pficon-virtual-machine", :value => available ? _("Available") : _("N/A")}
-    if available
-      h[:link]  = ems_physical_infra_path(@record.id, :display => 'ems_folders', :vat => true)
-      h[:title] = _("Show Virtual Machines & Templates")
-    end
-    h
-  end
-
-  def textual_clusters
-    label = title_for_clusters
-    num   = @record.number_of(:ems_clusters)
-    h     = {:label => label, :icon => "pficon pficon-cluster", :value => num}
-    if num > 0 && role_allows?(:feature => "ems_cluster_show_list")
-      h[:link] = ems_physical_infra_path(@record.id, :display => 'ems_clusters', :vat => true)
-      h[:title] = _("Show all %{label}") % {:label => label}
-    end
-    h
-  end
-
-  def textual_hosts
-    label = title_for_hosts
-    num   = @record.number_of(:hosts)
-    h     = {:label => label, :icon => "pficon pficon-screen", :value => num}
-    if num > 0 && role_allows?(:feature => "host_show_list")
-      h[:link]  = ems_physical_infra_path(@record.id, :display => 'hosts')
-      h[:title] = _("Show all %{label}") % {:label => label}
-    end
-    h
-  end
-
-  def textual_used_tenants
-    return nil if !@record.respond_to?(:cloud_tenants) || !@record.cloud_tenants
-
-    textual_link(@record.cloud_tenants,
-                 :as   => CloudTenant,
-                 :link => ems_physical_infra_path(@record.id, :display => 'cloud_tenants'))
-  end
-
-  def textual_used_availability_zones
-    return nil if !@record.respond_to?(:availability_zones) || !@record.availability_zones
-
-    textual_link(@record.availability_zones,
-                 :as   => AvailabilityZone,
-                 :link => ems_physical_infra_path(@record.id, :display => 'availability_zones'))
-  end
-
-  def textual_ems_cloud
-    return nil unless @record.provider.respond_to?(:cloud_ems)
-
-    textual_link(@record.provider.try(:cloud_ems).first)
   end
 
   def textual_datastores
@@ -156,25 +78,6 @@ module EmsPhysicalInfraHelper::TextualSummary
     return nil if @record.kind_of?(ManageIQ::Providers::PhysicalInfraManager)
 
     textual_link(@record.vms, :label => _("Virtual Machines"))
-  end
-
-  def textual_templates
-    textual_link(@record.miq_templates, :label => _("Templates"))
-  end
-
-  def textual_orchestration_stacks_status
-    return nil if !@record.respond_to?(:orchestration_stacks) || !@record.orchestration_stacks
-
-    label         = _("States of Root Orchestration Stacks")
-    stacks_states = @record.direct_orchestration_stacks.collect { |x| "#{x.name} status: #{x.status}" }.join(", ")
-
-    {:label => label, :value => stacks_states}
-  end
-
-  def textual_orchestration_stacks
-    return nil unless @record.respond_to?(:orchestration_stacks)
-
-    @record.orchestration_stacks
   end
 
   def textual_zone
