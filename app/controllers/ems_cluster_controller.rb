@@ -6,6 +6,7 @@ class EmsClusterController < ApplicationController
 
   include Mixins::GenericListMixin
   include Mixins::MoreShowActions
+  include GenericSessionMixin
 
   def drift_history
     @display = "drift_history"
@@ -207,7 +208,7 @@ class EmsClusterController < ApplicationController
     end
 
     return label, condition, breadcrumb_suffix
-  end
+  nd
 
   def breadcrumb_name(_model)
     title_for_clusters
