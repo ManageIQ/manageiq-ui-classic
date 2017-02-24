@@ -21,7 +21,7 @@ class ApplicationHelper::Toolbar::MiqScheduleCenter < ApplicationHelper::Toolbar
         separator,
         button(
           :schedule_run_now,
-          'collect',
+          'fa fa-play-circle-o fa-lg',
           t = N_('Queue up this Schedule to run now'),
           t,
           :klass => ApplicationHelper::Button::ScheduleRunNow),
