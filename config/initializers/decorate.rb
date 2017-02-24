@@ -1,3 +1,4 @@
+# extending all model instances and classes to have a `decorate` method
 class ApplicationRecord < ActiveRecord::Base
   class << self
     def decorate
