@@ -550,7 +550,7 @@ module QuadiconHelper
   def render_non_listicon_single_quadicon(item, options)
     output = []
 
-    img_path = if item.respond_to?(:decorator_class?) && item.decorator_class?
+    img_path = if item.decorate
                  item.decorate.try(:listicon_image)
                else
                  "100/#{item.class.base_class.to_s.underscore}.png"

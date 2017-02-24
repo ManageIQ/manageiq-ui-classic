@@ -1,6 +1,4 @@
-class ConfigurationProfileDecorator < Draper::Decorator
-  delegate_all
-
+class ConfigurationProfileDecorator < MiqDecorator
   def fonticon
     nil
   end

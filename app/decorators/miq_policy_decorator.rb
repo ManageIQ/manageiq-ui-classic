@@ -1,6 +1,4 @@
-class MiqPolicyDecorator < Draper::Decorator
-  delegate_all
-
+class MiqPolicyDecorator < MiqDecorator
   def fonticon
     icon = case towhat
            when 'Host'

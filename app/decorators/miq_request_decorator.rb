@@ -1,6 +1,4 @@
-class MiqRequestDecorator < Draper::Decorator
-  delegate_all
-
+class MiqRequestDecorator < MiqDecorator
   def fonticon
     case request_status.to_s.downcase
     when "ok"

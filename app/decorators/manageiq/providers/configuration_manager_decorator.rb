@@ -1,7 +1,5 @@
 module ManageIQ::Providers
-  class ConfigurationManagerDecorator < Draper::Decorator
-    delegate_all
-
+  class ConfigurationManagerDecorator < MiqDecorator
     def fonticon
       nil
     end

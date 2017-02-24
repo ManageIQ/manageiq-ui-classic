@@ -1,6 +1,4 @@
-class ConfigurationScriptSourceDecorator < Draper::Decorator
-  delegate_all
-
+class ConfigurationScriptSourceDecorator < MiqDecorator
   def fonticon
     "pficon pficon-repository"
   end

@@ -1,8 +1,6 @@
-class MiddlewareServerGroupDecorator < Draper::Decorator
-  delegate_all
-
+class MiddlewareServerGroupDecorator < MiqDecorator
   def fonticon
-    'pficon-server-group'.freeze
+    'pficon-server-group'
   end
 
   def listicon_image

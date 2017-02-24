@@ -1,6 +1,4 @@
-class MiqActionDecorator < Draper::Decorator
-  delegate_all
-
+class MiqActionDecorator < MiqDecorator
   def fonticon
     case action_type
     when 'assign_scan_profile'
