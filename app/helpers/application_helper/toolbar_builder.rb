@@ -366,12 +366,6 @@ class ApplicationHelper::ToolbarBuilder
 
   # Determine if a button should be hidden
   def hide_button?(id)
-    # Check buttons with other restriction logic
-    case id
-    when "miq_task_canceljob"
-      return true unless ["all_tasks", "all_ui_tasks"].include?(@layout)
-    end
-
     false  # No reason to hide, allow the button to show
   end
 
