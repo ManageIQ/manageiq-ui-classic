@@ -10,6 +10,7 @@ class ReportController < ApplicationController
 
   helper ApplicationHelper::ImportExportHelper
   include ReportHelper
+  include GenericSessionMixin
 
   before_action :check_privileges
   before_action :get_session_data
