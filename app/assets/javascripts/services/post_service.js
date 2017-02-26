@@ -6,18 +6,25 @@ ManageIQ.angular.app.service('postService', ["miqService", "$timeout", "$window"
       angular.toJson({
         action: "edit",
         resource: updateObject
-      })).then(handleSuccess, handleFailure);
+      })).then(function(response) {
+        if (response.error) {
+          handleFailure(response);
+        } else {
+          handleSuccess;
+        }
+      });
 
-    function handleSuccess(response) {
+    function handleSuccess() {
       $timeout(function () {
         $window.location.href = redirectURL + '&flash_msg=' + successMsg;
       });
     }
 
     function handleFailure(response) {
-      var msg = sprintf(__("Error during Save: [%s - %s]"), response.status, response.responseText);
-      $timeout(function () {
-        $window.location.href = redirectURL + '&flash_msg=' + msg + '&flash_error=true';
+      var msg = sprintf(__('Error during Save: [%s - %s]'), response.error.klass, response.error.message);
+      $timeout(function() {
+        miqService.sparkleOff();
+        miqService.miqFlash('error', __(msg));
       });
     }
   };
@@ -28,18 +35,25 @@ ManageIQ.angular.app.service('postService', ["miqService", "$timeout", "$window"
       angular.toJson({
         action: "create",
         resource: createObject
-      })).then(handleSuccess, handleFailure);
+      })).then(function(response) {
+        if (response.error) {
+          handleFailure(response);
+        } else {
+          handleSuccess;
+        }
+      });
 
-    function handleSuccess(response) {
+    function handleSuccess() {
       $timeout(function () {
         $window.location.href = redirectURL + '&flash_msg=' + successMsg;
       });
     }
 
     function handleFailure(response) {
-      var msg = sprintf(__("Error during Add: [%s - %s]"), response.status, response.responseText);
-      $timeout(function () {
-        $window.location.href = redirectURL + '&flash_msg=' + msg + '&flash_error=true';
+      var msg = sprintf(__('Error during Add: [%s - %s]'), response.error.klass, response.error.message);
+      $timeout(function() {
+        miqService.sparkleOff();
+        miqService.miqFlash('error', __(msg));
       });
     }
   };
