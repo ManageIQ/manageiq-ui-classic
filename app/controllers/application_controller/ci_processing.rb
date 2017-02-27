@@ -1826,6 +1826,7 @@ module ApplicationController::CiProcessing
     task = pressed.sub("#{klass.name.underscore.to_sym}_", "")
 
     return tag(klass) if task == "tag"
+    return javascript_redirect(:controller => klass.name.underscore.to_sym, :action => "new") if task == "new"
 
     cloud_object_store_button_operation(klass, task)
   end

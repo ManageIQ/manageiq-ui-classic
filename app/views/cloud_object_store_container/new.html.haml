@@ -1,0 +1,50 @@
+%form#form_div{:name => "angularForm", 'ng-controller' => "cloudObjectStoreContainerFormController", "ng-cloak" => ""}
+  = render :partial => "layouts/flash_msg"
+  %h3
+    = _('Basic Information')
+  .form-horizontal
+    .form-group{"ng-class" => "{'has-error': angularForm.storage_manager_id.$invalid}"}
+      %label.col-md-2.control-label
+        = _('Storage Manager')
+      .col-md-8
+        = select_tag("storage_manager_id",
+          options_for_select([["<#{_('Choose')}>", nil]] + @storage_manager_choices.sort, disabled: ["<#{_('Choose')}>", nil]),
+                      "ng-model"                    => "cloudContainerModel.storage_manager_id",
+                      "ng-change"                   => "storageManagerChanged(cloudContainerModel.storage_manager_id)",
+                      "required"                    => "",
+                      :checkchange                  => true,
+                      "selectpicker-for-select-tag" => "")
+
+    .form-group
+      %label.col-md-2.control-label
+        = _('Container Name')
+      .col-md-8
+        %input.form-control{:type          => "text",
+                            :name          => "name",
+                            'ng-model'     => "cloudContainerModel.name",
+                            'ng-maxlength' => 255,
+                            :miqrequired   => true,
+                            :checkchange   => true}
+  %div{"ng-if" => "cloudContainerModel.emstype == 'ManageIQ::Providers::Amazon::StorageManager::S3'"}
+    %h3
+      = _('Placement')
+    .form-horizontal
+      .form-group{"ng-class"  => "{'has-error': angularForm.provider_region.$invalid}",
+                  "ng-if"     => "#{@provider_regions.keys.to_json}.includes(cloudContainerModel.parent_emstype)",
+                  "ng-switch" => "",
+                  "on"        => "cloudContainerModel.parent_emstype"}
+        %label.col-md-2.control-label{"for" => "ems_region"}
+          = _('Region')
+        .col-md-8
+          - @provider_regions.each do |name, regions|
+            = select_tag('provider_region',
+                         options_for_select([["<#{_('Choose')}>", nil]] + regions, disabled: ["<#{_('Choose')}>", nil]),
+                         "ng-model"                    => "cloudContainerModel.provider_region",
+                         "ng-switch-when"              => name,
+                         "required"                    => "",
+                         "checkchange"                 => "",
+                         "selectpicker-for-select-tag" => "")
+  = render :partial => "layouts/angular/x_edit_buttons_angular"
+
+:javascript
+  miq_bootstrap('#form_div');
