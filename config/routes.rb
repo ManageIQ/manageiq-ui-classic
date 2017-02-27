@@ -1934,6 +1934,17 @@ Rails.application.routes.draw do
       )
     },
 
+    :ansible_credential => {
+      :get => %w(
+        download_data
+        download_summary_pdf
+        show
+        show_list
+      ),
+      :post => %w(
+        show_list)
+    },
+
     :ansible_playbook => {
       :get => %w(
         download_data
