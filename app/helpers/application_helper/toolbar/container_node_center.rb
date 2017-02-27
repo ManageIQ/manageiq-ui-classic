@@ -53,6 +53,15 @@ class ApplicationHelper::Toolbar::ContainerNodeCenter < ApplicationHelper::Toolb
   ])
   button_group('vm_access', [
     button(
+      :ems_container_launch_external_logging_support,
+      'product product-monitoring fa-lg',
+      N_('Open a new browser window with the External Logging Logging Presentation UI. ' \
+         'This requires the External Logging logging to be deployed on this Proider.'),
+      N_('External Logging'),
+      :klass => ApplicationHelper::Button::EmsContainerLaunchExternalLoggingSupport,
+      :url   => "launch_external_logging_support"
+    ),
+    button(
       :cockpit_console,
       'pficon pficon-screen fa-lg',
       N_('Open a new browser window with Cockpit for this VM.  This requires that Cockpit is pre-configured on the VM.'),

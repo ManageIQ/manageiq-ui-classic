@@ -5,6 +5,15 @@ class ApplicationHelper::Toolbar::EmsContainerCenter < ApplicationHelper::Toolba
       'fa fa-repeat fa-lg',
       N_('Reload Current Display'),
       nil),
+    button(
+      :ems_container_launch_external_logging_support,
+      'product product-monitoring fa-lg',
+      N_('Open a new browser window with the External Logging Logging Presentation UI. ' \
+         'This requires the External Logging logging to be deployed on this Proider.'),
+      N_('External Logging'),
+      :klass => ApplicationHelper::Button::EmsContainerLaunchExternalLoggingSupport,
+      :url   => "launch_external_logging_support"
+    ),
     select(
       :ems_container_vmdb_choice,
       'fa fa-cog fa-lg',
