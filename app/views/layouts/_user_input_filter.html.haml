@@ -18,7 +18,7 @@
                 - if part.kind_of?(Array) && part.first == :user_input
                   - token = part.last
                   - if @edit[:qs_tokens][token].key?(:field)
-                    - if @edit[:qs_tokens][token][:value_type] == :boolean
+                    - if @edit[:qs_tokens][token][:value_type] == :boolean && @edit[:qs_tokens][token][:value].present?
                       = select_tag("value_#{token}",
                                    options_for_select(["<Choose>"] + MiqExpression.get_entry_details(@edit[:qs_tokens][token][:tag]).sort_by { |desc, _name| desc.downcase },
                                                        nil),
@@ -32,7 +32,8 @@
                                        :maxlength         => 500,
                                        :onkeyup           => "miqQsEnterEscape(event);",
                                        "data-miq_observe" => {:interval => '.5',
-                                                              :url      => url}.to_json)
+                                                              :url      => url}.to_json,
+                                       :placeholder => ("true/false" if @edit[:qs_tokens][token][:value_type] == :boolean))
                       - if @edit[:qs_tokens][token][:value_type] == :percent
                         = "%"
                       - elsif @edit[:qs_tokens][token][:value_type] == :megabytes
