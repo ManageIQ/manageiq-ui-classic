@@ -1933,7 +1933,7 @@ class CatalogController < ApplicationController
         presenter.hide(:toolbar).show(:paging_div)
         # incase it was hidden for summary screen, and incase there were no records on show_list
         presenter.hide(:pc_div_1)
-        ansible_playbook? ? presenter.hide(:form_buttons_div) : presenter.show(:form_buttons_div)
+        action == 'at_st_new' && ansible_playbook? ? presenter.hide(:form_buttons_div) : presenter.show(:form_buttons_div)
         locals = {:record_id => @edit[:rec_id]}
         case action
         when 'group_edit'
