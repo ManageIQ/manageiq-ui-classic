@@ -1,7 +1,5 @@
-- url = url_for_only_path(:action => 'form_method_field_changed', :id => "#{@ae_method.id || 'new'}")
-- url_one_trans = url_for_only_path(:action => 'form_method_field_changed',
-  :id                             => "#{@ae_method.id || 'new'}",
-  :transOne                       => '1')
+- url = url_for_only_path(:action => 'form_method_field_changed', :id => (@ae_method.id || 'new'))
+- url_one_trans = url_for_only_path(:action => 'form_method_field_changed', :id => (@ae_method.id || 'new'), :transOne => '1')
 #form_div
   - if @edit[:new][:location] == "inline"
     = text_area_tag("#{field_name}_data",

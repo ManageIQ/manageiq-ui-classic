@@ -1,5 +1,5 @@
 - action = @edit[:new][:service_type] == "composite" ? "st_form_field_changed" : "atomic_form_field_changed"
-- url_one_trans = url_for_only_path(:action => action, :id => "#{@edit[:rec_id] || "new"}", :transOne => '1')
+- url_one_trans = url_for_only_path(:action => action, :id => (@edit[:rec_id] || "new"), :transOne => '1')
 
 %h3= _('Long Description')
 = text_area_tag("long_description", @edit[:new][:long_description],

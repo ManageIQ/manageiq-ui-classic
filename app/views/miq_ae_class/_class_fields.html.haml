@@ -43,7 +43,7 @@
                  :locals  => {:message => _("No schema found")}
 
     - else
-      - url = url_for_only_path(:action => 'fields_form_field_changed', :id => "#{@ae_class.id || 'new'}")
+      - url = url_for_only_path(:action => 'fields_form_field_changed', :id => (@ae_class.id || 'new'))
       - obs = {:interval => '.5', :url => url}.to_json
       / Edit Schema
       #form_div

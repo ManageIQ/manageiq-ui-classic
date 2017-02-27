@@ -1,7 +1,7 @@
 - box_title ||= _("E-mail")
 - action_url ||= "form_field_changed"
 - if @edit
-  - url = url_for_only_path(:action => action_url, :id => "#{record.id || "new"}")
+  - url = url_for_only_path(:action => action_url, :id => (record.id || "new"))
 #edit_email_div
   %h3
     = box_title

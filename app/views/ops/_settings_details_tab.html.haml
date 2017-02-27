@@ -3,7 +3,7 @@
     = render :partial => "layouts/flash_msg"
     - region = MiqRegion.my_region
     - if @edit
-      - url = url_for_only_path(:action => 'region_form_field_changed', :id => "#{region.id || "new"}")
+      - url = url_for_only_path(:action => 'region_form_field_changed', :id => (region.id || "new"))
       %h3
         = _("Region Information")
       .form-horizontal

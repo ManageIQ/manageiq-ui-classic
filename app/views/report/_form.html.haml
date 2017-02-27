@@ -1,4 +1,4 @@
-- url = url_for_only_path(:action => 'form_field_changed', :id => "#{@edit[:rpt_id] || 'new'}")
+- url = url_for_only_path(:action => 'form_field_changed', :id => (@edit[:rpt_id] || 'new'))
 #form_div
   = render :partial => '/layouts/tabs'
   = render :partial => "layouts/flash_msg"

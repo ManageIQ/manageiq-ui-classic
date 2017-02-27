@@ -1,5 +1,5 @@
 - if @sb[:active_tab] == "settings_advanced"
-  - url = url_for_only_path(:action => 'settings_form_field_changed', :id => "#{@sb[:active_tab].split('_').last}")
+  - url = url_for_only_path(:action => 'settings_form_field_changed', :id => @sb[:active_tab].split('_').last)
   = render :partial => "layouts/flash_msg"
   #form_div
     .alert.alert-danger

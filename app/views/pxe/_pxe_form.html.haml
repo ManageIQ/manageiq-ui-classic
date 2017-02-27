@@ -1,4 +1,4 @@
-- url = url_for_only_path(:action => 'pxe_server_form_field_changed', :id => "#{@ps.id || "new"}")
+- url = url_for_only_path(:action => 'pxe_server_form_field_changed', :id => (@ps.id || "new"))
 #form_div
   = render :partial => "layouts/flash_msg"
   %h3

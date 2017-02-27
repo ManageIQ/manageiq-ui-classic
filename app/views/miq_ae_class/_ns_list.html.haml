@@ -40,7 +40,7 @@
       });
 
   - else
-    - url = url_for_only_path(:action => 'form_ns_field_changed', :id => "#{@ae_ns.id || 'new'}")
+    - url = url_for_only_path(:action => 'form_ns_field_changed', :id => (@ae_ns.id || 'new'))
     = render :partial => "layouts/flash_msg"
     #form_ns_div
       %h3

@@ -4,8 +4,7 @@
 - pfx ||= ""
 
 - if @edit
-  - url = url_for_only_path(:action => 'rbac_user_field_changed',
-                  :id     => "#{@edit[:user_id] || "new"}")
+  - url = url_for_only_path(:action => 'rbac_user_field_changed', :id => (@edit[:user_id] || "new"))
 - observe_url_json = {:interval => '.5', :url => url}.to_json
 = render :partial => "layouts/flash_msg"
 - disabled = @edit && @edit[:new][:userid] == "admin"

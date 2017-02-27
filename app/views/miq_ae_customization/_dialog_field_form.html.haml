@@ -1,4 +1,4 @@
-- url = url_for_only_path(:action => 'dialog_form_field_changed', :id => "#{@record.id || 'new'}")
+- url = url_for_only_path(:action => 'dialog_form_field_changed', :id => (@record.id || 'new'))
 #dialog_field_div
   %h3
     = _('Element Information')

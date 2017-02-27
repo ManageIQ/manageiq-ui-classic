@@ -1,5 +1,5 @@
 - if x_active_tree == :settings_tree
-  - url = url_for_only_path(:action => 'ap_form_field_changed', :id => "#{@scan.id || "new"}")
+  - url = url_for_only_path(:action => 'ap_form_field_changed', :id => (@scan.id || "new"))
   #ap_form_div
     .form-horizontal
       = render :partial => "layouts/flash_msg"

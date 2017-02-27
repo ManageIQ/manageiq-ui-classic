@@ -1,4 +1,4 @@
-- url = url_for_only_path(:action => 'form_field_changed', :id => "#{@sm.id || "new"}")
+- url = url_for_only_path(:action => 'form_field_changed', :id => (@sm.id || "new"))
 - validate_url ||= %w(new create).include?(controller.action_name) ? "create" : "update"
 - change_stored_password ||= _("Change stored password")
 - cancel_password_change ||= _("Cancel password change")

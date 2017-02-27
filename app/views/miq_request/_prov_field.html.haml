@@ -1,4 +1,4 @@
-- url = url_for_only_path(:action => 'prov_field_changed', :id => "#{@edit[:req_id] || 'new'}") if @edit
+- url = url_for_only_path(:action => 'prov_field_changed', :id => (@edit[:req_id] || 'new')) if @edit
 -# wf          The workflow object currently in use
 -# dialog      Dialog name (symbol)
 -# field       Field name (symbol)

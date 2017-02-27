@@ -1,6 +1,5 @@
 - if @edit
-  - url = url_for_only_path(:action => 'rbac_role_field_changed',
-                  :id     => "#{@edit[:role_id] || "new"}")
+  - url = url_for_only_path(:action => 'rbac_role_field_changed', :id => (@edit[:role_id] || "new"))
 = render :partial => "layouts/flash_msg"
 #main_div
   .row

@@ -1,5 +1,5 @@
 - if @edit
-  - url = url_for_only_path(:action => 'alert_profile_field_changed', :id => "#{@alert_profile.id || 'new'}")
+  - url = url_for_only_path(:action => 'alert_profile_field_changed', :id => (@alert_profile.id || 'new'))
   - observe_with_interval = {:interval => '.5', :url => url}.to_json
 #alert_profile_details_div
   - if @assign

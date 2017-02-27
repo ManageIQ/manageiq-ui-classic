@@ -3,7 +3,7 @@
     = _('Management Event')
   .form-horizontal
     - if @edit
-      - url = url_for_only_path(:action => 'alert_field_changed', :id => "#{@alert.id || 'new'}")
+      - url = url_for_only_path(:action => 'alert_field_changed', :id => (@alert.id || 'new'))
       .form-group
         %label.control-label.col-md-2
           = _('Send a Management Event')
@@ -14,7 +14,7 @@
             "data-miq_observe_checkbox" => {:url => url}.to_json)
       - if @edit[:new][:send_event]
         .form-group
-          %label.control-label.col-md-2 
+          %label.control-label.col-md-2
             = _('Event Name')
           .col-md-8
             = text_field_tag("event_name", @edit[:new][:event_name],
