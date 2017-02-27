@@ -93,6 +93,13 @@ class AutomationManagerController < ApplicationController
     generic_x_show
   end
 
+  def identify_record(id, klass = self.class.model)
+    type, _id = parse_nodetype_and_id(x_node)
+    klass = TreeBuilder.get_model_for_prefix(type).constantize if type
+    record = super(id, klass)
+    record
+  end
+
   def tree_record
     @record =
       case x_active_tree
