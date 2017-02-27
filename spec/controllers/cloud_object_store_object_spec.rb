@@ -1,4 +1,13 @@
 describe CloudObjectStoreObjectController do
+  before do
+    EvmSpecHelper.create_guid_miq_server_zone
+    allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(true)
+  end
+
+  let :object do
+    FactoryGirl.create(:cloud_object_store_object)
+  end
+
   context "#tags_edit" do
     let!(:user) { stub_user(:features => :all) }
     before(:each) do
@@ -45,6 +54,66 @@ describe CloudObjectStoreObjectController do
       post :tagging_edit, :button => "save", :format => :js, :id => @object.id
       expect(assigns(:flash_array).first[:message]).to include("Tag edits were successfully saved")
       expect(assigns(:edit)).to be_nil
+    end
+  end
+
+  context "delete object store object" do
+    before do
+      login_as FactoryGirl.create(:user, :features => "everything")
+      request.parameters["controller"] = "cloud_object_store_object"
+      allow(controller).to receive(:role_allows?).and_return(true)
+    end
+
+    it "delete invokes process_cloud_object_storage_buttons" do
+      expect(controller).to receive(:process_cloud_object_storage_buttons)
+      post :button, :params => {
+        :pressed => "cloud_object_store_object_delete", :format => :js, :id => object.id
+      }
+    end
+
+    it "delete triggers delete" do
+      expect(controller).to receive(:cloud_object_store_button_operation).with(
+        CloudObjectStoreObject,
+        'delete'
+      )
+      post :button, :params => {
+        :pressed => "cloud_object_store_object_delete", :format => :js, :id => object.id
+      }
+    end
+
+    it "delete redirects to show_list" do
+      expect(controller).to receive(:javascript_redirect).with(
+        :action      => 'show_list',
+        :flash_msg   => anything,
+        :flash_error => false
+      )
+      post :button, :params => {
+        :pressed => "cloud_object_store_object_delete", :format => :js, :id => object.id
+      }
+    end
+
+    it "delete shows expected flash" do
+      post :button, :params => {
+        :pressed => "cloud_object_store_object_delete", :format => :js, :id => object.id
+      }
+
+      expect(assigns(:flash_array).first[:message]).to include(
+        "Delete initiated for 1 Cloud Object Store Object from the ManageIQ Database"
+      )
+      expect(response.status).to eq(200)
+    end
+
+    it "delete shows expected flash (non-existing object)" do
+      object.destroy
+
+      post :button, :params => {
+        :pressed => "cloud_object_store_object_delete", :format => :js, :id => object.id
+      }
+
+      expect(assigns(:flash_array).first[:message]).to include(
+        "Cloud Object Store Object no longer exists"
+      )
+      expect(response.status).to eq(200)
     end
   end
 

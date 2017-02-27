@@ -1858,7 +1858,7 @@ module ApplicationController::CiProcessing
     items = []
 
     # Either a list or coming from a different controller
-    if @lastaction == "show_list" || !%w(cloud_object_store_container).include?(request.parameters["controller"])
+    if @lastaction == "show_list" || %w(cloud_object_store_containers cloud_object_store_objects).include?(@display)
       items = find_checked_items
       if items.empty?
         add_flash(_("No %{model} were selected for %{task}") %
@@ -1892,9 +1892,11 @@ module ApplicationController::CiProcessing
     when "service"
       return Service
     when "cloud_object_store_container"
-      CloudObjectStoreContainer
+      params[:pressed].starts_with?("cloud_object_store_object") ? CloudObjectStoreObject : CloudObjectStoreContainer
+    when "cloud_object_store_object"
+      CloudObjectStoreObject
     when "ems_storage"
-      CloudObjectStoreContainer
+      params[:pressed].starts_with?("cloud_object_store_object") ? CloudObjectStoreObject : CloudObjectStoreContainer
     else
       return VmOrTemplate
     end
@@ -1914,6 +1916,9 @@ module ApplicationController::CiProcessing
     when "CloudObjectStoreContainer"
       objs, _objs_out_reg = filter_ids_in_region(objs, "CloudObjectStoreContainer")
       klass = CloudObjectStoreContainer
+    when "CloudObjectStoreObject"
+      objs, _objs_out_reg = filter_ids_in_region(objs, "CloudObjectStoreObject")
+      klass = CloudObjectStoreObject
     end
 
     assert_rbac(current_user, get_rec_cls, objs)

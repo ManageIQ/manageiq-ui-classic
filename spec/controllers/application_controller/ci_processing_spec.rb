@@ -36,6 +36,7 @@ describe ApplicationController do
       before do
         controller.params[:pressed] = "cloud_object_store_container_delete"
         request.parameters["controller"] = "ems_storage"
+        controller.instance_variable_set(:@display, "cloud_object_store_containers")
       end
 
       it "get_rec_cls" do
@@ -167,6 +168,165 @@ describe ApplicationController do
         controller.params[:id] = container.id
         allow_any_instance_of(CloudObjectStoreContainer).to receive(:supports?).and_return(false)
         controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
+        expect(assigns(:flash_array).first[:message]).to include(
+          "Delete does not apply to this item"
+        )
+      end
+    end
+  end
+
+  context "Delete object store object" do
+    before do
+      allow(controller).to receive(:assert_rbac).and_return(nil)
+      allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(true)
+    end
+
+    let :object1 do
+      FactoryGirl.create(:cloud_object_store_object)
+    end
+
+    let :object2 do
+      FactoryGirl.create(:cloud_object_store_object)
+    end
+
+    context "from list view" do
+      before do
+        controller.params[:pressed] = "cloud_object_store_object_delete"
+        request.parameters["controller"] = "cloud_object_store_container"
+        controller.instance_variable_set(:@display, "cloud_object_store_objects")
+      end
+
+      it "get_rec_cls" do
+        expect(controller.send(:get_rec_cls)).to eq(CloudObjectStoreObject)
+      end
+
+      it "invokes cloud_object_store_button_operation" do
+        expect(controller).to receive(:cloud_object_store_button_operation).with(
+          CloudObjectStoreObject,
+          "delete"
+        )
+        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+      end
+
+      it "invokes process_objects" do
+        controller.params[:miq_grid_checks] = "#{object1.id}, #{object2.id}"
+        expect(controller).to receive(:process_objects).with(
+          [object1.id, object2.id],
+          "delete_cloud_object_store_object",
+          "Delete"
+        )
+        controller.send(:cloud_object_store_button_operation, CloudObjectStoreObject, "delete")
+      end
+
+      it "invokes process_tasks on container class" do
+        controller.params[:miq_grid_checks] = "#{object1.id}, #{object2.id}"
+        expect(CloudObjectStoreObject).to receive(:process_tasks).with(
+          :ids    => [object1.id, object2.id],
+          :task   => "delete_cloud_object_store_object",
+          :userid => anything
+        )
+        controller.send(:process_objects, [object1.id, object2.id], "delete_cloud_object_store_object", "delete")
+      end
+
+      it "invokes process_tasks overall (when selected)" do
+        controller.params[:miq_grid_checks] = "#{object1.id}, #{object2.id}"
+        expect(CloudObjectStoreObject).to receive(:process_tasks).with(
+          :ids    => [object1.id, object2.id],
+          :task   => "delete_cloud_object_store_object",
+          :userid => anything
+        )
+        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+      end
+
+      it "does not invoke process_tasks overall when nothing selected" do
+        controller.params[:miq_grid_checks] = ""
+        expect(CloudObjectStoreObject).not_to receive(:process_tasks)
+        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+      end
+
+      it "flash - nothing selected" do
+        controller.params[:miq_grid_checks] = ""
+        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+        expect(assigns(:flash_array).first[:message]).to include(
+          "No Cloud Object Store Objects were selected for Delete"
+        )
+      end
+
+      it "flash - task not supported" do
+        controller.params[:miq_grid_checks] = "#{object1.id}, #{object2.id}"
+        allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(false)
+        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+        expect(assigns(:flash_array).first[:message]).to include(
+          "Delete does not apply to at least one of the selected items"
+        )
+      end
+    end
+
+    context "from details view" do
+      before do
+        allow(controller).to receive(:show_list).and_return(nil)
+        controller.params[:pressed] = "cloud_object_store_object_delete"
+        request.parameters["controller"] = "cloud_object_store_object"
+      end
+
+      let :object do
+        FactoryGirl.create(:cloud_object_store_object)
+      end
+
+      it "get_rec_cls" do
+        expect(controller.send(:get_rec_cls)).to eq(CloudObjectStoreObject)
+      end
+
+      it "invokes cloud_object_store_button_operation" do
+        expect(controller).to receive(:cloud_object_store_button_operation).with(
+          CloudObjectStoreObject,
+          "delete"
+        )
+        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+      end
+
+      it "invokes process_objects" do
+        controller.params[:id] = object.id.to_s
+        expect(controller).to receive(:process_objects).with(
+          [object.id.to_s],
+          "delete_cloud_object_store_object",
+          "Delete"
+        )
+        controller.send(:cloud_object_store_button_operation, CloudObjectStoreObject, "delete")
+      end
+
+      it "invokes process_tasks on object class" do
+        controller.params[:id] = object.id.to_s
+        expect(CloudObjectStoreObject).to receive(:process_tasks).with(
+          :ids    => [object.id.to_s],
+          :task   => "delete_cloud_object_store_object",
+          :userid => anything
+        )
+        controller.send(:process_objects, [object.id.to_s], "delete_cloud_object_store_object", "delete")
+      end
+
+      it "invokes process_tasks overall" do
+        controller.params[:id] = object.id.to_s
+        expect(CloudObjectStoreObject).to receive(:process_tasks).with(
+          :ids    => [object.id.to_s],
+          :task   => "delete_cloud_object_store_object",
+          :userid => anything
+        )
+        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+      end
+
+      it "flash - container no longer exists" do
+        object.destroy
+        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
+        expect(assigns(:flash_array).first[:message]).to include(
+          "Cloud Object Store Object no longer exists"
+        )
+      end
+
+      it "flash - task not supported" do
+        controller.params[:id] = object.id.to_s
+        allow_any_instance_of(CloudObjectStoreObject).to receive(:supports?).and_return(false)
+        controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
         expect(assigns(:flash_array).first[:message]).to include(
           "Delete does not apply to this item"
         )
