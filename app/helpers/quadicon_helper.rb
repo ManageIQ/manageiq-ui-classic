@@ -176,7 +176,7 @@ module QuadiconHelper
 
   def img_for_health_state(item)
     case item.healthState
-    when "Normal"   then "100/healthstate-normal.png"
+    when "Valid"   then "100/healthstate-normal.png"
     when "Critical" then "svg/healthstate-critical.svg"
     when "None"     then "svg/healthstate-unknown.svg"
     when "Warning"  then "100/warning.png"
@@ -511,26 +511,24 @@ module QuadiconHelper
  # Renders a quadicon for hosts
   #
   def render_physical_server_quadicon(item, options)
-    size = options[:size]
-    width = options[:size] == 150 ? 54 : 35
     output = []
     if settings(:quadicons, :physical_server)
-      output << flobj_img_simple(size, "#{size}/base.png")
+      output << flobj_img_simple( "layout/base.png")
 
-      output << flobj_p_simple("a#{size}", (item.host ? 1 : 0 )) #item.host&.size)
-      output << flobj_img_simple(size, "72/currentstate-#{h(item.powerState.downcase)}.png", "b#{size}")
-      output << flobj_img_simple(size, img_for_physical_vendor(item), "c#{size}")
-      output << flobj_img_simple(size, img_for_health_state(item), "d#{size}")
-      output << flobj_img_simple(size, '100/shield.png', "g#{size}") unless item.get_policies.empty?
+      output << flobj_p_simple("a72", (item.host ? 1 : 0 )) #item.host&.size)
+      output << flobj_img_simple("svg/currentstate-#{h(item.powerState.downcase)}.svg", "b72")
+      output << flobj_img_simple( img_for_physical_vendor(item), "c72")
+      output << flobj_img_simple( img_for_health_state(item), "d72")
+      output << flobj_img_simple( '100/shield.png', "g72") unless item.get_policies.empty?
     else
       output << flobj_img_simple(size)
-      output << flobj_img_simple(width * 1.8, img_for_host_vendor(item), "e#{size}")
+      output << flobj_img_simple(width * 1.8, img_for_host_vendor(item), "e72")
     end
 
     if options[:typ] == :listnav
       # Listnav, no href needed
       output << content_tag(:div, :class => 'flobj') do
-        tag(:img, :src => ActionController::Base.helpers.image_path("#{options[:size]}/reflection.png"), :border => 0)
+        tag(:img, :src => ActionController::Base.helpers.image_path("layout/reflection.png"), :border => 0)
       end
     else
       href = if quadicon_show_links?
@@ -541,7 +539,7 @@ module QuadiconHelper
         title = _("Name: %{name} ") % {:name => h(item.name)}
 
         link_to(href, :title => title) do
-          quadicon_reflection_img(:size => size)
+          quadicon_reflection_img
         end
       end
     end
@@ -554,17 +552,17 @@ module QuadiconHelper
     output = []
 
     if settings(:quadicons, db_for_quadicon)
-      output << flobj_img_simple(size, "#{size}/base.png")
+      output << flobj_img_simple("layout/base.png")
       item_count = case item
         when EmsPhysicalInfra then item.physical_servers.size
         when EmsCloud  then item.total_vms
         else item.hosts.size
       end
-      output << flobj_p_simple("a#{size}",item_count)
-      output << flobj_p_simple("b#{size}", item.total_miq_templates) if item.kind_of?(EmsCloud)
-      output << flobj_img_simple(size, "svg/vendor-#{h(item.image_name)}.svg", "c#{size}")
-      output << flobj_img_simple(size, img_for_auth_status(item), "d#{size}")
-      output << flobj_img_simple(size, '100/shield.png', "g#{size}") unless item.get_policies.empty?
+      output << flobj_p_simple("a72",item_count)
+      output << flobj_p_simple("b72", item.total_miq_templates) if item.kind_of?(EmsCloud)
+      output << flobj_img_simple( "svg/vendor-#{h(item.image_name)}.svg", "c72")
+      output << flobj_img_simple( img_for_auth_status(item), "d72")
+      output << flobj_img_simple( '100/shield.png', "g72") unless item.get_policies.empty?
     else
       output << flobj_img_simple("layout/base-single.png")
       output << flobj_img_small("svg/vendor-#{h(item.image_name)}.svg", "e72")
