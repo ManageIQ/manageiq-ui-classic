@@ -50,7 +50,7 @@ module Mixins
         polymorphic_path(record, options)
       else
         opts = options.merge(
-          :controller => self.class.table_name,
+          :controller => controller_name,
           :id         => record.id,
           :action     => :show,
           :only_path  => true,
