@@ -408,12 +408,6 @@ class ApplicationHelper::ToolbarBuilder
       return N_("VNC consoles are unsupported on VMware ESXi 6.5 and later.")
     end
 
-    # need to add this here, since this button is on list view screen
-    if disable_new_iso_datastore?(id)
-      return N_("No %{providers} are available to create an ISO Datastore on") %
-        {:providers => ui_lookup(:tables => "ext_management_system")}
-    end
-
     case get_record_cls(@record)
     when "MiqGroup"
       case id
