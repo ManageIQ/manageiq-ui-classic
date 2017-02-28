@@ -1,6 +1,6 @@
 class ResourcePoolDecorator < MiqDecorator
   def fonticon
-    "pficon pficon-resource-pool"
+    'pficon pficon-resource-pool'
   end
 
   def listicon_image

@@ -1,5 +1,5 @@
 module TreeNode
   class Container < Node
-    set_attribute(:icon, 'fa fa-cube')
+    set_attribute(:icon) { @object.decorate.fonticon }
   end
 end

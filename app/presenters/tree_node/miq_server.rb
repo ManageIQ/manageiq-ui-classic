@@ -1,6 +1,6 @@
 module TreeNode
   class MiqServer < Node
-    set_attribute(:icon, 'pficon pficon-server')
+    set_attribute(:icon) { @object.decorate.fonticon }
     set_attribute(:expand, true)
 
     set_attributes(:title, :tooltip) do

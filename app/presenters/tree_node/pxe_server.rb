@@ -1,5 +1,5 @@
 module TreeNode
   class PxeServer < Node
-    set_attribute(:icon, 'pficon pficon-server')
+    set_attribute(:icon) { @object.decorate.fonticon }
   end
 end

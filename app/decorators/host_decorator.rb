@@ -1,6 +1,6 @@
 class HostDecorator < MiqDecorator
   def fonticon
-    nil
+    'pficon pficon-screen'
   end
 
   def listicon_image

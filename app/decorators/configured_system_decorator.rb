@@ -1,6 +1,6 @@
 class ConfiguredSystemDecorator < MiqDecorator
   def fonticon
-    nil
+    'product product-configured_system'
   end
 
   def listicon_image

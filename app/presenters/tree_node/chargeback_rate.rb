@@ -1,6 +1,6 @@
 module TreeNode
   class ChargebackRate < Node
     set_attribute(:title, &:description)
-    set_attribute(:icon, 'fa fa-file-text-o')
+    set_attribute(:icon) { @object.decorate.fonticon }
   end
 end

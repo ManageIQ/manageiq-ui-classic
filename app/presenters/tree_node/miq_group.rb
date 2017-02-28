@@ -1,5 +1,5 @@
 module TreeNode
   class MiqGroup < Node
-    set_attribute(:icon, 'product product-group')
+    set_attribute(:icon) { @object.decorate.fonticon }
   end
 end

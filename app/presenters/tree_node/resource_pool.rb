@@ -1,5 +1,5 @@
 module TreeNode
   class ResourcePool < Node
-    set_attribute(:icon) { "pficon pficon-resource-pool" }
+    set_attribute(:icon) { @object.decorate.fonticon }
   end
 end

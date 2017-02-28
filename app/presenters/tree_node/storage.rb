@@ -1,5 +1,5 @@
 module TreeNode
   class Storage < Node
-    set_attribute(:icon, 'fa fa-database')
+    set_attribute(:icon) { @object.decorate.fonticon }
   end
 end

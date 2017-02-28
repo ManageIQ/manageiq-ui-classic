@@ -1,5 +1,5 @@
 module TreeNode
   class ScanItemSet < Node
-    set_attribute(:icon, 'fa fa-search')
+    set_attribute(:icon) { @object.decorate.fonticon }
   end
 end

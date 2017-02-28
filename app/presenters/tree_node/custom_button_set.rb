@@ -8,9 +8,7 @@ module TreeNode
       end
     end
 
-    set_attribute(:icon) do
-      @object.set_data && @object.set_data[:button_image] ? "product product-custom-#{@object.set_data[:button_image]}" : 'pficon pficon-folder-close'
-    end
+    set_attribute(:icon) { @object.decorate.fonticon }
 
     set_attribute(:tooltip) do
       if @object.description

@@ -4,7 +4,7 @@ module TreeNode
       if @object.picture
         image = @object.decorate.listicon_image
       else
-        icon = 'product product-service'
+        icon = @object.decorate.fonticon
       end
       [image, icon]
     end

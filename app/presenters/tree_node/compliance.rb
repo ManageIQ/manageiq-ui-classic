@@ -7,6 +7,6 @@ module TreeNode
       end
     end
 
-    set_attribute(:icon) { "pficon #{@object.compliant ? 'pficon-ok' : 'pficon-error-circle-o'}" }
+    set_attribute(:icon) { @object.decorate.fonticon }
   end
 end
