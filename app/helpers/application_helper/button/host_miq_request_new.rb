@@ -1,4 +1,4 @@
-class ApplicationHelper::Button::HostMiqRequestNew < ApplicationHelper::Button::Basic
+class ApplicationHelper::Button::HostMiqRequestNew < ApplicationHelper::Button::ButtonNewDiscover
   needs :@record
 
   def disabled?
