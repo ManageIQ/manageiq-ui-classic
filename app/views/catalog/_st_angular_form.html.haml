@@ -47,7 +47,7 @@
                             "switch-off-text" => "No",
                             "checkchange" => ""}
 
-    .form-group{"ng-class" => "{'has-error': vm.catalogItemModel.display && angularForm.catalog_id.$invalid}"}
+    .form-group
       %label.col-md-2.control-label{"for" => "catalog_id"}
         = _('Catalog')
       .col-md-8
@@ -58,9 +58,7 @@
                 "data-live-search" => "true",
                 'pf-select'        => true}
           %option{"value" => ""}
-            = "<#{_('Choose')}>"
-        %span.help-block{"ng-show" => "catalogItemModel.display"}
-          = _("Required")
+            = "<#{_('Unassigned')}>"
 
   = render :partial => "layouts/angular/multi_tab_ansible_form_options",
            :locals  => {:record => @record, :ng_model => "vm.catalogItemModel"}
