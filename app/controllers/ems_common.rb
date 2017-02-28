@@ -84,32 +84,16 @@ module EmsCommon
         security_groups storage_managers storages vms
       )
     end
-  end
 
-  def show
-    return unless init_show
-    session[:vm_summary_cool] = (settings(:views, :vm_summary_cool).to_s == "summary")
-    @summary_view = session[:vm_summary_cool]
-    @ems = @record
-
-    case @display
-    when 'dashboard'      then show_dashboard
-    when 'main'           then show_main
-    when 'summary_only'   then show_download
-    when 'props'          then show_props
-    when 'ems_folders'    then show_ems_folders
-    when 'timeline'       then show_timeline
-    when 'ad_hoc_metrics' then show_ad_hoc_metrics
-    when 'topology'       then show_topology
-    when 'performance'    then show_performance
-    when *self.class.display_methods
-      display_nested_list(@display)
+    def custom_display_modes
+      %w(props ems_folders ad_hoc_metrics topology)
     end
 
-    replace_gtl_main_div if pagination_request?
-
-    render :template => "shared/views/ems_common/show" if params[:action] == 'show' && !performed?
+    def default_show_template
+      "shared/views/ems_common/show"
+    end
   end
+
 
   def new
     @doc_url = provider_documentation_url
