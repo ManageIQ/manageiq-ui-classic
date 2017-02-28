@@ -148,22 +148,18 @@
   ReportDataController.prototype.onItemClicked = function(item, event) {
     event.stopPropagation();
     event.preventDefault();
-    var prefix;
-    if (this.initObject.isExplorer) {
-      var url;
+    var prefix = this.initObject.showUrl;
+    var splitUrl = this.initObject.showUrl.split('/');
+    if (this.initObject.isExplorer && splitUrl && splitUrl[1] === ManageIQ.controller) {
+      var itemId = item.id;
       if (this.initObject.showUrl.indexOf('?id=') !== -1 ){
         var itemId = this.initObject.showUrl.indexOf('xx-') !== -1 ? '_-' + item.id : '-' + item.id;
-        url = this.initObject.showUrl + itemId;
-      } else {
-        prefix = '/' + ManageIQ.controller;
-        url = prefix + '/x_show/' + item.id
       }
-      $.post(url)
-        .always(function() {
-          this.setExtraClasses();
-        }.bind(this));
+      url = prefix + itemId;
+      $.post(url).always(function() {
+        this.setExtraClasses();
+      }.bind(this));
     } else {
-      prefix = this.initObject.showUrl;
       this.$window.DoNav(prefix + '/' + item.id);
     }
     return false;
@@ -191,10 +187,9 @@
   };
 
   ReportDataController.prototype.initObjects = function(initObject) {
-    initObject.gtlType = initObject.gtlType || 'grid';
     this.gtlData = { cols: [], rows: [] };
     this.initObject = initObject;
-    this.gtlType = initObject.gtlType;
+    this.gtlType = initObject.gtlType || 'grid';
     this.settings.isLoading = true;
     ManageIQ.gridChecks = [];
     this.$window.sendDataWithRx({setCount: 0});
@@ -257,7 +252,7 @@
     this.settings.scrollElement = MAIN_CONTETN_ID;
     this.settings.dropDownClass = ['dropup'];
     this.settings.translateTotalOf = function(start, end, total) {
-      if (start && end && total) {
+      if (start !== undefined && end !== undefined && total !== undefined ) {
         return sprintf(__('%d - %d of %d'), start + 1, end + 1, total);
       }
       return start + ' - ' + end + ' of ' + total;
