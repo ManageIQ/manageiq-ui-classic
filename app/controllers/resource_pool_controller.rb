@@ -6,6 +6,12 @@ class ResourcePoolController < ApplicationController
 
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
+  include Mixins::GenericButtonMixin
+
+  BUTTONS_PRESS_MAP = {
+    "resource_pool_delete"  => :delete_resource_pools,
+    "resource_pool_protect" => :assign_policies
+  }
 
   def show
     @display = params[:display] || "main" unless pagination_or_gtl_request?
@@ -68,54 +74,15 @@ class ResourcePoolController < ApplicationController
     replace_gtl_main_div if pagination_request?
   end
 
-  # handle buttons pressed on the button bar
-  def button
-    @edit = session[:edit]                                  # Restore @edit for adv search box
-    params[:display] = @display if ["all_vms", "vms", "resource_pools"].include?(@display)  # Were we displaying sub-items
-    if ["all_vms", "vms", "resource_pools"].include?(@display)                  # Need to check, since RPs contain RPs
+  def specific_buttons(pressed)
+    method = BUTTONS_PRESS_MAP[pressed]
+    send(method) if method
+    return false if method == :delete_resource_pools
+    return method
+  end
 
-      if params[:pressed].starts_with?("vm_", # Handle buttons from sub-items screen
-                                       "miq_template_",
-                                       "guest_")
-
-        pfx = pfx_for_vm_button_pressed(params[:pressed])
-        process_vm_buttons(pfx)
-
-        return if ["#{pfx}_policy_sim", "#{pfx}_compare", "#{pfx}_tag", "#{pfx}_protect",
-                   "#{pfx}_retire", "#{pfx}_right_size", "#{pfx}_ownership",
-                   "#{pfx}_reconfigure"].include?(params[:pressed]) &&
-                  @flash_array.nil?   # Some other screen is showing, so return
-
-        unless ["#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone",
-                "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
-          @refresh_div = "main_div"
-          @refresh_partial = "layouts/gtl"
-          show
-        end
-      end
-    else
-      @refresh_div = "main_div" # Default div for button.rjs to refresh
-      tag(ResourcePool) if params[:pressed] == "resource_pool_tag"
-      deleteresourcepools if params[:pressed] == "resource_pool_delete"
-      assign_policies(ResourcePool) if params[:pressed] == "resource_pool_protect"
-    end
-
-    return if ["resource_pool_tag", "resource_pool_protect"].include?(params[:pressed]) && @flash_array.nil?   # Tag screen showing, so return
-
-    check_if_button_is_implemented
-
-    if !@flash_array.nil? && params[:pressed] == "resource_pool_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
-    elsif ["#{pfx}_miq_request_new", "#{pfx}_migrate", "#{pfx}_clone",
-           "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
-      render_or_redirect_partial(pfx)
-    else
-      if @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
-      else
-        render_flash
-      end
-    end
+  def assign_policies(resource=nil)
+    super(resource || ResourcePool)
   end
 
   private
