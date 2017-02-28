@@ -1,14 +1,16 @@
 describe('alertsCenterService', function() {
-  var testService, $timeout, API, $q, $rootScope;
-  var adminResponse, operatorResponse, existingUsersResponse, providersResponse, tagsResponse, alertsResponse;
+  var testService, $timeout, API, $http, $q, $rootScope;
+  var adminResponse, operatorResponse, existingUsersResponse, providersResponse, tagsResponse, iconsResponse,
+    alertsResponse;
   var deferred;
 
   beforeEach(module('alertsCenter'));
 
-  beforeEach(inject(function(_$timeout_, _alertsCenterService_, _API_, _$q_, _$rootScope_) {
+  beforeEach(inject(function(_$timeout_, _alertsCenterService_, _API_, _$http_, _$q_, _$rootScope_) {
     testService = _alertsCenterService_;
     $timeout = _$timeout_;
     API = _API_;
+    $http =_$http_;
     $q = _$q_;
     $rootScope = _$rootScope_;
 
@@ -17,6 +19,7 @@ describe('alertsCenterService', function() {
     existingUsersResponse = getJSONFixture('alerts_center/existing_users_response.json');
     providersResponse = getJSONFixture('alerts_center/providers_response.json');
     tagsResponse = getJSONFixture('alerts_center/tags_response.json');
+    iconsResponse = getJSONFixture('alerts_center/icons_response.json');
     alertsResponse = getJSONFixture('alerts_center/alerts_response.json');
   }));
 
@@ -78,6 +81,7 @@ describe('alertsCenterService', function() {
       deferred = $q.defer();
 
       spyOn(API, 'get').and.callFake(function() {return deferred.promise;});
+      spyOn($http, 'get').and.callFake(function() {return deferred.promise;});
     });
 
     it('should get the current user correctly', function() {
@@ -140,6 +144,7 @@ describe('alertsCenterService', function() {
       testService.existingUsers = existingUsersResponse.resources;
       testService.providers = providersResponse.resources;
       testService.tags = tagsResponse.resources;
+      testService.icons = iconsResponse;
     });
 
     it('should convert into an alert list correctly', function() {

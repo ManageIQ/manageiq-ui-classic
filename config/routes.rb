@@ -1026,6 +1026,7 @@ Rails.application.routes.draw do
     :alerts_list      => {
       :get => %w(
         show
+        class_icons
       )
     },
 

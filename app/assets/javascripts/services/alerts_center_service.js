@@ -1,8 +1,8 @@
 angular.module('alertsCenter').service('alertsCenterService', alertsCenterService);
 
-alertsCenterService.$inject = ['API', '$q', '$timeout', '$document', '$modal'];
+alertsCenterService.$inject = ['API', '$q', '$timeout', '$document', '$modal', '$http'];
 
-function alertsCenterService(API, $q, $timeout, $document, $modal) {
+function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
   var _this = this;
   var providersURL = '/api/providers';
   var tagsURL = '/api/tags';
@@ -393,10 +393,19 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
       .then(_this.updateExistingUsers)
       .then(_this.updateProviders)
       .then(_this.updateTags)
+      .then(_this.updateIcons)
       .then(function() {
         return _this.getAlertsData(limit, offset, filters, sortField, sortAscending);
       });
   };
+
+  _this.updateIcons = function(response) {
+    return $http.get('/alerts_list/class_icons')
+      .then(function(response) {
+        _this.icons = response.data;
+        return response;
+      });
+    };
 
   _this.getAlertsData = function(limit, offset, filters, sortField, sortAscending) {
     var deferred = $q.defer();
@@ -479,19 +488,8 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
     }
   }
 
-  function convertAlert(alertData, key, objectName, objectType, retrievalTime) {
-    var path = '/assets/svg/';
-    var suffix = '.svg';
-    var prefix = '';
-    var imageName = objectType.replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
-
-    if (key === 'providers') {
-      prefix = 'vendor-';
-    } else {
-      prefix = 'os-';
-    }
-
-    var typeImage = path + prefix + imageName + suffix;
+  function convertAlert(alertData, objectName, objectClassifiedType, objectType, retrievalTime) {
+    var hostType = alertData.resource.type;
 
     var newAlert = {
       id: alertData.id,
@@ -499,11 +497,12 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
       assignee: alertData.assignee,
       acknowledged: angular.isDefined(alertData.acknowledged) ? alertData.acknowledged : false,
       hostName: alertData.resource.name,
-      hostType: alertData.resource.type,
+      hostType: hostType,
+      hostImg: _this.icons[hostType],
       hostLink: '/container_node/show/' + alertData.resource.id,
       objectName: objectName,
       objectType: objectType,
-      objectTypeImg: typeImage,
+      objectTypeImg: _this.icons[objectClassifiedType],
       objectLink: '/ems_container/' + alertData.ems_id,
       sopLink: alertData.url,
       evaluated_on: convertApiTime(alertData.evaluated_on),
@@ -548,6 +547,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
     var key;
     var objectType;
     var objectName;
+    var objectClassifiedType;
 
     angular.forEach(alertData.resources, function(item) {
 
@@ -559,6 +559,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
         key = 'providers';
         objectType = getObjectType(alertProvider);
         objectName = alertProvider.name;
+        objectClassifiedType = alertProvider.type;
       }
 
       // Add filter for this object type
@@ -566,7 +567,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
         newTypes.push(objectType);
       }
 
-      alerts.push(convertAlert(item, key, objectName, objectType, retrievalTime));
+      alerts.push(convertAlert(item, objectName, objectClassifiedType, objectType, retrievalTime));
     });
 
     newTypes.sort();
@@ -579,8 +580,6 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
 
   _this.convertToAlertsOverview = function(responseData) {
     var alertData = [];
-    var path = '/assets/svg/';
-    var suffix = '.svg';
 
     _this.objectTypes.splice(0, _this.objectTypes.length);
 
@@ -621,7 +620,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal) {
             }
 
             summaryItem.objectType = objectType.replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
-            summaryItem.objectTypeImg = path + 'vendor-' + summaryItem.objectType + suffix;
+            summaryItem.objectTypeImg = _this.icons[provider.type];
 
             foundType = _.find(_this.objectTypes, function(nextType) {
               return nextType === summaryItem.objectType;

@@ -1,6 +1,7 @@
 describe('alertsListController', function() {
   var $scope, $controller, alertsCenterService;
-  var adminResponse, operatorResponse, existingUsersResponse, providersResponse, tagsResponse, alertsResponse;
+  var adminResponse, operatorResponse, existingUsersResponse, providersResponse, tagsResponse, iconsResponse,
+    alertsResponse;
 
   beforeEach(module('alertsCenter'));
 
@@ -22,6 +23,7 @@ describe('alertsListController', function() {
     existingUsersResponse = getJSONFixture('alerts_center/existing_users_response.json');
     providersResponse = getJSONFixture('alerts_center/providers_response.json');
     tagsResponse = getJSONFixture('alerts_center/tags_response.json');
+    iconsResponse = getJSONFixture('alerts_center/icons_response.json');
     alertsResponse = getJSONFixture('alerts_center/alerts_response.json');
 
     fakeGetAlerts = function() {
@@ -30,6 +32,7 @@ describe('alertsListController', function() {
       alertsCenterService.existingUsers = existingUsersResponse.resources;
       alertsCenterService.providers = providersResponse.resources;
       alertsCenterService.tags = tagsResponse.resources;
+      alertsCenterService.icons = iconsResponse;
 
       return Promise.resolve(alertsResponse);
     };

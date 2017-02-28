@@ -18,7 +18,7 @@
               %span.no-wrap{"tooltip" => "{{item.hostName}}",
                             "tooltip-placement" => "bottom",
                             "tooltip-popup-delay" => "1000"}
-                %img.list-view-type-img{"ng-src" => "/assets/100/container_node.png"}
+                %img.list-view-type-img{"ng-src" => "{{item.hostImg}}"}
                 {{item.hostName}}
           %div
             %a{"href" => "#", "ng-click" => "customScope.showObjectPage(item, $event)"}
