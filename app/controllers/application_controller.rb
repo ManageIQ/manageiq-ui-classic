@@ -284,7 +284,7 @@ class ApplicationController < ActionController::Base
 
     if params[:active_tree]
       node_info = get_node_info(x_node, false)
-      options.merge!(node_info) unless !node_info.is_a?(Hash)
+      options.merge!(node_info) if node_info.kind_of?(Hash)
     end
 
     options[:parent] = identify_record(params[:model_id]) if params[:model_id] && options[:parent].nil?

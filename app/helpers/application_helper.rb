@@ -248,8 +248,8 @@ module ApplicationHelper
 
   TREE_WITH_TAB = {
     "diagnostics_server_list" => "svr",
-    "db_details"     => "tb",
-    "db_indexes"     => "ti"
+    "db_details"              => "tb",
+    "db_indexes"              => "ti"
   }.freeze
 
   # Create a url to show a record from the passed in view
@@ -1639,12 +1639,12 @@ module ApplicationHelper
     end
   end
 
-  LIST_ICON_FOR = [
-    "MiqReportResult",
-    "MiqSchedule",
-    "MiqUserRole",
-    "MiqWidget"
-  ].freeze
+  LIST_ICON_FOR = %w(
+    MiqReportResult
+    MiqSchedule
+    MiqUserRole
+    MiqWidget
+  ).freeze
 
   def listicon_tag(db, row)
     if %w(MiqReportResult MiqSchedule MiqUserRole MiqWidget).include?(db)
