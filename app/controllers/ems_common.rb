@@ -115,7 +115,7 @@ module EmsCommon
     @in_a_form = true
     session[:changed] = nil
     drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => @table_name)},
-                    :url  => "/#{@table_name}/new")
+                    :url  => "/#{controller_name}/new")
   end
 
   def create
@@ -149,7 +149,7 @@ module EmsCommon
           end
         end
         drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => @table_name)},
-                        :url  => "/#{@table_name}/new")
+                        :url  => "/#{controller_name}/new")
         javascript_flash
       end
     when "validate"
@@ -172,7 +172,7 @@ module EmsCommon
     @in_a_form = true
     session[:changed] = false
     drop_breadcrumb(:name => _("Edit %{object_type} '%{object_name}'") % {:object_type => ui_lookup(:tables => @table_name), :object_name => @ems.name},
-                    :url  => "/#{@table_name}/#{@ems.id}/edit")
+                    :url  => "/#{controller_name}/#{@ems.id}/edit")
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
@@ -269,9 +269,9 @@ module EmsCommon
         add_flash("#{field.to_s.capitalize} #{msg}", :error)
       end
 
-      breadcrumb_url = "/#{@table_name}/edit/#{@ems.id}"
+      breadcrumb_url = "/#{controller_name}/edit/#{@ems.id}"
 
-      breadcrumb_url = "/#{@table_name}/#{@ems.id}/edit" if restful_routed?(model)
+      breadcrumb_url = "/#{controller_name}/#{@ems.id}/edit" if restful_routed?(model)
 
       drop_breadcrumb(:name => _("Edit %{table} '%{name}'") % {:table => ui_lookup(:table => @table_name),
                                                                :name  => @ems.name},
@@ -1061,9 +1061,9 @@ module EmsCommon
   end
 
   def show_list_link(ems, options = {})
-    url_for_only_path(options.merge(:controller => @table_name,
-                          :action     => "show_list",
-                          :id         => ems.id))
+    url_for_only_path(options.merge(:controller => controller_name,
+                                    :action     => "show_list",
+                                    :id         => ems.id))
   end
 
   def restore_password
