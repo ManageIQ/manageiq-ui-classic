@@ -6,23 +6,33 @@ ManageIQ.angular.app.directive('verifypasswd', function() {
       var log_verify = attr.prefix + "_verify";
       var logVerifyCtrl = attr.prefix + "_VerifyCtrl";
 
-      scope.$watch(attr.ngModel, function() {
-        if((ctrl.$modelValue != undefined && scope.afterGet) || scope.formId == "new") {
-          if(ctrl.$name == log_verify) {
-            scope[logVerifyCtrl] = ctrl;
+      var scopeModel;
+      var scopeVm;
+      if (angular.isDefined(scope.$parent.vm)) {
+        scopeModel = scope.$parent.vm[scope.$parent.vm.model];
+        scopeVm = scope.$parent.vm;
+      } else {
+        scopeModel = scope[scope.model];
+        scopeVm = scope;
+      }
 
-            setValidity(scope, ctrl, ctrl.$viewValue, scope[scope.model][log_password]);
-          }else if(ctrl.$name == log_password && scope[logVerifyCtrl] != undefined) {
-            setValidity(scope, scope[logVerifyCtrl], ctrl.$viewValue, scope[scope.model][log_verify]);
+      scope.$watch(attr.ngModel, function() {
+        if((ctrl.$modelValue != undefined && scopeVm.afterGet) || scopeVm.formId == "new") {
+          if(ctrl.$name == log_verify) {
+            scopeVm[logVerifyCtrl] = ctrl;
+
+            setValidity(scope, ctrl, ctrl.$viewValue, scopeModel[log_password]);
+          }else if(ctrl.$name == log_password && scopeVm[logVerifyCtrl] != undefined) {
+            setValidity(scope, scopeVm[logVerifyCtrl], ctrl.$viewValue, scopeModel[log_verify]);
           }
         }
       });
 
       ctrl.$parsers.push(function(value) {
         if (ctrl.$name == log_verify) {
-          setValidity(scope, ctrl, ctrl.$viewValue, scope[scope.model][log_password]);
-        }else if(ctrl.$name == log_password && scope[logVerifyCtrl] != undefined) {
-          setValidity(scope, scope[logVerifyCtrl], ctrl.$viewValue, scope[scope.model][log_verify]);
+          setValidity(scope, ctrl, ctrl.$viewValue, scopeModel[log_password]);
+        }else if(ctrl.$name == log_password && scopeVm[logVerifyCtrl] != undefined) {
+          setValidity(scope, scopeVm[logVerifyCtrl], ctrl.$viewValue, scopeModel[log_verify]);
         }
         return value;
       });

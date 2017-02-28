@@ -1,49 +1,63 @@
+- vm_scope ||= false
+
 .clearfix
-.pull-right.button-group{"ng-controller" => "buttonGroupController"}
-  = button_tag(_("Add"),
-               "class"       => "btn btn-primary disabled",
-               :alt          => _("Add"),
-               :title        => _("Add"),
-               "ng-click"    => "disabledClick($event)",
-               "ng-show"     => "newRecord && !saveable(angularForm)")
+.pull-right.button-group{"ng-controller" => "buttonGroupController as vm"}
+  - add_button_disabled = {"class"       => "btn btn-primary disabled",
+                           :alt          => _("Add"),
+                           :title        => _("Add"),
+                           "ng-show"     => "newRecord && !vm.saveable(angularForm)"}
+  - add_button_disabled['ng-show'] = "vm.newRecord && !vm.saveable($parent.vm.angularForm)" if vm_scope
+  = button_tag(_("Add"), add_button_disabled)
 
-  = button_tag(_("Add"),
-               :class        => "btn btn-primary",
-               :alt          => _("Add"),
-               :title        => _("Add"),
-               "ng-click"    => "addClicked($event, true)",
-               "ng-show"     => "newRecord && saveable(angularForm)")
+  - add_button = {"class"       => "btn btn-primary disabled",
+                  :alt          => _("Add"),
+                  :title        => _("Add"),
+                  "ng-show"     => "newRecord && vm.saveable(angularForm)"}
+  - add_button['ng-show'] = "vm.newRecord && vm.saveable($parent.vm.angularForm)" if vm_scope
+  = button_tag(_("Add"), add_button)
 
-  = button_tag(_("Save"),
-               :class        => "btn btn-primary disabled",
-               :alt          => _("Save changes"),
-               :title        => _("Save changes"),
-               "ng-click"    => "disabledClick($event)",
-               "ng-show"     => "!newRecord && !saveable(angularForm)")
 
-  = button_tag(_("Save"),
-               :class        => "btn btn-primary",
-               :alt          => _("Save changes"),
-               :title        => _("Save changes"),
-               "ng-click"    => "saveClicked($event, true)",
-               "ng-show"     => "!newRecord && saveable(angularForm)")
+  - save_button_disabled = {:class        => "btn btn-primary disabled",
+                            :alt          => _("Save changes"),
+                            :title        => _("Save changes"),
+                            "ng-show"     => "!newRecord && !vm.saveable(angularForm)"}
+  - save_button_disabled['ng-show'] = "!vm.newRecord && !vm.saveable($parent.vm.angularForm)" if vm_scope
+  = button_tag(_("Save"), save_button_disabled)
 
-  = button_tag(_("Reset"),
-               :class        => "btn btn-default disabled",
-               :alt          => _("Reset changes"),
-               :title        => _("Reset changes"),
-               "ng-click"    => "disabledClick($event)",
-               "ng-show"     => "!newRecord && angularForm.$pristine")
+  - save_button = {:class        => "btn btn-primary",
+                   :alt          => _("Save changes"),
+                   :title        => _("Save changes"),
+                   "ng-click"    => "saveClicked($event, true)",
+                   "ng-show"     => "!newRecord && vm.saveable(angularForm)"}
+  - if vm_scope
+    - save_button['ng-click'] = "$parent.vm.saveClicked($event, true)"
+    - save_button['ng-show'] = "!vm.newRecord && vm.saveable($parent.vm.angularForm)"
+  = button_tag(_("Save"), save_button)
 
-  = button_tag(_("Reset"),
-               :class        => "btn btn-default",
-               :alt          => _("Reset changes"),
-               :title        => _("Reset changes"),
-               "ng-click"    => "resetClicked()",
-               "ng-show"     => "!newRecord && !angularForm.$pristine")
 
-  = button_tag(_("Cancel"),
-               :class => "btn btn-default",
-               :alt   => _("Cancel"),
-               :title => _("Cancel"),
-               "ng-click" => "cancelClicked($event)")
+  - reset_button_disabled = {:class        => "btn btn-default disabled",
+                             :alt          => _("Reset changes"),
+                             :title        => _("Reset changes"),
+                             "ng-show"     => "!newRecord && angularForm.$pristine"}
+  - reset_button_disabled['ng-show'] = "!vm.newRecord && $parent.vm.angularForm.$pristine" if vm_scope
+  = button_tag(_("Reset"), reset_button_disabled)
+
+
+  - reset_button = {:class        => "btn btn-default",
+                    :alt          => _("Reset changes"),
+                    :title        => _("Reset changes"),
+                    "ng-click"    => "resetClicked()",
+                    "ng-show"     => "!newRecord && !angularForm.$pristine"}
+  - if vm_scope
+    - reset_button['ng-click'] = "$parent.vm.resetClicked($event, true)"
+    - reset_button['ng-show'] = "!vm.newRecord && !$parent.vm.angularForm.$pristine"
+  = button_tag(_("Reset"), reset_button)
+
+
+  - cancel_button = {:class => "btn btn-default",
+                     :alt   => _("Cancel"),
+                     :title => _("Cancel"),
+                     "ng-click" => "cancelClicked($event)"}
+  - cancel_button['ng-click'] = "$parent.vm.cancelClicked($event)" if vm_scope
+
+  = button_tag(_("Cancel"), cancel_button)

@@ -6,20 +6,28 @@ ManageIQ.angular.app.directive('clearFieldSetFocus', ['$timeout', 'miqService', 
 
       var option = attr.clearFieldSetFocus;
 
-      scope.$watch('bChangeStoredPassword', function(value) {
+      scope.$watch('vm.bChangeStoredPassword', function(value) {
         if (value) {
           $timeout(function () {
-            scope[scope.model][ctrl.$name] = '';
+            if (scope.$parent.vm) {
+              scope.$parent.vm[scope.$parent.vm.model][ctrl.$name] = '';
+            } else {
+              scope[scope.model][ctrl.$name] = '';
+            }
             if(option != "no-focus")
               angular.element(scope['form_passwordfocus_' + ctrl.$name]).focus();
           }, 0);
         }
       });
 
-      scope.$watch('bCancelPasswordChange', function(value) {
+      scope.$watch('vm.bCancelPasswordChange', function(value) {
         if (value) {
           $timeout(function () {
-            scope[scope.model][ctrl.$name] = miqService.storedPasswordPlaceholder;
+            if (scope.$parent.vm) {
+              scope.$parent.vm[scope.$parent.vm.model][ctrl.$name] = miqService.storedPasswordPlaceholder;
+            } else {
+              scope[scope.model][ctrl.$name] = miqService.storedPasswordPlaceholder;
+            }
           }, 0);
         }
       });
