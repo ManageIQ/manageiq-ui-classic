@@ -266,7 +266,9 @@ module Menu
       end
 
       def monitor_menu_section
-        Menu::Section.new(:monitor, N_("Monitor"), 'fa fa-heartbeat fa-2x', [alerts_menu_section])
+        if ::Settings.prototype.monitoring
+          Menu::Section.new(:monitor, N_("Monitor"), 'fa fa-heartbeat fa-2x', [alerts_menu_section])
+        end
       end
 
       def settings_menu_section
