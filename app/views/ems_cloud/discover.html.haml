@@ -1,4 +1,4 @@
-- url = url_for :action => 'discover_field_changed'
+- url = url_for_only_path :action => 'discover_field_changed'
 = render :partial => "layouts/flash_msg"
 = form_tag({:action => "discover"},
            :id     => 'discover_cloud_form',
