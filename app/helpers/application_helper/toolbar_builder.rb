@@ -656,12 +656,6 @@ class ApplicationHelper::ToolbarBuilder
     Rack::Utils.parse_query URI("?#{encoded_url}").query
   end
 
-  def disable_new_iso_datastore?(item_id)
-    @layout == "pxe" &&
-      item_id == "iso_datastore_new" &&
-      !ManageIQ::Providers::Redhat::InfraManager.any_without_iso_datastores?
-  end
-
   def build_toolbar_setup
     @toolbar = []
     @groups_added = []
