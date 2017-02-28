@@ -1,8 +1,6 @@
-class MiddlewareDomainDecorator < Draper::Decorator
-  delegate_all
-
+class MiddlewareDomainDecorator < MiqDecorator
   def fonticon
-    'pficon-domain'.freeze
+    'pficon-domain'
   end
 
   def listicon_image

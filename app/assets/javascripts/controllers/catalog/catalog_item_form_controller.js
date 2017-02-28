@@ -323,6 +323,11 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     return prefix == "provisioning";
   };
 
+  vm.variablesEmpty = function(prefix) {
+    field = vm.catalogItemModel[prefix + "_variables"];
+    return Object.keys(field).length === 0;
+  };
+
   // watch for all the drop downs on screen
   "catalog provisioning_playbook retirement_playbook provisioning_machine_credential retirement_machine_credential provisioning_network_credential retirement_network_credential provisioning_cloud_credential retirement_cloud_credential provisioning_dialog retirement_dialog".split(" ").forEach(idWatch)
 

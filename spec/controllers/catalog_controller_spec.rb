@@ -669,4 +669,25 @@ describe CatalogController do
       expect(assigns(:edit)[:new][:retire_fqname]).to include("Default")
     end
   end
+
+  context "#st_catalog_new" do
+    it "renders views successfully after button is pressed" do
+      controller.instance_variable_set(:@sb, {})
+      controller.instance_variable_set(:@_params, :pressed => 'st_catalog_new', :action => 'x_button')
+      edit = {
+        :new => {:name             => "",
+                 :description      => "",
+                 :fields           => [],
+                 :available_fields => [],
+        },
+        :key => "st_catalog_edit__new"
+      }
+      controller.instance_variable_set(:@edit, edit)
+      controller.x_node = "root"
+      session[:edit] = edit
+      expect(controller).to receive(:render)
+      controller.send(:st_catalog_edit)
+      expect(response).to have_http_status 200
+    end
+  end
 end

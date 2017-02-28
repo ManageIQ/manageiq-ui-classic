@@ -199,9 +199,9 @@ class EmsInfraController < ApplicationController
     elsif !stack_parameters.empty?
       # A value was changed
       begin
-        stack.raw_update_stack(nil, stack_parameters)
+        task_id = stack.update_stack_queue(session[:userid], nil, stack_parameters)
         if operation == 'scaledown'
-          @stack.queue_post_scaledown_task(additional_args[:services])
+          @stack.queue_post_scaledown_task(additional_args[:services], task_id)
         end
         redirect_to ems_infra_path(provider_id, :flash_msg => return_message)
       rescue => ex

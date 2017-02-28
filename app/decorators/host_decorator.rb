@@ -1,6 +1,4 @@
-class HostDecorator < Draper::Decorator
-  delegate_all
-
+class HostDecorator < MiqDecorator
   def fonticon
     nil
   end

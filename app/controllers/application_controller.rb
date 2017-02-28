@@ -960,7 +960,7 @@ class ApplicationController < ActionController::Base
   # Return the icon classname for the list view icon of a db,id pair
   # this always supersedes listicon_image if not nil
   def listicon_icon(item)
-    item.decorate.try(:fonticon) if item.decorator_class?
+    item.decorate.try(:fonticon)
   end
 
   # Return the image name for the list view icon of a db,id pair
@@ -977,7 +977,7 @@ class ApplicationController < ActionController::Base
             when ManageIQ::Providers::CloudManager::AuthKeyPair
               "100/auth_key_pair.png"
             else
-              item.decorate.try(:listicon_image) if item.decorator_class?
+              item.decorate.try(:listicon_image)
             end
 
     image || default

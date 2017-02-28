@@ -1,8 +1,6 @@
-class MiddlewareDatasourceDecorator < Draper::Decorator
-  delegate_all
-
+class MiddlewareDatasourceDecorator < MiqDecorator
   def fonticon
-    'fa fa-database'.freeze
+    'fa fa-database'
   end
 
   def listicon_image

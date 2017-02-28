@@ -32,20 +32,45 @@ module Mixins
     end
 
     def show_main
+      # remember dashboard mode if dashboard is supported for this controller
+      @sb[:summary_mode] = 'textual' if respond_to?(:dashboard_view)
+
       get_tagdata(@record) if @record.try(:taggings)
       drop_breadcrumb({:name => breadcrumb_name(nil),
                        :url  => "/#{controller_name}/show_list?page=#{@current_page}&refresh=y"},
                       true)
 
-      show_url = restful? ? "/#{controller_name}/" : "/#{controller_name}/show/"
-
       drop_breadcrumb(:name =>  _("%{name} (Summary)") % {:name => @record.name},
-                      :url  => "#{show_url}#{@record.id}")
+                      :url  => show_link(@record))
       @showtype = "main"
+    end
+
+    def show_link(record, options = {})
+      if restful?
+        polymorphic_path(record, options)
+      else
+        opts = options.merge(
+          :controller => controller_name,
+          :id         => record.id,
+          :action     => :show,
+          :only_path  => true,
+        )
+        url_for(opts)
+      end
     end
 
     def gtl_url
       restful? ? '/' : '/show'
+    end
+
+    # value for @display when not given explicit through params[:display]
+    #
+    def default_display
+      if respond_to?(:dashboard_view) && dashboard_view
+        'dashboard'
+      else
+        'main'
+      end
     end
 
     def init_show(model_class = self.class.model)
@@ -53,7 +78,10 @@ module Mixins
       return false if record_no_longer_exists?(@record)
       @lastaction = 'show'
       @gtl_url = gtl_url
-      @display = params[:display] || 'main' unless pagination_or_gtl_request?
+
+      unless pagination_or_gtl_request?
+        @display = params[:display] || default_display
+      end
       true
     end
 
@@ -87,14 +115,24 @@ module Mixins
       nested_list("template_cloud", ManageIQ::Providers::CloudManager::Template)
     end
 
-    def nested_list(table_name, model)
-      title = ui_lookup(:tables => table_name)
+    # options:
+    #   breadcrumb_title -- title for the breadcrumb, defaults to
+    #                       ui_lookup(:tables => table_name)
+    #   parent_method    -- parent_method to be passed to get_view call
+    #
+    def nested_list(table_name, model, options = {})
+      title = options[:breadcrumb_title] || ui_lookup(:tables => table_name)
+
       drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @record.name},
                       :url  => "/#{self.class.table_name}/show/#{@record.id}")
       drop_breadcrumb(:name => _("%{name} (All %{title})") % {:name => @record.name, :title => title},
-                      :url  => "/#{self.class.table_name}/show/#{@record.id}?display=#{@display}")
-      @view, @pages = get_view(model, :parent => @record) # Get the records (into a view) and the paginator
-      @showtype     = @display
+                      :url  => show_link(@record, :display => @display))
+
+      view_options = {:parent => @record}
+      view_options[:parent_method] = options[:parent_method] if options.key?(:parent_method)
+
+      @view, @pages = get_view(model, view_options)
+      @showtype = @display
     end
   end
 end

@@ -183,6 +183,8 @@ module ApplicationHelper
             record.class.db_name
           elsif record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook)
             "ansible_playbook"
+          elsif record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager::Authentication)
+            "ansible_credential"
           else
             record.class.base_class.to_s
           end
@@ -307,6 +309,8 @@ module ApplicationHelper
       action = "show"
     when "ConditionSet"
       controller = "condition"
+    when "ConfigurationScriptSource"
+      controller = "ansible_repository"
     when "ScanItemSet"
       controller = "ops"
       action = "ap_show"
@@ -343,11 +347,12 @@ module ApplicationHelper
       controller = "catalog"
     when "ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook"
       controller = "ansible_playbook"
+    when "ManageIQ::Providers::AutomationManager::Authentication"
+      controller = "ansible_credential"
     when "MiqWorker"
       controller = request.parameters[:controller]
       action = "diagnostics_worker_selected"
     when "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
-        "ConfigurationScriptSource",
         "ManageIQ::Providers::CloudManager::OrchestrationStack",
         "ManageIQ::Providers::AnsibleTower::AutomationManager::Job"
       controller = request.parameters[:controller]
@@ -468,6 +473,8 @@ module ApplicationHelper
       title += _(": Login")
     elsif layout == "manageiq/providers/ansible_tower/automation_manager/playbook"
       title += ": Playbooks (Ansible Tower)"
+    elsif layout == "manageiq/providers/automation_manager/authentication"
+      title += ": Credentials"
     elsif layout == "configuration_script_source"
       title += ": Repositories"
     # Assume layout is a table name and look up the plural version
@@ -1235,6 +1242,7 @@ module ApplicationHelper
                         host_aggregate
                         load_balancer
                         manageiq/providers/ansible_tower/automation_manager/playbook
+                        manageiq/providers/automation_manager/authentication
                         middleware_datasource
                         middleware_deployment
                         middleware_domain

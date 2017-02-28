@@ -364,48 +364,6 @@ class ApplicationHelper::ToolbarBuilder
     img
   end
 
-  def hide_button_ops(id)
-    case x_active_tree
-    when :settings_tree
-      return ["schedule_run_now"].include?(id)
-    when :diagnostics_tree
-      case @sb[:active_tab]
-      when "diagnostics_audit_log"
-        return !["fetch_audit_log", "refresh_audit_log"].include?(id)
-      when "diagnostics_collect_logs"
-        return !%w(collect_current_logs collect_logs log_depot_edit
-                  zone_collect_current_logs zone_collect_logs
-                  zone_log_depot_edit).include?(id)
-      when "diagnostics_evm_log"
-        return !["fetch_log", "refresh_log"].include?(id)
-      when "diagnostics_production_log"
-        return !["fetch_production_log", "refresh_production_log"].include?(id)
-      when "diagnostics_roles_servers", "diagnostics_servers_roles"
-        case id
-        when "reload_server_tree"
-          return false
-        when "zone_collect_current_logs", "zone_collect_logs", "zone_log_depot_edit"
-          return true
-        end
-        return false
-      when "diagnostics_summary"
-        return !["refresh_server_summary", "restart_server"].include?(id)
-      when "diagnostics_workers"
-        return !%w(restart_workers refresh_workers).include?(id)
-      else
-        return true
-      end
-    when :rbac_tree
-      return true unless role_allows?(:feature => rbac_common_feature_for_buttons(id))
-      return true if %w(rbac_project_add rbac_tenant_add).include?(id) && @record.project?
-      return false
-    when :vmdb_tree
-      return !["db_connections", "db_details", "db_indexes", "db_settings"].include?(@sb[:active_tab])
-    else
-      return true
-    end
-  end
-
   # Determine if a button should be hidden
   def hide_button?(id)
     # need to hide add buttons when on sub-list view screen of a CI.
@@ -424,11 +382,6 @@ class ApplicationHelper::ToolbarBuilder
     return false if id == "miq_request_reload" && # Show the request reload button
                     (@lastaction == "show_list" || @showtype == "miq_provisions")
 
-    if @layout == "ops"
-      res = hide_button_ops(id)
-      return res
-    end
-
     return false if id.starts_with?("miq_capacity_") && @sb[:active_tab] == "report"
 
     # don't check for feature RBAC if id is miq_request_approve/deny
@@ -436,7 +389,8 @@ class ApplicationHelper::ToolbarBuilder
       return true if !role_allows?(:feature => id) && !["miq_request_approve", "miq_request_deny"].include?(id) &&
                      id !~ /^history_\d*/ &&
                      !id.starts_with?("dialog_") && !id.starts_with?("miq_task_") &&
-                     !(id == "show_summary" && !@explorer) && id != "summary_reload"
+                     !(id == "show_summary" && !@explorer) && id != "summary_reload" &&
+                     @layout != "ops"
     end
 
     # Check buttons with other restriction logic
@@ -451,10 +405,8 @@ class ApplicationHelper::ToolbarBuilder
   # Determine if a button should be disabled. Returns either boolean or
   # string message with explanation of reason for disabling
   def disable_button(id)
-    return true if id.starts_with?("view_") && id.ends_with?("textual")  # Summary view buttons
     return true if @gtl_type && id.starts_with?("view_") && id.ends_with?(@gtl_type)  # GTL view buttons
     return true if id == "view_dashboard" && (@showtype == "dashboard")
-    return true if id == "view_summary" && (@showtype != "dashboard")
     if id == 'vm_vnc_console' && @record.vendor == 'vmware' &&
        ExtManagementSystem.find_by(:id => @record.ems_id).api_version.to_f >= 6.5
       return N_("VNC consoles are unsupported on VMware ESXi 6.5 and later.")

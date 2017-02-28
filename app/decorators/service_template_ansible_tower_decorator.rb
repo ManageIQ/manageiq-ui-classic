@@ -1,6 +1,4 @@
-class ServiceTemplateAnsibleTowerDecorator < Draper::Decorator
-  delegate_all
-
+class ServiceTemplateAnsibleTowerDecorator < MiqDecorator
   def fonticon
     nil
   end

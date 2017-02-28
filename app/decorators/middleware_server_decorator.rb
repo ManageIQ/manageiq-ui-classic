@@ -1,6 +1,4 @@
-class MiddlewareServerDecorator < Draper::Decorator
-  delegate_all
-
+class MiddlewareServerDecorator < MiqDecorator
   def fonticon
     nil
   end

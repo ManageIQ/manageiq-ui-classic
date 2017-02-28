@@ -17,7 +17,7 @@ module EmsCommon
   end
 
   def show_props
-    drop_breadcrumb(:name => @ems.name + _(" (Properties)"), :url => show_link(@ems, :display  =>  "props"))
+    drop_breadcrumb(:name => @ems.name + _(" (Properties)"), :url => show_link(@ems, :display => "props"))
   end
 
   def show_ems_folders
@@ -33,19 +33,6 @@ module EmsCommon
     cluster = @record
     @datacenter_tree = TreeBuilderVat.new(:vat_tree, :vat, @sb, true, cluster, !!params[:vat])
     self.x_active_tree = :vat_tree
-  end
-
-  def show_dashboard
-    @showtype = "dashboard"
-    @lastaction = "show_dashboard"
-    drop_breadcrumb(:name => @ems.name + _(" (Dashboard)"), :url => show_link(@ems))
-    @sb[:summary_mode] = 'dashboard' unless @sb[:summary_mode] == 'dashboard'
-    render :action => "show_dashboard"
-  end
-
-  def show_main
-    @sb[:summary_mode] = 'textual' unless @sb[:summary_mode] == 'textual'
-    super
   end
 
   def show_ad_hoc_metrics
@@ -114,10 +101,45 @@ module EmsCommon
       'hosts'                         => [Host,                   _("Managed Hosts")],
       'physical_servers'              => [PhysicalServer,         _("Physical Servers")],
     }
+  end 
+
+  def display_block_storage_managers
+    nested_list('block_storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :block_storage_managers)
   end
 
-  def show_entities(display)
-    view_setup_helper(display, *view_setup_params[display])
+  def display_object_storage_managers
+    nested_list('object_storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :object_storage_managers)
+  end
+
+  def display_storage_managers
+    nested_list('storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :storage_managers)
+  end
+
+  def display_ems_clusters
+    nested_list('ems_cluster', EmsCluster, :breadcrumb_title => title_for_clusters)
+  end
+
+  def display_persistent_volumes
+    nested_list('persistent_volume', PersistentVolume, :parent_method => :persistent_volumes)
+  end
+
+  def display_hosts
+    nested_list('hosts', Host, :breadcrumb_title => _("Managed Hosts"))
+  end
+
+  class_methods do
+    def display_methods
+      %w(
+        availability_zones block_storage_managers cloud_networks cloud_object_store_containers cloud_subnets
+        cloud_tenants cloud_volumes cloud_volume_snapshots configuration_jobs container_builds container_groups
+        container_image_registries container_images container_nodes container_projects container_replicators
+        container_routes containers container_services container_templates ems_clusters flavors floating_ips
+        host_aggregates hosts images instances load_balancers middleware_datasources middleware_deployments
+        middleware_domains middleware_messagings middleware_server_groups middleware_servers miq_templates
+        network_ports network_routers object_storage_managers orchestration_stacks persistent_volumes
+        security_groups storage_managers storages vms
+      )
+    end
   end
 
   def show
@@ -126,42 +148,23 @@ module EmsCommon
     @summary_view = session[:vm_summary_cool]
     @ems = @record
 
-    drop_breadcrumb({:name => ui_lookup(:tables => @table_name), :url => "/#{@table_name}/show_list?page=#{@current_page}&refresh=y"}, true)
-    case params[:display]
-    when 'main'                          then show_main
-    when 'summary_only'                  then show_download
-    when 'props'                         then show_props
-    when 'ems_folders'                   then show_ems_folders
-    when 'timeline'                      then show_timeline
-    when 'dashboard'                     then show_dashboard
-    when 'ad_hoc_metrics'                then show_ad_hoc_metrics
-    when 'topology'                      then show_topology
-    when 'performance'                   then show_performance
-    when nil
-      if pagination_or_gtl_request? # pagination controls
-        show_entities(@display) # display loaded from session
-      else                 # or default display
-        dashboard_view ? show_dashboard : show_main
-      end
-    else show_entities(params[:display])
+    case @display
+    when 'dashboard'      then show_dashboard
+    when 'main'           then show_main
+    when 'summary_only'   then show_download
+    when 'props'          then show_props
+    when 'ems_folders'    then show_ems_folders
+    when 'timeline'       then show_timeline
+    when 'ad_hoc_metrics' then show_ad_hoc_metrics
+    when 'topology'       then show_topology
+    when 'performance'    then show_performance
+    when *self.class.display_methods
+      display_nested_list(@display)
     end
 
-    @lastaction = "show"
-    session[:tl_record_id] = @record.id
-
     replace_gtl_main_div if pagination_request?
+
     render :template => "shared/views/ems_common/show" if params[:action] == 'show' && !performed?
-  end
-
-  def view_setup_helper(display, kls, title, parent_method = nil)
-    drop_breadcrumb(:name => @ems.name + _(" (All %{title})") % {:title => title},
-                    :url  => show_link(@ems, :display => display))
-    opts = {:parent => @ems}
-    opts[:parent_method] = parent_method if parent_method
-    @view, @pages = get_view(kls, **opts)
-
-    # display need's to be set so that it's stored in the session
-    @showtype = @display = display
   end
 
   def new
@@ -1115,13 +1118,6 @@ module EmsCommon
 
   def permission_prefix
     self.class.permission_prefix
-  end
-
-  def show_link(ems, options = {})
-    url_for(options.merge(:controller => @table_name,
-                          :action     => "show",
-                          :id         => ems.id,
-                          :only_path  => true))
   end
 
   def show_list_link(ems, options = {})

@@ -1,6 +1,4 @@
-class MiqAeClassDecorator < Draper::Decorator
-  delegate_all
-
+class MiqAeClassDecorator < MiqDecorator
   def fonticon
     'product product-ae_class'
   end

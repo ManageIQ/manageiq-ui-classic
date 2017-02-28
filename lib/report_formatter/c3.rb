@@ -91,7 +91,9 @@ module ReportFormatter
         unless mri.graph[:type] == 'Donut' || mri.graph[:type] == 'Pie'
           mri.chart[:legend] = {:position => 'bottom'}
         end
-        format, options = javascript_format(mri.graph[:columns][0], nil)
+
+        column = grouped_by_tag_category? ? mri.graph[:columns][0].split(/_+/)[0..-2].join('_') : mri.graph[:columns][0]
+        format, options = javascript_format(column, nil)
         return unless format
 
         axis_formatter = {:function => format, :options => options}
@@ -173,6 +175,10 @@ module ReportFormatter
     def build_performance_chart_pie(_maxcols, _divider)
       mri.chart[:miq][:expand_tooltip] = true
       super
+    end
+
+    def grouped_by_tag_category?
+      !!(mri.performance && mri.performance.fetch_path(:group_by_category))
     end
   end
 end

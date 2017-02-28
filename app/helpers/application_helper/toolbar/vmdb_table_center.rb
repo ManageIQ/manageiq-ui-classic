@@ -4,6 +4,7 @@ class ApplicationHelper::Toolbar::VmdbTableCenter < ApplicationHelper::Toolbar::
       :db_refresh,
       'fa fa-repeat fa-lg',
       N_('Reload Current Display'),
-      nil),
+      nil,
+      :klass => ApplicationHelper::Button::DbRefresh),
   ])
 end

@@ -1,6 +1,4 @@
-class AuthPrivateKeyDecorator < Draper::Decorator
-  delegate_all
-
+class AuthPrivateKeyDecorator < MiqDecorator
   def fonticon
     nil
   end

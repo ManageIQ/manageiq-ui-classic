@@ -1,6 +1,4 @@
-class ServiceDecorator < Draper::Decorator
-  delegate_all
-
+class ServiceDecorator < MiqDecorator
   def fonticon
     nil
   end

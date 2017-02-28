@@ -1,6 +1,4 @@
-class ServiceResourceDecorator < Draper::Decorator
-  delegate_all
-
+class ServiceResourceDecorator < MiqDecorator
   def fonticon
     resource_type.to_s == 'VmOrTemplate' ? 'pficon pficon-virtual-machine' : 'product product-template'
   end

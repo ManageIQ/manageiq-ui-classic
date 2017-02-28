@@ -1995,6 +1995,17 @@ Rails.application.routes.draw do
       )
     },
 
+    :ansible_credential => {
+      :get => %w(
+        download_data
+        download_summary_pdf
+        show
+        show_list
+      ),
+      :post => %w(
+        show_list)
+    },
+
     :ansible_playbook => {
       :get => %w(
         download_data
@@ -2068,6 +2079,7 @@ Rails.application.routes.draw do
         dialog_accordion_json
         explorer
         export_service_dialogs
+        show
       ),
       :post => %w(
         ab_group_reorder
@@ -3063,6 +3075,7 @@ Rails.application.routes.draw do
         accordion_select
         advanced_settings
         button
+        console
         edit_vm
         event_logs
         explorer

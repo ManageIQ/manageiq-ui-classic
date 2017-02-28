@@ -163,6 +163,19 @@ class MiqAeCustomizationController < ApplicationController
     tree_select
   end
 
+  # Dialog show selected from catalog explorer
+  def show
+    nodes = params[:id].split("-")
+    record = Dialog.find_by(:id =>from_cid(nodes.last))
+    self.x_active_accord = "dialogs"
+    self.x_active_tree   = "#{x_active_accord}_tree"
+    self.x_node = TreeBuilder.build_node_cid(record)
+    get_node_info
+    redirect_to :controller => "miq_ae_customization",
+                :action     => "explorer",
+                :id         => x_node
+  end
+
   private
 
   def features
