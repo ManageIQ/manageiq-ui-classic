@@ -397,17 +397,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       allow(session).to receive(:fetch_path).with(:browser, :os).and_return('linux')
     end
 
-    it 'disables the add new iso datastore button when no EMSes are available' do
-      expect(ManageIQ::Providers::Redhat::InfraManager)
-        .to(receive(:any_without_iso_datastores?))
-        .and_return(false)
-
-      @layout = "pxe"
-      @id = "iso_datastore_new"
-
-      expect(subject).to match(/No.*are available/)
-    end
-
     context "when record class = MiqServer" do
       let(:log_file) { FactoryGirl.create(:log_file) }
       let(:miq_task) { FactoryGirl.create(:miq_task) }
