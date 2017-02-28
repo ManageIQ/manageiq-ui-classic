@@ -7,6 +7,5 @@ module TreeNode
       end
     end
 
-    set_attribute(:icon) { @object.decorate.fonticon }
   end
 end

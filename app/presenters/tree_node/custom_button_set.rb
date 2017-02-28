@@ -8,7 +8,6 @@ module TreeNode
       end
     end
 
-    set_attribute(:icon) { @object.decorate.fonticon }
 
     set_attribute(:tooltip) do
       if @object.description

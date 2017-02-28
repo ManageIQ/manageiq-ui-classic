@@ -1,6 +1,5 @@
 module TreeNode
   class MiqPolicy < Node
-    set_attribute(:icon) { @object.decorate.fonticon }
     set_attribute(:title) do
       if @options[:tree] == :policy_profile_tree
         ViewHelper.capture do

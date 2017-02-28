@@ -1,6 +1,5 @@
 module TreeNode
   class MiqReportResult < Node
-    set_attribute(:icon) { @object.decorate.fonticon }
 
     set_attributes(:title, :tooltip, :expand) do
       expand = nil
