@@ -7,6 +7,18 @@ module EmsCommon
 
     helper_method :textual_group_list
     private :textual_group_list
+
+    # This is a temporary hack ensuring that @ems will be set.
+    # Once we use @record in place of @ems, this can be removed
+    # together with init_show_ems
+    alias_method :init_show_generic, :init_show
+    alias_method :init_show, :init_show_ems
+  end
+
+  def init_show_ems
+    result = init_show_generic
+    @ems = @record
+    result
   end
 
   def textual_group_list
