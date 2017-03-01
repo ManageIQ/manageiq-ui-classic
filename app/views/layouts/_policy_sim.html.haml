@@ -20,7 +20,7 @@
               miqInitSelectPicker();
               miqSelectPickerEvent("profile_id", "#{url}", {beforeSend: true, complete: true});
         %tr
-          %th.narrow
+          %th.table-view-pf-select
           %th= _("Policy Profiles in Effect")
       %tbody
         - if session[:policies].length == 0

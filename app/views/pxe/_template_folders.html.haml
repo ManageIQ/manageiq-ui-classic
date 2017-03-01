@@ -5,13 +5,13 @@
       %tbody
         %tr{:title => _("View Examples (read only)' Folder"),
           :onclick => "miqTreeActivateNode('customization_templates_tree', 'xx-xx-system');"}
-          %td.narrow
+          %td.table-view-pf-select
             %i.pficon.pficon-folder-close
           %td Examples (read only)
         - @folders.each do |f|
           %tr{:title => _("View '%{name}' Folder") % {:name => f.name},
             :onclick => "miqTreeActivateNode('customization_templates_tree', 'xx-xx-#{to_cid(f.id)}');"}
-            %td.narrow
+            %td.table-view-pf-select
               %i.pficon.pficon-folder-close
             %td
               = h(f.name)

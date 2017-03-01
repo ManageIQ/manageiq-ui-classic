@@ -43,13 +43,13 @@
     %h3= _("Child Tenants")
     %table.table.table-striped.table-bordered.table-hover
       %thead
-        %th.narrow
+        %th.table-view-pf-select
         %th= _("Name")
         %tbody
           - all_subtenants.each do |tenant|
             %tr{:onclick => "miqTreeActivateNode('rbac_tree', 'tn-#{to_cid(tenant.id)}');",
               :title => _("Click to view child Tenant")}
-              %td.narrow
+              %td.table-view-pf-select
                 %i.pficon.pficon-tenant
               %td= tenant.name
   - all_subprojects = @tenant.all_subprojects
@@ -57,13 +57,13 @@
     %h3= _("Projects")
     %table.table.table-striped.table-bordered.table-hover
       %thead
-        %th.narrow
+        %th.table-view-pf-select
         %th= _("Name")
         %tbody
           - all_subprojects.each do |tenant|
             %tr{:onclick => "miqTreeActivateNode('rbac_tree', 'tn-#{to_cid(tenant.id)}');",
               :title => _("Click to view child TenantProject")}
-              %td.narrow
+              %td.table-view-pf-select
                 %i.pficon.pficon-project
               %td= tenant.name
   .row

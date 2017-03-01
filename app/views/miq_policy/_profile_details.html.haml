@@ -87,7 +87,7 @@
             - @profile_policies.each do |p|
               %tr{:title => _("View this %{model} Policy") % {:model => ui_lookup(:model => p.towhat)},
                 :onclick => "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_p-#{to_cid(p.id)}');"}
-                %td.narrow
+                %td.table-view-pf-select
                   %i{:class => p.decorate.fonticon}
                 %td
                   %b

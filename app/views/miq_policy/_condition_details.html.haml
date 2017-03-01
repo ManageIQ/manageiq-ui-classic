@@ -88,7 +88,7 @@
                 - id = "xx-#{p.mode.downcase}_xx-#{p.mode.downcase}-#{p.towhat.downcase}_p-#{to_cid(p.id)}"
                 %tr{:title => _("Click to view Policy"),
                   :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=policy")}
-                  %td.narrow
+                  %td.table-view-pf-select
                     %i{:class => p.decorate.fonticon}
                   %td
                     = p.description

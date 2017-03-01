@@ -9,7 +9,7 @@
         %tbody
           - @zones.sort_by(&:description).each do |z|
             %tr{:onclick => "miqTreeActivateNode('settings_tree', 'z-#{to_cid(z.id)}');", :title => _("View this Zone's settings")}
-              %td.narrow
+              %td.table-view-pf-select
                 %i.pficon.pficon-zone
               %td
                 - if my_zone_name == z.name

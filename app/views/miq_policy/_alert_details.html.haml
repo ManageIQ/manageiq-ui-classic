@@ -294,8 +294,8 @@
                       - id = "a-#{to_cid(oa.id)}"
                       %tr{:title => _("View this Action"),
                         :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=action")}
-                        %td.narrow
+                        %td.table-view-pf-select
                           %i{:class => oa.decorate.fonticon}
-                        %td.narrow
+                        %td.table-view-pf-select
                           = oa.description
               %hr

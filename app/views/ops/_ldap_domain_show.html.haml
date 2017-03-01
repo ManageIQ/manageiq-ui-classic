@@ -104,14 +104,14 @@
   - else
     %table.table.table-striped.table-bordered.table-hover
       %thead
-        %th.narrow
+        %th.table-view-pf-select
         %th= _("Hostname")
         %th= _("Mode")
         %th= _("Port")
       %tbody
         - @selected_ld.ldap_servers.sort_by { |svr| svr.hostname.to_s }.each do |svr|
           %tr{:class => "no-hover #{cycle('row0', 'row1')}"}
-            %td.narrow
+            %td.table-view-pf-select
               %i.pficon.pficon-server
             %td
               = svr.hostname

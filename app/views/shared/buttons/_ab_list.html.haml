@@ -20,7 +20,7 @@
     = render :partial => "layouts/flash_msg"
     %table.table.table-bordered.table-hover.table-striped
       %thead
-        %th.narrow
+        %th.table-view-pf-select
         %th
           = _('Text')
         - if x_active_tree == :sandt_tree
@@ -32,7 +32,7 @@
         - @sb[:button_groups].each do |obj|
           - if obj.kind_of?(String)
             %tr{:title => _("Click to view details"), :onclick => "miqTreeActivateNode('ab_tree', '-ub-#{@nodetype[1]}')"}
-              %td.narrow
+              %td.table-view-pf-select
                 %i{:class => "pficon pficon-folder-close"}
               %td
                 = obj
@@ -50,7 +50,7 @@
               - img = obj[:button_image]
               - rec_type = "Group"
             %tr{:title => _("Click to view details"), :onclick => "miqTreeActivateNode('#{tree_box}', '#{tree_id}_#{typ}-#{to_cid(obj[:id])}')"}
-              %td.narrow
+              %td.table-view-pf-select
                 %i{:class => "product product-custom-#{img}"}
               %td
                 = obj[:name].split("|").first
@@ -93,7 +93,7 @@
     %hr
     %table.table.table-bordered.table-hover.table-striped
       %thead
-        %th.narrow
+        %th.table-view-pf-select
         %th
           = _('Text')
         %th
@@ -103,7 +103,7 @@
           - tree_box = x_active_tree == :sandt_tree ? 'sandt_tree' : 'ab_tree'
           - id = @nodetype[0].split('-')[1] == "ub" ? "#{@nodetype[0]}_cb-#{to_cid(obj[:id])}" : "#{x_node}_cb-#{to_cid(obj[:id])}"
           %tr{:title => _("Click to view details"), :onclick => "miqTreeActivateNode('#{tree_box}', '#{id}')"}
-            %td.narrow
+            %td.table-view-pf-select
               %i{:class => "product product-custom-#{obj[:button_image]}"}
             %td
               = obj[:name]
