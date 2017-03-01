@@ -297,7 +297,7 @@ class MiqTaskController < ApplicationController
 
   def db_table
     case @tabform
-    when 'tasks_1', 'tasks_3' then ""
+    when 'tasks_1', 'tasks_3' then "jobs."
     when 'tasks_2', 'tasks_4' then "miq_tasks."
     end
   end
