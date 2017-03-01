@@ -888,7 +888,6 @@ module ApplicationController::Performance
         chart_layout.each_with_index do |chart, _idx|
           next if chart.nil?
           rpt = perf_get_chart_rpt("vim_perf_tophour")
-          rpt.db = "MetricRollup"
           rpt.tz = @perf_options[:tz]
           rpt.time_profile_id = @perf_options[:time_profile]
           rpt.where_clause = ["resource_type = ? and resource_id IN (?) and timestamp = ? and capture_interval_name = ?",
@@ -900,7 +899,6 @@ module ApplicationController::Performance
         end
       else                                    # Gen chart based on index
         rpt = perf_get_chart_rpt("vim_perf_tophour")
-        rpt.db = "MetricRollup"
         rpt.tz = @perf_options[:tz]
         rpt.time_profile_id = @perf_options[:time_profile]
         rpt.where_clause = ["resource_type = ? and resource_id IN (?) and timestamp = ? and capture_interval_name = ?",
