@@ -734,7 +734,7 @@ module ApplicationController::Performance
 
     @charts, @chart_data = perf_gen_charts(rpt, @perf_options)
     if perf_parent?
-      @parent_charts, @parent_chart_data = perf_gen_charts(p_rpt, @perf_options.clone, true)
+      @parent_charts, @parent_chart_data = perf_gen_charts(p_rpt, @perf_options, true)
     end
 
     @sb[:chart_reports] = rpt           # Hang on to the report data for these charts
