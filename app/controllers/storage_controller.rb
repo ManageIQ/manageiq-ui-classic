@@ -216,7 +216,7 @@ class StorageController < ApplicationController
   def get_storages
     page = params[:page].nil? ? 1 : params[:page].to_i
     @current_page = page
-    @items_per_page = settings(:perpage, @gtl_type.to_sym)   # Get the per page setting for this gtl type
+    @items_per_page = settings(:perpage, @gtl_type.to_sym) # Get the per page setting for this gtl type
     @storage_pages, @storages = paginate(:storages, :per_page => @items_per_page, :order => @col_names[get_sort_col] + " " + @sortdir)
   end
 

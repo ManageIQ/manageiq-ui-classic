@@ -529,7 +529,7 @@ module ApplicationController::Filter
         session[:adv_search] ||= {}                   # Create/reuse the adv search hash
         session[:adv_search][@edit[@expkey][:exp_model]] = copy_hash(@edit) # Save by model name in settings
         default_search = settings(:default_search, @view.db.to_s.to_sym)
-        if default_search.present? && default_search != "0"
+        if default_search.present? && default_search.to_i != 0
           s = MiqSearch.find(default_search)
           @edit[@expkey].select_filter(s)
           @edit[:selected] = false
@@ -986,7 +986,7 @@ module ApplicationController::Filter
   def build_listnav_search_list(db)
     @settings[:default_search] = current_user.settings[:default_search]  # Get the user's default search settings again, incase default search was deleted
     default_search_db = settings(:default_search, db.to_sym).to_s
-    if default_search_db.present? && default_search_db != '0' && MiqSearch.exists?(default_search_db)
+    if default_search_db.present? && default_search_db.to_i != 0 && MiqSearch.exists?(default_search_db)
       @default_search = MiqSearch.find(default_search_db)
     end
 

@@ -1430,7 +1430,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_view_calculate_gtl_type(db_sym)
-    gtl_type = @settings.fetch_path(:views, db_sym) unless %w(scanitemset miqschedule pxeserver customizationtemplate).include?(db_sym.to_s)
+    gtl_type = settings(:views, db_sym) unless %w(scanitemset miqschedule pxeserver customizationtemplate).include?(db_sym.to_s)
     gtl_type = 'grid' if ['vm'].include?(db_sym.to_s) && request.parameters[:controller] == 'service'
     gtl_type ||= 'list' # return a sane default
     gtl_type
@@ -1523,7 +1523,7 @@ class ApplicationController < ActionController::Base
     sortdir_sym = "#{sort_prefix}_sortdir".to_sym
 
     # Set up the list view type (grid/tile/list)
-    @settings.store_path(:views, db_sym, params[:type]) if params[:type]  # Change the list view type, if it's sent in
+    @settings.store_path(:views, db_sym, params[:type]) if params[:type] # Change the list view type, if it's sent in
 
     @gtl_type = get_view_calculate_gtl_type(db_sym)
 
