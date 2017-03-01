@@ -407,11 +407,6 @@ class ApplicationHelper::ToolbarBuilder
       when "db_delete"
         return N_("Default Dashboard cannot be deleted") if @db.read_only
       end
-    when "Service"
-      case id
-      when "service_retire_now"
-        return N_("Service is already retired") if @record.retired == true
-      end
     when "ScanItemSet"
       case id
       when "ap_delete"
