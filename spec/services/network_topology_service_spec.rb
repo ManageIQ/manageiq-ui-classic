@@ -4,8 +4,9 @@ describe NetworkTopologyService do
   describe "#build_kinds" do
     it "creates the expected number of entity types" do
       expect(network_topology_service.build_kinds.keys).to match_array([
-        :CloudNetwork, :CloudSubnet, :CloudTenant, :FloatingIp, :LoadBalancer, :NetworkManager, :NetworkPort, :NetworkRouter,
-        :SecurityGroup, :Tag, :Vm, :AvailabilityZone])
+                                                                         :CloudNetwork, :CloudSubnet, :CloudTenant, :FloatingIp, :LoadBalancer, :NetworkManager, :NetworkPort, :NetworkRouter,
+                                                                         :SecurityGroup, :Tag, :Vm, :AvailabilityZone
+                                                                       ])
     end
   end
 
@@ -13,8 +14,9 @@ describe NetworkTopologyService do
     it "creates link between source to target" do
       expect(network_topology_service.build_link(
                "95e49048-3e00-11e5-a0d2-18037327aaeb",
-               "96c35f65-3e00-11e5-a0d2-18037327aaeb")).to eq(:source => "95e49048-3e00-11e5-a0d2-18037327aaeb",
-                                                              :target => "96c35f65-3e00-11e5-a0d2-18037327aaeb")
+               "96c35f65-3e00-11e5-a0d2-18037327aaeb"
+      )).to eq(:source => "95e49048-3e00-11e5-a0d2-18037327aaeb",
+               :target => "96c35f65-3e00-11e5-a0d2-18037327aaeb")
     end
   end
 
@@ -56,7 +58,8 @@ describe NetworkTopologyService do
       ems = FactoryGirl.create(:ems_openstack).network_manager
 
       allow(network_topology_service).to receive(:retrieve_providers).with(
-                                           anything, ManageIQ::Providers::NetworkManager).and_return([ems])
+        anything, ManageIQ::Providers::NetworkManager
+      ).and_return([ems])
       network_topology_service.instance_variable_set(:@providers,
                                                      ManageIQ::Providers::NetworkManager.where(:id => ems.id))
 
@@ -65,7 +68,8 @@ describe NetworkTopologyService do
                                                       :status       => "Unknown",
                                                       :kind         => "NetworkManager",
                                                       :display_kind => "Openstack",
-                                                      :miq_id       => ems.id})
+                                                      :miq_id       => ems.id}
+      )
     end
 
     it "topology contains the expected structure and content" do
@@ -74,56 +78,56 @@ describe NetworkTopologyService do
 
       expect(subject[:items]).to(
         eq(
-          "NetworkManager" + ems.compressed_id.to_s            => {
+          "NetworkManager" + ems.compressed_id.to_s                  => {
             :name         => ems.name,
             :kind         => "NetworkManager",
             :miq_id       => ems.id,
             :status       => "Unknown",
             :display_kind => "Openstack"
           },
-          "AvailabilityZone" + @availability_zone.compressed_id.to_s          => {
+          "AvailabilityZone" + @availability_zone.compressed_id.to_s => {
             :name         => "AZ name",
             :kind         => "AvailabilityZone",
             :miq_id       => @availability_zone.id,
             :status       => "Unknown",
             :display_kind => "AvailabilityZone"
           },
-          "CloudTenant" + @cloud_tenant.compressed_id.to_s     => {
+          "CloudTenant" + @cloud_tenant.compressed_id.to_s           => {
             :name         => @cloud_tenant.name,
             :kind         => "CloudTenant",
             :miq_id       => @cloud_tenant.id,
             :status       => "Unknown",
             :display_kind => "CloudTenant"
           },
-          "CloudNetwork" + @cloud_network.compressed_id.to_s   => {
+          "CloudNetwork" + @cloud_network.compressed_id.to_s         => {
             :name         => @cloud_network.name,
             :kind         => "CloudNetwork",
             :miq_id       => @cloud_network.id,
             :status       => "Unknown",
             :display_kind => "CloudNetwork"
           },
-          "CloudNetwork" + @public_network.compressed_id.to_s  => {
+          "CloudNetwork" + @public_network.compressed_id.to_s        => {
             :name         => @public_network.name,
             :kind         => "CloudNetwork",
             :miq_id       => @public_network.id,
             :status       => "Unknown",
             :display_kind => "CloudNetwork"
           },
-          "CloudSubnet" + @cloud_subnet.compressed_id.to_s     => {
+          "CloudSubnet" + @cloud_subnet.compressed_id.to_s           => {
             :name         => @cloud_subnet.name,
             :kind         => "CloudSubnet",
             :miq_id       => @cloud_subnet.id,
             :status       => "Unknown",
             :display_kind => "CloudSubnet"
           },
-          "FloatingIp" + @floating_ip.compressed_id.to_s       => {
+          "FloatingIp" + @floating_ip.compressed_id.to_s             => {
             :name         => @floating_ip.name,
             :kind         => "FloatingIp",
             :miq_id       => @floating_ip.id,
             :status       => "Unknown",
             :display_kind => "FloatingIp"
           },
-          "NetworkRouter" + @network_router.compressed_id.to_s => {
+          "NetworkRouter" + @network_router.compressed_id.to_s       => {
             :name         => @network_router.name,
             :kind         => "NetworkRouter",
             :miq_id       => @network_router.id,
@@ -131,14 +135,14 @@ describe NetworkTopologyService do
             :display_kind => "NetworkRouter"
           },
 
-          "SecurityGroup" + @security_group.compressed_id.to_s => {
+          "SecurityGroup" + @security_group.compressed_id.to_s       => {
             :name         => @security_group.name,
             :kind         => "SecurityGroup",
             :miq_id       => @security_group.id,
             :status       => "Unknown",
             :display_kind => "SecurityGroup"
           },
-          "Vm" + @vm.compressed_id.to_s                        => {
+          "Vm" + @vm.compressed_id.to_s                              => {
             :name         => @vm.name,
             :kind         => "Vm",
             :miq_id       => @vm.id,
