@@ -444,11 +444,6 @@ class ApplicationHelper::ToolbarBuilder
       when "db_delete"
         return N_("Default Dashboard cannot be deleted") if @db.read_only
       end
-    when "OrchestrationStack"
-      case id
-      when "orchestration_stack_retire_now"
-        return N_("Orchestration Stack is already retired") if @record.retired == true
-      end
     when "Service"
       case id
       when "service_retire_now"
