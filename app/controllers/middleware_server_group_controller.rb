@@ -34,13 +34,8 @@ class MiddlewareServerGroupController < ApplicationController
     OPERATIONS
   end
 
-  def show
-    return unless init_show
-    @display = params[:display] unless params[:display].nil?
-    case @display
-    when 'middleware_servers' then show_middleware_entities(MiddlewareServer)
-    else show_middleware
-    end
+  def self.display_methods
+    %i(middleware_servers)
   end
 
   def textual_group_list
