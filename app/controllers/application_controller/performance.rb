@@ -448,27 +448,24 @@ module ApplicationController::Performance
 
     elsif cmd == "Chart" && model == "Selected"                             # Create daily/hourly chart for selected CI
       return unless @record = perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
-      new_opts = {}
-
-      # Copy general items from the current perf_options
-      new_opts[:index] = @perf_options[:index]
-      new_opts[:tz] = @perf_options[:tz]
-      new_opts[:time_profile] = @perf_options[:time_profile]
-      new_opts[:time_profile_days] = @perf_options[:time_profile_days]
-      new_opts[:time_profile_tz] = @perf_options[:time_profile_tz]
-
-      # Set new perf options based on what was selected
-      new_opts[:model] = data_row["resource_type"]
-      new_opts[:typ] = typ
-      new_opts[:daily_date] = @perf_options[:daily_date] if typ == "Daily"
-      new_opts[:days] = @perf_options[:days] if typ == "Daily"
-      new_opts[:hourly_date] = [ts.month, ts.day, ts.year].join("/") if typ == "Hourly"
-
       # Set the perf options in the selected controller's sandbox
       cont = data_row["resource_type"].underscore.downcase.to_sym
       session[:sandboxes][cont] ||= {}
       session[:sandboxes][cont][:perf_options] ||= {}
-      session[:sandboxes][cont][:perf_options].merge!(new_opts)
+
+      # Copy general items from the current perf_options
+      session[:sandboxes][cont][:perf_options][:index] = @perf_options[:index]
+      session[:sandboxes][cont][:perf_options][:tz] = @perf_options[:tz]
+      session[:sandboxes][cont][:perf_options][:time_profile] = @perf_options[:time_profile]
+      session[:sandboxes][cont][:perf_options][:time_profile_days] = @perf_options[:time_profile_days]
+      session[:sandboxes][cont][:perf_options][:time_profile_tz] = @perf_options[:time_profile_tz]
+
+      # Set new perf options based on what was selected
+      session[:sandboxes][cont][:perf_options][:model] = data_row["resource_type"]
+      session[:sandboxes][cont][:perf_options][:typ] = typ
+      session[:sandboxes][cont][:perf_options][:daily_date] = @perf_options[:daily_date] if typ == "Daily"
+      session[:sandboxes][cont][:perf_options][:days] = @perf_options[:days] if typ == "Daily"
+      session[:sandboxes][cont][:perf_options][:hourly_date] = [ts.month, ts.day, ts.year].join("/") if typ == "Hourly"
 
       if data_row["resource_type"] == "VmOrTemplate"
         prefix = TreeBuilder.get_prefix_for_model(@record.class.base_model)
