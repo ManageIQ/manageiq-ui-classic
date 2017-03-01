@@ -1954,7 +1954,7 @@ class ApplicationController < ActionController::Base
     @detail_sortdir = @sb[:detail_sortdir].nil? ? "ASC" : @sb[:detail_sortdir]    # sort column for detail lists
 
     # Get performance hash, if it is in the sandbox for the running controller
-    @perf_options = @sb[:perf_options] || {}
+    @perf_options = @sb[:perf_options] || Performance::Options.new
 
     # Set @edit key default for the expression editor to use
     @expkey = session[:expkey] ? session[:expkey] : :expression

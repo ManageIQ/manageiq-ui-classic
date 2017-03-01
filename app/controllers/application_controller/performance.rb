@@ -451,7 +451,7 @@ module ApplicationController::Performance
       # Set the perf options in the selected controller's sandbox
       cont = data_row["resource_type"].underscore.downcase.to_sym
       session[:sandboxes][cont] ||= {}
-      session[:sandboxes][cont][:perf_options] ||= {}
+      session[:sandboxes][cont][:perf_options] ||= Options.new
 
       # Copy general items from the current perf_options
       session[:sandboxes][cont][:perf_options][:index] = @perf_options[:index]
@@ -550,7 +550,7 @@ module ApplicationController::Performance
   def perf_gen_init_options(refresh = nil)
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
     unless refresh == "n" || params[:refresh] == "n"
-      @perf_options = {}
+      @perf_options = Options.new
       tzs = TimeProfile.rollup_daily_metrics.all_timezones
       @perf_options[:tz_daily] = tzs.include?(session[:user_tz]) ? session[:user_tz] : tzs.first
       @perf_options[:typ] = "Daily"
