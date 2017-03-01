@@ -62,6 +62,49 @@ module ApplicationController::Performance
       end
     end
 
+    def set_dates(start_date, end_date, allow_interval_override)
+      tz = time_profile_tz || self.tz # Use time profile tz or chosen tz, if no profile tz
+      self.sdate = start_date.in_time_zone(tz)
+      self.edate = end_date.in_time_zone(tz)
+      self.sdate_daily = sdate.hour.zero? ? sdate : sdate + 1.day
+      self.edate_daily = edate.hour < 23 ? edate - 1.day : edate
+
+      if typ == 'Daily' && edate_daily < sdate_daily
+        self.no_daily = true
+        self.typ = 'Hourly' if allow_interval_override
+      else
+        self.no_daily = false
+      end
+
+      if hourly_date.present? &&
+         (hourly_date.to_date < sdate.to_date || hourly_date.to_date > edate.to_date || # it is out of range
+         (typ == 'Hourly' && time_profile && !time_profile_days.include?(hourly_date.to_date.wday))) # or out of profile
+        self.hourly_date = nil
+      end
+      if daily_date.present? &&
+         (daily_date.to_date < sdate_daily.to_date || daily_date.to_date > edate_daily.to_date)
+        options[:daily_date] = nil
+      end
+      self.hourly_date ||= [edate.month, edate.day, edate.year].join('/')
+      self.daily_date  ||= [edate_daily.month, edate_daily.day, edate_daily.year].join('/')
+
+      if typ == 'Hourly' && time_profile # If hourly and profile in effect, set hourly date to a valid day in profile
+        self.skip_days = (1..7).to_a.delete_if do |d|
+          # time_profile_days has 0 for sunday, skip_days needs 7 for sunday
+          time_profile_days.include?(d % 7)
+        end
+
+        hdate = hourly_date.to_date                                       # Start at the currently set hourly date
+        6.times do                                                        # Go back up to 6 days (try each weekday)
+          break if time_profile_days.include?(hdate.wday)                 # If weekday is in the profile, use it
+          hdate -= 1.day                                                  # Drop back 1 day and try again
+        end
+        self.hourly_date = [hdate.month, hdate.day, hdate.year].join('/') # Set the new hourly date
+      else
+        self.skip_days = nil
+      end
+    end
+
     def cats # category pulldown for tag charts
       return unless %w(EmsCluster Host Storage AvailabilityZone HostAggregate).include?(model)
       self[:cats] ||=

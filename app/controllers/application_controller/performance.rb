@@ -162,7 +162,6 @@ module ApplicationController::Performance
   # Correct any date that is out of the date/range or not allowed in a profile
   def perf_set_or_fix_dates(options, allow_interval_override = true)
     # Get start/end dates in selected timezone
-    tz = options[:time_profile_tz] || options[:tz]  # Use time profile tz or chosen tz, if no profile tz
     s, e = @perf_record.first_and_last_capture('hourly')
     if s.nil?
       s, e = @perf_record.first_and_last_capture('realtime')
@@ -174,47 +173,7 @@ module ApplicationController::Performance
       options[:typ] = "realtime"
       options[:no_rollups] = true
     end
-    sdate = s.in_time_zone(tz)
-    edate = e.in_time_zone(tz)
-    options[:sdate] = sdate
-    options[:edate] = edate
-
-    sdate_daily = sdate.hour == 00 ? sdate : sdate + 1.day
-    options[:sdate_daily] = sdate_daily
-    edate_daily = edate.hour < 23 ? edate - 1.day : edate
-    options[:edate_daily] = edate_daily
-    # check if Daily report was manualy chosen in UI
-    if options[:typ] == "Daily" && edate_daily < sdate_daily
-      options[:no_daily] = true
-      options[:typ] = "Hourly" if allow_interval_override
-    else
-      options[:no_daily] = false
-    end
-
-    if options[:hourly_date].present? && # Need to clear hourly date if not nil so it will be reset below if
-       (options[:hourly_date].to_date < sdate.to_date || options[:hourly_date].to_date > edate.to_date || # it is out of range
-         (options[:typ] == "Hourly" && options[:time_profile] && !options[:time_profile_days].include?(options[:hourly_date].to_date.wday))) # or not in profile
-      options[:hourly_date] = nil
-    end
-    if options[:daily_date].present? &&
-       (options[:daily_date].to_date < sdate_daily.to_date || options[:daily_date].to_date > edate_daily.to_date)
-      options[:daily_date] = nil
-    end
-    options[:hourly_date] ||= [edate.month, edate.day, edate.year].join("/")
-    options[:daily_date] ||= [edate_daily.month, edate_daily.day, edate_daily.year].join("/")
-
-    if options[:typ] == "Hourly" && options[:time_profile]              # If hourly and profile in effect, set hourly date to a valid day in the profile
-      options[:skip_days] = skip_days_from_time_profile(options[:time_profile_days])
-
-      hdate = options[:hourly_date].to_date                             # Start at the currently set hourly date
-      6.times do                                                        # Go back up to 6 days (try each weekday)
-        break if options[:time_profile_days].include?(hdate.wday)       # If weekday is in the profile, use it
-        hdate -= 1.day                                                  # Drop back 1 day and try again
-      end
-      options[:hourly_date] = [hdate.month, hdate.day, hdate.year].join("/")  # Set the new hourly date
-    else
-      options[:skip_days] = nil
-    end
+    @perf_options.set_dates(s, e, allow_interval_override)
   end
 
   def skip_days_from_time_profile(time_profile_days)
