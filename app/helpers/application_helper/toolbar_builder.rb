@@ -461,15 +461,6 @@ class ApplicationHelper::ToolbarBuilder
       when "ap_edit"
         return N_("Sample Analysis Profile cannot be edited") if @record.read_only
       end
-    when "ServiceTemplate"
-      case id
-      when "svc_catalog_provision"
-        d = nil
-        @record.resource_actions.each do |ra|
-          d = Dialog.find_by_id(ra.dialog_id.to_i) if ra.action.downcase == "provision"
-        end
-        return N_("No Ordering Dialog is available") if d.nil?
-      end
     when "Storage"
       case id
       when "storage_perf"
