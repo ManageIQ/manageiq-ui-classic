@@ -5,6 +5,7 @@ class EmsContainerController < ApplicationController
   include Mixins::EmsCommonAngular
   include Mixins::GenericSessionMixin
   include Mixins::DashboardViewMixin
+  include ContainersExternalLoggingSupportMixin
 
   before_action :check_privileges
   before_action :get_session_data

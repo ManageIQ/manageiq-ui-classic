@@ -1,5 +1,6 @@
 class ContainerNodeController < ApplicationController
   include ContainersCommonMixin
+  include ContainersExternalLoggingSupportMixin
 
   before_action :check_privileges
   before_action :get_session_data
