@@ -520,26 +520,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       end
     end
 
-    context "when record class = ServiceTemplate" do
-      context "and id = svc_catalog_provision" do
-        before do
-          @record = ServiceTemplate.new
-          @id = "svc_catalog_provision"
-        end
-
-        it "no provision dialog is available when action = 'provision'" do
-          allow(@record).to receive(:resource_actions).and_return([])
-          expect(subject).to eq("No Ordering Dialog is available")
-        end
-
-        it "when a provision dialog is available" do
-          allow(@record).to receive_messages(:resource_actions => [double(:action => 'Provision', :dialog_id => '10')])
-          allow(Dialog).to receive_messages(:find_by_id => 'some thing')
-          expect(subject).to be_falsey
-        end
-      end
-    end
-
     context "when record class = Storage" do
       before { @record = Storage.new }
 
