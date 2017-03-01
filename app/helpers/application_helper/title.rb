@@ -86,5 +86,35 @@ module ApplicationHelper
                 ": #{ui_lookup(:tables => layout)}"
               end
     end
+
+    def title_for_hosts
+      title_for_host(true)
+    end
+
+    def title_for_host(plural = false)
+      case Host.node_types
+      when :non_openstack
+        plural ? _("Hosts") : _("Host")
+      when :openstack
+        plural ? _("Nodes") : _("Node")
+      else
+        plural ? _("Hosts / Nodes") : _("Host / Node")
+      end
+    end
+
+    def title_for_clusters
+      title_for_cluster(true)
+    end
+
+    def title_for_cluster(plural = false)
+      case EmsCluster.node_types
+      when :non_openstack
+        plural ? _("Clusters") : _("Cluster")
+      when :openstack
+        plural ? _("Deployment Roles") : _("Deployment Role")
+      else
+        plural ? _("Clusters / Deployment Roles") : _("Cluster / Deployment Role")
+      end
+    end
   end
 end
