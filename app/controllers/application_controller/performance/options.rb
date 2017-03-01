@@ -24,7 +24,6 @@ module ApplicationController::Performance
     :top_model,
     :top_ts,
     :top_ids,
-    :vmtypes,           # <All>/registered/unregistered/unmanaged
     :vmtype,            # selected vmtype
     :compare_vm,        # id of Vm to compare with
     :skip_days,         # which days to skip, based on time_profile_days
@@ -50,6 +49,15 @@ module ApplicationController::Performance
           end
           ret_cats
         end
+    end
+
+    def vmtypes
+      if 'Storage' == model && typ == 'Daily'
+        [['<All>', '<All>'],
+         ['Managed/Registered', 'registered'],
+         ['Managed/Unregistered', 'unregistered'],
+         ['Not Managed', 'unmanaged']]
+      end
     end
   end
 end

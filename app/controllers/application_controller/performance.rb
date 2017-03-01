@@ -561,16 +561,6 @@ module ApplicationController::Performance
       @perf_options[:model] = @perf_record.class.base_class.to_s
     end
     @perf_options[:rt_minutes] ||= 15.minutes
-    if ["Storage"].include?(@perf_options[:model]) && @perf_options[:typ] == "Daily"
-      @perf_options[:vmtypes] ||= [["<All>", "<All>"],
-                                   ["Managed/Registered", "registered"],
-                                   ["Managed/Unregistered", "unregistered"],
-                                   ["Not Managed", "unmanaged"]
-                                  ]
-    else
-      @perf_options[:vmtypes] = nil
-    end
-
     get_time_profiles(@perf_record) # Get time profiles list (global and user specific). Pass record so that profiles can be limited to its region.
     # Get the time zone from the time profile, if one is in use
     if @perf_options[:time_profile]

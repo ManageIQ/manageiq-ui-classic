@@ -82,12 +82,12 @@
               :javascript
                 miqSelectPickerEvent("perf_cat", "#{url}")
         - unless @perf_options[:cat]
-          - if @perf_options[:vmtypes] && (@perf_options[:index].nil? || @charts.first[:title].include?("by Type"))
+          - if @perf_options.vmtypes && (@perf_options[:index].nil? || @charts.first[:title].include?("by Type"))
             %dt
               = _("Show VM Types")
             %dd
               = select_tag("perf_vmtype",
-                           options_for_select(@perf_options[:vmtypes],
+                           options_for_select(@perf_options.vmtypes,
                            @perf_options[:vmtype]),
                            "data-miq_sparkle_on" => true,
                            :class    => "selectpicker")
