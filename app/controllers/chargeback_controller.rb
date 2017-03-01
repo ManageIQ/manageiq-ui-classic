@@ -76,7 +76,7 @@ class ChargebackController < ApplicationController
     @explorer = true
     if params[:ppsetting]                                              # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                        # Set the new per page value
-      @settings[:perpage][@gtl_type.to_sym] = @items_per_page          # Set the per page setting for this gtl type
+      @settings.store_path(:perpage, @gtl_type.to_sym, @items_per_page) # Set the per page setting for this gtl type
     end
     @sortcol = session[:rates_sortcol].nil? ? 0 : session[:rates_sortcol].to_i
     @sortdir = session[:rates_sortdir].nil? ? "ASC" : session[:rates_sortdir]

@@ -205,7 +205,7 @@ class StorageManagerController < ApplicationController
   def show
     @display = params[:display] || "main" unless pagination_or_gtl_request?
 
-    session[:sm_summary_cool] = (@settings[:views][:sm_summary_cool] == "summary")
+    session[:sm_summary_cool] = (settings(:views, :sm_summary_cool) == "summary")
     @summary_view = session[:sm_summary_cool]
     @sm = @record = identify_record(params[:id])
     return if record_no_longer_exists?(@sm)

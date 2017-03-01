@@ -21,6 +21,10 @@ module ApplicationHelper
     @settings.fetch_path(*path)
   end
 
+  def settings_default(default, *path)
+    settings(*path) || default
+  end
+
   def documentation_link(url = nil, documentation_subject = "")
     if url
       link_to(_("For more information, visit the %{subject} documentation.") % {:subject => documentation_subject},

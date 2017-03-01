@@ -164,12 +164,12 @@ class ConfigurationController < ApplicationController
 
           # Now copying ALL display settings into the :css hash so we can easily add new settings
           @settings[:css] ||= {}
-          @settings[:css].merge!(@settings[:display])
-          @settings[:css].merge!(THEME_CSS_SETTINGS[@settings[:display][:theme]])
+          @settings[:css].merge!(settings(:display))
+          @settings[:css].merge!(THEME_CSS_SETTINGS[settings(:display, :theme)])
 
           @css ||= {}
-          @css.merge!(@settings[:display])
-          @css.merge!(THEME_CSS_SETTINGS[@settings[:display][:theme]])
+          @css.merge!(settings(:display))
+          @css.merge!(THEME_CSS_SETTINGS[settings(:display, :theme)])
           set_user_time_zone
           add_flash(_("User Interface settings saved for User %{name}") % {:name => current_user.name})
         else

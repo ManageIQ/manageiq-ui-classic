@@ -30,7 +30,7 @@ module PxeController::PxeCustomizationTemplates
     @ajax_paging_buttons = true
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
-      @settings[:perpage][@gtl_type.to_sym] = @items_per_page         # Set the per page setting for this gtl type
+      @settings.store_path(:perpage, @gtl_type.to_sym, @items_per_page) # Set the per page setting for this gtl type
     end
     @sortcol = session[:ct_sortcol].nil? ? 0 : session[:ct_sortcol].to_i
     @sortdir = session[:ct_sortdir].nil? ? "ASC" : session[:ct_sortdir]

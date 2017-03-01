@@ -342,7 +342,7 @@ class DashboardController < ApplicationController
       @user_name     = params[:user_name]
       @user_password = params[:user_password]
     end
-    css = @settings[:css] if @settings && @settings[:css] # Save prior CSS settings
+    css = settings(:css) # Save prior CSS settings
     @settings = copy_hash(DEFAULT_SETTINGS)               # Need settings, else pages won't display
     @settings[:css] = css if css                          # Restore CSS settings for other tabs previusly logged in
     @more = params[:type] && params[:type] != "less"
@@ -658,12 +658,12 @@ class DashboardController < ApplicationController
     # Copy ALL display settings into the :css hash so we can easily add new settings
     @settings[:css] ||= {}
     @settings[:css].merge!(@settings[:display])
-    @settings[:display][:theme] = THEMES.first.last unless THEMES.collect(&:last).include?(@settings[:display][:theme])
-    @settings[:css].merge!(THEME_CSS_SETTINGS[@settings[:display][:theme]])
+    @settings.store_path(:display, :theme, THEMES.first.last) unless THEMES.collect(&:last).include?(settings(:display, :theme))
+    @settings[:css].merge!(THEME_CSS_SETTINGS[settings(:display, :theme)])
 
     @css ||= {}
     @css.merge!(@settings[:display])
-    @css.merge!(THEME_CSS_SETTINGS[@settings[:display][:theme]])
+    @css.merge!(THEME_CSS_SETTINGS[settings(:display, :theme)])
 
     session[:user_TZO] = params[:user_TZO] ? params[:user_TZO].to_i : nil     # Grab the timezone (future use)
     session[:browser] ||= Hash.new("Unknown")

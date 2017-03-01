@@ -739,11 +739,11 @@ module ApplicationController::Compare
     @compare = nil                                                            # Clear the compare array to have it rebuilt
     @base = nil                                                                 # Clear the base comparison VM
     if mode == "compare"
-      session[:miq_compressed]  = (@settings[:views][:compare] == "compressed")
-      session[:miq_exists_mode] = (@settings[:views][:compare_mode] == "exists")
+      session[:miq_compressed]  = (settings(:views, :compare) == "compressed")
+      session[:miq_exists_mode] = (settings(:views, :compare_mode) == "exists")
     else
-      session[:miq_compressed]  = (@settings[:views][:drift] == "compressed")
-      session[:miq_exists_mode] = (@settings[:views][:drift_mode] == "exists")
+      session[:miq_compressed]  = (settings(:views, :drift) == "compressed")
+      session[:miq_exists_mode] = (settings(:views, :drift_mode) == "exists")
     end
     @compressed = session[:miq_compressed]
     @exists_mode = session[:miq_exists_mode]

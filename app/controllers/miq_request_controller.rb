@@ -114,12 +114,12 @@ class MiqRequestController < ApplicationController
     @lastaction = "show_list"
     @gtl_url = "/show_list"
 
-    @settings[:views][:miqrequest] = params[:type] if params[:type]   # new gtl type came in, set it
-    @gtl_type = @settings[:views][:miqrequest]                        # set the var for the UI to use
+    @settings.storage_path(:views, :miqrequest, params[:type]) if params[:type]   # new gtl type came in, set it
+    @gtl_type = settings(:views, :miqrequest)                        # set the var for the UI to use
 
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
-      @settings[:perpage][PERPAGE_TYPES[@gtl_type]] = @items_per_page # Set the per page setting for this gtl type
+      @settings.store_path(:perpage, PERPAGE_TYPES[@gtl_type], @items_per_page) # Set the per page setting for this gtl type
     end
     @sortcol = session[:request_sortcol].nil? ? 0 : session[:request_sortcol].to_i
     @sortdir = session[:request_sortdir].nil? ? "ASC" : session[:request_sortdir]

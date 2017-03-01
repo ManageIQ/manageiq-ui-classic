@@ -17,7 +17,7 @@
                 - li_class = "active"
             - elsif @edit && @edit[:expression] && ((@edit[:expression][:selected] && @edit[:expression][:selected][:id] == 0 && search.id.to_i == 0) || (@edit[:expression][:selected] && @edit[:expression][:selected][:name] == search.name && !@edit[:custom_search]))
               - li_class = "active"
-            - if (!@default_search.blank? && @default_search.name == search.name) || (@default_search.blank? && search.id.to_i == 0 && @settings[:default_search] && @settings[:default_search][@edit[@expkey][:exp_model].to_s.to_sym] && @settings[:default_search][@edit[@expkey][:exp_model].to_s.to_sym].to_i == 0)
+            - if (!@default_search.blank? && @default_search.name == search.name) || (@default_search.blank? && search.id.to_i == 0 && settings_default('0', :default_search, @edit[@expkey][:exp_model].to_s.to_sym).to_s == '0')
               - search_name << " (#{_('Default')})"
             %li{:class => li_class}
               = link_to(search_name.html_safe,
@@ -41,7 +41,7 @@
             - elsif @edit && @edit[:expression] && ((@edit[:expression][:selected].nil? && search.id.to_i == 0) || (@edit[:expression][:selected] && @edit[:expression][:selected][:name] == search.name && !@edit[:custom_search]))
               - li_class = "active"
             %li{:class => "#{li_class}"}
-              - if (!@default_search.blank? && @default_search.name == search.name) || (@default_search.blank? && search.id.to_i == 0 && @settings[:default_search] && @settings[:default_search][@edit[@expkey][:exp_model].to_s.to_sym] && @settings[:default_search][@edit[@expkey][:exp_model].to_s.to_sym].to_i == 0)
+              - if (!@default_search.blank? && @default_search.name == search.name) || (@default_search.blank? && search.id.to_i == 0 && settings_default('0', :default_search, @edit[@expkey][:exp_model].to_s.to_sym).to_s == '0')
                 - search_name << " (#{_('Default')})"
               = link_to(search.description.html_safe,
                 {:action => 'listnav_search_selected', :id => search.id, :button => "apply"},
@@ -51,7 +51,7 @@
                 :onclick      => "return miqCheckForChanges()")
 
 
-  - if @edit && @edit[:expression] && @edit[:expression][:selected] && (!@settings[:default_search] || (@settings[:default_search] && @edit[:expression][:selected][:id].to_i != @settings[:default_search][@edit[@expkey][:exp_model].to_s.to_sym].to_i) || (!@settings[:default_search][@edit[@expkey][:exp_model].to_s.to_sym]))
+  - if @edit && @edit[:expression] && @edit[:expression][:selected] && (@settings[:default_search] || (@edit[:expression][:selected][:id].to_i != settings(:default_search, @edit[@expkey][:exp_model].to_s.to_sym).to_i) || (!settings(:default_search, @edit[@expkey][:exp_model].to_s.to_sym)))
     - t = _('Set the current filter as my default')
     = link_to(_("Set Default"),
       {:action => "save_default_search", :id => @edit[:expression][:selected][:id].to_i},
