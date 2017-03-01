@@ -9,6 +9,10 @@ module ApplicationHelper
       I18n.t('product.name')
     end
 
+    def page_title
+      @page_title.present? ? productized_title(@page_title) : title_from_layout(@layout)
+    end
+
     # Derive the browser title text based on the layout value
     def title_from_layout(layout)
       title = product_title
