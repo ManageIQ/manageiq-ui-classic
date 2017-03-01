@@ -69,7 +69,8 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
           'fa fa-clock-o fa-lg',
           t = N_('Retire this Service'),
           t,
-          :confirm => N_("Retire this Service?")),
+          :confirm => N_("Retire this Service?"),
+          :klass   => ApplicationHelper::Button::ServiceRetireNow),
       ]
     ),
   ])
