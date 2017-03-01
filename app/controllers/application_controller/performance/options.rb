@@ -34,5 +34,22 @@ module ApplicationController::Performance
     :tz,
     :tz_daily,
   ) do
+    def build_cats # Build the category pulldown for tag charts
+      return unless %w(EmsCluster Host Storage AvailabilityZone HostAggregate).include?(model)
+      self.cats ||=
+        begin
+          cats = Classification.categories.select(&:show).sort_by(&:description)
+          cats.delete_if { |c| c.read_only? || c.entries.empty? }
+          ret_cats = {'<None>' => '<None>'}
+          case model
+          when 'Host', 'Storage', 'AvailabilityZone', 'HostAggregate'
+            cats.each { |c| ret_cats['Vm:' + c.name] = 'VM ' + c.description }
+          when 'EmsCluster'
+            cats.each { |c| ret_cats['Host:' + c.name] = 'Host ' + c.description }
+            cats.each { |c| ret_cats['Vm:' + c.name] = 'VM ' + c.description }
+          end
+          ret_cats
+        end
+    end
   end
 end

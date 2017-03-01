@@ -561,7 +561,7 @@ module ApplicationController::Performance
       @perf_options[:model] = @perf_record.class.base_class.to_s
     end
     @perf_options[:rt_minutes] ||= 15.minutes
-    @perf_options[:cats] ||= perf_build_cats(@perf_options[:model]) if ["EmsCluster", "Host", "Storage", "AvailabilityZone", "HostAggregate"].include?(@perf_options[:model])
+    @perf_options.build_cats
     if ["Storage"].include?(@perf_options[:model]) && @perf_options[:typ] == "Daily"
       @perf_options[:vmtypes] ||= [["<All>", "<All>"],
                                    ["Managed/Registered", "registered"],
@@ -1405,21 +1405,6 @@ module ApplicationController::Performance
       chart_xml[:xml2] = report.chart
     end
     chart_xml
-  end
-
-  # Build the category pulldown for tag charts
-  def perf_build_cats(model)
-    cats = Classification.categories.select(&:show).sort_by(&:description) # Get the categories, sort by name
-    cats.delete_if { |c| c.read_only? || c.entries.length == 0 }                    # Remove categories that are read only or have no entries
-    ret_cats = {"<None>" => "<None>"}                                               # Classifications hash for chooser
-    case model
-    when "Host", "Storage", "AvailabilityZone", "HostAggregate"
-      cats.each { |c| ret_cats["Vm:" + c.name] = "VM " + c.description }            # Add VM categories to the hash
-    when "EmsCluster"
-      cats.each { |c| ret_cats["Host:" + c.name] = "Host " + c.description }        # Add VM categories to the hash
-      cats.each { |c| ret_cats["Vm:" + c.name] = "VM " + c.description }            # Add VM categories to the hash
-    end
-    ret_cats
   end
 
   # Build the chart zoom url
