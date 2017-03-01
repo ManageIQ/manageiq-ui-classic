@@ -65,11 +65,7 @@ module ApplicationController::Performance
       page.replace("candu_charts_div", :partial => "layouts/perf_charts",
                                        :locals  => {:chart_data => @chart_data, :chart_set => "candu"})
       unless @no_util_data
-        if @perf_options[:typ] == "Hourly"
-          page << js_build_calendar(:date_from => @perf_options[:sdate], :date_to => @perf_options[:edate], :skip_days => @perf_options[:skip_days])
-        else
-          page << js_build_calendar(:date_from => @perf_options[:sdate_daily], :date_to => @perf_options[:edate_daily], :skip_days => @perf_options[:skip_days])
-        end
+        page << js_build_calendar(@perf_options.to_calendar)
         page << Charting.js_load_statement
       end
       page << 'miqSparkle(false);'
@@ -400,7 +396,7 @@ module ApplicationController::Performance
         end
         page.replace("perf_options_div", :partial => "layouts/perf_options")
         page.replace("candu_charts_div", :partial => "layouts/perf_charts", :locals => {:chart_data => @chart_data, :chart_set => "candu"})
-        page << js_build_calendar(:date_from => @perf_options[:sdate], :date_to => @perf_options[:edate], :skip_days => @perf_options[:skip_days])
+        page << js_build_calendar(@perf_options.to_calendar)
         page << Charting.js_load_statement
         page << 'miqSparkle(false);'
       end
@@ -428,7 +424,7 @@ module ApplicationController::Performance
         end
         page.replace("perf_options_div", :partial => "layouts/perf_options")
         page.replace("candu_charts_div", :partial => "layouts/perf_charts", :locals => {:chart_data => @chart_data, :chart_set => "candu"})
-        page << js_build_calendar(:date_from => @perf_options[:sdate_daily], :date_to => @perf_options[:edate_daily], :skip_days => @perf_options[:skip_days])
+        page << js_build_calendar(@perf_options.to_calendar)
         page << Charting.js_load_statement
         page << 'miqSparkle(false);'
       end

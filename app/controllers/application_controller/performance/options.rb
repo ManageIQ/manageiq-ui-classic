@@ -88,5 +88,13 @@ module ApplicationController::Performance
          ['Not Managed', 'unmanaged']]
       end
     end
+
+    def to_calendar
+      if typ == 'Hourly'
+        { :skip_days => skip_days, :date_from => sdate, :date_to => edate }
+      else
+        { :skip_days => skip_days, :date_from => sdate_daily, :date_to => edate_daily }
+      end
+    end
   end
 end
