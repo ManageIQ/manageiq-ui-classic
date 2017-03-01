@@ -59,7 +59,8 @@ describe AutomateImportJsonSerializerService do
       allow(import_file_upload).to receive(:binary_blob).and_return(binary_blob)
       allow(binary_blob).to receive(:binary).and_return('a bunch of junk')
       allow(tempfile).to receive(:binmode)
-      allow(Tempfile).to receive(:new).with(['automate_temporary_zip', '.zip']).and_return(tempfile)
+      allow(tempfile).to receive(:close)
+      allow(Tempfile).to receive(:open).with(['automate_temporary_zip', '.zip']).and_yield(tempfile)
       allow(MiqAeImport).to receive(:new).with('*', 'zip_file' => tempfile.path).and_return(miq_ae_yaml_import_zipfs)
       allow(miq_ae_yaml_import_zipfs).to receive(:domain_entries).with('*').and_return(
         ['Customer/test1.yml', 'ManageIQ/test2.yml']
@@ -95,8 +96,11 @@ describe AutomateImportJsonSerializerService do
       tempfile.unlink
     end
 
-    it 'sets the tempfile to binmode' do
-      expect(tempfile).to receive(:binmode)
+    it "sets the tempfile to binmode, writes to it, and then closes it" do
+      expect(tempfile).to receive(:binmode).ordered
+      expect(tempfile).to receive(:write).with("a bunch of junk").ordered
+      expect(tempfile).to receive(:close).ordered
+
       automate_import_json_serializer_service.serialize(import_file_upload)
     end
 
