@@ -14,7 +14,7 @@
             = select_tag('role',
                          options_for_select(@rss_roles, @rss_role),
                          :multiple => false,
-                         "data-miq_observe" => {:url => url_for(:action => 'role_selected')}.to_json)
+                         "data-miq_observe" => {:url => url_for_only_path(:action => 'role_selected')}.to_json)
             = javascript_tag(javascript_focus('role'))
         %tr
           %th.narrow

@@ -1,4 +1,4 @@
-- url = url_for(:action => 'rsop_show_options')
+- url = url_for_only_path(:action => 'rsop_show_options')
 - observe = {:url => url}.to_json
 #rsop_results_div
   = render :partial => "layouts/flash_msg"

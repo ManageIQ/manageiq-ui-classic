@@ -1,6 +1,6 @@
 - if @sb[:active_tab] == "settings_co_tags"
   #tab_div
-    - url = url_for(:action => 'ce_new_cat')
+    - url = url_for_only_path(:action => 'ce_new_cat')
     .form-horizontal
       %h3
         = _("Choose a Category")

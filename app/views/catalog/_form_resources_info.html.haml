@@ -1,4 +1,4 @@
-- url = url_for(:id => "#{@edit[:rec_id] || "new"}",
+- url = url_for_only_path(:id => (@edit[:rec_id] || "new").to_s,
   :action => @edit[:new][:service_type] == "composite" ? "st_form_field_changed" : "atomic_form_field_changed")
 
 #resources_info_div

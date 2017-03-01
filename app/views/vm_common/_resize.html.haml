@@ -1,5 +1,5 @@
 #main_div
-  - url = url_for(:action => 'resize_field_changed', :id => @record.id.to_s)
+  - url = url_for_only_path(:action => 'resize_field_changed', :id => @record.id.to_s)
 
   = render :partial => "layouts/flash_msg"
 
@@ -34,14 +34,14 @@
                          :class   => 'btn btn-primary',
                          :alt     => 'Submit',
                          :title   => 'Submit',
-                         :onclick => "miqAjaxButton('#{url_for(:action => 'resize_vm',
+                         :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'resize_vm',
                                                                :id     => @edit[:vm_id],
                                                                :button => "submit")}');")
           = button_tag(_("Cancel"),
                            :class   => 'btn btn-default',
                            :alt     => t = _("Cancel Changes"),
                            :title   => t,
-                           :onclick => "miqAjaxButton('#{url_for(:action => 'resize_vm',
+                           :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'resize_vm',
                                                                  :id     => @edit[:vm_id],
                                                                  :button => "cancel")}');")
         #buttons_off{:style => "display:#{@changed ? "none" : "display"};"}
@@ -50,6 +50,6 @@
                            :class   => 'btn btn-default',
                            :alt     => t = _("Cancel Changes"),
                            :title   => t,
-                           :onclick => "miqAjaxButton('#{url_for(:action => 'resize_vm',
+                           :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'resize_vm',
                                                                  :id     => @edit[:vm_id],
                                                                  :button => "cancel")}');")

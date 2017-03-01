@@ -362,7 +362,7 @@ class HostController < ApplicationController
       rescue Net::SSH::HostKeyMismatch => e   # Capture the Host key mismatch from the verify
         render :update do |page|
           page << javascript_prologue
-          new_url = url_for(:action => "update", :button => "validate", :type => params[:type], :remember_host => "true", :escape => false)
+          new_url = url_for_only_path(:action => "update", :button => "validate", :type => params[:type], :remember_host => "true", :escape => false)
           page << "if (confirm('The Host SSH key has changed, do you want to accept the new key?')) miqAjax('#{new_url}');"
         end
         return

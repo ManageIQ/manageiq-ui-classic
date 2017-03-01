@@ -75,7 +75,7 @@ module StorageHelper::TextualSummary
     num   = @record.number_of(:hosts)
     h     = {:label => label, :icon => "pficon pficon-screen", :value => num}
     if num > 0 && role_allows?(:feature => "host_show_list")
-      h[:link]  = url_for(:action => 'show', :id => @record, :display => 'hosts')
+      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'hosts')
       h[:title] = _("Show all %{label}") % {:label => label}
     end
     h
@@ -86,7 +86,7 @@ module StorageHelper::TextualSummary
     num   = @record.number_of(:all_vms)
     h     = {:label => label, :icon => "pficon pficon-virtual-machine", :value => num}
     if num > 0 && role_allows?(:feature => "vm_show_list")
-      h[:link]  = url_for(:action => 'show', :id => @record, :display => 'all_vms')
+      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'all_vms')
       h[:title] = _("Show all %{label}") % {:label => label}
     end
     h
@@ -97,7 +97,7 @@ module StorageHelper::TextualSummary
     num   = @record.number_of(:all_miq_templates)
     h     = {:label => label, :icon => "pficon pficon-virtual-machine", :value => num}
     if num > 0 && role_allows?(:feature => "miq_template_show_list")
-      h[:link]  = url_for(:action => 'show', :id => @record, :display => 'all_miq_templates')
+      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'all_miq_templates')
       h[:title] = _("Show all %{label}") % {:label => label}
     end
     h
@@ -120,7 +120,7 @@ module StorageHelper::TextualSummary
     h     = {:label => _("All Files"), :icon => "fa fa-file-o", :value => num}
     if num > 0
       h[:title] = _("Show all files installed on this %{table}") % {:table => ui_lookup(:table => "storages")}
-      h[:link]  = url_for(:action => 'files', :id => @record)
+      h[:link]  = url_for_only_path(:action => 'files', :id => @record)
     end
     h
   end
@@ -139,7 +139,7 @@ module StorageHelper::TextualSummary
     if num > 0
       h[:title] = _("Show VM Provisioned Disk Files installed on this %{table}") %
                   {:table => ui_lookup(:table => "storages")}
-      h[:link]  = url_for(:action => 'disk_files', :id => @record)
+      h[:link]  = url_for_only_path(:action => 'disk_files', :id => @record)
     end
     h
   end
@@ -157,7 +157,7 @@ module StorageHelper::TextualSummary
     if num > 0
       h[:title] = _("Show VM Snapshot Files installed on this %{storage}") %
                   {:storage => ui_lookup(:table => "storages")}
-      h[:link]  = url_for(:action => 'snapshot_files', :id => @record)
+      h[:link]  = url_for_only_path(:action => 'snapshot_files', :id => @record)
     end
     h
   end
@@ -174,7 +174,7 @@ module StorageHelper::TextualSummary
     h     = {:label => _("VM Memory Files"), :icon => "fa fa-file-o", :value => value}
     if num > 0
       h[:title] = _("Show VM Memory Files installed on this %{storage}") % {:storage => ui_lookup(:table => "storages")}
-      h[:link]  = url_for(:action => 'vm_ram_files', :id => @record)
+      h[:link]  = url_for_only_path(:action => 'vm_ram_files', :id => @record)
     end
     h
   end
@@ -191,7 +191,7 @@ module StorageHelper::TextualSummary
     h     = {:label => _("Other VM Files"), :icon => "fa fa-file-o", :value => value}
     if num > 0
       h[:title] = _("Show Other VM Files installed on this %{storage}") % {:storage => ui_lookup(:table => "storages")}
-      h[:link]  = url_for(:action => 'vm_misc_files', :id => @record)
+      h[:link]  = url_for_only_path(:action => 'vm_misc_files', :id => @record)
     end
     h
   end
@@ -208,7 +208,7 @@ module StorageHelper::TextualSummary
     h     = {:label => _("Non-VM Files"), :icon => "fa fa-file-o", :value => value}
     if num > 0
       h[:title] = _("Show Non-VM Files installed on this %{storage}") % {:storage => ui_lookup(:table => "storages")}
-      h[:link]  = url_for(:action => 'debris_files', :id => @record)
+      h[:link]  = url_for_only_path(:action => 'debris_files', :id => @record)
     end
     h
   end

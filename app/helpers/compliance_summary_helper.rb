@@ -20,7 +20,7 @@ module ComplianceSummaryHelper
                   end
       h[:title] = _("Show Details of Compliance Check on %{date}") % {:date => format_timezone(date)}
       h[:explorer] = true if @explorer
-      h[:link] = url_for(
+      h[:link] = url_for_only_path(
         :controller => controller.controller_name,
         :action     => 'show',
         :id         => @record,
@@ -40,7 +40,7 @@ module ComplianceSummaryHelper
       h[:title] = _("Show Compliance History of this %{model} (Last 10 Checks)") %
                   {:model => ui_lookup(:model => controller.class.model.name)}
       h[:explorer] = true if @explorer
-      h[:link] = url_for(
+      h[:link] = url_for_only_path(
         :controller => controller.controller_name,
         :action     => 'show',
         :id         => @record,

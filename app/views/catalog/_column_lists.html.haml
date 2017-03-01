@@ -1,5 +1,5 @@
 #column_lists
-  - url = url_for(:action => 'st_catalog_form_field_changed', :id => "#{@edit[:rec_id] || "new"}")
+  - url = url_for_only_path(:action => 'st_catalog_form_field_changed', :id => (@edit[:rec_id] || "new"))
   %table.form#formtest{:width => "100%"}
     %tr
       %td.widthed{:align => "left"}= _('Unassigned:')

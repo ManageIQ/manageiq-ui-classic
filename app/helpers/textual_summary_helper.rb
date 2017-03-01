@@ -90,7 +90,7 @@ module TextualSummaryHelper
       if restful_routed?(object)
         h[:link] = polymorphic_path(object)
       else
-        h[:link] = url_for(:controller => controller,
+        h[:link] = url_for_only_path(:controller => controller,
                            :action     => 'show',
                            :id         => object)
       end
@@ -129,13 +129,13 @@ module TextualSummaryHelper
         if restful_routed?(owner)
           h[:link] = polymorphic_path(owner, :display => display)
         else
-          h[:link] = url_for(:controller => controller_for_model(owner.class),
+          h[:link] = url_for_only_path(:controller => controller_for_model(owner.class),
                              :action     => 'show',
                              :id         => owner,
                              :display    => display)
         end
       else
-        h[:link] = url_for(:controller => controller_collection,
+        h[:link] = url_for_only_path(:controller => controller_collection,
                            :action     => 'list')
       end
       h[:title] = _("Show all %{label}") % {:label => label}

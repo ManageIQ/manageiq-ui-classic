@@ -7,7 +7,7 @@
       .form-horizontal
         - if @edit
           -# Don't show description unless in edit mode
-          - url = url_for(:action => 'action_field_changed', :id => "#{@action.id || 'new'}")
+          - url = url_for_only_path(:action => 'action_field_changed', :id => (@action.id || 'new'))
           .form-group
             %label.col-md-2.control-label
               = _('Description')

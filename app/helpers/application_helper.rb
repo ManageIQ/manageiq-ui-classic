@@ -10,6 +10,12 @@ module ApplicationHelper
   include TextualSummaryHelper
   include NumberHelper
 
+  # Need to generate paths w/o hostname by default to make proxying work.
+  #
+  def url_for_only_path(args)
+    url_for(:only_path => true, **args)
+  end
+
   def settings(*path)
     @settings ||= {}
     @settings.fetch_path(*path)
@@ -197,18 +203,18 @@ module ApplicationHelper
       return polymorphic_path(item)
     end
     if @vm && ["Account", "User", "Group", "Patch", "GuestApplication"].include?(db)
-      return url_for(:controller => "vm_or_template",
+      return url_for_only_path(:controller => "vm_or_template",
                      :action     => @lastaction,
                      :id         => @vm,
                      :show       => @id
                     )
     elsif @host && ["Patch", "GuestApplication"].include?(db)
-      return url_for(:controller => "host", :action => @lastaction, :id => @host, :show => @id)
+      return url_for_only_path(:controller => "host", :action => @lastaction, :id => @host, :show => @id)
     elsif %w(ConfiguredSystem ConfigurationProfile EmsFolder).include?(db)
-      return url_for(:controller => "provider_foreman", :action => @lastaction, :id => @record, :show => @id)
+      return url_for_only_path(:controller => "provider_foreman", :action => @lastaction, :id => @record, :show => @id)
     else
       controller, action = db_to_controller(db, action)
-      return url_for(:controller => controller, :action => action, :id => @id)
+      return url_for_only_path(:controller => controller, :action => action, :id => @id)
     end
   end
 
@@ -246,31 +252,31 @@ module ApplicationHelper
               LoadBalancer
               CloudVolume
               ).include?(view.db)
-          return url_for(:controller => controller, :action => "show") + "/"
+          return url_for_only_path(:controller => controller, :action => "show") + "/"
         elsif ["Vm"].include?(view.db) && parent && request.parameters[:controller] != "vm"
           # this is to handle link to a vm in vm explorer from service explorer
-          return url_for(:controller => "vm_or_template", :action => "show") + "/"
+          return url_for_only_path(:controller => "vm_or_template", :action => "show") + "/"
         elsif %w(ConfigurationProfile EmsFolder).include?(view.db) &&
               request.parameters[:controller] == "provider_foreman"
-          return url_for(:action => action, :id => nil) + "/"
+          return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w(ManageIQ::Providers::AutomationManager::InventoryGroup EmsFolder).include?(view.db) &&
               request.parameters[:controller] == "automation_manager"
-          return url_for(:action => action, :id => nil) + "/"
+          return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w(ConfiguredSystem).include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
-          return url_for(:action => action, :id => nil) + "/"
+          return url_for_only_path(:action => action, :id => nil) + "/"
         else
-          return url_for(:action => action) + "/" # In explorer, don't jump to other controllers
+          return url_for_only_path(:action => action) + "/" # In explorer, don't jump to other controllers
         end
       else
         controller = "vm_cloud" if controller == "template_cloud"
         controller = "vm_infra" if controller == "template_infra"
-        return url_for(:controller => controller, :action => action, :id => nil) + "/"
+        return url_for_only_path(:controller => controller, :action => action, :id => nil) + "/"
       end
 
     else
       # need to add a check for @explorer while setting controller incase building a link for details screen to show items
       # i.e users list view screen inside explorer needs to point to vm_or_template controller
-      return url_for(:controller => parent.kind_of?(VmOrTemplate) && !@explorer ? parent.class.base_model.to_s.underscore : request.parameters["controller"],
+      return url_for_only_path(:controller => parent.kind_of?(VmOrTemplate) && !@explorer ? parent.class.base_model.to_s.underscore : request.parameters["controller"],
                      :action     => association,
                      :id         => parent.id) + "?#{@explorer ? "x_show" : "show"}="
     end
@@ -1280,7 +1286,7 @@ module ApplicationHelper
     else
       url[:action] = action
       url[:id] = an_id unless an_id.nil?
-      url_for(url)
+      url_for_only_path(url)
     end
   end
 
@@ -1736,7 +1742,7 @@ module ApplicationHelper
 
   def route_exists?(hash)
     begin
-      url_for(hash)
+      url_for_only_path(hash)
     rescue
       return false
     end

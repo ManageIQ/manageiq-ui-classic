@@ -1,4 +1,4 @@
-- url = url_for(:action => 'form_field_changed', :id => "#{@ems.id || 'new'}")
+- url = url_for_only_path(:action => 'form_field_changed', :id => (@ems.id || 'new'))
 
 #form_div
   = render :partial => "layouts/flash_msg"
@@ -106,13 +106,13 @@
               :class   => "btn btn-primary",
               :alt     => t,
               :title   => t,
-              :onclick => "miqAjaxButton('#{url_for(:action => "create", :id => "new", :button => "add")}');")
+              :onclick => "miqAjaxButton('#{url_for_only_path(:action => "create", :id => "new", :button => "add")}');")
             - t = _("Cancel")
             = button_tag(t,
               :class   => "btn btn-default",
               :alt     => t,
               :title   => t,
-              :href    => url_for(:action => "show_list", :flash_msg => _("Add of new %{provider} was cancelled by the user") % {:provider => name}),
+              :href    => url_for_only_path(:action => "show_list", :flash_msg => _("Add of new %{provider} was cancelled by the user") % {:provider => name}),
               :onclick => 'window.location = this.getAttribute("href");')
   - else
     = render :partial => '/layouts/edit_form_buttons', :locals  => {:record_id => @ems.id, :ajax_buttons => true, :restful => true}

@@ -43,7 +43,7 @@ module CloudVolumeHelper::TextualSummary
     }
     if availability_zone && role_allows?(:feature => "availability_zone_show")
       h[:title] = _("Show this Volume's %{availability_zone}") % {:availability_zone => label}
-      h[:link]  = url_for(:controller => 'availability_zone', :action => 'show', :id => availability_zone)
+      h[:link]  = url_for_only_path(:controller => 'availability_zone', :action => 'show', :id => availability_zone)
     end
     h
   end
@@ -58,7 +58,7 @@ module CloudVolumeHelper::TextualSummary
     }
     if base_snapshot && role_allows?(:feature => "cloud_volume_snapshot_show")
       h[:title] = _("Show this Volume's %{parent}") % {:parent => label}
-      h[:link]  = url_for(:controller => 'cloud_volume_snapshot', :action => 'show', :id => base_snapshot)
+      h[:link]  = url_for_only_path(:controller => 'cloud_volume_snapshot', :action => 'show', :id => base_snapshot)
     end
     h
   end
@@ -69,7 +69,7 @@ module CloudVolumeHelper::TextualSummary
     h = {:label => label, :icon => "pficon pficon-cloud-tenant", :value => (cloud_tenant.nil? ? _("None") : cloud_tenant.name)}
     if cloud_tenant && role_allows?(:feature => "cloud_tenant_show")
       h[:title] = _("Show this Volume's %{cloud_tenant}") % {:cloud_tenant => label}
-      h[:link]  = url_for(:controller => 'cloud_tenant', :action => 'show', :id => cloud_tenant)
+      h[:link]  = url_for_only_path(:controller => 'cloud_tenant', :action => 'show', :id => cloud_tenant)
     end
     h
   end
@@ -81,7 +81,7 @@ module CloudVolumeHelper::TextualSummary
     if num > 0 && role_allows?(:feature => "cloud_volume_snapshot_show_list")
       label = ui_lookup(:tables => "cloud_volume_snapshots")
       h[:title] = _("Show all %{models}") % {:models => label}
-      h[:link]  = url_for(:action => 'show', :id => @record, :display => 'cloud_volume_snapshots')
+      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'cloud_volume_snapshots')
     end
     h
   end
@@ -93,7 +93,7 @@ module CloudVolumeHelper::TextualSummary
     if num > 0 && role_allows?(:feature => "cloud_volume_backup_show_list")
       label = ui_lookup(:tables => "cloud_volume_backups")
       h[:title] = _("Show all %{models}") % {:models => label}
-      h[:link]  = url_for(:action => 'show', :id => @record, :display => 'cloud_volume_backups')
+      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'cloud_volume_backups')
     end
     h
   end
@@ -104,7 +104,7 @@ module CloudVolumeHelper::TextualSummary
     h     = {:label => label, :icon => "pficon pficon-virtual-machine", :value => num}
     if num > 0 && role_allows?(:feature => "vm_show_list")
       h[:title] = _("Show all attached %{models}") % {:models => label}
-      h[:link]  = url_for(:action => 'show', :id => @record, :display => 'instances')
+      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'instances')
     end
     h
   end

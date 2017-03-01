@@ -88,9 +88,9 @@
                           :title        => _("Update Password"))
 
           .col-xs-4.col-md-3.submit
-            - login_url = url_for(:action => "authenticate",
+            - login_url = url_for_only_path(:action => "authenticate",
                                   :button => "login")
-            - sso_url = url_for(:action => "kerberos_authenticate",
+            - sso_url = url_for_only_path(:action => "kerberos_authenticate",
                                 :button => "sso_login")
 
             = link_to(_("Login"), '',

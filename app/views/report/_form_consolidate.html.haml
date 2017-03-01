@@ -1,4 +1,4 @@
-- url = url_for(:action => 'form_field_changed', :id => "#{@edit[:rpt_id] || 'new'}")
+- url = url_for_only_path(:action => 'form_field_changed', :id => (@edit[:rpt_id] || 'new'))
 #consolidate_div
   %h3
     = _('Group Records by up to 3 Columns')

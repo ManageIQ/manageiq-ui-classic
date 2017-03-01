@@ -114,7 +114,7 @@ module QuadiconHelper
   # Currently only used once
   #
   def quadicon_url_with_parent_and_lastaction(item)
-    url_for(
+    url_for_only_path(
       :controller => @parent.class.base_class.to_s.underscore,
       :action     => @lastaction,
       :id         => @parent.id,
@@ -257,7 +257,7 @@ module QuadiconHelper
       attrs[:id]      = to_cid(row['id']) || row['x_show_id']
     end
 
-    url_for(attrs)
+    url_for_only_path(attrs)
   end
 
   def quadicon_build_label_options(item, row)

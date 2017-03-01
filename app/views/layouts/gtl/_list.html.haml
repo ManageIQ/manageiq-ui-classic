@@ -66,7 +66,7 @@
           - view.col_order.each do |col|
             %th
               - if %w(zone.name miq_worker.type address).include?(col)
-                - url = url_for(:action => 'list_view_filter')
+                - url = url_for_only_path(:action => 'list_view_filter')
                 - if col == "zone.name"
                   = select_tag('zone_name',
                     options_for_select([["<#{_('All')}>", "all"]] + @zones, @sb[:zone_name]),

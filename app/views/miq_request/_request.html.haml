@@ -1,5 +1,5 @@
 - if @edit && @edit[:stamp_typ]
-  - url = url_for(:action => 'stamp_field_changed', :id => @edit[:request].id)
+  - url = url_for_only_path(:action => 'stamp_field_changed', :id => @edit[:request].id)
 #request_div
   %h3
     = _("Request Details")

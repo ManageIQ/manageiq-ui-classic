@@ -2,7 +2,7 @@ module ChartingHelper
   def chart_remote(a_controller, options)
     case Charting.backend
     when :c3
-      c3chart_remote(url_for(:controller => a_controller,
+      c3chart_remote(url_for_only_path(:controller => a_controller,
                              :action     => options[:action] || 'render_chart'),
                      options.slice(:id, :zoomed))
     end

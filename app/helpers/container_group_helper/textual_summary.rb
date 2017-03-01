@@ -113,7 +113,7 @@ module ContainerGroupHelper::TextualSummary
       :label => _("Underlying %{name}") % {:name => lives_on_entity_name},
       :image => "svg/vendor-#{lives_on_ems.image_name}.svg",
       :value => @record.container_node.lives_on.name.to_s,
-      :link  => url_for(
+      :link  => url_for_only_path(
         :action     => 'show',
         :controller => 'vm_or_template',
         :id         => @record.container_node.lives_on.id

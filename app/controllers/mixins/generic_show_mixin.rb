@@ -55,7 +55,7 @@ module Mixins
           :action     => :show,
           :only_path  => true,
         )
-        url_for(opts)
+        url_for_only_path(opts)
       end
     end
 
