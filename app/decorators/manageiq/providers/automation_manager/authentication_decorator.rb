@@ -2,7 +2,7 @@ class ManageIQ::Providers::AutomationManager::AuthenticationDecorator < Draper::
   delegate_all
 
   def fonticon
-    nil
+    'fa fa-lock'
   end
 
   def listicon_image
