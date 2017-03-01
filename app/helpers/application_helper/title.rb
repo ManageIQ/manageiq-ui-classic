@@ -1,5 +1,9 @@
 module ApplicationHelper
   module Title
+    def productized_title(title)
+      product_title + title
+    end
+
     def product_title
       # TODO: leave I18n until we have productization capability in gettext
       I18n.t('product.name')
@@ -56,8 +60,6 @@ module ApplicationHelper
         title += _(": Optimize")
       elsif layout.starts_with?("miq_request")
         title += _(": Requests")
-      elsif layout == "login"
-        title += _(": Login")
       elsif layout == "manageiq/providers/ansible_tower/automation_manager/playbook"
         title += ": Playbooks (Ansible Tower)"
       elsif layout == "manageiq/providers/automation_manager/authentication"
@@ -70,6 +72,5 @@ module ApplicationHelper
       end
       title
     end
-
   end
 end
