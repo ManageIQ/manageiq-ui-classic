@@ -34,7 +34,7 @@ module AnsibleRepositoryHelper::TextualSummary
   def textual_credential
     h = {:label => _('Credential')}
     if @record.try(:authentication) && role_allows?(:feature => 'embedded_automation_manager_credentials_view')
-      h.update(:link  => url_for(:controller => 'ansible_credential',
+      h.update(:link  => url_for_only_path(:controller => 'ansible_credential',
                                  :action     => 'show',
                                  :id         => @record.authentication),
                :title => _('Show Credential'),
