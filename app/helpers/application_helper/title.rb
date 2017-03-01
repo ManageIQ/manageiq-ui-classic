@@ -20,12 +20,19 @@ module ApplicationHelper
       return title if layout.blank?  # no layout, leave title alone
 
       title + case layout
-              when "configuration", "dashboard", "chargeback", "about"
-                ": #{layout.titleize}"
+              when "configuration"
+                _(": Configuration")
+              when "dashboard"
+                _(": Dashboard")
+              when "chargeback"
+                _(": Chargeback")
+              when "about"
+                _(": About")
               when "ems_cluster"
                 ": #{title_for_clusters}"
               when "host"
                 ": #{title_for_hosts}"
+
               # Specific titles for certain layouts
               when "miq_server"
                 _(": Servers")
@@ -68,11 +75,12 @@ module ApplicationHelper
               when /^miq_request/
                 _(": Requests")
               when "manageiq/providers/ansible_tower/automation_manager/playbook"
-                ": Playbooks (Ansible Tower)"
+                _(": Playbooks (Ansible Tower)")
               when "manageiq/providers/automation_manager/authentication"
-                ": Credentials"
+                _(": Credentials")
               when "configuration_script_source"
-                ": Repositories"
+                _(": Repositories")
+
               else
                 # Assume layout is a table name and look up the plural version
                 ": #{ui_lookup(:tables => layout)}"
