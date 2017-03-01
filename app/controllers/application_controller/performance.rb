@@ -166,6 +166,18 @@ module ApplicationController::Performance
 
   private ############################
 
+  def perf_breadcrumb
+    name = @perf_record.respond_to?(:evm_display_name) ? @perf_record.evm_display_name : @perf_record.name
+    if @perf_options.cat
+      drop_breadcrumb(:name => _("%{name} Capacity & Utilization (by %{option}:%{model})") %
+                      {:name => name, :option => @perf_options.cats[@perf_options.cat_model], :model => @perf_options.cat},
+                      :url  => url_for_only_path(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
+    else
+      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => name},
+                      :url  => url_for_only_path(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
+    end
+  end
+
   # Initiate the backend refresh of realtime c&u data
   def perf_refresh_data
     assert_privileges("perf_refresh")
@@ -577,31 +589,13 @@ module ApplicationController::Performance
     @perf_options[:ght_type] ||= "hybrid"
     @perf_options[:chart_type] = :performance
 
-    name = @perf_record.respond_to?(:evm_display_name) ? @perf_record.evm_display_name : @perf_record.name
-    if @perf_options[:cat]
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization (by %{option}:%{model})") %
-        {:name => name, :option => @perf_options.cats[@perf_options[:cat_model]], :model => @perf_options[:cat]},
-                      :url  => url_for_only_path(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
-    else
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => name},
-                      :url  => url_for_only_path(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
-    end
+    perf_breadcrumb
     @ajax_action = "perf_chart_chooser"
   end
 
   # Generate performance data for a model's charts
   def perf_gen_data
-    if @perf_options[:cat]
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization (by %{option}:%{model})") %
-        {:name   => @perf_record.name,
-         :option => @perf_options.cats[@perf_options[:cat_model]],
-         :model  => @perf_options[:cat]},
-                      :url  => url_for_only_path(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
-    else
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @perf_record.name},
-                      :url  => url_for_only_path(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
-    end
-
+    perf_breadcrumb
     unless @perf_options[:typ] == "realtime"
       if @perf_options[:cat]                                      # If a category was chosen, generate charts by tag
         perf_gen_tag_data
