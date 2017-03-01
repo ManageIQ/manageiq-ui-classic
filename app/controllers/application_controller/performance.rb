@@ -8,31 +8,7 @@ module ApplicationController::Performance
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
 
     unless params[:task_id] # First time thru, gather options changed by the user
-      @perf_options[:typ]        = params[:perf_typ]          if params[:perf_typ]
-      @perf_options[:days]       = params[:perf_days]         if params[:perf_days]
-      @perf_options[:rt_minutes] = params[:perf_minutes].to_i if params[:perf_minutes]
-      @perf_options[:hourly_date] = params[:miq_date_1] if params[:miq_date_1] && @perf_options[:typ] == "Hourly"
-      @perf_options[:daily_date]  = params[:miq_date_1] if params[:miq_date_1] && @perf_options[:typ] == "Daily"
-      @perf_options[:index]       = params[:chart_idx] == "clear" ? nil : params[:chart_idx] if params[:chart_idx]
-      @perf_options[:parent]      = params[:compare_to].blank? ? nil : params[:compare_to] if params.key?(:compare_to)
-      @perf_options[:compare_vm]  = params[:compare_vm].blank? ? nil : params[:compare_vm] if params.key?(:compare_vm)
-      if params[:perf_cat]
-        if params[:perf_cat] == "<None>"
-          @perf_options[:cat_model] = nil
-          @perf_options[:cat] = nil
-        else
-          @perf_options[:cat_model], @perf_options[:cat] = params[:perf_cat].split(":")
-        end
-      end
-      if params[:perf_vmtype]
-        @perf_options[:vmtype] = params[:perf_vmtype] == "<All>" ? nil : params[:perf_vmtype]
-      end
-      if params.key?(:time_profile)
-        tp = TimeProfile.find(params[:time_profile]) unless params[:time_profile].blank?
-        @perf_options[:time_profile] = params[:time_profile].blank? ? nil : params[:time_profile].to_i
-        @perf_options[:tz] = @perf_options[:time_profile_tz] = params[:time_profile].blank? ? nil : tp.tz
-        @perf_options[:time_profile_days] = params[:time_profile].blank? ? nil : tp.days
-      end
+      @perf_options.update_from_params(params)
     end
 
     case @perf_options[:chart_type]

@@ -33,6 +33,35 @@ module ApplicationController::Performance
     :tz,
     :tz_daily,
   ) do
+    def update_from_params(params)
+      self.typ         = params[:perf_typ]          if params[:perf_typ]
+      self.days        = params[:perf_days]         if params[:perf_days]
+      self.rt_minutes  = params[:perf_minutes].to_i if params[:perf_minutes]
+      self.hourly_date = params[:miq_date_1]        if params[:miq_date_1] && typ == 'Hourly'
+      self.daily_date  = params[:miq_date_1]        if params[:miq_date_1] && typ == 'Daily'
+      self.index       = params[:chart_idx] == 'clear' ? nil : params[:chart_idx] if params[:chart_idx]
+      self.parent      = params[:compare_to].blank? ? nil : params[:compare_to] if params.key?(:compare_to)
+      self.compare_vm  = params[:compare_vm].blank? ? nil : params[:compare_vm] if params.key?(:compare_vm)
+      self.vmtype      = params[:perf_vmtype] == '<All>' ? nil : params[:perf_vmtype] if params[:perf_vmtype]
+      if params[:perf_cat]
+        self.cat_model, self.cat = if params[:perf_cat] == '<None>'
+                                     [nil, nil]
+                                   else
+                                     params[:perf_cat].split(':')
+                                   end
+      end
+      if params.key?(:time_profile)
+        if params[:time_profile].blank?
+          self.time_profile = self.tz = self.time_profile_days = self.time_profile_tz = nil
+        else
+          tp = TimeProfile.find(params[:time_profile])
+          self.time_profile = params[:time_profile].to_i
+          self.tz = self.time_profile_tz = tp.tz
+          self.time_profile_days = tp.days
+        end
+      end
+    end
+
     def cats # category pulldown for tag charts
       return unless %w(EmsCluster Host Storage AvailabilityZone HostAggregate).include?(model)
       self[:cats] ||=
