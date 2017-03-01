@@ -154,15 +154,8 @@ class MiddlewareServerController < ApplicationController
     end
   end
 
-  def show
-    return unless init_show
-    @display = params[:display] unless params[:display].nil?
-    case @display
-    when 'middleware_datasources' then show_middleware_entities(MiddlewareDatasource)
-    when 'middleware_deployments' then show_middleware_entities(MiddlewareDeployment)
-    when 'middleware_messagings' then show_middleware_entities(MiddlewareMessaging)
-    else show_middleware
-    end
+  def self.display_methods
+    %i(middleware_datasources middleware_deployments middleware_messagings)
   end
 
   def button
