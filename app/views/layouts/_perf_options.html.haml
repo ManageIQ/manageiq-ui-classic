@@ -70,12 +70,12 @@
             = _("back")
       - unless @perf_options[:typ] == "realtime"
         - unless @perf_options[:typ] == "Hourly" && request.parameters["controller"] == "storage"
-          - if @perf_options[:cats]
+          - if @perf_options.cats
             %dt
               = _("Group by")
             %dd
               = select_tag("perf_cat",
-                           options_for_select(Array(@perf_options[:cats].invert).sort_by { |name, _value| name },
+                           options_for_select(Array(@perf_options.cats.invert).sort_by { |name, _value| name },
                                               "#{@perf_options[:cat_model]}:#{@perf_options[:cat]}"),
                            "data-miq_sparkle_on" => true,
                            :class    => "selectpicker")

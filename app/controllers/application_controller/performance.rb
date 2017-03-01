@@ -561,7 +561,6 @@ module ApplicationController::Performance
       @perf_options[:model] = @perf_record.class.base_class.to_s
     end
     @perf_options[:rt_minutes] ||= 15.minutes
-    @perf_options.build_cats
     if ["Storage"].include?(@perf_options[:model]) && @perf_options[:typ] == "Daily"
       @perf_options[:vmtypes] ||= [["<All>", "<All>"],
                                    ["Managed/Registered", "registered"],
@@ -591,7 +590,7 @@ module ApplicationController::Performance
     name = @perf_record.respond_to?(:evm_display_name) ? @perf_record.evm_display_name : @perf_record.name
     if @perf_options[:cat]
       drop_breadcrumb(:name => _("%{name} Capacity & Utilization (by %{option}:%{model})") %
-        {:name => name, :option => @perf_options[:cats][@perf_options[:cat_model]], :model => @perf_options[:cat]},
+        {:name => name, :option => @perf_options.cats[@perf_options[:cat_model]], :model => @perf_options[:cat]},
                       :url  => url_for_only_path(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
     else
       drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => name},
@@ -605,7 +604,7 @@ module ApplicationController::Performance
     if @perf_options[:cat]
       drop_breadcrumb(:name => _("%{name} Capacity & Utilization (by %{option}:%{model})") %
         {:name   => @perf_record.name,
-         :option => @perf_options[:cats][@perf_options[:cat_model]],
+         :option => @perf_options.cats[@perf_options[:cat_model]],
          :model  => @perf_options[:cat]},
                       :url  => url_for_only_path(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
     else

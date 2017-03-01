@@ -34,9 +34,9 @@ module ApplicationController::Performance
     :tz,
     :tz_daily,
   ) do
-    def build_cats # Build the category pulldown for tag charts
+    def cats # category pulldown for tag charts
       return unless %w(EmsCluster Host Storage AvailabilityZone HostAggregate).include?(model)
-      self.cats ||=
+      self[:cats] ||=
         begin
           cats = Classification.categories.select(&:show).sort_by(&:description)
           cats.delete_if { |c| c.read_only? || c.entries.empty? }
