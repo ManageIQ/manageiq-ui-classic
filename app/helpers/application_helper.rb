@@ -9,6 +9,7 @@ module ApplicationHelper
   include ToolbarHelper
   include TextualSummaryHelper
   include NumberHelper
+  include Title
 
   def settings(*path)
     @settings ||= {}
@@ -415,10 +416,19 @@ module ApplicationHelper
     (dbs.include?(".") ? "#{dbs.split(".").last}.#{fld}" : fld)
   end
 
+  def productized_title(title)
+    product_title + title
+  end
+
+  def product_title
+    # TODO: leave I18n until we have productization capability in gettext
+    I18n.t('product.name')
+  end
+
   # Derive the browser title text based on the layout value
   def title_from_layout(layout)
-    # TODO: leave I18n until we have productization capability in gettext
-    title = I18n.t('product.name')
+    title = product_title
+
     if layout.blank?  # no layout, leave title alone
     elsif ["configuration", "dashboard", "chargeback", "about"].include?(layout)
       title += ": #{layout.titleize}"
