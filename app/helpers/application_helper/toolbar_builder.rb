@@ -385,21 +385,6 @@ class ApplicationHelper::ToolbarBuilder
       when "rbac_group_edit"
         return N_("This Group is Read Only and can not be edited") if @record.read_only
       end
-    when "MiqServer"
-      case id
-      when "collect_logs", "collect_current_logs"
-        unless @record.started?
-          return N_("Cannot collect current logs unless the %{server} is started") %
-            {:server => ui_lookup(:table => "miq_server")}
-        end
-        if @record.log_collection_active_recently?
-          return N_("Log collection is already in progress for this %{server}") %
-            {:server => ui_lookup(:table => "miq_server")}
-        end
-        unless @record.log_file_depot
-          return N_("Log collection requires the Log Depot settings to be configured")
-        end
-      end
     when "MiqWidgetSet"
       case id
       when "db_delete"

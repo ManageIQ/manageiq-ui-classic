@@ -68,14 +68,14 @@ class ApplicationHelper::Toolbar::DiagnosticsServerCenter < ApplicationHelper::T
           'fa fa-filter fa-lg',
           N_('Collect the current logs from the selected Server'),
           N_('Collect current logs'),
-          :klass => ApplicationHelper::Button::DiagnosticsLogs
+          :klass => ApplicationHelper::Button::CollectLogs
         ),
         button(
           :collect_logs,
           'fa fa-filter fa-lg',
           N_('Collect all logs from the selected Server'),
           N_('Collect all logs'),
-          :klass => ApplicationHelper::Button::DiagnosticsLogs
+          :klass => ApplicationHelper::Button::CollectLogs
         ),
       ]
     ),
