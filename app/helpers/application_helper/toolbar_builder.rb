@@ -399,8 +399,6 @@ class ApplicationHelper::ToolbarBuilder
         unless @record.log_file_depot
           return N_("Log collection requires the Log Depot settings to be configured")
         end
-      when "restart_workers"
-        return N_("Select a worker to restart") if @sb[:selected_worker_id].nil?
       end
     when "MiqWidgetSet"
       case id
