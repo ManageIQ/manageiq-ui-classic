@@ -18,7 +18,7 @@ class ApplicationHelper::Toolbar::XTemplateCloudCenter < ApplicationHelper::Tool
                        N_('Perform SmartState Analysis on this Image'),
                        N_('Perform SmartState Analysis'),
                        :confirm => N_("Perform SmartState Analysis on this Image?"),
-                       :klass => ApplicationHelper::Button::VmInstanceTemplateScan),
+                       :klass => ApplicationHelper::Button::MiqTemplateScan),
                      separator,
                      button(
                        :image_edit,

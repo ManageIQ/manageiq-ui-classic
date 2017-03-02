@@ -366,9 +366,6 @@ class ApplicationHelper::ToolbarBuilder
       end
     when "MiqTemplate"
       case id
-      when "miq_template_scan", "image_scan"
-        return @record.unsupported_reason(:smartstate_analysis) unless @record.supports_smartstate_analysis?
-        return @record.active_proxy_error_message unless @record.has_active_proxy?
       when "miq_template_timeline"
         unless @record.has_events? || @record.has_events?(:policy_events)
           return N_("No Timeline data has been collected for this Template")
