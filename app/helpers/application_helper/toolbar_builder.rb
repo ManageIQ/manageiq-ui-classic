@@ -430,18 +430,6 @@ class ApplicationHelper::ToolbarBuilder
           return N_("No Timeline data has been collected for this Template")
         end
       end
-    when "Zone"
-      case id
-      when "zone_delete"
-        if @selected_zone.name.downcase == "default"
-          return N_("'Default' zone cannot be deleted")
-        elsif @selected_zone.ext_management_systems.count > 0 ||
-              @selected_zone.storage_managers.count > 0 ||
-              @selected_zone.miq_schedules.count > 0 ||
-              @selected_zone.miq_servers.count > 0
-          return N_("Cannot delete a Zone that has Relationships")
-        end
-      end
     when nil, "NilClass"
       case id
       when "ae_copy_simulate"
