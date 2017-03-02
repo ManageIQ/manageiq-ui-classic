@@ -43,6 +43,8 @@ class ApplicationHelper::ToolbarChooser
       'drift_view_tb'
     elsif %w(ems_container ems_infra).include?(@layout) && %w(main dashboard topology).include?(@display)
       'dashboard_summary_toggle_view_tb'
+    elsif %w(container_project).include?(@layout)
+      "#{@layout}_view_tb"
     elsif !%w(all_tasks all_ui_tasks timeline diagnostics my_tasks my_ui_tasks miq_server usage).include?(@layout) &&
           (!@layout.starts_with?("miq_request")) && !@treesize_buttons &&
           @display == "main" && @showtype == "main" && !@in_a_form

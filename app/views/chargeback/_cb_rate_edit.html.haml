@@ -1,4 +1,4 @@
-- url = url_for(:action => 'cb_rate_form_field_changed', :id => @edit[:rec_id] || "new")
+- url = url_for_only_path(:action => 'cb_rate_form_field_changed', :id => @edit[:rec_id] || "new")
 - currency = ChargebackRateDetailCurrency.currencies_for_select
 #form_div
   %h3

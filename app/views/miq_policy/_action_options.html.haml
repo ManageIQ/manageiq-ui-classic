@@ -1,4 +1,4 @@
-- url = url_for(:action => 'action_field_changed', :id => "#{@action.id || 'new'}")
+- url = url_for_only_path(:action => 'action_field_changed', :id => (@action.id || 'new'))
 - observe_with_interval = {:interval => '.5', :url => url}.to_json
 - observe = {:url => url}.to_json
 #action_options_div
@@ -331,8 +331,9 @@
           = select_tag('service_template_id',
           options_for_select([["<#{_('Choose')}>", nil]] + @edit[:ansible_playbooks],
           @edit[:new][:options][:service_template_id]),
-          :style             => "width:150px",
-          :class             => "selectpicker")
+          "style"            => "width:150px",
+          "data-live-search" => "true",
+          "class"            => "selectpicker")
           :javascript
             miqInitSelectPicker();
             miqSelectPickerEvent('service_template_id', '#{url}')

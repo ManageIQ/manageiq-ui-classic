@@ -12,7 +12,7 @@
       %td
         = text_field("entry", "hostname", :maxlength => MAX_NAME_LEN, :style => "width: 100%;")
       %td
-        - url1 = url_for(:action => 'ldap_entry_changed',
+        - url1 = url_for_only_path(:action => 'ldap_entry_changed',
                          :id     => @edit[:ldap_domain_id] || "new")
         = select_tag('entry_mode',
                      options_for_select([[_("LDAP"), 'ldap'], [_("LDAPS"), 'ldaps']], "ldaps"),
@@ -39,8 +39,7 @@
                      "value"    => entry[:hostname],
                      :style     => "width: 100%;")
       %td
-        - url1 = url_for(:action => 'ldap_entry_changed',
-                         :id     => "#{@edit[:ldap_domain_id] || "new"}")
+        - url1 = url_for_only_path(:action => 'ldap_entry_changed', :id => (@edit[:ldap_domain_id] || "new"))
         = select_tag('entry_mode',
                      options_for_select([[_("LDAP"), 'ldap'], [_("LDAPS"), 'ldaps']], entry[:mode]),
                      "data-miq_observe" => {:url => url1}.to_json)

@@ -6,7 +6,7 @@ module TextualMixins::TextualRegion
     url = reg.remote_ui_url
     h[:value] = if url
                   # TODO: Why is this link different than the others?
-                  link_to(reg.description, url_for(:host   => url,
+                  link_to(reg.description, url_for_only_path(:host   => url,
                                                    :action => 'show',
                                                    :id     => @record),
                           :title   => _("Connect to this VM in its Region"),

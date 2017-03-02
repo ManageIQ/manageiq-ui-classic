@@ -77,7 +77,7 @@ module MiqAeCustomizationController::Dialogs
 
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
-      @settings[:perpage][@gtl_type.to_sym] = @items_per_page         # Set the per page setting for this gtl type
+      @settings.store_path(:perpage, @gtl_type.to_sym, @items_per_page) # Set the per page setting for this gtl type
     end
 
     @sortcol = session[:dialog_sortcol].nil? ? 0 : session[:dialog_sortcol].to_i
@@ -506,7 +506,7 @@ module MiqAeCustomizationController::Dialogs
       page << javascript_for_miq_button_visibility(changed)
 
       # replace select tag of default values
-      url = url_for(:action => 'dialog_form_field_changed', :id => (@record.id || "new").to_s)
+      url = url_for_only_path(:action => 'dialog_form_field_changed', :id => (@record.id || "new").to_s)
       none =  [['<None>', nil]]
       values = key[:values].empty? ? none : none + key[:values].collect(&:reverse)
       selected = @edit[:field_default_value]
@@ -546,7 +546,7 @@ module MiqAeCustomizationController::Dialogs
       page << javascript_for_miq_button_visibility(changed)
 
       # replace select tag of default values
-      url = url_for(:action => 'dialog_form_field_changed', :id => (@record.id || "new").to_s)
+      url = url_for_only_path(:action => 'dialog_form_field_changed', :id => (@record.id || "new").to_s)
       none =  [['<None>', nil]]
       values = key[:values].empty? ? none : none + key[:values].collect(&:reverse)
       selected = @edit[:field_default_value]

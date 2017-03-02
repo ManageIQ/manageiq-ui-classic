@@ -15,7 +15,7 @@
           - @conditions.each do |c|
             %tr{:title => _("View this Condition"),
               :onclick => "miqTreeActivateNode('condition_tree', 'xx-#{c.towhat.camelize(:lower)}_co-#{to_cid(c.id)}');"}
-              %td.narrow
+              %td.table-view-pf-select
                 %i.product.product-miq_condition
               %td
                 = c.description

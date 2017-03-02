@@ -1,5 +1,5 @@
 - if edit
-  - url = url_for(:action => "ce_accept", :id => "accept")
+  - url = url_for_only_path(:action => "ce_accept", :id => "accept")
   - if entry == "new"
     %tr#new_tr{:class => cycle('row0', 'row1')}
       %td

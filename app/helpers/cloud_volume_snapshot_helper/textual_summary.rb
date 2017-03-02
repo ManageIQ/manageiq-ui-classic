@@ -22,7 +22,7 @@ module CloudVolumeSnapshotHelper::TextualSummary
     if num > 0 && role_allows?(:feature => "cloud_volume_show_list")
       label = ui_lookup(:table => "cloud_volumes")
       h[:title] = _("Show all %{volumes} based on this Snapshot.") % {:volumes => label}
-      h[:link]  = url_for(:action => 'show', :id => @record, :display => 'based_volumes')
+      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'based_volumes')
     end
     h
   end
@@ -45,7 +45,7 @@ module CloudVolumeSnapshotHelper::TextualSummary
     h = {:label => label, :icon => "pficon pficon-cloud-tenant", :value => (cloud_tenant.nil? ? _("None") : cloud_tenant.name)}
     if cloud_tenant && role_allows?(:feature => "cloud_tenant_show")
       h[:title] = _("Show this Snapshot's %{parent}") % {:parent => label}
-      h[:link]  = url_for(:controller => 'cloud_tenant', :action => 'show', :id => cloud_tenant)
+      h[:link]  = url_for_only_path(:controller => 'cloud_tenant', :action => 'show', :id => cloud_tenant)
     end
     h
   end

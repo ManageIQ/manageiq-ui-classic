@@ -43,7 +43,7 @@
                  :locals  => {:message => _("No schema found")}
 
     - else
-      - url = url_for(:action => 'fields_form_field_changed', :id => "#{@ae_class.id || 'new'}")
+      - url = url_for_only_path(:action => 'fields_form_field_changed', :id => (@ae_class.id || 'new'))
       - obs = {:interval => '.5', :url => url}.to_json
       / Edit Schema
       #form_div
@@ -52,7 +52,7 @@
         %table.table.table-striped.table-bordered
           %thead
             %tr
-              %th.narrow
+              %th.table-view-pf-select
               - [_('Name'), _('Type'), _('Data Type'), _('Default Value'), _('Display Name'), _('Description'), _('Sub'), _('Collect'),
                 _('Message'), _('On Entry'), _('On Exit'), _('On Error'), _('Max Retries'), _('Max Time')].each do |title|
                 %th

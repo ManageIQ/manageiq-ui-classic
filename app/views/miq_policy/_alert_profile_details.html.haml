@@ -1,5 +1,5 @@
 - if @edit
-  - url = url_for(:action => 'alert_profile_field_changed', :id => "#{@alert_profile.id || 'new'}")
+  - url = url_for_only_path(:action => 'alert_profile_field_changed', :id => (@alert_profile.id || 'new'))
   - observe_with_interval = {:interval => '.5', :url => url}.to_json
 #alert_profile_details_div
   - if @assign
@@ -34,7 +34,7 @@
               - @alert_profile_alerts.each do |a|
                 %tr{:title => _("View this Alert"),
                   :onclick => "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_al-#{to_cid(a.id)}');"}
-                  %td.narrow
+                  %td.table-view-pf-select
                     %i.pficon.pficon-warning-triangle-o
                   %td
                     = h(a.description)

@@ -1,10 +1,10 @@
 .col-md-12
   .toolbar-pf-actions
     - action_url = "saved_report_paging"
-    - url = url_for(:action => action_url)
+    - url = url_for_only_path(:action => action_url)
     - @pb_occ ||= 0
     - @pb_occ += 1
-    - pages ||= {:perpage => @settings[:perpage][:reports],
+    - pages ||= {:perpage => settings(:perpage, :reports),
                 :current => 1,
                 :total   => @sb[:pages][:total],
                 :items   => @sb[:pages][:items]}

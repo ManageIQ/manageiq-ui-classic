@@ -25,17 +25,19 @@ module ContainerNodeHelper::TextualSummary
   end
 
   def textual_group_conditions
-    labels = [_("Name"), _("Status"), _("Last Transition Time"), _("Reason")]
-    h = {:labels => labels}
-    h[:values] = @record.container_conditions.collect do |condition|
-      [
-        condition.name,
-        condition.status,
-        (condition.last_transition_time || ""),
-        (condition.reason || "")
-      ]
-    end
-    TextualGroup.new(_("Conditions"), h)
+    TextualMultilabel.new(
+      _("Conditions"),
+      :additional_table_class => "table-fixed",
+      :labels                 => [_("Name"), _("Status"), _("Last Transition Time"), _("Reason")],
+      :values                 => @record.container_conditions.collect do |condition|
+        [
+          condition.name,
+          condition.status,
+          (condition.last_transition_time || ""),
+          (condition.reason || "")
+        ]
+      end
+    )
   end
 
   def textual_group_smart_management
@@ -91,7 +93,7 @@ module ContainerNodeHelper::TextualSummary
       :label => _("Underlying %{name}") % {:name => lives_on_entity_name},
       :image => "svg/vendor-#{lives_on_ems.image_name}.svg",
       :value => @record.lives_on.name.to_s,
-      :link  => url_for(
+      :link  => url_for_only_path(
         :action     => 'show',
         :controller => 'vm_or_template',
         :id         => @record.lives_on.id

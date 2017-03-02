@@ -17,6 +17,8 @@ module Mixins
         show_performance if respond_to?(:performance)
       when "compliance_history"
         show_compliance_history if respond_to?(:compliance_history)
+      when "topology"
+        show_topology
 
       # nested list methods as enabled by 'display_methods'
       when *self.class.display_methods
@@ -55,7 +57,7 @@ module Mixins
           :action     => :show,
           :only_path  => true,
         )
-        url_for(opts)
+        url_for_only_path(opts)
       end
     end
 

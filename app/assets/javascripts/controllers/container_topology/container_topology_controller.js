@@ -16,16 +16,27 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
   $scope.d3 = d3;
 
   $scope.refresh = function() {
-    var id;
+    var id, type;
     var pathname = $window.location.pathname.replace(/\/$/, '');
-    if (pathname.match(/show$/)) {
+    if (pathname.match('/container_topology/show$')) {
+      // specifically the container_topology page - all container ems's
+      type = 'container_topology';
       id = '';
-    } else {
-      // search for pattern ^/<controler>/<id>$ in the pathname
-      id = '/' + (/^\/[^\/]+\/(\d+)$/.exec(pathname)[1]);
+    } else if (pathname.match('/(.+)/show/([0-9]+)')) {
+      // any container entity except the ems
+      // search for pattern ^/<controller>/show/<id>$ in the pathname - /container_project/show/11
+      var arr = pathname.match('/(.+)/show/([0-9]+)');
+      type = arr[1] + '_topology';
+      id = '/' + arr[2]
+    } else if (pathname.match('/(.+)/([0-9]+)')) {
+      // single entity topology of ems_container
+      // search for pattern ^/<controller>/<id>$ in the pathname - /ems_container/4
+      var arr = pathname.match('/(.+)/([0-9]+)');
+      type = 'container_topology';
+      id = '/' + arr[2]
     }
 
-    var url = '/container_topology/data' + id;
+    var url = '/' + type + '/data' + id;
 
     $http.get(url)
       .then(getContainerTopologyData)
@@ -254,6 +265,8 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
     switch (d.item.kind) {
       case "ContainerManager":
         return { x: -20, y: -20, r: 28 };
+      case "ContainerProject":
+        return { x: defaultDimensions.x, y: defaultDimensions.y, r: 28 };
       case "Container":
         return { x: 1, y: 5, r: 13 };
       case "ContainerGroup":

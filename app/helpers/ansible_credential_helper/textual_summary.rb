@@ -29,7 +29,7 @@ module AnsibleCredentialHelper::TextualSummary
     num = @record.number_of(:configuration_script_sources)
     h = {:label => _("Repositories"), :value => num}
     if role_allows?(:feature => "embedded_configuration_script_source_view") && num > 0
-      h.update(:link  => url_for(:action => 'show', :id => @record, :display => 'repositories'),
+      h.update(:link  => url_for_only_path(:action => 'show', :id => @record, :display => 'repositories'),
                :title => _('Show all Repositories'))
     end
     h

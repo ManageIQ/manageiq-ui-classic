@@ -6,7 +6,7 @@
         - @folders.each do |f|
           %tr{:title => _("View '%{name}' Cluster") % {:name => f.name},
             :onclick => "miqTreeActivateNode('storage_pod_tree', 'xx-#{f.id}');"}
-            %td.narrow
+            %td.table-view-pf-select
               %i.pficon.pficon-folder-close
             %td
               = h(f.name)

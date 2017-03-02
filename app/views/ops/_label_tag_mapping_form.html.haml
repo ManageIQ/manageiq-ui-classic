@@ -1,4 +1,4 @@
-- url = url_for(:action => 'label_tag_mapping_field_changed', :id => @lt_map && @lt_map.id ? @lt_map.id.to_s : "new")
+- url = url_for_only_path(:action => 'label_tag_mapping_field_changed', :id => @lt_map && @lt_map.id ? @lt_map.id.to_s : "new")
 #main_div
   = render :partial => "layouts/flash_msg"
   = form_tag({:action => 'label_tag_mapping_update'},

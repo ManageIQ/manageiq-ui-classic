@@ -1,5 +1,5 @@
 - if @edit
-  - url = url_for(:action => 'profile_field_changed', :id => "#{@profile.id || 'new'}")
+  - url = url_for_only_path(:action => 'profile_field_changed', :id => (@profile.id || 'new'))
   - observe_with_interval = {:interval => '.5', :url => url}.to_json
 - if @profile
   #profile_info_div
@@ -87,7 +87,7 @@
             - @profile_policies.each do |p|
               %tr{:title => _("View this %{model} Policy") % {:model => ui_lookup(:model => p.towhat)},
                 :onclick => "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_p-#{to_cid(p.id)}');"}
-                %td.narrow
+                %td.table-view-pf-select
                   %i{:class => p.decorate.fonticon}
                 %td
                   %b

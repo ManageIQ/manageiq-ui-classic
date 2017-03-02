@@ -54,7 +54,7 @@ module NetworkPortHelper::TextualSummary
     if instance && role_allows?(:feature => "vm_show")
       h = {:label => label, :icon => "pficon pficon-virtual-machine"}
       h[:value] = instance.name
-      h[:link]  = url_for(:controller => 'vm_cloud', :action => 'show', :id => instance.id)
+      h[:link]  = url_for_only_path(:controller => 'vm_cloud', :action => 'show', :id => instance.id)
       h[:title] = _("Show %{label}") % {:label => label}
     end
     h
@@ -77,7 +77,7 @@ module NetworkPortHelper::TextualSummary
     {
       :icon  => "pficon pficon-screen",
       :value => @record.device,
-      :link  => url_for(
+      :link  => url_for_only_path(
         :controller => "host",
         :action     => "show",
         :id         => @record.device.id

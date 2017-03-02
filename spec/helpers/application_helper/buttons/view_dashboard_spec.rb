@@ -1,0 +1,16 @@
+describe ApplicationHelper::Button::ViewDashboard do
+  let(:view_context) { setup_view_context_with_sandbox({}) }
+  let(:button) { described_class.new(view_context, {}, {'showtype' => showtype}, {}) }
+
+  describe '#calculate_properties' do
+    before { button.calculate_properties }
+    context 'when showtype == dashboard' do
+      let(:showtype) { 'dashboard' }
+      it_behaves_like 'a disabled button'
+    end
+    context 'when showtype != dashboard' do
+      let(:showtype) { 'not_dashboard' }
+      it_behaves_like 'an enabled button'
+    end
+  end
+end

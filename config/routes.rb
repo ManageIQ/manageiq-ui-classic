@@ -691,6 +691,7 @@ Rails.application.routes.draw do
         protect
         squash_toggle
         launch_cockpit
+        launch_external_logging_support
       ) +
                adv_search_post +
                exp_post +
@@ -977,6 +978,13 @@ Rails.application.routes.draw do
     },
 
     :container_topology       => {
+      :get => %w(
+        show
+        data
+      )
+    },
+
+    :container_project_topology => {
       :get => %w(
         show
         data
@@ -1285,6 +1293,7 @@ Rails.application.routes.draw do
         tagging_edit
         tag_edit_form_field_changed
         squash_toggle
+        launch_external_logging_support
       ) +
                adv_search_post +
                compare_post +

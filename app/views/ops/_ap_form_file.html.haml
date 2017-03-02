@@ -1,5 +1,5 @@
 - scan_id = "#{@scan.id || 'new'}"
-- url = url_for(:action => 'ap_edit',
+- url = url_for_only_path(:action => 'ap_edit',
                 :id     => scan_id)
 %h3= _("File Entry")
 %table.table.table-striped.table-bordered.table-hover

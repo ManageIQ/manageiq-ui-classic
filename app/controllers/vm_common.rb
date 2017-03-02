@@ -1758,7 +1758,7 @@ module VmCommon
   def get_vms(selected = nil)
     page = params[:page].nil? ? 1 : params[:page].to_i
     @current_page = page
-    @items_per_page = @settings[:perpage][@gtl_type.to_sym]   # Get the per page setting for this gtl type
+    @items_per_page = settings(:perpage, @gtl_type.to_sym) # Get the per page setting for this gtl type
     if selected                             # came in with a list of selected ids (i.e. checked vms)
       @record_pages, @records = paginate(:vms, :per_page => @items_per_page, :order => @col_names[get_sort_col] + " " + @sortdir, :conditions => ["id IN (?)", selected])
     else                                      # getting ALL vms

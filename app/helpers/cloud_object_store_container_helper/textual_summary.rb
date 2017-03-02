@@ -32,7 +32,7 @@ module CloudObjectStoreContainerHelper::TextualSummary
     h = {:label => label, :icon => "pficon pficon-cloud-tenant", :value => (cloud_tenant.nil? ? "None" : cloud_tenant.name)}
     if cloud_tenant && role_allows?(:feature => "cloud_tenant_show")
       h[:title] = _("Show this Cloud Object Store's parent %{parent}") % {:parent => label}
-      h[:link]  = url_for(:controller => 'cloud_tenant', :action => 'show', :id => cloud_tenant)
+      h[:link]  = url_for_only_path(:controller => 'cloud_tenant', :action => 'show', :id => cloud_tenant)
     end
     h
   end
@@ -43,7 +43,7 @@ module CloudObjectStoreContainerHelper::TextualSummary
     h = {:label => label, :icon => "product product-cloud_object_store", :value => num}
     if num > 0 && role_allows?(:feature => "cloud_object_store_object_show_list")
       h[:title] = _("Show this Cloud Object Store's child %{children}") % {:children => label}
-      h[:link]  = url_for(:action => 'show', :id => @record, :display => 'cloud_object_store_objects')
+      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'cloud_object_store_objects')
     end
     h
   end

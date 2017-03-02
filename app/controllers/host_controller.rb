@@ -362,7 +362,7 @@ class HostController < ApplicationController
       rescue Net::SSH::HostKeyMismatch => e   # Capture the Host key mismatch from the verify
         render :update do |page|
           page << javascript_prologue
-          new_url = url_for(:action => "update", :button => "validate", :type => params[:type], :remember_host => "true", :escape => false)
+          new_url = url_for_only_path(:action => "update", :button => "validate", :type => params[:type], :remember_host => "true", :escape => false)
           page << "if (confirm('The Host SSH key has changed, do you want to accept the new key?')) miqAjax('#{new_url}');"
         end
         return
@@ -641,7 +641,7 @@ class HostController < ApplicationController
     page = params[:page].nil? ? 1 : params[:page].to_i
     @current_page = page
 
-    @items_per_page = @settings[:perpage][@gtl_type.to_sym]   # Get the per page setting for this gtl type
+    @items_per_page = settings(:perpage, @gtl_type.to_sym) # Get the per page setting for this gtl type
     @host_pages, @hosts = paginate(:hosts, :per_page => @items_per_page, :order => @col_names[get_sort_col] + " " + @sortdir)
   end
 

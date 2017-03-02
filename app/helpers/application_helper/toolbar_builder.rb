@@ -28,7 +28,7 @@ class ApplicationHelper::ToolbarBuilder
   delegate :request, :current_user, :to => :@view_context
   delegate :role_allows?, :model_for_vm, :rbac_common_feature_for_buttons, :to => :@view_context
   delegate :x_tree_history, :x_node, :x_active_tree, :to => :@view_context
-  delegate :is_browser?, :is_browser_os?, :to => :@view_context
+  delegate :settings, :is_browser?, :is_browser_os?, :to => :@view_context
 
   def initialize(view_context, view_binding, instance_data)
     @view_context = view_context
@@ -366,10 +366,6 @@ class ApplicationHelper::ToolbarBuilder
 
   # Determine if a button should be hidden
   def hide_button?(id)
-    # need to hide add buttons when on sub-list view screen of a CI.
-    return true if id.ends_with?("_new", "_discover") &&
-                   @lastaction == "show" && !%w(main vms instances all_vms).include?(@display)
-
     # user can see the buttons if they can get to Policy RSOP/Automate Simulate screen
     return false if ["miq_ae_tools"].include?(@layout)
 
@@ -390,7 +386,9 @@ class ApplicationHelper::ToolbarBuilder
                      id !~ /^history_\d*/ &&
                      !id.starts_with?("dialog_") && !id.starts_with?("miq_task_") &&
                      !(id == "show_summary" && !@explorer) && id != "summary_reload" &&
-                     @layout != "ops"
+                     @layout != "ops" &&
+                     !(id.ends_with?("_new", "_discover") && @lastaction == "show" &&
+                         !%w(main vms instances all_vms).include?(@display))
     end
 
     # Check buttons with other restriction logic
@@ -405,8 +403,6 @@ class ApplicationHelper::ToolbarBuilder
   # Determine if a button should be disabled. Returns either boolean or
   # string message with explanation of reason for disabling
   def disable_button(id)
-    return true if @gtl_type && id.starts_with?("view_") && id.ends_with?(@gtl_type)  # GTL view buttons
-    return true if id == "view_dashboard" && (@showtype == "dashboard")
     if id == 'vm_vnc_console' && @record.vendor == 'vmware' &&
        ExtManagementSystem.find_by(:id => @record.ems_id).api_version.to_f >= 6.5
       return N_("VNC consoles are unsupported on VMware ESXi 6.5 and later.")
@@ -615,13 +611,13 @@ class ApplicationHelper::ToolbarBuilder
     return true if id.starts_with?("view_") && id.ends_with?("textual")  # Summary view buttons
     return true if @gtl_type && id.starts_with?("view_") && id.ends_with?(@gtl_type)  # GTL view buttons
     return true if @ght_type && id.starts_with?("view_") && id.ends_with?(@ght_type)  # GHT view buttons on report show
-    return true if id.starts_with?("tree_") && id.ends_with?(@settings[:views][:treesize].to_i == 32 ? "large" : "small")
-    return true if id.starts_with?("compare_") && id.ends_with?(@settings[:views][:compare])
-    return true if id.starts_with?("drift_") && id.ends_with?(@settings[:views][:drift])
+    return true if id.starts_with?("tree_") && id.ends_with?(settings(:views, :treesize).to_i == 32 ? "large" : "small")
+    return true if id.starts_with?("compare_") && id.ends_with?(settings(:views, :compare))
+    return true if id.starts_with?("drift_") && id.ends_with?(settings(:views, :drift))
     return true if id == "compare_all"
     return true if id == "drift_all"
-    return true if id.starts_with?("comparemode_") && id.ends_with?(@settings[:views][:compare_mode])
-    return true if id.starts_with?("driftmode_") && id.ends_with?(@settings[:views][:drift_mode])
+    return true if id.starts_with?("comparemode_") && id.ends_with?(settings(:views, :compare_mode))
+    return true if id.starts_with?("driftmode_") && id.ends_with?(settings(:views, :drift_mode))
     return true if id == "view_dashboard" && @showtype == "dashboard"
     return true if id == "view_topology" && @showtype == "topology"
     return true if id == "view_summary" && @showtype == "main"

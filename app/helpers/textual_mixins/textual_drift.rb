@@ -9,7 +9,7 @@ module TextualMixins::TextualDrift
       h[:value] = num
       h[:title] = _("Show virtual machine drift history")
       h[:explorer] = true
-      h[:link] = url_for(:controller => controller.controller_name, :action => 'drift_history', :id => @record)
+      h[:link] = url_for_only_path(:controller => controller.controller_name, :action => 'drift_history', :id => @record)
     end
     h
   end

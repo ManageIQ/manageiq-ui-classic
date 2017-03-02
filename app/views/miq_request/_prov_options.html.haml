@@ -1,5 +1,5 @@
 = render :partial => "layouts/flash_msg"
-- url = url_for(:action => 'prov_change_options')
+- url = url_for_only_path(:action => 'prov_change_options')
 #prov_options_div
   %h3
     = _("Filter By")

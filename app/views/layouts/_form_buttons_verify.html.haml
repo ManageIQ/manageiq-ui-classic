@@ -19,7 +19,7 @@
                  :class   => "btn btn-primary btn-xs pull-right",
                  :alt     => verify_title_on,
                  :title   => verify_title_on,
-                 :onclick => "miqAjaxButton('#{url_for(:action => validate_url,
+                 :onclick => "miqAjaxButton('#{url_for_only_path(:action => validate_url,
                                                        :id     => id,
                                                        :button => "validate")}', true);")
   - else

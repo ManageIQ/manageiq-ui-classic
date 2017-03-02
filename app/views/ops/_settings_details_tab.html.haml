@@ -3,7 +3,7 @@
     = render :partial => "layouts/flash_msg"
     - region = MiqRegion.my_region
     - if @edit
-      - url = url_for(:action => 'region_form_field_changed', :id => "#{region.id || "new"}")
+      - url = url_for_only_path(:action => 'region_form_field_changed', :id => (region.id || "new"))
       %h3
         = _("Region Information")
       .form-horizontal
@@ -29,32 +29,32 @@
       %tbody
         - unless @edit
           %tr
-            %td.narrow{:onclick => remote_function(:url => {:action => 'region_edit', :id => region.id}), :title => _("Edit this Region")}
+            %td.table-view-pf-select{:onclick => remote_function(:url => {:action => 'region_edit', :id => region.id}), :title => _("Edit this Region")}
               %i.pficon.pficon-regions
             %td{:onclick => remote_function(:url => {:action => 'region_edit', :id => region.id}), :title => _("Edit this Region")}
               = h(region.description)
               [#{h(region.region)}]
         %tr
-          %td.narrow{:onclick => "miqTreeActivateNode('settings_tree', 'xx-sis');", :title => _("View Analysis Profiles")}
+          %td.table-view-pf-select{:onclick => "miqTreeActivateNode('settings_tree', 'xx-sis');", :title => _("View Analysis Profiles")}
             %i.fa.fa-search
           %td{:onclick => "miqTreeActivateNode('settings_tree', 'xx-sis');", :title => _("View Analysis Profiles")}
             = _("Analysis Profiles")
             (#{h(@scan_items.size)})
         %tr
-          %td.narrow{:onclick => "miqTreeActivateNode('settings_tree', 'xx-z');", :title => _("View Zones")}
+          %td.table-view-pf-select{:onclick => "miqTreeActivateNode('settings_tree', 'xx-z');", :title => _("View Zones")}
             %i.pficon.pficon-zone
           %td{:onclick => "miqTreeActivateNode('settings_tree', 'xx-z');", :title => _("View Zones")}
             = _("Zones")
             (#{h(@zones.size)})
         %tr
-          %td.narrow{:onclick => "miqTreeActivateNode('settings_tree', 'xx-msc');", :title => _("View Schedules")}
+          %td.table-view-pf-select{:onclick => "miqTreeActivateNode('settings_tree', 'xx-msc');", :title => _("View Schedules")}
             %i.fa.fa-clock-o
           %td{:onclick => "miqTreeActivateNode('settings_tree', 'xx-msc');", :title => _("View Schedules")}
             = _("Schedules")
             (#{h(@miq_schedules.size)})
         - if ::Settings.product.new_ldap
           %tr
-            %td.narrow{:onclick => "miqTreeActivateNode('settings_tree', 'xx-l');", :title => _("View LDAP Regions")}
+            %td.table-view-pf-select{:onclick => "miqTreeActivateNode('settings_tree', 'xx-l');", :title => _("View LDAP Regions")}
               %i.pficon.pficon-regions
             %td{:onclick => "miqTreeActivateNode('settings_tree', 'xx-l');", :title => _("View LDAP Regions")}
               = _("LDAP Regions")

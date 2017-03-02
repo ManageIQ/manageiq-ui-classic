@@ -65,7 +65,7 @@ module ReportController::Reports
       end
       unless rpt.graph.nil? || rpt.graph[:type].blank?            # If graph present
         # FIXME: UNTESTED!!!
-        rpt.to_chart(@settings[:display][:reporttheme], false, MiqReport.graph_options(350, 250))  # Generate the chart
+        rpt.to_chart(settings(:display, :reporttheme), false, MiqReport.graph_options(350, 250)) # Generate the chart
         @edit[:zgraph_xml] = rpt.chart                 # Save chart data
       else
         @edit[:zgraph_xml] = nil
@@ -117,7 +117,7 @@ module ReportController::Reports
 
   # Generating sample chart
   def sample_chart
-    render Charting.render_format => Charting.sample_chart(@edit[:new], @settings[:display][:reporttheme])
+    render Charting.render_format => Charting.sample_chart(@edit[:new], settings(:display, :reporttheme))
   end
 
   def sample_timeline
@@ -163,7 +163,7 @@ module ReportController::Reports
 
       if params[:ppsetting]                                             # User selected new per page value
         @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
-        @settings[:perpage][@gtl_type.to_sym] = @items_per_page         # Set the per page setting for this gtl type
+        @settings.store_path(:perpage, @gtl_type.to_sym, @items_per_page) # Set the per page setting for this gtl type
       end
 
       @sortcol = session["#{x_active_tree}_sortcol".to_sym].nil? ? 0 : session["#{x_active_tree}_sortcol".to_sym].to_i

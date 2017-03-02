@@ -8,7 +8,7 @@
         %tbody
           - @zones.sort_by(&:name).each do |z|
             %tr{:onclick => "miqTreeActivateNode('diagnostics_tree', 'z-#{to_cid(z.id)}')", :title => _("View this Zone")}
-              %td.narrow
+              %td.table-view-pf-select
                 %i.pficon.pficon-zone
               %td
                 - if my_zone_name == z.name

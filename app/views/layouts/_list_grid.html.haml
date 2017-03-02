@@ -45,7 +45,7 @@
   %thead
     %tr
       - grid_hash[:head].each do |h|
-        %th{:class => h[:is_narrow] ? 'narrow' : ''}
+        %th{:class => h[:is_narrow] ? 'table-view-pf-select' : ''}
           - text = translate_header_text(h[:text])
           - if h[:sort]
             %a{:href => '#',

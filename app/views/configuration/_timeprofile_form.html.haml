@@ -213,13 +213,13 @@
     %table.table.table-striped.table-bordered
       %thead
         %tr
-          %th.narrow
+          %th.table-view-pf-select
           %th= _('Name')
           %th= _('Title')
       %tbody
         - @timeprofile.miq_reports.sort_by { |a| a.name.downcase }.each do |r|
           %tr
-            %td.narrow
+            %td.table-view-pf-select
               %i.fa.fa-file-text-o
             %td= r.name
             %td= r.title

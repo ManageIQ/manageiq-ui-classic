@@ -1,4 +1,4 @@
-- url = url_for(:action => 'quick_search')
+- url = url_for_only_path(:action => 'quick_search')
 #user_input_filter
   - if @edit
     .modal-dialog.modal-lg
@@ -18,7 +18,7 @@
                 - if part.kind_of?(Array) && part.first == :user_input
                   - token = part.last
                   - if @edit[:qs_tokens][token].key?(:field)
-                    - if @edit[:qs_tokens][token][:value_type] == :boolean
+                    - if @edit[:qs_tokens][token][:value_type] == :boolean && @edit[:qs_tokens][token][:value].present?
                       = select_tag("value_#{token}",
                                    options_for_select(["<Choose>"] + MiqExpression.get_entry_details(@edit[:qs_tokens][token][:tag]).sort_by { |desc, _name| desc.downcase },
                                                        nil),
@@ -32,7 +32,8 @@
                                        :maxlength         => 500,
                                        :onkeyup           => "miqQsEnterEscape(event);",
                                        "data-miq_observe" => {:interval => '.5',
-                                                              :url      => url}.to_json)
+                                                              :url      => url}.to_json,
+                                       :placeholder => ("true/false" if @edit[:qs_tokens][token][:value_type] == :boolean))
                       - if @edit[:qs_tokens][token][:value_type] == :percent
                         = "%"
                       - elsif @edit[:qs_tokens][token][:value_type] == :megabytes
@@ -76,7 +77,7 @@
                            :alt   => t = _("No input to apply"),
                            :title => t)
             %span#quick_search_buttons_on{:style => "display:none;"}
-              = link_to(t,
+              = link_to(_("Apply"),
                         {:action => "quick_search",
                          :button => "apply"},
                         :class                 => "btn btn-primary",

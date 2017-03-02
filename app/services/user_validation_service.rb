@@ -4,8 +4,8 @@ class UserValidationService
   end
 
   extend Forwardable
-  delegate [:session, :url_for, :initiate_wait_for_task, :session_init, :clear_current_user,
-            :session_reset, :start_url_for_user] => :@controller
+  delegate [:session, :initiate_wait_for_task, :session_init, :clear_current_user,
+            :session_reset, :start_url_for_user, :url_for_only_path] => :@controller
 
   ValidateResult = Struct.new(:result, :flash_msg, :url)
 
@@ -71,14 +71,14 @@ class UserValidationService
   private
 
   def validate_user_handle_no_records
-    ValidateResult.new(:pass, nil, url_for(
+    ValidateResult.new(:pass, nil, url_for_only_path(
                                      :controller    => "ems_infra",
                                      :action        => 'show_list'))
   end
 
   def validate_user_handle_not_ready(db_user)
     if db_user.super_admin_user?
-      ValidateResult.new(:pass, nil, url_for(
+      ValidateResult.new(:pass, nil, url_for_only_path(
                                        :controller    => "ops",
                                        :action        => 'explorer',
                                        :flash_warning => true,

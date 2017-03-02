@@ -140,7 +140,7 @@
           %table.table.table-bordered.table-hover.table-striped
             %thead
               %tr
-                %th.narrow
+                %th.table-view-pf-select
                 - titles = [_("Name"), _("Description"), _("Action Order"), _("Provision Order"), _("Action"), _("Delay (mins)")]
                 - colspan = [_("Action"), _("Delay (mins)")]
                 - titles.each do |title|
@@ -163,7 +163,7 @@
                     :onclick     => remote_function(:loading  => "miqSparkle(true);",
                                                     :complete => "miqSparkle(false);",
                                                     :url      => "/catalog/x_show/#{to_cid(r.resource_id)}")}
-                  %td.narrow
+                  %td.table-view-pf-select
                     %i.product.product-template
                   - keys = %w(resource_name resource_description group_idx provision_index start_action stop_action start_delay stop_delay)
                   - keys.each do |key|

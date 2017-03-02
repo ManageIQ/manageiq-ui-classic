@@ -12,7 +12,7 @@
           - @events.each do |e|
             %tr{:title => _("View this Event"),
               :onclick => "miqTreeActivateNode('event_tree', 'ev-#{to_cid(e.id)}');"}
-              %td.narrow
+              %td.table-view-pf-select
                 %i{:class => e.decorate.try(:fonticon)}
               %td
                 = e.description
