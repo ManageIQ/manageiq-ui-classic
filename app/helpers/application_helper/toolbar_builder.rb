@@ -366,37 +366,6 @@ class ApplicationHelper::ToolbarBuilder
 
   # Determine if a button should be hidden
   def hide_button?(id)
-    # user can see the buttons if they can get to Policy RSOP/Automate Simulate screen
-    return false if ["miq_ae_tools"].include?(@layout)
-
-    # buttons on compare/drift screen are allowed if user has access to compare/drift
-    return false if id.starts_with?("compare_", "drift_", "comparemode_", "driftmode_")
-
-    # Allow custom buttons on CI show screen, user can see custom button if they can get to show screen
-    return false if id.starts_with?("custom_")
-
-    return false if id == "miq_request_reload" && # Show the request reload button
-                    (@lastaction == "show_list" || @showtype == "miq_provisions")
-
-    return false if id.starts_with?("miq_capacity_") && @sb[:active_tab] == "report"
-
-    # don't check for feature RBAC if id is miq_request_approve/deny
-    unless %w(miq_policy catalogs).include?(@layout)
-      return true if !role_allows?(:feature => id) && !["miq_request_approve", "miq_request_deny"].include?(id) &&
-                     id !~ /^history_\d*/ &&
-                     !id.starts_with?("dialog_") && !id.starts_with?("miq_task_") &&
-                     !(id == "show_summary" && !@explorer) && id != "summary_reload" &&
-                     @layout != "ops" &&
-                     !(id.ends_with?("_new", "_discover") && @lastaction == "show" &&
-                         !%w(main vms instances all_vms).include?(@display))
-    end
-
-    # Check buttons with other restriction logic
-    case id
-    when "miq_task_canceljob"
-      return true unless ["all_tasks", "all_ui_tasks"].include?(@layout)
-    end
-
     false  # No reason to hide, allow the button to show
   end
 
