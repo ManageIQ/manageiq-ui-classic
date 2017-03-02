@@ -353,11 +353,6 @@ class ApplicationHelper::ToolbarBuilder
     img
   end
 
-  # Determine if a button should be hidden
-  def hide_button?(id)
-    false  # No reason to hide, allow the button to show
-  end
-
   # Determine if a button should be disabled. Returns either boolean or
   # string message with explanation of reason for disabling
   def disable_button(id)
