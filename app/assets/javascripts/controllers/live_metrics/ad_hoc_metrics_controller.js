@@ -110,7 +110,6 @@
 
     dash.viewMetrics = function() {
       dash.showGraph = false;
-      httpUtils.refreshList();
     };
 
     dash.refreshTenant = function() {

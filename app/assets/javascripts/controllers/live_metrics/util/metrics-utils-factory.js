@@ -1,6 +1,11 @@
 angular.module('miq.util').factory('metricsUtilsFactory', function() {
   return function (dash) {
     var getMetricTagsData = function(response) {
+      if (response.error || response.data.error) {
+        add_flash(response.error || response.data.error, 'error');
+        return;
+      }
+
       var data = response.data;
 
       dash.tagsLoaded = true;
