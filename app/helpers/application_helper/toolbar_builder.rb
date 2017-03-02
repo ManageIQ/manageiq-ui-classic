@@ -369,11 +369,6 @@ class ApplicationHelper::ToolbarBuilder
       when "rbac_group_edit"
         return N_("This Group is Read Only and can not be edited") if @record.read_only
       end
-    when "Storage"
-      case id
-      when "storage_scan"
-        return @record.unsupported_reason(:smartstate_analysis) unless @record.supports_smartstate_analysis?
-      end
     when "User"
       case id
       when "rbac_user_copy"

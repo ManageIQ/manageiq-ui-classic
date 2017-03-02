@@ -11,7 +11,9 @@ class ApplicationHelper::Toolbar::StorageCenter < ApplicationHelper::Toolbar::Ba
           'fa fa-search fa-lg',
           N_('Perform SmartState Analysis on this Datastore'),
           N_('Perform SmartState Analysis'),
-          :confirm => N_("Perform SmartState Analysis on this Datastore?")),
+          :confirm => N_("Perform SmartState Analysis on this Datastore?"),
+          :options => {:feature => :smartstate_analysis},
+          :klass   => ApplicationHelper::Button::StorageScan),
         separator,
         button(
           :storage_delete,
