@@ -53,12 +53,6 @@ module EmsCommon
     drop_breadcrumb(:name => @ems.name + _(" (Ad hoc Metrics)"), :url => show_link(@ems))
   end
 
-  def show_topology
-    @showtype = "topology"
-    @lastaction = "show_topology"
-    drop_breadcrumb(:name => @ems.name + _(" (Topology)"), :url => show_link(@ems))
-  end
-
   def display_block_storage_managers
     nested_list('block_storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :block_storage_managers)
   end
@@ -98,7 +92,7 @@ module EmsCommon
     end
 
     def custom_display_modes
-      %w(props ems_folders ad_hoc_metrics topology)
+      %w(props ems_folders ad_hoc_metrics)
     end
 
     def default_show_template
