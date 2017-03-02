@@ -132,9 +132,23 @@ class ServiceController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties lifecycle relationships miq_custom_attributes), %i(vm_totals tags)]
+    if @record.type == "ServiceAnsiblePlaybook"
+      [%i(properties)]
+    else
+      [%i(properties lifecycle relationships miq_custom_attributes), %i(vm_totals tags)]
+    end
   end
   helper_method :textual_group_list
+
+  def textual_provisioning_group_list
+    [%i(provisioning_results), %i(provisioning_details), %i(provisioning_credentials), %i(provisioning_stdout)]
+  end
+  helper_method :textual_provisioning_group_list
+
+  def textual_retirement_group_list
+    [%i(retirement_results), %i(retirement_details), %i(retirement_credentials), %i(retirement_stdout)]
+  end
+  helper_method :textual_retirement_group_list
 
   def features
     [ApplicationController::Feature.new_with_hash(:role     => "service",

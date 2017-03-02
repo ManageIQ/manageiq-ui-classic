@@ -1,8 +1,26 @@
 = render :partial => "layouts/textual_groups_generic"
-.row
-  .col-md-12.col-lg-6
-    %h3
-      = _('VMs')
+- if @record.type == "ServiceAnsiblePlaybook"
+  #services_tab
+    %ul.nav.nav-tabs
+      - job = @record.try(:job, "Retirement")
+      = miq_tab_header("provisioning") do
+        = _("Provisioning")
+      - if job
+        = miq_tab_header("retirement") do
+          = _("Retirement")
+    .tab-content
+      = miq_tab_content("provisioning", 'default') do
+        = render :partial => "layouts/textual_groups_tabs", :locals => {:groups => textual_provisioning_group_list}
+      - if job
+        = miq_tab_content("retirement") do
+          = render :partial => "layouts/textual_groups_tabs", :locals => {:groups => textual_retirement_group_list}
+  :javascript
+    miq_tabs_init('#services_tab');
+- else
+  .row
+    .col-md-12.col-lg-6
+      %h3
+        = _('VMs')
 
-    - if @view
-      = render :partial => "layouts/gtl", :locals => {:view => @view}
+      - if @view
+        = render :partial => "layouts/gtl", :locals => {:view => @view}
