@@ -366,8 +366,6 @@ class ApplicationHelper::ToolbarBuilder
       end
     when "MiqTemplate"
       case id
-      when "miq_template_perf"
-        return N_("No Capacity & Utilization data has been collected for this Template") unless @record.has_perf_data?
       when "miq_template_scan", "image_scan"
         return @record.unsupported_reason(:smartstate_analysis) unless @record.supports_smartstate_analysis?
         return @record.active_proxy_error_message unless @record.has_active_proxy?

@@ -111,7 +111,8 @@ class ApplicationHelper::Toolbar::XMiqTemplateCenter < ApplicationHelper::Toolba
           'product product-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this Template'),
           N_('Utilization'),
-          :url_parms => "?display=performance"),
+          :url_parms => "?display=performance",
+          :klass     => ApplicationHelper::Button::MiqTemplatePerf),
         button(
           :miq_template_timeline,
           'product product-timeline fa-lg',
