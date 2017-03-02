@@ -5,22 +5,18 @@
   - verify_title_on = _("Validate the credentials by logging into the Server")
   - verify_title_off ||= _("Server information, Username and matching password fields are needed to perform verification of credentials")
 - if controller.send(:restful?)
-  - validate = "validateClicked($event, '#{valtype}', true)"
+  -# TODO: replace first argument with a sane way of submitting the form
+  - validate = "validateClicked({target: '.validate_button:visible'}, '#{valtype}', true)"
 - else
   - validate = "validateClicked('#{url_for_only_path(:action => validate_url, :id => id, :type => valtype, :button => "validate")}')"
-%div{"ng-show" => ng_show, "ng-controller" => "buttonGroupController"}
-  = button_tag(_("Validate"),
-                 :class     => "btn btn-primary btn-xs disabled",
-                 :alt       => verify_title_off,
-                 :title     => verify_title_off,
-                 "ng-show"  => basic_info_needed ? "!canValidateBasicInfo()" : "!canValidate()",
-                 "ng-click" => "disabledClick($event)")
-  = button_tag(_("Validate"),
-                 :class     => "btn btn-primary btn-xs",
-                 :alt       => verify_title_on,
-                 :title     => verify_title_on,
-                 "ng-show"  => basic_info_needed ? "canValidateBasicInfo()" : "canValidate()",
-                 "ng-click" => validate)
+%div{"ng-show" => ng_show}
+  %miq-button{:class           => 'validate_button',
+              :name            => _("Validate"),
+              "disabled-title" => verify_title_off,
+              "enabled-title"  => verify_title_on,
+              :enabled         => basic_info_needed ? "canValidateBasicInfo()" : "canValidate()",
+              'on-click'       => validate,
+              :primary         => 'true'}
   %div{"ng-if" => "checkAuthentication"}
     .form-group{"ng-class" => "{'has-error': angularForm.#{valtype}_auth_status.$error.validationRequired}"}
       .col-md-8
