@@ -371,11 +371,6 @@ class ApplicationHelper::ToolbarBuilder
       end
     when "Storage"
       case id
-      when "storage_delete"
-        unless @record.vms_and_templates.empty? && @record.hosts.empty?
-          return N_("Only %{storage} without VMs and Hosts can be removed") %
-            {:storage => ui_lookup(:table => "storage")}
-        end
       when "storage_scan"
         return @record.unsupported_reason(:smartstate_analysis) unless @record.supports_smartstate_analysis?
       end

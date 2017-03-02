@@ -186,22 +186,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       allow(session).to receive(:fetch_path).with(:browser, :os).and_return('linux')
     end
 
-    context "when record class = Storage" do
-      before { @record = Storage.new }
-
-      context "and id = storage_delete" do
-        before { @id = "storage_delete" }
-        it "when with VMs or Hosts" do
-          allow(@record).to receive(:hosts).and_return(%w(h1 h2))
-          expect(subject).to eq("Only Datastore without VMs and Hosts can be removed")
-
-          allow(@record).to receive_messages(:hosts => [], :vms_and_templates => ['v1'])
-          expect(subject).to eq("Only Datastore without VMs and Hosts can be removed")
-        end
-        it_behaves_like 'default case'
-      end
-    end
-
     context "when record class = Vm" do
       before { @record = Vm.new }
 
