@@ -61,7 +61,9 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
     var getMetricTags = function() {
       $http.get(dash.url + '&query=metric_tags&limit=250')
         .then(utils.getMetricTagsData)
-        .catch(miqService.handleFailure);
+        .catch(function(error) {
+          dash.tenantChanged = false;
+          miqService.handleFailure(error); });
     };
 
     var getTenants = function(include) {
