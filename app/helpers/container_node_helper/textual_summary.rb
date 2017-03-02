@@ -25,17 +25,19 @@ module ContainerNodeHelper::TextualSummary
   end
 
   def textual_group_conditions
-    labels = [_("Name"), _("Status"), _("Last Transition Time"), _("Reason")]
-    h = {:labels => labels}
-    h[:values] = @record.container_conditions.collect do |condition|
-      [
-        condition.name,
-        condition.status,
-        (condition.last_transition_time || ""),
-        (condition.reason || "")
-      ]
-    end
-    TextualGroup.new(_("Conditions"), h)
+    TextualMultilabel.new(
+      _("Conditions"),
+      :additional_table_class => "table-fixed",
+      :labels                 => [_("Name"), _("Status"), _("Last Transition Time"), _("Reason")],
+      :values                 => @record.container_conditions.collect do |condition|
+        [
+          condition.name,
+          condition.status,
+          (condition.last_transition_time || ""),
+          (condition.reason || "")
+        ]
+      end
+    )
   end
 
   def textual_group_smart_management
