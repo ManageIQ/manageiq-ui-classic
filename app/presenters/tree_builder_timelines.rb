@@ -1,7 +1,7 @@
 class TreeBuilderTimelines < TreeBuilder
   has_kids_for Hash, [:x_get_tree_hash_kids]
 
-  def initialize(name, type, sandbox, build = true, **params)
+  def initialize(name, type, sandbox, build = true, params = {})
     @menu = params[:menu]
     super(name, type, sandbox, build)
   end
