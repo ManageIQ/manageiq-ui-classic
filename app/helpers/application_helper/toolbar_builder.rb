@@ -366,11 +366,6 @@ class ApplicationHelper::ToolbarBuilder
       end
     when "MiqTemplate"
       case id
-      when "image_check_compliance", "miq_template_check_compliance"
-        unless @record.has_compliance_policies?
-          return N_("No Compliance Policies assigned to this %{vm}") %
-            {:vm => ui_lookup(:model => model_for_vm(@record).to_s)}
-        end
       when "miq_template_perf"
         return N_("No Capacity & Utilization data has been collected for this Template") unless @record.has_perf_data?
       when "miq_template_scan", "image_scan"

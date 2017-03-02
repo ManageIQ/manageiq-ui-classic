@@ -70,7 +70,8 @@ class ApplicationHelper::Toolbar::XMiqTemplateCenter < ApplicationHelper::Toolba
           'fa fa-search fa-lg',
           N_('Check Compliance of the last known configuration for this Template'),
           N_('Check Compliance of Last Known Configuration'),
-          :confirm => N_("Initiate Check Compliance of the last known configuration for this Template?")),
+          :confirm => N_("Initiate Check Compliance of the last known configuration for this Template?"),
+          :klass   => ApplicationHelper::Button::MiqCheckCompliance),
       ]
     ),
   ])
