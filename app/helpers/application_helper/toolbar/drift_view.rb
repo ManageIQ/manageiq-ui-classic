@@ -5,7 +5,8 @@ class ApplicationHelper::Toolbar::DriftView < ApplicationHelper::Toolbar::Basic
       'product product-view_expanded fa-lg',
       N_('Expanded View'),
       nil,
-      :url => "drift_compress"),
+      :url   => "drift_compress",
+      :klass => ApplicationHelper::Button::ButtonWithoutRbacCheck),
     twostate(
       :drift_compressed,
       'fa fa-bars fa-rotate-90 fa-lg',
