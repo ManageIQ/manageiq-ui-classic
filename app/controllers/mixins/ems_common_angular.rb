@@ -417,19 +417,19 @@ module Mixins
       if ems.kind_of?(ManageIQ::Providers::ContainerManager)
         params[:cred_type] = ems.default_authentication_type if params[:cred_type] == "default"
         default_endpoint = {:role => :default, :hostname => hostname, :port => port}
-        default_endpoint.merge!(container_security_options(ems.security_protocol, default_tls_ca_certs))
+        default_endpoint.merge!(endpoint_security_options(ems.security_protocol, default_tls_ca_certs))
 
         if hawkular_hostname.blank?
           default_key = params[:default_password] || ems.authentication_key
           hawkular_hostname = get_hostname_from_routes(ems, default_endpoint, default_key)
         end
         hawkular_endpoint = {:role => :hawkular, :hostname => hawkular_hostname, :port => hawkular_api_port}
-        hawkular_endpoint.merge!(container_security_options(hawkular_security_protocol, hawkular_tls_ca_certs))
+        hawkular_endpoint.merge!(endpoint_security_options(hawkular_security_protocol, hawkular_tls_ca_certs))
       end
 
       if ems.kind_of?(ManageIQ::Providers::MiddlewareManager)
         default_endpoint = {:role => :default, :hostname => hostname, :port => port}
-        default_endpoint.merge!(container_security_options(ems.security_protocol, default_tls_ca_certs))
+        default_endpoint.merge!(endpoint_security_options(ems.security_protocol, default_tls_ca_certs))
       end
 
       if ems.kind_of?(ManageIQ::Providers::Hawkular::DatawarehouseManager)
@@ -470,7 +470,7 @@ module Mixins
       nil
     end
 
-    def container_security_options(security_protocol, certificate_authority)
+    def endpoint_security_options(security_protocol, certificate_authority)
       {
         :security_protocol     => security_protocol,
         :verify_ssl            => %w(ssl-without-validation non-ssl).exclude?(security_protocol),
