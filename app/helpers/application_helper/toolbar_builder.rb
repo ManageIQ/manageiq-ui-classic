@@ -377,12 +377,6 @@ class ApplicationHelper::ToolbarBuilder
       return N_("VNC consoles are unsupported on VMware ESXi 6.5 and later.")
     end
 
-    # need to add this here, since this button is on list view screen
-    if disable_new_iso_datastore?(id)
-      return N_("No %{providers} are available to create an ISO Datastore on") %
-        {:providers => ui_lookup(:tables => "ext_management_system")}
-    end
-
     case get_record_cls(@record)
     when "MiqGroup"
       case id
@@ -620,12 +614,6 @@ class ApplicationHelper::ToolbarBuilder
     url_parm = parse_ampersand.post_match if parse_ampersand.present?
     encoded_url = URI.encode(url_parm)
     Rack::Utils.parse_query URI("?#{encoded_url}").query
-  end
-
-  def disable_new_iso_datastore?(item_id)
-    @layout == "pxe" &&
-      item_id == "iso_datastore_new" &&
-      !ManageIQ::Providers::Redhat::InfraManager.any_without_iso_datastores?
   end
 
   def build_toolbar_setup
