@@ -8,3 +8,4 @@
           :bs_tree                   => @rep_tree,
           :click_url                 => "/dashboard/show_timeline/",
           :onclick                   => "miqOnClickTimelineSelection"})
+      = render(:partial => "shared/tree", :locals  => {:tree => @timelines_tree, :name => @timelines_tree.name})
