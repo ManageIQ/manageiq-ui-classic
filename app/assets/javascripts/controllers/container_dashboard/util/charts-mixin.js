@@ -9,12 +9,28 @@ angular.module('miq.util').factory('chartsMixin', ['pfUtils', function(pfUtils) 
     });
   };
 
+  var hourlyTimeTooltip = function (data) {
+    var theMoment = moment(data[0].x);
+    return _.template('<div class="tooltip-inner"><%- col1 %>: <%- col2 %></div>')({
+      col1: theMoment.format('h:mm A'),
+      col2: data[0].value + ' ' + data[0].name
+    });
+  };
+
   var dailyPodTimeTooltip = function (data) {
     var theMoment = moment(data[0].x);
     return _.template('<div class="tooltip-inner"><%- col1 %></br>  <%- col2 %></div>')({
       col1: theMoment.format('MM/DD/YYYY'),
       col2: data[0].value + ' ' + data[0].name + ', ' + data[1].value + ' ' + data[1].name
     });
+  };
+
+  var hourlyPodTimeTooltip = function (data) {
+    var theMoment = moment(data[0].x);
+      return _.template('<div class="tooltip-inner"><%- col1 %>: <%- col2 %></div>')({
+        col1: theMoment.format('h:mm A'),
+        col2: data[0].value + ' ' + data[0].name + ', ' + data[1].value + ' ' + data[1].name
+      });
   };
 
   var lineChartTooltipPositionFactory = function(chartId) {
@@ -43,6 +59,7 @@ angular.module('miq.util').factory('chartsMixin', ['pfUtils', function(pfUtils) 
     cpuUsageConfig: {
       chartId: 'cpuUsageChart',
       title: __('CPU'),
+      timeFrame: __('Last 30 Days'),
       units: __('Cores'),
       usageDataName: __('Used'),
       legendLeftText: __('Last 30 Days'),
@@ -52,6 +69,7 @@ angular.module('miq.util').factory('chartsMixin', ['pfUtils', function(pfUtils) 
     memoryUsageConfig: {
       chartId: 'memoryUsageChart',
       title: __('Memory'),
+      timeFrame: __('Last 30 Days'),
       units: __('GB'),
       usageDataName: __('Used'),
       legendLeftText: __('Last 30 Days'),
@@ -66,9 +84,26 @@ angular.module('miq.util').factory('chartsMixin', ['pfUtils', function(pfUtils) 
       dataName : __('KBps'),
       tooltipFn  : dailyTimeTooltip
     },
+    hourlyNetworkUsageConfig: {
+      chartId  : 'networkUsageHourlyChart',
+      headTitle: __('Network Utilization Trend'),
+      timeFrame: __('Last 24 Hours'),
+      units    : __('KBps'),
+      dataName : __('KBps'),
+      tooltipFn  : hourlyTimeTooltip
+    },
+    realtimeNetworkUsageConfig: {
+      chartId  : 'networkUsageHourlyChart',
+      headTitle: __('Network Utilization Trend'),
+      timeFrame: __('Last 10 minutes'),
+      units    : __('KBps'),
+      dataName : __('KBps'),
+      tooltipFn  : hourlyTimeTooltip
+    },
     dailyPodUsageConfig: {
       chartId     : 'podUsageDailyChart',
       headTitle   : __('Pod Creation and Deletion Trends'),
+      timeFrame   : __('Last 30 days'),
       createdLabel: __('Created'),
       deletedLabel: __('Deleted'),
       tooltip     : {
@@ -81,13 +116,44 @@ angular.module('miq.util').factory('chartsMixin', ['pfUtils', function(pfUtils) 
       grid        : {y: {show: false}},
       setAreaChart: true
     },
+    hourlyPodUsageConfig: {
+      chartId     : 'podUsageHourlyChart',
+      headTitle   : __('Pod Creation and Deletion Trends'),
+      timeFrame   : __('Last 24 hours'),
+      createdLabel: __('Created'),
+      deletedLabel: __('Deleted'),
+      tooltip     : {
+        contents: hourlyPodTimeTooltip,
+        position: lineChartTooltipPositionFactory('podUsageHourlyChart'),
+      },
+      point       : {r: 1},
+      size        : {height: 145},
+      color       : {pattern: [pfUtils.colorPalette.blue, pfUtils.colorPalette.green]},
+      grid        : {y: {show: false}},
+      setAreaChart: true
+    },
     dailyImageUsageConfig: {
       chartId     : 'imageUsageDailyChart',
       headTitle   : __('New Image Usage Trend'),
+      timeFrame   : __('Last 30 days'),
       createdLabel: __('Images'),
       tooltip     : {
         contents: dailyTimeTooltip,
         position: lineChartTooltipPositionFactory('imageUsageDailyChart'),
+      },
+      point       : {r: 1},
+      size        : {height: 93},
+      grid        : {y: {show: false}},
+      setAreaChart: true
+    },
+    hourlyImageUsageConfig: {
+      chartId     : 'imageUsageHourlyChart',
+      headTitle   : __('New Image Usage Trend'),
+      timeFrame   : __('Last 24 hours'),
+      createdLabel: __('Images'),
+      tooltip     : {
+        contents: hourlyTimeTooltip,
+        position: lineChartTooltipPositionFactory('imageUsageHourlyChart'),
       },
       point       : {r: 1},
       size        : {height: 93},
@@ -151,6 +217,7 @@ angular.module('miq.util').factory('chartsMixin', ['pfUtils', function(pfUtils) 
     processHeatmapData: processHeatmapData,
     processUtilizationData: processUtilizationData,
     processPodUtilizationData: processPodUtilizationData,
-    dailyTimeTooltip: dailyTimeTooltip
+    dailyTimeTooltip: dailyTimeTooltip,
+    hourlyTimeTooltip: hourlyTimeTooltip
   };
 }]);
