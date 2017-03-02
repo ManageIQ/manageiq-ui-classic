@@ -1,6 +1,7 @@
 angular.module('miq.util').factory('metricsUtilsFactory', function() {
   return function (dash) {
     var getMetricTagsData = function(response) {
+      'use strict';
       if (response.error || response.data.error) {
         add_flash(response.error || response.data.error, 'error');
         return;
@@ -28,6 +29,10 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
 
     var getContainerParamsData = function(metricId, currentItem, response) {
       'use strict';
+      dash.loadCount++;
+      if (dash.loadCount >= dash.selectedItems.length) {
+        dash.loadingData = false;
+      }
 
       if (response.error || response.data.error) {
         add_flash(response.error || response.data.error, 'error');
@@ -45,10 +50,6 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
       dash.chartData['yData'+ currentItem] = yData;
 
       dash.chartDataInit = true;
-      dash.loadCount++;
-      if (dash.loadCount >= dash.selectedItems.length) {
-        dash.loadingData = false;
-      }
     }
 
     var getContainerDashboardData = function(item, response) {

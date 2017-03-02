@@ -54,8 +54,14 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
                    '&starts=' + starts + '&bucket_duration=' + bucket_duration + 's';
 
       $http.get(dash.url + params)
-        .then(function(response) { utils.getContainerParamsData(metricId, currentItem, response); })
-        .catch(miqService.handleFailure);
+        .then(function(response) {
+          utils.getContainerParamsData(metricId, currentItem, response); })
+        .catch(function(error) {
+          dash.loadCount++;
+          if (dash.loadCount >= dash.selectedItems.length) {
+            dash.loadingData = false;
+          }
+          miqService.handleFailure(error); });
     };
 
     var getMetricTags = function() {
