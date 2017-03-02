@@ -61,7 +61,7 @@ module ReportFormatter
           break if row_limit != 0 && d_idx > row_limit - 1
           if ["y", "c"].include?(mri.group) && !mri.sortby.nil? && save_val != d.data[mri.sortby[0]].to_s
             unless d_idx == 0                       # If not the first row, we are at a group break
-              output << group_rows(save_val, mri.col_order.length, break_label, group_text)
+              output << build_group_html_rows(save_val, mri.col_order.length, break_label, group_text).join
             end
             save_val = d.data[mri.sortby[0]].to_s
             # Chargeback, sort by date, but show range
@@ -102,54 +102,11 @@ module ReportFormatter
       end
 
       if ["y", "c"].include?(mri.group) && !mri.sortby.nil?
-        output << group_rows(save_val, mri.col_order.length, break_label, group_text)
-        output << group_rows(:_total_, mri.col_order.length)
+        output << build_group_html_rows(save_val, mri.col_order.length, break_label, group_text).join
+        output << build_group_html_rows(:_total_, mri.col_order.length).join
       end
     end
     private :build_html_rows
-
-    # Generate grouping rows for the passed in grouping value
-    def group_rows(group, col_count, _group_label = nil, group_text = nil)
-      # This reminds MiqReport.build_group_html_rows
-      mri = options.mri
-      grp_output = ""
-      if mri.extras[:grouping] && mri.extras[:grouping][group]  # See if group key exists
-        if mri.group == "c"                                     # Show counts row
-          if group == :_total_
-            grp_output << "<tr><td class='group' colspan='#{col_count}'>Count for All Rows: #{mri.extras[:grouping][group][:count]}</td></tr>"
-          else
-            g = group_text ? group_text : group
-            grp_output << "<tr><td class='group' colspan='#{col_count}'>Count for #{g.blank? ? "&lt;blank&gt;" : g}: #{mri.extras[:grouping][group][:count]}</td></tr>"
-          end
-        else
-          if group == :_total_
-            grp_output << "<tr><td class='group' colspan='#{col_count}'>All Rows</td></tr>"
-          else
-            g = group_text ? group_text : group
-            grp_output << "<tr><td class='group' colspan='#{col_count}'>#{g.blank? ? "<blank>" : g}&nbsp;</td></tr>"
-          end
-        end
-        MiqReport::GROUPINGS.each do |calc|                     # Add an output row for each group calculation
-          if mri.extras[:grouping][group].key?(calc.first)  # Only add a row if there are calcs of this type for this group value
-            grp_output << "<tr>"
-            grp_output << "<td class='group'>#{calc.last.pluralize}:</td>"
-            mri.col_order.each_with_index do |c, c_idx|         # Go through the columns
-              next if c_idx == 0                                # Skip first column
-              grp_output << "<td class='group' style='text-align:right'>"
-              grp_output << CGI.escapeHTML(mri.format(c.split("__").first,
-                                                      mri.extras[:grouping][group][calc.first][c],
-                                                      :format => mri.col_formats[c_idx] ? mri.col_formats[c_idx] : :_default_
-                                                     )
-                                          ) if mri.extras[:grouping][group].key?(calc.first)
-              grp_output << "</td>"
-            end
-            grp_output << "</tr>"
-          end
-        end
-      end
-      grp_output << "<tr><td class='group' colspan='#{col_count}'>&nbsp;</td></tr>" unless group == :_total_
-      grp_output
-    end
 
     def build_document_footer
       mri = options.mri
