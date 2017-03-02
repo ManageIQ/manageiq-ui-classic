@@ -15,7 +15,8 @@ class ApplicationHelper::Toolbar::UserCenter < ApplicationHelper::Toolbar::Basic
           :rbac_user_copy,
           'fa fa-files-o fa-lg',
           t = N_('Copy this User to a new User'),
-          t),
+          t,
+          :klass => ApplicationHelper::Button::RbacUserCopy),
         button(
           :rbac_user_delete,
           'pficon pficon-delete fa-lg',
