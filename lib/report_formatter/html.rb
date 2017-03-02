@@ -152,23 +152,6 @@ module ReportFormatter
       output << "<tfoot>"
       output << "<td colspan='15'>"
       output << "<del class='container'>"
-      # output << "<div class='pagination'>"
-      # output << '<div class="limit">Display #<select name="limit" id="limit" class="inputbox" size="1" onchange="submitform();"><option value="5" >5</option><option value="10" >10</option><option value="15" >15</option><option value="20"  selected="selected">20</option><option value="25" >25</option><option value="30" >30</option><option value="50" >50</option><option value="100" >100</option><option value="0" >all</option></select></div>'
-      # output << '<div class="button2-right off"><div class="start"><span>Start</span></div></div><div class="button2-right off"><div class="prev"><span>Prev</span></div></div>'
-      # output << ""
-      # output << ""
-      # output << "<div class='button2-left'><div class='page'>"
-      # output << "<a title='1' onclick='javascript: document.adminForm.limitstart.value=0; submitform();return false;'>1</a>"
-      # output << "<a title='2' onclick='javascript: document.adminForm.limitstart.value=20; submitform();return false;'>2</a>"
-      # output << "</div></div>"
-
-      # output << "<div class='button2-left'><div class='next'>"
-      #  output << "<a title='Next' onclick='javascript: document.adminForm.limitstart.value=20; submitform();return false;'>Next</a>"
-      #  output << "</div></div>"
-
-      #  output << '<div class="button2-left"><div class="end"><a title="End" onclick="javascript: document.adminForm.limitstart.value=40; submitform();return false;">End</a></div></div>'
-
-      #  output << "<div class='limit'>page 1 of 3</div><input type='hidden' name='limitstart' value='0' /></div>"
       output << "</del>"
       output << "</td>"
       output << "</tfoot>"
@@ -177,15 +160,6 @@ module ReportFormatter
       if mri.filter_summary
         output << mri.filter_summary.to_s
       end
-
-      #     output << "<div class='clr'></div>"
-      #     output << "</div>"
-      #     output << "<div class='b'>"
-      #     output << "<div class='b'>"
-      #     output << "<div class='b'></div>"
-      #     output << "</div>"
-      #     output << "</div>"
-      #     output << "</div>"
     end
 
     def finalize_document
