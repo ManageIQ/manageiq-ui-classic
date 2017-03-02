@@ -405,7 +405,7 @@ class ApplicationHelper::ToolbarBuilder
       when "rbac_user_delete"
         return N_("User [Administrator] can not be deleted") if @record.userid == 'admin'
       end
-    when "UserRole"
+    when "MiqUserRole"
       case id
       when "rbac_role_delete"
         return N_("This Role is Read Only and can not be deleted") if @record.read_only
