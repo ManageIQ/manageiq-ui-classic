@@ -91,7 +91,6 @@ class ApplicationHelper::ToolbarBuilder
       if bsi.key?(:separator)
         props = ApplicationHelper::Button::Separator.new(:id => "sep_#{index}_#{bsi_idx}", :hidden => !any_visible)
       else
-        next if hide_button?(bsi[:pressed] || bsi[:id]) # Use pressed, else button id
         bs_children = true
         props = toolbar_button(
           bsi,
@@ -163,13 +162,7 @@ class ApplicationHelper::ToolbarBuilder
 
   # Build single button
   def build_normal_button(bgi, index)
-    button_hide = hide_button?(bgi[:id])
-    if button_hide
-      # These buttons need to be present even if hidden as we show/hide them dynamically
-      return nil unless %w(timeline_txt timeline_csv timeline_pdf).include?(bgi[:id])
-    end
-
-    @sep_needed = true unless button_hide
+    @sep_needed = true
     props = toolbar_button(
       bgi,
       :id      => bgi[:id],
@@ -180,9 +173,7 @@ class ApplicationHelper::ToolbarBuilder
     )
     return nil if props.nil?
 
-    # set pdf button to be hidden if graphical summary screen is set by default
-    props[:hidden] = %w(download_view vm_download_pdf).include?(bgi[:id]) && button_hide
-
+    props[:hidden] = false
     _add_separator(index)
     props
   end
@@ -204,8 +195,6 @@ class ApplicationHelper::ToolbarBuilder
 
   # Build button with more states
   def build_twostate_button(bgi, index)
-    return nil if hide_button?(bgi[:id])
-
     props = toolbar_button(
       bgi,
       :id     => bgi[:id],
