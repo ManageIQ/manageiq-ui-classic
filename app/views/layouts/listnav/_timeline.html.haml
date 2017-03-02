@@ -1,11 +1,4 @@
-- if @tree_type == "timeline" && @rep_tree
+- if @timelines_tree
   .panel-group#accordion
     = miq_accordion_panel(_("Timelines"), true, "timelines_tree") do
-      .treeview-pf-hover.treeview-pf-select{:id => "timeline_treebox"}
-      = render(:partial => "layouts/tree",
-        :locals         => {:tree_id => "timeline_treebox",
-          :tree_name                 => "timeline_tree",
-          :bs_tree                   => @rep_tree,
-          :click_url                 => "/dashboard/show_timeline/",
-          :onclick                   => "miqOnClickTimelineSelection"})
       = render(:partial => "shared/tree", :locals  => {:tree => @timelines_tree, :name => @timelines_tree.name})
