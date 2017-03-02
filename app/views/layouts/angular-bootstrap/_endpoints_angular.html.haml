@@ -153,10 +153,11 @@
              "prefix"          => "#{prefix}"}
 
 %div{"ng-if" => defined?(tls_ca_certs_hide) ? false : true}
-  .form-group{"ng-if"=> "emsCommonModel.emstype == 'rhevm' || " +                                          |
-                        "((emsCommonModel.ems_controller == 'ems_container' || " +                         |
-                        "emsCommonModel.emstype == 'hawkular') && " +                               |
-                        " emsCommonModel.#{prefix}_security_protocol == 'ssl-with-validation-custom-ca')"} |
+  .form-group{"ng-if"=> "emsCommonModel.emstype == 'rhevm' || " +                                             |
+                        "(emsCommonModel.ems_controller == 'ems_container' && " +                             |
+                        " emsCommonModel.#{prefix}_security_protocol == 'ssl-with-validation-custom-ca') || " |
+                        "(emsCommonModel.emstype == 'hawkular' && " +                                         |
+                        " emsCommonModel.#{prefix}_security_protocol == 'ssl-with-validation-custom-ca')"}    |
     %label.col-md-2.control-label{"for" => "#{prefix}_tls_ca_certs"}
       = _('Trusted CA Certificates')
     .col-md-4
