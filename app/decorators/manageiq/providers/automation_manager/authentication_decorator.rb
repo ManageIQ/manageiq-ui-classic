@@ -1,11 +1,11 @@
-class ManageIQ::Providers::AutomationManager::AuthenticationDecorator < Draper::Decorator
-  delegate_all
+module ManageIQ::Providers
+  class AutomationManager::AuthenticationDecorator < MiqDecorator
+    def fonticon
+      'fa fa-lock'
+    end
 
-  def fonticon
-    'fa fa-lock'
-  end
-
-  def listicon_image
-    '100/authentication.png'
+    def listicon_image
+      '100/authentication.png'
+    end
   end
 end
