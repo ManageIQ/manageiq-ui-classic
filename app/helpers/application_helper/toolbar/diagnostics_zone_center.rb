@@ -110,14 +110,14 @@ class ApplicationHelper::Toolbar::DiagnosticsZoneCenter < ApplicationHelper::Too
           'fa fa-filter fa-lg',
           N_('Collect the current logs from the selected Zone'),
           N_('Collect current logs'),
-          :klass => ApplicationHelper::Button::ZoneLogDepotEdit
+          :klass => ApplicationHelper::Button::ZoneCollectLogs
         ),
         button(
           :zone_collect_logs,
           'fa fa-filter fa-lg',
           N_('Collect all logs from the selected Zone'),
           N_('Collect all logs'),
-          :klass => ApplicationHelper::Button::ZoneLogDepotEdit
+          :klass => ApplicationHelper::Button::ZoneCollectLogs
         ),
       ]
     ),

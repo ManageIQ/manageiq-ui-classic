@@ -186,62 +186,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       allow(session).to receive(:fetch_path).with(:browser, :os).and_return('linux')
     end
 
-    context "when record class = Zone" do
-      let(:log_file) { FactoryGirl.create(:log_file) }
-      let(:miq_task) { FactoryGirl.create(:miq_task) }
-      let(:file_depot) { FactoryGirl.create(:file_depot) }
-      let(:miq_server) { FactoryGirl.create(:miq_server) }
-
-      before do
-        @record = FactoryGirl.create(:zone)
-      end
-
-      it "'collecting' without any started server and disables button" do
-        miq_server.status = "not responding"
-        @record.miq_servers << miq_server
-        error_msg = "Cannot collect current logs unless there are started Servers in the Zone"
-        expect(toolbar_builder.disable_button("zone_collect_logs")).to eq(error_msg)
-      end
-
-      it "log collecting is in progress and disables button" do
-        log_file.resource = @record
-        log_file.state = "collecting"
-        log_file.save
-        miq_server.log_files << log_file
-        miq_server.status = "started"
-        @record.miq_servers << miq_server
-        @record.log_file_depot = file_depot
-        error_msg = "Log collection is already in progress for one or more Servers in this Zone"
-        expect(toolbar_builder.disable_button("zone_collect_logs")).to eq(error_msg)
-      end
-
-      it "log collection in progress with unfinished task and disables button" do
-        miq_server.status = "started"
-        @record.miq_servers << miq_server
-        @record.log_file_depot = file_depot
-        miq_task.name = "Zipped log retrieval for XXX"
-        miq_task.miq_server_id = miq_server.id
-        miq_task.save
-        error_msg = "Log collection is already in progress for one or more Servers in this Zone"
-        expect(toolbar_builder.disable_button("zone_collect_logs")).to eq(error_msg)
-      end
-
-      it "'collecting' with undefined depot and disables button" do
-        miq_server.status = "started"
-        @record.miq_servers << miq_server
-        @record.log_file_depot = nil
-        error_msg = "This Zone do not have Log Depot settings configured, collection not allowed"
-        expect(toolbar_builder.disable_button("zone_collect_logs")).to eq(error_msg)
-      end
-
-      it "'collecting' with defined depot and enables button" do
-        miq_server.status = "started"
-        @record.miq_servers << miq_server
-        @record.log_file_depot = file_depot
-        expect(toolbar_builder.disable_button("zone_collect_logs")).to eq(false)
-      end
-    end
-
     context "when record class = Storage" do
       before { @record = Storage.new }
 
