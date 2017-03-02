@@ -364,13 +364,6 @@ class ApplicationHelper::ToolbarBuilder
       when "rbac_user_delete"
         return N_("User [Administrator] can not be deleted") if @record.userid == 'admin'
       end
-    when "MiqTemplate"
-      case id
-      when "miq_template_timeline"
-        unless @record.has_events? || @record.has_events?(:policy_events)
-          return N_("No Timeline data has been collected for this Template")
-        end
-      end
     when 'MiqReportResult'
       if id == 'report_only'
         return @report.present? && @report_result_id.present? &&

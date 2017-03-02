@@ -114,7 +114,8 @@ class ApplicationHelper::Toolbar::MiqTemplateCenter < ApplicationHelper::Toolbar
           N_('Show Timelines for this Template'),
           N_('Timelines'),
           :url       => "/show",
-          :url_parms => "?display=timeline"),
+          :url_parms => "?display=timeline",
+          :klass     => ApplicationHelper::Button::MiqTemplateTimeline),
       ]
     ),
   ])

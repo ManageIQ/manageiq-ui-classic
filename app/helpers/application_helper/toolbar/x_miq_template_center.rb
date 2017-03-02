@@ -118,7 +118,8 @@ class ApplicationHelper::Toolbar::XMiqTemplateCenter < ApplicationHelper::Toolba
           'product product-timeline fa-lg',
           N_('Show Timelines for this Template'),
           N_('Timelines'),
-          :url_parms => "?display=timeline"),
+          :url_parms => "?display=timeline",
+          :klass     => ApplicationHelper::Button::MiqTemplateTimeline),
       ]
     ),
   ])
