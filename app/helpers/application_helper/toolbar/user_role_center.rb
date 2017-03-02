@@ -22,7 +22,8 @@ class ApplicationHelper::Toolbar::UserRoleCenter < ApplicationHelper::Toolbar::B
           t = N_('Delete this Role'),
           t,
           :url_parms => "&refresh=y",
-          :confirm   => N_("Are you sure you want to delete this Role?")),
+          :confirm   => N_("Are you sure you want to delete this Role?"),
+          :klass     => ApplicationHelper::Button::RbacRoleDelete),
       ]
     ),
   ])

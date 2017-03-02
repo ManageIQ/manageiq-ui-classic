@@ -407,9 +407,6 @@ class ApplicationHelper::ToolbarBuilder
       end
     when "MiqUserRole"
       case id
-      when "rbac_role_delete"
-        return N_("This Role is Read Only and can not be deleted") if @record.read_only
-        return N_("This Role is in use by one or more Groups and can not be deleted") if @record.group_count > 0
       when "rbac_role_edit"
         return N_("This Role is Read Only and can not be edited") if @record.read_only
       end
