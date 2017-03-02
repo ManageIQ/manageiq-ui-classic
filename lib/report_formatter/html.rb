@@ -49,16 +49,19 @@ module ReportFormatter
       # This is similar to MiqReport.build_html_rows, needs to be unified
       tz = mri.get_time_zone(Time.zone.name)
       row = 0
+      in_a_widget = mri.rpt_options[:in_a_widget] || false
+
       unless mri.table.nil?
         row_limit = mri.rpt_options && mri.rpt_options[:row_limit] ? mri.rpt_options[:row_limit] : 0
         save_val = :_undefined_                                 # Hang on to the current group value
+        break_label = mri.col_options.fetch_path(mri.sortby[0], :break_label) unless mri.sortby.nil? || mri.col_options.nil? || in_a_widget
         group_text = nil                                        # Optionally override what gets displayed for the group (i.e. Chargeback)
         use_table = mri.sub_table ? mri.sub_table : mri.table
         use_table.data.each_with_index do |d, d_idx|
           break if row_limit != 0 && d_idx > row_limit - 1
           if ["y", "c"].include?(mri.group) && !mri.sortby.nil? && save_val != d.data[mri.sortby[0]].to_s
             unless d_idx == 0                       # If not the first row, we are at a group break
-              output << group_rows(save_val, mri.col_order.length, nil, group_text)
+              output << group_rows(save_val, mri.col_order.length, break_label, group_text)
             end
             save_val = d.data[mri.sortby[0]].to_s
             # Chargeback, sort by date, but show range
@@ -99,7 +102,7 @@ module ReportFormatter
       end
 
       if ["y", "c"].include?(mri.group) && !mri.sortby.nil?
-        output << group_rows(save_val, mri.col_order.length, nil, group_text)
+        output << group_rows(save_val, mri.col_order.length, break_label, group_text)
         output << group_rows(:_total_, mri.col_order.length)
       end
     end
