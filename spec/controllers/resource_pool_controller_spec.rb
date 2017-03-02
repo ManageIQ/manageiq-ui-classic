@@ -55,4 +55,53 @@ describe ResourcePoolController do
       expect(controller.send(:flash_errors?)).not_to be_truthy
     end
   end
+
+  describe "#show" do
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+      login_as FactoryGirl.create(:user)
+      @resource_pool = FactoryGirl.create(:resource_pool)
+    end
+
+    let(:url_params) { {} }
+
+    subject { get :show, :params => { :id => @resource_pool.id }.merge(url_params) }
+
+    context "main" do
+      it "renders" do
+        expect(subject).to have_http_status(200)
+        expect(subject).to render_template("resource_pool/show")
+      end
+    end
+
+    context "All VMs - Tree View" do
+      render_views
+      let(:url_params) { { :display => "descendant_vms" } }
+      it "renders" do
+        expect(subject).to have_http_status(200)
+        expect(subject).to render_template(:partial => "layouts/_tree")
+      end
+    end
+
+    context "Direct VMs" do
+      let(:url_params) { { :display => "vms" } }
+      it "renders" do
+        expect(subject).to have_http_status(200)
+      end
+    end
+
+    context "All VMs" do
+      let(:url_params) { { :display => "all_vms" } }
+      it "renders" do
+        expect(subject).to have_http_status(200)
+      end
+    end
+
+    context "Nested Resource Pools" do
+      let(:url_params) { { :display => "resource_pools"} }
+      it "renders" do
+        expect(subject).to have_http_status(200)
+      end
+    end
+  end
 end
