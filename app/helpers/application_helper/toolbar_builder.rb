@@ -355,14 +355,7 @@ class ApplicationHelper::ToolbarBuilder
 
   # Determine if a button should be disabled. Returns either boolean or
   # string message with explanation of reason for disabling
-  def disable_button(id)
-    case get_record_cls(@record)
-    when "User"
-      case id
-      when "rbac_user_delete"
-        return N_("User [Administrator] can not be deleted") if @record.userid == 'admin'
-      end
-    end
+  def disable_button(_id)
     false
   end
 

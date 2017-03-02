@@ -23,7 +23,8 @@ class ApplicationHelper::Toolbar::UserCenter < ApplicationHelper::Toolbar::Basic
           t = N_('Delete this User'),
           t,
           :url_parms => "&refresh=y",
-          :confirm   => N_("Are you sure you want to delete this User?")),
+          :confirm   => N_("Are you sure you want to delete this User?"),
+          :klass     => ApplicationHelper::Button::RbacUserDelete),
       ]
     ),
   ])
