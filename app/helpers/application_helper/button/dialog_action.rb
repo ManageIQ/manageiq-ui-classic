@@ -1,4 +1,4 @@
-class ApplicationHelper::Button::DialogAction < ApplicationHelper::Button::ButtonWithoutRbacCheck
+class ApplicationHelper::Button::DialogAction < ApplicationHelper::Button::Basic
   def visible?
     !@edit || !@edit[:current]
   end

@@ -5,8 +5,7 @@ class ApplicationHelper::Toolbar::TasksCenter < ApplicationHelper::Toolbar::Basi
       'fa fa-repeat fa-lg',
       N_('Reload the current display'),
       N_('Reload'),
-      :url_parms => "main_div",
-      :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck),
+      :url_parms => "main_div"),
   ])
   button_group('miq_task_delete', [
     select(
@@ -24,8 +23,7 @@ class ApplicationHelper::Toolbar::TasksCenter < ApplicationHelper::Toolbar::Basi
           :url_parms => "main_div",
           :confirm   => N_("Warning: The selected tasks will be permanently removed from the database!"),
           :enabled   => false,
-          :onwhen    => "1+",
-          :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck),
+          :onwhen    => "1+"),
         button(
           :miq_task_deleteolder,
           'pficon pficon-delete fa-lg',
@@ -34,8 +32,7 @@ class ApplicationHelper::Toolbar::TasksCenter < ApplicationHelper::Toolbar::Basi
           :url_parms => "main_div",
           :confirm   => N_("Warning: Tasks that are older than selected task will be permanently removed from the database!"),
           :enabled   => false,
-          :onwhen    => "1",
-          :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck),
+          :onwhen    => "1"),
         button(
           :miq_task_deleteall,
           'pficon pficon-delete fa-lg',
@@ -43,8 +40,7 @@ class ApplicationHelper::Toolbar::TasksCenter < ApplicationHelper::Toolbar::Basi
           N_('Delete All'),
           :url_parms => "main_div",
           :confirm   => N_("Warning: Finished tasks will be permanently removed from the database!"),
-          :enabled   => true,
-          :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck),
+          :enabled   => true),
       ]
     ),
   ])

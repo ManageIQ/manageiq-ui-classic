@@ -26,15 +26,13 @@ class ApplicationHelper::Toolbar::DriftView < ApplicationHelper::Toolbar::Basic
           'fa fa-file-text-o fa-lg',
           N_('Download comparison report in text format'),
           N_('Download as Text'),
-          :url   => "/drift_to_txt",
-          :klass => ApplicationHelper::Button::ButtonWithoutRbacCheck),
+          :url   => "/drift_to_txt"),
         button(
           :drift_download_csv,
           'fa fa-file-text-o fa-lg',
           N_('Download comparison report in CSV format'),
           N_('Download as CSV'),
-          :url   => "/drift_to_csv",
-          :klass => ApplicationHelper::Button::ButtonWithoutRbacCheck),
+          :url   => "/drift_to_csv"),
         button(
           :drift_download_pdf,
           'fa fa-file-pdf-o fa-lg',
