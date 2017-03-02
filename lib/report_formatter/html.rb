@@ -74,24 +74,7 @@ module ReportFormatter
           end
           mri.col_formats ||= []                 # Backward compat - create empty array for formats
           mri.col_order.each_with_index do |c, c_idx|
-            if c == "resource_type"                     # Lookup models in resource_type col
-              output << '<td>'
-              output << ui_lookup(:model => d.data[c])
-              output << "</td>"
-            else
-              if d.data[c].kind_of?(Time)
-                output << '<td style="text-align:center">'
-              elsif d.data[c].kind_of?(Bignum) || d.data[c].kind_of?(Fixnum) || d.data[c].kind_of?(Float)
-                output << '<td style="text-align:right">'
-              else
-                output << '<td>'
-              end
-              output << CGI.escapeHTML(mri.format(c.split("__").first,
-                                                  d.data[c],
-                                                  :format => mri.col_formats[c_idx] ? mri.col_formats[c_idx] : :_default_,
-                                                  :tz     => tz))
-              output << "</td>"
-            end
+            mri.build_html_col(output, c, mri.col_formats[c_idx], d.data)
           end
 
           output << "</tr>"
