@@ -6,7 +6,7 @@
         - @ap_folders.each do |f|
           %tr{:title => _("Open Folder"),
             :onclick => "miqTreeActivateNode('alert_profile_tree', 'xx-#{f.last}');"}
-            %td.narrow
+            %td.table-view-pf-select
               %img{:src => image_path("100/#{f.last.underscore.downcase}.png")}
             %td
               = f.first

@@ -26,7 +26,7 @@
       %table.table.table-bordered.table-striped
         %thead
           %tr
-            %th.narrow
+            %th.table-view-pf-select
             - [_('Name'), _('Action Order'), _('Provision Order'), _('Action'), _('Delay (mins)')].each_with_index do |title, id|
               %th{:colspan => (id >= 3) ? 2 : 1}
                 = title

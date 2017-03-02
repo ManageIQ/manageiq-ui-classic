@@ -5,7 +5,7 @@
     - if @record.ae_instances.present?
       %table#class_instances_grid.table.table-striped.table-bordered.table-hover.table-clickable.table-checkable
         %thead
-          %th.narrow
+          %th.table-view-pf-select
             %input.checkall{:type => 'checkbox', :title => _('Check All')}
           %th
           %th
@@ -14,9 +14,9 @@
             - next if record.name == '$'
             - cls_cid = "#{class_prefix(record.class)}-#{ApplicationRecord.compress_id(record.id)}"
             %tr{'data-click-id' => cls_cid}
-              %td.narrow.noclick
+              %td.table-view-pf-select.noclick
                 %input{:type => 'checkbox', :value => cls_cid}
-              %td.narrow
+              %td.table-view-pf-select
                 %i{:class => record.decorate.fonticon}
               %td
                 = record_name(record)

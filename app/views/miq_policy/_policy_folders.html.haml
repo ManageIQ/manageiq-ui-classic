@@ -28,7 +28,7 @@
           - type = f.split[-1].downcase
           - click = "#{type}_xx-#{type}-#{model_name}"
         %tr{:onclick => "miqTreeActivateNode('policy_tree', 'xx-#{click}');", :title => _("Open Folder")}
-          %td.narrow
+          %td.table-view-pf-select
             %img{:src => image_path("100/#{model_name.underscore}.png")}
           %td
             = folders_i18n[f]

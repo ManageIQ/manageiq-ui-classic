@@ -151,7 +151,7 @@
                                       "ng-change" => "",
                                       "miqrequired" => ""}
 
-                %td.narrow
+                %td.table-view-pf-select
                   %div{"ng-if" => "#{ng_model}.#{prefix}_editMode && $index === #{ng_model}.s_index"}
                     %button{:class => "btn btn-link", :type => "button", "ng-disabled" => "(#{ng_model}.key === '' || #{ng_model}.key_value === '')", "ng-click" => "vm.saveKeyValue('#{prefix}', $index)"}
                       %i.pficon.pficon-save

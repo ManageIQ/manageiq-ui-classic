@@ -85,7 +85,7 @@
   - else
     %table.table.table-striped.table-bordered.table-hover
       %thead
-        %th.narrow
+        %th.table-view-pf-select
         %th= _("Name")
         %th= _("Rows")
         %th= _("Size")
@@ -95,7 +95,7 @@
         - @indexes.each_with_index do |ind, _|
           %tr{:onclick => "#{remote_function(:url => "/ops/x_show/#{ind.id}")}",
             :title => _("Click to view index")}
-            %td.narrow
+            %td.table-view-pf-select
               %i.fa.fa-table
             %td= ind.name
             - metrics = ind.latest_hourly_metric

@@ -58,7 +58,7 @@
     %tbody
       - Array(@updates).each do |update|
         %tr
-          %td.narrow
+          %td.table-view-pf-select
             = check_box_tag("check_server_#{update.id}", 1,
                             update.checked,
                             :class => 'listcheckbox',
