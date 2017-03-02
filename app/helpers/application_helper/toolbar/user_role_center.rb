@@ -10,7 +10,8 @@ class ApplicationHelper::Toolbar::UserRoleCenter < ApplicationHelper::Toolbar::B
           :rbac_role_edit,
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Role'),
-          t),
+          t,
+          :klass => ApplicationHelper::Button::RbacRoleEdit),
         button(
           :rbac_role_copy,
           'fa fa-files-o fa-lg',

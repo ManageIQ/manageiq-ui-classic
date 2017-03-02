@@ -405,11 +405,6 @@ class ApplicationHelper::ToolbarBuilder
       when "rbac_user_delete"
         return N_("User [Administrator] can not be deleted") if @record.userid == 'admin'
       end
-    when "MiqUserRole"
-      case id
-      when "rbac_role_edit"
-        return N_("This Role is Read Only and can not be edited") if @record.read_only
-      end
     when "MiqTemplate"
       case id
       when "image_check_compliance", "miq_template_check_compliance"
