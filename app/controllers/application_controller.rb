@@ -190,7 +190,7 @@ class ApplicationController < ActionController::Base
       response.headers["Cache-Control"] = "cache, must-revalidate"
       response.headers["Pragma"] = "public"
     end
-    rpt.to_chart(@settings[:display][:reporttheme], true, MiqReport.graph_options(params[:width], params[:height]))
+    rpt.to_chart(settings(:display, :reporttheme), true, MiqReport.graph_options(params[:width], params[:height]))
     render Charting.render_format => rpt.chart
   end
 
@@ -274,14 +274,14 @@ class ApplicationController < ActionController::Base
   def saved_report_paging
     # Check new paging parms coming in
     if params[:ppsetting]
-      @settings[:perpage][:reports] = params[:ppsetting].to_i
+      @settings.store_path(:perpage, :reports, params[:ppsetting].to_i)
       @sb[:pages][:current] = 1
-      total = @sb[:pages][:items] / @settings[:perpage][:reports]
-      total += 1 if @sb[:pages][:items] % @settings[:perpage][:reports] != 0
+      total = @sb[:pages][:items] / settings(:perpage, :reports)
+      total += 1 if @sb[:pages][:items] % settings(:perpage, :reports) != 0
       @sb[:pages][:total] = total
     end
     @sb[:pages][:current] = params[:page].to_i if params[:page]
-    @sb[:pages][:perpage] = @settings[:perpage][:reports]
+    @sb[:pages][:perpage] = settings(:perpage, :reports)
 
     rr = MiqReportResult.find(@sb[:pages][:rr_id])
     @html = report_build_html_table(rr.report_results,
@@ -585,7 +585,7 @@ class ApplicationController < ActionController::Base
     @sb[:pages] ||= {}
     @sb[:pages][:rr_id] = rr.id
     @sb[:pages][:items] = @report.extras[:total_html_rows]
-    @sb[:pages][:perpage] = @settings[:perpage][:reports]
+    @sb[:pages][:perpage] = settings(:perpage, :reports)
     @sb[:pages][:current] = 1
     total = @sb[:pages][:items] / @sb[:pages][:perpage]
     total += 1 if @sb[:pages][:items] % @sb[:pages][:perpage] != 0
@@ -1430,7 +1430,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_view_calculate_gtl_type(db_sym)
-    gtl_type = @settings.fetch_path(:views, db_sym) unless %w(scanitemset miqschedule pxeserver customizationtemplate).include?(db_sym.to_s)
+    gtl_type = settings(:views, db_sym) unless %w(scanitemset miqschedule pxeserver customizationtemplate).include?(db_sym.to_s)
     gtl_type = 'grid' if ['vm'].include?(db_sym.to_s) && request.parameters[:controller] == 'service'
     gtl_type ||= 'list' # return a sane default
     gtl_type
@@ -1523,8 +1523,7 @@ class ApplicationController < ActionController::Base
     sortdir_sym = "#{sort_prefix}_sortdir".to_sym
 
     # Set up the list view type (grid/tile/list)
-    @settings ||= {:views => {}, :perpage => {}}
-    @settings[:views][db_sym] = params[:type] if params[:type]  # Change the list view type, if it's sent in
+    @settings.store_path(:views, db_sym, params[:type]) if params[:type] # Change the list view type, if it's sent in
 
     @gtl_type = get_view_calculate_gtl_type(db_sym)
 
@@ -1533,7 +1532,7 @@ class ApplicationController < ActionController::Base
 
     # Check for changed settings in params
     if params[:ppsetting]                             # User selected new per page value
-      @settings[:perpage][perpage_key(dbname)] = params[:ppsetting].to_i
+      @settings.store_path(:perpage, perpage_key(dbname), params[:ppsetting].to_i)
     elsif params[:sortby]                             # New sort order (by = col click, choice = pull down)
       params[:sortby]      = params[:sortby].to_i - 1
       params[:sort_choice] = view.headers[params[:sortby]]
@@ -1634,13 +1633,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_view_pages_perpage(dbname)
-    perpage = 10 # return a sane default
-    return perpage unless @settings && @settings.key?(:perpage)
-
-    key = perpage_key(dbname)
-    perpage = @settings[:perpage][key] if key && @settings[:perpage].key?(key)
-
-    perpage
+    settings_default(10, :perpage, perpage_key(dbname))
   end
 
   # Create the pages hash and return with the view

@@ -136,7 +136,7 @@ module PxeController::PxeImageTypes
     @ajax_paging_buttons = true
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
-      @settings[:perpage][@gtl_type.to_sym] = @items_per_page         # Set the per page setting for this gtl type
+      @settings.store_path(:perpage, @gtl_type.to_sym, @items_per_page) # Set the per page setting for this gtl type
     end
     @sortcol = session[:pxe_image_type_sortcol].nil? ? 0 : session[:pxe_image_type_sortcol].to_i
     @sortdir = session[:pxe_image_type_sortdir].nil? ? "ASC" : session[:pxe_image_type_sortdir]
