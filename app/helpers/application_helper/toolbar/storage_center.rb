@@ -51,7 +51,8 @@ class ApplicationHelper::Toolbar::StorageCenter < ApplicationHelper::Toolbar::Ba
           N_('Show Capacity & Utilization data for this Datastore'),
           N_('Utilization'),
           :url       => "/show",
-          :url_parms => "?display=performance"),
+          :url_parms => "?display=performance",
+          :klass     => ApplicationHelper::Button::StoragePerf),
       ]
     ),
   ])

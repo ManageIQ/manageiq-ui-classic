@@ -189,15 +189,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     context "when record class = Storage" do
       before { @record = Storage.new }
 
-      context "and id = storage_perf" do
-        before do
-          @id = "storage_perf"
-          allow(@record).to receive_messages(:has_perf_data? => true)
-        end
-        it_behaves_like 'record without perf data', "No Capacity & Utilization data has been collected for this Datastore"
-        it_behaves_like 'default case'
-      end
-
       context "and id = storage_delete" do
         before { @id = "storage_delete" }
         it "when with VMs or Hosts" do

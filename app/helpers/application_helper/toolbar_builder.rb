@@ -371,11 +371,6 @@ class ApplicationHelper::ToolbarBuilder
       end
     when "Storage"
       case id
-      when "storage_perf"
-        unless @record.has_perf_data?
-          return N_("No Capacity & Utilization data has been collected for this %{storage}") %
-            {:storage => ui_lookup(:table => "storage")}
-        end
       when "storage_delete"
         unless @record.vms_and_templates.empty? && @record.hosts.empty?
           return N_("Only %{storage} without VMs and Hosts can be removed") %
