@@ -68,6 +68,7 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
       $http.get(dash.url + '&query=metric_tags&limit=250')
         .then(utils.getMetricTagsData)
         .catch(function(error) {
+          dash.tagsLoaded = true;
           dash.tenantChanged = false;
           miqService.handleFailure(error); });
     };

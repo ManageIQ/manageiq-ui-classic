@@ -2,6 +2,7 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
   return function (dash) {
     var getMetricTagsData = function(response) {
       'use strict';
+      dash.tagsLoaded = true;
       if (response.error || response.data.error) {
         add_flash(response.error || response.data.error, 'error');
         return;
@@ -9,7 +10,6 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
 
       var data = response.data;
 
-      dash.tagsLoaded = true;
       if (data && angular.isArray(data.metric_tags)) {
         data.metric_tags.sort();
         for (var i = 0; i < data.metric_tags.length; i++) {
