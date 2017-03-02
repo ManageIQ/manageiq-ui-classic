@@ -58,7 +58,7 @@ module ReportFormatter
           break if row_limit != 0 && d_idx > row_limit - 1
           if ["y", "c"].include?(mri.group) && !mri.sortby.nil? && save_val != d.data[mri.sortby[0]].to_s
             unless d_idx == 0                       # If not the first row, we are at a group break
-              output << group_rows(save_val, mri.col_order.length, group_text)
+              output << group_rows(save_val, mri.col_order.length, nil, group_text)
             end
             save_val = d.data[mri.sortby[0]].to_s
             # Chargeback, sort by date, but show range
@@ -99,14 +99,15 @@ module ReportFormatter
       end
 
       if ["y", "c"].include?(mri.group) && !mri.sortby.nil?
-        output << group_rows(save_val, mri.col_order.length, group_text)
+        output << group_rows(save_val, mri.col_order.length, nil, group_text)
         output << group_rows(:_total_, mri.col_order.length)
       end
     end
     private :build_html_rows
 
     # Generate grouping rows for the passed in grouping value
-    def group_rows(group, col_count, group_text = nil)
+    def group_rows(group, col_count, _group_label = nil, group_text = nil)
+      # This reminds MiqReport.build_group_html_rows
       mri = options.mri
       grp_output = ""
       if mri.extras[:grouping] && mri.extras[:grouping][group]  # See if group key exists
