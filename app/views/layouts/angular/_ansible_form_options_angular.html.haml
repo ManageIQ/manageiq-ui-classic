@@ -64,7 +64,7 @@
           .col-md-9
             %select{"ng-model"    => "#{ng_model}.#{prefix}_cloud_type",
                     "name"        => "#{prefix}_cloud_type",
-                    'ng-options'  => "cloud_type for cloud_type in #{ng_model}.cloud_types",
+                    'ng-options'  => "k as v for (k, v) in vm.cloud_types",
                     "ng-change"   => "cloudTypeChanged('#{prefix}')",
                     :checkchange  => true,
                     "pf-select"   => true}
