@@ -497,7 +497,7 @@ module VmCommon
         return
       end
       @in_a_form = true
-      replace_right_cell
+      replace_right_cell(:action => 'policy_sim')
     else
       render :template => 'vm/show'
     end

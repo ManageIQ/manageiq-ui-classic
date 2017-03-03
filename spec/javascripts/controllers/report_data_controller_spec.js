@@ -115,7 +115,7 @@ describe('reportDataController', function () {
       var perPage = 10;
       $controller.setPaging(startIndex, perPage);
       expect($controller.perPage.value).toBe(perPage);
-      expect($controller.perPage.text).toBe(perPage);
+      expect($controller.perPage.text).toBe(perPage + ' Items');
       expect($controller.settings.perpage).toBe(perPage);
       expect($controller.settings.startIndex).toBe(startIndex);
       expect($controller.settings.current).toBe(( startIndex / perPage) + 1);

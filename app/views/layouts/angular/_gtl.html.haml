@@ -46,7 +46,7 @@
       sortColIdx: '#{@sortcol}',
       sortDir: '#{@sortdir}',
       isExplorer: '#{@explorer}' === 'true' ? true : false,
-      records: #{!selected_records.nil? ? selected_records : "\'\'"},
+      records: #{!selected_records.nil? ? h(j_str(selected_records.to_json)) : "\'\'"},
       hideSelect: #{selected_records.kind_of?(Array)},
       showUrl: '#{view_to_url(@view, @parent) if @view.present? && @view.db.present?}'
     }
