@@ -1,8 +1,8 @@
 class ContainerDashboardController < ApplicationController
   extend ActiveSupport::Concern
-  
-  include GenericSessionMixin
- 
+
+  include Mixins::GenericSessionMixin
+
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
@@ -29,7 +29,17 @@ class ContainerDashboardController < ApplicationController
 
   private
 
+  def self.session_key_prefix
+    "container_dashboard"
+  end
+
+  def self.table_name
+    _('title')
+  end
+
   def get_session_data
+    super
+    binding .pry
     @layout = "container_dashboard"
   end
 
@@ -42,6 +52,7 @@ class ContainerDashboardController < ApplicationController
   end
 
   def set_session_data
+    binding.pry
     session[:layout] = @layout
   end
 
