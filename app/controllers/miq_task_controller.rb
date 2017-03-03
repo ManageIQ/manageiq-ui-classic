@@ -447,7 +447,6 @@ class MiqTaskController < ApplicationController
   end
 
   def get_session_data
-    binding.pry
     super
     @jobs_tab      = session[:jobs_tab] if session[:jobs_tab]
     @tabform       = session[:tabform]  if session[:tabform]
