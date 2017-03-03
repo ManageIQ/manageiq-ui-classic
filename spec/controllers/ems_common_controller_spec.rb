@@ -235,20 +235,30 @@ describe EmsContainerController do
         end
 
         def test_setting_many_fields
-          controller.instance_variable_set(:@_params, :name              => 'EMS 2',
-                                                      :default_userid    => '_',
-                                                      :default_hostname  => '10.10.10.11',
-                                                      :default_api_port  => '5000',
-                                                      :default_password  => 'valid-token',
-                                                      :hawkular_hostname => '10.10.10.10',
-                                                      :hawkular_api_port => '8443',
-                                                      :emstype           => @type)
+          controller.instance_variable_set(:@_params, :name                       => 'EMS 2',
+                                                      :default_userid             => '_',
+                                                      :default_hostname           => '10.10.10.11',
+                                                      :default_api_port           => '5000',
+                                                      :default_security_protocol  => 'ssl-with-validation-custom-ca',
+                                                      :default_tls_ca_certs       => '-----BEGIN DUMMY...',
+                                                      :default_password           => 'valid-token',
+                                                      :hawkular_hostname          => '10.10.10.10',
+                                                      :hawkular_api_port          => '8443',
+                                                      :hawkular_security_protocol => 'ssl-with-validation',
+                                                      :emstype                    => @type)
           controller.send(:set_ems_record_vars, @ems)
           expect(@flash_array).to be_nil
-          expect(@ems.connection_configurations.default.endpoint.hostname).to eq('10.10.10.11')
-          expect(@ems.connection_configurations.default.endpoint.port).to eq(5000)
-          expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('10.10.10.10')
-          expect(@ems.connection_configurations.hawkular.endpoint.port).to eq(8443)
+          cc = @ems.connection_configurations
+          expect(cc.default.endpoint.hostname).to eq('10.10.10.11')
+          expect(cc.default.endpoint.port).to eq(5000)
+          expect(cc.default.endpoint.security_protocol).to eq('ssl-with-validation-custom-ca')
+          expect(cc.default.endpoint.verify_ssl?).to eq(true)
+          expect(cc.default.endpoint.certificate_authority).to eq('-----BEGIN DUMMY...')
+          expect(cc.hawkular.endpoint.hostname).to eq('10.10.10.10')
+          expect(cc.hawkular.endpoint.port).to eq(8443)
+          expect(cc.hawkular.endpoint.security_protocol).to eq('ssl-with-validation')
+          expect(cc.hawkular.endpoint.verify_ssl?).to eq(true)
+          expect(cc.hawkular.endpoint.certificate_authority).to eq(nil)
           expect(@ems.authentication_token("bearer")).to eq('valid-token')
           expect(@ems.authentication_type("default")).to be_nil
           expect(@ems.hostname).to eq('10.10.10.11')

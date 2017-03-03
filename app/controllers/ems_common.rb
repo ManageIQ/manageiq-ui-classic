@@ -717,6 +717,7 @@ module EmsCommon
     @openstack_security_protocols = retrieve_openstack_security_protocols
     @amqp_security_protocols = retrieve_amqp_security_protocols
     @nuage_security_protocols = retrieve_nuage_security_protocols
+    @container_security_protocols = retrieve_container_security_protocols
     @scvmm_security_protocols = [[_('Basic (SSL)'), 'ssl'], ['Kerberos', 'kerberos']]
     @openstack_api_versions = retrieve_openstack_api_versions
     @vmware_cloud_api_versions = retrieve_vmware_cloud_api_versions
@@ -766,6 +767,12 @@ module EmsCommon
   def retrieve_amqp_security_protocols
     # OSP8 doesn't support SSL for AMQP
     [[_('Non-SSL'), 'non-ssl']]
+  end
+
+  def retrieve_container_security_protocols
+    [[_('SSL'), 'ssl-with-validation'],
+     [_('SSL trusting custom CA'), 'ssl-with-validation-custom-ca'],
+     [_('SSL without validation'), 'ssl-without-validation']]
   end
 
   # Get variables from edit form
