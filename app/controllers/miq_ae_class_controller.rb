@@ -4,7 +4,6 @@ class MiqAeClassController < ApplicationController
   include AutomateTreeHelper
   include Mixins::GenericSessionMixin
 
-
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
@@ -2535,14 +2534,12 @@ class MiqAeClassController < ApplicationController
   end
 
   def get_session_data
-    @layout     = "miq_ae_class"
     @title      = _("Datastore")
     @lastaction = session[:aeclass_lastaction]
     @edit       = session[:edit]
   end
 
   def set_session_data
-    session[:aeclass_lastaction] = @lastaction
     session[:edit]               = @edit
   end
 
