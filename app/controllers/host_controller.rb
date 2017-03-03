@@ -4,7 +4,7 @@ class HostController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  include GenericSessionMixin
+  include Mixins::GenericSessionMixin
   include Mixins::GenericListMixin
   include Mixins::MoreShowActions
 
@@ -651,15 +651,11 @@ class HostController < ApplicationController
     @layout     = "host"
     @drift_db   = "Host"
     @lastaction = session[:host_lastaction]
-    @display    = session[:host_display]
-    @filters    = session[:host_filters]
     @catinfo    = session[:host_catinfo]
   end
 
   def set_session_data
     session[:host_lastaction] = @lastaction
-    session[:host_display]    = @display unless @display.nil?
-    session[:host_filters]    = @filters
     session[:host_catinfo]    = @catinfo
     session[:miq_compressed]  = @compressed  unless @compressed.nil?
     session[:miq_exists_mode] = @exists_mode unless @exists_mode.nil?
