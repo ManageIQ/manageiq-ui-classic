@@ -447,18 +447,18 @@ class MiqTaskController < ApplicationController
   end
 
   def get_session_data
-    @layout        = get_layout
+    binding.pry
+    super
     @jobs_tab      = session[:jobs_tab] if session[:jobs_tab]
     @tabform       = session[:tabform]  if session[:tabform]
-    @lastaction    = session[:jobs_lastaction]
     @tasks_options = session[:tasks_options] || ""
   end
 
   def set_session_data
+    super
     session[:jobs_tab]            = @jobs_tab
     session[:tabform]             = @tabform
     session[:layout]              = @layout
-    session[:jobs_lastaction]     = @lastaction
     session[:tasks_options]       = @tasks_options unless @tasks_options.nil?
   end
 
