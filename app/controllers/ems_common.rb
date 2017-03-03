@@ -633,6 +633,19 @@ module EmsCommon
     @edit[:new][:api_version] = @ems.api_version
     @edit[:new][:provider_id] = @ems.provider_id
 
+    # when ems has Provider parent, we should show its name
+    if @ems.respond_to? :provider_class
+      provider = @ems.provider
+
+      @edit[:new][:name] = provider.name if provider
+
+      if @ems.kind_of?(ManageIQ::Providers::Amazon::CloudManager)
+        # TODO: when GUI is able to diplay region checkbox, return all regions
+        @edit[:new][:provider_region] = provider.provider_regions.first if provider
+      end
+
+    end
+
     if @ems.kind_of?(ManageIQ::Providers::Openstack::CloudManager) ||
        @ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
       # Special behaviour for OpenStack while keeping it backwards compatible for the rest
