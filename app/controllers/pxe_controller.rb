@@ -1,4 +1,5 @@
 class PxeController < ApplicationController
+  include Mixins::GenericSessionMixin
   # Methods for accordions
   include_concern 'PxeServers'
   include_concern 'PxeImageTypes'
@@ -251,8 +252,17 @@ class PxeController < ApplicationController
     render :json => presenter.for_render
   end
 
+  def title
+    "PXE"
+  end
+
+  def self.session_key_prefix
+    "pxe"
+  end
+
   def get_session_data
-    @title        = "PXE"
+    super
+    binding.pry
     @layout       = "pxe"
     @lastaction   = session[:pxe_lastaction]
     @display      = session[:pxe_display]
@@ -260,6 +270,8 @@ class PxeController < ApplicationController
   end
 
   def set_session_data
+    super
+    binding.pry
     session[:pxe_lastaction]   = @lastaction
     session[:pxe_current_page] = @current_page
     session[:pxe_display]      = @display unless @display.nil?
