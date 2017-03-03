@@ -1,0 +1,46 @@
+.list-view-container.list-view-compact{"ng-if"    => "dash.applied",
+                                       "ng-class" => "{'no-filters': dash.filterConfig.fields.length === 0}"}
+  .spinner.spinner-lg.loading{"ng-if" => "dash.loadingMetrics"}
+  .col-md-12{"pf-list-view" => "", "config" => "dash.listConfig", "items" => "dash.items"}
+    .list-view-pf-body.row
+      .col-md-6.col-sm-6.no-wrap
+        %span{"ng-if" => "item.type == 'gauge'"}
+          %i.fa.fa-tachometer
+        %span{"ng-if" => "item.type == 'counter'"}
+          %i.pficon.pficon-trend-up
+        {{item.id}}
+      .col-md-6.col-sm-12.no-wrap
+        .row
+          .col-md-8.col-sm-6.no-wrap
+            %strong
+              = _("Most Recent")
+            %span.time-stamp
+              {{item.last_timestamp | date:'hh:mm:ss yyyy-MM-dd'}}
+          .col-md-4.col-sm-6.no-wrap
+            .spinner.spinner-sm.loading{"ng-if" => "!item.last_value"}
+            %span.pull-right{"ng-if" => "item.last_value"}
+              {{item.last_value}}
+    %list-expanded-content
+      .row
+        .col-md-6.col-sm-12.no-wrap
+          %h3
+            = _("Tag list")
+        .col-md-6.col-sm-12.no-wrap
+          %h3
+            = _("Recent values")
+      .row
+        .col-md-6.col-sm-12.no-wrap
+          .row{"ng-repeat" => "(key, value) in $parent.item.tags"}
+            .col-md-3.col-sm-6.no-wrap
+              %strong.pull-right
+                {{key}}
+            .col-md-9.col-sm-6.no-wrap
+              {{value}}
+        .col-md-6.col-sm-12.no-wrap
+          .row{"ng-repeat" => "(timestamp, value) in $parent.item.lastValues"}
+            .col-md-4
+              %strong.pull-right
+                {{value}}
+            .col-md-8
+              %span.pull-left
+                {{timestamp | date:'hh:mm:ss yyyy-MM-dd'}}

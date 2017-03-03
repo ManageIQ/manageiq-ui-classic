@@ -1,0 +1,31 @@
+.col-md-12.ad-hoc-tenant
+  .form-group.pull-left.ad-hoc-tenant
+    %button.btn.btn-primary{"type"        => "button",
+                            "ng-disabled" => "!dash.tenantChanged",
+                            "ng-click"    => "dash.refreshTenant()"}
+      = _("Set tenant")
+
+    %input.form-control{"id"                  => "ad-hoc-tenant",
+                        "type"                => "text",
+                        "ng-model"            => "dash.tenant",
+                        "placeholder"         => _("Choose Tenants"),
+                        "typeahead"           => "tenenat for tenenat in dash.getTenants($viewValue)",
+                        "typeahead-loading"   => "dash.loadingTenants",
+                        "ng-change"           => "dash.tenantChanged = true",
+                        "typeahead-on-select" => "dash.refreshTenant()",
+                        "typeahead-wait-ms"   => 500}
+
+.ad-hoc-toolbar{"pf-toolbar" => "", "config" => "dash.toolbarConfig"}
+  %actions
+    %button.btn.btn-default{"type"        => "button",
+                            "ng-click"    => "dash.doAddFilter()",
+                            "ng-disabled" => "!dash.filterConfig.currentValue"}
+      = _("Add filter")
+    %button.btn.btn-primary{"type"        => "button",
+                            "ng-click"    => "dash.applyFilters()",
+                            "ng-disabled" => "!dash.filterChanged"}
+      = _("Apply filters")
+    %button.btn.btn-primary{"type"        => "button",
+                            "ng-click"    => "dash.viewGraph()",
+                            "ng-disabled" => "!dash.itemSelected"}
+      = _("View Graph")
