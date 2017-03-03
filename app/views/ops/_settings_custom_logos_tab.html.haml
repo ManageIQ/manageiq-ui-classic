@@ -27,7 +27,7 @@
         .col-md-8
           = check_box_tag("server_uselogo", true, @edit[:new][:server][:custom_logo], :data => {:on_text => 'Yes', :off_text => 'No'})
   %hr
-  %h3= _("Custom Login Background Image")
+  %h3= _("Custom Login & 'About' Screen Background Image")
   - if File.exist?(@login_logo_file)
     = image_tag("/upload/custom_login_logo.png?#{rand(99_999_999)}",
                 :height => 400,
@@ -58,7 +58,7 @@
     %form.form-horizontal
       .form-group
         %label.col-md-2.control-label
-          = _("Use Custom Login Background Image")
+          = _("Use Custom Login & 'About' Screen Background Image")
         .col-md-8
           = check_box_tag("server_useloginlogo", true, @edit[:new][:server][:custom_login_logo], :data => {:on_text => 'Yes', :off_text => 'No'})
   %hr

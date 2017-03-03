@@ -1,6 +1,6 @@
 .modal.fade{:id => "aboutModal", "tabindex" => "-1", "role" => "dialog1", "aria-labelledby" => "aboutModalLabel", "aria-hidden" => "true"}
   .modal-dialog
-    .modal-content.about-modal-pf
+    .modal-content.about-modal-pf{:class => ::Settings.server.custom_login_logo ? 'whitelabel' : ''}
       .modal-header
         %button.close{"data-dismiss" => "modal"}
           %span.pficon.pficon-close
@@ -23,7 +23,7 @@
         .trademark-pf
           = I18n.t("product.copyright")
       .modal-footer
-        %img{:src => image_path("layout/login-screen-logo.png"), :alt => "ManageIQ"}
+        %img{:src => ::Settings.server.custom_logo ? '/upload/custom_logo.png' : image_path("layout/login-screen-logo.png")}
 :javascript
   $(function(){
     $("button[data-dismiss='modal']").off('click');
