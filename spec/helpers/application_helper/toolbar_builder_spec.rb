@@ -289,62 +289,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       allow(session).to receive(:fetch_path).with(:browser, :os).and_return('linux')
     end
 
-    context "when record class = MiqServer" do
-      let(:log_file) { FactoryGirl.create(:log_file) }
-      let(:miq_task) { FactoryGirl.create(:miq_task) }
-      let(:file_depot) { FactoryGirl.create(:file_depot) }
-      let(:miq_server) { FactoryGirl.create(:miq_server) }
-
-      before do
-        @record = MiqServer.new('name' => 'Server1', 'id' => 'Server ID')
-      end
-
-      it "'collecting' log_file with started server and disables button" do
-        @record.status = "not responding"
-        error_msg = "Cannot collect current logs unless the Server is started"
-        expect(toolbar_builder.disable_button("collect_logs")).to eq(error_msg)
-      end
-
-      it "log collecting is in progress and disables button" do
-        log_file.resource = @record
-        log_file.state = "collecting"
-        log_file.save
-        @record.status = "started"
-        @record.log_files << log_file
-        error_msg = "Log collection is already in progress for this Server"
-        expect(toolbar_builder.disable_button("collect_logs")).to eq(error_msg)
-      end
-
-      it "log collection in progress with unfinished task and disables button" do
-        @record.status = "started"
-        miq_task.name = "Zipped log retrieval for XXX"
-        miq_task.miq_server_id = @record.id
-        miq_task.save
-        error_msg = "Log collection is already in progress for this Server"
-        expect(toolbar_builder.disable_button("collect_logs")).to eq(error_msg)
-      end
-
-      it "'collecting' with undefined depot and disables button" do
-        @record.status = "started"
-        @record.log_file_depot = nil
-        error_msg = "Log collection requires the Log Depot settings to be configured"
-        expect(toolbar_builder.disable_button("collect_logs")).to eq(error_msg)
-      end
-
-      it "'collecting' with undefined depot and disables button" do
-        @record.status = "started"
-        @record.log_file_depot = nil
-        error_msg = "Log collection requires the Log Depot settings to be configured"
-        expect(toolbar_builder.disable_button("collect_logs")).to eq(error_msg)
-      end
-
-      it "'collecting' with defined depot and enables button" do
-        @record.status = "started"
-        @record.log_file_depot = file_depot
-        expect(toolbar_builder.disable_button("collect_logs")).to eq(false)
-      end
-    end
-
     context "when record class = Zone" do
       let(:log_file) { FactoryGirl.create(:log_file) }
       let(:miq_task) { FactoryGirl.create(:miq_task) }

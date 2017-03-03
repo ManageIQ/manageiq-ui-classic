@@ -68,14 +68,14 @@ class ApplicationHelper::Toolbar::DiagnosticsServerCenter < ApplicationHelper::T
           'fa fa-filter fa-lg',
           N_('Collect the current logs from the selected Server'),
           N_('Collect current logs'),
-          :klass => ApplicationHelper::Button::DiagnosticsLogs
+          :klass => ApplicationHelper::Button::CollectLogs
         ),
         button(
           :collect_logs,
           'fa fa-filter fa-lg',
           N_('Collect all logs from the selected Server'),
           N_('Collect all logs'),
-          :klass => ApplicationHelper::Button::DiagnosticsLogs
+          :klass => ApplicationHelper::Button::CollectLogs
         ),
       ]
     ),
@@ -104,7 +104,7 @@ class ApplicationHelper::Toolbar::DiagnosticsServerCenter < ApplicationHelper::T
           N_('Select a worker to restart'),
           N_('Restart selected worker'),
           :confirm => N_("Warning: Selected node will be restarted, do you want to continue?"),
-          :klass   => ApplicationHelper::Button::RefreshWorkers),
+          :klass   => ApplicationHelper::Button::RestartWorkers),
       ]
     ),
   ])
