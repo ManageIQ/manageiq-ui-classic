@@ -47,11 +47,11 @@ describe('containerDashboardController gets data and', function() {
     });
 
     it('in network metrics', function() {
-      expect($scope.dailyNetworkUtilization).toBeDefined();
+      expect($scope.networkUtilization).toBeDefined();
     });
 
     it('in pod metrics', function() {
-      expect($scope.dailyPodEntityTrend).toBeDefined();
+      expect($scope.podEntityTrend).toBeDefined();
     });
   });
 });
@@ -105,11 +105,11 @@ describe('containerDashboardController gets no data and', function() {
     });
 
     it('in network metrics', function() {
-      expect($scope.dailyNetworkUtilization.dataAvailable).toBeDefined();
+      expect($scope.networkUtilization.dataAvailable).toBeDefined();
     });
 
     it('in pod metrics', function() {
-      expect($scope.dailyPodEntityTrend.dataAvailable).toBeDefined();
+      expect($scope.podEntityTrend.dataAvailable).toBeDefined();
     });
   });
 });
@@ -161,11 +161,11 @@ describe('containerDashboardController gets data for one provider and', function
     });
 
     it('in network metrics', function() {
-      expect($scope.dailyNetworkUtilization).toBeDefined();
+      expect($scope.networkUtilization).toBeDefined();
     });
 
     it('in pod metrics', function() {
-      expect($scope.dailyPodEntityTrend).toBeDefined();
+      expect($scope.podEntityTrend).toBeDefined();
     });
   });
 });
