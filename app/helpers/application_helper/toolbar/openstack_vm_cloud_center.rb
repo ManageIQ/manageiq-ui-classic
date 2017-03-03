@@ -164,7 +164,8 @@ class ApplicationHelper::Toolbar::OpenstackVmCloudCenter < ApplicationHelper::To
           'product product-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this Instance'),
           N_('Utilization'),
-          :url_parms => "?display=performance"),
+          :url_parms => "?display=performance",
+          :klass     => ApplicationHelper::Button::VmPerf),
         button(
           :instance_timeline,
           'product product-timeline fa-lg',

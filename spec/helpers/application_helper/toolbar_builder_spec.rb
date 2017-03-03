@@ -429,15 +429,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     context "when record class = Vm" do
       before { @record = Vm.new }
 
-      context "and id = vm_perf" do
-        before do
-          @id = "vm_perf"
-          allow(@record).to receive_messages(:has_perf_data? => true)
-        end
-        it_behaves_like 'record without perf data', "No Capacity & Utilization data has been collected for this VM"
-        it_behaves_like 'default case'
-      end
-
       context "and id = storage_scan" do
         before do
           @id = "storage_scan"
