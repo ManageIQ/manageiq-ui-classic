@@ -4,7 +4,8 @@ describe ApplicationHelper::Dialogs do
       "DialogField",
       :id                   => "100",
       :read_only            => read_only,
-      :trigger_auto_refresh => trigger_auto_refresh
+      :trigger_auto_refresh => trigger_auto_refresh,
+      :force_multi_value    => true,
     )
   end
   let(:trigger_auto_refresh) { nil }
@@ -353,7 +354,7 @@ describe ApplicationHelper::Dialogs do
         expect(helper.drop_down_options(dialog_field, "url")).to eq(
           :class    => "dynamic-drop-down-100 selectpicker",
           :disabled => true,
-          :title    => "This element is disabled because it is read only"
+          :title    => "This element is disabled because it is read only",
         )
       end
     end
@@ -369,7 +370,8 @@ describe ApplicationHelper::Dialogs do
             :class                 => "dynamic-drop-down-100 selectpicker",
             "data-miq_sparkle_on"  => true,
             "data-miq_sparkle_off" => true,
-            "data-live-search"     => true
+            "data-live-search"     => true,
+            :multiple              => "multiple"
           )
         end
       end
@@ -382,7 +384,8 @@ describe ApplicationHelper::Dialogs do
             :class                 => "dynamic-drop-down-100 selectpicker",
             "data-miq_sparkle_on"  => true,
             "data-miq_sparkle_off" => true,
-            "data-live-search"     => true
+            "data-live-search"     => true,
+            :multiple              => "multiple"
           )
         end
       end
