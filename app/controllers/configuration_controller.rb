@@ -1,7 +1,7 @@
 require 'miq_bulk_import'
 class ConfigurationController < ApplicationController
   include StartUrl
-  include GenericSessionMixin
+  include Mixins::GenericSessionMixin
 
   logo_dir = File.expand_path(File.join(Rails.root, "public/upload"))
   Dir.mkdir logo_dir unless File.exist?(logo_dir)
@@ -608,7 +608,17 @@ class ConfigurationController < ApplicationController
     end
   end
 
+  def self.model
+   self
+  end
+
+  def self.session_key_prefix
+   "config"
+  end
+
   def get_session_data
+    super
+    binding.pry
     @title        = session[:config_title] ? _("Configuration") : session[:config_title]
     @layout       = "configuration"
     @tabform      = session[:config_tabform]    if session[:config_tabform]
@@ -617,6 +627,8 @@ class ConfigurationController < ApplicationController
   end
 
   def set_session_data
+    super
+    binding.pry
     session[:config_tabform]    = @tabform
     session[:config_schema_ver] = @schema_ver
     session[:vm_filters]        = @filters
