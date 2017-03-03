@@ -2535,7 +2535,6 @@ class MiqAeClassController < ApplicationController
 
   def get_session_data
     @title      = _("Datastore")
-    @lastaction = session[:aeclass_lastaction]
     @edit       = session[:edit]
   end
 
