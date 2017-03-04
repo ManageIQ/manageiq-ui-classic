@@ -17,7 +17,7 @@ module Mixins
       flash_msg = _("Edit of %{model} \"%{name}\" was cancelled by the user") %
                   {:model => ui_lookup(:model => model_name),
                    :name  => update_ems.name}
-      js_args = {:action    => @lastaction,
+      js_args = {:action    => @lastaction == 'show_dashboard' ? 'show' : @lastaction,
                  :id        => update_ems.id,
                  :display   => session[:ems_display],
                  :flash_msg => flash_msg,
