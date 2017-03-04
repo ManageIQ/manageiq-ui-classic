@@ -395,10 +395,6 @@ class ApplicationHelper::ToolbarBuilder
       end
     when nil, "NilClass"
       case id
-      when "customization_template_new"
-        if @pxe_image_types_count <= 0
-          return N_("No System Image Types available, Customization Template cannot be added")
-        end
       # following 2 are checks for buttons in Reports/Dashboard accordion
       when "db_new"
         if @widgetsets.length >= MAX_DASHBOARD_COUNT
