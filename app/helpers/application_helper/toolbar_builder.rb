@@ -456,10 +456,6 @@ class ApplicationHelper::ToolbarBuilder
       end
     when nil, "NilClass"
       case id
-      when "ae_copy_simulate"
-        if @resolve[:button_class].blank?
-          return N_("Object attribute must be specified to copy object details for use in a Button")
-        end
       when "customization_template_new"
         if @pxe_image_types_count <= 0
           return N_("No System Image Types available, Customization Template cannot be added")
