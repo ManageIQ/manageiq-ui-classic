@@ -10,7 +10,7 @@ class ReportController < ApplicationController
 
   helper ApplicationHelper::ImportExportHelper
   include ReportHelper
-  include GenericSessionMixin
+  include Mixins::GenericSessionMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -891,7 +891,17 @@ class ReportController < ApplicationController
     render :json => presenter.for_render
   end
 
+ def self.session_key_prefix
+    'report'
+ end
+
+ def self.table_name
+	nil
+ end
+
   def get_session_data
+	super
+	#binding.pry
     @layout           = 'report'
     @lastaction       = session[:report_lastaction]
     @report_tab       = session[:report_tab]
@@ -906,6 +916,8 @@ class ReportController < ApplicationController
   end
 
   def set_session_data
+	#super
+	#binding.pry
     session[:report_lastaction] = @lastaction
     session[:report_tab]        = @report_tab
     session[:panels]            = @panels
