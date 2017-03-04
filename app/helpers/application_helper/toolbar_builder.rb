@@ -470,8 +470,6 @@ class ApplicationHelper::ToolbarBuilder
           return N_("Only %{dashboard_count} Dashboards are allowed for a group") %
             {:dashboard_count => MAX_DASHBOARD_COUNT}
         end
-      when "db_seq_edit"
-        return N_("There should be atleast 2 Dashboards to Edit Sequence") if @widgetsets.length <= 1
       when "render_report_csv", "render_report_pdf",
           "render_report_txt", "report_only"
         if (@html || @zgraph) && (!@report.extras[:grouping] || (@report.extras[:grouping] && @report.extras[:grouping][:_total_][:count] > 0))
