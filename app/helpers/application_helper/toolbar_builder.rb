@@ -405,13 +405,6 @@ class ApplicationHelper::ToolbarBuilder
           return N_("Only %{dashboard_count} Dashboards are allowed for a group") %
             {:dashboard_count => MAX_DASHBOARD_COUNT}
         end
-      when "render_report_csv", "render_report_pdf",
-          "render_report_txt", "report_only"
-        if (@html || @zgraph) && (!@report.extras[:grouping] || (@report.extras[:grouping] && @report.extras[:grouping][:_total_][:count] > 0))
-          return false
-        else
-          return N_("No records found for this report")
-        end
       end
     when 'MiqReportResult'
       if id == 'report_only'
