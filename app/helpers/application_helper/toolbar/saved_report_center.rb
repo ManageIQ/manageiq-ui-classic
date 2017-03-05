@@ -14,7 +14,7 @@ class ApplicationHelper::Toolbar::SavedReportCenter < ApplicationHelper::Toolbar
           :url     => "/report_only",
           :popup   => true,
           :confirm => N_("This will show the entire report (all rows) in your browser.  Do you want to proceed?"),
-          :klass   => ApplicationHelper::Button::RenderReport),
+          :klass   => ApplicationHelper::Button::ReportOnly),
         button(
           :saved_report_delete,
           'pficon pficon-delete fa-lg',
