@@ -39,14 +39,14 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
       .catch(miqService.handleFailure);
   }
 
-  vm.canValidateBasicInfo = function () {
-    if (vm.isBasicInfoValid())
+  vm.canValidateBasicInfo = function (angularForm) {
+    if (vm.isBasicInfoValid(angularForm))
       return true;
     else
       return false;
   }
 
-  vm.isBasicInfoValid = function() {
+  vm.isBasicInfoValid = function(angularForm) {
     if(angularForm.url.$valid &&
       angularForm.log_userid.$valid &&
       angularForm.log_password.$valid &&
