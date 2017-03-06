@@ -66,8 +66,7 @@ class ApplicationController < ActionController::Base
   end
 
   def allow_websocket
-    proto = request.ssl? ? 'wss' : 'ws'
-    override_content_security_policy_directives(:connect_src => ["'self'", "#{proto}://#{request.env['HTTP_HOST']}"])
+    override_content_security_policy_directives(:connect_src => ["'self'", websocket_origin])
   end
   private :allow_websocket
 
