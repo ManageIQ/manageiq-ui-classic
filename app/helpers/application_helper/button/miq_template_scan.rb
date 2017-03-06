@@ -1,9 +1,5 @@
-class ApplicationHelper::Button::MiqTemplateScan < ApplicationHelper::Button::GenericFeatureButtonWithDisable
+class ApplicationHelper::Button::MiqTemplateScan < ApplicationHelper::Button::VmInstanceTemplateScan
   needs :@record
-
-  def visible?
-    true
-  end
 
   def disabled?
     return true if super
