@@ -15,6 +15,7 @@ ManageIQ.angular.app.component('miqButton', {
         this.onClick();
       }
       event.preventDefault();
+      event.target.blur();
     };
     this.setTitle = function() {
       if (this.enabledTitle || this.disabledTitle) {
