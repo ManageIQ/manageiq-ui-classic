@@ -1,4 +1,4 @@
-class ResourcePoolDecorator < MiqDecorator
+class ScanItemSetDecorator < MiqDecorator
   def fonticon
     'fa fa-search'
   end
