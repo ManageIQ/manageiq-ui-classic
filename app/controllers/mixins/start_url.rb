@@ -8,7 +8,7 @@ module StartUrl
   end
 
   def start_url_for_user(start_url)
-    return url_for_only_path(start_url) unless start_url.nil?
+    return start_url unless start_url.nil?
     return url_for_only_path(:controller => 'dashboard', :action => 'show') unless helpers.settings(:display, :startpage)
 
     first_allowed_url = nil
