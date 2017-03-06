@@ -5,6 +5,7 @@ ManageIQ.angular.app.component('miqButton', {
     enabledTitle: '@?',
     disabledTitle: '@?',
     primary: '<?',
+    xs: '<?',
     onClick: '&',
   },
   controllerAs: 'vm',
@@ -33,7 +34,7 @@ ManageIQ.angular.app.component('miqButton', {
   template: [
     '<button',
     'controllerAs="vm"',
-    'ng-class="{btn: true, \'btn-primary\': vm.primary, \'btn-default\': !vm.primary, disabled: !vm.enabled}"',
+    'ng-class="{btn: true, \'btn-primary\': vm.primary, \'btn-xs\': vm.xs, \'btn-default\': !vm.primary, disabled: !vm.enabled}"',
     'ng-click="vm.buttonClicked($event)"',
     'ng-attr-title="{{vm.title}}"',
     'ng-attr-alt="{{vm.title}}">',

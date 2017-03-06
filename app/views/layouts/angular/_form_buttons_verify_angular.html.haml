@@ -16,6 +16,7 @@
               "enabled-title"  => verify_title_on,
               :enabled         => basic_info_needed ? "#{main_scope}.canValidateBasicInfo(angularForm)" : "#{main_scope}.canValidate(angularForm)",
               'on-click'       => validate,
+              :xs              => 'true',
               :primary         => 'true'}
   %div{"ng-if" => "checkAuthentication"}
     .form-group{"ng-class" => "{'has-error': angularForm.#{valtype}_auth_status.$error.validationRequired}"}
