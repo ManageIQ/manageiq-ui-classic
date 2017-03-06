@@ -2011,9 +2011,6 @@ Rails.application.routes.draw do
       :get => %w(
         download_data
         download_summary_pdf
-        dummy_data
-        edit
-        new
         show
         show_list
       ),
@@ -2025,6 +2022,8 @@ Rails.application.routes.draw do
       :get => %w(
         download_data
         download_summary_pdf
+        edit
+        new
         show
         show_list
       ),

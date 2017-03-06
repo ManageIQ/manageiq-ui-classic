@@ -24,7 +24,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
     miqService.sparkleOn();
     // TODO change to API
     if (repositoryId != 'new') {
-      $http.get('/ansible_repository/dummy_data')
+      $http.get('/api/configuration_script_sources/' + repositoryId)
         .then(getRepositoryFormData)
         .catch(miqService.handleFailure);
     }
@@ -35,9 +35,22 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
     }
 
   };
+  vm.newRecord = function() {
+    return repositoryId == 'new';
+  };
+
+  $scope.newRecord = function() {
+    return repositoryId == 'new';
+  };
+
+  $scope.saveable = function(angularForm) {
+    // TODO
+    return true;
+  };
 
   $scope.cancelClicked = function() {
     // TODO go back
+    miqService.miqAjaxButton('/ansible_repository/show_list');
   };
 
   $scope.resetClicked = function() {
@@ -48,17 +61,21 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
   };
 
   $scope.saveClicked = function() {
-    $scope.angularForm.$setPristine(true);
+    // TODO correct object redirect back
+    API.put('/api/configuration_script_sources/' + repositoryId, {name: 'fooo'})
+      .then(getRepositoryFormData)
+      .catch(miqService.handleFailure);
   };
 
   $scope.addClicked = function() {
-    // URL is different from save, maybe?
-    $scope.saveClicked();
+    // TODO correct object redirect back to list view
+    API.post('/api/configuration_script_sources', {name: 'fooo'})
+       .then(getRepositoryFormData)
+       .catch(miqService.handleFailure);
   };
 
   function getRepositoryFormData(response) {
     var data = response.data;
-
     Object.assign(vm.repositoryModel, data);
     vm.modelCopy = angular.copy( vm.repositoryModel );
     vm.afterGet = true;
