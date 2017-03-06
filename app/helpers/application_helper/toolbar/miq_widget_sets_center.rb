@@ -17,7 +17,8 @@ class ApplicationHelper::Toolbar::MiqWidgetSetsCenter < ApplicationHelper::Toolb
           :db_seq_edit,
           'pficon pficon-edit fa-lg',
           t = N_('Edit Sequence of Dashboards'),
-          t),
+          t,
+          :klass => ApplicationHelper::Button::DbSeqEdit),
       ]
     ),
   ])
