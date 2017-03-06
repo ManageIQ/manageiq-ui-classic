@@ -20,7 +20,7 @@ describe "host/show.html.haml" do
     let(:showtype) { "performance" }
 
     before do
-      assign(:perf_options, :chart_type => :performance)
+      assign(:perf_options, ApplicationController::Performance::Options.new.tap { |o| o.chart_type = :performance })
     end
 
     it_behaves_like "miq_before_onload JS is needed"
