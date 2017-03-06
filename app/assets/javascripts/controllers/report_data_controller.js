@@ -12,6 +12,10 @@
     MiQEndpointsService.endpoints.listDataTable = '/' + ManageIQ.constants.reportData;
   }
 
+  function isCurrentControllerOrPolicies(splitUrl) {
+    return splitUrl && (splitUrl[1] === ManageIQ.controller || splitUrl[2] === 'policies');
+  }
+
   /**
   * Method for init paging component for GTL.
   * Default paging has 5, 10, 20, 50, 100, 1000
@@ -150,17 +154,18 @@
     event.preventDefault();
     var prefix = this.initObject.showUrl;
     var splitUrl = this.initObject.showUrl.split('/');
-    if (this.initObject.isExplorer && splitUrl && splitUrl[1] === ManageIQ.controller) {
+    if (this.initObject.isExplorer && isCurrentControllerOrPolicies(splitUrl)) {
       var itemId = item.id;
       if (this.initObject.showUrl.indexOf('?id=') !== -1 ){
         var itemId = this.initObject.showUrl.indexOf('xx-') !== -1 ? '_-' + item.id : '-' + item.id;
       }
-      url = prefix + itemId;
+      var url = prefix + itemId;
       $.post(url).always(function() {
         this.setExtraClasses();
       }.bind(this));
     } else {
-      this.$window.DoNav(prefix + '/' + item.id);
+      prefix = prefix[prefix.length -1 ] !== '/' ? prefix + '/' : prefix;
+      this.$window.DoNav(prefix + item.id);
     }
     return false;
   };
@@ -189,6 +194,14 @@
   ReportDataController.prototype.initObjects = function(initObject) {
     this.gtlData = { cols: [], rows: [] };
     this.initObject = initObject;
+    if (this.initObject.showUrl === '') {
+      this.initObject.showUrl = '/' + ManageIQ.controller;
+      if (this.initObject.isExplorer) {
+        this.initObject.showUrl += '/x_show/';
+      } else {
+        this.initObject.showUrl += '/show/';
+      }
+    }
     this.gtlType = initObject.gtlType || 'grid';
     this.settings.isLoading = true;
     ManageIQ.gridChecks = [];
@@ -310,6 +323,12 @@
         this.gtlData = gtlData;
         this.perPage.text = this.settings.perpage;
         this.perPage.value = this.settings.perpage;
+        this.initObject.showUrl = this.settings.url || this.initObject.showUrl;
+        var splitUrl = this.initObject.showUrl.split('/');
+        if (splitUrl && splitUrl[1] === 'vm') {
+          splitUrl[1] = 'vm_infra';
+          this.initObject.showUrl = splitUrl.join('/');
+        }
         return gtlData;
       }.bind(this));
   };

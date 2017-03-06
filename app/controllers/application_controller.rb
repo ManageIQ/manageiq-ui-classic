@@ -342,6 +342,14 @@ class ApplicationController < ActionController::Base
     settings[:sort_dir] = @sortdir unless settings.nil?
     settings[:sort_col] = @sortcol unless settings.nil?
     @edit = session[:edit]
+    @policy_sim = @edit[:policy_sim] unless @edit.nil?
+    controller, _action = db_to_controller(current_view.db)
+    if !@policy_sim.nil? && session[:policies] && !session[:policies].empty?
+      settings[:url] = '/' + controller + '/policies/'
+    end
+    if session[:sandboxes] && @sb
+      session[:sandboxes][controller] = @sb
+    end
     render :json => {
       :settings => settings,
       :data     => view_to_hash(current_view),

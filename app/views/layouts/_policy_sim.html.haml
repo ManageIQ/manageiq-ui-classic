@@ -43,5 +43,7 @@
   - if @tagitems
     - @embedded = true
     - @policy_sim = true
+    - session[:edit] ||= {} 
+    - session[:edit][:policy_sim] = @policy_sim
     = render :partial => "layouts/gtl",
              :locals  => {:view => @pol_view}

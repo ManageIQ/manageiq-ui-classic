@@ -99,6 +99,7 @@ module ApplicationController::PolicySupport
   # Add selected policy to the simulation
   def policy_sim_add
     @edit = session[:edit]
+    @explorer = @edit[:explorer]
     # Profile was selected
     if params[:profile_id] != "<select>"
       prof = MiqPolicySet.find(params[:profile_id])               # Go thru all the profiles
