@@ -573,6 +573,9 @@ module ApplicationHelper
            miq_policy
            miq_policy_export
            miq_policy_rsop
+           monitor_alerts_overview
+           monitor_alerts_list
+           monitor_alerts_most_recent
            network_topology
            ops
            pxe
@@ -1192,6 +1195,9 @@ module ApplicationHelper
                         middleware_topology
                         miq_schedule
                         miq_template
+                        monitor_alerts_overview
+                        monitor_alerts_list
+                        monitor_alerts_most_recent
                         network_port
                         network_router
                         network_topology
