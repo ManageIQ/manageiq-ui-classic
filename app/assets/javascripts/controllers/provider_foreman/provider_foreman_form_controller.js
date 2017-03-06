@@ -18,6 +18,8 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
   vm.modelCopy = angular.copy( vm.providerForemanModel );
   vm.model = 'providerForemanModel';
 
+  vm.saveable = miqService.saveable;
+
   ManageIQ.angular.scope = vm;
 
 
@@ -64,25 +66,25 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
     }
   };
 
-  vm.cancelClicked = function() {
+  vm.cancelClicked = function(angularForm) {
     providerForemanEditButtonClicked('cancel');
     angularForm.$setPristine(true);
   };
 
-  vm.resetClicked = function() {
+  vm.resetClicked = function(angularForm) {
     $scope.$broadcast ('resetClicked');
     vm.providerForemanModel = angular.copy( vm.modelCopy );
     angularForm.$setPristine(true);
     miqService.miqFlash("warn", __("All changes have been reset"));
   };
 
-  vm.saveClicked = function() {
+  vm.saveClicked = function(angularForm) {
     providerForemanEditButtonClicked('save', true);
     angularForm.$setPristine(true);
   };
 
-  vm.addClicked = function() {
-    vm.saveClicked();
+  vm.addClicked = function(angularForm) {
+    vm.saveClicked(angularForm);
   };
 
   function getProviderForemanFormData(response) {
