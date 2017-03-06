@@ -199,7 +199,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       vm._catalog = _.find(vm.catalogs, {id: vm.catalogItemModel.catalog_id});
     })
 
-    // list of service dailaogs
+    // list of service dialogs
     API.get("/api/service_dialogs/?expand=resources&attributes=id,label").then(function (data) {
       vm.dialogs = data.resources
       vm._retirement_dialog = _.find(vm.dialogs, {id: vm.catalogItemModel.retirement_dialog_id});
@@ -207,7 +207,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     })
 
     // list of repositories
-    API.get("/api/configuration_script_sources/?expand=resources&attributes=id,name").then(function (data) {
+    API.get("/api/configuration_script_sources?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource&expand=resources&attributes=id,name").then(function (data) {
       vm.repositories = data.resources;
       vm._retirement_repository = _.find(vm.repositories, {id: vm.catalogItemModel.retirement_repository_id});
       vm._provisioning_repository = _.find(vm.repositories, {id: vm.catalogItemModel.provisioning_repository_id});
