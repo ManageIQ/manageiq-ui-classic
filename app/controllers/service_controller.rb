@@ -190,7 +190,7 @@ class ServiceController < ApplicationController
   end
 
   # Get all info for the node about to be displayed
-  def get_node_info(treenodeid)
+  def get_node_info(treenodeid, _show_list = true)
     @nodetype, id = parse_nodetype_and_id(valid_active_node(treenodeid))
     # resetting action that was stored during edit to determine what is being edited
     @sb[:action] = nil
@@ -217,6 +217,7 @@ class ServiceController < ApplicationController
       end
     end
     x_history_add_item(:id => treenodeid, :text => @right_cell_text)
+    {:view => @view, :pages => @pages}
   end
 
   # set partial name and cell header for edit screens

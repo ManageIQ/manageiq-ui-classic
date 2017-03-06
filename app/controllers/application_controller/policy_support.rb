@@ -99,6 +99,7 @@ module ApplicationController::PolicySupport
   # Add selected policy to the simulation
   def policy_sim_add
     @edit = session[:edit]
+    @explorer = @edit[:explorer]
     # Profile was selected
     if params[:profile_id] != "<select>"
       prof = MiqPolicySet.find(params[:profile_id])               # Go thru all the profiles
@@ -171,7 +172,7 @@ module ApplicationController::PolicySupport
       protect
       @refresh_partial = "layouts/protect"
     else
-      javascript_redirect :action => 'protect' # redirect to build policy screen
+      javascript_redirect :action => 'protect', :db => db # redirect to build policy screen
     end
   end
   %w(image instance vm miq_template
@@ -247,7 +248,9 @@ module ApplicationController::PolicySupport
 
   # Build the policy simulation screen
   def policy_sim_build_screen
+    @edit ||= {}
     @tagitems = session[:tag_db].find(session[:tag_items]).sort_by(&:name)  # Get the db records that are being tagged
+    @edit[:pol_items] = session[:tag_items]
     @catinfo = {}
     @lastaction = "policy_sim"
     @pol_view = get_db_view(session[:tag_db])       # Instantiate the MIQ Report view object

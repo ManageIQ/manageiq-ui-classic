@@ -257,13 +257,14 @@ class MiqAeCustomizationController < ApplicationController
     sub_node == "xx" || !(sub_node == "" && node.split('_').length <= 2)
   end
 
-  def get_node_info
+  def get_node_info(node = {}, _show_list = true)
     node = x_node
     node = valid_active_node(x_node) unless dialog_edit_tree_active? || first_sub_node_is_a_folder?(node)
 
-    get_specific_node_info(node)
+    node_info = get_specific_node_info(node)
 
     x_history_add_item(:id => node, :text => @right_cell_text) unless x_active_tree == :dialog_edit_tree
+    node_info
   end
 
   def get_specific_node_info(node)
