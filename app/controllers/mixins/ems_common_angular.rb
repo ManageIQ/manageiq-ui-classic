@@ -122,11 +122,6 @@ module Mixins
       default_tls_verify = default_endpoint.verify_ssl != 0 ? true : false
       default_tls_ca_certs = default_endpoint.certificate_authority
 
-      if @ems.zone.nil? || @ems.my_zone == ""
-        zone = "default"
-      else
-        zone = @ems.my_zone
-      end
       amqp_userid = ""
       amqp_hostname = ""
       amqp_port = ""
@@ -207,8 +202,6 @@ module Mixins
         service_account = @ems.authentication_token
         service_account_auth_status = @ems.authentication_status_ok?
       end
-
-      default_auth_status = @ems.authentication_status_ok? unless @ems.kind_of?(ManageIQ::Providers::Google::CloudManager)
 
       render :json => {:name                            => @ems.name,
                        :emstype                         => @ems.emstype,
@@ -445,6 +438,10 @@ module Mixins
         default_endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
       end
 
+      if ems.kind_of?(ManageIQ::Providers::Lenovo::PhysicalInfraManager)
+        default_endpoint = {:role => :default, :hostname => hostname, :port => port}
+      end
+
       endpoints = {:default     => default_endpoint,
                    :ceilometer  => ceilometer_endpoint,
                    :amqp        => amqp_endpoint,
@@ -582,6 +579,18 @@ module Mixins
       }
 
       @edit[:new][:tenant_mapping_enabled] = params[:tenant_mapping_enabled] if ems.class.supports_cloud_tenant_mapping?
+    end
+
+    def zone
+      if @ems.zone.nil? || @ems.my_zone == ""
+        "default"
+      else
+        @ems.my_zone
+      end
+    end
+
+    def default_auth_status
+      @ems.authentication_status_ok? unless @ems.kind_of?(ManageIQ::Providers::Google::CloudManager)
     end
   end
 end

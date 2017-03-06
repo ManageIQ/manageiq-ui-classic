@@ -451,9 +451,10 @@ module EmsCommon
         javascript_redirect :back
         return
       end
-      if params[:pressed] == "ems_cloud_recheck_auth_status"     ||
-         params[:pressed] == "ems_infra_recheck_auth_status"     ||
-         params[:pressed] == "ems_middleware_recheck_auth_status" ||
+      if params[:pressed] == "ems_cloud_recheck_auth_status"          ||
+         params[:pressed] == "ems_infra_recheck_auth_status"          ||
+         params[:pressed] == "ems_physical_infra_recheck_auth_status" ||
+         params[:pressed] == "ems_middleware_recheck_auth_status"     ||
          params[:pressed] == "ems_container_recheck_auth_status"
         if params[:id]
           table_key = :table

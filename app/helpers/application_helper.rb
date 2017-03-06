@@ -234,6 +234,9 @@ module ApplicationHelper
       if controller == "ems_infra" && action == "show"
         return ems_infras_path
       end
+      if controller == "ems_physical_infra" && action == "show"
+        return ems_physical_infras_path
+      end
       if controller == "ems_container" && action == "show"
         return ems_containers_path
       end
@@ -575,6 +578,7 @@ module ApplicationHelper
            miq_policy_rsop
            network_topology
            ops
+           physical_infra_topology
            pxe
            report
            rss
@@ -640,7 +644,16 @@ module ApplicationHelper
   ]
   # Return a blank tb if a placeholder is needed for AJAX explorer screens, return nil if no custom toolbar to be shown
   def custom_toolbar_filename
-    if %w(ems_cloud ems_cluster ems_infra host miq_template storage ems_storage ems_network cloud_tenant).include?(@layout) # Classic CIs
+    if %w(cloud_tenant
+          ems_cloud
+          ems_cluster
+          ems_infra
+          ems_network
+          ems_storage
+          ems_physical_infra
+          host
+          miq_template
+          storage).include?(@layout) # Classic CIs
       return "custom_buttons_tb" if @record && @lastaction == "show" && @display == "main"
     end
 
@@ -762,6 +775,7 @@ module ApplicationHelper
        ems_infra
        ems_middleware
        ems_network
+       ems_physical_infra
        ems_storage
        flavor
        floating_ip
@@ -1173,6 +1187,7 @@ module ApplicationHelper
                         ems_infra_dashboard
                         ems_middleware
                         ems_network
+                        ems_physical_infra
                         ems_storage
                         infra_topology
                         event
@@ -1197,6 +1212,7 @@ module ApplicationHelper
                         network_topology
                         offline
                         orchestration_stack
+                        physical_infra_topology
                         persistent_volume
                         policy
                         policy_group
@@ -1271,6 +1287,7 @@ module ApplicationHelper
           ems_infra
           ems_middleware
           ems_network
+          ems_physical_infra
           ems_storage
           flavor
           floating_ip
@@ -1336,6 +1353,7 @@ module ApplicationHelper
              ems_infra
              ems_middleware
              ems_network
+             ems_physical_infra
              ems_storage
              flavor
              floating_ip
@@ -1394,6 +1412,7 @@ module ApplicationHelper
       ems_infra
       ems_middleware
       ems_network
+      ems_physical_infra
       ems_storage
       flavor
       floating_ip

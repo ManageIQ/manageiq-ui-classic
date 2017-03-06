@@ -1020,6 +1020,13 @@ Rails.application.routes.draw do
       )
     },
 
+    :physical_infra_topology         => {
+      :get => %w(
+        show
+        data
+      )
+    },
+
     :container_dashboard      => {
       :get => %w(
         show
@@ -1163,8 +1170,6 @@ Rails.application.routes.draw do
         protect
         show_list
         tagging_edit
-        scaling
-        scaledown
       ) +
                compare_get,
       :post => %w(
@@ -1185,9 +1190,9 @@ Rails.application.routes.draw do
         tree_autoload
         update
         wait_for_task
+        x_show
         scaling
         scaledown
-        x_show
         squash_toggle
       ) +
                adv_search_post +
@@ -1199,6 +1204,49 @@ Rails.application.routes.draw do
     },
 
     :ems_infra_dashboard      => {
+      :get => %w(
+        show
+        data
+      )
+    },
+
+    :ems_physical_infra                => {
+      :get  => %w(
+        discover
+        download_data
+        download_summary_pdf
+        ems_physical_infra_form_fields
+        protect
+        show_list
+        tagging_edit
+      ) +
+               compare_get,
+      :post => %w(
+        button
+        create
+        listnav_search_selected
+        protect
+        quick_search
+        show
+        show_list
+        squash_toggle
+        tag_edit_form_field_changed
+        tagging_edit
+        tl_chooser
+        tree_autoload
+        update
+        wait_for_task
+        x_show
+      ) +
+               adv_search_post +
+               compare_post +
+               dialog_runner_post +
+               discover_get_post +
+               exp_post +
+               save_post
+    },
+
+    :ems_physical_infra_dashboard      => {
       :get => %w(
         show
         data
@@ -3196,7 +3244,7 @@ Rails.application.routes.draw do
   controller_routes.each do |controller_name, controller_actions|
     # Default route with no action to controller's index action
     unless [
-      :ems_cloud, :ems_infra, :ems_container, :ems_middleware, :ems_datawarehouse, :ems_network
+      :ems_cloud, :ems_infra, :ems_physical_infra, :ems_container, :ems_middleware, :ems_datawarehouse, :ems_network
     ].include?(controller_name)
       match controller_name.to_s, :controller => controller_name, :action => :index, :via => :get
     end
@@ -3224,10 +3272,11 @@ Rails.application.routes.draw do
   # pure-angular templates
   get '/static/*id' => 'static#show', :format => false
 
-  resources :ems_cloud, :as => :ems_clouds
-  resources :ems_infra, :as => :ems_infras
-  resources :ems_container, :as => :ems_containers
-  resources :ems_middleware, :as => :ems_middlewares
-  resources :ems_datawarehouse, :as => :ems_datawarehouses
-  resources :ems_network, :as => :ems_networks
+  resources :ems_cloud,          :as => :ems_clouds
+  resources :ems_infra,          :as => :ems_infras
+  resources :ems_physical_infra, :as => :ems_physical_infras
+  resources :ems_container,      :as => :ems_containers
+  resources :ems_middleware,     :as => :ems_middlewares
+  resources :ems_datawarehouse,  :as => :ems_datawarehouses
+  resources :ems_network,        :as => :ems_networks
 end
