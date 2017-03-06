@@ -384,8 +384,6 @@ class ApplicationHelper::ToolbarBuilder
       when "storage_scan"
         return @record.unsupported_reason(:smartstate_analysis) unless @record.supports_smartstate_analysis?
       end
-    when "Tenant"
-      return N_("Default Tenant can not be deleted") if @record.parent.nil? && id == "rbac_tenant_delete"
     when "User"
       case id
       when "rbac_user_copy"
