@@ -10,7 +10,8 @@ class ApplicationHelper::Toolbar::ScanProfileCenter < ApplicationHelper::Toolbar
           :ap_edit,
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Analysis Profile'),
-          t),
+          t,
+          :klass => ApplicationHelper::Button::ApEdit),
         button(
           :ap_copy,
           'fa fa-files-o fa-lg',
@@ -23,7 +24,8 @@ class ApplicationHelper::Toolbar::ScanProfileCenter < ApplicationHelper::Toolbar
           t = N_('Delete this Analysis Profile'),
           t,
           :url_parms => "&refresh=y",
-          :confirm   => N_("Warning: This Analysis Profile and ALL of its components will be permanently removed!")),
+          :confirm   => N_("Warning: This Analysis Profile and ALL of its components will be permanently removed!"),
+          :klass     => ApplicationHelper::Button::ApDelete),
       ]
     ),
   ])

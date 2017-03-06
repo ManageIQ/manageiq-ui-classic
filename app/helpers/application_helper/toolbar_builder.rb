@@ -369,13 +369,6 @@ class ApplicationHelper::ToolbarBuilder
       when "rbac_group_edit"
         return N_("This Group is Read Only and can not be edited") if @record.read_only
       end
-    when "ScanItemSet"
-      case id
-      when "ap_delete"
-        return N_("Sample Analysis Profile cannot be deleted") if @record.read_only
-      when "ap_edit"
-        return N_("Sample Analysis Profile cannot be edited") if @record.read_only
-      end
     when "Storage"
       case id
       when "storage_perf"
