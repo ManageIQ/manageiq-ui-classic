@@ -6,18 +6,18 @@ ManageIQ.angular.app.service('postService', ["miqService", "$timeout", "$window"
       angular.toJson({
         action: "edit",
         resource: updateObject
-      })).then(handleSuccess, handleFailure);
+      })).then(handleSuccess)
+         .catch(miqService.handleFailure);
 
     function handleSuccess(response) {
       $timeout(function () {
-        $window.location.href = redirectURL + '&flash_msg=' + successMsg;
-      });
-    }
-
-    function handleFailure(response) {
-      var msg = sprintf(__("Error during Save: [%s - %s]"), response.status, response.responseText);
-      $timeout(function () {
-        $window.location.href = redirectURL + '&flash_msg=' + msg + '&flash_error=true';
+        if (response.error) {
+          var msg = __(response.error.klass + ': ' + response.error.message);
+          miqService.miqFlash('error', msg);
+          miqService.sparkleOff();
+        } else {
+          $window.location.href = redirectURL + '&flash_msg=' + successMsg;
+        }
       });
     }
   };
@@ -28,18 +28,18 @@ ManageIQ.angular.app.service('postService', ["miqService", "$timeout", "$window"
       angular.toJson({
         action: "create",
         resource: createObject
-      })).then(handleSuccess, handleFailure);
+      })).then(handleSuccess)
+         .catch(miqService.handleFailure);
 
     function handleSuccess(response) {
       $timeout(function () {
-        $window.location.href = redirectURL + '&flash_msg=' + successMsg;
-      });
-    }
-
-    function handleFailure(response) {
-      var msg = sprintf(__("Error during Add: [%s - %s]"), response.status, response.responseText);
-      $timeout(function () {
-        $window.location.href = redirectURL + '&flash_msg=' + msg + '&flash_error=true';
+        if (response.error) {
+          var msg = __(response.error.klass + ': ' + response.error.message);
+          miqService.miqFlash('error', msg);
+          miqService.sparkleOff();
+        } else {
+          $window.location.href = redirectURL + '&flash_msg=' + successMsg;
+        }
       });
     }
   };
