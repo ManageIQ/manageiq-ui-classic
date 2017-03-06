@@ -110,7 +110,7 @@ function physicalInfraTopologyCtrl($scope, $http, $interval, $location, topology
       return false;
     }
 
-    topologyService.addContextMenuOption(popup, "Go to summary page", data, self.dblclick);
+    topologyService.addContextMenuOption(popup, __("Go to summary page"), data, self.dblclick);
   };
 
   $scope.$on("render", function(ev, vertices, added) {

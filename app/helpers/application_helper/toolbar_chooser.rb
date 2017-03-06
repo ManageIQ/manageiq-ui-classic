@@ -529,7 +529,8 @@ class ApplicationHelper::ToolbarChooser
               container_template
               ems_block_storage
               ems_object_storage
-              timeline usage).include?(@layout)
+              timeline
+              usage).include?(@layout)
           if ["show_list"].include?(@lastaction)
             return "#{@layout.pluralize}_center_tb"
           else
