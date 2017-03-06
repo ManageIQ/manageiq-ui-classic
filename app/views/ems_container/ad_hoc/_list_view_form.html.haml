@@ -3,7 +3,7 @@
     %button.btn.btn-primary{"type"        => "button",
                             "ng-disabled" => "!dash.tenantChanged",
                             "ng-click"    => "dash.refreshTenant()"}
-      = _("Set tenant")
+      = _("Set Tenant")
 
     %input.form-control{"id"                  => "ad-hoc-tenant",
                         "type"                => "text",
@@ -20,11 +20,11 @@
     %button.btn.btn-default{"type"        => "button",
                             "ng-click"    => "dash.doAddFilter()",
                             "ng-disabled" => "!dash.filterConfig.currentValue"}
-      = _("Add filter")
+      = _("Add Filter")
     %button.btn.btn-primary{"type"        => "button",
                             "ng-click"    => "dash.applyFilters()",
                             "ng-disabled" => "!dash.filterChanged"}
-      = _("Apply filters")
+      = _("Apply Filters")
     %button.btn.btn-primary{"type"        => "button",
                             "ng-click"    => "dash.viewGraph()",
                             "ng-disabled" => "!dash.itemSelected"}
