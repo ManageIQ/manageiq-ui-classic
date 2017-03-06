@@ -76,9 +76,9 @@ module ApplicationHelper
                 _(": Requests")
               when "manageiq/providers/ansible_tower/automation_manager/playbook"
                 _(": Playbooks (Ansible Tower)")
-              when "manageiq/providers/automation_manager/authentication"
+              when "manageiq/providers/embedded_automation_manager/authentication"
                 _(": Credentials")
-              when "configuration_script_source"
+              when "manageiq/providers/embedded_automation_manager/configuration_script_source"
                 _(": Repositories")
 
               else
