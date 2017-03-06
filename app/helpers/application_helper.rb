@@ -9,6 +9,7 @@ module ApplicationHelper
   include ToolbarHelper
   include TextualSummaryHelper
   include NumberHelper
+  include Title
 
   # Need to generate paths w/o hostname by default to make proxying work.
   #
@@ -423,72 +424,6 @@ module ApplicationHelper
   def field_to_col(field)
     dbs, fld = field.split("-")
     (dbs.include?(".") ? "#{dbs.split(".").last}.#{fld}" : fld)
-  end
-
-  # Derive the browser title text based on the layout value
-  def title_from_layout(layout)
-    # TODO: leave I18n until we have productization capability in gettext
-    title = I18n.t('product.name')
-    if layout.blank?  # no layout, leave title alone
-    elsif ["configuration", "dashboard", "chargeback", "about"].include?(layout)
-      title += ": #{layout.titleize}"
-    elsif @layout == "ems_cluster"
-      title += ": #{title_for_clusters}"
-    elsif @layout == "host"
-      title += ": #{title_for_hosts}"
-    # Specific titles for certain layouts
-    elsif layout == "miq_server"
-      title += _(": Servers")
-    elsif layout == "usage"
-      title += _(": VM Usage")
-    elsif layout == "scan_profile"
-      title += _(": Analysis Profiles")
-    elsif layout == "miq_policy_rsop"
-      title += _(": Policy Simulation")
-    elsif layout == "all_ui_tasks"
-      title += _(": All UI Tasks")
-    elsif layout == "my_ui_tasks"
-      title += _(": My UI Tasks")
-    elsif layout == "rss"
-      title += _(": RSS")
-    elsif layout == "storage_manager"
-      title += _(": Storage - Storage Managers")
-    elsif layout == "ops"
-      title += _(": Configuration")
-    elsif layout == "provider_foreman"
-      title += _(": Configuration Management")
-    elsif layout == "pxe"
-      title += _(": PXE")
-    elsif layout == "explorer"
-      title += ": #{controller_model_name(params[:controller])} Explorer"
-    elsif layout == "vm_cloud"
-      title += _(": Instances")
-    elsif layout == "vm_infra"
-      title += _(": Virtual Machines")
-    elsif layout == "vm_or_template"
-      title += _(": Workloads")
-    # Specific titles for groups of layouts
-    elsif layout.starts_with?("miq_ae_")
-      title += _(": Automation")
-    elsif layout.starts_with?("miq_policy")
-      title += _(": Control")
-    elsif layout.starts_with?("miq_capacity")
-      title += _(": Optimize")
-    elsif layout.starts_with?("miq_request")
-      title += _(": Requests")
-    elsif layout == "login"
-      title += _(": Login")
-    elsif layout == "manageiq/providers/ansible_tower/automation_manager/playbook"
-      title += ": Playbooks (Ansible Tower)"
-    elsif layout == "manageiq/providers/automation_manager/authentication"
-      title += ": Credentials"
-    elsif layout == "configuration_script_source"
-      title += ": Repositories"
-    # Assume layout is a table name and look up the plural version
-    else
-      title += ": #{ui_lookup(:tables => layout)}"
-    end
-    title
   end
 
   def controller_model_name(controller)
@@ -1498,36 +1433,6 @@ module ApplicationHelper
       :ems_cloud
     else
       :ems_container
-    end
-  end
-
-  def title_for_hosts
-    title_for_host(true)
-  end
-
-  def title_for_host(plural = false)
-    case Host.node_types
-    when :non_openstack
-      plural ? _("Hosts") : _("Host")
-    when :openstack
-      plural ? _("Nodes") : _("Node")
-    else
-      plural ? _("Hosts / Nodes") : _("Host / Node")
-    end
-  end
-
-  def title_for_clusters
-    title_for_cluster(true)
-  end
-
-  def title_for_cluster(plural = false)
-    case EmsCluster.node_types
-    when :non_openstack
-      plural ? _("Clusters") : _("Cluster")
-    when :openstack
-      plural ? _("Deployment Roles") : _("Deployment Role")
-    else
-      plural ? _("Clusters / Deployment Roles") : _("Cluster / Deployment Role")
     end
   end
 
