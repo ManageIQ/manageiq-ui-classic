@@ -2307,7 +2307,7 @@ module ApplicationController::CiProcessing
       each_host(hosts, task_name) do |host|
         if host.maintenance
           if host.respond_to?(:unset_node_maintenance)
-            host.send(:unset_node_maintenance)
+            host.send(:unset_node_maintenance_queue, session[:userid])
             add_flash(_("\"%{record}\": %{task} successfully initiated") %
                       {:record => host.name, :task => (display_name || task)})
           else
@@ -2315,7 +2315,7 @@ module ApplicationController::CiProcessing
                       {:hostname => host.name, :task => (task_name || task)}, :error)
           end
         elsif host.respond_to?(:set_node_maintenance)
-          host.send(:set_node_maintenance)
+          host.send(:set_node_maintenance_queue, session[:userid])
           add_flash(_("\"%{record}\": %{task} successfully initiated") %
                     {:record => host.name, :task => (display_name || task)})
         else
