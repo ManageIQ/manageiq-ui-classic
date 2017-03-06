@@ -67,7 +67,7 @@ module TreeNode
     end
 
     def icon
-      nil
+      @object.try(:decorate).try(:fonticon)
     end
 
     def klass

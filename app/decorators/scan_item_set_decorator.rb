@@ -1,0 +1,5 @@
+class ResourcePoolDecorator < MiqDecorator
+  def fonticon
+    'fa fa-search'
+  end
+end
