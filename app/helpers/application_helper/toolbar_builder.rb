@@ -369,11 +369,6 @@ class ApplicationHelper::ToolbarBuilder
       when "rbac_group_edit"
         return N_("This Group is Read Only and can not be edited") if @record.read_only
       end
-    when "MiqWidgetSet"
-      case id
-      when "db_delete"
-        return N_("Default Dashboard cannot be deleted") if @db.read_only
-      end
     when "ScanItemSet"
       case id
       when "ap_delete"
