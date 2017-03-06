@@ -136,7 +136,7 @@ class MiqAeClassController < ApplicationController
     end
   end
 
-  def get_node_info(node)
+  def get_node_info(node, _show_list = true)
     id = valid_active_node(node).split('-')
     @sb[:row_selected] = nil if params[:action] == "tree_select"
     case id[0]

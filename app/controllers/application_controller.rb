@@ -78,6 +78,8 @@ class ApplicationController < ActionController::Base
   # Convert Controller Name to Actual Model
   def self.model
     @model ||= name[0..-11].constantize
+  rescue
+    @model = nil
   end
 
   def self.permission_prefix
@@ -246,6 +248,114 @@ class ApplicationController < ActionController::Base
     browser_refresh_task(task_id)
   end
   private :initiate_wait_for_task
+
+  # Method for creating object with data for report.
+  # Report is either grid/table or list.
+  # @param controller_name name of JS controller. Typically `reportDataController`.
+  def init_report_data(controller_name)
+    view_url = view_to_url(@view) unless @view.nil?
+    {
+      :controller_name => controller_name,
+      :data            => {
+        :modelName  => @display.nil? && !self.class.model.nil? ? self.class.model.to_s.tableize : @display,
+        :activeTree => x_active_tree.to_s,
+        :gtlType    => @gtl_type,
+        :currId     => params[:id],
+        :sortColIdx => @sortcol,
+        :sortDir    => @sortdir,
+        :isExplorer => @explorer,
+        :showUrl    => view_url
+      }
+    }
+  end
+
+  # Private method for processing params.
+  # params can contain these options:
+  # @param params parameters object.
+  # @option params :explorer [String]
+  #     String value of boolean if we are fetching data for explorer or not. "true" | "false"
+  # @option params :active_tree [String]
+  #     String value of active tree node.
+  # @option params :model_id [String]
+  #     String value of model's ID to be filtered with.
+  def process_params_options(params)
+    options = {}
+    @explorer = params[:explorer] == "true" if params[:explorer]
+
+    if params[:active_tree]
+      node_info = get_node_info(x_node, false)
+      options.merge!(node_info) if node_info.kind_of?(Hash)
+    end
+
+    options[:parent] = identify_record(params[:model_id]) if params[:model_id] && options[:parent].nil?
+    options[:parent] = options[:parent] || @parent
+    options[:selected_ids] = params[:records]
+    options
+  end
+  private :process_params_options
+
+  # Method for processing params and finding correct model for current params.
+  # @param params parameters object.
+  # @option params :active_tree [String]
+  #     String value of active tree node.
+  # @option params :model [String]
+  #     String value of model to be selected.
+  # @param options options Object.
+  # @option options :model [Object]
+  #     If model was chosen somehow before calling this method use this model instead of finding it.
+  def process_params_model_view(params, options)
+    if options[:model]
+      model_view = options[:model].constantize
+    end
+
+    if model_view.nil? && params[:active_tree]
+      model_view = vm_model_from_active_tree(params[:active_tree].to_sym)
+    end
+    if model_view.nil? && CONTROLLER_TO_MODEL[self.class.model.to_s].nil? && params[:model]
+      model_view = model_string_to_constant(params[:model])
+    end
+
+    if model_view.nil?
+      model_view = controller_to_model
+    end
+    model_view
+  end
+  private :process_params_model_view
+
+  # Method for fetching report data. These data can be displayed in Grid/Tile/List.
+  # This method will first process params for options and then for current model.
+  # From these options and model we get view (for fetching data) and settings (will hold info about paging).
+  # Then this method will return JSON object with settings and data.
+  def report_data
+    if params[:explorer]
+      params[:action] = "explorer"
+    end
+    options = process_params_options(params)
+    if options[:view].nil?
+      model_view = process_params_model_view(params, options)
+      @edit = session[:edit]
+      current_view, settings = get_view(model_view, options)
+    else
+      current_view = options[:view]
+      settings = options[:pages]
+    end
+    settings[:sort_dir] = @sortdir unless settings.nil?
+    settings[:sort_col] = @sortcol unless settings.nil?
+    @edit = session[:edit]
+    @policy_sim = @edit[:policy_sim] unless @edit.nil?
+    controller, _action = db_to_controller(current_view.db)
+    if !@policy_sim.nil? && session[:policies] && !session[:policies].empty?
+      settings[:url] = '/' + controller + '/policies/'
+    end
+    if session[:sandboxes] && @sb
+      session[:sandboxes][controller] = @sb
+    end
+    render :json => {
+      :settings => settings,
+      :data     => view_to_hash(current_view),
+      :messages => @flash_array || session[:flash_msg]
+    }
+  end
 
   def event_logs
     @record = identify_record(params[:id])
@@ -863,8 +973,15 @@ class ApplicationController < ActionController::Base
 
     # Add table elements
     table = view.sub_table ? view.sub_table : view.table
+    view_context.instance_variable_set(:@explorer, @explorer)
     table.data.each do |row|
-      new_row = {:id => list_row_id(row), :cells => []}
+      target = @targets_hash[row.id] unless row['id'].nil?
+      quadicon = view_context.render_quadicon(target) if !target.nil? && type_has_quadicon(target.class.name)
+      new_row = {
+        :id       => list_row_id(row),
+        :cells    => [],
+        :quadicon => quadicon
+      }
       root[:rows] << new_row
 
       if has_checkbox
@@ -874,10 +991,14 @@ class ApplicationController < ActionController::Base
       # Generate html for the list icon
       if has_listicon
         item = listicon_item(view, row['id'])
-
+        image = listicon_image(item, view)
+        new_row[:img_url] = ActionController::Base.helpers.image_path(listicon_image(item, view).to_s)
+        icon, icon2 = listicon_icon(item) || listicon_glyphicon(view.db, row)
         new_row[:cells] << {:title => _('View this item'),
-                            :image => listicon_image(item, view),
-                            :icon  => listicon_icon(item)}
+                            :image => image,
+                            :icon  => icon,
+                            :icon2 => icon2}
+
       end
 
       view.col_order.each_with_index do |col, col_idx|
@@ -973,9 +1094,11 @@ class ApplicationController < ActionController::Base
             when Storage
               "100/piecharts/datastore/#{calculate_pct_img(item.v_free_space_percent_of_total)}.png"
             when MiqRequest
-              item.decorate.listicon_image || "100/#{@listicon.downcase}.png"
+              item.decorate.listicon_image || "100/#{@listicon.downcase}.png" if @listicon.try(:downcase)
             when ManageIQ::Providers::CloudManager::AuthKeyPair
               "100/auth_key_pair.png"
+            when MiqWorker
+              "100/processmanager-#{item.normalized_type}.png" if item.try(:normalized_type)
             else
               item.decorate.try(:listicon_image)
             end
@@ -1137,6 +1260,7 @@ class ApplicationController < ActionController::Base
       @sortcol = 0
       @sortdir = "ASC"
     end
+    @sortdir = params[:is_ascending] ? 'ASC' : 'DESC' if defined? params[:is_ascending]
     @sortcol
   end
 
@@ -1483,9 +1607,14 @@ class ApplicationController < ActionController::Base
 
   # Create view and paginator for a DB records with/without tags
   def get_view(db, options = {})
-    db     = db.to_s
-    dbname = options[:dbname] || db.gsub('::', '_').downcase # Get db name as text
-    db_sym = (options[:gtl_dbname] || dbname).to_sym # Get db name as symbol
+    unless @edit.nil?
+      object_ids = @edit[:object_ids] unless @edit[:object_ids].nil?
+      object_ids = @edit[:pol_items] unless @edit[:pol_items].nil?
+    end
+    object_ids   = options[:selected_ids].map(&:to_i) unless options[:selected_ids].nil?
+    db           = db.to_s
+    dbname       = options[:dbname] || db.gsub('::', '_').downcase # Get db name as text
+    db_sym       = (options[:gtl_dbname] || dbname).to_sym # Get db name as symbol
     refresh_view = false
 
     # Determine if the view should be refreshed or use the existing view
@@ -1533,7 +1662,9 @@ class ApplicationController < ActionController::Base
     # Check for changed settings in params
     if params[:ppsetting]                             # User selected new per page value
       @settings.store_path(:perpage, perpage_key(dbname), params[:ppsetting].to_i)
-    elsif params[:sortby]                             # New sort order (by = col click, choice = pull down)
+    end
+
+    if params[:sortby] # New sort order (by = col click, choice = pull down)
       params[:sortby]      = params[:sortby].to_i - 1
       params[:sort_choice] = view.headers[params[:sortby]]
     elsif params[:sort_choice]                        # If user chose new sortcol, set sortby parm
@@ -1560,7 +1691,6 @@ class ApplicationController < ActionController::Base
 
     # Save the paged_view_search_options for download buttons to use later
     session[:paged_view_search_options] = {
-      # Make a copy of parent object (to avoid saving related objects)
       :parent                    => parent ? minify_ar_object(parent) : nil,
       :parent_method             => options[:parent_method],
       :targets_hash              => true,
@@ -1574,6 +1704,7 @@ class ApplicationController < ActionController::Base
       :named_scope               => options[:named_scope],
       :display_filter_hash       => options[:display_filter_hash],
       :userid                    => session[:userid],
+      :selected_ids              => object_ids,
       :match_via_descendants     => options[:match_via_descendants]
     }
     # Call paged_view_search to fetch records and build the view.table and additional attrs

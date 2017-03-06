@@ -493,7 +493,7 @@ class ReportController < ApplicationController
   end
 
   # Get all info for the node about to be displayed
-  def get_node_info
+  def get_node_info(_node = {}, _show_list = true)
     treenodeid = valid_active_node(x_node)
     if [:db_tree, :reports_tree, :saved_tree, :savedreports_tree, :widgets_tree].include?(x_active_tree)
       @nodetype = case x_active_tree
@@ -524,6 +524,7 @@ class ReportController < ApplicationController
     end
 
     x_history_add_item(:id => treenodeid, :text => @right_cell_text)
+    {:view => @view, :pages => @pages}
   end
 
   def get_export_reports

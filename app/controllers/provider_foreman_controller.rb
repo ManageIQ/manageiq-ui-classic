@@ -116,6 +116,7 @@ class ProviderForemanController < ApplicationController
   end
 
   def tagging
+    @explorer = true
     case x_active_accord
     when :configuration_manager_providers
       assert_privileges("provider_foreman_configured_system_tag")
@@ -298,9 +299,10 @@ class ProviderForemanController < ApplicationController
     tree
   end
 
-  def get_node_info(treenodeid)
+  def get_node_info(treenodeid, show_list = true)
     @sb[:action] = nil
     @nodetype, id = parse_nodetype_and_id(valid_active_node(treenodeid))
+    @show_list = show_list
 
     model = TreeBuilder.get_model_for_prefix(@nodetype)
     if model == "Hash"
@@ -310,18 +312,18 @@ class ProviderForemanController < ApplicationController
 
     case model
     when "ManageIQ::Providers::Foreman::ConfigurationManager"
-      provider_list(id, model)
+      options = provider_list(id, model)
     when "ConfigurationProfile"
-      configuration_profile_node(id, model)
+      options = configuration_profile_node(id, model)
     when "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem", "ConfiguredSystem"
-      configured_system_list(id, model)
+      options = configured_system_list(id, model)
     when "MiqSearch"
-      miq_search_node
+      options = miq_search_node
     else
       if unassigned_configuration_profile?(treenodeid)
-        configuration_profile_node(id, model)
+        options = configuration_profile_node(id, model)
       else
-        default_node
+        options = default_node
       end
     end
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && x_tree[:type] == :configuration_manager_cs_filter && @edit && @edit[:adv_search_applied]
@@ -333,6 +335,7 @@ class ProviderForemanController < ApplicationController
     else
       x_history_add_item(:id => treenodeid, :text => @right_cell_text)  # Add to history pulldown array
     end
+    options
   end
 
   def provider_node(id, model)
@@ -345,7 +348,8 @@ class ProviderForemanController < ApplicationController
       case @record.type
       when "ManageIQ::Providers::Foreman::ConfigurationManager"
         options = {:model => "ConfigurationProfile", :match_via_descendants => ConfiguredSystem, :where_clause => ["manager_id IN (?)", provider.id]}
-        process_show_list(options)
+        process_show_list(options) if @show_list
+        options.merge!(update_options) unless @show_list
         add_unassigned_configuration_profile_record(provider.id)
         record_model = ui_lookup(:model => model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
         @right_cell_text = _("%{model} \"%{name}\"") %
@@ -353,6 +357,7 @@ class ProviderForemanController < ApplicationController
          :model => "#{ui_lookup(:tables => "configuration_profile")} under #{record_model} Provider"}
       end
     end
+    options
   end
 
   def configuration_profile_node(id, model)
@@ -367,7 +372,8 @@ class ProviderForemanController < ApplicationController
       else
         options[:where_clause] = ["configuration_profile_id IN (?)", @configuration_profile_record.id]
       end
-      process_show_list(options)
+      process_show_list(options) if @show_list
+      options.merge!(update_options) unless @show_list
       record_model = ui_lookup(:model => model || TreeBuilder.get_model_for_prefix(@nodetype))
       if @sb[:active_tab] == 'configured_systems'
         configuration_profile_right_cell_text(model)
@@ -378,19 +384,23 @@ class ProviderForemanController < ApplicationController
                                                         :model => record_model}
       end
     end
+    options
   end
 
   def default_node
     return unless x_node == "root"
     if x_active_tree == :configuration_manager_providers_tree
       options = {:model => "ManageIQ::Providers::ConfigurationManager"}
-      process_show_list(options)
+      process_show_list(options) if @show_list
+      options.merge!(update_options) unless @show_list
       @right_cell_text = _("All Configuration Management Providers")
     elsif x_active_tree == :configuration_manager_cs_filter_tree
       options = {:model => "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem"}
-      process_show_list(options)
+      process_show_list(options) if @show_list
+      options.merge!(update_options) unless @show_list
       @right_cell_text = _("All Configured Systems")
     end
+    options
   end
 
   def rebuild_trees(replace_trees)
@@ -531,13 +541,20 @@ class ProviderForemanController < ApplicationController
     @grid_hash = view_to_hash(@view)
   end
 
-  def process_show_list(options = {})
+  def update_options
+    options = {}
     options[:dbname] = case x_active_accord
                        when :configuration_manager_providers
                          options[:model] && options[:model] == 'ConfiguredSystem' ? :cm_configured_systems : :cm_providers
                        when :configuration_manager_cs_filter
                          :cm_configured_systems
                        end
+    options
+  end
+  private :update_options
+
+  def process_show_list(options = {})
+    options.merge!(update_options)
     super
   end
 

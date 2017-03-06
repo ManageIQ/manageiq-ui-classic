@@ -1411,6 +1411,7 @@ module MiqAeCustomizationController::Dialogs
         @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "Dialog"), :name => @record.label}
       end
     end
+    {:pages => @pages, :view => @view}
   end
 
   def dynamic_field?(field)

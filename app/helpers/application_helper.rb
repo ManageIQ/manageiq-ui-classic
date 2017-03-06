@@ -159,13 +159,36 @@ module ApplicationHelper
     record.class.base_model.name.underscore
   end
 
+  def model_string_to_constant_params
+    {
+      "all_vms" => VmOrTemplate
+    }
+  end
+  private :model_string_to_constant_params
+
+  def type_has_quadicon(type)
+    !["ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile", "ServiceTemplate"].include? type
+  end
+
+  CONTROLLER_TO_MODEL = {
+    "ManageIQ::Providers::CloudManager::Template" => VmOrTemplate,
+    "ManageIQ::Providers::CloudManager::Vm"       => VmOrTemplate,
+    "ManageIQ::Providers::InfraManager::Template" => VmOrTemplate,
+    "ManageIQ::Providers::InfraManager::Vm"       => VmOrTemplate
+  }.freeze
+
   def controller_to_model
-    case self.class.model.to_s
-    when "ManageIQ::Providers::CloudManager::Template", "ManageIQ::Providers::CloudManager::Vm", "ManageIQ::Providers::InfraManager::Template", "ManageIQ::Providers::InfraManager::Vm"
-      VmOrTemplate
-    else
-      self.class.model
-    end
+    CONTROLLER_TO_MODEL[self.class.model.to_s] || self.class.model
+  end
+
+  MODEL_STRING = {
+    "all_vms"   => VmOrTemplate,
+    "instances" => Vm,
+    "images"    => MiqTemplate
+  }.freeze
+
+  def model_string_to_constant(model_string)
+    MODEL_STRING[model_string] || model_string.singularize.classify.constantize
   end
 
   def restful_routed?(record_or_model)
@@ -223,6 +246,12 @@ module ApplicationHelper
     end
   end
 
+  TREE_WITH_TAB = {
+    "diagnostics_server_list" => "svr",
+    "db_details"              => "tb",
+    "db_indexes"              => "ti"
+  }.freeze
+
   # Create a url to show a record from the passed in view
   def view_to_url(view, parent = nil)
     association = view_to_association(view, parent)
@@ -272,6 +301,16 @@ module ApplicationHelper
           return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w(ConfiguredSystem).include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
           return url_for_only_path(:action => action, :id => nil) + "/"
+        elsif %w(MiqWidget).include?(view.db) && request.parameters[:controller] == "report"
+          return "/report/tree_select/?id=" + request.parameters[:id]
+        elsif %w(MiqWidget).include?(view.db) && %w(report).include?(request.parameters[:controller])
+          return "/" + request.parameters[:controller] + "/tree_select/?id=" + request.parameters[:id]
+        elsif %w(User MiqGroup MiqUserRole Tenant).include?(view.db) &&
+              %w(ops).include?(request.parameters[:controller])
+          return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node.split("-")[1]
+        elsif %w(VmdbTableEvm VmdbIndex MiqServer).include?(view.db) &&
+              %w(ops).include?(request.parameters[:controller])
+          return "/" + request.parameters[:controller] + "/tree_select/?id=" + TREE_WITH_TAB[active_tab]
         else
           return url_for_only_path(:action => action) + "/" # In explorer, don't jump to other controllers
         end
@@ -1577,45 +1616,54 @@ module ApplicationHelper
     end
   end
 
-  def listicon_glyphicon_tag(db, row)
-    glyphicon2 = nil
+  def listicon_glyphicon(db, row)
     case db
     when "MiqSchedule"
-      glyphicon = "fa fa-clock-o"
+      "fa fa-clock-o"
     when "MiqReportResult"
       case row['status'].downcase
       when "error"
-        glyphicon = "pficon pficon-warning-triangle-o"
+        "pficon pficon-warning-triangle-o"
       when "finished"
-        glyphicon = "pficon pficon-ok"
+        "pficon pficon-ok"
       when "running"
-        glyphicon = "pficon pficon-running"
+        "pficon pficon-running"
       when "queued"
-        glyphicon = "fa fa-pause"
+        "fa fa-pause"
       else
-        glyphicon = "fa fa-arrow-right"
+        "fa fa-arrow-right"
       end
     when "MiqUserRole"
-      glyphicon = "product product-role"
+      "product product-role"
     when "MiqWidget"
-      case row['content_type'].downcase
+      glyphicon = case row['content_type'].downcase
       when "chart"
-        glyphicon = "fa fa-pie-chart"
+        "fa fa-pie-chart"
       when "menu"
-        glyphicon = "fa fa-share-square-o"
+        "fa fa-share-square-o"
       when "report"
-        glyphicon = "fa fa-file-text-o"
+        "fa fa-file-text-o"
       when "rss"
-        glyphicon = "fa fa-rss"
+        "fa fa-rss"
       end
-      # for second icon to show status in widget list
-      glyphicon2 = listicon_glyphicon_tag_for_widget(row)
+      [glyphicon, listicon_glyphicon_tag_for_widget(row)]
     end
+  end
+
+  def listicon_glyphicon_tag(db, row)
+    glyphicon, glyphicon2 = listicon_glyphicon(db, row)
 
     content_tag(:i, nil, :class => glyphicon) do
       content_tag(:i, nil, :class => glyphicon2) if glyphicon2
     end
   end
+
+  LIST_ICON_FOR = %w(
+    MiqReportResult
+    MiqSchedule
+    MiqUserRole
+    MiqWidget
+  ).freeze
 
   def listicon_tag(db, row)
     if %w(MiqReportResult MiqSchedule MiqUserRole MiqWidget).include?(db)
