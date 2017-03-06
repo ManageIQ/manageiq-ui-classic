@@ -17,7 +17,8 @@ class ApplicationHelper::Toolbar::ZoneCenter < ApplicationHelper::Toolbar::Basic
           t = N_('Delete this Zone'),
           t,
           :url_parms => "&refresh=y",
-          :confirm   => N_("Are you sure you want to delete this Zone?")),
+          :confirm   => N_("Are you sure you want to delete this Zone?"),
+          :klass => ApplicationHelper::Button::ZoneDelete),
       ]
     ),
   ])
