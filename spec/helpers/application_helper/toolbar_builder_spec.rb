@@ -186,58 +186,8 @@ describe ApplicationHelper, "::ToolbarBuilder" do
       allow(session).to receive(:fetch_path).with(:browser, :os).and_return('linux')
     end
 
-    context "when record class = Storage" do
-      before { @record = Storage.new }
-
-      context "and id = storage_perf" do
-        before do
-          @id = "storage_perf"
-          allow(@record).to receive_messages(:has_perf_data? => true)
-        end
-        it_behaves_like 'record without perf data', "No Capacity & Utilization data has been collected for this Datastore"
-        it_behaves_like 'default case'
-      end
-
-      context "and id = storage_delete" do
-        before { @id = "storage_delete" }
-        it "when with VMs or Hosts" do
-          allow(@record).to receive(:hosts).and_return(%w(h1 h2))
-          expect(subject).to eq("Only Datastore without VMs and Hosts can be removed")
-
-          allow(@record).to receive_messages(:hosts => [], :vms_and_templates => ['v1'])
-          expect(subject).to eq("Only Datastore without VMs and Hosts can be removed")
-        end
-        it_behaves_like 'default case'
-      end
-    end
-
     context "when record class = Vm" do
       before { @record = Vm.new }
-
-      context "and id = storage_scan" do
-        before do
-          @id = "storage_scan"
-          @record = FactoryGirl.create(:storage)
-          host = FactoryGirl.create(:host_vmware,
-                                    :ext_management_system => FactoryGirl.create(:ems_vmware),
-                                    :storages              => [@record])
-        end
-
-        it "should be available for vmware storages" do
-          expect(subject).to be(false)
-        end
-      end
-
-      context "and id = storage_scan" do
-        before do
-          @id = "storage_scan"
-          @record = FactoryGirl.create(:storage)
-        end
-
-        it "should be not be available for non-vmware storages" do
-          expect(subject).to include('cannot be performed on selected')
-        end
-      end
 
       context "and id = vm_vnc_console" do
         before :each do
