@@ -62,7 +62,7 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
     if (serializeFields === undefined) {
       miqService.miqAjaxButton(url);
     } else {
-      miqService.miqAjaxButton(url, serializeFields);
+      miqService.miqAjaxButton(url, vm.providerForemanModel);
     }
   };
 
