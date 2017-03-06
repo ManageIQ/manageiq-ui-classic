@@ -17,7 +17,7 @@ class ApplicationHelper::Button::VmVncConsole < ApplicationHelper::Button::VmCon
 
   private
 
-  def unsupported_vendor_api
+  def unsupported_vendor_api_version
     6.5
   end
 end
