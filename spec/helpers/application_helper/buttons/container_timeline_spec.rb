@@ -5,7 +5,5 @@ describe ApplicationHelper::Button::ContainerTimeline do
                         {:options => {:entity => 'Container'}})
   end
 
-  describe '#calculate_properties?' do
-    it_behaves_like 'timeline#calculate_properties', 'No Timeline data has been collected for this Container'
-  end
+  it_behaves_like 'a timeline button', :entity => 'Container'
 end
