@@ -408,30 +408,6 @@ class ApplicationHelper::ToolbarBuilder
           return N_("No Timeline data has been collected for this Template")
         end
       end
-    when "Zone"
-      case id
-      when "zone_collect_logs", "zone_collect_current_logs"
-        unless @record.any_started_miq_servers?
-          return N_("Cannot collect current logs unless there are started %{servers} in the Zone") %
-            {:servers => ui_lookup(:tables => "miq_servers")}
-        end
-        unless @record.log_file_depot
-          return N_("This Zone do not have Log Depot settings configured, collection not allowed")
-        end
-        if @record.log_collection_active_recently?
-          return N_("Log collection is already in progress for one or more %{servers} in this Zone") %
-            {:servers => ui_lookup(:tables => "miq_servers")}
-        end
-      when "zone_delete"
-        if @selected_zone.name.downcase == "default"
-          return N_("'Default' zone cannot be deleted")
-        elsif @selected_zone.ext_management_systems.count > 0 ||
-              @selected_zone.storage_managers.count > 0 ||
-              @selected_zone.miq_schedules.count > 0 ||
-              @selected_zone.miq_servers.count > 0
-          return N_("Cannot delete a Zone that has Relationships")
-        end
-      end
     when nil, "NilClass"
       case id
       when "ae_copy_simulate"
