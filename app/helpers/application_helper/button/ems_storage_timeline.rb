@@ -1,11 +1,7 @@
-class ApplicationHelper::Button::EmsStorageTimeline < ApplicationHelper::Button::Basic
+class ApplicationHelper::Button::EmsStorageTimeline < ApplicationHelper::Button::GenericFeatureButton
   def calculate_properties
     super
     self[:hidden] = true unless visible?
-  end
-
-  def visible?
-    @record.supports_timeline?
   end
 
   def disabled?
