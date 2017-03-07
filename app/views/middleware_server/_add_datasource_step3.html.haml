@@ -41,7 +41,6 @@
                                            "placeholder"  => _("Enter Password"),
                                            "ng-model"     => "vm.step3DsModel.password"}
 
-
     .form-group
       %label.col-md-4.control-label{:for => "security_domain_input"}
         = _("Security Domain")
@@ -49,6 +48,44 @@
         %input.form-control#security_domain_input{:type          => "text",
                                                   "placeholder"  => _("Enter Security Domain"),
                                                   "ng-model"     => "vm.step3DsModel.securityDomain"}
+
+    .form-group{"ng-show" => "vm.chooseDsModel.xaDatasource"}
+      %label.col-md-4.control-label{:for => "xa_properties"}
+        = _("XA Properties")
+      .col-md-8
+        %div
+
+    .form-group{"ng-show" => "vm.chooseDsModel.xaDatasource"}
+      %div{"ng-repeat" => "prop in vm.step3DsModel.dsProps track by $index"}
+        .row.property-table-item
+          .col-md-2.col-md-offset-4
+            %label{"ng-bind" => "prop.name"}
+          .col-md-4
+            %input.form-control{:type      => "text",
+                                "ng-model" => "prop.value"}
+          .col-md-1
+            %button.btn.btn-default.pficon-delete{:type      => "button",
+                                                  "alt"      => (t = _("Delete")),
+                                                  "title"    => t,
+                                                  "ng-click" => "vm.deleteDsProperty(prop.id)"}
+
+      .row.property-table-item
+        .col-md-2.col-md-offset-4
+          %input.form-control{:type         => "text",
+                              "name"        => "addName",
+                              "placeholder" => _("Name"),
+                              "ng-model"    => "vm.step3DsModel.dsAddPropertyName"}
+        .col-md-4
+          %input.form-control{:type         => "text",
+                              "name"        => "addValue",
+                              "placeholder" => _("Value"),
+                              "ng-model"    => "vm.step3DsModel.dsAddPropertyValue"}
+        .col-md-1
+          %button.btn.btn-default.pficon-add-circle-o{:type         => "button",
+                                                      "alt"         => (t = _("Add")),
+                                                      "title"       => t,
+                                                      "ng-disabled" => "!vm.enableAddProperty()",
+                                                      "ng-click"    => "vm.addDsProperty(vm.step3DsModel.dsAddPropertyName, vm.step3DsModel.dsAddPropertyValue)"}
 
     .modal-footer
       %button.btn.btn-default.dialog-cancel-button{:type      => "button",
@@ -62,8 +99,8 @@
                               "ng-click" => "vm.finishAddDatasourceBack()"}
         = t
       %button.btn.btn-primary{:type         => "button",
-                              "alt"      => (t = _("Finish")),
-                              "title"    => t,
+                              "alt"         => (t = _("Finish")),
+                              "title"       => t,
                               "ng-click"    => "vm.finishAddDatasource()",
                               "ng-disabled" => "step3Form.$invalid"}
         = t

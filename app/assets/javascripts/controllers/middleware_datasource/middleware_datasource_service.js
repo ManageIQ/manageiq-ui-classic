@@ -33,7 +33,81 @@ function MwAddDatasourceService($http, $q) {
       driverName: 'mysql', driverModuleName: 'com.mysql', driverClass: 'com.mysql.jdbc.Driver',
       connectionUrl: '://localhost:3306/db_name'},
   ];
-  var dsDriverNames = _.pluck(datasources, 'driverName');
+  var xaDatasources = [
+    {id: 'H2', label: 'H2 XA', name: 'H2XADS', jndiName: 'java:/H2XADS',
+      driverName: 'h2', driverModuleName: 'com.h2database.h2',
+      driverClass: 'org.h2.jdbcx.JdbcDataSource',
+      properties: {
+        URL: 'jdbc:h2:mem:test',
+      },
+      connectionUrl: ':mem:test;DB_CLOSE_DELAY=-1'},
+    {id: 'POSTGRES', label: 'Postgres XA', name: 'PostgresXADS',
+      jndiName: 'java:/PostgresXADS',
+      driverName: 'postresql',
+      driverModuleName: 'org.postgresql',
+      driverClass: 'org.postgresql.xa.PGXADataSource',
+      properties: {
+        DatabaseName: 'postgresdb',
+        PortNumber: 5432,
+        ServerName: 'servername',
+      },
+      connectionUrl: '://localhost:5432/postgresdb', alias: 'POSTGRESQL'},
+    {id: 'MSSQL', label: 'Microsoft SQL Server XA', name: 'MSSQLXADS',
+      jndiName: 'java:/MSSQLXADS',
+      driverName: 'sqlserver', driverModuleName: 'com.microsoft',
+      driverClass: 'com.microsoft.sqlserver.jdbc.SQLServerXADataSource',
+      properties: {
+        DatabaseName: 'MyDatabase',
+        SelectMethod: 'cursor',
+        ServerName: 'localhost',
+      },
+      connectionUrl: '://localhost:1433;DatabaseName=MyDatabase'},
+    {id: 'ORACLE', label: 'Oracle XA', name: 'XAOracleDS',
+      jndiName: 'java:/XAOracleDS',
+      driverName: 'oracle', driverModuleName: 'com.oracle',
+      driverClass: 'oracle.jdbc.xa.client.OracleXADataSource',
+      properties: {
+        URL: 'jdbc:oracle:oci8',
+      },
+      connectionUrl: ':thin:@localhost:1521:oraclesid'},
+    {id: 'DB2', label: 'IBM DB2 XA', name: 'DB2XADS',
+      jndiName: 'java:/DB2XADS',
+      driverName: 'ibmdb2', driverModuleName: 'com.ibm',
+      driverClass: 'COM.ibm.db2.jdbc.DB2XADataSource',
+      properties: {
+        DatabaseName: 'ibmdb2db',
+        PortNumber: 446,
+        ServerName: 'localhost',
+      },
+      connectionUrl: '://db2'},
+    {id: 'SYBASE', label: 'Sybase XA', name: 'SybaseXADS',
+      jndiName: 'java:/SybaseXADS',
+      driverName: 'sybase', driverModuleName: 'com.sybase',
+      driverClass: 'com.sybase.jdbc4.jdbc.SybXADataSource',
+      properties: {
+        DatabaseName: 'mydatabase',
+        NetworkProtocol: 'Tds',
+        PortNumber: 4100,
+        ServerName: 'localhost',
+      },
+      connectionUrl: ':Tds:localhost:4100/mydatabase?JCONNECT_VERSION=6'},
+    {id: 'MARIADB', label: 'MariaDB XA', name: 'MariaDBDS',
+      jndiName: 'java:jboss/datasources/MariaDBDS',
+      driverName: 'mariadb', driverModuleName: 'org.mariadb',
+      driverClass: '??',
+      connectionUrl: '://localhost:3306/db_name'},
+    {id: 'MYSQL', label: 'MySql XA', name: 'MySqlDS',
+      jndiName: 'java:/MysqlXADS',
+      driverName: 'mysql', driverModuleName: 'com.mysql',
+      driverClass: 'com.mysql.jdbc.jdbc2.optional.MysqlXADataSource',
+      properties: {
+        DatabaseName: 'mydatabase',
+        NetworkProtocol: 'Tds',
+        PortNumber: 4100,
+        ServerName: 'localhost',
+      },
+      connectionUrl: '://localhost:4100/db_name'},
+  ];
 
   self.getExistingJdbcDrivers = function(serverId) {
     var deferred = $q.defer();
@@ -42,9 +116,6 @@ function MwAddDatasourceService($http, $q) {
 
     $http.get(parameterizedUrl).then(function(driverData) {
       var transformedData = _.chain(driverData.data.data)
-        .filter(function(driver) {
-          return driver.properties['Driver Class'] !== null;
-        })
         .map(function(driver) {
           return {'id': driver.properties['Driver Name'].toUpperCase(),
                   'label': driver.properties['Driver Name'],
@@ -64,8 +135,12 @@ function MwAddDatasourceService($http, $q) {
     return Object.freeze(datasources);
   };
 
+  self.getXaDatasources = function() {
+    return Object.freeze(xaDatasources);
+  };
+
   self.isXaDriver = function(driver) {
-    return driver.hasOwnProperty('xaDsClass') && driver.xaDsClass !== '';
+    return driver.hasOwnProperty('xaDsClass') && !!driver.xaDsClass;
   };
 
   self.determineConnectionUrl = function(dsSelection) {
@@ -73,7 +148,9 @@ function MwAddDatasourceService($http, $q) {
     return JDBC_PREFIX + driverName + dsSelection.connectionUrl;
   };
 
-  self.isValidDatasourceName = function(dsName) {
+  self.isValidDatasourceName = function(dsName, isXa) {
+    var dsContainer = isXa ? xaDatasources : datasources;
+    var dsDriverNames = _.pluck(dsContainer, 'driverName');
     if (dsName) {
       return _.contains(dsDriverNames, dsName.toLowerCase());
     } else {
@@ -81,8 +158,9 @@ function MwAddDatasourceService($http, $q) {
     }
   };
 
-  self.findDatasourceById = function(id) {
-    return _.find(datasources, function(datasource) {
+  self.findDatasourceById = function(id, isXa) {
+    var aDatasources = isXa ? xaDatasources : datasources;
+    return _.find(aDatasources, function(datasource) {
       // handle special case when JDBC Driver Name doesn't match naming of Datasource
       // For instance, 'POSTGRES' vs 'POSTGRESQL'
       // in this case an 'alias' in the datasource configuration is used
@@ -94,20 +172,31 @@ function MwAddDatasourceService($http, $q) {
     });
   };
 
-  self.findDsSelectionFromDriver = function(driverSelection) {
-    var dsSelection;
-    var findDatasourceByDriverClass = function(driverClass) {
-      return _.find(datasources, function(datasource) {
+  self.findDatasourceByDriverClass = function(driverClass, isXa) {
+    var dsContainer = isXa ? xaDatasources : datasources;
+
+    if (isXa) {
+      return _.find(dsContainer, function(datasource) {
         return datasource.driverClass === driverClass;
       });
-    };
-
-    if (self.isValidDatasourceName(driverSelection.id)) {
-      dsSelection = self.findDatasourceById(driverSelection.id);
     } else {
-      dsSelection = findDatasourceByDriverClass(driverSelection.driverClass);
+      return _.find(dsContainer, function(datasource) {
+        return datasource.driverClass === driverClass;
+      });
     }
-    return dsSelection;
+  };
+
+  self.findDsSelectionFromDriver = function(driverSelection) {
+    var datasourceSelection = {};
+    var isXa = self.isXaDriver(driverSelection);
+
+    if (self.isValidDatasourceName(driverSelection.id, isXa)) {
+      datasourceSelection = self.findDatasourceById(driverSelection.id, isXa);
+    } else {
+      var driverClass = isXa ? driverSelection.xaDsClass : driverSelection.driverClass;
+      datasourceSelection = self.findDatasourceByDriverClass(driverClass, isXa);
+    }
+    return datasourceSelection;
   };
 
   self.determineConnectionUrlFromExisting = function(driverSelection) {
@@ -115,9 +204,8 @@ function MwAddDatasourceService($http, $q) {
     return JDBC_PREFIX + dsSelection.driverName + dsSelection.connectionUrl;
   };
 
-  this.sendAddDatasource = function(payload) {
+  self.sendAddDatasource = function(payload) {
     return $http.post('/middleware_server/add_datasource', angular.toJson(payload));
-  }
+  };
 }
-
 
