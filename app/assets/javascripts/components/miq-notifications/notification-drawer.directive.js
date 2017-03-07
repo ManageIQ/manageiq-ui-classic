@@ -1,4 +1,4 @@
-angular.module('miq.notifications').directive('miqNotificationDrawer', function ($window, $timeout) {
+angular.module('miq.notifications').directive('miqNotificationDrawer', ['$window', '$timeout', function ($window, $timeout) {
   'use strict';
   return {
     restrict: 'A',
@@ -18,11 +18,11 @@ angular.module('miq.notifications').directive('miqNotificationDrawer', function 
       customScope: '=?'
     },
     templateUrl: '/static/miq-notifications/notification-drawer.html',
-    controller: function ($scope) {
+    controller: ['$scope', function ($scope) {
       if (!$scope.allowExpand || angular.isUndefined($scope.drawerExpanded)) {
         $scope.drawerExpanded = false;
       }
-    },
+    }],
     link: function (scope, element) {
 
       scope.$watch('notificationGroups', function () {
@@ -67,4 +67,4 @@ angular.module('miq.notifications').directive('miqNotificationDrawer', function 
       }
     }
   };
-});
+}]);
