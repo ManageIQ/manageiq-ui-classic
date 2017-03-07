@@ -357,13 +357,6 @@ class ApplicationHelper::ToolbarBuilder
   # string message with explanation of reason for disabling
   def disable_button(id)
     case get_record_cls(@record)
-    when "MiqGroup"
-      case id
-      when "rbac_group_delete"
-        return N_("This Group is Read Only and can not be deleted") if @record.read_only
-      when "rbac_group_edit"
-        return N_("This Group is Read Only and can not be edited") if @record.read_only
-      end
     when "User"
       case id
       when "rbac_user_copy"
