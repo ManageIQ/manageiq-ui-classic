@@ -43,6 +43,8 @@ describe TreeBuilderAlertProfileObj do
         expect(locals[:check_url]).to eq("alert_profile_assign_changed/")
         expect(locals[:oncheck]).to eq("miqOnCheckHandler")
         expect(locals[:checkboxes]).to eq(true)
+        expect(locals[:cfmeNoClick]).to eq(true)
+        expect(locals[:onclick]).to eq(false)
       end
     end
 

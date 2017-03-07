@@ -12,7 +12,6 @@ class TreeBuilderAlertProfileObj < TreeBuilder
     identifier = (object.name.presence || object.description)
     identifier += "-" + object.hostname if object.kind_of?(MiddlewareServer)
     node[:title] = identifier
-    node[:icon] = "fa fa-tag" if @cat_tree
     node[:hideCheckbox] = false
     node[:select] = @objects.include?(object.id)
     node
@@ -27,10 +26,12 @@ class TreeBuilderAlertProfileObj < TreeBuilder
   def set_locals_for_render
     locals = super
     locals.merge!(
-      :id_prefix  => "obj_treebox2",
-      :oncheck    => "miqOnCheckHandler",
-      :check_url  => "alert_profile_assign_changed/",
-      :checkboxes => true,
+      :id_prefix   => "obj_treebox2",
+      :oncheck     => "miqOnCheckHandler",
+      :check_url   => "alert_profile_assign_changed/",
+      :checkboxes  => true,
+      :cfmeNoClick => true,
+      :onclick     => false
     )
   end
 
