@@ -3,26 +3,16 @@ class TreeBuilderAlertProfileObj < TreeBuilder
     @assign_to = assign_to
     @cat = cat
     @objects = objects
+    @cat_tree = true if @assign_to.ends_with?("-tags")
     build = false unless @assign_to
     super(name, type, sandbox, build)
   end
 
   def override(node, object, _pid, _options)
     identifier = (object.name.presence || object.description)
-    if object.kind_of?(MiddlewareServer)
-      identifier += "-" + object.hostname
-    end
-
-    if @assign_to.ends_with?("-tags")
-      node[:icon] = "fa fa-tag"
-    elsif @assign_to == "tenant"
-      node[:icon] = "pficon pficon-tenant"
-    else
-      node[:image] = ActionController::Base.helpers.image_path("100/#{@assign_to}.png")
-    end
-
+    identifier += "-" + object.hostname if object.kind_of?(MiddlewareServer)
     node[:title] = identifier
-    node[:cfmeNoClick] = true
+    node[:icon] = "fa fa-tag" if @cat_tree
     node[:hideCheckbox] = false
     node[:select] = @objects.include?(object.id)
     node
@@ -45,7 +35,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
   end
 
   def root_options
-    t = @assign_to.ends_with?("-tags") ? "Tags" : ui_lookup(:tables => @assign_to)
+    t = @cat_tree ? "Tags" : ui_lookup(:tables => @assign_to)
     {
       :title        => t,
       :tooltip      => "",
@@ -59,7 +49,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
   def x_get_tree_roots(count_only, _options)
     obj = if !@assign_to || @assign_to == "enterprise"
                  []
-               elsif @assign_to.ends_with?("-tags")
+               elsif @cat_tree
                  @cat ? Classification.find(@cat).entries : []
                else
                  @assign_to.camelize.constantize.all

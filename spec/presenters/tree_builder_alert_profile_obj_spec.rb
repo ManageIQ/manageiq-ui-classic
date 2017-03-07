@@ -49,7 +49,6 @@ describe TreeBuilderAlertProfileObj do
     describe '#override' do
       it 'set node' do
         node = subject.send(:override, {}, tag1a, nil, nil)
-        expect(node[:cfmeNoClick]).to eq(true)
         expect(node[:hideCheckbox]).to eq(false)
         expect(node[:select]).to eq(true)
 
@@ -106,7 +105,6 @@ describe TreeBuilderAlertProfileObj do
     describe '#override' do
       it 'set node' do
         node = subject.send(:override, {}, tag1b, nil, nil)
-        expect(node[:cfmeNoClick]).to eq(true)
         expect(node[:hideCheckbox]).to eq(false)
         expect(node[:select]).to eq(true)
 
