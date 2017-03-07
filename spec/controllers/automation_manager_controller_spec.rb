@@ -347,8 +347,8 @@ describe AutomationManagerController do
       controller.instance_variable_set(:@_params, :id => "at-" + ApplicationRecord.compress_id(@automation_manager1.id))
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0].name).to eq("ConfigScript1")
-      expect(view.table.data[1].name).to eq("ConfigScript3")
+      expect(view.table.data[0].name).to eq("ConfigScript3")
+      expect(view.table.data[1].name).to eq("ConfigScript1")
     end
 
     it "calls get_view with the associated dbname for the Ansible Tower Providers accordion" do

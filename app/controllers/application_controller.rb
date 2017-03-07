@@ -335,7 +335,7 @@ class ApplicationController < ActionController::Base
       params[:action] = "explorer"
     end
     options = process_params_options(params)
-    if options[:view].nil?
+    if options.nil? || options[:view].nil?
       model_view = process_params_model_view(params, options)
       @edit = session[:edit]
       current_view, settings = get_view(model_view, options)
@@ -1387,7 +1387,7 @@ class ApplicationController < ActionController::Base
       object_ids = @edit[:object_ids] unless @edit[:object_ids].nil?
       object_ids = @edit[:pol_items] unless @edit[:pol_items].nil?
     end
-    object_ids   = options[:selected_ids].map(&:to_i) unless options[:selected_ids].nil?
+    object_ids   = params[:records].map(&:to_i) unless params[:records].nil?
     db           = db.to_s
     dbname       = options[:dbname] || db.gsub('::', '_').downcase # Get db name as text
     db_sym       = (options[:gtl_dbname] || dbname).to_sym # Get db name as symbol

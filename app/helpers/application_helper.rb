@@ -186,10 +186,16 @@ module ApplicationHelper
   end
 
   CONTROLLER_TO_MODEL = {
-    "ManageIQ::Providers::CloudManager::Template" => VmOrTemplate,
-    "ManageIQ::Providers::CloudManager::Vm"       => VmOrTemplate,
-    "ManageIQ::Providers::InfraManager::Template" => VmOrTemplate,
-    "ManageIQ::Providers::InfraManager::Vm"       => VmOrTemplate
+    "ManageIQ::Providers::CloudManager::Template" =>
+      VmOrTemplate,
+    "ManageIQ::Providers::CloudManager::Vm"       =>
+      VmOrTemplate,
+    "ManageIQ::Providers::InfraManager::Template" =>
+      VmOrTemplate,
+    "ManageIQ::Providers::InfraManager::Vm"       =>
+      VmOrTemplate,
+    "ManageIQ::Providers::AutomationManager"      =>
+      ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript
   }.freeze
 
   def controller_to_model
