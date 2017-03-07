@@ -52,3 +52,7 @@
             %td
               - if row.respond_to?(:cloud_tenant)
                 = h(row.cloud_tenant.try(:name))
+          - if @edit[:vm_headers].include?("image?")
+            %td
+              - if row.respond_to?(:image?)
+                = h(row.image? ? _("Image") : _("Snapshot"))
