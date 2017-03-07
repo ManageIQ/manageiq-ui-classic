@@ -409,7 +409,6 @@ module ApplicationHelper
       :msg_title             => @msg_title,
       :perf_options          => @perf_options,
       :policy                => @policy,
-      :pxe_image_types_count => @pxe_image_types_count,
       :record                => @record,
       :report                => @report,
       :report_result_id      => @report_result_id,

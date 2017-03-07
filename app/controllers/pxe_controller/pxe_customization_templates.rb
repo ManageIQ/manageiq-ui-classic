@@ -236,9 +236,6 @@ module PxeController::PxeCustomizationTemplates
 
   def template_get_node_info(treenodeid)
     if treenodeid == "root"
-      @folders = PxeImageType.all.sort
-      # to check if Add customization template button should be enabled
-      @pxe_image_types_count = @folders.count
       @right_cell_text = _("All %{model} - %{group}") % {:model => ui_lookup(:models => "PxeCustomizationTemplate"), :group => ui_lookup(:models => "PxeImageType")}
       @right_cell_div  = "template_list"
     else
@@ -249,7 +246,6 @@ module PxeController::PxeCustomizationTemplates
         @right_cell_text = _("%{model} \"%{name}\"") % {:name => @ct.name, :model => ui_lookup(:model => "PxeCustomizationTemplate")}
       else
         template_list
-        @pxe_image_types_count = PxeImageType.count
         pxe_img_id = x_node.split('-').last
 
         pxe_img_type = PxeImageType.find_by_id(from_cid(pxe_img_id)) if pxe_img_id != "system"
