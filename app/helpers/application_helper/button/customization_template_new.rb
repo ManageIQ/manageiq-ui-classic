@@ -6,7 +6,7 @@ class ApplicationHelper::Button::CustomizationTemplateNew < ApplicationHelper::B
   end
 
   def disabled?
-    if @pxe_image_types_count <= 0
+    if PxeImageType.count.zero?
       @error_message = _('No System Image Types available, Customization Template cannot be added')
     end
     @error_message.present?
