@@ -130,7 +130,7 @@ angular.module('patternfly.notification').directive('pfNotificationList', functi
   return {
     restrict: 'E',
     controller: NotificationListController,
-    templateUrl: 'notification/notification-list.html'
+    templateUrl: '/static/miq-notifications/notification-list.html'
   };
 
   function NotificationListController ($scope, $rootScope) {

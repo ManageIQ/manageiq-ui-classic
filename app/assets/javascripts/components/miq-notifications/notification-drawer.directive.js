@@ -17,7 +17,7 @@ angular.module('patternfly.notification').directive('pfNotificationDrawer', func
       notificationFooterInclude: '@',
       customScope: '=?'
     },
-    templateUrl: 'notification/notification-drawer.html',
+    templateUrl: '/static/miq-notifications/notification-drawer.html',
     controller: function ($scope) {
       if (!$scope.allowExpand || angular.isUndefined($scope.drawerExpanded)) {
         $scope.drawerExpanded = false;
