@@ -192,10 +192,12 @@ module ApplicationHelper
             controller_for_vm(model_for_vm(record))
           elsif record.class.respond_to?(:db_name)
             record.class.db_name
-          elsif record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook)
+          elsif record.kind_of?(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
             "ansible_playbook"
-          elsif record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager::Authentication)
+          elsif record.kind_of?(ManageIQ::Providers::EmbeddedAutomationManager::Authentication)
             "ansible_credential"
+          elsif record.kind_of?(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
+            "ansible_repository"
           else
             record.class.base_class.to_s
           end
@@ -320,7 +322,7 @@ module ApplicationHelper
       action = "show"
     when "ConditionSet"
       controller = "condition"
-    when "ConfigurationScriptSource"
+    when "ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource"
       controller = "ansible_repository"
     when "ScanItemSet"
       controller = "ops"
@@ -356,9 +358,9 @@ module ApplicationHelper
       action = "show"
     when "ServiceResource", "ServiceTemplate"
       controller = "catalog"
-    when "ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook"
+    when "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook"
       controller = "ansible_playbook"
-    when "ManageIQ::Providers::AutomationManager::Authentication"
+    when "ManageIQ::Providers::EmbeddedAutomationManager::Authentication"
       controller = "ansible_credential"
     when "MiqWorker"
       controller = request.parameters[:controller]
@@ -1196,8 +1198,8 @@ module ApplicationHelper
                         host
                         host_aggregate
                         load_balancer
-                        manageiq/providers/ansible_tower/automation_manager/playbook
-                        manageiq/providers/automation_manager/authentication
+                        manageiq/providers/embedded_ansible/automation_manager/playbook
+                        manageiq/providers/embedded_automation_manager/authentication
                         middleware_datasource
                         middleware_deployment
                         middleware_domain
