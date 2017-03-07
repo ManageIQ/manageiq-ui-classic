@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   # rubocop:disable AlignHash
-  # rubocop:disable MultilineOperationIndentation
   # grouped routes
   adv_search_post = %w(
     adv_search_button
@@ -1031,6 +1030,25 @@ Rails.application.routes.draw do
       :get => %w(
         show
         data
+      )
+    },
+
+    :alerts_overview      => {
+      :get => %w(
+        show
+      )
+    },
+
+    :alerts_list      => {
+      :get => %w(
+        show
+        class_icons
+      )
+    },
+
+    :alerts_most_recent      => {
+      :get => %w(
+        show
       )
     },
 

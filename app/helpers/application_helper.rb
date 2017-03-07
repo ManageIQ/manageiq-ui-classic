@@ -578,6 +578,9 @@ module ApplicationHelper
            miq_policy
            miq_policy_export
            miq_policy_rsop
+           monitor_alerts_overview
+           monitor_alerts_list
+           monitor_alerts_most_recent
            network_topology
            ops
            physical_infra_topology
@@ -1158,6 +1161,9 @@ module ApplicationHelper
   GTL_VIEW_LAYOUTS = %w(action
                         auth_key_pair_cloud
                         availability_zone
+                        alerts_overview
+                        alerts_list
+                        alerts_most_recent
                         cloud_network
                         cloud_object_store_container
                         cloud_object_store_object
@@ -1209,6 +1215,9 @@ module ApplicationHelper
                         middleware_topology
                         miq_schedule
                         miq_template
+                        monitor_alerts_overview
+                        monitor_alerts_list
+                        monitor_alerts_most_recent
                         network_port
                         network_router
                         network_topology

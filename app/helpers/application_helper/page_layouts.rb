@@ -24,6 +24,9 @@ module ApplicationHelper::PageLayouts
       miq_policy
       miq_policy_export
       miq_policy_logs
+      monitor_alerts_overview
+      monitor_alerts_list
+      monitor_alerts_most_recent
       my_tasks
       my_ui_tasks
       ops
@@ -77,6 +80,10 @@ module ApplicationHelper::PageLayouts
           (%w(dashboard).include?(@showtype) && @lastaction.ends_with?("_dashboard")) ||
           %w(topology).include?(@showtype)
       # Dashboard tabs are located in taskbar because they are otherwise hidden behind the taskbar regardless of z-index
+      return false
+    elsif @layout == "monitor_alerts_overview" ||
+          @layout == "monitor_alerts_list" ||
+          @layout == "monitor_alerts_most_recent"
       return false
     end
     true

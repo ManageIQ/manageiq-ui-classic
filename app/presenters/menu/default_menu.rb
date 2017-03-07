@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/LineLength
 module Menu
   class DefaultMenu
     class << self
@@ -264,6 +265,20 @@ module Menu
         ])
       end
 
+      def alerts_menu_section
+        Menu::Section.new(:monitor_alerts, N_("Alerts"), 'fa fa-bullhorn-o fa-2x', [
+                            Menu::Item.new('monitor_alerts_overview', N_('Overview'), 'monitor_alerts_overview', {:feature => 'monitor_alerts_overview', :any => true}, '/alerts_overview'),
+                            Menu::Item.new('monitor_alerts_list', N_('All Alerts'), 'monitor_alerts_list', {:feature => 'monitor_alerts_list', :any => true}, '/alerts_list'),
+                            Menu::Item.new('monitor_alerts_most_recent', N_('Most Recent Alerts'), 'monitor_alerts_most_recent', {:feature => 'monitor_alerts_most_recent', :any => true}, '/alerts_most_recent')
+                          ])
+      end
+
+      def monitor_menu_section
+        if ::Settings.prototype.monitoring
+          Menu::Section.new(:monitor, N_("Monitor"), 'fa fa-heartbeat fa-2x', [alerts_menu_section])
+        end
+      end
+
       def settings_menu_section
         Menu::Section.new(:set, N_("Settings"), 'pficon pficon-settings', [
           Menu::Item.new('configuration', N_('My Settings'),   'my_settings',  {:feature => 'my_settings', :any => true},  '/configuration/index'),
@@ -275,7 +290,8 @@ module Menu
       def default_menu
         [cloud_inteligence_menu_section, services_menu_section, compute_menu_section, configuration_menu_section,
          network_menu_section, middleware_menu_section, datawarehouse_menu_section, storage_menu_section,
-         control_menu_section, automation_menu_section, optimize_menu_section, settings_menu_section].compact
+         control_menu_section, automation_menu_section, optimize_menu_section, monitor_menu_section,
+         settings_menu_section].compact
       end
     end
   end
