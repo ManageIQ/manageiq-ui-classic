@@ -22,12 +22,12 @@ describe TreeBuilderAlertProfileObj do
 
   context 'classification tree' do
     subject do
-      assign = {}
-      assign[:new] = {}
-      assign[:new][:assign_to] = 'storage-tags'
-      assign[:new][:cat] = folder1a.id
-      assign[:new][:objects] = [tag1a.id, tag2a.id]
-      described_class.new(:alert_profile_obj_tree, :alert_profile_obj, {}, true, assign)
+      described_class.new(:alert_profile_obj_tree, :alert_profile_obj,
+                          {},
+                          true,
+                          'storage-tags',
+                          folder1a.id,
+                          [tag1a.id, tag2a.id])
     end
 
     describe '#tree_init_options' do
@@ -87,11 +87,13 @@ describe TreeBuilderAlertProfileObj do
 
   context 'tenant tree' do
     subject do
-      assign = {}
-      assign[:new] = {}
-      assign[:new][:assign_to] = 'tenant'
-      assign[:new][:objects] = [tag1b.id]
-      described_class.new(:alert_profile_obj_tree, :alert_profile_obj, {}, true, assign)
+      described_class.new(:alert_profile_obj_tree,
+                          :alert_profile_obj,
+                          {},
+                          true,
+                          'tenant',
+                          nil,
+                          [tag1b.id])
     end
 
     describe '#x_get_tree_roots' do

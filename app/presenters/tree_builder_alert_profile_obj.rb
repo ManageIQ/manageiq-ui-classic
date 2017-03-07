@@ -1,11 +1,9 @@
 class TreeBuilderAlertProfileObj < TreeBuilder
-  def initialize(name, type, sandbox, build = true, assign = nil)
-    @assign = {
-      :new     => assign[:new],
-      :current => assign[:current]
-    }
-
-    build = false unless @assign[:new][:assign_to]
+  def initialize(name, type, sandbox, build = true, assign_to = nil, cat = nil, objects = nil)
+    @assign_to = assign_to
+    @cat = cat
+    @objects = objects
+    build = false unless @assign_to
     super(name, type, sandbox, build)
   end
 
@@ -15,18 +13,18 @@ class TreeBuilderAlertProfileObj < TreeBuilder
       identifier += "-" + object.hostname
     end
 
-    if @assign[:new][:assign_to].ends_with?("-tags")
+    if @assign_to.ends_with?("-tags")
       node[:icon] = "fa fa-tag"
-    elsif @assign[:new][:assign_to] == "tenant"
+    elsif @assign_to == "tenant"
       node[:icon] = "pficon pficon-tenant"
     else
-      node[:image] = ActionController::Base.helpers.image_path("100/#{@assign[:new][:assign_to]}.png")
+      node[:image] = ActionController::Base.helpers.image_path("100/#{@assign_to}.png")
     end
 
     node[:title] = identifier
     node[:cfmeNoClick] = true
     node[:hideCheckbox] = false
-    node[:select] = @assign[:new][:objects].include?(object.id)
+    node[:select] = @objects.include?(object.id)
     node
   end
 
@@ -47,7 +45,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
   end
 
   def root_options
-    t = @assign[:new][:assign_to].ends_with?("-tags") ? "Tags" : ui_lookup(:tables => @assign[:new][:assign_to])
+    t = @assign_to.ends_with?("-tags") ? "Tags" : ui_lookup(:tables => @assign_to)
     {
       :title        => t,
       :tooltip      => "",
@@ -59,14 +57,14 @@ class TreeBuilderAlertProfileObj < TreeBuilder
   end
 
   def x_get_tree_roots(count_only, _options)
-    @objects = if !@assign[:new][:assign_to] || @assign[:new][:assign_to] == "enterprise"
+    obj = if !@assign_to || @assign_to == "enterprise"
                  []
-               elsif @assign[:new][:assign_to].ends_with?("-tags")
-                 @assign[:new][:cat] ? Classification.find(@assign[:new][:cat]).entries : []
+               elsif @assign_to.ends_with?("-tags")
+                 @cat ? Classification.find(@cat).entries : []
                else
-                 @assign[:new][:assign_to].camelize.constantize.all
+                 @assign_to.camelize.constantize.all
                end
 
-    count_only_or_objects(count_only, @objects.sort_by { |o| (o.name.presence || o.description).downcase })
+    count_only_or_objects(count_only, obj.sort_by { |o| (o.name.presence || o.description).downcase })
   end
 end
