@@ -430,6 +430,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         default_hostname:          $scope.emsCommonModel.default_hostname,
         default_api_port:          $scope.emsCommonModel.default_api_port,
         default_security_protocol: $scope.emsCommonModel.default_security_protocol,
+        default_tls_verify:        $scope.emsCommonModel.default_tls_verify,
+        default_tls_ca_certs:      $scope.emsCommonModel.default_tls_ca_certs,
         default_userid:            $scope.emsCommonModel.default_userid,
         default_password:          default_password,
         default_verify:            default_verify,
@@ -486,8 +488,10 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       }
     } else if (prefix === "hawkular") {
       $scope.postValidationModel['hawkular'] = {
-        hawkular_hostname:         $scope.emsCommonModel.hawkular_hostname,
-        hawkular_api_port:         $scope.emsCommonModel.hawkular_api_port,
+        hawkular_hostname:          $scope.emsCommonModel.hawkular_hostname,
+        hawkular_api_port:          $scope.emsCommonModel.hawkular_api_port,
+        hawkular_security_protocol: $scope.emsCommonModel.hawkular_security_protocol,
+        hawkular_tls_ca_certs:      $scope.emsCommonModel.hawkular_tls_ca_certs,
       }
     }
   };
