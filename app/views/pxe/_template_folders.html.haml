@@ -1,5 +1,5 @@
 #template_folders_div
-  - if @folders
+  - if @folders.any?
     = render(:partial => "layouts/flash_msg")
     %table.table.table-bordered.table-striped.table-hover
       %tbody

@@ -236,6 +236,7 @@ module PxeController::PxeCustomizationTemplates
 
   def template_get_node_info(treenodeid)
     if treenodeid == "root"
+      @folders = PxeImageType.all.sort
       @right_cell_text = _("All %{model} - %{group}") % {:model => ui_lookup(:models => "PxeCustomizationTemplate"), :group => ui_lookup(:models => "PxeImageType")}
       @right_cell_div  = "template_list"
     else
