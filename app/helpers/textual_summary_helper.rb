@@ -77,14 +77,13 @@ module TextualSummaryHelper
     feature ||= "#{controller}_show"
 
     label ||= ui_lookup(:model => klass.name)
-    image = textual_object_icon(object, klass)
     value = if block_given?
               yield object
             else
               object.name
             end
 
-    h = {:label => label, :image => image, :value => value}
+    h = {:label => label, :value => value}.merge(textual_object_icon(object, klass))
 
     if role_allows?(:feature => feature)
       if restful_routed?(object)
@@ -114,10 +113,9 @@ module TextualSummaryHelper
     feature ||= "#{controller_collection}_show_list"
 
     label ||= ui_lookup(:models => klass.name)
-    image = textual_collection_icon(collection, klass)
     count = collection.count
 
-    h = {:label => label, :image => image, :value => count.to_s}
+    h = {:label => label, :value => count.to_s}.merge(textual_collection_icon(collection, klass))
 
     if count > 0 && role_allows?(:feature => feature)
       if link
@@ -148,7 +146,7 @@ module TextualSummaryHelper
   def textual_object_icon(object, klass)
     case object
     when ExtManagementSystem
-      "svg/vendor-#{object.image_name}.svg"
+      {:image => "svg/vendor-#{object.image_name}.svg"}
     else
       textual_class_icon(klass)
     end
@@ -160,11 +158,11 @@ module TextualSummaryHelper
 
   def textual_class_icon(klass)
     if klass <= AdvancedSetting
-      "100/advancedsetting.png"
+      {:image => "100/advancedsetting.png"}
     elsif klass <= MiqTemplate
-      "100/vm.png"
+      {:image => "100/vm.png"}
     else
-      "100/#{klass.name.underscore}.png"
+      {:image => "100/#{klass.name.underscore}.png"}
     end
   end
 
