@@ -438,6 +438,8 @@ module ApplicationHelper
       controller = "ems_#{$1.underscore}"
     when /^ManageIQ::Providers::(\w+)Manager::(\w+)$/
       controller = "#{$2.underscore}_#{$1.underscore}"
+    when "EmsAutomation"
+      controller = "automation_manager"
     else
       controller = db.underscore
     end

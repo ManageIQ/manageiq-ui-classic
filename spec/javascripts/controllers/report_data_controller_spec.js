@@ -159,20 +159,6 @@ describe('reportDataController', function () {
       expect(ManageIQ.gridChecks.indexOf(itemId) === -1).toBeTruthy();
     });
 
-    it('should create POST redirect for explorer', function() {
-      var itemId = "10";
-      var clickEvent = $.Event('click');
-      initObject.isExplorer = true;
-      spyOn(clickEvent, 'stopPropagation');
-      spyOn(clickEvent, 'preventDefault');
-      selectedItem = $controller.gtlData.rows.filter(function(item) {
-        return item.id === itemId;
-      });
-      $controller.onItemClicked(selectedItem[0], clickEvent);
-      expect(clickEvent.stopPropagation).toHaveBeenCalled();
-      expect(clickEvent.preventDefault).toHaveBeenCalled();
-    });
-
     it('should create redirect for non explorer click on item', function() {
       var itemId = "10";
       var clickEvent = $.Event('click');

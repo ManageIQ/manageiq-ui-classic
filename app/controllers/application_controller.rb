@@ -347,11 +347,11 @@ class ApplicationController < ActionController::Base
     settings[:sort_col] = @sortcol unless settings.nil?
     @edit = session[:edit]
     @policy_sim = @edit[:policy_sim] unless @edit.nil?
-    controller, _action = db_to_controller(current_view.db)
+    controller, _action = db_to_controller(current_view.db) unless current_view.nil?
     if !@policy_sim.nil? && session[:policies] && !session[:policies].empty?
       settings[:url] = '/' + controller + '/policies/'
     end
-    if session[:sandboxes] && @sb
+    if session[:sandboxes] && @sb && controller
       session[:sandboxes][controller] = @sb
     end
     render :json => {

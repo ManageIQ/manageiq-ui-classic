@@ -46,6 +46,7 @@ class AutomationManagerController < ApplicationController
 
 
   def tagging
+    @explorer ||= true
     case x_active_accord
     when :automation_manager_providers
       assert_privileges("automation_manager_provider_configured_system_tag")
