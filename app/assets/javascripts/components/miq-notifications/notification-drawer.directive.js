@@ -1,4 +1,4 @@
-angular.module('miq.notifications').directive('pfNotificationDrawer', function ($window, $timeout) {
+angular.module('miq.notifications').directive('miqNotificationDrawer', function ($window, $timeout) {
   'use strict';
   return {
     restrict: 'A',
