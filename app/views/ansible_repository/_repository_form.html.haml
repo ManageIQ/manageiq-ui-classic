@@ -6,6 +6,9 @@
     %form#form_div{:name           => "angularForm",
                    'ng-controller' => "repositoryFormController as vm",
                    'ng-show'       => "vm.afterGet",
+                    "miq-form"       => true,
+                    "model"          => "vm.repositoryModel",
+                    "model-copy"     => 'vm.modelCopy',
                    :novalidate     => true}
       = render :partial => "layouts/flash_msg"
       .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
@@ -44,13 +47,15 @@
           = _('URL')
         .col-md-8
           %input.form-control{:type              => "url",
-                                :name            => "url",
-                                :id             => "url",
-                                'ng-model'       => "vm.repositoryModel.url",
+                                :name            => "href",
+                                :id             => "href",
+                                'ng-model'       => "vm.repositoryModel.href",
                                 :required        => "",
                                 :checkchange     => true}
-          %span.help-block{"ng-show" => "angularForm.description.$error.required"}
+          %span.help-block{"ng-show" => "angularForm.href.$error.required"}
             = _("Required")
+          %span.help-block{"ng-show" => "angularForm.href.$error.url"}
+            = _("URL must include a protocol")
       .form-group
         %label.col-md-2.control-label
           = _('SCM credentials')
@@ -92,5 +97,5 @@
       = render :partial => "layouts/angular/x_edit_buttons_angular"
 
 :javascript
-  ManageIQ.angular.app.value('repositoryId', '#{@record.try(:id) || 'new'}');
+  ManageIQ.angular.app.value('repositoryId', '#{@id}');
   miq_bootstrap('#form_div');

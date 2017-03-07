@@ -24,25 +24,25 @@ class AnsibleRepositoryController < ApplicationController
     super
   end
 
+  def button
+    if params[:pressed] == "embedded_configuration_script_source_edit"
+      id = from_cid(params[:miq_grid_checks])
+      javascript_redirect :action => 'edit', :id => id
+    elsif params[:pressed] == "embedded_configuration_script_source_add"
+      javascript_redirect :action => 'new'
+    elsif params[:pressed] == "embedded_configuration_script_source_delete"
+      binding.pry
+    end
+  end
+
   def edit
+    @id = params[:id]
     @in_a_form = true
   end
 
   def new
+    @id = 'new'
     @in_a_form = true
-  end
-
-  def dummy_data
-    @record = ConfigurationScriptSource.all[0]
-    render :json => { :name => @record.name,
-                      :description => @record.description,
-                      scm_type: 'Troll',
-                      url: 'localhost:3000',
-                      scm_credentials: 'nope',
-                      branch: 'none',
-                      clean: true,
-                      deleteOnUpdate: true,
-                      updateOnLaunch: true,}
   end
 
   def display_playbooks

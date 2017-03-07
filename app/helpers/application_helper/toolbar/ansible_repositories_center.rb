@@ -11,21 +11,23 @@ class ApplicationHelper::Toolbar::AnsibleRepositoriesCenter < ApplicationHelper:
           'pficon pficon-edit fa-lg',
           t = N_('Add New Repository'),
           t,
-          :url => "/new"),
+          :url_parms => "new_div"),
         button(
           :embedded_configuration_script_source_edit,
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Repository'),
           t,
+          :enabled   => false,
           :onwhen => "1",
-          :url => "/edit"),
+          :url_parms => "edit_div"),
         button(
           :embedded_configuration_script_source_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Remove selected Repositories'),
           t,
-          :url_parms => "&refresh=y",
-          :onwhen => "+1",
+          :url_parms => "delete_div",
+          :enabled   => false,
+          :onwhen => "1+",
           :confirm   => N_("Warning: The selected Repository will be permanently removed!")),
       ]
     )

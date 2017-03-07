@@ -68,6 +68,7 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', funct
   }
 
   this.saveable = function(form) {
+    debugger;
     return form.$valid && form.$dirty;
   };
 

@@ -35,6 +35,7 @@ ManageIQ.angular.app.directive('checkchange', ['miqService', function(miqService
       ctrl.$parsers.push(function(value) {
         miqService.miqFlashClear();
 
+        debugger;
         if (value == modelCopy()[ctrl.$name]) {
           scope.angularForm[scope['formchange_' + ctrl.$name]].$setPristine();
         }

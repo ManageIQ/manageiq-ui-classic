@@ -2015,7 +2015,8 @@ Rails.application.routes.draw do
         show_list
       ),
       :post => %w(
-        show_list)
+        show_list
+      )
     },
 
     :ansible_playbook => {
@@ -2028,18 +2029,25 @@ Rails.application.routes.draw do
         show_list
       ),
       :post => %w(
-        show_list)
+        show_list
+      )
     },
 
     :ansible_repository => {
       :get => %w(
         download_data
         download_summary_pdf
+        edit
+        new
         show
         show_list
       ),
       :post => %w(
-        show_list)
+        button
+        edit
+        new
+        show_list
+      )
     },
 
     :miq_ae_class             => {
