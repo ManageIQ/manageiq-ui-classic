@@ -3,8 +3,7 @@ describe ApplicationHelper::Button::CustomizationTemplateNew do
   let(:lastaction) { '' }
   let(:display) { '' }
   let(:x_node) { 'root' }
-  let(:count) { 1 }
-  let(:instance_data) { {'lastaction' => lastaction, 'display' => display, 'pxe_image_types_count' => count} }
+  let(:instance_data) { {'lastaction' => lastaction, 'display' => display} }
   let(:button) { described_class.new(view_context, {}, instance_data, {}) }
 
   before { allow(view_context).to receive(:x_node).and_return(x_node) }
@@ -27,7 +26,10 @@ describe ApplicationHelper::Button::CustomizationTemplateNew do
   end
 
   describe '#calculate_properties' do
-    before { button.calculate_properties }
+    before do
+      allow(PxeImageType).to receive(:count).and_return(count)
+      button.calculate_properties
+    end
 
     context 'when there are no System Image Types available' do
       let(:count) { 0 }
@@ -35,6 +37,7 @@ describe ApplicationHelper::Button::CustomizationTemplateNew do
     end
 
     context 'when there are System Image Types available' do
+      let(:count) { 1 }
       it_behaves_like 'an enabled button'
     end
   end
