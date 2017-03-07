@@ -144,9 +144,11 @@ module TextualSummaryHelper
   end
 
   def textual_object_icon(object, klass)
-    case object
-    when ExtManagementSystem
-      {:image => "svg/vendor-#{object.image_name}.svg"}
+    icon = object.decorate.try(:fonticon)
+    image = object.decorate.try(:listicon_image)
+
+    if icon || image
+      {:icon => icon, :image => image}
     else
       textual_class_icon(klass)
     end
@@ -157,7 +159,12 @@ module TextualSummaryHelper
   end
 
   def textual_class_icon(klass)
-    if klass <= AdvancedSetting
+    icon = klass.decorate.try(:fonticon)
+    image = klass.decorate.try(:listicon_image)
+
+    if icon || image
+      {:icon => icon, :image => image}
+    elsif klass <= AdvancedSetting
       {:image => "100/advancedsetting.png"}
     elsif klass <= MiqTemplate
       {:image => "100/vm.png"}
