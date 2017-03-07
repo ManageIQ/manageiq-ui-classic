@@ -118,9 +118,9 @@ module Mixins
       @ems = model.new if params[:id] == 'new'
       @ems = find_by_id_filtered(model, params[:id]) if params[:id] != 'new'
       default_endpoint = @ems.default_endpoint
-      default_security_protocol = default_endpoint.security_protocol ? default_endpoint.security_protocol : 'ssl'
+      default_security_protocol = default_endpoint.security_protocol || security_protocol_default
       default_tls_verify = default_endpoint.verify_ssl != 0 ? true : false
-      default_tls_ca_certs = default_endpoint.certificate_authority
+      default_tls_ca_certs = default_endpoint.certificate_authority || ""
 
       amqp_userid = ""
       amqp_hostname = ""
@@ -134,7 +134,7 @@ module Mixins
       keystone_v3_domain_id = ""
       hawkular_hostname = ""
       hawkular_api_port = ""
-      hawkular_security_protocol = ""
+      hawkular_security_protocol = security_protocol_default
       hawkular_tls_ca_certs = ""
 
       if @ems.connection_configurations.amqp.try(:endpoint)
@@ -318,6 +318,13 @@ module Mixins
     def metrics_default_database_name
       if @ems.class.name == 'ManageIQ::Providers::Redhat::InfraManager'
         ManageIQ::Providers::Redhat::InfraManager.default_history_database_name
+      end
+    end
+
+    def security_protocol_default
+      case controller_name
+      when "ems_container" then "ssl-with-validation"
+      else "ssl"
       end
     end
 
