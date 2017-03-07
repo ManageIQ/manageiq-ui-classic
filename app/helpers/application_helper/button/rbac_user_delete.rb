@@ -2,7 +2,7 @@ class ApplicationHelper::Button::RbacUserDelete < ApplicationHelper::Button::Bas
   needs :@record
 
   def disabled?
-    @error_message = _('User [Administrator] can not be deleted') if @record.userid == 'admin'
+    @error_message = _('Default Administrator can not be deleted') if @record.userid == 'admin'
     @error_message.present?
   end
 end
