@@ -19,7 +19,7 @@ class ApplicationHelper::Toolbar::XMiqTemplateCenter < ApplicationHelper::Toolba
           N_('Perform SmartState Analysis on this Template'),
           N_('Perform SmartState Analysis'),
           :confirm => N_("Perform SmartState Analysis on this Template?"),
-          :klass => ApplicationHelper::Button::MiqTemplateScan),
+          :klass => ApplicationHelper::Button::VmInstanceTemplateScan),
         separator,
         button(
           :miq_template_edit,
