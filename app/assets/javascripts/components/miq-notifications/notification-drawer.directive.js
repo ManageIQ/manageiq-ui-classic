@@ -1,4 +1,4 @@
-angular.module('patternfly.notification').directive('pfNotificationDrawer', function ($window, $timeout) {
+angular.module('miq.notifications').directive('pfNotificationDrawer', function ($window, $timeout) {
   'use strict';
   return {
     restrict: 'A',

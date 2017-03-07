@@ -1,4 +1,4 @@
-angular.module('patternfly.notification').provider('Notifications', function () {
+angular.module('miq.notifications').provider('Notifications', function () {
   'use strict';
 
   // time (in ms) the notifications are shown
@@ -124,7 +124,7 @@ angular.module('patternfly.notification').provider('Notifications', function () 
 
 });
 
-angular.module('patternfly.notification').directive('pfNotificationList', function () {
+angular.module('miq.notifications').directive('pfNotificationList', function () {
   'use strict';
 
   return {

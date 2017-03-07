@@ -1,1 +1,1 @@
-angular.module('patternfly.notification', ['patternfly.utils']);
+angular.module('miq.notifications', ['patternfly.utils']);
