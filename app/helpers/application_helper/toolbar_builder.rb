@@ -381,15 +381,6 @@ class ApplicationHelper::ToolbarBuilder
           return N_("No Timeline data has been collected for this Template")
         end
       end
-    when nil, "NilClass"
-      case id
-      # following 2 are checks for buttons in Reports/Dashboard accordion
-      when "db_new"
-        if @widgetsets.length >= MAX_DASHBOARD_COUNT
-          return N_("Only %{dashboard_count} Dashboards are allowed for a group") %
-            {:dashboard_count => MAX_DASHBOARD_COUNT}
-        end
-      end
     when 'MiqReportResult'
       if id == 'report_only'
         return @report.present? && @report_result_id.present? &&
