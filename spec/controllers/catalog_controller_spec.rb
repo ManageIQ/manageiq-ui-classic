@@ -730,4 +730,13 @@ describe CatalogController do
       expect(controller.send(:need_ansible_locals?)).to be_falsey
     end
   end
+
+  context "#get_available_resources" do
+    it "list of available resources should not include Ansible Playbook Service Templates" do
+      FactoryGirl.create(:service_template, :type => "ServiceTemplateAnsiblePlaybook")
+      controller.instance_variable_set(:@edit, :new => {:selected_resources => []})
+      controller.send(:get_available_resources, "ServiceTemplate")
+      expect(assigns(:edit)[:new][:available_resources].count).to eq(2)
+    end
+  end
 end

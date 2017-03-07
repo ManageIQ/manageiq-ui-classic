@@ -1422,7 +1422,7 @@ class CatalogController < ApplicationController
 
   def get_available_resources(kls)
     @edit[:new][:available_resources] = {}
-    kls.constantize.all.each do |r|
+    kls.constantize.all.reject { |st| st.type == "ServiceTemplateAnsiblePlaybook" }.each do |r|
       @edit[:new][:available_resources][r.id] = r.name if  r.id.to_s != @edit[:rec_id].to_s &&
                                                            !@edit[:new][:selected_resources].include?(r.id)  # don't add the servicetemplate record that's being edited, or add all vm templates
     end
