@@ -209,9 +209,9 @@ module MiqPolicyController::AlertProfiles
                                             :object,
                                             @sb,
                                             true,
-                                            @assign[:new][:assign_to],
-                                            @assign[:new][:cat],
-                                            @assign[:new][:objects])
+                                            :assign_to => @assign[:new][:assign_to],
+                                            :cat       => @assign[:new][:cat],
+                                            :objects   => @assign[:new][:objects])
     end
     tree
   end

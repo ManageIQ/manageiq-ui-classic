@@ -1,10 +1,9 @@
 class TreeBuilderAlertProfileObj < TreeBuilder
-  def initialize(name, type, sandbox, build = true, assign_to = nil, cat = nil, objects = nil)
+  def initialize(name, type, sandbox, build = true, assign_to: nil, cat: nil, objects: nil)
     @assign_to = assign_to
     @cat = cat
     @objects = objects
     @cat_tree = true if @assign_to.ends_with?("-tags")
-    build = false unless @assign_to
     super(name, type, sandbox, build)
   end
 
@@ -49,13 +48,12 @@ class TreeBuilderAlertProfileObj < TreeBuilder
 
   def x_get_tree_roots(count_only, _options)
     obj = if !@assign_to || @assign_to == "enterprise"
-                 []
-               elsif @cat_tree
-                 @cat ? Classification.find(@cat).entries : []
-               else
-                 @assign_to.camelize.constantize.all
-               end
-
+            []
+          elsif @cat_tree
+            @cat ? Classification.find(@cat).entries : []
+          else
+            @assign_to.camelize.constantize.all
+          end
     count_only_or_objects(count_only, obj.sort_by { |o| (o.name.presence || o.description).downcase })
   end
 end
