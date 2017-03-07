@@ -153,6 +153,11 @@ describe EmsCloudController do
         expect(response.status).to eq 200
         expect(response.body).to include('orchestration_stack/retire')
       end
+
+      it "when Delete Button is pressed for CloudObjectStoreContainer" do
+        expect(controller).to receive(:process_cloud_object_storage_buttons)
+        post :button, :params => { :pressed => "cloud_object_store_container_delete" }
+      end
     end
   end
 

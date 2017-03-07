@@ -322,7 +322,6 @@ module EmsCommon
     # Handle buttons from sub-items screen
     if params[:pressed].starts_with?("availability_zone_",
                                      "cloud_network_",
-                                     "cloud_object_store_container_",
                                      "cloud_subnet_",
                                      "cloud_tenant_",
                                      "cloud_volume_",
@@ -370,7 +369,6 @@ module EmsCommon
       # Edit Tags for Network Manager Relationship pages
       when "availability_zone_tag"            then tag(AvailabilityZone)
       when "cloud_network_tag"                then tag(CloudNetwork)
-      when "cloud_object_store_container_tag" then tag(CloudObjectStoreContainer)
       when "cloud_subnet_tag"                 then tag(CloudSubnet)
       when "cloud_tenant_tag"                 then tag(CloudTenant)
       when "cloud_volume_tag"                 then tag(CloudVolume)
@@ -406,6 +404,8 @@ module EmsCommon
           show                                                        # Handle EMS buttons
         end
       end
+    elsif params[:pressed].starts_with?("cloud_object_store_")
+      process_cloud_object_storage_buttons(params[:pressed])
     else
       @refresh_div = "main_div" # Default div for button.rjs to refresh
       redirect_to :action => "new" if params[:pressed] == "new"
@@ -487,7 +487,9 @@ module EmsCommon
     end
 
     if !@flash_array.nil? && params[:pressed] == "#{@table_name}_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
+      javascript_redirect :action      => 'show_list',
+                          :flash_msg   => @flash_array[0][:message],
+                          :flash_error => @flash_array[0][:level] == :error
     elsif params[:pressed] == "host_aggregate_edit"
       javascript_redirect :controller => "host_aggregate", :action => "edit", :id => find_checked_items[0]
     elsif params[:pressed] == "cloud_tenant_edit"
