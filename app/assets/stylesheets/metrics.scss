@@ -30,6 +30,11 @@
     padding-top: 10px;
   }
 
+  .graph-view {
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+
   .line-chart {
     margin-top: 36px;
     margin-left: 30px;

@@ -1,10 +1,21 @@
 angular.module('miq.util').factory('metricsUtilsFactory', function() {
   return function (dash) {
+    var UNKNOWN_ERROR_STR = __('Something is wrong, try reloading the page');
+
+    var checkResponse = function(response) {
+      if (response.error || response.data.error || typeof response.data === 'string') {
+        add_flash(response.error || response.data.error || UNKNOWN_ERROR_STR, 'error');
+        return false;
+      }
+
+      return true;
+    }
+
     var getMetricTagsData = function(response) {
       'use strict';
       dash.tagsLoaded = true;
-      if (response.error || response.data.error) {
-        add_flash(response.error || response.data.error, 'error');
+
+      if (checkResponse(response) === false) {
         return;
       }
 
@@ -34,8 +45,7 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
         dash.loadingData = false;
       }
 
-      if (response.error || response.data.error) {
-        add_flash(response.error || response.data.error, 'error');
+      if (checkResponse(response) === false) {
         return;
       }
 
@@ -54,38 +64,38 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
 
     var getContainerDashboardData = function(item, response) {
       'use strict';
-      if (response.error || response.data.error) {
-        add_flash(response.error || response.data.error, 'error');
+      if (checkResponse(response) === false) {
+        return;
+      }
+
+      var data = response.data.data;
+
+      item.lastValues = {};
+      angular.forEach(data, function(d) {
+        item.lastValues[d.timestamp] = numeral(d.value).format('0,0.00a');
+      });
+
+      if (data.length > 0) {
+        var lastValue = data[0].value;
+        item.last_value = numeral(lastValue).format('0,0.00a');
+        item.last_timestamp = data[0].timestamp;
       } else {
-        var data = response.data.data;
+        item.last_value = '-';
+        item.last_timestamp = '-';
+      }
 
-        item.lastValues = {};
-        angular.forEach(data, function(d) {
-          item.lastValues[d.timestamp] = numeral(d.value).format('0,0.00a');
-        });
-
-        if (data.length > 0) {
-          var lastValue = data[0].value;
-          item.last_value = numeral(lastValue).format('0,0.00a');
-          item.last_timestamp = data[0].timestamp;
-        } else {
-          item.last_value = '-';
-          item.last_timestamp = '-';
-        }
-
-        if (data.length > 1) {
-          var prevValue = data[1].value;
-          if (angular.isNumber(lastValue) && angular.isNumber(prevValue)) {
-            var change;
-            if (prevValue !== 0 && lastValue !== 0) {
-              change = Math.round((lastValue - prevValue) / lastValue);
-            } else if (lastValue !== 0) {
-              change = 1;
-            } else {
-              change = 0;
-            }
-            item.percent_change = '(' + numeral(change).format('0,0.00%') + ')';
+      if (data.length > 1) {
+        var prevValue = data[1].value;
+        if (angular.isNumber(lastValue) && angular.isNumber(prevValue)) {
+          var change;
+          if (prevValue !== 0 && lastValue !== 0) {
+            change = Math.round((lastValue - prevValue) / lastValue);
+          } else if (lastValue !== 0) {
+            change = 1;
+          } else {
+            change = 0;
           }
+          item.percent_change = '(' + numeral(change).format('0,0.00%') + ')';
         }
       }
     }
@@ -93,7 +103,8 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
     return {
       getMetricTagsData: getMetricTagsData,
       getContainerParamsData: getContainerParamsData,
-      getContainerDashboardData: getContainerDashboardData
+      getContainerDashboardData: getContainerDashboardData,
+      checkResponse: checkResponse
     }
   }
 });

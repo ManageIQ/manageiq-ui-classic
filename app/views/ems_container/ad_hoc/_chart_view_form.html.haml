@@ -26,5 +26,17 @@
                                          "options"            => "dash.dateOptions",
                                          "date"               => "dash.timeFilter.date"}
 
+    %dropdown.dropdown-kebab-pf
+      %button.btn.btn-link.dropdown-toggle{"type"          => "button",
+                                           "data-toggle"   => "dropdown",
+                                           "aria-haspopup" => "true",
+                                           "aria-expanded" => "true"}
+        %span.fa.fa-ellipsis-v
+      %ul.dropdown-menu{"aria-labelledby" => "dropdownKebab"}
+        %li{"ng-repeat" => "range in dash.timeIntervals"}
+          %a{"href"     => "#",
+             "ng-click" => "dash.minBucketDurationInSecondes = range.value; dash.refreshGraph()"}
+            {{range.title}}
+
     %button.btn.btn-primary.pull-left{"type" => "button", "ng-click" => "dash.refreshGraph()"}
       = _("Refresh")
