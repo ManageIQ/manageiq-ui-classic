@@ -6,7 +6,8 @@ class TreeBuilderServices < TreeBuilder
   def tree_init_options(_tree_name)
     {
       :leaf     => "Service",
-      :full_ids => true
+      :full_ids => true,
+      :add_root => false
     }
   end
 
@@ -16,20 +17,32 @@ class TreeBuilderServices < TreeBuilder
   end
 
   def root_options
-    {
-      :title   => t = _("All Services"),
-      :tooltip => t
-    }
+    { }
   end
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only, _options)
-    all_services = Rbac.filtered(Service.where(:display => true))
+    objects = []
+    objects.push(:id            => "asrv",
+                 :text          => _("Active Services"),
+                 :icon          => "pficon pficon-folder-close",
+                 :load_children => true,
+                 :tip           => _("Active Services"))
+    objects.push(:id            => "rsrv",
+                 :text          => _("Retired Services"),
+                 :icon          => "pficon pficon-folder-close",
+                 :load_children => true,
+                 :tip           => _("Retired Services"))
+    count_only_or_objects(count_only, objects)
+  end
+
+  def x_get_tree_custom_kids(object, count_only, _options )
+    services = Rbac.filtered(Service.where(:retired => object[:id] != 'asrv'))
     if count_only
-      all_services.size
+      services.size
     else
-      MiqPreloader.preload(all_services.to_a, :picture)
-      Service.arrange_nodes(all_services.sort_by { |n| [n.ancestry.to_s, n.name.downcase] })
+      MiqPreloader.preload(services.to_a, :picture)
+      Service.arrange_nodes(services.sort_by { |n| [n.ancestry.to_s, n.name.downcase] })
     end
   end
 end

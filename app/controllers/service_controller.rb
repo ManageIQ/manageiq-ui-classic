@@ -20,7 +20,7 @@ class ServiceController < ApplicationController
   end
 
   def x_button
-    generic_x_button(SERVICE_X_BUTTON_ALLOWED_ACTIONS)
+     generic_x_button(SERVICE_X_BUTTON_ALLOWED_ACTIONS)
   end
 
   # Service show selected, redirect to proper controller
@@ -34,6 +34,10 @@ class ServiceController < ApplicationController
       return
     end
     redirect_to :action => 'show', :controller => record.class.base_model.to_s.underscore, :id => record.id
+  end
+
+  def show_list
+    redirect_to :action => 'explorer', :flash_msg => @flash_array.try(:fetch_path, 0, :message)
   end
 
   def explorer
@@ -216,6 +220,14 @@ class ServiceController < ApplicationController
       @gtl_type = "grid"
       @items_per_page = ONE_MILLION
       @view, @pages = get_view(Vm, :parent => @record, :parent_method => :all_vms, :all_pages => true)  # Get the records (into a view) and the paginator
+    when "Hash"
+      if id == "asrv"
+        process_show_list(:where_clause => "ancestry is null")
+        @right_cell_text = _("Active Services")
+      else
+        process_show_list(:where_clause => "retired is true")
+        @right_cell_text = _("Retired Services")
+      end
     else      # Get list of child Catalog Items/Services of this node
       if x_node == "root"
         process_show_list(:where_clause => "ancestry is null")
