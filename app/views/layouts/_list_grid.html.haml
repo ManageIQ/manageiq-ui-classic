@@ -62,8 +62,9 @@
     - grid_hash[:rows].each do |row|
       %tr{:onclick => "miqRowClick('#{j row[:id]}', #{row_url}, #{j row_url_ajax.to_s}); return false;"}
         - row[:cells].each do |cell|
-          -# double {{}} to work around hamlit issue #28
-          %td{{:onclick => (cell[:is_checkbox] || cell[:is_button]) ? "event.stopPropagation()" : false}}
+          - click = cell[:is_checkbox] || cell[:is_button]
+          - narrow = click || cell[:icon]
+          %td{:class => narrow ? 'table-view-pf-select' : '', :onclick => click ? "event.stopPropagation()" : false}
             - if cell[:is_checkbox]
               = check_box_tag("check_#{row[:id]}", row[:id], false,
                 :onchange => "miqGridOnCheck(this, '#{button_div}')",
