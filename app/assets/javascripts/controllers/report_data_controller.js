@@ -270,6 +270,7 @@
       }
       return start + ' - ' + end + ' of ' + total;
     };
+    this.settings.translateTotalof = this.settings.translateTotalOf;
   };
 
   ReportDataController.prototype.setExtraClasses = function(viewType) {
@@ -328,7 +329,7 @@
         if (this.initObject.showUrl) {
           var splitUrl = this.initObject.showUrl.split('/');
           if (splitUrl && splitUrl[1] === 'vm') {
-            splitUrl[1] = 'vm_infra';
+            splitUrl[1] = splitUrl[2] === 'policies'? 'vm_infra' : 'vm_cloud';
             this.initObject.showUrl = splitUrl.join('/');
           }
         }

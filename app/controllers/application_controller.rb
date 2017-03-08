@@ -287,12 +287,13 @@ class ApplicationController < ActionController::Base
     @explorer = params[:explorer] == "true" if params[:explorer]
 
     if params[:active_tree]
-      node_info = get_node_info(x_node, false)
+      node_info = get_node_info(x_node, false) if methods.include? 'get_node_info'
       options.merge!(node_info) if node_info.kind_of?(Hash)
     end
 
     options[:parent] = identify_record(params[:model_id]) if params[:model_id] && options[:parent].nil?
     options[:parent] = options[:parent] || @parent
+    options[:association] = params[:model] if HAS_ASSOCATION.include? params[:model]
     options[:selected_ids] = params[:records]
     options
   end
@@ -1093,7 +1094,6 @@ class ApplicationController < ActionController::Base
   # Return the image name for the list view icon of a db,id pair
   def fileicon(item, view)
     default = "100/#{(@listicon || view.db).underscore}.png"
-
     image = case item
             when EventLog, OsProcess
               "100/#{@listicon.downcase}.png"
@@ -1101,6 +1101,10 @@ class ApplicationController < ActionController::Base
               "100/piecharts/datastore/#{calculate_pct_img(item.v_free_space_percent_of_total)}.png"
             when MiqRequest
               item.decorate.listicon_image || "100/#{@listicon.downcase}.png" if @listicon.try(:downcase)
+            when Account
+              "100/#{item.accttype}.png"
+            when SystemService
+              "100/service.png"
             when ManageIQ::Providers::CloudManager::AuthKeyPair
               "100/auth_key_pair.png"
             when MiqWorker

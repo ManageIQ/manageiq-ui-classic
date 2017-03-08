@@ -180,9 +180,15 @@ module ApplicationHelper
     }
   end
   private :model_string_to_constant_params
-
   def type_has_quadicon(type)
-    !["ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile", "ServiceTemplate"].include? type
+    !%w(
+      ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile
+      ServiceTemplate
+      Account
+      GuestApplication
+      SystemService
+      Filesystem
+    ).include? type
   end
 
   CONTROLLER_TO_MODEL = {
@@ -203,10 +209,19 @@ module ApplicationHelper
   end
 
   MODEL_STRING = {
-    "all_vms"   => VmOrTemplate,
-    "instances" => Vm,
-    "images"    => MiqTemplate
+    "all_vms"           => VmOrTemplate,
+    "all_miq_templates" => MiqTemplate,
+    "instances"         => Vm,
+    "images"            => MiqTemplate,
+    "groups"            => Account,
+    "users"             => Account,
+    "host_services"     => SystemService
   }.freeze
+
+  HAS_ASSOCATION = %w(
+    groups
+    users
+  ).freeze
 
   def model_string_to_constant(model_string)
     MODEL_STRING[model_string] || model_string.singularize.classify.constantize
