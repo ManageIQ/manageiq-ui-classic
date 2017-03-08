@@ -1,0 +1,36 @@
+.drawer-pf{'ng-class' => "{'hide': drawerHidden, 'drawer-pf-expanded': drawerExpanded}"}
+  .drawer-pf-title{'ng-if' => "drawerTitle"}
+    %a.drawer-pf-toggle-expand{'ng-if'    => "allowExpand",
+                               'ng-click' => "toggleExpandDrawer()"}
+    %h3.text-center
+      {{drawerTitle}}
+
+  .drawer-pf-title{'ng-if'      => "titleInclude",
+                   'ng-include' => "titleInclude"}
+
+  %div{'pf-fixed-accordion' => true,
+       'scroll-selector'    => ".panel-body"}
+    .panel-group
+      .panel.panel-default{'ng-repeat' => "notificationGroup in notificationGroups track by $index"}
+        .panel-heading
+          %h4.panel-title
+            %a{'ng-click'   => "toggleCollapse(notificationGroup)",
+               'ng-class'   => "{collapsed: !notificationGroup.open}",
+               'ng-include' => "headingInclude"}
+          %span.panel-counter{'ng-include' => "subheadingInclude"}
+
+        .panel-collapse.collapse{'ng-class' => "{in: notificationGroup.open}"}
+          .panel-body
+            .drawer-pf-notification{'ng-class'   => "{unread: notification.unread, 'expanded-notification': drawerExpanded}",
+                                    'ng-repeat'  => "notification in notificationGroup.notifications",
+                                    'ng-include' => "notificationBodyInclude"}
+            .drawer-pf-loading.text-center{'ng-if' => "notificationGroup.isLoading"}
+              %span.spinner.spinner-xs.spinner-inline
+              Loading More
+
+          .drawer-pf-action{'ng-if' => "actionButtonTitle"}
+            %a.btn.btn-link.btn-block{'ng-click' => "actionButtonCallback(notificationGroup)"}
+              {{actionButtonTitle}}
+
+          %div{'ng-if'      => "notificationFooterInclude",
+               'ng-include' => "notificationFooterInclude"}
