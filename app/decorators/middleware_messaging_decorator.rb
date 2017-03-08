@@ -1,4 +1,8 @@
 class MiddlewareMessagingDecorator < MiqDecorator
+  def self.fonticon
+    'fa fa-exchange'
+  end
+
   def fonticon
     'fa fa-exchange'
   end

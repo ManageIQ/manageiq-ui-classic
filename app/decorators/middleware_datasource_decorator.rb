@@ -1,4 +1,8 @@
 class MiddlewareDatasourceDecorator < MiqDecorator
+  def self.fonticon
+    'fa fa-database'
+  end
+
   def fonticon
     'fa fa-database'
   end
