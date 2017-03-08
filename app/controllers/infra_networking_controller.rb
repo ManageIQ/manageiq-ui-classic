@@ -304,19 +304,19 @@ class InfraNetworkingController < ApplicationController
     end
 
     options = case model
-    when  "ExtManagementSystem"
-      provider_switches_list(id, ExtManagementSystem)
-    when  "Host"
-      host_switches_list(id, Host)
-    when "EmsCluster"
-      cluster_switches_list(id, EmsCluster)
-    when "Switch"
-      dvswitch_node(id, Switch)
-    when "MiqSearch"
-      miq_search_node
-    else
-      default_node
-    end
+              when "ExtManagementSystem"
+                provider_switches_list(id, ExtManagementSystem)
+              when "Host"
+                host_switches_list(id, Host)
+              when "EmsCluster"
+                cluster_switches_list(id, EmsCluster)
+              when "Switch"
+                dvswitch_node(id, Switch)
+              when "MiqSearch"
+                miq_search_node
+              else
+                default_node
+              end
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && @edit && @edit[:adv_search_applied]
 
     if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history

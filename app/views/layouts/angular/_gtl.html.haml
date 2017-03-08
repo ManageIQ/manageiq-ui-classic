@@ -1,7 +1,7 @@
 - current_model = controller.class.model if controller.class.respond_to?("model") && !controller.class.model.nil?
 - current_model = params[:db].nil? ? current_model.to_s.tableize : h(j_str(params[:db]))
 - current_model = current_model && (@display.nil? || @display == "main") ? current_model : @display
-- current_model = params[:action] if @use_action && !params.nil? && !params[:action].nil?
+- current_model = params[:action] if @use_action && !params.nil? && !params[:action].nil? && params[:action] != 'show'
 - gtl_type_string = j_str(@gtl_type)
 - selected_records = @edit[:object_ids] unless @edit.nil? || @edit[:object_ids].nil?
 - selected_records = @edit[:pol_items] unless @edit.nil? || @edit[:pol_items].nil?

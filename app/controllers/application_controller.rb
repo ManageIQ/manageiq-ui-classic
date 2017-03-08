@@ -290,8 +290,10 @@ class ApplicationController < ActionController::Base
       node_info = get_node_info(x_node, false) if defined? get_node_info
       options.merge!(node_info) if node_info.kind_of?(Hash)
     end
-
-    options[:parent] = identify_record(params[:model_id]) if params[:model_id] && options[:parent].nil?
+    curr_model_id = Integer(params[:model_id]) rescue nil
+    unless curr_model_id.nil?
+      options[:parent] = identify_record(params[:model_id]) if params[:model_id] && options[:parent].nil?
+    end
     options[:parent] = options[:parent] || @parent
     options[:association] = params[:model] if HAS_ASSOCATION.include? params[:model]
     options[:selected_ids] = params[:records]

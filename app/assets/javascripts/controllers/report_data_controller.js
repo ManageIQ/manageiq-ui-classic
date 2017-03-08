@@ -156,15 +156,15 @@
     var splitUrl = this.initObject.showUrl.split('/');
     if (this.initObject.isExplorer && isCurrentControllerOrPolicies(splitUrl)) {
       var itemId = item.id;
-      if (this.initObject.showUrl.indexOf('?id=') !== -1 ){
-        var itemId = this.initObject.showUrl.indexOf('xx-') !== -1 ? '_-' + item.id : '-' + item.id;
+      if (this.initObject.showUrl.indexOf('?id=') !== -1 ) {
+        itemId = this.initObject.showUrl.indexOf('xx-') !== -1 ? '_-' + item.id : '-' + item.id;
       }
       var url = prefix + itemId;
       $.post(url).always(function() {
         this.setExtraClasses();
       }.bind(this));
     } else {
-      prefix = prefix[prefix.length -1 ] !== '/' ? prefix + '/' : prefix;
+      prefix = prefix[prefix.length - 1] !== '/' ? prefix + '/' : prefix;
       this.$window.DoNav(prefix + item.id);
     }
     return false;
@@ -294,9 +294,9 @@
   ReportDataController.prototype.movePagination = function() {
     this.$timeout(function() {
       var pagination = this.$document.getElementsByClassName('miq-pagination');
-      var pagind_div = this.$document.querySelector('#paging_div .col-md-12');
-      if (pagination && pagination.length > 0 && pagind_div) {
-        pagind_div.appendChild(pagination[0]);
+      var pagingDiv = this.$document.querySelector('#paging_div .col-md-12');
+      if (pagination && pagination.length > 0 && pagingDiv) {
+        pagingDiv.appendChild(pagination[0]);
       }
     }.bind(this));
   };
@@ -316,7 +316,7 @@
       current: 1,
       perpage: 20,
       sort_col: 0,
-      sort_dir: "DESC",
+      sort_dir: 'DESC',
     };
     return this.MiQDataTableService.retrieveRowsAndColumnsFromUrl(modelName, activeTree, currId, isExplorer, settings, records)
       .then(function(gtlData) {
@@ -329,7 +329,7 @@
         if (this.initObject.showUrl) {
           var splitUrl = this.initObject.showUrl.split('/');
           if (splitUrl && splitUrl[1] === 'vm') {
-            splitUrl[1] = splitUrl[2] === 'policies'? 'vm_infra' : 'vm_cloud';
+            splitUrl[1] = splitUrl[2] === 'policies' ? 'vm_infra' : 'vm_cloud';
             this.initObject.showUrl = splitUrl.join('/');
           }
         }
