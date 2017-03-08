@@ -41,4 +41,5 @@ class EmsCloudController < ApplicationController
   public :restful?
 
   menu_section :clo
+  custom_buttons
 end

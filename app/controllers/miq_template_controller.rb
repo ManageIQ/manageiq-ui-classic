@@ -43,4 +43,6 @@ class MiqTemplateController < ApplicationController
     session[:polArr]                    = @polArr unless @polArr.nil?
     session[:policy_options]            = @policy_options unless @policy_options.nil?
   end
+
+  custom_buttons
 end

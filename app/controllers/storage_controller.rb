@@ -620,4 +620,5 @@ class StorageController < ApplicationController
   helper_method :textual_group_list
 
   menu_section :inf
+  custom_buttons
 end

@@ -244,4 +244,5 @@ class EmsClusterController < ApplicationController
   end
 
   menu_section :inf
+  custom_buttons
 end

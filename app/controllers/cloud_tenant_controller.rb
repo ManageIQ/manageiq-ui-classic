@@ -273,4 +273,5 @@ class CloudTenantController < ApplicationController
   end
 
   menu_section :clo
+  custom_buttons
 end
