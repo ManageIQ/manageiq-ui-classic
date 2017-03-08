@@ -29,6 +29,8 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   include Mixins::TimeHelper
   include Mixins::MenuSection
+  include Mixins::GenericToolbarMixin
+
   helper ToolbarHelper
   helper JsHelper
   helper QuadiconHelper
