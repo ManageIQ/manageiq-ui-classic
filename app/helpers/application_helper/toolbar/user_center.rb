@@ -15,14 +15,16 @@ class ApplicationHelper::Toolbar::UserCenter < ApplicationHelper::Toolbar::Basic
           :rbac_user_copy,
           'fa fa-files-o fa-lg',
           t = N_('Copy this User to a new User'),
-          t),
+          t,
+          :klass => ApplicationHelper::Button::RbacUserCopy),
         button(
           :rbac_user_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Delete this User'),
           t,
           :url_parms => "&refresh=y",
-          :confirm   => N_("Are you sure you want to delete this User?")),
+          :confirm   => N_("Are you sure you want to delete this User?"),
+          :klass     => ApplicationHelper::Button::RbacUserDelete),
       ]
     ),
   ])
