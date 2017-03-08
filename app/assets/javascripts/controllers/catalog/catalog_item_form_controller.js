@@ -213,20 +213,6 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       vm._retirement_repository = _.find(vm.repositories, {id: vm.catalogItemModel.retirement_repository_id});
       vm._provisioning_repository = _.find(vm.repositories, {id: vm.catalogItemModel.provisioning_repository_id});
     })
-
-    // list of machine credentials
-    API.get("/api/authentications?collection_class=ManageIQ::Providers::AnsibleTower::AutomationManager::MachineCredential&expand=resources&attributes=id,name" + sort_options).then(function (data) {
-      vm.machine_credentials = data.resources;
-      vm._retirement_machine_credential = _.find(vm.machine_credentials, {id: vm.catalogItemModel.retirement_machine_credential_id});
-      vm._provisioning_machine_credential = _.find(vm.machine_credentials, {id: vm.catalogItemModel.provisioning_machine_credential_id});
-    })
-
-    // list of network credentials
-    API.get("/api/authentications?collection_class=ManageIQ::Providers::AnsibleTower::AutomationManager::NetworkCredential&expand=resources&attributes=id,name" + sort_options).then(function (data) {
-      vm.network_credentials = data.resources;
-      vm._retirement_network_credential = _.find(vm.network_credentials, {id: vm.catalogItemModel.retirement_network_credential_id});
-      vm._provisioning_network_credential = _.find(vm.network_credentials, {id: vm.catalogItemModel.provisioning_network_credential_id});
-    })
   };
 
   // get playbooks for selected repository
@@ -236,11 +222,40 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       // if repository has changed
       if (id !== vm.catalogItemModel[prefix + '_repository_id']) {
         vm.catalogItemModel[prefix + '_playbook_id'] = '';
+        vm.clearCredentials(prefix);
         vm.catalogItemModel[prefix + '_repository_id'] = id;
       } else {
         vm['_' + prefix + '_playbook'] = _.find(vm[prefix + '_playbooks'], {id: vm.catalogItemModel[prefix + '_playbook_id']});
       }
     })
+  };
+
+  vm.clearCredentials = function(prefix) {
+    vm.catalogItemModel[prefix + '_machine_credential_id'] = '';
+    vm.catalogItemModel[prefix + '_cloud_credential_id'] = '';
+    vm.catalogItemModel[prefix + '_cloud_type'] = '';
+    vm[prefix + '_network_credentials'] = [];
+    vm[prefix + '_machine_credentials'] = [];
+    vm[prefix + '_cloud_credentials'] = [];
+  };
+
+  // get credentials for selected playbook
+  vm.playbookChanged = function(prefix, id) {
+    if (id !== vm.catalogItemModel[prefix + '_playbook_id']) {
+      API.get("/api/configuration_script_payloads/" + id + "?attributes=authentications" + sort_options).then(function(data) {
+        vm[prefix + '_network_credentials'] = _.where(data.authentications, {type: 'ManageIQ::Providers::AnsibleTower::AutomationManager::NetworkCredential'});
+        vm[prefix + '_machine_credentials'] = _.where(data.authentications, {type: 'ManageIQ::Providers::AnsibleTower::AutomationManager::MachineCredential'});
+        // if playbook has changed
+        vm.catalogItemModel[prefix + '_machine_credential_id'] = '';
+        vm.catalogItemModel[prefix + '_cloud_credential_id'] = '';
+        vm.catalogItemModel[prefix + '_cloud_type'] = '';
+        vm.catalogItemModel[prefix + '_playbook_id'] = id;
+        vm[prefix + '_cloud_credentials'] = [];
+      })
+    }
+    else {
+        vm['_' + prefix + '_playbook'] = _.find(vm[prefix + '_playbooks'], {id: vm.catalogItemModel[prefix + '_playbook_id']});
+    }
   };
 
   $scope.$watch('vm._provisioning_repository', function(value) {
@@ -257,14 +272,31 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       vm.catalogItemModel['retirement_repository_id'] = '';
   });
 
+  $scope.$watch('vm._provisioning_playbook', function(value) {
+    if (value) {
+      vm.playbookChanged("provisioning", value.id)
+    } else
+      vm.catalogItemModel['provisioning_playbook_id'] = '';
+  });
+
+  $scope.$watch('vm._retirement_playbook', function(value) {
+    if (value) {
+      vm.playbookChanged("retirement", value.id)
+    } else
+      vm.catalogItemModel['retirement_playbook_id'] = '';
+  });
+
   $scope.cloudTypeChanged = function(prefix) {
-    typ = vm.catalogItemModel[prefix + "_cloud_type"];
+    var typ = vm.catalogItemModel[prefix + "_cloud_type"];
+    var type_class = "ManageIQ::Providers::AnsibleTower::AutomationManager::" + typ + "Credential";
+    var id = vm.catalogItemModel[prefix + '_playbook_id'];
     // list of cloud credentials based upon selected cloud type
-    url = "/api/authentications?collection_class=ManageIQ::Providers::AnsibleTower::AutomationManager::" + typ + "Credential&expand=resources&attributes=id,name" + sort_options
-    API.get(url).then(function (data) {
-      vm.cloud_credentials = data.resources;
-      vm._retirement_cloud_credential = _.find(vm.cloud_credentials, {id: vm.catalogItemModel.retirement_cloud_credential_id});
-      vm._provisioning_cloud_credential = _.find(vm.cloud_credentials, {id: vm.catalogItemModel.provisioning_cloud_credential_id});
+    API.get("/api/configuration_script_payloads/" + id + "?attributes=authentications" + sort_options).then(function(data) {
+      vm[prefix + '_cloud_credentials'] = _.where(data.authentications, {type: type_class});
+      if ( prefix == 'provisioning')
+        {vm._provisioning_cloud_credential = _.find(vm[prefix + '_cloud_credentials'], {id: vm.catalogItemModel.provisioning_cloud_credential_id});}
+      else
+        {vm._retirement_cloud_credential = _.find(vm[prefix + '_cloud_credentials'], {id: vm.catalogItemModel.retirement_cloud_credential_id});}
     })
   }
 
@@ -330,7 +362,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
   };
 
   // watch for all the drop downs on screen
-  "catalog provisioning_playbook retirement_playbook provisioning_machine_credential retirement_machine_credential provisioning_network_credential retirement_network_credential provisioning_cloud_credential retirement_cloud_credential provisioning_dialog retirement_dialog".split(" ").forEach(idWatch)
+  "catalog provisioning_machine_credential retirement_machine_credential provisioning_network_credential retirement_network_credential provisioning_cloud_credential retirement_cloud_credential provisioning_dialog retirement_dialog".split(" ").forEach(idWatch)
 
   function idWatch(name) {
     field_name = "vm._" + name;
