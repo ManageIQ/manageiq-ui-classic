@@ -166,38 +166,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     end
   end # get_image
 
-  describe "#get_record_cls" do
-    subject { toolbar_builder.get_record_cls(record) }
-    context "when record not exist" do
-      let(:record) { nil }
-      it { is_expected.to eq("NilClass") }
-    end
-
-    context "when record is array" do
-      let(:record) { ["some", "thing"] }
-      it { is_expected.to eq(record.class.name) }
-    end
-
-    context "when record is valid" do
-      [ManageIQ::Providers::Redhat::InfraManager::Host].each do |c|
-        it "and with #{c}" do
-          record = c.new
-          expect(toolbar_builder.get_record_cls(record)).to eq(record.class.base_class.to_s)
-        end
-      end
-
-      it "and with 'VmOrTemplate'" do
-        record = ManageIQ::Providers::Vmware::InfraManager::Template.new
-        expect(toolbar_builder.get_record_cls(record)).to eq(record.class.base_model.to_s)
-      end
-
-      it "otherwise" do
-        record = Job.new
-        expect(toolbar_builder.get_record_cls(record)).to eq(record.class.to_s)
-      end
-    end
-  end
-
   describe "#twostate_button_selected" do
     before do
       @gtl_type = 'list'
