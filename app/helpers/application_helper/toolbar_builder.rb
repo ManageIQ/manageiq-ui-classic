@@ -149,13 +149,6 @@ class ApplicationHelper::ToolbarBuilder
       button[:url_parms] = "?show=#{request.parameters[:show]}"
     end
 
-    dis_title = disable_button(button[:child_id] || button[:id])
-    if dis_title
-      button[:enabled] = false
-      if dis_title.kind_of? String
-        button[:title] = button.localized(:title, dis_title)
-      end
-    end
     button.calculate_properties
     button
   end
@@ -351,12 +344,6 @@ class ApplicationHelper::ToolbarBuilder
     # to change summary screen button to green image
     return "summary-green" if b_name == "show_summary" && %w(miq_schedule miq_task scan_profile).include?(@layout)
     img
-  end
-
-  # Determine if a button should be disabled. Returns either boolean or
-  # string message with explanation of reason for disabling
-  def disable_button(_id)
-    false
   end
 
   def get_record_cls(record)
