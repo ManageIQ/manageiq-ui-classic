@@ -76,7 +76,7 @@
             .col-md-9
               %select{"ng-model"         => "vm._#{prefix}_cloud_credential",
                       "name"             => "#{prefix}_cloud_credential_id",
-                      'ng-options'       => 'cloud_credential as cloud_credential.name for cloud_credential in vm.cloud_credentials',
+                      'ng-options'       => "cloud_credential as cloud_credential.name for cloud_credential in vm.#{prefix}_cloud_credentials",
                       :checkchange       => true,
                       "data-live-search" => "true",
                       'pf-select'        => true}
@@ -182,7 +182,7 @@
           %option{"value" => ""}
             = "<#{_('Choose')}>"
           %span.help-block{"ng-show" => "angularForm.#{prefix}_dialog_id.$error.$invalid"}
-            = _("Required")  
+            = _("Required")
 
     .form-group
       %label.col-md-3.control-label

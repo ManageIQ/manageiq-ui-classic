@@ -215,14 +215,14 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     })
 
     // list of machine credentials
-    API.get("/api/authentications?collection_class=ManageIQ::Providers::AnsibleTower::AutomationManager::MachineCredential&expand=resources&attributes=id,name" + sort_options).then(function (data) {
+    API.get("/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential&expand=resources&attributes=id,name" + sort_options).then(function (data) {
       vm.machine_credentials = data.resources;
       vm._retirement_machine_credential = _.find(vm.machine_credentials, {id: vm.catalogItemModel.retirement_machine_credential_id});
       vm._provisioning_machine_credential = _.find(vm.machine_credentials, {id: vm.catalogItemModel.provisioning_machine_credential_id});
     })
 
     // list of network credentials
-    API.get("/api/authentications?collection_class=ManageIQ::Providers::AnsibleTower::AutomationManager::NetworkCredential&expand=resources&attributes=id,name" + sort_options).then(function (data) {
+    API.get("/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential&expand=resources&attributes=id,name" + sort_options).then(function (data) {
       vm.network_credentials = data.resources;
       vm._retirement_network_credential = _.find(vm.network_credentials, {id: vm.catalogItemModel.retirement_network_credential_id});
       vm._provisioning_network_credential = _.find(vm.network_credentials, {id: vm.catalogItemModel.provisioning_network_credential_id});
@@ -260,13 +260,12 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
   $scope.cloudTypeChanged = function(prefix) {
     typ = vm.catalogItemModel[prefix + "_cloud_type"];
     // list of cloud credentials based upon selected cloud type
-    url = "/api/authentications?collection_class=ManageIQ::Providers::AnsibleTower::AutomationManager::" + typ + "Credential&expand=resources&attributes=id,name" + sort_options
+    url = "/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::" + typ + "Credential&expand=resources&attributes=id,name" + sort_options
     API.get(url).then(function (data) {
-      vm.cloud_credentials = data.resources;
-      vm._retirement_cloud_credential = _.find(vm.cloud_credentials, {id: vm.catalogItemModel.retirement_cloud_credential_id});
-      vm._provisioning_cloud_credential = _.find(vm.cloud_credentials, {id: vm.catalogItemModel.provisioning_cloud_credential_id});
+      vm[prefix + '_cloud_credentials'] = data.resources;
+      vm[prefix + '_cloud_credential'] = _.find(vm[prefix + '_cloud_credentials'], {id: vm.catalogItemModel[prefix + '_cloud_credential_id']});
     })
-  }
+  };
 
   $scope.$watch('vm.catalogItemModel.display', function(value) {
     vm.catalogItemModel.display = value;
