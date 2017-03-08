@@ -364,11 +364,6 @@ class ApplicationHelper::ToolbarBuilder
       when "rbac_user_delete"
         return N_("User [Administrator] can not be deleted") if @record.userid == 'admin'
       end
-    when 'MiqReportResult'
-      if id == 'report_only'
-        return @report.present? && @report_result_id.present? &&
-          MiqReportResult.find(@report_result_id).try(:miq_report_result_details).try(:length).to_i > 0 ? false : N_("No records found for this report")
-      end
     end
     false
   end
