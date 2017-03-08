@@ -225,6 +225,8 @@
   * @returns {Object} promise of fetched data.
   */
   ReportDataController.prototype.initController = function(initObject) {
+    this.$window.ManageIQ.gtl = this.$window.ManageIQ.gtl || {};
+    this.$window.ManageIQ.gtl.loading = true;
     initObject.modelName = decodeURIComponent(initObject.modelName);
     this.initObjects(initObject);
     this.setExtraClasses(initObject.gtlType);
@@ -245,6 +247,9 @@
         }
         this.setDefaults();
         this.movePagination();
+        this.$timeout(function() {
+          this.$window.ManageIQ.gtl.loading = false;
+        });
         return data;
       }.bind(this));
   };
