@@ -19,7 +19,8 @@
                'ng-include' => "headingInclude"}
           %span.panel-counter{'ng-include' => "subheadingInclude"}
 
-        .panel-collapse.collapse{'ng-class' => "{in: notificationGroup.open}"}
+        .panel-collapse.collapse{'ng-class' => "{in: notificationGroup.open}",
+                                 'ng-if'    => "notificationGroup.open"}
           .panel-body
             .drawer-pf-notification{'ng-class'   => "{unread: notification.unread, 'expanded-notification': drawerExpanded}",
                                     'ng-repeat'  => "notification in notificationGroup.notifications",
