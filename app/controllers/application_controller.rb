@@ -287,7 +287,7 @@ class ApplicationController < ActionController::Base
     @explorer = params[:explorer] == "true" if params[:explorer]
 
     if params[:active_tree]
-      node_info = get_node_info(x_node, false) if methods.include? 'get_node_info'
+      node_info = get_node_info(x_node, false) if defined? get_node_info
       options.merge!(node_info) if node_info.kind_of?(Hash)
     end
 

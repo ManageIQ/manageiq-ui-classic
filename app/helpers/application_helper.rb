@@ -188,6 +188,7 @@ module ApplicationHelper
       GuestApplication
       SystemService
       Filesystem
+      ChargebackRate
     ).include? type
   end
 
@@ -215,7 +216,8 @@ module ApplicationHelper
     "images"            => MiqTemplate,
     "groups"            => Account,
     "users"             => Account,
-    "host_services"     => SystemService
+    "host_services"     => SystemService,
+    "chargebacks"       => ChargebackRate
   }.freeze
 
   HAS_ASSOCATION = %w(
@@ -290,7 +292,8 @@ module ApplicationHelper
   TREE_WITH_TAB = {
     "diagnostics_server_list" => "svr",
     "db_details"              => "tb",
-    "db_indexes"              => "ti"
+    "db_indexes"              => "ti",
+    "report_info"             => "msc"
   }.freeze
 
   # Create a url to show a record from the passed in view
@@ -349,8 +352,8 @@ module ApplicationHelper
         elsif %w(User MiqGroup MiqUserRole Tenant).include?(view.db) &&
               %w(ops).include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node.split("-")[1]
-        elsif %w(VmdbTableEvm VmdbIndex MiqServer).include?(view.db) &&
-              %w(ops).include?(request.parameters[:controller])
+        elsif %w(VmdbTableEvm VmdbIndex MiqServer MiqSchedule).include?(view.db) &&
+              %w(ops report).include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + TREE_WITH_TAB[active_tab]
         else
           return url_for_only_path(:action => action) + "/" # In explorer, don't jump to other controllers

@@ -453,6 +453,7 @@ class ChargebackController < ApplicationController
         end
       end
     end
+    {:view => @view, :pages => @pages}
   end
 
   def cb_rpt_build_folder_nodes
