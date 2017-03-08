@@ -402,6 +402,8 @@ class ServiceController < ApplicationController
   end
 
   def get_session_data
+    super
+    binding.pry
     @title      = _("My Services")
     @layout     = "services"
     @lastaction = session[:svc_lastaction]
@@ -409,6 +411,7 @@ class ServiceController < ApplicationController
   end
 
   def set_session_data
+    super
     session[:svc_lastaction] = @lastaction
     session[:prov_options]   = @options if @options
   end
