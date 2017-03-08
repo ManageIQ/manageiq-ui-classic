@@ -17,7 +17,7 @@ angular.module('miq.notifications').directive('miqNotificationDrawer', ['$window
       notificationFooterInclude: '@',
       customScope: '=?'
     },
-    templateUrl: '/static/miq-notifications/notification-drawer.html',
+    templateUrl: '/static/notification_drawer/notification-drawer.html',
     controller: ['$scope', function ($scope) {
       if (!$scope.allowExpand || angular.isUndefined($scope.drawerExpanded)) {
         $scope.drawerExpanded = false;
