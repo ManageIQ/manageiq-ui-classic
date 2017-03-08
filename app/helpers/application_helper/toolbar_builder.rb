@@ -346,22 +346,6 @@ class ApplicationHelper::ToolbarBuilder
     img
   end
 
-  def get_record_cls(record)
-    if record.kind_of?(AvailabilityZone)
-      record.class.base_class.name
-    elsif MiqRequest.descendants.include?(record.class)
-      record.class.base_class.name
-    else
-      klass = case record
-              when ContainerNode, ContainerGroup, Container then record.class.base_class
-              when Host, ExtManagementSystem                then record.class.base_class
-              when VmOrTemplate                             then record.class.base_model
-              else                                               record.class
-              end
-      klass.name
-    end
-  end
-
   # Determine if a button should be selected for buttonTwoState
   def twostate_button_selected(id)
     return true if id.starts_with?("view_") && id.ends_with?("textual")  # Summary view buttons
