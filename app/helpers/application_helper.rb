@@ -34,6 +34,19 @@ module ApplicationHelper
     end
   end
 
+  def websocket_origin
+    proto = request.ssl? ? 'wss' : 'ws'
+    # Retrieve the host that needs to be explicitly allowed for websocket connections
+    host = if request.env['HTTP_X_FORWARDED_HOST']
+             # Use the first proxy (production)
+             request.env['HTTP_X_FORWARDED_HOST'].split(/,\s*/).first
+           else
+             # Use the HOST header (development)
+             request.env['HTTP_HOST']
+           end
+    "#{proto}://#{host}"
+  end
+
   def valid_html_id(id)
     id = id.to_s.gsub("::", "__")
     raise "HTML ID is not valid" if /[^\w_]/.match(id)
