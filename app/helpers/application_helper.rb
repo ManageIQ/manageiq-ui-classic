@@ -657,44 +657,6 @@ module ApplicationHelper
     end
   end
 
-  CUSTOM_TOOLBAR_CONTROLLERS = [
-    "cloud_tenant",
-    "service",
-    "vm_cloud",
-    "vm_infra",
-    "vm_or_template"
-  ]
-  # Return a blank tb if a placeholder is needed for AJAX explorer screens, return nil if no custom toolbar to be shown
-  def custom_toolbar_filename
-    if %w(cloud_tenant
-          ems_cloud
-          ems_cluster
-          ems_infra
-          ems_network
-          ems_storage
-          ems_physical_infra
-          host
-          miq_template
-          storage).include?(@layout) # Classic CIs
-      return "custom_buttons_tb" if @record && @lastaction == "show" && @display == "main"
-    end
-
-    if @explorer && CUSTOM_TOOLBAR_CONTROLLERS.include?(params[:controller])
-      if x_tree            # Make sure we have the trees defined
-        if x_node == "root" || # If on a root, create placeholder toolbar
-           !@record                                                  #   or no record showing
-          return "blank_view_tb"
-        elsif @display == "main"
-          return "custom_buttons_tb"
-        else
-          return "blank_view_tb"
-        end
-      end
-    end
-
-    nil
-  end
-
   # Return a blank tb if a placeholder is needed for AJAX explorer screens, return nil if no center toolbar to be shown
   def center_toolbar_filename
     _toolbar_chooser.center_toolbar_filename
