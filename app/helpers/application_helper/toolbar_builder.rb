@@ -364,23 +364,6 @@ class ApplicationHelper::ToolbarBuilder
       when "rbac_user_delete"
         return N_("User [Administrator] can not be deleted") if @record.userid == 'admin'
       end
-    when "MiqTemplate"
-      case id
-      when "image_check_compliance", "miq_template_check_compliance"
-        unless @record.has_compliance_policies?
-          return N_("No Compliance Policies assigned to this %{vm}") %
-            {:vm => ui_lookup(:model => model_for_vm(@record).to_s)}
-        end
-      when "miq_template_perf"
-        return N_("No Capacity & Utilization data has been collected for this Template") unless @record.has_perf_data?
-      when "miq_template_scan", "image_scan"
-        return @record.unsupported_reason(:smartstate_analysis) unless @record.supports_smartstate_analysis?
-        return @record.active_proxy_error_message unless @record.has_active_proxy?
-      when "miq_template_timeline"
-        unless @record.has_events? || @record.has_events?(:policy_events)
-          return N_("No Timeline data has been collected for this Template")
-        end
-      end
     when 'MiqReportResult'
       if id == 'report_only'
         return @report.present? && @report_result_id.present? &&
