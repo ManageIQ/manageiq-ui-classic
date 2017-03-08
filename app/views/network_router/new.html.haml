@@ -16,34 +16,9 @@
                       "ng-change"                   => "filterNetworkManagerChanged(networkRouterModel.ems_id)",
                       "selectpicker-for-select-tag" => "")
 
-  %h3
-    = _('Basic Information')
-  .form-horizontal
-    .form-group
-      %label.col-md-2.control-label
-        = _('Router Name')
-      .col-md-8
-        %input.form-control{:type          => "text",
-                            :name          => "name",
-                            'ng-model'     => "networkRouterModel.name",
-                            'ng-maxlength' => 128,
-                            :miqrequired   => true,
-                            :checkchange   => true}
-    .form-group{"ng-if" => "networkRouterModel.ems_id"}
-      %label.col-md-2.control-label
-        = _('Network')
-      .col-md-8
-        %select{"name"                        => "cloud_network_id",
-                "ng-model"                    => "networkRouterModel.cloud_network_id",
-                "required"                    => "",
-                :miqrequired                  => true,
-                :checkchange                  => true,
-                'ng-options'                  => 'network.id as network.name for network in available_networks',
-                'pf-select'                   => true,
-                "selectpicker-for-select-tag" => ""}
-          %option{"value" => ""}
-            = "<#{_('Choose')}>"
+    = render :partial => "common_new_edit"
 
+  %h3
     = _('Placement')
   .form-horizontal
     .form-group

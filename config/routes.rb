@@ -1795,6 +1795,7 @@ Rails.application.routes.draw do
         index
         network_router_form_fields
         network_router_networks_by_ems
+        network_router_subnets_by_network
         new
         remove_interface_select
         show
