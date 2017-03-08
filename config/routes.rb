@@ -2015,7 +2015,6 @@ Rails.application.routes.draw do
         show_list
       ),
       :post => %w(
-        show_list
       )
     },
 
@@ -2023,13 +2022,10 @@ Rails.application.routes.draw do
       :get => %w(
         download_data
         download_summary_pdf
-        edit
-        new
         show
         show_list
       ),
       :post => %w(
-        show_list
       )
     },
 

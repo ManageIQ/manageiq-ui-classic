@@ -662,14 +662,6 @@ class ApplicationHelper::ToolbarChooser
     end
   end
 
-  def ansible_repository_center_tb
-    "ansible_repository_center_tb"
-  end
-
-  def ansible_repositories_center_tb
-    "ansible_repositories_center_tb"
-  end
-
   def unassigned_configuration_profile_node(nodes)
     configuration_profile_center_tb if nodes[2] == "unassigned"
   end

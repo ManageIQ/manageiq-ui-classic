@@ -36,7 +36,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
   };
 
   $scope.cancelClicked = function() {
-    getBack();
+    getBack('Action canceled by user.', 'warning');
   };
 
   $scope.resetClicked = function() {
@@ -46,28 +46,31 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
   };
 
   $scope.saveClicked = function() {
-    API.put('/api/configuration_script_sources/' + repositoryId, vm.repositoryModel)
-      .then(getBack)
-      .catch(miqService.handleFailure);
+    // TODO send
+    //API.put('/api/configuration_script_sources/' + repositoryId, vm.repositoryModel)
+    //  .then(getBack)
+    //  .catch(miqService.handleFailure);
+    getBack('Repository saved', 'success');
   };
 
   $scope.addClicked = function() {
-    API.post('/api/configuration_script_sources', vm.repositoryModel)
-       .then(getBack)
-       .catch(miqService.handleFailure);
+    // TODO send all info
+    //API.post('/api/configuration_script_sources/', {name: vm.repositoryModel.name, description: vm.repositoryModel.description})
+    //   .then(getBack)
+    //   .catch(miqService.handleFailure);
+    getBack('Repository added', 'success');
   };
 
   function getRepositoryFormData(response) {
-    var data = response.data;
+    var data = response;
     Object.assign(vm.repositoryModel, data);
     vm.modelCopy = angular.copy( vm.repositoryModel );
     vm.afterGet = true;
     miqService.sparkleOff();
   }
 
-  function getBack() {
-    // TODO add flash message
-    window.location.href = '/ansible_repository/show_list';
+  function getBack(message, level) {
+    window.location.href = '/ansible_repository/show_list' + '?message=' + message + '&level=' + level;
   }
 
   init();

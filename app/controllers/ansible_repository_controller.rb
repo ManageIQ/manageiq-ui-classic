@@ -19,19 +19,22 @@ class AnsibleRepositoryController < ApplicationController
     ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource
   end
 
-  def get_session_data
-    @center_toolbar = 'ansible_repositories'
-    super
-  end
-
   def button
     if params[:pressed] == "embedded_configuration_script_source_edit"
+      binding.pry
       id = from_cid(params[:miq_grid_checks])
       javascript_redirect :action => 'edit', :id => id
     elsif params[:pressed] == "embedded_configuration_script_source_add"
       javascript_redirect :action => 'new'
     elsif params[:pressed] == "embedded_configuration_script_source_delete"
-      binding.pry
+      ids = params[:miq_grid_checks].split(',')
+      ids.each do |id|
+        ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource.delete(from_cid(id).to_i)
+      end
+      # TODO nicer way?
+      add_flash(_('Selected repositories were deleted'), :success)
+      show_list
+      replace_gtl_main_div
     end
   end
 
@@ -47,6 +50,21 @@ class AnsibleRepositoryController < ApplicationController
 
   def display_playbooks
     nested_list("ansible_playbook", ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
+  end
+
+  def show
+    @center_toolbar = 'ansible_repository'
+    super
+  end
+
+  def show_list
+    @center_toolbar = 'ansible_repositories'
+    # TODO remove adding stuff
+    if params[:message].present?
+      add_flash(params[:message], params[:level].to_sym)
+      ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource.create(:name => 'dummy Repository', :description => "Couldn't save your repository :P ")
+    end
+    super
   end
 
   private
