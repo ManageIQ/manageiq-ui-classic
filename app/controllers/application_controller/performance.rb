@@ -11,9 +11,10 @@ module ApplicationController::Performance
       @perf_options.update_from_params(params)
     end
 
-    case @perf_options[:chart_type]
-    when :performance
-      perf_set_or_fix_dates(@perf_options, !params[:perf_typ]) unless params[:task_id] # Set dates if first time thru
+    if @perf_options[:chart_type] == :performance
+      unless params[:task_id] # Set dates if first time thru
+        perf_set_or_fix_dates(@perf_options, !params[:perf_typ])
+      end
       unless @no_util_data
         perf_gen_data # Go generate the task
         return unless @charts # Return if no charts got created (first time thru async rpt gen)
@@ -161,19 +162,17 @@ module ApplicationController::Performance
 
   # Correct any date that is out of the date/range or not allowed in a profile
   def perf_set_or_fix_dates(options, allow_interval_override = true)
-    # Get start/end dates in selected timezone
-    s, e = @perf_record.first_and_last_capture('hourly')
-    if s.nil?
-      s, e = @perf_record.first_and_last_capture('realtime')
-      if s.nil?
-        add_flash(_("No Utilization data available"), :warning)
-        @no_util_data = true
-        return
-      end
+    start_date, end_date = @perf_record.first_and_last_capture('hourly')
+    start_date, end_date = @perf_record.first_and_last_capture('realtime') if realtime = start_date.nil?
+    if start_date.nil? && realtime
+      add_flash(_("No Utilization data available"), :warning)
+      @no_util_data = true
+      return
+    elsif realtime
       options[:typ] = "realtime"
       options[:no_rollups] = true
     end
-    @perf_options.set_dates(s, e, allow_interval_override)
+    @perf_options.set_dates(start_date, end_date, allow_interval_override)
   end
 
   def skip_days_from_time_profile(time_profile_days)
