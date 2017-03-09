@@ -130,13 +130,20 @@ module ApplicationController::Performance
 
   def perf_breadcrumb
     name = @perf_record.respond_to?(:evm_display_name) ? @perf_record.evm_display_name : @perf_record.name
+    url = url_for_only_path(:action => "show",
+                            :id => @perf_record,
+                            :display => "performance",
+                            :refresh => "n")
     if @perf_options.cat
       drop_breadcrumb(:name => _("%{name} Capacity & Utilization (by %{option}:%{model})") %
-                      {:name => name, :option => @perf_options.cats[@perf_options.cat_model], :model => @perf_options.cat},
-                      :url  => url_for_only_path(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
+                      {:name => name,
+                       :option => @perf_options.cats[@perf_options.cat_model],
+                       :model => @perf_options.cat},
+                      :url => url)
     else
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => name},
-                      :url  => url_for_only_path(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
+      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") %
+                      {:name => name},
+                      :url  => url)
     end
   end
 
