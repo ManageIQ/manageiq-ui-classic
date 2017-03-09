@@ -712,7 +712,7 @@ module ApplicationHelper
     end
 
     toolbars['center_tb'] = center_toolbar_filename
-    if fname = custom_toolbar_filename
+    if fname = controller.custom_toolbar_filename
       toolbars['custom_tb'] = fname
     end
 
