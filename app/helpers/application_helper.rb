@@ -350,6 +350,8 @@ module ApplicationHelper
         elsif %w(VmdbTableEvm VmdbIndex MiqServer MiqSchedule).include?(view.db) &&
               %w(ops report).include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + TREE_WITH_TAB[active_tab]
+        elsif %w(MiqReportResult).include?(view.db) && %w(report).include?(request.parameters[:controller])
+          return "/#{request.parameters[:controller]}/x_show/#{TreeBuilder.get_prefix_for_model(x_tree[:leaf])}-"
         else
           return url_for_only_path(:action => action) + "/" # In explorer, don't jump to other controllers
         end

@@ -749,6 +749,10 @@ div.disabled {
   width: 94%;
 }
 
+#main-content.miq-list-content ~ .no-padding #paging_div #pc_div_1 {
+  display: none !important;
+}
+
 .miq-page-counter {
   padding: 0 !important;
 }

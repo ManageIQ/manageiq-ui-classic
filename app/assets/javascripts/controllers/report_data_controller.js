@@ -158,6 +158,9 @@
       var itemId = item.id;
       if (this.initObject.showUrl.indexOf('?id=') !== -1 ) {
         itemId = this.initObject.showUrl.indexOf('xx-') !== -1 ? '_-' + item.id : '-' + item.id;
+        if (this.initObject.showUrl.indexOf('?id=root') !== -1) {
+          itemId += '-' + item.id;
+        }
       }
       var url = prefix + itemId;
       $.post(url).always(function() {
@@ -249,7 +252,7 @@
         this.movePagination();
         this.$timeout(function() {
           this.$window.ManageIQ.gtl.loading = false;
-        });
+        }.bind(this));
         return data;
       }.bind(this));
   };
