@@ -360,7 +360,7 @@ module ApplicationController::Performance
       @record = identify_tl_or_perf_record
       @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
       @perf_options[:typ] = "Daily"
-      perf_set_or_fix_dates(false)  unless params[:task_id] # Set dates if first time thru
+      perf_set_or_fix_dates(false) unless params[:task_id] # Set dates if first time thru
       perf_gen_data
       return unless @charts        # Return if no charts got created (first time thru async rpt gen)
 
@@ -523,13 +523,13 @@ module ApplicationController::Performance
   def perf_gen_data
     perf_breadcrumb
     unless @perf_options[:typ] == "realtime"
-      if @perf_options[:cat]                                      # If a category was chosen, generate charts by tag
+      if @perf_options[:cat] # If a category was chosen, generate charts by tag
         perf_gen_tag_data
         return
       end
     end
 
-    unless params[:task_id]                                     # First time thru, kick off the report generate task
+    unless params[:task_id] # First time thru, kick off the report generate task
       perf_gen_data_before_wait
     else
       perf_gen_data_after_wait
@@ -664,14 +664,16 @@ module ApplicationController::Performance
       chart[:trends].delete_if { |trend| trend.include?("reserved") } if chart[:trends]
     end
     if chart[:title].include?("by Type")
-      chart[:columns].delete_if { |col| !col.include?("_" + @perf_options[:vmtype]) } if @perf_options[:vmtype] && @perf_options[:vmtype] != "<All>"
+      chart[:columns].delete_if do |col|
+        !col.include?("_" + @perf_options[:vmtype])
+      end if @perf_options[:vmtype] && @perf_options[:vmtype] != "<All>"
     end
   end
 
   # Generate performance data by tag for a model's charts
   def perf_gen_tag_data
     @perf_options[:chart_type] = :performance
-    unless params[:task_id]                       # First time thru, kick off the report generate task
+    unless params[:task_id] # First time thru, kick off the report generate task
       perf_gen_tag_data_before_wait
     else
       perf_gen_tag_data_after_wait
@@ -1095,7 +1097,6 @@ module ApplicationController::Performance
       if @sb[:planning][:options][:trend_vcpus]
         rpt.db_options[:options][:target_options][:vcpus] = {
           :mode        => :current,
-          #         :metric     => :num_cpu, # Not applicable to vcpus
           :limit_col   => :total_vcpus, # not sure of name, but should be # vcpus/core times # of cores
           :limit_ratio => @sb[:planning][:options][:limit_vcpus]
         }
@@ -1442,9 +1443,6 @@ module ApplicationController::Performance
     new_rpt.table = Marshal.load(Marshal.dump(report.table))
     keepcols = []
     keepcols += ["timestamp", "statistic_time"] unless @top_chart
-    #   keepcols += ["resource_name"] if @charts.first[:type].include?("Pie")
-    #   keepcols += @charts.first[:columns]
-    #   keepcols += @charts.first[:chart2][:columns] if @charts.first[:chart2]
     keepcols += ["resource_name"] if charts[:type].include?("Pie")
     keepcols += charts[:columns]
     keepcols += charts[:chart2][:columns] if charts[:chart2]
