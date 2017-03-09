@@ -123,14 +123,7 @@ module ApplicationController::Performance
     report = perf_remove_report_cols(report)  # Remove cols that are not in the current chart
     filename = @breadcrumbs.last[:name] + " - " + report.title
     disable_client_cache
-    case params[:typ]
-    when "txt"
-      send_data(report.to_text,
-                :filename => "#{filename}.txt")
-    when "csv"
-      send_data(report.to_csv,
-                :filename => "#{filename}.csv")
-    end
+    send_data(report.to_text, :filename => "#{filename}.#{params[:typ]}")
   end
 
   private ############################
