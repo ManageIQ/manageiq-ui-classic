@@ -1,4 +1,8 @@
 class MiddlewareDomainDecorator < MiqDecorator
+  def self.fonticon
+    'pficon-domain'
+  end
+
   def fonticon
     'pficon-domain'
   end
