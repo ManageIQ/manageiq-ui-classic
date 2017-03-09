@@ -1,7 +1,11 @@
 describe ApplicationHelper::Button::TenantAdd do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:options) { {:feature => 'rbac_project_add'} }
+  let(:record) { FactoryGirl.create(:tenant) }
+  let(:feature) { 'rbac_project_add' }
+  let(:options) { {:feature => feature} }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, {:options => options}) }
+
+  it_behaves_like 'a generic feature button after initialization'
 
   describe '#visible?' do
     subject { button.visible? }
@@ -10,7 +14,6 @@ describe ApplicationHelper::Button::TenantAdd do
       it { expect(subject).to be_falsey }
     end
     context 'when record is not a project' do
-      let(:record) { FactoryGirl.create(:tenant) }
       it { expect(subject).to be_truthy }
     end
   end

@@ -1,24 +1,29 @@
 describe ApplicationHelper::Button::StorageScan do
   let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:hosts) { [] }
+  let(:host) { FactoryGirl.create(:host, :state => 'on') }
+  let(:hosts) { [host] }
+  let(:authenticated_hosts) { hosts }
   let(:record) { FactoryGirl.create(:storage, :hosts => hosts) }
   let(:feature) { :smartstate_analysis }
   let(:props) { {:options => {:feature => feature}} }
   let(:button) { described_class.new(view_context, {}, {'record' => record}, props) }
 
-  describe '#calculate_properties' do
-    let(:authenticated_hosts) { hosts }
-    before do
-      allow(record).to receive(:supports?).and_return(feature_supported?)
-      allow(record).to receive(:active_hosts_with_authentication_status_ok).and_return(authenticated_hosts)
-      button.calculate_properties
-    end
+  before { allow(record).to receive(:active_hosts_with_authentication_status_ok).and_return(authenticated_hosts) }
 
-    context 'when feature is supported' do
-      let(:feature_supported?) { true }
-      let(:hosts) { [host] }
+  it_behaves_like 'a generic feature button after initialization'
+
+  context 'when feature is not supported' do
+    it_behaves_like 'GenericFeatureButtonWithDisabled#calculate_properties'
+  end
+
+  context 'when feature is supported' do
+    describe '#calculate_properties' do
+      before do
+        allow(record).to receive(:supports?).and_return(true)
+        button.calculate_properties
+      end
+
       context 'and there are active hosts' do
-        let(:host) { FactoryGirl.create(:host, :state => 'on') }
         context 'but none has valid credentials for the Datastore' do
           let(:authenticated_hosts) { [] }
           it_behaves_like 'a disabled button', 'There are no running Hosts with valid credentials for this Datastore'
