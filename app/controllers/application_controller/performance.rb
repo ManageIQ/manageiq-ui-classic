@@ -528,12 +528,8 @@ module ApplicationController::Performance
         return
       end
     end
-
-    unless params[:task_id] # First time thru, kick off the report generate task
-      perf_gen_data_before_wait
-    else
-      perf_gen_data_after_wait
-    end
+    # First time thru, kick off the report generate task
+    params[:task_id] ? perf_gen_data_after_wait : perf_gen_data_before_wait
   end
 
   # Generate performance data for a model's charts - kick off report task
@@ -663,21 +659,18 @@ module ApplicationController::Performance
       chart[:columns].delete_if { |col| col.include?("reserved") }
       chart[:trends].delete_if { |trend| trend.include?("reserved") } if chart[:trends]
     end
-    if chart[:title].include?("by Type")
+    if chart[:title].include?("by Type") && @perf_options[:vmtype] && @perf_options[:vmtype] != "<All>"
       chart[:columns].delete_if do |col|
         !col.include?("_" + @perf_options[:vmtype])
-      end if @perf_options[:vmtype] && @perf_options[:vmtype] != "<All>"
+      end
     end
   end
 
   # Generate performance data by tag for a model's charts
   def perf_gen_tag_data
     @perf_options[:chart_type] = :performance
-    unless params[:task_id] # First time thru, kick off the report generate task
-      perf_gen_tag_data_before_wait
-    else
-      perf_gen_tag_data_after_wait
-    end
+    # First time thru, kick off the report generate task
+    params[:task_id] ? perf_gen_tag_data_after_wait : perf_gen_tag_data_before_wait
   end
 
   # Generate performance data by tag - kick off report task
