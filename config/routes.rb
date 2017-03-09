@@ -2015,7 +2015,7 @@ Rails.application.routes.draw do
         show_list
       ),
       :post => %w(
-      )
+        show_list)
     },
 
     :ansible_playbook => {
@@ -2026,7 +2026,7 @@ Rails.application.routes.draw do
         show_list
       ),
       :post => %w(
-      )
+        show_list)
     },
 
     :ansible_repository => {

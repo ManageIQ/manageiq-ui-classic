@@ -6,34 +6,34 @@
     %form#form_div{:name           => "angularForm",
                    'ng-controller' => "repositoryFormController as vm",
                    'ng-show'       => "vm.afterGet",
-                    "miq-form"       => true,
-                    "model"          => "vm.repositoryModel",
-                    "model-copy"     => 'vm.modelCopy',
+                    "miq-form"     => true,
+                    "model"        => "vm.repositoryModel",
+                    "model-copy"   => 'vm.modelCopy',
                    :novalidate     => true}
       = render :partial => "layouts/flash_msg"
       .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
         %label.col-md-2.control-label
           = _('Name')
         .col-md-8
-          %input.form-control{:type              => "text",
-                                :name            => "name",
-                                "id"             => "name",
-                                'ng-model'       => "vm.repositoryModel.name",
-                                :maxlength       => MAX_NAME_LEN,
-                                :required        => "",
-                                :checkchange     => true,
-                                "auto-focus"     => ""}
+          %input.form-control{:type          => "text",
+                                :name        => "name",
+                                "id"         => "name",
+                                'ng-model'   => "vm.repositoryModel.name",
+                                :maxlength   => MAX_NAME_LEN,
+                                :required    => "",
+                                :checkchange => true,
+                                "auto-focus" => ""}
           %span.help-block{"ng-show" => "angularForm.name.$error.required"}
             = _("Required")
       .form-group
         %label.col-md-2.control-label
           = _('Description')
         .col-md-8
-          %input.form-control{:type            => "text",
-                              :name            => "description",
-                              "id"             => "description",
-                              'ng-model'       => "vm.repositoryModel.description",
-                              :checkchange     => true}
+          %input.form-control{:type        => "text",
+                              :name        => "description",
+                              "id"         => "description",
+                              'ng-model'   => "vm.repositoryModel.description",
+                              :checkchange => true}
       .form-group
         %label.col-md-2.control-label
           = _('SCM type')
@@ -46,12 +46,12 @@
         %label.col-md-2.control-label
           = _('URL')
         .col-md-8
-          %input.form-control{:type              => "url",
-                                :name            => "href",
-                                :id             => "href",
-                                'ng-model'       => "vm.repositoryModel.href",
-                                :required        => "",
-                                :checkchange     => true}
+          %input.form-control{:type          => "url",
+                                :name        => "scm_url",
+                                :id          => "scm_url",
+                                'ng-model'   => "vm.repositoryModel.href",
+                                :required    => "",
+                                :checkchange => true}
           %span.help-block{"ng-show" => "angularForm.href.$error.required"}
             = _("Required")
           %span.help-block{"ng-show" => "angularForm.href.$error.url"}
@@ -62,35 +62,35 @@
         .col-md-8
           = select_tag('scm_credentials',
                          options_for_select([["#{_('whatever')}", "wharever"]]),
-                         "ng-model"                    => "vm.repositoryModel.scm_credentials",
-                         "checkchange"                 => "",
+                         "ng-model"    => "vm.repositoryModel.scm_credentials",
+                         "checkchange" => "",
                          "pf-select" => "")
       .form-group
         %label.col-md-2.control-label
           = _('SCM Branch')
         .col-md-8
-          %input.form-control{:type            => "text",
-                              :name            => "branch",
-                              "id"             => "branch",
-                              'ng-model'       => "vm.repositoryModel.branch",
-                              :checkchange     => true}
+          %input.form-control{:type        => "text",
+                              :name        => "scm_branch",
+                              "id"         => "scm_branch",
+                              'ng-model'   => "vm.repositoryModel.scm_branch",
+                              :checkchange => true}
       .form-group
         %label.col-md-2.control-label
           = _('SCM Update Options')
         .col-md-8
           %div
             %label
-              = check_box_tag("clean", "1", false, 'ng-model' => "vm.repositoryModel.clean")
+              = check_box_tag("clean", "1", false, 'ng-model' => "vm.repositoryModel.scm_clean")
               = _('Clean')
             %i.pficon.pficon-info
           %div
             %label
-              = check_box_tag("clean", "1", false, 'ng-model' => 'vm.repositoryModel.deleteOnUpdate')
+              = check_box_tag("clean", "1", false, 'ng-model' => 'vm.repositoryModel.scm_delete_on_update')
               = _('Delete on Update')
             %i.pficon.pficon-info
           %div
             %label
-              = check_box_tag("clean", "1", false, 'ng-model' => 'vm.repositoryModel.updateOnLaunch')
+              = check_box_tag("clean", "1", false, 'ng-model' => 'vm.repositoryModel.scm_update_on_launch')
               = _('Update on Launch')
             %i.pficon.pficon-info
 

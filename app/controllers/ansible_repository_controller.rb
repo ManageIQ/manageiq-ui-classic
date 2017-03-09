@@ -10,6 +10,7 @@ class AnsibleRepositoryController < ApplicationController
   include Mixins::GenericShowMixin
 
   menu_section :ansible
+  toolbar :ansible_repository
 
   def self.display_methods
     %w(playbooks)
@@ -52,13 +53,7 @@ class AnsibleRepositoryController < ApplicationController
     nested_list("ansible_playbook", ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
   end
 
-  def show
-    @center_toolbar = 'ansible_repository'
-    super
-  end
-
   def show_list
-    @center_toolbar = 'ansible_repositories'
     # TODO remove adding stuff
     if params[:message].present?
       add_flash(params[:message], params[:level].to_sym)

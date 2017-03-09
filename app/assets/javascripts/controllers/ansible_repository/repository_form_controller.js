@@ -8,10 +8,10 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
       scm_type: 'git',
       href: '',
       scm_credentials: '',
-      branch: '',
-      clean: false,
-      deleteOnUpdate: false,
-      updateOnLaunch: false
+      scm_branch: '',
+      scm_clean: false,
+      scm_delete_on_update: false,
+      scm_update_on_launch: false
     };
 
     $scope.newRecord = repositoryId == 'new';
