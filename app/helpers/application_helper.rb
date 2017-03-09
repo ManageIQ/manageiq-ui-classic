@@ -712,9 +712,8 @@ module ApplicationHelper
     end
 
     toolbars['center_tb'] = center_toolbar_filename
-    if fname = controller.custom_toolbar_filename
-      toolbars['custom_tb'] = fname
-    end
+    fname = controller.custom_toolbar_filename
+    toolbars['custom_tb'] = fname if fname
 
     toolbars['view_tb'] = inner_layout_present? ? x_view_toolbar_filename : view_toolbar_filename
     toolbars
