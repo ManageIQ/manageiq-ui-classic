@@ -161,6 +161,7 @@ module ApplicationHelper
 
     Rbac.role_allows?(options.merge(:user => User.current_user)) rescue false
   end
+
   module_function :role_allows?
   public :role_allows?
   alias_method :role_allows, :role_allows?
@@ -174,7 +175,10 @@ module ApplicationHelper
 
   def controller_to_model
     case self.class.model.to_s
-    when "ManageIQ::Providers::CloudManager::Template", "ManageIQ::Providers::CloudManager::Vm", "ManageIQ::Providers::InfraManager::Template", "ManageIQ::Providers::InfraManager::Vm"
+    when "ManageIQ::Providers::CloudManager::Template",
+         "ManageIQ::Providers::CloudManager::Vm",
+         "ManageIQ::Providers::InfraManager::Template",
+         "ManageIQ::Providers::InfraManager::Vm"
       VmOrTemplate
     else
       self.class.model
