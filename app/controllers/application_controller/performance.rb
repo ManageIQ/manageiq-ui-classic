@@ -13,7 +13,7 @@ module ApplicationController::Performance
 
     if @perf_options[:chart_type] == :performance
       unless params[:task_id] # Set dates if first time thru
-        perf_set_or_fix_dates(@perf_options, !params[:perf_typ])
+        perf_set_or_fix_dates(!params[:perf_typ])
       end
       unless @no_util_data
         perf_gen_data # Go generate the task
@@ -161,7 +161,7 @@ module ApplicationController::Performance
   end
 
   # Correct any date that is out of the date/range or not allowed in a profile
-  def perf_set_or_fix_dates(options, allow_interval_override = true)
+  def perf_set_or_fix_dates(allow_interval_override = true)
     start_date, end_date = @perf_record.first_and_last_capture('hourly')
     start_date, end_date = @perf_record.first_and_last_capture('realtime') if realtime = start_date.nil?
     if start_date.nil? && realtime
@@ -169,8 +169,8 @@ module ApplicationController::Performance
       @no_util_data = true
       return
     elsif realtime
-      options[:typ] = "realtime"
-      options[:no_rollups] = true
+      @perf_options[:typ] = "realtime"
+      @perf_options[:no_rollups] = true
     end
     @perf_options.set_dates(start_date, end_date, allow_interval_override)
   end
@@ -330,7 +330,7 @@ module ApplicationController::Performance
       @perf_options[:typ] = "Hourly"
       @perf_options[:hourly_date] = [ts.month, ts.day, ts.year].join("/")
 
-      perf_set_or_fix_dates(@perf_options)  unless params[:task_id] # Set dates if first time thru
+      perf_set_or_fix_dates unless params[:task_id] # Set dates if first time thru
       perf_gen_data
 
       return unless @charts      # Return if no charts got created (first time thru async rpt gen)
@@ -364,7 +364,7 @@ module ApplicationController::Performance
       @record = identify_tl_or_perf_record
       @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
       @perf_options[:typ] = "Daily"
-      perf_set_or_fix_dates(@perf_options, false)  unless params[:task_id] # Set dates if first time thru
+      perf_set_or_fix_dates(false)  unless params[:task_id] # Set dates if first time thru
       perf_gen_data
       return unless @charts        # Return if no charts got created (first time thru async rpt gen)
 
@@ -513,7 +513,7 @@ module ApplicationController::Performance
     end
 
     # Get start/end dates in selected timezone, but only right before displaying the chart options screen
-    perf_set_or_fix_dates(@perf_options) if params[:action] == "perf_chart_chooser"
+    perf_set_or_fix_dates if params[:action] == "perf_chart_chooser"
 
     @perf_options[:days] ||= "7"
     @perf_options[:ght_type] ||= "hybrid"
