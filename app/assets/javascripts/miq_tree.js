@@ -212,7 +212,6 @@ function miqOnClickHostNet(id) {
 
 // OnClick handler for Report Menu Tree
 function miqOnClickTimelineSelection(id) {
-  debugger;
   var allIds = id.split('xx-');
   if (allIds.length > 3) {
     var rep_id = allIds[allIds.length - 1].split('__');

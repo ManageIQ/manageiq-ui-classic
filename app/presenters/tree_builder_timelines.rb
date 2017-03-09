@@ -1,7 +1,7 @@
 class TreeBuilderTimelines < TreeBuilder
   has_kids_for Hash, [:x_get_tree_hash_kids]
 
-  def override(node, object, _pid, options)
+  def override(node, object, _pid, _options)
     node[:expand] = object[:expand] if object[:expand].present?
   end
 
@@ -13,17 +13,20 @@ class TreeBuilderTimelines < TreeBuilder
   private
 
   def set_locals_for_render
-    super.merge!(:id_prefix         => 'timelines_',
-                 :onclick     => "miqOnClickTimelineSelection",
-                 :click_url => "/dashboard/show_timeline/",
-                 :cfmeNoClick => true,
-                 :tree_state  => true)
+    super.merge!(
+      :id_prefix  => 'timelines_',
+      :onclick    => "miqOnClickTimelineSelection",
+      :click_url  => "/dashboard/show_timeline/",
+      :tree_state => true
+    )
   end
 
   def tree_init_options(_tree_name)
-    {:full_ids             => true,
-     :lazy => false,
-     :add_root             => false}
+    {
+      :full_ids => true,
+      :lazy     => false,
+      :add_root => false
+    }
   end
 
   def root_options
@@ -32,13 +35,14 @@ class TreeBuilderTimelines < TreeBuilder
 
   def x_get_tree_roots(count_only, _options)
     menus = @menu.map do |item|
+      title = item.first
       {
-        :id          => "r__#{item.first}",
-        :text => t = item.first,
+        :text        => title,
+        :id          => "r__#{title}",
         :icon        => 'pficon pficon-folder-close',
-        :tip         => t,
+        :tip         => title,
         :cfmeNoClick => true,
-        :expand => true,
+        :expand      => true,
         :subsections => item.last
       }
     end
@@ -48,22 +52,24 @@ class TreeBuilderTimelines < TreeBuilder
   def x_get_tree_hash_kids(parent, count_only)
     subsections = parent[:subsections].map do |item|
       if item.kind_of?(Array)
+        title = item.first
         {
-          :id          => "p__#{item.first}",
-          :text => t = item.first,
+          :text        => title,
+          :id          => "p__#{title}",
           :icon        => 'pficon pficon-folder-close',
-          :tip         => _("Group: %{:name}" % {:name => t}),
-          :expand => false,
+          :tip         => _("Group: %{:name}" % {:name => title}),
+          :expand      => false,
+          :cfmeNoClick => true,
           :subsections => item.last
         }
       else
-        report = MiqReport.find_by_name(item)
+        report = MiqReport.find_by(:name => item)
         if report.present?
           {
+            :text        => item,
             :id          => "#{report.id}__#{item}",
-            :text => t = item,
             :icon        => "fa fa-arrow-circle-o-right",
-            :tip         => _("Report: %{:name}" % {:name => t}),
+            :tip         => _("Report: %{:name}" % {:name => item}),
             :subsections => []
           }
         end
@@ -71,5 +77,4 @@ class TreeBuilderTimelines < TreeBuilder
     end
     count_only_or_objects(count_only, subsections.compact)
   end
-
 end
