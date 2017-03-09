@@ -1,0 +1,16 @@
+.row
+  .col-md-12.col-lg-6
+    %hr
+      %h3= _("#{label}")
+      = text_area("textual", "data",
+          :value => "#{value}",
+          :size => "90x20",
+          :disabled => true,
+          :style => "display:none;")
+      -# Create a MyCodeMirror editor for the text area
+      = render(:partial => "/layouts/my_code_mirror",
+        :locals => {:text_area_id => "textual_data",
+          :mode => "#{mode}",
+          :line_numbers => true,
+          :read_only => true})
+

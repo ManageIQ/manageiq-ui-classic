@@ -1,8 +1,12 @@
 = render :partial => "layouts/textual_groups_generic"
 - if @record.type == "ServiceAnsiblePlaybook"
   #services_tab
+    - job = @record.try(:job, "Retirement")
+    - unless job
+      -# show header when Retirement tab is not visible,
+      -# tabs are only displayed when there are are more than 1 tab on screen
+      %h3= _("Provisioning")
     %ul.nav.nav-tabs
-      - job = @record.try(:job, "Retirement")
       = miq_tab_header("provisioning") do
         = _("Provisioning")
       - if job
@@ -11,11 +15,15 @@
     .tab-content
       = miq_tab_content("provisioning", 'default') do
         = render :partial => "layouts/textual_groups_tabs", :locals => {:groups => textual_provisioning_group_list}
+        - if @job && @job.try(:raw_stdout)
+          = render :partial => "layouts/textual_code_mirror", :locals => {:label => 'Standard Output', :value => @job.raw_stdout, :mode => "htmlmixed"}
       - if job
         = miq_tab_content("retirement") do
           = render :partial => "layouts/textual_groups_tabs", :locals => {:groups => textual_retirement_group_list}
+          = render :partial => "layouts/textual_code_mirror", :locals => {:label => 'Standard Output', :value => job.raw_stdout, :mode => "htmlmixed"}
   :javascript
     miq_tabs_init('#services_tab');
+    ManageIQ.editor.refresh();
 - else
   .row
     .col-md-12.col-lg-6

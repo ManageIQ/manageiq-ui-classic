@@ -25,9 +25,9 @@ module ServiceHelper::TextualSummary
     TextualGroup.new(_("Credentials"), %i(machine_credential network_credential cloud_credential))
   end
 
-  def textual_group_provisioning_stdout
+  def textual_group_provisioning_plays
     return nil unless provisioning_get_job
-    TextualGroup.new(_("Standard Output"), %i(stdout))
+    get_job_plays
   end
 
   def textual_group_retirement_results
@@ -45,9 +45,9 @@ module ServiceHelper::TextualSummary
     TextualGroup.new(_("Credentials"), %i(machine_credential network_credential cloud_credential))
   end
 
-  def textual_group_retirement_stdout
+  def textual_group_retirement_plays
     return nil unless retirement_get_job
-    TextualGroup.new(_("Standard Output"), %i(stdout))
+    get_job_plays
   end
 
   def textual_group_vm_totals
@@ -195,14 +195,16 @@ module ServiceHelper::TextualSummary
   end
 
   def textual_elapsed_time
-    {:label => _("Elapsed"), :value => @job.finish_time && @job.start_time ? @job.finish_time - @job.start_time : "N/A"}
+    {:label => _("Elapsed"), :value => @job.finish_time && @job.start_time ? calculate_elapsed_time(@job.start_time, @job.finish_time) : "N/A"}
   end
 
   def textual_playbook
+    return nil unless @job.playbook
     {:label => _("Playbook"), :value => @job.playbook.name}
   end
 
   def textual_repository
+    return nil unless @job.playbook
     {:label => _("Repository"), :value => @job.playbook.configuration_script_source.name}
   end
 
@@ -232,10 +234,6 @@ module ServiceHelper::TextualSummary
     {:label => _("Cloud"), :value => credential.name}
   end
 
-  def textual_stdout
-    {:label => _("Output"), :value => @job.raw_stdout}
-  end
-
   def provisioning_get_job
     get_job("Provision")
   end
@@ -247,5 +245,29 @@ module ServiceHelper::TextualSummary
   def get_job(type)
     @job = @record.try(:job, type)
     @job
+  end
+
+  def get_job_plays
+    items = @job.job_plays.sort_by(&:start_time).collect do |play|
+      [
+        play.name,
+        format_timezone(play.start_time),
+        play.finish_time && play.start_time ? calculate_elapsed_time(play.start_time, play.finish_time) : '/A'
+      ]
+    end.sort
+
+    TextualTable.new(
+      _("Plays"),
+      items,
+      [_("Name"), _("Start Time"), _("Elapsed Time")]
+    )
+  end
+
+  def calculate_elapsed_time(stime, ftime)
+    val = (ftime - stime)
+    hours   = val / 3600
+    mins = val / 60
+    secs = val % 60
+    ("%02d:%02d:%02d" % [hours, mins, secs])
   end
 end
