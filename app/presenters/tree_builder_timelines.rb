@@ -42,7 +42,7 @@ class TreeBuilderTimelines < TreeBuilder
         :subsections => item.last
       }
     end
-    count_only_or_objects(count_only, menus)
+    count_only_or_objects(count_only, menus.compact)
   end
 
   def x_get_tree_hash_kids(parent, count_only)
@@ -69,7 +69,7 @@ class TreeBuilderTimelines < TreeBuilder
         end
       end
     end
-    count_only_or_objects(count_only, subsections)
+    count_only_or_objects(count_only, subsections.compact)
   end
 
 end
