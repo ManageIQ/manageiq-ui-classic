@@ -7,18 +7,14 @@ module ApplicationController::Performance
     @record = identify_tl_or_perf_record
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
 
-    unless params[:task_id] # First time thru, gather options changed by the user
+    unless params[:task_id] # first time thru, gather options changed by the user
       @perf_options.update_from_params(params)
+      perf_set_or_fix_dates(!params[:perf_typ]) if @perf_options[:chart_type] == :performance
     end
 
-    if @perf_options[:chart_type] == :performance
-      unless params[:task_id] # Set dates if first time thru
-        perf_set_or_fix_dates(!params[:perf_typ])
-      end
-      unless @no_util_data
-        perf_gen_data # Go generate the task
-        return unless @charts # Return if no charts got created (first time thru async rpt gen)
-      end
+    if !@no_util_data && @perf_options[:chart_type] == :performance
+      perf_gen_data # generate the task
+      return unless @charts # no charts got created (first time thru async rpt gen)
     end
 
     if @perf_options[:no_rollups]
