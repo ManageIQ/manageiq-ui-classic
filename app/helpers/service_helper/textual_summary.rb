@@ -27,7 +27,7 @@ module ServiceHelper::TextualSummary
 
   def textual_group_provisioning_plays
     return nil unless provisioning_get_job
-    get_job_plays
+    fetch_job_plays
   end
 
   def textual_group_retirement_results
@@ -47,7 +47,7 @@ module ServiceHelper::TextualSummary
 
   def textual_group_retirement_plays
     return nil unless retirement_get_job
-    get_job_plays
+    fetch_job_plays
   end
 
   def textual_group_vm_totals
@@ -219,35 +219,39 @@ module ServiceHelper::TextualSummary
   def textual_machine_credential
     credential = @job.authentications.find_by(:type => 'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential')
     return nil unless credential
-    {:label => _("Machine"), :value => credential.name}
+    credential(credential, _("Machine"))
   end
 
   def textual_network_credential
     credential = @job.authentications.find_by(:type => 'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential')
     return nil unless credential
-    {:label => _("Network"), :value => credential.name}
+    credential(credential, _("Network"))
   end
 
   def textual_cloud_credential
     credential = @job.authentications.find_by(:type => 'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential')
     return nil unless credential
-    {:label => _("Cloud"), :value => credential.name}
+    credential(credential, _("Cloud"))
+  end
+
+  def credential(credential, label)
+    {:label => label, :value => credential.name}
   end
 
   def provisioning_get_job
-    get_job("Provision")
+    fetch_job("Provision")
   end
 
   def retirement_get_job
-    get_job("Retirement")
+    fetch_job("Retirement")
   end
 
-  def get_job(type)
+  def fetch_job(type)
     @job = @record.try(:job, type)
     @job
   end
 
-  def get_job_plays
+  def fetch_job_plays
     items = @job.job_plays.sort_by(&:start_time).collect do |play|
       [
         play.name,
@@ -260,13 +264,13 @@ module ServiceHelper::TextualSummary
     TextualTable.new(
       _("Plays"),
       items,
-      [_("Name"), _("Started"), _("Finished"),_("Elapsed")]
+      [_("Name"), _("Started"), _("Finished"), _("Elapsed")]
     )
   end
 
   def calculate_elapsed_time(stime, ftime)
     val = (ftime - stime)
-    hours   = val / 3600
+    hours = val / 3600
     mins = val / 60
     secs = val % 60
     ("%02d:%02d:%02d" % [hours, mins, secs])
