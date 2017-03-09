@@ -12,7 +12,8 @@ describe ApplicationHelper::Button::TemplateRefresh do
     context "when record is not refreshable but @perf_options[:typ] is 'realtime'" do
       before do
         @record = FactoryGirl.create(:vm_vmware)
-        @perf_options = {:typ => "realtime"}
+        @perf_options = ApplicationController::Performance::Options.new
+        @perf_options.typ = 'realtime'
         allow(@record).to receive(:ext_management_system).and_return(false)
       end
 
@@ -26,7 +27,8 @@ describe ApplicationHelper::Button::TemplateRefresh do
     context "when record is not refreshable but @perf_options[:typ] is 'realtime'" do
       before do
         @record = FactoryGirl.create(:vm_vmware)
-        @perf_options = {:typ => "Hourly"}
+        @perf_options = ApplicationController::Performance::Options.new
+        @perf_options.typ = 'Hourly'
         allow(@record).to receive(:ext_management_system).and_return(false)
       end
 

@@ -12,7 +12,6 @@ describe ContainerDashboardService do
   context "providers" do
     it "filters containers providers with zero entity count and sorts providers by type correctly" do
       FactoryGirl.create(:ems_openshift, :hostname => "test2.com")
-      FactoryGirl.create(:ems_openshift_enterprise, :hostname => "test3.com")
 
       providers_data = ContainerDashboardService.new(nil, nil).providers
 
@@ -71,8 +70,8 @@ describe ContainerDashboardService do
       ems_kubernetes.metric_rollups << old_metric.dup
       ems_kubernetes.metric_rollups << nil_fielded_metric.dup
 
-      node_utilization_all_providers = described_class.new(nil, controller).ems_utilization
-      node_utilization_single_provider = described_class.new(ems_openshift.id, controller).ems_utilization
+      node_utilization_all_providers = described_class.new(nil, controller).ems_utilization[:xy_data]
+      node_utilization_single_provider = described_class.new(ems_openshift.id, controller).ems_utilization[:xy_data]
 
       expect(node_utilization_single_provider).to eq(
         :cpu => {
@@ -107,8 +106,8 @@ describe ContainerDashboardService do
 
     it "returns hash with nil values when no metrics available" do
       ems_openshift = FactoryGirl.create(:ems_openshift, :zone => @zone)
-      node_utilization_all_providers = described_class.new(nil, controller).ems_utilization
-      node_utilization_single_provider = described_class.new(ems_openshift.id, controller).ems_utilization
+      node_utilization_all_providers = described_class.new(nil, controller).ems_utilization[:xy_data]
+      node_utilization_single_provider = described_class.new(ems_openshift.id, controller).ems_utilization[:xy_data]
       expect(node_utilization_all_providers).to eq(:cpu => nil, :mem => nil)
       expect(node_utilization_single_provider).to eq(:cpu => nil, :mem => nil)
     end
@@ -254,8 +253,16 @@ describe ContainerDashboardService do
       ems_openshift = FactoryGirl.create(:ems_openshift, :zone => @zone)
       ems_kubernetes = FactoryGirl.create(:ems_kubernetes, :zone => @zone)
 
+      previous_date = 8.days.ago
       current_date = 7.days.ago
       old_date = 35.days.ago
+
+      previous_metric_openshift = FactoryGirl.create(
+        :metric_rollup_cm_daily,
+        :timestamp              => previous_date,
+        :net_usage_rate_average => 2000,
+        :time_profile           => time_profile
+      )
 
       current_metric_openshift = FactoryGirl.create(
         :metric_rollup_cm_daily,
@@ -275,22 +282,23 @@ describe ContainerDashboardService do
         :net_usage_rate_average => 1500,
         :time_profile           => time_profile)
 
+      ems_openshift.metric_rollups << previous_metric_openshift
       ems_openshift.metric_rollups << current_metric_openshift
       ems_openshift.metric_rollups << old_metric
       ems_kubernetes.metric_rollups << current_metric_kubernetes
       ems_kubernetes.metric_rollups << old_metric.dup
 
-      daily_network_trends = described_class.new(nil, controller).daily_network_metrics
-      daily_network_trends_single_provider = described_class.new(ems_openshift.id, controller).daily_network_metrics
+      daily_network_trends = described_class.new(nil, controller).network_metrics[:xy_data]
+      daily_network_trends_single_provider = described_class.new(ems_openshift.id, controller).network_metrics[:xy_data]
 
       expect(daily_network_trends_single_provider).to eq(
-        :xData => [current_date.strftime("%Y-%m-%d")],
-        :yData => [1000]
+        :xData => [previous_date.strftime("%Y-%m-%d"), current_date.strftime("%Y-%m-%d")],
+        :yData => [2000, 1000]
       )
 
       expect(daily_network_trends).to eq(
-        :xData => [current_date.strftime("%Y-%m-%d")],
-        :yData => [2500]
+        :xData => [previous_date.strftime("%Y-%m-%d"), current_date.strftime("%Y-%m-%d")],
+        :yData => [2000, 2500]
       )
     end
 
@@ -298,8 +306,16 @@ describe ContainerDashboardService do
       ems_openshift = FactoryGirl.create(:ems_openshift, :zone => @zone)
       ems_kubernetes = FactoryGirl.create(:ems_kubernetes, :zone => @zone)
 
+      previous_date = 3.hours.ago
       current_date = 2.hours.ago
       old_date = 2.days.ago
+
+      previous_metric_openshift = FactoryGirl.create(
+        :metric_rollup_cm_hr,
+        :timestamp              => previous_date,
+        :net_usage_rate_average => 2000,
+        :time_profile           => time_profile
+      )
 
       current_metric_openshift = FactoryGirl.create(
         :metric_rollup_cm_hr,
@@ -324,6 +340,7 @@ describe ContainerDashboardService do
         :timestamp    => old_date,
         :time_profile => time_profile)
 
+      ems_openshift.metric_rollups << previous_metric_openshift
       ems_openshift.metric_rollups << current_metric_openshift
       ems_openshift.metric_rollups << old_metric
       ems_openshift.metric_rollups << nil_fields_metric
@@ -331,17 +348,18 @@ describe ContainerDashboardService do
       ems_kubernetes.metric_rollups << old_metric.dup
       ems_kubernetes.metric_rollups << nil_fields_metric.dup
 
-      hourly_network_trends = described_class.new(nil, controller).hourly_network_metrics
-      hourly_network_trends_single_provider = described_class.new(ems_openshift.id, controller).hourly_network_metrics
+      hourly_network_trends = described_class.new(nil, controller).network_metrics[:xy_data]
+      hourly_network_trends_single_provider =
+        described_class.new(ems_openshift.id, controller).network_metrics[:xy_data]
 
       expect(hourly_network_trends_single_provider).to eq(
-        :xData => [current_date.beginning_of_hour.utc],
-        :yData => [1000]
+        :xData => [previous_date.beginning_of_hour.utc, current_date.beginning_of_hour.utc],
+        :yData => [2000, 1000]
       )
 
       expect(hourly_network_trends).to eq(
-        :xData => [current_date.beginning_of_hour.utc],
-        :yData => [2500]
+        :xData => [previous_date.beginning_of_hour.utc, current_date.beginning_of_hour.utc],
+        :yData => [2000, 2500]
       )
     end
 

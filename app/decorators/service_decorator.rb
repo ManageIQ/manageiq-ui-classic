@@ -1,6 +1,6 @@
 class ServiceDecorator < MiqDecorator
   def fonticon
-    nil
+    'pficon pficon-service'
   end
 
   def listicon_image

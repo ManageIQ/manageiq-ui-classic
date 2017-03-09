@@ -1,5 +1,5 @@
 module TreeNode
   class WindowsImage < Node
-    set_attribute(:image, 'svg/os-windows_generic.svg')
+    set_attribute(:image) { @object.decorate.listicon_image }
   end
 end

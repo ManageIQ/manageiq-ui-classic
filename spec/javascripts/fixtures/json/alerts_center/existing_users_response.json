@@ -1,0 +1,17 @@
+{
+  "name":"users",
+  "count":2,
+  "subcount":2,
+  "resources":[
+    {
+      "id": 1,
+      "name": "Administrator",
+      "userid": "admin"
+    },
+    {
+      "id": 2,
+      "name": "Operator",
+      "userid": "operator"
+    }
+  ]
+}

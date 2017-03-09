@@ -139,12 +139,16 @@ class MiddlewareServerController < ApplicationController
       }
     else
       params[:datasource] = {
-        :datasourceName => datasource_name,
-        :xaDatasource   => params["xaDatasource"],
-        :jndiName       => params["jndiName"],
-        :driverName     => params["driverName"],
-        :driverClass    => params["driverClass"],
-        :connectionUrl  => params["connectionUrl"]
+        :datasourceName       => datasource_name,
+        :xaDatasource         => params["xaDatasource"],
+        :jndiName             => params["jndiName"],
+        :driverName           => params["driverName"],
+        :driverClass          => params["driverClass"],
+        :connectionUrl        => params["connectionUrl"],
+        :userName             => params["userName"],
+        :password             => params["password"],
+        :securityDomain       => params["securityDomain"],
+        :datasourceProperties => params["datasourceProperties"]
       }
 
       run_server_operation(STANDALONE_SERVER_OPERATIONS.fetch(:middleware_add_datasource), selected_server)
@@ -154,15 +158,8 @@ class MiddlewareServerController < ApplicationController
     end
   end
 
-  def show
-    return unless init_show
-    @display = params[:display] unless params[:display].nil?
-    case @display
-    when 'middleware_datasources' then show_middleware_entities(MiddlewareDatasource)
-    when 'middleware_deployments' then show_middleware_entities(MiddlewareDeployment)
-    when 'middleware_messagings' then show_middleware_entities(MiddlewareMessaging)
-    else show_middleware
-    end
+  def self.display_methods
+    %i(middleware_datasources middleware_deployments middleware_messagings)
   end
 
   def button

@@ -16,11 +16,11 @@ class AnsibleCredentialController < ApplicationController
   end
 
   def self.model
-    ManageIQ::Providers::AutomationManager::Authentication
+    ManageIQ::Providers::EmbeddedAutomationManager::Authentication
   end
 
   def display_repositories
-    nested_list("repository", ConfigurationScriptSource)
+    nested_list("repository", ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
   end
 
   private

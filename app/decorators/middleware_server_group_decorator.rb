@@ -1,4 +1,8 @@
 class MiddlewareServerGroupDecorator < MiqDecorator
+  def self.fonticon
+    'pficon-server-group'
+  end
+
   def fonticon
     'pficon-server-group'
   end

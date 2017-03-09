@@ -348,8 +348,7 @@
       "Host":{"type":"glyph","icon":"","fontfamily":"PatternFlyIcons-webfont"},
       "Vm":{"type":"glyph","icon":"","fontfamily":"PatternFlyIcons-webfont"},
       "Kubernetes":{"type":"image","icon":"...kubernetes..."},
-      "Openshift":{"type":"image","icon":"...openshift..."},
-      "OpenshiftEnterprise":{"type":"image","icon":"...openshift_enterprise..."}
+      "Openshift":{"type":"image","icon":"...openshift..."}
     },
     "settings": { "containers_max_objects":100}
   }

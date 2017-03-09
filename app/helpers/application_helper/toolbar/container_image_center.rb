@@ -11,7 +11,9 @@ class ApplicationHelper::Toolbar::ContainerImageCenter < ApplicationHelper::Tool
           'fa fa-search fa-lg',
           N_('Perform SmartState Analysis on this item'),
           N_('Perform SmartState Analysis'),
-          :confirm => N_("Perform SmartState Analysis on this item?")),
+          :confirm => N_("Perform SmartState Analysis on this item?"),
+          :klass   => ApplicationHelper::Button::SmartStateScan,
+        )
       ]
     ),
   ])

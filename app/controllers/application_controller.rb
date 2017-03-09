@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/LineLength, Lint/EmptyWhen
 require 'open-uri'
 require 'simple-rss'
 
@@ -16,7 +17,7 @@ class ApplicationController < ActionController::Base
     # This secret is reset to a value found in the miq_databases table in
     # MiqWebServerWorkerMixin.configure_secret_token for rails server, UI, and
     # web service worker processes.
-    protect_from_forgery :secret => SecureRandom.hex(64), :except => [:authenticate, :csp_report], :with => :exception
+    protect_from_forgery :secret => SecureRandom.hex(64), :except => [:authenticate, :external_authenticate, :kerberos_authenticate, :saml_login, :initiate_saml_login, :csp_report], :with => :exception
   end
 
   helper ChartingHelper
@@ -66,8 +67,7 @@ class ApplicationController < ActionController::Base
   end
 
   def allow_websocket
-    proto = request.ssl? ? 'wss' : 'ws'
-    override_content_security_policy_directives(:connect_src => ["'self'", "#{proto}://#{request.env['HTTP_HOST']}"])
+    override_content_security_policy_directives(:connect_src => ["'self'", websocket_origin])
   end
   private :allow_websocket
 
@@ -1683,6 +1683,8 @@ class ApplicationController < ActionController::Base
         javascript_redirect edit_ems_datawarehouse_path(params[:id])
       elsif params[:pressed] == "ems_network_edit" && params[:id]
         javascript_redirect edit_ems_network_path(params[:id])
+      elsif params[:pressed] == "ems_physical_infra_edit" && params[:id]
+        javascript_redirect edit_ems_physical_infra_path(params[:id])
       else
         javascript_redirect :action => @refresh_partial, :id => @redirect_id
       end
@@ -1947,7 +1949,7 @@ class ApplicationController < ActionController::Base
     @detail_sortdir = @sb[:detail_sortdir].nil? ? "ASC" : @sb[:detail_sortdir]    # sort column for detail lists
 
     # Get performance hash, if it is in the sandbox for the running controller
-    @perf_options = @sb[:perf_options] ? copy_hash(@sb[:perf_options]) : {}
+    @perf_options = @sb[:perf_options] || Performance::Options.new
 
     # Set @edit key default for the expression editor to use
     @expkey = session[:expkey] ? session[:expkey] : :expression
@@ -2109,7 +2111,7 @@ class ApplicationController < ActionController::Base
       case controller_name
 
       # These controllers don't use breadcrumbs, see above get method to store URL
-      when "dashboard", "report", "support", "alert", "jobs", "ui_jobs", "miq_ae_tools", "miq_policy", "miq_action", "miq_capacity", "chargeback", "service"
+      when "dashboard", "report", "support", "alert", "alert_center", "jobs", "ui_jobs", "miq_ae_tools", "miq_policy", "miq_action", "miq_capacity", "chargeback", "service"
 
       when "storage_manager"
         session[:tab_bc][:sto] = @breadcrumbs.dup if ["show", "show_list", "index"].include?(action_name)
@@ -2168,7 +2170,7 @@ class ApplicationController < ActionController::Base
     end
 
     # Put performance hash, if it exists, into the sandbox for the running controller
-    @sb[:perf_options] = copy_hash(@perf_options) if @perf_options
+    @sb[:perf_options] = @perf_options
 
     # Save @assign hash in sandbox
     @sb[:assign] = @assign ? copy_hash(@assign) : nil

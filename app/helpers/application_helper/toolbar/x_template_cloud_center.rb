@@ -95,7 +95,8 @@ class ApplicationHelper::Toolbar::XTemplateCloudCenter < ApplicationHelper::Tool
                        'fa fa-search fa-lg',
                        N_('Check Compliance of the last known configuration for this Image'),
                        N_('Check Compliance of Last Known Configuration'),
-                       :confirm => N_("Initiate Check Compliance of the last known configuration for this Image?")),
+                       :confirm => N_("Initiate Check Compliance of the last known configuration for this Image?"),
+                       :klass   => ApplicationHelper::Button::MiqCheckCompliance),
                    ]
                  ),
                ])

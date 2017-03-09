@@ -21,7 +21,6 @@ module UiServiceMixin
       :MiddlewareServerGroup   => {:type => "glyph", :icon => "\uE91a", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-server-group
       :Kubernetes              => {:type => "image", :icon => provider_icon(:Kubernetes)},
       :Openshift               => {:type => "image", :icon => provider_icon(:Openshift)},
-      :OpenshiftEnterprise     => {:type => "image", :icon => provider_icon(:OpenshiftEnterprise)},
       :CloudSubnet             => {:type => "glyph", :icon => "\uE909", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-network
       :NetworkRouter           => {:type => "glyph", :icon => "\uE625", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-route
       :SecurityGroup           => {:type => "glyph", :icon => "\uE903", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-cloud-security

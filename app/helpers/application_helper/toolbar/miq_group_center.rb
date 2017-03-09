@@ -10,14 +10,16 @@ class ApplicationHelper::Toolbar::MiqGroupCenter < ApplicationHelper::Toolbar::B
           :rbac_group_edit,
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Group'),
-          t),
+          t,
+          :klass => ApplicationHelper::Button::RbacGroupEdit),
         button(
           :rbac_group_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Delete this Group'),
           t,
           :url_parms => "&refresh=y",
-          :confirm   => N_("Are you sure you want to delete this Group?")),
+          :confirm   => N_("Are you sure you want to delete this Group?"),
+          :klass     => ApplicationHelper::Button::RbacGroupDelete),
       ]
     ),
   ])

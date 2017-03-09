@@ -4,7 +4,7 @@ describe InfraTopologyService do
   describe "#build_kinds" do
     it "creates the expected number of entity types" do
       expect(infra_topology_service.build_kinds.keys).to match_array(
-        [:InfraManager, :EmsCluster, :Host])
+        [:InfraManager, :EmsCluster, :Host, :Vm])
     end
   end
 

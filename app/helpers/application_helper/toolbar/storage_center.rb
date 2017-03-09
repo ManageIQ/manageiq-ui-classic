@@ -11,7 +11,9 @@ class ApplicationHelper::Toolbar::StorageCenter < ApplicationHelper::Toolbar::Ba
           'fa fa-search fa-lg',
           N_('Perform SmartState Analysis on this Datastore'),
           N_('Perform SmartState Analysis'),
-          :confirm => N_("Perform SmartState Analysis on this Datastore?")),
+          :confirm => N_("Perform SmartState Analysis on this Datastore?"),
+          :options => {:feature => :smartstate_analysis},
+          :klass   => ApplicationHelper::Button::StorageScan),
         separator,
         button(
           :storage_delete,
@@ -19,7 +21,8 @@ class ApplicationHelper::Toolbar::StorageCenter < ApplicationHelper::Toolbar::Ba
           N_('Remove this Datastore'),
           N_('Remove Datastore'),
           :url_parms => "&refresh=y",
-          :confirm   => N_("Warning: This Datastore and ALL of its components will be permanently removed!")),
+          :confirm   => N_("Warning: This Datastore and ALL of its components will be permanently removed!"),
+          :klass     => ApplicationHelper::Button::StorageDelete),
       ]
     ),
   ])
@@ -51,7 +54,8 @@ class ApplicationHelper::Toolbar::StorageCenter < ApplicationHelper::Toolbar::Ba
           N_('Show Capacity & Utilization data for this Datastore'),
           N_('Utilization'),
           :url       => "/show",
-          :url_parms => "?display=performance"),
+          :url_parms => "?display=performance",
+          :klass     => ApplicationHelper::Button::StoragePerf),
       ]
     ),
   ])

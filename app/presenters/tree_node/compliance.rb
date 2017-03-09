@@ -7,6 +7,5 @@ module TreeNode
       end
     end
 
-    set_attribute(:icon) { "pficon #{@object.compliant ? 'pficon-ok' : 'pficon-error-circle-o'}" }
   end
 end

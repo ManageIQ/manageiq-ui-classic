@@ -1,5 +1,5 @@
-module ManageIQ::Providers::AutomationManager
-  class InventoryGroupDecorator < MiqDecorator
+module ManageIQ::Providers
+  class AutomationManager::InventoryGroupDecorator < MiqDecorator
     def fonticon
       'pficon pficon-folder-close'
     end

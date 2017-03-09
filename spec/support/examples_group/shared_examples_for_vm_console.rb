@@ -8,11 +8,11 @@ shared_examples 'vm_console_record_types' do |supported_records|
 end
 
 shared_examples 'vm_console_with_power_state_on_off' do |err_msg|
-  context 'and record.current_state == on' do
+  context 'when record.current_state == on' do
     let(:power_state) { 'on' }
     it_behaves_like 'an enabled button'
   end
-  context 'and record.current_state == off' do
+  context 'when record.current_state == off' do
     let(:power_state) { 'off' }
     it_behaves_like 'a disabled button',
                     err_msg || 'The web-based console is not available because the VM is not powered on'

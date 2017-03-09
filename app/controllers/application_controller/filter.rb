@@ -667,8 +667,8 @@ module ApplicationController::Filter
   # Set advanced search filter text
   def adv_search_set_text
     if @edit[@expkey].history.idx == 0                          # Are we pointing at the first exp
-      if @edit[:adv_search_name]
-        @edit[:adv_search_applied][:text] = _(" - Filtered by \"%{text}\"") % {:text => @edit[:adv_search_name]}
+      if @edit[:new_search_name]
+        @edit[:adv_search_applied][:text] = _(" - Filtered by \"%{text}\"") % {:text => @edit[:new_search_name]}
       else
         @edit[:adv_search_applied][:text] = _(" - Filtered by \"%{text}\" report") %
                                               {:text => @edit[:adv_search_report]}

@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   # rubocop:disable AlignHash
-  # rubocop:disable MultilineOperationIndentation
   # grouped routes
   adv_search_post = %w(
     adv_search_button
@@ -152,6 +151,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
+        wait_for_task
       ) + adv_search_post + compare_post + exp_post + save_post
     },
 
@@ -1019,10 +1019,36 @@ Rails.application.routes.draw do
       )
     },
 
+    :physical_infra_topology         => {
+      :get => %w(
+        show
+        data
+      )
+    },
+
     :container_dashboard      => {
       :get => %w(
         show
         data
+      )
+    },
+
+    :alerts_overview      => {
+      :get => %w(
+        show
+      )
+    },
+
+    :alerts_list      => {
+      :get => %w(
+        show
+        class_icons
+      )
+    },
+
+    :alerts_most_recent      => {
+      :get => %w(
+        show
       )
     },
 
@@ -1162,8 +1188,6 @@ Rails.application.routes.draw do
         protect
         show_list
         tagging_edit
-        scaling
-        scaledown
       ) +
                compare_get,
       :post => %w(
@@ -1184,9 +1208,9 @@ Rails.application.routes.draw do
         tree_autoload
         update
         wait_for_task
+        x_show
         scaling
         scaledown
-        x_show
         squash_toggle
       ) +
                adv_search_post +
@@ -1208,6 +1232,7 @@ Rails.application.routes.draw do
       :get  => %w(
         discover
         download_data
+        download_summary_pdf
         ems_physical_infra_form_fields
         protect
         show_list
@@ -1222,6 +1247,7 @@ Rails.application.routes.draw do
         quick_search
         show
         show_list
+        squash_toggle
         tag_edit_form_field_changed
         tagging_edit
         tl_chooser

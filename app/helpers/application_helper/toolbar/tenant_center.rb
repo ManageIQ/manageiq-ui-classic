@@ -39,7 +39,8 @@ class ApplicationHelper::Toolbar::TenantCenter < ApplicationHelper::Toolbar::Bas
           t = N_('Delete this item'),
           t,
           :url_parms => "&refresh=y",
-          :confirm   => N_("Are you sure you want to delete this item and all of it's children?")),
+          :confirm   => N_("Are you sure you want to delete this item and all of it's children?"),
+          :klass     => ApplicationHelper::Button::RbacTenantDelete),
       ]
     ),
   ])

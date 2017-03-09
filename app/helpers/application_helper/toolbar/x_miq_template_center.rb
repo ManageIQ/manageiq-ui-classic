@@ -70,7 +70,8 @@ class ApplicationHelper::Toolbar::XMiqTemplateCenter < ApplicationHelper::Toolba
           'fa fa-search fa-lg',
           N_('Check Compliance of the last known configuration for this Template'),
           N_('Check Compliance of Last Known Configuration'),
-          :confirm => N_("Initiate Check Compliance of the last known configuration for this Template?")),
+          :confirm => N_("Initiate Check Compliance of the last known configuration for this Template?"),
+          :klass   => ApplicationHelper::Button::MiqCheckCompliance),
       ]
     ),
   ])
@@ -110,13 +111,15 @@ class ApplicationHelper::Toolbar::XMiqTemplateCenter < ApplicationHelper::Toolba
           'product product-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this Template'),
           N_('Utilization'),
-          :url_parms => "?display=performance"),
+          :url_parms => "?display=performance",
+          :klass     => ApplicationHelper::Button::MiqTemplatePerf),
         button(
           :miq_template_timeline,
           'product product-timeline fa-lg',
           N_('Show Timelines for this Template'),
           N_('Timelines'),
-          :url_parms => "?display=timeline"),
+          :url_parms => "?display=timeline",
+          :klass     => ApplicationHelper::Button::MiqTemplateTimeline),
       ]
     ),
   ])

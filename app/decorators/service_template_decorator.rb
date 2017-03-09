@@ -1,6 +1,6 @@
 class ServiceTemplateDecorator < MiqDecorator
   def fonticon
-    nil
+    'product product-template'
   end
 
   def listicon_image
