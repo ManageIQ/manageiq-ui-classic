@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::ContainerReplicatorsCenter < ApplicationHelper
           N_('Edit Tags for these Replicators'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
         button(
@@ -22,6 +23,7 @@ class ApplicationHelper::Toolbar::ContainerReplicatorsCenter < ApplicationHelper
           N_('Manage Policies for these Replicators'),
           N_('Manage Policies'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => "false",
           :onwhen    => "1+"),
         button(
@@ -30,6 +32,7 @@ class ApplicationHelper::Toolbar::ContainerReplicatorsCenter < ApplicationHelper
           N_('Check Compliance of the last known configuration for these Replicators'),
           N_('Check Compliance of Last Known Configuration'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Initiate Check Compliance of the last known configuration for the selected items?"),
           :enabled   => "false",
           :onwhen    => "1+")

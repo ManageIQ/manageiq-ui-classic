@@ -31,6 +31,7 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
                           }
                         end,
           :url_parms => "main_div",
+          :send_checked => true,
           :klass     => ApplicationHelper::Button::PolicyCopy,
           :options   => {:feature => 'policy_copy'}),
         button(
@@ -41,6 +42,7 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
           end,
           t,
           :url_parms => "main_div",
+          :send_checked => true,
           :klass     => ApplicationHelper::Button::PolicyDelete,
           :confirm   => proc { _("Are you sure you want to delete this %{policy_type} Policy?") % {:policy_type => ui_lookup(:model => @policy.towhat)} },
           :options   => {:feature => 'policy_delete'}),

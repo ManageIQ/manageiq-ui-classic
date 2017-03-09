@@ -28,6 +28,7 @@ class ApplicationHelper::Toolbar::CloudObjectStoreContainersCenter < Application
             N_('Remove selected Object Storage Containers'),
             N_('Remove Object Storage Containers'),
             :url_parms => "main_div",
+            :send_checked => true,
             :confirm   => N_("Warning: The selected Object Storage Containers and ALL related Objects will be "\
                              "permanently removed!"),
             :enabled   => false,
@@ -52,6 +53,7 @@ class ApplicationHelper::Toolbar::CloudObjectStoreContainersCenter < Application
           N_('Edit tags for the selected items'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+")
       ]

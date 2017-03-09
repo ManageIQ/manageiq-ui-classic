@@ -17,6 +17,7 @@ class ApplicationHelper::Toolbar::MiqGroupsCenter < ApplicationHelper::Toolbar::
           N_('Select a single Group to edit'),
           N_('Edit the selected Group'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1",
           :klass     => ApplicationHelper::Button::RbacGroupEdit),
@@ -26,6 +27,7 @@ class ApplicationHelper::Toolbar::MiqGroupsCenter < ApplicationHelper::Toolbar::
           N_('Select one or more Groups to delete'),
           N_('Delete selected Groups'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Delete all selected Groups?"),
           :enabled   => false,
           :onwhen    => "1+",
@@ -56,6 +58,7 @@ class ApplicationHelper::Toolbar::MiqGroupsCenter < ApplicationHelper::Toolbar::
           end,
           t,
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

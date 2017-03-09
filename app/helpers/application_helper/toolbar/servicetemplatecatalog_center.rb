@@ -12,13 +12,15 @@ class ApplicationHelper::Toolbar::ServicetemplatecatalogCenter < ApplicationHelp
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Item'),
           t,
-          :url_parms => "main_div"),
+          :url_parms => "main_div",
+          :send_checked => true),
         button(
           :st_catalog_delete,
           'pficon pficon-delete fa-lg',
           N_('Remove this Catalog'),
           N_('Remove Catalog'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: This Catalog will be permanently removed!")),
       ]
     ),

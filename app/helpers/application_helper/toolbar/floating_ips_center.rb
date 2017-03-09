@@ -54,6 +54,7 @@ class ApplicationHelper::Toolbar::FloatingIpsCenter < ApplicationHelper::Toolbar
             N_('Edit Tags for the selected Floating IPs'),
             N_('Edit Tags'),
             :url_parms => "main_div",
+            :send_checked => true,
             :enabled   => false,
             :onwhen    => "1+")
         ]

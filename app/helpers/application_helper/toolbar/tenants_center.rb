@@ -12,6 +12,7 @@ class ApplicationHelper::Toolbar::TenantsCenter < ApplicationHelper::Toolbar::Ba
           N_('Select a single item to edit'),
           N_('Edit the selected item'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -20,6 +21,7 @@ class ApplicationHelper::Toolbar::TenantsCenter < ApplicationHelper::Toolbar::Ba
           N_('Select one or more items to delete'),
           N_('Delete selected items'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Delete all selected items and all of their children?"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -29,6 +31,7 @@ class ApplicationHelper::Toolbar::TenantsCenter < ApplicationHelper::Toolbar::Ba
           N_('Select a single item to manage quotas'),
           N_('Manage Quotas for the Selected Item'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
       ]
@@ -51,6 +54,7 @@ class ApplicationHelper::Toolbar::TenantsCenter < ApplicationHelper::Toolbar::Ba
           end,
           t,
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

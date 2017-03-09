@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::ResourcePoolsCenter < ApplicationHelper::Toolb
           N_('Remove selected Resource Pools'),
           N_('Remove Resource Pools'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected Resource Pools and ALL of their components will be permanently removed!"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -35,6 +36,7 @@ class ApplicationHelper::Toolbar::ResourcePoolsCenter < ApplicationHelper::Toolb
           N_('Manage Policies for the selected Resource Pools'),
           N_('Manage Policies'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
         button(
@@ -43,6 +45,7 @@ class ApplicationHelper::Toolbar::ResourcePoolsCenter < ApplicationHelper::Toolb
           N_('Edit Tags for the selected Resource Pools'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

@@ -12,7 +12,8 @@ class ApplicationHelper::Toolbar::CatalogitemButtonsCenter < ApplicationHelper::
           t = N_('Edit this Button Group'),
           t,
           :klass => ApplicationHelper::Button::CatalogItemButton,
-          :url_parms => "main_div"),
+          :url_parms => "main_div",
+          :send_checked => true),
         button(
           :ab_button_new,
           'pficon pficon-add-circle-o fa-lg',
@@ -26,6 +27,7 @@ class ApplicationHelper::Toolbar::CatalogitemButtonsCenter < ApplicationHelper::
           t,
           :klass => ApplicationHelper::Button::CatalogItemButton,
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected Button Group will be permanently removed!")),
       ]
     ),

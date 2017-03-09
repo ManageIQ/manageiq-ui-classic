@@ -32,6 +32,7 @@ class ApplicationHelper::Toolbar::SavedReportsCenter < ApplicationHelper::Toolba
           t = N_('Delete selected Saved Reports'),
           t,
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected Saved Reports will be permanently removed from the database!"),
           :enabled   => false,
           :onwhen    => "1+",

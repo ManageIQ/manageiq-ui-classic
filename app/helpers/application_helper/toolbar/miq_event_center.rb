@@ -12,6 +12,7 @@ class ApplicationHelper::Toolbar::MiqEventCenter < ApplicationHelper::Toolbar::B
           t = N_('Edit Actions for this Policy Event'),
           t,
           :url_parms => "main_div",
+          :send_checked => true,
           :klass     => ApplicationHelper::Button::MiqActionModify),
       ]
     ),

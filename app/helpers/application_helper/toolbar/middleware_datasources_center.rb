@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::MiddlewareDatasourcesCenter < ApplicationHelpe
           N_('Edit Tags for these Middleware Datasources'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]
@@ -35,6 +36,7 @@ class ApplicationHelper::Toolbar::MiddlewareDatasourcesCenter < ApplicationHelpe
             N_('Remove Middleware Datasources'),
             N_('Remove'),
             :url_parms => "main_div",
+            :send_checked => true,
             :enabled   => false,
             :onwhen    => "1+",
             :confirm   => N_('Do you want to remove these Datasources? Some Applications could be using these '\

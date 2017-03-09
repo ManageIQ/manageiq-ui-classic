@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::XForemanConfiguredSystemCenter < ApplicationHe
           t,
           :url       => "provision",
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => true),
       ]
     ),
@@ -31,6 +32,7 @@ class ApplicationHelper::Toolbar::XForemanConfiguredSystemCenter < ApplicationHe
           N_('Edit Tags'),
           :url       => "tagging",
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => true),
       ]
     ),

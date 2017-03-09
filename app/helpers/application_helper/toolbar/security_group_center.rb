@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::SecurityGroupCenter < ApplicationHelper::Toolb
             t = N_('Edit this Security Group'),
             t,
             :url_parms => 'main_div',
+            :send_checked => true,
             :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
             :options   => {:feature => :update}
           ),
@@ -23,6 +24,7 @@ class ApplicationHelper::Toolbar::SecurityGroupCenter < ApplicationHelper::Toolb
             t = N_('Delete this Security Group'),
             t,
             :url_parms => 'main_div',
+            :send_checked => true,
             :confirm   => N_('Warning: This Security Group and ALL of its components will be removed!'),
             :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
             :options   => {:feature => :delete}

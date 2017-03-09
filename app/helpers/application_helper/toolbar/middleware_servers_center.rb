@@ -15,6 +15,7 @@ class ApplicationHelper::Toolbar::MiddlewareServersCenter < ApplicationHelper::T
           N_('Edit Tags for these Middleware Servers'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]
@@ -36,6 +37,7 @@ class ApplicationHelper::Toolbar::MiddlewareServersCenter < ApplicationHelper::T
           N_('Reload Server'),
           :image     => 'guest_restart',
           :url_parms => 'main_div',
+          :send_checked => true,
           :confirm   => N_('Do you want to reload selected servers?'),
           :klass     => ApplicationHelper::Button::MiddlewareServerAction,
           :enabled   => false,

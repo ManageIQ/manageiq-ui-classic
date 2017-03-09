@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::MiqTemplatesCenter < ApplicationHelper::Toolba
           N_('Refresh relationships and power states for all items related to the selected Templates'),
           N_('Refresh Relationships and Power States'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Refresh relationships and power states for all items related to the selected Templates?"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -23,6 +24,7 @@ class ApplicationHelper::Toolbar::MiqTemplatesCenter < ApplicationHelper::Toolba
           N_('Select two or more Templates to compare'),
           N_('Compare Selected Templates'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "2+"),
         separator,
@@ -32,6 +34,7 @@ class ApplicationHelper::Toolbar::MiqTemplatesCenter < ApplicationHelper::Toolba
           N_('Select a single Template to edit'),
           N_('Edit Selected Template'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -40,6 +43,7 @@ class ApplicationHelper::Toolbar::MiqTemplatesCenter < ApplicationHelper::Toolba
           N_('Set Ownership for the selected Templates'),
           N_('Set Ownership'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
         button(
@@ -48,6 +52,7 @@ class ApplicationHelper::Toolbar::MiqTemplatesCenter < ApplicationHelper::Toolba
           N_('Remove selected Templates'),
           N_('Remove Templates'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected Templates and ALL of their components will be permanently removed!"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -69,6 +74,7 @@ class ApplicationHelper::Toolbar::MiqTemplatesCenter < ApplicationHelper::Toolba
           N_('Manage Policies for the selected Templates'),
           N_('Manage Policies'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
         button(
@@ -77,6 +83,7 @@ class ApplicationHelper::Toolbar::MiqTemplatesCenter < ApplicationHelper::Toolba
           N_('View Policy Simulation for the selected Templates'),
           N_('Policy Simulation'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
         button(
@@ -85,6 +92,7 @@ class ApplicationHelper::Toolbar::MiqTemplatesCenter < ApplicationHelper::Toolba
           N_('Edit tags for the selected Templates'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
         button(
@@ -93,6 +101,7 @@ class ApplicationHelper::Toolbar::MiqTemplatesCenter < ApplicationHelper::Toolba
           N_('Check Compliance of the last known configuration for the selected Templates'),
           N_('Check Compliance of Last Known Configuration'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Initiate Check Compliance of the last known configuration for the selected Templates?"),
           :enabled   => false,
           :onwhen    => "1+"),

@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
           N_('Refresh relationships and power states for all items related to the selected items'),
           N_('Refresh Relationships and Power States'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Refresh relationships and power states for all items related to the selected items?"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -23,6 +24,7 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
           N_('Perform SmartState Analysis on the selected items'),
           N_('Perform SmartState Analysis'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Perform SmartState Analysis on the selected items?"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -32,6 +34,7 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
           N_('Select two or more items to compare'),
           N_('Compare Selected items'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "2+"),
         separator,
@@ -41,6 +44,7 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
           N_('Select a single item to edit'),
           N_('Edit Selected item'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -49,6 +53,7 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
           N_('Set Ownership for the selected items'),
           N_('Set Ownership'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
         button(
@@ -57,6 +62,7 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
           t = N_('Remove selected items'),
           t,
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected items and ALL of their components will be permanently removed!"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -67,6 +73,7 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
           N_('CPU/Memory Recommendations of selected item'),
           N_('Right-Size Recommendations'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -75,6 +82,7 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
           N_('Reconfigure the Memory/CPUs of selected items'),
           N_('Reconfigure Selected items'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]
@@ -93,6 +101,7 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
           N_('Select a single Image to Provision Instances'),
           N_('Provision Instances using selected Image'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1",
           :klass     => ApplicationHelper::Button::ButtonNewDiscover),
@@ -114,6 +123,7 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
           N_('Manage Policies for the selected items'),
           N_('Manage Policies'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
         button(
@@ -122,6 +132,7 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
           N_('View Policy Simulation for the selected items'),
           N_('Policy Simulation'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
         button(
@@ -130,6 +141,7 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
           N_('Edit tags for the selected items'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
         button(
@@ -138,6 +150,7 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
           N_('Check Compliance of the last known configuration for the selected items'),
           N_('Check Compliance of Last Known Configuration'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Initiate Check Compliance of the last known configuration for the selected items?"),
           :enabled   => false,
           :onwhen    => "1+"),

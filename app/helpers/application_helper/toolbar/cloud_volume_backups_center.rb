@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::CloudVolumeBackupsCenter < ApplicationHelper::
           N_('Edit tags for the selected items'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

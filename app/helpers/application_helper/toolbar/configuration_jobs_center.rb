@@ -12,6 +12,7 @@ class ApplicationHelper::Toolbar::ConfigurationJobsCenter < ApplicationHelper::T
           N_('Remove selected Jobs'),
           N_('Remove Jobs'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected Jobs and ALL of their components will be permanently removed!"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -33,6 +34,7 @@ class ApplicationHelper::Toolbar::ConfigurationJobsCenter < ApplicationHelper::T
           N_('Edit Tags for the selected Jobs'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

@@ -141,7 +141,8 @@ class ApplicationHelper::Toolbar::OpenstackVmCloudCenter < ApplicationHelper::To
           t,
           :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options   => {:feature => :live_migrate},
-          :url_parms => 'main_div'),
+          :url_parms => 'main_div',
+          :send_checked => true),
         button(
           :instance_evacuate,
           'product product-migrate fa-lg',
@@ -149,7 +150,8 @@ class ApplicationHelper::Toolbar::OpenstackVmCloudCenter < ApplicationHelper::To
           t,
           :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options   => {:feature => :evacuate},
-          :url_parms => 'main_div')
+          :url_parms => 'main_div',
+          :send_checked => true)
       ]
     ),
   ])

@@ -143,6 +143,7 @@ class ApplicationHelper::Toolbar::XMiqTemplateCenter < ApplicationHelper::Toolba
           t,
           :confirm   => N_("The selected snapshot will be permanently deleted. Are you sure you want to delete the selected snapshot?"),
           :url_parms => "main_div",
+          :send_checked => true,
           :onwhen    => "1"),
         button(
           :miq_template_snapshot_delete_all,
@@ -172,6 +173,7 @@ class ApplicationHelper::Toolbar::XMiqTemplateCenter < ApplicationHelper::Toolba
       N_('Compare selected Templates'),
       nil,
       :url_parms => "main_div",
+      :send_checked => true,
       :enabled   => false,
       :onwhen    => "2+"),
   ])

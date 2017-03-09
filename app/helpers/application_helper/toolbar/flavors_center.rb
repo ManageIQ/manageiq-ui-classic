@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::FlavorsCenter < ApplicationHelper::Toolbar::Ba
           N_('Edit Tags for the selected Flavors'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

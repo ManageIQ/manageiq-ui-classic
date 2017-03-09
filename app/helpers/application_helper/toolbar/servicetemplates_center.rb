@@ -24,6 +24,7 @@ class ApplicationHelper::Toolbar::ServicetemplatesCenter < ApplicationHelper::To
           N_('Select a single Item to edit'),
           N_('Edit Selected Item'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -32,6 +33,7 @@ class ApplicationHelper::Toolbar::ServicetemplatesCenter < ApplicationHelper::To
           N_('Remove selected Catalog Items'),
           N_('Remove Catalog Items'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected Items and ALL of their components will be permanently removed!"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -53,6 +55,7 @@ class ApplicationHelper::Toolbar::ServicetemplatesCenter < ApplicationHelper::To
           N_('Edit tags for the selected Items'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

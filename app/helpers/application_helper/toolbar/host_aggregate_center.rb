@@ -12,6 +12,7 @@ class ApplicationHelper::Toolbar::HostAggregateCenter < ApplicationHelper::Toolb
           N_('Select this Host Aggregate'),
           N_('Edit Host Aggregate'),
           :url_parms => "main_div",
+          :send_checked => true,
           :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options   => {:feature => :update_aggregate}
         ),
@@ -21,6 +22,7 @@ class ApplicationHelper::Toolbar::HostAggregateCenter < ApplicationHelper::Toolb
           N_('Select this Host Aggregate'),
           N_('Add Host to Host Aggregate'),
           :url_parms => "main_div",
+          :send_checked => true,
           :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options   => {:feature => :add_host}
         ),
@@ -30,6 +32,7 @@ class ApplicationHelper::Toolbar::HostAggregateCenter < ApplicationHelper::Toolb
           N_('Select this Host Aggregate'),
           N_('Remove Host from Host Aggregate'),
           :url_parms => "main_div",
+          :send_checked => true,
           :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options   => {:feature => :remove_host}
         ),
@@ -39,6 +42,7 @@ class ApplicationHelper::Toolbar::HostAggregateCenter < ApplicationHelper::Toolb
           N_('Delete selected Host Aggregates'),
           N_('Delete Host Aggregates'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected Host Aggregates will be permanently deleted!"),
           :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options   => {:feature => :delete_aggregate}

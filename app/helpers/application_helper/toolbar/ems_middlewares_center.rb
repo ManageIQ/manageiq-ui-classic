@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::EmsMiddlewaresCenter < ApplicationHelper::Tool
           :confirm   => N_("Refresh Items and Relationships related to these Middleware Providers?"),
           :enabled   => false,
           :url_parms => "main_div",
+          :send_checked => true,
           :onwhen    => "1+"),
         separator,
         button(
@@ -29,6 +30,7 @@ class ApplicationHelper::Toolbar::EmsMiddlewaresCenter < ApplicationHelper::Tool
           N_('Select a single Middleware Providers to edit'),
           N_('Edit Selected Middleware Providers'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -37,6 +39,7 @@ class ApplicationHelper::Toolbar::EmsMiddlewaresCenter < ApplicationHelper::Tool
           N_('Remove selected Middleware Providers'),
           N_('Remove Middleware Providers'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected Middleware Providers and ALL of their components will be permanently removed!"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -58,6 +61,7 @@ class ApplicationHelper::Toolbar::EmsMiddlewaresCenter < ApplicationHelper::Tool
           N_('Edit Tags for these Middleware Providers'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]
@@ -78,6 +82,7 @@ class ApplicationHelper::Toolbar::EmsMiddlewaresCenter < ApplicationHelper::Tool
           N_('Re-check Authentication Status for the selected Middleware Providers'),
           N_('Re-check Authentication Status'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

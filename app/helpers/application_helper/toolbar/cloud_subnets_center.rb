@@ -53,6 +53,7 @@ class ApplicationHelper::Toolbar::CloudSubnetsCenter < ApplicationHelper::Toolba
           N_('Edit Tags for the selected Cloud Subnets'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"
         ),

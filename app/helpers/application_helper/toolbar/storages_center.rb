@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::StoragesCenter < ApplicationHelper::Toolbar::B
           N_('Perform SmartState Analysis on the selected Datastores'),
           N_('Perform SmartState Analysis'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Perform SmartState Analysis on the selected Datastores?"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -23,6 +24,7 @@ class ApplicationHelper::Toolbar::StoragesCenter < ApplicationHelper::Toolbar::B
           N_('Remove selected Datastores'),
           N_('Remove Datastores'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected Datastores and ALL of their components will be permanently removed!"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -44,6 +46,7 @@ class ApplicationHelper::Toolbar::StoragesCenter < ApplicationHelper::Toolbar::B
           N_('Edit Tags for the selected Datastores'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

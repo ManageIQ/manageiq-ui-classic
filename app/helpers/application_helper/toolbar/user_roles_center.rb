@@ -17,6 +17,7 @@ class ApplicationHelper::Toolbar::UserRolesCenter < ApplicationHelper::Toolbar::
           N_('Select a single Role to edit'),
           N_('Edit the selected Role'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -25,6 +26,7 @@ class ApplicationHelper::Toolbar::UserRolesCenter < ApplicationHelper::Toolbar::
           N_('Select a single Role to copy'),
           N_('Copy the selected Role to a new Role'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -33,6 +35,7 @@ class ApplicationHelper::Toolbar::UserRolesCenter < ApplicationHelper::Toolbar::
           N_('Delete the selected Roles from the VMDB'),
           N_('Delete selected Roles'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Delete all selected Roles?"),
           :enabled   => false,
           :onwhen    => "1+"),

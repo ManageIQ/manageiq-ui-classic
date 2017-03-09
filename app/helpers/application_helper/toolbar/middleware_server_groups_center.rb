@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::MiddlewareServerGroupsCenter < ApplicationHelp
                        N_('Edit Tags for these Middleware Server Groups'),
                        N_('Edit Tags'),
                        :url_parms => "main_div",
+                       :send_checked => true,
                        :enabled   => false,
                        :onwhen    => "1+",
                      ),

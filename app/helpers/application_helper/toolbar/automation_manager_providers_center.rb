@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::AutomationManagerProvidersCenter < Application
           N_('Refresh Relationships and Power states'),
           :url       => "refresh",
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Refresh relationships for all items related to the selected items?"),
           :enabled   => false,
           :onwhen    => "1+"
@@ -34,6 +35,7 @@ class ApplicationHelper::Toolbar::AutomationManagerProvidersCenter < Application
           N_('Edit Selected item'),
           :url       => "edit",
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"
         ),
@@ -44,6 +46,7 @@ class ApplicationHelper::Toolbar::AutomationManagerProvidersCenter < Application
           t,
           :url       => "delete",
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected items and ALL of their components will be permanently removed!"),
           :enabled   => false,
           :onwhen    => "1+"

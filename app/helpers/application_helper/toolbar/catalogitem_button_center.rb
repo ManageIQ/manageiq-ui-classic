@@ -12,7 +12,8 @@ class ApplicationHelper::Toolbar::CatalogitemButtonCenter < ApplicationHelper::T
           t = N_('Edit this Button'),
           t,
           :klass => ApplicationHelper::Button::CatalogItemButton,
-          :url_parms => "main_div"),
+          :url_parms => "main_div",
+          :send_checked => true),
         button(
           :ab_button_delete,
           'pficon pficon-delete fa-lg',
@@ -20,6 +21,7 @@ class ApplicationHelper::Toolbar::CatalogitemButtonCenter < ApplicationHelper::T
           t,
           :klass => ApplicationHelper::Button::CatalogItemButton,
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: This Button will be permanently removed from the Virtual Management Database!")),
         separator,
         button(

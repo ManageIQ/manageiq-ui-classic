@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::EmsContainersCenter < ApplicationHelper::Toolb
           :confirm   => N_("Refresh Items and Relationships related to Containers Providers?"),
           :enabled   => false,
           :url_parms => "main_div",
+          :send_checked => true,
           :onwhen    => "1+"),
         separator,
         button(
@@ -36,6 +37,7 @@ class ApplicationHelper::Toolbar::EmsContainersCenter < ApplicationHelper::Toolb
           N_('Select a single Containers Provider to edit'),
           N_('Edit Selected Containers Provider'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -44,6 +46,7 @@ class ApplicationHelper::Toolbar::EmsContainersCenter < ApplicationHelper::Toolb
           N_('Remove selected Containers Providers'),
           N_('Remove Containers Providers'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected Containers Providers and ALL of their components will be permanently removed!"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -65,6 +68,7 @@ class ApplicationHelper::Toolbar::EmsContainersCenter < ApplicationHelper::Toolb
           N_('Edit Tags for these Containers Providers'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
         button(
@@ -73,6 +77,7 @@ class ApplicationHelper::Toolbar::EmsContainersCenter < ApplicationHelper::Toolb
           N_('Manage Policies for these Containers Providers'),
           N_('Manage Policies'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => "false",
           :onwhen    => "1+"),
         button(
@@ -81,6 +86,7 @@ class ApplicationHelper::Toolbar::EmsContainersCenter < ApplicationHelper::Toolb
           N_('Check Compliance of the last known configuration for these Container Managers'),
           N_('Check Compliance of Last Known Configuration'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Initiate Check Compliance of the last known configuration for the selected items?"),
           :enabled   => "false",
           :onwhen    => "1+")
@@ -102,6 +108,7 @@ class ApplicationHelper::Toolbar::EmsContainersCenter < ApplicationHelper::Toolb
           N_('Re-check Authentication Status for the selected Containers Providers '),
           N_('Re-check Authentication Status'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

@@ -12,6 +12,7 @@ class ApplicationHelper::Toolbar::DialogCenter < ApplicationHelper::Toolbar::Bas
           t = N_('Edit this Dialog'),
           t,
           :url_parms => "main_div",
+          :send_checked => true,
           :klass     => ApplicationHelper::Button::DialogAction),
         button(
           :dialog_copy,
@@ -19,6 +20,7 @@ class ApplicationHelper::Toolbar::DialogCenter < ApplicationHelper::Toolbar::Bas
           t = N_('Copy this Dialog'),
           t,
           :url_parms => "main_div",
+          :send_checked => true,
           :klass     => ApplicationHelper::Button::DialogAction),
         button(
           :dialog_delete,
@@ -26,6 +28,7 @@ class ApplicationHelper::Toolbar::DialogCenter < ApplicationHelper::Toolbar::Bas
           N_('Remove this Dialog'),
           N_('Remove Dialog'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: This Dialog will be permanently removed!"),
           :klass     => ApplicationHelper::Button::DialogAction),
       ]

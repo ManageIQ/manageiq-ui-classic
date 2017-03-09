@@ -27,6 +27,7 @@ class ApplicationHelper::Toolbar::ConfigurationScriptCenter < ApplicationHelper:
           N_('Edit Tags'),
           :url       => "tagging",
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => true),
       ]
     ),

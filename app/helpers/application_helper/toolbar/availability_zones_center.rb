@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::AvailabilityZonesCenter < ApplicationHelper::T
           N_('Edit Tags for the selected Availability Zones'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

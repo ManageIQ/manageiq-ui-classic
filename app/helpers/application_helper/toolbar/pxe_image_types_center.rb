@@ -18,6 +18,7 @@ class ApplicationHelper::Toolbar::PxeImageTypesCenter < ApplicationHelper::Toolb
           N_('Select a single System Image Type to edit'),
           N_('Edit the selected System Image Type'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -26,6 +27,7 @@ class ApplicationHelper::Toolbar::PxeImageTypesCenter < ApplicationHelper::Toolb
           N_('Remove selected System Image Types'),
           N_('Remove System Image Types'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected System Image Types will be permanently removed!"),
           :enabled   => false,
           :onwhen    => "1+"),

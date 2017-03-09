@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::ContainerTemplatesCenter < ApplicationHelper::
           N_('Edit Tags for these Container Templates'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

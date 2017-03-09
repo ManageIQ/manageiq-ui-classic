@@ -18,6 +18,7 @@ class ApplicationHelper::Toolbar::CloudTenantsCenter < ApplicationHelper::Toolba
           N_('Select a single Cloud Tenant to edit'),
           N_('Edit Selected Cloud Tenant'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -26,6 +27,7 @@ class ApplicationHelper::Toolbar::CloudTenantsCenter < ApplicationHelper::Toolba
           N_('Delete selected Cloud Tenants'),
           N_('Delete Cloud Tenants'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected Cloud Tenants will be permanently deleted!"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -47,6 +49,7 @@ class ApplicationHelper::Toolbar::CloudTenantsCenter < ApplicationHelper::Toolba
           N_('Edit tags for the selected items'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

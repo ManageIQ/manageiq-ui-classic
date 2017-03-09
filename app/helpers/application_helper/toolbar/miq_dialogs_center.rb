@@ -19,6 +19,7 @@ class ApplicationHelper::Toolbar::MiqDialogsCenter < ApplicationHelper::Toolbar:
           t,
           :klass     => ApplicationHelper::Button::OldDialogsEditDelete,
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -27,6 +28,7 @@ class ApplicationHelper::Toolbar::MiqDialogsCenter < ApplicationHelper::Toolbar:
           t = N_('Copy the selected Dialog to a new Dialog'),
           t,
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -36,6 +38,7 @@ class ApplicationHelper::Toolbar::MiqDialogsCenter < ApplicationHelper::Toolbar:
           t,
           :klass     => ApplicationHelper::Button::OldDialogsEditDelete,
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected Dialog will be permanently removed!"),
           :enabled   => false,
           :onwhen    => "1+"),

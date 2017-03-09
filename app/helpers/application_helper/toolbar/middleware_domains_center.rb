@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::MiddlewareDomainsCenter < ApplicationHelper::T
                        N_('Edit Tags for these Middleware Domains'),
                        N_('Edit Tags'),
                        :url_parms => "main_div",
+                       :send_checked => true,
                        :enabled   => false,
                        :onwhen    => "1+",
                      ),

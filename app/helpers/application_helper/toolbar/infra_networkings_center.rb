@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::InfraNetworkingsCenter < ApplicationHelper::To
                                                 N_('Edit Tags for the selected Network Elements'),
                                                 N_('Edit Tags'),
                                                 :url_parms => "main_div",
+                                                :send_checked => true,
                                                 :enabled   => false,
                                                 :onwhen    => "1+"),
                                             ]

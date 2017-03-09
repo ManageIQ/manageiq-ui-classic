@@ -38,6 +38,7 @@ class ApplicationHelper::Toolbar::MiqReportCenter < ApplicationHelper::Toolbar::
           t = N_('Delete this Saved Report from the Database'),
           t,
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+",
           :confirm   => N_("Warning: The selected Saved Reports will be permanently removed from the database!"),

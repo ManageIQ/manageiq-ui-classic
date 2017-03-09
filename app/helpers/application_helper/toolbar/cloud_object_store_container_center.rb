@@ -25,6 +25,7 @@ class ApplicationHelper::Toolbar::CloudObjectStoreContainerCenter < ApplicationH
             N_('Remove Object Storage Container'),
             N_('Remove Object Storage Container'),
             :url_parms => "main_div",
+            :send_checked => true,
             :confirm   => N_("Warning: The selected Object Storage Container and ALL related Objects will be "\
                              "permanently removed!"),
             :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,

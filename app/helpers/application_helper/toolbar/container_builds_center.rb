@@ -12,6 +12,7 @@ class ApplicationHelper::Toolbar::ContainerBuildsCenter < ApplicationHelper::Too
           N_('Perform SmartState Analysis on the selected items'),
           N_('Perform SmartState Analysis'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Perform SmartState Analysis on the selected items?"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -33,6 +34,7 @@ class ApplicationHelper::Toolbar::ContainerBuildsCenter < ApplicationHelper::Too
           N_('Edit Tags for these Container Builds'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

@@ -12,6 +12,7 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
           N_('Refresh relationships and power states for all items related to the selected Infrastructure Providers'),
           N_('Refresh Relationships and Power States'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Refresh relationships and power states for all items related to the selected Infrastructure Providers?"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -35,6 +36,7 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
           N_('Select a single Infrastructure Provider to edit'),
           N_('Edit Selected Infrastructure Providers'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -43,6 +45,7 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
           N_('Remove selected Infrastructure Providers'),
           N_('Remove Infrastructure Providers'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected Infrastructure Providers and ALL of their components will be permanently removed!"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -64,6 +67,7 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
           N_('Manage Policies for the selected Physical Infrastructure Providers'),
           N_('Manage Policies'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
         button(
@@ -72,6 +76,7 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
           N_('Edit Tags for the selected Physical Infrastructure Providers'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
         button(
@@ -80,6 +85,7 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
           N_('Check Compliance of the last known configuration for these Physical Infra Managers'),
           N_('Check Compliance of Last Known Configuration'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Initiate Check Compliance of the last known configuration for the selected items?"),
           :enabled   => "false",
           :onwhen    => "1+")
@@ -101,6 +107,7 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
           N_('Re-check Authentication Status for the selected Physical Infrastructure Providers'),
           N_('Re-check Authentication Status'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

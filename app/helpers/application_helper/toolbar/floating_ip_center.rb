@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::FloatingIpCenter < ApplicationHelper::Toolbar:
             t = N_('Manage the port association of this Floating'),
             t,
             :url_parms => 'main_div',
+            :send_checked => true,
             :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
             :options   => {:feature => :update}
           ),
@@ -23,6 +24,7 @@ class ApplicationHelper::Toolbar::FloatingIpCenter < ApplicationHelper::Toolbar:
             t = N_('Delete this Floating IP'),
             t,
             :url_parms => 'main_div',
+            :send_checked => true,
             :confirm   => N_('Warning: This Floating IP and ALL of its components will be removed!'),
             :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
             :options   => {:feature => :delete}

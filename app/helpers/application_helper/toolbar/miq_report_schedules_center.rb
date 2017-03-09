@@ -18,6 +18,7 @@ class ApplicationHelper::Toolbar::MiqReportSchedulesCenter < ApplicationHelper::
           t = N_('Edit the selected Schedule'),
           t,
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -26,6 +27,7 @@ class ApplicationHelper::Toolbar::MiqReportSchedulesCenter < ApplicationHelper::
           t = N_('Delete the selected Schedules'),
           t,
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected Schedules and ALL of their components will be permanently removed!"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -35,6 +37,7 @@ class ApplicationHelper::Toolbar::MiqReportSchedulesCenter < ApplicationHelper::
           t = N_('Enable the selected Schedules'),
           t,
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
         button(
@@ -43,6 +46,7 @@ class ApplicationHelper::Toolbar::MiqReportSchedulesCenter < ApplicationHelper::
           t = N_('Disable the selected Schedules'),
           t,
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
         separator,
@@ -52,6 +56,7 @@ class ApplicationHelper::Toolbar::MiqReportSchedulesCenter < ApplicationHelper::
           t = N_('Queue up selected Schedules to run now'),
           t,
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

@@ -12,6 +12,7 @@ class ApplicationHelper::Toolbar::CloudSubnetCenter < ApplicationHelper::Toolbar
           t = N_('Edit this Cloud Subnet'),
           t,
           :url_parms => 'main_div',
+          :send_checked => true,
           :klass => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options => {:feature => :update}
         ),
@@ -21,6 +22,7 @@ class ApplicationHelper::Toolbar::CloudSubnetCenter < ApplicationHelper::Toolbar
           t = N_('Delete this Cloud Subnet'),
           t,
           :url_parms => 'main_div',
+          :send_checked => true,
           :confirm   => N_('Warning: This Cloud Subnet and ALL of its components will be removed!'),
           :klass => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options => {:feature => :delete}

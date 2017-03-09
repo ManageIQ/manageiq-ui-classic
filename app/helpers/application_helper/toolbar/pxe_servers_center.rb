@@ -18,6 +18,7 @@ class ApplicationHelper::Toolbar::PxeServersCenter < ApplicationHelper::Toolbar:
           N_('Select a single PXE Servers to edit'),
           N_('Edit Selected PXE Servers'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -26,6 +27,7 @@ class ApplicationHelper::Toolbar::PxeServersCenter < ApplicationHelper::Toolbar:
           N_('Remove selected PXE Servers'),
           N_('Remove PXE Servers'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected PXE Servers and ALL of their components will be permanently removed!"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -36,6 +38,7 @@ class ApplicationHelper::Toolbar::PxeServersCenter < ApplicationHelper::Toolbar:
           N_('Refresh Relationships for selected PXE Servers'),
           N_('Refresh Relationships'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Refresh Relationships for selected PXE Servers?"),
           :enabled   => false,
           :onwhen    => "1+"),

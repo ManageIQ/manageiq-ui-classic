@@ -56,6 +56,7 @@ class ApplicationHelper::Toolbar::CloudNetworksCenter < ApplicationHelper::Toolb
             N_('Edit Tags for the selected Cloud Networks'),
             N_('Edit Tags'),
             :url_parms => "main_div",
+            :send_checked => true,
             :enabled   => false,
             :onwhen    => "1+")
         ]

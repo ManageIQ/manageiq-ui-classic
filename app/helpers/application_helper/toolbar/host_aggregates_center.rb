@@ -19,6 +19,7 @@ class ApplicationHelper::Toolbar::HostAggregatesCenter < ApplicationHelper::Tool
           N_('Select a single Host Aggregate to edit'),
           N_('Edit Selected Host Aggregate'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -27,6 +28,7 @@ class ApplicationHelper::Toolbar::HostAggregatesCenter < ApplicationHelper::Tool
           N_('Select a single Host Aggregate to Add Host'),
           N_('Add Host to Selected Host Aggregate'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -35,6 +37,7 @@ class ApplicationHelper::Toolbar::HostAggregatesCenter < ApplicationHelper::Tool
           N_('Select a single Host Aggregate to Remove Host'),
           N_('Remove Host from Selected Host Aggregate'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -43,6 +46,7 @@ class ApplicationHelper::Toolbar::HostAggregatesCenter < ApplicationHelper::Tool
           N_('Delete selected Host Aggregates'),
           N_('Delete Host Aggregates'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected Host Aggregates will be permanently deleted!"),
           :enabled   => false,
           :onwhen    => "1+"),
@@ -64,6 +68,7 @@ class ApplicationHelper::Toolbar::HostAggregatesCenter < ApplicationHelper::Tool
           N_('Edit Tags for the selected Host Aggregates'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

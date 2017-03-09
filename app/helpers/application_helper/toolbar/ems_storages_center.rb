@@ -12,6 +12,7 @@ class ApplicationHelper::Toolbar::EmsStoragesCenter < ApplicationHelper::Toolbar
                        N_('Refresh relationships and power states for all items related to the selected Storage Managers'),
                        N_('Refresh Relationships and Power States'),
                        :url_parms => "main_div",
+                       :send_checked => true,
                        :confirm   => N_("Refresh relationships and power states for all items related to the selected Storage Managers?"),
                        :enabled   => false,
                        :onwhen    => "1+"),
@@ -22,6 +23,7 @@ class ApplicationHelper::Toolbar::EmsStoragesCenter < ApplicationHelper::Toolbar
                        N_('Remove selected Storage Managers'),
                        N_('Remove Storage Managers'),
                        :url_parms => "main_div",
+                       :send_checked => true,
                        :confirm   => N_("Warning: The selected Storage Managers and ALL of their components will be permanently removed!"),
                        :enabled   => false,
                        :onwhen    => "1+"),
@@ -43,6 +45,7 @@ class ApplicationHelper::Toolbar::EmsStoragesCenter < ApplicationHelper::Toolbar
                        N_('Manage Policies for the selected Storage Managers'),
                        N_('Manage Policies'),
                        :url_parms => "main_div",
+                       :send_checked => true,
                        :enabled   => false,
                        :onwhen    => "1+"),
                      button(
@@ -51,6 +54,7 @@ class ApplicationHelper::Toolbar::EmsStoragesCenter < ApplicationHelper::Toolbar
                        N_('Edit Tags for the selected Storage Managers'),
                        N_('Edit Tags'),
                        :url_parms => "main_div",
+                       :send_checked => true,
                        :enabled   => false,
                        :onwhen    => "1+"),
                    ]

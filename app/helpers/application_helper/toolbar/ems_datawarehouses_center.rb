@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::EmsDatawarehousesCenter < ApplicationHelper::T
           :confirm   => N_("Refresh Items and Relationships related to these Datawarehouse Providers?"),
           :enabled   => false,
           :url_parms => "main_div",
+          :send_checked => true,
           :onwhen    => "1+"),
         separator,
         button(
@@ -29,6 +30,7 @@ class ApplicationHelper::Toolbar::EmsDatawarehousesCenter < ApplicationHelper::T
           N_('Select a single Datawarehouse Providers to edit'),
           N_('Edit Selected Datawarehouse Providers'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1"),
         button(
@@ -37,6 +39,7 @@ class ApplicationHelper::Toolbar::EmsDatawarehousesCenter < ApplicationHelper::T
           N_('Remove selected Datawarehouse Providers'),
           N_('Remove Datawarehouse Providers'),
           :url_parms => "main_div",
+          :send_checked => true,
           :confirm   => N_("Warning: The selected Datawarehouse Providers and ALL " \
                            "of their components will be permanently removed!"),
           :enabled   => false,
@@ -59,6 +62,7 @@ class ApplicationHelper::Toolbar::EmsDatawarehousesCenter < ApplicationHelper::T
           N_('Edit Tags for these Datawarehouse Providers'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]
@@ -79,6 +83,7 @@ class ApplicationHelper::Toolbar::EmsDatawarehousesCenter < ApplicationHelper::T
           N_('Re-check Authentication Status for the selected Datawarehouse Providers'),
           N_('Re-check Authentication Status'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

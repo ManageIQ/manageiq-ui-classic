@@ -310,6 +310,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           t,
           :confirm   => N_("The selected snapshot will be permanently deleted. Are you sure you want to delete the selected snapshot?"),
           :url_parms => "main_div",
+          :send_checked => true,
           :onwhen    => "1",
           :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options   => {:feature => :remove_snapshot}),
@@ -344,6 +345,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
       N_('Compare selected VMs'),
       nil,
       :url_parms => "main_div",
+      :send_checked => true,
       :enabled   => false,
       :onwhen    => "2+"),
   ])

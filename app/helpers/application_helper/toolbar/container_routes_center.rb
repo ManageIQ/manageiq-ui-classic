@@ -14,6 +14,7 @@ class ApplicationHelper::Toolbar::ContainerRoutesCenter < ApplicationHelper::Too
           N_('Edit Tags for these Routes'),
           N_('Edit Tags'),
           :url_parms => "main_div",
+          :send_checked => true,
           :enabled   => false,
           :onwhen    => "1+"),
       ]
