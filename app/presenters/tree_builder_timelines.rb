@@ -1,8 +1,12 @@
 class TreeBuilderTimelines < TreeBuilder
   has_kids_for Hash, [:x_get_tree_hash_kids]
 
-  def initialize(name, type, sandbox, build = true, params = {})
-    @menu = params[:menu]
+  def override(node, object, _pid, options)
+    node[:expand] = object[:expand] if object[:expand].present?
+  end
+
+  def initialize(name, type, sandbox, build = true, menu:)
+    @menu = menu
     super(name, type, sandbox, build)
   end
 
@@ -12,6 +16,7 @@ class TreeBuilderTimelines < TreeBuilder
     super.merge!(:id_prefix         => 'timelines_',
                  :onclick     => "miqOnClickTimelineSelection",
                  :click_url => "/dashboard/show_timeline/",
+                 :cfmeNoClick => true,
                  :tree_state  => true)
   end
 
@@ -47,9 +52,8 @@ class TreeBuilderTimelines < TreeBuilder
           :id          => "p__#{item.first}",
           :text => t = item.first,
           :icon        => 'pficon pficon-folder-close',
-          :tip         => _("Group: %{t}"),
-          :cfmeNoClick => true,
-          :expand => true,
+          :tip         => _("Group: %{:name}" % {:name => t}),
+          :expand => false,
           :subsections => item.last
         }
       else
@@ -58,10 +62,8 @@ class TreeBuilderTimelines < TreeBuilder
           {
             :id          => "#{report.id}__#{item}",
             :text => t = item,
-            :image        => "100/link_internal.gif",
-            :tip         => _("Report: %{t}"),
-            :cfmeNoClick => false,
-            :expand => true,
+            :icon        => "fa fa-arrow-circle-o-right",
+            :tip         => _("Report: %{:name}" % {:name => t}),
             :subsections => []
           }
         end
