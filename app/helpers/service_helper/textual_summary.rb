@@ -252,6 +252,7 @@ module ServiceHelper::TextualSummary
       [
         play.name,
         format_timezone(play.start_time),
+        format_timezone(play.finish_time),
         play.finish_time && play.start_time ? calculate_elapsed_time(play.start_time, play.finish_time) : '/A'
       ]
     end.sort
@@ -259,7 +260,7 @@ module ServiceHelper::TextualSummary
     TextualTable.new(
       _("Plays"),
       items,
-      [_("Name"), _("Start Time"), _("Elapsed Time")]
+      [_("Name"), _("Started"), _("Finished"),_("Elapsed")]
     )
   end
 
