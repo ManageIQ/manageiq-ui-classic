@@ -1478,7 +1478,7 @@ function miqToolbarOnClick(_e) {
   // put url_parms into params var, if defined
   var params;
   if (button.data("url_parms")) {
-    if (button.data('url_parms').match("_div$")) {
+    if (button.data("send_checked")) {
       if (ManageIQ.gridChecks.length) {
         params = "miq_grid_checks=" + ManageIQ.gridChecks.join(',');
       } else {
