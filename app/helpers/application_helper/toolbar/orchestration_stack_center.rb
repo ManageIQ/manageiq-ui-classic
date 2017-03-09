@@ -48,7 +48,8 @@ class ApplicationHelper::Toolbar::OrchestrationStackCenter < ApplicationHelper::
           'fa fa-clock-o fa-lg',
           t = N_('Retire this Orchestration Stack'),
           t,
-          :confirm => N_("Retire this Orchestration Stack")),
+          :confirm => N_("Retire this Orchestration Stack"),
+          :klass   => ApplicationHelper::Button::OrchestrationStackRetireNow),
       ]
     ),
   ])

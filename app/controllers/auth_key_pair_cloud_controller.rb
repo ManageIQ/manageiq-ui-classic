@@ -112,21 +112,14 @@ class AuthKeyPairCloudController < ApplicationController
       ext_management_system = find_by_id_filtered(ManageIQ::Providers::CloudManager, options[:ems_id])
       kls = kls.class_by_ems(ext_management_system)
       if kls.is_available?(:create_key_pair, ext_management_system, options)
-        begin
-          kls.create_key_pair(ext_management_system, options)
-          add_flash(_("Creating %{model} %{name}") % {
-            :model => ui_lookup(:table => 'auth_key_pair_cloud'),
-            :name  => options[:name]})
-        rescue => ex
-          add_flash(_("Unable to create %{model} %{name}. %{error}") % {
-            :model => ui_lookup(:table => 'auth_key_pair_cloud'),
-            :name  => options[:name],
-            :error => get_error_message_from_fog(ex.to_s)}, :error)
+        task_id = kls.create_key_pair_queue(session[:userid], ext_management_system, options)
+
+        if task_id.kind_of?(Integer)
+          initiate_wait_for_task(:task_id => task_id, :action => "create_finished")
+        else
+          add_flash(_("Key Pair creation failed: Task start failed"), :error)
+          javascript_flash(:spinner_off => true)
         end
-        @breadcrumbs.pop if @breadcrumbs
-        session[:edit] = nil
-        session[:flash_msgs] = @flash_array.dup if @flash_array
-        javascript_redirect :action => "show_list"
       else
         @in_a_form = true
         add_flash(kls.is_available_now_error_message(:create_key_pair, ext_management_system, kls))
@@ -147,6 +140,28 @@ class AuthKeyPairCloudController < ApplicationController
       end
       javascript_flash
     end
+  end
+
+  def create_finished
+    task_id = session[:async][:params][:task_id]
+    key_pair_name = session[:async][:params][:name]
+    task = MiqTask.find(task_id)
+    if MiqTask.status_ok?(task.status)
+      add_flash(_("Key Pair \"%{name}\" created") % {
+        :name => key_pair_name
+      })
+    else
+      add_flash(_("Unable to create Key Pair \"%{name}\": %{details}") % {
+        :name    => key_pair_name,
+        :details => task.message
+      }, :error)
+    end
+
+    @breadcrumbs.pop if @breadcrumbs
+    session[:edit] = nil
+    session[:flash_msgs] = @flash_array.dup if @flash_array
+
+    javascript_redirect :action => "show_list"
   end
 
   # delete selected auth key pairs
@@ -205,8 +220,7 @@ class AuthKeyPairCloudController < ApplicationController
         :userid       => session[:userid]
       }
       AuditEvent.success(audit)
-      kp.delete_key_pair
-      kp.destroy
+      kp.delete_key_pair_queue(session[:userid])
     end
     add_flash(n_("Delete initiated for %{number} Key Pair",
                  "Delete initiated for %{number} Key Pairs", key_pairs.length) % {:number => key_pairs.length})

@@ -5,6 +5,6 @@ describe TreeNode::Switch do
   let(:object) { FactoryGirl.create(:switch, :name => "light") }
 
   include_examples 'TreeNode::Node#key prefix', 'sw-'
-  include_examples 'TreeNode::Node#icon', 'product product-switch'
+  include_examples 'TreeNode::Node#icon', 'product product-network_switch'
   include_examples 'TreeNode::Node#tooltip prefix', 'Switch'
 end

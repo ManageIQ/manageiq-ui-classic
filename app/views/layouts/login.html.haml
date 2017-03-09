@@ -2,7 +2,7 @@
 %html.login-pf{:class => ::Settings.server.custom_login_logo ? '' : 'rcue-login', :lang => I18n.locale.to_s.sub('-', '_')}
   %head
     %title
-      = h(title_from_layout(@layout))
+      = h productized_title(_(": Login"))
     = favicon_link_tag
     = stylesheet_link_tag 'application'
     = javascript_include_tag 'application'

@@ -1,6 +1,6 @@
 class ServiceTemplateAnsibleTowerDecorator < MiqDecorator
   def fonticon
-    nil
+    'product product-template'
   end
 
   def listicon_image

@@ -21,32 +21,7 @@ module ReportFormatter
 
     def build_document_body
       return no_records_found_chart if mri.table.nil? || mri.table.data.blank?
-      # find the highest chart value and set the units accordingly for large disk values (identified by GB in units)
       maxcols = 8
-      divider = 1
-      if graph_options[:units] == "GB" && !graph_options[:composite]
-        maxval = 0
-        mri.graph[:columns].each_with_index do |col, col_idx|
-          next if col_idx >= maxcols
-          newmax = mri.table.data.collect { |r| r[col].nil? ? 0 : r[col] }.max
-          maxval = newmax if newmax > maxval
-        end
-        if maxval > 10.gigabytes
-          divider = 1.gigabyte
-        elsif maxval > 10.megabytes
-          graph_options[:units] = "MB"
-          divider = 1.megabyte
-        elsif maxval > 10.kilobytes
-          graph_options[:units] = "KB"
-          divider = 1.kilobyte
-        else
-          graph_options[:units] = "Bytes"
-          graph_options[:decimals] = 0
-          divider = 1
-        end
-        mri.title += " (#{graph_options[:units]})" unless graph_options[:units].blank?
-      end
-
       fun = case graph_options[:chart_type]
             when :performance then :build_performance_chart # performance chart (time based)
             when :util_ts     then :build_util_ts_chart     # utilization timestamp chart (grouped columns)
@@ -54,7 +29,7 @@ module ReportFormatter
             else                                            # reporting charts
               mri.graph[:mode] == 'values' ? :build_reporting_chart_numeric : :build_reporting_chart
             end
-      method(fun).call(maxcols, divider)
+      method(fun).call(maxcols)
     end
 
     def build_document_footer
@@ -63,7 +38,7 @@ module ReportFormatter
     protected
 
     # C&U performance charts (Cluster, Host, VM based)
-    def build_performance_chart_area(maxcols, divider)
+    def build_performance_chart_area(maxcols)
       tz = mri.get_time_zone(Time.zone.name)
       nils2zero = false # Allow gaps in charts for nil values
 
@@ -78,6 +53,7 @@ module ReportFormatter
       ####
 
       mri.graph[:columns].each_with_index do |col, col_idx|
+
         next if col_idx >= maxcols
         allnil = true
         tip = graph_options[:trendtip] if col.starts_with?("trend") && graph_options[:trendtip]
@@ -104,7 +80,6 @@ module ReportFormatter
           #       end
           ####
 
-          val /= divider.to_f unless val.nil? || divider == 1
           if d_idx == mri.table.data.length - 1 && !tip.nil?
             series.push(:value => val, :tooltip => tip)
           else
@@ -132,7 +107,7 @@ module ReportFormatter
       value.round(graph_options[:decimals] || 0)
     end
 
-    def build_performance_chart_pie(_maxcols, divider)
+    def build_performance_chart_pie(_maxcols)
       col = mri.graph[:columns].first
       mri.table.sort_rows_by!(col, :order => :descending)
       categories = [] # Store categories and series counts in an array of arrays
@@ -141,7 +116,7 @@ module ReportFormatter
       cat_total = mri.table.size
       mri.table.data.each do |r|
         cat = cat_cnt > 6 ? '<Other(1)>' : r["resource_name"]
-        val = rounded_value(r[col]) / divider
+        val = rounded_value(r[col])
         next if val == 0
         if cat.starts_with?("<Other(") && categories[-1].starts_with?("<Other(") # Are we past the top 10?
           categories[-1] = "<Other(#{cat_total - (cat_cnt - 1)})>" # Fix the <Other> category count
@@ -161,7 +136,7 @@ module ReportFormatter
       add_series('', series)
     end
 
-    def build_planning_chart(_maxcols, _divider)
+    def build_planning_chart(_maxcols)
       case mri.graph[:type]
       when "Column", "ColumnThreed" # Build XML for column charts
         categories = [] # Store categories and series counts in an array of arrays
@@ -540,22 +515,22 @@ module ReportFormatter
     end
 
     # C&U performance charts (Cluster, Host, VM based)
-    def build_performance_chart(maxcols, divider)
+    def build_performance_chart(maxcols)
       case mri.graph[:type]
       when "Area", "AreaThreed", "Line", "StackedArea",
            "StackedThreedArea", "ParallelThreedColumn"
-        build_performance_chart_area(maxcols, divider)
+        build_performance_chart_area(maxcols)
       when "Pie", "PieThreed"
-        build_performance_chart_pie(maxcols, divider)
+        build_performance_chart_pie(maxcols)
       end
     end
 
     # Utilization timestamp charts
-    def build_util_ts_chart(_maxcols, _divider)
+    def build_util_ts_chart(_maxcols)
       build_util_ts_chart_column if %w(Column ColumnThreed).index(mri.graph[:type])
     end
 
-    def build_reporting_chart_numeric(_maxcols, _divider)
+    def build_reporting_chart_numeric(_maxcols)
       return no_records_found_chart(_('Invalid chart definition')) unless mri.graph[:column].present?
       if mri.group.nil?
         build_numeric_chart_simple
@@ -564,7 +539,7 @@ module ReportFormatter
       end
     end
 
-    def build_reporting_chart(_maxcols, _divider)
+    def build_reporting_chart(_maxcols)
       mri.dims == 2 ? build_reporting_chart_dim2 : build_reporting_chart_other
     end
   end

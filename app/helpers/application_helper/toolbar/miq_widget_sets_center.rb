@@ -11,13 +11,14 @@ class ApplicationHelper::Toolbar::MiqWidgetSetsCenter < ApplicationHelper::Toolb
           'pficon pficon-add-circle-o fa-lg',
           t = N_('Add a new Dashboard'),
           t,
-          :klass => ApplicationHelper::Button::ButtonNewDiscover),
+          :klass => ApplicationHelper::Button::DbNew),
         separator,
         button(
           :db_seq_edit,
           'pficon pficon-edit fa-lg',
           t = N_('Edit Sequence of Dashboards'),
-          t),
+          t,
+          :klass => ApplicationHelper::Button::DbSeqEdit),
       ]
     ),
   ])

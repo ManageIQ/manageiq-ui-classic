@@ -200,7 +200,7 @@ module EmsPhysicalInfraHelper::TextualSummary
   def textual_topology
     {:label => _('Topology'),
      :icon  => "pficon pficon-topology",
-     :link  => url_for(:controller => '/infra_topology', :action => 'show', :id => @ems.id),
+     :link  => url_for(:controller => '/physical_infra_topology', :action => 'show', :id => @record.id),
      :title => _("Show topology")}
   end
 end

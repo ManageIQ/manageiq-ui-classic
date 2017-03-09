@@ -1,6 +1,5 @@
 module TreeNode
   class Zone < Node
-    set_attribute(:icon, 'pficon pficon-zone')
     set_attributes(:title, :tooltip) do
       if @options[:is_current]
         tooltip = "#{ui_lookup(:model => @object.class.to_s)}: #{@object.description} (#{_('current')})"

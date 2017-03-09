@@ -1,4 +1,6 @@
 describe ApplicationHelper::Button::VmSnapshotAdd do
+  let(:controller) { 'vm_infra' }
+  let(:session) { {} }
   let(:view_context) { setup_view_context_with_sandbox({}) }
   let(:zone) { EvmSpecHelper.local_miq_server(:is_master => true).zone }
   let(:ems) { FactoryGirl.create(:ems_vmware, :zone => zone, :name => 'Test EMS') }
@@ -8,7 +10,10 @@ describe ApplicationHelper::Button::VmSnapshotAdd do
   let(:button) { described_class.new(view_context, {}, {'record' => record, 'active' => active}, {}) }
 
   describe '#calculate_properties' do
-    before { button.calculate_properties }
+    before :each do
+      stub_user(:features => :all)
+      button.calculate_properties
+    end
     context 'when creating snapshots is available' do
       let(:current) { 1 }
       let(:record) do
@@ -21,10 +26,6 @@ describe ApplicationHelper::Button::VmSnapshotAdd do
                                                :current           => current)]
         record
       end
-      context 'and the selected snapshot is not active' do
-        let(:active) { false }
-        it_behaves_like 'a disabled button', 'Select the Active snapshot to create a new snapshot for this VM'
-      end
       context 'and the selected snapshot may be active but the vm is not connected to a host' do
         let(:record) { FactoryGirl.create(:vm_vmware) }
         it_behaves_like 'a disabled button', 'The VM is not connected to a Host'
@@ -33,16 +34,23 @@ describe ApplicationHelper::Button::VmSnapshotAdd do
         context 'and current' do
           it_behaves_like 'an enabled button'
         end
-        context 'but not current' do
-          let(:current) { 0 }
-          it_behaves_like 'a disabled button',
-                          'At least one snapshot has to be active to create a new snapshot for this VM'
-        end
       end
     end
     context 'when creating snapshots is not available' do
       let(:record) { FactoryGirl.create(:vm_amazon) }
       it_behaves_like 'a disabled button', 'Operation not supported'
+    end
+    context 'when user has permissions to create snapsnots' do
+      it_behaves_like 'an enabled button'
+    end
+  end
+  describe 'user lacks permissions to create snapshots' do
+    before do
+      stub_user(:features => :none)
+      button.calculate_properties
+    end
+    context 'when user lacks permissions to create snapsnots' do
+      it_behaves_like 'a disabled button', 'Current user lacks permissions to create a new snapshot for this VM'
     end
   end
 end

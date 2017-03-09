@@ -26,7 +26,23 @@ class EmsPhysicalInfraController < ApplicationController
   end
 
   def ems_physical_infra_form_fields
-    ems_form_fields
+    assert_privileges("#{permission_prefix}_edit")
+    @ems = model.new if params[:id] == 'new'
+    @ems = find_by_id_filtered(model, params[:id]) if params[:id] != 'new'
+
+    render :json => {
+      :name                => @ems.name,
+      :emstype             => @ems.emstype,
+      :zone                => zone,
+      :provider_id         => @ems.provider_id ? @ems.provider_id : "",
+      :hostname            => @ems.hostname,
+      :default_hostname    => @ems.connection_configurations.default.endpoint.hostname,
+      :default_api_port    => @ems.connection_configurations.default.endpoint.port,
+      :provider_region     => @ems.provider_region,
+      :default_userid      => @ems.authentication_userid ? @ems.authentication_userid : "",
+      :ems_controller      => controller_name,
+      :default_auth_status => default_auth_status,
+    }
   end
 
   private

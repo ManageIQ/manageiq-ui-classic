@@ -1,6 +1,5 @@
 module TreeNode
   class ServerRole < Node
-    set_attribute(:icon) { "product product-role" }
     set_attribute(:expand, true)
 
     set_attributes(:title, :tooltip) do

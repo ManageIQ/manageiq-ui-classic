@@ -4,6 +4,17 @@
 
   %ng-form.form-horizontal#form_ds_choose{"name" => "dsChooseForm"}
     .form-group
+      %label.col-md-4.control-label{:for => "xa_ds_cb"}
+        = _("XA Datasource:")
+      .col-md-8
+        %input#xa_ds_cb{:type             => "checkbox",
+                        "bs-switch"       => "",
+                        "switch-on-text"  => _("Yes"),
+                        "switch-off-text" => _("No"),
+                        "switch-change"   => "vm.onXaChange()",
+                        "ng-model"        => "vm.chooseDsModel.xaDatasource"}
+
+    .form-group
       %label.col-md-4.control-label{:for => "choose_datasource_input"}
         = _("Datasource:")
       .col-md-8

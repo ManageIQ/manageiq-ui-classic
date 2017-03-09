@@ -5,8 +5,20 @@ module EmsCommon
     include Mixins::GenericSessionMixin
     include Mixins::MoreShowActions
 
+    # This is a temporary hack ensuring that @ems will be set.
+    # Once we use @record in place of @ems, this can be removed
+    # together with init_show_ems
+    alias_method :init_show_generic, :init_show
+    alias_method :init_show, :init_show_ems
+
     helper_method :textual_group_list
     private :textual_group_list
+  end
+
+  def init_show_ems
+    result = init_show_generic
+    @ems = @record
+    result
   end
 
   def textual_group_list
@@ -102,7 +114,7 @@ module EmsCommon
       'physical_servers'              => [PhysicalServer,         _("Physical Servers")],
     }
   end
-
+  
   def display_block_storage_managers
     nested_list('block_storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :block_storage_managers)
   end
@@ -140,32 +152,16 @@ module EmsCommon
         security_groups storage_managers storages vms physical_servers  
       )
     end
-  end
 
-  def show
-    return unless init_show
-    session[:vm_summary_cool] = (settings(:views, :vm_summary_cool).to_s == "summary")
-    @summary_view = session[:vm_summary_cool]
-    @ems = @record
-
-    case @display
-    when 'dashboard'      then show_dashboard
-    when 'main'           then show_main
-    when 'summary_only'   then show_download
-    when 'props'          then show_props
-    when 'ems_folders'    then show_ems_folders
-    when 'timeline'       then show_timeline
-    when 'ad_hoc_metrics' then show_ad_hoc_metrics
-    when 'topology'       then show_topology
-    when 'performance'    then show_performance
-    when *self.class.display_methods
-      display_nested_list(@display)
+    def custom_display_modes
+      %w(props ems_folders ad_hoc_metrics)
     end
 
-    replace_gtl_main_div if pagination_request?
-
-    render :template => "shared/views/ems_common/show" if params[:action] == 'show' && !performed?
+    def default_show_template
+      "shared/views/ems_common/show"
+    end
   end
+
 
   def new
     @doc_url = provider_documentation_url
@@ -175,7 +171,7 @@ module EmsCommon
     @in_a_form = true
     session[:changed] = nil
     drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => @table_name)},
-                    :url  => "/#{@table_name}/new")
+                    :url  => "/#{controller_name}/new")
   end
 
   def create
@@ -209,7 +205,7 @@ module EmsCommon
           end
         end
         drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => @table_name)},
-                        :url  => "/#{@table_name}/new")
+                        :url  => "/#{controller_name}/new")
         javascript_flash
       end
     when "validate"
@@ -232,7 +228,7 @@ module EmsCommon
     @in_a_form = true
     session[:changed] = false
     drop_breadcrumb(:name => _("Edit %{object_type} '%{object_name}'") % {:object_type => ui_lookup(:tables => @table_name), :object_name => @ems.name},
-                    :url  => "/#{@table_name}/#{@ems.id}/edit")
+                    :url  => "/#{controller_name}/#{@ems.id}/edit")
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
@@ -329,9 +325,9 @@ module EmsCommon
         add_flash("#{field.to_s.capitalize} #{msg}", :error)
       end
 
-      breadcrumb_url = "/#{@table_name}/edit/#{@ems.id}"
+      breadcrumb_url = "/#{controller_name}/edit/#{@ems.id}"
 
-      breadcrumb_url = "/#{@table_name}/#{@ems.id}/edit" if restful_routed?(model)
+      breadcrumb_url = "/#{controller_name}/#{@ems.id}/edit" if restful_routed?(model)
 
       drop_breadcrumb(:name => _("Edit %{table} '%{name}'") % {:table => ui_lookup(:table => @table_name),
                                                                :name  => @ems.name},
@@ -388,7 +384,6 @@ module EmsCommon
     # Handle buttons from sub-items screen
     if params[:pressed].starts_with?("availability_zone_",
                                      "cloud_network_",
-                                     "cloud_object_store_container_",
                                      "cloud_subnet_",
                                      "cloud_tenant_",
                                      "cloud_volume_",
@@ -436,7 +431,6 @@ module EmsCommon
       # Edit Tags for Network Manager Relationship pages
       when "availability_zone_tag"            then tag(AvailabilityZone)
       when "cloud_network_tag"                then tag(CloudNetwork)
-      when "cloud_object_store_container_tag" then tag(CloudObjectStoreContainer)
       when "cloud_subnet_tag"                 then tag(CloudSubnet)
       when "cloud_tenant_tag"                 then tag(CloudTenant)
       when "cloud_volume_tag"                 then tag(CloudVolume)
@@ -472,6 +466,8 @@ module EmsCommon
           show                                                        # Handle EMS buttons
         end
       end
+    elsif params[:pressed].starts_with?("cloud_object_store_")
+      process_cloud_object_storage_buttons(params[:pressed])
     else
       @refresh_div = "main_div" # Default div for button.rjs to refresh
       redirect_to :action => "new" if params[:pressed] == "new"
@@ -517,9 +513,10 @@ module EmsCommon
         javascript_redirect :back
         return
       end
-      if params[:pressed] == "ems_cloud_recheck_auth_status"     ||
-         params[:pressed] == "ems_infra_recheck_auth_status"     ||
-         params[:pressed] == "ems_middleware_recheck_auth_status" ||
+      if params[:pressed] == "ems_cloud_recheck_auth_status"          ||
+         params[:pressed] == "ems_infra_recheck_auth_status"          ||
+         params[:pressed] == "ems_physical_infra_recheck_auth_status" ||
+         params[:pressed] == "ems_middleware_recheck_auth_status"     ||
          params[:pressed] == "ems_container_recheck_auth_status"
         if params[:id]
           table_key = :table
@@ -552,7 +549,9 @@ module EmsCommon
     end
 
     if !@flash_array.nil? && params[:pressed] == "#{@table_name}_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
+      javascript_redirect :action      => 'show_list',
+                          :flash_msg   => @flash_array[0][:message],
+                          :flash_error => @flash_array[0][:level] == :error
     elsif params[:pressed] == "host_aggregate_edit"
       javascript_redirect :controller => "host_aggregate", :action => "edit", :id => find_checked_items[0]
     elsif params[:pressed] == "cloud_tenant_edit"
@@ -773,6 +772,7 @@ module EmsCommon
     @openstack_security_protocols = retrieve_openstack_security_protocols
     @amqp_security_protocols = retrieve_amqp_security_protocols
     @nuage_security_protocols = retrieve_nuage_security_protocols
+    @container_security_protocols = retrieve_container_security_protocols
     @scvmm_security_protocols = [[_('Basic (SSL)'), 'ssl'], ['Kerberos', 'kerberos']]
     @openstack_api_versions = retrieve_openstack_api_versions
     @vmware_cloud_api_versions = retrieve_vmware_cloud_api_versions
@@ -824,6 +824,12 @@ module EmsCommon
     [[_('Non-SSL'), 'non-ssl']]
   end
 
+  def retrieve_container_security_protocols
+    [[_('SSL'), 'ssl-with-validation'],
+     [_('SSL trusting custom CA'), 'ssl-with-validation-custom-ca'],
+     [_('SSL without validation'), 'ssl-without-validation']]
+  end
+
   # Get variables from edit form
   def get_form_vars
     @ems = @edit[:ems_id] ? model.find_by_id(@edit[:ems_id]) : model.new
@@ -843,8 +849,6 @@ module EmsCommon
         @edit[:new][:port] = @ems.port ? @ems.port : ManageIQ::Providers::Kubernetes::ContainerManager::DEFAULT_PORT
       elsif params[:server_emstype] == ManageIQ::Providers::Openshift::ContainerManager.ems_type
         @edit[:new][:port] = @ems.port ? @ems.port : ManageIQ::Providers::Openshift::ContainerManager::DEFAULT_PORT
-      elsif params[:server_emstype] == ManageIQ::Providers::OpenshiftEnterprise::ContainerManager.ems_type
-        @edit[:new][:port] = @ems.port ? @ems.port : ManageIQ::Providers::OpenshiftEnterprise::ContainerManager::DEFAULT_PORT
       else
         @edit[:new][:port] = nil
       end
@@ -1121,9 +1125,9 @@ module EmsCommon
   end
 
   def show_list_link(ems, options = {})
-    url_for_only_path(options.merge(:controller => @table_name,
-                          :action     => "show_list",
-                          :id         => ems.id))
+    url_for_only_path(options.merge(:controller => controller_name,
+                                    :action     => "show_list",
+                                    :id         => ems.id))
   end
 
   def restore_password

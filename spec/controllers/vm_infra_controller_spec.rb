@@ -414,8 +414,8 @@ describe VmInfraController do
 
     post :x_button, :params => { :pressed => 'vm_reconfigure', :id => vm.id }
     expect(response.status).to eq(200)
-    expect(response.body).to include('class=\"btn btn-primary\" alt=\"Submit\"')
-    expect(response.body).to include('class=\"btn btn-default\" alt=\"Cancel\"')
+    expect(response.body).to include("miq-button alt='Submit'")
+    expect(response.body).to include("miq-button alt='Cancel'")
   end
 
   context "breadcrumbs" do

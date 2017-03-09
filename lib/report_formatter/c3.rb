@@ -115,7 +115,7 @@ module ReportFormatter
     end
 
     # change structure of chart JSON to performance chart with timeseries data
-    def build_performance_chart_area(maxcols, divider)
+    def build_performance_chart_area(maxcols)
       super
       change_structure_to_timeseries
     end
@@ -162,17 +162,17 @@ module ReportFormatter
       end
     end
 
-    def build_reporting_chart(_maxcols, _divider)
+    def build_reporting_chart(_maxcols)
       mri.chart[:miq][:expand_tooltip] = true
       super
     end
 
-    def build_reporting_chart_numeric(_maxcols, _divider)
+    def build_reporting_chart_numeric(_maxcols)
       mri.chart[:miq][:expand_tooltip] = true
       super
     end
 
-    def build_performance_chart_pie(_maxcols, _divider)
+    def build_performance_chart_pie(_maxcols)
       mri.chart[:miq][:expand_tooltip] = true
       super
     end

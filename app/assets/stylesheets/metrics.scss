@@ -1,72 +1,50 @@
 .miq-metrics {
-  .toolbar-pf .form-group {
-    padding-left: 20px;
+  overflow-x:hidden;
+
+  .ad-hoc-toolbar {
+      margin-left: 10px;
   }
-  .toolbar-pf .form-group .btn-group {
-    margin-left: 0;
-  }
-  .list-view-container {
-    height: calc(100vh - 316px);
-    overflow-y: auto;
-    position: static;
-    &.no-filters {
-      height: calc(100vh - 275px);
+
+  .ad-hoc-tenant {
+    margin-left: 5px;
+
+    input  {
+      display: inline;
+      width: 190px;
+    }
+
+    button {
+      vertical-align: top;
+      margin-bottom: 10px;
     }
   }
-  .time-stamp {
-    padding-left: 5px;
-  }
-  .last-value {
-    padding-left: 5px;
-    width: 50px;
-    text-align: right;
-    float: left;
-  }
-  .blank-slate-pf {
-    height: calc(100vh - 316px);
+
+  .list-view-container, .line-chart, .blank-slate-pf {
     margin-bottom: 0;
-    &.loading {
-      height: calc(100vh - 218px);
-    }
-    &.no-filters {
-      height: calc(100vh - 275px);
-    }
+    min-height: calc(100vh - 362px);
+    margin-left: 20px;
+    margin-right: 20px;
   }
-  .metrics-graph {
-    .line-chart {
-      height: calc(100vh - 275px);
-      padding: 20px 20px 10px 0;
-    }
+
+  .list-view-container {
+    padding-top: 10px;
   }
-  .metric-row {
-    padding-left: 5px;
-    width: 350px;
-    text-align: right;
+
+  .line-chart {
+    margin-top: 36px;
+    margin-left: 30px;
+    margin-right: 50px;
   }
-  .metric-no-padding {
-    padding-right: 5px;
-  }
-  .time-range-form {
-    margin: 10px;
-    .btn-group {
-      padding-left: 10px;
-    }
-  }
+
   .timeline-date-input {
     width: 250px;
   }
-  .ad-hoc-tenant {
-    margin-left: 5px;
-    margin-bottom: 10px;
+
+  .list-group {
+    border-top: none;
   }
-  .ad-hoc-tenant-button{
-    vertical-align: top;
-  }
-  #ad-hoc-tenant {
-    display: inline;
-    width: 200px;
-  }
-  h3 {
-    margin-top: 5px;
+
+  .bootstrap-touchspin {
+    text-align: center;
   }
 }

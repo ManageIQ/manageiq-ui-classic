@@ -10,6 +10,10 @@ module Mixins
       when "main"
         show_main
 
+      # dashboard is defined in DashboardViewMixin
+      when "dashboard"
+        show_dashboard if respond_to?(:show_dashboard)
+
       # these methods are defined in MoreShowActions
       when "timeline"
         show_timeline if respond_to?(:timeline)
@@ -23,9 +27,33 @@ module Mixins
       # nested list methods as enabled by 'display_methods'
       when *self.class.display_methods
         display_nested_list(@display)
+
+      else
+        # if the controller implements more display modes for #show, invoke those
+        if self.class.respond_to?(:custom_display_modes)
+          custom_display_call(@display) if self.class.custom_display_modes.index(@display)
+        end
       end
 
       replace_gtl_main_div if pagination_request?
+
+      if params[:action] == 'show' && !performed? && self.class.respond_to?(:default_show_template)
+        render :template => self.class.default_show_template
+      end
+    end
+
+    def custom_display_method(display)
+      methods = self.class.custom_display_modes
+      # Converting to hash so brakeman doesn't complain about using params directly
+      methods.zip(methods).to_h[display]
+    end
+
+    def custom_display_method_name(display)
+      "show_#{custom_display_method(display)}"
+    end
+
+    def custom_display_call(display)
+      public_send(custom_display_method_name(display))
     end
 
     def show_download
@@ -109,6 +137,26 @@ module Mixins
       nested_list(display, display.camelize.singularize.constantize)
     end
 
+    def display_descendant_vms
+      @showtype = "config"
+      drop_breadcrumb(:name => _("%{name} (All VMs - Tree View)") % {:name => @record.name},
+                      :url  => show_link(@record, :display => "descendant_vms", :treestate => true))
+      self.x_active_tree = :datacenter_tree
+      @datacenter_tree = TreeBuilderDatacenter.new(:datacenter_tree, :datacenter, @sb, true, @record)
+    end
+
+    def display_all_vms
+      nested_list("vms", Vm, :association => "all_vms")
+    end
+
+    def display_vms
+      nested_list(nil, Vm, :breadcrumb_title => _("Direct VMs"))
+    end
+
+    def display_resource_pools
+      nested_list("resource_pools", ResourcePool)
+    end
+
     def display_instances
       nested_list("vm_cloud", ManageIQ::Providers::CloudManager::Vm)
     end
@@ -121,7 +169,7 @@ module Mixins
     #   breadcrumb_title -- title for the breadcrumb, defaults to
     #                       ui_lookup(:tables => table_name)
     #   parent_method    -- parent_method to be passed to get_view call
-    #
+    #   association      -- get_view option association - implicit nil
     def nested_list(table_name, model, options = {})
       title = options[:breadcrumb_title] || ui_lookup(:tables => table_name)
 
@@ -131,6 +179,7 @@ module Mixins
                       :url  => show_link(@record, :display => @display))
 
       view_options = {:parent => @record}
+      view_options[:association] = options[:association] if options.key?(:association)
       view_options[:parent_method] = options[:parent_method] if options.key?(:parent_method)
 
       @view, @pages = get_view(model, view_options)

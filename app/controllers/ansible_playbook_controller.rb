@@ -12,7 +12,7 @@ class AnsiblePlaybookController < ApplicationController
   menu_section :ansible
 
   def self.model
-    ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook
+    ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook
   end
 
   private

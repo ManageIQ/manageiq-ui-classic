@@ -104,6 +104,10 @@ module VmHelper::TextualSummary
     TextualGroup.new(_("VC Custom Attributes"), textual_ems_custom_attributes)
   end
 
+  def textual_group_labels
+    TextualGroup.new(_("Labels"), textual_labels)
+  end
+
   def textual_group_power_management
     TextualGroup.new(_("Power Management"), %i(power_state boot_time state_changed_on))
   end
@@ -752,6 +756,12 @@ module VmHelper::TextualSummary
 
   def textual_ems_custom_attributes
     attrs = @record.ems_custom_attributes
+    return nil if attrs.blank?
+    attrs.sort_by(&:name).collect { |a| {:label => a.name, :value => a.value} }
+  end
+
+  def textual_labels
+    attrs = @record.custom_attributes
     return nil if attrs.blank?
     attrs.sort_by(&:name).collect { |a| {:label => a.name, :value => a.value} }
   end

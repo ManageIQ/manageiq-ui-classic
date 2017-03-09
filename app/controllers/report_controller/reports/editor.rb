@@ -1391,6 +1391,7 @@ module ReportController::Reports::Editor
     end
 
     @edit[:current] = ["copy", "new"].include?(params[:action]) ? {} : copy_hash(@edit[:new])
+    @edit[:new][:name] = "Copy of #{@rpt.name}" if params[:pressed] == "miq_report_copy"
 
     # For trend reports, check for percent field chosen
     if @rpt.db && @rpt.db == TREND_MODEL &&

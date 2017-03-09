@@ -21,10 +21,4 @@ describe('buttonGroupController', function() {
       expect($scope.saveable).toBeDefined();
     });
   });
-
-  describe('disabledClick should exist in the scope', function() {
-    it('returns true', function() {
-      expect($scope.disabledClick).toBeDefined();
-    });
-  });
 });

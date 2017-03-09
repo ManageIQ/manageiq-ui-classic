@@ -13,6 +13,7 @@ class ApplicationHelper::Toolbar::ContainerImagesCenter < ApplicationHelper::Too
           N_('Perform SmartState Analysis'),
           :url_parms => "main_div",
           :confirm   => N_("Perform SmartState Analysis on the selected items?"),
+          :klass     => ApplicationHelper::Button::SmartStateScan,
           :enabled   => false,
           :onwhen    => "1+"),
       ]

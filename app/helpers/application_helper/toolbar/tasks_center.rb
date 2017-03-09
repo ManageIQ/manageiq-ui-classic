@@ -53,6 +53,7 @@ class ApplicationHelper::Toolbar::TasksCenter < ApplicationHelper::Toolbar::Basi
       :url_parms => "main_div",
       :confirm   => N_("Warning: The selected task will be cancelled. Are you sure you want to cancel the task?"),
       :enabled   => false,
-      :onwhen    => "1"),
+      :onwhen    => "1",
+      :klass     => ApplicationHelper::Button::MiqTaskCanceljob),
   ])
 end

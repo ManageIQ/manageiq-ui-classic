@@ -55,11 +55,7 @@ module VmRemote
   end
 
   def launch_html5_console
-    scheme = request.ssl? ? 'wss' : 'ws'
-    override_content_security_policy_directives(
-      :connect_src => ["'self'", "#{scheme}://#{request.env['HTTP_HOST']}"],
-      :img_src     => %w(data: self)
-    )
+    override_content_security_policy_directives(:connect_src => ["'self'", websocket_origin], :img_src => %w(data: self))
     %i(secret url proto).each { |p| params.require(p) }
 
     proto = j(params[:proto])

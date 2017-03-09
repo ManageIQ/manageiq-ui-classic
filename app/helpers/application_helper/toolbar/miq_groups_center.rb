@@ -18,7 +18,8 @@ class ApplicationHelper::Toolbar::MiqGroupsCenter < ApplicationHelper::Toolbar::
           N_('Edit the selected Group'),
           :url_parms => "main_div",
           :enabled   => false,
-          :onwhen    => "1"),
+          :onwhen    => "1",
+          :klass     => ApplicationHelper::Button::RbacGroupEdit),
         button(
           :rbac_group_delete,
           'pficon pficon-delete fa-lg',
@@ -27,7 +28,8 @@ class ApplicationHelper::Toolbar::MiqGroupsCenter < ApplicationHelper::Toolbar::
           :url_parms => "main_div",
           :confirm   => N_("Delete all selected Groups?"),
           :enabled   => false,
-          :onwhen    => "1+"),
+          :onwhen    => "1+",
+          :klass     => ApplicationHelper::Button::RbacGroupDelete),
         separator,
         button(
           :rbac_group_seq_edit,

@@ -1,0 +1,5 @@
+{
+  "ManageIQ::Providers::Kubernetes::ContainerManager::ContainerNode":  "/assets/100/container_node-1692bacf91834f0b8ea684497f8107b00039bf3e5c1eeca7d68eb3363f38af67.png",
+  "ManageIQ::Providers::Openshift::ContainerManager":"/assets/svg/vendor-openshift-1d618a8a9b84a545ce01bf41e996f2614b8cf433e1845fcf953af8ff43788707.svg",
+  "ManageIQ::Providers::Hawkular::DatawarehouseManager":"/assets/svg/vendor-hawkular-1d618a8a9b84a545ce01bf41e996f2614b8cf433e1845fcf953af8ff43788707.svg"
+}

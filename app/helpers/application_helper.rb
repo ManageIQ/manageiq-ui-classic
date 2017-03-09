@@ -9,6 +9,7 @@ module ApplicationHelper
   include ToolbarHelper
   include TextualSummaryHelper
   include NumberHelper
+  include Title
 
   # Need to generate paths w/o hostname by default to make proxying work.
   #
@@ -31,6 +32,19 @@ module ApplicationHelper
               url, :rel => 'external',
               :class => 'documentation-link', :target => '_blank')
     end
+  end
+
+  def websocket_origin
+    proto = request.ssl? ? 'wss' : 'ws'
+    # Retrieve the host that needs to be explicitly allowed for websocket connections
+    host = if request.env['HTTP_X_FORWARDED_HOST']
+             # Use the first proxy (production)
+             request.env['HTTP_X_FORWARDED_HOST'].split(/,\s*/).first
+           else
+             # Use the HOST header (development)
+             request.env['HTTP_HOST']
+           end
+    "#{proto}://#{host}"
   end
 
   def valid_html_id(id)
@@ -129,13 +143,14 @@ module ApplicationHelper
     end
   end
 
-  def no_hover_class(item)
-    klass = if item[:link]
-              ""
-            elsif item.has_key?(:value)
-              "" if item[:value].kind_of?(Array) && item[:value].any? {|val| val[:link]}
-            end
-    klass.nil? ? 'no-hover' : ''
+  def hover_class(item)
+    if item.fetch_path(:link) ||
+       item.fetch_path(:value).kind_of?(Array) &&
+       item[:value].any? { |val| val[:link] }
+      'no-hover'
+    else
+      ''
+    end
   end
 
   # Check role based authorization for a UI task
@@ -147,6 +162,7 @@ module ApplicationHelper
 
     Rbac.role_allows?(options.merge(:user => User.current_user)) rescue false
   end
+
   module_function :role_allows?
   public :role_allows?
   alias_method :role_allows, :role_allows?
@@ -160,7 +176,10 @@ module ApplicationHelper
 
   def controller_to_model
     case self.class.model.to_s
-    when "ManageIQ::Providers::CloudManager::Template", "ManageIQ::Providers::CloudManager::Vm", "ManageIQ::Providers::InfraManager::Template", "ManageIQ::Providers::InfraManager::Vm"
+    when "ManageIQ::Providers::CloudManager::Template",
+         "ManageIQ::Providers::CloudManager::Vm",
+         "ManageIQ::Providers::InfraManager::Template",
+         "ManageIQ::Providers::InfraManager::Vm"
       VmOrTemplate
     else
       self.class.model
@@ -191,10 +210,12 @@ module ApplicationHelper
             controller_for_vm(model_for_vm(record))
           elsif record.class.respond_to?(:db_name)
             record.class.db_name
-          elsif record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook)
+          elsif record.kind_of?(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
             "ansible_playbook"
-          elsif record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager::Authentication)
+          elsif record.kind_of?(ManageIQ::Providers::EmbeddedAutomationManager::Authentication)
             "ansible_credential"
+          elsif record.kind_of?(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
+            "ansible_repository"
           else
             record.class.base_class.to_s
           end
@@ -319,7 +340,7 @@ module ApplicationHelper
       action = "show"
     when "ConditionSet"
       controller = "condition"
-    when "ConfigurationScriptSource"
+    when "ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource"
       controller = "ansible_repository"
     when "ScanItemSet"
       controller = "ops"
@@ -355,9 +376,9 @@ module ApplicationHelper
       action = "show"
     when "ServiceResource", "ServiceTemplate"
       controller = "catalog"
-    when "ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook"
+    when "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook"
       controller = "ansible_playbook"
-    when "ManageIQ::Providers::AutomationManager::Authentication"
+    when "ManageIQ::Providers::EmbeddedAutomationManager::Authentication"
       controller = "ansible_credential"
     when "MiqWorker"
       controller = request.parameters[:controller]
@@ -406,7 +427,6 @@ module ApplicationHelper
       :msg_title             => @msg_title,
       :perf_options          => @perf_options,
       :policy                => @policy,
-      :pxe_image_types_count => @pxe_image_types_count,
       :record                => @record,
       :report                => @report,
       :report_result_id      => @report_result_id,
@@ -426,72 +446,6 @@ module ApplicationHelper
   def field_to_col(field)
     dbs, fld = field.split("-")
     (dbs.include?(".") ? "#{dbs.split(".").last}.#{fld}" : fld)
-  end
-
-  # Derive the browser title text based on the layout value
-  def title_from_layout(layout)
-    # TODO: leave I18n until we have productization capability in gettext
-    title = I18n.t('product.name')
-    if layout.blank?  # no layout, leave title alone
-    elsif ["configuration", "dashboard", "chargeback", "about"].include?(layout)
-      title += ": #{layout.titleize}"
-    elsif @layout == "ems_cluster"
-      title += ": #{title_for_clusters}"
-    elsif @layout == "host"
-      title += ": #{title_for_hosts}"
-    # Specific titles for certain layouts
-    elsif layout == "miq_server"
-      title += _(": Servers")
-    elsif layout == "usage"
-      title += _(": VM Usage")
-    elsif layout == "scan_profile"
-      title += _(": Analysis Profiles")
-    elsif layout == "miq_policy_rsop"
-      title += _(": Policy Simulation")
-    elsif layout == "all_ui_tasks"
-      title += _(": All UI Tasks")
-    elsif layout == "my_ui_tasks"
-      title += _(": My UI Tasks")
-    elsif layout == "rss"
-      title += _(": RSS")
-    elsif layout == "storage_manager"
-      title += _(": Storage - Storage Managers")
-    elsif layout == "ops"
-      title += _(": Configuration")
-    elsif layout == "provider_foreman"
-      title += _(": Configuration Management")
-    elsif layout == "pxe"
-      title += _(": PXE")
-    elsif layout == "explorer"
-      title += ": #{controller_model_name(params[:controller])} Explorer"
-    elsif layout == "vm_cloud"
-      title += _(": Instances")
-    elsif layout == "vm_infra"
-      title += _(": Virtual Machines")
-    elsif layout == "vm_or_template"
-      title += _(": Workloads")
-    # Specific titles for groups of layouts
-    elsif layout.starts_with?("miq_ae_")
-      title += _(": Automation")
-    elsif layout.starts_with?("miq_policy")
-      title += _(": Control")
-    elsif layout.starts_with?("miq_capacity")
-      title += _(": Optimize")
-    elsif layout.starts_with?("miq_request")
-      title += _(": Requests")
-    elsif layout == "login"
-      title += _(": Login")
-    elsif layout == "manageiq/providers/ansible_tower/automation_manager/playbook"
-      title += ": Playbooks (Ansible Tower)"
-    elsif layout == "manageiq/providers/automation_manager/authentication"
-      title += ": Credentials"
-    elsif layout == "configuration_script_source"
-      title += ": Repositories"
-    # Assume layout is a table name and look up the plural version
-    else
-      title += ": #{ui_lookup(:tables => layout)}"
-    end
-    title
   end
 
   def controller_model_name(controller)
@@ -641,8 +595,12 @@ module ApplicationHelper
            miq_policy
            miq_policy_export
            miq_policy_rsop
+           monitor_alerts_overview
+           monitor_alerts_list
+           monitor_alerts_most_recent
            network_topology
            ops
+           physical_infra_topology
            pxe
            report
            rss
@@ -708,7 +666,16 @@ module ApplicationHelper
   ]
   # Return a blank tb if a placeholder is needed for AJAX explorer screens, return nil if no custom toolbar to be shown
   def custom_toolbar_filename
-    if %w(ems_cloud ems_cluster ems_infra ems_physical_infra host miq_template storage ems_storage ems_network cloud_tenant).include?(@layout) # Classic CIs
+    if %w(cloud_tenant
+          ems_cloud
+          ems_cluster
+          ems_infra
+          ems_network
+          ems_storage
+          ems_physical_infra
+          host
+          miq_template
+          storage).include?(@layout) # Classic CIs
       return "custom_buttons_tb" if @record && @lastaction == "show" && @display == "main"
     end
 
@@ -1211,6 +1178,9 @@ module ApplicationHelper
   GTL_VIEW_LAYOUTS = %w(action
                         auth_key_pair_cloud
                         availability_zone
+                        alerts_overview
+                        alerts_list
+                        alerts_most_recent
                         cloud_network
                         cloud_object_store_container
                         cloud_object_store_object
@@ -1251,8 +1221,8 @@ module ApplicationHelper
                         host
                         host_aggregate
                         load_balancer
-                        manageiq/providers/ansible_tower/automation_manager/playbook
-                        manageiq/providers/automation_manager/authentication
+                        manageiq/providers/embedded_ansible/automation_manager/playbook
+                        manageiq/providers/embedded_automation_manager/authentication
                         middleware_datasource
                         middleware_deployment
                         middleware_domain
@@ -1262,11 +1232,15 @@ module ApplicationHelper
                         middleware_topology
                         miq_schedule
                         miq_template
+                        monitor_alerts_overview
+                        monitor_alerts_list
+                        monitor_alerts_most_recent
                         network_port
                         network_router
                         network_topology
                         offline
                         orchestration_stack
+                        physical_infra_topology
                         persistent_volume
                         physical_server
                         policy
@@ -1513,36 +1487,6 @@ module ApplicationHelper
       :ems_cloud
     else
       :ems_container
-    end
-  end
-
-  def title_for_hosts
-    title_for_host(true)
-  end
-
-  def title_for_host(plural = false)
-    case Host.node_types
-    when :non_openstack
-      plural ? _("Hosts") : _("Host")
-    when :openstack
-      plural ? _("Nodes") : _("Node")
-    else
-      plural ? _("Hosts / Nodes") : _("Host / Node")
-    end
-  end
-
-  def title_for_clusters
-    title_for_cluster(true)
-  end
-
-  def title_for_cluster(plural = false)
-    case EmsCluster.node_types
-    when :non_openstack
-      plural ? _("Clusters") : _("Cluster")
-    when :openstack
-      plural ? _("Deployment Roles") : _("Deployment Role")
-    else
-      plural ? _("Clusters / Deployment Roles") : _("Cluster / Deployment Role")
     end
   end
 

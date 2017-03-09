@@ -16,11 +16,11 @@ class AnsibleRepositoryController < ApplicationController
   end
 
   def self.model
-    ConfigurationScriptSource
+    ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource
   end
 
   def display_playbooks
-    nested_list("ansible_playbook", ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook)
+    nested_list("ansible_playbook", ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
   end
 
   private
