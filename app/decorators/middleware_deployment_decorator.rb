@@ -1,12 +1,6 @@
 class MiddlewareDeploymentDecorator < MiqDecorator
   def self.fonticon
-    if name.end_with? '.ear'
-      'product product-file-ear-o'
-    elsif name.end_with? '.war'
-      'product product-file-war-o'
-    else
-      'fa fa-file-text-o'
-    end
+    'fa fa-file-text-o'
   end
 
   def fonticon

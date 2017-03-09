@@ -10,5 +10,4 @@ class AvailabilityZoneDecorator < MiqDecorator
   def listicon_image
     '100/availability_zone.png'
   end
-
 end

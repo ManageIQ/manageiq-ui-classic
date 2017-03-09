@@ -3,7 +3,7 @@ class LanDecorator < MiqDecorator
     'product product-network_switch'
   end
 
-   def listicon_image
+  def listicon_image
     '100/network_switch.png'
   end
 end
