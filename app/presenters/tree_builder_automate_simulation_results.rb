@@ -104,68 +104,20 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
       'fa fa-list-ul'
     when Authentication
       'fa fa-lock'
-    when CloudNetwork
-      'product product-cloud_network'
-    when CloudObjectStoreContainer
-      'product product-cloud_object_store'
-    when CloudObjectStoreObject
-      'product product-cloud_object_store'
     when CloudResourceQuota
       'fa fa-pie-chart'
-    when CloudSubnet
-      'pficon pficon-network'
-    when CloudTenant
-      'pficon pficon-cloud-tenant'
-    when CloudVolume
-      'pficon pficon-volume'
-    when CloudVolumeBackup
-      'pficon pficon-volume'
-    when CloudVolumeSnapshot
-      'fa fa-camera'
-    when ContainerBuild
-      'pficon pficon-build'
-    when ContainerGroup
-      'fa fa-cubes'
-    when ContainerImage
-      'pficon pficon-image'
-    when ContainerImageRegistry
-      'pficon pficon-registry'
-    when ContainerNode
-      'pficon pficon-container-node'
-    when ContainerProject
-      'pficon pficon-project'
-    when ContainerReplicator
-      'pficon pficon-replicator'
-    when ContainerRoute
-      'pficon pficon-route'
-    when ContainerService
-      'pficon pficon-service'
     when ContainerVolume
       'pficon pficon-volume'
-    when Flavor
-      'pficon pficon-flavor'
-    when FloatingIp
-      'fa fa-map-marker'
     when GuestApplication
       'product product-application'
     when HostAggregate
       'pficon pficon-screen'
-    when LoadBalancer
-      'product product-load_balancer'
     when MiqRequest
       'fa fa-question'
     when Network
       'pficon pficon-network'
-    when NetworkPort
-      'product product-network_port'
-    when NetworkRouter
-      'pficon pficon-route'
-    when OrchestrationStack
-      'product product-orchestration_stack'
-    when PersistentVolume
-      'pficon pficon-volume'
-    when SecurityGroup
-      'pficon pficon-cloud-security'
+    else
+      obj.decorate.fonticon
     end
   end
 end

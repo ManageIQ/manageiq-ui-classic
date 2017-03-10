@@ -7,17 +7,14 @@ module ApplicationController::Performance
     @record = identify_tl_or_perf_record
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
 
-    unless params[:task_id] # First time thru, gather options changed by the user
+    unless params[:task_id] # first time thru, gather options changed by the user
       @perf_options.update_from_params(params)
+      perf_set_or_fix_dates(!params[:perf_typ]) if @perf_options[:chart_type] == :performance
     end
 
-    case @perf_options[:chart_type]
-    when :performance
-      perf_set_or_fix_dates(@perf_options, !params[:perf_typ]) unless params[:task_id] # Set dates if first time thru
-      unless @no_util_data
-        perf_gen_data # Go generate the task
-        return unless @charts # Return if no charts got created (first time thru async rpt gen)
-      end
+    if !@no_util_data && @perf_options[:chart_type] == :performance
+      perf_gen_data # generate the task
+      return unless @charts # no charts got created (first time thru async rpt gen)
     end
 
     if @perf_options[:no_rollups]
@@ -120,33 +117,24 @@ module ApplicationController::Performance
     end
   end
 
-  # Send the current chart report data in text, CSV, or PDF
-  def perf_download
-    report = @sb[:chart_reports].class == Array ? @sb[:chart_reports].first : @sb[:chart_reports] # Get the first or only report
-    report = perf_remove_report_cols(report)  # Remove cols that are not in the current chart
-    filename = @breadcrumbs.last[:name] + " - " + report.title
-    disable_client_cache
-    case params[:typ]
-    when "txt"
-      send_data(report.to_text,
-                :filename => "#{filename}.txt")
-    when "csv"
-      send_data(report.to_csv,
-                :filename => "#{filename}.csv")
-    end
-  end
-
   private ############################
 
   def perf_breadcrumb
     name = @perf_record.respond_to?(:evm_display_name) ? @perf_record.evm_display_name : @perf_record.name
+    url = url_for_only_path(:action => "show",
+                            :id => @perf_record,
+                            :display => "performance",
+                            :refresh => "n")
     if @perf_options.cat
       drop_breadcrumb(:name => _("%{name} Capacity & Utilization (by %{option}:%{model})") %
-                      {:name => name, :option => @perf_options.cats[@perf_options.cat_model], :model => @perf_options.cat},
-                      :url  => url_for_only_path(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
+                      {:name => name,
+                       :option => @perf_options.cats[@perf_options.cat_model],
+                       :model => @perf_options.cat},
+                      :url => url)
     else
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => name},
-                      :url  => url_for_only_path(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
+      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") %
+                      {:name => name},
+                      :url  => url)
     end
   end
 
@@ -160,20 +148,18 @@ module ApplicationController::Performance
   end
 
   # Correct any date that is out of the date/range or not allowed in a profile
-  def perf_set_or_fix_dates(options, allow_interval_override = true)
-    # Get start/end dates in selected timezone
-    s, e = @perf_record.first_and_last_capture('hourly')
-    if s.nil?
-      s, e = @perf_record.first_and_last_capture('realtime')
-      if s.nil?
-        add_flash(_("No Utilization data available"), :warning)
-        @no_util_data = true
-        return
-      end
-      options[:typ] = "realtime"
-      options[:no_rollups] = true
+  def perf_set_or_fix_dates(allow_interval_override = true)
+    start_date, end_date = @perf_record.first_and_last_capture('hourly')
+    start_date, end_date = @perf_record.first_and_last_capture('realtime') if realtime = start_date.nil?
+    if start_date.nil? && realtime
+      add_flash(_("No Utilization data available"), :warning)
+      @no_util_data = true
+      return
+    elsif realtime
+      @perf_options[:typ] = "realtime"
+      @perf_options[:no_rollups] = true
     end
-    @perf_options.set_dates(s, e, allow_interval_override)
+    @perf_options.set_dates(start_date, end_date, allow_interval_override)
   end
 
   def skip_days_from_time_profile(time_profile_days)
@@ -331,7 +317,7 @@ module ApplicationController::Performance
       @perf_options[:typ] = "Hourly"
       @perf_options[:hourly_date] = [ts.month, ts.day, ts.year].join("/")
 
-      perf_set_or_fix_dates(@perf_options)  unless params[:task_id] # Set dates if first time thru
+      perf_set_or_fix_dates unless params[:task_id] # Set dates if first time thru
       perf_gen_data
 
       return unless @charts      # Return if no charts got created (first time thru async rpt gen)
@@ -365,7 +351,7 @@ module ApplicationController::Performance
       @record = identify_tl_or_perf_record
       @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
       @perf_options[:typ] = "Daily"
-      perf_set_or_fix_dates(@perf_options, false)  unless params[:task_id] # Set dates if first time thru
+      perf_set_or_fix_dates(false) unless params[:task_id] # Set dates if first time thru
       perf_gen_data
       return unless @charts        # Return if no charts got created (first time thru async rpt gen)
 
@@ -514,7 +500,7 @@ module ApplicationController::Performance
     end
 
     # Get start/end dates in selected timezone, but only right before displaying the chart options screen
-    perf_set_or_fix_dates(@perf_options) if params[:action] == "perf_chart_chooser"
+    perf_set_or_fix_dates if params[:action] == "perf_chart_chooser"
 
     @perf_options[:days] ||= "7"
     @perf_options[:ght_type] ||= "hybrid"
@@ -528,17 +514,13 @@ module ApplicationController::Performance
   def perf_gen_data
     perf_breadcrumb
     unless @perf_options[:typ] == "realtime"
-      if @perf_options[:cat]                                      # If a category was chosen, generate charts by tag
+      if @perf_options[:cat] # If a category was chosen, generate charts by tag
         perf_gen_tag_data
         return
       end
     end
-
-    unless params[:task_id]                                     # First time thru, kick off the report generate task
-      perf_gen_data_before_wait
-    else
-      perf_gen_data_after_wait
-    end
+    # First time thru, kick off the report generate task
+    params[:task_id] ? perf_gen_data_after_wait : perf_gen_data_before_wait
   end
 
   # Generate performance data for a model's charts - kick off report task
@@ -668,19 +650,18 @@ module ApplicationController::Performance
       chart[:columns].delete_if { |col| col.include?("reserved") }
       chart[:trends].delete_if { |trend| trend.include?("reserved") } if chart[:trends]
     end
-    if chart[:title].include?("by Type")
-      chart[:columns].delete_if { |col| !col.include?("_" + @perf_options[:vmtype]) } if @perf_options[:vmtype] && @perf_options[:vmtype] != "<All>"
+    if chart[:title].include?("by Type") && @perf_options[:vmtype] && @perf_options[:vmtype] != "<All>"
+      chart[:columns].delete_if do |col|
+        !col.include?("_" + @perf_options[:vmtype])
+      end
     end
   end
 
   # Generate performance data by tag for a model's charts
   def perf_gen_tag_data
     @perf_options[:chart_type] = :performance
-    unless params[:task_id]                       # First time thru, kick off the report generate task
-      perf_gen_tag_data_before_wait
-    else
-      perf_gen_tag_data_after_wait
-    end
+    # First time thru, kick off the report generate task
+    params[:task_id] ? perf_gen_tag_data_after_wait : perf_gen_tag_data_before_wait
   end
 
   # Generate performance data by tag - kick off report task
@@ -1100,7 +1081,6 @@ module ApplicationController::Performance
       if @sb[:planning][:options][:trend_vcpus]
         rpt.db_options[:options][:target_options][:vcpus] = {
           :mode        => :current,
-          #         :metric     => :num_cpu, # Not applicable to vcpus
           :limit_col   => :total_vcpus, # not sure of name, but should be # vcpus/core times # of cores
           :limit_ratio => @sb[:planning][:options][:limit_vcpus]
         }
@@ -1447,9 +1427,6 @@ module ApplicationController::Performance
     new_rpt.table = Marshal.load(Marshal.dump(report.table))
     keepcols = []
     keepcols += ["timestamp", "statistic_time"] unless @top_chart
-    #   keepcols += ["resource_name"] if @charts.first[:type].include?("Pie")
-    #   keepcols += @charts.first[:columns]
-    #   keepcols += @charts.first[:chart2][:columns] if @charts.first[:chart2]
     keepcols += ["resource_name"] if charts[:type].include?("Pie")
     keepcols += charts[:columns]
     keepcols += charts[:chart2][:columns] if charts[:chart2]

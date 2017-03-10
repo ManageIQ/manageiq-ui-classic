@@ -4,6 +4,7 @@ class MiqAeCustomizationController < ApplicationController
   include_concern 'Dialogs'
 
   include AutomateTreeHelper
+  helper ApplicationHelper::ImportExportHelper
 
   before_action :check_privileges
   before_action :get_session_data
