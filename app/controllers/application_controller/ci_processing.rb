@@ -100,6 +100,7 @@ module ApplicationController::CiProcessing
 
     @user = @group = DONT_CHANGE_OWNER if ownership_items.length > 1
     ownership_scope = klass.where(:id => ownership_items)
+    ownership_scope = ownership_scope.with_ownership if klass.respond_to?(:with_ownership)
     @ownershipitems = ownership_scope.order(:name)
     @view = get_db_view(klass == VmOrTemplate ? Vm : klass) # Instantiate the MIQ Report view object
     @view.table = MiqFilter.records2table(@ownershipitems, @view.cols + ['id'])
