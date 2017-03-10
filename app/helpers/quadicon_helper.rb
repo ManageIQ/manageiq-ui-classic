@@ -396,6 +396,12 @@ module QuadiconHelper
     end
   end
 
+  def flobj_fonticon_simple(icon = nil, cls = '')
+    content_tag(:div, :class => "flobj #{cls}") do
+      tag(:i, :class => "fa-fw quadicon-single-fonticon #{icon}")
+    end
+  end
+
   def flobj_img_small(image = nil, cls = '')
     flobj_img_simple(image, cls, 64)
   end
@@ -550,6 +556,8 @@ module QuadiconHelper
   # Renders a single_quad uh, quadicon
   #
   def render_single_quad_quadicon(item, options)
+    fonticon = item.try(:picture) ? nil : item.decorate.try(:fonticon)
+
     img_path = if item.decorate.try(:listicon_image)
                  item.decorate.listicon_image
                elsif @listicon
@@ -560,7 +568,8 @@ module QuadiconHelper
 
     output = []
     output << flobj_img_simple("layout/base-single.png")
-    output << flobj_img_simple(img_path, "e72")
+    output << flobj_img_simple(img_path, "e72") unless fonticon
+    output << flobj_fonticon_simple(fonticon, "e72") if fonticon
 
     unless options[:typ] == :listnav
       title = case @listicon
