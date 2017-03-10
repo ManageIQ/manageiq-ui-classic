@@ -174,12 +174,6 @@ module ApplicationHelper
     record.class.base_model.name.underscore
   end
 
-  def model_string_to_constant_params
-    {
-      "all_vms" => VmOrTemplate
-    }
-  end
-  private :model_string_to_constant_params
   def type_has_quadicon(type)
     !%w(
       ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile
@@ -1666,15 +1660,15 @@ module ApplicationHelper
       "product product-role"
     when "MiqWidget"
       glyphicon = case row['content_type'].downcase
-      when "chart"
-        "fa fa-pie-chart"
-      when "menu"
-        "fa fa-share-square-o"
-      when "report"
-        "fa fa-file-text-o"
-      when "rss"
-        "fa fa-rss"
-      end
+                  when "chart"
+                    "fa fa-pie-chart"
+                  when "menu"
+                    "fa fa-share-square-o"
+                  when "report"
+                    "fa fa-file-text-o"
+                  when "rss"
+                    "fa fa-rss"
+                  end
       [glyphicon, listicon_glyphicon_tag_for_widget(row)]
     end
   end

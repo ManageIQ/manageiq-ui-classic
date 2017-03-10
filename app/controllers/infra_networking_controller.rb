@@ -317,6 +317,7 @@ class InfraNetworkingController < ApplicationController
               else
                 default_node
               end
+
     @right_cell_text += @edit[:adv_search_applied][:text] if x_tree && @edit && @edit[:adv_search_applied]
 
     if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
