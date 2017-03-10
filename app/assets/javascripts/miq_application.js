@@ -1477,15 +1477,17 @@ function miqToolbarOnClick(_e) {
 
   // put url_parms into params var, if defined
   var params;
+  if (button.data("send_checked")) {
+    if (ManageIQ.gridChecks.length) {
+      params = "miq_grid_checks=" + ManageIQ.gridChecks.join(',');
+    }
+  }
+
   if (button.data("url_parms")) {
-    if (button.data("send_checked")) {
-      if (ManageIQ.gridChecks.length) {
-        params = "miq_grid_checks=" + ManageIQ.gridChecks.join(',');
-      } else {
-        params = miqSerializeForm(button.data('url_parms'));
-      }
+    if (button.data('url_parms').match("_div$")) {
+      params = params || miqSerializeForm(button.data('url_parms'));
     } else {
-      params = button.data('url_parms').split("?")[1];
+      params = (params ? '&' : '') + button.data('url_parms').split("?")[1];
     }
   }
 
