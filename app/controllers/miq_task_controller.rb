@@ -448,17 +448,16 @@ class MiqTaskController < ApplicationController
 
   def get_session_data
     super
-    @jobs_tab      = session[:jobs_tab] if session[:jobs_tab]
+    @layout = get_layout
+    @tasks_tab     = session[:tasks_tab] if session[:tasks_tab]
     @tabform       = session[:tabform]  if session[:tabform]
-    @tasks_options = session[:tasks_options] || ""
   end
 
   def set_session_data
     super
-    session[:jobs_tab]            = @jobs_tab
+    session[:tasks_tab]            = @tasks_tab
     session[:tabform]             = @tabform
     session[:layout]              = @layout
-    session[:tasks_options]       = @tasks_options unless @tasks_options.nil?
   end
 
   menu_section :set
