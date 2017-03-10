@@ -56,5 +56,5 @@ class VmOrTemplateController < ApplicationController
   end
 
   menu_section :svc
-  custom_buttons
+  has_custom_buttons
 end

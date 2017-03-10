@@ -37,5 +37,5 @@ class EmsNetworkController < ApplicationController
   public :restful?
 
   menu_section :net
-  custom_buttons
+  has_custom_buttons
 end

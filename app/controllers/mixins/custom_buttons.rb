@@ -8,6 +8,7 @@ module Mixins::CustomButtons
   end
 
   def custom_toolbar_filename_explorer
+    binding.pry
     if x_tree                # Make sure we have the trees defined
       if x_node == "root" || # If on a root, create placeholder toolbar
          !@record            #   or no record showing
@@ -25,7 +26,7 @@ module Mixins::CustomButtons
   end
 
   class_methods do
-    def custom_buttons
+    def has_custom_buttons
       @custom_buttons = true
     end
   end

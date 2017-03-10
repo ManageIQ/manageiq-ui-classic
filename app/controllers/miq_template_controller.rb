@@ -44,5 +44,5 @@ class MiqTemplateController < ApplicationController
     session[:policy_options]            = @policy_options unless @policy_options.nil?
   end
 
-  custom_buttons
+  has_custom_buttons
 end
