@@ -187,22 +187,8 @@ module ApplicationController::Performance
       return if display_current_top(data_row)
     elsif cmd == "Display" && typ == "bytag"
       return if display_by_tag(data_row, report, ts, bc_model, model, legend_idx)
-    elsif cmd == "Display"  # Display selected resources
-      dt = @perf_options[:typ] == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
-      state = typ == "on" ? _("running") : _("stopped")
-      if data_row["assoc_ids"][model.downcase.to_sym][typ.to_sym].blank?
-        msg = _("No %{model} were %{state} %{time}") % {:model => model, :state => state, :time => dt}
-      else
-        bc = request.parameters["controller"] == "storage" ? "#{bc_model} #{dt}" : "#{bc_model} #{state} #{dt}"
-        javascript_redirect :controller    => model.downcase.singularize,
-                            :action        => "show_list",
-                            :menu_click    => params[:menu_click],
-                            :sb_controller => request.parameters["controller"],
-                            :bc            => bc,
-                            :escape        => false
-        return
-      end
-
+    elsif cmd == "Display"
+      return if display_selected(ts, typ, data_row, model, bc_model)
     elsif cmd == "Timeline" && model == "Current" # Display timeline for the current CI
       @record = identify_tl_or_perf_record
       @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
@@ -451,6 +437,25 @@ module ApplicationController::Performance
            else
              _("%{model} (%{tag} running %{time})") % {:tag => bc_tag, :model => bc_model, :time => dt}
            end
+      javascript_redirect :controller    => model.downcase.singularize,
+                          :action        => "show_list",
+                          :menu_click    => params[:menu_click],
+                          :sb_controller => request.parameters["controller"],
+                          :bc            => bc,
+                          :escape        => false
+      return true
+    end
+    false
+  end
+
+  # display selected resources
+  def display_selected(ts, typ, data_row, model, bc_model)
+    dt = @perf_options[:typ] == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
+    state = typ == "on" ? _("running") : _("stopped")
+    if data_row["assoc_ids"][model.downcase.to_sym][typ.to_sym].blank?
+      msg = _("No %{model} were %{state} %{time}") % {:model => model, :state => state, :time => dt}
+    else
+      bc = request.parameters["controller"] == "storage" ? "#{bc_model} #{dt}" : "#{bc_model} #{state} #{dt}"
       javascript_redirect :controller    => model.downcase.singularize,
                           :action        => "show_list",
                           :menu_click    => params[:menu_click],
