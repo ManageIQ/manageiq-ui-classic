@@ -13,6 +13,7 @@ module Mixins
       @filters    = session["#{prefix}_filters".to_sym]
       @catinfo    = session["#{prefix}_catinfo".to_sym]
       @showtype   = session["#{prefix}_showtype".to_sym]
+      @tasks_options = session["#{prefix}_tasks_options".to_sym] || ""
     end
 
     def set_session_data
@@ -22,6 +23,7 @@ module Mixins
       session["#{prefix}_filters".to_sym]    = @filters
       session["#{prefix}_catinfo".to_sym]    = @catinfo
       session["#{prefix}_showtype".to_sym]   = @showtype
+      session["#{prefix}_tasks_options".to_sym] = @tasks_options unless @tasks_options.nil?
     end
   end
 end
