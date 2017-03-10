@@ -197,43 +197,8 @@ module ApplicationController::Performance
       return if chart_current_hourly(ts)
     elsif cmd == "Chart" && model == "Current" && typ == "Daily"
       return if chart_current_daily
-    elsif cmd == "Chart" && model == "Selected"                             # Create daily/hourly chart for selected CI
-      return unless @record = perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
-      # Set the perf options in the selected controller's sandbox
-      cont = data_row["resource_type"].underscore.downcase.to_sym
-      session[:sandboxes][cont] ||= {}
-      session[:sandboxes][cont][:perf_options] ||= Options.new
-
-      # Copy general items from the current perf_options
-      session[:sandboxes][cont][:perf_options][:index] = @perf_options[:index]
-      session[:sandboxes][cont][:perf_options][:tz] = @perf_options[:tz]
-      session[:sandboxes][cont][:perf_options][:time_profile] = @perf_options[:time_profile]
-      session[:sandboxes][cont][:perf_options][:time_profile_days] = @perf_options[:time_profile_days]
-      session[:sandboxes][cont][:perf_options][:time_profile_tz] = @perf_options[:time_profile_tz]
-
-      # Set new perf options based on what was selected
-      session[:sandboxes][cont][:perf_options][:model] = data_row["resource_type"]
-      session[:sandboxes][cont][:perf_options][:typ] = typ
-      session[:sandboxes][cont][:perf_options][:daily_date] = @perf_options[:daily_date] if typ == "Daily"
-      session[:sandboxes][cont][:perf_options][:days] = @perf_options[:days] if typ == "Daily"
-      session[:sandboxes][cont][:perf_options][:hourly_date] = [ts.month, ts.day, ts.year].join("/") if typ == "Hourly"
-
-      if data_row["resource_type"] == "VmOrTemplate"
-        prefix = TreeBuilder.get_prefix_for_model(@record.class.base_model)
-        tree_node_id = "#{prefix}-#{@record.id}"  # Build the tree node id
-        session[:exp_parms] = {:display => "performance", :refresh => "n", :id => tree_node_id}
-        javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
-                            :action     => "explorer"
-      else
-        javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
-                            :action     => "show",
-                            :id         => data_row["resource_id"],
-                            :display    => "performance",
-                            :refresh    => "n",
-                            :escape     => false
-      end
-      return
-
+    elsif cmd == "Chart" && model == "Selected"
+      return if chart_selected(data_row, typ, ts)
     elsif cmd == "Chart" && typ.starts_with?("top") && @perf_options[:cat]  # Create top chart for selected timestamp/model by tag
       @record = identify_tl_or_perf_record
       @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
@@ -481,6 +446,45 @@ module ApplicationController::Performance
       page << js_build_calendar(@perf_options.to_calendar)
       page << Charting.js_load_statement
       page << 'miqSparkle(false);'
+    end
+    return true
+  end
+
+  # Create daily/hourly chart for selected CI
+  def chart_selected(data_row, typ, ts)
+    return true unless @record = perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
+    # Set the perf options in the selected controller's sandbox
+    cont = data_row["resource_type"].underscore.downcase.to_sym
+    session[:sandboxes][cont] ||= {}
+    session[:sandboxes][cont][:perf_options] ||= Options.new
+
+    # Copy general items from the current perf_options
+    session[:sandboxes][cont][:perf_options][:index] = @perf_options[:index]
+    session[:sandboxes][cont][:perf_options][:tz] = @perf_options[:tz]
+    session[:sandboxes][cont][:perf_options][:time_profile] = @perf_options[:time_profile]
+    session[:sandboxes][cont][:perf_options][:time_profile_days] = @perf_options[:time_profile_days]
+    session[:sandboxes][cont][:perf_options][:time_profile_tz] = @perf_options[:time_profile_tz]
+
+    # Set new perf options based on what was selected
+    session[:sandboxes][cont][:perf_options][:model] = data_row["resource_type"]
+    session[:sandboxes][cont][:perf_options][:typ] = typ
+    session[:sandboxes][cont][:perf_options][:daily_date] = @perf_options[:daily_date] if typ == "Daily"
+    session[:sandboxes][cont][:perf_options][:days] = @perf_options[:days] if typ == "Daily"
+    session[:sandboxes][cont][:perf_options][:hourly_date] = [ts.month, ts.day, ts.year].join("/") if typ == "Hourly"
+
+    if data_row["resource_type"] == "VmOrTemplate"
+      prefix = TreeBuilder.get_prefix_for_model(@record.class.base_model)
+      tree_node_id = "#{prefix}-#{@record.id}"  # Build the tree node id
+      session[:exp_parms] = {:display => "performance", :refresh => "n", :id => tree_node_id}
+      javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
+                          :action     => "explorer"
+    else
+      javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
+                          :action     => "show",
+                          :id         => data_row["resource_id"],
+                          :display    => "performance",
+                          :refresh    => "n",
+                          :escape     => false
     end
     return true
   end
