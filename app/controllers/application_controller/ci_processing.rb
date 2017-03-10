@@ -132,6 +132,12 @@ module ApplicationController::CiProcessing
      :group => @group}
   end
 
+  def valid_items_for(klass, param_ids)
+    scope = klass.respond_to?(:with_ownership) ? klass.with_ownership : klass
+    checked_ids = Rbac.filtered(scope.where(:id => param_ids)).pluck(:id)
+    checked_ids.to_set == param_ids.to_set
+  end
+
   def ownership_update
     case params[:button]
     when "cancel"
@@ -163,6 +169,8 @@ module ApplicationController::CiProcessing
 
       klass = get_class_from_controller_param(request.parameters[:controller])
       param_ids = params[:objectIds].map(&:to_i)
+      raise _('Invalid items selected.') unless valid_items_for(klass, param_ids)
+
       result = klass.set_ownership(param_ids, opts)
       unless result == true
         result["missing_ids"].each { |msg| add_flash(msg, :error) } if result["missing_ids"]
