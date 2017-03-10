@@ -4,8 +4,7 @@ shared_examples 'controller with custom buttons' do
     controller.instance_variable_set(:@lastaction, 'show')
     controller.instance_variable_set(:@record, true)
 
-    text = controller.custom_toolbar_filename
-    expect(text).to eq("custom_buttons_tb")
+    expect(controller.custom_toolbar?).to be true
   end
 
   it "has no custom toolbar when showing main view w/o @record" do
@@ -13,8 +12,7 @@ shared_examples 'controller with custom buttons' do
     controller.instance_variable_set(:@lastaction, 'show')
     controller.instance_variable_set(:@record, nil)
 
-    text = controller.custom_toolbar_filename
-    expect(text).to be_nil
+    expect(controller.custom_toolbar?).to be_falsey
   end
 
   it "has no custom toolbar when not showing main view w/ @record" do
@@ -22,8 +20,7 @@ shared_examples 'controller with custom buttons' do
     controller.instance_variable_set(:@lastaction, 'show')
     controller.instance_variable_set(:@record, true)
 
-    text = controller.custom_toolbar_filename
-    expect(text).to be_nil
+    expect(controller.custom_toolbar?).to be_falsey
   end
 end
 
@@ -37,8 +34,7 @@ shared_examples 'explorer controller with custom buttons' do
       :trees       => {"my_tree" => {:active_node => 'root'}}
     )
 
-    text = controller.custom_toolbar_filename
-    expect(text).to eq("blank_view_tb")
+    expect(controller.custom_toolbar?).to eq(:blank)
   end
 
   it "has no custom toolbar when not showing main view w/ @record" do
@@ -51,8 +47,7 @@ shared_examples 'explorer controller with custom buttons' do
       :trees       => {"my_tree" => {:active_node => 'v-1r35'}}
     )
 
-    text = controller.custom_toolbar_filename
-    expect(text).to eq("blank_view_tb")
+    expect(controller.custom_toolbar?).to eq(:blank)
   end
 
   it "has custom toolbar when showing main view w/ @record" do
@@ -65,7 +60,6 @@ shared_examples 'explorer controller with custom buttons' do
       :trees       => {"my_tree" => {:active_node => 'v-1r35'}}
     )
 
-    text = controller.custom_toolbar_filename
-    expect(text).to eq("custom_buttons_tb")
+    expect(controller.custom_toolbar?).to be(true)
   end
 end
