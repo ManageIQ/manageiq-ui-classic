@@ -1,5 +1,5 @@
 class AuthPrivateKeyDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     nil
   end
 

@@ -1,5 +1,5 @@
 class ServiceDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'pficon pficon-service'
   end
 

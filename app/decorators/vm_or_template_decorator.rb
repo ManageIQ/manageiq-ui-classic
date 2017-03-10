@@ -1,5 +1,5 @@
 class VmOrTemplateDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     nil
   end
 

@@ -1,5 +1,5 @@
 class EmsClusterDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'pficon pficon-cluster'
   end
 

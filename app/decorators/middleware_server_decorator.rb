@@ -1,5 +1,5 @@
 class MiddlewareServerDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     nil
   end
 

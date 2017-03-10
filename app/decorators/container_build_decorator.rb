@@ -1,5 +1,5 @@
 class ContainerBuildDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'pficon pficon-build'
   end
 

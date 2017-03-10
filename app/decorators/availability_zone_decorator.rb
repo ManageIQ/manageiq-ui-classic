@@ -3,10 +3,6 @@ class AvailabilityZoneDecorator < MiqDecorator
     'pficon pficon-zone'
   end
 
-  def fonticon
-    'pficon pficon-zone'
-  end
-
   def listicon_image
     '100/availability_zone.png'
   end

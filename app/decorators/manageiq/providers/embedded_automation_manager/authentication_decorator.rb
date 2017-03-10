@@ -1,6 +1,6 @@
 module ManageIQ::Providers
   class EmbeddedAutomationManager::AuthenticationDecorator < MiqDecorator
-    def fonticon
+    def self.fonticon
       'fa fa-lock'
     end
 

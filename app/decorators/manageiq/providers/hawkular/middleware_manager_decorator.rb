@@ -1,6 +1,6 @@
 module ManageIQ::Providers::Hawkular
   class MiddlewareManagerDecorator < MiqDecorator
-    def fonticon
+    def self.fonticon
       nil
     end
 

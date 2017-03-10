@@ -1,5 +1,5 @@
 class SnapshotDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'fa fa-camera'
   end
 end

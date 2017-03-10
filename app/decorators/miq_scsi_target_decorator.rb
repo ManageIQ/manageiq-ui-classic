@@ -1,5 +1,5 @@
 class MiqScsiTargetDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'product product-network_card'
   end
 end

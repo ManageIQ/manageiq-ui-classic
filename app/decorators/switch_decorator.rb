@@ -1,5 +1,5 @@
 class SwitchDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'product product-network_switch'
   end
 

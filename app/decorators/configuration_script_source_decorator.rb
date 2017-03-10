@@ -1,5 +1,5 @@
 class ConfigurationScriptSourceDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     "pficon pficon-repository"
   end
 

@@ -1,5 +1,5 @@
 class MiqSearchDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'fa fa-filter'
   end
 end

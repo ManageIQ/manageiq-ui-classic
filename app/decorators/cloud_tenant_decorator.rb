@@ -3,10 +3,6 @@ class CloudTenantDecorator < MiqDecorator
     'pficon pficon-cloud-tenant'
   end
 
-  def fonticon
-    'pficon pficon-cloud-tenant'
-  end
-
   def listicon_image
     '100/cloud_tenant.png'
   end
