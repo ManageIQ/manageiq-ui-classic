@@ -185,28 +185,8 @@ module ApplicationController::Performance
 
     if cmd == "Display" && model == "Current" && typ == "Top"
       return if display_current_top(data_row)
-    elsif cmd == "Display" && typ == "bytag"  # Display selected resources from a tag chart
-      dt = @perf_options[:typ] == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
-      top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]
-      bc_tag =  "#{Classification.find_by_name(@perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][legend_idx]}"
-      dt = typ == "tophour" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
-      if top_ids.blank?
-        msg = _("No %{tag} %{model} were running %{time}") % {:tag => bc_tag, :model => bc_model, :time => dt}
-      else
-        bc = if request.parameters["controller"] == "storage"
-               "#{bc_model} (#{bc_tag} #{dt})"
-             else
-               _("%{model} (%{tag} running %{time})") % {:tag => bc_tag, :model => bc_model, :time => dt}
-             end
-        javascript_redirect :controller    => model.downcase.singularize,
-                            :action        => "show_list",
-                            :menu_click    => params[:menu_click],
-                            :sb_controller => request.parameters["controller"],
-                            :bc            => bc,
-                            :escape        => false
-        return
-      end
-
+    elsif cmd == "Display" && typ == "bytag"
+      return if display_by_tag(data_row, report, ts, bc_model, model, legend_idx)
     elsif cmd == "Display"  # Display selected resources
       dt = @perf_options[:typ] == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
       state = typ == "on" ? _("running") : _("stopped")
@@ -455,6 +435,31 @@ module ApplicationController::Performance
                         :id         => data_row["resource_id"],
                         :escape     => false
     return true
+  end
+
+  # display selected resources from a tag chart
+  def display_by_tag(data_row, report, ts, bc_model, model, legend_idx)
+    dt = @perf_options[:typ] == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
+    top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]
+    bc_tag =  "#{Classification.find_by_name(@perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][legend_idx]}"
+    dt = typ == "tophour" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
+    if top_ids.blank?
+      msg = _("No %{tag} %{model} were running %{time}") % {:tag => bc_tag, :model => bc_model, :time => dt}
+    else
+      bc = if request.parameters["controller"] == "storage"
+             "#{bc_model} (#{bc_tag} #{dt})"
+           else
+             _("%{model} (%{tag} running %{time})") % {:tag => bc_tag, :model => bc_model, :time => dt}
+           end
+      javascript_redirect :controller    => model.downcase.singularize,
+                          :action        => "show_list",
+                          :menu_click    => params[:menu_click],
+                          :sb_controller => request.parameters["controller"],
+                          :bc            => bc,
+                          :escape        => false
+      return true
+    end
+    false
   end
 
   # Send error message if record is found and authorized, else return the record
