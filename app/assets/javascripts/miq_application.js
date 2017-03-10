@@ -1487,7 +1487,7 @@ function miqToolbarOnClick(_e) {
     if (button.data('url_parms').match("_div$")) {
       params = params || miqSerializeForm(button.data('url_parms'));
     } else {
-      params = (params ? '&' : '') + button.data('url_parms').split("?")[1];
+      params += (params ? '&' : '') + button.data('url_parms').split("?")[1];
     }
   }
 
