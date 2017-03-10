@@ -99,8 +99,8 @@ module ApplicationController::CiProcessing
     Rbac.filtered(MiqGroup.non_tenant_groups).each { |g| @groups[g.description] = g.id.to_s }
 
     @user = @group = DONT_CHANGE_OWNER if ownership_items.length > 1
-
-    @ownershipitems = klass.find(ownership_items).sort_by(&:name)
+    ownership_scope = klass.where(:id => ownership_items)
+    @ownershipitems = ownership_scope.order(:name)
     @view = get_db_view(klass == VmOrTemplate ? Vm : klass) # Instantiate the MIQ Report view object
     @view.table = MiqFilter.records2table(@ownershipitems, @view.cols + ['id'])
   end
