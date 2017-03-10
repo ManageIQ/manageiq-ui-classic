@@ -83,7 +83,7 @@ module ApplicationController::Performance
       end
       if daily_date.present? &&
          (daily_date.to_date < sdate_daily.to_date || daily_date.to_date > edate_daily.to_date)
-        options[:daily_date] = nil
+        self.daily_date = nil
       end
       self.hourly_date ||= [edate.month, edate.day, edate.year].join('/')
       self.daily_date  ||= [edate_daily.month, edate_daily.day, edate_daily.year].join('/')
