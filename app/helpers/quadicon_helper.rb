@@ -415,6 +415,7 @@ module QuadiconHelper
   # Renders a quadicon for service classes
   #
   def render_service_quadicon(item, options)
+    return render_single_quad_quadicon(item, options) #TODO: FIXME
     output = []
     output << flobj_img_simple
 
