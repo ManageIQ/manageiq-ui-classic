@@ -21,10 +21,6 @@ module EmsCloudHelper::TextualSummary
     )
   end
 
-  def textual_group_configuration_relationships
-    TextualGroup.new(_("Configuration"), %i(arbitration_profiles))
-  end
-
   def textual_group_status
     TextualGroup.new(_("Status"), textual_authentications(@record.authentication_for_summary) + %i(refresh_status))
   end
@@ -153,20 +149,6 @@ module EmsCloudHelper::TextualSummary
     h
   end
 
-  def textual_arbitration_profiles
-    num = @record.number_of(:arbitration_profiles)
-    h = {:label => _("Arbitration Profiles"), :icon => "fa fa-list-ul", :value => num}
-    if num > 0
-      h[:title] = n_("Show Arbitration Profiles for this Provider",
-                     "Show Arbitration Profiles for this Provider", num)
-      h[:link]  = url_for(:controller => controller.controller_name,
-                          :action     => 'arbitration_profiles',
-                          :id         => @record,
-                          :db         => controller.controller_name)
-    end
-    h
-  end
-
   def textual_zone
     {:label => _("Managed by Zone"), :icon => "pficon pficon-zone", :value => @record.zone.name}
   end
@@ -174,7 +156,7 @@ module EmsCloudHelper::TextualSummary
   def textual_topology
     {:label => _('Topology'),
      :icon  => "pficon pficon-topology",
-     :link  => url_for(:controller => 'cloud_topology', :action => 'show', :id => @record.id),
+     :link  => url_for_only_path(:controller => 'cloud_topology', :action => 'show', :id => @record.id),
      :title => _("Show topology")}
   end
 end

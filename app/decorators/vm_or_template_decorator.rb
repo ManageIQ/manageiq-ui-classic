@@ -1,6 +1,4 @@
-class VmOrTemplateDecorator < Draper::Decorator
-  delegate_all
-
+class VmOrTemplateDecorator < MiqDecorator
   def fonticon
     nil
   end

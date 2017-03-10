@@ -10,15 +10,14 @@ class ContainerDashboardService
 
   def all_data
     {
-      :providers_link         => get_url_to_entity(:ems_container),
-      :status                 => status,
-      :providers              => providers,
-      :heatmaps               => heatmaps,
-      :ems_utilization        => ems_utilization,
-      :hourly_network_metrics => hourly_network_metrics,
-      :daily_network_metrics  => daily_network_metrics,
-      :daily_pod_metrics      => daily_pod_metrics,
-      :daily_image_metrics    => daily_image_metrics
+      :providers_link  => get_url_to_entity(:ems_container),
+      :status          => status,
+      :providers       => providers,
+      :heatmaps        => heatmaps,
+      :ems_utilization => ems_utilization,
+      :network_metrics => network_metrics,
+      :pod_metrics     => pod_metrics,
+      :image_metrics   => image_metrics
     }.compact
   end
 
@@ -107,18 +106,27 @@ class ContainerDashboardService
     if @ems.present?
       @controller.polymorphic_url(@ems, :display => entity.to_s.pluralize)
     else
-      @controller.url_for(:action     => 'show_list',
+      @controller.url_for_only_path(:action     => 'show_list',
                           :controller => entity)
     end
   end
 
-  def heatmaps
+  def realtime_heatmaps
+    heatmaps_data(realtime_provider_metrics)
+  end
+
+  def hourly_heatmaps
     # Get latest hourly rollup for each node.
     node_ids = @ems.container_nodes if @ems.present?
     metrics = MetricRollup.latest_rollups(ContainerNode.name, node_ids)
     metrics = metrics.where('timestamp > ?', 1.day.ago.utc).includes(:resource)
     metrics = metrics.includes(:resource => [:ext_management_system]) unless @ems.present?
 
+    data = heatmaps_data(metrics)
+    data if data[:nodeCpuUsage]
+  end
+
+  def heatmaps_data(metrics)
     node_cpu_usage = []
     node_memory_usage = []
 
@@ -149,7 +157,54 @@ class ContainerDashboardService
     }
   end
 
-  def ems_utilization
+  def heatmaps
+    hourly_heatmaps || realtime_heatmaps
+  end
+
+  def fill_ems_utilization(m, time, used_cpu, used_mem, total_cpu, total_mem)
+    used_cpu[time] += m.v_derived_cpu_total_cores_used if m.v_derived_cpu_total_cores_used.present?
+    used_mem[time] += m.derived_memory_used if m.derived_memory_used.present?
+    total_cpu[time] += m.derived_vm_numvcpus if m.derived_vm_numvcpus.present?
+    total_mem[time] += m.derived_memory_available if m.derived_memory_available.present?
+  end
+
+  def realtime_ems_utilization
+    used_cpu = Hash.new(0)
+    used_mem = Hash.new(0)
+    total_cpu = Hash.new(0)
+    total_mem = Hash.new(0)
+
+    realtime_provider_metrics.each do |m|
+      minute = m.timestamp.beginning_of_minute.utc
+      fill_ems_utilization(m, minute, used_cpu, used_mem, total_cpu, total_mem)
+    end
+
+    {
+      :interval_name => "realtime",
+      :xy_data       => ems_utilization_data(used_cpu, total_cpu, used_mem, total_mem) || {:cpu => nil, :mem => nil}
+    }
+  end
+
+  def hourly_ems_utilization
+    used_cpu = Hash.new(0)
+    used_mem = Hash.new(0)
+    total_cpu = Hash.new(0)
+    total_mem = Hash.new(0)
+
+    hourly_provider_metrics.each do |m|
+      hour = m.timestamp.beginning_of_hour.utc
+      fill_ems_utilization(m, hour, used_cpu, used_mem, total_cpu, total_mem)
+    end
+
+    if used_cpu.any?
+      {
+        :interval_name => "hourly",
+        :xy_data       => ems_utilization_data(used_cpu, total_cpu, used_mem, total_mem)
+      }
+    end
+  end
+
+  def daily_ems_utilization
     used_cpu = Hash.new(0)
     used_mem = Hash.new(0)
     total_cpu = Hash.new(0)
@@ -157,12 +212,18 @@ class ContainerDashboardService
 
     daily_provider_metrics.each do |metric|
       date = metric.timestamp.strftime("%Y-%m-%d")
-      used_cpu[date] += metric.v_derived_cpu_total_cores_used if metric.v_derived_cpu_total_cores_used.present?
-      used_mem[date] += metric.derived_memory_used if metric.derived_memory_used.present?
-      total_cpu[date] += metric.derived_vm_numvcpus if metric.derived_vm_numvcpus.present?
-      total_mem[date] += metric.derived_memory_available if metric.derived_memory_available.present?
+      fill_ems_utilization(metric, date, used_cpu, used_mem, total_cpu, total_mem)
     end
 
+    if used_cpu.any?
+      {
+        :interval_name => "daily",
+        :xy_data       => ems_utilization_data(used_cpu, total_cpu, used_mem, total_mem)
+      }
+    end
+  end
+
+  def ems_utilization_data(used_cpu, total_cpu, used_mem, total_mem)
     if used_cpu.any?
       {
         :cpu => {
@@ -178,26 +239,37 @@ class ContainerDashboardService
           :yData => used_mem.values.map { |m| (m / 1024.0).round }
         }
       }
-    else
-      {
-        :cpu => nil,
-        :mem => nil
-      }
     end
   end
 
-  def hourly_network_metrics
-    hourly_network_trend = Hash.new(0)
-    MetricRollup.with_interval_and_time_range("hourly", (1.day.ago.beginning_of_hour.utc)..(Time.now.utc))
-                .where(:resource => (@ems || ManageIQ::Providers::ContainerManager.all)).each do |m|
-      hour = m.timestamp.beginning_of_hour.utc
-      hourly_network_trend[hour] += m.net_usage_rate_average if m.net_usage_rate_average.present?
+  def ems_utilization
+    daily_ems_utilization || hourly_ems_utilization || realtime_ems_utilization
+  end
+
+  def realtime_network_metrics
+    realtime_network_metrics = Hash.new(0)
+    realtime_provider_metrics.each do |m|
+      minute = m.timestamp.beginning_of_minute.utc
+      realtime_network_metrics[minute] += m.net_usage_rate_average if m.net_usage_rate_average.present?
     end
 
-    if hourly_network_trend.any?
+    {
+      :interval_name => "realtime",
+      :xy_data       => trend_data(realtime_network_metrics)
+    }
+  end
+
+  def hourly_network_metrics
+    hourly_network_metrics = Hash.new(0)
+    hourly_provider_metrics.each do |m|
+      hour = m.timestamp.beginning_of_hour.utc
+      hourly_network_metrics[hour] += m.net_usage_rate_average if m.net_usage_rate_average.present?
+    end
+
+    if hourly_network_metrics.size > 1
       {
-        :xData => hourly_network_trend.keys,
-        :yData => hourly_network_trend.values.map(&:round)
+        :interval_name => "hourly",
+        :xy_data       => trend_data(hourly_network_metrics)
       }
     end
   end
@@ -209,37 +281,81 @@ class ContainerDashboardService
       daily_network_metrics[day] += m.net_usage_rate_average if m.net_usage_rate_average.present?
     end
 
-    if daily_network_metrics.any?
+    if daily_network_metrics.size > 1
       {
-        :xData => daily_network_metrics.keys,
-        :yData => daily_network_metrics.values.map(&:round)
+        :interval_name => "daily",
+        :xy_data       => trend_data(daily_network_metrics)
       }
     end
   end
 
-  def fill_daily_pod_metrics(metrics, pod_create_trend, pod_delete_trend)
-    metrics.each do |m|
-      timestamp = m.timestamp.strftime("%Y-%m-%d")
+  def network_metrics
+    daily_network_metrics || hourly_network_metrics || realtime_network_metrics
+  end
 
-      pod_create_trend[timestamp] += m.stat_container_group_create_rate if m.stat_container_group_create_rate.present?
-      pod_delete_trend[timestamp] += m.stat_container_group_delete_rate if m.stat_container_group_delete_rate.present?
+  def fill_pod_metrics(m, time, pod_create_trend, pod_delete_trend)
+    pod_create_trend[time] += m.stat_container_group_create_rate if m.stat_container_group_create_rate.present?
+    pod_delete_trend[time] += m.stat_container_group_delete_rate if m.stat_container_group_delete_rate.present?
+  end
+
+  def hourly_pod_metrics
+    hourly_pod_create_trend = Hash.new(0)
+    hourly_pod_delete_trend = Hash.new(0)
+    hourly_provider_metrics.each do |m|
+      hour = m.timestamp.beginning_of_hour.utc
+      fill_pod_metrics(m, hour, hourly_pod_create_trend, hourly_pod_delete_trend)
     end
+
+    {
+      :interval_name => "hourly",
+      :xy_data       => create_delete_data(hourly_pod_create_trend, hourly_pod_delete_trend)
+    }
   end
 
   def daily_pod_metrics
     daily_pod_create_trend = Hash.new(0)
     daily_pod_delete_trend = Hash.new(0)
 
-    fill_daily_pod_metrics(daily_provider_metrics,
-                           daily_pod_create_trend, daily_pod_delete_trend)
+    daily_provider_metrics.each do |m|
+      date = m.timestamp.strftime("%Y-%m-%d")
+      fill_pod_metrics(m, date, daily_pod_create_trend, daily_pod_delete_trend)
+    end
 
-    if daily_pod_create_trend.any?
+    if daily_pod_create_trend.size > 1
       {
-        :xData    => daily_pod_create_trend.keys,
-        :yCreated => daily_pod_create_trend.values.map(&:round),
-        :yDeleted => daily_pod_delete_trend.values.map(&:round)
+        :interval_name => "daily",
+        :xy_data       => create_delete_data(daily_pod_create_trend, daily_pod_delete_trend)
       }
     end
+  end
+
+  def pod_metrics
+    daily_pod_metrics || hourly_pod_metrics
+  end
+
+  def create_delete_data(create_trend, delete_trend)
+    if create_trend.any?
+      {
+        :xData    => create_trend.keys,
+        :yCreated => create_trend.values.map(&:round),
+        :yDeleted => delete_trend.values.map(&:round)
+      }
+    end
+  end
+
+  def hourly_image_metrics
+    hourly_image_metrics = Hash.new(0)
+    hourly_provider_metrics.each do |m|
+      hour = m.timestamp.beginning_of_hour.utc
+      if m.stat_container_image_registration_rate.present?
+        hourly_image_metrics[hour] += m.stat_container_image_registration_rate
+      end
+    end
+
+    {
+      :interval_name => "hourly",
+      :xy_data       => trend_data(hourly_image_metrics)
+    }
   end
 
   def daily_image_metrics
@@ -250,12 +366,38 @@ class ContainerDashboardService
         m.stat_container_image_registration_rate if m.stat_container_image_registration_rate.present?
     end
 
-    if daily_image_metrics.any?
+    if daily_image_metrics.size > 1
       {
-        :xData => daily_image_metrics.keys,
-        :yData => daily_image_metrics.values.map(&:round)
+        :interval_name => "daily",
+        :xy_data       => trend_data(daily_image_metrics)
       }
     end
+  end
+
+  def image_metrics
+    daily_image_metrics || hourly_image_metrics
+  end
+
+  def trend_data(trend)
+    if trend.any?
+      {
+        :xData => trend.keys,
+        :yData => trend.values.map(&:round)
+      }
+    end
+  end
+
+  def realtime_provider_metrics
+    current_user = @controller.current_user
+    tp = TimeProfile.profile_for_user_tz(current_user.id, current_user.get_timezone) || TimeProfile.default_time_profile
+    Metric::Helper.find_for_interval_name('realtime', tp)
+                  .where(:resource => (@ems.try(:container_nodes) || ContainerNode.all))
+                  .where('timestamp > ?', 10.minutes.ago.utc).order('timestamp')
+  end
+
+  def hourly_provider_metrics
+    MetricRollup.with_interval_and_time_range("hourly", (1.day.ago.beginning_of_hour.utc)..(Time.now.utc))
+                .where(:resource => (@ems || ManageIQ::Providers::ContainerManager.all))
   end
 
   def daily_provider_metrics

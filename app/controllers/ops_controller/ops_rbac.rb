@@ -755,6 +755,11 @@ module OpsController::OpsRbac
     update_gtl_div("rbac_#{rec_type.pluralize}_list") if pagination_or_gtl_request?
   end
 
+  def allowed_tenant_names
+    current_tenant = User.current_user.current_tenant
+    (current_tenant.descendants + [current_tenant]).map(&:name)
+  end
+
   # Create the view and associated vars for the rbac list
   def rbac_build_list(rec_type)
     @lastaction = "rbac_#{rec_type}s_list"
@@ -763,7 +768,7 @@ module OpsController::OpsRbac
     @ajax_paging_buttons = true
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
-      @settings[:perpage][@gtl_type.to_sym] = @items_per_page         # Set the per page setting for this gtl type
+      @settings.store_path(:perpage, @gtl_type.to_sym, @items_per_page) # Set the per page setting for this gtl type
     end
     @sortcol = session["rbac_#{rec_type}_sortcol"].nil? ? 0 : @sb["rbac_#{rec_type}_sortcol"].to_i
     @sortdir = session["rbac_#{rec_type}_sortdir"].nil? ? "ASC" : @sb["rbac_#{rec_type}_sortdir"]
@@ -777,7 +782,14 @@ module OpsController::OpsRbac
                     when "role"
                       get_view(MiqUserRole)
                     when "tenant"
-                      get_view(Tenant, :named_scope => :in_my_region)
+                      view, pages = get_view(Tenant, :named_scope => :in_my_region)
+                      unless User.current_user.super_admin_user?
+                        view.table.data.map! do |x|
+                          x['parent_name'] = '' unless allowed_tenant_names.include?(x['parent_name'])
+                          x
+                        end
+                      end
+                      [view, pages]
                     end
 
     @current_page = @pages[:current] unless @pages.nil? # save the current page number

@@ -1,8 +1,6 @@
-class ServiceDecorator < Draper::Decorator
-  delegate_all
-
+class ServiceDecorator < MiqDecorator
   def fonticon
-    nil
+    'pficon pficon-service'
   end
 
   def listicon_image

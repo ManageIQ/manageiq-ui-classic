@@ -5,8 +5,6 @@
 - elsif @showtype == "performance"
   = render(:partial => "layouts/performance_async")
 - elsif @showtype == "compliance_history"
-  = render :partial => "shared/views/#{@showtype}"
+  = render :partial => "shared/views/compliance_history"
 - elsif @showtype == "main"
   = render :partial => "layouts/textual_groups_generic"
-- else
-  = render :partial => @showtype

@@ -77,20 +77,19 @@ module TextualSummaryHelper
     feature ||= "#{controller}_show"
 
     label ||= ui_lookup(:model => klass.name)
-    image = textual_object_icon(object, klass)
     value = if block_given?
               yield object
             else
               object.name
             end
 
-    h = {:label => label, :image => image, :value => value}
+    h = {:label => label, :value => value}.merge(textual_object_icon(object, klass))
 
     if role_allows?(:feature => feature)
       if restful_routed?(object)
         h[:link] = polymorphic_path(object)
       else
-        h[:link] = url_for(:controller => controller,
+        h[:link] = url_for_only_path(:controller => controller,
                            :action     => 'show',
                            :id         => object)
       end
@@ -114,10 +113,9 @@ module TextualSummaryHelper
     feature ||= "#{controller_collection}_show_list"
 
     label ||= ui_lookup(:models => klass.name)
-    image = textual_collection_icon(collection, klass)
     count = collection.count
 
-    h = {:label => label, :image => image, :value => count.to_s}
+    h = {:label => label, :value => count.to_s}.merge(textual_collection_icon(collection, klass))
 
     if count > 0 && role_allows?(:feature => feature)
       if link
@@ -129,13 +127,13 @@ module TextualSummaryHelper
         if restful_routed?(owner)
           h[:link] = polymorphic_path(owner, :display => display)
         else
-          h[:link] = url_for(:controller => controller_for_model(owner.class),
+          h[:link] = url_for_only_path(:controller => controller_for_model(owner.class),
                              :action     => 'show',
                              :id         => owner,
                              :display    => display)
         end
       else
-        h[:link] = url_for(:controller => controller_collection,
+        h[:link] = url_for_only_path(:controller => controller_collection,
                            :action     => 'list')
       end
       h[:title] = _("Show all %{label}") % {:label => label}
@@ -146,9 +144,11 @@ module TextualSummaryHelper
   end
 
   def textual_object_icon(object, klass)
-    case object
-    when ExtManagementSystem
-      "svg/vendor-#{object.image_name}.svg"
+    icon = object.decorate.try(:fonticon)
+    image = object.decorate.try(:listicon_image)
+
+    if icon || image
+      {:icon => icon, :image => image}
     else
       textual_class_icon(klass)
     end
@@ -159,12 +159,17 @@ module TextualSummaryHelper
   end
 
   def textual_class_icon(klass)
-    if klass <= AdvancedSetting
-      "100/advancedsetting.png"
+    icon = klass.decorate.try(:fonticon)
+    image = klass.decorate.try(:listicon_image)
+
+    if icon || image
+      {:icon => icon, :image => image}
+    elsif klass <= AdvancedSetting
+      {:image => "100/advancedsetting.png"}
     elsif klass <= MiqTemplate
-      "100/vm.png"
+      {:image => "100/vm.png"}
     else
-      "100/#{klass.name.underscore}.png"
+      {:image => "100/#{klass.name.underscore}.png"}
     end
   end
 

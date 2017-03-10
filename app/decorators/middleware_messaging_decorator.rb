@@ -1,8 +1,10 @@
-class MiddlewareMessagingDecorator < Draper::Decorator
-  delegate_all
+class MiddlewareMessagingDecorator < MiqDecorator
+  def self.fonticon
+    'fa fa-exchange'
+  end
 
   def fonticon
-    'fa fa-exchange'.freeze
+    'fa fa-exchange'
   end
 
   def listicon_image

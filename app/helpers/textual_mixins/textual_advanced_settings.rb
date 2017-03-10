@@ -5,7 +5,7 @@ module TextualMixins::TextualAdvancedSettings
     if num > 0
       h[:title] = _("Show the advanced settings on this VM")
       h[:explorer] = true
-      h[:link] = url_for(:action => 'advanced_settings', :id => @record, :db => controller.controller_name)
+      h[:link] = url_for_only_path(:action => 'advanced_settings', :id => @record, :db => controller.controller_name)
     end
     h
   end

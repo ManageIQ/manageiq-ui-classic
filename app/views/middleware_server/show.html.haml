@@ -4,13 +4,12 @@
   = render(:partial => "layouts/performance_async")
 - elsif @showtype == 'main'
   = render :partial => "layouts/textual_groups_generic"
-- else
-  = render :partial => @showtype
+
 - @angular_form = true
 %ng-form#mw_server_form{"name"          => "mw_server_form",
                         "ng-controller" => "mwServerController",
                         "novalidate"    => "true"}
-  = render :partial => 'ops_params'
+  = render :partial => 'middleware_shared/ops_params', :locals => {:opsController => 'mwServerOpsController'}
   = render :partial => 'deploy'
   = render :partial => 'add_jdbc_driver'
   = render :partial => 'add_datasource'

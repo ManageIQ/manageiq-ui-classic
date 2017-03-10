@@ -1,8 +1,10 @@
-class ResourcePoolDecorator < Draper::Decorator
-  delegate_all
+class ResourcePoolDecorator < MiqDecorator
+  def self.fonticon
+    'pficon pficon-resource-pool'
+  end
 
   def fonticon
-    "pficon pficon-resource-pool"
+    'pficon pficon-resource-pool'
   end
 
   def listicon_image

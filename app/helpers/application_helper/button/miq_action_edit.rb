@@ -3,7 +3,7 @@ class ApplicationHelper::Button::MiqActionEdit < ApplicationHelper::Button::MiqA
 
   def disabled?
     super
-    @error_message = N_("Default actions can not be changed.") if @record.action_type == "default"
+    @error_message = _("Default actions can not be changed.") if @record.action_type == "default"
     @error_message.present?
   end
 end

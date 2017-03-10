@@ -1,6 +1,4 @@
-class MiddlewareServerDecorator < Draper::Decorator
-  delegate_all
-
+class MiddlewareServerDecorator < MiqDecorator
   def fonticon
     nil
   end
@@ -9,7 +7,7 @@ class MiddlewareServerDecorator < Draper::Decorator
     case product
     when 'Hawkular'
       'svg/vendor-hawkular.svg'
-    when 'JBoss EAP'
+    when /EAP$/
       'svg/vendor-jboss-eap.svg'
     else
       'svg/vendor-wildfly.svg'

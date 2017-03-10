@@ -1,5 +1,5 @@
 #main_div
-  - url = url_for(:action => 'form_field_changed', :id => "#{@record.id || "new"}")
+  - url = url_for_only_path(:action => 'form_field_changed', :id => (@record.id || "new"))
 
   = render :partial => "layouts/flash_msg"
 
@@ -52,7 +52,7 @@
 
   %hr
   %h3= _('Child VM Selection')
-  %table
+  %table#child-vm-select
     %tr
       %td.widthed{:align => "left"}= _('Child VMs:')
       %td

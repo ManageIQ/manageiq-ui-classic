@@ -16,11 +16,6 @@ describe('ManageIQ.charts.formatters', function() {
       var fn = ManageIQ.charts.formatters[options.name].c3(options);
       expect(fn(1234)).toEqual('1,234');
     });
-
-    it('foo.jqplot(opt)(_, val)', function() {
-      var fn = ManageIQ.charts.formatters[options.name].jqplot(options);
-      expect(fn(null, 1234)).toEqual('1,234');
-    });
   });
 
   describe('.number_with_delimiter', function() {

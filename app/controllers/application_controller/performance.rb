@@ -8,31 +8,7 @@ module ApplicationController::Performance
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
 
     unless params[:task_id] # First time thru, gather options changed by the user
-      @perf_options[:typ]        = params[:perf_typ]          if params[:perf_typ]
-      @perf_options[:days]       = params[:perf_days]         if params[:perf_days]
-      @perf_options[:rt_minutes] = params[:perf_minutes].to_i if params[:perf_minutes]
-      @perf_options[:hourly_date] = params[:miq_date_1] if params[:miq_date_1] && @perf_options[:typ] == "Hourly"
-      @perf_options[:daily_date]  = params[:miq_date_1] if params[:miq_date_1] && @perf_options[:typ] == "Daily"
-      @perf_options[:index]       = params[:chart_idx] == "clear" ? nil : params[:chart_idx] if params[:chart_idx]
-      @perf_options[:parent]      = params[:compare_to].blank? ? nil : params[:compare_to] if params.key?(:compare_to)
-      @perf_options[:compare_vm]  = params[:compare_vm].blank? ? nil : params[:compare_vm] if params.key?(:compare_vm)
-      if params[:perf_cat]
-        if params[:perf_cat] == "<None>"
-          @perf_options[:cat_model] = nil
-          @perf_options[:cat] = nil
-        else
-          @perf_options[:cat_model], @perf_options[:cat] = params[:perf_cat].split(":")
-        end
-      end
-      if params[:perf_vmtype]
-        @perf_options[:vmtype] = params[:perf_vmtype] == "<All>" ? nil : params[:perf_vmtype]
-      end
-      if params.key?(:time_profile)
-        tp = TimeProfile.find(params[:time_profile]) unless params[:time_profile].blank?
-        @perf_options[:time_profile] = params[:time_profile].blank? ? nil : params[:time_profile].to_i
-        @perf_options[:tz] = @perf_options[:time_profile_tz] = params[:time_profile].blank? ? nil : tp.tz
-        @perf_options[:time_profile_days] = params[:time_profile].blank? ? nil : tp.days
-      end
+      @perf_options.update_from_params(params)
     end
 
     case @perf_options[:chart_type]
@@ -89,11 +65,7 @@ module ApplicationController::Performance
       page.replace("candu_charts_div", :partial => "layouts/perf_charts",
                                        :locals  => {:chart_data => @chart_data, :chart_set => "candu"})
       unless @no_util_data
-        if @perf_options[:typ] == "Hourly"
-          page << js_build_calendar(:date_from => @perf_options[:sdate], :date_to => @perf_options[:edate], :skip_days => @perf_options[:skip_days])
-        else
-          page << js_build_calendar(:date_from => @perf_options[:sdate_daily], :date_to => @perf_options[:edate_daily], :skip_days => @perf_options[:skip_days])
-        end
+        page << js_build_calendar(@perf_options.to_calendar)
         page << Charting.js_load_statement
       end
       page << 'miqSparkle(false);'
@@ -139,7 +111,7 @@ module ApplicationController::Performance
       end
     else
       drop_breadcrumb(:name => params[:bc],
-                      :url  => url_for(:id     => @perf_record.id,
+                      :url  => url_for_only_path(:id     => @perf_record.id,
                                        :action => "perf_top_chart",
                                        :bc     => params[:bc],
                                        :escape => false))
@@ -166,6 +138,18 @@ module ApplicationController::Performance
 
   private ############################
 
+  def perf_breadcrumb
+    name = @perf_record.respond_to?(:evm_display_name) ? @perf_record.evm_display_name : @perf_record.name
+    if @perf_options.cat
+      drop_breadcrumb(:name => _("%{name} Capacity & Utilization (by %{option}:%{model})") %
+                      {:name => name, :option => @perf_options.cats[@perf_options.cat_model], :model => @perf_options.cat},
+                      :url  => url_for_only_path(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
+    else
+      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => name},
+                      :url  => url_for_only_path(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
+    end
+  end
+
   # Initiate the backend refresh of realtime c&u data
   def perf_refresh_data
     assert_privileges("perf_refresh")
@@ -178,7 +162,6 @@ module ApplicationController::Performance
   # Correct any date that is out of the date/range or not allowed in a profile
   def perf_set_or_fix_dates(options, allow_interval_override = true)
     # Get start/end dates in selected timezone
-    tz = options[:time_profile_tz] || options[:tz]  # Use time profile tz or chosen tz, if no profile tz
     s, e = @perf_record.first_and_last_capture('hourly')
     if s.nil?
       s, e = @perf_record.first_and_last_capture('realtime')
@@ -190,47 +173,7 @@ module ApplicationController::Performance
       options[:typ] = "realtime"
       options[:no_rollups] = true
     end
-    sdate = s.in_time_zone(tz)
-    edate = e.in_time_zone(tz)
-    options[:sdate] = sdate
-    options[:edate] = edate
-
-    sdate_daily = sdate.hour == 00 ? sdate : sdate + 1.day
-    options[:sdate_daily] = sdate_daily
-    edate_daily = edate.hour < 23 ? edate - 1.day : edate
-    options[:edate_daily] = edate_daily
-    # check if Daily report was manualy chosen in UI
-    if options[:typ] == "Daily" && edate_daily < sdate_daily
-      options[:no_daily] = true
-      options[:typ] = "Hourly" if allow_interval_override
-    else
-      options[:no_daily] = false
-    end
-
-    if options[:hourly_date].present? && # Need to clear hourly date if not nil so it will be reset below if
-       (options[:hourly_date].to_date < sdate.to_date || options[:hourly_date].to_date > edate.to_date || # it is out of range
-         (options[:typ] == "Hourly" && options[:time_profile] && !options[:time_profile_days].include?(options[:hourly_date].to_date.wday))) # or not in profile
-      options[:hourly_date] = nil
-    end
-    if options[:daily_date].present? &&
-       (options[:daily_date].to_date < sdate_daily.to_date || options[:daily_date].to_date > edate_daily.to_date)
-      options[:daily_date] = nil
-    end
-    options[:hourly_date] ||= [edate.month, edate.day, edate.year].join("/")
-    options[:daily_date] ||= [edate_daily.month, edate_daily.day, edate_daily.year].join("/")
-
-    if options[:typ] == "Hourly" && options[:time_profile]              # If hourly and profile in effect, set hourly date to a valid day in the profile
-      options[:skip_days] = skip_days_from_time_profile(options[:time_profile_days])
-
-      hdate = options[:hourly_date].to_date                             # Start at the currently set hourly date
-      6.times do                                                        # Go back up to 6 days (try each weekday)
-        break if options[:time_profile_days].include?(hdate.wday)       # If weekday is in the profile, use it
-        hdate -= 1.day                                                  # Drop back 1 day and try again
-      end
-      options[:hourly_date] = [hdate.month, hdate.day, hdate.year].join("/")  # Set the new hourly date
-    else
-      options[:skip_days] = nil
-    end
+    @perf_options.set_dates(s, e, allow_interval_override)
   end
 
   def skip_days_from_time_profile(time_profile_days)
@@ -412,7 +355,7 @@ module ApplicationController::Performance
         end
         page.replace("perf_options_div", :partial => "layouts/perf_options")
         page.replace("candu_charts_div", :partial => "layouts/perf_charts", :locals => {:chart_data => @chart_data, :chart_set => "candu"})
-        page << js_build_calendar(:date_from => @perf_options[:sdate], :date_to => @perf_options[:edate], :skip_days => @perf_options[:skip_days])
+        page << js_build_calendar(@perf_options.to_calendar)
         page << Charting.js_load_statement
         page << 'miqSparkle(false);'
       end
@@ -440,7 +383,7 @@ module ApplicationController::Performance
         end
         page.replace("perf_options_div", :partial => "layouts/perf_options")
         page.replace("candu_charts_div", :partial => "layouts/perf_charts", :locals => {:chart_data => @chart_data, :chart_set => "candu"})
-        page << js_build_calendar(:date_from => @perf_options[:sdate_daily], :date_to => @perf_options[:edate_daily], :skip_days => @perf_options[:skip_days])
+        page << js_build_calendar(@perf_options.to_calendar)
         page << Charting.js_load_statement
         page << 'miqSparkle(false);'
       end
@@ -448,27 +391,24 @@ module ApplicationController::Performance
 
     elsif cmd == "Chart" && model == "Selected"                             # Create daily/hourly chart for selected CI
       return unless @record = perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
-      new_opts = {}
-
-      # Copy general items from the current perf_options
-      new_opts[:index] = @perf_options[:index]
-      new_opts[:tz] = @perf_options[:tz]
-      new_opts[:time_profile] = @perf_options[:time_profile]
-      new_opts[:time_profile_days] = @perf_options[:time_profile_days]
-      new_opts[:time_profile_tz] = @perf_options[:time_profile_tz]
-
-      # Set new perf options based on what was selected
-      new_opts[:model] = data_row["resource_type"]
-      new_opts[:typ] = typ
-      new_opts[:daily_date] = @perf_options[:daily_date] if typ == "Daily"
-      new_opts[:days] = @perf_options[:days] if typ == "Daily"
-      new_opts[:hourly_date] = [ts.month, ts.day, ts.year].join("/") if typ == "Hourly"
-
       # Set the perf options in the selected controller's sandbox
       cont = data_row["resource_type"].underscore.downcase.to_sym
       session[:sandboxes][cont] ||= {}
-      session[:sandboxes][cont][:perf_options] ||= {}
-      session[:sandboxes][cont][:perf_options].merge!(new_opts)
+      session[:sandboxes][cont][:perf_options] ||= Options.new
+
+      # Copy general items from the current perf_options
+      session[:sandboxes][cont][:perf_options][:index] = @perf_options[:index]
+      session[:sandboxes][cont][:perf_options][:tz] = @perf_options[:tz]
+      session[:sandboxes][cont][:perf_options][:time_profile] = @perf_options[:time_profile]
+      session[:sandboxes][cont][:perf_options][:time_profile_days] = @perf_options[:time_profile_days]
+      session[:sandboxes][cont][:perf_options][:time_profile_tz] = @perf_options[:time_profile_tz]
+
+      # Set new perf options based on what was selected
+      session[:sandboxes][cont][:perf_options][:model] = data_row["resource_type"]
+      session[:sandboxes][cont][:perf_options][:typ] = typ
+      session[:sandboxes][cont][:perf_options][:daily_date] = @perf_options[:daily_date] if typ == "Daily"
+      session[:sandboxes][cont][:perf_options][:days] = @perf_options[:days] if typ == "Daily"
+      session[:sandboxes][cont][:perf_options][:hourly_date] = [ts.month, ts.day, ts.year].join("/") if typ == "Hourly"
 
       if data_row["resource_type"] == "VmOrTemplate"
         prefix = TreeBuilder.get_prefix_for_model(@record.class.base_model)
@@ -553,7 +493,7 @@ module ApplicationController::Performance
   def perf_gen_init_options(refresh = nil)
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
     unless refresh == "n" || params[:refresh] == "n"
-      @perf_options = {}
+      @perf_options = Options.new
       tzs = TimeProfile.rollup_daily_metrics.all_timezones
       @perf_options[:tz_daily] = tzs.include?(session[:user_tz]) ? session[:user_tz] : tzs.first
       @perf_options[:typ] = "Daily"
@@ -564,17 +504,6 @@ module ApplicationController::Performance
       @perf_options[:model] = @perf_record.class.base_class.to_s
     end
     @perf_options[:rt_minutes] ||= 15.minutes
-    @perf_options[:cats] ||= perf_build_cats(@perf_options[:model]) if ["EmsCluster", "Host", "Storage", "AvailabilityZone", "HostAggregate"].include?(@perf_options[:model])
-    if ["Storage"].include?(@perf_options[:model]) && @perf_options[:typ] == "Daily"
-      @perf_options[:vmtypes] ||= [["<All>", "<All>"],
-                                   ["Managed/Registered", "registered"],
-                                   ["Managed/Unregistered", "unregistered"],
-                                   ["Not Managed", "unmanaged"]
-                                  ]
-    else
-      @perf_options[:vmtypes] = nil
-    end
-
     get_time_profiles(@perf_record) # Get time profiles list (global and user specific). Pass record so that profiles can be limited to its region.
     # Get the time zone from the time profile, if one is in use
     if @perf_options[:time_profile]
@@ -591,31 +520,13 @@ module ApplicationController::Performance
     @perf_options[:ght_type] ||= "hybrid"
     @perf_options[:chart_type] = :performance
 
-    name = @perf_record.respond_to?(:evm_display_name) ? @perf_record.evm_display_name : @perf_record.name
-    if @perf_options[:cat]
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization (by %{option}:%{model})") %
-        {:name => name, :option => @perf_options[:cats][@perf_options[:cat_model]], :model => @perf_options[:cat]},
-                      :url  => url_for(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
-    else
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => name},
-                      :url  => url_for(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
-    end
+    perf_breadcrumb
     @ajax_action = "perf_chart_chooser"
   end
 
   # Generate performance data for a model's charts
   def perf_gen_data
-    if @perf_options[:cat]
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization (by %{option}:%{model})") %
-        {:name   => @perf_record.name,
-         :option => @perf_options[:cats][@perf_options[:cat_model]],
-         :model  => @perf_options[:cat]},
-                      :url  => url_for(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
-    else
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @perf_record.name},
-                      :url  => url_for(:action => "show", :id => @perf_record, :display => "performance", :refresh => "n"))
-    end
-
+    perf_breadcrumb
     unless @perf_options[:typ] == "realtime"
       if @perf_options[:cat]                                      # If a category was chosen, generate charts by tag
         perf_gen_tag_data
@@ -734,8 +645,7 @@ module ApplicationController::Performance
 
     @charts, @chart_data = perf_gen_charts(rpt, @perf_options)
     if perf_parent?
-      @parent_charts, @parent_chart_data =
-        perf_gen_charts(p_rpt, @perf_options.merge(:model => "Parent-#{@perf_options[:parent]}"))
+      @parent_charts, @parent_chart_data = perf_gen_charts(p_rpt, @perf_options, true)
     end
 
     @sb[:chart_reports] = rpt           # Hang on to the report data for these charts
@@ -824,7 +734,7 @@ module ApplicationController::Performance
     # Grab the first (and should be only) chart column
     col = chart[:columns].first
     # Create the new chart columns for each tag
-    chart[:columns] ||= rpt.extras[:group_by_tags].collect { |t| col + "_" + t }
+    chart[:columns] = rpt.extras[:group_by_tags].collect { |t| col + "_" + t }
   end
 
   def gen_perf_chart(chart, rpt, idx, zoom_action)
@@ -905,7 +815,6 @@ module ApplicationController::Performance
         chart_layout.each_with_index do |chart, _idx|
           next if chart.nil?
           rpt = perf_get_chart_rpt("vim_perf_topday")
-          rpt.db = "VimPerformanceDaily"
           rpt.tz = @perf_options[:tz]
           rpt.time_profile_id = @perf_options[:time_profile]
           rpt.where_clause = ["resource_type = ? and resource_id IN (?) and timestamp >= ? and timestamp < ?",
@@ -917,7 +826,6 @@ module ApplicationController::Performance
         end
       else                                      # Gen chart based on index
         rpt = perf_get_chart_rpt("vim_perf_topday")
-        rpt.db = "VimPerformanceDaily"
         rpt.tz = @perf_options[:tz]
         rpt.time_profile_id = @perf_options[:time_profile]
         rpt.where_clause = ["resource_type = ? and resource_id IN (?) and timestamp >= ? and timestamp < ?",
@@ -933,7 +841,6 @@ module ApplicationController::Performance
         chart_layout.each_with_index do |chart, _idx|
           next if chart.nil?
           rpt = perf_get_chart_rpt("vim_perf_tophour")
-          rpt.db = "MetricRollup"
           rpt.tz = @perf_options[:tz]
           rpt.time_profile_id = @perf_options[:time_profile]
           rpt.where_clause = ["resource_type = ? and resource_id IN (?) and timestamp = ? and capture_interval_name = ?",
@@ -945,7 +852,6 @@ module ApplicationController::Performance
         end
       else                                    # Gen chart based on index
         rpt = perf_get_chart_rpt("vim_perf_tophour")
-        rpt.db = "MetricRollup"
         rpt.tz = @perf_options[:tz]
         rpt.time_profile_id = @perf_options[:time_profile]
         rpt.where_clause = ["resource_type = ? and resource_id IN (?) and timestamp = ? and capture_interval_name = ?",
@@ -1284,12 +1190,13 @@ module ApplicationController::Performance
   end
 
   # Generate a set of charts based on a report object
-  def perf_gen_charts(rpt, perf_options)
+  def perf_gen_charts(rpt, perf_options, parent = false)
+    model_title = parent ? "Parent-#{perf_options[:parent]}" : perf_options[:model]
     charts = []
     chart_data = []
     case perf_options[:typ]
     when "Hourly"
-      chart_layout = perf_get_chart_layout("hourly_perf_charts", perf_options[:model])
+      chart_layout = perf_get_chart_layout("hourly_perf_charts", model_title)
       unless perf_options[:index]           # Gen all charts if no index present
         chart_layout.each_with_index do |chart, idx|
           if chart[:type] == "None"           # No chart is available for this slot
@@ -1299,7 +1206,7 @@ module ApplicationController::Performance
             options = chart.merge(:zoom_url      => zoom_url = perf_zoom_url("perf_chart_chooser", idx.to_s),
                                   :link_data_url => "javascript:miqChartLinkData( _col_, _row_, _value_, _category_, _series_, _id_ )",
                                   :axis_skip     => 3)
-            menu_opts = perf_options[:model].starts_with?("Parent") ? {} : {:menu => chart[:menu], :zoom_url => zoom_url}
+            menu_opts = parent ? {} : {:menu => chart[:menu], :zoom_url => zoom_url}
             chart_data.push(perf_gen_chart(rpt, options).merge(menu_opts))
             chart[:title] = rpt.title           # Grab title from chart in case formatting added units
           end
@@ -1312,13 +1219,13 @@ module ApplicationController::Performance
                               :link_data_url => "javascript:miqChartLinkData( _col_, _row_, _value_, _category_, _series_, _id_ )",
                               :axis_skip     => 3,
                               :width         => 1000, :height => 700)
-        menu_opts = perf_options[:model].starts_with?("Parent") ? {} : {:menu => chart[:menu], :zoom_url => zoom_url}
+        menu_opts = parent ? {} : {:menu => chart[:menu], :zoom_url => zoom_url}
         chart_data.push(perf_gen_chart(rpt, options).merge(menu_opts))
         chart[:title] = rpt.title           # Grab title from chart in case formatting added units
         charts.push(chart)
       end
     when "realtime"
-      chart_layout = perf_get_chart_layout("realtime_perf_charts", perf_options[:model])
+      chart_layout = perf_get_chart_layout("realtime_perf_charts", model_title)
       unless perf_options[:index]           # Gen all charts if no index present
         chart_layout.each_with_index do |chart, idx|
           if chart[:type] == "None"           # No chart is available for this slot
@@ -1327,7 +1234,7 @@ module ApplicationController::Performance
             perf_remove_chart_cols(chart)
             options = chart.merge(:zoom_url  => zoom_url = perf_zoom_url("perf_chart_chooser", idx.to_s),
                                   :axis_skip => 29)
-            menu_opts = perf_options[:model].starts_with?("Parent") ? {} : {:menu => chart[:menu], :zoom_url => zoom_url}
+            menu_opts = parent ? {} : {:menu => chart[:menu], :zoom_url => zoom_url}
             chart_data.push(perf_gen_chart(rpt, options).merge(menu_opts))
             chart[:title] = rpt.title           # Grab title from chart in case formatting added units
           end
@@ -1340,13 +1247,13 @@ module ApplicationController::Performance
                               :axis_skip => 29,
                               :width     => 1000,
                               :height    => 700)
-        menu_opts = perf_options[:model].starts_with?("Parent") ? {} : {:menu => chart[:menu], :zoom_url => zoom_url}
+        menu_opts = parent ? {} : {:menu => chart[:menu], :zoom_url => zoom_url}
         chart_data.push(perf_gen_chart(rpt, options).merge(menu_opts))
         chart[:title] = rpt.title           # Grab title from chart in case formatting added units
         charts.push(chart)
       end
     when "Daily"
-      chart_layout = perf_get_chart_layout("daily_perf_charts", perf_options[:model])
+      chart_layout = perf_get_chart_layout("daily_perf_charts", model_title)
       unless perf_options[:index]
         chart_layout.each_with_index do |chart, idx|
           if chart[:type] == "None"           # No chart is available for this slot
@@ -1357,7 +1264,7 @@ module ApplicationController::Performance
                                   :link_data_url => "javascript:miqChartLinkData( _col_, _row_, _value_, _category_, _series_, _id_ )",
                                   :axis_skip     => 3)
             process_chart_trends(chart, rpt, options)
-            menu_opts = perf_options[:model].starts_with?("Parent") ? {} : {:menu => chart[:menu], :zoom_url => zoom_url}
+            menu_opts = parent ? {} : {:menu => chart[:menu], :zoom_url => zoom_url}
             chart_data.push(perf_gen_chart(rpt, options).merge(menu_opts))
             chart[:title] = rpt.title           # Grab title from chart in case formatting added units
           end
@@ -1372,7 +1279,7 @@ module ApplicationController::Performance
                                 :axis_skip => 3,
                                 :width => 1000, :height => 700)
           process_chart_trends(chart, rpt, options)
-          menu_opts = perf_options[:model].starts_with?("Parent") ? {} : {:menu => chart[:menu], :zoom_url => zoom_url}
+          menu_opts = parent ? {} : {:menu => chart[:menu], :zoom_url => zoom_url}
           chart_data.push(perf_gen_chart(rpt, options).merge(menu_opts))
           chart[:title] = rpt.title           # Grab title from chart in case formatting added units
           charts.push(chart)
@@ -1394,7 +1301,7 @@ module ApplicationController::Performance
     report.graph[:legends] = options[:legends]
     report.graph[:max_col_size] = options[:max_value]
     # FIXME: rename xml, xml2 to something like 'chart_data'
-    report.to_chart(@settings[:display][:reporttheme], false,
+    report.to_chart(settings(:display, :reporttheme), false,
                     MiqReport.graph_options(options[:width], options[:height], options))
     chart_xml = {
       :xml      => report.chart,            # Save the graph xml
@@ -1403,35 +1310,19 @@ module ApplicationController::Performance
     if options[:chart2]
       report.graph[:type]    = options[:chart2][:type]
       report.graph[:columns] = options[:chart2][:columns]
-      report.to_chart(@settings[:display][:reporttheme], false,
+      report.to_chart(settings(:display, :reporttheme), false,
                       MiqReport.graph_options(options[:width], options[:height], options.merge(:composite => true)))
       chart_xml[:xml2] = report.chart
     end
     chart_xml
   end
 
-  # Build the category pulldown for tag charts
-  def perf_build_cats(model)
-    cats = Classification.categories.select(&:show).sort_by(&:description) # Get the categories, sort by name
-    cats.delete_if { |c| c.read_only? || c.entries.length == 0 }                    # Remove categories that are read only or have no entries
-    ret_cats = {"<None>" => "<None>"}                                               # Classifications hash for chooser
-    case model
-    when "Host", "Storage", "AvailabilityZone", "HostAggregate"
-      cats.each { |c| ret_cats["Vm:" + c.name] = "VM " + c.description }            # Add VM categories to the hash
-    when "EmsCluster"
-      cats.each { |c| ret_cats["Host:" + c.name] = "Host " + c.description }        # Add VM categories to the hash
-      cats.each { |c| ret_cats["Vm:" + c.name] = "VM " + c.description }            # Add VM categories to the hash
-    end
-    ret_cats
-  end
-
   # Build the chart zoom url
   def perf_zoom_url(action, idx)
     url = "javascript:miqAsyncAjax('" +
-          url_for(:only_path => true,
-                  :action    => action,
-                  :id        => @perf_record.id,
-                  :chart_idx => idx) +
+          url_for_only_path(:action    => action,
+                            :id        => @perf_record.id,
+                            :chart_idx => idx) +
           "')"
     url
   end

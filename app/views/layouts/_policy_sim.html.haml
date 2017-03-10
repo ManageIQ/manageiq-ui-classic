@@ -1,4 +1,4 @@
-- url = url_for(:action => 'policy_sim_add')
+- url = url_for_only_path(:action => 'policy_sim_add')
 #main_div
 
   #flash_msg_div
@@ -20,7 +20,7 @@
               miqInitSelectPicker();
               miqSelectPickerEvent("profile_id", "#{url}", {beforeSend: true, complete: true});
         %tr
-          %th.narrow
+          %th.table-view-pf-select
           %th= _("Policy Profiles in Effect")
       %tbody
         - if session[:policies].length == 0

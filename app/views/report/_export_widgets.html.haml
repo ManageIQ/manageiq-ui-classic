@@ -7,7 +7,7 @@
     %table.table.table-striped.table-bordered
       %thead
         %tr
-          %th.narrow
+          %th.table-view-pf-select
             %input{:type => 'checkbox', :id => 'check-all'}
           %th
             = _('Widget name')
@@ -16,7 +16,7 @@
       %tbody
         - @import.each do |item|
           %tr
-            %td.narrow
+            %td.table-view-pf-select
               %input{:type => 'checkbox', :name => 'widgets_to_import[]', :value => item[:name]}
             %td.treegrid-node
               = item[:name]

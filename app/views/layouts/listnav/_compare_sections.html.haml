@@ -14,64 +14,56 @@
         - height = "100px"
       %div{:style => "position: relative; width: 152px; height: #{height}; z-index: 0; margin: 0px auto;"}
         - if %w(MiqTemplate VmOrTemplate Vm).include?(@sb[:compare_db])
-          - width = size == 150 ? 54 : 35
-          - height = width
           - if settings(:quadicons, :vm)
             .flobj
               %img{:src => image_path("layout/base.png")}
-            - if @drift_obj.template?
-              - if @drift_obj.host
-                %div{:class => "flobj b#{size}"}
+            %div{:class => "flobj b72"}
+              - if @drift_obj.template?
+                - if @drift_obj.host
                   %img{:src => image_path('100/template.png')}
-              - else
-                %div{:class => "flobj b#{size}"}
+                - else
                   %img{:src => image_path('100/template-no-host.png')}
-            - else
-              %div{:class => "flobj b#{size}"}
+              - else
                 %img{:src => image_path("svg/currentstate-#{h(@drift_obj.current_state.downcase)}.svg")}
-            %div{:class => "flobj c#{size}"}
+            %div{:class => "flobj c72"}
               %img{:src => image_path("svg/vendor-#{h(@drift_obj.vendor.downcase)}.svg")}
-            %div{:class => "flobj a#{size}"}
+            %div{:class => "flobj a72"}
               %img{:src => image_path("svg/os-#{h(@drift_obj.os_image_name.downcase)}.svg")}
-            %div{:class => "flobj d#{size}"}
+            %div{:class => "flobj d72"}
               %p
                 = @drift_obj.number_of(:snapshots)
           - else
             .flobj
               %img{:src => image_path("layout/base-single.png")}
-            %div{:class => "flobj e#{size}"}
-              %img{:src => image_path("svg/vendor-#{h(@drift_obj.vendor.downcase)}.svg"), :width => "#{width * 1.8}", :height => "#{height * 1.8}"}
+            = flobj_img_small("svg/vendor-#{h(@drift_obj.vendor.downcase)}.svg", "e72")
           - if @drift_obj.get_policies.length > 0
-            %div{:class => "flobj g#{size}"}
+            %div{:class => "flobj g72"}
               %img{:src => image_path('100/shield.png')}
           .flobj
             %img{:src => image_path("layout/reflection.png")}
         - elsif @sb[:compare_db] == "Host"
-          - width = size == 150 ? 54 : 35
-          - height = width
           - if settings(:quadicons, :host)
             .flobj
               %img{:src => image_path("layout/base.png")}
-            %div{:class => "flobj c#{size}"}
+            %div{:class => "flobj c72"}
               %img{:src => image_path("svg/vendor-#{h(@drift_obj.vmm_vendor_display.downcase)}.svg")}
             - unless @drift_obj.power_state.blank?
-              %div{:class => "flobj b#{size}"}
+              %div{:class => "flobj b72"}
                 %img{:src => image_path("svg/currentstate-#{h(@drift_obj.power_state.downcase)}.svg")}
-            %div{:class => "flobj a#{size}"}
+            %div{:class => "flobj a72"}
               %p
                 = @drift_obj.vms.count
           - else
             .flobj
               %img{:src => image_path("layout/base-single.png")}
-            %div{:class => "flobj e#{size}"}
-              %img{:src => image_path("svg/vendor-#{h(@host.vmm_vendor_display.downcase)}.svg"), :width => "#{width * 1.8}", :height => "#{height * 1.8}"}
+            = flobj_img_small("svg/vendor-#{h(@host.vmm_vendor_display.downcase)}.svg", "e72")
           - if @host.number_of(:get_policies) > 0
-            %div{:class => "flobj g#{size}"}
+            %div{:class => "flobj g72"}
               %img{:src => image_path('100/shield.png')}
           .flobj
             %img{:src => image_path("layout/reflection.png")}
         - elsif @sb[:compare_db] == "EmsCluster"
-          = render_quadicon(@drift_obj, :mode => :icon, :size => size, :typ => :listnav)
+          = render_quadicon(@drift_obj, :mode => :icon, :typ => :listnav)
       - if @sb[:compare_db] != "EmsCluster"
         %div{:style => "margin-top: -25px;"}
           %center{:style => "color:#000;"}

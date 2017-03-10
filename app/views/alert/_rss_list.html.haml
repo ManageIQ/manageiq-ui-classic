@@ -14,17 +14,17 @@
             = select_tag('role',
                          options_for_select(@rss_roles, @rss_role),
                          :multiple => false,
-                         "data-miq_observe" => {:url => url_for(:action => 'role_selected')}.to_json)
+                         "data-miq_observe" => {:url => url_for_only_path(:action => 'role_selected')}.to_json)
             = javascript_tag(javascript_focus('role'))
         %tr
-          %th.narrow
+          %th.table-view-pf-select
           %th= _('Title')
           %th= _('Description')
           %th= _('Feed URL')
       %tbody
         - @rss_feeds.each do |feed|
           %tr{:title => _("Subscribe to this feed"), :onclick => "DoNav('#{feed.link}');"}
-            %td.narrow
+            %td.table-view-pf-select
               %i.fa.fa-rss
             %td
               = h(feed.title)

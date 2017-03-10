@@ -24,9 +24,13 @@ module ApplicationHelper::PageLayouts
       miq_policy
       miq_policy_export
       miq_policy_logs
+      monitor_alerts_overview
+      monitor_alerts_list
+      monitor_alerts_most_recent
       my_tasks
       my_ui_tasks
       ops
+      physical_infra_topology
       pxe
       report
       rss
@@ -41,7 +45,7 @@ module ApplicationHelper::PageLayouts
 
     return false if @showtype == "dialog_provision"
 
-    return false if @showtype == "dashboard"
+    return false if @showtype == "dashboard" && @lastaction.ends_with?("_dashboard")
 
     return false if @showtype == "consumption"
 
@@ -73,8 +77,13 @@ module ApplicationHelper::PageLayouts
        (@layout == "report" && ["new", "create", "edit", "copy", "update", "explorer"].include?(controller.action_name))
       return false
     elsif %w(container_dashboard dashboard ems_infra_dashboard).include?(@layout) ||
-          %w(dashboard topology).include?(@showtype)
+          (%w(dashboard).include?(@showtype) && @lastaction.ends_with?("_dashboard")) ||
+          %w(topology).include?(@showtype)
       # Dashboard tabs are located in taskbar because they are otherwise hidden behind the taskbar regardless of z-index
+      return false
+    elsif @layout == "monitor_alerts_overview" ||
+          @layout == "monitor_alerts_list" ||
+          @layout == "monitor_alerts_most_recent"
       return false
     end
     true

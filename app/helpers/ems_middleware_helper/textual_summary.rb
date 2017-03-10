@@ -53,7 +53,7 @@ module EmsMiddlewareHelper::TextualSummary
   def textual_topology
     {:label => _('Topology'),
      :icon  => "pficon pficon-topology",
-     :link  => url_for(:controller => 'middleware_topology', :action => 'show', :id => @record.id),
+     :link  => url_for_only_path(:controller => 'middleware_topology', :action => 'show', :id => @record.id),
      :title => _('Show topology')}
   end
 end

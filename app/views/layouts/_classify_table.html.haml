@@ -2,13 +2,13 @@
   %table.table.table-bordered.table-striped.table-hover
     %thead
       %tr
-        %th.narrow
+        %th.table-view-pf-select
         %th= _("Category")
         %th= _("Assigned Value")
     %tbody
       - if session[:assignments].length == 0
         %tr
-          %td.narrow
+          %td.table-view-pf-select
           %td
             - if @tagitems.length == 1
               = _("No %{tenant_name} Tags are assigned") % {:tenant_name => current_tenant.name}

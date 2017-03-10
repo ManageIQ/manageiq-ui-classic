@@ -68,7 +68,7 @@ module ApplicationController::ReportDownloads
       render :update do |page|
         page << javascript_prologue
         page << "miqSparkle(false);"
-        page << "DoNav('#{url_for(:action => "send_report_data")}');"
+        page << "DoNav('#{url_for_only_path(:action => "send_report_data")}');"
       end
     end
   end

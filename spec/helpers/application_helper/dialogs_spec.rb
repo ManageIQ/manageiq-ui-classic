@@ -4,7 +4,8 @@ describe ApplicationHelper::Dialogs do
       "DialogField",
       :id                   => "100",
       :read_only            => read_only,
-      :trigger_auto_refresh => trigger_auto_refresh
+      :trigger_auto_refresh => trigger_auto_refresh,
+      :force_multi_value    => true,
     )
   end
   let(:trigger_auto_refresh) { nil }
@@ -353,7 +354,7 @@ describe ApplicationHelper::Dialogs do
         expect(helper.drop_down_options(dialog_field, "url")).to eq(
           :class    => "dynamic-drop-down-100 selectpicker",
           :disabled => true,
-          :title    => "This element is disabled because it is read only"
+          :title    => "This element is disabled because it is read only",
         )
       end
     end
@@ -369,7 +370,8 @@ describe ApplicationHelper::Dialogs do
             :class                 => "dynamic-drop-down-100 selectpicker",
             "data-miq_sparkle_on"  => true,
             "data-miq_sparkle_off" => true,
-            "data-live-search"     => true
+            "data-live-search"     => true,
+            :multiple              => "multiple"
           )
         end
       end
@@ -382,7 +384,8 @@ describe ApplicationHelper::Dialogs do
             :class                 => "dynamic-drop-down-100 selectpicker",
             "data-miq_sparkle_on"  => true,
             "data-miq_sparkle_off" => true,
-            "data-live-search"     => true
+            "data-live-search"     => true,
+            :multiple              => "multiple"
           )
         end
       end
@@ -496,6 +499,114 @@ describe ApplicationHelper::Dialogs do
         {:tab_index => 1, :group_index => 0, :field_index => 0, :auto_refresh => false},
         {:tab_index => 1, :group_index => 0, :field_index => 1, :auto_refresh => true}
       ])
+    end
+  end
+
+  describe "#auto_refresh_listening_options" do
+    let(:options) { {:trigger => false} }
+
+    it "overrides the trigger attribute" do
+      expect(helper.auto_refresh_listening_options(options, true)).to eq(:trigger => true)
+    end
+  end
+
+  describe "#default_value_form_options" do
+    let(:subject) { helper.default_value_form_options(field_type, field_values, field_default_value) }
+
+    context "when the field values are empty" do
+      let(:field_values) { [] }
+
+      context "when the field type is a DialogFieldDropDownList" do
+        let(:field_type) { "DialogFieldDropDownList" }
+
+        context "when the field default value is set" do
+          let(:field_default_value) { "some default" }
+
+          it "adds the ability to select no default value" do
+            expect(subject).to eq("<option value=\"\">&lt;None&gt;</option>")
+          end
+        end
+
+        context "when the field default value is not set" do
+          let(:field_default_value) { nil }
+
+          it "adds the ability to select no default value" do
+            expect(subject).to eq("<option value=\"\">&lt;None&gt;</option>")
+          end
+        end
+      end
+
+      context "when the field type is a DialogFieldRadioButton" do
+        let(:field_type) { "DialogFieldRadioButton" }
+
+        context "when the field default value is set" do
+          let(:field_default_value) { "some default" }
+
+          it "adds the ability to select no default value" do
+            expect(subject).to eq("<option value=\"\">&lt;None&gt;</option>")
+          end
+        end
+
+        context "when the field default value is not set" do
+          let(:field_default_value) { nil }
+
+          it "adds the ability to select no default value" do
+            expect(subject).to eq("<option value=\"\">&lt;None&gt;</option>")
+          end
+        end
+      end
+    end
+
+    context "when the field values are not empty" do
+      let(:field_values) { [%w(123 456)] }
+
+      context "when the field type is a DialogFieldDropDownList" do
+        let(:field_type) { "DialogFieldDropDownList" }
+
+        context "when the field default value is set" do
+          let(:field_default_value) { "123" }
+
+          it "selects the default value and does not add any" do
+            expect(subject).to eq("<option selected=\"selected\" value=\"123\">456</option>")
+          end
+        end
+
+        context "when the field default value is not set" do
+          let(:field_default_value) { nil }
+
+          it "does not explicitly select anything" do
+            expect(subject).to eq("<option value=\"123\">456</option>")
+          end
+        end
+      end
+
+      context "when the field type is a DialogFieldRadioButton" do
+        let(:field_type) { "DialogFieldRadioButton" }
+
+        context "when the field default value is set" do
+          let(:field_default_value) { "123" }
+
+          it "adds the ability to select no default value but selects the default" do
+            expected_html = <<-HTML
+<option value=\"\">&lt;None&gt;</option>
+<option selected=\"selected\" value=\"123\">456</option>
+            HTML
+            expect(subject).to eq(expected_html.chomp)
+          end
+        end
+
+        context "when the field default value is not set" do
+          let(:field_default_value) { nil }
+
+          it "adds the ability to select no default value" do
+            expected_html = <<-HTML
+<option value=\"\">&lt;None&gt;</option>
+<option value=\"123\">456</option>
+            HTML
+            expect(subject).to eq(expected_html.chomp)
+          end
+        end
+      end
     end
   end
 end

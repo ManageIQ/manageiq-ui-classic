@@ -88,13 +88,14 @@ module ApplicationHelper::Dialogs
 
   def drop_down_options(field, url)
     tag_options = {:class => "dynamic-drop-down-#{field.id} selectpicker"}
+    multiple = field.force_multi_value ? true : false
     extra_options = {
       "data-miq_sparkle_on"  => true,
       "data-miq_sparkle_off" => true,
-      "data-live-search"     => true
+      "data-live-search"     => true,
       # data-miq_observe functionality is handled by dialogFieldRefresh.initializeDialogSelectPicker here
     }
-
+    extra_options[:multiple] = "multiple" if multiple
     add_options_unless_read_only(extra_options, tag_options, field)
   end
 
@@ -108,6 +109,19 @@ module ApplicationHelper::Dialogs
     }
 
     add_options_unless_read_only({}, tag_options, field)
+  end
+
+  def default_value_form_options(field_type, field_values, field_default_value)
+    no_default_value = [["<#{_('None')}>", nil]]
+    if field_values.empty?
+      values = no_default_value
+    else
+      values = field_values.collect(&:reverse)
+      values = no_default_value + values if field_type == "DialogFieldRadioButton"
+    end
+
+    selected = field_default_value || nil
+    options_for_select(values, selected)
   end
 
   def build_auto_refreshable_field_indicies(workflow)
@@ -129,6 +143,10 @@ module ApplicationHelper::Dialogs
     end
 
     auto_refreshable_field_indicies
+  end
+
+  def auto_refresh_listening_options(options, trigger_override)
+    options.merge(:trigger => trigger_override)
   end
 
   private

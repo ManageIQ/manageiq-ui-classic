@@ -15,7 +15,7 @@ module TextualMixins::TextualOsInfo
       h[:value] = product_name
       h[:title] = _("Show OS container information")
       h[:explorer] = true
-      h[:link] = url_for(:action => 'show', :id => @record, :display => 'os_info')
+      h[:link] = url_for_only_path(:action => 'show', :id => @record, :display => 'os_info')
     end
     h
   end

@@ -1,4 +1,4 @@
-class ApplicationHelper::Button::CloudVolumeNew < ApplicationHelper::Button::Basic
+class ApplicationHelper::Button::CloudVolumeNew < ApplicationHelper::Button::ButtonNewDiscover
   def calculate_properties
     super
     if disabled?
@@ -8,6 +8,6 @@ class ApplicationHelper::Button::CloudVolumeNew < ApplicationHelper::Button::Bas
 
   # disable button if no active providers support create action
   def disabled?
-    EmsCloud.all.none? { |ems| CloudVolume.class_by_ems(ems).supports_create? }
+    ExtManagementSystem.all.none? { |ems| CloudVolume.class_by_ems(ems).supports_create? }
   end
 end

@@ -126,10 +126,10 @@
           %th= _('Type')
           %th{"ng-if" => @reconfigitems.first.vendor == 'vmware'}= _('Mode')
           %th= _('Size')
-          %th.narrow
-          %th.narrow{"ng-if" => @reconfigitems.first.vendor == 'vmware'}= _('Dependent')
-          %th.narrow= _('Delete Backing')
-          %th.narrow{"ng-if" => @reconfigitems.first.vendor == 'redhat'}= _('Bootable')
+          %th.table-view-pf-select
+          %th.table-view-pf-select{"ng-if" => @reconfigitems.first.vendor == 'vmware'}= _('Dependent')
+          %th.table-view-pf-select= _('Delete Backing')
+          %th.table-view-pf-select{"ng-if" => @reconfigitems.first.vendor == 'redhat'}= _('Bootable')
           %th= _('Actions')
         %tbody
           %tr{"ng-if"       => "reconfigureModel.addEnabled",
@@ -163,7 +163,7 @@
                                   "ng-change"   => "hdChanged()"}
               %span{"style" => "color:red", "ng-show" => "rowForm.dvcSize.$invalid"}
                 = _(" Valid numeric disk size required ")
-            %td.narrow
+            %td.table-view-pf-select
               = select_tag('hdUnit',
                        options_for_select(%w(MB GB)),
                        "ng-model"                    => "reconfigureModel.hdUnit",
@@ -171,14 +171,14 @@
                        "data-width"                  => "auto",
                        "required"                    => "",
                        "selectpicker-for-select-tag" => "")
-            %td.narrow{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
+            %td.table-view-pf-select{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
               %input{"bs-switch" => "",
                      :data       => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
                      "type"      => "checkbox",
                      "name"      => "cb_dependent",
                      "ng-model"  => "reconfigureModel.cb_dependent"}
-            %td.narrow
-            %td.narrow{"ng-if" => @reconfigitems.first.vendor == 'redhat'}
+            %td.table-view-pf-select
+            %td.table-view-pf-select{"ng-if" => @reconfigitems.first.vendor == 'redhat'}
               %input{"bs-switch" => "",
                      :data           => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
                      "type"          => "checkbox",
@@ -195,9 +195,9 @@
               {{disk.hdMode}}
             %td
               {{disk.hdSize}}
-            %td.narrow
+            %td.table-view-pf-select
               {{disk.hdUnit}}
-            %td.narrow{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
+            %td.table-view-pf-select{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
               %input{"bs-switch"     => "",
                      :data           => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
                      "type"          => "checkbox",
@@ -206,7 +206,7 @@
                      "switch-active" => "{{disk.add_remove!='add'}}",
                      "ng-readonly"   => "disk.add_remove=='add'",
                      "ng-if"         => "disk.add_remove=='add'"}
-            %td.narrow
+            %td.table-view-pf-select
               %input{"bs-switch"     => "",
                      :data           => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
                      "type"          => "checkbox",
@@ -215,7 +215,7 @@
                      "ng-readonly"   => "disk.add_remove=='remove'",
                      "switch-active" => "{{disk.add_remove!='remove'}}",
                      "ng-if"         => "disk.add_remove!='add'"}
-            %td.narrow{"ng-if" => @reconfigitems.first.vendor == 'redhat'}
+            %td.table-view-pf-select{"ng-if" => @reconfigitems.first.vendor == 'redhat'}
               %input{"bs-switch"     => "",
                      :data           => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
                      "type"          => "checkbox",
@@ -243,28 +243,23 @@
   %table{:width => "100%", :align => "bottom"}
     %tr
       %td#buttons_on{:align => "right"}
-        = button_tag(_("Submit"),
-                     :class     => "btn btn-primary disabled",
-                     :alt       => _("Submit"),
-                     "ng-click" => "disabledClick($event)",
-                     "ng-show"  => "(angularForm.$pristine && !cb_disks) || angularForm.$invalid || (!cb_memory && !cb_cpu && !cb_disks)")
-        = button_tag(_("Submit"),
-                     :class     => "btn btn-primary",
-                     :alt       => _("Submit"),
-                     "ng-click" => "submitClicked()",
-                     "ng-show"  => "!((angularForm.$pristine && !cb_disks) || angularForm.$invalid || (!cb_memory && !cb_cpu && !cb_disks))")
-        = button_tag(_("Reset"),
-             :class        => "btn btn-default disabled",
-             :alt          => _("Reset changes"),
-             :title        => _("Reset changes"),
-             "ng-class"    => "{ disabled: angularForm.$pristine && !cb_disks}",
-             "ng-click"    => "resetClicked()",
-             "ng-disabled" => "angularForm.$pristine && !cb_disks",
-             "ng-hide"     => "newRecord")
-        = button_tag(_("Cancel"),
-                     :class     => "btn btn-default",
-                     :alt       => _("Cancel"),
-                     "ng-click" => "cancelClicked()")
+        %miq-button{:name      => t = _('Submit'),
+                    :title     => t,
+                    :alt       => t,
+                    :enabled   => "!((angularForm.$pristine && !cb_disks) || angularForm.$invalid || (!cb_memory && !cb_cpu && !cb_disks))",
+                    'on-click' => "submitClicked()",
+                    :primary   => 'true'}
+        %miq-button{:name      => t = _('Reset'),
+                    :title     => t,
+                    :alt       => t,
+                    :enabled   => "!(angularForm.$pristine && !cb_disks)",
+                    'on-click' => "resetClicked()",
+                    'ng-show'  => '!newRecord'}
+        %miq-button{:name      => t = _('Cancel'),
+                    :title     => t,
+                    :alt       => t,
+                    :enabled   => "true",
+                    'on-click' => "cancelClicked()"}
 
 :javascript
   ManageIQ.angular.app.value('reconfigureFormId', '#{@request_id || "new"}');

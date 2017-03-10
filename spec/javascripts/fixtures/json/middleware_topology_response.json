@@ -205,10 +205,6 @@
       "Openshift": {
         "type": "image",
         "icon": "...openshift..."
-      },
-      "OpenshiftEnterprise": {
-        "type": "image",
-        "icon": "...openshift_enterprise..."
       }
     }
   }

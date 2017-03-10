@@ -1,7 +1,11 @@
-class ManageIQ::Providers::Openshift::ContainerManagerDecorator < Draper::Decorator
-  delegate_all
+module ManageIQ::Providers::Openshift
+  class ContainerManagerDecorator < MiqDecorator
+    def self.listicon_image
+      "svg/vendor-openshift.svg"
+    end
 
-  def listicon_image
-    "svg/vendor-openshift.svg"
+    def listicon_image
+      self.class.listicon_image
+    end
   end
 end

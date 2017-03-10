@@ -124,22 +124,6 @@ module EmsInfraHelper::TextualSummary
     h
   end
 
-  def textual_used_tenants
-    return nil if !@record.respond_to?(:cloud_tenants) || !@record.cloud_tenants
-
-    textual_link(@record.cloud_tenants,
-                 :as   => CloudTenant,
-                 :link => ems_infra_path(@record.id, :display => 'cloud_tenants'))
-  end
-
-  def textual_used_availability_zones
-    return nil if !@record.respond_to?(:availability_zones) || !@record.availability_zones
-
-    textual_link(@record.availability_zones,
-                 :as   => AvailabilityZone,
-                 :link => ems_infra_path(@record.id, :display => 'availability_zones'))
-  end
-
   def textual_ems_cloud
     return nil unless @record.provider.respond_to?(:cloud_ems)
 
@@ -192,7 +176,7 @@ module EmsInfraHelper::TextualSummary
   def textual_topology
     {:label => _('Topology'),
      :icon  => "pficon pficon-topology",
-     :link  => url_for(:controller => '/infra_topology', :action => 'show', :id => @record.id),
+     :link  => url_for_only_path(:controller => '/infra_topology', :action => 'show', :id => @record.id),
      :title => _("Show topology")}
   end
 end

@@ -39,7 +39,6 @@ if (! window.ManageIQ) {
     charts: {
       provider: null, // name of charting provider for provider-specific code
       chartData: null, // data for charts
-      charts: {}, // object with registered charts used in jqplot_register_chart
       formatters: {}, // functions corresponding to MiqReport::Formatting
       c3: {}, // C3 charts by id
       c3config: null, // C3 chart configuration

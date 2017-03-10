@@ -31,14 +31,14 @@ describe MiqTaskController do
       end
 
       it "all defaults" do
-        query = "userid=? AND "\
-                "((state=? OR state=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state!=? AND state!=? AND state!=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=?"
+        query = "jobs.userid=? AND "\
+                "((jobs.state=? OR jobs.state=?) OR "\
+                "(jobs.state=? AND jobs.status=?) OR "\
+                "(jobs.state=? AND jobs.status=?) OR "\
+                "(jobs.state=? AND jobs.status=?) OR "\
+                "(jobs.state!=? AND jobs.state!=? AND jobs.state!=?)) AND "\
+                "jobs.updated_on>=? AND "\
+                "jobs.updated_on<=?"
         expected = [query,
                     user.userid,
                     "waiting_to_start", "Queued",
@@ -59,12 +59,12 @@ describe MiqTaskController do
                  :zone         => "default",
                  :time_period  => 1)
 
-        query = "userid=? AND "\
-                "((state=? AND status=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "zone=? AND "\
-                "state=?"
+        query = "jobs.userid=? AND "\
+                "((jobs.state=? AND jobs.status=?)) AND "\
+                "jobs.updated_on>=? AND "\
+                "jobs.updated_on<=? AND "\
+                "jobs.zone=? AND "\
+                "jobs.state=?"
         expected = [query,
                     user.userid,
                     "finished", "ok"]
@@ -81,12 +81,12 @@ describe MiqTaskController do
                  :zone        => "default",
                  :time_period => 6)
 
-        query = "userid=? AND ("\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "zone=?"
+        query = "jobs.userid=? AND ("\
+                "(jobs.state=? AND jobs.status=?) OR "\
+                "(jobs.state=? AND jobs.status=?)) AND "\
+                "jobs.updated_on>=? AND "\
+                "jobs.updated_on<=? AND "\
+                "jobs.zone=?"
         expected = [query,
                     user.userid,
                     "finished", "error",
@@ -98,15 +98,15 @@ describe MiqTaskController do
       it "zone: <All Zones>, Time period: Last 24, Status: Queued, Running, Ok, Error and Warn, State: Aborting" do
         set_opts(:state_choice => "aborting")
 
-        query = "userid=? AND "\
-                "((state=? OR state=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state!=? AND state!=? AND state!=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "jobs.userid=? AND "\
+                "((jobs.state=? OR jobs.state=?) OR "\
+                "(jobs.state=? AND jobs.status=?) OR "\
+                "(jobs.state=? AND jobs.status=?) OR "\
+                "(jobs.state=? AND jobs.status=?) OR "\
+                "(jobs.state!=? AND jobs.state!=? AND jobs.state!=?)) AND "\
+                "jobs.updated_on>=? AND "\
+                "jobs.updated_on<=? AND "\
+                "jobs.state=?"
         expected = [query,
                     user.userid,
                     "waiting_to_start", "Queued",
@@ -126,10 +126,10 @@ describe MiqTaskController do
                  :warn    => nil,
                  :running => nil)
 
-        query = "userid=? AND "\
-                "(status!=? AND status!=? AND status!=? AND state!=? AND state!=?) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=?"
+        query = "jobs.userid=? AND "\
+                "(jobs.status!=? AND jobs.status!=? AND jobs.status!=? AND jobs.state!=? AND jobs.state!=?) AND "\
+                "jobs.updated_on>=? AND "\
+                "jobs.updated_on<=?"
 
         expected = [query,
                     user.userid,
@@ -147,11 +147,11 @@ describe MiqTaskController do
                  :running      => nil,
                  :state_choice => "aborting")
 
-        query = "userid=? AND "\
-                "(status!=? AND status!=? AND status!=? AND state!=? AND state!=?) "\
-                "AND updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "jobs.userid=? AND "\
+                "(jobs.status!=? AND jobs.status!=? AND jobs.status!=? AND jobs.state!=? AND jobs.state!=?) "\
+                "AND jobs.updated_on>=? AND "\
+                "jobs.updated_on<=? AND "\
+                "jobs.state=?"
 
         expected = [query, user.userid, "ok", "error", "warn", "finished", "waiting_to_start"]
         expected += get_time_period(@opts[:time_period]) << "aborting"
@@ -168,12 +168,12 @@ describe MiqTaskController do
                  :zone         => "default",
                  :time_period  => 1)
 
-        query = "userid=? AND "\
-                "(status!=? AND status!=? AND status!=? AND state!=? AND state!=?) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "zone=? AND "\
-                "state=?"
+        query = "jobs.userid=? AND "\
+                "(jobs.status!=? AND jobs.status!=? AND jobs.status!=? AND jobs.state!=? AND jobs.state!=?) AND "\
+                "jobs.updated_on>=? AND "\
+                "jobs.updated_on<=? AND "\
+                "jobs.zone=? AND "\
+                "jobs.state=?"
         expected = [query, user.userid, "ok", "error", "warn", "finished", "waiting_to_start"]
         expected += get_time_period(@opts[:time_period]) << "default" << "waiting_to_start"
         expect(subject).to eq(expected)
@@ -189,13 +189,13 @@ describe MiqTaskController do
                  :zone         => "default",
                  :time_period  => 4)
 
-        query = "userid=? AND "\
-                "((state=? OR state=?) OR "\
-                "(state!=? AND state!=? AND state!=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "zone=? AND "\
-                "state=?"
+        query = "jobs.userid=? AND "\
+                "((jobs.state=? OR jobs.state=?) OR "\
+                "(jobs.state!=? AND jobs.state!=? AND jobs.state!=?)) AND "\
+                "jobs.updated_on>=? AND "\
+                "jobs.updated_on<=? AND "\
+                "jobs.zone=? AND "\
+                "jobs.state=?"
         expected = [query, user.userid, "waiting_to_start", "Queued", "finished", "waiting_to_start", "queued"]
         expected += get_time_period(@opts[:time_period]) << "default" << "synchronizing"
         expect(subject).to eq(expected)
@@ -211,13 +211,13 @@ describe MiqTaskController do
                  :zone         => "default",
                  :time_period  => 4)
 
-        query = "userid=? AND "\
-                "((state=? OR state=?) OR "\
-                "(state!=? AND state!=? AND state!=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "zone=? AND "\
-                "state=?"
+        query = "jobs.userid=? AND "\
+                "((jobs.state=? OR jobs.state=?) OR "\
+                "(jobs.state!=? AND jobs.state!=? AND jobs.state!=?)) AND "\
+                "jobs.updated_on>=? AND "\
+                "jobs.updated_on<=? AND "\
+                "jobs.zone=? AND "\
+                "jobs.state=?"
         expected = [query, user.userid, "waiting_to_start", "Queued", "finished", "waiting_to_start", "queued"]
         expected += get_time_period(@opts[:time_period]) << "default" << "snapshot_delete"
         expect(subject).to eq(expected)
@@ -242,14 +242,14 @@ describe MiqTaskController do
       end
 
       it "all defaults" do
-        query = 'userid=? AND ('\
-                '(state=? OR state=?) OR '\
-                '(state=? AND status=?) OR '\
-                '(state=? AND status=?) OR '\
-                '(state=? AND status=?) OR '\
-                '(state!=? AND state!=? AND state!=?)) AND '\
-                'updated_on>=? AND '\
-                'updated_on<=?'
+        query = 'jobs.guid IS NULL AND miq_tasks.userid=? AND ('\
+                '(miq_tasks.state=? OR miq_tasks.state=?) OR '\
+                '(miq_tasks.state=? AND miq_tasks.status=?) OR '\
+                '(miq_tasks.state=? AND miq_tasks.status=?) OR '\
+                '(miq_tasks.state=? AND miq_tasks.status=?) OR '\
+                '(miq_tasks.state!=? AND miq_tasks.state!=? AND miq_tasks.state!=?)) AND '\
+                'miq_tasks.updated_on>=? AND '\
+                'miq_tasks.updated_on<=?'
         expected = [query, user.userid, "waiting_to_start", "Queued", "Finished", "Ok",
                     "Finished", "Error", "Finished", "Warn", "Finished", "waiting_to_start", "Queued"
                    ]
@@ -264,12 +264,12 @@ describe MiqTaskController do
                  :state_choice => "Initialized",
                  :time_period  => 6)
 
-        query = "userid=? AND ("\
-                "(state=? OR state=?) OR "\
-                "(state!=? AND state!=? AND state!=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "jobs.guid IS NULL AND miq_tasks.userid=? AND ("\
+                "(miq_tasks.state=? OR miq_tasks.state=?) OR "\
+                "(miq_tasks.state!=? AND miq_tasks.state!=? AND miq_tasks.state!=?)) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=? AND "\
+                "miq_tasks.state=?"
         expected = [query, user.userid, "waiting_to_start", "Queued", "Finished", "waiting_to_start", "Queued"]
         expected += get_time_period(@opts[:time_period]) << "Initialized"
         expect(subject).to eq(expected)
@@ -282,12 +282,12 @@ describe MiqTaskController do
                  :state_choice => "Active",
                  :time_period  => 6)
 
-        query = "userid=? AND "\
-                "((state=? OR state=?) OR "\
-                "(state!=? AND state!=? AND state!=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "jobs.guid IS NULL AND miq_tasks.userid=? AND "\
+                "((miq_tasks.state=? OR miq_tasks.state=?) OR "\
+                "(miq_tasks.state!=? AND miq_tasks.state!=? AND miq_tasks.state!=?)) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=? AND "\
+                "miq_tasks.state=?"
         expected = [query, user.userid, "waiting_to_start", "Queued", "Finished", "waiting_to_start", "Queued"]
         expected += get_time_period(@opts[:time_period]) << "Active"
         expect(subject).to eq(expected)
@@ -296,12 +296,12 @@ describe MiqTaskController do
       it "Time period: 6 Days Ago, status: queued and running, state: finished" do
         set_opts(:ok => nil, :error => nil, :warn => nil, :state_choice => "Finished", :time_period => 6)
 
-        query = "userid=? AND "\
-                "((state=? OR state=?) OR "\
-                "(state!=? AND state!=? AND state!=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "jobs.guid IS NULL AND miq_tasks.userid=? AND "\
+                "((miq_tasks.state=? OR miq_tasks.state=?) OR "\
+                "(miq_tasks.state!=? AND miq_tasks.state!=? AND miq_tasks.state!=?)) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=? AND "\
+                "miq_tasks.state=?"
         expected = [query, user.userid, "waiting_to_start", "Queued", "Finished", "waiting_to_start", "Queued"]
         expected += get_time_period(@opts[:time_period]) << "Finished"
         expect(subject).to eq(expected)
@@ -316,11 +316,11 @@ describe MiqTaskController do
                  :state_choice => "Queued",
                  :time_period  => 6)
 
-        query = "userid=? AND "\
-                "((state=? AND status=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "jobs.guid IS NULL AND miq_tasks.userid=? AND "\
+                "((miq_tasks.state=? AND miq_tasks.status=?)) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=? AND "\
+                "miq_tasks.state=?"
 
         expected = [query, user.userid, "Finished", "Ok"]
         expected += get_time_period(@opts[:time_period]) << "Queued"
@@ -336,12 +336,12 @@ describe MiqTaskController do
                  :state_choice => "Queued",
                  :time_period  => 6)
 
-        query = "userid=? AND "\
-                "((state=? AND status=?) OR "\
-                "(state=? AND status=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "jobs.guid IS NULL AND miq_tasks.userid=? AND "\
+                "((miq_tasks.state=? AND miq_tasks.status=?) OR "\
+                "(miq_tasks.state=? AND miq_tasks.status=?)) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=? AND "\
+                "miq_tasks.state=?"
         expected = [query, user.userid, "Finished", "Ok", "Finished", "Warn"]
         expected += get_time_period(@opts[:time_period]) << "Queued"
         expect(subject).to eq(expected)
@@ -356,13 +356,13 @@ describe MiqTaskController do
                  :state_choice => "Queued",
                  :time_period  => 6)
 
-        query = "userid=? AND "\
-                "((state=? AND status=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "jobs.guid IS NULL AND miq_tasks.userid=? AND "\
+                "((miq_tasks.state=? AND miq_tasks.status=?) OR "\
+                "(miq_tasks.state=? AND miq_tasks.status=?) OR "\
+                "(miq_tasks.state=? AND miq_tasks.status=?)) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=? AND "\
+                "miq_tasks.state=?"
         expected = [query, user.userid, "Finished", "Ok", "Finished", "Error", "Finished", "Warn"]
         expected += get_time_period(@opts[:time_period]) << "Queued"
         expect(subject).to eq(expected)
@@ -371,10 +371,11 @@ describe MiqTaskController do
       it "Time Period: Last 24, Status: none checked, State: All" do
         set_opts(:ok => nil, :queued => nil, :error => nil, :warn => nil, :running => nil)
 
-        query = "userid=? AND "\
-                "(status!=? AND status!=? AND status!=? AND state!=? AND state!=?) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=?"
+        query = "jobs.guid IS NULL AND miq_tasks.userid=? AND "\
+                "(miq_tasks.status!=? AND miq_tasks.status!=? AND miq_tasks.status!=? AND miq_tasks.state!=? AND "\
+                "miq_tasks.state!=?) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=?"
         expected = [query, user.userid, "Ok", "Error", "Warn", "Finished", "Queued"]
         expected += get_time_period(@opts[:time_period])
         expect(subject).to eq(expected)
@@ -383,11 +384,12 @@ describe MiqTaskController do
       it "Time Period: Last 24, Status: none checked, State: Active" do
         set_opts(:ok => nil, :queued => nil, :error => nil, :warn => nil, :running => nil, :state_choice => "Active")
 
-        query = "userid=? AND "\
-                "(status!=? AND status!=? AND status!=? AND state!=? AND state!=?) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "jobs.guid IS NULL AND miq_tasks.userid=? AND "\
+                "(miq_tasks.status!=? AND miq_tasks.status!=? AND miq_tasks.status!=? AND miq_tasks.state!=? AND "\
+                "miq_tasks.state!=?) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=? AND "\
+                "miq_tasks.state=?"
         expected = [query, user.userid, "Ok", "Error", "Warn", "Finished", "Queued"]
         expected += get_time_period(@opts[:time_period]) << "Active"
         expect(subject).to eq(expected)
@@ -402,11 +404,12 @@ describe MiqTaskController do
                  :state_choice => "Finished",
                  :time_period  => 1)
 
-        query = "userid=? AND "\
-                "(status!=? AND status!=? AND status!=? AND state!=? AND state!=?) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "jobs.guid IS NULL AND miq_tasks.userid=? AND "\
+                "(miq_tasks.status!=? AND miq_tasks.status!=? AND miq_tasks.status!=? AND miq_tasks.state!=? AND "\
+                "miq_tasks.state!=?) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=? AND "\
+                "miq_tasks.state=?"
         expected = [query, user.userid, "Ok", "Error", "Warn", "Finished", "Queued"]
         expected += get_time_period(@opts[:time_period]) << "Finished"
         expect(subject).to eq(expected)
@@ -421,11 +424,12 @@ describe MiqTaskController do
                  :state_choice => "Initialized",
                  :time_period  => 2)
 
-        query = "userid=? AND "\
-                "(status!=? AND status!=? AND status!=? AND state!=? AND state!=?) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "jobs.guid IS NULL AND miq_tasks.userid=? AND "\
+                "(miq_tasks.status!=? AND miq_tasks.status!=? AND miq_tasks.status!=? AND miq_tasks.state!=? AND "\
+                "miq_tasks.state!=?) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=? AND "\
+                "miq_tasks.state=?"
         expected = [query, user.userid, "Ok", "Error", "Warn", "Finished", "Queued"]
         expected += get_time_period(@opts[:time_period]) << "Initialized"
         expect(subject).to eq(expected)
@@ -440,11 +444,12 @@ describe MiqTaskController do
                  :state_choice => "Queued",
                  :time_period  => 3)
 
-        query = "userid=? AND "\
-                "(status!=? AND status!=? AND status!=? AND state!=? AND state!=?) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "jobs.guid IS NULL AND miq_tasks.userid=? AND "\
+                "(miq_tasks.status!=? AND miq_tasks.status!=? AND miq_tasks.status!=? AND miq_tasks.state!=? AND "\
+                "miq_tasks.state!=?) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=? AND "\
+                "miq_tasks.state=?"
         expected = [query, user.userid, "Ok", "Error", "Warn", "Finished", "Queued"]
         expected += get_time_period(@opts[:time_period]) << "Queued"
         expect(subject).to eq(expected)
@@ -477,13 +482,13 @@ describe MiqTaskController do
       end
 
       it "all defaults" do
-        query = "((state=? OR state=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state!=? AND state!=? AND state!=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=?"
+        query = "((jobs.state=? OR jobs.state=?) OR "\
+                "(jobs.state=? AND jobs.status=?) OR "\
+                "(jobs.state=? AND jobs.status=?) OR "\
+                "(jobs.state=? AND jobs.status=?) OR "\
+                "(jobs.state!=? AND jobs.state!=? AND jobs.state!=?)) AND "\
+                "jobs.updated_on>=? AND "\
+                "jobs.updated_on<=?"
         expected = [query, "waiting_to_start", "Queued", "finished", "ok", "finished", "error",
                     "finished", "warn", "finished", "waiting_to_start", "queued"
                    ]
@@ -494,11 +499,11 @@ describe MiqTaskController do
       it "zone: default, user: all, Time  period: 6 Days Ago, status: queued and running, state: all" do
         set_opts(:ok => nil, :queued => "1", :error => nil, :warn => nil, :zone => "default", :time_period => 6)
 
-        query = "((state=? OR state=?) OR "\
-                "(state!=? AND state!=? AND state!=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "zone=?"
+        query = "((jobs.state=? OR jobs.state=?) OR "\
+                "(jobs.state!=? AND jobs.state!=? AND jobs.state!=?)) AND "\
+                "jobs.updated_on>=? AND "\
+                "jobs.updated_on<=? AND "\
+                "jobs.zone=?"
         expected = [query, "waiting_to_start", "Queued", "finished", "waiting_to_start", "queued"]
         expected += get_time_period(@opts[:time_period]) << "default"
         expect(subject).to eq(expected)
@@ -513,12 +518,12 @@ describe MiqTaskController do
                  :zone         => "default",
                  :time_period  => 6)
 
-        query = "((state=? OR state=?) OR "\
-                "(state!=? AND state!=? AND state!=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "zone=? AND "\
-                "state=?"
+        query = "((jobs.state=? OR jobs.state=?) OR "\
+                "(jobs.state!=? AND jobs.state!=? AND jobs.state!=?)) AND "\
+                "jobs.updated_on>=? AND "\
+                "jobs.updated_on<=? AND "\
+                "jobs.zone=? AND "\
+                "jobs.state=?"
         expected = [query, "waiting_to_start", "Queued", "finished", "waiting_to_start", "queued"]
         expected += get_time_period(@opts[:time_period]) << "default" << "snapshot_create"
         expect(subject).to eq(expected)
@@ -533,13 +538,13 @@ describe MiqTaskController do
                  :zone         => "default",
                  :time_period  => 6)
 
-        query = "((state=? OR state=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state!=? AND state!=? AND state!=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "zone=? AND "\
-                "state=?"
+        query = "((jobs.state=? OR jobs.state=?) OR "\
+                "(jobs.state=? AND jobs.status=?) OR "\
+                "(jobs.state!=? AND jobs.state!=? AND jobs.state!=?)) AND "\
+                "jobs.updated_on>=? AND "\
+                "jobs.updated_on<=? AND "\
+                "jobs.zone=? AND "\
+                "jobs.state=?"
         expected = [query, "waiting_to_start", "Queued", "finished", "ok",
                     "finished", "waiting_to_start", "queued"]
         expected += get_time_period(@opts[:time_period]) << "default" << "snapshot_create"
@@ -554,10 +559,10 @@ describe MiqTaskController do
                  :running      => nil,
                  :state_choice => "snapshot_create")
 
-        query = "(status!=? AND status!=? AND status!=? AND state!=? AND state!=?) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "(jobs.status!=? AND jobs.status!=? AND jobs.status!=? AND jobs.state!=? AND jobs.state!=?) AND "\
+                "jobs.updated_on>=? AND "\
+                "jobs.updated_on<=? AND "\
+                "jobs.state=?"
         expected = [query, "ok", "error", "warn", "finished", "waiting_to_start"]
         expected += get_time_period(@opts[:time_period]) << "snapshot_create"
         expect(subject).to eq(expected)
@@ -572,10 +577,10 @@ describe MiqTaskController do
                  :state_choice => "scanning",
                  :time_period  => 2)
 
-        query = "(status!=? AND status!=? AND status!=? AND state!=? AND state!=?) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "(jobs.status!=? AND jobs.status!=? AND jobs.status!=? AND jobs.state!=? AND jobs.state!=?) AND "\
+                "jobs.updated_on>=? AND "\
+                "jobs.updated_on<=? AND "\
+                "jobs.state=?"
         expected = [query, "ok", "error", "warn", "finished", "waiting_to_start"]
         expected += get_time_period(@opts[:time_period]) << "scanning"
         expect(subject).to eq(expected)
@@ -590,10 +595,10 @@ describe MiqTaskController do
                  :state_choice => "initializing",
                  :time_period  => 3)
 
-        query = "(status!=? AND status!=? AND status!=? AND state!=? AND state!=?) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "(jobs.status!=? AND jobs.status!=? AND jobs.status!=? AND jobs.state!=? AND jobs.state!=?) AND "\
+                "jobs.updated_on>=? AND "\
+                "jobs.updated_on<=? AND "\
+                "jobs.state=?"
         expected = [query, "ok", "error", "warn", "finished", "waiting_to_start"]
         expected += get_time_period(@opts[:time_period]) << "initializing"
         expect(subject).to eq(expected)
@@ -608,10 +613,10 @@ describe MiqTaskController do
                  :state_choice => "finished",
                  :time_period  => 4)
 
-        query = "(status!=? AND status!=? AND status!=? AND state!=? AND state!=?) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "(jobs.status!=? AND jobs.status!=? AND jobs.status!=? AND jobs.state!=? AND jobs.state!=?) AND "\
+                "jobs.updated_on>=? AND "\
+                "jobs.updated_on<=? AND "\
+                "jobs.state=?"
         expected = [query, "ok", "error", "warn", "finished", "waiting_to_start"]
         expected += get_time_period(@opts[:time_period]) << "finished"
         expect(subject).to eq(expected)
@@ -626,10 +631,10 @@ describe MiqTaskController do
                  :state_choice => "deploy_smartproxy",
                  :time_period  => 5)
 
-        query = "(status!=? AND status!=? AND status!=? AND state!=? AND state!=?) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "(jobs.status!=? AND jobs.status!=? AND jobs.status!=? AND jobs.state!=? AND jobs.state!=?) AND "\
+                "jobs.updated_on>=? AND "\
+                "jobs.updated_on<=? AND "\
+                "jobs.state=?"
         expected = [query, "ok", "error", "warn", "finished", "waiting_to_start"]
         expected += get_time_period(@opts[:time_period]) << "deploy_smartproxy"
         expect(subject).to eq(expected)
@@ -644,12 +649,12 @@ describe MiqTaskController do
                  :state_choice => "cancelling",
                  :time_period  => 6)
 
-        query = "((state=? AND status=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "((jobs.state=? AND jobs.status=?) OR "\
+                "(jobs.state=? AND jobs.status=?) OR "\
+                "(jobs.state=? AND jobs.status=?)) AND "\
+                "jobs.updated_on>=? AND "\
+                "jobs.updated_on<=? AND "\
+                "jobs.state=?"
         expected = [query, "finished", "ok", "finished", "error", "finished", "warn"]
         expected += get_time_period(@opts[:time_period]) << "cancelling"
         expect(subject).to eq(expected)
@@ -677,13 +682,13 @@ describe MiqTaskController do
       end
 
       it "all defaults" do
-        query = "((state=? OR state=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state!=? AND state!=? AND state!=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=?"
+        query = "jobs.guid IS NULL AND ((miq_tasks.state=? OR miq_tasks.state=?) OR "\
+                "(miq_tasks.state=? AND miq_tasks.status=?) OR "\
+                "(miq_tasks.state=? AND miq_tasks.status=?) OR "\
+                "(miq_tasks.state=? AND miq_tasks.status=?) OR "\
+                "(miq_tasks.state!=? AND miq_tasks.state!=? AND miq_tasks.state!=?)) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=?"
         expected = [query, "waiting_to_start", "Queued", "Finished", "Ok", "Finished", "Error",
                     "Finished", "Warn", "Finished", "waiting_to_start", "Queued"]
         expected += get_time_period(@opts[:time_period])
@@ -693,14 +698,14 @@ describe MiqTaskController do
       it "user: all, Time period: 1 Day Ago, status: queued, running, ok, error and warn, state: active" do
         set_opts(:state_choice => "Active", :time_period => 1)
 
-        query = "((state=? OR state=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state!=? AND state!=? AND state!=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "jobs.guid IS NULL AND ((miq_tasks.state=? OR miq_tasks.state=?) OR "\
+                "(miq_tasks.state=? AND miq_tasks.status=?) OR "\
+                "(miq_tasks.state=? AND miq_tasks.status=?) OR "\
+                "(miq_tasks.state=? AND miq_tasks.status=?) OR "\
+                "(miq_tasks.state!=? AND miq_tasks.state!=? AND miq_tasks.state!=?)) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=? AND "\
+                "miq_tasks.state=?"
         expected = [query, "waiting_to_start", "Queued", "Finished", "Ok", "Finished", "Error",
                     "Finished", "Warn", "Finished", "waiting_to_start", "Queued"]
         expected += get_time_period(@opts[:time_period]) << "Active"
@@ -710,14 +715,14 @@ describe MiqTaskController do
       it "user: all, Time period: 1 Day Ago, status: queued, running, ok, error and warn, state: finished" do
         set_opts(:state_choice => "Finished", :time_period => 1)
 
-        query = "((state=? OR state=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state!=? AND state!=? AND state!=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "jobs.guid IS NULL AND ((miq_tasks.state=? OR miq_tasks.state=?) OR "\
+                "(miq_tasks.state=? AND miq_tasks.status=?) OR "\
+                "(miq_tasks.state=? AND miq_tasks.status=?) OR "\
+                "(miq_tasks.state=? AND miq_tasks.status=?) OR "\
+                "(miq_tasks.state!=? AND miq_tasks.state!=? AND miq_tasks.state!=?)) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=? AND "\
+                "miq_tasks.state=?"
         expected = [query, "waiting_to_start", "Queued", "Finished", "Ok", "Finished", "Error",
                     "Finished", "Warn", "Finished", "waiting_to_start", "Queued"]
         expected += get_time_period(@opts[:time_period]) << "Finished"
@@ -727,13 +732,13 @@ describe MiqTaskController do
       it "user: all, Time period: 1 Day Ago, status: queued, running, ok, error and warn, state: initialized" do
         set_opts(:state_choice => "Initialized", :time_period => 1)
 
-        query = "((state=? OR state=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state!=? AND state!=? AND state!=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND state=?"
+        query = "jobs.guid IS NULL AND ((miq_tasks.state=? OR miq_tasks.state=?) OR "\
+                "(miq_tasks.state=? AND miq_tasks.status=?) OR "\
+                "(miq_tasks.state=? AND miq_tasks.status=?) OR "\
+                "(miq_tasks.state=? AND miq_tasks.status=?) OR "\
+                "(miq_tasks.state!=? AND miq_tasks.state!=? AND miq_tasks.state!=?)) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=? AND miq_tasks.state=?"
         expected = [query, "waiting_to_start", "Queued", "Finished", "Ok", "Finished", "Error",
                     "Finished", "Warn", "Finished", "waiting_to_start", "Queued"]
         expected += get_time_period(@opts[:time_period]) << "Initialized"
@@ -743,14 +748,14 @@ describe MiqTaskController do
       it "user: all, Time period: 1 Day Ago, status: queued, running, ok, error and warn, state: queued" do
         set_opts(:state_choice => "Queued", :time_period => 1)
 
-        query = "((state=? OR state=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state=? AND status=?) OR "\
-                "(state!=? AND state!=? AND state!=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "jobs.guid IS NULL AND ((miq_tasks.state=? OR miq_tasks.state=?) OR "\
+                "(miq_tasks.state=? AND miq_tasks.status=?) OR "\
+                "(miq_tasks.state=? AND miq_tasks.status=?) OR "\
+                "(miq_tasks.state=? AND miq_tasks.status=?) OR "\
+                "(miq_tasks.state!=? AND miq_tasks.state!=? AND miq_tasks.state!=?)) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=? AND "\
+                "miq_tasks.state=?"
         expected = [query, "waiting_to_start", "Queued", "Finished", "Ok", "Finished", "Error",
                     "Finished", "Warn", "Finished", "waiting_to_start", "Queued"]
         expected += get_time_period(@opts[:time_period]) << "Queued"
@@ -760,9 +765,10 @@ describe MiqTaskController do
       it "User: All Users, Time Period: Last 24, Status: none checked, State: All" do
         set_opts(:ok => nil, :queued => nil, :error => nil, :warn => nil, :running => nil)
 
-        query = "(status!=? AND status!=? AND status!=? AND state!=? AND state!=?) AND " \
-                "updated_on>=? AND " \
-                "updated_on<=?"
+        query = "jobs.guid IS NULL AND (miq_tasks.status!=? AND miq_tasks.status!=? AND "\
+                "miq_tasks.status!=? AND miq_tasks.state!=? AND miq_tasks.state!=?) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=?"
         expected = [query, "Ok", "Error", "Warn", "Finished", "Queued"]
         expected += get_time_period(@opts[:time_period])
         expect(subject).to eq(expected)
@@ -778,11 +784,12 @@ describe MiqTaskController do
                  :user_choice  => "system",
                  :time_period  => 1)
 
-        query = "userid=? AND "\
-                "(status!=? AND status!=? AND status!=? AND state!=? AND state!=?) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "jobs.guid IS NULL AND miq_tasks.userid=? AND "\
+                "(miq_tasks.status!=? AND miq_tasks.status!=? AND miq_tasks.status!=? AND "\
+                "miq_tasks.state!=? AND miq_tasks.state!=?) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=? AND "\
+                "miq_tasks.state=?"
         expected = [query, "system", "Ok", "Error", "Warn", "Finished", "Queued"]
         expected += get_time_period(@opts[:time_period]) << "Active"
         expect(subject).to eq(expected)
@@ -798,11 +805,11 @@ describe MiqTaskController do
                  :user_choice  => "system",
                  :time_period  => 2)
 
-        query = "userid=? AND "\
-                "((state=? OR state=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "jobs.guid IS NULL AND miq_tasks.userid=? AND "\
+                "((miq_tasks.state=? OR miq_tasks.state=?)) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=? AND "\
+                "miq_tasks.state=?"
         expected = [query, "system", "waiting_to_start", "Queued"]
         expected += get_time_period(@opts[:time_period]) << "Finished"
         expect(subject).to eq(expected)
@@ -818,11 +825,11 @@ describe MiqTaskController do
                  :user_choice  => "system",
                  :time_period  => 3)
 
-        query = "userid=? AND "\
-                "((state!=? AND state!=? AND state!=?)) AND "\
-                "updated_on>=? AND "\
-                "updated_on<=? AND "\
-                "state=?"
+        query = "jobs.guid IS NULL AND miq_tasks.userid=? AND "\
+                "((miq_tasks.state!=? AND miq_tasks.state!=? AND miq_tasks.state!=?)) AND "\
+                "miq_tasks.updated_on>=? AND "\
+                "miq_tasks.updated_on<=? AND "\
+                "miq_tasks.state=?"
         expected = [query, "system", "Finished", "waiting_to_start", "Queued"]
         expected += get_time_period(@opts[:time_period]) << "Initialized"
         expect(subject).to eq(expected)
@@ -835,10 +842,6 @@ describe MiqTaskController do
         controller.instance_variable_set(:@settings, :perpage => {})
         allow(controller).to receive(:role_allows?).and_return(true)
       end
-      it 'sets the active tab' do
-        controller.build_jobs_tab
-        expect(assigns(:active_tab)).to eq("2")
-      end
 
       it 'sets the available tabs' do
         controller.build_jobs_tab
@@ -848,6 +851,17 @@ describe MiqTaskController do
                                        ["3", _("All VM and Container Analysis Tasks")],
                                        ["4", _("All Other Tasks")]
                                      ])
+      end
+    end
+
+    describe "#list_jobs" do
+      it 'sets the active tab' do
+        controller.instance_variable_set(:@tabform, "ui_2")
+        controller.instance_variable_set(:@tasks_options, {})
+        allow(controller).to receive(:tasks_condition)
+        allow(controller).to receive(:get_view)
+        controller.list_jobs
+        expect(assigns(:active_tab)).to eq("2")
       end
     end
 

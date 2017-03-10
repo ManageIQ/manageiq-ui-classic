@@ -76,7 +76,7 @@ class ChargebackController < ApplicationController
     @explorer = true
     if params[:ppsetting]                                              # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                        # Set the new per page value
-      @settings[:perpage][@gtl_type.to_sym] = @items_per_page          # Set the per page setting for this gtl type
+      @settings.store_path(:perpage, @gtl_type.to_sym, @items_per_page) # Set the per page setting for this gtl type
     end
     @sortcol = session[:rates_sortcol].nil? ? 0 : session[:rates_sortcol].to_i
     @sortdir = session[:rates_sortdir].nil? ? "ASC" : session[:rates_sortdir]
@@ -109,6 +109,9 @@ class ChargebackController < ApplicationController
       @rate = params[:button] == "add" ? ChargebackRate.new : ChargebackRate.find(params[:id])
       if @edit[:new][:description].nil? || @edit[:new][:description] == ""
         render_flash(_("Description is required"), :error)
+        return
+      elsif @rate.description == "Default Container Image Rate" && @edit[:new][:description] != @rate.description
+        render_flash(_("Can not change description of 'Default Container Image Rate'"), :error)
         return
       end
       @rate.description = @edit[:new][:description]
@@ -466,7 +469,7 @@ class ChargebackController < ApplicationController
     miq_report = MiqReport.find(@sb[:miq_report_id])
     saved_reports = miq_report.miq_report_results.with_current_user_groups
                               .select("id, miq_report_id, name, last_run_on, report_source")
-                              .order(:last_run_on)
+                              .order(:last_run_on => :desc)
 
     @sb[:tree_typ] = "reports"
     @right_cell_text = _("Report \"%{report_name}\"") % {:report_name => miq_report.name}
@@ -508,6 +511,7 @@ class ChargebackController < ApplicationController
 
     rate_details.each_with_index do |detail, detail_index|
       temp = detail.slice(*ChargebackRateDetail::FORM_ATTRIBUTES)
+      temp[:group] = detail.chargeable_field.group
       temp[:per_time] ||= "hourly"
 
       temp[:currency] = detail.detail_currency.id
@@ -928,7 +932,7 @@ class ChargebackController < ApplicationController
   end
 
   def display_detail_errors(detail, errors)
-    errors.each { |field, msg| add_flash("'#{detail.description}' #{field.to_s.humanize.downcase} #{msg}", :error) }
+    errors.each { |field, msg| add_flash("'#{detail.chargeable_field.description}' #{field.to_s.humanize.downcase} #{msg}", :error) }
   end
 
   def add_row(i, pos, code_currency)

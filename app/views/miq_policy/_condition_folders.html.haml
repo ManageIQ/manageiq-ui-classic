@@ -6,7 +6,7 @@
         - @folders.each do |f|
           %tr{:title => _("View Condition"),
             :onclick => "miqTreeActivateNode('condition_tree', 'xx-#{f.camelize(:lower)}');"}
-            %td.narrow
+            %td.table-view-pf-select
               %img{:src => image_path("100/#{f.underscore}.png")}
             %td
               = _("%{object} Conditions") % {:object => ui_lookup(:model => f)}

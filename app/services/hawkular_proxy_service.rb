@@ -41,7 +41,7 @@ class HawkularProxyService
   def metric_definitions
     tags = @params['tags'].blank? ? nil : JSON.parse(@params['tags'])
     tags = nil if tags == {}
-    limit = @params['limit'] || 20
+    limit = @params['limit'] || 2000
 
     list = if @params['type'].blank?
              @cli.hawkular_client.counters.query(tags).compact +

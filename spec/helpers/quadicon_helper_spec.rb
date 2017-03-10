@@ -890,7 +890,7 @@ describe QuadiconHelper do
 
       context "when item is not CIM or decorated" do
         before(:each) do
-          allow(item).to receive(:decorator_class?) { false }
+          allow(item).to receive(:decorate).and_return(nil)
         end
 
         it "includes an image with the item's base class name" do

@@ -52,6 +52,17 @@ module ApplicationController::Filter
       end
     end
 
+    def tags_for_display_filters
+      if exp_model == '_display_filter_'
+        exp_available_tags
+      else
+        self.available_tags ||= MiqExpression.model_details(exp_model, :typ             => "tag",
+                                                                       :include_model   => true,
+                                                                       :include_my_tags => use_mytags,
+                                                                       :userid          => User.current_user.userid)
+      end
+    end
+
     def available_adv_searches
       @available_adv_searches ||=
         begin

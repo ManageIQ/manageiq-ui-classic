@@ -17,7 +17,7 @@ module Mixins
       flash_msg = _("Edit of %{model} \"%{name}\" was cancelled by the user") %
                   {:model => ui_lookup(:model => model_name),
                    :name  => update_ems.name}
-      js_args = {:action    => @lastaction,
+      js_args = {:action    => @lastaction == 'show_dashboard' ? 'show' : @lastaction,
                  :id        => update_ems.id,
                  :display   => session[:ems_display],
                  :flash_msg => flash_msg,
@@ -117,13 +117,11 @@ module Mixins
       assert_privileges("#{permission_prefix}_edit")
       @ems = model.new if params[:id] == 'new'
       @ems = find_by_id_filtered(model, params[:id]) if params[:id] != 'new'
-      default_security_protocol = @ems.default_endpoint.security_protocol ? @ems.default_endpoint.security_protocol : 'ssl'
+      default_endpoint = @ems.default_endpoint
+      default_security_protocol = default_endpoint.security_protocol ? default_endpoint.security_protocol : 'ssl'
+      default_tls_verify = default_endpoint.verify_ssl != 0 ? true : false
+      default_tls_ca_certs = default_endpoint.certificate_authority
 
-      if @ems.zone.nil? || @ems.my_zone == ""
-        zone = "default"
-      else
-        zone = @ems.my_zone
-      end
       amqp_userid = ""
       amqp_hostname = ""
       amqp_port = ""
@@ -136,6 +134,8 @@ module Mixins
       keystone_v3_domain_id = ""
       hawkular_hostname = ""
       hawkular_api_port = ""
+      hawkular_security_protocol = ""
+      hawkular_tls_ca_certs = ""
 
       if @ems.connection_configurations.amqp.try(:endpoint)
         amqp_hostname = @ems.connection_configurations.amqp.endpoint.hostname
@@ -171,6 +171,8 @@ module Mixins
         hawkular_hostname = @ems.connection_configurations.hawkular.endpoint.hostname
         hawkular_api_port = @ems.connection_configurations.hawkular.endpoint.port
         hawkular_auth_status = @ems.authentication_status_ok?(:hawkular)
+        hawkular_security_protocol = @ems.connection_configurations.hawkular.endpoint.security_protocol
+        hawkular_tls_ca_certs = @ems.connection_configurations.hawkular.endpoint.certificate_authority
       end
 
       if @ems.connection_configurations.default.try(:endpoint)
@@ -200,8 +202,6 @@ module Mixins
         service_account = @ems.authentication_token
         service_account_auth_status = @ems.authentication_status_ok?
       end
-
-      default_auth_status = @ems.authentication_status_ok? unless @ems.kind_of?(ManageIQ::Providers::Google::CloudManager)
 
       render :json => {:name                            => @ems.name,
                        :emstype                         => @ems.emstype,
@@ -249,6 +249,8 @@ module Mixins
                         :metrics_api_port              => metrics_port ? metrics_port : "",
                         :default_security_protocol     => default_security_protocol,
                         :amqp_security_protocol        => amqp_security_protocol,
+                        :default_tls_verify            => default_tls_verify,
+                        :default_tls_ca_certs          => default_tls_ca_certs,
                         :api_version                   => @ems.api_version ? @ems.api_version : "v2",
                         :provider_region               => @ems.provider_region,
                         :default_userid                => @ems.authentication_userid ? @ems.authentication_userid : "",
@@ -266,24 +268,27 @@ module Mixins
                         :ssh_keypair_auth_status       => ssh_keypair_auth_status.nil? ? true : ssh_keypair_auth_status
       } if controller_name == "ems_infra"
 
-      render :json => {:name                      => @ems.name,
-                       :emstype                   => @ems.emstype,
-                       :zone                      => zone,
-                       :provider_id               => @ems.provider_id ? @ems.provider_id : "",
-                       :hostname                  => @ems.hostname,
-                       :default_hostname          => @ems.connection_configurations.default.endpoint.hostname,
-                       :hawkular_hostname         => hawkular_hostname,
-                       :default_api_port          => @ems.connection_configurations.default.endpoint.port,
-                       :hawkular_api_port         => hawkular_api_port,
-                       :api_version               => @ems.api_version ? @ems.api_version : "v2",
-                       :default_security_protocol => default_security_protocol,
-                       :provider_region           => @ems.provider_region,
-                       :default_userid            => @ems.authentication_userid ? @ems.authentication_userid : "",
-                       :service_account           => service_account ? service_account : "",
-                       :bearer_token_exists       => @ems.authentication_token(:bearer).nil? ? false : true,
-                       :ems_controller            => controller_name,
-                       :default_auth_status       => default_auth_status,
-                       :hawkular_auth_status      => hawkular_auth_status.nil? ? true : hawkular_auth_status,
+      render :json => {:name                       => @ems.name,
+                       :emstype                    => @ems.emstype,
+                       :zone                       => zone,
+                       :provider_id                => @ems.provider_id ? @ems.provider_id : "",
+                       :hostname                   => @ems.hostname,
+                       :default_hostname           => @ems.connection_configurations.default.endpoint.hostname,
+                       :hawkular_hostname          => hawkular_hostname,
+                       :default_api_port           => @ems.connection_configurations.default.endpoint.port,
+                       :hawkular_api_port          => hawkular_api_port,
+                       :api_version                => @ems.api_version ? @ems.api_version : "v2",
+                       :default_security_protocol  => default_security_protocol,
+                       :hawkular_security_protocol => hawkular_security_protocol,
+                       :default_tls_ca_certs       => default_tls_ca_certs,
+                       :hawkular_tls_ca_certs      => hawkular_tls_ca_certs,
+                       :provider_region            => @ems.provider_region,
+                       :default_userid             => @ems.authentication_userid ? @ems.authentication_userid : "",
+                       :service_account            => service_account ? service_account : "",
+                       :bearer_token_exists        => @ems.authentication_token(:bearer).nil? ? false : true,
+                       :ems_controller             => controller_name,
+                       :default_auth_status        => default_auth_status,
+                       :hawkular_auth_status       => hawkular_auth_status.nil? ? true : hawkular_auth_status,
       } if controller_name == "ems_container"
 
       render :json => {:name                => @ems.name,
@@ -312,7 +317,7 @@ module Mixins
 
     def metrics_default_database_name
       if @ems.class.name == 'ManageIQ::Providers::Redhat::InfraManager'
-        ManageIQ::Providers::Redhat::InfraManager.history_database_name_for('4.0')
+        ManageIQ::Providers::Redhat::InfraManager.default_history_database_name
       end
     end
 
@@ -343,6 +348,9 @@ module Mixins
       metrics_database_name = params[:metrics_database_name].strip if params[:metrics_database_name]
       hawkular_hostname = params[:hawkular_hostname].strip if params[:hawkular_hostname]
       hawkular_api_port = params[:hawkular_api_port].strip if params[:hawkular_api_port]
+      hawkular_security_protocol = params[:hawkular_security_protocol].strip if params[:hawkular_security_protocol]
+      default_tls_ca_certs  = params[:default_tls_ca_certs].strip if params[:default_tls_ca_certs]
+      hawkular_tls_ca_certs = params[:hawkular_tls_ca_certs].strip if params[:hawkular_tls_ca_certs]
       default_endpoint = {}
       amqp_endpoint = {}
       ceilometer_endpoint = {}
@@ -363,7 +371,14 @@ module Mixins
       ssh_keypair_endpoint = {:role => :ssh_keypair} if ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
 
       if ems.kind_of?(ManageIQ::Providers::Redhat::InfraManager)
-        default_endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
+        default_endpoint = {
+          :role                  => :default,
+          :hostname              => hostname,
+          :port                  => port,
+          :security_protocol     => ems.security_protocol,
+          :verify_ssl            => params[:default_tls_verify] == 'on' ? 1 : 0,
+          :certificate_authority => params[:default_tls_ca_certs],
+        }
         metrics_endpoint = { :role     => :metrics,
                              :hostname => metrics_hostname,
                              :port     => metrics_port,
@@ -399,14 +414,15 @@ module Mixins
 
       if ems.kind_of?(ManageIQ::Providers::ContainerManager)
         params[:cred_type] = ems.default_authentication_type if params[:cred_type] == "default"
-        ems.hostname = hostname
+        default_endpoint = {:role => :default, :hostname => hostname, :port => port}
+        default_endpoint.merge!(container_security_options(ems.security_protocol, default_tls_ca_certs))
+
         if hawkular_hostname.blank?
           default_key = params[:default_password] || ems.authentication_key
-          hawkular_hostname = get_hostname_from_routes(ems, hostname, port, default_key)
+          hawkular_hostname = get_hostname_from_routes(ems, default_endpoint, default_key)
         end
-
-        default_endpoint = {:role => :default, :hostname => hostname, :port => port}
         hawkular_endpoint = {:role => :hawkular, :hostname => hawkular_hostname, :port => hawkular_api_port}
+        hawkular_endpoint.merge!(container_security_options(hawkular_security_protocol, hawkular_tls_ca_certs))
       end
 
       if ems.kind_of?(ManageIQ::Providers::MiddlewareManager)
@@ -422,6 +438,10 @@ module Mixins
         default_endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
       end
 
+      if ems.kind_of?(ManageIQ::Providers::Lenovo::PhysicalInfraManager)
+        default_endpoint = {:role => :default, :hostname => hostname, :port => port}
+      end
+
       endpoints = {:default     => default_endpoint,
                    :ceilometer  => ceilometer_endpoint,
                    :amqp        => amqp_endpoint,
@@ -432,13 +452,27 @@ module Mixins
       build_connection(ems, endpoints, mode)
     end
 
-    def get_hostname_from_routes(ems, hostname, port, token)
+    def get_hostname_from_routes(ems, endpoint_hash, token)
       return nil unless ems.class.respond_to?(:openshift_connect)
-      client = ems.class.openshift_connect(hostname, port, :bearer => token)
+      endpoint = Endpoint.new(endpoint_hash)
+      ssl_options = {
+        :verify_ssl => ems.verify_ssl_mode(endpoint),
+        :cert_store => ems.ssl_cert_store(endpoint)
+      }
+      client = ems.class.raw_connect(endpoint.hostname, endpoint.port,
+                                     :service => :openshift, :bearer => token, :ssl_options => ssl_options)
       client.get_route('hawkular-metrics', 'openshift-infra').try(:spec).try(:host)
     rescue KubeException => e
       $log.warn("MIQ(#{controller_name}_controller-#{action_name}): get_hostname_from_routes error: #{e}")
       nil
+    end
+
+    def container_security_options(security_protocol, certificate_authority)
+      {
+        :security_protocol     => security_protocol,
+        :verify_ssl            => security_protocol != 'ssl-without-validation',
+        :certificate_authority => security_protocol == 'ssl-with-validation-custom-ca' ? certificate_authority : nil,
+      }
     end
 
     def build_connection(ems, endpoints, mode)
@@ -545,6 +579,18 @@ module Mixins
       }
 
       @edit[:new][:tenant_mapping_enabled] = params[:tenant_mapping_enabled] if ems.class.supports_cloud_tenant_mapping?
+    end
+
+    def zone
+      if @ems.zone.nil? || @ems.my_zone == ""
+        "default"
+      else
+        @ems.my_zone
+      end
+    end
+
+    def default_auth_status
+      @ems.authentication_status_ok? unless @ems.kind_of?(ManageIQ::Providers::Google::CloudManager)
     end
   end
 end

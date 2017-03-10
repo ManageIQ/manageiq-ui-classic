@@ -1,4 +1,4 @@
-- url = url_for(:action => 'settings_form_field_changed', :id => 'rhn_edit')
+- url = url_for_only_path(:action => 'settings_form_field_changed', :id => 'rhn_edit')
 - url_jsh = {:url => url}.to_json
 - url_int_jsh = {:interval => '.5', :url => url}.to_json
 
@@ -35,7 +35,7 @@
           = button_tag(_('Default'),
                     :id      => 'rhn_default_button',
                     :class   => 'btn btn-default',
-                    :onclick => "miqAjaxButton('#{url_for(:action => 'rhn_default_server', :id => 'rhn_edit')}');")
+                    :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'rhn_default_server', :id => 'rhn_edit')}');")
 
     .form-group
       - label = _("Repository Name(s):")
@@ -48,7 +48,7 @@
         = button_tag(_('Default'),
                   :id      => 'repo_default_name',
                   :class   => 'btn btn-default',
-                  :onclick => "miqAjaxButton('#{url_for(:action => 'repo_default_name', :id => 'rhn_edit')}');")
+                  :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'repo_default_name', :id => 'rhn_edit')}');")
 
     .form-group
       %label.col-md-2.control-label

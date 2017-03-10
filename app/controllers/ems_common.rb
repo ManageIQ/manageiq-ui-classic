@@ -5,19 +5,31 @@ module EmsCommon
     include Mixins::GenericSessionMixin
     include Mixins::MoreShowActions
 
+    # This is a temporary hack ensuring that @ems will be set.
+    # Once we use @record in place of @ems, this can be removed
+    # together with init_show_ems
+    alias_method :init_show_generic, :init_show
+    alias_method :init_show, :init_show_ems
+
     helper_method :textual_group_list
     private :textual_group_list
   end
 
+  def init_show_ems
+    result = init_show_generic
+    @ems = @record
+    result
+  end
+
   def textual_group_list
     [
-      %i(properties status) + (@record.respond_to?(:arbitration_profiles) ? %i(configuration_relationships) : []),
+      %i(properties status),
       %i(relationships topology smart_management)
     ]
   end
 
   def show_props
-    drop_breadcrumb(:name => @ems.name + _(" (Properties)"), :url => show_link(@ems, :display  =>  "props"))
+    drop_breadcrumb(:name => @ems.name + _(" (Properties)"), :url => show_link(@ems, :display => "props"))
   end
 
   def show_ems_folders
@@ -35,133 +47,59 @@ module EmsCommon
     self.x_active_tree = :vat_tree
   end
 
-  def show_dashboard
-    @showtype = "dashboard"
-    @lastaction = "show_dashboard"
-    drop_breadcrumb(:name => @ems.name + _(" (Dashboard)"), :url => show_link(@ems))
-    @sb[:summary_mode] = 'dashboard' unless @sb[:summary_mode] == 'dashboard'
-    render :action => "show_dashboard"
-  end
-
-  def show_main
-    @sb[:summary_mode] = 'textual' unless @sb[:summary_mode] == 'textual'
-    super
-  end
-
   def show_ad_hoc_metrics
     @showtype = "ad_hoc_metrics"
     @lastaction = "show_ad_hoc_metrics"
     drop_breadcrumb(:name => @ems.name + _(" (Ad hoc Metrics)"), :url => show_link(@ems))
   end
 
-  def show_topology
-    @showtype = "topology"
-    @lastaction = "show_topology"
-    drop_breadcrumb(:name => @ems.name + _(" (Topology)"), :url => show_link(@ems))
+  def display_block_storage_managers
+    nested_list('block_storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :block_storage_managers)
   end
 
-  def view_setup_params
-    {
-      "instances"                     => [ManageIQ::Providers::CloudManager::Vm, _("Instances")],
-      "images"                        => [ManageIQ::Providers::CloudManager::Template, _("Images")],
-      "block_storage_managers"        => [ManageIQ::Providers::StorageManager,
-                                          _("Block Storage Managers"),
-                                          :block_storage_managers],
-      "object_storage_managers"       => [ManageIQ::Providers::StorageManager,
-                                          _("Object Storage Managers"),
-                                          :object_storage_managers],
-      "storage_managers"              => [ManageIQ::Providers::StorageManager,
-                                          _("Storage Managers"),
-                                          :storage_managers],
-      "miq_templates"                 => [MiqTemplate,            _("Templates")],
-      "vms"                           => [Vm,                     _("VMs")],
-      "orchestration_stacks"          => [OrchestrationStack,     _("Stacks")],
-      # "configuration_jobs"            => [ConfigurationJob, _("Configuration Jobs")],
-      "cloud_object_store_containers" => [CloudObjectStoreContainer, _('Cloud Object Store Containers')],
-      'containers'                    => [Container,              _('Containers')],
-      'container_replicators'         => [ContainerReplicator,    _('Container Replicators')],
-      'container_nodes'               => [ContainerNode,          _('Container Nodes')],
-      'container_groups'              => [ContainerGroup,         _('Pods')],
-      'container_services'            => [ContainerService,       _('Container Services')],
-      'container_images'              => [ContainerImage,         _('Container Images')],
-      'container_routes'              => [ContainerRoute,         _('Container Routes')],
-      'container_builds'              => [ContainerBuild,         _('Container Builds')],
-      'container_projects'            => [ContainerProject,       _('Container Projects')],
-      'container_image_registries'    => [ContainerImageRegistry, _('Container Image Registries')],
-      'container_templates'           => [ContainerTemplate,      _('Container Templates')],
-      'availability_zones'            => [AvailabilityZone,       _('Availability Zones')],
-      'host_aggregates'               => [HostAggregate,          _('Host Aggregates')],
-      'middleware_servers'            => [MiddlewareServer,       _('Middleware Servers')],
-      'middleware_deployments'        => [MiddlewareDeployment,   _('Middleware Deployments')],
-      'middleware_datasources'        => [MiddlewareDatasource,   _('Middleware Datasources')],
-      'middleware_domains'            => [MiddlewareDomain,       _('Middleware Domains')],
-      'middleware_server_groups'      => [MiddlewareServerGroup,  _('Middleware Server Groups')],
-      'middleware_messagings'         => [MiddlewareMessaging,    _('Middleware Messagings')],
-      'cloud_tenants'                 => [CloudTenant,            _('Cloud Tenants')],
-      'cloud_volumes'                 => [CloudVolume,            _('Cloud Volumes')],
-      'cloud_volume_snapshots'        => [CloudVolumeSnapshot,    _('Cloud Volume Snapshots')],
-      'flavors'                       => [Flavor,                 _('Flavors')],
-      'security_groups'               => [SecurityGroup,          _('Security Groups')],
-      'floating_ips'                  => [FloatingIp,             _('Floating IPs')],
-      'network_routers'               => [NetworkRouter,          _('Network Routers')],
-      'network_ports'                 => [NetworkPort,            _('Network Ports')],
-      'cloud_subnets'                 => [CloudSubnet,            _('Cloud Subnets')],
-      'cloud_networks'                => [CloudNetwork,           _('Cloud Networks')],
-      'load_balancers'                => [LoadBalancer,           _('Load Balancers')],
-      'storages'                      => [Storage,                _('Managed Datastores')],
-      'ems_clusters'                  => [EmsCluster,             title_for_clusters],
-      'persistent_volumes'            => [PersistentVolume,       _('Volumes'), :persistent_volumes],
-      'hosts'                         => [Host,                   _("Managed Hosts")],
-    }
+  def display_object_storage_managers
+    nested_list('object_storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :object_storage_managers)
   end
 
-  def show_entities(display)
-    view_setup_helper(display, *view_setup_params[display])
+  def display_storage_managers
+    nested_list('storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :storage_managers)
   end
 
-  def show
-    return unless init_show
-    session[:vm_summary_cool] = (settings(:views, :vm_summary_cool).to_s == "summary")
-    @summary_view = session[:vm_summary_cool]
-    @ems = @record
+  def display_ems_clusters
+    nested_list('ems_cluster', EmsCluster, :breadcrumb_title => title_for_clusters)
+  end
 
-    drop_breadcrumb({:name => ui_lookup(:tables => @table_name), :url => "/#{@table_name}/show_list?page=#{@current_page}&refresh=y"}, true)
-    case params[:display]
-    when 'main'                          then show_main
-    when 'summary_only'                  then show_download
-    when 'props'                         then show_props
-    when 'ems_folders'                   then show_ems_folders
-    when 'timeline'                      then show_timeline
-    when 'dashboard'                     then show_dashboard
-    when 'ad_hoc_metrics'                then show_ad_hoc_metrics
-    when 'topology'                      then show_topology
-    when 'performance'                   then show_performance
-    when nil
-      if pagination_or_gtl_request? # pagination controls
-        show_entities(@display) # display loaded from session
-      else                 # or default display
-        dashboard_view ? show_dashboard : show_main
-      end
-    else show_entities(params[:display])
+  def display_persistent_volumes
+    nested_list('persistent_volume', PersistentVolume, :parent_method => :persistent_volumes)
+  end
+
+  def display_hosts
+    nested_list('hosts', Host, :breadcrumb_title => _("Managed Hosts"))
+  end
+
+  class_methods do
+    def display_methods
+      %w(
+        availability_zones block_storage_managers cloud_networks cloud_object_store_containers cloud_subnets
+        cloud_tenants cloud_volumes cloud_volume_snapshots configuration_jobs container_builds container_groups
+        container_image_registries container_images container_nodes container_projects container_replicators
+        container_routes containers container_services container_templates ems_clusters flavors floating_ips
+        host_aggregates hosts images instances load_balancers middleware_datasources middleware_deployments
+        middleware_domains middleware_messagings middleware_server_groups middleware_servers miq_templates
+        network_ports network_routers object_storage_managers orchestration_stacks persistent_volumes
+        security_groups storage_managers storages vms
+      )
     end
 
-    @lastaction = "show"
-    session[:tl_record_id] = @record.id
+    def custom_display_modes
+      %w(props ems_folders ad_hoc_metrics)
+    end
 
-    replace_gtl_main_div if pagination_request?
-    render :template => "shared/views/ems_common/show" if params[:action] == 'show' && !performed?
+    def default_show_template
+      "shared/views/ems_common/show"
+    end
   end
 
-  def view_setup_helper(display, kls, title, parent_method = nil)
-    drop_breadcrumb(:name => @ems.name + _(" (All %{title})") % {:title => title},
-                    :url  => show_link(@ems, :display => display))
-    opts = {:parent => @ems}
-    opts[:parent_method] = parent_method if parent_method
-    @view, @pages = get_view(kls, **opts)
-
-    # display need's to be set so that it's stored in the session
-    @showtype = @display = display
-  end
 
   def new
     @doc_url = provider_documentation_url
@@ -171,7 +109,7 @@ module EmsCommon
     @in_a_form = true
     session[:changed] = nil
     drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => @table_name)},
-                    :url  => "/#{@table_name}/new")
+                    :url  => "/#{controller_name}/new")
   end
 
   def create
@@ -205,7 +143,7 @@ module EmsCommon
           end
         end
         drop_breadcrumb(:name => _("Add New %{table}") % {:table => ui_lookup(:table => @table_name)},
-                        :url  => "/#{@table_name}/new")
+                        :url  => "/#{controller_name}/new")
         javascript_flash
       end
     when "validate"
@@ -228,7 +166,7 @@ module EmsCommon
     @in_a_form = true
     session[:changed] = false
     drop_breadcrumb(:name => _("Edit %{object_type} '%{object_name}'") % {:object_type => ui_lookup(:tables => @table_name), :object_name => @ems.name},
-                    :url  => "/#{@table_name}/#{@ems.id}/edit")
+                    :url  => "/#{controller_name}/#{@ems.id}/edit")
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
@@ -325,9 +263,9 @@ module EmsCommon
         add_flash("#{field.to_s.capitalize} #{msg}", :error)
       end
 
-      breadcrumb_url = "/#{@table_name}/edit/#{@ems.id}"
+      breadcrumb_url = "/#{controller_name}/edit/#{@ems.id}"
 
-      breadcrumb_url = "/#{@table_name}/#{@ems.id}/edit" if restful_routed?(model)
+      breadcrumb_url = "/#{controller_name}/#{@ems.id}/edit" if restful_routed?(model)
 
       drop_breadcrumb(:name => _("Edit %{table} '%{name}'") % {:table => ui_lookup(:table => @table_name),
                                                                :name  => @ems.name},
@@ -384,7 +322,6 @@ module EmsCommon
     # Handle buttons from sub-items screen
     if params[:pressed].starts_with?("availability_zone_",
                                      "cloud_network_",
-                                     "cloud_object_store_container_",
                                      "cloud_subnet_",
                                      "cloud_tenant_",
                                      "cloud_volume_",
@@ -432,7 +369,6 @@ module EmsCommon
       # Edit Tags for Network Manager Relationship pages
       when "availability_zone_tag"            then tag(AvailabilityZone)
       when "cloud_network_tag"                then tag(CloudNetwork)
-      when "cloud_object_store_container_tag" then tag(CloudObjectStoreContainer)
       when "cloud_subnet_tag"                 then tag(CloudSubnet)
       when "cloud_tenant_tag"                 then tag(CloudTenant)
       when "cloud_volume_tag"                 then tag(CloudVolume)
@@ -468,13 +404,12 @@ module EmsCommon
           show                                                        # Handle EMS buttons
         end
       end
+    elsif params[:pressed].starts_with?("cloud_object_store_")
+      process_cloud_object_storage_buttons(params[:pressed])
     else
       @refresh_div = "main_div" # Default div for button.rjs to refresh
       redirect_to :action => "new" if params[:pressed] == "new"
       deleteemss if params[:pressed] == "#{@table_name}_delete"
-      arbitration_profile_edit if params[:pressed] == "arbitration_profile_new"
-      arbitration_profile_edit if params[:pressed] == "arbitration_profile_edit"
-      arbitration_profile_delete if params[:pressed] == "arbitration_profile_delete"
       refreshemss if params[:pressed] == "#{@table_name}_refresh"
       #     scanemss if params[:pressed] == "scan"
       tag(model) if params[:pressed] == "#{@table_name}_tag"
@@ -516,9 +451,10 @@ module EmsCommon
         javascript_redirect :back
         return
       end
-      if params[:pressed] == "ems_cloud_recheck_auth_status"     ||
-         params[:pressed] == "ems_infra_recheck_auth_status"     ||
-         params[:pressed] == "ems_middleware_recheck_auth_status" ||
+      if params[:pressed] == "ems_cloud_recheck_auth_status"          ||
+         params[:pressed] == "ems_infra_recheck_auth_status"          ||
+         params[:pressed] == "ems_physical_infra_recheck_auth_status" ||
+         params[:pressed] == "ems_middleware_recheck_auth_status"     ||
          params[:pressed] == "ems_container_recheck_auth_status"
         if params[:id]
           table_key = :table
@@ -551,14 +487,16 @@ module EmsCommon
     end
 
     if !@flash_array.nil? && params[:pressed] == "#{@table_name}_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
+      javascript_redirect :action      => 'show_list',
+                          :flash_msg   => @flash_array[0][:message],
+                          :flash_error => @flash_array[0][:level] == :error
     elsif params[:pressed] == "host_aggregate_edit"
       javascript_redirect :controller => "host_aggregate", :action => "edit", :id => find_checked_items[0]
     elsif params[:pressed] == "cloud_tenant_edit"
       javascript_redirect :controller => "cloud_tenant", :action => "edit", :id => find_checked_items[0]
     elsif params[:pressed] == "cloud_volume_edit"
       javascript_redirect :controller => "cloud_volume", :action => "edit", :id => find_checked_items[0]
-    elsif params[:pressed].ends_with?("_edit") || ["arbitration_profile_new", "#{pfx}_miq_request_new", "#{pfx}_clone",
+    elsif params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new", "#{pfx}_clone",
                                                    "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
       render_or_redirect_partial(pfx)
     else
@@ -586,71 +524,11 @@ module EmsCommon
     showlist ? show_list : show
   end
 
-  def arbitration_profile_edit
-    assert_privileges("arbitration_profile_edit")
-    id = params[:show] ? params[:show] : find_checked_items.first
-    @arbitration_profile = id ? find_by_id_filtered(ArbitrationProfile, from_cid(id)) : ArbitrationProfile.new
-    @refresh_partial = "arbitration_profile_edit"
-    @redirect_id = @arbitration_profile.try(:id) || nil
-    @in_a_form = true
-    @title = _("Arbitration Profiles")
-  end
-
   def provider_documentation_url
     "http://manageiq.org/documentation/getting-started/#adding-a-provider"
   end
 
-  def arbitration_profiles
-    @db = params[:db] ? params[:db] : request.parameters[:controller]
-    get_record(@db)
-    return if record_no_longer_exists?(@record)
-    @lastaction = "arbitration_profiles"
-    params[:show].nil? ? fetch_arbitration_profiles_list : fetch_arbitration_profile_item
-  end
-
   private ############################
-
-  def fetch_arbitration_profiles_list
-    generate_breadcrumb(@record.name, "/#{@db}/show/#{@record.id}", true)
-    generate_breadcrumb(_("%{name} (Arbitration Profiles)") % {:name => @record.name}, "/#{@db}/arbitration_profiles/#{@record.id}")
-    @listicon = "arbitration_profile"
-    @no_checkboxes = false
-    show_details(ArbitrationProfile)
-  end
-
-  def fetch_arbitration_profile_item
-    @item = ArbitrationProfile.find_by_id(from_cid(params[:show]))
-    generate_breadcrumb(_("%{name} (Arbitration Profiles)") % {:name => @record.name}, "/#{@db}/arbitration_profiles/#{@record.id}?page=#{@current_page}")
-    generate_breadcrumb(@item.name, "/#{@db}/show/#{@record.id}?show=#{@item.id}")
-    @view = get_db_view(ArbitrationProfile) # Instantiate the MIQ Report view object
-    show_item
-  end
-
-  def arbitration_profile_delete
-    assert_privileges("arbitration_profile_delete")
-    profiles = profiles_to_delete
-    process_elements(profiles, ArbitrationProfile, "destroy") unless profiles.empty?
-    add_flash(_("Delete initiated for %{count_model} from the Database") %
-                {:count_model => pluralize(profiles.length,
-                                           ui_lookup(:table => "ArbitrationProfile"))}) if @flash_array.nil?
-    params.delete(:show) unless flash_errors?
-    @_params[:db] = "ems_cloud"
-    arbitration_profiles
-  end
-
-  def profiles_to_delete
-    if params[:miq_grid_checks] # showing a list
-      profiles = find_checked_items
-      add_flash(_("No %{record} were selected for deletion") %
-                  {:record => ui_lookup(:table => "ArbitrationProfile")}, :error) if profiles.empty?
-    elsif params[:show].nil? || ArbitrationProfile.find_by_id(from_cid(params[:show])).nil? # showing 1 item
-      profiles = []
-      add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => "ArbitrationProfile")}, :error)
-    else # showing 1 item
-      profiles.push(from_cid(params[:show]))
-    end
-    profiles
-  end
 
   def generate_breadcrumb(name, url, replace = false)
     drop_breadcrumb({:name => name, :url => url}, replace)
@@ -832,6 +710,7 @@ module EmsCommon
     @openstack_security_protocols = retrieve_openstack_security_protocols
     @amqp_security_protocols = retrieve_amqp_security_protocols
     @nuage_security_protocols = retrieve_nuage_security_protocols
+    @container_security_protocols = retrieve_container_security_protocols
     @scvmm_security_protocols = [[_('Basic (SSL)'), 'ssl'], ['Kerberos', 'kerberos']]
     @openstack_api_versions = retrieve_openstack_api_versions
     @vmware_cloud_api_versions = retrieve_vmware_cloud_api_versions
@@ -883,6 +762,12 @@ module EmsCommon
     [[_('Non-SSL'), 'non-ssl']]
   end
 
+  def retrieve_container_security_protocols
+    [[_('SSL'), 'ssl-with-validation'],
+     [_('SSL trusting custom CA'), 'ssl-with-validation-custom-ca'],
+     [_('SSL without validation'), 'ssl-without-validation']]
+  end
+
   # Get variables from edit form
   def get_form_vars
     @ems = @edit[:ems_id] ? model.find_by_id(@edit[:ems_id]) : model.new
@@ -902,8 +787,6 @@ module EmsCommon
         @edit[:new][:port] = @ems.port ? @ems.port : ManageIQ::Providers::Kubernetes::ContainerManager::DEFAULT_PORT
       elsif params[:server_emstype] == ManageIQ::Providers::Openshift::ContainerManager.ems_type
         @edit[:new][:port] = @ems.port ? @ems.port : ManageIQ::Providers::Openshift::ContainerManager::DEFAULT_PORT
-      elsif params[:server_emstype] == ManageIQ::Providers::OpenshiftEnterprise::ContainerManager.ems_type
-        @edit[:new][:port] = @ems.port ? @ems.port : ManageIQ::Providers::OpenshiftEnterprise::ContainerManager::DEFAULT_PORT
       else
         @edit[:new][:port] = nil
       end
@@ -1179,18 +1062,10 @@ module EmsCommon
     self.class.permission_prefix
   end
 
-  def show_link(ems, options = {})
-    url_for(options.merge(:controller => @table_name,
-                          :action     => "show",
-                          :id         => ems.id,
-                          :only_path  => true))
-  end
-
   def show_list_link(ems, options = {})
-    url_for(options.merge(:controller => @table_name,
-                          :action     => "show_list",
-                          :id         => ems.id,
-                          :only_path  => true))
+    url_for_only_path(options.merge(:controller => controller_name,
+                                    :action     => "show_list",
+                                    :id         => ems.id))
   end
 
   def restore_password

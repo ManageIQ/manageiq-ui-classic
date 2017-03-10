@@ -368,7 +368,7 @@ class MiqPolicyController < ApplicationController
     @ajax_paging_buttons = true
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
-      @settings[:perpage][@gtl_type.to_sym] = @items_per_page         # Set the per page setting for this gtl type
+      @settings.store_path(:perpage, @gtl_type.to_sym, @items_per_page) # Set the per page setting for this gtl type
     end
     sortcol_key = "#{what}_sortcol".to_sym
     sortdir_key = "#{what}_sortdir".to_sym
@@ -715,6 +715,9 @@ class MiqPolicyController < ApplicationController
     render :update do |page|
       page << javascript_prologue
       if @edit
+        if @refresh_inventory
+          page.replace("action_options_div", :partial => "action_options")
+        end
         if @action_type_changed || @snmp_trap_refresh
           page.replace("action_options_div", :partial => "action_options")
         elsif @alert_refresh

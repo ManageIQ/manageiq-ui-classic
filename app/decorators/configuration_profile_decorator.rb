@@ -1,8 +1,10 @@
-class ConfigurationProfileDecorator < Draper::Decorator
-  delegate_all
-
+class ConfigurationProfileDecorator < MiqDecorator
   def fonticon
-    nil
+    if id.nil?
+      'pficon pficon-folder-close'
+    else
+      'fa fa-list-ul'
+    end
   end
 
   def listicon_image

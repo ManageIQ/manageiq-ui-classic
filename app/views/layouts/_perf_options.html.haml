@@ -1,4 +1,4 @@
-- url = url_for(:action => 'perf_chart_chooser',
+- url = url_for_only_path(:action => 'perf_chart_chooser',
                 :id     => @record.id)
 #perf_options_div{:onclick => "if (typeof miqMenu != 'undefined') miqMenu.hideContextMenu();"}
   - if @charts || @perf_options[:chart_type] != :performance
@@ -70,24 +70,24 @@
             = _("back")
       - unless @perf_options[:typ] == "realtime"
         - unless @perf_options[:typ] == "Hourly" && request.parameters["controller"] == "storage"
-          - if @perf_options[:cats]
+          - if @perf_options.cats
             %dt
               = _("Group by")
             %dd
               = select_tag("perf_cat",
-                           options_for_select(Array(@perf_options[:cats].invert).sort_by { |name, _value| name },
+                           options_for_select(Array(@perf_options.cats.invert).sort_by { |name, _value| name },
                                               "#{@perf_options[:cat_model]}:#{@perf_options[:cat]}"),
                            "data-miq_sparkle_on" => true,
                            :class    => "selectpicker")
               :javascript
                 miqSelectPickerEvent("perf_cat", "#{url}")
         - unless @perf_options[:cat]
-          - if @perf_options[:vmtypes] && (@perf_options[:index].nil? || @charts.first[:title].include?("by Type"))
+          - if @perf_options.vmtypes && (@perf_options[:index].nil? || @charts.first[:title].include?("by Type"))
             %dt
               = _("Show VM Types")
             %dd
               = select_tag("perf_vmtype",
-                           options_for_select(@perf_options[:vmtypes],
+                           options_for_select(@perf_options.vmtypes,
                            @perf_options[:vmtype]),
                            "data-miq_sparkle_on" => true,
                            :class    => "selectpicker")

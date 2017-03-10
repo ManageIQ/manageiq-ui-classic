@@ -1,4 +1,4 @@
-- url = url_for(:action => 'prov_field_changed', :id => "#{@edit[:req_id] || 'new'}") if @edit
+- url = url_for_only_path(:action => 'prov_field_changed', :id => (@edit[:req_id] || 'new')) if @edit
 -# wf          The workflow object currently in use
 -# dialog      Dialog name (symbol)
 -# field       Field name (symbol)
@@ -133,7 +133,7 @@
                              :class   => "btn btn-primary",
                              :alt     => t = _("LDAP Group Lookup"),
                              :title   => t,
-                             :onclick => "miqAjaxButton('#{url_for(:controller => 'miq_request',
+                             :onclick => "miqAjaxButton('#{url_for_only_path(:controller => 'miq_request',
                                                                    :action     => 'retrieve_email',
                                                                    :field      => fh[:pressed][:method],
                                                                    :button     => 'submit')}');")

@@ -5,11 +5,10 @@
     - case @showtype
     - when "details"
       = render :partial => "layouts/gtl", :locals => {:action_url => @lastaction}
-    - when "compare", "drift"
-      = raise 'compare or drift partial called through "show"'
-      = render :partial => "layouts/compare"
-    - when "drift_history", "item"
-      = render :partial => "layouts/#{@showtype}"
+    - when "drift_history"
+      = render :partial => "layouts/drift_history"
+    - when "item"
+      = render :partial => "layouts/item"
     - when "performance"
       = render :partial => "layouts/performance_async"
     - when "performance_summary"
@@ -19,8 +18,8 @@
     - when "dialog_provision"
       = render :partial => "shared/dialogs/dialog_provision"
     - when "compliance_history"
-      = render :partial => "shared/views/#{@showtype}"
+      = render :partial => "shared/views/compliance_history"
     - when "main"
       = render :partial => "layouts/textual_groups_generic"
-    - else
-      = render :partial => @showtype
+    - when "config"
+      = render :partial => "config"

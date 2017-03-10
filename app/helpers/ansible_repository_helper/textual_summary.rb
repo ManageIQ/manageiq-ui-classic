@@ -7,7 +7,7 @@ module AnsibleRepositoryHelper::TextualSummary
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(provider playbooks))
+    TextualGroup.new(_("Relationships"), %i(provider playbooks credential))
   end
 
   def textual_created
@@ -25,8 +25,20 @@ module AnsibleRepositoryHelper::TextualSummary
   def textual_playbooks
     h = {:label => _('Playbooks'), :value => @record.total_payloads}
     if @record.total_payloads > 0 && role_allows?(:feature => 'embedded_configuration_script_payload_view')
-      h.update(:link  => url_for(:action => 'show', :id => @record, :display => 'playbooks'),
+      h.update(:link  => url_for_only_path(:action => 'show', :id => @record, :display => 'playbooks'),
                :title => _('Show all Playbooks'))
+    end
+    h
+  end
+
+  def textual_credential
+    h = {:label => _('Credential')}
+    if @record.try(:authentication) && role_allows?(:feature => 'embedded_automation_manager_credentials_view')
+      h.update(:link  => url_for_only_path(:controller => 'ansible_credential',
+                                 :action     => 'show',
+                                 :id         => @record.authentication),
+               :title => _('Show Credential'),
+               :value => @record.authentication.name)
     end
     h
   end

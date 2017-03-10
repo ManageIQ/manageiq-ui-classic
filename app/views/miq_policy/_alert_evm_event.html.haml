@@ -3,7 +3,7 @@
     = _('Timeline Event')
   .form-horizontal
     - if @edit
-      - url = url_for(:action => 'alert_field_changed',  :id => "#{@alert.id || 'new'}")
+      - url = url_for_only_path(:action => 'alert_field_changed',  :id => (@alert.id || 'new'))
       .form-group
         %label.col-md-2.control-label
           = _('Show on Timeline')

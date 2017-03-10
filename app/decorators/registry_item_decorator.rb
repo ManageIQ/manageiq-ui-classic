@@ -1,6 +1,4 @@
-class RegistryItemDecorator < Draper::Decorator
-  delegate_all
-
+class RegistryItemDecorator < MiqDecorator
   def fonticon
     nil
   end

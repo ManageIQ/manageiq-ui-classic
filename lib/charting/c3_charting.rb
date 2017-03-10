@@ -6,7 +6,7 @@ class C3Charting < Charting
 
   # for Charting.detect_available_plugin
   def self.priority
-    1000 # TODO: set to value > JqplotCharting.priority to take effect
+    1000
   end
 
   # backend identifier
@@ -34,7 +34,7 @@ class C3Charting < Charting
   def data_ok?(data)
     obj = YAML.load(data)
     !!obj && obj.kind_of?(Hash) && !obj[:options]
-  rescue Psych::SyntaxError
+  rescue Psych::SyntaxError, ArgumentError
     false
   end
 

@@ -56,10 +56,15 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
         :icon => ae_field_fonticon(el.name.underscore)
       }
     else
+      key = el.name.sub(/^MiqAeService/, '').gsub('_', '::')
+      base_obj = key.safe_constantize.try(:new)
+      obj = TreeNode.new(base_obj) if TreeNode.exists?(base_obj)
+
       {
         :text    => el.name,
         :tooltip => el.name,
-        :image   => "100/#{el.name.underscore.sub(/^miq_ae_service_/, '')}.png"
+        :icon    => obj ? obj.icon : nontreenode_icon(base_obj),
+        :image   => obj ? obj.image : nil
       }
     end
   end
@@ -91,5 +96,76 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
       kids.push(get_root_elements(el, i))
     end
     count_only_or_objects(count_only, kids)
+  end
+
+  def nontreenode_icon(obj)
+    case obj
+    when ArbitrationProfile
+      'fa fa-list-ul'
+    when Authentication
+      'fa fa-lock'
+    when CloudNetwork
+      'product product-cloud_network'
+    when CloudObjectStoreContainer
+      'product product-cloud_object_store'
+    when CloudObjectStoreObject
+      'product product-cloud_object_store'
+    when CloudResourceQuota
+      'fa fa-pie-chart'
+    when CloudSubnet
+      'pficon pficon-network'
+    when CloudTenant
+      'pficon pficon-cloud-tenant'
+    when CloudVolume
+      'pficon pficon-volume'
+    when CloudVolumeBackup
+      'pficon pficon-volume'
+    when CloudVolumeSnapshot
+      'fa fa-camera'
+    when ContainerBuild
+      'pficon pficon-build'
+    when ContainerGroup
+      'fa fa-cubes'
+    when ContainerImage
+      'pficon pficon-image'
+    when ContainerImageRegistry
+      'pficon pficon-registry'
+    when ContainerNode
+      'pficon pficon-container-node'
+    when ContainerProject
+      'pficon pficon-project'
+    when ContainerReplicator
+      'pficon pficon-replicator'
+    when ContainerRoute
+      'pficon pficon-route'
+    when ContainerService
+      'pficon pficon-service'
+    when ContainerVolume
+      'pficon pficon-volume'
+    when Flavor
+      'pficon pficon-flavor'
+    when FloatingIp
+      'fa fa-map-marker'
+    when GuestApplication
+      'product product-application'
+    when HostAggregate
+      'pficon pficon-screen'
+    when LoadBalancer
+      'product product-load_balancer'
+    when MiqRequest
+      'fa fa-question'
+    when Network
+      'pficon pficon-network'
+    when NetworkPort
+      'product product-network_port'
+    when NetworkRouter
+      'pficon pficon-route'
+    when OrchestrationStack
+      'product product-orchestration_stack'
+    when PersistentVolume
+      'pficon pficon-volume'
+    when SecurityGroup
+      'pficon pficon-cloud-security'
+    end
   end
 end

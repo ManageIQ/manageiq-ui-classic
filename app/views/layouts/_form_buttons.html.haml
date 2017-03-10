@@ -12,13 +12,13 @@
             :class   => 'btn btn-primary',
             :alt     => save_text,
             :title   => save_text,
-            :onclick => "miqAjaxButton('#{url_for(:action => action_url, :id => record_id, :button => 'save')}', true);")
+            :onclick => "miqAjaxButton('#{url_for_only_path(:action => action_url, :id => record_id, :button => 'save')}', true);")
         - else
           = button_tag(_('Save'),
             :class   => 'btn btn-primary',
             :alt     => save_text,
             :title   => save_text,
-            :onclick => "miqAjaxButton('#{url_for(:action => action_url, :button => 'save')}');")
+            :onclick => "miqAjaxButton('#{url_for_only_path(:action => action_url, :button => 'save')}');")
       - else
         - if save_confirm_text
           = button_tag(_("Save"),
@@ -43,7 +43,7 @@
           :class   => 'btn btn-default',
           :alt     => t = _("Reset Changes"),
           :title   => t,
-          :onclick => "miqAjaxButton('#{url_for(:action => action_url, :button => 'reset')}');")
+          :onclick => "miqAjaxButton('#{url_for_only_path(:action => action_url, :button => 'reset')}');")
       - else
         = button_tag(_('Reset'),
           :id      => "reset",

@@ -227,12 +227,7 @@ table.table tbody td img {
   font-weight: normal
 }
 
-table .narrow {
-  width: 1%;
-  white-space: nowrap;
-}
-
-table .narrow i { /* font icon styling in table view (equivalent to fa-lg) */
+table .table-view-pf-select i { /* font icon styling in table view (equivalent to fa-lg) */
   padding-left: 2px;
   font-size: 1.33333333em;
   line-height: 0.75em;

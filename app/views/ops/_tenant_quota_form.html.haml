@@ -20,7 +20,7 @@
               = _("Units")
         %tbody
           %tr{"ng-repeat" => "(quota_name, quota_obj) in tenantQuotaModel.quotas", "ng-form" => "rowForm", "ng-class" => "{'has-error': rowForm.value.$invalid}"}
-            %td.narrow
+            %td.table-view-pf-select
               %input{"bs-switch"  => "",
                     "id"          => "{{quota_name}}",
                     "type"        => "checkbox",

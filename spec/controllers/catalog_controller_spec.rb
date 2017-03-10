@@ -68,6 +68,7 @@ describe CatalogController do
   context "#atomic_form_field_changed" do
     before :each do
       controller.instance_variable_set(:@sb, {})
+      controller.instance_variable_set(:@record, ServiceTemplate.new(:prov_type => "generic"))
       edit = {
         :key          => "prov_edit__new",
         :rec_id       => 1,
@@ -666,6 +667,27 @@ describe CatalogController do
       controller.send(:st_set_form_vars)
       expect(assigns(:edit)[:new][:fqname]).to include("CatalogBundleInitialization")
       expect(assigns(:edit)[:new][:retire_fqname]).to include("Default")
+    end
+  end
+
+  context "#st_catalog_new" do
+    it "renders views successfully after button is pressed" do
+      controller.instance_variable_set(:@sb, {})
+      controller.instance_variable_set(:@_params, :pressed => 'st_catalog_new', :action => 'x_button')
+      edit = {
+        :new => {:name             => "",
+                 :description      => "",
+                 :fields           => [],
+                 :available_fields => [],
+        },
+        :key => "st_catalog_edit__new"
+      }
+      controller.instance_variable_set(:@edit, edit)
+      controller.x_node = "root"
+      session[:edit] = edit
+      expect(controller).to receive(:render)
+      controller.send(:st_catalog_edit)
+      expect(response).to have_http_status 200
     end
   end
 end

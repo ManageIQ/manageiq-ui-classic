@@ -26,7 +26,7 @@
                 - id = "xx-#{p.mode.downcase}_xx-#{p.mode.downcase}-#{p.towhat.camelize(:lower)}_p-#{to_cid(p.id)}"
                 %tr{:title => _("Click to view Policy"),
                   :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=policy")}
-                  %td.narrow
+                  %td.table-view-pf-select
                     %i{:class => p.decorate.fonticon}
                   %td
                     = p.description
@@ -129,7 +129,7 @@
             %table.table.table-striped.table-bordered.table-hover
               %thead
                 %tr
-                  %th.narrow
+                  %th.table-view-pf-select
                   %th= _("Description")
                   %th= _("Synchronous")
                   %th= _("Type")
@@ -140,7 +140,7 @@
                   - f = "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_#{id}');"
                   %tr{:title => _("View this Event Action"),
                     :onclick => (x_active_tree == :action_tree) ? t : f}
-                    %td.narrow
+                    %td.table-view-pf-select
                       %i.pficon.pficon-ok
                     %td
                       = a.description
@@ -252,7 +252,7 @@
             %table.table.table-striped.table-bordered.table-hover
               %thead
                 %tr
-                  %th.narrow
+                  %th.table-view-pf-select
                   %th= _('Description')
                   %th= _('Synchronous')
                   %th= _('Type')
@@ -263,7 +263,7 @@
                   - f = "miqTreeActivateNode('#{x_active_tree}', '#{x_node}_#{id}');"
                   %tr{:title => _("View this Event Action"),
                      :onclick => (x_active_tree == :action_tree) ? t : f}
-                    %td.narrow
+                    %td.table-view-pf-select
                       %i.pficon.pficon-error-circle-o
                     %td
                       = a.description

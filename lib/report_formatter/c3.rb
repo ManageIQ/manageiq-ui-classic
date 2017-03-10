@@ -91,7 +91,9 @@ module ReportFormatter
         unless mri.graph[:type] == 'Donut' || mri.graph[:type] == 'Pie'
           mri.chart[:legend] = {:position => 'bottom'}
         end
-        format, options = javascript_format(mri.graph[:columns][0], nil)
+
+        column = grouped_by_tag_category? ? mri.graph[:columns][0].split(/_+/)[0..-2].join('_') : mri.graph[:columns][0]
+        format, options = javascript_format(column, nil)
         return unless format
 
         axis_formatter = {:function => format, :options => options}
@@ -113,7 +115,7 @@ module ReportFormatter
     end
 
     # change structure of chart JSON to performance chart with timeseries data
-    def build_performance_chart_area(maxcols, divider)
+    def build_performance_chart_area(maxcols)
       super
       change_structure_to_timeseries
     end
@@ -160,19 +162,23 @@ module ReportFormatter
       end
     end
 
-    def build_reporting_chart(_maxcols, _divider)
+    def build_reporting_chart(_maxcols)
       mri.chart[:miq][:expand_tooltip] = true
       super
     end
 
-    def build_reporting_chart_numeric(_maxcols, _divider)
+    def build_reporting_chart_numeric(_maxcols)
       mri.chart[:miq][:expand_tooltip] = true
       super
     end
 
-    def build_performance_chart_pie(_maxcols, _divider)
+    def build_performance_chart_pie(_maxcols)
       mri.chart[:miq][:expand_tooltip] = true
       super
+    end
+
+    def grouped_by_tag_category?
+      !!(mri.performance && mri.performance.fetch_path(:group_by_category))
     end
   end
 end

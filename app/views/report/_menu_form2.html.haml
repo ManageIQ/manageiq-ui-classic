@@ -1,6 +1,6 @@
 #menu_div2
   - if @selected && @selected[1] && (!@edit[:selected_reports].blank? || !@edit[:available_reports].blank?)
-    - url = url_for(:action => 'menu_field_changed')
+    - url = url_for_only_path(:action => 'menu_field_changed')
     .col-sm-6
       %h3
         = _('Manage Reports')
@@ -120,7 +120,7 @@
                     'data-click_url'      => {:url => "#{url}?pressed=commit"}.to_json}
                   = _('Commit')
                 - t = _("Discard report management changes")
-                - url2 = url_for(:action => 'discard_changes')
+                - url2 = url_for_only_path(:action => 'discard_changes')
                 %button.btn.btn-default{:title => t,
                     "data-submit"         => 'column_lists',
                     "data-miq_sparkle_on" => true,

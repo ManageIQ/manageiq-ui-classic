@@ -177,16 +177,6 @@ module OpsController::Settings::Common
     replication_type = MiqRegion.replication_type
     subscriptions = replication_type == :global ? PglogicalSubscription.all : []
     subscriptions = get_subscriptions_array(subscriptions) unless subscriptions.empty?
-    if replication_type == :global
-      subscriptions.each do |h|
-        region = MiqRegion.find_by(:region => h[:provider_region])
-        h.merge!(
-          :auth_key_configured => !!region.try(:auth_key_configured?),
-          :remote_ws_address   => region.try(:remote_ws_address).to_s
-        )
-      end
-    end
-
     exclusion_list = replication_type == :remote ? MiqPglogical.new.active_excludes : MiqPglogical.default_excludes
 
     render :json => {
@@ -255,43 +245,6 @@ module OpsController::Settings::Common
     javascript_flash
   end
 
-
-  def enable_central_admin
-    replication_type = MiqRegion.replication_type
-
-    if replication_type != :global || !@_params[:provider_region] || !@_params[:ssh_user] || !@_params[:ssh_password]
-      add_flash(_("Invalid data for enabling Central Admin"), :error)
-    else
-      provider_region = @_params[:provider_region]
-      region = MiqRegion.find_by(:region => provider_region)
-      if region
-        region.generate_auth_key_queue(@_params[:ssh_user], @_params[:ssh_password], @_params[:ssh_host])
-        add_flash(_("Enable Central Admin has been successfully initiated"))
-      else
-        add_flash(_("Region Not found"), :error)
-      end
-    end
-    javascript_flash
-  end
-
-  def disable_central_admin
-    replication_type = MiqRegion.replication_type
-
-    if replication_type != :global || !@_params[:provider_region]
-      add_flash(_("Invalid data for disabling Central Admin"), :error)
-    else
-      provider_region = @_params[:provider_region]
-      region = MiqRegion.find_by( :region => provider_region)
-      if region
-        region.remove_auth_key
-        add_flash(_("Central Admin has been disabled"))
-      else
-        add_flash(_("Region Not found"), :error)
-      end
-    end
-    javascript_flash
-  end
-
   private
 
   PASSWORD_MASK = '●●●●●●●●'.freeze
@@ -324,7 +277,8 @@ module OpsController::Settings::Common
         :user            => sub.user,
         :password        => '●●●●●●●●',
         :port            => sub.port,
-        :provider_region => sub.provider_region
+        :provider_region => sub.provider_region,
+        :backlog         => number_to_human_size(sub.backlog)
       }
     end
   end

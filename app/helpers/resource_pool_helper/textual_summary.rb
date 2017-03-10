@@ -16,7 +16,7 @@ module ResourcePoolHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(parent_datacenter parent_cluster parent_host direct_vms allvms_size total_vms)
+      %i(parent_datacenter parent_cluster parent_host direct_vms allvms_size total_vms resource_pools)
     )
   end
 
@@ -82,7 +82,7 @@ module ResourcePoolHelper::TextualSummary
          :value => (cluster.nil? ? _("None") : cluster.name)}
     if cluster && role_allows?(:feature => "ems_cluster_show")
       h[:title] = _("Show Parent %{title} %{name}") % {:title => title_for_cluster, :name => cluster.name}
-      h[:link]  = url_for(:controller => 'ems_cluster', :action => 'show', :id => cluster)
+      h[:link]  = url_for_only_path(:controller => 'ems_cluster', :action => 'show', :id => cluster)
     end
     h
   end
@@ -94,7 +94,7 @@ module ResourcePoolHelper::TextualSummary
          :value => (host.nil? ? _("None") : host.name)}
     if host && role_allows?(:feature => "host_show")
       h[:title] = _("Show Parent %{title} '%{name}'") % {:title => title_for_host, :name => host.name}
-      h[:link]  = url_for(:controller => 'host', :action => 'show', :id => host)
+      h[:link]  = url_for_only_path(:controller => 'host', :action => 'show', :id => host)
     end
     h
   end
@@ -104,7 +104,7 @@ module ResourcePoolHelper::TextualSummary
     h = {:label => _("Direct VMs"), :icon => "pficon pficon-virtual-machine", :value => num}
     if num > 0 && role_allows?(:feature => "vm_show_list")
       h[:title] = _("Show VMs in this Resource Pool, but not in Resource Pools below")
-      h[:link]  = url_for(:controller => 'resource_pool', :action => 'show', :id => @record, :display => 'vms')
+      h[:link]  = url_for_only_path(:controller => 'resource_pool', :action => 'show', :id => @record, :display => 'vms')
     end
     h
   end
@@ -114,7 +114,7 @@ module ResourcePoolHelper::TextualSummary
     h = {:label => _("All VMs"), :icon => "pficon pficon-virtual-machine", :value => num}
     if num > 0 && role_allows?(:feature => "vm_show_list")
       h[:title] = _("Show all VMs in this Resource Pool")
-      h[:link]  = url_for(:controller => 'resource_pool', :action => 'show', :id => @record, :display => 'all_vms')
+      h[:link]  = url_for_only_path(:controller => 'resource_pool', :action => 'show', :id => @record, :display => 'all_vms')
     end
     h
   end
@@ -125,7 +125,17 @@ module ResourcePoolHelper::TextualSummary
     # TODO: Why is this role_allows? resource_pool_show_list but the previous 2 methods are for vm_show_list
     if num > 0 && role_allows?(:feature => "resource_pool_show_list")
       h[:title] = _("Show tree of all VMs in this Resource Pool")
-      h[:link]  = url_for(:controller => 'resource_pool', :action => 'show', :id => @record, :display => 'descendant_vms')
+      h[:link]  = url_for_only_path(:controller => 'resource_pool', :action => 'show', :id => @record, :display => 'descendant_vms')
+    end
+    h
+  end
+
+  def textual_resource_pools
+    num = @record.number_of(:resource_pools)
+    h = {:label => _("Resource Pools"), :icon => "pficon pficon-resource-pool", :value => num}
+    if num > 0 && role_allows?(:feature => "resource_pool_show_list")
+      h[:title] = _("Show all Resource Pools")
+      h[:link]  = url_for_only_path(:controller => "resource_pool", :action => 'show', :id => @record, :display => 'resource_pools')
     end
     h
   end

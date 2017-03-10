@@ -14,7 +14,7 @@
           - t = _('Undo the last change')
           %button.btn.btn-default{"data-miq_sparkle_on" => true,
           "data-method" => :post,
-          :onclick      => "miqAjaxButton('#{url_for(:action => 'exp_button', :pressed => 'undo')}');",
+          :onclick      => "miqAjaxButton('#{url_for_only_path(:action => 'exp_button', :pressed => 'undo')}');",
           :remote       => true,
           :title        => t}
             %i.fa.fa-reply
@@ -25,7 +25,7 @@
         - if @edit[@expkey].history.idx < @edit[@expkey].history.array.length - 1
           - t = _('Re-apply the previous change')
           %button.btn.btn-default{"data-miq_sparkle_on" => true,
-          :onclick      => "miqAjaxButton('#{url_for(:action => 'exp_button', :pressed => 'redo')}');",
+          :onclick      => "miqAjaxButton('#{url_for_only_path(:action => 'exp_button', :pressed => 'redo')}');",
           :remote       => true,
           "data-method" => :post,
           :title        => t}
@@ -61,7 +61,7 @@
 
           %button.btn.btn-default{"data-method" => :post,
           "data-miq_sparkle_on" => true,
-          :onclick              => "miqAjaxButton('#{url_for(:action => 'exp_button', :pressed => 'remove')}');",
+          :onclick              => "miqAjaxButton('#{url_for_only_path(:action => 'exp_button', :pressed => 'remove')}');",
           :remote               => true,
           :title                => _("Remove this expression element")}
             %i.fa-lg.pficon.pficon-close
@@ -78,7 +78,7 @@
                         :title                 => title)
           %button.btn.btn-default{"data-method" => :post,
           "data-miq_sparkle_on" => true,
-          :onclick              => "miqAjaxButton('#{url_for(:action => 'exp_button', :pressed => 'remove')}');",
+          :onclick              => "miqAjaxButton('#{url_for_only_path(:action => 'exp_button', :pressed => 'remove')}');",
           :remote               => true,
           :title                => _("Remove this expression element")}
             %i.fa-lg.pficon.pficon-close

@@ -27,7 +27,7 @@
   - else
     %table.table.table-striped.table-bordered.table-hover
       %thead
-        %th.narrow
+        %th.table-view-pf-select
         %th= _("Name")
         %th= _("Base DN")
         %th= _("User Type")
@@ -35,7 +35,7 @@
       %tbody
         - @selected_lr.ldap_domains.sort_by { |d| d.name.to_s }.each do |domain|
           %tr{:onclick => "miqTreeActivateNode('settings_tree', 'ld-#{to_cid(domain.id)}');", :title => _("Click to view details")}
-            %td.narrow
+            %td.table-view-pf-select
               %i.product.product-domain
             %td
               = domain.name

@@ -1,39 +1,48 @@
 describe ApplicationHelper::Button::HostFeatureButton do
-  describe '#visible?' do
-    context "record is openstack infra manager" do
-      before do
-        @record = FactoryGirl.create(:ems_openstack_infra)
-      end
+  let(:view_context) { setup_view_context_with_sandbox({}) }
+  let(:record) { FactoryGirl.create(:ems_openstack_infra) }
+  let(:feature) { :standby }
+  let(:props) { {:options => {:feature => feature}} }
+  let(:button) { described_class.new(view_context, {}, {'record' => record}, props) }
 
-      it "will not be visible for this record" do
-        allow(@record).to receive(:supports_some_feature?).and_return(true)
-        view_context = setup_view_context_with_sandbox({})
-        button = described_class.new(
-          view_context,
-          {},
-          {'record' => @record},
-          {:options => {:feature => :some_feature}}
-        )
-        expect(button.visible?).to be_falsey
+  it_behaves_like 'a generic feature button after initialization'
+
+  describe '#visible?' do
+    subject { button.visible? }
+
+    context 'when record.kind_of?(ManageIQ::Providers::Openstack::InfraManager)' do
+      %w(start stop).each do |feature|
+        context "and feature is #{feature}" do
+          let(:feature) { feature }
+          it { expect(subject).to be_truthy }
+        end
+      end
+      context 'and feature is other than start or stop' do
+        let(:feature) { :stand_by }
+        it { expect(subject).to be_falsey }
       end
     end
-
-    context "record is not openstack infra manager" do
-      before do
-        @record = FactoryGirl.create(:ems_vmware)
+    context 'when record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)' do
+      let(:record) { FactoryGirl.create(:host_openstack_infra) }
+      before { allow(record).to receive(:is_available?).and_return(available) }
+      context 'and feature is available' do
+        let(:feature) { :stop }
+        let(:available) { true }
+        it { expect(subject).to be_truthy }
       end
-
-      it "will be visible for this record" do
-        allow(@record).to receive(:supports_some_feature?).and_return(true)
-        view_context = setup_view_context_with_sandbox({})
-        button = described_class.new(
-          view_context,
-          {},
-          {'record' => @record},
-          {:options => {:feature => :some_feature}}
-        )
-        expect(button.visible?).to be_truthy
+      context 'and feature is unavailable' do
+        let(:feature) { :shutdown }
+        let(:available) { false }
+        it { expect(subject).to be_falsey }
       end
+    end
+    context 'when there is no record' do
+      let(:record) { nil }
+      it { expect(subject).to be_truthy }
+    end
+    context 'when feature is nil' do
+      let(:feature) { nil }
+      it { expect(subject).to be_truthy }
     end
   end
 end

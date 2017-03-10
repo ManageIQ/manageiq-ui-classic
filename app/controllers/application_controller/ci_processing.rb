@@ -389,7 +389,7 @@ module ApplicationController::CiProcessing
       if @record.supports_resize?
         begin
           old_flavor = @record.flavor
-          @record.resize(flavor)
+          @record.resize_queue(session[:userid], flavor)
           add_flash(_("Reconfiguring %{instance} \"%{name}\" from %{old_flavor} to %{new_flavor}") % {
             :instance   => ui_lookup(:table => 'vm_cloud'),
             :name       => @record.name,
@@ -614,7 +614,8 @@ module ApplicationController::CiProcessing
         on_shared_storage = params[:on_shared_storage] == 'on'
         admin_password = on_shared_storage ? nil : params[:admin_password]
         begin
-          @record.evacuate(
+          @record.evacuate_queue(
+            session[:userid],
             :hostname          => hostname,
             :on_shared_storage => on_shared_storage,
             :admin_password    => admin_password
@@ -730,7 +731,7 @@ module ApplicationController::CiProcessing
       if @record.supports_associate_floating_ip?
         floating_ip = params[:floating_ip]
         begin
-          @record.associate_floating_ip(floating_ip)
+          @record.associate_floating_ip_queue(session[:userid], floating_ip)
           add_flash(_("Associating Floating IP %{address} with Instance \"%{name}\"") % {
             :address => floating_ip,
             :name    => @record.name})
@@ -824,7 +825,7 @@ module ApplicationController::CiProcessing
       if @record.supports_disassociate_floating_ip?
         floating_ip = params[:floating_ip]
         begin
-          @record.disassociate_floating_ip(floating_ip)
+          @record.disassociate_floating_ip_queue(session[:userid], floating_ip)
           add_flash(_("Disassociating Floating IP %{address} from Instance \"%{name}\"") % {
             :address => floating_ip,
             :name    => @record.name})
@@ -1566,7 +1567,7 @@ module ApplicationController::CiProcessing
     @view, @pages = get_view(model || self.class.model, options)  # Get the records (into a view) and the paginator
     if session[:bc] && session[:menu_click]               # See if we came from a perf chart menu click
       drop_breadcrumb(:name => session[:bc],
-                      :url  => url_for(:controller    => self.class.table_name,
+                      :url  => url_for_only_path(:controller    => self.class.table_name,
                                        :action        => "show_list",
                                        :bc            => session[:bc],
                                        :sb_controller => params[:sb_controller],
@@ -1839,6 +1840,49 @@ module ApplicationController::CiProcessing
     vms.count
   end
 
+  def process_cloud_object_storage_buttons(pressed)
+    assert_privileges(pressed)
+
+    klass = get_rec_cls
+    task = pressed.sub("#{klass.name.underscore.to_sym}_", "")
+
+    return tag(klass) if task == "tag"
+
+    cloud_object_store_button_operation(klass, task)
+  end
+
+  def cloud_object_store_button_operation(klass, task)
+    method = "#{task}_#{klass.name.underscore.to_sym}"
+    display_name = _(task.capitalize)
+
+    items = []
+
+    # Either a list or coming from a different controller
+    if @lastaction == "show_list" || !%w(cloud_object_store_container).include?(request.parameters["controller"])
+      items = find_checked_items
+      if items.empty?
+        add_flash(_("No %{model} were selected for %{task}") %
+                    {:model => ui_lookup(:models => klass.name), :task => display_name}, :error)
+      elsif klass.find(items).any? { |item| !item.supports?(task) }
+        add_flash(_("%{task} does not apply to at least one of the selected items") %
+                    {:task => display_name}, :error)
+      else
+        process_objects(items, method, display_name)
+      end
+    elsif params[:id].nil? || klass.find_by(:id => params[:id]).nil?
+      add_flash(_("%{record} no longer exists") %
+                  {:record => ui_lookup(:table => request.parameters["controller"])}, :error)
+      show_list unless @explorer
+      @refresh_partial = "layouts/gtl"
+    elsif !klass.find_by(:id => params[:id]).supports?(task)
+      add_flash(_("%{task} does not apply to this item") %
+                  {:task => display_name}, :error)
+    else
+      items.push(params[:id])
+      process_objects(items, method, display_name) unless items.empty?
+    end
+  end
+
   def get_rec_cls
     case request.parameters["controller"]
     when "miq_template"
@@ -1847,6 +1891,10 @@ module ApplicationController::CiProcessing
       return OrchestrationStack
     when "service"
       return Service
+    when "cloud_object_store_container"
+      CloudObjectStoreContainer
+    when "ems_storage"
+      CloudObjectStoreContainer
     else
       return VmOrTemplate
     end
@@ -1863,6 +1911,9 @@ module ApplicationController::CiProcessing
     when "VmOrTemplate"
       objs, _objs_out_reg = filter_ids_in_region(objs, "VM") unless VmOrTemplate::REMOTE_REGION_TASKS.include?(task)
       klass = Vm
+    when "CloudObjectStoreContainer"
+      objs, _objs_out_reg = filter_ids_in_region(objs, "CloudObjectStoreContainer")
+      klass = CloudObjectStoreContainer
     end
 
     assert_rbac(current_user, get_rec_cls, objs)
@@ -2306,7 +2357,7 @@ module ApplicationController::CiProcessing
       each_host(hosts, task_name) do |host|
         if host.maintenance
           if host.respond_to?(:unset_node_maintenance)
-            host.send(:unset_node_maintenance)
+            host.send(:unset_node_maintenance_queue, session[:userid])
             add_flash(_("\"%{record}\": %{task} successfully initiated") %
                       {:record => host.name, :task => (display_name || task)})
           else
@@ -2314,7 +2365,7 @@ module ApplicationController::CiProcessing
                       {:hostname => host.name, :task => (task_name || task)}, :error)
           end
         elsif host.respond_to?(:set_node_maintenance)
-          host.send(:set_node_maintenance)
+          host.send(:set_node_maintenance_queue, session[:userid])
           add_flash(_("\"%{record}\": %{task} successfully initiated") %
                     {:record => host.name, :task => (display_name || task)})
         else

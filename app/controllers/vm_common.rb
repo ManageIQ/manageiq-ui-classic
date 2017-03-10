@@ -930,10 +930,15 @@ module VmCommon
       TreeBuilder.build_node_cid(vm.ems_id, 'ExtManagementSystem')
     elsif vm.cloud
       TreeBuilder.build_node_cid(vm.availability_zone_id, 'AvailabilityZone')
-    elsif (blue_folder = vm.parent_blue_folder)
+    elsif (blue_folder = vm.parent_blue_folder) && !blue_folder.hidden
       TreeBuilder.build_node_cid(blue_folder.id, 'EmsFolder')
     elsif vm.ems_id # has no folder parent but is in the tree
-      TreeBuilder.build_node_cid(vm.ems_id, 'ExtManagementSystem')
+      if vm.parent_datacenter
+        TreeBuilder.build_node_cid(vm.parent_datacenter.id, 'Datacenter')
+      else
+        TreeBuilder.build_node_cid(vm.ems_id, 'ExtManagementSystem')
+      end
+
     else
       nil # no selection if VmOrTemplate has no parent
     end
@@ -1758,7 +1763,7 @@ module VmCommon
   def get_vms(selected = nil)
     page = params[:page].nil? ? 1 : params[:page].to_i
     @current_page = page
-    @items_per_page = @settings[:perpage][@gtl_type.to_sym]   # Get the per page setting for this gtl type
+    @items_per_page = settings(:perpage, @gtl_type.to_sym) # Get the per page setting for this gtl type
     if selected                             # came in with a list of selected ids (i.e. checked vms)
       @record_pages, @records = paginate(:vms, :per_page => @items_per_page, :order => @col_names[get_sort_col] + " " + @sortdir, :conditions => ["id IN (?)", selected])
     else                                      # getting ALL vms

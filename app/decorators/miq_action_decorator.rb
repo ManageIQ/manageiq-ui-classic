@@ -1,6 +1,4 @@
-class MiqActionDecorator < Draper::Decorator
-  delegate_all
-
+class MiqActionDecorator < MiqDecorator
   def fonticon
     case action_type
     when 'assign_scan_profile'
@@ -33,6 +31,8 @@ class MiqActionDecorator < Draper::Decorator
       'fa fa-tag'
     when 'vm_collect_running_processes'
       'fa fa-cogs'
+    when 'run_ansible_playbook'
+      'fa fa-file-text-o'
     when 'default'
       'product product-action'
     end

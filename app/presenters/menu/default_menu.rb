@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/LineLength
 module Menu
   class DefaultMenu
     class << self
@@ -5,6 +6,7 @@ module Menu
         Menu::Section.new(:compute, N_("Compute"), 'pficon pficon-cpu', [
           clouds_menu_section,
           infrastructure_menu_section,
+          physical_infrastructure_menu_section,
           container_menu_section
         ])
       end
@@ -71,6 +73,13 @@ module Menu
           Menu::Item.new('infra_networking', N_('Networking'),       'infra_networking',           {:feature => 'infra_networking', :any => true},  '/infra_networking/explorer'),
           Menu::Item.new('miq_request_host', N_('Requests'),         nil,                          {:feature => 'miq_request_show_list'},           '/miq_request?typ=host'),
           Menu::Item.new('infra_topology',   N_('Topology'), 'infra_topology',                     {:feature => 'infra_topology', :any => true},    '/infra_topology')
+        ])
+      end
+
+      def physical_infrastructure_menu_section
+        Menu::Section.new(:phy, N_("Physical Infrastructure"), 'fa fa-plus fa-2x', [
+          Menu::Item.new('ems_physical_infra',    N_('Providers'), 'ems_physical_infra',    {:feature => 'ems_physical_infra_show_list'},    '/ems_physical_infra'),
+          Menu::Item.new('physical_server', N_('Servers'),   'physical_server', {:feature => 'physical_server_show_list'}, '/physical_server'),
         ])
       end
 
@@ -225,6 +234,7 @@ module Menu
 
       def ansible_menu_section
         Menu::Section.new(:ansible, N_("Ansible"), 'fa fa-recycle', [
+          Menu::Item.new('ansible_credentials', N_('Credentials'), 'embedded_automation_manager_credentials', {:feature => 'embedded_automation_manager_credentials'}, '/ansible_credential'),
           Menu::Item.new('ansible_playbooks', N_('Playbooks'), 'embedded_configuration_script_payload', {:feature => 'embedded_configuration_script_payload'}, '/ansible_playbook'),
           Menu::Item.new('ansible_repositories', N_('Repositories'), 'embedded_configuration_script_source', {:feature => 'embedded_configuration_script_source'}, '/ansible_repository'),
         ])
@@ -255,6 +265,20 @@ module Menu
         ])
       end
 
+      def alerts_menu_section
+        Menu::Section.new(:monitor_alerts, N_("Alerts"), 'fa fa-bullhorn-o fa-2x', [
+                            Menu::Item.new('monitor_alerts_overview', N_('Overview'), 'monitor_alerts_overview', {:feature => 'monitor_alerts_overview', :any => true}, '/alerts_overview'),
+                            Menu::Item.new('monitor_alerts_list', N_('All Alerts'), 'monitor_alerts_list', {:feature => 'monitor_alerts_list', :any => true}, '/alerts_list'),
+                            Menu::Item.new('monitor_alerts_most_recent', N_('Most Recent Alerts'), 'monitor_alerts_most_recent', {:feature => 'monitor_alerts_most_recent', :any => true}, '/alerts_most_recent')
+                          ])
+      end
+
+      def monitor_menu_section
+        if ::Settings.prototype.monitoring
+          Menu::Section.new(:monitor, N_("Monitor"), 'fa fa-heartbeat fa-2x', [alerts_menu_section])
+        end
+      end
+
       def settings_menu_section
         Menu::Section.new(:set, N_("Settings"), 'pficon pficon-settings', [
           Menu::Item.new('configuration', N_('My Settings'),   'my_settings',  {:feature => 'my_settings', :any => true},  '/configuration/index'),
@@ -266,7 +290,8 @@ module Menu
       def default_menu
         [cloud_inteligence_menu_section, services_menu_section, compute_menu_section, configuration_menu_section,
          network_menu_section, middleware_menu_section, datawarehouse_menu_section, storage_menu_section,
-         control_menu_section, automation_menu_section, optimize_menu_section, settings_menu_section].compact
+         control_menu_section, automation_menu_section, optimize_menu_section, monitor_menu_section,
+         settings_menu_section].compact
       end
     end
   end

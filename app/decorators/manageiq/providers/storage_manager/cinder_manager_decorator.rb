@@ -1,7 +1,7 @@
-class ManageIQ::Providers::StorageManager::CinderManagerDecorator < Draper::Decorator
-  delegate_all
-
-  def listicon_image
-    "svg/vendor-openstack.svg"
+module ManageIQ::Providers
+  class StorageManager::CinderManagerDecorator < MiqDecorator
+    def listicon_image
+      "svg/vendor-cinder.svg"
+    end
   end
 end

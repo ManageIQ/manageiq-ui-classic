@@ -7,7 +7,7 @@
       .form-horizontal
         - if @edit
           -# Don't show description unless in edit mode
-          - url = url_for(:action => 'action_field_changed', :id => "#{@action.id || 'new'}")
+          - url = url_for_only_path(:action => 'action_field_changed', :id => (@action.id || 'new'))
           .form-group
             %label.col-md-2.control-label
               = _('Description')
@@ -217,7 +217,7 @@
                   - id = "al-#{to_cid(alert.id)}"
                   %tr{:title => _('View This Alert'),
                     :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=alert")}
-                    %td.narrow
+                    %td.table-view-pf-select
                       %i.pficon.pficon-warning-triangle-o
                       = alert.description
           %hr
@@ -258,7 +258,7 @@
                   - id = "xx-#{p.mode.downcase}_xx-#{p.mode.downcase}-#{p.towhat.downcase}_p-#{to_cid(p.id)}"
                   %tr{:title => _("Click to view Policy"),
                     :onclick => remote_function(:url => "/miq_policy/x_show/#{id}?accord=policy")}
-                    %td.narrow
+                    %td.table-view-pf-select
                       %i{:class => p.decorate.fonticon}
                     %td
                       = p.description

@@ -136,31 +136,48 @@ class CatalogController < ApplicationController
     build_ae_tree(:catalog, :automate_tree) if params[:display] || params[:template_id] || params[:manager_id]
     if params[:st_prov_type] # build request screen for selected item type
       @_params[:org_controller] = "service_template"
-      prov_set_form_vars if need_prov_dialogs?(params[:st_prov_type])
-      @record = class_service_template(params[:st_prov_type]).new
-      set_form_vars
-      @edit[:new][:st_prov_type] = params[:st_prov_type] if params[:st_prov_type]
-      @edit[:new][:service_type] = "atomic"
-      default_entry_point(@edit[:new][:st_prov_type],
-                          @edit[:new][:service_type])
-      @edit[:rec_id] = @record.try(:id)
-      @tabactive = @edit[:new][:current_tab_key]
+      if ansible_playbook?
+        @record = ServiceTemplate.new
+        # waiting for back-end PR to be merged to implement this
+        # if false
+        #   add_flash(_("Before adding Ansible Service, at least 1 repository, 1 playbook, 1 credential must exist in VMDB"), :error)
+        #   javascript_flash
+        #   return
+        # end
+      else
+        prov_set_form_vars if need_prov_dialogs?(params[:st_prov_type])
+        @record = class_service_template(params[:st_prov_type]).new
+        set_form_vars
+        @edit[:new][:st_prov_type] = params[:st_prov_type] if params[:st_prov_type]
+        @edit[:new][:service_type] = "atomic"
+        default_entry_point(@edit[:new][:st_prov_type],
+                            @edit[:new][:service_type])
+        @edit[:rec_id] = @record.try(:id)
+        @tabactive = @edit[:new][:current_tab_key]
+      end
     end
     render :update do |page|
       page << javascript_prologue
-      # for generic/orchestration type tabs do not show up on screen as there is only a single tab when form is initialized
-      # when display in catalog is checked, replace div so tabs can be redrawn
-      page.replace("form_div", :partial => "st_form") if params[:st_prov_type] ||
-        (params[:display] && @edit[:new][:st_prov_type].starts_with?("generic"))
-      page.replace_html("basic_info_div", :partial => "form_basic_info") if params[:display] || params[:template_id] || params[:manager_id]
-      if params[:display]
-        page << "miq_tabs_show_hide('#details_tab', '#{(params[:display] == "1")}')"
+      if @edit[:new][:st_prov_type] == "generic_ansible_playbook"
+        page.replace("form_div", :partial => "st_angular_form")
+        page << javascript_hide("form_buttons_div")
+      else
+        # for generic/orchestration type tabs do not show up on screen
+        # as there is only a single tab when form is initialized
+        # when display in catalog is checked, replace div so tabs can be redrawn
+        page.replace("form_div", :partial => "st_form") if params[:st_prov_type] ||
+          (params[:display] && @edit[:new][:st_prov_type].starts_with?("generic"))
+        page.replace_html("basic_info_div", :partial => "form_basic_info") if params[:display] ||
+          params[:template_id] || params[:manager_id]
+        if params[:display]
+          page << "miq_tabs_show_hide('#details_tab', '#{(params[:display] == "1")}')"
+        end
+        if changed != session[:changed]
+          page << javascript_for_miq_button_visibility(changed)
+          session[:changed] = changed
+        end
+        page << set_spinner_off
       end
-      if changed != session[:changed]
-        page << javascript_for_miq_button_visibility(changed)
-        session[:changed] = changed
-      end
-      page << set_spinner_off
     end
   end
 
@@ -191,7 +208,7 @@ class CatalogController < ApplicationController
 
     build_accordions_and_trees
 
-    if params[:id]  # If a tree node id came in, show in one of the trees
+    if params[:id] && !params[:button] # If a tree node id came in, show in one of the trees
       @nodetype, id = parse_nodetype_and_id(params[:id])
       self.x_active_tree   = 'sandt_tree'
       self.x_active_accord = 'sandt'
@@ -210,8 +227,10 @@ class CatalogController < ApplicationController
       upload_sysprep_file
       set_form_locals_for_sysprep
     end
+    template_locals = {:locals => {:controller => "catalog"}}
+    template_locals[:locals].merge!(fetch_playbook_details) if TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplate" && !@view && @record.prov_type == "generic_ansible_playbook"
 
-    render :layout => "application", :action => "explorer"
+    render :layout => "application", :action => "explorer", :locals => template_locals
   end
 
   def set_form_locals_for_sysprep
@@ -802,6 +821,12 @@ class CatalogController < ApplicationController
   end
 
   private
+
+  def ansible_playbook?
+    prov_type = params[:st_prov_type] ? params[:st_prov_type] : @record.prov_type
+    prov_type == "generic_ansible_playbook"
+  end
+  helper_method :ansible_playbook?
 
   def features
     [{:role     => "svc_catalog_accord",
@@ -1695,7 +1720,12 @@ class CatalogController < ApplicationController
                                    {:typ   => ui_lookup(:models => "Service"),
                                     :model => ui_lookup(:model => "ServiceTemplateCatalog")}
               else
-                condition = ["display=? and service_template_catalog_id=? and service_template_catalog_id IS NOT NULL", true, from_cid(id)]
+                if x_active_tree == :sandt_tree
+                  # catalog items accordion also shows the non-"Display in Catalog" items
+                  condition = ["service_template_catalog_id=? and service_template_catalog_id IS NOT NULL", from_cid(id)]
+                else
+                  condition = ["display=? and service_template_catalog_id=? and service_template_catalog_id IS NOT NULL", true, from_cid(id)]
+                end
                 service_template_list(condition, :model => model, :no_order_button => true)
                 stc = ServiceTemplateCatalog.find_by_id(from_cid(id))
                 @right_cell_text = _("%{typ} in %{model} \"%{name}\"") % {:name => stc.name, :typ => ui_lookup(:models => "Service"), :model => ui_lookup(:model => "ServiceTemplateCatalog")}
@@ -1706,27 +1736,29 @@ class CatalogController < ApplicationController
                 @miq_request = MiqRequest.find_by_id(@record.service_resources[0].resource_id)
                 prov_set_show_vars
               end
-              @sb[:dialog_label]       = _("No Dialog")
-              @sb[:fqname]             = nil
-              @sb[:reconfigure_fqname] = nil
-              @sb[:retire_fqname]      = nil
-              @record.resource_actions.each do |ra|
-                d = Dialog.where(:id => ra.dialog_id).first
-                @sb[:dialog_label] = d.label if d
-                case ra.action.downcase
-                when 'provision'
-                  @sb[:fqname] = ra.fqname
-                when 'reconfigure'
-                  @sb[:reconfigure_fqname] = ra.fqname
-                when 'retirement'
-                  @sb[:retire_fqname] = ra.fqname
+              unless @record.prov_type == "generic_ansible_playbook"
+                @sb[:dialog_label]       = _("No Dialog")
+                @sb[:fqname]             = nil
+                @sb[:reconfigure_fqname] = nil
+                @sb[:retire_fqname]      = nil
+                @record.resource_actions.each do |ra|
+                  d = Dialog.where(:id => ra.dialog_id).first
+                  @sb[:dialog_label] = d.label if d
+                  case ra.action.downcase
+                  when 'provision'
+                    @sb[:fqname] = ra.fqname
+                  when 'reconfigure'
+                    @sb[:reconfigure_fqname] = ra.fqname
+                  when 'retirement'
+                    @sb[:retire_fqname] = ra.fqname
+                  end
                 end
-              end
-              # saving values of ServiceTemplate catalog id and resource that are needed in view to build the link
-              @sb[:stc_nodes] = {}
-              @record.service_resources.each do |r|
-                st = ServiceTemplate.find_by_id(r.resource_id)
-                @sb[:stc_nodes][r.resource_id] = st.service_template_catalog_id ? st.service_template_catalog_id : "Unassigned" unless st.nil?
+                # saving values of ServiceTemplate catalog id and resource that are needed in view to build the link
+                @sb[:stc_nodes] = {}
+                @record.service_resources.each do |r|
+                  st = ServiceTemplate.find_by(:id => r.resource_id)
+                  @sb[:stc_nodes][r.resource_id] = st.service_template_catalog_id ? st.service_template_catalog_id : "Unassigned" unless st.nil?
+                end
               end
               if params[:action] == "x_show"
                 prefix = @record.service_template_catalog_id ? "stc-#{to_cid(@record.service_template_catalog_id)}" : "-Unassigned"
@@ -1740,6 +1772,34 @@ class CatalogController < ApplicationController
       end
     end
     x_history_add_item(:id => treenodeid, :text => @right_cell_text)
+  end
+
+  def fetch_playbook_details
+    playbook_details = {}
+    provision = @record.config_info[:provision]
+    playbook_details[:provisioning] = {}
+    playbook_details[:provisioning][:repository] = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScriptSource.find(provision[:repository_id]).name
+    playbook_details[:provisioning][:playbook] = ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook.find(provision[:playbook_id]).name
+    playbook_details[:provisioning][:machine_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::MachineCredential.find(provision[:credential_id]).name
+    playbook_details[:provisioning][:network_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::NetworkCredential.find(provision[:network_credential_id]).name if provision[:network_credential_id]
+    playbook_details[:provisioning][:cloud_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::CloudCredential.find(provision[:cloud_credential_id]).name if provision[:cloud_credential_id]
+    dialog = provision[:dialog_id] ? Dialog.find(provision[:dialog_id]) : Dialog.find_by(:name => provision[:dialog_name])
+    playbook_details[:provisioning][:dialog] = dialog.name
+    playbook_details[:provisioning][:dialog_id] = dialog.id
+
+    if @record.config_info[:retirement]
+      retirement = @record.config_info[:retirement]
+      playbook_details[:retirement] = {}
+      playbook_details[:retirement][:repository] = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScriptSource.find(retirement[:repository_id]).name
+      playbook_details[:retirement][:playbook] = ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook.find(retirement[:playbook_id]).name
+      playbook_details[:retirement][:machine_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::MachineCredential.find(retirement[:credential_id]).name
+      playbook_details[:retirement][:network_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::NetworkCredential.find(retirement[:network_credential_id]).name if retirement[:network_credential_id]
+      playbook_details[:retirement][:cloud_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::CloudCredential.find(retirement[:cloud_credential_id]).name if retirement[:cloud_credential_id]
+      dialog = provision[:dialog_id] ? Dialog.find(retirement[:dialog_id]) : Dialog.find_by(:name => retirement[:dialog_name])
+      playbook_details[:retirement][:dialog] = dialog.name
+      playbook_details[:retirement][:dialog_id] = dialog.id
+    end
+    playbook_details
   end
 
   def open_parent_nodes(record)
@@ -1859,7 +1919,7 @@ class CatalogController < ApplicationController
         action_url = x_active_tree == :ot_tree ? "ot_tags_edit" : "st_tags_edit"
         r[:partial => "layouts/x_tagging", :locals => {:action_url => action_url}]
       elsif action && ["at_st_new", "st_new"].include?(action)
-        r[:partial => "st_form"]
+        r[:partial => ansible_playbook? ? "st_angular_form" : "st_form"]
       elsif action && ["st_catalog_new", "st_catalog_edit"].include?(action)
         r[:partial => "stcat_form"]
       elsif action == "dialog_provision"
@@ -1872,7 +1932,9 @@ class CatalogController < ApplicationController
         elsif @sb[:buttons_node]
           r[:partial => "shared/buttons/ab_list"]
         else
-          r[:partial => "catalog/#{x_active_tree}_show", :locals => {:controller => "catalog"}]
+          template_locals = {:controller => "catalog"}
+          template_locals.merge!(fetch_playbook_details) if TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplate" && @record.prov_type == "generic_ansible_playbook"
+          r[:partial => "catalog/#{x_active_tree}_show", :locals => template_locals]
         end
       elsif @sb[:buttons_node]
         r[:partial => "shared/buttons/ab_list"]
@@ -1904,7 +1966,8 @@ class CatalogController < ApplicationController
           'st_new', 'st_catalog_new', 'st_catalog_edit'].include?(action)
         presenter.hide(:toolbar).show(:paging_div)
         # incase it was hidden for summary screen, and incase there were no records on show_list
-        presenter.show(:form_buttons_div).hide(:pc_div_1)
+        presenter.hide(:pc_div_1)
+        action == 'at_st_new' && ansible_playbook? ? presenter.hide(:form_buttons_div) : presenter.show(:form_buttons_div)
         locals = {:record_id => @edit[:rec_id]}
         case action
         when 'group_edit'

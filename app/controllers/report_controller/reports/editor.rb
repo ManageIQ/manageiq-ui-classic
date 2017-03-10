@@ -154,13 +154,17 @@ module ReportController::Reports::Editor
     end
   end
 
+  def display_filter_details_for(target_class, cols)
+    cols ? cols.select { |_, column| target_class.parse(column).try(:plural?) } : []
+  end
+
   private
 
   def build_edit_screen
     build_tabs
 
     get_time_profiles # Get time profiles list (global and user specific)
-
+    cb_entities_by_provider if Chargeback.db_is_chargeback?(@edit[:new][:model])
     case @sb[:miq_tab].split("_")[1]
     when "1"  # Select columns
       @edit[:models] ||= reportable_models
@@ -211,10 +215,11 @@ module ReportController::Reports::Editor
       @edit[:display_filter][:exp_table] = exp_build_table(@edit[:display_filter][:expression])
 
       cols = @edit[:new][:field_order]
-      @edit[:display_filter][:exp_available_fields] = MiqReport.display_filter_details(cols, :field)
+      @edit[:display_filter][:exp_available_fields] = display_filter_details_for(MiqExpression::Field, cols)
 
       cols = @edit[:new][:fields]
-      @edit[:display_filter][:exp_available_tags] = MiqReport.display_filter_details(cols, :tag)
+      @edit[:display_filter][:exp_available_tags] = display_filter_details_for(MiqExpression::Tag, cols)
+
       @edit[:display_filter][:exp_model] = "_display_filter_" # Set model for display filter
 
       @expkey = :record_filter # Start with Record Filter showing
@@ -506,6 +511,7 @@ module ReportController::Reports::Editor
         @edit[:new][:cb_end_interval_offset] ||= 1
         @edit[:new][:cb_groupby] ||= "date"                     # Default to Date grouping
         @edit[:new][:tz] = session[:user_tz]
+        @edit[:new][:cb_include_metrics] = true if @edit[:new][:model] == 'ChargebackVm'
       end
       reset_report_col_fields
       build_edit_screen
@@ -597,6 +603,8 @@ module ReportController::Reports::Editor
         @edit[:new][:cb_tag_cat] = params[:cb_tag_cat]
         @edit[:cb_tags] = entries_hash(params[:cb_tag_cat])
       end
+    elsif params.key?(:cb_include_metrics)
+      @edit[:new][:cb_include_metrics] = params[:cb_include_metrics] == 'true'
     elsif params.key?(:cb_owner_id)
       @edit[:new][:cb_owner_id] = params[:cb_owner_id].blank? ? nil : params[:cb_owner_id]
     elsif params.key?(:cb_tenant_id)
@@ -988,6 +996,7 @@ module ReportController::Reports::Editor
         options[:entity_id] = @edit[:new][:cb_entity_id]
       end
 
+      options[:include_metrics] = @edit[:new][:cb_include_metrics]
       options[:groupby] = @edit[:new][:cb_groupby]
       options[:groupby_tag] = @edit[:new][:cb_groupby] == 'tag' ? @edit[:new][:cb_groupby_tag] : nil
 
@@ -1266,12 +1275,15 @@ module ReportController::Reports::Editor
         @edit[:new][:cb_provider_id] = options[:provider_id]
       end
 
+      # @edit[:new][:cb_include_metrics] = nil - it means YES (YES is default value for new and legacy reports)
+      @edit[:new][:cb_include_metrics] = options[:include_metrics].nil? || options[:include_metrics]
       @edit[:new][:cb_groupby_tag] = options[:groupby_tag] if options.key?(:groupby_tag)
       @edit[:new][:cb_model] = Chargeback.report_cb_model(@rpt.db)
       @edit[:new][:cb_interval] = options[:interval]
       @edit[:new][:cb_interval_size] = options[:interval_size]
       @edit[:new][:cb_end_interval_offset] = options[:end_interval_offset]
       @edit[:new][:cb_groupby] = options[:groupby]
+      cb_entities_by_provider
     end
 
     # Only show chargeback users choice if an admin
@@ -1282,20 +1294,6 @@ module ReportController::Reports::Editor
       @edit[:new][:cb_show_typ] = "owner"
       @edit[:new][:cb_owner_id] = session[:userid]
       @edit[:cb_owner_name] = current_user.name
-    end
-
-    @edit[:cb_providers] = { :container_project => {}, :container_image => {} }
-    @edit[:cb_entities_by_provider_id] = { :container_project => {}, :container_image => {} }
-    ManageIQ::Providers::ContainerManager.includes(:container_projects, :container_images).all.each do |provider|
-      @edit[:cb_providers][:container_project][provider.name] = provider.id
-      @edit[:cb_providers][:container_image][provider.name] = provider.id
-      @edit[:cb_entities_by_provider_id][provider.id] = {:container_project => {}, :container_image => {}}
-      provider.container_projects.all.each do |project|
-        @edit[:cb_entities_by_provider_id][provider.id][:container_project][project.id] = project.name
-      end
-      provider.container_images.all.each do |image|
-        @edit[:cb_entities_by_provider_id][provider.id][:container_image][image.id] = image.name
-      end
     end
 
     # Build trend limit cols array
@@ -1393,6 +1391,7 @@ module ReportController::Reports::Editor
     end
 
     @edit[:current] = ["copy", "new"].include?(params[:action]) ? {} : copy_hash(@edit[:new])
+    @edit[:new][:name] = "Copy of #{@rpt.name}" if params[:pressed] == "miq_report_copy"
 
     # For trend reports, check for percent field chosen
     if @rpt.db && @rpt.db == TREND_MODEL &&
@@ -1401,6 +1400,22 @@ module ReportController::Reports::Editor
          @edit[:new][:perf_trend_db] + "-" + @edit[:new][:perf_trend_col]
        end.first.include?("(%)")
       @edit[:percent_col] = true
+    end
+  end
+
+  def cb_entities_by_provider
+    @edit[:cb_providers] = { :container_project => {}, :container_image => {} }
+    @cb_entities_by_provider_id = { :container_project => {}, :container_image => {} }
+    ManageIQ::Providers::ContainerManager.includes(:container_projects, :container_images).all.each do |provider|
+      @edit[:cb_providers][:container_project][provider.name] = provider.id
+      @edit[:cb_providers][:container_image][provider.name] = provider.id
+      @cb_entities_by_provider_id[provider.id] = {:container_project => {}, :container_image => {}}
+      provider.container_projects.all.each do |project|
+        @cb_entities_by_provider_id[provider.id][:container_project][project.id] = project.name
+      end
+      provider.container_images.all.each do |image|
+        @cb_entities_by_provider_id[provider.id][:container_image][image.id] = image.name
+      end
     end
   end
 

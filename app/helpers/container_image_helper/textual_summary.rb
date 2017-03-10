@@ -114,7 +114,7 @@ module ContainerImageHelper
   end
 
   def textual_group_env
-    TextualGroup.new(
+    TextualMultilabel.new(
       _("Environment variables"),
       :additional_table_class => "table-fixed",
       :labels                 => [_("Name"), _("Type"), _("Value")],

@@ -4,6 +4,7 @@ TextualMultilabel = Struct.new(:title, :options) do
   end
 
   def locals
+    options[:additional_table_class] ||= ''
     options.merge(:title => title)
   end
 end

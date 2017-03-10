@@ -9,10 +9,21 @@ module ApplicationHelper
   include ToolbarHelper
   include TextualSummaryHelper
   include NumberHelper
+  include Title
+
+  # Need to generate paths w/o hostname by default to make proxying work.
+  #
+  def url_for_only_path(args)
+    url_for(:only_path => true, **args)
+  end
 
   def settings(*path)
     @settings ||= {}
     @settings.fetch_path(*path)
+  end
+
+  def settings_default(default, *path)
+    settings(*path) || default
   end
 
   def documentation_link(url = nil, documentation_subject = "")
@@ -21,6 +32,19 @@ module ApplicationHelper
               url, :rel => 'external',
               :class => 'documentation-link', :target => '_blank')
     end
+  end
+
+  def websocket_origin
+    proto = request.ssl? ? 'wss' : 'ws'
+    # Retrieve the host that needs to be explicitly allowed for websocket connections
+    host = if request.env['HTTP_X_FORWARDED_HOST']
+             # Use the first proxy (production)
+             request.env['HTTP_X_FORWARDED_HOST'].split(/,\s*/).first
+           else
+             # Use the HOST header (development)
+             request.env['HTTP_HOST']
+           end
+    "#{proto}://#{host}"
   end
 
   def valid_html_id(id)
@@ -119,13 +143,14 @@ module ApplicationHelper
     end
   end
 
-  def no_hover_class(item)
-    klass = if item[:link]
-              ""
-            elsif item.has_key?(:value)
-              "" if item[:value].kind_of?(Array) && item[:value].any? {|val| val[:link]}
-            end
-    klass.nil? ? 'no-hover' : ''
+  def hover_class(item)
+    if item.fetch_path(:link) ||
+       item.fetch_path(:value).kind_of?(Array) &&
+       item[:value].any? { |val| val[:link] }
+      'no-hover'
+    else
+      ''
+    end
   end
 
   # Check role based authorization for a UI task
@@ -137,6 +162,7 @@ module ApplicationHelper
 
     Rbac.role_allows?(options.merge(:user => User.current_user)) rescue false
   end
+
   module_function :role_allows?
   public :role_allows?
   alias_method :role_allows, :role_allows?
@@ -150,7 +176,10 @@ module ApplicationHelper
 
   def controller_to_model
     case self.class.model.to_s
-    when "ManageIQ::Providers::CloudManager::Template", "ManageIQ::Providers::CloudManager::Vm", "ManageIQ::Providers::InfraManager::Template", "ManageIQ::Providers::InfraManager::Vm"
+    when "ManageIQ::Providers::CloudManager::Template",
+         "ManageIQ::Providers::CloudManager::Vm",
+         "ManageIQ::Providers::InfraManager::Template",
+         "ManageIQ::Providers::InfraManager::Vm"
       VmOrTemplate
     else
       self.class.model
@@ -181,8 +210,12 @@ module ApplicationHelper
             controller_for_vm(model_for_vm(record))
           elsif record.class.respond_to?(:db_name)
             record.class.db_name
-          elsif record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook)
+          elsif record.kind_of?(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
             "ansible_playbook"
+          elsif record.kind_of?(ManageIQ::Providers::EmbeddedAutomationManager::Authentication)
+            "ansible_credential"
+          elsif record.kind_of?(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
+            "ansible_repository"
           else
             record.class.base_class.to_s
           end
@@ -195,18 +228,18 @@ module ApplicationHelper
       return polymorphic_path(item)
     end
     if @vm && ["Account", "User", "Group", "Patch", "GuestApplication"].include?(db)
-      return url_for(:controller => "vm_or_template",
+      return url_for_only_path(:controller => "vm_or_template",
                      :action     => @lastaction,
                      :id         => @vm,
                      :show       => @id
                     )
     elsif @host && ["Patch", "GuestApplication"].include?(db)
-      return url_for(:controller => "host", :action => @lastaction, :id => @host, :show => @id)
+      return url_for_only_path(:controller => "host", :action => @lastaction, :id => @host, :show => @id)
     elsif %w(ConfiguredSystem ConfigurationProfile EmsFolder).include?(db)
-      return url_for(:controller => "provider_foreman", :action => @lastaction, :id => @record, :show => @id)
+      return url_for_only_path(:controller => "provider_foreman", :action => @lastaction, :id => @record, :show => @id)
     else
       controller, action = db_to_controller(db, action)
-      return url_for(:controller => controller, :action => action, :id => @id)
+      return url_for_only_path(:controller => controller, :action => action, :id => @id)
     end
   end
 
@@ -220,6 +253,9 @@ module ApplicationHelper
       end
       if controller == "ems_infra" && action == "show"
         return ems_infras_path
+      end
+      if controller == "ems_physical_infra" && action == "show"
+        return ems_physical_infras_path
       end
       if controller == "ems_container" && action == "show"
         return ems_containers_path
@@ -244,31 +280,31 @@ module ApplicationHelper
               LoadBalancer
               CloudVolume
               ).include?(view.db)
-          return url_for(:controller => controller, :action => "show") + "/"
+          return url_for_only_path(:controller => controller, :action => "show") + "/"
         elsif ["Vm"].include?(view.db) && parent && request.parameters[:controller] != "vm"
           # this is to handle link to a vm in vm explorer from service explorer
-          return url_for(:controller => "vm_or_template", :action => "show") + "/"
+          return url_for_only_path(:controller => "vm_or_template", :action => "show") + "/"
         elsif %w(ConfigurationProfile EmsFolder).include?(view.db) &&
               request.parameters[:controller] == "provider_foreman"
-          return url_for(:action => action, :id => nil) + "/"
+          return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w(ManageIQ::Providers::AutomationManager::InventoryGroup EmsFolder).include?(view.db) &&
               request.parameters[:controller] == "automation_manager"
-          return url_for(:action => action, :id => nil) + "/"
+          return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w(ConfiguredSystem).include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
-          return url_for(:action => action, :id => nil) + "/"
+          return url_for_only_path(:action => action, :id => nil) + "/"
         else
-          return url_for(:action => action) + "/" # In explorer, don't jump to other controllers
+          return url_for_only_path(:action => action) + "/" # In explorer, don't jump to other controllers
         end
       else
         controller = "vm_cloud" if controller == "template_cloud"
         controller = "vm_infra" if controller == "template_infra"
-        return url_for(:controller => controller, :action => action, :id => nil) + "/"
+        return url_for_only_path(:controller => controller, :action => action, :id => nil) + "/"
       end
 
     else
       # need to add a check for @explorer while setting controller incase building a link for details screen to show items
       # i.e users list view screen inside explorer needs to point to vm_or_template controller
-      return url_for(:controller => parent.kind_of?(VmOrTemplate) && !@explorer ? parent.class.base_model.to_s.underscore : request.parameters["controller"],
+      return url_for_only_path(:controller => parent.kind_of?(VmOrTemplate) && !@explorer ? parent.class.base_model.to_s.underscore : request.parameters["controller"],
                      :action     => association,
                      :id         => parent.id) + "?#{@explorer ? "x_show" : "show"}="
     end
@@ -279,7 +315,7 @@ module ApplicationHelper
     when "OrchestrationStackOutput"    then "outputs"
     when "OrchestrationStackParameter" then "parameters"
     when "OrchestrationStackResource"  then "resources"
-    when 'AdvancedSetting', 'ArbitrationProfile', 'Filesystem', 'FirewallRule', 'GuestApplication', 'Patch',
+    when 'AdvancedSetting', 'Filesystem', 'FirewallRule', 'GuestApplication', 'Patch',
          'RegistryItem', 'ScanHistory', 'OpenscapRuleResult'
                                        then view.db.tableize
     when "SystemService"
@@ -304,6 +340,8 @@ module ApplicationHelper
       action = "show"
     when "ConditionSet"
       controller = "condition"
+    when "ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource"
+      controller = "ansible_repository"
     when "ScanItemSet"
       controller = "ops"
       action = "ap_show"
@@ -338,13 +376,14 @@ module ApplicationHelper
       action = "show"
     when "ServiceResource", "ServiceTemplate"
       controller = "catalog"
-    when "ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook"
+    when "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook"
       controller = "ansible_playbook"
+    when "ManageIQ::Providers::EmbeddedAutomationManager::Authentication"
+      controller = "ansible_credential"
     when "MiqWorker"
       controller = request.parameters[:controller]
       action = "diagnostics_worker_selected"
     when "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
-        "ConfigurationScriptSource",
         "ManageIQ::Providers::CloudManager::OrchestrationStack",
         "ManageIQ::Providers::AnsibleTower::AutomationManager::Job"
       controller = request.parameters[:controller]
@@ -388,7 +427,6 @@ module ApplicationHelper
       :msg_title             => @msg_title,
       :perf_options          => @perf_options,
       :policy                => @policy,
-      :pxe_image_types_count => @pxe_image_types_count,
       :record                => @record,
       :report                => @report,
       :report_result_id      => @report_result_id,
@@ -408,79 +446,6 @@ module ApplicationHelper
   def field_to_col(field)
     dbs, fld = field.split("-")
     (dbs.include?(".") ? "#{dbs.split(".").last}.#{fld}" : fld)
-  end
-
-  # Get the dynamic list of tags for the expression atom editor
-  def exp_available_tags(model, use_mytags = false)
-    # Generate tag list unless already generated during this transaction
-    @exp_available_tags ||= MiqExpression.model_details(model, :typ             => "tag",
-                                                               :include_model   => true,
-                                                               :include_my_tags => use_mytags,
-                                                               :userid          => session[:userid])
-  end
-
-  # Derive the browser title text based on the layout value
-  def title_from_layout(layout)
-    # TODO: leave I18n until we have productization capability in gettext
-    title = I18n.t('product.name')
-    if layout.blank?  # no layout, leave title alone
-    elsif ["configuration", "dashboard", "chargeback", "about"].include?(layout)
-      title += ": #{layout.titleize}"
-    elsif @layout == "ems_cluster"
-      title += ": #{title_for_clusters}"
-    elsif @layout == "host"
-      title += ": #{title_for_hosts}"
-    # Specific titles for certain layouts
-    elsif layout == "miq_server"
-      title += _(": Servers")
-    elsif layout == "usage"
-      title += _(": VM Usage")
-    elsif layout == "scan_profile"
-      title += _(": Analysis Profiles")
-    elsif layout == "miq_policy_rsop"
-      title += _(": Policy Simulation")
-    elsif layout == "all_ui_tasks"
-      title += _(": All UI Tasks")
-    elsif layout == "my_ui_tasks"
-      title += _(": My UI Tasks")
-    elsif layout == "rss"
-      title += _(": RSS")
-    elsif layout == "storage_manager"
-      title += _(": Storage - Storage Managers")
-    elsif layout == "ops"
-      title += _(": Configuration")
-    elsif layout == "provider_foreman"
-      title += _(": Configuration Management")
-    elsif layout == "pxe"
-      title += _(": PXE")
-    elsif layout == "explorer"
-      title += ": #{controller_model_name(params[:controller])} Explorer"
-    elsif layout == "vm_cloud"
-      title += _(": Instances")
-    elsif layout == "vm_infra"
-      title += _(": Virtual Machines")
-    elsif layout == "vm_or_template"
-      title += _(": Workloads")
-    # Specific titles for groups of layouts
-    elsif layout.starts_with?("miq_ae_")
-      title += _(": Automation")
-    elsif layout.starts_with?("miq_policy")
-      title += _(": Control")
-    elsif layout.starts_with?("miq_capacity")
-      title += _(": Optimize")
-    elsif layout.starts_with?("miq_request")
-      title += _(": Requests")
-    elsif layout == "login"
-      title += _(": Login")
-    elsif layout == "manageiq/providers/ansible_tower/automation_manager/playbook"
-      title += ": Playbooks (Ansible Tower)"
-    elsif layout == "configuration_script_source"
-      title += ": Repositories"
-    # Assume layout is a table name and look up the plural version
-    else
-      title += ": #{ui_lookup(:tables => layout)}"
-    end
-    title
   end
 
   def controller_model_name(controller)
@@ -630,8 +595,12 @@ module ApplicationHelper
            miq_policy
            miq_policy_export
            miq_policy_rsop
+           monitor_alerts_overview
+           monitor_alerts_list
+           monitor_alerts_most_recent
            network_topology
            ops
+           physical_infra_topology
            pxe
            report
            rss
@@ -697,7 +666,16 @@ module ApplicationHelper
   ]
   # Return a blank tb if a placeholder is needed for AJAX explorer screens, return nil if no custom toolbar to be shown
   def custom_toolbar_filename
-    if %w(ems_cloud ems_cluster ems_infra host miq_template storage ems_storage ems_network cloud_tenant).include?(@layout) # Classic CIs
+    if %w(cloud_tenant
+          ems_cloud
+          ems_cluster
+          ems_infra
+          ems_network
+          ems_storage
+          ems_physical_infra
+          host
+          miq_template
+          storage).include?(@layout) # Classic CIs
       return "custom_buttons_tb" if @record && @lastaction == "show" && @display == "main"
     end
 
@@ -819,6 +797,7 @@ module ApplicationHelper
        ems_infra
        ems_middleware
        ems_network
+       ems_physical_infra
        ems_storage
        flavor
        floating_ip
@@ -1199,6 +1178,9 @@ module ApplicationHelper
   GTL_VIEW_LAYOUTS = %w(action
                         auth_key_pair_cloud
                         availability_zone
+                        alerts_overview
+                        alerts_list
+                        alerts_most_recent
                         cloud_network
                         cloud_object_store_container
                         cloud_object_store_object
@@ -1230,6 +1212,7 @@ module ApplicationHelper
                         ems_infra_dashboard
                         ems_middleware
                         ems_network
+                        ems_physical_infra
                         ems_storage
                         infra_topology
                         event
@@ -1238,7 +1221,8 @@ module ApplicationHelper
                         host
                         host_aggregate
                         load_balancer
-                        manageiq/providers/ansible_tower/automation_manager/playbook
+                        manageiq/providers/embedded_ansible/automation_manager/playbook
+                        manageiq/providers/embedded_automation_manager/authentication
                         middleware_datasource
                         middleware_deployment
                         middleware_domain
@@ -1248,11 +1232,15 @@ module ApplicationHelper
                         middleware_topology
                         miq_schedule
                         miq_template
+                        monitor_alerts_overview
+                        monitor_alerts_list
+                        monitor_alerts_most_recent
                         network_port
                         network_router
                         network_topology
                         offline
                         orchestration_stack
+                        physical_infra_topology
                         persistent_volume
                         policy
                         policy_group
@@ -1281,7 +1269,7 @@ module ApplicationHelper
     else
       url[:action] = action
       url[:id] = an_id unless an_id.nil?
-      url_for(url)
+      url_for_only_path(url)
     end
   end
 
@@ -1327,6 +1315,7 @@ module ApplicationHelper
           ems_infra
           ems_middleware
           ems_network
+          ems_physical_infra
           ems_storage
           flavor
           floating_ip
@@ -1392,6 +1381,7 @@ module ApplicationHelper
              ems_infra
              ems_middleware
              ems_network
+             ems_physical_infra
              ems_storage
              flavor
              floating_ip
@@ -1450,6 +1440,7 @@ module ApplicationHelper
       ems_infra
       ems_middleware
       ems_network
+      ems_physical_infra
       ems_storage
       flavor
       floating_ip
@@ -1489,36 +1480,6 @@ module ApplicationHelper
       :ems_cloud
     else
       :ems_container
-    end
-  end
-
-  def title_for_hosts
-    title_for_host(true)
-  end
-
-  def title_for_host(plural = false)
-    case Host.node_types
-    when :non_openstack
-      plural ? _("Hosts") : _("Host")
-    when :openstack
-      plural ? _("Nodes") : _("Node")
-    else
-      plural ? _("Hosts / Nodes") : _("Host / Node")
-    end
-  end
-
-  def title_for_clusters
-    title_for_cluster(true)
-  end
-
-  def title_for_cluster(plural = false)
-    case EmsCluster.node_types
-    when :non_openstack
-      plural ? _("Clusters") : _("Cluster")
-    when :openstack
-      plural ? _("Deployment Roles") : _("Deployment Role")
-    else
-      plural ? _("Clusters / Deployment Roles") : _("Cluster / Deployment Role")
     end
   end
 
@@ -1640,7 +1601,7 @@ module ApplicationHelper
     when 'complete' then 'pficon pficon-ok'
     when 'queued'   then 'fa fa-pause'
     when 'running'  then 'pficon pficon-running'
-    when 'error'    then 'fa fa-warning'
+    when 'error'    then 'pficon pficon-warning-triangle-o'
     end
   end
 
@@ -1652,7 +1613,7 @@ module ApplicationHelper
     when "MiqReportResult"
       case row['status'].downcase
       when "error"
-        glyphicon = "fa fa-warning"
+        glyphicon = "pficon pficon-warning-triangle-o"
       when "finished"
         glyphicon = "pficon pficon-ok"
       when "running"
@@ -1737,7 +1698,7 @@ module ApplicationHelper
 
   def route_exists?(hash)
     begin
-      url_for(hash)
+      url_for_only_path(hash)
     rescue
       return false
     end

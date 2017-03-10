@@ -2,7 +2,7 @@
 - ae_sim_form       ||= false
 - ae_custom_button  ||= false
 - rec_id = @edit && @edit[:action_id].present? ? @edit[:action_id] : "new"
-- url    = url_for(:action => field_changed_url, :id => rec_id)
+- url    = url_for_only_path(:action => field_changed_url, :id => rec_id)
 .form-horizontal
   - if form_action == "ae_resolve"
     %hr

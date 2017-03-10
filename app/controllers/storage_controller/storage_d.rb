@@ -15,7 +15,7 @@ module StorageController::StorageD
     @ajax_paging_buttons = true
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
-      @settings[:perpage][@gtl_type.to_sym] = @items_per_page         # Set the per page setting for this gtl type
+      @settings.store_path(:perpage, @gtl_type.to_sym, @items_per_page) # Set the per page setting for this gtl type
     end
     @sortcol = session[:storage_sortcol].nil? ? 0 : session[:storage_sortcol].to_i
     @sortdir = session[:storage_sortdir].nil? ? "ASC" : session[:storage_sortdir]
@@ -32,7 +32,7 @@ module StorageController::StorageD
   def miq_search_node
     options = {:model => "Storage"}
     process_show_list(options)
-    @right_cell_text = _("All %{title} Datastores") % {:title => ui_lookup(:ui_title => "datastore")}
+    @right_cell_text = _("All %{models}") % {:models => ui_lookup(:models => "Datastore")}
   end
 
   private #######################

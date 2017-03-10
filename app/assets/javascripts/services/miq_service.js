@@ -124,7 +124,6 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', '$log
 
     return serializedObj;
   };
-  
   this.handleFailure = function(e) {
     miqSparkleOff();
     if (e.message) {

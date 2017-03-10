@@ -15,7 +15,10 @@ class InfraTopologyService < TopologyService
       :tags,
       :ems_clusters => [
         :tags,
-        :hosts,
+        :hosts => [
+          :tags,
+          :vms => :tags
+        ]
       ],
     ]
 
@@ -60,13 +63,15 @@ class InfraTopologyService < TopologyService
       entity.authentications.blank? ? 'Unknown' : entity.authentications.first.status.try(:capitalize)
     when Host
       entity.state ? entity.state.downcase.capitalize : 'Unknown'
+    when Vm
+      entity.power_state.capitalize
     else
       'Unknown'
     end
   end
 
   def build_kinds
-    kinds = [:InfraManager, :EmsCluster, :Host]
+    kinds = [:InfraManager, :EmsCluster, :Host, :Vm]
     build_legend_kinds(kinds)
   end
 end

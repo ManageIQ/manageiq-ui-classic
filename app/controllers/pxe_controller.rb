@@ -50,7 +50,6 @@ class PxeController < ApplicationController
 
     @right_cell_div ||= "pxe_server_list"
     @right_cell_text ||= _("All PXE Servers")
-    @pxe_image_types_count = PxeImageType.count
 
     render :layout => "application"
   end
