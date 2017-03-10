@@ -475,4 +475,6 @@ describe VmInfraController do
 
   include_examples '#download_summary_pdf', :vm_vmware
   include_examples '#download_summary_pdf', :template_vmware
+
+  it_behaves_like "explorer controller with custom buttons"
 end

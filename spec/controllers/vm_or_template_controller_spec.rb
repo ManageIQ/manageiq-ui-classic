@@ -127,4 +127,6 @@ describe VmOrTemplateController do
       end
     end
   end
+
+  it_behaves_like "explorer controller with custom buttons"
 end

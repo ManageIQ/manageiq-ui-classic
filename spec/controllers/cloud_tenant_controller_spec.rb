@@ -203,4 +203,6 @@ describe CloudTenantController do
   end
 
   include_examples '#download_summary_pdf', :cloud_tenant
+
+  it_behaves_like "controller with custom buttons"
 end

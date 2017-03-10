@@ -574,4 +574,6 @@ describe EmsCloudController do
   end
 
   include_examples '#download_summary_pdf', :ems_amazon
+
+  it_behaves_like "controller with custom buttons"
 end

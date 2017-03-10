@@ -276,4 +276,6 @@ describe HostController do
       expect(response.body).to include("name='default_password' ng-disabled='!showVerify(&#39;default_userid&#39;)' ng-model='hostModel.default_password' ng-required='false'")
     end
   end
+
+  it_behaves_like "controller with custom buttons"
 end

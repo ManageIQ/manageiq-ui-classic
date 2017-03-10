@@ -186,4 +186,6 @@ describe VmCloudController do
 
   include_examples '#download_summary_pdf', :vm_cloud
   include_examples '#download_summary_pdf', :template_azure
+
+  it_behaves_like "explorer controller with custom buttons"
 end
