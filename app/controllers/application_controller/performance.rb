@@ -189,44 +189,8 @@ module ApplicationController::Performance
       return if display_by_tag(data_row, report, ts, bc_model, model, legend_idx)
     elsif cmd == "Display"
       return if display_selected(ts, typ, data_row, model, bc_model)
-    elsif cmd == "Timeline" && model == "Current" # Display timeline for the current CI
-      @record = identify_tl_or_perf_record
-      @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
-      @perf_record = VmOrTemplate.find_by_id(@perf_options[:compare_vm]) unless @perf_options[:compare_vm].nil?
-      new_opts = tl_session_data(request.parameters["controller"]) || ApplicationController::Timelines::Options.new
-      new_opts[:model] = @perf_record.class.base_class.to_s
-      dt = typ == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
-      new_opts.date.typ = typ
-      new_opts.date.daily = @perf_options[:daily_date] if typ == "Daily"
-      new_opts.date.hourly = [ts.month, ts.day, ts.year].join("/") if typ == "Hourly"
-      new_opts[:tl_show] = "timeline"
-      set_tl_session_data(new_opts, request.parameters["controller"])
-      f = @perf_record.first_event
-      if f.nil?
-        msg = if new_opts[:model] == "EmsCluster"
-                _("No events available for this Cluster")
-              else
-                _("No events available for this %{model}") % {:model => new_opts[:model]}
-              end
-      elsif @record.kind_of?(MiqServer) # For server charts in OPS
-        change_tab("diagnostics_timelines")                # Switch to the Timelines tab
-        return
-      else
-        if @explorer
-          @_params[:id] = @perf_record.id
-          @_params[:refresh] = "n"
-          show_timeline
-        else
-          javascript_redirect :id         => @perf_record.id,
-                              :action     => "show",
-                              :display    => "timeline",
-                              :controller => model_to_controller(@perf_record),
-                              :refresh    => "n",
-                              :escape     => false
-        end
-        return
-      end
-
+    elsif cmd == "Timeline" && model == "Current"
+      return if timeline_current(typ, ts)
     elsif cmd == "Timeline" && model == "Selected"  # Display timeline for the selected CI
       return unless @record = perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
       controller = data_row["resource_type"].underscore
@@ -462,6 +426,47 @@ module ApplicationController::Performance
                           :sb_controller => request.parameters["controller"],
                           :bc            => bc,
                           :escape        => false
+      return true
+    end
+    false
+  end
+
+  # display timeline for the current CI
+  def timeline_current(typ, ts)
+    @record = identify_tl_or_perf_record
+    @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
+    @perf_record = VmOrTemplate.find_by_id(@perf_options[:compare_vm]) unless @perf_options[:compare_vm].nil?
+    new_opts = tl_session_data(request.parameters["controller"]) || ApplicationController::Timelines::Options.new
+    new_opts[:model] = @perf_record.class.base_class.to_s
+    dt = typ == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
+    new_opts.date.typ = typ
+    new_opts.date.daily = @perf_options[:daily_date] if typ == "Daily"
+    new_opts.date.hourly = [ts.month, ts.day, ts.year].join("/") if typ == "Hourly"
+    new_opts[:tl_show] = "timeline"
+    set_tl_session_data(new_opts, request.parameters["controller"])
+    f = @perf_record.first_event
+    if f.nil?
+      msg = if new_opts[:model] == "EmsCluster"
+              _("No events available for this Cluster")
+            else
+              _("No events available for this %{model}") % {:model => new_opts[:model]}
+            end
+    elsif @record.kind_of?(MiqServer) # For server charts in OPS
+      change_tab("diagnostics_timelines")                # Switch to the Timelines tab
+      return true
+    else
+      if @explorer
+        @_params[:id] = @perf_record.id
+        @_params[:refresh] = "n"
+        show_timeline
+      else
+        javascript_redirect :id         => @perf_record.id,
+                            :action     => "show",
+                            :display    => "timeline",
+                            :controller => model_to_controller(@perf_record),
+                            :refresh    => "n",
+                            :escape     => false
+      end
       return true
     end
     false
