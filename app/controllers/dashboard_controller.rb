@@ -1,7 +1,7 @@
 class DashboardController < ApplicationController
   include DashboardHelper
   include StartUrl
-  include GenericSessionMixin
+  include Mixins::GenericSessionMixin
 
   menu_section :vi
 
@@ -756,11 +756,13 @@ class DashboardController < ApplicationController
   end
 
   def get_session_data
+    super
     @layout       = "login"
     @current_page = session[:vm_current_page] # current page number
   end
 
   def set_session_data
+    super
     session[:layout]          = @layout
     session[:vm_current_page] = @current_page
   end
