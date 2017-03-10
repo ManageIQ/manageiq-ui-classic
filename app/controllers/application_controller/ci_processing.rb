@@ -44,6 +44,13 @@ module ApplicationController::CiProcessing
     if @explorer
       @sb[:explorer] = true
       ownership(ownership_items)
+      if @ownershipitems.empty?
+        add_flash(_('None of the selected items allow ownership changes'), :error)
+
+        @refresh_div = "flash_msg_div"
+        @refresh_partial = "layouts/flash_msg"
+        return
+      end
     else
       if role_allows?(:feature => "vm_ownership")
         drop_breadcrumb(:name => _("Set Ownership"), :url => "/vm_common/ownership")
@@ -53,6 +60,7 @@ module ApplicationController::CiProcessing
       end
     end
   end
+
   alias_method :image_ownership, :set_ownership
   alias_method :instance_ownership, :set_ownership
   alias_method :vm_ownership, :set_ownership
@@ -76,6 +84,7 @@ module ApplicationController::CiProcessing
     drop_breadcrumb(:name => _("Set Ownership"), :url => "/vm_common/ownership")
     ownership_items = params[:rec_ids] if params[:rec_ids]
     build_ownership_info(ownership_items)
+    return if @ownershipitems.empty?
     build_targets_hash(@ownershipitems)
     if @sb[:explorer]
       @refresh_partial = "shared/views/ownership"
@@ -101,6 +110,7 @@ module ApplicationController::CiProcessing
     @user = @group = DONT_CHANGE_OWNER if ownership_items.length > 1
     ownership_scope = klass.where(:id => ownership_items)
     ownership_scope = ownership_scope.with_ownership if klass.respond_to?(:with_ownership)
+    @origin_ownership_items = ownership_items
     @ownershipitems = ownership_scope.order(:name)
     @view = get_db_view(klass == VmOrTemplate ? Vm : klass) # Instantiate the MIQ Report view object
     @view.table = MiqFilter.records2table(@ownershipitems, @view.cols + ['id'])
