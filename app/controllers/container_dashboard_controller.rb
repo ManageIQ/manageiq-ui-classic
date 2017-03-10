@@ -27,20 +27,18 @@ class ContainerDashboardController < ApplicationController
     render :json => collect_live_data(params[:id], params[:query])
   end
 
+  def title
+    "container_dashboard"
+  end
+
   private
 
   def self.session_key_prefix
     "container_dashboard"
   end
 
-  def self.table_name
-    _('title')
-  end
-
   def get_session_data
     super
-    binding .pry
-    @layout = "container_dashboard"
   end
 
   def collect_data(provider_id)
@@ -52,7 +50,6 @@ class ContainerDashboardController < ApplicationController
   end
 
   def set_session_data
-    binding.pry
     session[:layout] = @layout
   end
 
