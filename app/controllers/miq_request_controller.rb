@@ -588,6 +588,7 @@ class MiqRequestController < ApplicationController
   end
 
   def get_session_data
+    super
     @title        = _("Requests")
     @request_tab  = session[:request_tab] if session[:request_tab]
     @showtype     = session[:request_lastaction]
@@ -596,6 +597,7 @@ class MiqRequestController < ApplicationController
   end
 
   def set_session_data
+    super
     session[:edit]                 = @edit unless @edit.nil?
     session[:request_tab]          = @request_tab unless @request_tab.nil?
     session[:request_current_page] = @current_page
