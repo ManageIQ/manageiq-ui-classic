@@ -201,22 +201,8 @@ module ApplicationController::Performance
       return if chart_selected(data_row, typ, ts)
     elsif cmd == "Chart" && typ.starts_with?("top") && @perf_options[:cat]
       return if chart_top_by_tag(data_row, report, legend_idx, model, ts, bc_model)
-    elsif cmd == "Chart" && typ.starts_with?("top")                         # Create top chart for selected timestamp/model
-      @record = identify_tl_or_perf_record
-      @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
-      top_ids = data_row["assoc_ids"][model.downcase.to_sym][:on]
-      dt = typ == "tophour" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
-      if top_ids.blank?
-        msg = _("No %{model} were running %{time}") % {:model => model, :time => dt}
-      else
-        javascript_redirect :id          => @perf_record.id,
-                            :action      => "perf_top_chart",
-                            :menu_choice => params[:menu_click],
-                            :bc          => "#{@perf_record.name} top #{bc_model} (#{dt})",
-                            :escape      => false
-        return
-      end
-
+    elsif cmd == "Chart" && typ.starts_with?("top")
+      return if chart_top(data_row, typ, ts, model, bc_model)
     else
       msg = _("Chart menu selection not yet implemented")
     end
@@ -488,6 +474,25 @@ module ApplicationController::Performance
                           :action      => "perf_top_chart",
                           :menu_choice => params[:menu_click],
                           :bc          => "#{@perf_record.name} top #{bc_model} (#{bc_tag} #{dt})",
+                          :escape      => false
+      return true
+    end
+    false
+  end
+
+  # create top chart for selected timestamp/model
+  def chart_top(data_row, typ, ts, model, bc_model)
+    @record = identify_tl_or_perf_record
+    @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
+    top_ids = data_row["assoc_ids"][model.downcase.to_sym][:on]
+    dt = typ == "tophour" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
+    if top_ids.blank?
+      msg = _("No %{model} were running %{time}") % {:model => model, :time => dt}
+    else
+      javascript_redirect :id          => @perf_record.id,
+                          :action      => "perf_top_chart",
+                          :menu_choice => params[:menu_click],
+                          :bc          => "#{@perf_record.name} top #{bc_model} (#{dt})",
                           :escape      => false
       return true
     end
