@@ -23,10 +23,6 @@ module QuadiconHelper
     @settings.fetch_path(:display, :quad_truncate) || 'm'
   end
 
-  def listicon_nil?
-    @listicon.nil?
-  end
-
   def quadicon_vm_attributes(item)
     vm_quad_link_attributes(item)
   end
@@ -551,55 +547,20 @@ module QuadiconHelper
     output.collect(&:html_safe).join('').html_safe
   end
 
-  def render_non_listicon_single_quadicon(item, options)
-    output = []
-
-    img_path = if item.decorate
-                 item.decorate.try(:listicon_image)
+  # Renders a single_quad uh, quadicon
+  #
+  def render_single_quad_quadicon(item, options)
+    img_path = if item.decorate.try(:listicon_image)
+                 item.decorate.listicon_image
+               elsif @listicon
+                 "100/#{@listicon}.png"
                else
                  "100/#{item.class.base_class.to_s.underscore}.png"
                end
 
+    output = []
     output << flobj_img_simple("layout/base-single.png")
     output << flobj_img_simple(img_path, "e72")
-
-    unless options[:typ] == :listnav
-      name = item.name
-
-      img_opts = {
-        :title => h(name),
-        :path  => "layout/clearpix.gif"
-      }
-
-      link_opts = {}
-
-      url = ""
-
-      if quadicon_show_links?
-        if quadicon_in_explorer_view?
-          img_opts.delete(:path)
-          url = quadicon_url_to_xshow_from_cid(item, options)
-          link_opts = {:sparkle => true, :remote => true}
-        else
-          url = url_for_record(item)
-        end
-      end
-
-      output << content_tag(:div, :class => "flobj") do
-        quadicon_link_to(url, **link_opts) do
-          quadicon_reflection_img(img_opts)
-        end
-      end
-    end
-
-    output
-  end
-
-  def render_listicon_single_quadicon(item, options)
-    output = []
-
-    output << flobj_img_simple("layout/base-single.png")
-    output << flobj_img_small("100/#{@listicon}.png", "e72")
 
     unless options[:typ] == :listnav
       title = case @listicon
@@ -611,30 +572,43 @@ module QuadiconHelper
                 item.try(:name)
               end
 
-      url = nil
+      url = if !quadicon_show_links?
+              nil
+            elsif @listicon
+              quadicon_url_with_parent_and_lastaction(item)
+            elsif @explorer
+              quadicon_url_to_xshow_from_cid(item, options)
+            else
+              url_for_record(item)
+            end
 
-      if quadicon_show_links?
-        url = quadicon_url_with_parent_and_lastaction(item)
-      end
+      reflection_path = if @listicon || (@explorer && quadicon_show_links?)
+                          nil
+                        else
+                          "layout/clearpix.gif"
+                        end
 
-      output << content_tag(:div, :class => 'flobj') do
-        link_to(url, :title => title) do
-          quadicon_reflection_img
+      img_opts = if @listicon.nil?
+                   {:title => h(title),
+                    :path  => reflection_path}
+                 else
+                   {}
+                 end
+
+      link_opts = if quadicon_show_links? && quadicon_in_explorer_view? && @listicon.nil?
+                    {:sparkle => true, :remote => true}
+                  elsif @listicon
+                    {:title => title}
+                  else
+                    {}
+                  end
+
+      output << content_tag(:div, :class => "flobj") do
+        quadicon_link_to(url, **link_opts) do
+          quadicon_reflection_img(img_opts)
         end
       end
     end
-
-    output
-  end
-
-  # Renders a single_quad uh, quadicon
-  #
-  def render_single_quad_quadicon(item, options)
-    output =  if listicon_nil?
-                render_non_listicon_single_quadicon(item, options)
-              else
-                render_listicon_single_quadicon(item, options)
-              end
 
     output.collect(&:html_safe).join('').html_safe
   end
