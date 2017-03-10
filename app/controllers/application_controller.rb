@@ -329,6 +329,22 @@ class ApplicationController < ActionController::Base
   end
   private :process_params_model_view
 
+  def set_variables_report_data(settings, current_view)
+    settings[:sort_dir] = @sortdir unless settings.nil?
+    settings[:sort_col] = @sortcol unless settings.nil?
+    @edit = session[:edit]
+    @policy_sim = @edit[:policy_sim] unless @edit.nil?
+    controller, _action = db_to_controller(current_view.db) unless current_view.nil?
+    if !@policy_sim.nil? && session[:policies] && !session[:policies].empty?
+      settings[:url] = '/' + controller + '/policies/'
+    end
+    if session[:sandboxes] && @sb && controller
+      session[:sandboxes][controller] = @sb
+    end
+    settings
+  end
+  private :set_variables_report_data
+
   # Method for fetching report data. These data can be displayed in Grid/Tile/List.
   # This method will first process params for options and then for current model.
   # From these options and model we get view (for fetching data) and settings (will hold info about paging).
@@ -346,17 +362,7 @@ class ApplicationController < ActionController::Base
       current_view = options[:view]
       settings = options[:pages]
     end
-    settings[:sort_dir] = @sortdir unless settings.nil?
-    settings[:sort_col] = @sortcol unless settings.nil?
-    @edit = session[:edit]
-    @policy_sim = @edit[:policy_sim] unless @edit.nil?
-    controller, _action = db_to_controller(current_view.db) unless current_view.nil?
-    if !@policy_sim.nil? && session[:policies] && !session[:policies].empty?
-      settings[:url] = '/' + controller + '/policies/'
-    end
-    if session[:sandboxes] && @sb && controller
-      session[:sandboxes][controller] = @sb
-    end
+    settings = set_variables_report_data(settings, current_view)
     render :json => {
       :settings => settings,
       :data     => view_to_hash(current_view),

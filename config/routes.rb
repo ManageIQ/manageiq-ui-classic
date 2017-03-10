@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   default_routes = %w(
     report_data
   )
-  
+
   # grouped routes
   adv_search_post = %w(
     adv_search_button

@@ -21,7 +21,7 @@
         this.onUpdateToolbar(event.redrawToolbar);
       } else if (event.update) {
         this.onUpdateItem(event);
-      } else if (event.setCount !== undefined) {
+      } else if (typeof event.setCount !== 'undefined') {
          this.onSetCount(event.setCount);
       }
 

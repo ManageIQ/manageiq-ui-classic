@@ -1639,36 +1639,28 @@ module ApplicationHelper
     end
   end
 
+  ICON_GLYPHICON = {
+    "MiqReportResult" => {"error"    => "pficon pficon-warning-triangle-o",
+                          "finished" => "pficon pficon-ok",
+                          "running"  => "pficon pficon-running",
+                          "queued"   => "fa fa-pause"},
+    "MiqWidget"       => {"chart"  => "fa fa-pie-chart",
+                          "menu"   => "fa fa-share-square-o",
+                          "report" => "fa fa-file-text-o",
+                          "rss"    => "fa fa-rss"},
+    "MiqSchedule"     => "fa fa-clock-o",
+    "MiqUserRole"     => "product product-role"
+  }.freeze
+
   def listicon_glyphicon(db, row)
-    case db
-    when "MiqSchedule"
-      "fa fa-clock-o"
-    when "MiqReportResult"
-      case row['status'].downcase
-      when "error"
-        "pficon pficon-warning-triangle-o"
-      when "finished"
-        "pficon pficon-ok"
-      when "running"
-        "pficon pficon-running"
-      when "queued"
-        "fa fa-pause"
-      else
-        "fa fa-arrow-right"
-      end
-    when "MiqUserRole"
-      "product product-role"
-    when "MiqWidget"
-      glyphicon = case row['content_type'].downcase
-                  when "chart"
-                    "fa fa-pie-chart"
-                  when "menu"
-                    "fa fa-share-square-o"
-                  when "report"
-                    "fa fa-file-text-o"
-                  when "rss"
-                    "fa fa-rss"
-                  end
+    glyphicon = ICON_GLYPHICON[db]
+
+    return glyphicon if glyphicon.kind_of? String
+
+    if %w(MiqReportResult).include? db
+      glyphicon[row['status'].downcase]
+    elsif %w(MiqWidget).include? db
+      glyphicon = glyphicon[row['content_type'].downcase]
       [glyphicon, listicon_glyphicon_tag_for_widget(row)]
     end
   end

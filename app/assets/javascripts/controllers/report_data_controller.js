@@ -53,6 +53,11 @@
       } else if (event.tollbarEvent && (event.tollbarEvent === 'itemClicked')) {
         this.setExtraClasses();
       }
+
+      if (event.controller === COTNROLLER_NAME && this.apiFunctions && this.apiFunctions[event.action]) {
+        var actionCallback = this.apiFunctions[event.action];
+        actionCallback.apply(this, event.data);
+      }
     }.bind(this),
     function(err) {
       console.error('Angular RxJs Error: ', err);
@@ -93,6 +98,9 @@
     this.$timeout = $timeout;
     this.$window = $window;
     initEndpoints(this.MiQEndpointsService);
+    if (ManageIQ.qe && ManageIQ.qe.gtl && ManageIQ.qe.gtl.actionsToFunction) {
+      this.apiFunctions = ManageIQ.qe.gtl.actionsToFunction.bind(this)();
+    }
     subscribeToSubject.bind(this)();
     this.perPage = defaultPaging();
   };
@@ -180,16 +188,18 @@
   * @returns {undefined}
   */
   ReportDataController.prototype.onItemSelect = function(item, isSelected) {
-    var selectedItem = _.find(this.gtlData.rows, {id: item.id});
-    if (selectedItem) {
-      selectedItem.checked = isSelected;
-      selectedItem.selected = isSelected;
-      this.$window.sendDataWithRx({rowSelect: selectedItem});
-      if (isSelected) {
-        ManageIQ.gridChecks.push(item.id);
-      } else {
-        var index = ManageIQ.gridChecks.indexOf(item.id);
-        index !== -1 && ManageIQ.gridChecks.splice(index, 1);
+    if (typeof item !== 'undefined') {
+      var selectedItem = _.find(this.gtlData.rows, {id: item.id});
+      if (selectedItem) {
+        selectedItem.checked = isSelected;
+        selectedItem.selected = isSelected;
+        this.$window.sendDataWithRx({rowSelect: selectedItem});
+        if (isSelected) {
+          ManageIQ.gridChecks.push(item.id);
+        } else {
+          var index = ManageIQ.gridChecks.indexOf(item.id);
+          index !== -1 && ManageIQ.gridChecks.splice(index, 1);
+        }
       }
     }
   };
@@ -252,6 +262,8 @@
         this.movePagination();
         this.$timeout(function() {
           this.$window.ManageIQ.gtl.loading = false;
+          this.$window.ManageIQ.gtl.isFirst = this.settings.current === 1;
+          this.$window.ManageIQ.gtl.isLast = this.settings.current === this.settings.totla;
         }.bind(this));
         return data;
       }.bind(this));
@@ -273,7 +285,7 @@
     this.settings.scrollElement = MAIN_CONTETN_ID;
     this.settings.dropDownClass = ['dropup'];
     this.settings.translateTotalOf = function(start, end, total) {
-      if (start !== undefined && end !== undefined && total !== undefined ) {
+      if (typeof start !== 'undefined' && typeof end !== 'undefined' && typeof total !== 'undefined') {
         return sprintf(__('%d - %d of %d'), start + 1, end + 1, total);
       }
       return start + ' - ' + end + ' of ' + total;
