@@ -3,9 +3,5 @@ module ManageIQ::Providers::Openshift
     def self.listicon_image
       "svg/vendor-openshift.svg"
     end
-
-    def listicon_image
-      self.class.listicon_image
-    end
   end
 end

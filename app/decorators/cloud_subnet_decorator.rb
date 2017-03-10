@@ -3,7 +3,7 @@ class CloudSubnetDecorator < MiqDecorator
     'pficon pficon-network'
   end
 
-  def listicon_image
+  def self.listicon_image
     '100/cloud_subnet.png'
   end
 end

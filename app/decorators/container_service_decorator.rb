@@ -3,7 +3,7 @@ class ContainerServiceDecorator < MiqDecorator
     'pficon pficon-service'
   end
 
-  def listicon_image
+  def self.listicon_image
     '100/container_service.png'
   end
 end

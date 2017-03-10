@@ -3,7 +3,7 @@ class CloudVolumeSnapshotDecorator < MiqDecorator
     'fa fa-camera'
   end
 
-  def listicon_image
+  def self.listicon_image
     '100/cloud_volume_snapshot.png'
   end
 end

@@ -1,6 +1,6 @@
 module ManageIQ::Providers
   class StorageManager::SwiftManagerDecorator < MiqDecorator
-    def listicon_image
+    def self.listicon_image
       "svg/vendor-swift.svg"
     end
   end

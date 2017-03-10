@@ -3,7 +3,7 @@ class FlavorDecorator < MiqDecorator
     'pficon pficon-flavor'
   end
 
-  def listicon_image
+  def self.listicon_image
     '100/flavor.png'
   end
 end

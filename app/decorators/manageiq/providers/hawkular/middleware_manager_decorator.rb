@@ -4,7 +4,7 @@ module ManageIQ::Providers::Hawkular
       nil
     end
 
-    def listicon_image
+    def self.listicon_image
       "svg/vendor-hawkular.svg"
     end
   end

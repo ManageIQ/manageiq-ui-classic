@@ -4,7 +4,7 @@ module ManageIQ::Providers
       "pficon pficon-repository"
     end
 
-    def listicon_image
+    def self.listicon_image
       nil
     end
   end

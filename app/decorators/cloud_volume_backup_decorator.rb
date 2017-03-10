@@ -3,7 +3,7 @@ class CloudVolumeBackupDecorator < MiqDecorator
     'pficon pficon-volume'
   end
 
-  def listicon_image
+  def self.listicon_image
     '100/cloud_volume.png'
   end
 end
