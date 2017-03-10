@@ -1,9 +1,53 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "cloudVolumeFormController"}
+%form#form_div{:name => "angularForm", 'ng-controller' => "cloudVolumeFormController", "ng-cloak" => ""}
   = render :partial => "layouts/flash_msg"
-  %h3
-    = _('Basic Information')
   .form-horizontal
-    .form-group
+    .form-group{"ng-class" => "{'has-error': angularForm.storage_manager_id.$invalid}"}
+      %label.col-md-2.control-label
+        = _('Storage Manager')
+      .col-md-8
+        = select_tag("storage_manager_id",
+                     options_for_select([["<#{_('Choose')}>", nil]] + @storage_manager_choices.sort, disabled: ["<#{_('Choose')}>", nil]),
+                     "ng-model"                    => "cloudVolumeModel.storage_manager_id",
+                     "ng-change"                   => "storageManagerChanged(cloudVolumeModel.storage_manager_id)",
+                     "required"                    => "",
+                     :checkchange                  => true,
+                     "selectpicker-for-select-tag" => "")
+        %span.help-block{"ng-show" => "angularForm.storage_manager_id.$error.required"}
+          = _("Required")
+
+    .form-group{"ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}",
+                "ng-if"    => "cloudVolumeModel.emstype == 'ManageIQ::Providers::StorageManager::CinderManager'"}
+      %label.col-md-2.control-label
+        = _('Cloud Tenant')
+      .col-md-8
+        %select{"name"                        => "cloud_tenant_id",
+                "ng-model"                    => "cloudVolumeModel.cloud_tenant_id",
+                "ng-options"                  => "tenant.id as tenant.name for tenant in cloudTenantChoices",
+                "required"                    => "",
+                :checkchange                  => true,
+                "selectpicker-for-select-tag" => ""}
+          %option{"value" => "", "disabled" => ""}
+            = "<#{_('Choose')}>"
+        %span.help-block{"ng-show" => "angularForm.cloud_tenant_id.$error.required"}
+          = _("Required")
+
+    .form-group{"ng-class" => "{'has-error': angularForm.aws_availability_zone_id.$invalid}",
+                "ng-if"    => "cloudVolumeModel.emstype == 'ManageIQ::Providers::Amazon::StorageManager::Ebs'"}
+      %label.col-md-2.control-label
+        = _('Availability Zone')
+      .col-md-8
+        %select{"name"                        => "aws_availability_zone_id",
+                "ng-model"                    => "cloudVolumeModel.aws_availability_zone_id",
+                "ng-options"                  => "az.ems_ref as az.name for az in availabilityZoneChoices",
+                "required"                    => "",
+                :checkchange                  => true,
+                "selectpicker-for-select-tag" => ""}
+          %option{"value" => "", "disabled" => ""}
+            = "<#{_('Choose')}>"
+        %span.help-block{"ng-show" => "angularForm.aws_availability_zone_id.$error.required"}
+          = _("Required")
+
+    .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
       %label.col-md-2.control-label
         = _('Volume Name')
       .col-md-8
@@ -11,9 +55,29 @@
                             :name          => "name",
                             'ng-model'     => "cloudVolumeModel.name",
                             'ng-maxlength' => 128,
-                            :miqrequired   => true,
+                            :required      => "",
                             :checkchange   => true}
-    .form-group
+        %span.help-block{"ng-show" => "angularForm.name.$error.required"}
+          = _("Required")
+
+    .form-group{"ng-class" => "{'has-error': angularForm.aws_volume_type.$invalid}",
+                "ng-if"    => "cloudVolumeModel.emstype == 'ManageIQ::Providers::Amazon::StorageManager::Ebs'"}
+      %label.col-md-2.control-label
+        = _('Cloud Volume Type')
+      .col-md-8
+        %select{"name"                        => "aws_volume_type",
+                "ng-model"                    => "cloudVolumeModel.aws_volume_type",
+                "ng-options"                  => "voltype.type as voltype.name for voltype in awsVolumeTypes",
+                "ng-change"                   => "awsVolumeTypeChanged(cloudVolumeModel.aws_volume_type)",
+                "required"                    => "",
+                :checkchange                  => true,
+                "selectpicker-for-select-tag" => ""}
+          %option{"value" => "", "disabled" => ""}
+            = "<#{_('Choose')}>"
+        %span.help-block{"ng-show" => "angularForm.aws_volume_type.$error.required"}
+          = _("Required")
+
+    .form-group{"ng-class" => "{'has-error': angularForm.size.$invalid}"}
       %label.col-md-2.control-label
         = _('Size (in gigabytes)')
       .col-md-8
@@ -21,22 +85,37 @@
                             :name          => "size",
                             'ng-model'     => "cloudVolumeModel.size",
                             'ng-maxlength' => 10,
-                            :miqrequired   => true,
+                            'ng-change'    => "sizeChanged(cloudVolumeModel.size)",
+                            :required      => "",
                             :checkchange   => true}
-  %h3
-    = _('Placement')
-  .form-horizontal
-    .form-group{"ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}"}
+        %span.help-block{"ng-show" => "angularForm.size.$error.required"}
+          = _("Required")
+
+    .form-group{"ng-class" => "{'has-error': angularForm.aws_iops.$invalid}",
+                "ng-if"    => "cloudVolumeModel.emstype == 'ManageIQ::Providers::Amazon::StorageManager::Ebs'"}
       %label.col-md-2.control-label
-        = _('Cloud Tenant')
+        = _('IOPS')
       .col-md-8
-        = select_tag("cloud_tenant_id",
-          options_for_select([["<#{_('Choose')}>", nil]] + @cloud_tenant_choices.sort),
-                      "ng-model"                    => "cloudVolumeModel.cloud_tenant_id",
-                      "required"                    => "",
-                      :miqrequired                  => true,
-                      :checkchange                  => true,
-                      "selectpicker-for-select-tag" => "")
+        %input.form-control{:type          => "text",
+                            :name          => "aws_iops",
+                            'ng-model'     => "cloudVolumeModel.aws_iops",
+                            'ng-maxlength' => 50,
+                            'ng-disabled'  => "cloudVolumeModel.aws_volume_type != 'io1'",
+                            "required"     => "",
+                            :checkchange   => true}
+        %span.help-block{"ng-show" => "cloudVolumeModel.aws_volume_type == 'io1' && angularForm.aws_iops.$error.required"}
+          = _("Required")
+
+    .form-group{"ng-if" => "cloudVolumeModel.emstype == 'ManageIQ::Providers::Amazon::StorageManager::Ebs'"}
+      %label.col-md-2.control-label
+        = _('Encryption')
+      .col-md-8
+        %input.form-control{"bs-switch"  => "",
+                            :data        => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
+                            :type        => "checkbox",
+                            :name        => "encryption",
+                            'ng-model'   => "cloudVolumeModel.aws_encryption",
+                            :checkchange => true}
 
   %table{:width => '100%'}
     %tr
