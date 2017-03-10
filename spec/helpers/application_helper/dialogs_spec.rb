@@ -12,7 +12,7 @@ describe ApplicationHelper::Dialogs do
 
   describe "#dialog_dropdown_select_values" do
     let(:dialog_field) { instance_double("DialogFieldDropDownList", :values => values, :type => type) }
-    let(:values) { [["cat", "Cat"], ["dog", "Dog"]] }
+    let(:values) { [%w(cat Cat), %w(dog Dog)] }
 
     context "when the field type includes drop down" do
       let(:type) { "BananaDropDown" }
