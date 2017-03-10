@@ -183,14 +183,8 @@ module ApplicationController::Performance
     # Use timestamp or statistic_time (metrics vs ontap)
     ts = (data_row["timestamp"] || data_row["statistic_time"]).in_time_zone(@perf_options[:tz])                 # Grab the timestamp from the row in selected tz
 
-    if cmd == "Display" && model == "Current" && typ == "Top"                   # Display the CI selected from a Top chart
-      return unless perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
-      javascript_redirect :controller => data_row["resource_type"].underscore,
-                          :action     => "show",
-                          :id         => data_row["resource_id"],
-                          :escape     => false
-      return
-
+    if cmd == "Display" && model == "Current" && typ == "Top"
+      return if display_current_top(data_row)
     elsif cmd == "Display" && typ == "bytag"  # Display selected resources from a tag chart
       dt = @perf_options[:typ] == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
       top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]
@@ -451,6 +445,16 @@ module ApplicationController::Performance
 
     msg ? add_flash(msg, :warning) : add_flash(_("Unknown error has occurred"), :error)
     javascript_flash(:spinner_off => true)
+  end
+
+  # display the CI selected from a Top chart
+  def display_current_top(data_row)
+    return true unless perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
+    javascript_redirect :controller => data_row["resource_type"].underscore,
+                        :action     => "show",
+                        :id         => data_row["resource_id"],
+                        :escape     => false
+    return true
   end
 
   # Send error message if record is found and authorized, else return the record
