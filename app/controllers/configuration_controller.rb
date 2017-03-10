@@ -12,6 +12,10 @@ class ConfigurationController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  def title
+    session[:config_title] ? _("configuration") : session[:config_title]
+  end
+
   def index
     @breadcrumbs = []
     active_tab = nil
@@ -608,19 +612,13 @@ class ConfigurationController < ApplicationController
     end
   end
 
-  def self.model
-   self
-  end
 
   def self.session_key_prefix
-   "config"
+    "configuration"
   end
 
   def get_session_data
     super
-    binding.pry
-    @title        = session[:config_title] ? _("Configuration") : session[:config_title]
-    @layout       = "configuration"
     @tabform      = session[:config_tabform]    if session[:config_tabform]
     @schema_ver   = session[:config_schema_ver] if session[:config_schema_ver]
     @zone_options = session[:zone_options]      if session[:zone_options]
@@ -628,7 +626,6 @@ class ConfigurationController < ApplicationController
 
   def set_session_data
     super
-    binding.pry
     session[:config_tabform]    = @tabform
     session[:config_schema_ver] = @schema_ver
     session[:vm_filters]        = @filters

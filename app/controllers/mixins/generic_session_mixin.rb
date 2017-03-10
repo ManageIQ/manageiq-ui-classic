@@ -4,7 +4,6 @@ module Mixins
     private
 
     def get_session_data
-      binding.pry
       prefix      = self.class.session_key_prefix
       @title      = respond_to?(:title) ? title : ui_lookup(:tables => self.class.table_name)
       @layout     = prefix
@@ -17,7 +16,6 @@ module Mixins
     end
 
     def set_session_data
-      binding.pry
       prefix = self.class.session_key_prefix
       session["#{prefix}_lastaction".to_sym] = @lastaction
       session["#{prefix}_display".to_sym]    = @display unless @display.nil?
