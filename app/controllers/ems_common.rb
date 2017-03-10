@@ -53,6 +53,68 @@ module EmsCommon
     drop_breadcrumb(:name => @ems.name + _(" (Ad hoc Metrics)"), :url => show_link(@ems))
   end
 
+  def show_topology
+    @showtype = "topology"
+    @lastaction = "show_topology"
+    drop_breadcrumb(:name => @ems.name + _(" (Topology)"), :url => show_link(@ems))
+  end
+
+  def view_setup_params
+    {
+      "instances"                     => [ManageIQ::Providers::CloudManager::Vm, _("Instances")],
+      "images"                        => [ManageIQ::Providers::CloudManager::Template, _("Images")],
+      "block_storage_managers"        => [ManageIQ::Providers::StorageManager,
+                                          _("Block Storage Managers"),
+                                          :block_storage_managers],
+      "object_storage_managers"       => [ManageIQ::Providers::StorageManager,
+                                          _("Object Storage Managers"),
+                                          :object_storage_managers],
+      "storage_managers"              => [ManageIQ::Providers::StorageManager,
+                                          _("Storage Managers"),
+                                          :storage_managers],
+      "miq_templates"                 => [MiqTemplate,            _("Templates")],
+      "vms"                           => [Vm,                     _("VMs")],
+      "orchestration_stacks"          => [OrchestrationStack,     _("Stacks")],
+      # "configuration_jobs"            => [ConfigurationJob, _("Configuration Jobs")],
+      "cloud_object_store_containers" => [CloudObjectStoreContainer, _('Cloud Object Store Containers')],
+      'containers'                    => [Container,              _('Containers')],
+      'container_replicators'         => [ContainerReplicator,    _('Container Replicators')],
+      'container_nodes'               => [ContainerNode,          _('Container Nodes')],
+      'container_groups'              => [ContainerGroup,         _('Pods')],
+      'container_services'            => [ContainerService,       _('Container Services')],
+      'container_images'              => [ContainerImage,         _('Container Images')],
+      'container_routes'              => [ContainerRoute,         _('Container Routes')],
+      'container_builds'              => [ContainerBuild,         _('Container Builds')],
+      'container_projects'            => [ContainerProject,       _('Container Projects')],
+      'container_image_registries'    => [ContainerImageRegistry, _('Container Image Registries')],
+      'container_templates'           => [ContainerTemplate,      _('Container Templates')],
+      'availability_zones'            => [AvailabilityZone,       _('Availability Zones')],
+      'host_aggregates'               => [HostAggregate,          _('Host Aggregates')],
+      'middleware_servers'            => [MiddlewareServer,       _('Middleware Servers')],
+      'middleware_deployments'        => [MiddlewareDeployment,   _('Middleware Deployments')],
+      'middleware_datasources'        => [MiddlewareDatasource,   _('Middleware Datasources')],
+      'middleware_domains'            => [MiddlewareDomain,       _('Middleware Domains')],
+      'middleware_server_groups'      => [MiddlewareServerGroup,  _('Middleware Server Groups')],
+      'middleware_messagings'         => [MiddlewareMessaging,    _('Middleware Messagings')],
+      'cloud_tenants'                 => [CloudTenant,            _('Cloud Tenants')],
+      'cloud_volumes'                 => [CloudVolume,            _('Cloud Volumes')],
+      'cloud_volume_snapshots'        => [CloudVolumeSnapshot,    _('Cloud Volume Snapshots')],
+      'flavors'                       => [Flavor,                 _('Flavors')],
+      'security_groups'               => [SecurityGroup,          _('Security Groups')],
+      'floating_ips'                  => [FloatingIp,             _('Floating IPs')],
+      'network_routers'               => [NetworkRouter,          _('Network Routers')],
+      'network_ports'                 => [NetworkPort,            _('Network Ports')],
+      'cloud_subnets'                 => [CloudSubnet,            _('Cloud Subnets')],
+      'cloud_networks'                => [CloudNetwork,           _('Cloud Networks')],
+      'load_balancers'                => [LoadBalancer,           _('Load Balancers')],
+      'storages'                      => [Storage,                _('Managed Datastores')],
+      'ems_clusters'                  => [EmsCluster,             title_for_clusters],
+      'persistent_volumes'            => [PersistentVolume,       _('Volumes'), :persistent_volumes],
+      'hosts'                         => [Host,                   _("Managed Hosts")],
+      'physical_servers'              => [PhysicalServer,         _("Physical Servers")],
+    }
+  end
+  
   def display_block_storage_managers
     nested_list('block_storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :block_storage_managers)
   end
@@ -87,7 +149,7 @@ module EmsCommon
         host_aggregates hosts images instances load_balancers middleware_datasources middleware_deployments
         middleware_domains middleware_messagings middleware_server_groups middleware_servers miq_templates
         network_ports network_routers object_storage_managers orchestration_stacks persistent_volumes
-        security_groups storage_managers storages vms
+        security_groups storage_managers storages vms physical_servers  
       )
     end
 
