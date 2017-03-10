@@ -257,6 +257,10 @@ class ReportController < ApplicationController
 
     replace_right_cell(:partial => 'export_widgets')
   end
+	
+  def title
+	nil
+  end
 
   private ###########################
 
@@ -895,14 +899,8 @@ class ReportController < ApplicationController
     'report'
  end
 
- def self.table_name
-	nil
- end
-
   def get_session_data
 	super
-	#binding.pry
-    @layout           = 'report'
     @lastaction       = session[:report_lastaction]
     @report_tab       = session[:report_tab]
     @report_result_id = session[:report_result_id]
@@ -916,8 +914,7 @@ class ReportController < ApplicationController
   end
 
   def set_session_data
-	#super
-	#binding.pry
+	super
     session[:report_lastaction] = @lastaction
     session[:report_tab]        = @report_tab
     session[:panels]            = @panels
