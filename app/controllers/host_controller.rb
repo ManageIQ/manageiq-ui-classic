@@ -647,6 +647,7 @@ class HostController < ApplicationController
   end
 
   def get_session_data
+    super
     @title      = _("Hosts")
     @layout     = "host"
     @drift_db   = "Host"
@@ -655,6 +656,7 @@ class HostController < ApplicationController
   end
 
   def set_session_data
+    super
     session[:host_lastaction] = @lastaction
     session[:host_catinfo]    = @catinfo
     session[:miq_compressed]  = @compressed  unless @compressed.nil?
