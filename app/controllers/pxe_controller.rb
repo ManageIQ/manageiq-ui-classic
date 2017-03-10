@@ -56,7 +56,13 @@ class PxeController < ApplicationController
     render :layout => "application"
   end
 
-  private
+  def title
+    "PXE"
+  end
+
+  def self.session_key_prefix
+    "pxe"
+  end
 
   def features
     [{:role     => "pxe_server_accord",
@@ -82,6 +88,7 @@ class PxeController < ApplicationController
       ApplicationController::Feature.new_with_hash(hsh)
     end
   end
+  private :features
 
   def get_node_info(node, show_list = true)
     @show_list = show_list
@@ -95,6 +102,7 @@ class PxeController < ApplicationController
     x_history_add_item(:id => node, :text => @right_cell_text)
     {:view => @view, :pages => @pages}
   end
+  private :get_node_info
 
   def replace_right_cell(options = {})
     nodetype, replace_trees = options.values_at(:nodetype, :replace_trees)
@@ -251,31 +259,18 @@ class PxeController < ApplicationController
 
     render :json => presenter.for_render
   end
+  private :replace_right_cell
 
-  def title
-    "PXE"
-  end
-
-  def self.session_key_prefix
-    "pxe"
-  end
 
   def get_session_data
     super
-    binding.pry
-    @layout       = "pxe"
-    @lastaction   = session[:pxe_lastaction]
-    @display      = session[:pxe_display]
-    @current_page = session[:pxe_current_page]
   end
+  private :get_session_data
 
   def set_session_data
     super
-    binding.pry
-    session[:pxe_lastaction]   = @lastaction
-    session[:pxe_current_page] = @current_page
-    session[:pxe_display]      = @display unless @display.nil?
   end
+  private :set_session_data
 
   menu_section :inf
 end
