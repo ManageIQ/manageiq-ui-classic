@@ -162,7 +162,8 @@ module ApplicationController::CiProcessing
       end
 
       klass = get_class_from_controller_param(request.parameters[:controller])
-      result = klass.set_ownership(params[:objectIds].map(&:to_i), opts)
+      param_ids = params[:objectIds].map(&:to_i)
+      result = klass.set_ownership(param_ids, opts)
       unless result == true
         result["missing_ids"].each { |msg| add_flash(msg, :error) } if result["missing_ids"]
         result["error_updating"].each { |msg| add_flash(msg, :error) } if result["error_updating"]
