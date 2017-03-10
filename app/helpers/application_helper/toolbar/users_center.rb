@@ -16,29 +16,29 @@ class ApplicationHelper::Toolbar::UsersCenter < ApplicationHelper::Toolbar::Basi
           'pficon pficon-edit fa-lg',
           N_('Select a single User to edit'),
           N_('Edit the selected User'),
-          :url_parms => "main_div",
+          :url_parms    => "main_div",
           :send_checked => true,
-          :enabled   => false,
-          :onwhen    => "1"),
+          :enabled      => false,
+          :onwhen       => "1"),
         button(
           :rbac_user_copy,
           'fa fa-files-o fa-lg',
           N_('Select a single User to copy'),
           N_('Copy the selected User to a new User'),
-          :url_parms => "main_div",
+          :url_parms    => "main_div",
           :send_checked => true,
-          :enabled   => false,
-          :onwhen    => "1"),
+          :enabled      => false,
+          :onwhen       => "1"),
         button(
           :rbac_user_delete,
           'pficon pficon-delete fa-lg',
           N_('Select one or more Users to delete'),
           N_('Delete selected Users'),
-          :url_parms => "main_div",
+          :url_parms    => "main_div",
           :send_checked => true,
-          :confirm   => N_("Delete all selected Users?"),
-          :enabled   => false,
-          :onwhen    => "1+"),
+          :confirm      => N_("Delete all selected Users?"),
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])
@@ -50,7 +50,7 @@ class ApplicationHelper::Toolbar::UsersCenter < ApplicationHelper::Toolbar::Basi
       t,
       :enabled => false,
       :onwhen  => "1+",
-      :items => [
+      :items   => [
         button(
           :rbac_user_tags_edit,
           'pficon pficon-edit fa-lg',
@@ -58,10 +58,10 @@ class ApplicationHelper::Toolbar::UsersCenter < ApplicationHelper::Toolbar::Basi
             _('Edit \'%{customer_name}\' Tags for the selected Users') % {:customer_name => @view_context.session[:customer_name]}
           end,
           t,
-          :url_parms => "main_div",
+          :url_parms    => "main_div",
           :send_checked => true,
-          :enabled   => false,
-          :onwhen    => "1+"),
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])

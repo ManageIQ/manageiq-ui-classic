@@ -10,10 +10,10 @@ class ApplicationHelper::Toolbar::HostCloudServiceCenter < ApplicationHelper::To
         'pficon pficon-edit fa-lg',
         N_('Toggle Scheduling'),
         N_('Toggle Scheduling'),
-        :confirm   => N_("Toggle Scheduling for this Cloud Service?"),
-        :url_parms => "main_div",
+        :confirm      => N_("Toggle Scheduling for this Cloud Service?"),
+        :url_parms    => "main_div",
         :send_checked => true,
-        :enabled   => true),
+        :enabled      => true),
     ]),
   ])
 end

@@ -11,7 +11,7 @@ class ApplicationHelper::Toolbar::MiqAlertCenter < ApplicationHelper::Toolbar::B
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Alert'),
           t,
-          :url_parms => "main_div",
+          :url_parms    => "main_div",
           :send_checked => true),
         button(
           :alert_copy,
@@ -25,10 +25,10 @@ class ApplicationHelper::Toolbar::MiqAlertCenter < ApplicationHelper::Toolbar::B
           'pficon pficon-delete fa-lg',
           t = N_('Delete this Alert'),
           t,
-          :url_parms => "main_div",
+          :url_parms    => "main_div",
           :send_checked => true,
-          :confirm   => N_("Are you sure you want to delete this Alert?"),
-          :klass     => ApplicationHelper::Button::MiqAlertDelete),
+          :confirm      => N_("Are you sure you want to delete this Alert?"),
+          :klass        => ApplicationHelper::Button::MiqAlertDelete),
       ]
     ),
   ])

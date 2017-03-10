@@ -13,10 +13,10 @@ class ApplicationHelper::Toolbar::CloudVolumeBackupsCenter < ApplicationHelper::
           'pficon pficon-edit fa-lg',
           N_('Edit tags for the selected items'),
           N_('Edit Tags'),
-          :url_parms => "main_div",
+          :url_parms    => "main_div",
           :send_checked => true,
-          :enabled   => false,
-          :onwhen    => "1+"),
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])

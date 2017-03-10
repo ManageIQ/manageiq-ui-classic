@@ -30,10 +30,10 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
                             :new_policy_description => truncate("Copy of #{@policy.description}", :length => 255, :omission => "")
                           }
                         end,
-          :url_parms => "main_div",
+          :url_parms    => "main_div",
           :send_checked => true,
-          :klass     => ApplicationHelper::Button::PolicyCopy,
-          :options   => {:feature => 'policy_copy'}),
+          :klass        => ApplicationHelper::Button::PolicyCopy,
+          :options      => {:feature => 'policy_copy'}),
         button(
           :policy_delete,
           'pficon pficon-delete fa-lg',
@@ -41,11 +41,11 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
             _('Delete this %{policy_type} Policy') % {:policy_type => ui_lookup(:model => @policy.towhat)}
           end,
           t,
-          :url_parms => "main_div",
+          :url_parms    => "main_div",
           :send_checked => true,
-          :klass     => ApplicationHelper::Button::PolicyDelete,
-          :confirm   => proc { _("Are you sure you want to delete this %{policy_type} Policy?") % {:policy_type => ui_lookup(:model => @policy.towhat)} },
-          :options   => {:feature => 'policy_delete'}),
+          :klass        => ApplicationHelper::Button::PolicyDelete,
+          :confirm      => proc { _("Are you sure you want to delete this %{policy_type} Policy?") % {:policy_type => ui_lookup(:model => @policy.towhat)} },
+          :options      => {:feature => 'policy_delete'}),
         button(
           :condition_edit,
           'pficon pficon-add-circle-o fa-lg',

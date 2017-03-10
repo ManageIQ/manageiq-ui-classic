@@ -25,10 +25,10 @@ class ApplicationHelper::Toolbar::XConfigurationScriptCenter < ApplicationHelper
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for this Job Template'),
           N_('Edit Tags'),
-          :url       => "tagging",
-          :url_parms => "main_div",
+          :url          => "tagging",
+          :url_parms    => "main_div",
           :send_checked => true,
-          :enabled   => true),
+          :enabled      => true),
       ]
     ),
   ])

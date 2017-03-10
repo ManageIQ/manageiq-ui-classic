@@ -11,18 +11,18 @@ class ApplicationHelper::Toolbar::MiqPolicyProfileCenter < ApplicationHelper::To
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Policy Profile'),
           t,
-          :url_parms => "main_div",
+          :url_parms    => "main_div",
           :send_checked => true,
-          :klass     => ApplicationHelper::Button::ReadOnly),
+          :klass        => ApplicationHelper::Button::ReadOnly),
         button(
           :profile_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Policy Profile'),
           t,
-          :url_parms => "main_div",
+          :url_parms    => "main_div",
           :send_checked => true,
-          :klass     => ApplicationHelper::Button::ReadOnly,
-          :confirm   => N_("Are you sure you want to remove this Policy Profile?")),
+          :klass        => ApplicationHelper::Button::ReadOnly,
+          :confirm      => N_("Are you sure you want to remove this Policy Profile?")),
       ]
     ),
   ])

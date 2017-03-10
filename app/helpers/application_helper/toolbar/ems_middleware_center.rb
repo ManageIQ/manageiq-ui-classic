@@ -71,7 +71,7 @@ class ApplicationHelper::Toolbar::EmsMiddlewareCenter < ApplicationHelper::Toolb
           'fa fa-search fa-lg',
           N_("Re-check Authentication Status for this Middleware Provider"),
           N_('Re-check Authentication Status'),
-          :klass => ApplicationHelper::Button::GenericFeatureButton,
+          :klass   => ApplicationHelper::Button::GenericFeatureButton,
           :options => {:feature => :authentication_status}),
       ]
     ),

@@ -19,41 +19,41 @@ class ApplicationHelper::Toolbar::CloudVolumesCenter < ApplicationHelper::Toolba
                        'pficon pficon-volume fa-lg',
                        t = N_('Attach selected Cloud Volume to an Instance'),
                        t,
-                       :url_parms => 'main_div',
+                       :url_parms    => 'main_div',
                        :send_checked => true,
-                       :enabled   => false,
-                       :onwhen    => '1'
+                       :enabled      => false,
+                       :onwhen       => '1'
                      ),
                      button(
                        :cloud_volume_detach,
                        'pficon pficon-volume fa-lg',
                        t = N_('Detach selected Cloud Volume from an Instance'),
                        t,
-                       :url_parms => 'main_div',
+                       :url_parms    => 'main_div',
                        :send_checked => true,
-                       :enabled   => false,
-                       :onwhen    => '1'
+                       :enabled      => false,
+                       :onwhen       => '1'
                      ),
                      button(
                        :cloud_volume_edit,
                        'pficon pficon-edit fa-lg',
                        t = N_('Edit selected Cloud Volume'),
                        t,
-                       :url_parms => 'main_div',
+                       :url_parms    => 'main_div',
                        :send_checked => true,
-                       :enabled   => false,
-                       :onwhen    => '1'
+                       :enabled      => false,
+                       :onwhen       => '1'
                      ),
                      button(
                        :cloud_volume_delete,
                        'pficon pficon-delete fa-lg',
                        t = N_('Delete selected Cloud Volumes'),
                        t,
-                       :url_parms => 'main_div',
+                       :url_parms    => 'main_div',
                        :send_checked => true,
-                       :confirm   => N_('Warning: The selected Cloud Volume and ALL of their components will be removed!'),
-                       :enabled   => false,
-                       :onwhen    => '1+'
+                       :confirm      => N_('Warning: The selected Cloud Volume and ALL of their components will be removed!'),
+                       :enabled      => false,
+                       :onwhen       => '1+'
                      ),
                    ]
                  )
@@ -72,10 +72,10 @@ class ApplicationHelper::Toolbar::CloudVolumesCenter < ApplicationHelper::Toolba
           'pficon pficon-edit fa-lg',
           N_('Edit tags for the selected items'),
           N_('Edit Tags'),
-          :url_parms => "main_div",
+          :url_parms    => "main_div",
           :send_checked => true,
-          :enabled   => false,
-          :onwhen    => "1+"),
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])

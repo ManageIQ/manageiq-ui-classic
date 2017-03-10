@@ -55,10 +55,10 @@ class ApplicationHelper::Toolbar::CloudNetworksCenter < ApplicationHelper::Toolb
             'pficon pficon-edit fa-lg',
             N_('Edit Tags for the selected Cloud Networks'),
             N_('Edit Tags'),
-            :url_parms => "main_div",
+            :url_parms    => "main_div",
             :send_checked => true,
-            :enabled   => false,
-            :onwhen    => "1+")
+            :enabled      => false,
+            :onwhen       => "1+")
         ]
       )
     ]

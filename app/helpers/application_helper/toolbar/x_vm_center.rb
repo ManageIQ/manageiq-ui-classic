@@ -26,7 +26,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           N_('Extract Running Processes for this VM'),
           N_('Extract Running Processes'),
           :confirm => N_("Extract Running Processes for this VM?"),
-          :klass => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+          :klass   => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
           :options => {:feature => :collect_running_processes}),
         separator,
         button(
@@ -126,7 +126,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           'product product-migrate fa-lg',
           N_('Migrate this VM to another Host/Datastore'),
           N_('Migrate this VM'),
-          :klass => ApplicationHelper::Button::GenericFeatureButton,
+          :klass   => ApplicationHelper::Button::GenericFeatureButton,
           :options => {:feature => :migrate}),
         button(
           :vm_retire,
@@ -140,7 +140,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           t = N_('Retire this VM'),
           t,
           :confirm => N_("Retire this VM?"),
-          :klass => ApplicationHelper::Button::VmRetireNow),
+          :klass   => ApplicationHelper::Button::VmRetireNow),
       ]
     ),
   ])
@@ -308,12 +308,12 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           'pficon pficon-delete fa-lg',
           t = N_('Delete Selected Snapshot'),
           t,
-          :confirm   => N_("The selected snapshot will be permanently deleted. Are you sure you want to delete the selected snapshot?"),
-          :url_parms => "main_div",
+          :confirm      => N_("The selected snapshot will be permanently deleted. Are you sure you want to delete the selected snapshot?"),
+          :url_parms    => "main_div",
           :send_checked => true,
-          :onwhen    => "1",
-          :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-          :options   => {:feature => :remove_snapshot}),
+          :onwhen       => "1",
+          :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+          :options      => {:feature => :remove_snapshot}),
         button(
           :vm_snapshot_delete_all,
           'pficon pficon-delete fa-lg',
@@ -344,9 +344,9 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
       'product product-compare fa-lg',
       N_('Compare selected VMs'),
       nil,
-      :url_parms => "main_div",
+      :url_parms    => "main_div",
       :send_checked => true,
-      :enabled   => false,
-      :onwhen    => "2+"),
+      :enabled      => false,
+      :onwhen       => "2+"),
   ])
 end

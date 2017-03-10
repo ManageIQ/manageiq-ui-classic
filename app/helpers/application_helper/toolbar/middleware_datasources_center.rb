@@ -13,10 +13,10 @@ class ApplicationHelper::Toolbar::MiddlewareDatasourcesCenter < ApplicationHelpe
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for these Middleware Datasources'),
           N_('Edit Tags'),
-          :url_parms => "main_div",
+          :url_parms    => "main_div",
           :send_checked => true,
-          :enabled   => false,
-          :onwhen    => "1+"),
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])
@@ -35,11 +35,11 @@ class ApplicationHelper::Toolbar::MiddlewareDatasourcesCenter < ApplicationHelpe
             'pficon pficon-delete fa-lg',
             N_('Remove Middleware Datasources'),
             N_('Remove'),
-            :url_parms => "main_div",
+            :url_parms    => "main_div",
             :send_checked => true,
-            :enabled   => false,
-            :onwhen    => "1+",
-            :confirm   => N_('Do you want to remove these Datasources? Some Applications could be using these '\
+            :enabled      => false,
+            :onwhen       => "1+",
+            :confirm      => N_('Do you want to remove these Datasources? Some Applications could be using these '\
                              'Datasources and may malfunction if they are deleted.'),
             :klass     => ApplicationHelper::Button::MiddlewareStandaloneServerAction
           )

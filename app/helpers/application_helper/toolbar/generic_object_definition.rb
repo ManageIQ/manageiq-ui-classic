@@ -11,7 +11,7 @@ class ApplicationHelper::Toolbar::GenericObjectDefinition < ApplicationHelper::T
           'pficon pficon-add-circle-o fa-lg',
           title = N_('Create a new Generic Object Definition'),
           title,
-          :data => {
+          :data             => {
             'function'      => 'sendDataWithRx',
             'function-data' => '{"eventType": "showAddForm"}'
           }
@@ -21,9 +21,9 @@ class ApplicationHelper::Toolbar::GenericObjectDefinition < ApplicationHelper::T
           'pficon pficon-edit fa-lg',
           title = N_('Edit this Generic Object Definition'),
           title,
-          :onwhen  => "1",
-          :enabled => false,
-          :data    => {
+          :onwhen           => "1",
+          :enabled          => false,
+          :data             => {
             'function'      => 'sendDataWithRx',
             'function-data' => '{"eventType": "showEditForm"}'
           }
@@ -33,10 +33,10 @@ class ApplicationHelper::Toolbar::GenericObjectDefinition < ApplicationHelper::T
           'pficon pficon-delete fa-lg',
           title = N_('Delete this Generic Object Definition'),
           title,
-          :onwhen  => "1",
-          :enabled => false,
-          :confirm => N_("Are you sure you want to delete this Generic Object Definition?"),
-          :data    => {
+          :onwhen           => "1",
+          :enabled          => false,
+          :confirm          => N_("Are you sure you want to delete this Generic Object Definition?"),
+          :data             => {
             'function'      => 'sendDataWithRx',
             'function-data' => '{"eventType": "deleteGenericObject"}'
           }

@@ -32,13 +32,13 @@ class ApplicationHelper::Toolbar::DriftCenter < ApplicationHelper::Toolbar::Basi
       N_('Details Mode'),
       nil,
       :klass => ApplicationHelper::Button::ButtonWithoutRbacCheck,
-      :url => "drift_mode"),
+      :url   => "drift_mode"),
     twostate(
       :driftmode_exists,
       'product product-exists fa-lg',
       N_('Exists Mode'),
       nil,
       :klass => ApplicationHelper::Button::ButtonWithoutRbacCheck,
-      :url => "drift_mode"),
+      :url   => "drift_mode"),
   ])
 end
