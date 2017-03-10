@@ -191,50 +191,8 @@ module ApplicationController::Performance
       return if display_selected(ts, typ, data_row, model, bc_model)
     elsif cmd == "Timeline" && model == "Current"
       return if timeline_current(typ, ts)
-    elsif cmd == "Timeline" && model == "Selected"  # Display timeline for the selected CI
-      return unless @record = perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
-      controller = data_row["resource_type"].underscore
-      new_opts = tl_session_data(controller) || ApplicationController::Timelines::Options.new
-      new_opts[:model] = data_row["resource_type"]
-      dt = typ == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
-      new_opts.date.typ = typ
-      new_opts.date.daily = @perf_options[:daily_date] if typ == "Daily"
-      new_opts.date.hourly = [ts.month, ts.day, ts.year].join("/") if typ == "Hourly"
-      new_opts[:tl_show] = "timeline"
-      set_tl_session_data(new_opts, controller)
-      f = @record.first_event
-      if f.nil?
-        msg = if model == "EmsCluster"
-                _("No events available for this Cluster")
-              else
-                _("No events available for this %{model}") % {:model => model}
-              end
-      elsif @record.kind_of?(MiqServer) # For server charts in OPS
-        change_tab("diagnostics_timelines")                # Switch to the Timelines tab
-        return
-      else
-        if @explorer
-          @_params[:id] = data_row["resource_id"]
-          @_params[:refresh] = "n"
-          show_timeline
-        else
-          if data_row["resource_type"] == "VmOrTemplate"
-            tree_node_id = TreeBuilder.build_node_id(@record.class.base_model, @record.id)
-            session[:exp_parms] = {:display => "timeline", :refresh => "n", :id => tree_node_id}
-            javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
-                                :action     => "explorer"
-          else
-            javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
-                                :action     => "show",
-                                :display    => "timeline",
-                                :id         => data_row["resource_id"],
-                                :refresh    => "n",
-                                :escape     => false
-          end
-        end
-        return
-      end
-
+    elsif cmd == "Timeline" && model == "Selected"
+      return if timeline_selected(data_row, ts, typ, model)
     elsif cmd == "Chart" && model == "Current" && typ == "Hourly" # Create hourly chart for selected day
       @record = identify_tl_or_perf_record
       @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
@@ -466,6 +424,53 @@ module ApplicationController::Performance
                             :controller => model_to_controller(@perf_record),
                             :refresh    => "n",
                             :escape     => false
+      end
+      return true
+    end
+    false
+  end
+
+  # display timeline for the selected CI
+  def timeline_selected(data_row, ts, typ, model)
+    return true unless @record = perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
+    controller = data_row["resource_type"].underscore
+    new_opts = tl_session_data(controller) || ApplicationController::Timelines::Options.new
+    new_opts[:model] = data_row["resource_type"]
+    dt = typ == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
+    new_opts.date.typ = typ
+    new_opts.date.daily = @perf_options[:daily_date] if typ == "Daily"
+    new_opts.date.hourly = [ts.month, ts.day, ts.year].join("/") if typ == "Hourly"
+    new_opts[:tl_show] = "timeline"
+    set_tl_session_data(new_opts, controller)
+    f = @record.first_event
+    if f.nil?
+      msg = if model == "EmsCluster"
+              _("No events available for this Cluster")
+            else
+              _("No events available for this %{model}") % {:model => model}
+            end
+    elsif @record.kind_of?(MiqServer) # For server charts in OPS
+      change_tab("diagnostics_timelines")                # Switch to the Timelines tab
+      return true
+    else
+      if @explorer
+        @_params[:id] = data_row["resource_id"]
+        @_params[:refresh] = "n"
+        show_timeline
+      else
+        if data_row["resource_type"] == "VmOrTemplate"
+          tree_node_id = TreeBuilder.build_node_id(@record.class.base_model, @record.id)
+          session[:exp_parms] = {:display => "timeline", :refresh => "n", :id => tree_node_id}
+          javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
+                              :action     => "explorer"
+        else
+          javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
+                              :action     => "show",
+                              :display    => "timeline",
+                              :id         => data_row["resource_id"],
+                              :refresh    => "n",
+                              :escape     => false
+        end
       end
       return true
     end
