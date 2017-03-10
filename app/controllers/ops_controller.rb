@@ -829,7 +829,7 @@ class OpsController < ApplicationController
   end
 
   def get_session_data
-    #TODO:import tasks_options from generic session
+    # TODO, import tasks_options from generic session
     @title         = _("Configuration")
     @layout        = "ops"
     @tasks_options = session[:tasks_options] || ""

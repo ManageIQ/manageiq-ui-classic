@@ -455,7 +455,7 @@ class MiqTaskController < ApplicationController
 
   def set_session_data
     super
-    session[:tasks_tab]            = @tasks_tab
+    session[:tasks_tab]           = @tasks_tab
     session[:tabform]             = @tabform
     session[:layout]              = @layout
   end
