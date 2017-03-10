@@ -145,7 +145,7 @@ function miqOnClickSelectRbacTreeNode(id) {
   } else {
     miqTreeExpandNode('rbac_tree', 'xx-' + id.split('-')[0]);
     var promise = function() {
-      return new Promise(function(resolve){
+      return new Promise(function(resolve) {
         miqJqueryRequest('/' + ManageIQ.controller + '/tree_select/?id=' + id + '&tree=' + tree)
         .then(resolve);
       });
