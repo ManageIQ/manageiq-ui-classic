@@ -117,15 +117,6 @@ module ApplicationController::Performance
     end
   end
 
-  # Send the current chart report data in text, CSV, or PDF
-  def perf_download
-    report = @sb[:chart_reports].class == Array ? @sb[:chart_reports].first : @sb[:chart_reports] # Get the first or only report
-    report = perf_remove_report_cols(report)  # Remove cols that are not in the current chart
-    filename = @breadcrumbs.last[:name] + " - " + report.title
-    disable_client_cache
-    send_data(report.to_text, :filename => "#{filename}.#{params[:typ]}")
-  end
-
   private ############################
 
   def perf_breadcrumb
