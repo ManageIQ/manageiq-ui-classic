@@ -195,34 +195,8 @@ module ApplicationController::Performance
       return if timeline_selected(data_row, ts, typ, model)
     elsif cmd == "Chart" && model == "Current" && typ == "Hourly"
       return if chart_current_hourly(ts)
-    elsif cmd == "Chart" && model == "Current" && typ == "Daily"  # Go back to the daily chart
-      @record = identify_tl_or_perf_record
-      @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
-      @perf_options[:typ] = "Daily"
-      perf_set_or_fix_dates(false) unless params[:task_id] # Set dates if first time thru
-      perf_gen_data
-      return unless @charts        # Return if no charts got created (first time thru async rpt gen)
-
-      render :update do |page|
-        page << javascript_prologue
-        if @parent_chart_data
-          page << 'ManageIQ.charts.chartData = ' + {
-            "candu"  => @chart_data,
-            "parent" => @parent_chart_data
-          }.to_json + ';'
-        else
-          page << 'ManageIQ.charts.chartData = ' + {
-            "candu" => @chart_data
-          }.to_json + ';'
-        end
-        page.replace("perf_options_div", :partial => "layouts/perf_options")
-        page.replace("candu_charts_div", :partial => "layouts/perf_charts", :locals => {:chart_data => @chart_data, :chart_set => "candu"})
-        page << js_build_calendar(@perf_options.to_calendar)
-        page << Charting.js_load_statement
-        page << 'miqSparkle(false);'
-      end
-      return
-
+    elsif cmd == "Chart" && model == "Current" && typ == "Daily"
+      return if chart_current_daily
     elsif cmd == "Chart" && model == "Selected"                             # Create daily/hourly chart for selected CI
       return unless @record = perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
       # Set the perf options in the selected controller's sandbox
@@ -479,6 +453,36 @@ module ApplicationController::Performance
       page << 'miqSparkle(false);'
     end
     true
+  end
+
+  # go back to the daily chart
+  def chart_current_daily
+    @record = identify_tl_or_perf_record
+    @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
+    @perf_options[:typ] = "Daily"
+    perf_set_or_fix_dates(false) unless params[:task_id] # Set dates if first time thru
+    perf_gen_data
+    return true unless @charts        # Return if no charts got created (first time thru async rpt gen)
+
+    render :update do |page|
+      page << javascript_prologue
+      if @parent_chart_data
+        page << 'ManageIQ.charts.chartData = ' + {
+          "candu"  => @chart_data,
+          "parent" => @parent_chart_data
+        }.to_json + ';'
+      else
+        page << 'ManageIQ.charts.chartData = ' + {
+          "candu" => @chart_data
+        }.to_json + ';'
+      end
+      page.replace("perf_options_div", :partial => "layouts/perf_options")
+      page.replace("candu_charts_div", :partial => "layouts/perf_charts", :locals => {:chart_data => @chart_data, :chart_set => "candu"})
+      page << js_build_calendar(@perf_options.to_calendar)
+      page << Charting.js_load_statement
+      page << 'miqSparkle(false);'
+    end
+    return true
   end
 
   # Send error message if record is found and authorized, else return the record
