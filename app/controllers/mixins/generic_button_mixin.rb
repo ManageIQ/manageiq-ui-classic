@@ -6,6 +6,14 @@ module Mixins
     def button
       generic_button_setup
 
+      handle_tag_presses(params[:pressed]) do
+        return if @flash_array.nil?
+      end
+
+      handle_button_pressed(params[:pressed]) do
+        return if performed? # did something build a response?
+      end
+
       handle_sub_item_presses(params[:pressed]) do |pfx|
         process_vm_buttons(pfx)
         return if button_control_transferred?(params[:pressed])
@@ -13,14 +21,6 @@ module Mixins
         unless button_has_redirect_suffix?(params[:pressed])
           set_refresh_and_show
         end
-      end
-
-      handle_tag_presses(params[:pressed]) do
-        return if @flash_array.nil?
-      end
-
-      handle_button_pressed(params[:pressed]) do
-        return if performed? # did something build a response?
       end
 
       check_if_button_is_implemented
