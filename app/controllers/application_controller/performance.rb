@@ -79,10 +79,8 @@ module ApplicationController::Performance
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
     if params[:menu_choice]
       chart_click_data = parse_chart_click(params[:menu_choice])
-      _cmd, model, typ = [
-        [chart_click_data[:cmd],
-         chart_click_data[:model],
-         chart_click_data[:update_periods]]
+      model, typ = [
+        [chart_click_data[:model], chart_click_data[:update_periods]]
       ].flatten
 
       report = @sb[:chart_reports].kind_of?(Array) ? report = @sb[:chart_reports][chart_click_data[:chart_index]] : @sb[:chart_reports]
@@ -178,10 +176,8 @@ module ApplicationController::Performance
   def perf_menu_click
     # Parse the clicked item to get indexes and selection variables
     chart_click_data = parse_chart_click(params[:menu_click])
-    cmd, model, typ = [
-      [chart_click_data[:cmd],
-       chart_click_data[:model],
-       chart_click_data[:update_periods]]
+    model, typ = [
+      [chart_click_data[:model], chart_click_data[:update_periods]]
     ].flatten
 
     # Swap in 'Instances' for 'VMs' in AZ breadcrumbs (poor man's cloud/infra split hack)
@@ -193,27 +189,34 @@ module ApplicationController::Performance
     # Use timestamp or statistic_time (metrics vs ontap)
     ts = (data_row["timestamp"] || data_row["statistic_time"]).in_time_zone(@perf_options[:tz])                 # Grab the timestamp from the row in selected tz
 
-    if cmd == "Display" && model == "Current" && typ == "Top"
-      display_current_top(data_row)
-      return
-    elsif cmd == "Display" && typ == "bytag"
-      return if display_by_tag(chart_click_data, data_row, report, ts, bc_model, model, legend_idx)
-    elsif cmd == "Display"
-      return if display_selected(chart_click_data, ts, typ, data_row, model, bc_model)
-    elsif cmd == "Timeline" && model == "Current"
-      return if timeline_current(chart_click_data, typ, ts)
-    elsif cmd == "Timeline" && model == "Selected"
-      return if timeline_selected(chart_click_data, data_row, ts, typ, model)
-    elsif cmd == "Chart" && model == "Current" && typ == "Hourly"
-      return if chart_current_hourly(ts)
-    elsif cmd == "Chart" && model == "Current" && typ == "Daily"
-      return if chart_current_daily
-    elsif cmd == "Chart" && model == "Selected"
-      return if chart_selected(chart_click_data, data_row, typ, ts)
-    elsif cmd == "Chart" && typ.starts_with?("top") && @perf_options[:cat]
-      return if chart_top_by_tag(chart_click_data, data_row, report, model, ts, bc_model)
-    elsif cmd == "Chart" && typ.starts_with?("top")
-      return if chart_top(chart_click_data, data_row, typ, ts, model, bc_model)
+    case chart_click_data[:cmd]
+    when "Display"
+      if model == "Current" && typ == "Top"
+        display_current_top(chart_click_data, data_row)
+        return
+      elsif typ == "bytag"
+        return if display_by_tag(chart_click_data, data_row, report, ts, bc_model, model)
+      else
+        return if display_selected(chart_click_data, ts, typ, data_row, model, bc_model)
+      end
+    when "Timeline"
+      if model == "Current"
+        return if timeline_current(chart_click_data, typ, ts)
+      elsif model == "Selected"
+        return if timeline_selected(chart_click_data, data_row, ts, typ, model)
+      end
+    when "Chart"
+      if model == "Current" && typ == "Hourly"
+        return if chart_current_hourly(ts)
+      elsif model == "Current" && typ == "Daily"
+        return if chart_current_daily
+      elsif model == "Selected"
+        return if chart_selected(chart_click_data, data_row, typ, ts)
+      elsif typ.starts_with?("top") && @perf_options[:cat]
+        return if chart_top_by_tag(chart_click_data, data_row, report, model, ts, bc_model)
+      elsif typ.starts_with?("top")
+        return if chart_top(chart_click_data, data_row, typ, ts, model, bc_model)
+      end
     else
       @menu_click_msg = _("Chart menu selection not yet implemented")
     end
