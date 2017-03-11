@@ -79,18 +79,18 @@ module ApplicationController::Performance
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
     if params[:menu_choice]
       chart_click_data = parse_chart_click(params[:menu_choice])
-      model, typ = [
-        [chart_click_data[:model], chart_click_data[:update_periods]]
+      typ = [
+        [chart_click_data[:update_periods]]
       ].flatten
 
       report = @sb[:chart_reports].kind_of?(Array) ? report = @sb[:chart_reports][chart_click_data[:chart_index]] : @sb[:chart_reports]
       data_row = report.table.data[chart_click_data[:data_index]]
       if @perf_options[:cat]
-        top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click_data[:legend_index]]}"][model.downcase.to_sym][:on]
+        top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click_data[:legend_index]]}"][chart_click_data[:model].downcase.to_sym][:on]
       else
-        top_ids = data_row["assoc_ids"][model.downcase.to_sym][:on]
+        top_ids = data_row["assoc_ids"][chart_click_data[:model].downcase.to_sym][:on]
       end
-      @perf_options[:top_model] = model.singularize.capitalize
+      @perf_options[:top_model] = chart_click_data[:model].singularize.capitalize
       @perf_options[:top_type] = typ        # day or hour
       @perf_options[:top_ts] = data_row["timestamp"].utc
       @perf_options[:top_ids] = top_ids
@@ -176,12 +176,12 @@ module ApplicationController::Performance
   def perf_menu_click
     # Parse the clicked item to get indexes and selection variables
     chart_click_data = parse_chart_click(params[:menu_click])
-    model, typ = [
-      [chart_click_data[:model], chart_click_data[:update_periods]]
+    typ = [
+      [chart_click_data[:update_periods]]
     ].flatten
 
     # Swap in 'Instances' for 'VMs' in AZ breadcrumbs (poor man's cloud/infra split hack)
-    bc_model = ['availability_zone', 'host_aggregate'].include?(request.parameters['controller']) && model == 'VMs' ? 'Instances' : model
+    bc_model = ['availability_zone', 'host_aggregate'].include?(request.parameters['controller']) && chart_click_data[:model] == 'VMs' ? 'Instances' : chart_click_data[:model]
 
     report = @sb[:chart_reports].kind_of?(Array) ? @sb[:chart_reports][chart_click_data[:chart_index]] : @sb[:chart_reports]
     data_row = report.table.data[chart_click_data[:data_index]]
@@ -191,31 +191,31 @@ module ApplicationController::Performance
 
     case chart_click_data[:cmd]
     when "Display"
-      if model == "Current" && typ == "Top"
+      if chart_click_data[:model] == "Current" && typ == "Top"
         display_current_top(chart_click_data, data_row)
         return
       elsif typ == "bytag"
-        return if display_by_tag(chart_click_data, data_row, report, ts, bc_model, model)
+        return if display_by_tag(chart_click_data, data_row, report, ts, bc_model)
       else
-        return if display_selected(chart_click_data, ts, typ, data_row, model, bc_model)
+        return if display_selected(chart_click_data, ts, typ, data_row, bc_model)
       end
     when "Timeline"
-      if model == "Current"
+      if chart_click_data[:model] == "Current"
         return if timeline_current(chart_click_data, typ, ts)
-      elsif model == "Selected"
-        return if timeline_selected(chart_click_data, data_row, ts, typ, model)
+      elsif chart_click_data[:model] == "Selected"
+        return if timeline_selected(chart_click_data, data_row, ts, typ)
       end
     when "Chart"
-      if model == "Current" && typ == "Hourly"
+      if chart_click_data[:model] == "Current" && typ == "Hourly"
         return if chart_current_hourly(ts)
-      elsif model == "Current" && typ == "Daily"
+      elsif chart_click_data[:model] == "Current" && typ == "Daily"
         return if chart_current_daily
-      elsif model == "Selected"
+      elsif chart_click_data[:model] == "Selected"
         return if chart_selected(chart_click_data, data_row, typ, ts)
       elsif typ.starts_with?("top") && @perf_options[:cat]
-        return if chart_top_by_tag(chart_click_data, data_row, report, model, ts, bc_model)
+        return if chart_top_by_tag(chart_click_data, data_row, report, ts, bc_model)
       elsif typ.starts_with?("top")
-        return if chart_top(chart_click_data, data_row, typ, ts, model, bc_model)
+        return if chart_top(chart_click_data, data_row, typ, ts, bc_model)
       end
     else
       @menu_click_msg = _("Chart menu selection not yet implemented")
@@ -240,8 +240,8 @@ module ApplicationController::Performance
   end
 
   # display selected resources from a tag chart
-  def display_by_tag(chart_click_data, data_row, report, ts, bc_model, model)
-    top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click_data[:legend_index]]}"][model.downcase.to_sym][:on]
+  def display_by_tag(chart_click_data, data_row, report, ts, bc_model)
+    top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click_data[:legend_index]]}"][chart_click_data[:model].downcase.to_sym][:on]
     bc_tag =  "#{Classification.find_by(:name => @perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][chart_click_data[:legend_index]]}"
     if top_ids.blank?
       @menu_click_msg = _("No %{tag} %{model} were running %{time}") %
@@ -254,7 +254,7 @@ module ApplicationController::Performance
              _("%{model} (%{tag} running %{time})") %
                {:tag => bc_tag, :model => bc_model, :time => date_time_running_msg(typ, ts)}
            end
-      javascript_redirect :controller    => model.downcase.singularize,
+      javascript_redirect :controller    => chart_click_data[:model].downcase.singularize,
                           :action        => "show_list",
                           :menu_click    => params[:menu_click],
                           :sb_controller => request.parameters["controller"],
@@ -266,14 +266,14 @@ module ApplicationController::Performance
   end
 
   # display selected resources
-  def display_selected(chart_click_data, ts, typ, data_row, model, bc_model)
+  def display_selected(chart_click_data, ts, typ, data_row, bc_model)
     dt = @perf_options[:typ] == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
     state = typ == "on" ? _("running") : _("stopped")
-    if data_row["assoc_ids"][model.downcase.to_sym][typ.to_sym].blank?
-      @menu_click_msg = _("No %{model} were %{state} %{time}") % {:model => model, :state => state, :time => dt}
+    if data_row["assoc_ids"][chart_click_data[:model].downcase.to_sym][typ.to_sym].blank?
+      @menu_click_msg = _("No %{model} were %{state} %{time}") % {:model => chart_click_data[:model], :state => state, :time => dt}
     else
       bc = request.parameters["controller"] == "storage" ? "#{bc_model} #{dt}" : "#{bc_model} #{state} #{dt}"
-      javascript_redirect :controller    => model.downcase.singularize,
+      javascript_redirect :controller    => chart_click_data[:model].downcase.singularize,
                           :action        => "show_list",
                           :menu_click    => params[:menu_click],
                           :sb_controller => request.parameters["controller"],
@@ -325,7 +325,7 @@ module ApplicationController::Performance
   end
 
   # display timeline for the selected CI
-  def timeline_selected(chart_click_data, data_row, ts, typ, model)
+  def timeline_selected(chart_click_data, data_row, ts, typ)
     return true unless @record = perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
     controller = data_row["resource_type"].underscore
     new_opts = tl_session_data(controller) || ApplicationController::Timelines::Options.new
@@ -337,10 +337,10 @@ module ApplicationController::Performance
     set_tl_session_data(new_opts, controller)
     f = @record.first_event
     if f.nil?
-      @menu_click_msg = if model == "EmsCluster"
+      @menu_click_msg = if chart_click_data[:model] == "EmsCluster"
                           _("No events available for this Cluster")
                         else
-                          _("No events available for this %{model}") % {:model => model}
+                          _("No events available for this %{model}") % {:model => chart_click_data[:model]}
                         end
     elsif @record.kind_of?(MiqServer) # For server charts in OPS
       change_tab("diagnostics_timelines") # Switch to the Timelines tab
@@ -478,10 +478,10 @@ module ApplicationController::Performance
   end
 
   # create top chart for selected timestamp/model by tag
-  def chart_top_by_tag(chart_click_data, data_row, report, model, ts, bc_model)
+  def chart_top_by_tag(chart_click_data, data_row, report, ts, bc_model)
     @record = identify_tl_or_perf_record
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
-    top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click_data[:legend_index]]}"][model.downcase.to_sym][:on]
+    top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click_data[:legend_index]]}"][chart_click_data[:model].downcase.to_sym][:on]
     bc_tag =  "#{Classification.find_by_name(@perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][chart_click_data[:legend_index]]}"
     if top_ids.blank?
       @menu_click_msg = _("No %{tag} %{model}  were running %{time}") %
@@ -498,13 +498,13 @@ module ApplicationController::Performance
   end
 
   # create top chart for selected timestamp/model
-  def chart_top(chart_click_data, data_row, typ, ts, model, bc_model)
+  def chart_top(chart_click_data, data_row, typ, ts, bc_model)
     @record = identify_tl_or_perf_record
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
-    top_ids = data_row["assoc_ids"][model.downcase.to_sym][:on]
+    top_ids = data_row["assoc_ids"][chart_click_data[:model].downcase.to_sym][:on]
     if top_ids.blank?
       @menu_click_msg = _("No %{model} were running %{time}") %
-        {:model => model, :time => date_time_running_msg(typ, ts)}
+        {:model => chart_click_data[:model], :time => date_time_running_msg(typ, ts)}
     else
       javascript_redirect :id          => @perf_record.id,
                           :action      => "perf_top_chart",
