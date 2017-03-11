@@ -15,15 +15,13 @@ class ResourcePoolController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    restore_edit_for_search
-    copy_sub_item_display_value_to_params
-    set_default_refresh_div
+    generic_button_setup
 
     handle_tag_presses(params[:pressed])
     handle_button_pressed(params[:pressed])
 
     handle_sub_item_presses(params[:pressed]) do |pfx|
-      process_vm_buttons(pfx)
+      process_vm_buttons(pfx) unless params[:pressed].ends_with?("_tag")
 
       return if button_control_transferred?(params[:pressed])
 
