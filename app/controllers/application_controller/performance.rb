@@ -230,14 +230,16 @@ module ApplicationController::Performance
   def display_by_tag(data_row, report, ts, bc_model, model, legend_idx)
     top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]
     bc_tag =  "#{Classification.find_by(:name => @perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][legend_idx]}"
-    dt = typ == "tophour" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
     if top_ids.blank?
-      @menu_click_msg = _("No %{tag} %{model} were running %{time}") % {:tag => bc_tag, :model => bc_model, :time => dt}
+      @menu_click_msg = _("No %{tag} %{model} were running %{time}") %
+        {:tag => bc_tag, :model => bc_model, :time => date_time_running_msg(typ, ts)}
     else
       bc = if request.parameters["controller"] == "storage"
-             "#{bc_model} (#{bc_tag} #{dt})"
+             _("%{model} (%{tag} %{time})") %
+               {:tag => bc_tag, :model => bc_model, :time => date_time_running_msg(typ, ts)}
            else
-             _("%{model} (%{tag} running %{time})") % {:tag => bc_tag, :model => bc_model, :time => dt}
+             _("%{model} (%{tag} running %{time})") %
+               {:tag => bc_tag, :model => bc_model, :time => date_time_running_msg(typ, ts)}
            end
       javascript_redirect :controller    => model.downcase.singularize,
                           :action        => "show_list",
@@ -468,15 +470,14 @@ module ApplicationController::Performance
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
     top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]
     bc_tag =  "#{Classification.find_by_name(@perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][legend_idx]}"
-    dt = typ == "tophour" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
     if top_ids.blank?
       @menu_click_msg = _("No %{tag} %{model}  were running %{time}") %
-                          {:tag => bc_tag, :model => bc_model, :time => dt}
+                          {:tag => bc_tag, :model => bc_model, :time => date_time_running_msg(typ, ts)}
     else
       javascript_redirect :id          => @perf_record.id,
                           :action      => "perf_top_chart",
                           :menu_choice => params[:menu_click],
-                          :bc          => "#{@perf_record.name} top #{bc_model} (#{bc_tag} #{dt})",
+                          :bc          => "#{@perf_record.name} top #{bc_model} (#{bc_tag} #{date_time_running_msg(typ, ts)})",
                           :escape      => false
       return true
     end
@@ -488,18 +489,28 @@ module ApplicationController::Performance
     @record = identify_tl_or_perf_record
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
     top_ids = data_row["assoc_ids"][model.downcase.to_sym][:on]
-    dt = typ == "tophour" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
     if top_ids.blank?
-      @menu_click_msg = _("No %{model} were running %{time}") % {:model => model, :time => dt}
+      @menu_click_msg = _("No %{model} were running %{time}") %
+        {:model => model, :time => date_time_running_msg(typ, ts)}
     else
       javascript_redirect :id          => @perf_record.id,
                           :action      => "perf_top_chart",
                           :menu_choice => params[:menu_click],
-                          :bc          => "#{@perf_record.name} top #{bc_model} (#{dt})",
+                          :bc          => "#{@perf_record.name} top #{bc_model} (#{date_time_running_msg(typ, ts)})",
                           :escape      => false
       return true
     end
     false
+  end
+
+  def date_time_running_msg(typ, timestamp)
+    if typ == "tophour"
+      _("on %{date} at %{time}") %
+        {:date => timestamp.to_date,
+         :time => timestamp.strftime("%h:%m:%s %z")}
+    else
+      _("on %{date}") % {:date => timestamp.to_date}
+    end
   end
 
   # Send error message if record is found and authorized, else return the record
