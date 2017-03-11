@@ -1,91 +1,7 @@
 
 module Mixins
-  # NOTE: ivars and estimated purpose
-  # @current_page
-  # @display
-  # @edit
-  # @flash_array
-  # @lastaction
-  # @redirect_id
-  # @refresh_div
-  # @refresh_partial
-
-  # TODO: consider moving related methods here
-  # ==== ApplicationController
-  # render_or_redirect_partial
-  #
-  # ==== ApplicationController::Buttons
-  # custom_buttons
-  #
-  # ==== ApplicationHelper
-  # check_if_button_is_implemented
-  #
-  # ==== CiProcessing
-  # process_vm_buttons => moved
-  # pfx_for_vm_button_pressed
-  # POWER_BUTTON_NAMES
-  # powerbutton_hosts
-  # host_button_operation
-
-  # NOTE: Methods that eventually call render
-  # javascript_redirect
-  # javascript_flash
-
-  # NOTE: Press values encountered
-  # auth_key_pair_cloud_tag
-  # auth_key_pair_cloud_delete
-  # auth_key_pair_cloud_new
-  # availability_zone_tag
-  # cloud_network_tag
-  # cloud_network_delete
-  # cloud_network_edit
-  # cloud_network_new
-  # cloud_object_store_container_tag
-  # cloud_object_store_object_tag
-  # cloud_subnet_tag
-  # cloud_subnet_delete
-  # cloud_subnet_edit
-  # cloud_subnet_new
-  # cloud_tenant_new
-  # cloud_tenant_edit
-  # cloud_tenant_delete
-  # custom_button
-  # cloud_volume_tag
-  # cloud_volume_delete
-  # cloud_volume_attach
-  # cloud_volume_detach
-  # cloud_volume_edit
-  # cloud_volume_snapshot_create
-  # cloud_volume_new
-  # cloud_volume_backup_create
-  # cloud_volume_backup_restore
-  #
-  # host_analyze_check_compliance
-  # host_check_compliance
-  # host_cloud_service_scheduling_toggle
-  # host_compare
-  # host_delete
-  # host_edit
-  # host_introspect
-  # host_manageable
-  # host_miq_request_new
-  # host_protect
-  # host_provide
-  # host_refresh
-  # host_scan
-  # host_toggle_maintenance
-  # storage_scan
-  # storage_refresh
-  # storage_delete
-  # ems_cluster_compare
-  # ems_cluster_delete
-  # ems_cluster_protect
-  # ems_cluster_scan
-  #
-  #
   module GenericButtonMixin
     # handle buttons pressed on the button bar
-    # TODO: break this up and include only relevant methods in controllers
     #
     def button
       generic_button_setup
@@ -103,9 +19,8 @@ module Mixins
         return if @flash_array.nil?
       end
 
-      if respond_to?(:specific_buttons, true)
-        handled = specific_buttons(params[:pressed])
-        return if handled
+      handle_button_pressed(params[:pressed]) do
+        return if performed? # did something build a response?
       end
 
       check_if_button_is_implemented
@@ -235,20 +150,11 @@ module Mixins
     end
 
     def handled_storage_buttons
-      %w(
-        storage_scan
-        storage_refresh
-        storage_delete
-      )
+      %w(storage_scan storage_refresh storage_delete)
     end
 
     def handled_ems_cluster_buttons
-      %w(
-        ems_cluster_compare
-        ems_cluster_delete
-        ems_cluster_protect
-        ems_cluster_scan
-      )
+      %w(ems_cluster_compare ems_cluster_delete ems_cluster_protect ems_cluster_scan)
     end
 
     # Used in Middleware-related controllers that include EmsCommon
@@ -375,7 +281,6 @@ module Mixins
     end
 
     def button_skip_show_render?(pressed)
-      # pfx = button_prefix(pressed)
       suffixes = %w(
         _edit
         _miq_request_new
@@ -441,14 +346,7 @@ module Mixins
     ############################################################################
 
     def button_redirect_suffixes
-      %w(
-        _edit
-        _copy
-        _miq_request_new
-        _clone
-        _migrate
-        _publish
-      )
+      %w(_edit _copy _miq_request_new _clone _migrate _publish)
     end
 
     def button_control_transfer_suffixes
@@ -597,98 +495,6 @@ module Mixins
         javascript_redirect :action      => 'show_list',
                             :flash_msg   => @flash_array[0][:message],
                             :flash_error => @flash_array[0][:level] == :error
-      end
-    end
-
-    ### Complex code moved for comparison
-    ############################################################################
-
-    # These seem to be last resorts, and seem to do similar things in different ways
-
-    # Original
-    # render :update do |page|
-    #   page << javascript_prologue
-    #
-    #   unless @refresh_partial.nil?
-    #     refresh_flash_msg_or_block(page) do |page|
-    #       if ["images", "instances"].include?(@display) # If displaying vms, action_url s/b show
-    #         page << "miqSetButtons(0, 'center_tb');"
-    #         page.replace_html("main_div", :partial => "layouts/gtl", :locals => {:action_url => "show/#{@availability_zone.id}"})
-    #       else
-    #         page.replace_html(@refresh_div, :partial => @refresh_partial)
-    #       end
-    #     end
-    #   end
-    # end
-    #
-    # Context:
-    # !button_replace_gtl_main?
-    #
-    def availability_zone_render_update
-      render_update_with_prologue do |page|
-        return if @refresh_partial.nil?
-
-        refresh_flash_msg_or_block(page) do |pg|
-          if button_sub_item_display_values.include?(@display) # If displaying vms, action_url s/b show
-            button_center_toolbar(pg)
-            pg.replace_html(
-              "main_div",
-              :partial => "layouts/gtl",
-              :locals  => {
-                :action_url => "show/#{@availability_zone.id}"
-              }
-            )
-          else
-            replace_refresh_div_contents_with_partial(pg)
-          end
-        end
-      end
-    end
-
-    # Original:
-    # render :update do |page|
-    #   page << javascript_prologue
-    #   unless @refresh_partial.nil?
-    #     if refreshing_flash_msg?
-    #       page.replace(@refresh_div, :partial => @refresh_partial)
-    #     else
-    #       page.replace_html(@refresh_div, :partial => @refresh_partial)
-    #     end
-    #   end
-    #   page.replace_html(@refresh_div, :action => @render_action) unless @render_action.nil?
-    # end
-    #
-    # Context:
-    # !params[:pressed].ends_with?("_edit")
-    def miq_request_render_update
-      render_update_with_prologue do |page|
-        unless @refresh_partial.nil?
-          if refreshing_flash_msg?
-            replace_refresh_div_with_partial(page)
-          else
-            replace_refresh_div_contents_with_partial(page)
-          end
-        end
-
-        page.replace_html(@refresh_div, :action => @render_action) unless @render_action.nil?
-      end
-    end
-
-    def storage_manager_javascript_redirect
-      if button_has_redirect_suffix?(params[:pressed])
-        js_redirect_with_redirect_controller_or_partial
-
-        return
-      end
-
-      if button_replace_gtl_main?
-        replace_gtl_main_div
-      elsif refreshing_flash_msg?
-        javascript_flash
-      else
-        render_update_with_prologue do |page|
-          replace_refresh_div_contents_with_partial(page)
-        end
       end
     end
 
