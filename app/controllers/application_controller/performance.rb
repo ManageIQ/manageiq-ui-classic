@@ -204,10 +204,15 @@ module ApplicationController::Performance
     elsif cmd == "Chart" && typ.starts_with?("top")
       return if chart_top(data_row, typ, ts, model, bc_model)
     else
-      msg = _("Chart menu selection not yet implemented")
+      @menu_click_msg = _("Chart menu selection not yet implemented")
     end
 
-    msg ? add_flash(msg, :warning) : add_flash(_("Unknown error has occurred"), :error)
+    if @menu_click_msg.present?
+      add_flash(@menu_click_msg, :warning)
+    else
+      add_flash(_("Unknown error has occurred"), :error)
+    end
+
     javascript_flash(:spinner_off => true)
   end
 
@@ -228,7 +233,7 @@ module ApplicationController::Performance
     bc_tag =  "#{Classification.find_by_name(@perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][legend_idx]}"
     dt = typ == "tophour" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
     if top_ids.blank?
-      msg = _("No %{tag} %{model} were running %{time}") % {:tag => bc_tag, :model => bc_model, :time => dt}
+      @menu_click_msg = _("No %{tag} %{model} were running %{time}") % {:tag => bc_tag, :model => bc_model, :time => dt}
     else
       bc = if request.parameters["controller"] == "storage"
              "#{bc_model} (#{bc_tag} #{dt})"
@@ -251,7 +256,7 @@ module ApplicationController::Performance
     dt = @perf_options[:typ] == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
     state = typ == "on" ? _("running") : _("stopped")
     if data_row["assoc_ids"][model.downcase.to_sym][typ.to_sym].blank?
-      msg = _("No %{model} were %{state} %{time}") % {:model => model, :state => state, :time => dt}
+      @menu_click_msg = _("No %{model} were %{state} %{time}") % {:model => model, :state => state, :time => dt}
     else
       bc = request.parameters["controller"] == "storage" ? "#{bc_model} #{dt}" : "#{bc_model} #{state} #{dt}"
       javascript_redirect :controller    => model.downcase.singularize,
@@ -280,11 +285,11 @@ module ApplicationController::Performance
     set_tl_session_data(new_opts, request.parameters["controller"])
     f = @perf_record.first_event
     if f.nil?
-      msg = if new_opts[:model] == "EmsCluster"
-              _("No events available for this Cluster")
-            else
-              _("No events available for this %{model}") % {:model => new_opts[:model]}
-            end
+      @menu_click_msg = if new_opts[:model] == "EmsCluster"
+                          _("No events available for this Cluster")
+                        else
+                          _("No events available for this %{model}") % {:model => new_opts[:model]}
+                        end
     elsif @record.kind_of?(MiqServer) # For server charts in OPS
       change_tab("diagnostics_timelines")                # Switch to the Timelines tab
       return true
@@ -320,11 +325,11 @@ module ApplicationController::Performance
     set_tl_session_data(new_opts, controller)
     f = @record.first_event
     if f.nil?
-      msg = if model == "EmsCluster"
-              _("No events available for this Cluster")
-            else
-              _("No events available for this %{model}") % {:model => model}
-            end
+      @menu_click_msg = if model == "EmsCluster"
+                          _("No events available for this Cluster")
+                        else
+                          _("No events available for this %{model}") % {:model => model}
+                        end
     elsif @record.kind_of?(MiqServer) # For server charts in OPS
       change_tab("diagnostics_timelines")                # Switch to the Timelines tab
       return true
@@ -468,7 +473,8 @@ module ApplicationController::Performance
     bc_tag =  "#{Classification.find_by_name(@perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][legend_idx]}"
     dt = typ == "tophour" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
     if top_ids.blank?
-      msg = "No #{bc_tag} #{bc_model} were running #{dt}"
+      @menu_click_msg = _("No %{tag} %{model}  were running %{time}") %
+                          {:tag => bc_tag, :model => bc_model, :time => dt}
     else
       javascript_redirect :id          => @perf_record.id,
                           :action      => "perf_top_chart",
@@ -487,7 +493,7 @@ module ApplicationController::Performance
     top_ids = data_row["assoc_ids"][model.downcase.to_sym][:on]
     dt = typ == "tophour" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
     if top_ids.blank?
-      msg = _("No %{model} were running %{time}") % {:model => model, :time => dt}
+      @menu_click_msg = _("No %{model} were running %{time}") % {:model => model, :time => dt}
     else
       javascript_redirect :id          => @perf_record.id,
                           :action      => "perf_top_chart",
