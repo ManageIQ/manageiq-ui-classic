@@ -75,9 +75,7 @@ class AvailabilityZoneController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    restore_edit_for_search
-    copy_sub_item_display_value_to_params
-    save_current_page_for_refresh
+    generic_button_setup
 
     handle_sub_item_presses(params[:pressed]) do |pfx|
       process_vm_buttons(pfx)
@@ -111,6 +109,27 @@ class AvailabilityZoneController < ApplicationController
     [%i(relationships), %i(availability_zone_totals tags)]
   end
   helper_method :textual_group_list
+
+  def availability_zone_render_update
+    render_update_with_prologue do |page|
+      return if @refresh_partial.nil?
+
+      refresh_flash_msg_or_block(page) do |pg|
+        if button_sub_item_display_values.include?(@display) # If displaying vms, action_url s/b show
+          button_center_toolbar(pg)
+          pg.replace_html(
+            "main_div",
+            :partial => "layouts/gtl",
+            :locals  => {
+              :action_url => "show/#{@availability_zone.id}"
+            }
+          )
+        else
+          replace_refresh_div_contents_with_partial(pg)
+        end
+      end
+    end
+  end
 
   menu_section :clo
 end

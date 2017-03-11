@@ -620,4 +620,18 @@ class MiqRequestController < ApplicationController
       end
     end
   end
+
+  def miq_request_render_update
+    render_update_with_prologue do |page|
+      unless @refresh_partial.nil?
+        if refreshing_flash_msg?
+          replace_refresh_div_with_partial(page)
+        else
+          replace_refresh_div_contents_with_partial(page)
+        end
+      end
+
+      page.replace_html(@refresh_div, :action => @render_action) unless @render_action.nil?
+    end
+  end
 end

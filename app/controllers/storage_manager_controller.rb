@@ -10,9 +10,7 @@ class StorageManagerController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    restore_edit_for_search
-    save_current_page_for_refresh
-    set_default_refresh_div
+    generic_button_setup
 
     handle_button_pressed(params[:pressed])
 
@@ -488,6 +486,23 @@ class StorageManagerController < ApplicationController
   def handle_storage_manager_delete
     deletesms
     redirect_to_retire_screen_if_single_delete
+  end
+
+  def storage_manager_javascript_redirect
+    if button_has_redirect_suffix?(params[:pressed])
+      js_redirect_with_redirect_controller_or_partial
+      return
+    end
+
+    if button_replace_gtl_main?
+      replace_gtl_main_div
+    elsif refreshing_flash_msg?
+      javascript_flash
+    else
+      render_update_with_prologue do |page|
+        replace_refresh_div_contents_with_partial(page)
+      end
+    end
   end
 
   menu_section :nap
