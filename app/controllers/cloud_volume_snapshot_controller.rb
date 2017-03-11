@@ -16,13 +16,8 @@ class CloudVolumeSnapshotController < ApplicationController
   end
   helper_method :textual_group_list
 
-  # handle buttons pressed on the button bar
-  def specific_buttons(pressed)
-    if pressed == 'cloud_volume_snapshot_delete'
-      delete_cloud_volume_snapshots
-      return true
-    end
-    false
+  def handled_buttons
+    %w(cloud_volume_snapshot_delete)
   end
 
   def self.display_methods
@@ -33,7 +28,7 @@ class CloudVolumeSnapshotController < ApplicationController
     nested_list('based_volumes', CloudVolume)
   end
 
-  def delete_cloud_volume_snapshots
+  def handle_cloud_volume_snapshot_delete
     assert_privileges("cloud_volume_snapshot_delete")
 
     snapshots = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_volume_snapshot")

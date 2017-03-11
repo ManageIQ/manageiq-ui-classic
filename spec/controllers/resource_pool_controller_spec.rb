@@ -17,56 +17,16 @@ describe ResourcePoolController do
       post :button, :params => {:pressed => "resource_pool_delete", :id => pool.id}
     end
 
-    it "handles when VM Right Size Recommendations is pressed" do
-      controller.instance_variable_set(:@_params, :pressed => "vm_right_size")
-      expect(controller).to receive(:vm_right_size)
-      controller.button
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
+    # Presses handled:
+    # vm_right_size
+    # vm_migrate
+    # vm_retire
+    # vm_protect
+    # vm_tag
+    # miq_template_protect
+    # miq_template_tag
 
-    it "handles when VM Migrate is pressed" do
-      controller.instance_variable_set(:@_params, :pressed => "vm_migrate")
-      controller.instance_variable_set(:@refresh_partial, "layouts/gtl")
-      expect(controller).to receive(:prov_redirect).with("migrate")
-      expect(controller).to receive(:render)
-      controller.button
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "handles when VM Retire is pressed" do
-      controller.instance_variable_set(:@_params, :pressed => "vm_retire")
-      expect(controller).to receive(:retirevms).once
-      controller.button
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "handles when VM Manage Policies is pressed" do
-      controller.instance_variable_set(:@_params, :pressed => "vm_protect")
-      expect(controller).to receive(:assign_policies).with(VmOrTemplate)
-      controller.button
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "handles when MiqTemplate Manage Policies is pressed" do
-      controller.instance_variable_set(:@_params, :pressed => "miq_template_protect")
-      expect(controller).to receive(:assign_policies).with(VmOrTemplate)
-      controller.button
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "handles when VM Tag is pressed" do
-      controller.instance_variable_set(:@_params, :pressed => "vm_tag")
-      expect(controller).to receive(:tag).with(VmOrTemplate)
-      controller.button
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "handles when MiqTemplate Tag is pressed" do
-      controller.instance_variable_set(:@_params, :pressed => "miq_template_tag")
-      expect(controller).to receive(:tag).with(VmOrTemplate)
-      controller.button
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
+    include_examples :host_vm_button_examples
   end
 
   describe "#show" do
