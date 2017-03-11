@@ -79,8 +79,7 @@ module ApplicationController::Performance
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
     if params[:menu_choice]
       chart_click_data = parse_chart_click(params[:menu_choice])
-      legend_idx, data_idx, chart_idx, _cmd, model, typ = [
-        chart_click_data[:legend_index],
+      data_idx, chart_idx, _cmd, model, typ = [
         chart_click_data[:data_index],
         chart_click_data[:chart_index],
         [chart_click_data[:cmd],
@@ -91,7 +90,7 @@ module ApplicationController::Performance
       report = @sb[:chart_reports].kind_of?(Array) ? report = @sb[:chart_reports][chart_idx] : @sb[:chart_reports]
       data_row = report.table.data[data_idx]
       if @perf_options[:cat]
-        top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]
+        top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click_data[:legend_index]]}"][model.downcase.to_sym][:on]
       else
         top_ids = data_row["assoc_ids"][model.downcase.to_sym][:on]
       end
@@ -181,8 +180,7 @@ module ApplicationController::Performance
   def perf_menu_click
     # Parse the clicked item to get indexes and selection variables
     chart_click_data = parse_chart_click(params[:menu_click])
-    legend_idx, data_idx, chart_idx, cmd, model, typ = [
-      chart_click_data[:legend_index],
+    data_idx, chart_idx, cmd, model, typ = [
       chart_click_data[:data_index],
       chart_click_data[:chart_index],
       [chart_click_data[:cmd],
@@ -217,7 +215,7 @@ module ApplicationController::Performance
     elsif cmd == "Chart" && model == "Selected"
       return if chart_selected(chart_click_data, data_row, typ, ts)
     elsif cmd == "Chart" && typ.starts_with?("top") && @perf_options[:cat]
-      return if chart_top_by_tag(chart_click_data, data_row, report, legend_idx, model, ts, bc_model)
+      return if chart_top_by_tag(chart_click_data, data_row, report, model, ts, bc_model)
     elsif cmd == "Chart" && typ.starts_with?("top")
       return if chart_top(chart_click_data, data_row, typ, ts, model, bc_model)
     else
@@ -243,9 +241,9 @@ module ApplicationController::Performance
   end
 
   # display selected resources from a tag chart
-  def display_by_tag(chart_click_data, data_row, report, ts, bc_model, model, legend_idx)
-    top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]
-    bc_tag =  "#{Classification.find_by(:name => @perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][legend_idx]}"
+  def display_by_tag(chart_click_data, data_row, report, ts, bc_model, model)
+    top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click_data[:legend_index]]}"][model.downcase.to_sym][:on]
+    bc_tag =  "#{Classification.find_by(:name => @perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][chart_click_data[:legend_index]]}"
     if top_ids.blank?
       @menu_click_msg = _("No %{tag} %{model} were running %{time}") %
         {:tag => bc_tag, :model => bc_model, :time => date_time_running_msg(typ, ts)}
@@ -481,11 +479,11 @@ module ApplicationController::Performance
   end
 
   # create top chart for selected timestamp/model by tag
-  def chart_top_by_tag(chart_click_data, data_row, report, legend_idx, model, ts, bc_model)
+  def chart_top_by_tag(chart_click_data, data_row, report, model, ts, bc_model)
     @record = identify_tl_or_perf_record
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
-    top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]
-    bc_tag =  "#{Classification.find_by_name(@perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][legend_idx]}"
+    top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click_data[:legend_index]]}"][model.downcase.to_sym][:on]
+    bc_tag =  "#{Classification.find_by_name(@perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][chart_click_data[:legend_index]]}"
     if top_ids.blank?
       @menu_click_msg = _("No %{tag} %{model}  were running %{time}") %
                           {:tag => bc_tag, :model => bc_model, :time => date_time_running_msg(typ, ts)}
