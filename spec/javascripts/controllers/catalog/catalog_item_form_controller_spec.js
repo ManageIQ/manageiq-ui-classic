@@ -35,6 +35,9 @@ describe('catalogItemFormController', function() {
           },
           network_credential_id: undefined,
           cloud_credential_id: undefined
+        },
+        retirement: {
+          remove_resources: 'yes_without_playbook',
         }
       }
     };

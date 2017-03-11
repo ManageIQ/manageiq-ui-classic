@@ -23,6 +23,7 @@
                   'ng-options'       => "playbook as playbook.name for playbook in vm.#{prefix}_playbooks",
                   "required"         => "",
                   :miqrequired       => true,
+                  "ng-change"        => "playbookTypeChanged('#{prefix}')",
                   :checkchange       => true,
                   "data-live-search" => "true",
                   'pf-select'        => true}
@@ -95,6 +96,17 @@
                             "checkchange" => ""}
           %span.help-block{"ng-show" => "angularForm.#{prefix}_inventory.$error.miqrequired"}
             = _("Required")
+
+    - if prefix == "retirement"
+      .form-group
+        %label.col-md-3.control-label{"for" => "catalog_id"}
+          = _('Remove resources?')
+        .col-md-9
+          %select{"ng-model"   => "vm.catalogItemModel.retirement_remove_resources",
+                  "name"       => "vm.catalogItemModel.retirement_remove_resources",
+                  'ng-options' => "v as k for (k, v) in vm.catalogItemModel.remove_resources_types",
+                  :checkchange => true,
+                  "pf-select"  => true}
   .col-md-12.col-lg-6
     .form-group
       %label.col-md-3.control-label

@@ -40,6 +40,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       retirement_cloud_type: '',
       cloud_types: ["Amazon", "Azure", "Google", "Openstack", "Vmware"]
     };
+    getRemoveResourcesTypes();
     vm.formId = catalogItemFormId;
     vm.afterGet = false;
     vm.model = "catalogItemModel";
@@ -69,6 +70,23 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     }
   };
 
+  var getRemoveResourcesTypes = function() {
+    if (angular.isUndefined(vm.catalogItemModel.retirement_playbook_id) || vm.catalogItemModel.retirement_playbook_id === '') {
+      vm.catalogItemModel.retirement_remove_resources = 'yes_without_playbook';
+      vm.catalogItemModel['remove_resources_types'] = {
+        "No": "no_without_playbook",
+        "Yes": "yes_without_playbook"
+      };
+    } else {
+      vm.catalogItemModel.retirement_remove_resources = 'no_with_playbook';
+      vm.catalogItemModel['remove_resources_types'] = {
+        "No": "no_with_playbook",
+        "Pre": "pre_with_playbook",
+        "Post": "post_with_playbook"
+      };
+    }
+  }
+
   var getConfigInfo = function(configData) {
     vm.catalogItemModel.provisioning_repository_id = configData.provision.repository_id;
     vm.catalogItemModel.provisioning_playbook_id = configData.provision.playbook_id;
@@ -84,6 +102,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.catalogItemModel.provisioning_variables = configData.provision.extra_vars;
 
     if (typeof configData.retirement !== 'undefined') {
+      vm.catalogItemModel.retirement_remove_resources = configData.retirement.remove_resources;
       vm.catalogItemModel.retirement_repository_id = configData.retirement.repository_id;
       vm.catalogItemModel.retirement_playbook_id = configData.retirement.playbook_id;
       vm.catalogItemModel.retirement_machine_credential_id = configData.retirement.credential_id;
@@ -166,16 +185,19 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     } else if (configData.provisioning_dialog_name !== '')
       catalog_item['config_info']['provision']['new_dialog_name'] = configData.provisioning_dialog_name;
 
-    // add 'retirement' key only if required fields were selected
-    if (configData.retirement_repository_id !== '') {
-      catalog_item['config_info']['retirement'] = {
-          repository_id: configData.retirement_repository_id,
-          playbook_id: configData.retirement_playbook_id,
-          credential_id: configData.retirement_machine_credential_id,
-          hosts: configData.retirement_inventory,
-          dialog_id: configData.retirement_dialog_id,
-          extra_vars: configData.retirement_variables
-      }
+    catalog_item['config_info']['retirement'] = {
+      remove_resources: configData.retirement_remove_resources
+    }
+
+    if (angular.isDefined(vm.catalogItemModel.retirement_repository_id) && configData.retirement_repository_id !== '') {
+      var retirement = catalog_item['config_info']['retirement'];
+
+      retirement['repository_id'] = configData.retirement_repository_id;
+      retirement['playbook_id']   = configData.retirement_playbook_id;
+      retirement['credential_id'] = configData.retirement_machine_credential_id;
+      retirement['hosts']         = configData.retirement_inventory;
+      retirement['dialog_id']     = configData.retirement_dialog_id;
+      retirement['extra_vars']    = configData.retirement_variables;
 
       if (configData.retirement_network_credential_id !== '')
         catalog_item['config_info']['retirement']['network_credential_id'] = configData.retirement_network_credential_id;
@@ -266,6 +288,19 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       vm[prefix + '_cloud_credential'] = _.find(vm[prefix + '_cloud_credentials'], {id: vm.catalogItemModel[prefix + '_cloud_credential_id']});
     })
   };
+
+  vm.playbookTypeChanged = function(prefix) {
+    if (prefix === "retirement")
+      getRemoveResourcesTypes();
+  };
+
+  $scope.$watch('vm._retirement_playbook', function(value) {
+    if (value) {
+      vm.catalogItemModel['retirement_playbook_id'] = value.id;
+    } else
+      vm.catalogItemModel['retirement_playbook_id'] = '';
+    vm.playbookTypeChanged("retirement");
+  });
 
   $scope.$watch('vm.catalogItemModel.display', function(value) {
     vm.catalogItemModel.display = value;
