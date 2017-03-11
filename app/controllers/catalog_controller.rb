@@ -1778,11 +1778,11 @@ class CatalogController < ApplicationController
     playbook_details = {}
     provision = @record.config_info[:provision]
     playbook_details[:provisioning] = {}
-    playbook_details[:provisioning][:repository] = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScriptSource.find(provision[:repository_id]).name
-    playbook_details[:provisioning][:playbook] = ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook.find(provision[:playbook_id]).name
-    playbook_details[:provisioning][:machine_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::MachineCredential.find(provision[:credential_id]).name
-    playbook_details[:provisioning][:network_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::NetworkCredential.find(provision[:network_credential_id]).name if provision[:network_credential_id]
-    playbook_details[:provisioning][:cloud_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::CloudCredential.find(provision[:cloud_credential_id]).name if provision[:cloud_credential_id]
+    playbook_details[:provisioning][:repository] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource.find(provision[:repository_id]).name
+    playbook_details[:provisioning][:playbook] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook.find(provision[:playbook_id]).name
+    playbook_details[:provisioning][:machine_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential.find(provision[:credential_id]).name
+    playbook_details[:provisioning][:network_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential.find(provision[:network_credential_id]).name if provision[:network_credential_id]
+    playbook_details[:provisioning][:cloud_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential.find(provision[:cloud_credential_id]).name if provision[:cloud_credential_id]
     dialog = provision[:dialog_id] ? Dialog.find(provision[:dialog_id]) : Dialog.find_by(:name => provision[:dialog_name])
     playbook_details[:provisioning][:dialog] = dialog.name
     playbook_details[:provisioning][:dialog_id] = dialog.id
@@ -1790,11 +1790,11 @@ class CatalogController < ApplicationController
     if @record.config_info[:retirement]
       retirement = @record.config_info[:retirement]
       playbook_details[:retirement] = {}
-      playbook_details[:retirement][:repository] = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScriptSource.find(retirement[:repository_id]).name
-      playbook_details[:retirement][:playbook] = ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook.find(retirement[:playbook_id]).name
-      playbook_details[:retirement][:machine_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::MachineCredential.find(retirement[:credential_id]).name
-      playbook_details[:retirement][:network_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::NetworkCredential.find(retirement[:network_credential_id]).name if retirement[:network_credential_id]
-      playbook_details[:retirement][:cloud_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::CloudCredential.find(retirement[:cloud_credential_id]).name if retirement[:cloud_credential_id]
+      playbook_details[:retirement][:repository] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource.find(retirement[:repository_id]).name
+      playbook_details[:retirement][:playbook] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook.find(retirement[:playbook_id]).name
+      playbook_details[:retirement][:machine_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential.find(retirement[:credential_id]).name
+      playbook_details[:retirement][:network_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential.find(retirement[:network_credential_id]).name if retirement[:network_credential_id]
+      playbook_details[:retirement][:cloud_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential.find(retirement[:cloud_credential_id]).name if retirement[:cloud_credential_id]
       dialog = provision[:dialog_id] ? Dialog.find(retirement[:dialog_id]) : Dialog.find_by(:name => retirement[:dialog_name])
       playbook_details[:retirement][:dialog] = dialog.name
       playbook_details[:retirement][:dialog_id] = dialog.id
