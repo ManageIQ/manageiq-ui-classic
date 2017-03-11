@@ -35,15 +35,12 @@ class AuthKeyPairCloudController < ApplicationController
     save_current_page_for_refresh
 
     handle_tag_presses(params[:pressed])
-    handle_button_pressed(params[:pressed])
 
-    return if performed?
-
-    if button_replace_gtl_main?
-      replace_gtl_main_div
-    else
-      render_flash
+    handle_button_pressed(params[:pressed]) do
+      return if performed?
     end
+
+    button_render_fallback
   end
 
   def set_form_vars
