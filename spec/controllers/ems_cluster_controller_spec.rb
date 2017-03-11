@@ -82,4 +82,6 @@ describe EmsClusterController do
   end
 
   include_examples '#download_summary_pdf', :ems_cluster
+
+  it_behaves_like "controller with custom buttons"
 end

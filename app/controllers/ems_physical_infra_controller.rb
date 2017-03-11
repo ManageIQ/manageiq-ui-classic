@@ -64,4 +64,5 @@ class EmsPhysicalInfraController < ApplicationController
   public :restful?
 
   menu_section :phy
+  has_custom_buttons
 end

@@ -32,4 +32,5 @@ class EmsStorageController < ApplicationController
   end
 
   menu_section :sto
+  has_custom_buttons
 end

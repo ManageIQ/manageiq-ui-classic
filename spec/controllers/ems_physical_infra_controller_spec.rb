@@ -223,4 +223,6 @@ describe EmsPhysicalInfraController do
   end
 
   include_examples '#download_summary_pdf', :ems_physical_infra
+
+  it_behaves_like "controller with custom buttons"
 end

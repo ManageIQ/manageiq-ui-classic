@@ -386,4 +386,5 @@ class ServiceController < ApplicationController
   end
 
   menu_section :svc
+  has_custom_buttons
 end
