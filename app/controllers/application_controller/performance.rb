@@ -79,8 +79,7 @@ module ApplicationController::Performance
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
     if params[:menu_choice]
       chart_click_data = parse_chart_click(params[:menu_choice])
-      data_idx, chart_idx, _cmd, model, typ = [
-        chart_click_data[:data_index],
+      chart_idx, _cmd, model, typ = [
         chart_click_data[:chart_index],
         [chart_click_data[:cmd],
          chart_click_data[:model],
@@ -88,7 +87,7 @@ module ApplicationController::Performance
       ].flatten
 
       report = @sb[:chart_reports].kind_of?(Array) ? report = @sb[:chart_reports][chart_idx] : @sb[:chart_reports]
-      data_row = report.table.data[data_idx]
+      data_row = report.table.data[chart_click_data[:data_index]]
       if @perf_options[:cat]
         top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click_data[:legend_index]]}"][model.downcase.to_sym][:on]
       else
@@ -180,8 +179,7 @@ module ApplicationController::Performance
   def perf_menu_click
     # Parse the clicked item to get indexes and selection variables
     chart_click_data = parse_chart_click(params[:menu_click])
-    data_idx, chart_idx, cmd, model, typ = [
-      chart_click_data[:data_index],
+    chart_idx, cmd, model, typ = [
       chart_click_data[:chart_index],
       [chart_click_data[:cmd],
        chart_click_data[:model],
@@ -192,7 +190,7 @@ module ApplicationController::Performance
     bc_model = ['availability_zone', 'host_aggregate'].include?(request.parameters['controller']) && model == 'VMs' ? 'Instances' : model
 
     report = @sb[:chart_reports].kind_of?(Array) ? @sb[:chart_reports][chart_idx] : @sb[:chart_reports]
-    data_row = report.table.data[data_idx]
+    data_row = report.table.data[chart_click_data[:data_index]]
 
     # Use timestamp or statistic_time (metrics vs ontap)
     ts = (data_row["timestamp"] || data_row["statistic_time"]).in_time_zone(@perf_options[:tz])                 # Grab the timestamp from the row in selected tz
