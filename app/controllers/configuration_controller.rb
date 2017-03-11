@@ -33,6 +33,7 @@ class ConfigurationController < ApplicationController
   # handle buttons pressed on the button bar
   def button
     set_default_refresh_div
+
     handle_button_pressed(params[:pressed])
 
     check_if_button_is_implemented
@@ -40,7 +41,13 @@ class ConfigurationController < ApplicationController
     if button_has_redirect_suffix?
       js_redirect_with_partial_and_id
     else
-      configuration_render_update
+      c_tb = build_toolbar(center_toolbar_filename)
+
+      render_update_with_prologue do |page|
+        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page.replace_html("main_div", :partial => "ui_4") # Replace the main div area contents
+        page << javascript_pf_toolbar_reload('center_tb', c_tb)
+      end
     end
   end
 

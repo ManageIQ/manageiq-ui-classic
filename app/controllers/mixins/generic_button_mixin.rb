@@ -582,6 +582,14 @@ module Mixins
       javascript_redirect(args)
     end
 
+    def js_redirect_with_redirect_controller_or_partial
+      if @redirect_controller
+        js_redirect_with_controller
+      else
+        js_redirect_with_partial_and_id
+      end
+    end
+
     # redirect to build the retire screen
     def redirect_to_retire_screen_if_single_delete
       if !@flash_array.nil? && @single_delete
@@ -638,43 +646,6 @@ module Mixins
     end
 
     # Original:
-    # c_tb = build_toolbar(center_toolbar_filename)
-    # render :update do |page|
-    #   page << javascript_prologue
-    #   page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-    #   page.replace_html("main_div", :partial => "ui_4") # Replace the main div area contents
-    #   page << javascript_pf_toolbar_reload('center_tb', c_tb)
-    # end
-    #
-    # Context:
-    # !button_has_redirect_suffix?
-    def configuration_render_update
-      c_tb = build_toolbar(center_toolbar_filename)
-
-      render_update_with_prologue do |page|
-        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-        page.replace_html("main_div", :partial => "ui_4") # Replace the main div area contents
-        page << javascript_pf_toolbar_reload('center_tb', c_tb)
-      end
-    end
-
-    # button_has_redirect_suffix?
-    def host_javascript_redirect
-      if @flash_array
-        show_list
-        replace_gtl_main_div
-      elsif @redirect_controller
-        if flash_errors?
-          javascript_flash # render called
-        else
-          js_redirect_with_controller
-        end
-      else
-        js_redirect_with_partial_and_id
-      end
-    end
-
-    # Original:
     # render :update do |page|
     #   page << javascript_prologue
     #   unless @refresh_partial.nil?
@@ -703,85 +674,6 @@ module Mixins
       end
     end
 
-    # Original:
-    # render :update do |page|
-    #   page << javascript_prologue
-    #   unless @refresh_partial.nil?
-    #     page << "miqSetButtons(0, 'center_tb');"
-    #     if refreshing_flash_msg?
-    #       replace_refresh_div_with_partial(page)
-    #     else
-    #       page.replace_html("main_div", :partial => @refresh_partial)
-    #       page.replace_html("paging_div", :partial => 'layouts/pagingcontrols',
-    #                                       :locals  => {:pages      => @pages,
-    #                                                    :action_url => @lastaction,
-    #                                                    :db         => @view.db,
-    #                                                    :headers    => @view.headers})
-    #     end
-    #   end
-    # end
-    #
-    def miq_task_render_update
-      render_update_with_prologue do |page|
-        return if @refresh_partial.nil?
-
-        page << "miqSetButtons(0, 'center_tb');"
-
-        if refreshing_flash_msg?
-          replace_refresh_div_with_partial(page)
-        else
-          page.replace_html("main_div", :partial => @refresh_partial)
-          page.replace_html("paging_div", :partial => 'layouts/pagingcontrols',
-                                          :locals  => {:pages      => @pages,
-                                                       :action_url => @lastaction,
-                                                       :db         => @view.db,
-                                                       :headers    => @view.headers})
-        end
-      end
-    end
-
-    # Original:
-    # if !@flash_array.nil? && @single_delete
-    #   # redirect to build the retire screen
-    #   javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
-    # elsif params[:pressed].ends_with?("_edit")
-    #   if @redirect_controller
-    #     javascript_redirect :controller => @redirect_controller, :action => @refresh_partial, :id => @redirect_id, :org_controller => @org_controller
-    #   else
-    #     javascript_redirect :action => @refresh_partial, :id => @redirect_id
-    #   end
-    # else
-    #   if @refresh_div == "main_div" && @lastaction == "show_list"
-    #     replace_gtl_main_div
-    #   else
-    #     if @refresh_div == "flash_msg_div"
-    #       javascript_flash(:spinner_off => true)
-    #     else
-    #       options
-    #       partial_replace(@refresh_div, "vm_common/#{@refresh_partial}")
-    #     end
-    #   end
-    # end
-    #
-    def vm_common_javascript_redirect
-      redirect_to_retire_screen_if_single_delete
-
-      if params[:pressed].ends_with?("_edit")
-        js_redirect_with_redirect_controller_or_partial
-
-        return
-      end
-
-      if button_replace_gtl_main?
-        replace_gtl_main_div
-      elsif refreshing_flash_msg?
-        javascript_flash(:spinner_off => true)
-      else
-        options
-        partial_replace(@refresh_div, "vm_common/#{@refresh_partial}")
-      end
-    end
-
     def storage_manager_javascript_redirect
       if button_has_redirect_suffix?(params[:pressed])
         js_redirect_with_redirect_controller_or_partial
@@ -796,61 +688,6 @@ module Mixins
       else
         render_update_with_prologue do |page|
           replace_refresh_div_contents_with_partial(page)
-        end
-      end
-    end
-
-    def js_redirect_with_redirect_controller_or_partial
-      if @redirect_controller
-        js_redirect_with_controller
-      else
-        js_redirect_with_partial_and_id
-      end
-    end
-
-    def cloud_tenant_javascript_redirect
-      if params[:pressed].starts_with?(*editable_objects)
-        target_controller = editable_objects.detect { |n| params[:pressed].starts_with?(n) }
-        action = params[:pressed].sub("#{target_controller}_", '')
-
-        if action == 'delete'
-          action = "#{action}_#{target_controller.sub('cloud_', '').pluralize}"
-        end
-
-        if action == 'detach'
-          volume = find_by_id_filtered(CloudVolume, from_cid(params[:miq_grid_checks]))
-
-          if volume.attachments.empty?
-            render_flash(_("%{volume} \"%{volume_name}\" is not attached to any %{instances}") % {
-              :volume      => ui_lookup(:table => 'cloud_volume'),
-              :volume_name => volume.name,
-              :instances   => ui_lookup(:tables => 'vm_cloud')
-            }, :error)
-
-            return
-          end
-        end
-
-        javascript_redirect :controller      => target_controller,
-                            :miq_grid_checks => params[:miq_grid_checks],
-                            :action          => action
-      end
-    end
-
-    def host_aggregate_javascript_redirect
-      render :update do |page|
-        page << javascript_prologue
-        unless @refresh_partial.nil?
-          if @refresh_div == "flash_msg_div"
-            page.replace(@refresh_div, :partial => @refresh_partial)
-          elsif %w(images instances).include?(@display) # If displaying vms, action_url s/b show
-            page << "miqSetButtons(0, 'center_tb');"
-            page.replace_html("main_div",
-                              :partial => "layouts/gtl",
-                              :locals  => {:action_url => "show/#{@host_aggregate.id}"})
-          else
-            page.replace_html(@refresh_div, :partial => @refresh_partial)
-          end
         end
       end
     end

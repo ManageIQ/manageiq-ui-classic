@@ -272,6 +272,35 @@ class CloudTenantController < ApplicationController
     )
   end
 
+  def cloud_tenant_javascript_redirect
+    if params[:pressed].starts_with?(*editable_objects)
+      target_controller = editable_objects.detect { |n| params[:pressed].starts_with?(n) }
+      action = params[:pressed].sub("#{target_controller}_", '')
+
+      if action == 'delete'
+        action = "#{action}_#{target_controller.sub('cloud_', '').pluralize}"
+      end
+
+      if action == 'detach'
+        volume = find_by_id_filtered(CloudVolume, from_cid(params[:miq_grid_checks]))
+
+        if volume.attachments.empty?
+          render_flash(_("%{volume} \"%{volume_name}\" is not attached to any %{instances}") % {
+            :volume      => ui_lookup(:table => 'cloud_volume'),
+            :volume_name => volume.name,
+            :instances   => ui_lookup(:tables => 'vm_cloud')
+          }, :error)
+
+          return
+        end
+      end
+
+      javascript_redirect :controller      => target_controller,
+                          :miq_grid_checks => params[:miq_grid_checks],
+                          :action          => action
+    end
+  end
+
   menu_section :clo
   has_custom_buttons
 end

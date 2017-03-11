@@ -591,5 +591,22 @@ class HostAggregateController < ApplicationController
     javascript_redirect :action => "remove_host_select", :id => checked_item_id
   end
 
+  def host_aggregate_javascript_redirect
+    render_update_with_prologue do |page|
+      unless @refresh_partial.nil?
+        if refreshing_flash_msg?
+          replace_refresh_div_with_partial(page)
+        elsif %w(images instances).include?(@display) # If displaying vms, action_url s/b show
+          button_center_toolbar(page)
+          page.replace_html("main_div",
+                            :partial => "layouts/gtl",
+                            :locals  => {:action_url => "show/#{@host_aggregate.id}"})
+        else
+          replace_refresh_div_contents_with_partial(page)
+        end
+      end
+    end
+  end
+
   menu_section :clo
 end

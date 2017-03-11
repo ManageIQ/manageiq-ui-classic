@@ -1767,4 +1767,23 @@ module VmCommon
   def handle_remove_service
     remove_service
   end
+
+  def vm_common_javascript_redirect
+    redirect_to_retire_screen_if_single_delete
+
+    if params[:pressed].ends_with?("_edit")
+      js_redirect_with_redirect_controller_or_partial
+
+      return
+    end
+
+    if button_replace_gtl_main?
+      replace_gtl_main_div
+    elsif refreshing_flash_msg?
+      javascript_flash(:spinner_off => true)
+    else
+      options
+      partial_replace(@refresh_div, "vm_common/#{@refresh_partial}")
+    end
+  end
 end

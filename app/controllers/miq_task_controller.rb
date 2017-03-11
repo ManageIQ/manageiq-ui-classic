@@ -219,7 +219,23 @@ class MiqTaskController < ApplicationController
   def button
     restore_edit_for_search
     generic_x_button(TASK_X_BUTTON_ALLOWED_ACTIONS)
-    miq_task_render_update
+
+    render_update_with_prologue do |page|
+      return if @refresh_partial.nil?
+
+      button_center_toolbar(page)
+
+      if refreshing_flash_msg?
+        replace_refresh_div_with_partial(page)
+      else
+        page.replace_html("main_div", :partial => @refresh_partial)
+        page.replace_html("paging_div", :partial => 'layouts/pagingcontrols',
+                                        :locals  => {:pages      => @pages,
+                                                     :action_url => @lastaction,
+                                                     :db         => @view.db,
+                                                     :headers    => @view.headers})
+      end
+    end
   end
 
   # Gather any changed options

@@ -407,10 +407,7 @@ class HostController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    restore_edit_for_search
-    copy_sub_item_display_value_to_params
-    save_current_page_for_refresh
-    set_default_refresh_div
+    generic_button_setup
 
     handle_tag_presses(params[:pressed])
     handle_host_power_press(params[:pressed])
@@ -607,7 +604,7 @@ class HostController < ApplicationController
       perf_refresh
       custom_button
     )
-    ctrlr_buttons += handled_host_buttons
+    ctrlr_buttons + handled_host_buttons
   end
 
   def handle_common_drift
@@ -624,6 +621,21 @@ class HostController < ApplicationController
 
   def handle_perf_refresh
     perf_refresh_data
+  end
+
+  def host_javascript_redirect
+    if @flash_array
+      show_list
+      replace_gtl_main_div
+    elsif @redirect_controller
+      if flash_errors?
+        javascript_flash # render called
+      else
+        js_redirect_with_controller
+      end
+    else
+      js_redirect_with_partial_and_id
+    end
   end
 
   menu_section :inf
