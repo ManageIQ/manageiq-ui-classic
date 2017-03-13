@@ -138,7 +138,6 @@ module VmShowMixin
     @base           = session[:vm_compare_base]
     @filters        = get_filters
     @catinfo        = session[:vm_catinfo]
-    @cats           = session[:vm_cats]
     @display        = session[:vm_display]
     @polArr         = session[:polArr] || ""          # current tags in effect
     @policy_options = session[:policy_options] || ""
@@ -152,7 +151,6 @@ module VmShowMixin
     session[:vm_compare_base] = @base
     session[:vm_filters]      = @filters
     session[:vm_catinfo]      = @catinfo
-    session[:vm_cats]         = @cats
     session[:vm_display]      = @display unless @display.nil?
     session[:polArr]          = @polArr unless @polArr.nil?
     session[:policy_options]  = @policy_options unless @policy_options.nil?
