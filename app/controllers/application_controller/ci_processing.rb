@@ -127,7 +127,8 @@ module ApplicationController::CiProcessing
     @group = group ? group.id.to_s : nil
     Rbac.filtered(MiqGroup).each { |g| @groups[g.description] = g.id.to_s }
     @user = @group = DONT_CHANGE_OWNER if ownership_items.length > 1
-    @ownershipitems = klass.find(ownership_items).sort_by(&:name)
+    @ownershipitems = Rbac.filtered(klass.where(:id => ownership_items).order(:name), :class => klass)
+    raise _('Invalid items passed') unless @ownershipitems.pluck(:id).to_set == ownership_items.map(&:to_i).to_set
     {:user  => @user,
      :group => @group}
   end
