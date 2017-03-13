@@ -415,10 +415,10 @@ module ApplicationController::MiqRequestMethods
     }
 
     # add tenant column header to cloud workflows only
-    headers["cloud_tenant"] = "Tenant" if vms.any? { |vm| vm.respond_to?(:cloud_tenant) }
+    headers["cloud_tenant"] = _("Tenant") if vms.any? { |vm| vm.respond_to?(:cloud_tenant) }
     # add snapshot/image column header to cloud workflows only, since they're
     # currently the only ones that support the field.
-    headers["image?"] = "Type" if vms.any? { |vm| vm.respond_to?(:image?) }
+    headers["image?"] = _("Type") if vms.any? { |vm| vm.respond_to?(:image?) }
 
     integer_fields = %w(allocated_disk_storage mem_cpu logical_cpus v_total_snapshots)
 
