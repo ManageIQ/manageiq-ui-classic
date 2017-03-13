@@ -737,7 +737,6 @@ module ApplicationController::Compare
   # Initialize the VM compare array
   def compare_init(mode)
     @compare = nil                                                            # Clear the compare array to have it rebuilt
-    @base = nil                                                                 # Clear the base comparison VM
     if mode == "compare"
       session[:miq_compressed]  = (settings(:views, :compare) == "compressed")
       session[:miq_exists_mode] = (settings(:views, :compare_mode) == "exists")
@@ -748,74 +747,6 @@ module ApplicationController::Compare
     @compressed = session[:miq_compressed]
     @exists_mode = session[:miq_exists_mode]
   end
-
-  # Set a given VM id as the base vm for compare
-  def compare_set_base(baseid)
-    @compare.results[1..-1].each do |c|
-      if c[:object].id == baseid
-        @base = c
-        break
-      end
-    end
-
-    compare_matches                             # Go calc match %s against the new base
-  end
-
-  # Calculate the value matches in each compare section
-  def compare_matches
-    @compare.results.each_with_index do |r, idx|                            # Go thru each VM result
-      if idx != 0
-        all_total = 0; all_matches = 0
-        session[:miq_sections].each do |s|                                        # Go thru each section
-          section = s[:name]
-          if s[:added] == true                                                        # Only if section has data
-            count = 0
-            r[:results][s[:name]].each_with_index do |val, val_idx|         # Go thru each value
-              count += 1 if val == @base[:results][s[:name]][val_idx]   # count matches between the value and the base value
-            end
-            if r[:results][s[:name]].length > 0
-              r[:results][s[:name] + "_match"] = (count * 100) / r[:results][s[:name]].length # Set the percent of matches for the VM to the base
-              if s[:checked] == true                                                  # Only if section is currently checked
-                all_matches += count                                                # Add count to the total matches
-                all_total += r[:results][s[:name]].length                       # Add total to the grand total
-              end
-            else
-              r[:results][s[:name] + "_match"] = 0
-            end
-          end
-        end
-        r[:results]["all_match"] = all_total == 0 ? 0 : all_matches * 100 / all_total # Calculate the total matches percent
-      end
-    end
-  end
-
-  # Calculate the value matches in each drift section
-  def drift_matches
-    @compare.results.each_with_index do |r, idx|                            # Go thru each VM result
-      if idx > 1                                                                            # Skip master list and first timestamp
-        all_match = true
-        prev = ""
-        session[:miq_sections].each do |s|                                        # Go thru each section
-          section = s[:name]
-          match = true
-          if s[:added] == true                                                        # Only if section has data
-            r[:results][s[:name]].each_with_index do |val, val_idx|         # Go thru each value
-              if val != @compare.results[idx - 1][:results][s[:name]][val_idx]  # Compare to previous timestamp entry
-                match = false                                                         # Doesn't match, set it and
-                break                                                                     #   move on to the next section
-              end
-            end
-            r[:results][s[:name] + "_match"] = match                      # Set section match = true or false
-            if s[:checked] == true                                                  # Only if section is currently checked
-              all_match = match && all_match                                  # Set all_match
-            end
-          end
-        end
-        r[:results]["all_match"] = all_match                                    # Set all match value in the object
-      end
-    end
-  end
-  ####### End of compare & drift related methods
 
   # Compare selected VMs
   def comparemiq
