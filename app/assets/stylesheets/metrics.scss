@@ -33,6 +33,10 @@
   .graph-view {
     overflow-x: hidden;
     overflow-y: hidden;
+
+    .dropdown-kebab-pf .dropdown-menu {
+      left: 0px;
+    }
   }
 
   .line-chart {
