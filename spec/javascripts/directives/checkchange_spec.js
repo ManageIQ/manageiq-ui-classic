@@ -2,7 +2,7 @@ describe('checkchange initialization', function() {
   var $scope, form;
   beforeEach(module('ManageIQ'));
   beforeEach(inject(function($compile, $rootScope, miqService) {
-    $scope = $rootScope;
+    $scope = $rootScope.$new();
     var element = angular.element(
       '<form name="angularForm">' +
       '<input checkchange type="text" ng-model="repo.path" name="repo_path"/>' +

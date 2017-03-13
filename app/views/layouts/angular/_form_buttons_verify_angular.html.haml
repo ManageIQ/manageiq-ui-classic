@@ -6,16 +6,17 @@
   - verify_title_off ||= _("Server information, Username and matching password fields are needed to perform verification of credentials")
 - if controller.send(:restful?)
   -# TODO: replace first argument with a sane way of submitting the form
-  - validate = "validateClicked({target: '.validate_button:visible'}, '#{valtype}', true)"
+  - validate = "#{main_scope}.validateClicked({target: '.validate_button:visible'}, '#{valtype}', true)"
 - else
-  - validate = "validateClicked('#{url_for_only_path(:action => validate_url, :id => id, :type => valtype, :button => "validate")}')"
+  - validate = "#{main_scope}.validateClicked('#{url_for_only_path(:action => validate_url, :id => id, :type => valtype, :button => "validate")}')"
 %div{"ng-show" => ng_show}
   %miq-button{:class           => 'validate_button',
               :name            => _("Validate"),
               "disabled-title" => verify_title_off,
               "enabled-title"  => verify_title_on,
-              :enabled         => basic_info_needed ? "canValidateBasicInfo()" : "canValidate()",
+              :enabled         => basic_info_needed ? "#{main_scope}.canValidateBasicInfo(angularForm)" : "#{main_scope}.canValidate(angularForm)",
               'on-click'       => validate,
+              :xs              => 'true',
               :primary         => 'true'}
   %div{"ng-if" => "checkAuthentication"}
     .form-group{"ng-class" => "{'has-error': angularForm.#{valtype}_auth_status.$error.validationRequired}"}
