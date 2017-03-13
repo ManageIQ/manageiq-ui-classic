@@ -128,13 +128,13 @@
                        "reset-validation-status"     => "#{prefix}_auth_status")
     .col-md-8{"ng-if" => "emsCommonModel.emstype == 'hawkular'"}
       = select_tag("#{prefix}_security_protocol",
-                       options_for_select([["<#{_('Choose')}>", nil]] + @hawkular_security_protocols, disabled: ["<#{_('Choose')}>", nil]),
+                       options_for_select([["<#{_('Choose')}>", nil]] + @hawkular_security_protocols, "disabled" => ["<#{_('Choose')}>", nil]),
                        "ng-model"                    => "#{ng_model}.#{prefix}_security_protocol",
                        "checkchange"                 => "",
                        "required"                    => "",
                        "ng-change"                   => "hawkularSecurityProtocolChanged()",
                        "selectpicker-for-select-tag" => "",
-                       "prefix"                      => "#{prefix}",
+                       "prefix"                      => prefix.to_s,
                        "reset-validation-status"     => "#{prefix}_auth_status")
 
 %div{"ng-if" => defined?(tls_verify_hide) ? false : true}

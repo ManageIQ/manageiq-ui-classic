@@ -378,7 +378,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     var defaultNonSSLPort = '8080';
     var defaultSSLPort = '8443';
     var defaultPorts = [defaultNonSSLPort, defaultSSLPort];
-    if ($scope.emsCommonModel.default_api_port === undefined ||
+    if (typeof $scope.emsCommonModel.default_api_port === 'undefined' ||
         $scope.emsCommonModel.default_api_port === '' ||
         defaultPorts.indexOf($scope.emsCommonModel.default_api_port) != -1) {
       if ($scope.emsCommonModel.default_security_protocol === 'non-ssl') {
