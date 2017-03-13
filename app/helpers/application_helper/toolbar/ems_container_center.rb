@@ -65,13 +65,13 @@ class ApplicationHelper::Toolbar::EmsContainerCenter < ApplicationHelper::Toolba
           :options   => {:feature => :ad_hoc_metrics},
           :url_parms => "?display=ad_hoc_metrics"),
         button(
-          :ems_container_launch_external_logging_support,
+          :ems_container_launch_external_logging,
           'product product-monitoring fa-lg',
           N_('Open a new browser window with the External Logging Presentation UI. ' \
              'This requires the External Logging to be deployed on this Proider.'),
           N_('External Logging'),
           :klass => ApplicationHelper::Button::EmsContainerLaunchExternalLoggingSupport,
-          :url   => "launch_external_logging_support"
+          :url   => "launch_external_logging"
         ),
       ]
     ),
