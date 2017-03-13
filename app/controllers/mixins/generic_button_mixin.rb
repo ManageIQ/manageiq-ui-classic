@@ -1,8 +1,6 @@
 
 module Mixins
   module GenericButtonMixin
-    # handle buttons pressed on the button bar
-    #
     def button
       generic_button_setup
 
@@ -491,7 +489,6 @@ module Mixins
     # redirect to build the retire screen
     def redirect_to_retire_screen_if_single_delete
       if !@flash_array.nil? && @single_delete
-        # javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
         javascript_redirect :action      => 'show_list',
                             :flash_msg   => @flash_array[0][:message],
                             :flash_error => @flash_array[0][:level] == :error

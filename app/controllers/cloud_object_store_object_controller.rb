@@ -16,16 +16,17 @@ class CloudObjectStoreObjectController < ApplicationController
     restore_edit_for_search
     save_current_page_for_refresh
 
-    handle_tag_presses(params[:pressed])
+    # FIXME: Change process_cloud_object_storage_buttons to handle_button_pressed
+    # handle_tag_presses(params[:pressed])
 
     process_cloud_object_storage_buttons(params[:pressed])
 
-    if !@flash_array.nil? && params[:pressed].ends_with?("delete")
-      javascript_redirect :action      => 'show_list',
-                          :flash_msg   => @flash_array[0][:message],
-                          :flash_error => @flash_array[0][:level] == :error
-    elsif !@flash_array.nil?
-      render_flash unless performed?
+    @single_delete = params[:pressed].ends_with?("delete")
+
+    redirect_to_retire_screen_if_single_delete
+
+    unless @flash_array.nil? || performed?
+      render_flash
     end
   end
 
