@@ -20,7 +20,7 @@ class ServiceController < ApplicationController
   end
 
   def x_button
-     generic_x_button(SERVICE_X_BUTTON_ALLOWED_ACTIONS)
+    generic_x_button(SERVICE_X_BUTTON_ALLOWED_ACTIONS)
   end
 
   # Service show selected, redirect to proper controller
