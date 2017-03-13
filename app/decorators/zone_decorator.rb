@@ -1,5 +1,5 @@
 class ZoneDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'pficon pficon-zone'
   end
 end

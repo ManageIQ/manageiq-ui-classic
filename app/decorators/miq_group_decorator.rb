@@ -1,5 +1,5 @@
 class MiqGroupDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'product product-group'
   end
 end

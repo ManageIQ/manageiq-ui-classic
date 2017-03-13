@@ -1,5 +1,5 @@
 class DialogTabDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'product product-tab'
   end
 end

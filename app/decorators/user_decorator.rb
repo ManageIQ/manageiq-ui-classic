@@ -1,5 +1,5 @@
 class UserDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'pficon pficon-user'
   end
 end

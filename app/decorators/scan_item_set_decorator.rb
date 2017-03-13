@@ -1,5 +1,5 @@
 class ScanItemSetDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'fa fa-search'
   end
 end

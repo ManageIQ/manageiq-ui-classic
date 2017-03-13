@@ -1,5 +1,5 @@
 class LdapDomainDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'pficon pficon-domain'
   end
 end

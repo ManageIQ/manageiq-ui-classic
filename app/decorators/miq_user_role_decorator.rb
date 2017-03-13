@@ -1,5 +1,5 @@
 class MiqUserRoleDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'product product-role'
   end
 end

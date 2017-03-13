@@ -1,5 +1,5 @@
 class ConditionDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'product product-miq_condition'
   end
 end

@@ -1,10 +1,10 @@
 module ManageIQ::Providers::Hawkular
   class MiddlewareManagerDecorator < MiqDecorator
-    def fonticon
+    def self.fonticon
       nil
     end
 
-    def listicon_image
+    def self.listicon_image
       "svg/vendor-hawkular.svg"
     end
   end

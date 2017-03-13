@@ -1,5 +1,5 @@
 class DatacenterDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'fa fa-building-o'
   end
 end

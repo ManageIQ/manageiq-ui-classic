@@ -1,6 +1,6 @@
 module ManageIQ::Providers
   class ConfigurationManagerDecorator < MiqDecorator
-    def fonticon
+    def self.fonticon
       nil
     end
 

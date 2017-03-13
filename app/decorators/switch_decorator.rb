@@ -1,9 +1,9 @@
 class SwitchDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'product product-network_switch'
   end
 
-  def listicon_image
+  def self.listicon_image
     '100/network_switch.png'
   end
 end

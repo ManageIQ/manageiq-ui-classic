@@ -1,10 +1,10 @@
 module ManageIQ::Providers
   class AutomationManager::AuthenticationDecorator < MiqDecorator
-    def fonticon
+    def self.fonticon
       'fa fa-lock'
     end
 
-    def listicon_image
+    def self.listicon_image
       '100/authentication.png'
     end
   end
