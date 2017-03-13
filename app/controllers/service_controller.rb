@@ -141,12 +141,12 @@ class ServiceController < ApplicationController
   helper_method :textual_group_list
 
   def textual_provisioning_group_list
-    [%i(provisioning_results), %i(provisioning_details), %i(provisioning_credentials), %i(provisioning_plays)]
+    [%i(provisioning_results provisioning_plays), %i(provisioning_details provisioning_credentials)]
   end
   helper_method :textual_provisioning_group_list
 
   def textual_retirement_group_list
-    [%i(retirement_results), %i(retirement_details), %i(retirement_credentials), %i(retirement_plays)]
+    [%i(retirement_results retirement_plays), %i(retirement_details retirement_credentials)]
   end
   helper_method :textual_retirement_group_list
 
