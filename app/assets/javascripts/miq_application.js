@@ -1070,7 +1070,7 @@ function miq_tabs_init(id, url) {
   $(id + ' > ul.nav-tabs a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     // Refresh CodeMirror when its tab is toggled
     if ($($(e.target).attr('href')).hasClass('cm-tab') && typeof(ManageIQ.editor) != 'undefined') {
-      ManageIQ.editor.refresh();
+      miq_refresh_code_mirror();
     }
   });
 
@@ -1090,6 +1090,13 @@ function miq_tabs_init(id, url) {
   } else if ($(id + ' > ul.nav-tabs > li:not(.hidden)').length > 1) {
     $(id + ' > ul.nav-tabs').show();
   }
+}
+
+// refresh multiple/single code mirror textboxes on screen
+function miq_refresh_code_mirror() {
+  $('.CodeMirror').each(function(_i, el){
+    el.CodeMirror.refresh();
+  });
 }
 
 function miq_tabs_disable_inactive(id) {

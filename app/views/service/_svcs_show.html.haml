@@ -1,8 +1,35 @@
 = render :partial => "layouts/textual_groups_generic"
-.row
-  .col-md-12.col-lg-6
-    %h3
-      = _('VMs')
+- if @record.type == "ServiceAnsiblePlaybook"
+  #services_tab
+    - job = @record.try(:job, "Retirement")
+    - unless job
+      -# show header when Retirement tab is not visible,
+      -# tabs are only displayed when there are are more than 1 tab on screen
+      %hr
+      %h3= _("Provisioning")
+    %ul.nav.nav-tabs
+      = miq_tab_header("provisioning") do
+        = _("Provisioning")
+      - if job
+        = miq_tab_header("retirement") do
+          = _("Retirement")
+    .tab-content
+      = miq_tab_content("provisioning", 'default', :class => 'cm-tab') do
+        = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_provisioning_group_list}
+        - if @job && @job.try(:raw_stdout)
+          = render :partial => "layouts/textual_code_mirror", :locals => {:label => 'Standard Output', :value => @job.raw_stdout, :mode => "htmlmixed", :text_area_id => "provision_output"}
+      - if job
+        = miq_tab_content("retirement", 'default', :class => 'cm-tab') do
+          = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_retirement_group_list}
+          = render :partial => "layouts/textual_code_mirror", :locals => {:label => 'Standard Output', :value => job.raw_stdout, :mode => "htmlmixed", :text_area_id => "retirement_output"}
+  :javascript
+    miq_tabs_init('#services_tab');
+    miq_refresh_code_mirror();
+- else
+  .row
+    .col-md-12.col-lg-6
+      %h3
+        = _('VMs')
 
-    - if @view
-      = render :partial => "layouts/gtl", :locals => {:view => @view}
+      - if @view
+        = render :partial => "layouts/gtl", :locals => {:view => @view}
