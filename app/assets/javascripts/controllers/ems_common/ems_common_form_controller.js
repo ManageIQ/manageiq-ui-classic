@@ -187,6 +187,10 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.api_version                     = 'v2';
       $scope.emsCommonModel.ems_controller                  = data.ems_controller;
       $scope.emsCommonModel.ems_controller === 'ems_container' ? $scope.emsCommonModel.default_api_port = '8443' : $scope.emsCommonModel.default_api_port = '';
+      $scope.emsCommonModel.default_security_protocol       = data.default_security_protocol;
+      $scope.emsCommonModel.hawkular_security_protocol      = data.hawkular_security_protocol;
+      $scope.emsCommonModel.default_tls_ca_certs            = data.default_tls_ca_certs;
+      $scope.emsCommonModel.hawkular_tls_ca_certs           = data.hawkular_tls_ca_certs;
       $scope.emsCommonModel.default_auth_status             = data.default_auth_status;
       $scope.emsCommonModel.amqp_auth_status                = data.amqp_auth_status;
       $scope.emsCommonModel.service_account_auth_status     = data.service_account_auth_status;
