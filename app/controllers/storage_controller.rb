@@ -343,7 +343,6 @@ class StorageController < ApplicationController
 
 
   def explorer
-    binding.pry
     @breadcrumbs = []
     @explorer = true
     @lastaction = "explorer"
