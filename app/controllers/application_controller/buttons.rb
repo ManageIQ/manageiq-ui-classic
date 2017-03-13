@@ -106,11 +106,14 @@ module ApplicationController::Buttons
       @edit[:new][:name] = params[:name] if params[:name]
       @edit[:new][:display] = params[:display] == "1" if params[:display]
       @edit[:new][:open_url] = params[:open_url] == "1" if params[:open_url]
+      @edit[:new][:display_for] = params[:display_for] if params[:display_for]
+      @edit[:new][:submit_how] = params[:submit_how] if params[:submit_how]
       @edit[:new][:description] = params[:description] if params[:description]
       @edit[:new][:button_image] = params[:button_image].to_i if params[:button_image]
       @edit[:new][:dialog_id] = params[:dialog_id] if params[:dialog_id]
       visibility_box_edit
     end
+
     render :update do |page|
       page << javascript_prologue
       if params.key?(:instance_name) || params.key?(:other_name) || params.key?(:target_class)
@@ -757,8 +760,10 @@ module ApplicationController::Buttons
       button[:options][:button_image] ||= {}
       button[:options][:button_image] = @edit[:new][:button_image]
     end
-    button[:options][:display] = @edit[:new][:display]
-    button[:options][:open_url] = @edit[:new][:open_url]
+
+    %i(display open_url display_for submit_how).each do |key|
+      button[:options][key] = @edit[:new][key]
+    end
     button.visibility ||= {}
     if @edit[:new][:visibility_typ] == "role"
       roles = []
@@ -846,6 +851,8 @@ module ApplicationController::Buttons
       :button_image   => @custom_button.options.try(:[], :button_image).to_s,
       :display        => @custom_button.options.try(:[], :display).nil? ? true : @custom_button.options[:display],
       :open_url       => @custom_button.options.try(:[], :open_url) ? @custom_button.options[:open_url] : false,
+      :display_for    => @custom_button.options.try(:[], :display_for) ? @custom_button.options[:display_for] : 'single',
+      :submit_how     => @custom_button.options.try(:[], :submit_how) ? @custom_button.options[:submit_how] : 'all',
       :object_message => @custom_button.uri_message || "create",
     )
     @edit[:current] = copy_hash(@edit[:new])
