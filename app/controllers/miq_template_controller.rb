@@ -1,4 +1,5 @@
 require "rexml/document"
+
 class MiqTemplateController < ApplicationController
   include VmCommon
   include Mixins::GenericListMixin
@@ -24,7 +25,6 @@ class MiqTemplateController < ApplicationController
     @base           = session[:miq_template_compare_base]
     @filters        = session[:miq_template_filters]
     @catinfo        = session[:miq_template_catinfo]
-    @cats           = session[:miq_template_cats]
     @display        = session[:miq_template_display]
     @polArr         = session[:polArr] || "" # current tags in effect
     @policy_options = session[:policy_options] || ""
@@ -38,7 +38,6 @@ class MiqTemplateController < ApplicationController
     session[:miq_template_compare_base] = @base
     session[:miq_template_filters]      = @filters
     session[:miq_template_catinfo]      = @catinfo
-    session[:miq_template_cats]         = @cats
     session[:miq_template_display]      = @display unless @display.nil?
     session[:polArr]                    = @polArr unless @polArr.nil?
     session[:policy_options]            = @policy_options unless @policy_options.nil?
