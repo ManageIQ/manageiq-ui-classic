@@ -228,7 +228,7 @@ class CatalogController < ApplicationController
       set_form_locals_for_sysprep
     end
     template_locals = {:locals => {:controller => "catalog"}}
-    template_locals[:locals].merge!(fetch_playbook_details) if TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplate" && !@view && @record.prov_type == "generic_ansible_playbook"
+    template_locals[:locals].merge!(fetch_playbook_details) if need_ansible_locals?
 
     render :layout => "application", :action => "explorer", :locals => template_locals
   end
@@ -1933,7 +1933,7 @@ class CatalogController < ApplicationController
           r[:partial => "shared/buttons/ab_list"]
         else
           template_locals = {:controller => "catalog"}
-          template_locals.merge!(fetch_playbook_details) if TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplate" && @record.prov_type == "generic_ansible_playbook"
+          template_locals.merge!(fetch_playbook_details) if need_ansible_locals?
           r[:partial => "catalog/#{x_active_tree}_show", :locals => template_locals]
         end
       elsif @sb[:buttons_node]
@@ -2025,6 +2025,12 @@ class CatalogController < ApplicationController
     presenter.reset_one_trans
 
     render :json => presenter.for_render
+  end
+
+  def need_ansible_locals?
+    x_active_tree == :sandt_tree &&
+      TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplate" &&
+      @record.prov_type == "generic_ansible_playbook"
   end
 
   # Build a Catalog Items explorer tree
