@@ -4,6 +4,6 @@ class ClassificationDecorator < MiqDecorator
   end
 
   def fonticon
-    entries.present? ? 'pficon pficon-folder-close' : 'fa fa-tag'
+    category? ? 'pficon pficon-folder-close' : 'fa fa-tag'
   end
 end
