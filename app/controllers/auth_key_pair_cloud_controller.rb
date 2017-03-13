@@ -243,7 +243,7 @@ class AuthKeyPairCloudController < ApplicationController
       show_list
       replace_gtl_main_div
     else
-      javascript_redirect :action => "new"
+      js_redirect_to_new
     end
   end
 

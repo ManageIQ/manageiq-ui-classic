@@ -447,6 +447,14 @@ module Mixins
       javascript_redirect :action => @refresh_partial, :id => @redirect_id
     end
 
+    def js_redirect_to_edit_for_checked_id
+      javascript_redirect :action => "edit", :id => checked_item_id
+    end
+
+    def js_redirect_to_new
+      javascript_redirect :action => "new"
+    end
+
     # In render :update, page is an instance of
     # ActionView::Helpers::JqueryHelper::JavascriptGenerator
 

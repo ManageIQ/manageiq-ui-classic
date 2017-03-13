@@ -263,10 +263,10 @@ class SecurityGroupController < ApplicationController
   end
 
   def handle_security_group_edit
-    javascript_redirect :action => "edit", :id => checked_item_id(params)
+    js_redirect_to_edit_for_checked_id
   end
 
   def handle_security_group_new
-    javascript_redirect :action => "new"
+    js_redirect_to_new
   end
 end

@@ -267,10 +267,10 @@ class FloatingIpController < ApplicationController
   end
 
   def handle_floating_ip_new
-    javascript_redirect :action => "new"
+    js_redirect_to_new
   end
 
   def handle_floating_ip_edit
-    javascript_redirect :action => "edit", :id => checked_item_id(params)
+    js_redirect_to_edit_for_checked_id
   end
 end

@@ -571,11 +571,11 @@ class HostAggregateController < ApplicationController
   end
 
   def handle_host_aggregate_new
-    javascript_redirect :action => "new"
+    js_redirect_to_new
   end
 
   def handle_host_aggregate_edit
-    javascript_redirect :action => "edit", :id => checked_item_id
+    js_redirect_to_edit_for_checked_id
   end
 
   def handle_host_aggregate_delete
