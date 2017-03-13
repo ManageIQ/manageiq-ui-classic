@@ -128,8 +128,21 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def label_tag_mapping_add(entity, label_name, cat_description)
+    entity_str = ''
     prefix = ContainerLabelTagMapping::AUTOTAG_PREFIX
-    entity_str = entity.nil? ? "" : entity.underscore
+
+    # The entity is a string in the form "Provider::ResourceType".
+    if entity
+      prefix, entity = entity.split('::')
+      # Backwards compatibility
+      if prefix && entity
+        prefix.downcase!
+        entity_str = entity.underscore
+      else
+        prefix = ContainerLabelTagMapping::AUTOTAG_PREFIX
+      end
+    end
+
     cat_name = "#{prefix}:#{entity_str}:" + Classification.sanitize_name(label_name.tr("/", ":"))
 
     # UI currently can't allow 2 mappings for same (entity, label).
