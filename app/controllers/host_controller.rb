@@ -653,7 +653,6 @@ class HostController < ApplicationController
     @display    = session[:host_display]
     @filters    = session[:host_filters]
     @catinfo    = session[:host_catinfo]
-    @base       = session[:vm_compare_base]
   end
 
   def set_session_data
@@ -663,7 +662,6 @@ class HostController < ApplicationController
     session[:host_catinfo]    = @catinfo
     session[:miq_compressed]  = @compressed  unless @compressed.nil?
     session[:miq_exists_mode] = @exists_mode unless @exists_mode.nil?
-    session[:vm_compare_base] = @base
   end
 
   menu_section :inf

@@ -135,7 +135,6 @@ module VmShowMixin
     @layout         = controller_name
     @lastaction     = session[:vm_lastaction]
     @showtype       = session[:vm_showtype]
-    @base           = session[:vm_compare_base]
     @filters        = get_filters
     @catinfo        = session[:vm_catinfo]
     @cats           = session[:vm_cats]
@@ -149,7 +148,6 @@ module VmShowMixin
     session[:vm_showtype]     = @showtype
     session[:miq_compressed]  = @compressed unless @compressed.nil?
     session[:miq_exists_mode] = @exists_mode unless @exists_mode.nil?
-    session[:vm_compare_base] = @base
     session[:vm_filters]      = @filters
     session[:vm_catinfo]      = @catinfo
     session[:vm_cats]         = @cats
