@@ -304,7 +304,7 @@ module OpsController::Settings::Schedules
     case params[:action_typ]
     when "db_backup"          then "DatabaseBackup"
     when /check_compliance\z/ then (params[:action_typ].split("_") - params[:action_typ].split("_").last(2)).join("_")
-                                     .classify
+                                                                                                            .classify
     when "emscluster"         then "EmsCluster"
     when "automation_request" then "AutomationRequest"
     else                           params[:action_typ].camelcase
