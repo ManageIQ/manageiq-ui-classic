@@ -184,7 +184,8 @@ module ApplicationController::Performance
     ts = (data_row["timestamp"] || data_row["statistic_time"]).in_time_zone(@perf_options[:tz])                 # Grab the timestamp from the row in selected tz
 
     if cmd == "Display" && model == "Current" && typ == "Top"
-      return if display_current_top(data_row)
+      display_current_top(data_row)
+      return
     elsif cmd == "Display" && typ == "bytag"
       return if display_by_tag(data_row, report, ts, bc_model, model, legend_idx)
     elsif cmd == "Display"
@@ -218,12 +219,11 @@ module ApplicationController::Performance
 
   # display the CI selected from a Top chart
   def display_current_top(data_row)
-    return true unless perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
+    return unless perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
     javascript_redirect :controller => data_row["resource_type"].underscore,
                         :action     => "show",
                         :id         => data_row["resource_id"],
                         :escape     => false
-    return true
   end
 
   # display selected resources from a tag chart
