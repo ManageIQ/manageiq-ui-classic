@@ -1,4 +1,29 @@
 class ApplicationHelper::Toolbar::CloudObjectStoreObjectsCenter < ApplicationHelper::Toolbar::Basic
+  button_group(
+    'cloud_object_store_object_vmdb',
+    [
+      select(
+        :cloud_object_store_object_vmdb_choice,
+        'fa fa-cog fa-lg',
+        t = N_('Configuration'),
+        t,
+        :enabled => false,
+        :onwhen  => "1+",
+        :items   => [
+          button(
+            :cloud_object_store_object_delete,
+            'pficon pficon-delete fa-lg',
+            N_('Remove selected Object Storage Objects'),
+            N_('Remove Object Storage Objects'),
+            :url_parms => "main_div",
+            :confirm   => N_("Warning: The selected Object Storage Object will be permanently removed!"),
+            :enabled   => false,
+            :onwhen    => "1+"
+          ),
+        ]
+      ),
+    ]
+  )
   button_group('cloud_object_store_object_policy', [
     select(
       :cloud_object_store_object_policy_choice,

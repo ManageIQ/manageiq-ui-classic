@@ -14,7 +14,16 @@ class CloudObjectStoreObjectController < ApplicationController
   def button
     @edit = session[:edit]
     params[:page] = @current_page unless @current_page.nil?
-    return tag("CloudObjectStoreObject") if params[:pressed] == 'cloud_object_store_object_tag'
+
+    process_cloud_object_storage_buttons(params[:pressed])
+
+    if !@flash_array.nil? && params[:pressed].ends_with?("delete")
+      javascript_redirect :action      => 'show_list',
+                          :flash_msg   => @flash_array[0][:message],
+                          :flash_error => @flash_array[0][:level] == :error
+    elsif !@flash_array.nil?
+      render_flash unless performed?
+    end
   end
 
   def show
