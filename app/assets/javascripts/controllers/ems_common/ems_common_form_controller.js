@@ -24,6 +24,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       realm: '',
       security_protocol: '',
       amqp_security_protocol: '',
+      hawkular_security_protocol: '',
+      hawkular_tls_ca_certs: '',
       provider_region: '',
       default_userid: '',
       default_password: '',
