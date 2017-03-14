@@ -1,10 +1,10 @@
 = render :partial => "layouts/flash_msg"
 .ad-hoc-metrics.row.miq-dashboard-view.miq-metrics{"ng-controller" => "adHocMetricsController as dash"}
-  .row.toolbar-pf{"ng-show" => "!dash.showGraph"}
+  .row.toolbar-pf.list-view{"ng-show" => "!dash.showGraph"}
     = render :partial => "ems_container/ad_hoc/list_view_form"
     = render :partial => "ems_container/ad_hoc/list_view"
     = render :partial => "ems_container/ad_hoc/list_view_blank"
-  .row.toolbar-pf{"ng-show" => "dash.showGraph"}
+  .row.toolbar-pf.graph-view{"ng-show" => "dash.showGraph"}
     = render :partial => "ems_container/ad_hoc/chart_view_form"
     = render :partial => "ems_container/ad_hoc/chart_view"
 

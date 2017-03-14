@@ -1,20 +1,12 @@
 /* global miqHttpInject */
 
   ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', 'miqService',
-    'metricsUtilsFactory', 'metricsHttpFactory', 'metricsConfigFactory',
-    function($http, $window, miqService, metricsUtilsFactory, metricsHttpFactory, metricsConfigFactory) {
+    'metricsUtilsFactory', 'metricsHttpFactory', 'metricsConfigFactory', 'metricsParseUrlFactory',
+    function($http, $window, miqService, metricsUtilsFactory, metricsHttpFactory, metricsConfigFactory, metricsParseUrlFactory) {
 
     var dash = this;
     var utils = metricsUtilsFactory(dash);
     var httpUtils = metricsHttpFactory(dash, $http, utils, miqService);
-
-    // get the pathname and remove trailing / if exist
-    var pathname = $window.location.pathname.replace(/\/$/, '');
-
-    dash.providerId = '/' + (/^\/[^\/]+\/([r\d]+)$/.exec(pathname)[1]);
-    dash.tenant = '_ops';
-    dash.minBucketDurationInSecondes = 20 * 60;
-    dash.max_metrics = 1000;
 
     var initialization = function() {
       dash.tenantChanged = false;
@@ -120,6 +112,11 @@
     dash.refreshList = httpUtils.refreshList;
     dash.refreshGraph = httpUtils.refreshGraph;
 
+    // try to parse config variables from page url
+    // and set page config variables
+    metricsParseUrlFactory(dash, $window);
     metricsConfigFactory(dash);
+
+    // initialize page elemants
     initialization();
   }]);

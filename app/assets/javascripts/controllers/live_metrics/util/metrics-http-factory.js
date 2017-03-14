@@ -14,12 +14,10 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
 
     function getMetricDefinitionsData(response) {
       'use strict';
-
       var data = response.data;
-
       dash.loadingMetrics = false;
-      if (response.error || response.data.error) {
-        add_flash(response.error || response.data.error, 'error');
+
+      if (utils.checkResponse(response) === false) {
         return;
       }
 
@@ -75,6 +73,10 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
 
     var getTenants = function(include) {
       return $http.get(dash.url + "&query=get_tenants&limit=7&include=" + include).then(function(response) {
+        if (utils.checkResponse(response) === false) {
+          return [];
+        }
+
         return response.data.tenants;
       });
     }

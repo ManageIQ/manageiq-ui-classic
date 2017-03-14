@@ -30,6 +30,15 @@
     padding-top: 10px;
   }
 
+  .graph-view {
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+    .dropdown-kebab-pf .dropdown-menu {
+      left: 0px;
+    }
+  }
+
   .line-chart {
     margin-top: 36px;
     margin-left: 30px;

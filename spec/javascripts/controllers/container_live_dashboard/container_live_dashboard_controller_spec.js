@@ -16,10 +16,10 @@ describe('adHocMetricsController', function() {
 
   beforeEach(inject(function(_$httpBackend_, $rootScope, _$controller_) {
     $httpBackend = _$httpBackend_;
-    $httpBackend.when('GET','/container_dashboard/data/42/?live=true&tenant=_ops&query=metric_tags&limit=250').respond(mock_data);
-    $httpBackend.when('GET','/container_dashboard/data/42/?live=true&tenant=_ops&limit=1000&query=metric_definitions&tags={}').respond(mock_metrics_data);
-    $httpBackend.when('GET','/container_dashboard/data/42/?live=true&type=gauge&tenant=_ops&query=get_data&metric_id=hello1&limit=5&order=DESC').respond(mock_data1_data);
-    $httpBackend.when('GET','/container_dashboard/data/42/?live=true&type=gauge&tenant=_ops&query=get_data&metric_id=hello2&limit=5&order=DESC').respond(mock_data2_data);
+    $httpBackend.when('GET','/container_dashboard/data/42/?live=true&tenant=_system&query=metric_tags&limit=250').respond(mock_data);
+    $httpBackend.when('GET','/container_dashboard/data/42/?live=true&tenant=_system&limit=1000&query=metric_definitions&tags={}').respond(mock_metrics_data);
+    $httpBackend.when('GET','/container_dashboard/data/42/?live=true&type=gauge&tenant=_system&query=get_data&metric_id=hello1&limit=5&order=DESC').respond(mock_data1_data);
+    $httpBackend.when('GET','/container_dashboard/data/42/?live=true&type=gauge&tenant=_system&query=get_data&metric_id=hello2&limit=5&order=DESC').respond(mock_data2_data);
     $controller = _$controller_('adHocMetricsController');
     $controller.refreshList();
     $httpBackend.flush();
