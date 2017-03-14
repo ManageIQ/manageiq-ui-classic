@@ -473,7 +473,6 @@ Rails.application.routes.draw do
 
     :cloud_volume             => {
       :get  => %w(
-        delete_volumes
         download_data
         download_summary_pdf
         attach
@@ -1693,7 +1692,6 @@ Rails.application.routes.draw do
 
     :cloud_subnet             => {
       :get  => %w(
-        delete_subnets
         download_data
         download_summary_pdf
         cloud_subnet_form_fields
@@ -1730,7 +1728,6 @@ Rails.application.routes.draw do
     :cloud_network             => {
       :get  => %w(
         cloud_network_form_fields
-        delete_networks
         download_data
         download_summary_pdf
         edit
@@ -1793,7 +1790,6 @@ Rails.application.routes.draw do
     :network_router           => {
       :get  => %w(
         add_interface_select
-        delete_network_routers
         download_data
         edit
         index
