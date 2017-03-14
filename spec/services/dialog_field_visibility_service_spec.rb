@@ -6,6 +6,7 @@ describe DialogFieldVisibilityService do
       described_class.new(
         auto_placement_visibility_service,
         number_of_vms_visibility_service,
+        floating_ip_address_visibility_service,
         service_template_fields_visibility_service,
         network_visibility_service,
         sysprep_auto_logon_visibility_service,
@@ -25,6 +26,7 @@ describe DialogFieldVisibilityService do
         :customize_fields_list           => customize_fields_list,
         :linked_clone                    => linked_clone,
         :number_of_vms                   => number_of_vms,
+        :floating_ip_address             => floating_ip_address,
         :platform                        => platform,
         :provision_type                  => provision_type,
         :request_type                    => request_type,
@@ -49,6 +51,9 @@ describe DialogFieldVisibilityService do
     let(:number_of_vms_visibility_service) { double("NumberOfVmsVisibilityService") }
     let(:number_of_vms) { "number_of_vms" }
     let(:platform) { "platform" }
+
+    let(:floating_ip_address_visibility_service) { double("FloatingIpAddressVisibilityService") }
+    let(:floating_ip_address) { "floating_ip_address" }
 
     let(:network_visibility_service) { double("NetworkVisibilityService") }
     let(:sysprep_enabled) { "sysprep_enabled" }
@@ -93,6 +98,11 @@ describe DialogFieldVisibilityService do
       allow(number_of_vms_visibility_service)
         .to receive(:determine_visibility).with(number_of_vms, platform).and_return(
           :hide => [:number_hide], :edit => [:number_edit]
+        )
+
+      allow(floating_ip_address_visibility_service)
+        .to receive(:determine_visibility).with(floating_ip_address, number_of_vms).and_return(
+          :hide => [:floating_ip_address], :edit => [:floating_ip_address]
         )
 
       allow(network_visibility_service)
@@ -158,6 +168,7 @@ describe DialogFieldVisibilityService do
       expect(result[:edit]).to match_array([
         :auto_edit,
         :customize_fields_edit,
+        :floating_ip_address,
         :linked_clone_edit,
         :network_edit,
         :number_edit,

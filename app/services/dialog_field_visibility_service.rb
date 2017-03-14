@@ -2,6 +2,7 @@ class DialogFieldVisibilityService
   def initialize(
     auto_placement_visibility_service = AutoPlacementVisibilityService.new,
     number_of_vms_visibility_service = NumberOfVmsVisibilityService.new,
+    floating_ip_address_visibility_service = FloatingIpAddressVisibilityService.new,
     service_template_fields_visibility_service = ServiceTemplateFieldsVisibilityService.new,
     network_visibility_service = NetworkVisibilityService.new,
     sysprep_auto_logon_visibility_service = SysprepAutoLogonVisibilityService.new,
@@ -23,6 +24,7 @@ class DialogFieldVisibilityService
     @request_type_visibility_service = request_type_visibility_service
     @pxe_iso_visibility_service = pxe_iso_visibility_service
     @linked_clone_visibility_service = linked_clone_visibility_service
+    @floating_ip_address_visibility_service = floating_ip_address_visibility_service
   end
 
   def set_visibility_for_field(visibility_hash, field_name, field)
@@ -42,6 +44,11 @@ class DialogFieldVisibilityService
     add_to_visibility_arrays(@service_template_fields_visibility_service, options[:service_template_request])
     add_to_visibility_arrays(@auto_placement_visibility_service, options[:auto_placement_enabled])
     add_to_visibility_arrays(@number_of_vms_visibility_service, options[:number_of_vms], options[:platform])
+    add_to_visibility_arrays(
+      @floating_ip_address_visibility_service,
+      options[:floating_ip_address],
+      options[:number_of_vms]
+    )
 
     add_to_visibility_arrays(
       @network_visibility_service,
