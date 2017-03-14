@@ -101,13 +101,17 @@
                 %p.form-control-static
                   = h(@event)
         -# Repeat Time
-        .form-group
+        .form-group.notification-frequency
           %label.control-label.col-md-2
             = _("Notification Frequency")
+          - hide = false
           - if @edit
             .col-md-8
               - if @edit[:new][:expression][:eval_method] == "hourly_performance"
                 - repeat = @sb[:alert][:hourly_repeat_times]
+              - elsif @edit[:new][:expression][:eval_method] == "dwh_generic"
+                - repeat = @sb[:alert][:repeat_times_dwh]
+                - hide = true
               - else
                 - repeat = @sb[:alert][:repeat_times]
               = select_tag('repeat_time',
@@ -121,8 +125,13 @@
               %p.form-control-static
                 - if @alert.options[:notifications][:delay_next_evaluation].blank?
                   = _('10 Minutes')
+                - elsif @alert.options[:notifications][:delay_next_evaluation].zero?
+                  - hide = true
                 - else
                   = h(@sb[:alert][:repeat_times][@alert.options[:notifications][:delay_next_evaluation]])
+          - if hide
+            :javascript
+              $(".notification-frequency").hide();
       %hr
       -# Expression
       - if @edit
