@@ -58,7 +58,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       hawkular_auth_status: '',
       vmware_cloud_api_version: ''
     };
-    $scope.realmNote = __("Note: Username must be in the format: name@realm");
     $scope.formId = emsCommonFormId;
     $scope.afterGet = false;
     $scope.modelCopy = angular.copy( $scope.emsCommonModel );
@@ -349,8 +348,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       if ($scope.emsCommonModel.emstype === 'openstack') {
         $scope.emsCommonModel.tenant_mapping_enabled = false;
       }
-    } else if ($scope.emsCommonModel.emstype === 'scvmm' && $scope.emsCommonModel.default_security_protocol === 'kerberos') {
-      $scope.note = $scope.realmNote;
     } else if ($scope.emsCommonModel.emstype === 'scvmm') {
       $scope.emsCommonModel.default_security_protocol = 'ssl';
     } else if ($scope.emsCommonModel.emstype === 'rhevm') {
@@ -371,13 +368,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       } else {
         $scope.emsCommonModel.default_api_port = "13000";
       }
-    }
-  };
-
-  $scope.scvmmSecurityProtocolChanged = function() {
-    $scope.note = "";
-    if ($scope.emsCommonModel.emstype === 'scvmm' && $scope.emsCommonModel.default_security_protocol === 'kerberos') {
-      $scope.note = $scope.realmNote;
     }
   };
 
