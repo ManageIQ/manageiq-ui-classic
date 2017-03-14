@@ -2,6 +2,72 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased - as of Sprint 56 end 2017-03-13
+
+### [Added](https://github.com/ManageIQ/manageiq-ui-classic/issues?q=milestone%3A%22Sprint+56+Ending+Mar+13%2C+2017%22+label%3Aenhancement)
+
+- Automate
+  - UI changes needed for embedded ansible models [(#584)](https://github.com/ManageIQ/manageiq-ui-classic/pull/584)
+  - Display the credentials for the embedded tower in the playbook catalog UI dropdowns [(#627)](https://github.com/ManageIQ/manageiq-ui-classic/pull/627)
+- Compute
+  - Cloud
+    - Display AWS instance labels in the Summary screen [(#631)](https://github.com/ManageIQ/manageiq-ui-classic/pull/631)
+    - Support operation `delete` on CloudObjectStoreContainer [(#420)](https://github.com/ManageIQ/manageiq-ui-classic/pull/420)
+  - Containers
+    - Dashboard: Show hourly and realtime trends [(#519)](https://github.com/ManageIQ/manageiq-ui-classic/pull/519)
+    - Adding External Logging Link for Containers Providers [(#489)](https://github.com/ManageIQ/manageiq-ui-classic/pull/489)
+    - Container SSA: warn if no smartproxy/state role [(#273)](https://github.com/ManageIQ/manageiq-ui-classic/pull/273)
+    - Topology for Container Projects [(#120)](https://github.com/ManageIQ/manageiq-ui-classic/pull/120)
+    - TLS verification & custom CA UI for oVirt and Container providers [(#450)](https://github.com/ManageIQ/manageiq-ui-classic/pull/450)
+  - Infrastructure
+    - Show vms in infra topology [(#564)](https://github.com/ManageIQ/manageiq-ui-classic/pull/564)
+    - Physical infra pages [(#196)](https://github.com/ManageIQ/manageiq-ui-classic/pull/196)
+- Control: Add live search to the service template id dropdown for Run Ansible Playbook action [(#512)](https://github.com/ManageIQ/manageiq-ui-classic/pull/512)
+- Graphics
+  - Add icon for ansible credentials [(#525)](https://github.com/ManageIQ/manageiq-ui-classic/pull/525)
+  - Textual Summaries - textual\_*\_ icon - support for fonticons decorators [(#603)](https://github.com/ManageIQ/manageiq-ui-classic/pull/603)
+- Middleware: Enable Xa capability for Middleware  Datatsource options [(#149)](https://github.com/ManageIQ/manageiq-ui-classic/pull/149)
+- Services
+  - Added remove resources option in the form on Retirement tab [(#629)](https://github.com/ManageIQ/manageiq-ui-classic/pull/629)
+  - Get list of Repositories using Embedded Provider [(#565)](https://github.com/ManageIQ/manageiq-ui-classic/pull/565)
+- Settings: Add custom logo capability to the ‘About’ modal [(#566)](https://github.com/ManageIQ/manageiq-ui-classic/pull/566)
+- Storage
+  - Allow cloud volume to provide list of supported VMs for attachment [(#601)](https://github.com/ManageIQ/manageiq-ui-classic/pull/601)
+  - Support operation `delete` on CloudObjectStoreObject [(#497)](https://github.com/ManageIQ/manageiq-ui-classic/pull/497)
+
+### [Changed](https://github.com/ManageIQ/manageiq-ui-classic/issues?q=milestone%3A%22Sprint+56+Ending+Mar+13%2C+2017%22+label%3Aenhancement)
+
+- Services
+  - Fixed class names to get objects using EmbeddedAnsible tower. [(#659)](https://github.com/ManageIQ/manageiq-ui-classic/pull/659)
+  - Changed all drop downs in form to sort by name in ascending order. [(#597)](https://github.com/ManageIQ/manageiq-ui-classic/pull/597)
+- Storage
+  - Extend form for creating new cloud volumes [(#517)](https://github.com/ManageIQ/manageiq-ui-classic/pull/517)
+  - Allow any EMS to create cloud volume [(#600)](https://github.com/ManageIQ/manageiq-ui-classic/pull/600)
+
+
+### [Fixed](https://github.com/ManageIQ/manageiq-ui-classic/issues?q=milestone%3A%22Sprint+56+Ending+Mar+13%2C+2017%22+label%3Abug)
+
+- Automate
+  - Allow access to embedded ansible anytime a feature is allowed [(#640)](https://github.com/ManageIQ/manageiq-ui-classic/pull/640)
+  - Decorator update for inventory and credentials [(#538)](https://github.com/ManageIQ/manageiq-ui-classic/pull/538)
+  - Fix for unable to import service dialog from yaml  [(#616)](https://github.com/ManageIQ/manageiq-ui-classic/pull/616)
+- Compute
+  - Containers: Fix overlapping in Container Image summary screen [(#272)](https://github.com/ManageIQ/manageiq-ui-classic/pull/272)
+  - Infrastructure
+    - Datastore selection flash message fix [(#559)](https://github.com/ManageIQ/manageiq-ui-classic/pull/559)
+    - Create snapshot with no active snapshot [(#598)](https://github.com/ManageIQ/manageiq-ui-classic/pull/598)
+- Middleware: Use the proper EAP icon for EAP 6.4 instead of using default icon [(#537)](https://github.com/ManageIQ/manageiq-ui-classic/pull/537)
+- Networks: Show also non vpc vms in network topology [(#510)](https://github.com/ManageIQ/manageiq-ui-classic/pull/510)
+- UI
+  - Fix the displaying of the flash message(s) in policy list [(#628)](https://github.com/ManageIQ/manageiq-ui-classic/pull/628)
+  - Fix error when creating filter in Networks page [(#494)](https://github.com/ManageIQ/manageiq-ui-classic/pull/494)
+- Services
+  - Fixed 'Catalog' should not be a required field [(#514)](https://github.com/ManageIQ/manageiq-ui-classic/pull/514)
+  - Fixed Error handling of REST API calls. [(#490)](https://github.com/ManageIQ/manageiq-ui-classic/pull/490)
+- Textual Summaries
+  - TextualMultilabel: fix additional_table_class. [(#609)](https://github.com/ManageIQ/manageiq-ui-classic/pull/609)
+  - Container node condition displayed with multilabel [(#541)](https://github.com/ManageIQ/manageiq-ui-classic/pull/541)
+
 ## Unreleased - as of Sprint 55 end 2017-02-27
 
 ### [Added](https://github.com/ManageIQ/manageiq-ui-classic/issues?q=milestone%3A%22Sprint+55+Ending+Feb+27%2C+2017%22+label%3Aenhancement)
