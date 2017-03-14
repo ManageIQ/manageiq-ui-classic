@@ -1,21 +1,19 @@
-.col-md-12.ad-hoc-tenant
+.col-md-12.tenant-filter-bar
   .form-group.pull-left.ad-hoc-tenant
     %button.btn.btn-primary{"type"        => "button",
                             "ng-disabled" => "!dash.tenantChanged",
                             "ng-click"    => "dash.refreshTenant()"}
       = _("Set Tenant")
 
-    %input.form-control{"id"                  => "ad-hoc-tenant",
-                        "type"                => "text",
-                        "ng-model"            => "dash.tenant",
-                        "placeholder"         => _("Choose Tenants"),
-                        "typeahead"           => "tenenat for tenenat in dash.getTenants($viewValue)",
-                        "typeahead-loading"   => "dash.loadingTenants",
-                        "ng-change"           => "dash.tenantChanged = true",
-                        "typeahead-on-select" => "dash.refreshTenant()",
-                        "typeahead-wait-ms"   => 500}
+    %select.selectpicker.tenants-selector{"pf-select"        => "",
+                                          "id"               => "tenant-slector",
+                                          "ng-options"       => "o.label for o in dash.tenantList",
+                                          "ng-model"         => "dash.tenant",
+                                          "ng-change"        => "dash.tenantChanged = true",
+                                          "data-live-search" => "true",
+                                          "data-actions-box" => "true"}
 
-.ad-hoc-toolbar{"pf-toolbar" => "", "config" => "dash.toolbarConfig"}
+.ad-hoc-toolbar.filters-selector{"pf-toolbar" => "", "config" => "dash.toolbarConfig"}
   %actions
     %button.btn.btn-default{"type"        => "button",
                             "ng-click"    => "dash.doAddFilter()",
@@ -29,3 +27,48 @@
                             "ng-click"    => "dash.viewGraph()",
                             "ng-disabled" => "!dash.itemSelected"}
       = _("View Graph")
+
+    %dropdown.dropdown-kebab-pf
+      %button.btn.btn-link.dropdown-toggle{"type"          => "button",
+                                           "data-toggle"   => "dropdown",
+                                           "aria-haspopup" => "true",
+                                           "aria-expanded" => "true"}
+        %span.fa.fa-fw.fa-ellipsis-v
+      %ul.dropdown-menu{"aria-labelledby" => "dropdownKebab"}
+        %li{"ng-repeat" => "range in dash.filterTypes"}
+          %a{"href"     => "#",
+             "ng-click" => "dash.filterType = range.value; dash.setFilterOptions()"}
+            .row
+              .col-md-9
+                {{range.title}}
+              .col
+                %span.pficon{"ng-class" => "{true: 'pficon-ok'}[dash.filterType===range.value]"}
+
+  .form-group.pagination-div
+    %ul.pagination.pagination-pf-back
+      %li
+        %a{"href"  => "#",
+           "ng-click" => "dash.setPage(1)",
+           "title" => _("First Page")}
+          %span.i.fa.fa-angle-double-left
+      %li
+        %a{"href"  => "#",
+           "ng-click" => "dash.setPage(dash.page - 1)",
+           "title" => _("Previous Page")}
+          %span.i.fa.fa-angle-left
+
+    %input.page-input.form-control{"ng-model" => "dash.page",
+                                            "readonly" => "readonly",
+                                            "type"     => "text"}
+
+    %ul.pagination.pagination-pf-forward
+      %li
+        %a{"href"  => "#",
+           "ng-click" => "dash.setPage(dash.page + 1)",
+           "title" => _("Next Page")}
+          %span.i.fa.fa-angle-right
+      %li
+        %a{"href"  => "#",
+           "ng-click" => "dash.setPage(dash.pages)",
+           "title" => _("Last Page")}
+          %span.i.fa.fa-angle-double-right

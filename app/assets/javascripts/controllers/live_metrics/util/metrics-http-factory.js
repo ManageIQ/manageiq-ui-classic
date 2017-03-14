@@ -27,11 +27,8 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
 
       angular.forEach(dash.items, getLatestData);
 
-      if (dash.items.length > dash.max_metrics) {
-        dash.filterConfig.resultsCount = __("Showing first") + " " + dash.max_metrics;
-      } else {
-        dash.filterConfig.resultsCount = dash.items.length;
-      }
+      dash.pages = (data.pages > 0) ? data.pages : 1;
+      dash.filterConfig.resultsCount = __("Page ") + data.page + __(" Of ") + dash.pages + __(", Found ") + data.items;
     }
 
     function refreshOneGraph(metricId, metricType, currentItem) {
@@ -71,21 +68,44 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
           miqService.handleFailure(error); });
     };
 
-    var getTenants = function(include) {
-      return $http.get(dash.url + "&query=get_tenants&limit=7&include=" + include).then(function(response) {
+    var getTenants = function() {
+      var url = '/container_dashboard/data' + dash.providerId  + '/?live=true&query=get_tenants';
+
+      return $http.get(url).then(function(response) {
+        var tagsNeedRefresh = true;
+
         if (utils.checkResponse(response) === false) {
-          return [];
+          dash.tenantList = [];
+          dash.tenant = {value: null};
         }
 
-        return response.data.tenants;
+        // get the tenant list, and set the current tenant
+        dash.tenantList = response.data.tenants;
+        dash.tenant = dash.tenantList[0];
+
+        // try to set the current tenant to be the default one
+        dash.tenantList.forEach(function callback(obj, i) {
+          if (obj.value === dash.DEFAULT_TENANT) {
+            dash.tenant = dash.tenantList[i];
+            tagsNeedRefresh = false;
+          }
+        });
+
+        if (tagsNeedRefresh) {
+          getMetricTags();
+        }
       });
     }
 
     var refreshList = function() {
       dash.itemSelected = false;
       dash.loadingMetrics = true;
-      var _tags = dash.tags !== {} ? '&tags=' + JSON.stringify(dash.tags) : '';
-      $http.get(dash.url + '&limit=' + dash.max_metrics +'&query=metric_definitions' + _tags)
+      const _tagHash = Object.assign({}, dash.tags, dash.predefinedTags);
+
+      var _tags = _tagHash !== {} ? '&tags=' + JSON.stringify(_tagHash) : '';
+      var pagination = '&page=' + dash.page + '&items_per_page=' + dash.items_per_page;
+
+      $http.get(dash.url + '&limit=' + dash.max_metrics +'&query=metric_definitions' + _tags + pagination)
         .then(getMetricDefinitionsData)
         .catch(miqService.handleFailure);
     };
@@ -111,11 +131,23 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
       }
     };
 
+    var setPage = function(page) {
+      var _page = page || 1;
+      if (_page < 1) _page = 1;
+      if (_page > dash.pages) _page = dash.pages;
+
+      if (dash.page !== _page) {
+        dash.page = _page;
+        refreshList();
+      }
+    };
+
     return {
       getMetricTags: getMetricTags,
       getTenants: getTenants,
       refreshList: refreshList,
-      refreshGraph: refreshGraph
+      refreshGraph: refreshGraph,
+      setPage: setPage
     }
   }
 });

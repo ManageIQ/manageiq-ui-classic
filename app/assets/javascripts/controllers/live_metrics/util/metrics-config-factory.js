@@ -9,6 +9,9 @@ angular.module('miq.util').factory('metricsConfigFactory', function() {
       }
     };
 
+    dash.DEFAULT_TENANT = "_system";
+    dash.tenant = {value: null};
+
     dash.actionsConfig = {
       actionsInclude: true
     };
@@ -67,9 +70,18 @@ angular.module('miq.util').factory('metricsConfigFactory', function() {
     ];
 
     dash.timeIntervals = [
-      {title: __("Min interval 1 Minute"), value: 1 * 60},
-      {title: __("Min interval 5 Minutes"), value: 5 * 60},
-      {title: __("Min interval 20 Minutes"), value: 20 * 60}
+      {title: __("1m average"), value: 1 * 60},
+      {title: __("5m average"), value: 5 * 60},
+      {title: __("20m average"), value: 20 * 60},
+      {title: __("1h average"), value: 60 * 60},
+      {title: __("12h average"), value: 12 * 60 * 60}
+    ];
+
+    dash.filterType = "simple";
+
+    dash.filterTypes = [
+      {title: __("Advanced filters"), value: "advanced"},
+      {title: __("Simple filters"), value: "simple"}
     ];
 
     dash.dateOptions = {
