@@ -66,4 +66,6 @@ describe ServiceController do
       expect(flash_message[:level]).to be(:success)
     end
   end
+
+  it_behaves_like "explorer controller with custom buttons"
 end

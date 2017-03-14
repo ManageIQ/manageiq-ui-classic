@@ -3,11 +3,7 @@ class ContainerDecorator < MiqDecorator
     'fa fa-cube'
   end
 
-  def fonticon
-    'fa fa-cube'
-  end
-
-  def listicon_image
+  def self.listicon_image
     '100/container.png'
   end
 end

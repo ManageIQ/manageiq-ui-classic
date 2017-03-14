@@ -1,5 +1,5 @@
 class WindowsImageDecorator < MiqDecorator
-  def listicon_image
+  def self.listicon_image
     'svg/os-windows_generic.svg'
   end
 end

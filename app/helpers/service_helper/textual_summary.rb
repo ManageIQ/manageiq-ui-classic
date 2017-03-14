@@ -10,6 +10,46 @@ module ServiceHelper::TextualSummary
     TextualGroup.new(_("Properties"), %i(name description guid))
   end
 
+  def textual_group_provisioning_results
+    return nil unless provisioning_get_job
+    TextualGroup.new(_("Results"), %i(status start_time finish_time elapsed_time owner))
+  end
+
+  def textual_group_provisioning_details
+    return nil unless provisioning_get_job
+    TextualGroup.new(_("Details"), %i(playbook repository verbosity hosts))
+  end
+
+  def textual_group_provisioning_credentials
+    return nil unless provisioning_get_job
+    TextualGroup.new(_("Credentials"), %i(machine_credential network_credential cloud_credential))
+  end
+
+  def textual_group_provisioning_plays
+    return nil unless provisioning_get_job
+    fetch_job_plays
+  end
+
+  def textual_group_retirement_results
+    return nil unless retirement_get_job
+    TextualGroup.new(_("Results"), %i(status start_time finish_time elapsed_time owner))
+  end
+
+  def textual_group_retirement_details
+    return nil unless retirement_get_job
+    TextualGroup.new(_("Details"), %i(playbook repository verbosity hosts))
+  end
+
+  def textual_group_retirement_credentials
+    return nil unless retirement_get_job
+    TextualGroup.new(_("Credentials"), %i(machine_credential network_credential cloud_credential))
+  end
+
+  def textual_group_retirement_plays
+    return nil unless retirement_get_job
+    fetch_job_plays
+  end
+
   def textual_group_vm_totals
     TextualGroup.new(
       _("Totals for Service VMs"),
@@ -140,5 +180,99 @@ module ServiceHelper::TextualSummary
     attrs = @record.miq_custom_attributes
     return nil if attrs.blank?
     attrs.sort_by(&:name).collect { |a| {:label => a.name, :value => a.value} }
+  end
+
+  def textual_status
+    {:label => _("Status"), :value => @job.status}
+  end
+
+  def textual_start_time
+    {:label => _("Started"), :value => format_timezone(@job.start_time)}
+  end
+
+  def textual_finish_time
+    {:label => _("Finished"), :value => format_timezone(@job.finish_time)}
+  end
+
+  def textual_elapsed_time
+    {:label => _("Elapsed"), :value => @job.finish_time && @job.start_time ? calculate_elapsed_time(@job.start_time, @job.finish_time) : "N/A"}
+  end
+
+  def textual_playbook
+    return nil unless @job.playbook
+    {:label => _("Playbook"), :value => @job.playbook.name}
+  end
+
+  def textual_repository
+    return nil unless @job.playbook
+    {:label => _("Repository"), :value => @job.playbook.configuration_script_source.name}
+  end
+
+  def textual_verbosity
+    {:label => _("Verbosity"), :value => @job.verbosity}
+  end
+
+  def textual_hosts
+    {:label => _("Hosts"), :value => @job.hosts.join(", ")}
+  end
+
+  def textual_machine_credential
+    credential = @job.authentications.find_by(:type => 'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential')
+    return nil unless credential
+    credential(credential, _("Machine"))
+  end
+
+  def textual_network_credential
+    credential = @job.authentications.find_by(:type => 'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential')
+    return nil unless credential
+    credential(credential, _("Network"))
+  end
+
+  def textual_cloud_credential
+    credential = @job.authentications.find_by(:type => 'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential')
+    return nil unless credential
+    credential(credential, _("Cloud"))
+  end
+
+  def credential(credential, label)
+    {:label => label, :value => credential.name}
+  end
+
+  def provisioning_get_job
+    fetch_job("Provision")
+  end
+
+  def retirement_get_job
+    fetch_job("Retirement")
+  end
+
+  def fetch_job(type)
+    @job = @record.try(:job, type)
+    @job
+  end
+
+  def fetch_job_plays
+    items = @job.job_plays.sort_by(&:start_time).collect do |play|
+      [
+        play.name,
+        format_timezone(play.start_time),
+        format_timezone(play.finish_time),
+        play.finish_time && play.start_time ? calculate_elapsed_time(play.start_time, play.finish_time) : '/A'
+      ]
+    end.sort
+
+    TextualTable.new(
+      _("Plays"),
+      items,
+      [_("Name"), _("Started"), _("Finished"), _("Elapsed")]
+    )
+  end
+
+  def calculate_elapsed_time(stime, ftime)
+    val = (ftime - stime)
+    hours = val / 3600
+    mins = val / 60
+    secs = val % 60
+    ("%02d:%02d:%02d" % [hours, mins, secs])
   end
 end

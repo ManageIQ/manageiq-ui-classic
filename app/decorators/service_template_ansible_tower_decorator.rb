@@ -1,5 +1,5 @@
 class ServiceTemplateAnsibleTowerDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'product product-template'
   end
 

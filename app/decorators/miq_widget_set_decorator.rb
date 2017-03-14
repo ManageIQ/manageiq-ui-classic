@@ -1,5 +1,5 @@
 class MiqWidgetSetDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'fa fa-tachometer'
   end
 end

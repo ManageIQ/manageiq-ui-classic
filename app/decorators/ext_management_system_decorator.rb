@@ -1,5 +1,5 @@
 class ExtManagementSystemDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     nil
   end
 

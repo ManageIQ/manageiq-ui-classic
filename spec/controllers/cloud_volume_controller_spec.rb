@@ -175,5 +175,116 @@ describe CloudVolumeController do
     end
   end
 
+  describe "#create_volume" do
+    before do
+      stub_user(:features => :all)
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    shared_examples "queue create volume task" do
+      let(:task_options) do
+        {
+          :action => "creating Cloud Volume for user %{user}" % {:user => controller.current_user.userid},
+          :userid => controller.current_user.userid
+        }
+      end
+      let(:queue_options) do
+        {
+          :class_name  => "CloudVolume",
+          :method_name => 'create_volume',
+          :role        => 'ems_operations',
+          :zone        => @ems.my_zone,
+          :args        => @task_options
+        }
+      end
+
+      it "builds add new volume screen" do
+        post :button, :params => { :pressed => "cloud_volume_new", :format => :js }
+        expect(assigns(:flash_array)).to be_nil
+      end
+
+      it "queues the create cloud volume action form OpenStack" do
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+        post :create, :params => @form_params.merge(:button => "add", :format => :js)
+      end
+    end
+
+    context "in OpenStack cloud" do
+      before do
+        @ems = FactoryGirl.create(:ems_openstack)
+        @tenant = FactoryGirl.create(:cloud_tenant_openstack, :ext_management_system => @ems)
+
+        @form_params = { :name => "volume", :size => 1, :cloud_tenant_id => @tenant.id,
+                         :emstype => "ManageIQ::Providers::StorageManager::CinderManager" }
+        @task_options = [@ems.id, { :name => "volume", :size => 1, :cloud_tenant => @tenant }]
+      end
+
+      it_behaves_like "queue create volume task"
+    end
+
+    context "in Amazon EBS" do
+      before do
+        @cloud_manager = FactoryGirl.create(:ems_amazon)
+        @ems = FactoryGirl.create(:ems_amazon_ebs, :parent_manager => @cloud_manager)
+        @availability_zone = FactoryGirl.create(:availability_zone,
+                                                :ems_ref               => "us-east-1e",
+                                                :ext_management_system => @cloud_manager)
+
+        # Common form parameters for the Amazon EBS volume.
+        @form_params = {
+          :emstype                  => "ManageIQ::Providers::Amazon::StorageManager::Ebs",
+          :storage_manager_id       => @ems.id,
+          :name                     => "volume",
+          :size                     => 1,
+          :aws_availability_zone_id => @availability_zone.ems_ref,
+        }
+        # Common EC2 client options
+        @aws_options = {
+          :name              => "volume", :size => 1,
+          :availability_zone => @availability_zone.ems_ref
+        }
+        # Task options include the ID of the EMS and provider-specific options.
+        @task_options = [@ems.id, @aws_options]
+      end
+
+      context "for volume type 'gp2'" do
+        before do
+          # 'gp2' volume type requires only the type
+          @form_params[:aws_volume_type] = "gp2"
+          @aws_options[:volume_type] = "gp2"
+          @aws_options[:encrypted] = nil
+        end
+
+        it_behaves_like "queue create volume task"
+      end
+
+      context "for volume type 'io1'" do
+        before do
+          # 'io1' volume type requires the IOPS as well.
+          @form_params[:aws_volume_type] = "io1"
+          @form_params[:aws_iops] = "100"
+
+          @aws_options[:volume_type] = "io1"
+          @aws_options[:iops] = "100"
+          @aws_options[:encrypted] = nil
+        end
+
+        it_behaves_like "queue create volume task"
+      end
+
+      context "for encrypted volume" do
+        before do
+          # 'gp2' volume type requires only the type
+          @form_params[:aws_volume_type] = "gp2"
+          @form_params[:aws_encryption] = "true"
+          @aws_options[:volume_type] = "gp2"
+          @aws_options[:encrypted] = "true"
+        end
+
+        it_behaves_like "queue create volume task"
+      end
+    end
+  end
+
   include_examples '#download_summary_pdf', :cloud_volume
 end

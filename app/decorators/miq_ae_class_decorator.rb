@@ -1,5 +1,5 @@
 class MiqAeClassDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'product product-ae_class'
   end
 end

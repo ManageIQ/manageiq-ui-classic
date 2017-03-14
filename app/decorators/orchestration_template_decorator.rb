@@ -1,5 +1,5 @@
 class OrchestrationTemplateDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'product product-template'
   end
 end

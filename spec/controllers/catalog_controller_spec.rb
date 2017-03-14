@@ -690,4 +690,44 @@ describe CatalogController do
       expect(response).to have_http_status 200
     end
   end
+
+  context "#need_ansible_locals?" do
+    before do
+      controller.instance_variable_set(:@nodetype, 'st')
+      st = FactoryGirl.create(:service_template,
+                              :type      => "ServiceTemplateAnsiblePlaybook",
+                              :prov_type => "generic_ansible_playbook")
+      controller.instance_variable_set(:@record, st)
+    end
+
+    it "returns true for Ansible Playbook Service Template in Catalog Items accordion only" do
+      controller.instance_variable_set(:@sb,
+                                       :trees       => {:sandt_tree => {:open_nodes => []}},
+                                       :active_tree => :sandt_tree)
+      expect(controller.send(:need_ansible_locals?)).to be_truthy
+    end
+
+    it "returns false for Ansible Playbook Service Template in other accordions" do
+      controller.instance_variable_set(:@sb,
+                                       :trees       => {:svccat_tree => {:open_nodes => []}},
+                                       :active_tree => :svccat_tree)
+      expect(controller.send(:need_ansible_locals?)).to be_falsey
+    end
+
+    it "returns false for any other Service Template in Catalog Items accordions" do
+      controller.instance_variable_set(:@record, FactoryGirl.create(:service_template))
+      controller.instance_variable_set(:@sb,
+                                       :trees       => {:svccat_tree => {:open_nodes => []}},
+                                       :active_tree => :svccat_tree)
+      expect(controller.send(:need_ansible_locals?)).to be_falsey
+    end
+
+    it "returns false for any other Service Template in other accordions" do
+      controller.instance_variable_set(:@record, FactoryGirl.create(:service_template))
+      controller.instance_variable_set(:@sb,
+                                       :trees       => {:svccat_tree => {:open_nodes => []}},
+                                       :active_tree => :svccat_tree)
+      expect(controller.send(:need_ansible_locals?)).to be_falsey
+    end
+  end
 end

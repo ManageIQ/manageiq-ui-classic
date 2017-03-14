@@ -1,5 +1,5 @@
 class MiqScsiLunDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'fa fa-database'
   end
 end

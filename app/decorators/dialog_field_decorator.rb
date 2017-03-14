@@ -1,5 +1,5 @@
 class DialogFieldDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'product product-field'
   end
 end

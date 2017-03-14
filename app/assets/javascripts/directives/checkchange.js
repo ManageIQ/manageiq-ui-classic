@@ -6,10 +6,18 @@ ManageIQ.angular.app.directive('checkchange', ['miqService', function(miqService
       scope['elemType_' + ctrl.$name] = attr.type;
 
       var model = function() {
-        return scope.$eval(scope.angularForm.model || scope.model);
+        if (scope.$parent.angularForm) {
+          return scope.$parent.$eval(scope.$parent.angularForm.model || scope.$parent.model);
+        } else {
+          return scope.$eval(scope.angularForm.model || scope.model);
+        }
       };
       var modelCopy = function() {
-        return scope.$eval(scope.angularForm.modelCopy || "modelCopy");
+        if (scope.$parent.angularForm) {
+          return scope.$parent.$eval(scope.$parent.angularForm.modelCopy || "modelCopy");
+        } else {
+          return scope.$eval(scope.angularForm.modelCopy || "modelCopy");
+        }
       };
 
       if (modelCopy()) {

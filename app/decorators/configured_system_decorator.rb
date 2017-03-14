@@ -1,5 +1,5 @@
 class ConfiguredSystemDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'product product-configured_system'
   end
 

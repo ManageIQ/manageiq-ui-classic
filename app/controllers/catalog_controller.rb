@@ -228,7 +228,7 @@ class CatalogController < ApplicationController
       set_form_locals_for_sysprep
     end
     template_locals = {:locals => {:controller => "catalog"}}
-    template_locals[:locals].merge!(fetch_playbook_details) if TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplate" && !@view && @record.prov_type == "generic_ansible_playbook"
+    template_locals[:locals].merge!(fetch_playbook_details) if need_ansible_locals?
 
     render :layout => "application", :action => "explorer", :locals => template_locals
   end
@@ -1778,11 +1778,11 @@ class CatalogController < ApplicationController
     playbook_details = {}
     provision = @record.config_info[:provision]
     playbook_details[:provisioning] = {}
-    playbook_details[:provisioning][:repository] = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScriptSource.find(provision[:repository_id]).name
-    playbook_details[:provisioning][:playbook] = ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook.find(provision[:playbook_id]).name
-    playbook_details[:provisioning][:machine_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::MachineCredential.find(provision[:credential_id]).name
-    playbook_details[:provisioning][:network_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::NetworkCredential.find(provision[:network_credential_id]).name if provision[:network_credential_id]
-    playbook_details[:provisioning][:cloud_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::CloudCredential.find(provision[:cloud_credential_id]).name if provision[:cloud_credential_id]
+    playbook_details[:provisioning][:repository] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource.find(provision[:repository_id]).name
+    playbook_details[:provisioning][:playbook] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook.find(provision[:playbook_id]).name
+    playbook_details[:provisioning][:machine_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential.find(provision[:credential_id]).name
+    playbook_details[:provisioning][:network_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential.find(provision[:network_credential_id]).name if provision[:network_credential_id]
+    playbook_details[:provisioning][:cloud_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential.find(provision[:cloud_credential_id]).name if provision[:cloud_credential_id]
     dialog = provision[:dialog_id] ? Dialog.find(provision[:dialog_id]) : Dialog.find_by(:name => provision[:dialog_name])
     playbook_details[:provisioning][:dialog] = dialog.name
     playbook_details[:provisioning][:dialog_id] = dialog.id
@@ -1790,11 +1790,11 @@ class CatalogController < ApplicationController
     if @record.config_info[:retirement]
       retirement = @record.config_info[:retirement]
       playbook_details[:retirement] = {}
-      playbook_details[:retirement][:repository] = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScriptSource.find(retirement[:repository_id]).name
-      playbook_details[:retirement][:playbook] = ManageIQ::Providers::AnsibleTower::AutomationManager::Playbook.find(retirement[:playbook_id]).name
-      playbook_details[:retirement][:machine_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::MachineCredential.find(retirement[:credential_id]).name
-      playbook_details[:retirement][:network_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::NetworkCredential.find(retirement[:network_credential_id]).name if retirement[:network_credential_id]
-      playbook_details[:retirement][:cloud_credential] = ManageIQ::Providers::AnsibleTower::AutomationManager::CloudCredential.find(retirement[:cloud_credential_id]).name if retirement[:cloud_credential_id]
+      playbook_details[:retirement][:repository] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource.find(retirement[:repository_id]).name
+      playbook_details[:retirement][:playbook] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook.find(retirement[:playbook_id]).name
+      playbook_details[:retirement][:machine_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential.find(retirement[:credential_id]).name
+      playbook_details[:retirement][:network_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential.find(retirement[:network_credential_id]).name if retirement[:network_credential_id]
+      playbook_details[:retirement][:cloud_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential.find(retirement[:cloud_credential_id]).name if retirement[:cloud_credential_id]
       dialog = provision[:dialog_id] ? Dialog.find(retirement[:dialog_id]) : Dialog.find_by(:name => retirement[:dialog_name])
       playbook_details[:retirement][:dialog] = dialog.name
       playbook_details[:retirement][:dialog_id] = dialog.id
@@ -1933,7 +1933,7 @@ class CatalogController < ApplicationController
           r[:partial => "shared/buttons/ab_list"]
         else
           template_locals = {:controller => "catalog"}
-          template_locals.merge!(fetch_playbook_details) if TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplate" && @record.prov_type == "generic_ansible_playbook"
+          template_locals.merge!(fetch_playbook_details) if need_ansible_locals?
           r[:partial => "catalog/#{x_active_tree}_show", :locals => template_locals]
         end
       elsif @sb[:buttons_node]
@@ -2025,6 +2025,12 @@ class CatalogController < ApplicationController
     presenter.reset_one_trans
 
     render :json => presenter.for_render
+  end
+
+  def need_ansible_locals?
+    x_active_tree == :sandt_tree &&
+      TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplate" &&
+      @record.prov_type == "generic_ansible_playbook"
   end
 
   # Build a Catalog Items explorer tree

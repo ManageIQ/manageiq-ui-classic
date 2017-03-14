@@ -1,5 +1,5 @@
 class LdapRegionDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'pficon pficon-regions'
   end
 end

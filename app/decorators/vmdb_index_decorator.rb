@@ -1,5 +1,5 @@
 class VmdbIndexDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'fa fa-table'
   end
 end

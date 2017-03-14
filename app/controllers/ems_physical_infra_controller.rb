@@ -78,4 +78,5 @@ class EmsPhysicalInfraController < ApplicationController
   end
 
   menu_section :phy
+  has_custom_buttons
 end

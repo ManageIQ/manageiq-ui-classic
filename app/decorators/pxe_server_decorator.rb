@@ -1,5 +1,5 @@
 class PxeServerDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'pficon pficon-server'
   end
 end

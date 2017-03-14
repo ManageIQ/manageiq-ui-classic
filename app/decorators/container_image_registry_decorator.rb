@@ -3,11 +3,7 @@ class ContainerImageRegistryDecorator < MiqDecorator
     'pficon pficon-registry'
   end
 
-  def fonticon
-    'pficon pficon-registry'
-  end
-
-  def listicon_image
+  def self.listicon_image
     '100/container_image_registry.png'
   end
 end

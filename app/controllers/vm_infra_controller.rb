@@ -72,4 +72,5 @@ class VmInfraController < ApplicationController
   end
 
   menu_section :inf
+  has_custom_buttons
 end

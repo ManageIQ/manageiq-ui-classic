@@ -1,110 +1,112 @@
 ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$scope', 'providerForemanFormId', 'miqService', function($http, $scope, providerForemanFormId, miqService) {
-    var init = function() {
-      $scope.providerForemanModel = {
-        provtype: '',
-        name: '',
-        url: '',
-        zone: '',
-        verify_ssl: '',
-        log_userid: '',
-        log_password: '',
-        log_verify: ''
-      };
-      $scope.formId = providerForemanFormId;
-      $scope.afterGet = false;
-      $scope.validateClicked = miqService.validateWithAjax;
-      $scope.modelCopy = angular.copy( $scope.providerForemanModel );
-      $scope.model = 'providerForemanModel';
+  var vm = this;
 
-      ManageIQ.angular.scope = $scope;
+  vm.providerForemanModel = {
+    provtype: '',
+    name: '',
+    url: '',
+    zone: '',
+    verify_ssl: '',
+    log_userid: '',
+    log_password: '',
+    log_verify: ''
+  };
 
-      if (providerForemanFormId == 'new') {
-        $scope.newRecord = true;
+  vm.formId = providerForemanFormId;
+  vm.afterGet = false;
+  vm.validateClicked = miqService.validateWithAjax;
+  vm.modelCopy = angular.copy( vm.providerForemanModel );
+  vm.model = 'providerForemanModel';
 
-        $http.get('/provider_foreman/provider_foreman_form_fields/' + providerForemanFormId)
-          .then(getProviderForemanFormData)
-          .catch(miqService.handleFailure);
-      } else {
-        $scope.newRecord = false;
+  vm.saveable = miqService.saveable;
 
-        miqService.sparkleOn();
+  ManageIQ.angular.scope = vm;
 
-        $http.get('/provider_foreman/provider_foreman_form_fields/' + providerForemanFormId)
-          .then(getProviderForemanFormData)
-          .catch(miqService.handleFailure);
+
+  if (providerForemanFormId == 'new') {
+    vm.newRecord = true;
+
+    $http.get('/provider_foreman/provider_foreman_form_fields/' + providerForemanFormId)
+      .then(getProviderForemanFormData)
+      .catch(miqService.handleFailure);
+  } else {
+    vm.newRecord = false;
+
+    miqService.sparkleOn();
+
+    $http.get('/provider_foreman/provider_foreman_form_fields/' + providerForemanFormId)
+      .then(getProviderForemanFormData)
+      .catch(miqService.handleFailure);
+  }
+
+  vm.canValidateBasicInfo = function (angularForm) {
+    if (vm.isBasicInfoValid(angularForm))
+      return true;
+    else
+      return false;
+  }
+
+  vm.isBasicInfoValid = function(angularForm) {
+    if(angularForm.url.$valid &&
+      angularForm.log_userid.$valid &&
+      angularForm.log_password.$valid &&
+      angularForm.log_verify.$valid)
+      return true;
+    else
+      return false;
+  };
+
+  var providerForemanEditButtonClicked = function(buttonName, serializeFields) {
+    miqService.sparkleOn();
+    var url = '/provider_foreman/edit/' + providerForemanFormId + '?button=' + buttonName;
+    if (serializeFields === undefined) {
+      miqService.miqAjaxButton(url);
+    } else {
+      miqService.miqAjaxButton(url, vm.providerForemanModel);
+    }
+  };
+
+  vm.cancelClicked = function(angularForm) {
+    providerForemanEditButtonClicked('cancel');
+    angularForm.$setPristine(true);
+  };
+
+  vm.resetClicked = function(angularForm) {
+    $scope.$broadcast ('resetClicked');
+    vm.providerForemanModel = angular.copy( vm.modelCopy );
+    angularForm.$setPristine(true);
+    miqService.miqFlash("warn", __("All changes have been reset"));
+  };
+
+  vm.saveClicked = function(angularForm) {
+    providerForemanEditButtonClicked('save', true);
+    angularForm.$setPristine(true);
+  };
+
+  vm.addClicked = function(angularForm) {
+    vm.saveClicked(angularForm);
+  };
+
+  function getProviderForemanFormData(response) {
+    var data = response.data;
+
+    if (! vm.newRecord) {
+      vm.providerForemanModel.provtype = data.provtype;
+      vm.providerForemanModel.name = data.name;
+      vm.providerForemanModel.url = data.url;
+      vm.providerForemanModel.verify_ssl = data.verify_ssl === 1;
+
+      vm.providerForemanModel.log_userid = data.log_userid;
+
+      if (vm.providerForemanModel.log_userid !== '') {
+        vm.providerForemanModel.log_password = vm.providerForemanModel.log_verify = miqService.storedPasswordPlaceholder;
       }
-    };
-
-    $scope.canValidateBasicInfo = function () {
-      if ($scope.isBasicInfoValid())
-        return true;
-      else
-        return false;
     }
 
-    $scope.isBasicInfoValid = function() {
-      if($scope.angularForm.url.$valid &&
-         $scope.angularForm.log_userid.$valid &&
-         $scope.angularForm.log_password.$valid &&
-         $scope.angularForm.log_verify.$valid)
-        return true;
-      else
-        return false;
-    };
+    vm.providerForemanModel.zone = data.zone;
+    vm.afterGet = true;
+    vm.modelCopy = angular.copy( vm.providerForemanModel );
 
-    var providerForemanEditButtonClicked = function(buttonName, serializeFields) {
-      miqService.sparkleOn();
-      var url = '/provider_foreman/edit/' + providerForemanFormId + '?button=' + buttonName;
-      if (serializeFields === undefined) {
-        miqService.miqAjaxButton(url);
-      } else {
-        miqService.miqAjaxButton(url, serializeFields);
-      }
-    };
-
-    $scope.cancelClicked = function() {
-      providerForemanEditButtonClicked('cancel');
-      $scope.angularForm.$setPristine(true);
-    };
-
-    $scope.resetClicked = function() {
-      $scope.$broadcast ('resetClicked');
-      $scope.providerForemanModel = angular.copy( $scope.modelCopy );
-      $scope.angularForm.$setPristine(true);
-      miqService.miqFlash("warn", __("All changes have been reset"));
-    };
-
-    $scope.saveClicked = function() {
-      providerForemanEditButtonClicked('save', true);
-      $scope.angularForm.$setPristine(true);
-    };
-
-    $scope.addClicked = function() {
-      $scope.saveClicked();
-    };
-
-    function getProviderForemanFormData(response) {
-      var data = response.data;
-
-      if (! $scope.newRecord) {
-        $scope.providerForemanModel.provtype = data.provtype;
-        $scope.providerForemanModel.name = data.name;
-        $scope.providerForemanModel.url = data.url;
-        $scope.providerForemanModel.verify_ssl = data.verify_ssl === 1;
-
-        $scope.providerForemanModel.log_userid = data.log_userid;
-
-        if ($scope.providerForemanModel.log_userid !== '') {
-          $scope.providerForemanModel.log_password = $scope.providerForemanModel.log_verify = miqService.storedPasswordPlaceholder;
-        }
-      }
-
-      $scope.providerForemanModel.zone = data.zone;
-      $scope.afterGet = true;
-      $scope.modelCopy = angular.copy( $scope.providerForemanModel );
-
-      miqService.sparkleOff();
-    }
-
-    init();
+    miqService.sparkleOff();
+  }
 }]);

@@ -3,11 +3,7 @@ class MiddlewareMessagingDecorator < MiqDecorator
     'fa fa-exchange'
   end
 
-  def fonticon
-    'fa fa-exchange'
-  end
-
-  def listicon_image
+  def self.listicon_image
     '100/middleware_messaging.png'
   end
 end

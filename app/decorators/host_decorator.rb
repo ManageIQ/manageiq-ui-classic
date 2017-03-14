@@ -1,5 +1,5 @@
 class HostDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'pficon pficon-screen'
   end
 

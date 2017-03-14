@@ -11,6 +11,9 @@
 - change_stored_private_key ||= _("Change stored private key")
 - cancel_private_key_change ||= _("Cancel private key change")
 - verify_title_off          ||= _("Server information, username and private key fields are needed to perform verification of credentials")
+- vm_scope                  ||= false
+- main_scope                  = vm_scope ? "$parent.vm" : "$parent"
+
 
 %div{"ng-controller" => "emsKeypairController as vm", "ng-init" => "vm.initialize(#{ng_model}, formId)"}
   %div{"ng-show" => "#{ng_show}"}
@@ -82,5 +85,6 @@
                                                     :id                => id,
                                                     :valtype           => prefix,
                                                     :ng_model          => "#{ng_model}",
+                                                    :main_scope        => main_scope,
                                                     :verify_title_off  => verify_title_off,
                                                     :basic_info_needed => defined?(basic_info_needed) ? basic_info_needed : nil}

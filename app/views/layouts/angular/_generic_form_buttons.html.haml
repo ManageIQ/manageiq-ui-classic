@@ -1,0 +1,27 @@
+.clearfix
+.pull-right.button-group.edit_buttons
+  %miq-button{:name      => t = _("Add"),
+              :title     => t,
+              :alt       => t,
+              'ng-show'  => 'vm.newRecord',
+              :enabled   => "vm.saveable(angularForm)",
+              'on-click' => "vm.addClicked(angularForm)",
+              :primary   => 'true'}
+  %miq-button{:name      => t = _("Save"),
+              :title     => t,
+              :alt       => t,
+              'ng-show'  => '!vm.newRecord',
+              :enabled   => "vm.saveable(angularForm)",
+              'on-click' => "vm.saveClicked(angularForm)",
+              :primary   => 'true'}
+  %miq-button{:name      => t = _("Reset"),
+              :title     => t,
+              :alt       => t,
+              'ng-show'  => '!vm.newRecord',
+              :enabled   => "!angularForm.$pristine",
+              'on-click' => "vm.resetClicked(angularForm)"}
+  %miq-button{:name      => t = _("Cancel"),
+              :title     => t,
+              :alt       => t,
+              :enabled   => "true",
+              'on-click' => "vm.cancelClicked(angularForm)"}

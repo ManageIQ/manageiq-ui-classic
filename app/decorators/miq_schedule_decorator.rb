@@ -1,5 +1,5 @@
 class MiqScheduleDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'fa fa-clock-o'
   end
 end

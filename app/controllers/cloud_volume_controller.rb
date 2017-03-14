@@ -134,7 +134,7 @@ class CloudVolumeController < ApplicationController
     assert_privileges("cloud_volume_attach")
     @vm_choices = {}
     @volume = find_by_id_filtered(CloudVolume, params[:id])
-    @volume.cloud_tenant.vms.each { |vm| @vm_choices[vm.name] = vm.id }
+    @volume.available_vms.each { |vm| @vm_choices[vm.name] = vm.id }
 
     @in_a_form = true
     drop_breadcrumb(
@@ -277,8 +277,8 @@ class CloudVolumeController < ApplicationController
     assert_privileges("cloud_volume_new")
     @volume = CloudVolume.new
     @in_a_form = true
-    @cloud_tenant_choices = {}
-    CloudTenant.all.each { |tenant| @cloud_tenant_choices[tenant.name] = tenant.id }
+    @storage_manager_choices = {}
+    ExtManagementSystem.all.each { |ems| @storage_manager_choices[ems.name] = ems.id if ems.supports_block_storage? }
     drop_breadcrumb(
       :name => _("Add New %{model}") % {:model => ui_lookup(:table => 'cloud_volume')},
       :url  => "/cloud_volume/new"
@@ -294,12 +294,11 @@ class CloudVolumeController < ApplicationController
 
     when "add"
       @volume = CloudVolume.new
-      options = form_params
-      cloud_tenant = find_by_id_filtered(CloudTenant, options[:cloud_tenant_id])
-      options[:cloud_tenant] = cloud_tenant
-      valid_action, action_details = CloudVolume.validate_create_volume(cloud_tenant.ext_management_system)
+      options = form_params_create
+      ext_management_system = options.delete(:ems)
+      valid_action, action_details = CloudVolume.validate_create_volume(ext_management_system)
       if valid_action
-        task_id = CloudVolume.create_volume_queue(session[:userid], cloud_tenant.ext_management_system, options)
+        task_id = CloudVolume.create_volume_queue(session[:userid], ext_management_system, options)
 
         if task_id.kind_of?(Integer)
           initiate_wait_for_task(:task_id => task_id, :action => "create_finished")
@@ -697,6 +696,32 @@ class CloudVolumeController < ApplicationController
     options[:cloud_tenant_id] = params[:cloud_tenant_id] if params[:cloud_tenant_id]
     options[:vm_id] = params[:vm_id] if params[:vm_id]
     options[:device_path] = params[:device_path] if params[:device_path]
+    options
+  end
+
+  def form_params_create
+    options = {}
+    options[:name] = params[:name] if params[:name]
+    options[:size] = params[:size].to_i if params[:size]
+
+    # Depending on the storage manager type, collect required form params.
+    case params[:emstype]
+    when "ManageIQ::Providers::StorageManager::CinderManager"
+      cloud_tenant_id = params[:cloud_tenant_id] if params[:cloud_tenant_id]
+      cloud_tenant = find_by_id_filtered(CloudTenant, cloud_tenant_id)
+      options[:cloud_tenant] = cloud_tenant
+      options[:ems] = cloud_tenant.ext_management_system
+    when "ManageIQ::Providers::Amazon::StorageManager::Ebs"
+      options[:volume_type] = params[:aws_volume_type] if params[:aws_volume_type]
+      # Only set IOPS if io1 (provisioned IOPS) and IOPS available
+      options[:iops] = params[:aws_iops] if options[:volume_type] == 'io1' && params[:aws_iops]
+      options[:availability_zone] = params[:aws_availability_zone_id] if params[:aws_availability_zone_id]
+      options[:encrypted] = params[:aws_encryption]
+
+      # Get the storage manager.
+      storage_manager_id = params[:storage_manager_id] if params[:storage_manager_id]
+      options[:ems] = find_by_id_filtered(ExtManagementSystem, storage_manager_id)
+    end
     options
   end
 

@@ -1,5 +1,5 @@
 class DialogGroupDecorator < MiqDecorator
-  def fonticon
+  def self.fonticon
     'fa fa-comments-o'
   end
 end
