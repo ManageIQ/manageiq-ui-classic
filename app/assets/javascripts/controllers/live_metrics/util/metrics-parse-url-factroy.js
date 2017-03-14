@@ -8,5 +8,6 @@ angular.module('miq.util').factory('metricsParseUrlFactory', function() {
     dash.tenant = '_system';
     dash.minBucketDurationInSecondes = 20 * 60;
     dash.max_metrics = 1000;
+    dash.items_per_page = 10;
   };
 });
