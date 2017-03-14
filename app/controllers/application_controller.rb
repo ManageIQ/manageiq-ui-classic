@@ -1006,7 +1006,7 @@ class ApplicationController < ActionController::Base
         item = listicon_item(view, row['id'])
         image = listicon_image(item, view)
         new_row[:img_url] = ActionController::Base.helpers.image_path(listicon_image(item, view).to_s)
-        icon, icon2 = listicon_icon(item) || listicon_glyphicon(view.db, row)
+        icon, icon2, _image = listicon_glyphicon(item)
         new_row[:cells] << {:title => _('View this item'),
                             :image => image,
                             :icon  => icon,

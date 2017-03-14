@@ -1578,10 +1578,13 @@ module ApplicationHelper
     x_tree && ((tree_with_advanced_search? && !@record) || @show_adv_search)
   end
 
+  def listicon_glyphicon(item)
+    [item.decorate.try(:fonticon), item.decorate.try(:secondary_icon), item.decorate.try(:listicon_image)]
+  end
+  private :listicon_glyphicon
+
   def listicon_tag(item)
-    icon = item.decorate.try(:fonticon)
-    icon2 = item.decorate.try(:secondary_icon)
-    image = item.decorate.try(:listicon_image)
+    icon, icon2, image = listicon_glyphicon(item)
 
     if image
       image_tag(ActionController::Base.helpers.image_path(image))
