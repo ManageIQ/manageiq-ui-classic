@@ -28,7 +28,6 @@ describe TreeBuilderTags do
     end
     it 'set locals for render correctly' do
       locals = @tags_tree.send(:set_locals_for_render)
-      expect(locals[:id_prefix]).to eq('tags_')
       expect(locals[:checkboxes]).to eq(true)
       expect(locals[:check_url]).to eq("/ops/rbac_group_field_changed/#{@group.id || "new"}___")
       expect(locals[:highlight_changes]).to eq(true)

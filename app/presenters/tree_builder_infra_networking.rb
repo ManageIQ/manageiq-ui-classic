@@ -16,7 +16,8 @@ class TreeBuilderInfraNetworking < TreeBuilder
 
   def set_locals_for_render
     locals = super
-    locals.merge!(:id_prefix => 'nt_', :autoload => true)
+    locals[:autoload] = true
+    locals
   end
 
   def root_options

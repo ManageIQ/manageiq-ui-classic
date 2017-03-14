@@ -25,7 +25,6 @@ class TreeBuilderMiqActionCategory < TreeBuilder
   def set_locals_for_render
     locals = super
     locals.merge!(
-      :id_prefix => "cat_tree",
       :click_url => "/miq_policy/action_tag_pressed/",
       :onclick   => "miqOnClickTagCat"
     )
