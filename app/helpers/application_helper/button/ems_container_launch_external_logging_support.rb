@@ -1,7 +1,7 @@
 class ApplicationHelper::Button::EmsContainerLaunchExternalLoggingSupport < ApplicationHelper::Button::GenericFeatureButton
   def initialize(view_context, view_binding, instance_data, props)
     props ||= {}
-    props.store_path(:options, :feature, :external_logging_support)
+    props.store_path(:options, :feature, :external_logging)
     super(view_context, view_binding, instance_data, props)
   end
 
