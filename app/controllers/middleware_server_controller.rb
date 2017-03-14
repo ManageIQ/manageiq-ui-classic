@@ -159,7 +159,7 @@ class MiddlewareServerController < ApplicationController
   end
 
   def self.display_methods
-    %i(middleware_datasources middleware_deployments middleware_messagings)
+    %w(middleware_datasources middleware_deployments middleware_messagings)
   end
 
   def button

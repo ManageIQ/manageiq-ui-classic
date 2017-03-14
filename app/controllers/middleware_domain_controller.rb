@@ -10,7 +10,7 @@ class MiddlewareDomainController < ApplicationController
   after_action :set_session_data
 
   def self.display_methods
-    %i(middleware_server_groups)
+    %w(middleware_server_groups)
   end
 
   menu_section :cnt

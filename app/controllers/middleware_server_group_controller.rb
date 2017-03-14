@@ -35,7 +35,7 @@ class MiddlewareServerGroupController < ApplicationController
   end
 
   def self.display_methods
-    %i(middleware_servers)
+    %w(middleware_servers)
   end
 
   def textual_group_list
