@@ -331,6 +331,11 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   };
 
   $scope.providerTypeChanged = function() {
+    if ($scope.emsCommonModel.ems_controller === 'ems_container') {
+      $scope.emsCommonModel.default_api_port = "8443"; // TODO: correct per-type port
+      // Container types are nearly identical, no point resetting most fields on type change.
+      return;
+    }
     $scope.emsCommonModel.default_api_port = "";
     $scope.emsCommonModel.provider_region = "";
     $scope.emsCommonModel.default_security_protocol = "";
@@ -352,10 +357,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.metrics_api_port = "5432";
       $scope.emsCommonModel.default_api_port = $scope.getDefaultApiPort($scope.emsCommonModel.emstype);
       $scope.emsCommonModel.metrics_database_name = "ovirt_engine_history";
-    } else if ($scope.emsCommonModel.ems_controller === 'ems_container') {
-      $scope.emsCommonModel.default_api_port = "8443";
-      $scope.emsCommonModel.default_security_protocol = 'ssl-with-validation';
-      $scope.emsCommonModel.hawkular_security_protocol = 'ssl-with-validation';
     } else if ($scope.emsCommonModel.emstype === 'vmware_cloud') {
       $scope.emsCommonModel.default_api_port = "443";
       $scope.emsCommonModel.event_stream_selection = "none";
