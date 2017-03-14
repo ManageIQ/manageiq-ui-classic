@@ -81,8 +81,8 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       vm.catalogItemModel.retirement_remove_resources = 'no_with_playbook';
       vm.catalogItemModel['remove_resources_types'] = {
         "No": "no_with_playbook",
-        "Pre": "pre_with_playbook",
-        "Post": "post_with_playbook"
+        "Before Playbook runs": "pre_with_playbook",
+        "After Playbook runs": "post_with_playbook"
       };
     }
   }
@@ -275,8 +275,11 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
   $scope.$watch('vm._retirement_repository', function(value) {
     if (value) {
       vm.repositoryChanged("retirement", value.id)
-    } else
+    } else {
+      vm.catalogItemModel['retirement_playbook_id'] = '';
       vm.catalogItemModel['retirement_repository_id'] = '';
+      getRemoveResourcesTypes();
+    }
   });
 
   $scope.cloudTypeChanged = function(prefix) {
