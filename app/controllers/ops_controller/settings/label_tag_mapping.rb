@@ -132,15 +132,12 @@ module OpsController::Settings::LabelTagMapping
     prefix = ContainerLabelTagMapping::AUTOTAG_PREFIX
 
     # The entity is a string in the form "Provider::ResourceType".
-    if entity
+    if entity && entity.include?('::')
       prefix, entity = entity.split('::')
-      # Backwards compatibility
-      if prefix && entity
-        prefix.downcase!
-        entity_str = entity.underscore
-      else
-        prefix = ContainerLabelTagMapping::AUTOTAG_PREFIX
-      end
+      prefix.downcase!
+      entity_str = entity.underscore
+    else
+      entity_str = entity.underscore if entity
     end
 
     cat_name = "#{prefix}:#{entity_str}:" + Classification.sanitize_name(label_name.tr("/", ":"))

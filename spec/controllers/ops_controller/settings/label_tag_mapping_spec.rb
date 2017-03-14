@@ -15,6 +15,14 @@ describe OpsController do
       post :label_tag_mapping_edit, :button => 'add'
     end
 
+    def use_form_to_create_scoped_mapping
+      post :label_tag_mapping_edit
+      post :label_tag_mapping_field_changed, :id => 'new', :entity => 'Amazon::Vm'
+      post :label_tag_mapping_field_changed, :id => 'new', :label_name => 'some-amazon-label'
+      post :label_tag_mapping_field_changed, :id => 'new', :category => 'Amazon Vms'
+      post :label_tag_mapping_edit, :button => 'add'
+    end
+
     it "creates new mapping on save" do
       use_form_to_create_mapping
       mapping = ContainerLabelTagMapping.last
@@ -25,7 +33,17 @@ describe OpsController do
       expect(mapping.tag.classification.description).to eq('My Cat')
     end
 
-    it "can edit existing mapping" do
+    it "creates new scoped mapping on save" do
+      use_form_to_create_scoped_mapping
+      mapping = ContainerLabelTagMapping.last
+      expect(mapping.labeled_resource_type).to eq('Vm')
+      expect(mapping.label_name).to eq('some-amazon-label')
+      expect(mapping.label_value).to be nil
+      expect(mapping.tag.classification.category?).to be true
+      expect(mapping.tag.classification.description).to eq('Amazon Vms')
+    end
+
+    it "can edit an existing mapping" do
       use_form_to_create_mapping
       mapping = ContainerLabelTagMapping.last
 
@@ -54,6 +72,35 @@ describe OpsController do
       controller.instance_variable_set :@flash_array, nil
       post :label_tag_mapping_edit, :id => mapping.id.to_s, :button => 'save'
       expect(mapping.tag.classification.description).to eq('Edited Again Cat')
+    end
+
+    it "can edit an existing scoped mapping" do
+      use_form_to_create_scoped_mapping
+      mapping = ContainerLabelTagMapping.last
+
+      post :label_tag_mapping_edit, :id => mapping.id.to_s
+      expect(assigns(:edit)[:new]).to include(:entity     => 'Vm',
+                                              :label_name => 'some-amazon-label',
+                                              :category   => 'Amazon Vms')
+
+      post :label_tag_mapping_field_changed, :id => mapping.id.to_s, :category => 'Edited Amazon'
+      expect(assigns(:edit)[:new]).to include(:entity     => 'Vm',
+                                              :label_name => 'some-amazon-label',
+                                              :category   => 'Edited Amazon')
+
+      post :label_tag_mapping_edit, :id => mapping.id.to_s, :button => 'reset'
+      expect(assigns(:edit)[:new]).to include(:entity     => 'Vm',
+                                              :label_name => 'some-amazon-label',
+                                              :category   => 'Amazon Vms')
+
+      post :label_tag_mapping_field_changed, :id => mapping.id.to_s, :category => 'Edited Again Amazon'
+      expect(assigns(:edit)[:new]).to include(:entity     => 'Vm',
+                                              :label_name => 'some-amazon-label',
+                                              :category   => 'Edited Again Amazon')
+
+      controller.instance_variable_set :@flash_array, nil
+      post :label_tag_mapping_edit, :id => mapping.id.to_s, :button => 'save'
+      expect(mapping.tag.classification.description).to eq('Edited Again Amazon')
     end
   end
 end
