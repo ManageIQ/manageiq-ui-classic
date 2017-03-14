@@ -1578,53 +1578,13 @@ module ApplicationHelper
     x_tree && ((tree_with_advanced_search? && !@record) || @show_adv_search)
   end
 
-  def fileicon_tag(db, row)
-    icon = nil
-    if %w(Job MiqTask).include?(db)
-      if row["state"].downcase == "finished" && row["status"]
-        title = _("Status = %{row}") % {:row => row["status"].capitalize}
-        cancel_msg = row["message"].include?('cancel')
-        if row["status"].downcase == "ok" && !cancel_msg
-          icon = "pficon pficon-ok"
-        elsif row["status"].downcase == "error" || cancel_msg
-          icon = "pficon pficon-error-circle-o"
-        elsif row["status"].downcase == "warn" || cancel_msg
-          icon = "pficon pficon-warning-triangle-o"
-        end
-      elsif %w(queued waiting_to_start).include?(row["state"].downcase)
-        icon = "fa fa-step-forward"
-        title = _("Status = Queued")
-      elsif !%w(finished queued waiting_to_start).include?(row["state"].downcase)
-        icon = "pficon pficon-running"
-        title = _("Status = Running")
-      end
-    elsif %w(Vm VmOrTemplate).include?(db)
-      vm = @targets_hash[from_cid(@id)]
-      vendor = vm ? vm.vendor : "unknown"
-      image = "svg/vendor-#{vendor}.svg"
-    elsif db == "Host"
-      host = @targets_hash[@id] if @targets_hash
-      vendor = host ? host.vmm_vendor_display.downcase : "unknown"
-      image = "svg/vendor-#{vendor}.svg"
-    elsif db == "MiqAction"
-      action = @targets_hash[row['id']]
-      icon = action ? action.decorate.fonticon : 'product product-action'
-    elsif db == "MiqProvision"
-      image = "100/miq_request.png"
-    elsif db == "MiqWorker"
-      worker = @targets_hash[from_cid(@id)]
-      image = "100/processmanager-#{worker.normalized_type}.png"
-    elsif db == "ExtManagementSystem"
-      ems = @targets_hash[from_cid(@id)]
-      image = "svg/vendor-#{ems.image_name}.svg"
-    elsif db == "Tenant"
-      icon = row['divisible'] ? "pficon pficon-tenant" : "pficon pficon-project"
-    else
-      image = "100/#{db.underscore}.png"
-    end
+  def listicon_tag(item)
+    icon = item.decorate.try(:fonticon)
+    icon2 = item.decorate.try(:secondary_icon)
+    image = item.decorate.try(:listicon_image)
 
-    if icon
-      content_tag(:i, nil, :class => icon, :title => title)
+    if image
+      image_tag(ActionController::Base.helpers.image_path(image))
     else
       image_tag(ActionController::Base.helpers.image_path(image), :title => title, :alt => nil)
     end
@@ -1685,6 +1645,11 @@ module ApplicationHelper
       listicon_glyphicon_tag(db, row)
     else
       fileicon_tag(db, row)
+=======
+      content_tag(:i, nil, :class => icon) do
+        content_tag(:i, nil, :class => icon2) if icon2
+      end
+>>>>>>> resolved conflicts from cherry-pick of #ca2dea446cfe1111bc0d1c7cd96ce4d59d439423 so report_data will use decorators for icons in listicon selection defined in application helper.
     end
   end
 
