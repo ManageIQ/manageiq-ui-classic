@@ -257,7 +257,11 @@ class ProviderForemanController < ApplicationController
     else
       x_history_add_item(:id => treenodeid, :text => @right_cell_text)  # Add to history pulldown array
     end
-    options
+    if @view && @pages
+      {:view => @view, :pages => @pages}
+    else
+      options
+    end
   end
 
   def provider_node(id, model)
@@ -271,7 +275,7 @@ class ProviderForemanController < ApplicationController
       when "ManageIQ::Providers::Foreman::ConfigurationManager"
         options = {:model => "ConfigurationProfile", :match_via_descendants => ConfiguredSystem, :where_clause => ["manager_id IN (?)", provider.id]}
         @show_list ? process_show_list(options) : options.merge!(update_options)
-        add_unassigned_configuration_profile_record(provider.id)
+        options.merge!(add_unassigned_configuration_profile_record(provider.id))
         record_model = ui_lookup(:model => self.class.model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
         @right_cell_text = _("%{model} \"%{name}\"") %
         {:name => provider.name,
@@ -450,7 +454,13 @@ class ProviderForemanController < ApplicationController
        'manager_id'                     => provider_id
       }
 
-    add_unassigned_configuration_profile_record_to_view(unassigned_profile_row, unassigned_configuration_profile)
+    if @view
+      add_unassigned_configuration_profile_record_to_view(unassigned_profile_row, unassigned_configuration_profile)
+    end
+    {
+      :unassigned_profile_row => unassigned_profile_row,
+      :unassigned_configuration_profile => unassigned_configuration_profile
+    }
   end
 
   def add_unassigned_configuration_profile_record_to_view(unassigned_profile_row, unassigned_configuration_profile)

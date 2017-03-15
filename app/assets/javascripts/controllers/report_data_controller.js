@@ -170,6 +170,9 @@
           itemId += '-' + item.id;
         }
       }
+      if (itemId.indexOf('unassigned') !== -1) {
+        prefix = '/' + ManageIQ.controller + '/tree_select/?id=';
+      }
       var url = prefix + itemId;
       $.post(url).always(function() {
         this.setExtraClasses();

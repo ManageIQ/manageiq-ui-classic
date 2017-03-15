@@ -183,6 +183,10 @@ module ApplicationHelper
       SystemService
       Filesystem
       ChargebackRate
+      ServiceTemplateProvisionRequest
+      MiqProvisionRequest
+      MiqProvisionRequestTemplate
+      MiqWebServiceWorker
     ).include? type
   end
 
@@ -334,16 +338,17 @@ module ApplicationHelper
           return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w(ConfiguredSystem).include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
           return url_for_only_path(:action => action, :id => nil) + "/"
-        elsif %w(MiqWidget).include?(view.db) && request.parameters[:controller] == "report"
-          return "/report/tree_select/?id=" + request.parameters[:id]
         elsif %w(MiqWidget).include?(view.db) && %w(report).include?(request.parameters[:controller])
-          return "/" + request.parameters[:controller] + "/tree_select/?id=" + request.parameters[:id]
+          return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node
         elsif %w(User MiqGroup MiqUserRole Tenant).include?(view.db) &&
               %w(ops).include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node.split("-")[1]
-        elsif %w(VmdbTableEvm VmdbIndex MiqServer MiqSchedule).include?(view.db) &&
+        elsif %w(VmdbTableEvm VmdbIndex MiqServer).include?(view.db) &&
               %w(ops report).include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + TREE_WITH_TAB[active_tab]
+        elsif %w(MiqAction MiqAlert ScanItemSet MiqSchedule).include?(view.db) &&
+          %w(miq_policy ops).include?(params[:controller])
+          return "/#{params[:controller]}/tree_select/?id=#{TreeBuilder.get_prefix_for_model(view.db)}"
         elsif %w(MiqReportResult).include?(view.db) && %w(report).include?(request.parameters[:controller])
           return "/#{request.parameters[:controller]}/x_show/#{TreeBuilder.get_prefix_for_model(x_tree[:leaf])}-"
         else
@@ -1579,7 +1584,7 @@ module ApplicationHelper
   end
 
   def listicon_glyphicon(item)
-    [item.decorate.try(:fonticon), item.decorate.try(:secondary_icon), item.decorate.try(:listicon_image)]
+    [item.decorate.try(:fonticon), item.decorate.try(:secondary_icon), item.decorate.try(:listicon_image)] if item
   end
   private :listicon_glyphicon
 

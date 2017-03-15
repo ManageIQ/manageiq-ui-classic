@@ -425,6 +425,7 @@ class MiqPolicyController < ApplicationController
     @show_adv_search = (@nodetype == "xx"   && !@folders) ||
                        (@nodetype == "root" && ![:alert_profile_tree, :condition_tree, :policy_tree].include?(x_active_tree))
     x_history_add_item(:id => treenodeid, :text => @right_cell_text)
+    {:view => @view, :pages => @pages}
   end
 
   # Fetches right side info if a tree root is selected

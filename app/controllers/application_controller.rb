@@ -290,6 +290,9 @@ class ApplicationController < ActionController::Base
       node_info = get_node_info(x_node, false)
       options.merge!(node_info) if node_info.kind_of?(Hash)
     end
+    if params[:model] && %w(miq_requests).include?(params[:model])
+      options = show_list
+    end
     curr_model_id = Integer(params[:model_id]) rescue nil
     unless curr_model_id.nil?
       options[:parent] = identify_record(params[:model_id]) if params[:model_id] && options[:parent].nil?
@@ -363,6 +366,12 @@ class ApplicationController < ActionController::Base
       settings = options[:pages]
     end
     settings = set_variables_report_data(settings, current_view)
+    # Foreman has some unassigned rows which needs to be added after view is fetched
+    if options && options[:unassigned_profile_row] && options[:unassigned_configuration_profile]
+      options[:unassigned_profile_row][:id] ||= options[:unassigned_profile_row]['manager_id']
+      current_view.table.data.push(options[:unassigned_profile_row])
+      @targets_hash[options[:unassigned_profile_row]['id']] = options[:unassigned_configuration_profile]
+    end
     render :json => {
       :settings => settings,
       :data     => view_to_hash(current_view),
@@ -1118,7 +1127,7 @@ class ApplicationController < ActionController::Base
             when MiqWorker
               "100/processmanager-#{item.normalized_type}.png" if item.try(:normalized_type)
             else
-              item.decorate.try(:fileicon)
+              item.decorate.try(:fileicon) if item
             end
 
     image || default
