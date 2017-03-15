@@ -6,7 +6,6 @@ class TreeBuilderServices < TreeBuilder
   def tree_init_options(_tree_name)
     {
       :leaf     => "Service",
-      :full_ids => true,
       :add_root => false
     }
   end
@@ -37,7 +36,7 @@ class TreeBuilderServices < TreeBuilder
   end
 
   def x_get_tree_custom_kids(object, count_only, _options)
-    services = Rbac.filtered(Service.where(:retired => object[:id] != 'asrv'))
+    services = Rbac.filtered(Service.where(:retired => object[:id] != 'asrv', :ancestry => [nil, ""]))
     if count_only
       services.size
     else

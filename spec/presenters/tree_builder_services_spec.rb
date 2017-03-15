@@ -8,15 +8,9 @@ describe TreeBuilderServices do
     active_nodes = kid_nodes(root_nodes[0])
     retired_nodes = kid_nodes(root_nodes[1])
     expect(active_nodes).to eq(
-      @service => {
-        @service_c1 => {
-          @service_c11 => {},
-          @service_c12 => {
-            @service_c121 => {}
-          }
-        },
-        @service_c2 => {}
-      }
+      @service => {},
+      @service_c1 => {},
+      @service_c2 => {}
     )
     expect(retired_nodes).to eq(@service_c3 => {})
   end
@@ -33,12 +27,12 @@ describe TreeBuilderServices do
 
   def create_deep_tree
     @service      = FactoryGirl.create(:service, :display => true, :retired => false)
-    @service_c1   = FactoryGirl.create(:service, :service => @service, :display => true, :retired => false)
+    @service_c1   = FactoryGirl.create(:service, :display => true, :retired => false)
     @service_c11  = FactoryGirl.create(:service, :service => @service_c1, :display => true, :retired => false)
     @service_c12  = FactoryGirl.create(:service, :service => @service_c1, :display => true, :retired => false)
     @service_c121 = FactoryGirl.create(:service, :service => @service_c12, :display => true, :retired => false)
-    @service_c2   = FactoryGirl.create(:service, :service => @service, :display => true, :retired => false)
+    @service_c2   = FactoryGirl.create(:service, :display => true, :retired => false)
     # hidden
-    @service_c3   = FactoryGirl.create(:service, :service => @service, :retired => true)
+    @service_c3   = FactoryGirl.create(:service, :retired => true)
   end
 end
