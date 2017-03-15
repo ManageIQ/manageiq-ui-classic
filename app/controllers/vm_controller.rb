@@ -24,7 +24,6 @@ class VmController < ApplicationController
     @layout         = "vm"
     @lastaction     = session[:vm_lastaction]
     @showtype       = session[:vm_showtype]
-    @base           = session[:vm_compare_base]
     @filters        = session[:vm_filters]
     @catinfo        = session[:vm_catinfo]
     @display        = session[:vm_display]
@@ -37,7 +36,6 @@ class VmController < ApplicationController
     session[:vm_showtype]     = @showtype
     session[:miq_compressed]  = @compressed unless @compressed.nil?
     session[:miq_exists_mode] = @exists_mode unless @exists_mode.nil?
-    session[:vm_compare_base] = @base
     session[:vm_filters]      = @filters
     session[:vm_catinfo]      = @catinfo
     session[:vm_display]      = @display unless @display.nil?

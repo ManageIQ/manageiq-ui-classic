@@ -22,7 +22,6 @@ class MiqTemplateController < ApplicationController
     @layout         = session[:miq_template_type] ? session[:miq_template_type] : "miq_template"
     @lastaction     = session[:miq_template_lastaction]
     @showtype       = session[:miq_template_showtype]
-    @base           = session[:miq_template_compare_base]
     @filters        = session[:miq_template_filters]
     @catinfo        = session[:miq_template_catinfo]
     @display        = session[:miq_template_display]
@@ -35,7 +34,6 @@ class MiqTemplateController < ApplicationController
     session[:miq_template_showtype]     = @showtype
     session[:miq_compressed]            = @compressed unless @compressed.nil?
     session[:miq_exists_mode]           = @exists_mode unless @exists_mode.nil?
-    session[:miq_template_compare_base] = @base
     session[:miq_template_filters]      = @filters
     session[:miq_template_catinfo]      = @catinfo
     session[:miq_template_display]      = @display unless @display.nil?
