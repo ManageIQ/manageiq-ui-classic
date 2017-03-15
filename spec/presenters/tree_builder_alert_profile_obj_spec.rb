@@ -39,8 +39,7 @@ describe TreeBuilderAlertProfileObj do
     describe '#set_locals_for_render' do
       it 'set locals for render correctly' do
         locals = subject.send(:set_locals_for_render)
-        expect(locals[:id_prefix]).to eq('obj_treebox2')
-        expect(locals[:check_url]).to eq("alert_profile_assign_changed/")
+        expect(locals[:check_url]).to eq("/miq_policy/alert_profile_assign_changed/")
         expect(locals[:oncheck]).to eq("miqOnCheckHandler")
         expect(locals[:checkboxes]).to eq(true)
         expect(locals[:cfmeNoClick]).to eq(true)

@@ -18,8 +18,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
 
   def tree_init_options(_tree_name)
     {
-      :expand => true,
-      :hideCheckox => false
+      :expand => true
     }
   end
 
@@ -35,7 +34,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
   end
 
   def root_options
-    t = @cat_tree ? "Tags" : ui_lookup(:tables => @assign_to)
+    t = @cat_tree ? _("Tags") : ui_lookup(:tables => @assign_to)
     {
       :title        => t,
       :tooltip      => "",
