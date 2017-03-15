@@ -11,7 +11,6 @@ class TreeBuilderAlertProfileObj < TreeBuilder
     node[:title] = (object.name.presence || object.description) unless object.kind_of?(MiddlewareServer)
     node[:hideCheckbox] = false
     node[:select] = @objects.include?(object.id)
-    node
   end
 
   def tree_init_options(_tree_name)

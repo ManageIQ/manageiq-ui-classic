@@ -49,14 +49,17 @@ describe TreeBuilderAlertProfileObj do
 
     describe '#override' do
       it 'set node' do
-        node = subject.send(:override, {}, tag1a, nil, nil)
+        node = {}
+        subject.send(:override, node, tag1a, nil, nil)
         expect(node[:hideCheckbox]).to eq(false)
         expect(node[:select]).to eq(true)
 
-        node = subject.send(:override, {}, tag2a, nil, nil)
+        node = {}
+        subject.send(:override, node, tag2a, nil, nil)
         expect(node[:select]).to eq(true)
 
-        node = subject.send(:override, {}, tag3a, nil, nil)
+        node = {}
+        subject.send(:override, node, tag3a, nil, nil)
         expect(node[:select]).to eq(false)
       end
     end
@@ -105,14 +108,17 @@ describe TreeBuilderAlertProfileObj do
 
     describe '#override' do
       it 'set node' do
-        node = subject.send(:override, {}, tag1b, nil, nil)
+        node = {}
+        subject.send(:override, node, tag1b, nil, nil)
         expect(node[:hideCheckbox]).to eq(false)
         expect(node[:select]).to eq(true)
 
-        node = subject.send(:override, {}, tag2b, nil, nil)
+        node = {}
+        subject.send(:override, node, tag2b, nil, nil)
         expect(node[:select]).to eq(false)
 
-        node = subject.send(:override, {}, tag3b, nil, nil)
+        node = {}
+        subject.send(:override, node, tag3b, nil, nil)
         expect(node[:select]).to eq(false)
       end
     end
