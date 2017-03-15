@@ -9,6 +9,9 @@ angular.module('miq.util').factory('metricsConfigFactory', function() {
       }
     };
 
+    dash.DEFAULT_TENANT = "_system";
+    dash.tenant = {value: null};
+
     dash.actionsConfig = {
       actionsInclude: true
     };

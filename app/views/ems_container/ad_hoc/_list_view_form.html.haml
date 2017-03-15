@@ -5,17 +5,15 @@
                             "ng-click"    => "dash.refreshTenant()"}
       = _("Set Tenant")
 
-    %input.form-control{"id"                  => "ad-hoc-tenant",
-                        "type"                => "text",
-                        "ng-model"            => "dash.tenant",
-                        "placeholder"         => _("Choose Tenants"),
-                        "typeahead"           => "tenenat for tenenat in dash.getTenants($viewValue)",
-                        "typeahead-loading"   => "dash.loadingTenants",
-                        "ng-change"           => "dash.tenantChanged = true",
-                        "typeahead-on-select" => "dash.refreshTenant()",
-                        "typeahead-wait-ms"   => 500}
+    %select.selectpicker.tenants-selector{"pf-select"        => "",
+                                          "id"               => "tenant-slector",
+                                          "ng-options"       => "o.label for o in dash.tenantList",
+                                          "ng-model"         => "dash.tenant",
+                                          "ng-change"        => "dash.tenantChanged = true",
+                                          "data-live-search" => "true",
+                                          "data-actions-box" => "true"}
 
-.ad-hoc-toolbar{"pf-toolbar" => "", "config" => "dash.toolbarConfig"}
+.ad-hoc-toolbar.filters-selector{"pf-toolbar" => "", "config" => "dash.toolbarConfig"}
   %actions
     %button.btn.btn-default{"type"        => "button",
                             "ng-click"    => "dash.doAddFilter()",

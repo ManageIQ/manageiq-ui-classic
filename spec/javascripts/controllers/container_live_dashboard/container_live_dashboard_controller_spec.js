@@ -1,6 +1,7 @@
 describe('adHocMetricsController', function() {
   var $scope, $controller, $httpBackend, pfViewUtils;
   var mock_data = getJSONFixture('container_live_dashboard_response.json');
+  var mock_tenants_data = getJSONFixture('container_live_dashboard_tenant_response.json');
   var mock_metrics_data = getJSONFixture('container_live_dashboard_metrics_response.json');
   var mock_data1_data = getJSONFixture('container_live_dashboard_data1_response.json');
   var mock_data2_data = getJSONFixture('container_live_dashboard_data2_response.json');
@@ -16,6 +17,7 @@ describe('adHocMetricsController', function() {
 
   beforeEach(inject(function(_$httpBackend_, $rootScope, _$controller_) {
     $httpBackend = _$httpBackend_;
+    $httpBackend.when('GET','/container_dashboard/data/42/?live=true&query=get_tenants').respond(mock_tenants_data);
     $httpBackend.when('GET','/container_dashboard/data/42/?live=true&tenant=_system&query=metric_tags&limit=250').respond(mock_data);
     $httpBackend.when('GET','/container_dashboard/data/42/?live=true&tenant=_system&limit=1000&query=metric_definitions&tags={}&page=1&items_per_page=10').respond(mock_metrics_data);
     $httpBackend.when('GET','/container_dashboard/data/42/?live=true&type=gauge&tenant=_system&query=get_data&metric_id=hello1&limit=5&order=DESC').respond(mock_data1_data);

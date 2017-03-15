@@ -1,6 +1,15 @@
 class HawkularProxyService
   include UiServiceMixin
 
+  TENANT_LABEL_MAX_LEN = 25
+  TENANT_LABEL_SPECIAL_CASES = {
+    "_system"         => "System",
+    "_ops"            => "Operations",
+    "default"         => "Default",
+    "admin"           => "Admin",
+    "openshift-infra" => "OpenShift Infra"
+  }.freeze
+
   def initialize(provider_id, controller)
     @provider_id = provider_id
     @controller = controller
@@ -110,15 +119,19 @@ class HawkularProxyService
     tenants = @cli.hawkular_client.http_get('/tenants')
 
     if @params['include'].blank?
-      tenants.map! { |x| x["id"] }
+      tenants.map! { |x| {:label => labelize(x["id"]), :value => x["id"]} }
     else
-      tenants.map! { |x| x["id"] if x["id"].include?(@params['include']) }
+      tenants.map! { |x| {:label => labelize(x["id"]), :value => x["id"]} if x["id"].include?(@params['include']) }
     end
 
     tenants.compact[0...limit]
   end
 
   private
+
+  def labelize(id)
+    TENANT_LABEL_SPECIAL_CASES.fetch(id, id.truncate(TENANT_LABEL_MAX_LEN))
+  end
 
   def _metric_definitions(tags, type)
     if type.blank?

@@ -1,12 +1,25 @@
 /* global miqHttpInject */
-
-  ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', 'miqService',
-    'metricsUtilsFactory', 'metricsHttpFactory', 'metricsConfigFactory', 'metricsParseUrlFactory',
-    function($http, $window, miqService, metricsUtilsFactory, metricsHttpFactory, metricsConfigFactory, metricsParseUrlFactory) {
-
+ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', 'miqService',
+  'metricsUtilsFactory', 'metricsHttpFactory', 'metricsConfigFactory', 'metricsParseUrlFactory',
+  function($http, $window, miqService, metricsUtilsFactory, metricsHttpFactory, metricsConfigFactory, metricsParseUrlFactory) {
     var dash = this;
     var utils = metricsUtilsFactory(dash);
     var httpUtils = metricsHttpFactory(dash, $http, utils, miqService);
+
+    dash.getTenants = httpUtils.getTenants;
+    dash.refreshList = httpUtils.refreshList;
+    dash.refreshGraph = httpUtils.refreshGraph;
+    dash.setPage = httpUtils.setPage;
+
+    var pageSetup = function() {
+      // try to parse config variables from page url
+      // and set page config variables
+      metricsParseUrlFactory(dash, $window);
+      metricsConfigFactory(dash);
+
+      // load tenants
+      httpUtils.getTenants();
+    }
 
     var initialization = function() {
       dash.tenantChanged = false;
@@ -41,9 +54,8 @@
         actionsConfig: dash.actionsConfig
       };
 
-      dash.url = '/container_dashboard/data' + dash.providerId  + '/?live=true&tenant=' + dash.tenant;
-
-      httpUtils.getMetricTags();
+      var _tenant = dash.tenant.value || dash.DEFAULT_TENANT;
+      dash.url = '/container_dashboard/data' + dash.providerId  + '/?live=true&tenant=' + _tenant;
     }
 
     var filterChange = function (filters, addOnly) {
@@ -54,6 +66,7 @@
       // prevent listing all metrics point
       if (dash.filterConfig.appliedFilters.length === 0) {
         dash.applied = false;
+        dash.itemSelected = false;
         dash.items = [];
         dash.page = 1;
         dash.pages = 1;
@@ -70,6 +83,7 @@
 
       // when change filter we automatically apply changes
       if (!addOnly) {
+        dash.itemSelected = false;
         dash.items = [];
         dash.page = 1;
         dash.pages = 1;
@@ -115,16 +129,10 @@
       initialization();
     };
 
-    dash.getTenants = httpUtils.getTenants;
-    dash.refreshList = httpUtils.refreshList;
-    dash.refreshGraph = httpUtils.refreshGraph;
-    dash.setPage = httpUtils.setPage;
-
-    // try to parse config variables from page url
-    // and set page config variables
-    metricsParseUrlFactory(dash, $window);
-    metricsConfigFactory(dash);
+    // one time initialization of page elemants
+    pageSetup();
 
     // initialize page elemants
     initialization();
-  }]);
+  }
+]);

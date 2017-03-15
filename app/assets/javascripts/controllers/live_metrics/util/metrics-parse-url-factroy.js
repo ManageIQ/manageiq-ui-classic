@@ -5,7 +5,7 @@ angular.module('miq.util').factory('metricsParseUrlFactory', function() {
     dash.providerId = '/' + (/^\/[^\/]+\/([r\d]+)$/.exec(pathname)[1]);
 
     // TODO: get this values from GET/POST values ?
-    dash.tenant = '_system';
+    dash.tenantList = [];
     dash.minBucketDurationInSecondes = 20 * 60;
     dash.max_metrics = 1000;
     dash.items_per_page = 10;
