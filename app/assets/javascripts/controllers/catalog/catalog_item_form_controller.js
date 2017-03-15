@@ -99,23 +99,28 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.catalogItemModel.provisioning_dialog_name = configData.provision.new_dialog_name;
     vm.catalogItemModel.provisioning_key = '';
     vm.catalogItemModel.provisioning_value = '';
-    vm.catalogItemModel.provisioning_variables = configData.provision.extra_vars;
+    setExtraVars('provisioning_variables', configData.provision.extra_vars);
 
-    if (typeof configData.retirement !== 'undefined') {
-      vm.catalogItemModel.retirement_remove_resources = configData.retirement.remove_resources;
+    vm.catalogItemModel.retirement_remove_resources = configData.retirement.remove_resources;
+    if (typeof configData.retirement.repository_id !== 'undefined') {
       vm.catalogItemModel.retirement_repository_id = configData.retirement.repository_id;
       vm.catalogItemModel.retirement_playbook_id = configData.retirement.playbook_id;
       vm.catalogItemModel.retirement_machine_credential_id = configData.retirement.credential_id;
-      vm.catalogItemModel.retirement_network_credential_id = configData.retirement.network_credential_id;
-      vm.catalogItemModel.retirement_cloud_credential_id = configData.retirement.cloud_credential_id;
-      vm.catalogItemModel.retirement_inventory = configData.retirement.hosts;
       vm.catalogItemModel.retirement_dialog_existing = configData.retirement.dialog_id ? "existing" : "create";
       vm.catalogItemModel.retirement_dialog_id = configData.retirement.dialog_id;
       vm.catalogItemModel.retirement_dialog_name = configData.retirement.new_dialog_name;
-      vm.catalogItemModel.retirement_key = '';
-      vm.catalogItemModel.retirement_value = '';
-      vm.catalogItemModel.retirement_variables = configData.retirement.extra_vars;
     }
+    vm.catalogItemModel.retirement_network_credential_id = configData.retirement.network_credential_id;
+    vm.catalogItemModel.retirement_cloud_credential_id = configData.retirement.cloud_credential_id;
+    vm.catalogItemModel.retirement_inventory = configData.retirement.hosts;
+    vm.catalogItemModel.retirement_key = '';
+    vm.catalogItemModel.retirement_value = '';
+    setExtraVars('retirement_variables', configData.retirement.extra_vars);
+  };
+
+  var setExtraVars = function(variableName, extraVars) {
+    if (typeof extraVars !== 'undefined')
+      vm.catalogItemModel[variableName] = extraVars;
   }
 
   var redirectUrl = '/catalog/explorer/' + catalogItemFormId;
@@ -189,27 +194,25 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       remove_resources: configData.retirement_remove_resources
     }
 
+    var retirement = catalog_item['config_info']['retirement'];
+    retirement['hosts'] = configData.retirement_inventory;
+    retirement['extra_vars'] = configData.retirement_variables;
     if (angular.isDefined(vm.catalogItemModel.retirement_repository_id) && configData.retirement_repository_id !== '') {
-      var retirement = catalog_item['config_info']['retirement'];
-
       retirement['repository_id'] = configData.retirement_repository_id;
-      retirement['playbook_id']   = configData.retirement_playbook_id;
+      retirement['playbook_id'] = configData.retirement_playbook_id;
       retirement['credential_id'] = configData.retirement_machine_credential_id;
-      retirement['hosts']         = configData.retirement_inventory;
-      retirement['dialog_id']     = configData.retirement_dialog_id;
-      retirement['extra_vars']    = configData.retirement_variables;
-
-      if (configData.retirement_network_credential_id !== '')
-        catalog_item['config_info']['retirement']['network_credential_id'] = configData.retirement_network_credential_id;
-
-      if (configData.retirement_cloud_credential_id !== '')
-        catalog_item['config_info']['retirement']['cloud_credential_id'] = configData.retirement_cloud_credential_id;
-
-      if (configData.retirement_dialog_id !== '') {
-        catalog_item['config_info']['retirement']['dialog_id'] = configData.retirement_dialog_id;
-      } else if (configData.retirement_dialog_name !== '')
-        catalog_item['config_info']['retirement']['new_dialog_name'] = configData.retirement_dialog_name;
+      retirement['dialog_id'] = configData.retirement_dialog_id;
     }
+    if (configData.retirement_network_credential_id !== '')
+      catalog_item['config_info']['retirement']['network_credential_id'] = configData.retirement_network_credential_id;
+
+    if (configData.retirement_cloud_credential_id !== '')
+      catalog_item['config_info']['retirement']['cloud_credential_id'] = configData.retirement_cloud_credential_id;
+
+    if (configData.retirement_dialog_id !== '') {
+      catalog_item['config_info']['retirement']['dialog_id'] = configData.retirement_dialog_id;
+    } else if (configData.retirement_dialog_name !== '')
+      catalog_item['config_info']['retirement']['new_dialog_name'] = configData.retirement_dialog_name;
 
     return catalog_item;
   }

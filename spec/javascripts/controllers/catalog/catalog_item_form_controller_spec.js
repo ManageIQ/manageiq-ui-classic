@@ -38,6 +38,11 @@ describe('catalogItemFormController', function() {
         },
         retirement: {
           remove_resources: 'yes_without_playbook',
+          hosts: undefined,
+          extra_vars: Object({  }),
+          network_credential_id: undefined,
+          cloud_credential_id: undefined,
+          dialog_id: undefined
         }
       }
     };
