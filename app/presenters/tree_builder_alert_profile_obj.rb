@@ -26,9 +26,8 @@ class TreeBuilderAlertProfileObj < TreeBuilder
   def set_locals_for_render
     locals = super
     locals.merge!(
-      :id_prefix   => "obj_treebox2",
       :oncheck     => "miqOnCheckHandler",
-      :check_url   => "alert_profile_assign_changed/",
+      :check_url   => "/miq_policy/alert_profile_assign_changed/",
       :checkboxes  => true,
       :cfmeNoClick => true,
       :onclick     => false
