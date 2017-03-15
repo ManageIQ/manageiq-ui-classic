@@ -900,6 +900,8 @@ class ApplicationController < ActionController::Base
           celltext = row[col].titleize
         when 'hardware.bitness'
           celltext = row[col] ? "#{row[col]} bit" : ''
+        when 'image?'
+          celltext = row[col] ? _("Image") : _("Snapshot")
         else
           # Use scheduled tz for formatting, if configured
           if ['miqschedule'].include?(view.db.downcase)
