@@ -13,17 +13,20 @@
     %thead
       %tr
         - id = @edit[:req_id] || "new"
-        - @edit[:vm_columns].each_with_index do |h, i|
+        - ["name", "image?", "operating_system.product_name", "platform",
+            "logical_cpus", "mem_cpu", "allocated_disk_storage", "deprecated",
+            "ext_management_system.name", "v_total_snapshots", "cloud_tenant"].each do |column_name|
           %th
-            -# Replaced to exclude non-view table fields from sorting
-            = link_to(h(@edit[:vm_headers][h]),
-              {:action => "vm_pre_prov", :sort_choice => h, :id => id.to_s},
-              "data-miq_sparkle_on"  => true,
-              "data-miq_sparkle_off" => true,
-              "data-method"          => :post,
-              :remote                => true)
-            - if @edit[:vm_columns][i] == @edit[:vm_sortcol]
-              %img{:src => image_path("16/sort_#{@edit[:vm_sortdir] == 'ASC' ? 'up' : 'down'}.png")}
+            - if @edit[:vm_headers].include?(column_name)
+              -# Replaced to exclude non-view table fields from sorting
+              = link_to(h(@edit[:vm_headers][column_name]),
+                {:action => "vm_pre_prov", :sort_choice => column_name, :id => id.to_s},
+                "data-miq_sparkle_on"  => true,
+                "data-miq_sparkle_off" => true,
+                "data-method"          => :post,
+                :remote                => true)
+              - if column_name == @edit[:vm_sortcol]
+                %img{:src => image_path("16/sort_#{@edit[:vm_sortdir] == 'ASC' ? 'up' : 'down'}.png")}
     %tbody
       - @vms.each do |row|
         - @id = row.id
@@ -31,6 +34,10 @@
         %tr{:class => cls, :onclick => "miqAjax('/miq_request/pre_prov/?sel_id=#{@id}');", :id => "row_#{@id}"}
           %td
             = h(row.name)
+          - if @edit[:vm_headers].include?("image?")
+            %td
+              - if row.respond_to?(:image?)
+                = h(row.image? ? _("Image") : _("Snapshot"))
           %td
             = h(row.operating_system.try(:product_name))
           %td
