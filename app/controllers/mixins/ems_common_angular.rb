@@ -172,6 +172,7 @@ module Mixins
         hawkular_api_port = @ems.connection_configurations.hawkular.endpoint.port
         hawkular_auth_status = @ems.authentication_status_ok?(:hawkular)
         hawkular_security_protocol = @ems.connection_configurations.hawkular.endpoint.security_protocol
+        hawkular_security_protocol ||= security_protocol_default
         hawkular_tls_ca_certs = @ems.connection_configurations.hawkular.endpoint.certificate_authority
       end
 
