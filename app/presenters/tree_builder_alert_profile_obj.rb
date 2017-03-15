@@ -18,7 +18,8 @@ class TreeBuilderAlertProfileObj < TreeBuilder
 
   def tree_init_options(_tree_name)
     {
-      :expand => true
+      :expand => true,
+      :hideCheckox => false
     }
   end
 
