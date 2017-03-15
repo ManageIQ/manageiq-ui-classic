@@ -30,4 +30,18 @@ describe MiddlewareServerController do
       end
     end
   end
+
+  # FIXME: should test for nested entities: %w(middleware_datasources middleware_deployments middleware_messagings)
+  describe '#show' do
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    let(:server) { FactoryGirl.create(:middleware_server) }
+    let(:deployment) { FactoryGirl.create(:middleware_deployment, :middleware_server => server) }
+
+    it "show associated server groups" do
+      assert_nested_list(server, [deployment], 'middleware_deployments', 'All Middleware Deployments')
+    end
+  end
 end
