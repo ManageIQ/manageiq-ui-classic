@@ -17,7 +17,7 @@ class CloudVolumeSnapshotController < ApplicationController
   helper_method :textual_group_list
 
   def handled_buttons
-    %w(cloud_volume_snapshot_delete)
+    %w(cloud_volume_snapshot_delete cloud_volume_snapshot_tag)
   end
 
   def self.display_methods

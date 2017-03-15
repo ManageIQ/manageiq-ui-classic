@@ -17,5 +17,9 @@ class PersistentVolumeController < ApplicationController
     _("Volumes")
   end
 
+  def handled_buttons
+    %w(persistent_volume_tag)
+  end
+
   menu_section :cnt
 end

@@ -13,6 +13,15 @@ class ConfigurationController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  def self.model
+    nil # there is no Configuration constant
+  end
+
+  # button looks for something here
+  def self.table_name
+    "configuration"
+  end
+
   def index
     @breadcrumbs = []
     active_tab = nil
@@ -33,7 +42,6 @@ class ConfigurationController < ApplicationController
   # handle buttons pressed on the button bar
   def button
     set_default_refresh_div
-
     handle_button_pressed(params[:pressed])
 
     check_if_button_is_implemented

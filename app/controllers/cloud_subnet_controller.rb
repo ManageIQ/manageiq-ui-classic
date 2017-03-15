@@ -16,14 +16,8 @@ class CloudSubnetController < ApplicationController
   end
 
   def button
-    restore_edit_for_search
-    copy_sub_item_display_value_to_params
-    save_current_page_for_refresh
-    set_default_refresh_div
-
-    handle_tag_presses(params[:pressed])
+    generic_button_setup
     handle_button_pressed(params[:pressed])
-
     button_render_fallback unless performed?
   end
 
@@ -304,6 +298,7 @@ class CloudSubnetController < ApplicationController
       cloud_subnet_delete
       cloud_subnet_edit
       cloud_subnet_new
+      cloud_subnet_tag
     )
   end
 

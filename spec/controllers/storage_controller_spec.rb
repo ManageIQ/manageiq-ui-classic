@@ -13,26 +13,8 @@ describe StorageController do
       EvmSpecHelper.create_guid_miq_server_zone
     end
 
-    # Button presses covered by shared examples:
-    # vm_right_size
-    # vm_migrate
-    # vm_retire
-    # vm_protect
-    # miq_template_protect
-    # vm_tag
-    # miq_template_tag
-    # host_scan
-    # host_check_compliance
-    # host_refresh
-    # host_protect
-    # host_edit
-    # host_delete
-    # storage_refresh
-    # storage_scan
-    # storage_delete
-
     include_examples :host_vm_button_examples
-    include_examples :host_power_button_examples
+    include_examples :host_power_button_examples, :miq_grid_checks
     include_examples :common_host_button_examples
     include_examples :storage_button_examples
 

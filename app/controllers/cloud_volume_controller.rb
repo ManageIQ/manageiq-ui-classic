@@ -10,14 +10,9 @@ class CloudVolumeController < ApplicationController
   include Mixins::GenericButtonMixin
   include Mixins::GenericSessionMixin
 
-  # handle buttons pressed on the button bar
+  # FIXME: This may follow the GenericButtonMixin method
   def button
-    restore_edit_for_search
-    copy_sub_item_display_value_to_params
-    save_current_page_for_refresh
-    set_default_refresh_div
-
-    handle_tag_presses(params[:pressed])
+    generic_button_setup
     handle_button_pressed(params[:pressed])
 
     handle_sub_item_presses(params[:pressed]) do |pfx|
@@ -724,14 +719,15 @@ class CloudVolumeController < ApplicationController
 
   def handled_buttons
     %w(
-      cloud_volume_backup_create
-      cloud_volume_delete
       cloud_volume_attach
+      cloud_volume_backup_create
+      cloud_volume_backup_restore
+      cloud_volume_delete
       cloud_volume_detach
       cloud_volume_edit
-      cloud_volume_snapshot_create
       cloud_volume_new
-      cloud_volume_backup_restore
+      cloud_volume_snapshot_create
+      cloud_volume_tag
     )
   end
 

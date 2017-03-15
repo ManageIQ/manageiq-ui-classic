@@ -16,9 +16,7 @@ class CloudObjectStoreObjectController < ApplicationController
     restore_edit_for_search
     save_current_page_for_refresh
 
-    # FIXME: Change process_cloud_object_storage_buttons to handle_button_pressed
-    # handle_tag_presses(params[:pressed])
-
+    # FIXME: Handle this in GenericButtonMixin
     process_cloud_object_storage_buttons(params[:pressed])
 
     @single_delete = params[:pressed].ends_with?("delete")

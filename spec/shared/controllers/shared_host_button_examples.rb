@@ -187,12 +187,20 @@ shared_examples :host_vm_button_examples do
   end
 end
 
-shared_examples :host_power_button_examples do
+shared_examples :host_power_button_examples do |param_mode|
   before do
     EvmSpecHelper.create_guid_miq_server_zone unless defined?(server)
   end
 
   let(:host)  { FactoryGirl.create(:host) }
+
+  let(:id_param) do
+    if param_mode == :miq_grid_checks
+      { :miq_grid_checks => host.id.to_s }
+    else
+      { :id => host.id }
+    end
+  end
 
   {
     "host_standby"  => "Enter Standby Mode",
@@ -208,7 +216,8 @@ shared_examples :host_power_button_examples do
       controller.instance_variable_set(:@lastaction, "show_list")
       allow(controller).to receive(:show_list)
 
-      post :button, :params => { :pressed => button, :miq_grid_checks => host.id.to_s}
+      # post :button, :params => { :pressed => button, :miq_grid_checks => host.id }
+      post :button, :params => { :pressed => button }.merge(id_param)
 
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("successfully initiated")

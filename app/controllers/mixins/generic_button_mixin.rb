@@ -1,14 +1,10 @@
-
 module Mixins
   module GenericButtonMixin
     def button
       generic_button_setup
 
-      handle_tag_presses(params[:pressed]) do
-        return if @flash_array.nil?
-      end
-
-      handle_button_pressed(params[:pressed]) do
+      handle_button_pressed(params[:pressed]) do |pressed|
+        return if pressed.ends_with?("tag") && @flash_array.nil?
         return if performed? # did something build a response?
       end
 
@@ -66,11 +62,21 @@ module Mixins
     ### Dispatch to handlers
     ############################################################################
 
-    # Ideal method to use
     # This send is white-listed by `handled_buttons`
-    def handle_button_pressed(pressed)
-      if handled_buttons.include?(pressed)
+    def button_handler_dispatch(pressed)
+      if table_name_tag?(pressed)
+        handle_model_tag
+      else
         send("handle_#{pressed}".to_sym)
+      end
+    end
+
+    # Ideal method to use
+    def handle_button_pressed(pressed)
+      if button_power_press?(pressed)
+        powerbutton_hosts(button_remove_prefix(pressed))
+      elsif handled_buttons.include?(pressed)
+        button_handler_dispatch(pressed)
 
         yield(pressed) if block_given?
       end
@@ -85,44 +91,16 @@ module Mixins
       end
     end
 
-    def handle_tag_presses(pressed)
-      if pressed.ends_with?("_tag")
-        tag_for_pressed(pressed)
-
-        yield(pressed) if block_given?
-      end
+    def table_name_tag?(pressed)
+      defined?(self.class.model) && pressed == table_name_tag
     end
 
-    def handle_host_power_press(pressed)
-      if button_power_press?(params[:pressed])
-        powerbutton_hosts(button_remove_prefix(pressed))
-      end
+    def table_name_tag
+      "#{self.class.table_name}_tag"
     end
 
-    def tag_for_pressed(pressed)
-      case pressed
-      when "#{self.class.table_name}_tag"     then tag(self.class.model)
-      when "availability_zone_tag"            then tag(AvailabilityZone)
-      when "cloud_network_tag"                then tag(CloudNetwork)
-      when "cloud_object_store_container_tag" then tag(CloudObjectStoreContainer)
-      when "cloud_subnet_tag"                 then tag(CloudSubnet)
-      when "cloud_tenant_tag"                 then tag(CloudTenant)
-      when "cloud_volume_snapshot_tag"        then tag(CloudVolumeSnapshot)
-      when "cloud_volume_tag"                 then tag(CloudVolume)
-      when "ems_cluster_tag"                  then tag(EmsCluster)
-      when "flavor_tag"                       then tag(Flavor)
-      when "floating_ip_tag"                  then tag(FloatingIp)
-      when "host_tag"                         then tag(Host)
-      when "infra_networking_tag"             then tag(Switch)
-      when "load_balancer_tag"                then tag(LoadBalancer)
-      when "network_port_tag"                 then tag(NetworkPort)
-      when "network_router_tag"               then tag(NetworkRouter)
-      when "orchestration_stack_tag"          then tag(OrchestrationStack)
-      when "security_group_tag"               then tag(SecurityGroup)
-      when "storage_tag"                      then tag(Storage)
-      when "miq_template_tag", "vm_tag", "instance_tag"
-        tag(VmOrTemplate)
-      end
+    def handle_model_tag
+      tag(self.class.model)
     end
 
     ### Common handlers
@@ -143,12 +121,13 @@ module Mixins
         host_provide
         host_refresh
         host_scan
+        host_tag
         host_toggle_maintenance
       )
     end
 
     def handled_storage_buttons
-      %w(storage_scan storage_refresh storage_delete)
+      %w(storage_scan storage_refresh storage_delete storage_tag)
     end
 
     def handled_ems_cluster_buttons
@@ -165,6 +144,7 @@ module Mixins
         "ems_cluster_compare",
         "ems_cluster_delete",
         "ems_cluster_scan",
+        "ems_cluster_tag",
         handled_host_buttons,
         handled_storage_buttons
       ].flatten
@@ -201,6 +181,10 @@ module Mixins
 
     def handle_host_protect
       assign_policies(Host)
+    end
+
+    def handle_host_tag
+      tag(Host)
     end
 
     def handle_host_refresh
@@ -251,6 +235,10 @@ module Mixins
 
     def handle_storage_delete
       deletestorages
+    end
+
+    def handle_storage_tag
+      tag(Storage)
     end
 
     # Ems Clusters
@@ -387,9 +375,10 @@ module Mixins
       %w(all_vms vms images instances)
     end
 
-    # Should be implemented in controller
+    # Should be overwridden in controller
+    # By default handle controller.table_name tag
     def handled_buttons
-      []
+      [table_name_tag]
     end
 
     ### Refreshes and redirects

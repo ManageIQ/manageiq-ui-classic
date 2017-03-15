@@ -2,12 +2,11 @@ describe EmsClusterController do
   let(:vm) { FactoryGirl.create(:vm_vmware) }
   let!(:user) { stub_user(:features => :all) }
 
-  describe 'Shared Button Examples' do
+  describe "#button" do
+    # FIXME: Test power buttons
     include_examples :host_vm_button_examples
     include_examples :ems_cluster_button_examples
-  end
 
-  describe "#button" do
     it 'handles custom_buttons' do
       expect(controller).to receive(:custom_buttons).and_call_original
       post :button, :params => { :pressed => "custom_button" }

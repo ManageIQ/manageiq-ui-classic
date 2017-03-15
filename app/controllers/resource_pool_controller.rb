@@ -25,7 +25,7 @@ class ResourcePoolController < ApplicationController
   end
 
   def handled_buttons
-    %w(resource_pool_delete resource_pool_protect)
+    %w(resource_pool_delete resource_pool_protect resource_pool_tag)
   end
 
   def handle_resource_pool_delete
@@ -35,6 +35,10 @@ class ResourcePoolController < ApplicationController
 
   def handle_resource_pool_protect
     assign_policies(ResourcePool)
+  end
+
+  def handle_resource_pool_tag
+    handle_model_tag
   end
 
   menu_section :inf

@@ -77,6 +77,10 @@ class AvailabilityZoneController < ApplicationController
   def button
     generic_button_setup
 
+    handle_button_pressed(params[:pressed]) do
+      return if @flash_array.nil?
+    end
+
     handle_sub_item_presses(params[:pressed]) do |pfx|
       process_vm_buttons(pfx)
       return if button_control_transferred?(params[:pressed])
@@ -86,20 +90,14 @@ class AvailabilityZoneController < ApplicationController
       end
     end
 
-    handle_tag_presses(params[:pressed]) do
-      return if @flash_array.nil?
-    end
-
     check_if_button_is_implemented
 
     if button_has_redirect_suffix?(params[:pressed])
       render_or_redirect_partial_for(params[:pressed])
+    elsif button_replace_gtl_main?
+      replace_gtl_main_div
     else
-      if button_replace_gtl_main?
-        replace_gtl_main_div
-      else
-        availability_zone_render_update
-      end
+      availability_zone_render_update
     end
   end
 

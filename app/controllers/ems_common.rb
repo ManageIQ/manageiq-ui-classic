@@ -315,19 +315,16 @@ module EmsCommon
 
   # handle buttons pressed on the button bar
   def button
-    restore_edit_for_search
-    copy_sub_item_display_value_to_params
-    save_current_page_for_refresh
+    generic_button_setup
 
     if params[:pressed].starts_with?("cloud_object_store_")
       process_cloud_object_storage_buttons(params[:pressed])
     end
 
-    handle_tag_presses(params[:pressed]) { return if @flash_array.nil? }
-    handle_host_power_press(params[:pressed])
-    handle_button_pressed(params[:pressed])
+    handle_button_pressed(params[:pressed]) do |pressed|
+      return if pressed.ends_with?("tag") && @flash_array.nil?
+    end
 
-    # Handle buttons from sub-items screen
     handle_sub_item_presses(params[:pressed]) do |pfx|
       process_vm_buttons(pfx)
 
@@ -1022,6 +1019,7 @@ module EmsCommon
 
   def handled_buttons
     [
+      "ems_cluster_tag",
       "host_aggregate_edit",
       "cloud_tenant_edit",
       "cloud_volume_edit",
@@ -1042,6 +1040,10 @@ module EmsCommon
 
   def handle_cloud_volume_edit
     javascript_redirect :controller => "cloud_volume", :action => "edit", :id => find_checked_items[0]
+  end
+
+  def handle_ems_cluster_tag
+    tag(EmsCluster)
   end
 
   def recheck_auth_status

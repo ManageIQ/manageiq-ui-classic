@@ -34,8 +34,6 @@ class AuthKeyPairCloudController < ApplicationController
     restore_edit_for_search
     save_current_page_for_refresh
 
-    handle_tag_presses(params[:pressed])
-
     handle_button_pressed(params[:pressed]) do
       return if performed?
     end
@@ -251,6 +249,7 @@ class AuthKeyPairCloudController < ApplicationController
     %w(
       auth_key_pair_cloud_delete
       auth_key_pair_cloud_new
+      auth_key_pair_cloud_tag
     )
   end
 end

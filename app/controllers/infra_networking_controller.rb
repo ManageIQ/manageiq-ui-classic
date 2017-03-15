@@ -76,7 +76,7 @@ class InfraNetworkingController < ApplicationController
     save_current_page_for_refresh
     set_default_refresh_div
 
-    handle_tag_presses(params[:pressed]) do
+    handle_button_pressed(params[:pressed]) do
       return if @flash_array.nil?
     end
 
@@ -742,6 +742,14 @@ class InfraNetworkingController < ApplicationController
 
   def title
     _("Networking")
+  end
+
+  def handled_buttons
+    %w(infra_networking_tag)
+  end
+
+  def handle_infra_networking_tag
+    tag(Switch)
   end
 
   menu_section :inf

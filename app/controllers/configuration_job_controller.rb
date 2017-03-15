@@ -47,19 +47,15 @@ class ConfigurationJobController < ApplicationController
     show_association('parameters', _('Parameters'), 'parameter', :parameters, OrchestrationStackParameter)
   end
 
-  # handle buttons pressed on the button bar
   def button
-    restore_edit_for_search
-    save_current_page_for_refresh
-    set_default_refresh_div
+    generic_button_setup
 
-    handle_button_pressed(params[:pressed])
-    handle_tag_presses(params[:pressed]) do
-      return if @flash_array.nil? # Tag screen showing, so return
+    handle_button_pressed(params[:pressed]) do |pressed|
+      return if @flash_array.nil? && pressed.ends_with?("tag")
     end
 
     check_if_button_is_implemented
-    @configuration_job = @record
+    @configuration_job = @record # is this necessary?
 
     button_render_fallback
   end
@@ -76,7 +72,10 @@ class ConfigurationJobController < ApplicationController
   helper_method :textual_group_list
 
   def handled_buttons
-    %w(configuration_job_delete)
+    %w(
+      configuration_job_delete
+      configuration_job_tag
+    )
   end
 
   def handle_configuration_job_delete

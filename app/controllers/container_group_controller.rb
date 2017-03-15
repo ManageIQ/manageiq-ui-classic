@@ -26,6 +26,7 @@ class ContainerGroupController < ApplicationController
 
   def handled_buttons
     %(
+      container_group_tag
       container_group_protect
       container_group_check_compliance
     )

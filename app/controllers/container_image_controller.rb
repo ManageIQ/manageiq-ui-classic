@@ -36,6 +36,7 @@ class ContainerImageController < ApplicationController
 
   def handled_buttons
     %(
+      container_image_tag
       container_image_scan
       container_image_protect
       container_image_check_compliance

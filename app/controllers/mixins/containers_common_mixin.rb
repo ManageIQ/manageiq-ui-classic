@@ -17,11 +17,6 @@ module ContainersCommonMixin
 
   def button
     generic_button_setup
-
-    handle_tag_presses(params[:pressed]) do
-      return if @flash_array.nil?
-    end
-
     handle_button_pressed(params[:pressed])
   end
 

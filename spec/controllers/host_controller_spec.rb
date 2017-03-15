@@ -4,42 +4,15 @@ describe HostController do
   let(:host2) { FactoryGirl.create(:host) }
   let(:hardware) { FactoryGirl.create(:hardware, :provision_state => "manageable") }
 
-  describe "Shared button examples" do
-
-  end
-
   describe "#button" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
     end
 
-    # Button presses covered by shared examples:
-    # host_scan
-    # host_check_compliance
-    # host_refresh
-    # host_protect
-    # host_edit
-    # host_delete
-    # host_cloud_service_scheduling_toggle
-    # host_compare
-    # host_introspect
-    # host_manageable
-    # host_miq_request_new
-    # host_provide
-    # host_toggle_maintenance
-    # host_analyze_check_compliance
-    # host_tag
-    # vm_right_size
-    # vm_migrate
-    # vm_retire
-    # vm_protect
-    # miq_template_protect
-    # vm_tag
-    # miq_template_tag
-
     include_examples :host_vm_button_examples
     include_examples :common_host_button_examples
     include_examples :special_host_button_examples
+    include_examples :host_power_button_examples
 
     %w(
       common_drift

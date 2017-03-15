@@ -17,6 +17,7 @@ class ContainerReplicatorController < ApplicationController
 
   def handled_buttons
     %(
+      container_replicator_tag
       container_replicator_protect
       container_replicator_check_compliance
     )

@@ -17,17 +17,16 @@ class CloudObjectStoreContainerController < ApplicationController
     restore_edit_for_search
     save_current_page_for_refresh
 
+    # FIXME: Handle this in GenericButtonMixin
     process_cloud_object_storage_buttons(params[:pressed])
 
-    if !@flash_array.nil? && params[:pressed].ends_with?("delete")
-      javascript_redirect :action      => 'show_list',
-                          :flash_msg   => @flash_array[0][:message],
-                          :flash_error => @flash_array[0][:level] == :error
-    elsif !@flash_array.nil?
-      render_flash unless performed?
-    end
+    @single_delete = params[:pressed].ends_with?("delete")
 
-    # handle_tag_presses(params[:pressed])
+    redirect_to_retire_screen_if_single_delete
+
+    if !performed? && @flash_array.present?
+      render_flash
+    end
   end
 
   def self.display_methods

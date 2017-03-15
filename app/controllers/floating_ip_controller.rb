@@ -17,12 +17,7 @@ class FloatingIpController < ApplicationController
   menu_section :net
 
   def button
-    restore_edit_for_search
-    copy_sub_item_display_value_to_params
-    save_current_page_for_refresh
-    set_default_refresh_div
-
-    handle_tag_presses(params[:pressed])
+    generic_button_setup
     handle_button_pressed(params[:pressed])
 
     button_render_fallback unless performed?
@@ -263,6 +258,7 @@ class FloatingIpController < ApplicationController
       floating_ip_new
       floating_ip_edit
       floating_ip_delete
+      floating_ip_tag
     )
   end
 

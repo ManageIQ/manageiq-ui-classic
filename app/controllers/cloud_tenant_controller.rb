@@ -23,12 +23,35 @@ class CloudTenantController < ApplicationController
     network_routers
   ).freeze
 
-  # handle buttons pressed on the button bar
   def button
-    handle_tag_presses(params[:pressed])
     handle_button_pressed(params[:pressed])
 
-    cloud_tenant_javascript_redirect
+    if params[:pressed].starts_with?(*editable_objects)
+      target_controller = editable_objects.detect { |n| params[:pressed].starts_with?(n) }
+      action = params[:pressed].sub("#{target_controller}_", '')
+
+      if action == 'delete'
+        action = "#{action}_#{target_controller.sub('cloud_', '').pluralize}"
+      end
+
+      if action == 'detach'
+        volume = find_by_id_filtered(CloudVolume, from_cid(params[:miq_grid_checks]))
+
+        if volume.attachments.empty?
+          render_flash(_("%{volume} \"%{volume_name}\" is not attached to any %{instances}") % {
+            :volume      => ui_lookup(:table => 'cloud_volume'),
+            :volume_name => volume.name,
+            :instances   => ui_lookup(:tables => 'vm_cloud')
+          }, :error)
+
+          return
+        end
+      end
+
+      javascript_redirect :controller      => target_controller,
+                          :miq_grid_checks => params[:miq_grid_checks],
+                          :action          => action
+    end
   end
 
   def new
@@ -263,42 +286,19 @@ class CloudTenantController < ApplicationController
     js_redirect_to_edit_for_checked_id
   end
 
+  def handle_instance_tag
+    tag(VmOrTemplate)
+  end
+
   def handled_buttons
     %w(
       cloud_tenant_new
       cloud_tenant_edit
       cloud_tenant_delete
       instance_retire
+      cloud_tenant_tag
+      instance_tag
     )
-  end
-
-  def cloud_tenant_javascript_redirect
-    if params[:pressed].starts_with?(*editable_objects)
-      target_controller = editable_objects.detect { |n| params[:pressed].starts_with?(n) }
-      action = params[:pressed].sub("#{target_controller}_", '')
-
-      if action == 'delete'
-        action = "#{action}_#{target_controller.sub('cloud_', '').pluralize}"
-      end
-
-      if action == 'detach'
-        volume = find_by_id_filtered(CloudVolume, from_cid(params[:miq_grid_checks]))
-
-        if volume.attachments.empty?
-          render_flash(_("%{volume} \"%{volume_name}\" is not attached to any %{instances}") % {
-            :volume      => ui_lookup(:table => 'cloud_volume'),
-            :volume_name => volume.name,
-            :instances   => ui_lookup(:tables => 'vm_cloud')
-          }, :error)
-
-          return
-        end
-      end
-
-      javascript_redirect :controller      => target_controller,
-                          :miq_grid_checks => params[:miq_grid_checks],
-                          :action          => action
-    end
   end
 
   menu_section :clo

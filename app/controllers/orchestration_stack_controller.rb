@@ -83,15 +83,13 @@ class OrchestrationStackController < ApplicationController
     show_association('resources', _('Resources'), 'resource', :resources, OrchestrationStackResource)
   end
 
-  # handle buttons pressed on the button bar
+  # FIXME: This may be similar enough to replace with GenericButtonMixin#button
   def button
-    restore_edit_for_search
-    copy_sub_item_display_value_to_params
-    save_current_page_for_refresh
-    set_default_refresh_div
+    generic_button_setup
 
-    handle_tag_presses(params[:pressed])
-    handle_button_pressed(params[:pressed])
+    handle_button_pressed(params[:pressed]) do
+      return if performed?
+    end
 
     handle_sub_item_presses(params[:pressed]) do |pfx|
       process_vm_buttons(pfx)
@@ -102,8 +100,6 @@ class OrchestrationStackController < ApplicationController
         set_refresh_and_show
       end
     end
-
-    return if performed?
 
     check_if_button_is_implemented
 
@@ -245,7 +241,12 @@ class OrchestrationStackController < ApplicationController
       orchestration_stack_delete
       orchestration_stack_retire
       orchestration_stack_retire_now
+      orchestration_stack_tag
     )
+  end
+
+  def handle_orchestration_stack_tag
+    handle_model_tag
   end
 
   def handle_orchestration_stack_delete

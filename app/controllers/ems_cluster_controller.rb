@@ -92,17 +92,16 @@ class EmsClusterController < ApplicationController
     replace_gtl_main_div if pagination_request?
   end
 
-  # handle buttons pressed on the button bar
+  # FIXME: This method may follow the pattern in GenericButtonMixin
   def button
-    restore_edit_for_search
-    copy_sub_item_display_value_to_params
-    set_default_refresh_div
+    generic_button_setup
 
-    handle_tag_presses(params[:pressed]) { return if @flash_array.nil? }
-    handle_host_power_press(params[:pressed])
-    handle_button_pressed(params[:pressed])
+    # handle_host_power_press(params[:pressed])
 
-    # Handle buttons from sub-items screen
+    handle_button_pressed(params[:pressed]) do |pressed|
+      return if @flash_array.nil? && pressed.ends_with?("tag")
+    end
+
     handle_sub_item_presses(params[:pressed]) do |pfx|
       process_vm_buttons(pfx)
       return if button_control_transferred?(params[:pressed])
@@ -118,12 +117,10 @@ class EmsClusterController < ApplicationController
 
     if button_has_redirect_suffix?(params[:pressed])
       render_or_redirect_partial(button_prefix(params[:pressed]))
+    elsif button_replace_gtl_main?
+      replace_gtl_main_div
     else
-      if button_replace_gtl_main?
-        replace_gtl_main_div
-      else
-        render_flash
-      end
+      render_flash
     end
   end
 
@@ -201,12 +198,12 @@ class EmsClusterController < ApplicationController
 
   # Overrides generic button value
   def button_sub_item_display_values
-    ["all_vms", "vms", "hosts", "resource_pools"]
+    %w(all_vms vms hosts resource_pools)
   end
 
   # Overrides generic button value
   def button_sub_item_prefixes
-    ["vm_", "miq_template_", "guest_", "host_", "rp_"]
+    %w(vm_ miq_template_ guest_ host_ rp_)
   end
 
   def handled_buttons
@@ -217,6 +214,7 @@ class EmsClusterController < ApplicationController
       "ems_cluster_protect",
       "ems_cluster_scan",
       "ems_cluster_delete",
+      "ems_cluster_tag",
       handled_host_buttons
     ].flatten
   end

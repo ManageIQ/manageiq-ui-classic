@@ -94,15 +94,9 @@ class StorageController < ApplicationController
     @lastaction = "show"
   end
 
-
-  # handle buttons pressed on the button bar
+  # FIXME: Might be similar enough to GenericButtonMixin#button
   def button
-    restore_edit_for_search
-    copy_sub_item_display_value_to_params
-    set_default_refresh_div
-
-    handle_tag_presses(params[:pressed]) { return if @flash_array.nil? }
-    handle_host_power_press(params[:pressed])
+    generic_button_setup
 
     handle_button_pressed(params[:pressed]) do |pressed|
       return unless pressed == "host_check_compliance"

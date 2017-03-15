@@ -16,13 +16,11 @@ class NetworkRouterController < ApplicationController
   end
 
   def button
-    restore_edit_for_search
-    copy_sub_item_display_value_to_params
-    save_current_page_for_refresh
-    set_default_refresh_div
+    generic_button_setup
 
-    handle_tag_presses(params[:pressed]) { return }
-    handle_button_pressed(params[:pressed])
+    handle_button_pressed(params[:pressed]) do |pressed|
+      return if pressed.ends_with?("tag")
+    end
 
     button_render_fallback unless performed?
   end
@@ -445,9 +443,14 @@ class NetworkRouterController < ApplicationController
       network_router_delete
       network_router_edit
       network_router_new
+      network_router_tag
       network_router_add_interface
       network_router_remove_interface
     )
+  end
+
+  def handle_network_router_tag
+    handle_model_tag
   end
 
   def handle_network_router_edit

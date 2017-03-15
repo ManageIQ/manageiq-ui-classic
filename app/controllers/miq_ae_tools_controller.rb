@@ -6,6 +6,15 @@ class MiqAeToolsController < ApplicationController
 
   include Mixins::GenericButtonMixin
 
+  def self.model
+    nil # there is no MiqAeTools constant
+  end
+
+  # button looks for something here
+  def self.table_name
+    "miq_ae_tools"
+  end
+
   def index
     resolve
   end
@@ -14,11 +23,8 @@ class MiqAeToolsController < ApplicationController
     @lastaction = "resolve"
   end
 
-  # handle buttons pressed on the button bar
   def button
-    restore_edit_for_search
-    set_default_refresh_div
-
+    generic_button_setup
     handle_button_pressed(params[:pressed]) { return }
 
     check_if_button_is_implemented

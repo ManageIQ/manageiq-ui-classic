@@ -11,7 +11,7 @@ describe FloatingIpController do
 
   describe "#button" do
     it "handles floating_ip_tag" do
-      expect(controller).to receive(:tag)
+      expect(controller).to receive(:tag).with(FloatingIp)
       post :button, :params => { :pressed => "floating_ip_tag", :format => :js, :id => flip.id }
       expect(assigns(:flash_array)).to be_nil
     end

@@ -27,6 +27,7 @@ class ContainerNodeController < ApplicationController
 
   def handled_buttons
     %(
+      container_node_tag
       container_node_protect
       container_node_check_compliance
     )

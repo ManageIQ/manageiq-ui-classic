@@ -37,11 +37,9 @@ class CloudNetworkController < ApplicationController
     save_current_page_for_refresh
     set_default_refresh_div
 
-    handle_tag_presses(params[:pressed]) do
-      return if @flash_array.nil?
+    handle_button_pressed(params[:pressed]) do |pressed|
+      return if @flash_array.nil? && pressed.ends_with?("tag")
     end
-
-    handle_button_pressed(params[:pressed])
 
     button_render_fallback
   end
@@ -301,6 +299,7 @@ class CloudNetworkController < ApplicationController
       cloud_network_delete
       cloud_network_edit
       cloud_network_new
+      cloud_network_tag
     )
   end
 

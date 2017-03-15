@@ -74,17 +74,12 @@ class HostAggregateController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    restore_edit_for_search
-    copy_sub_item_display_value_to_params
-    save_current_page_for_refresh
+    generic_button_setup
 
-    handle_tag_presses(params[:pressed]) do
-      return if @flash_array.nil?
+    handle_button_pressed(params[:pressed]) do |pressed|
+      return if pressed.ends_with?("tag") && @flash_array.nil?
+      return if performed?
     end
-
-    handle_button_pressed(params[:pressed])
-
-    return if performed?
 
     handle_sub_item_presses(params[:pressed]) do |pfx|
       process_vm_buttons(pfx)
@@ -562,6 +557,7 @@ class HostAggregateController < ApplicationController
 
   def handled_buttons
     %(
+      host_aggregate_tag
       host_aggregate_new
       host_aggregate_edit
       host_aggregate_delete

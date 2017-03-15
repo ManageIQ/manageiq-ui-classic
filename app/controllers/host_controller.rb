@@ -405,41 +405,32 @@ class HostController < ApplicationController
     }
   end
 
-  # handle buttons pressed on the button bar
   def button
     generic_button_setup
 
-    handle_tag_presses(params[:pressed])
-    handle_host_power_press(params[:pressed])
-    handle_button_pressed(params[:pressed])
-
-    return if performed?
+    handle_button_pressed(params[:pressed]) do
+      return if performed?
+    end
 
     handle_sub_item_presses(params[:pressed]) do |pfx|
       process_vm_buttons(pfx)
 
-      return if button_control_transferred?(params[:pressed])
-
-      unless button_has_redirect_suffix?(params[:pressed])
+      unless button_has_redirect_suffix?(params[:pressed]) ||
+             button_control_transferred?(params[:pressed])
         set_refresh_and_show
       end
     end
 
-    # Handle Host buttons
-    unless params[:pressed].starts_with?(*button_sub_item_prefixes)
-      return if button_control_transferred?(params[:pressed])
+    return if button_control_transferred?(params[:pressed])
 
-      check_if_button_is_implemented unless params[:pressed] == "host_miq_request_new"
-    end
+    check_if_button_is_implemented unless params[:pressed] == "host_miq_request_new"
 
     if button_has_redirect_suffix?(params[:pressed])
       host_javascript_redirect
+    elsif button_replace_gtl_main?
+      replace_gtl_main_div
     else
-      if button_replace_gtl_main?
-        replace_gtl_main_div
-      else
-        render_flash
-      end
+      render_flash
     end
   end
 
@@ -597,6 +588,7 @@ class HostController < ApplicationController
   def handled_buttons
     ctrlr_buttons = %w(
       storage_scan
+      storage_tag
       storage_refresh
       common_drift
       new
