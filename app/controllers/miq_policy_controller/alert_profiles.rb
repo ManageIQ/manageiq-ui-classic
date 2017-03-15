@@ -169,17 +169,10 @@ module MiqPolicyController::AlertProfiles
   end
 
   def alert_profile_get_assign_to_objects_empty?
-    empty = true
-    unless @assign[:new][:assign_to] == "enterprise"          # No further selection needed for enterprise
-      if @assign[:new][:assign_to]                            # Assign to selected
-        if @assign[:new][:assign_to].ends_with?("-tags")
-          empty = false if @assign[:new][:cat]
-        else
-          empty = false
-        end
-      end
-    end
-    empty
+    return true if @assign[:new][:assign_to].blank?
+    return true if @assign[:new][:assign_to] == "enterprise"
+    return true if @assign[:new][:assign_to].ends_with?("-tags") && @assign[:new][:cat].blank?
+    false
   end
 
   # Build the assign objects selection tree

@@ -3,7 +3,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
     @assign_to = assign_to
     @cat = cat
     @objects = objects
-    @cat_tree = true if @assign_to.ends_with?("-tags")
+    @cat_tree = @assign_to.ends_with?("-tags")
     super(name, type, sandbox, build)
   end
 
@@ -44,7 +44,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
   end
 
   def x_get_tree_roots(count_only, _options)
-    obj = if !@assign_to || @assign_to == "enterprise"
+    obj = if @assign_to.blank? || @assign_to == "enterprise"
             []
           elsif @cat_tree
             @cat ? Classification.find(@cat).entries : []
