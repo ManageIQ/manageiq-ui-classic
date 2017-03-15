@@ -620,7 +620,6 @@ class ConfigurationController < ApplicationController
     session[:config_schema_ver] = @schema_ver
     session[:vm_filters]        = @filters
     session[:vm_catinfo]        = @catinfo
-    session[:vm_cats]           = @cats
     session[:zone_options]      = @zone_options
   end
 

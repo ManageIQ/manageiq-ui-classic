@@ -909,7 +909,6 @@ class ReportController < ApplicationController
     session[:ght_type]          = @ght_type
     session[:report_groups]     = @report_groups
     session[:vm_catinfo]        = @catinfo
-    session[:vm_cats]           = @cats
     session[:edit]              = @edit unless @edit.nil?
     session[:report_result_id]  = @report_result_id
     session[:report_menu]       = @menu
