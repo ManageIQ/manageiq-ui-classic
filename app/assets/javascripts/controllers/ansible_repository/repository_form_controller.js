@@ -36,7 +36,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
   };
 
   $scope.cancelClicked = function() {
-    getBack('Action canceled by user.', 'warning');
+    getBack(__('Action canceled by user.'), 'warning');
   };
 
   $scope.resetClicked = function() {
@@ -50,7 +50,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
     //API.put('/api/configuration_script_sources/' + repositoryId, vm.repositoryModel)
     //  .then(getBack)
     //  .catch(miqService.handleFailure);
-    getBack('Repository saved', 'success');
+    getBack(__('Repository saved.'), 'success');
   };
 
   $scope.addClicked = function() {
@@ -58,7 +58,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
     //API.post('/api/configuration_script_sources/', {name: vm.repositoryModel.name, description: vm.repositoryModel.description})
     //   .then(getBack)
     //   .catch(miqService.handleFailure);
-    getBack('Repository added', 'success');
+    getBack(__('Repository added.'), 'success');
   };
 
   function getRepositoryFormData(response) {
