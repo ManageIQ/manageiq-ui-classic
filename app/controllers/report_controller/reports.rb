@@ -65,7 +65,7 @@ module ReportController::Reports
       end
       unless rpt.graph.nil? || rpt.graph[:type].blank?            # If graph present
         # FIXME: UNTESTED!!!
-        rpt.to_chart(settings(:display, :reporttheme), false, MiqReport.graph_options(350, 250)) # Generate the chart
+        rpt.to_chart(settings(:display, :reporttheme), false, MiqReport.graph_options) # Generate the chart
         @edit[:zgraph_xml] = rpt.chart                 # Save chart data
       else
         @edit[:zgraph_xml] = nil

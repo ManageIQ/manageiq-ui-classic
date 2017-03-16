@@ -1282,7 +1282,7 @@ module ApplicationController::Performance
     report.graph[:max_col_size] = options[:max_value]
     # FIXME: rename xml, xml2 to something like 'chart_data'
     report.to_chart(settings(:display, :reporttheme), false,
-                    MiqReport.graph_options(options[:width], options[:height], options))
+                    MiqReport.graph_options(options))
     chart_xml = {
       :xml      => report.chart,            # Save the graph xml
       :main_col => options[:columns].first  # And the main (first) column of the chart
@@ -1291,7 +1291,7 @@ module ApplicationController::Performance
       report.graph[:type]    = options[:chart2][:type]
       report.graph[:columns] = options[:chart2][:columns]
       report.to_chart(settings(:display, :reporttheme), false,
-                      MiqReport.graph_options(options[:width], options[:height], options.merge(:composite => true)))
+                      MiqReport.graph_options(options.merge(:composite => true)))
       chart_xml[:xml2] = report.chart
     end
     chart_xml
