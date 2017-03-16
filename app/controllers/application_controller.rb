@@ -1005,6 +1005,9 @@ class ApplicationController < ActionController::Base
         :cells    => [],
         :quadicon => quadicon
       }
+      new_row[:parent_id] = "xx-#{to_cid(row.data['miq_report_id'])}" if defined? row.data && row.data['miq_report_id']
+      new_row[:parent_id] = "xx-#{CONTENT_TYPE_ID[target[:content_type]]}" if target && target[:content_type]
+      new_row[:tree_id] = TreeBuilder.build_node_cid(target) if target
       root[:rows] << new_row
 
       if has_checkbox

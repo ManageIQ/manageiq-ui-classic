@@ -275,7 +275,8 @@ class ProviderForemanController < ApplicationController
       when "ManageIQ::Providers::Foreman::ConfigurationManager"
         options = {:model => "ConfigurationProfile", :match_via_descendants => ConfiguredSystem, :where_clause => ["manager_id IN (?)", provider.id]}
         @show_list ? process_show_list(options) : options.merge!(update_options)
-        options.merge!(add_unassigned_configuration_profile_record(provider.id))
+        unassigned_profiles = add_unassigned_configuration_profile_record(provider.id)
+        options.merge!(unassigned_profiles) unless unassigned_profiles.nil?
         record_model = ui_lookup(:model => self.class.model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
         @right_cell_text = _("%{model} \"%{name}\"") %
         {:name => provider.name,
@@ -458,7 +459,7 @@ class ProviderForemanController < ApplicationController
       add_unassigned_configuration_profile_record_to_view(unassigned_profile_row, unassigned_configuration_profile)
     end
     {
-      :unassigned_profile_row => unassigned_profile_row,
+      :unassigned_profile_row           => unassigned_profile_row,
       :unassigned_configuration_profile => unassigned_configuration_profile
     }
   end

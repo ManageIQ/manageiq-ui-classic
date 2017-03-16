@@ -88,21 +88,22 @@
                                       $document,
                                       $timeout,
                                       $window) {
-    this.settings = {};
-    this.MiQDataTableService = MiQDataTableService;
-    this.MiQEndpointsService = MiQEndpointsService;
-    this.$filter = $filter;
-    this.$scope = $scope;
-    this.$location = $location;
-    this.$document = $document[0];
-    this.$timeout = $timeout;
-    this.$window = $window;
-    initEndpoints(this.MiQEndpointsService);
+    var vm = this;
+    vm.settings = {};
+    vm.MiQDataTableService = MiQDataTableService;
+    vm.MiQEndpointsService = MiQEndpointsService;
+    vm.$filter = $filter;
+    vm.$scope = $scope;
+    vm.$location = $location;
+    vm.$document = $document[0];
+    vm.$timeout = $timeout;
+    vm.$window = $window;
+    initEndpoints(vm.MiQEndpointsService);
     if (ManageIQ.qe && ManageIQ.qe.gtl && ManageIQ.qe.gtl.actionsToFunction) {
-      this.apiFunctions = ManageIQ.qe.gtl.actionsToFunction.bind(this)();
+      vm.apiFunctions = ManageIQ.qe.gtl.actionsToFunction.bind(vm)();
     }
-    subscribeToSubject.bind(this)();
-    this.perPage = defaultPaging();
+    subscribeToSubject.bind(vm)();
+    vm.perPage = defaultPaging();
   };
 
   ReportDataController.prototype.setSort = function(headerId, isAscending) {
@@ -166,8 +167,8 @@
       var itemId = item.id;
       if (this.initObject.showUrl.indexOf('?id=') !== -1 ) {
         itemId = this.initObject.showUrl.indexOf('xx-') !== -1 ? '_-' + item.id : '-' + item.id;
-        if (this.initObject.showUrl.indexOf('?id=root') !== -1) {
-          itemId += '-' + item.id;
+        if (item.parent_id) {
+          itemId = item.parent_id + '_' + item.tree_id;
         }
       }
       if (itemId.indexOf('unassigned') !== -1) {
@@ -178,7 +179,8 @@
         this.setExtraClasses();
       }.bind(this));
     } else {
-      prefix = prefix[prefix.length - 1] !== '/' ? prefix + '/' : prefix;
+      var lastChar = prefix[prefix.length - 1];
+      prefix = (lastChar !== '/' && lastChar !== '=') ? prefix + '/' : prefix;
       this.$window.DoNav(prefix + (item.long_id || item.id));
     }
     return false;

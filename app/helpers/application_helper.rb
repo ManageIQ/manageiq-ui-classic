@@ -289,6 +289,13 @@ module ApplicationHelper
     "report_info"             => "msc"
   }.freeze
 
+  CONTENT_TYPE_ID = {
+    "report" => "r",
+    "menu"   => "m",
+    "rss"    => "rf",
+    "chart"  => "c"
+  }.freeze
+
   # Create a url to show a record from the passed in view
   def view_to_url(view, parent = nil)
     association = view_to_association(view, parent)
@@ -338,8 +345,8 @@ module ApplicationHelper
           return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w(ConfiguredSystem).include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
           return url_for_only_path(:action => action, :id => nil) + "/"
-        elsif %w(MiqWidget).include?(view.db) && %w(report).include?(request.parameters[:controller])
-          return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node
+        elsif %w(MiqWidget MiqReportResult).include?(view.db) && %w(report).include?(request.parameters[:controller])
+          return "/" + request.parameters[:controller] + "/tree_select/?id="
         elsif %w(User MiqGroup MiqUserRole Tenant).include?(view.db) &&
               %w(ops).include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node.split("-")[1]
@@ -347,10 +354,8 @@ module ApplicationHelper
               %w(ops report).include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + TREE_WITH_TAB[active_tab]
         elsif %w(MiqAction MiqAlert ScanItemSet MiqSchedule).include?(view.db) &&
-          %w(miq_policy ops).include?(params[:controller])
+              %w(miq_policy ops).include?(params[:controller])
           return "/#{params[:controller]}/tree_select/?id=#{TreeBuilder.get_prefix_for_model(view.db)}"
-        elsif %w(MiqReportResult).include?(view.db) && %w(report).include?(request.parameters[:controller])
-          return "/#{request.parameters[:controller]}/x_show/#{TreeBuilder.get_prefix_for_model(x_tree[:leaf])}-"
         else
           return url_for_only_path(:action => action) + "/" # In explorer, don't jump to other controllers
         end

@@ -5,7 +5,9 @@ module OpsController::Settings::AnalysisProfiles
   def aps_list
     ap_build_list
 
-    update_gtl_div('aps_list') if pagination_or_gtl_request?
+    if @show_list
+      update_gtl_div('aps_list') if pagination_or_gtl_request?
+    end
   end
 
   # Show a scanitemset
