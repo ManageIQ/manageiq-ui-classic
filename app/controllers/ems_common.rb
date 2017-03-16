@@ -494,6 +494,8 @@ module EmsCommon
       javascript_redirect :controller => "host_aggregate", :action => "edit", :id => find_checked_items[0]
     elsif params[:pressed] == "cloud_tenant_edit"
       javascript_redirect :controller => "cloud_tenant", :action => "edit", :id => find_checked_items[0]
+    elsif params[:pressed] == "cloud_volume_new"
+      javascript_redirect :controller => "cloud_volume", :action => "new", :storage_manager_id => params[:id]
     elsif params[:pressed] == "cloud_volume_edit"
       javascript_redirect :controller => "cloud_volume", :action => "edit", :id => find_checked_items[0]
     elsif params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new", "#{pfx}_clone",

@@ -6,10 +6,11 @@
         = _('Storage Manager')
       .col-md-8
         = select_tag("storage_manager_id",
-                     options_for_select([["<#{_('Choose')}>", nil]] + @storage_manager_choices.sort, disabled: ["<#{_('Choose')}>", nil]),
+                     options_for_select((@storage_manager_id.nil? ? [["<#{_('Choose')}>", nil]] : []) + @storage_manager_choices.sort, disabled: ["<#{_('Choose')}>", nil]),
                      "ng-model"                    => "cloudVolumeModel.storage_manager_id",
                      "ng-change"                   => "storageManagerChanged(cloudVolumeModel.storage_manager_id)",
                      "required"                    => "",
+                     "disabled"                    => !@storage_manager_id.nil?,
                      :checkchange                  => true,
                      "selectpicker-for-select-tag" => "")
         %span.help-block{"ng-show" => "angularForm.storage_manager_id.$error.required"}
@@ -87,4 +88,5 @@
 
 :javascript
   ManageIQ.angular.app.value('cloudVolumeFormId', '#{@volume.id || "new"}');
+  ManageIQ.angular.app.value('storageManagerId', '#{@storage_manager_id}');
   miq_bootstrap('#form_div');
