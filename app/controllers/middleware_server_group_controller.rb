@@ -38,6 +38,10 @@ class MiddlewareServerGroupController < ApplicationController
     %w(middleware_servers)
   end
 
+  def self.default_show_template
+    "#{model.name.underscore}/show"
+  end
+
   def textual_group_list
     [%i(properties), %i(relationships smart_management)]
   end

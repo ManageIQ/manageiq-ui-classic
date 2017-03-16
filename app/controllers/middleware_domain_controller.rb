@@ -13,6 +13,10 @@ class MiddlewareDomainController < ApplicationController
     %w(middleware_server_groups)
   end
 
+  def self.default_show_template
+    "#{model.name.underscore}/show"
+  end
+
   menu_section :cnt
 
   private

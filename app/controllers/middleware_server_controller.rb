@@ -162,6 +162,10 @@ class MiddlewareServerController < ApplicationController
     %w(middleware_datasources middleware_deployments middleware_messagings)
   end
 
+  def self.default_show_template
+    "#{model.name.underscore}/show"
+  end
+
   def button
     selected_operation = params[:pressed].to_sym
 
