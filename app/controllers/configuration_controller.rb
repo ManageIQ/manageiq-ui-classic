@@ -13,7 +13,7 @@ class ConfigurationController < ApplicationController
   after_action :set_session_data
 
   def title
-    session[:config_title] ? _("configuration") : session[:config_title]
+     _("Configuration")
   end
 
   def index
