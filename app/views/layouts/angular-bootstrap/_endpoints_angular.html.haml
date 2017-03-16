@@ -155,7 +155,8 @@
                              "ng-disabled" => "emsCommonModel.emstype == 'rhevm' && !#{ng_model}.#{prefix}_tls_verify",
                              "ng-required" => false,
                              "ng-trim"     => false,
-                             "prefix"      => "#{prefix}"}
+                             "prefix"      => "#{prefix}",
+                             "reset-validation-status" => "#{prefix}_auth_status"}
       %span.help-block
         = _("Paste here the trusted CA certificates, in PEM format.")
 

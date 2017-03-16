@@ -24,6 +24,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       realm: '',
       security_protocol: '',
       amqp_security_protocol: '',
+      hawkular_security_protocol: '',
+      hawkular_tls_ca_certs: '',
       provider_region: '',
       default_userid: '',
       default_password: '',
@@ -185,6 +187,10 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.api_version                     = 'v2';
       $scope.emsCommonModel.ems_controller                  = data.ems_controller;
       $scope.emsCommonModel.ems_controller === 'ems_container' ? $scope.emsCommonModel.default_api_port = '8443' : $scope.emsCommonModel.default_api_port = '';
+      $scope.emsCommonModel.default_security_protocol       = data.default_security_protocol;
+      $scope.emsCommonModel.hawkular_security_protocol      = data.hawkular_security_protocol;
+      $scope.emsCommonModel.default_tls_ca_certs            = data.default_tls_ca_certs;
+      $scope.emsCommonModel.hawkular_tls_ca_certs           = data.hawkular_tls_ca_certs;
       $scope.emsCommonModel.default_auth_status             = data.default_auth_status;
       $scope.emsCommonModel.amqp_auth_status                = data.amqp_auth_status;
       $scope.emsCommonModel.service_account_auth_status     = data.service_account_auth_status;
@@ -215,7 +221,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
        $scope.emsCommonModel.emstype == "openstack_infra" && $scope.emsCommonModel.default_hostname ||
        $scope.emsCommonModel.emstype == "nuage_network"  && $scope.emsCommonModel.default_hostname ||
        $scope.emsCommonModel.emstype == "rhevm" && $scope.emsCommonModel.default_hostname ||
-       $scope.emsCommonModel.emstype == "vmwarews" && $scope.emsCommonModel.default_hostname || 
+       $scope.emsCommonModel.emstype == "vmwarews" && $scope.emsCommonModel.default_hostname ||
        $scope.emsCommonModel.emstype == "vmware_cloud" && $scope.emsCommonModel.default_hostname) &&
       ($scope.emsCommonModel.default_userid != '' && $scope.angularForm.default_userid.$valid &&
        $scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid &&
@@ -325,6 +331,11 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   };
 
   $scope.providerTypeChanged = function() {
+    if ($scope.emsCommonModel.ems_controller === 'ems_container') {
+      $scope.emsCommonModel.default_api_port = "8443"; // TODO: correct per-type port
+      // Container types are nearly identical, no point resetting most fields on type change.
+      return;
+    }
     $scope.emsCommonModel.default_api_port = "";
     $scope.emsCommonModel.provider_region = "";
     $scope.emsCommonModel.default_security_protocol = "";
@@ -346,10 +357,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.metrics_api_port = "5432";
       $scope.emsCommonModel.default_api_port = $scope.getDefaultApiPort($scope.emsCommonModel.emstype);
       $scope.emsCommonModel.metrics_database_name = "ovirt_engine_history";
-    } else if ($scope.emsCommonModel.ems_controller === 'ems_container') {
-      $scope.emsCommonModel.default_api_port = "8443";
-      $scope.emsCommonModel.default_security_protocol = 'ssl-with-validation';
-      $scope.emsCommonModel.hawkular_security_protocol = 'ssl-with-validation';
     } else if ($scope.emsCommonModel.emstype === 'vmware_cloud') {
       $scope.emsCommonModel.default_api_port = "443";
       $scope.emsCommonModel.event_stream_selection = "none";
@@ -424,6 +431,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         default_hostname:          $scope.emsCommonModel.default_hostname,
         default_api_port:          $scope.emsCommonModel.default_api_port,
         default_security_protocol: $scope.emsCommonModel.default_security_protocol,
+        default_tls_verify:        $scope.emsCommonModel.default_tls_verify,
+        default_tls_ca_certs:      $scope.emsCommonModel.default_tls_ca_certs,
         default_userid:            $scope.emsCommonModel.default_userid,
         default_password:          default_password,
         default_verify:            default_verify,
@@ -480,8 +489,10 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       }
     } else if (prefix === "hawkular") {
       $scope.postValidationModel['hawkular'] = {
-        hawkular_hostname:         $scope.emsCommonModel.hawkular_hostname,
-        hawkular_api_port:         $scope.emsCommonModel.hawkular_api_port,
+        hawkular_hostname:          $scope.emsCommonModel.hawkular_hostname,
+        hawkular_api_port:          $scope.emsCommonModel.hawkular_api_port,
+        hawkular_security_protocol: $scope.emsCommonModel.hawkular_security_protocol,
+        hawkular_tls_ca_certs:      $scope.emsCommonModel.hawkular_tls_ca_certs,
       }
     }
   };
