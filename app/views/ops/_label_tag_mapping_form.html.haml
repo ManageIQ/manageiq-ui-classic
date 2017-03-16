@@ -7,9 +7,9 @@
               :method => :post}) do
     - disabled = !@lt_map.nil?
     - if disabled
-      %h3= _("Container entity and label")
+      %h3= _("Resource entity and label")
     - else
-      %h3= _("Choose a container entity and label")
+      %h3= _("Choose a resource entity and label")
     .form-group
       %label.col-md-2.control-label
         = _("Entity")
