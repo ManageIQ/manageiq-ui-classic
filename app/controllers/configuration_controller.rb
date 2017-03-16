@@ -13,7 +13,7 @@ class ConfigurationController < ApplicationController
   after_action :set_session_data
 
   def title
-     _("Configuration")
+    _("Configuration")
   end
 
   def index
@@ -611,7 +611,6 @@ class ConfigurationController < ApplicationController
       @edit[:new][:display][:drift] = params[:display][:drift] if !params[:display].nil? && !params[:display][:drift].nil?
     end
   end
-
 
   def self.session_key_prefix
     "configuration"
