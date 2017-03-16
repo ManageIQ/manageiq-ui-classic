@@ -147,9 +147,9 @@ module ApplicationHelper
     if item.fetch_path(:link) ||
        item.fetch_path(:value).kind_of?(Array) &&
        item[:value].any? { |val| val[:link] }
-      'no-hover'
-    else
       ''
+    else
+      'no-hover'
     end
   end
 
