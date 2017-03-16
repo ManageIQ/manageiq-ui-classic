@@ -47,8 +47,8 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
     count_only ? get_custom_buttons(object).count : get_custom_buttons(object).sort_by { |a| a.name.downcase }
   end
 
-  def button_order?(object)
-    object[:set_data] && object[:set_data][:button_order]
+  def buttons_ordered?(object)
+    !!(object[:set_data] && object[:set_data][:button_order])
   end
 
   def x_get_tree_aset_kids(object, count_only)
@@ -58,7 +58,7 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
       object.members.count
     else
       # need to show button nodes in button order that they were saved in
-      button_order = button_order?(object) ? object[:set_data][:button_order] : nil
+      button_order = buttons_ordered?(object) ? object[:set_data][:button_order] : nil
       objects = []
       Array(button_order).each do |bidx|
         object.members.each { |b| objects.push(b) if bidx == b.id && !objects.include?(b) }

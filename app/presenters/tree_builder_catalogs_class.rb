@@ -29,8 +29,8 @@ class TreeBuilderCatalogsClass < TreeBuilder
     count_only ? get_custom_buttons(object).count : get_custom_buttons(object).sort_by { |a| a.name.downcase }
   end
 
-  def button_order?(object)
-    object[:set_data] && object[:set_data][:button_order]
+  def buttons_ordered?(object)
+    !!(object[:set_data] && object[:set_data][:button_order])
   end
 
   def x_get_tree_aset_kids(object, count_only)
@@ -39,7 +39,7 @@ class TreeBuilderCatalogsClass < TreeBuilder
     elsif count_only
       object.members.count
     else
-      button_order = button_order?(object) ? object[:set_data][:button_order] : nil
+      button_order = buttons_ordered?(object) ? object[:set_data][:button_order] : nil
       Array(button_order).each_with_object([]) do |bidx, arr|
         object.members.each { |b| arr.push(b) if bidx == b.id && !arr.include?(b) }
       end
