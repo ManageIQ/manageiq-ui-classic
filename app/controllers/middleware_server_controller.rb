@@ -97,6 +97,10 @@ class MiddlewareServerController < ApplicationController
     ALL_OPERATIONS
   end
 
+  def self.default_show_template
+    "middleware_server/show"
+  end
+
   def add_jdbc_driver
     selected_server = identify_selected_entities
 
