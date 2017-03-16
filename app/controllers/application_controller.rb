@@ -1001,6 +1001,7 @@ class ApplicationController < ActionController::Base
       quadicon = view_context.render_quadicon(target) if !target.nil? && type_has_quadicon(target.class.name)
       new_row = {
         :id       => list_row_id(row),
+        :long_id  => row['id'],
         :cells    => [],
         :quadicon => quadicon
       }
@@ -1013,9 +1014,8 @@ class ApplicationController < ActionController::Base
       # Generate html for the list icon
       if has_listicon
         item = listicon_item(view, row['id'])
-        image = listicon_image(item, view)
-        new_row[:img_url] = ActionController::Base.helpers.image_path(listicon_image(item, view).to_s)
-        icon, icon2, _image = listicon_glyphicon(item)
+        icon, icon2, image = listicon_glyphicon(item)
+        new_row[:img_url] = ActionController::Base.helpers.image_path(image.to_s)
         new_row[:cells] << {:title => _('View this item'),
                             :image => image,
                             :icon  => icon,

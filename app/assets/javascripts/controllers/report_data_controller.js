@@ -179,7 +179,7 @@
       }.bind(this));
     } else {
       prefix = prefix[prefix.length - 1] !== '/' ? prefix + '/' : prefix;
-      this.$window.DoNav(prefix + item.id);
+      this.$window.DoNav(prefix + (item.long_id || item.id));
     }
     return false;
   };
