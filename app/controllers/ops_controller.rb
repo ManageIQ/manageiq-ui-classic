@@ -460,9 +460,10 @@ class OpsController < ApplicationController
   end
 
   # Get all info for the node about to be displayed
-  def get_node_info(treenodeid, _show_list = true)
+  def get_node_info(treenodeid, show_list = true)
     return if params[:cls_id] # no need to do get_node_info if redirected from show_product_update
     @nodetype = valid_active_node(treenodeid).split("-").first
+    @show_list = show_list
     if @replace_trees
       @sb[:active_tab] = case x_active_tree
                          when :diagnostics_tree then 'diagnostics_zones'
