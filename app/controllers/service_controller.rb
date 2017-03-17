@@ -26,7 +26,7 @@ class ServiceController < ApplicationController
   end
 
   def title
-    "My Services"
+    _("My Services")
   end
 
   # Service show selected, redirect to proper controller
