@@ -449,13 +449,11 @@ class MiqTaskController < ApplicationController
   def get_session_data
     super
     @layout = get_layout
-    @tasks_tab     = session[:tasks_tab] if session[:tasks_tab]
     @tabform       = session[:tabform]  if session[:tabform]
   end
 
   def set_session_data
     super
-    session[:tasks_tab]           = @tasks_tab
     session[:tabform]             = @tabform
     session[:layout]              = @layout
   end
