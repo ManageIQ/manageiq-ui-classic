@@ -169,48 +169,6 @@ module EmsCommon
                     :url  => "/#{controller_name}/#{@ems.id}/edit")
   end
 
-  # AJAX driven routine to check for changes in ANY field on the form
-  def form_field_changed
-    return unless load_edit("ems_edit__#{params[:id]}")
-    get_form_vars
-
-    changed = edit_changed?
-    render :update do |page|
-      page << javascript_prologue
-      if params[:server_emstype] || params[:default_security_protocol] # Server/protocol type changed
-        page.replace_html("form_div", :partial => "shared/views/ems_common/form")
-      end
-      if params[:server_emstype] # Server type changed
-        unless @ems.kind_of?(ManageIQ::Providers::CloudManager)
-          # Hide/show C&U credentials tab
-          page << "$('#metrics_li').#{params[:server_emstype] == "rhevm" ? "show" : "hide"}();"
-        end
-        if ["openstack", "openstack_infra"].include?(params[:server_emstype])
-          page << "$('#port').val(#{j_str(@edit[:new][:port].to_s)});"
-        end
-        # Hide/show port field
-        page << "$('#port_tr').#{%w(openstack openstack_infra rhevm).include?(params[:server_emstype]) ? "show" : "hide"}();"
-      end
-      page << javascript_for_miq_button_visibility(changed)
-      if @edit[:default_verify_status] != @edit[:saved_default_verify_status]
-        @edit[:saved_default_verify_status] = @edit[:default_verify_status]
-        page << "miqValidateButtons('#{@edit[:default_verify_status] ? 'show' : 'hide'}', 'default_');"
-      end
-      if @edit[:metrics_verify_status] != @edit[:saved_metrics_verify_status]
-        @edit[:saved_metrics_verify_status] = @edit[:metrics_verify_status]
-        page << "miqValidateButtons('#{@edit[:metrics_verify_status] ? 'show' : 'hide'}', 'metrics_');"
-      end
-      if @edit[:amqp_verify_status] != @edit[:saved_amqp_verify_status]
-        @edit[:saved_amqp_verify_status] = @edit[:amqp_verify_status]
-        page << "miqValidateButtons('#{@edit[:amqp_verify_status] ? 'show' : 'hide'}', 'amqp_');"
-      end
-      if @edit[:bearer_verify_status] != @edit[:saved_bearer_verify_status]
-        @edit[:saved_bearer_verify_status] = @edit[:bearer_verify_status]
-        page << "miqValidateButtons('#{@edit[:bearer_verify_status] ? 'show' : 'hide'}', 'bearer_');"
-      end
-    end
-  end
-
   def update
     assert_privileges("#{permission_prefix}_edit")
     return unless load_edit("ems_edit__#{params[:id]}")
