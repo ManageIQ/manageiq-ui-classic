@@ -754,7 +754,6 @@ class DashboardController < ApplicationController
   end
 
   def get_session_data
-    super
     @layout       = "login"
     @current_page = session[:vm_current_page] # current page number
   end
