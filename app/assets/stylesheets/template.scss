@@ -81,6 +81,20 @@ img.tiny { margin: 0; padding: 0;width:20px;height:20px; border: 0; vertical-ali
 .g72 img,.g72 img { width: 36px; height: 36px;}
 .e72 img { width: 60px; height: 60px;}
 
+.quadicon-single-fonticon {
+  line-height: 60px !important;
+
+  &.fa {
+    font-size: 48px;
+  }
+  &.product {
+    font-size: 60px;
+  }
+  &.pficon {
+    font-size: 47px;
+  }
+}
+
 /************ Misc ************/
 /*select boxes*/
 .form .widthed{ width:400px;}
