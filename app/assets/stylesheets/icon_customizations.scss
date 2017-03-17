@@ -298,6 +298,9 @@ span[class^="product-"], span[class*=" product-"], // i & span tags prevent conf
 .product-field:before {
   content: "\e655";
 }
+.product-element:before {
+  content: "\e656";
+}
 
 /* define  colors */
 
