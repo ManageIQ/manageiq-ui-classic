@@ -262,6 +262,27 @@ module Spec
         report
       end
 
+      def cu_chart_with_no_data
+        report = MiqReport.new(
+          :db        => "VimPerformanceDaily",
+          :cols      => %w(timestamp cpu_usagemhz_rate_average max_derived_cpu_available),
+          :include   => {"resource" => {"columns" => %w(cpu_usagemhz_rate_average_high_over_time_period cpu_usagemhz_rate_average_low_over_time_period)}},
+          :col_order => %w(timestamp cpu_usagemhz_rate_average max_derived_cpu_available),
+          :headers   => ["Date/Time", "Avg Used", "Max Available"],
+          :order     => "Ascending",
+          :sortby    => %w(timestamp),
+          :group     => "n",
+          :graph     => {:type => "Line", :columns => %w(cpu_usagemhz_rate_average max_derived_cpu_available)},
+          :extras    => {:trend => {"trend_max_cpu_usagemhz_rate_average|max_derived_cpu_available"=>"Trending Down"}}
+        )
+
+        report.table = Ruport::Data::Table.new(
+          :column_names => %w(timestamp cpu_usagemhz_rate_average max_derived_cpu_available),
+          :data         => []
+        )
+        report
+      end
+
       def long_category
         'Daenerys Targaryen, the First of Her Name, Queen of Meereen, Queen of the Andals and the Rhoynar and the First Men,\
          Lord of the Seven Kingdoms, Protector of the Realm, Khaleesi of the Great Grass Sea, called Daenerys Stormborn, the Unburnt,\
