@@ -5,10 +5,14 @@
 
 .form-horizontal
   %form#form_div{:name           => 'angularForm',
-                 'ng-controller' => 'keyPairCloudFormController',
+                 'ng-controller' => 'keyPairCloudFormController as vm',
                  'ng-show'       => 'afterGet',
                  'ng-cloak'      => '',
                  'form-changed'  => true,
+                 'miq-form'      => true,
+                 'model'         => 'vm.keyPairModel',
+                 'model-copy'    => 'vm.modelCopy',
+
                  :novalidate     => true}
     = render :partial => 'layouts/flash_msg'
     .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
@@ -18,7 +22,7 @@
         %input.form-control{:type            => 'text',
                             :name            => 'name',
                             :id              => 'name',
-                            'ng-model'       => 'keyPairModel.name',
+                            'ng-model'       => 'vm.keyPairModel.name',
                             :maxlength       => MAX_NAME_LEN,
                             :required        => true,
                             'auto-focus'     => true}
@@ -30,7 +34,7 @@
       .col-md-8
         %textarea.form-control{:name           => 'public_key',
                                :id             => 'public_key',
-                               'ng-model'      => 'keyPairModel.public_key',
+                               'ng-model'      => 'vm.keyPairModel.public_key',
                                :rows           => 10}
     .form-horizontal
       .form-group
@@ -39,7 +43,7 @@
         .col-md-8
           = select_tag('ems_id',
                   '',
-                  'ng-model'                   => 'keyPairModel.ems',
+                  'ng-model'                   => 'vm.keyPairModel.ems',
                   'ng-options'                 => 'ems.name for ems in ems_choices',
                   :id                          => 'ems_id',
                   :required                    => '',
