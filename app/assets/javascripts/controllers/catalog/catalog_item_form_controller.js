@@ -37,8 +37,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       retirement_value: '',
       retirement_variables: {},
       retirement_editMode: false,
-      retirement_cloud_type: '',
-      cloud_types: ["Amazon", "Azure", "Google", "Openstack", "Vmware"]
+      retirement_cloud_type: ''
     };
     getRemoveResourcesTypes();
     vm.formId = catalogItemFormId;
@@ -252,6 +251,30 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       vm._retirement_network_credential = _.find(vm.network_credentials, {id: vm.catalogItemModel.retirement_network_credential_id});
       vm._provisioning_network_credential = _.find(vm.network_credentials, {id: vm.catalogItemModel.provisioning_network_credential_id});
     })
+
+    API.options('/api/authentications').then(function(data) {
+      var cloud_types = {};
+      angular.forEach(data.data.credential_types.embedded_ansible_credential_types, function(cred_object, cred_type) {
+        if (cred_object.type == 'cloud')
+          cloud_types[cred_type] = cred_object.label;
+      });
+      vm.cloud_types = getSortedHash(cloud_types);
+    });
+  };
+
+  var getSortedHash = function(inputHash) {
+    var sortedHash = Object.keys(inputHash)
+      .map(function(key) {
+        return ({"k": key, "v": inputHash[key]})
+      })
+      .sort(function(a, b) {
+        return a.v.localeCompare(b.v)
+      })
+      .reduce(function(o, e) {
+        o[e.k] = e.v;
+        return o;
+      }, {});
+    return sortedHash;
   };
 
   // get playbooks for selected repository
@@ -286,9 +309,9 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
   });
 
   $scope.cloudTypeChanged = function(prefix) {
-    typ = vm.catalogItemModel[prefix + "_cloud_type"];
+    var typ = vm.catalogItemModel[prefix + "_cloud_type"];
     // list of cloud credentials based upon selected cloud type
-    url = "/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::" + typ + "Credential&expand=resources&attributes=id,name" + sort_options
+    var url = '/api/authentications?collection_class=' + typ + '&expand=resources&attributes=id,name' + sort_options;
     API.get(url).then(function (data) {
       vm[prefix + '_cloud_credentials'] = data.resources;
       vm[prefix + '_cloud_credential'] = _.find(vm[prefix + '_cloud_credentials'], {id: vm.catalogItemModel[prefix + '_cloud_credential_id']});
