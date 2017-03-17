@@ -286,7 +286,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
         vm.catalogItemModel[prefix + '_playbook_id'] = '';
         vm.catalogItemModel[prefix + '_repository_id'] = id;
       } else {
-        vm['_' + prefix + '_playbook'] = _.find(vm[prefix + '_playbooks'], {id: vm.catalogItemModel[prefix + '_playbook_id']});
+        findObjectForDropDown(prefix, '_playbook', '_playbooks');
       }
     })
   };
@@ -314,9 +314,13 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     var url = '/api/authentications?collection_class=' + typ + '&expand=resources&attributes=id,name' + sort_options;
     API.get(url).then(function (data) {
       vm[prefix + '_cloud_credentials'] = data.resources;
-      vm['_' + prefix + '_cloud_credential'] = _.find(vm[prefix + '_cloud_credentials'], {id: vm.catalogItemModel[prefix + '_cloud_credential_id']});
+      findObjectForDropDown(prefix, '_cloud_credential', '_cloud_credentials');
     })
   };
+
+  var findObjectForDropDown = function(prefix, fieldName, listName) {
+    vm['_' + prefix + fieldName] = _.find(vm[prefix + listName], {id: vm.catalogItemModel[prefix + fieldName + '_id']});
+  }
 
   vm.playbookTypeChanged = function(prefix) {
     if (prefix === "retirement")
