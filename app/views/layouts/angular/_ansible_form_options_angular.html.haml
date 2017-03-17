@@ -33,7 +33,7 @@
       #credentials_div{"ng-show" => "vm.#{prefix}_repository_selected()"}
         .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_machine_credential_id.$invalid}"}
           %label.col-md-3.control-label{"for" => "#{prefix}_machine_credential_id"}
-            = _('Machine Credentials')
+            = _('Machine Credential')
           .col-md-9
             %select{"ng-model"         => "vm._#{prefix}_machine_credential",
                     "name"             => "#{prefix}_machine_credential_id",
@@ -47,7 +47,7 @@
                 = "<#{_('Choose')}>"
         .form-group
           %label.col-md-3.control-label{"for" => "vm.#{prefix}_network_credential_id"}
-            = _('Network Credentials')
+            = _('Network Credential')
           .col-md-9
             %select{"ng-model"         => "vm._#{prefix}_network_credential",
                     "name"             => "#{prefix}_network_credential_id",
@@ -73,7 +73,7 @@
         #cloud_credentials_div{"ng-show" => "#{ng_model}.#{prefix}_cloud_type !== ''"}
           .form-group
             %label.col-md-3.control-label{"for" => "vm.#{prefix}_cloud_credential_id"}
-              = _('Cloud Credentials')
+              = _('Cloud Credential')
             .col-md-9
               %select{"ng-model"         => "vm._#{prefix}_cloud_credential",
                       "name"             => "#{prefix}_cloud_credential_id",
