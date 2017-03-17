@@ -49,13 +49,7 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
         :tooltip => el.attributes["name"],
         :icon    => 'product product-attribute'
       }
-    elsif !el.text.blank?
-      {
-        :text => el.text,
-        :tip  => el.text,
-        :icon => ae_field_fonticon(el.name.underscore)
-      }
-    else
+    elsif el.name.starts_with?('MiqAeService')
       key = el.name.sub(/^MiqAeService/, '').gsub('_', '::')
       base_obj = key.safe_constantize.try(:new)
       obj = TreeNode.new(base_obj) if TreeNode.exists?(base_obj)
@@ -65,6 +59,13 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
         :tooltip => el.name,
         :icon    => obj ? obj.icon : nontreenode_icon(base_obj),
         :image   => obj ? obj.image : nil
+      }
+    else
+      text = !el.text.blank? ? el.text : el.name
+      {
+        :text => text,
+        :tip  => text,
+        :icon => ae_field_fonticon(el.name.underscore)
       }
     end
   end
