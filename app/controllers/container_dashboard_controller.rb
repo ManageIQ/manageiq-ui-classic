@@ -49,9 +49,5 @@ class ContainerDashboardController < ApplicationController
     HawkularProxyService.new(provider_id, self).data(query)
   end
 
-  def set_session_data
-    session[:layout] = @layout
-  end
-
   menu_section :cnt
 end
