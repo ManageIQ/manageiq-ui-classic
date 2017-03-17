@@ -25,10 +25,6 @@ class ServiceController < ApplicationController
     generic_x_button(SERVICE_X_BUTTON_ALLOWED_ACTIONS)
   end
 
-  def title
-    _("My Services")
-  end
-
   # Service show selected, redirect to proper controller
   def show
     record = Service.find_by_id(from_cid(params[:id]))
@@ -407,7 +403,6 @@ class ServiceController < ApplicationController
 
   def get_session_data
     super
-    @title      = title
     @layout     = "services"
     @options    = session[:prov_options]
   end
