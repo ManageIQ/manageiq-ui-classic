@@ -3,15 +3,10 @@ class MiqAeCustomizationController < ApplicationController
   include_concern 'OldDialogs'
   include_concern 'Dialogs'
 
-
   include AutomateTreeHelper
 
   helper ApplicationHelper::ImportExportHelper
-  include GenericSessionMixin
-
   include Mixins::GenericSessionMixin
-
-
 
   before_action :check_privileges
   before_action :get_session_data
