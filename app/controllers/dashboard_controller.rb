@@ -1,7 +1,6 @@
 class DashboardController < ApplicationController
   include DashboardHelper
   include StartUrl
-  include Mixins::GenericSessionMixin
 
   menu_section :vi
 
