@@ -14,7 +14,6 @@ class DashboardController < ApplicationController
   before_action :get_session_data, :except => [:csp_report, :authenticate,
                                                :external_authenticate, :kerberos_authenticate, :saml_login]
   after_action :cleanup_action,    :except => [:csp_report]
-  after_action :set_session_data,  :except => [:csp_report]
 
   def index
     redirect_to :action => 'show'
@@ -759,11 +758,5 @@ class DashboardController < ApplicationController
     super
     @layout       = "login"
     @current_page = session[:vm_current_page] # current page number
-  end
-
-  def set_session_data
-    super
-    session[:layout]          = @layout
-    session[:vm_current_page] = @current_page
   end
 end
