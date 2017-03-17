@@ -648,11 +648,7 @@ class HostController < ApplicationController
 
   def get_session_data
     super
-    @title      = _("Hosts")
-    @layout     = "host"
     @drift_db   = "Host"
-    @lastaction = session[:host_lastaction]
-    @catinfo    = session[:host_catinfo]
   end
 
   def set_session_data
