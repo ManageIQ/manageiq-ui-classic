@@ -101,6 +101,14 @@ li.brand-white-label.whitelabeled {
 
 /* Dashboard overrides */
 
+body#dashboard .blank-slate-pf {
+  padding: 0 !important;
+}
+
+.blank-slate-pf .pficon-warning-triangle-o:before {
+  color: #9c9c9c;
+}
+
 body#dashboard table {
   border: 0;
 }
@@ -116,16 +124,6 @@ body#dashboard table thead th {
 
 body#dashboard table td {
   border: none;
-}
-
-body#dashboard .dropdown-kebab-pf .dropdown-menu {
-  left: -136px;
-  margin-top: 11px;
-}
-
-body#dashboard .dropdown-kebab-pf .dropdown-menu:after,
-body#dashboard .dropdown-kebab-pf .dropdown-menu:before {
-  left: 127px;
 }
 
 /* Login overrides */
