@@ -1,9 +1,14 @@
 - @angular_form = true
 
+
+
 .form-horizontal{:id => "start_form_div", :style => "display:none"}
   %form#form_div{:name           => "angularForm",
-                 'ng-controller' => "automationManagerFormController",
-                 'ng-show'       => "afterGet",
+                 'ng-controller' => "automationManagerFormController as vm",
+                 'ng-show'       => "vm.afterGet",
+                 "miq-form"      => true,
+                 "model"         => "vm.automationManagerModel",
+                 "model-copy"    => "vm.modelCopy",
                  :novalidate     => true}
     = render :partial => "layouts/flash_msg"
     %br
@@ -13,7 +18,7 @@
       .col-md-8
         %input.form-control{:type            => "text",
                             :name            => "name",
-                            'ng-model'       => "automationManagerModel.name",
+                            'ng-model'       => "vm.automationManagerModel.name",
                             :maxlength       => MAX_NAME_LEN,
                             :required        => "",
                             :checkchange     => true,
@@ -30,7 +35,7 @@
           %input.form-control{"type"        => "text",
                               "id"          => "prov_zone",
                               "name"        => "zone",
-                              "ng-model"    => "automationManagerModel.zone",
+                              "ng-model"    => "vm.automationManagerModel.zone",
                               "maxlength"   => 15,
                               "required"    => "",
                               "checkchange" => "",
@@ -39,7 +44,7 @@
         - else
           = select_tag('zone',
                        options_for_select(@server_zones.sort_by { |name, _name| name }),
-                       "ng-model"                    => "automationManagerModel.zone",
+                       "ng-model"                    => "vm.automationManagerModel.zone",
                        "checkchange"                 => "",
                        "required"                    => "",
                        "selectpicker-for-select-tag" => "")
@@ -50,7 +55,7 @@
       .col-md-8
         %input.form-control{:type           => "text",
                             :name           => "url",
-                            'ng-model'      => "automationManagerModel.url",
+                            'ng-model'      => "vm.automationManagerModel.url",
                             :maxlength      => MAX_DESC_LEN,
                             "id"            => "url",
                             :required       => "",
@@ -67,7 +72,7 @@
       .col-md-8
         %input{:type            => "checkbox",
                :name            => "verify_ssl",
-               'ng-model'       => "automationManagerModel.verify_ssl",
+               'ng-model'       => "vm.automationManagerModel.verify_ssl",
                :checkchange     => true}
 
 
@@ -76,7 +81,7 @@
       = _("Credentials")
     = render :partial => "layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
              :locals  => {:ng_show           => true,
-                          :ng_model          => "automationManagerModel",
+                          :ng_model          => "vm.automationManagerModel",
                           :ng_reqd_userid    => true,
                           :ng_reqd_password  => true,
                           :ng_reqd_verify    => true,

@@ -18,9 +18,13 @@ ManageIQ.angular.app.directive('verifypasswd', function() {
         }
       });
 
+      var model = function () {
+          return scope.$eval(scope.angularForm.model || scope.model);
+      }
+
       ctrl.$parsers.push(function(value) {
         if (ctrl.$name == log_verify) {
-          setValidity(scope, ctrl, ctrl.$viewValue, scope[scope.model][log_password]);
+          setValidity(scope, ctrl, ctrl.$viewValue, model()[log_password]);
         }else if(ctrl.$name == log_password && scope[logVerifyCtrl] != undefined) {
           setValidity(scope, scope[logVerifyCtrl], ctrl.$viewValue, scope[scope.model][log_verify]);
         }
