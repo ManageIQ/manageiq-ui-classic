@@ -117,7 +117,7 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def title
-    "miq_ae_customization"
+    _("Automate Customization")
   end
 
   def explorer
