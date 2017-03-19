@@ -7,9 +7,10 @@
     .col-md-8
       %input.form-control{:type          => "text",
                           :name          => "name",
-                          'ng-model'     => "networkRouterModel.name",
-                          'ng-maxlength' => 128,
+                          "ng-model"     => "networkRouterModel.name",
+                          "ng-maxlength" => 128,
                           :miqrequired   => true,
+                          "required"     => "",
                           :checkchange   => true}
 %h3
   = _('External Gateway')
