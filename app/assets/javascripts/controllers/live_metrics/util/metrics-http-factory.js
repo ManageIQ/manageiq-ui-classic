@@ -75,6 +75,7 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
         if (utils.checkResponse(response) === false) {
           dash.tenantList = [];
           dash.tenant = {value: null};
+          dash.tagsLoaded = true;
           return;
         }
 

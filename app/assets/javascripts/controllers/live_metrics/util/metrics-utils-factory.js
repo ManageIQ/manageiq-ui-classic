@@ -11,6 +11,45 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
       return true;
     }
 
+    var setFilterOptionsAlpha = function(tagsData) {
+      for (var i = 0; i < tagsData.length; i++) {
+        var tagItem = tagsData[i];
+
+        dash.filterConfig.fields.push(
+          {
+            id: tagItem.tag,
+            title: tagItem.tag,
+            placeholder: sprintf(__('Filter by %s...'), tagItem.tag),
+            filterType: 'alpha'
+          });
+      }
+    }
+
+    var setFilterOptionsSelect = function(tagsData) {
+      for (var i = 0; i < tagsData.length; i++) {
+        var tagItem = tagsData[i];
+
+        dash.filterConfig.fields.push(
+          {
+            id: tagItem.tag,
+            title: tagItem.tag,
+            placeholder: sprintf(__('Filter by %s...'), tagItem.tag),
+            filterType: 'select',
+            filterValues: tagItem.options
+          });
+      }
+    }
+
+    var setFilterOptions = function() {
+      dash.filterConfig.fields = [];
+
+      if (dash.filterType === 'simple') {
+        setFilterOptionsSelect(dash.metricTags);
+      } else {
+        setFilterOptionsAlpha(dash.metricTags);
+      }
+    }
+
     var getMetricTagsData = function(response) {
       'use strict';
       dash.tagsLoaded = true;
@@ -23,16 +62,14 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
 
       dash.filterConfig.fields = [];
       if (data && angular.isArray(data.metric_tags)) {
+        // filters available, apply filtering
         data.metric_tags.sort();
-        for (var i = 0; i < data.metric_tags.length; i++) {
-          dash.filterConfig.fields.push(
-            {
-              id: data.metric_tags[i],
-              title: data.metric_tags[i],
-              placeholder: sprintf(__('Filter by %s...'), data.metric_tags[i]),
-              filterType: 'alpha',
-            });
-        }
+
+        // remember the metric tags
+        dash.metricTags = data.metric_tags;
+
+        // apply dash.metricTags to the filter form
+        setFilterOptions();
       }
     }
 
@@ -66,7 +103,7 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
         return;
       }
 
-      var data = response.data.data;
+      var data = response.data.data.sort(function(a, b) { return a.timestamp < b.timestamp; });
 
       item.lastValues = {};
       angular.forEach(data, function(d) {
@@ -102,7 +139,8 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
       getMetricTagsData: getMetricTagsData,
       getContainerParamsData: getContainerParamsData,
       getContainerDashboardData: getContainerDashboardData,
-      checkResponse: checkResponse
+      checkResponse: checkResponse,
+      setFilterOptions: setFilterOptions
     }
   }
 });

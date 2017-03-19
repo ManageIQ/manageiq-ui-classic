@@ -9,6 +9,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
     dash.getTenants = httpUtils.getTenants;
     dash.refreshList = httpUtils.refreshList;
     dash.refreshGraph = httpUtils.refreshGraph;
+    dash.setFilterOptions = utils.setFilterOptions;
     dash.setPage = httpUtils.setPage;
 
     var pageSetup = function() {
