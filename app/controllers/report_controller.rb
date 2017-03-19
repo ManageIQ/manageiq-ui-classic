@@ -257,7 +257,11 @@ class ReportController < ApplicationController
 
     replace_right_cell(:partial => 'export_widgets')
   end
-	
+
+  def self.session_key_prefix
+    'report'
+  end
+
   def title
 	nil
   end
@@ -894,10 +898,6 @@ class ReportController < ApplicationController
 
     render :json => presenter.for_render
   end
-
- def self.session_key_prefix
-    'report'
- end
 
   def get_session_data
 	super
