@@ -1496,7 +1496,7 @@ module VmCommon
       action = nil
     when "live_migrate"
       partial = "vm_common/live_migrate"
-      header = _("Live Migrating %{model} \"%{name}\"") % {:name => name, :model => ui_lookup(:table => table)}
+      header = _("Live Migrating %{model}") % {:name => name, :model => ui_lookup(:tables => table)}
       action = "live_migrate_vm"
     when "evacuate"
       partial = "vm_common/evacuate"
