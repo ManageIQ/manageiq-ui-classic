@@ -229,7 +229,7 @@ module ApplicationController::Performance
   # display selected resources from a tag chart
   def display_by_tag(data_row, report, ts, bc_model, model, legend_idx)
     top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]
-    bc_tag =  "#{Classification.find_by_name(@perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][legend_idx]}"
+    bc_tag =  "#{Classification.find_by(:name => @perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][legend_idx]}"
     dt = typ == "tophour" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
     if top_ids.blank?
       @menu_click_msg = _("No %{tag} %{model} were running %{time}") % {:tag => bc_tag, :model => bc_model, :time => dt}
@@ -273,7 +273,7 @@ module ApplicationController::Performance
   def timeline_current(typ, ts)
     @record = identify_tl_or_perf_record
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
-    @perf_record = VmOrTemplate.find_by_id(@perf_options[:compare_vm]) unless @perf_options[:compare_vm].nil?
+    @perf_record = VmOrTemplate.find(@perf_options[:compare_vm]) unless @perf_options[:compare_vm].nil?
     new_opts = tl_session_data(request.parameters["controller"]) || ApplicationController::Timelines::Options.new
     new_opts[:model] = @perf_record.class.base_class.to_s
     new_opts.date.typ = typ
