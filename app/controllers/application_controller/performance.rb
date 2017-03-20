@@ -228,7 +228,6 @@ module ApplicationController::Performance
 
   # display selected resources from a tag chart
   def display_by_tag(data_row, report, ts, bc_model, model, legend_idx)
-    dt = @perf_options[:typ] == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
     top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]
     bc_tag =  "#{Classification.find_by_name(@perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][legend_idx]}"
     dt = typ == "tophour" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
@@ -277,7 +276,6 @@ module ApplicationController::Performance
     @perf_record = VmOrTemplate.find_by_id(@perf_options[:compare_vm]) unless @perf_options[:compare_vm].nil?
     new_opts = tl_session_data(request.parameters["controller"]) || ApplicationController::Timelines::Options.new
     new_opts[:model] = @perf_record.class.base_class.to_s
-    dt = typ == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
     new_opts.date.typ = typ
     new_opts.date.daily = @perf_options[:daily_date] if typ == "Daily"
     new_opts.date.hourly = [ts.month, ts.day, ts.year].join("/") if typ == "Hourly"
@@ -317,7 +315,6 @@ module ApplicationController::Performance
     controller = data_row["resource_type"].underscore
     new_opts = tl_session_data(controller) || ApplicationController::Timelines::Options.new
     new_opts[:model] = data_row["resource_type"]
-    dt = typ == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
     new_opts.date.typ = typ
     new_opts.date.daily = @perf_options[:daily_date] if typ == "Daily"
     new_opts.date.hourly = [ts.month, ts.day, ts.year].join("/") if typ == "Hourly"
