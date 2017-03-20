@@ -1,4 +1,5 @@
 class TreeBuilderButtons < TreeBuilderAeCustomization
+  include CustomButtonsMixin
   has_kids_for CustomButtonSet, [:x_get_tree_aset_kids]
 
   private
@@ -33,38 +34,6 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
       CustomButtonSet.new(:name => "[Unassigned Buttons]|ub-#{nodes[1]}", :description => "[Unassigned Buttons]")
     )
     count_only_or_objects(count_only, objects)
-  end
-
-  def get_custom_buttons(object)
-    # FIXME: don't we have a method for the splits?
-    # FIXME: cannot we ask for the null parent using Arel?
-    CustomButton.buttons_for(object.name.split('|').last.split('-').last).select do |uri|
-      uri.parent.nil?
-    end
-  end
-
-  def get_tree_aset_kids_for_nil_id(object, count_only)
-    count_only ? get_custom_buttons(object).count : get_custom_buttons(object).sort_by { |a| a.name.downcase }
-  end
-
-  def button_order?(object)
-    object[:set_data] && object[:set_data][:button_order]
-  end
-
-  def x_get_tree_aset_kids(object, count_only)
-    if object.id.nil?
-      get_tree_aset_kids_for_nil_id(object, count_only)
-    elsif count_only
-      object.members.count
-    else
-      # need to show button nodes in button order that they were saved in
-      button_order = button_order?(object) ? object[:set_data][:button_order] : nil
-      objects = []
-      Array(button_order).each do |bidx|
-        object.members.each { |b| objects.push(b) if bidx == b.id && !objects.include?(b) }
-      end
-      objects
-    end
   end
 
   def buttons_node_image(node)
