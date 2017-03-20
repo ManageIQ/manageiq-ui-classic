@@ -286,7 +286,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
         vm.catalogItemModel[prefix + '_playbook_id'] = '';
         vm.catalogItemModel[prefix + '_repository_id'] = id;
       } else {
-        vm['_' + prefix + '_playbook'] = _.find(vm[prefix + '_playbooks'], {id: vm.catalogItemModel[prefix + '_playbook_id']});
+        findObjectForDropDown(prefix, '_playbook', '_playbooks');
       }
     })
   };
@@ -314,9 +314,13 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     var url = '/api/authentications?collection_class=' + typ + '&expand=resources&attributes=id,name' + sort_options;
     API.get(url).then(function (data) {
       vm[prefix + '_cloud_credentials'] = data.resources;
-      vm[prefix + '_cloud_credential'] = _.find(vm[prefix + '_cloud_credentials'], {id: vm.catalogItemModel[prefix + '_cloud_credential_id']});
+      findObjectForDropDown(prefix, '_cloud_credential', '_cloud_credentials');
     })
   };
+
+  var findObjectForDropDown = function(prefix, fieldName, listName) {
+    vm['_' + prefix + fieldName] = _.find(vm[prefix + listName], {id: vm.catalogItemModel[prefix + fieldName + '_id']});
+  }
 
   vm.playbookTypeChanged = function(prefix) {
     if (prefix === "retirement")
@@ -403,5 +407,44 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     });
   }
 
+  $scope.cancelCopyProvisioning = function() {
+    closeConfirmationModal();
+  }
+
+  $scope.copyProvisioning = function() {
+    closeConfirmationModal();
+    vm.formOptions();
+    vm.catalogItemModel.retirement_repository_id = vm.catalogItemModel.provisioning_repository_id;
+    vm.catalogItemModel.retirement_playbook_id = vm.catalogItemModel.provisioning_playbook_id;
+    vm.catalogItemModel.retirement_machine_credential_id = vm.catalogItemModel.provisioning_machine_credential_id;
+    vm.catalogItemModel.retirement_network_credential_id = vm.catalogItemModel.provisioning_network_credential_id;
+    vm.catalogItemModel.retirement_cloud_type = vm.catalogItemModel.provisioning_cloud_type;
+    vm.catalogItemModel.retirement_cloud_credential_id = vm.catalogItemModel.provisioning_cloud_credential_id;
+    if (vm.catalogItemModel.retirement_cloud_type !== '')
+      $scope.cloudTypeChanged('retirement');
+    vm.catalogItemModel.retirement_inventory = vm.catalogItemModel.provisioning_inventory;
+    vm.catalogItemModel.retirement_dialog_existing = vm.catalogItemModel.provisioning_dialog_existing;
+    vm.catalogItemModel.retirement_dialog_id = vm.catalogItemModel.provisioning_dialog_id;
+    vm.catalogItemModel.retirement_dialog_name = vm.catalogItemModel.provisioning_dialog_name;
+    vm.catalogItemModel.retirement_key = '';
+    vm.catalogItemModel.retirement_value = '';
+    vm.catalogItemModel.retirement_variables = angular.copy(vm.catalogItemModel.provisioning_variables);
+  }
+
+  var closeConfirmationModal = function() {
+    angular.element('#confirmationModal').modal("hide");
+  }
+
   init();
 }]);
+
+// Javascript function to be called from confirmation modal outside of Angular controller.
+function cancelOrCopyProvisioning(buttonType) {
+  var scope = angular.element("#form_div").scope();
+  scope.$apply(function () {
+    if (buttonType == "cancel")
+      scope.cancelCopyProvisioning();
+    else
+      scope.copyProvisioning();
+  });
+}

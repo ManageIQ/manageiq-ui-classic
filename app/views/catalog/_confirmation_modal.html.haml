@@ -1,0 +1,48 @@
+.modal.fade#confirmationModal{"tabindex"        => "-1",
+                             "role"            => "dialog",
+                             "aria-labelledby" => "confirmation_modal_label",
+                             "aria-describedby" => "modal",
+                             "aria-hidden"     => "true",
+                             "data-keyboard"   => "false",
+                             "data-backdrop"   => "static",
+                             :style            => "display: none"}
+  .modal-dialog
+    .modal-content
+      #search_notification{:style => "display: none;"}
+      .modal-header
+        %button.close{"data-dismiss" => "modal"}
+          %span{"aria-hidden" => "true"}
+            &times;
+          %span.sr-only
+            Close
+        %h4.modal-title#confirmation_modal_label
+          = _("Copy from Provisioning")
+      .modal-body
+        .form-group
+          %label.control-label.col-md-2
+            %img{:src => image_path("100/warning.png")}
+          .col-md-8
+            = _("Are you sure you want the retirement options to be copied from provisioning?")
+            %p
+            = _("Warning: You will loose all of your current retirement options if you continue with this action")
+      .modal-footer
+        #confirmation_modal_footer
+          = button_tag(_('Cancel'),
+                   :class   => "btn btn-default",
+                   :alt     => t = _("Cancel Copy from provisioning"),
+                   :title   => t,
+                   :onclick => "cancelOrCopyProvisioning('cancel')")
+          = button_tag(_('Copy'),
+                   :class   => "btn btn-primary",
+                   :alt     => t = _("Copy from provisioning"),
+                   :title   => t,
+                   :onclick => "cancelOrCopyProvisioning('copy')")
+
+:javascript
+  $(function(){
+    $('#confirmationModal').off("click");
+    $('#confirmationModal').on('click', '[data-dismiss="modal"]', function() {
+      $('#confirmationModal').modal("hide")
+    });
+  });
+

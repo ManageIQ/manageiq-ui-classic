@@ -1,6 +1,22 @@
 - prefix ||= 'provisioning'
 .row
   .col-md-12.col-lg-6
+    - if prefix == "retirement"
+      = render :partial => 'catalog/confirmation_modal'
+      .form-group
+        %label.col-md-3.control-label
+          %table{:width => "100%", :align => "bottom"}
+            %tr
+              %td#buttons_on
+                %button{"type"          => "button",
+                        :class          => "btn btn-default",
+                        "data-toggle"   => "modal",
+                        "data-target"   => "#confirmationModal",
+                        "data-whatever" => "@mdo",
+                        :id             => "confirmation_modal",
+                        :title          => _("Copy from Provisioning")}
+                  = _('Copy from Provisioning')
+
     .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_repository_id.$invalid}"}
       %label.col-md-3.control-label{"for" => "vm.#{prefix}_repository_id"}
         = _('Repository')
