@@ -114,6 +114,8 @@ module MiqAeClassHelper
       'product product-relationship'
     when 'state'
       'product product-state'
+    when 'element'
+      'product product-element'
     else
       raise NotImplementedError, "Missing fonticon for MiqAeField type #{field}"
     end
