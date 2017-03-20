@@ -1,54 +1,58 @@
 ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', function($http, $scope, automationManagerFormId, miqService) {
     var vm = this;
-    $scope.automationManagerModel = {
-    name: '',
-    url: '',
-    zone: '',
-    verify_ssl: '',
-    log_userid: '',
-    log_password: '',
-    log_verify: '',
-  };
-  $scope.formId = automationManagerFormId;
-  $scope.afterGet = false;
-  $scope.validateClicked = miqService.validateWithAjax;
-  $scope.modelCopy = angular.copy( $scope.automationManagerModel );
-  $scope.model = 'automationManagerModel';
+    vm.automationManagerModel = $scope.automationManagerModel = {
+        name: '',
+        url: '',
+        zone: '',
+        verify_ssl: '',
+        log_userid: '',
+        log_password: '',
+        log_verify: '',
+    };
+    /**change - ok*/
+    vm.formId = automationManagerFormId;
+    /**change - ok*/
+    vm.afterGet =  false;
+    /**will not validate after removing scope*/
+    vm.validateClicked = $scope.validateClicked = miqService.validateWithAjax;
+    /**change ok need to resolve model copy in many other module*/
+    vm.modelCopy = $scope.modelCopy = angular.copy( $scope.automationManagerModel );
+    /**change ok*/
+    vm.model = 'automationManagerModel';
 
   ManageIQ.angular.scope = $scope;
 
-  if (automationManagerFormId === 'new') {
-    $scope.newRecord = true;
 
-    $scope.automationManagerModel.name = '';
-    $scope.automationManagerModel.url = '';
-    $scope.automationManagerModel.verify_ssl = false;
-    $scope.automationManagerModel.log_userid = '';
-    $scope.automationManagerModel.log_password = '';
-    $scope.automationManagerModel.log_verify = '';
+    if (automationManagerFormId === 'new') {
+        /**needs to be resolved in other modules*/
+        vm.newRecord = true;
+        vm.automationManagerModel.name = '';
+        vm.automationManagerModel.url = '';
+        vm.automationManagerModel.verify_ssl = false;
+        vm.automationManagerModel.log_userid = '';
+        vm.automationManagerModel.log_password = '';
+        vm.automationManagerModel.log_verify = '';
 
-    $http.get('/automation_manager/form_fields/' + automationManagerFormId)
-      .then(getAutomationManagerNewFormDataComplete)
-      .catch(miqService.handleFailure);
-  } else {
-    $scope.newRecord = false;
-    miqService.sparkleOn();
+      $http.get('/automation_manager/form_fields/' + automationManagerFormId)
+        .then(getAutomationManagerNewFormDataComplete)
+        .catch(miqService.handleFailure);
+    } else {
+        vm.newRecord = false;
+        miqService.sparkleOn();
+      $http.get('/automation_manager/form_fields/' + automationManagerFormId)
+        .then(getAutomationManagerFormDataComplete)
+        .catch(miqService.handleFailure);
+        miqService.sparkleOff();
+    }
 
-    $http.get('/automation_manager/form_fields/' + automationManagerFormId)
-      .then(getAutomationManagerFormDataComplete)
-      .catch(miqService.handleFailure);
+    function getAutomationManagerNewFormDataComplete(response) {
+        var data = response.data;
+        vm.afterGet = true;
+        vm.automationManagerModel.zone = data.zone;
+        vm.modelCopy = $scope.modelCopy = angular.copy( $scope.automationManagerModel );
+    }
 
-    miqService.sparkleOff();
-  }
-
-  function getAutomationManagerNewFormDataComplete(response) {
-    var data = response.data;
-    $scope.afterGet = true;
-    $scope.automationManagerModel.zone = data.zone;
-    $scope.modelCopy = angular.copy($scope.automationManagerModel);
-  }
-
-  function getAutomationManagerFormDataComplete(response) {
+    function getAutomationManagerFormDataComplete(response) {
     var data = response.data;
     $scope.afterGet = true;
 
@@ -60,7 +64,7 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     $scope.automationManagerModel.log_userid   = data.log_userid;
 
     if($scope.automationManagerModel.log_userid != '') {
-      $scope.automationManagerModel.log_password = $scope.automationManagerModel.log_verify = miqService.storedPasswordPlaceholder;
+      vm.automationManagerModel.log_password = vm.automationManagerModel.log_verify = miqService.storedPasswordPlaceholder;
     }
     $scope.modelCopy = angular.copy( $scope.automationManagerModel );
   }
