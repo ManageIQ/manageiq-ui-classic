@@ -289,7 +289,7 @@ module ApplicationController::Performance
                           _("No events available for this %{model}") % {:model => new_opts[:model]}
                         end
     elsif @record.kind_of?(MiqServer) # For server charts in OPS
-      change_tab("diagnostics_timelines")                # Switch to the Timelines tab
+      change_tab("diagnostics_timelines") # Switch to the Timelines tab
       return true
     else
       if @explorer
@@ -328,7 +328,7 @@ module ApplicationController::Performance
                           _("No events available for this %{model}") % {:model => model}
                         end
     elsif @record.kind_of?(MiqServer) # For server charts in OPS
-      change_tab("diagnostics_timelines")                # Switch to the Timelines tab
+      change_tab("diagnostics_timelines") # Switch to the Timelines tab
       return true
     else
       if @explorer
@@ -400,7 +400,7 @@ module ApplicationController::Performance
     @perf_options[:typ] = "Daily"
     perf_set_or_fix_dates(false) unless params[:task_id] # Set dates if first time thru
     perf_gen_data
-    return true unless @charts        # Return if no charts got created (first time thru async rpt gen)
+    return true unless @charts # Return if no charts got created (first time thru async rpt gen)
 
     render :update do |page|
       page << javascript_prologue
