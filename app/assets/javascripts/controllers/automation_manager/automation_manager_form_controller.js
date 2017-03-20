@@ -1,5 +1,6 @@
 ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', function($http, $scope, automationManagerFormId, miqService) {
     var vm = this;
+    //TODO: remove scope for models, and remove some duplicity references vm. = $scope. = ...
     vm.automationManagerModel = $scope.automationManagerModel = {
         name: '',
         url: '',
@@ -12,7 +13,7 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     vm.formId = automationManagerFormId;
     vm.afterGet =  false;
     vm.validateClicked = $scope.validateClicked = miqService.validateWithAjax;
-    vm.modelCopy = $scope.modelCopy = angular.copy( $scope.automationManagerModel );
+    vm.modelCopy = $scope.modelCopy = angular.copy( vm.automationManagerModel );
     vm.model = 'automationManagerModel';
 
   ManageIQ.angular.scope = $scope;
@@ -44,7 +45,7 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
         var data = response.data;
         vm.afterGet = true;
         vm.automationManagerModel.zone = data.zone;
-        vm.modelCopy = $scope.modelCopy = angular.copy( $scope.automationManagerModel );
+        vm.modelCopy = $scope.modelCopy = angular.copy( vm.automationManagerModel );
     }
 
     function getAutomationManagerFormDataComplete(response) {
@@ -58,10 +59,10 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
 
     vm.automationManagerModel.log_userid   = data.log_userid;
 
-    if($scope.automationManagerModel.log_userid != '') {
+    if(vm.automationManagerModel.log_userid != '') {
       vm.automationManagerModel.log_password = vm.automationManagerModel.log_verify = miqService.storedPasswordPlaceholder;
     }
-    vm.modelCopy = $scope.modelCopy = angular.copy( $scope.automationManagerModel );
+    vm.modelCopy = $scope.modelCopy = angular.copy( vm.automationManagerModel );
   }
 
   /**simple vm change not enough*/
