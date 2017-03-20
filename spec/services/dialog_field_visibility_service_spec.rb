@@ -25,7 +25,6 @@ describe DialogFieldVisibilityService do
         :customize_fields_list           => customize_fields_list,
         :linked_clone                    => linked_clone,
         :number_of_vms                   => number_of_vms,
-        :floating_ip_address             => floating_ip_address,
         :platform                        => platform,
         :provision_type                  => provision_type,
         :request_type                    => request_type,
@@ -93,8 +92,7 @@ describe DialogFieldVisibilityService do
 
       allow(number_of_vms_visibility_service)
         .to receive(:determine_visibility).with(number_of_vms, platform).and_return(
-          :hide => [:number_hide], :edit => [:number_edit],
-          :hide => [:floating_ip_address], :edit => [:floating_ip_address]
+          :hide => [:number_hide], :edit => [:number_edit]
         )
 
       allow(network_visibility_service)
@@ -160,7 +158,6 @@ describe DialogFieldVisibilityService do
       expect(result[:edit]).to match_array([
         :auto_edit,
         :customize_fields_edit,
-        :floating_ip_address,
         :linked_clone_edit,
         :network_edit,
         :number_edit,
