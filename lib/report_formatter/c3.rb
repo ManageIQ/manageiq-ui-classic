@@ -58,7 +58,7 @@ module ReportFormatter
       mri.chart = {
         :miqChart => type,
         :data     => {:columns => [], :names => {}},
-        :axis     => {:x => {:tick => {}}, :y => {:tick => {}}},
+        :axis     => {:x => {:tick => {}}, :y => {:tick => {}, :padding => {:bottom => 0}}},
         :tooltip  => {:format => {}},
         :miq      => {:name_table => {}, :category_table => {}},
         :legend   => {}
@@ -97,7 +97,7 @@ module ReportFormatter
         return unless format
 
         axis_formatter = {:function => format, :options => options}
-        mri.chart[:axis][:y] = {:tick => {:format => axis_formatter}}
+        mri.chart[:axis][:y][:tick] = {:format => axis_formatter}
         mri.chart[:miq][:format] = axis_formatter
       end
     end
