@@ -85,7 +85,8 @@
                             "emsCommonModel.emstype == 'nuage_network' || " +                          |
                             "(emsCommonModel.emstype == 'vmware_cloud' && '#{prefix}' === 'amqp') || " |
                             "emsCommonModel.emstype == 'scvmm' || " +                                  |
-                            "emsCommonModel.ems_controller == 'ems_container'"}                        |
+                            "emsCommonModel.ems_controller == 'ems_container' || " +                   |
+                            "emsCommonModel.emstype == 'hawkular'"}                                    |
     %label.col-md-2.control-label{"for" => "#{prefix}_security_protocol"}
       = _('Security Protocol')
     .col-md-8{"ng-if" => "emsCommonModel.emstype == 'openstack' || emsCommonModel.emstype == 'openstack_infra' || emsCommonModel.emstype == 'vmware_cloud'"}
@@ -125,6 +126,16 @@
                        "selectpicker-for-select-tag" => "",
                        "prefix"                      => "#{prefix}",
                        "reset-validation-status"     => "#{prefix}_auth_status")
+    .col-md-8{"ng-if" => "emsCommonModel.emstype == 'hawkular'"}
+      = select_tag("#{prefix}_security_protocol",
+                       options_for_select([["<#{_('Choose')}>", nil]] + @hawkular_security_protocols, "disabled" => ["<#{_('Choose')}>", nil]),
+                       "ng-model"                    => "#{ng_model}.#{prefix}_security_protocol",
+                       "checkchange"                 => "",
+                       "required"                    => "",
+                       "ng-change"                   => "hawkularSecurityProtocolChanged()",
+                       "selectpicker-for-select-tag" => "",
+                       "prefix"                      => prefix.to_s,
+                       "reset-validation-status"     => "#{prefix}_auth_status")
 
 %div{"ng-if" => defined?(tls_verify_hide) ? false : true}
   .form-group{"ng-if"=> "emsCommonModel.emstype == 'rhevm'"}
@@ -143,9 +154,11 @@
              "prefix"          => "#{prefix}"}
 
 %div{"ng-if" => defined?(tls_ca_certs_hide) ? false : true}
-  .form-group{"ng-if"=> "emsCommonModel.emstype == 'rhevm' || " +                                          |
-                        "(emsCommonModel.ems_controller == 'ems_container' && " +                          |
-                        " emsCommonModel.#{prefix}_security_protocol == 'ssl-with-validation-custom-ca')"} |
+  .form-group{"ng-if"=> "emsCommonModel.emstype == 'rhevm' || " +                                             |
+                        "(emsCommonModel.ems_controller == 'ems_container' && " +                             |
+                        " emsCommonModel.#{prefix}_security_protocol == 'ssl-with-validation-custom-ca') || " |
+                        "(emsCommonModel.emstype == 'hawkular' && " +                                         |
+                        " emsCommonModel.#{prefix}_security_protocol == 'ssl-with-validation-custom-ca')"}    |
     %label.col-md-2.control-label{"for" => "#{prefix}_tls_ca_certs"}
       = _('Trusted CA Certificates')
     .col-md-4
