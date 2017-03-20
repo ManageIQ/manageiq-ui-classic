@@ -5,6 +5,12 @@ describe NumberOfVmsVisibilityService do
     context "when the number of vms is greater than 1" do
       let(:number_of_vms) { 2 }
 
+        it "adds values to field names to hide" do
+          expect(subject.determine_visibility(number_of_vms)).to eq(
+            :hide => [:floating_ip_address], :edit => []
+          )
+        end
+
       context "when the platform is linux" do
         let(:platform) { "linux" }
 
@@ -30,6 +36,12 @@ describe NumberOfVmsVisibilityService do
 
     context "when the number of vms is not greater than 1" do
       let(:number_of_vms) { 1 }
+
+      it "adds values to field names to edit" do
+        expect(subject.determine_visibility(number_of_vms)).to eq(
+          :hide => [], :edit => [:floating_ip_address]
+        )
+      end
 
       context "when the platform is linux" do
         let(:platform) { "linux" }

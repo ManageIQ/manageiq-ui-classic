@@ -6,7 +6,6 @@ describe DialogFieldVisibilityService do
       described_class.new(
         auto_placement_visibility_service,
         number_of_vms_visibility_service,
-        floating_ip_address_visibility_service,
         service_template_fields_visibility_service,
         network_visibility_service,
         sysprep_auto_logon_visibility_service,
@@ -52,9 +51,6 @@ describe DialogFieldVisibilityService do
     let(:number_of_vms) { "number_of_vms" }
     let(:platform) { "platform" }
 
-    let(:floating_ip_address_visibility_service) { double("FloatingIpAddressVisibilityService") }
-    let(:floating_ip_address) { "floating_ip_address" }
-
     let(:network_visibility_service) { double("NetworkVisibilityService") }
     let(:sysprep_enabled) { "sysprep_enabled" }
     let(:supports_pxe) { "supports_pxe" }
@@ -97,11 +93,7 @@ describe DialogFieldVisibilityService do
 
       allow(number_of_vms_visibility_service)
         .to receive(:determine_visibility).with(number_of_vms, platform).and_return(
-          :hide => [:number_hide], :edit => [:number_edit]
-        )
-
-      allow(floating_ip_address_visibility_service)
-        .to receive(:determine_visibility).with(number_of_vms).and_return(
+          :hide => [:number_hide], :edit => [:number_edit],
           :hide => [:floating_ip_address], :edit => [:floating_ip_address]
         )
 
