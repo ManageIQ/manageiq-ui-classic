@@ -3,7 +3,7 @@ class MiddlewareServerDecorator < MiqDecorator
     nil
   end
 
-  def listicon_image
+  def fileicon
     case product
     when 'Hawkular'
       'svg/vendor-hawkular.svg'

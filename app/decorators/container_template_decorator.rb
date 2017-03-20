@@ -3,7 +3,7 @@ class ContainerTemplateDecorator < MiqDecorator
     'product product-template'
   end
 
-  def self.listicon_image
+  def self.fileicon
     '100/container_template.png'
   end
 end

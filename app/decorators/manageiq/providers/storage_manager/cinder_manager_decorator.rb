@@ -1,6 +1,6 @@
 module ManageIQ::Providers
   class StorageManager::CinderManagerDecorator < MiqDecorator
-    def self.listicon_image
+    def self.fileicon
       "svg/vendor-cinder.svg"
     end
   end

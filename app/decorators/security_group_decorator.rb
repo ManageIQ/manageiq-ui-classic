@@ -3,7 +3,7 @@ class SecurityGroupDecorator < MiqDecorator
     'pficon pficon-cloud-security'
   end
 
-  def self.listicon_image
+  def self.fileicon
     '100/security_group.png'
   end
 end

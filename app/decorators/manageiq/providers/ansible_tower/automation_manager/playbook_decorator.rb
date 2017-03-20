@@ -4,7 +4,7 @@ module ManageIQ::Providers::AnsibleTower
       nil
     end
 
-    def self.listicon_image
+    def self.fileicon
       'svg/vendor-ansible.svg'
     end
   end

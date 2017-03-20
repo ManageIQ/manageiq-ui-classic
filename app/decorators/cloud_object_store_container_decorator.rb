@@ -3,7 +3,7 @@ class CloudObjectStoreContainerDecorator < MiqDecorator
     'product product-cloud_object_store'
   end
 
-  def self.listicon_image
+  def self.fileicon
     '100/cloud_object_store_container.png'
   end
 end

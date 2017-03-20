@@ -145,7 +145,7 @@ module TextualSummaryHelper
 
   def textual_object_icon(object, klass)
     icon = object.decorate.try(:fonticon)
-    image = object.decorate.try(:listicon_image)
+    image = object.decorate.try(:fileicon)
 
     if icon || image
       {:icon => icon, :image => image}
@@ -160,7 +160,7 @@ module TextualSummaryHelper
 
   def textual_class_icon(klass)
     icon = klass.decorate.try(:fonticon)
-    image = klass.decorate.try(:listicon_image)
+    image = klass.decorate.try(:fileicon)
 
     if icon || image
       {:icon => icon, :image => image}

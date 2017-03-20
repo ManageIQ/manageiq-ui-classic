@@ -3,7 +3,7 @@ class MiddlewareServerGroupDecorator < MiqDecorator
     'pficon-server-group'
   end
 
-  def self.listicon_image
+  def self.fileicon
     '100/middleware_server_group.png'
   end
 end

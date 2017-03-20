@@ -426,7 +426,7 @@ module QuadiconHelper
 
     output << content_tag(:div, :class => "flobj e72") do
       quadicon_link_to(url, **link_opts) do
-        quadicon_reflection_img(:path => item.decorate.listicon_image)
+        quadicon_reflection_img(:path => item.decorate.fileicon)
       end
     end
 
@@ -555,7 +555,7 @@ module QuadiconHelper
     output = []
 
     img_path = if item.decorate
-                 item.decorate.try(:listicon_image)
+                 item.decorate.try(:fileicon)
                else
                  "100/#{item.class.base_class.to_s.underscore}.png"
                end
