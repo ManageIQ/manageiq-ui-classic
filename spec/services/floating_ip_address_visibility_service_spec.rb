@@ -7,7 +7,7 @@ describe FloatingIpAddressVisibilityService do
       let(:number_of_vms) { 2 }
 
       it "adds values to field names to hide" do
-        expect(subject.determine_visibility(floating_ip_address, number_of_vms)).to eq(
+        expect(subject.determine_visibility(number_of_vms)).to eq(
           :hide => [:floating_ip_address], :edit => []
         )
       end
@@ -18,7 +18,7 @@ describe FloatingIpAddressVisibilityService do
       let(:number_of_vms) { 1 }
 
       it "adds values to field names to edit" do
-        expect(subject.determine_visibility(floating_ip_address, number_of_vms)).to eq(
+        expect(subject.determine_visibility(number_of_vms)).to eq(
           :hide => [], :edit => [:floating_ip_address]
         )
       end

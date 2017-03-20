@@ -1,5 +1,5 @@
 class FloatingIpAddressVisibilityService
-  def determine_visibility(floating_ip_address, number_of_vms)
+  def determine_visibility( number_of_vms)
     field_names_to_hide = []
     field_names_to_edit = []
 

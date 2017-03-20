@@ -101,7 +101,7 @@ describe DialogFieldVisibilityService do
         )
 
       allow(floating_ip_address_visibility_service)
-        .to receive(:determine_visibility).with(floating_ip_address, number_of_vms).and_return(
+        .to receive(:determine_visibility).with(number_of_vms).and_return(
           :hide => [:floating_ip_address], :edit => [:floating_ip_address]
         )
 

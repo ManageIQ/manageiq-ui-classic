@@ -45,10 +45,7 @@ class DialogFieldVisibilityService
     add_to_visibility_arrays(@auto_placement_visibility_service, options[:auto_placement_enabled])
     add_to_visibility_arrays(@number_of_vms_visibility_service, options[:number_of_vms], options[:platform])
     add_to_visibility_arrays(
-      @floating_ip_address_visibility_service,
-      options[:floating_ip_address],
-      options[:number_of_vms]
-    )
+      @floating_ip_address_visibility_service, options[:number_of_vms])
 
     add_to_visibility_arrays(
       @network_visibility_service,
