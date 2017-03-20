@@ -151,6 +151,10 @@ module QuadiconHelper
     end
   end
 
+  def img_for_physical_vendor(item)
+    "svg/vendor-#{h(item.label_for_vendor.downcase)}.svg"
+  end
+
   # FIXME: Even better would be to ask the object what method to use
   def quadicon_builder_factory(item, options)
     case quadicon_builder_name_from(item)
@@ -163,6 +167,7 @@ module QuadiconHelper
     when 'single_quad'           then render_single_quad_quadicon(item, options)
     when 'storage'               then render_storage_quadicon(item, options)
     when 'vm_or_template'        then render_vm_or_template_quadicon(item, options)
+    when 'physical_server'       then render_physical_server_quadicon(item, options)
     else
       raise "unknown quadicon kind - #{quadicon_builder_name_from(item)}"
     end
@@ -214,6 +219,44 @@ module QuadiconHelper
       url = quadicon_build_label_url(item, row)
       quadicon_link_to(url, **opts) { content }
     end
+  end
+
+  # Renders a quadicon for PhysicalServer
+  #
+  def render_physical_server_quadicon(item, options)
+    output = []
+    if settings(:quadicons, :physical_server)
+      output << flobj_img_simple( "layout/base.png")
+
+      output << flobj_p_simple("a72", (item.host ? 1 : 0 ))
+      output << flobj_img_simple("svg/currentstate-#{h(item.power_state.downcase)}.svg", "b72")
+      output << flobj_img_simple( img_for_physical_vendor(item), "c72")
+      output << flobj_img_simple( img_for_health_state(item), "d72")
+      output << flobj_img_simple( '100/shield.png', "g72") unless item.get_policies.empty?
+    else
+      output << flobj_img_simple(size)
+      output << flobj_img_simple(width * 1.8, img_for_physical_vendor(item), "e72")
+    end
+
+    if options[:typ] == :listnav
+      # Listnav, no href needed
+      output << content_tag(:div, :class => 'flobj') do
+        tag(:img, :src => ActionController::Base.helpers.image_path("layout/reflection.png"), :border => 0)
+      end
+    else
+      href = if quadicon_show_links?
+               quadicon_edit_key?(:hostitems) ? "/physical_server/edit/?selected_physical_server=#{item.id}" : url_for_record(item)
+             end
+
+      output << content_tag(:div, :class => 'flobj') do
+        title = _("Name: %{name} ") % {:name => h(item.name)}
+
+        link_to(href, :title => title) do
+          quadicon_reflection_img
+        end
+      end
+    end
+    output.collect(&:html_safe).join('').html_safe
   end
 
   # FIXME: Even better would be to ask the object what name to use
@@ -356,6 +399,8 @@ module QuadiconHelper
                    elsif item.kind_of?(ManageIQ::Providers::ConfigurationManager)
                      "single_quad"
                    elsif quadicon_named_for_base_class?(item)
+                     item.class.base_class.name.underscore
+                   elsif item.kind_of? PhysicalServer
                      item.class.base_class.name.underscore
                    else
                      # All other models that only need single large icon and use name for hover text
@@ -637,6 +682,15 @@ module QuadiconHelper
               end
 
     output.collect(&:html_safe).join('').html_safe
+  end
+
+  def img_for_health_state(item)
+    case item.health_state
+    when "Valid"   then "100/healthstate-normal.png"
+    when "Critical" then "svg/healthstate-critical.svg"
+    when "None"     then "svg/healthstate-unknown.svg"
+    when "Warning"  then "100/warning.png"
+    end
   end
 
   # Renders a storage quadicon
