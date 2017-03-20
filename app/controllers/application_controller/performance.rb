@@ -420,7 +420,7 @@ module ApplicationController::Performance
       page << Charting.js_load_statement
       page << 'miqSparkle(false);'
     end
-    return true
+    true
   end
 
   # Create daily/hourly chart for selected CI
@@ -459,7 +459,7 @@ module ApplicationController::Performance
                           :refresh    => "n",
                           :escape     => false
     end
-    return true
+    true
   end
 
   # create top chart for selected timestamp/model by tag
