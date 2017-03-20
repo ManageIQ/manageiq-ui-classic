@@ -47,7 +47,6 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     vm.automationManagerModel.zone = data.zone;
     vm.modelCopy = $scope.modelCopy = angular.copy(vm.automationManagerModel);
   }
-
   function getAutomationManagerFormDataComplete(response) {
     var data = response.data;
     vm.afterGet = true;
