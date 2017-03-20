@@ -51,4 +51,33 @@ describe TreeNode do
       end
     end
   end
+
+  describe '.exists?' do
+    subject { described_class.exists?(object) }
+
+    context 'object has a direct subclass' do
+      let(:object) { User.new }
+      it { is_expected.to be_truthy }
+    end
+
+    context 'object has an indirect subclass' do
+      let(:object) { VmOrTemplate.new }
+      it { is_expected.to be_truthy }
+    end
+
+    context 'object is a hash' do
+      let(:object) { Hash.new }
+      it { is_expected.to be_truthy }
+    end
+
+    context 'object is an array' do
+      let(:object) { [] }
+      it { is_expected.to be_falsey }
+    end
+
+    context 'object is nil' do
+      let(:object) { nil }
+      it { is_expected.to be_falsey }
+    end
+  end
 end

@@ -16,9 +16,9 @@ module TreeNode
     private
 
     def subclass(object)
-      klass = "#{self}::#{object.class}"
-      node = object.kind_of?(Hash) || Object.const_defined?(klass) ? klass : "#{self}::#{object.class.base_class}"
-      node.safe_constantize
+      klass = "#{self}::#{object.class}".safe_constantize
+      klass ||= "#{self}::#{object.class.base_class}".safe_constantize if object.kind_of?(ApplicationRecord)
+      klass
     end
   end
 end
