@@ -1,5 +1,5 @@
 class TreeBuilderCatalogsClass < TreeBuilder
-  include Mixins::CustomButtons
+  include CustomButtonsMixin
   has_kids_for CustomButtonSet, [:x_get_tree_aset_kids]
 
   private
