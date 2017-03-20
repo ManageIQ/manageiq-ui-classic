@@ -16,7 +16,6 @@ class ServiceController < ApplicationController
 
   def button
     custom_buttons if params[:pressed] == "custom_button"
-    return if ["custom_button"].include?(params[:pressed])    # custom button screen, so return, let custom_buttons method handle everything
   end
 
   def x_button

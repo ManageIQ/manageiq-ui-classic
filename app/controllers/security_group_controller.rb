@@ -17,28 +17,10 @@ class SecurityGroupController < ApplicationController
   menu_section :net
 
   def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w(vms instances images).include?(@display)
-    params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
+    generic_button_setup
+    handle_button_pressed(params[:pressed])
 
-    @refresh_div = "main_div"
-
-    case params[:pressed]
-    when "security_group_tag"
-      return tag("SecurityGroup")
-    when 'security_group_delete'
-      delete_security_groups
-    when "security_group_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id(params)
-    else
-      if params[:pressed] == "security_group_new"
-        javascript_redirect :action => "new"
-      elsif !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
-      else
-        render_flash
-      end
-    end
+    button_render_fallback unless performed?
   end
 
   def cancel_action(message)
@@ -111,7 +93,7 @@ class SecurityGroupController < ApplicationController
     javascript_redirect :action => "show_list"
   end
 
-  def delete_security_groups
+  def handle_security_group_delete
     assert_privileges("security_group_delete")
 
     security_groups = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "security_group")
@@ -265,5 +247,22 @@ class SecurityGroupController < ApplicationController
                    "Delete initiated for %{number} Security Groups.",
                    security_groups.length) % {:number => security_groups.length})
     end
+  end
+
+  def handled_buttons
+    %w(
+      security_group_delete
+      security_group_edit
+      security_group_new
+      security_group_tag
+    )
+  end
+
+  def handle_security_group_edit
+    js_redirect_to_edit_for_checked_id
+  end
+
+  def handle_security_group_new
+    js_redirect_to_new
   end
 end

@@ -25,5 +25,21 @@ class ContainerNodeController < ApplicationController
     end
   end
 
+  def handled_buttons
+    %(
+      container_node_tag
+      container_node_protect
+      container_node_check_compliance
+    )
+  end
+
+  def handle_container_node_protect
+    assign_policies(ContainerNode)
+  end
+
+  def handle_container_node_check_compliance
+    check_compliance(ContainerNode)
+  end
+
   menu_section :cnt
 end

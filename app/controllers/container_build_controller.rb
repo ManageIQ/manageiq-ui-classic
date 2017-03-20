@@ -17,5 +17,9 @@ class ContainerBuildController < ApplicationController
     "Builds"
   end
 
+  def handled_buttons
+    %w(container_build_tag)
+  end
+
   menu_section :cnt
 end

@@ -6,25 +6,26 @@ class CloudObjectStoreContainerController < ApplicationController
 
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
+  include Mixins::GenericButtonMixin
   include Mixins::GenericSessionMixin
 
   def breadcrumb_name(_model)
     ui_lookup(:tables => "cloud_object_store_container")
   end
 
-  # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
+    restore_edit_for_search
+    save_current_page_for_refresh
 
+    # FIXME: Handle this in GenericButtonMixin
     process_cloud_object_storage_buttons(params[:pressed])
 
-    if !@flash_array.nil? && params[:pressed].ends_with?("delete")
-      javascript_redirect :action      => 'show_list',
-                          :flash_msg   => @flash_array[0][:message],
-                          :flash_error => @flash_array[0][:level] == :error
-    elsif !@flash_array.nil?
-      render_flash unless performed?
+    @single_delete = params[:pressed].ends_with?("delete")
+
+    redirect_to_retire_screen_if_single_delete
+
+    if !performed? && @flash_array.present?
+      render_flash
     end
   end
 

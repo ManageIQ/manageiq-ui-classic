@@ -35,4 +35,42 @@ describe ConfigurationController do
                                    ])
     end
   end
+
+  describe "#button" do
+    let(:time_profile) { FactoryGirl.create(:time_profile) }
+
+    before do
+      stub_user(:features => :all)
+    end
+
+    it 'handles tp_delete' do
+      expect(controller).to receive(:handle_tp_delete).and_call_original
+      post :button, :params => {
+        :pressed => "tp_delete",
+        :format => :js,
+        "check_#{time_profile.id}".to_sym => 1
+      }
+      expect(assigns(:flash_array).first[:message]).to match(/Delete successful/)
+    end
+
+    it 'handles tp_edit' do
+      expect(controller).to receive(:handle_tp_edit).and_call_original
+      post :button, :params => {
+        :pressed => "tp_edit",
+        :format => :js,
+        "check_#{time_profile.id}".to_sym => 1
+      }
+      expect(assigns(:flash_array)).to be_nil
+    end
+
+    it 'handles tp_copy' do
+      expect(controller).to receive(:handle_tp_copy).and_call_original
+      post :button, :params => {
+        :pressed => "tp_copy",
+        :format => :js,
+        "check_#{time_profile.id}".to_sym => 1
+      }
+      expect(assigns(:flash_array)).to be_nil
+    end
+  end
 end

@@ -25,4 +25,8 @@ class MiddlewareDomainController < ApplicationController
     [%i(properties), %i(relationships smart_management)]
   end
   helper_method :textual_group_list
+
+  def handled_buttons
+    middleware_handled_buttons
+  end
 end

@@ -57,4 +57,8 @@ describe ContainerTemplateController do
     end
     controller.send(:get_view, "ContainerTemplate", :gtl_dbname => :containertemplate)
   end
+
+  describe "#button" do
+    include_examples :container_button_examples, "container_template"
+  end
 end

@@ -1,43 +1,81 @@
 describe VmOrTemplateController do
-  context "#snap_pressed" do
-    before :each do
-      stub_user(:features => :all)
-      @vm = FactoryGirl.create(:vm_vmware)
-      @snapshot = FactoryGirl.create(:snapshot, :vm_or_template_id => @vm.id,
-                                                :name              => 'EvmSnapshot',
-                                                :description       => "Some Description"
-                                    )
-      @vm.snapshots = [@snapshot]
-      tree_hash = {
-        :trees         => {
+  let(:vm) { FactoryGirl.create(:vm_vmware) }
+
+  describe '#button' do
+    let!(:user) { stub_user(:features => :all) }
+
+    before do
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    it "handles custom_button" do
+      expect(controller).to receive(:custom_buttons)
+      post :button, :params => { :pressed => 'custom_button', :id => vm.id }
+      expect(response.status).to eq(200)
+    end
+
+    it "handles perf_reload" do
+      expect(controller).to receive(:perf_chart_chooser).and_call_original
+      post :button, :params => { :pressed => 'perf_reload', :id => vm.id }
+      expect(assigns(:flash_array)).to be_nil
+      expect(response.status).to eq(200)
+    end
+
+    # FIXME: The next 2 test existing behavior, which is to return "Button not yet implemented"
+    # Perhaps VmCommon controllers don't need to handle these?
+    #
+    it "handles perf_refresh" do
+      expect(controller).to receive(:perf_refresh_data)
+      post :button, :params => { :pressed => 'perf_refresh', :id => vm.id }
+    end
+
+    it "handles remove_service" do
+      expect(controller).to receive(:remove_service)
+      post :button, :params => { :pressed => 'remove_service', :id => vm.id }
+    end
+  end
+
+  describe "#snap_pressed" do
+    let!(:user) { stub_user(:features => :all) }
+
+    let(:snapshot) do
+      FactoryGirl.create(:snapshot, :vm_or_template_id => vm.id, :name => 'EvmSnapshot', :description => "Some Description")
+    end
+
+    let(:tree_hash) do
+      {
+        :trees => {
           :vandt_tree => {
-            :active_node => "v-#{@vm.id}"
+            :active_node => "v-#{vm.id}"
           }
         },
         :active_tree   => :vandt_tree,
         :active_accord => :vandt
       }
+    end
 
+    before do
+      vm.snapshots = [snapshot]
       session[:sandboxes] = {"vm_or_template" => tree_hash}
     end
 
     it "snapshot node exists in tree" do
-      post :snap_pressed, :params => { :id => @snapshot.id }
+      post :snap_pressed, :params => { :id => snapshot.id }
       expect(assigns(:flash_array)).to be_blank
     end
 
     it "when snapshot is selected center toolbars are replaced" do
-      post :snap_pressed, :params => { :id => @snapshot.id }
+      post :snap_pressed, :params => { :id => snapshot.id }
       expect(response.body).to include("sendDataWithRx({redrawToolbar:")
       expect(assigns(:flash_array)).to be_blank
     end
 
     it "when snapshot is selected parent vm record remains the same" do
       sb = session[:sandboxes]["vm_or_template"]
-      sb[sb[:active_accord]] = "v-#{@vm.id}"
+      sb[sb[:active_accord]] = "v-#{vm.id}"
       sb[:trees][:vandt_tree][:active_node] = "f-1"
-      post :snap_pressed, :params => { :id => @snapshot.id }
-      expect(assigns(:record).id).to eq(@vm.id)
+      post :snap_pressed, :params => { :id => snapshot.id }
+      expect(assigns(:record).id).to eq(vm.id)
     end
 
     it "deleted node pressed in snapshot tree" do
@@ -47,80 +85,100 @@ describe VmOrTemplateController do
     end
   end
 
-  context '#reload ' do
+  describe '#reload ' do
+    let(:vm) { FactoryGirl.create(:vm_cloud) }
+    let(:folder) { FactoryGirl.create(:ems_folder) }
+
     before do
       login_as FactoryGirl.create(:user_with_group, :role => "operator")
       allow(controller).to receive(:tree_select).and_return(nil)
-      @folder = FactoryGirl.create(:ems_folder)
-      @vm = FactoryGirl.create(:vm_cloud)
     end
 
     it 'sets params[:id] to hidden vm if its summary is displayed' do
       User.current_user.settings[:display] = {:display_vms => false}
-      allow(controller).to receive(:x_node).and_return('f-' + @folder.id.to_s)
-      controller.instance_variable_set(:@_params, :id => @vm.id.to_s)
+      allow(controller).to receive(:x_node).and_return('f-' + folder.id.to_s)
+      controller.instance_variable_set(:@_params, :id => vm.id.to_s)
       controller.reload
-      expect(controller.params[:id]).to eq('v-' + TreeBuilder.to_cid(@vm.id))
+      expect(controller.params[:id]).to eq('v-' + TreeBuilder.to_cid(vm.id))
     end
 
     it 'sets params[:id] to x_node if vms are displayed in a tree' do
       User.current_user.settings[:display] = {:display_vms => true}
-      allow(controller).to receive(:x_node).and_return('f-' + @folder.id.to_s)
-      controller.instance_variable_set(:@_params, :id => @folder.id.to_s)
+      allow(controller).to receive(:x_node).and_return('f-' + folder.id.to_s)
+      controller.instance_variable_set(:@_params, :id => folder.id.to_s)
       controller.reload
       expect(controller.params[:id]).to eq(controller.x_node)
     end
   end
 
-  context "#show" do
-    before :each do
+  describe "#show" do
+    before do
       allow(User).to receive(:server_timezone).and_return("UTC")
       allow_any_instance_of(described_class).to receive(:set_user_time_zone)
       allow(controller).to receive(:check_privileges).and_return(true)
       EvmSpecHelper.seed_specific_product_features("vandt_accord", "vms_instances_filter_accord")
-      @vm = FactoryGirl.create(:vm_vmware)
     end
 
-    it "redirects user to explorer that they have access to" do
-      feature = MiqProductFeature.find_all_by_identifier(["vandt_accord"])
-      login_as FactoryGirl.create(:user, :features => feature)
-      controller.instance_variable_set(:@sb, {})
-      get :show, :params => {:id => @vm.id}
-      expect(response).to redirect_to(:controller => "vm_infra", :action => 'explorer')
+    context "when user has all privileges" do
+      let!(:user) { stub_user(:features => :all) }
+
+      it "Redirects user with privileges to vm_infra/explorer" do
+        get :show, :params => {:id => vm.id}
+        expect(response.status).to eq(302)
+        expect(response).to redirect_to(:controller => "vm_infra", :action => 'explorer')
+      end
     end
 
-    it "redirects user to Workloads explorer when user does not have access to Infra Explorer" do
-      feature = MiqProductFeature.find_all_by_identifier(["vms_instances_filter_accord"])
-      login_as FactoryGirl.create(:user, :features => feature)
-      controller.instance_variable_set(:@sb, {})
-      get :show, :params => {:id => @vm.id}
-      expect(response).to redirect_to(:controller => "vm_or_template", :action => 'explorer')
+    context "when user has no privileges" do
+      let!(:user) { stub_user(:features => :none) }
+
+      it "Redirects user to the referrer controller/action" do
+        request.env["HTTP_REFERER"] = "http://localhost:3000/dashboard/show"
+        allow(controller).to receive(:find_by_id_filtered).and_return(nil)
+        get :show, :params => {:id => vm.id}
+        expect(response.status).to eq(302)
+        expect(response).to redirect_to(:controller => "dashboard", :action => 'show')
+      end
     end
 
-    it "redirects user back to the url they came from when user does not have access to any of VM Explorers" do
-      feature = MiqProductFeature.find_all_by_identifier(["dashboard_show"])
-      login_as FactoryGirl.create(:user, :features => feature)
-      controller.instance_variable_set(:@sb, {})
-      request.env["HTTP_REFERER"] = "http://localhost:3000/dashboard/show"
-      get :show, :params => {:id => @vm.id}
-      expect(response).to redirect_to(:controller => "dashboard", :action => 'show')
-      expect(assigns(:flash_array).first[:message]).to include("is not authorized to access")
+    context "when can vandt_accord" do
+      let(:features) { MiqProductFeature.find_all_by_identifier(["vandt_accord"]) }
+      let(:user) { FactoryGirl.create(:user, :features => features) }
+
+      it "redirects user to explorer that they have access to" do
+        login_as user
+        request.env["HTTP_REFERER"] = "http://localhost:3000/vm_infra/explorer"
+        controller.instance_variable_set(:@sb, {})
+        get :show, :params => {:id => vm.id}
+        expect(response).to redirect_to(:controller => "vm_infra", :action => 'explorer')
+      end
     end
 
-    it "Redirects user with privileges to vm_infra/explorer" do
-      stub_user(:features => :all)
-      get :show, :params => {:id => @vm.id}
-      expect(response.status).to eq(302)
-      expect(response).to redirect_to(:controller => "vm_infra", :action => 'explorer')
+    context "when user does not have access to Infra Explorer" do
+      let(:features) { MiqProductFeature.find_all_by_identifier(["vms_instances_filter_accord"]) }
+      let(:user) { FactoryGirl.create(:user, :features => features) }
+
+      it "redirects user to Workloads explorer" do
+        login_as user
+        request.env["HTTP_REFERER"] = "http://localhost:3000/vm_or_template/explorer"
+        controller.instance_variable_set(:@sb, {})
+        get :show, :params => {:id => vm.id}
+        expect(response).to redirect_to(:controller => "vm_or_template", :action => 'explorer')
+      end
     end
 
-    it "Redirects user to the referrer controller/action" do
-      login_as FactoryGirl.create(:user)
-      request.env["HTTP_REFERER"] = "http://localhost:3000/dashboard/show"
-      allow(controller).to receive(:find_by_id_filtered).and_return(nil)
-      get :show, :params => {:id => @vm.id}
-      expect(response.status).to eq(302)
-      expect(response).to redirect_to(:controller => "dashboard", :action => 'show')
+    context "when user does not have access to any of VM Explorers" do
+      let(:features) { MiqProductFeature.find_all_by_identifier(["dashboard_show"]) }
+      let(:user) { FactoryGirl.create(:user, :features => features) }
+
+      it "redirects user back to the url they came from" do
+        login_as user
+        controller.instance_variable_set(:@sb, {})
+        request.env["HTTP_REFERER"] = "http://localhost:3000/dashboard/show"
+        get :show, :params => {:id => vm.id}
+        expect(response).to redirect_to(:controller => "dashboard", :action => 'show')
+        expect(assigns(:flash_array).first[:message]).to include("is not authorized to access")
+      end
     end
 
     context 'set session[:snap_selected]' do
@@ -128,7 +186,7 @@ describe VmOrTemplateController do
         tree_hash = {
           :trees         => {
             :vandt_tree => {
-              :active_node => "v-#{@vm.id}"
+              :active_node => "v-#{vm.id}"
             }
           },
           :active_tree   => :vandt_tree,
@@ -142,17 +200,17 @@ describe VmOrTemplateController do
 
       it 'to snap_selected.id if a Snapshot exists' do
         @snapshot = FactoryGirl.create(:snapshot,
-                                       :vm_or_template_id => @vm.id,
+                                       :vm_or_template_id => vm.id,
                                        :name              => 'EvmSnapshot',
                                        :description       => 'Some Description')
-        @vm.snapshots = [@snapshot]
-        post :show, :params => {:id => @vm.id, :display => 'snapshot_info'}
+        vm.snapshots = [@snapshot]
+        post :show, :params => {:id => vm.id, :display => 'snapshot_info'}
         expect(session[:snap_selected]).to eq(@snapshot.id)
       end
 
       it 'to nil if Snapshot does not exist' do
         session[:snap_selected] = '21'
-        get :show, :params => {:id => @vm.id, :display => 'snapshot_info'}
+        get :show, :params => {:id => vm.id, :display => 'snapshot_info'}
         expect(session[:snap_selected]).to be(nil)
       end
     end
@@ -188,13 +246,17 @@ describe VmOrTemplateController do
     end
   end
 
-  context '#replace_right_cell' do
+  describe '#replace_right_cell' do
+    let(:vm) { FactoryGirl.create(:vm_infra) }
+
     it 'should display form button on Migrate request screen' do
-      vm = FactoryGirl.create(:vm_infra)
       allow(controller).to receive(:params).and_return(:action => 'vm_migrate')
-      controller.instance_eval { @sb = {:active_tree => :vandt_tree, :action => "migrate"} }
-      controller.instance_eval { @record = vm }
-      controller.instance_eval { @in_a_form = true }
+      # controller.instance_eval { @sb = {:active_tree => :vandt_tree, :action => "migrate"} }
+      # controller.instance_eval { @record = vm }
+      # controller.instance_eval { @in_a_form = true }
+      controller.instance_variable_set(:@sb, {:active_tree => :vandt_tree, :action => "migrate"})
+      controller.instance_variable_set(:@record, vm)
+      controller.instance_variable_set(:@in_a_form, true)
       allow(controller).to receive(:render).and_return(nil)
       presenter = ExplorerPresenter.new(:active_tree => :vandt_tree)
       expect(controller).to receive(:render_to_string).with(:partial => "miq_request/prov_edit",

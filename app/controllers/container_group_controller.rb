@@ -24,5 +24,21 @@ class ContainerGroupController < ApplicationController
     "Pods"
   end
 
+  def handled_buttons
+    %(
+      container_group_tag
+      container_group_protect
+      container_group_check_compliance
+    )
+  end
+
+  def handle_container_group_protect
+    assign_policies(ContainerGroup)
+  end
+
+  def handle_container_group_check_compliance
+    check_compliance(ContainerGroup)
+  end
+
   menu_section :cnt
 end

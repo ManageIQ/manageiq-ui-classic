@@ -17,28 +17,10 @@ class FloatingIpController < ApplicationController
   menu_section :net
 
   def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w(vms instances images).include?(@display)
-    params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
+    generic_button_setup
+    handle_button_pressed(params[:pressed])
 
-    @refresh_div = "main_div"
-
-    case params[:pressed]
-    when "floating_ip_tag"
-      tag("FloatingIp")
-    when 'floating_ip_delete'
-      delete_floating_ips
-    when "floating_ip_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id(params)
-    when "floating_ip_new"
-      javascript_redirect :action => "new"
-    else
-      if !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
-      else
-        render_flash
-      end
-    end
+    button_render_fallback unless performed?
   end
 
   def cancel_action(message)
@@ -93,7 +75,7 @@ class FloatingIpController < ApplicationController
     javascript_redirect :action => "show_list"
   end
 
-  def delete_floating_ips
+  def handle_floating_ip_delete
     assert_privileges("floating_ip_delete")
 
     floating_ips = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "floating_ip")
@@ -269,5 +251,22 @@ class FloatingIpController < ApplicationController
                    "Delete initiated for %{number} Floating IPs.",
                    floating_ips.length) % {:number => floating_ips.length})
     end
+  end
+
+  def handled_buttons
+    %w(
+      floating_ip_new
+      floating_ip_edit
+      floating_ip_delete
+      floating_ip_tag
+    )
+  end
+
+  def handle_floating_ip_new
+    js_redirect_to_new
+  end
+
+  def handle_floating_ip_edit
+    js_redirect_to_edit_for_checked_id
   end
 end

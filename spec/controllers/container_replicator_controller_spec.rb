@@ -34,7 +34,7 @@ describe ContainerReplicatorController do
       @replicator = FactoryGirl.create(:replicator_with_assoc)
     end
 
-    subject { get :show, :id => @replicator.id }
+    subject { get :show, :params => { :id => @replicator.id } }
 
     context "render" do
       render_views
@@ -56,5 +56,10 @@ describe ContainerReplicatorController do
     get :show_list
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
+  end
+
+  describe "#button" do
+    render_views false
+    include_examples :container_button_examples, "container_replicator"
   end
 end

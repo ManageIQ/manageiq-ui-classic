@@ -23,29 +23,25 @@ class CloudNetworkController < ApplicationController
     %w(instances cloud_networks network_routers cloud_subnets)
   end
 
+  def self.table_name
+    "cloud_network"
+  end
+
+  def self.model
+    CloudNetwork
+  end
+
   def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w(vms instances images).include?(@display)
-    params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
+    restore_edit_for_search
+    copy_sub_item_display_value_to_params
+    save_current_page_for_refresh
+    set_default_refresh_div
 
-    @refresh_div = "main_div"
-
-    case params[:pressed]
-    when "cloud_network_tag"
-      return tag("CloudNetwork")
-    when 'cloud_network_delete'
-      delete_networks
-    when "cloud_network_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id
-    when "cloud_network_new"
-      javascript_redirect :action => "new"
-    else
-      if !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
-      else
-        render_flash
-      end
+    handle_button_pressed(params[:pressed]) do |pressed|
+      return if @flash_array.nil? && pressed.ends_with?("tag")
     end
+
+    button_render_fallback
   end
 
   def cloud_network_form_fields
@@ -113,7 +109,7 @@ class CloudNetworkController < ApplicationController
     javascript_redirect :action => "show_list"
   end
 
-  def delete_networks
+  def handle_cloud_network_delete
     assert_privileges("cloud_network_delete")
 
     networks = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_network") || @lastaction.nil?
@@ -296,6 +292,23 @@ class CloudNetworkController < ApplicationController
                    "Delete initiated for %{number} Cloud Networks.",
                    networks.length) % {:number => networks.length})
     end
+  end
+
+  def handled_buttons
+    %w(
+      cloud_network_delete
+      cloud_network_edit
+      cloud_network_new
+      cloud_network_tag
+    )
+  end
+
+  def handle_cloud_network_edit
+    js_redirect_to_edit_for_checked_id
+  end
+
+  def handle_cloud_network_new
+    js_redirect_to_new
   end
 
   menu_section :net

@@ -5,6 +5,7 @@ class InfraNetworkingController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericButtonMixin
   include Mixins::GenericSessionMixin
 
   def self.model
@@ -71,28 +72,17 @@ class InfraNetworkingController < ApplicationController
   end
 
   def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:page] = @current_page if @current_page.nil? # Save current page for list refresh
+    restore_edit_for_search
+    save_current_page_for_refresh
+    set_default_refresh_div
 
-    params[:page] = @current_page if @current_page.nil? # Save current page for list refresh
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
-    case params[:pressed]
-    when "infra_networking_tag"
-      tag(Switch)
-    end
-    return if %w(infra_networking_tag).include?(params[:pressed]) && @flash_array.nil? # Tag screen showing, so return
-
-    if @flash_array.nil? && !@refresh_partial # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    elsif @flash_array && @lastaction == "show"
-      @configuration_job = @record = identify_record(params[:id])
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
+    handle_button_pressed(params[:pressed]) do
+      return if @flash_array.nil?
     end
 
-    if @refresh_div == "main_div" && @lastaction == "show_list"
+    check_if_button_is_implemented
+
+    if button_replace_gtl_main?
       replace_gtl_main_div
     else
       render_flash
@@ -752,6 +742,14 @@ class InfraNetworkingController < ApplicationController
 
   def title
     _("Networking")
+  end
+
+  def handled_buttons
+    %w(infra_networking_tag)
+  end
+
+  def handle_infra_networking_tag
+    tag(Switch)
   end
 
   menu_section :inf

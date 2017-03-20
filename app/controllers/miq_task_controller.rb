@@ -4,6 +4,8 @@ class MiqTaskController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericButtonMixin
+
   def index
     @tabform = nil
     @tabform ||= "tasks_1" if role_allows?(:feature => "job_my_smartproxy")
@@ -215,25 +217,23 @@ class MiqTaskController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit] # Restore @edit for adv search box
-
+    restore_edit_for_search
     generic_x_button(TASK_X_BUTTON_ALLOWED_ACTIONS)
 
-    render :update do |page|
-      page << javascript_prologue
-      unless @refresh_partial.nil?
-        if @refresh_div == "flash_msg_div"
-          page << "miqSetButtons(0, 'center_tb');"
-          page.replace(@refresh_div, :partial => @refresh_partial)
-        else
-          page << "miqSetButtons(0, 'center_tb');"
-          page.replace_html("main_div", :partial => @refresh_partial)
-          page.replace_html("paging_div", :partial => 'layouts/pagingcontrols',
-                                          :locals  => {:pages      => @pages,
-                                                       :action_url => @lastaction,
-                                                       :db         => @view.db,
-                                                       :headers    => @view.headers})
-        end
+    render_update_with_prologue do |page|
+      return if @refresh_partial.nil?
+
+      button_center_toolbar(page)
+
+      if refreshing_flash_msg?
+        replace_refresh_div_with_partial(page)
+      else
+        page.replace_html("main_div", :partial => @refresh_partial)
+        page.replace_html("paging_div", :partial => 'layouts/pagingcontrols',
+                                        :locals  => {:pages      => @pages,
+                                                     :action_url => @lastaction,
+                                                     :db         => @view.db,
+                                                     :headers    => @view.headers})
       end
     end
   end

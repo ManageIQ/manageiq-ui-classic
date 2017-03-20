@@ -57,4 +57,8 @@ describe ContainerBuildController do
     end
     controller.send(:get_view, "ContainerBuild", :gtl_dbname => :containerbuild)
   end
+
+  describe "#button" do
+    include_examples :container_button_examples, "container_build"
+  end
 end

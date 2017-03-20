@@ -38,13 +38,13 @@ describe ContainerGroupController do
   end
 
   describe "#show" do
+    let(:group) { FactoryGirl.create(:container_group_with_assoc) }
+
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @container_group = FactoryGirl.create(:container_group_with_assoc)
-      login_as FactoryGirl.create(:user)
     end
 
-    subject { get :show, :id => @container_group.id }
+    subject { get :show, :params => { :id => group.id } }
 
     context "render" do
       render_views
@@ -57,4 +57,9 @@ describe ContainerGroupController do
   end
 
   include_examples '#download_summary_pdf', :container_group_with_assoc
+
+  describe "#button" do
+    render_views false
+    include_examples :container_button_examples, "container_group"
+  end
 end

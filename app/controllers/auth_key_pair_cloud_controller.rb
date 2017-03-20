@@ -6,6 +6,7 @@ class AuthKeyPairCloudController < ApplicationController
 
   include Mixins::GenericShowMixin
   include Mixins::GenericListMixin
+  include Mixins::GenericButtonMixin
   include Mixins::GenericSessionMixin
 
   def self.display_methods
@@ -30,26 +31,14 @@ class AuthKeyPairCloudController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
-    return tag("ManageIQ::Providers::CloudManager::AuthKeyPair") if params[:pressed] == 'auth_key_pair_cloud_tag'
-    delete_auth_key_pairs if params[:pressed] == 'auth_key_pair_cloud_delete'
-    new if params[:pressed] == 'auth_key_pair_cloud_new'
+    restore_edit_for_search
+    save_current_page_for_refresh
 
-    if !@flash_array.nil? && params[:pressed] == "auth_key_pair_cloud_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
-    elsif params[:pressed] == "auth_key_pair_cloud_new"
-      if @flash_array
-        show_list
-        replace_gtl_main_div
-      else
-        javascript_redirect :action => "new"
-      end
-    elsif @refresh_div == "main_div" && @lastaction == "show_list"
-      replace_gtl_main_div
-    else
-      render_flash
+    handle_button_pressed(params[:pressed]) do
+      return if performed?
     end
+
+    button_render_fallback
   end
 
   def set_form_vars
@@ -234,4 +223,33 @@ class AuthKeyPairCloudController < ApplicationController
   helper_method :textual_group_list
 
   menu_section :clo
+
+  private
+
+  def handle_auth_key_pair_cloud_delete
+    delete_auth_key_pairs
+
+    if @flash_array.present? && @single_delete
+      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
+    end
+  end
+
+  def handle_auth_key_pair_cloud_new
+    new
+
+    if @flash_array.present?
+      show_list
+      replace_gtl_main_div
+    else
+      js_redirect_to_new
+    end
+  end
+
+  def handled_buttons
+    %w(
+      auth_key_pair_cloud_delete
+      auth_key_pair_cloud_new
+      auth_key_pair_cloud_tag
+    )
+  end
 end

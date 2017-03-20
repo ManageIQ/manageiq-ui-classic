@@ -5,6 +5,7 @@ class ConfigurationJobController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericListMixin
+  include Mixins::GenericButtonMixin
   include Mixins::GenericSessionMixin
 
   def self.model
@@ -46,39 +47,17 @@ class ConfigurationJobController < ApplicationController
     show_association('parameters', _('Parameters'), 'parameter', :parameters, OrchestrationStackParameter)
   end
 
-  # handle buttons pressed on the button bar
-  # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:page] = @current_page if @current_page.nil? # Save current page for list refresh
+    generic_button_setup
 
-    params[:page] = @current_page if @current_page.nil? # Save current page for list refresh
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
-    case params[:pressed]
-    when "configuration_job_delete"
-      configuration_job_delete
-    when "configuration_job_tag"
-      tag(ManageIQ::Providers::AnsibleTower::AutomationManager::Job)
-    end
-    return if %w(configuration_job_tag).include?(params[:pressed]) && @flash_array.nil? # Tag screen showing, so return
-
-    if @flash_array.nil? && !@refresh_partial # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    elsif @flash_array && @lastaction == "show"
-      @configuration_job = @record = identify_record(params[:id])
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
+    handle_button_pressed(params[:pressed]) do |pressed|
+      return if @flash_array.nil? && pressed.ends_with?("tag")
     end
 
-    if !@flash_array.nil? && params[:pressed] == "configurations_job_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
-    elsif @refresh_div == "main_div" && @lastaction == "show_list"
-      replace_gtl_main_div
-    else
-      render_flash
-    end
+    check_if_button_is_implemented
+    @configuration_job = @record # is this necessary?
+
+    button_render_fallback
   end
 
   def title
@@ -91,6 +70,18 @@ class ConfigurationJobController < ApplicationController
     [%i(properties relationships), %i(tags)]
   end
   helper_method :textual_group_list
+
+  def handled_buttons
+    %w(
+      configuration_job_delete
+      configuration_job_tag
+    )
+  end
+
+  def handle_configuration_job_delete
+    configuration_job_delete
+    redirect_to_retire_screen_if_single_delete
+  end
 
   menu_section :conf
 end

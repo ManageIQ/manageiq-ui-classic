@@ -1,83 +1,41 @@
 describe EmsClusterController do
-  context "#button" do
-    it "when VM Right Size Recommendations is pressed" do
-      controller.instance_variable_set(:@_params, :pressed => "vm_right_size")
-      expect(controller).to receive(:vm_right_size)
-      controller.button
-      expect(controller.send(:flash_errors?)).not_to be_truthy
+  let(:vm) { FactoryGirl.create(:vm_vmware) }
+  let!(:user) { stub_user(:features => :all) }
+
+  describe "#button" do
+    # FIXME: Test power buttons
+    include_examples :host_vm_button_examples
+    include_examples :ems_cluster_button_examples
+
+    it 'handles custom_buttons' do
+      expect(controller).to receive(:custom_buttons).and_call_original
+      post :button, :params => { :pressed => "custom_button" }
+      expect(assigns(:flash_array)).to be_nil
     end
 
-    it "when VM Migrate button is pressed" do
-      controller.instance_variable_set(:@_params, :pressed => "vm_migrate")
-      controller.instance_variable_set(:@refresh_partial, "layouts/gtl")
-      expect(controller).to receive(:prov_redirect).with("migrate")
-      expect(controller).to receive(:render)
-      controller.button
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when VM Retire button is pressed" do
-      controller.instance_variable_set(:@_params, :pressed => "vm_retire")
-      expect(controller).to receive(:retirevms).once
-      controller.button
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when VM Manage Policies is pressed" do
-      controller.instance_variable_set(:@_params, :pressed => "vm_protect")
-      expect(controller).to receive(:assign_policies).with(VmOrTemplate)
-      controller.button
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when MiqTemplate Manage Policies is pressed" do
-      controller.instance_variable_set(:@_params, :pressed => "miq_template_protect")
-      expect(controller).to receive(:assign_policies).with(VmOrTemplate)
-      controller.button
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when VM Tag is pressed" do
-      controller.instance_variable_set(:@_params, :pressed => "vm_tag")
-      expect(controller).to receive(:tag).with(VmOrTemplate)
-      controller.button
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when MiqTemplate Tag is pressed" do
-      controller.instance_variable_set(:@_params, :pressed => "miq_template_tag")
-      expect(controller).to receive(:tag).with(VmOrTemplate)
-      controller.button
-      expect(controller.send(:flash_errors?)).not_to be_truthy
-    end
-
-    it "when Host Analyze then Check Compliance is pressed" do
-      controller.instance_variable_set(:@_params, :pressed => "host_analyze_check_compliance")
-      allow(controller).to receive(:show)
-      expect(controller).to receive(:analyze_check_compliance_hosts)
-      expect(controller).to receive(:render)
-      controller.button
-      expect(controller.send(:flash_errors?)).not_to be_truthy
+    it 'handles common_drift' do
+      expect(controller).to receive(:drift_analysis).and_call_original
+      post :button, :params => { :pressed => "common_drift" }
+      expect(assigns(:flash_array)).to be_nil
     end
   end
 
   describe "#show" do
+    let(:cluster) { FactoryGirl.create(:ems_cluster) }
+
     before do
       EvmSpecHelper.create_guid_miq_server_zone
-      @cluster = FactoryGirl.create(:ems_cluster)
-      login_as FactoryGirl.create(:user)
     end
 
     subject do
-      get :show, :params => {:id => @cluster.id}
+      get :show, :params => {:id => cluster.id}
     end
 
-    context "render" do
-      render_views
-      it do
-        is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => "layouts/listnav/_ems_cluster")
-      end
+    render_views
+
+    it "renders show" do
+      is_expected.to have_http_status 200
+      is_expected.to render_template(:partial => "layouts/listnav/_ems_cluster")
     end
   end
 

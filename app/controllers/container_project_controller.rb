@@ -17,5 +17,9 @@ class ContainerProjectController < ApplicationController
   end
   helper_method :textual_group_list
 
+  def handled_buttons
+    %w(container_project_tag)
+  end
+
   menu_section :cnt
 end

@@ -16,28 +16,9 @@ class CloudSubnetController < ApplicationController
   end
 
   def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w(vms instances images).include?(@display)
-    params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
-
-    @refresh_div = "main_div"
-
-    case params[:pressed]
-    when "cloud_subnet_tag"
-      return tag("CloudSubnet")
-    when 'cloud_subnet_delete'
-      delete_subnets
-    when "cloud_subnet_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id
-    else
-      if params[:pressed] == "cloud_subnet_new"
-        javascript_redirect :action => "new"
-      elsif !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
-      else
-        render_flash
-      end
-    end
+    generic_button_setup
+    handle_button_pressed(params[:pressed])
+    button_render_fallback unless performed?
   end
 
   def cloud_subnet_form_fields
@@ -133,7 +114,7 @@ class CloudSubnetController < ApplicationController
     javascript_redirect :action => "show_list"
   end
 
-  def delete_subnets
+  def handle_cloud_subnet_delete
     assert_privileges("cloud_subnet_delete")
 
     subnets = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_subnet") || @lastaction.nil?
@@ -302,6 +283,23 @@ class CloudSubnetController < ApplicationController
         subnet.delete_cloud_subnet_queue(session[:userid])
       end
     end
+  end
+
+  def handle_cloud_subnet_edit
+    js_redirect_to_edit_for_checked_id
+  end
+
+  def handle_cloud_subnet_new
+    js_redirect_to_new
+  end
+
+  def handled_buttons
+    %w(
+      cloud_subnet_delete
+      cloud_subnet_edit
+      cloud_subnet_new
+      cloud_subnet_tag
+    )
   end
 
   menu_section :net

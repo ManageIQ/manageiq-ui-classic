@@ -10,6 +10,10 @@ class ContainerImageRegistryController < ApplicationController
 
   private
 
+  def handled_buttons
+    %w(container_image_registry_tag)
+  end
+
   def textual_group_list
     [%i(properties), %i(relationships smart_management)]
   end

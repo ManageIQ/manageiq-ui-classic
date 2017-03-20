@@ -303,5 +303,9 @@ class ContainerController < ApplicationController
     @explorer
   end
 
+  def handled_buttons
+    %w(container_tag)
+  end
+
   menu_section :cnt
 end

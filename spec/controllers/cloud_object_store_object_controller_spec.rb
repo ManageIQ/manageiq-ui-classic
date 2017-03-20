@@ -8,11 +8,20 @@ describe CloudObjectStoreObjectController do
     FactoryGirl.create(:cloud_object_store_object)
   end
 
-  context "#tags_edit" do
-    let!(:user) { stub_user(:features => :all) }
+  let!(:user) { stub_user(:features => :all) }
+
+  describe "#button" do
+    it "handles the cloud_object_store_object_tag pressed" do
+      expect(controller).to receive(:tag).with(CloudObjectStoreObject)
+      post :button, :pressed => "cloud_object_store_object_tag", :format => :js, :id => object.id
+      expect(assigns(:flash_array)).to be_nil
+    end
+  end
+
+  describe "#tagging_edit" do
     before(:each) do
       EvmSpecHelper.create_guid_miq_server_zone
-      @object = FactoryGirl.create(:cloud_object_store_object, :name => "cloud-object-store-container-01")
+      @object = FactoryGirl.create(:cloud_object_store_object, :name => "cloud-object-store-object-01")
       allow(@object).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
       classification = FactoryGirl.create(:classification, :name => "department", :description => "D    epartment")
       @tag1 = FactoryGirl.create(:classification_tag,
@@ -21,7 +30,7 @@ describe CloudObjectStoreObjectController do
       @tag2 = FactoryGirl.create(:classification_tag,
                                  :name   => "tag2",
                                  :parent => classification)
-      allow(Classification).to receive(:find_assigned_entries).with(@container).and_return([@tag1, @tag2])
+      allow(Classification).to receive(:find_assigned_entries).with(@object).and_return([@tag1, @tag2])
       session[:tag_db] = "CloudObjectStoreObject"
       edit = {
         :key        => "CloudObjectStoreObject_edit_tags__#{@object.id}",
@@ -35,11 +44,6 @@ describe CloudObjectStoreObjectController do
 
     after(:each) do
       expect(response.status).to eq(200)
-    end
-
-    it "builds tagging screen" do
-      post :button, :pressed => "cloud_object_store_object_tag", :format => :js, :id => @object.id
-      expect(assigns(:flash_array)).to be_nil
     end
 
     it "cancels tags edit" do

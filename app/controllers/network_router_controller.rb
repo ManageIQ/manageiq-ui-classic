@@ -16,27 +16,13 @@ class NetworkRouterController < ApplicationController
   end
 
   def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w(vms instances images).include?(@display)
-    params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
+    generic_button_setup
 
-    @refresh_div = "main_div"
-    return tag("NetworkRouter") if params[:pressed] == "network_router_tag"
-    delete_network_routers if params[:pressed] == 'network_router_delete'
-
-    if params[:pressed] == "network_router_edit"
-      javascript_redirect :action => "edit", :id => checked_item_id
-    elsif params[:pressed] == "network_router_new"
-      javascript_redirect :action => "new"
-    elsif params[:pressed] == "network_router_add_interface"
-      javascript_redirect :action => "add_interface_select", :id => checked_item_id
-    elsif params[:pressed] == "network_router_remove_interface"
-      javascript_redirect :action => "remove_interface_select", :id => checked_item_id
-    elsif !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
-      replace_gtl_main_div
-    else
-      render_flash
+    handle_button_pressed(params[:pressed]) do |pressed|
+      return if pressed.ends_with?("tag")
     end
+
+    button_render_fallback unless performed?
   end
 
   def network_router_form_fields
@@ -122,7 +108,7 @@ class NetworkRouterController < ApplicationController
     javascript_redirect :action => "show_list"
   end
 
-  def delete_network_routers
+  def handle_network_router_delete
     assert_privileges("network_router_delete")
 
     routers = if @lastaction == "show_list" ||
@@ -450,6 +436,37 @@ class NetworkRouterController < ApplicationController
                    "Delete initiated for %{number} Network Routers.",
                    routers.length) % {:number => routers.length})
     end
+  end
+
+  def handled_buttons
+    %w(
+      network_router_delete
+      network_router_edit
+      network_router_new
+      network_router_tag
+      network_router_add_interface
+      network_router_remove_interface
+    )
+  end
+
+  def handle_network_router_tag
+    handle_model_tag
+  end
+
+  def handle_network_router_edit
+    js_redirect_to_edit_for_checked_id
+  end
+
+  def handle_network_router_new
+    js_redirect_to_new
+  end
+
+  def handle_network_router_add_interface
+    javascript_redirect :action => "add_interface_select", :id => checked_item_id
+  end
+
+  def handle_network_router_remove_interface
+    javascript_redirect :action => "remove_interface_select", :id => checked_item_id
   end
 
   menu_section :net

@@ -2,6 +2,8 @@ require 'miq_bulk_import'
 class ConfigurationController < ApplicationController
   include StartUrl
 
+  include Mixins::GenericButtonMixin
+
   logo_dir = File.expand_path(File.join(Rails.root, "public/upload"))
   Dir.mkdir logo_dir unless File.exist?(logo_dir)
   @@logo_file = File.join(logo_dir, "custom_logo.png")
@@ -10,6 +12,15 @@ class ConfigurationController < ApplicationController
   before_action :get_session_data
   after_action :cleanup_action
   after_action :set_session_data
+
+  def self.model
+    nil # there is no Configuration constant
+  end
+
+  # button looks for something here
+  def self.table_name
+    "configuration"
+  end
 
   def index
     @breadcrumbs = []
@@ -30,23 +41,17 @@ class ConfigurationController < ApplicationController
 
   # handle buttons pressed on the button bar
   def button
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
-    timeprofile_delete if params[:pressed] == "tp_delete"
-    copy_record if params[:pressed] == "tp_copy"
-    edit_record if params[:pressed] == "tp_edit"
+    set_default_refresh_div
+    handle_button_pressed(params[:pressed])
 
-    if ! @refresh_partial && @flash_array.nil? # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    end
+    check_if_button_is_implemented
 
-    if params[:pressed].ends_with?("_edit", "_copy")
-      javascript_redirect :action => @refresh_partial, :id => @redirect_id
+    if button_has_redirect_suffix?
+      js_redirect_with_partial_and_id
     else
       c_tb = build_toolbar(center_toolbar_filename)
-      render :update do |page|
-        page << javascript_prologue
+
+      render_update_with_prologue do |page|
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
         page.replace_html("main_div", :partial => "ui_4") # Replace the main div area contents
         page << javascript_pf_toolbar_reload('center_tb', c_tb)
@@ -288,7 +293,7 @@ class ConfigurationController < ApplicationController
   end
 
   # Delete all selected or single displayed VM(s)
-  def timeprofile_delete
+  def handle_tp_delete
     assert_privileges("tp_delete")
     timeprofiles = []
     unless params[:id] # showing a list, scan all selected timeprofiles
@@ -467,14 +472,14 @@ class ConfigurationController < ApplicationController
   private ############################
 
   # copy single selected Object
-  def edit_record
+  def handle_tp_edit
     obj = find_checked_items
     @refresh_partial = "timeprofile_edit"
     @redirect_id = obj[0]
   end
 
   # copy single selected Object
-  def copy_record
+  def handle_tp_copy
     obj = find_checked_items
     @refresh_partial = "timeprofile_copy"
     @redirect_id = obj[0]
@@ -641,6 +646,14 @@ class ConfigurationController < ApplicationController
     s[:views].delete(:dashboards)           # :dashboards is obsolete now
 
     s
+  end
+
+  def handled_buttons
+    %w(
+      tp_delete
+      tp_edit
+      tp_copy
+    )
   end
 
   menu_section :set

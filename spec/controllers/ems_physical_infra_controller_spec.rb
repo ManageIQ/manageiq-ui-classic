@@ -4,14 +4,15 @@ describe EmsPhysicalInfraController do
   let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
   let(:zone) { FactoryGirl.build(:zone) }
 
-  describe "#create" do
-    before do
-      user = FactoryGirl.create(:user, :features => "ems_physical_infra_new")
+  describe '#button' do
+    include_examples :ems_common_button_examples
+  end
 
+  describe "#new" do
+    let!(:user) { stub_user(:features => :all) }
+
+    before do
       allow(user).to receive(:server_timezone).and_return("UTC")
-      allow_any_instance_of(described_class).to receive(:set_user_time_zone)
-      allow(controller).to receive(:check_privileges).and_return(true)
-      login_as user
     end
 
     it "adds a new provider" do

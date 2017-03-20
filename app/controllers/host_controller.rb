@@ -6,6 +6,7 @@ class HostController < ApplicationController
 
   include Mixins::GenericListMixin
   include Mixins::MoreShowActions
+  include Mixins::GenericButtonMixin
 
   def show_association(action, display_name, listicon, method, klass, association = nil, conditions = nil)
     set_config(identify_record(params[:id]))
@@ -404,120 +405,32 @@ class HostController < ApplicationController
     }
   end
 
-  # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit]                                  # Restore @edit for adv search box
-    params[:display] = @display if ["vms", "storages"].include?(@display)  # Were we displaying vms/storages
+    generic_button_setup
 
-    if params[:pressed].starts_with?("vm_", # Handle buttons from sub-items screen
-                                     "miq_template_",
-                                     "guest_",
-                                     "storage_")
+    handle_button_pressed(params[:pressed]) do
+      return if performed?
+    end
 
-      pfx = pfx_for_vm_button_pressed(params[:pressed])
+    handle_sub_item_presses(params[:pressed]) do |pfx|
       process_vm_buttons(pfx)
 
-      scanstorage if params[:pressed] == "storage_scan"
-      refreshstorage if params[:pressed] == "storage_refresh"
-      tag(Storage) if params[:pressed] == "storage_tag"
-
-      # Control transferred to another screen, so return
-      return if ["host_drift", "#{pfx}_compare", "#{pfx}_tag", "#{pfx}_policy_sim",
-                 "#{pfx}_retire", "#{pfx}_protect", "#{pfx}_ownership",
-                 "#{pfx}_reconfigure", "#{pfx}_retire", "#{pfx}_right_size",
-                 "storage_tag"].include?(params[:pressed]) && @flash_array.nil?
-
-      unless ["#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
-        @refresh_div = "main_div"
-        @refresh_partial = "layouts/gtl"
-        show
-      end
-    else                                                                        # Handle Host buttons
-      params[:page] = @current_page unless @current_page.nil?                     # Save current page for list refresh
-      @refresh_div = "main_div" # Default div for button.rjs to refresh
-      drift_analysis if params[:pressed] == "common_drift"
-      redirect_to :action => "new" if params[:pressed] == "new"
-      deletehosts if params[:pressed] == "host_delete"
-      comparemiq if params[:pressed] == "host_compare"
-      refreshhosts if params[:pressed] == "host_refresh"
-      maintenancehosts if params[:pressed] == "host_toggle_maintenance"
-      scanhosts if params[:pressed] == "host_scan"
-      check_compliance_hosts if params[:pressed] == "host_check_compliance"
-      analyze_check_compliance_hosts if params[:pressed] == "host_analyze_check_compliance"
-      tag(Host) if params[:pressed] == "host_tag"
-      assign_policies(Host) if params[:pressed] == "host_protect"
-      edit_record if params[:pressed] == "host_edit"
-      custom_buttons if params[:pressed] == "custom_button"
-      prov_redirect if params[:pressed] == "host_miq_request_new"
-      toggleservicescheduling if params[:pressed] == "host_cloud_service_scheduling_toggle"
-      sethoststomanageable if params[:pressed] == "host_manageable"
-      introspecthosts if params[:pressed] == "host_introspect"
-      providehosts if params[:pressed] == "host_provide"
-
-      # Handle Host power buttons
-      if ["host_shutdown", "host_reboot", "host_standby", "host_enter_maint_mode", "host_exit_maint_mode",
-          "host_start", "host_stop", "host_reset"].include?(params[:pressed])
-        powerbutton_hosts(params[:pressed].split("_")[1..-1].join("_")) # Handle specific power button
-      end
-
-      perf_chart_chooser if params[:pressed] == "perf_reload"
-      perf_refresh_data if params[:pressed] == "perf_refresh"
-
-      return if ["custom_button"].include?(params[:pressed])    # custom button screen, so return, let custom_buttons method handle everything
-      return if ["host_tag", "host_compare", "common_drift",
-                 "host_protect", "perf_reload"].include?(params[:pressed]) &&
-                @flash_array.nil? # Another screen showing, so return
-
-      if @flash_array.nil? && !@refresh_partial && !["host_miq_request_new"].include?(params[:pressed]) # if no button handler ran, show not implemented msg
-        add_flash(_("Button not yet implemented"), :error)
-        @refresh_partial = "layouts/flash_msg"
-        @refresh_div = "flash_msg_div"
-      elsif @flash_array && @lastaction == "show"
-        @host = @record = identify_record(params[:id])
-        @refresh_partial = "layouts/flash_msg"
-        @refresh_div = "flash_msg_div"
+      unless button_has_redirect_suffix?(params[:pressed]) ||
+             button_control_transferred?(params[:pressed])
+        set_refresh_and_show
       end
     end
 
-    if @lastaction == "show" && ["custom_button", "host_miq_request_new"].include?(params[:pressed])
-      @host = @record = identify_record(params[:id])
-    end
+    return if button_control_transferred?(params[:pressed])
 
-    if !@flash_array.nil? && params[:pressed] == "host_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
-    elsif params[:pressed].ends_with?("_edit") || ["host_miq_request_new", "#{pfx}_miq_request_new",
-                                                   "#{pfx}_clone", "#{pfx}_migrate",
-                                                   "#{pfx}_publish"].include?(params[:pressed])
-      if @flash_array
-        show_list
-        replace_gtl_main_div
-      else
-        if @redirect_controller
-          if ["host_miq_request_new", "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
-            if flash_errors?
-              javascript_flash
-            else
-              javascript_redirect :controller     => @redirect_controller,
-                                  :action         => @refresh_partial,
-                                  :id             => @redirect_id,
-                                  :prov_type      => @prov_type,
-                                  :prov_id        => @prov_id,
-                                  :org_controller => @org_controller,
-                                  :escape         => false
-            end
-          else
-            javascript_redirect :controller => @redirect_controller, :action => @refresh_partial, :id => @redirect_id, :org_controller => @org_controller
-          end
-        else
-          javascript_redirect :action => @refresh_partial, :id => @redirect_id
-        end
-      end
+    check_if_button_is_implemented unless params[:pressed] == "host_miq_request_new"
+
+    if button_has_redirect_suffix?(params[:pressed])
+      host_javascript_redirect
+    elsif button_replace_gtl_main?
+      replace_gtl_main_div
     else
-      if @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
-      else
-        render_flash
-      end
+      render_flash
     end
   end
 
@@ -662,6 +575,59 @@ class HostController < ApplicationController
     session[:host_catinfo]    = @catinfo
     session[:miq_compressed]  = @compressed  unless @compressed.nil?
     session[:miq_exists_mode] = @exists_mode unless @exists_mode.nil?
+  end
+
+  def button_sub_item_display_values
+    %w(vms storages)
+  end
+
+  def button_sub_item_prefixes
+    %w(vm_ miq_template_ guest_ storage_)
+  end
+
+  def handled_buttons
+    ctrlr_buttons = %w(
+      storage_scan
+      storage_tag
+      storage_refresh
+      common_drift
+      new
+      perf_reload
+      perf_refresh
+      custom_button
+    )
+    ctrlr_buttons + handled_host_buttons
+  end
+
+  def handle_common_drift
+    drift_analysis
+  end
+
+  def handle_new
+    redirect_to :action => "new"
+  end
+
+  def handle_perf_reload
+    perf_chart_chooser
+  end
+
+  def handle_perf_refresh
+    perf_refresh_data
+  end
+
+  def host_javascript_redirect
+    if @flash_array
+      show_list
+      replace_gtl_main_div
+    elsif @redirect_controller
+      if flash_errors?
+        javascript_flash # render called
+      else
+        js_redirect_with_controller
+      end
+    else
+      js_redirect_with_partial_and_id
+    end
   end
 
   menu_section :inf

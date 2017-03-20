@@ -75,4 +75,8 @@ class MiddlewareServerGroupController < ApplicationController
       render :json => {:status => :error, :msg => fail_msg}
     end
   end
+
+  def handled_buttons
+    middleware_handled_buttons
+  end
 end

@@ -55,5 +55,9 @@ class MiddlewareDeploymentController < ApplicationController
     op.call(mw_deployment.ems_ref, mw_deployment.name)
   end
 
+  def handled_buttons
+    middleware_handled_buttons
+  end
+
   menu_section :mdl
 end

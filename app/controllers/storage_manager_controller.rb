@@ -5,47 +5,19 @@ class StorageManagerController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericListMixin
+  include Mixins::GenericButtonMixin
   include Mixins::GenericSessionMixin
 
   # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit]                                  # Restore @edit for adv search box
-    params[:page] = @current_page unless @current_page.nil?   # Save current page for list refresh
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
-    redirect_to :action => "new" if params[:pressed] == "storage_manager_new"
-    deletesms if params[:pressed] == "storage_manager_delete"
-    edit_record if params[:pressed] == "storage_manager_edit"
-    refresh_inventory if params[:pressed] == "storage_manager_refresh_inventory"
-    refresh_status_sm if params[:pressed] == "storage_manager_refresh_status"
+    generic_button_setup
 
-    if !@flash_array && !@refresh_partial # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    elsif @flash_array && @lastaction == "show"
-      @sm = @record = identify_record(params[:id])
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    end
+    handle_button_pressed(params[:pressed])
 
-    if !@flash_array.nil? && params[:pressed] == "storage_manager_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]  # redirect to build the retire screen
-    elsif params[:pressed].ends_with?("_edit")
-      if @redirect_controller
-        javascript_redirect :controller => @redirect_controller, :action => @refresh_partial, :id => @redirect_id
-      else
-        javascript_redirect :action => @refresh_partial, :id => @redirect_id
-      end
-    elsif @refresh_div == "main_div" && @lastaction == "show_list"
-      replace_gtl_main_div
-    elsif @refresh_div == "flash_msg_div"
-      javascript_flash
-    else
-      render :update do |page|
-        page << javascript_prologue
-        page.replace_html(@refresh_div, :partial => @refresh_partial)
-      end
-    end
+    return if performed?
+
+    check_if_button_is_implemented
+    storage_manager_javascript_redirect
   end
 
   def new
@@ -483,6 +455,54 @@ class StorageManagerController < ApplicationController
   def deletesms
     assert_privileges("storage_manager_delete")
     sm_button_operation('destroy', 'deletion')
+  end
+
+  def handled_buttons
+    %w(
+      storage_manager_new
+      storage_manager_edit
+      storage_manager_refresh_inventory
+      storage_manager_refresh_status
+      storage_manager_delete
+    )
+  end
+
+  def handle_storage_manager_new
+    redirect_to :action => "new"
+  end
+
+  def handle_storage_manager_edit
+    edit_record
+  end
+
+  def handle_storage_manager_refresh_inventory
+    refresh_inventory
+  end
+
+  def handle_storage_manager_refresh_status
+    refresh_status_sm
+  end
+
+  def handle_storage_manager_delete
+    deletesms
+    redirect_to_retire_screen_if_single_delete
+  end
+
+  def storage_manager_javascript_redirect
+    if button_has_redirect_suffix?(params[:pressed])
+      js_redirect_with_redirect_controller_or_partial
+      return
+    end
+
+    if button_replace_gtl_main?
+      replace_gtl_main_div
+    elsif refreshing_flash_msg?
+      javascript_flash
+    else
+      render_update_with_prologue do |page|
+        replace_refresh_div_contents_with_partial(page)
+      end
+    end
   end
 
   menu_section :nap

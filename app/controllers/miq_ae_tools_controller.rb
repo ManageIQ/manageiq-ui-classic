@@ -4,6 +4,17 @@ class MiqAeToolsController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericButtonMixin
+
+  def self.model
+    nil # there is no MiqAeTools constant
+  end
+
+  # button looks for something here
+  def self.table_name
+    "miq_ae_tools"
+  end
+
   def index
     resolve
   end
@@ -12,20 +23,11 @@ class MiqAeToolsController < ApplicationController
     @lastaction = "resolve"
   end
 
-  # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit]                                  # Restore @edit for adv search box
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
-    if params[:pressed] == "refresh_log"
-      refresh_log
-      return
-    end
+    generic_button_setup
+    handle_button_pressed(params[:pressed]) { return }
 
-    unless @refresh_partial # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    end
+    check_if_button_is_implemented
   end
 
   def log
@@ -40,7 +42,7 @@ class MiqAeToolsController < ApplicationController
     render :action => "show"
   end
 
-  def refresh_log
+  def handle_refresh_log
     assert_privileges("refresh_log")
     @log = $miq_ae_logger.contents if $miq_ae_logger
     add_flash(_("Logs for this %{product} Server are not available for viewing") % {:product => I18n.t('product.name')}, :warning) if @log.blank?
@@ -458,6 +460,10 @@ Methods updated/added: %{method_stats}") % stat_options)
 
   def set_session_data
     session[:resolve_tools] = @resolve if @resolve
+  end
+
+  def handled_buttons
+    %w(refresh_log)
   end
 
   menu_section :automate

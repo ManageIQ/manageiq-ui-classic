@@ -142,9 +142,22 @@ describe OrchestrationStackController do
   end
 
   describe "#button" do
+    let(:record) { FactoryGirl.create(:orchestration_stack_cloud_with_template) }
+
+    it 'handles orchestration_stack_delete' do
+      expect(controller).to receive(:handle_orchestration_stack_delete).and_call_original
+      post :button, :params => {:id => record.id, :pressed => "orchestration_stack_delete"}
+      expect(assigns(:flash_array).first[:message]).to include('deleted')
+    end
+
+    it 'handles orchestration_stack_tag' do
+      expect(controller).to receive(:tag).with(OrchestrationStack).and_call_original
+      post :button, :params => {:id => record.id, :pressed => "orchestration_stack_tag"}
+      expect(assigns(:flash_array)).to be_nil
+    end
+
     context "make stack's orchestration template orderable" do
       it "won't allow making stack's orchestration template orderable when already orderable" do
-        record = FactoryGirl.create(:orchestration_stack_cloud_with_template)
         post :button, :params => {:id => record.id, :pressed => "make_ot_orderable"}
         expect(record.orchestration_template.orderable?).to be_truthy
         expect(response.status).to eq(200)
@@ -164,7 +177,6 @@ describe OrchestrationStackController do
 
     context "copy stack's orchestration template as orderable" do
       it "won't allow copying stack's orchestration template orderable when already orderable" do
-        record = FactoryGirl.create(:orchestration_stack_cloud_with_template)
         post :button, :params => {:id => record.id, :pressed => "orchestration_template_copy"}
         expect(record.orchestration_template.orderable?).to be_truthy
         expect(response.status).to eq(200)
@@ -183,7 +195,6 @@ describe OrchestrationStackController do
 
     context "view stack's orchestration template in catalog" do
       it "redirects to catalog controller" do
-        record = FactoryGirl.create(:orchestration_stack_cloud_with_template)
         post :button, :params => {:id => record.id, :pressed => "orchestration_templates_view"}
         expect(response.status).to eq(200)
         expect(response.body).to include("window.location.href")

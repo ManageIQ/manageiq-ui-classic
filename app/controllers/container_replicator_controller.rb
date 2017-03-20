@@ -14,4 +14,20 @@ class ContainerReplicatorController < ApplicationController
     [%i(properties container_labels container_selectors compliance), %i(relationships smart_management)]
   end
   helper_method :textual_group_list
+
+  def handled_buttons
+    %(
+      container_replicator_tag
+      container_replicator_protect
+      container_replicator_check_compliance
+    )
+  end
+
+  def handle_container_replicator_protect
+    assign_policies(ContainerReplicator)
+  end
+
+  def handle_container_replicator_check_compliance
+    check_compliance(ContainerReplicator)
+  end
 end

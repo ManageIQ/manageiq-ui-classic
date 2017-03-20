@@ -4,6 +4,7 @@ class OrchestrationStackController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericButtonMixin
   include Mixins::GenericSessionMixin
 
   def self.table_name
@@ -82,77 +83,30 @@ class OrchestrationStackController < ApplicationController
     show_association('resources', _('Resources'), 'resource', :resources, OrchestrationStackResource)
   end
 
-  # handle buttons pressed on the button bar
+  # FIXME: This may be similar enough to replace with GenericButtonMixin#button
   def button
-    @edit = session[:edit]                          # Restore @edit for adv search box
+    generic_button_setup
 
-    params[:display] = @display if ["instances"].include?(@display)  # Were we displaying vms/hosts/storages
-    params[:page] = @current_page if @current_page.nil?   # Save current page for list refresh
+    handle_button_pressed(params[:pressed]) do
+      return if performed?
+    end
 
-    if params[:pressed].starts_with?("instance_")        # Handle buttons from sub-items screen
-      pfx = pfx_for_vm_button_pressed(params[:pressed])
+    handle_sub_item_presses(params[:pressed]) do |pfx|
       process_vm_buttons(pfx)
 
-      # Control transferred to another screen, so return
-      return if ["#{pfx}_policy_sim", "#{pfx}_compare", "#{pfx}_tag",
-                 "#{pfx}_retire", "#{pfx}_protect", "#{pfx}_ownership",
-                 "#{pfx}_refresh", "#{pfx}_right_size",
-                 "#{pfx}_reconfigure"].include?(params[:pressed]) &&
-                @flash_array.nil?
+      return if button_control_transferred?
 
-      unless ["#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone",
-              "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
-        @refresh_div = "main_div"
-        @refresh_partial = "layouts/gtl"
-        show                                                        # Handle VMs buttons
+      unless button_has_redirect_suffix?(params[:pressed])
+        set_refresh_and_show
       end
-    elsif params[:pressed] == "make_ot_orderable"
-      make_ot_orderable
-      return
-    elsif params[:pressed] == "orchestration_template_copy"
-      orchestration_template_copy
-      return
-    elsif params[:pressed] == "orchestration_templates_view"
-      orchestration_templates_view
-      return
-    else
-      params[:page] = @current_page if @current_page.nil?                     # Save current page for list refresh
-      @refresh_div = "main_div" # Default div for button.rjs to refresh
-      case params[:pressed]
-      when "orchestration_stack_delete"
-        orchestration_stack_delete
-      when "orchestration_stack_retire"
-        orchestration_stack_retire
-      when "orchestration_stack_retire_now"
-        orchestration_stack_retire_now
-      when "orchestration_stack_tag"
-        tag(OrchestrationStack)
-      end
-      return if %w(orchestration_stack_retire orchestration_stack_tag).include?(params[:pressed]) &&
-                @flash_array.nil? # Tag screen showing, so return
     end
 
-    if @flash_array.nil? && !@refresh_partial # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    elsif @flash_array && @lastaction == "show"
-      @orchestration_stack = @record = identify_record(params[:id])
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    end
+    check_if_button_is_implemented
 
-    if !@flash_array.nil? && params[:pressed] == "orchestration_stack_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
-    elsif params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new", "#{pfx}_clone",
-                                                   "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
+    if button_has_redirect_suffix?(params[:pressed])
       render_or_redirect_partial(pfx)
     else
-      if @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
-      else
-        render_flash
-      end
+      button_render_fallback
     end
   end
 
@@ -183,7 +137,7 @@ class OrchestrationStackController < ApplicationController
   end
   helper_method :textual_group_list
 
-  def make_ot_orderable
+  def handle_make_ot_orderable
     stack = find_by_id_filtered(OrchestrationStack, params[:id])
     template = stack.orchestration_template
     if template.orderable?
@@ -209,7 +163,7 @@ class OrchestrationStackController < ApplicationController
     end
   end
 
-  def orchestration_template_copy
+  def handle_orchestration_template_copy
     @record = find_by_id_filtered(OrchestrationStack, params[:id])
     if @record.orchestration_template.orderable?
       add_flash(_("Orchestration template \"%{name}\" is already orderable") %
@@ -270,13 +224,42 @@ class OrchestrationStackController < ApplicationController
     end
   end
 
-  def orchestration_templates_view
+  def handle_orchestration_templates_view
     template = find_by_id_filtered(OrchestrationStack, params[:id]).orchestration_template
     javascript_redirect :controller => 'catalog', :action => 'ot_show', :id => template.id
   end
 
   def title
     _("Stack")
+  end
+
+  def handled_buttons
+    %w(
+      make_ot_orderable
+      orchestration_template_copy
+      orchestration_templates_view
+      orchestration_stack_delete
+      orchestration_stack_retire
+      orchestration_stack_retire_now
+      orchestration_stack_tag
+    )
+  end
+
+  def handle_orchestration_stack_tag
+    handle_model_tag
+  end
+
+  def handle_orchestration_stack_delete
+    orchestration_stack_delete
+    redirect_to_retire_screen_if_single_delete
+  end
+
+  def handle_orchestration_stack_retire
+    orchestration_stack_retire
+  end
+
+  def handle_orchestration_stack_retire_now
+    orchestration_stack_retire_now
   end
 
   menu_section :clo
