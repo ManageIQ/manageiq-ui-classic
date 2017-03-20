@@ -11,7 +11,6 @@
                       options_for_select([["<#{_('Choose')}>", nil]] + @network_provider_choices.sort),
                       "ng-model"                    => "networkRouterModel.ems_id",
                       "required"                    => "",
-                      :miqrequired                  => true,
                       :checkchange                  => true,
                       "ng-change"                   => "filterNetworkManagerChanged(networkRouterModel.ems_id)",
                       "selectpicker-for-select-tag" => "")
@@ -29,7 +28,6 @@
                       options_for_select([["<#{_('Choose')}>", nil]] + @cloud_tenant_choices.sort),
                       "ng-model"                    => "networkRouterModel.cloud_tenant_id",
                       "required"                    => "",
-                      :miqrequired                  => true,
                       :checkchange                  => true,
                       "selectpicker-for-select-tag" => "")
 

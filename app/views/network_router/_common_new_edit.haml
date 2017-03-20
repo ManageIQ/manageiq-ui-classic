@@ -9,7 +9,6 @@
                           :name          => "name",
                           "ng-model"     => "networkRouterModel.name",
                           "ng-maxlength" => 128,
-                          :miqrequired   => true,
                           "required"     => "",
                           :checkchange   => true}
 %h3
@@ -50,6 +49,7 @@
               "ng-change"                   => "filterCloudNetworkChanged(networkRouterModel.cloud_network_id)",
               "pf-select"                   => true,
               "ng-selected"                 => "networkRouterModel.cloud_network_id",
+              "ng-required"                 => "networkRouterModel.enable_snat == true",
               "selectpicker-for-select-tag" => ""}
         %option{"value" => ""}
           = "<#{_('Choose')}>"
