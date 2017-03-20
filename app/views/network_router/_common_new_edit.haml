@@ -1,7 +1,7 @@
 %h3
   = _('Basic Information')
 .form-horizontal
-  .form-group
+  .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
     %label.col-md-2.control-label
       = _('Router Name')
     .col-md-8
@@ -11,6 +11,8 @@
                           "ng-maxlength" => 128,
                           "required"     => "",
                           :checkchange   => true}
+      %span.help-block{"ng-show" => "angularForm.name.$error.required"}
+        = _("Required")
 %h3
   = _('External Gateway')
 .form-horizontal
@@ -38,7 +40,7 @@
              "checkchange" => "true",
              "ng-model"    => "networkRouterModel.enable_snat"}
 
-  .form-group
+  .form-group{"ng-class" => "{'has-error': angularForm.cloud_network_id.$invalid}"}
     %label.col-md-2.control-label
       = _('Network')
     .col-md-8
@@ -53,6 +55,8 @@
               "selectpicker-for-select-tag" => ""}
         %option{"value" => ""}
           = "<#{_('Choose')}>"
+      %span.help-block{"ng-show" => "angularForm.cloud_network_id.$error.required"}
+        = _("Required")
 
   %h2
   .form-horizontal{"ng-if" => "networkRouterModel.cloud_network_id"}
