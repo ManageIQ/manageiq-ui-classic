@@ -183,274 +183,326 @@ module ApplicationController::Performance
     # Use timestamp or statistic_time (metrics vs ontap)
     ts = (data_row["timestamp"] || data_row["statistic_time"]).in_time_zone(@perf_options[:tz])                 # Grab the timestamp from the row in selected tz
 
-    if cmd == "Display" && model == "Current" && typ == "Top"                   # Display the CI selected from a Top chart
-      return unless perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
-      javascript_redirect :controller => data_row["resource_type"].underscore,
-                          :action     => "show",
-                          :id         => data_row["resource_id"],
-                          :escape     => false
+    if cmd == "Display" && model == "Current" && typ == "Top"
+      display_current_top(data_row)
       return
+    elsif cmd == "Display" && typ == "bytag"
+      return if display_by_tag(data_row, report, ts, bc_model, model, legend_idx)
+    elsif cmd == "Display"
+      return if display_selected(ts, typ, data_row, model, bc_model)
+    elsif cmd == "Timeline" && model == "Current"
+      return if timeline_current(typ, ts)
+    elsif cmd == "Timeline" && model == "Selected"
+      return if timeline_selected(data_row, ts, typ, model)
+    elsif cmd == "Chart" && model == "Current" && typ == "Hourly"
+      return if chart_current_hourly(ts)
+    elsif cmd == "Chart" && model == "Current" && typ == "Daily"
+      return if chart_current_daily
+    elsif cmd == "Chart" && model == "Selected"
+      return if chart_selected(data_row, typ, ts)
+    elsif cmd == "Chart" && typ.starts_with?("top") && @perf_options[:cat]
+      return if chart_top_by_tag(data_row, report, legend_idx, model, ts, bc_model)
+    elsif cmd == "Chart" && typ.starts_with?("top")
+      return if chart_top(data_row, typ, ts, model, bc_model)
+    else
+      @menu_click_msg = _("Chart menu selection not yet implemented")
+    end
 
-    elsif cmd == "Display" && typ == "bytag"  # Display selected resources from a tag chart
-      dt = @perf_options[:typ] == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
-      top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]
-      bc_tag =  "#{Classification.find_by_name(@perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][legend_idx]}"
-      dt = typ == "tophour" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
-      if top_ids.blank?
-        msg = _("No %{tag} %{model} were running %{time}") % {:tag => bc_tag, :model => bc_model, :time => dt}
+    if @menu_click_msg.present?
+      add_flash(@menu_click_msg, :warning)
+    else
+      add_flash(_("Unknown error has occurred"), :error)
+    end
+
+    javascript_flash(:spinner_off => true)
+  end
+
+  # display the CI selected from a Top chart
+  def display_current_top(data_row)
+    return unless perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
+    javascript_redirect :controller => data_row["resource_type"].underscore,
+                        :action     => "show",
+                        :id         => data_row["resource_id"],
+                        :escape     => false
+  end
+
+  # display selected resources from a tag chart
+  def display_by_tag(data_row, report, ts, bc_model, model, legend_idx)
+    dt = @perf_options[:typ] == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
+    top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]
+    bc_tag =  "#{Classification.find_by_name(@perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][legend_idx]}"
+    dt = typ == "tophour" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
+    if top_ids.blank?
+      @menu_click_msg = _("No %{tag} %{model} were running %{time}") % {:tag => bc_tag, :model => bc_model, :time => dt}
+    else
+      bc = if request.parameters["controller"] == "storage"
+             "#{bc_model} (#{bc_tag} #{dt})"
+           else
+             _("%{model} (%{tag} running %{time})") % {:tag => bc_tag, :model => bc_model, :time => dt}
+           end
+      javascript_redirect :controller    => model.downcase.singularize,
+                          :action        => "show_list",
+                          :menu_click    => params[:menu_click],
+                          :sb_controller => request.parameters["controller"],
+                          :bc            => bc,
+                          :escape        => false
+      return true
+    end
+    false
+  end
+
+  # display selected resources
+  def display_selected(ts, typ, data_row, model, bc_model)
+    dt = @perf_options[:typ] == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
+    state = typ == "on" ? _("running") : _("stopped")
+    if data_row["assoc_ids"][model.downcase.to_sym][typ.to_sym].blank?
+      @menu_click_msg = _("No %{model} were %{state} %{time}") % {:model => model, :state => state, :time => dt}
+    else
+      bc = request.parameters["controller"] == "storage" ? "#{bc_model} #{dt}" : "#{bc_model} #{state} #{dt}"
+      javascript_redirect :controller    => model.downcase.singularize,
+                          :action        => "show_list",
+                          :menu_click    => params[:menu_click],
+                          :sb_controller => request.parameters["controller"],
+                          :bc            => bc,
+                          :escape        => false
+      return true
+    end
+    false
+  end
+
+  # display timeline for the current CI
+  def timeline_current(typ, ts)
+    @record = identify_tl_or_perf_record
+    @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
+    @perf_record = VmOrTemplate.find_by_id(@perf_options[:compare_vm]) unless @perf_options[:compare_vm].nil?
+    new_opts = tl_session_data(request.parameters["controller"]) || ApplicationController::Timelines::Options.new
+    new_opts[:model] = @perf_record.class.base_class.to_s
+    dt = typ == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
+    new_opts.date.typ = typ
+    new_opts.date.daily = @perf_options[:daily_date] if typ == "Daily"
+    new_opts.date.hourly = [ts.month, ts.day, ts.year].join("/") if typ == "Hourly"
+    new_opts[:tl_show] = "timeline"
+    set_tl_session_data(new_opts, request.parameters["controller"])
+    f = @perf_record.first_event
+    if f.nil?
+      @menu_click_msg = if new_opts[:model] == "EmsCluster"
+                          _("No events available for this Cluster")
+                        else
+                          _("No events available for this %{model}") % {:model => new_opts[:model]}
+                        end
+    elsif @record.kind_of?(MiqServer) # For server charts in OPS
+      change_tab("diagnostics_timelines")                # Switch to the Timelines tab
+      return true
+    else
+      if @explorer
+        @_params[:id] = @perf_record.id
+        @_params[:refresh] = "n"
+        show_timeline
       else
-        bc = if request.parameters["controller"] == "storage"
-               "#{bc_model} (#{bc_tag} #{dt})"
-             else
-               _("%{model} (%{tag} running %{time})") % {:tag => bc_tag, :model => bc_model, :time => dt}
-             end
-        javascript_redirect :controller    => model.downcase.singularize,
-                            :action        => "show_list",
-                            :menu_click    => params[:menu_click],
-                            :sb_controller => request.parameters["controller"],
-                            :bc            => bc,
-                            :escape        => false
-        return
-      end
-
-    elsif cmd == "Display"  # Display selected resources
-      dt = @perf_options[:typ] == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
-      state = typ == "on" ? _("running") : _("stopped")
-      if data_row["assoc_ids"][model.downcase.to_sym][typ.to_sym].blank?
-        msg = _("No %{model} were %{state} %{time}") % {:model => model, :state => state, :time => dt}
-      else
-        bc = request.parameters["controller"] == "storage" ? "#{bc_model} #{dt}" : "#{bc_model} #{state} #{dt}"
-        javascript_redirect :controller    => model.downcase.singularize,
-                            :action        => "show_list",
-                            :menu_click    => params[:menu_click],
-                            :sb_controller => request.parameters["controller"],
-                            :bc            => bc,
-                            :escape        => false
-        return
-      end
-
-    elsif cmd == "Timeline" && model == "Current" # Display timeline for the current CI
-      @record = identify_tl_or_perf_record
-      @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
-      @perf_record = VmOrTemplate.find_by_id(@perf_options[:compare_vm]) unless @perf_options[:compare_vm].nil?
-      new_opts = tl_session_data(request.parameters["controller"]) || ApplicationController::Timelines::Options.new
-      new_opts[:model] = @perf_record.class.base_class.to_s
-      dt = typ == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
-      new_opts.date.typ = typ
-      new_opts.date.daily = @perf_options[:daily_date] if typ == "Daily"
-      new_opts.date.hourly = [ts.month, ts.day, ts.year].join("/") if typ == "Hourly"
-      new_opts[:tl_show] = "timeline"
-      set_tl_session_data(new_opts, request.parameters["controller"])
-      f = @perf_record.first_event
-      if f.nil?
-        msg = if new_opts[:model] == "EmsCluster"
-                _("No events available for this Cluster")
-              else
-                _("No events available for this %{model}") % {:model => new_opts[:model]}
-              end
-      elsif @record.kind_of?(MiqServer) # For server charts in OPS
-        change_tab("diagnostics_timelines")                # Switch to the Timelines tab
-        return
-      else
-        if @explorer
-          @_params[:id] = @perf_record.id
-          @_params[:refresh] = "n"
-          show_timeline
-        else
-          javascript_redirect :id         => @perf_record.id,
-                              :action     => "show",
-                              :display    => "timeline",
-                              :controller => model_to_controller(@perf_record),
-                              :refresh    => "n",
-                              :escape     => false
-        end
-        return
-      end
-
-    elsif cmd == "Timeline" && model == "Selected"  # Display timeline for the selected CI
-      return unless @record = perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
-      controller = data_row["resource_type"].underscore
-      new_opts = tl_session_data(controller) || ApplicationController::Timelines::Options.new
-      new_opts[:model] = data_row["resource_type"]
-      dt = typ == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
-      new_opts.date.typ = typ
-      new_opts.date.daily = @perf_options[:daily_date] if typ == "Daily"
-      new_opts.date.hourly = [ts.month, ts.day, ts.year].join("/") if typ == "Hourly"
-      new_opts[:tl_show] = "timeline"
-      set_tl_session_data(new_opts, controller)
-      f = @record.first_event
-      if f.nil?
-        msg = if model == "EmsCluster"
-                _("No events available for this Cluster")
-              else
-                _("No events available for this %{model}") % {:model => model}
-              end
-      elsif @record.kind_of?(MiqServer) # For server charts in OPS
-        change_tab("diagnostics_timelines")                # Switch to the Timelines tab
-        return
-      else
-        if @explorer
-          @_params[:id] = data_row["resource_id"]
-          @_params[:refresh] = "n"
-          show_timeline
-        else
-          if data_row["resource_type"] == "VmOrTemplate"
-            tree_node_id = TreeBuilder.build_node_id(@record.class.base_model, @record.id)
-            session[:exp_parms] = {:display => "timeline", :refresh => "n", :id => tree_node_id}
-            javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
-                                :action     => "explorer"
-          else
-            javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
-                                :action     => "show",
-                                :display    => "timeline",
-                                :id         => data_row["resource_id"],
-                                :refresh    => "n",
-                                :escape     => false
-          end
-        end
-        return
-      end
-
-    elsif cmd == "Chart" && model == "Current" && typ == "Hourly" # Create hourly chart for selected day
-      @record = identify_tl_or_perf_record
-      @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
-      @perf_options[:typ] = "Hourly"
-      @perf_options[:hourly_date] = [ts.month, ts.day, ts.year].join("/")
-
-      perf_set_or_fix_dates unless params[:task_id] # Set dates if first time thru
-      perf_gen_data
-
-      return unless @charts      # Return if no charts got created (first time thru async rpt gen)
-
-      render :update do |page|
-        page << javascript_prologue
-        if @parent_chart_data
-          page << 'ManageIQ.charts.chartData = ' + {
-            "candu"  => @chart_data,
-            "parent" => @parent_chart_data
-          }.to_json + ';'
-        elsif @parent_chart_data
-          page << 'ManageIQ.charts.chartData = ' + {
-            "candu"      => @chart_data,
-            "compare_vm" => @compare_vm_chart_data
-          }.to_json + ';'
-        else
-          page << 'ManageIQ.charts.chartData = ' + {
-            "candu" => @chart_data
-          }.to_json + ';'
-        end
-        page.replace("perf_options_div", :partial => "layouts/perf_options")
-        page.replace("candu_charts_div", :partial => "layouts/perf_charts", :locals => {:chart_data => @chart_data, :chart_set => "candu"})
-        page << js_build_calendar(@perf_options.to_calendar)
-        page << Charting.js_load_statement
-        page << 'miqSparkle(false);'
-      end
-      return
-
-    elsif cmd == "Chart" && model == "Current" && typ == "Daily"  # Go back to the daily chart
-      @record = identify_tl_or_perf_record
-      @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
-      @perf_options[:typ] = "Daily"
-      perf_set_or_fix_dates(false) unless params[:task_id] # Set dates if first time thru
-      perf_gen_data
-      return unless @charts        # Return if no charts got created (first time thru async rpt gen)
-
-      render :update do |page|
-        page << javascript_prologue
-        if @parent_chart_data
-          page << 'ManageIQ.charts.chartData = ' + {
-            "candu"  => @chart_data,
-            "parent" => @parent_chart_data
-          }.to_json + ';'
-        else
-          page << 'ManageIQ.charts.chartData = ' + {
-            "candu" => @chart_data
-          }.to_json + ';'
-        end
-        page.replace("perf_options_div", :partial => "layouts/perf_options")
-        page.replace("candu_charts_div", :partial => "layouts/perf_charts", :locals => {:chart_data => @chart_data, :chart_set => "candu"})
-        page << js_build_calendar(@perf_options.to_calendar)
-        page << Charting.js_load_statement
-        page << 'miqSparkle(false);'
-      end
-      return
-
-    elsif cmd == "Chart" && model == "Selected"                             # Create daily/hourly chart for selected CI
-      return unless @record = perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
-      # Set the perf options in the selected controller's sandbox
-      cont = data_row["resource_type"].underscore.downcase.to_sym
-      session[:sandboxes][cont] ||= {}
-      session[:sandboxes][cont][:perf_options] ||= Options.new
-
-      # Copy general items from the current perf_options
-      session[:sandboxes][cont][:perf_options][:index] = @perf_options[:index]
-      session[:sandboxes][cont][:perf_options][:tz] = @perf_options[:tz]
-      session[:sandboxes][cont][:perf_options][:time_profile] = @perf_options[:time_profile]
-      session[:sandboxes][cont][:perf_options][:time_profile_days] = @perf_options[:time_profile_days]
-      session[:sandboxes][cont][:perf_options][:time_profile_tz] = @perf_options[:time_profile_tz]
-
-      # Set new perf options based on what was selected
-      session[:sandboxes][cont][:perf_options][:model] = data_row["resource_type"]
-      session[:sandboxes][cont][:perf_options][:typ] = typ
-      session[:sandboxes][cont][:perf_options][:daily_date] = @perf_options[:daily_date] if typ == "Daily"
-      session[:sandboxes][cont][:perf_options][:days] = @perf_options[:days] if typ == "Daily"
-      session[:sandboxes][cont][:perf_options][:hourly_date] = [ts.month, ts.day, ts.year].join("/") if typ == "Hourly"
-
-      if data_row["resource_type"] == "VmOrTemplate"
-        prefix = TreeBuilder.get_prefix_for_model(@record.class.base_model)
-        tree_node_id = "#{prefix}-#{@record.id}"  # Build the tree node id
-        session[:exp_parms] = {:display => "performance", :refresh => "n", :id => tree_node_id}
-        javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
-                            :action     => "explorer"
-      else
-        javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
+        javascript_redirect :id         => @perf_record.id,
                             :action     => "show",
-                            :id         => data_row["resource_id"],
-                            :display    => "performance",
+                            :display    => "timeline",
+                            :controller => model_to_controller(@perf_record),
                             :refresh    => "n",
                             :escape     => false
       end
-      return
-
-    elsif cmd == "Chart" && typ.starts_with?("top") && @perf_options[:cat]  # Create top chart for selected timestamp/model by tag
-      @record = identify_tl_or_perf_record
-      @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
-      top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]
-      bc_tag =  "#{Classification.find_by_name(@perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][legend_idx]}"
-      dt = typ == "tophour" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
-      if top_ids.blank?
-        msg = "No #{bc_tag} #{bc_model} were running #{dt}"
-      else
-        javascript_redirect :id          => @perf_record.id,
-                            :action      => "perf_top_chart",
-                            :menu_choice => params[:menu_click],
-                            :bc          => "#{@perf_record.name} top #{bc_model} (#{bc_tag} #{dt})",
-                            :escape      => false
-        return
-      end
-
-    elsif cmd == "Chart" && typ.starts_with?("top")                         # Create top chart for selected timestamp/model
-      @record = identify_tl_or_perf_record
-      @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
-      top_ids = data_row["assoc_ids"][model.downcase.to_sym][:on]
-      dt = typ == "tophour" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
-      if top_ids.blank?
-        msg = _("No %{model} were running %{time}") % {:model => model, :time => dt}
-      else
-        javascript_redirect :id          => @perf_record.id,
-                            :action      => "perf_top_chart",
-                            :menu_choice => params[:menu_click],
-                            :bc          => "#{@perf_record.name} top #{bc_model} (#{dt})",
-                            :escape      => false
-        return
-      end
-
-    else
-      msg = _("Chart menu selection not yet implemented")
+      return true
     end
+    false
+  end
 
-    msg ? add_flash(msg, :warning) : add_flash(_("Unknown error has occurred"), :error)
-    javascript_flash(:spinner_off => true)
+  # display timeline for the selected CI
+  def timeline_selected(data_row, ts, typ, model)
+    return true unless @record = perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
+    controller = data_row["resource_type"].underscore
+    new_opts = tl_session_data(controller) || ApplicationController::Timelines::Options.new
+    new_opts[:model] = data_row["resource_type"]
+    dt = typ == "Hourly" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
+    new_opts.date.typ = typ
+    new_opts.date.daily = @perf_options[:daily_date] if typ == "Daily"
+    new_opts.date.hourly = [ts.month, ts.day, ts.year].join("/") if typ == "Hourly"
+    new_opts[:tl_show] = "timeline"
+    set_tl_session_data(new_opts, controller)
+    f = @record.first_event
+    if f.nil?
+      @menu_click_msg = if model == "EmsCluster"
+                          _("No events available for this Cluster")
+                        else
+                          _("No events available for this %{model}") % {:model => model}
+                        end
+    elsif @record.kind_of?(MiqServer) # For server charts in OPS
+      change_tab("diagnostics_timelines")                # Switch to the Timelines tab
+      return true
+    else
+      if @explorer
+        @_params[:id] = data_row["resource_id"]
+        @_params[:refresh] = "n"
+        show_timeline
+      else
+        if data_row["resource_type"] == "VmOrTemplate"
+          tree_node_id = TreeBuilder.build_node_id(@record.class.base_model, @record.id)
+          session[:exp_parms] = {:display => "timeline", :refresh => "n", :id => tree_node_id}
+          javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
+                              :action     => "explorer"
+        else
+          javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
+                              :action     => "show",
+                              :display    => "timeline",
+                              :id         => data_row["resource_id"],
+                              :refresh    => "n",
+                              :escape     => false
+        end
+      end
+      return true
+    end
+    false
+  end
+
+  # create hourly chart for selected day
+  def chart_current_hourly(ts)
+    @record = identify_tl_or_perf_record
+    @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
+    @perf_options[:typ] = "Hourly"
+    @perf_options[:hourly_date] = [ts.month, ts.day, ts.year].join("/")
+
+    perf_set_or_fix_dates unless params[:task_id] # Set dates if first time thru
+    perf_gen_data
+
+    return true unless @charts      # Return if no charts got created (first time thru async rpt gen)
+
+    render :update do |page|
+      page << javascript_prologue
+      if @parent_chart_data
+        page << 'ManageIQ.charts.chartData = ' + {
+          "candu"  => @chart_data,
+          "parent" => @parent_chart_data
+        }.to_json + ';'
+      elsif @parent_chart_data
+        page << 'ManageIQ.charts.chartData = ' + {
+          "candu"      => @chart_data,
+          "compare_vm" => @compare_vm_chart_data
+        }.to_json + ';'
+      else
+        page << 'ManageIQ.charts.chartData = ' + {
+          "candu" => @chart_data
+        }.to_json + ';'
+      end
+      page.replace("perf_options_div", :partial => "layouts/perf_options")
+      page.replace("candu_charts_div", :partial => "layouts/perf_charts", :locals => {:chart_data => @chart_data, :chart_set => "candu"})
+      page << js_build_calendar(@perf_options.to_calendar)
+      page << Charting.js_load_statement
+      page << 'miqSparkle(false);'
+    end
+    true
+  end
+
+  # go back to the daily chart
+  def chart_current_daily
+    @record = identify_tl_or_perf_record
+    @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
+    @perf_options[:typ] = "Daily"
+    perf_set_or_fix_dates(false) unless params[:task_id] # Set dates if first time thru
+    perf_gen_data
+    return true unless @charts        # Return if no charts got created (first time thru async rpt gen)
+
+    render :update do |page|
+      page << javascript_prologue
+      if @parent_chart_data
+        page << 'ManageIQ.charts.chartData = ' + {
+          "candu"  => @chart_data,
+          "parent" => @parent_chart_data
+        }.to_json + ';'
+      else
+        page << 'ManageIQ.charts.chartData = ' + {
+          "candu" => @chart_data
+        }.to_json + ';'
+      end
+      page.replace("perf_options_div", :partial => "layouts/perf_options")
+      page.replace("candu_charts_div", :partial => "layouts/perf_charts", :locals => {:chart_data => @chart_data, :chart_set => "candu"})
+      page << js_build_calendar(@perf_options.to_calendar)
+      page << Charting.js_load_statement
+      page << 'miqSparkle(false);'
+    end
+    return true
+  end
+
+  # Create daily/hourly chart for selected CI
+  def chart_selected(data_row, typ, ts)
+    return true unless @record = perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"], data_row["resource_name"])
+    # Set the perf options in the selected controller's sandbox
+    cont = data_row["resource_type"].underscore.downcase.to_sym
+    session[:sandboxes][cont] ||= {}
+    session[:sandboxes][cont][:perf_options] ||= Options.new
+
+    # Copy general items from the current perf_options
+    session[:sandboxes][cont][:perf_options][:index] = @perf_options[:index]
+    session[:sandboxes][cont][:perf_options][:tz] = @perf_options[:tz]
+    session[:sandboxes][cont][:perf_options][:time_profile] = @perf_options[:time_profile]
+    session[:sandboxes][cont][:perf_options][:time_profile_days] = @perf_options[:time_profile_days]
+    session[:sandboxes][cont][:perf_options][:time_profile_tz] = @perf_options[:time_profile_tz]
+
+    # Set new perf options based on what was selected
+    session[:sandboxes][cont][:perf_options][:model] = data_row["resource_type"]
+    session[:sandboxes][cont][:perf_options][:typ] = typ
+    session[:sandboxes][cont][:perf_options][:daily_date] = @perf_options[:daily_date] if typ == "Daily"
+    session[:sandboxes][cont][:perf_options][:days] = @perf_options[:days] if typ == "Daily"
+    session[:sandboxes][cont][:perf_options][:hourly_date] = [ts.month, ts.day, ts.year].join("/") if typ == "Hourly"
+
+    if data_row["resource_type"] == "VmOrTemplate"
+      prefix = TreeBuilder.get_prefix_for_model(@record.class.base_model)
+      tree_node_id = "#{prefix}-#{@record.id}"  # Build the tree node id
+      session[:exp_parms] = {:display => "performance", :refresh => "n", :id => tree_node_id}
+      javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
+                          :action     => "explorer"
+    else
+      javascript_redirect :controller => data_row["resource_type"].underscore.downcase.singularize,
+                          :action     => "show",
+                          :id         => data_row["resource_id"],
+                          :display    => "performance",
+                          :refresh    => "n",
+                          :escape     => false
+    end
+    return true
+  end
+
+  # create top chart for selected timestamp/model by tag
+  def chart_top_by_tag(data_row, report, legend_idx, model, ts, bc_model)
+    @record = identify_tl_or_perf_record
+    @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
+    top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][legend_idx]}"][model.downcase.to_sym][:on]
+    bc_tag =  "#{Classification.find_by_name(@perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][legend_idx]}"
+    dt = typ == "tophour" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
+    if top_ids.blank?
+      @menu_click_msg = _("No %{tag} %{model}  were running %{time}") %
+                          {:tag => bc_tag, :model => bc_model, :time => dt}
+    else
+      javascript_redirect :id          => @perf_record.id,
+                          :action      => "perf_top_chart",
+                          :menu_choice => params[:menu_click],
+                          :bc          => "#{@perf_record.name} top #{bc_model} (#{bc_tag} #{dt})",
+                          :escape      => false
+      return true
+    end
+    false
+  end
+
+  # create top chart for selected timestamp/model
+  def chart_top(data_row, typ, ts, model, bc_model)
+    @record = identify_tl_or_perf_record
+    @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
+    top_ids = data_row["assoc_ids"][model.downcase.to_sym][:on]
+    dt = typ == "tophour" ? "on #{ts.to_date} at #{ts.strftime("%H:%M:%S %Z")}" : "on #{ts.to_date}"
+    if top_ids.blank?
+      @menu_click_msg = _("No %{model} were running %{time}") % {:model => model, :time => dt}
+    else
+      javascript_redirect :id          => @perf_record.id,
+                          :action      => "perf_top_chart",
+                          :menu_choice => params[:menu_click],
+                          :bc          => "#{@perf_record.name} top #{bc_model} (#{dt})",
+                          :escape      => false
+      return true
+    end
+    false
   end
 
   # Send error message if record is found and authorized, else return the record
