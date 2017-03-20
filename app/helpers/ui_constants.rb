@@ -164,7 +164,9 @@ module UiConstants
       :host         => true,
       :miq_template => true,
       :storage      => true,
-      :vm           => true
+      :vm           => true,
+      :physical_server  => true,
+      :ems_physical_infra => true
     },
     :views     => { # List view setting, by resource type
       :authkeypaircloud                         => "list",
@@ -198,6 +200,7 @@ module UiConstants
       :drift_mode                               => "details",
       :emscluster                               => "grid",
       :emscontainer                             => "grid",
+      :ems_physical_infra                       => "grid",
       :filesystem                               => "list",
       :flavor                                   => "list",
       :host                                     => "grid",
@@ -232,6 +235,7 @@ module UiConstants
       :storagemanager                           => "list",
       :miqtask                                  => "list",
       :ms                                       => "grid",
+      :physical_server                          => "grid",
       :policy                                   => "list",
       :policyset                                => "grid",
       :resourcepool                             => "grid",
