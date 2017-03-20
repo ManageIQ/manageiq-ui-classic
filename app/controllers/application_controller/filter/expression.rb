@@ -3,6 +3,7 @@ module ApplicationController::Filter
     :alias,
     :expression,
     :exp_available_tags,
+    :available_tags,
     :exp_available_fields,
     :exp_cfield,
     :exp_check,
