@@ -30,7 +30,7 @@ module ContainerGroupHelper::TextualSummary
         condition.status,
       ]
     end
-    TextualGroup.new(_("Conditions"), h)
+    TextualMultilabel.new(_("Conditions"), h)
   end
 
   def textual_group_smart_management
@@ -73,7 +73,7 @@ module ContainerGroupHelper::TextualSummary
       volume_values[0][0] = volume.name if volume_values.length > 0
       h[:values] += volume_values
     end
-    TextualGroup.new(_("Volumes"), h)
+    TextualMultilabel.new(_("Volumes"), h)
   end
 
   #

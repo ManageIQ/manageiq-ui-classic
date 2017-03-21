@@ -37,7 +37,7 @@ module EmsContainerHelper::TextualSummary
         (cs.error || "")
       ]
     end
-    TextualGroup.new(_("Component Statuses"), h)
+    TextualMultilabel.new(_("Component Statuses"), h)
   end
 
   def textual_group_smart_management
