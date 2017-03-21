@@ -78,18 +78,15 @@ module ApplicationController::Filter::SubstMixin
         ret_exp = exp_find_by_token(e, token)       # Look for token
         return ret_exp unless ret_exp.nil?            # Return if we found it
       end
-      return nil                                    # Didn't find it in the array, return nil
     elsif exp[:token] && exp[:token] == token       # This is the token exp
       @parent_is_not = true if parent_is_not        # Remember that token exp's parent is a NOT
-      return exp                                    #   return it
+      exp                                           #   return it
     elsif exp["not"]
-      return exp_find_by_token(exp["not"], token, true) # Look for token under NOT (indicate we are a NOT)
+      exp_find_by_token(exp["not"], token, true)    # Look for token under NOT (indicate we are a NOT)
     elsif exp["and"]
-      return exp_find_by_token(exp["and"], token)   # Look for token under AND
+      exp_find_by_token(exp["and"], token)          # Look for token under AND
     elsif exp["or"]
-      return exp_find_by_token(exp["or"], token)    # Look for token under OR
-    else
-      return nil
+      exp_find_by_token(exp["or"], token)           # Look for token under OR
     end
   end
 
