@@ -61,18 +61,18 @@
                     'pf-select'        => true}
               %option{"value" => ""}
                 = "<#{_('Choose')}>"
-        .form-group
-          %label.col-md-3.control-label{"for" => "vm.#{prefix}_network_credential_id"}
-            = _('Network Credential')
-          .col-md-9
-            %select{"ng-model"         => "vm._#{prefix}_network_credential",
-                    "name"             => "#{prefix}_network_credential_id",
-                    'ng-options'       => 'network_credential as network_credential.name for network_credential in vm.network_credentials',
-                    :checkchange       => true,
-                    "data-live-search" => "true",
-                    'pf-select'        => true}
-              %option{"value" => ""}
-                = "<#{_('Choose')}>"
+        -#.form-group
+        -#  %label.col-md-3.control-label{"for" => "vm.#{prefix}_network_credential_id"}
+        -#    = _('Network Credential')
+        -#  .col-md-9
+        -#    %select{"ng-model"         => "vm._#{prefix}_network_credential",
+        -#            "name"             => "#{prefix}_network_credential_id",
+        -#            'ng-options'       => 'network_credential as network_credential.name for network_credential in vm.network_credentials',
+        -#            :checkchange       => true,
+        -#            "data-live-search" => "true",
+        -#            'pf-select'        => true}
+        -#      %option{"value" => ""}
+        -#        = "<#{_('Choose')}>"
 
         .form-group
           %label.col-md-3.control-label{"for" => "vm.#{prefix}_cloud_type"}
