@@ -17,6 +17,7 @@ describe ContainerTemplateController do
     get :show, :params => { :id => container_template.id }
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
+    expect(response).to render_template('shared/summary/_textual_multilabel')
     expect(assigns(:breadcrumbs)).to eq([{:name => "Container Templates",
                                           :url  => "/container_template/show_list?page=&refresh=y"},
                                          {:name => "Test Template (Summary)",

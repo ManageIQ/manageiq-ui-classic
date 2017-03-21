@@ -34,7 +34,7 @@ module PersistentVolumeHelper::TextualSummary
 
   def textual_group_capacity
     labels = [_("Resource"), _("Quantity")]
-    TextualGroup.new(_("Capacity"), :labels => labels, :values => @record.capacity)
+    TextualMultilabel.new(_("Capacity"), :labels => labels, :values => @record.capacity)
   end
 
   #

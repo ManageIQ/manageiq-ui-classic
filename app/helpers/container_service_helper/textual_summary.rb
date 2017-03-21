@@ -22,7 +22,7 @@ module ContainerServiceHelper::TextualSummary
         config.node_port
       ]
     end
-    TextualGroup.new(_("Port Configurations"), h)
+    TextualMultilabel.new(_("Port Configurations"), h)
   end
 
   def textual_group_relationships

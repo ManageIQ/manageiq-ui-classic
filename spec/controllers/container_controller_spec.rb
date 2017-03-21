@@ -133,6 +133,7 @@ describe ContainerController do
 
       expect(response).to render_template('layouts/_textual_groups_generic')
       expect(response).to render_template('shared/summary/_textual_tags')
+      expect(response).to render_template('shared/summary/_textual_multilabel')
       expect(response.status).to eq(200)
     end
   end
