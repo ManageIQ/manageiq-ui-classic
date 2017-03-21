@@ -35,18 +35,16 @@ module ApplicationController::Filter::SubstMixin
         exp_context[@expkey][:exp_token] = @exp_token         # Save the token value for the view
         exp_context[:edit_exp] = copy_hash(exp)       # Save the exp part for the view
         exp_context[@expkey].update_from_exp_tree(exp_context[:edit_exp]) # Set the fields for a new exp part
-      else
-        if quick_search # Separate out the user input fields if doing a quick search
-          human_exp = MiqExpression.to_human(exp)
-          if human_exp.include?("<user input>")
-            exp_table.push(human_exp.split("<user input>").join(""))
-            exp_table.push([:user_input, @exp_token])
-          else
-            exp_table.push(human_exp)
-          end
-        else            # Not quick search, add token to the expression
-          exp_table.push([MiqExpression.to_human(exp), @exp_token])
+      elsif quick_search # Separate out the user input fields if doing a quick search
+        human_exp = MiqExpression.to_human(exp)
+        if human_exp.include?("<user input>")
+          exp_table.push(human_exp.split("<user input>").join(""))
+          exp_table.push([:user_input, @exp_token])
+        else
+          exp_table.push(human_exp)
         end
+      else            # Not quick search, add token to the expression
+        exp_table.push([MiqExpression.to_human(exp), @exp_token])
       end
     end
     exp_table
