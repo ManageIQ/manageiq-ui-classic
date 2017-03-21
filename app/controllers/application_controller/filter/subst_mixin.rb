@@ -74,10 +74,7 @@ module ApplicationController::Filter::SubstMixin
   # Find an expression atom based on the token
   def exp_find_by_token(exp, token, parent_is_not = false)
     if exp.kind_of?(Array)                             # Is this and AND or OR
-      exp.each do |e|                               #   yes, check each array item
-        ret_exp = exp_find_by_token(e, token)       # Look for token
-        return ret_exp unless ret_exp.nil?            # Return if we found it
-      end
+      exp.find { |e| exp_find_by_token(e, token) }     # Look for token
     elsif exp[:token] && exp[:token] == token       # This is the token exp
       @parent_is_not = true if parent_is_not        # Remember that token exp's parent is a NOT
       exp                                           #   return it
