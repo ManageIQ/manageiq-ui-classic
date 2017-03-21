@@ -48,7 +48,7 @@
 
     - when 'DialogFieldTagControl'
       - if edit         
-        - select_tag(field.name,
+        = select_tag(field.name,
                      options_for_select(dialog_dropdown_select_values(field), wf.value(field.name)),
                      drop_down_options(field, url))
         :javascript
