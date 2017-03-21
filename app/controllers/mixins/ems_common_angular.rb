@@ -328,6 +328,7 @@ module Mixins
     def security_protocol_default
       case controller_name
       when "ems_container" then "ssl-with-validation"
+      when "ems_middleware" then "non-ssl"
       else "ssl"
       end
     end
