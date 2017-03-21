@@ -259,7 +259,6 @@ module VmCommon
                       :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
     end
 
-    set_config(@record)
     get_host_for_vm(@record)
     session[:tl_record_id] = @record.id
 

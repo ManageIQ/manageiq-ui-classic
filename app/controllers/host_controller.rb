@@ -31,7 +31,6 @@ class HostController < ApplicationController
 
     @gtl_url = "/show"
     @showtype = "config"
-    set_config(@host)
     case @display
     when "main", "summary_only"
       get_tagdata(@host)
