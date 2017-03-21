@@ -1,10 +1,11 @@
 = render :partial => "layouts/flash_msg"
 - case @display
 - when "devices"
-  - unless @devices.empty?
+  - devices = get_devices
+  - if devices.present?
     .form-horizontal.static
       .form-group
-        - @devices.each do |item|
+        - devices.each do |item|
           %label.col-md-2.control-label
             = h(item[:device])
           .col-md-10
@@ -12,10 +13,11 @@
               %img{:src => image_path("100/hardware-#{item[:icon].downcase}.png")}
               = h(item[:description])
 - when "os_info"
-  - if @osinfo
+  - os_info, _ = get_os_info
+  - if os_info.present?
     .form-horizontal.static
       .form-group
-        - @osinfo.each do |item|
+        - os_info.each do |item|
           %label.col-md-2.control-label
             = h(item[:osinfo])
           .col-md-10
@@ -35,10 +37,11 @@
             = h(@host.ipaddress)
 
 - when "hv_info"
-  - if @vmminfo
+  - vmminfo = get_vmm_info
+  - if vmminfo
     .form-horizontal.static
       .form-group
-        - @vmminfo.each do |item|
+        - vmminfo.each do |item|
           %label.col-md-2.control-label
             = h(item[:vmminfo])
           .col-md-10
