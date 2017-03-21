@@ -77,6 +77,12 @@ module EmsCommon
     nested_list('hosts', Host, :breadcrumb_title => _("Managed Hosts"))
   end
 
+  def view_setup_params
+    {
+      'physical_servers'              => [PhysicalServer,         _("Physical Servers")],
+    }
+  end
+
   class_methods do
     def display_methods
       %w(
@@ -87,7 +93,7 @@ module EmsCommon
         host_aggregates hosts images instances load_balancers middleware_datasources middleware_deployments
         middleware_domains middleware_messagings middleware_server_groups middleware_servers miq_templates
         network_ports network_routers object_storage_managers orchestration_stacks persistent_volumes
-        security_groups storage_managers storages vms
+        security_groups storage_managers storages vms physical_servers
       )
     end
 
