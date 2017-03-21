@@ -226,13 +226,13 @@ module QuadiconHelper
   def render_physical_server_quadicon(item, options)
     output = []
     if settings(:quadicons, :physical_server)
-      output << flobj_img_simple( "layout/base.png")
+      output << flobj_img_simple("layout/base.png")
 
-      output << flobj_p_simple("a72", (item.host ? 1 : 0 ))
+      output << flobj_p_simple("a72", (item.host ? 1 : 0))
       output << flobj_img_simple("svg/currentstate-#{h(item.power_state.downcase)}.svg", "b72")
-      output << flobj_img_simple( img_for_physical_vendor(item), "c72")
-      output << flobj_img_simple( img_for_health_state(item), "d72")
-      output << flobj_img_simple( '100/shield.png', "g72") unless item.get_policies.empty?
+      output << flobj_img_simple(img_for_physical_vendor(item), "c72")
+      output << flobj_img_simple(img_for_health_state(item), "d72")
+      output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
     else
       output << flobj_img_simple(size)
       output << flobj_img_simple(width * 1.8, img_for_physical_vendor(item), "e72")
@@ -256,6 +256,8 @@ module QuadiconHelper
         end
       end
     end
+    # TODO(odravison): rubocop saying that is risky use html_safe
+    # to use instead safe_join or others Rails tag helpers.
     output.collect(&:html_safe).join('').html_safe
   end
 
@@ -408,7 +410,6 @@ module QuadiconHelper
                      # All other models that only need single large icon and use name for hover text
                      "single_quad"
                    end
-    $log.info("quadicon_builder_name_from::builder_name::> #{builder_name}")
     builder_name = 'vm_or_template' if %w(miq_template vm).include?(builder_name)
     builder_name
   end
@@ -546,14 +547,14 @@ module QuadiconHelper
   #
   def render_ext_management_system_quadicon(item, options)
     output = []
-		$log.info("quadicon::> #{db_for_quadicon}")
     if settings(:quadicons, db_for_quadicon)
       output << flobj_img_simple("layout/base.png")
       item_count = case item
-        when EmsPhysicalInfra then item.physical_servers.size
-        when EmsCloud  then item.total_vms
-        else item.hosts.size
-      end
+                   when EmsPhysicalInfra then item.physical_servers.size
+                   when EmsCloud         then item.total_vms
+                   else
+                     item.hosts.size
+                   end
       output << flobj_p_simple("a72", item_count)
       output << flobj_p_simple("b72", item.total_miq_templates) if item.kind_of?(EmsCloud)
       output << flobj_img_simple("svg/vendor-#{h(item.image_name)}.svg", "c72")
@@ -693,7 +694,7 @@ module QuadiconHelper
 
   def img_for_health_state(item)
     case item.health_state
-    when "Valid"   then "100/healthstate-normal.png"
+    when "Valid"    then "100/healthstate-normal.png"
     when "Critical" then "svg/healthstate-critical.svg"
     when "None"     then "svg/healthstate-unknown.svg"
     when "Warning"  then "100/warning.png"

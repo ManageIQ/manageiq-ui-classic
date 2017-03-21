@@ -1440,7 +1440,6 @@ module ApplicationHelper
   end
 
   def db_for_quadicon
-    $log.info("layout::> #{@layout}")
     case @layout
     when "ems_infra"
       :ems

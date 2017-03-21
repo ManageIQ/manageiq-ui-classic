@@ -1,5 +1,6 @@
 class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Toolbar::Basic
-  button_group('host_vmdb', [
+  button_group('host_vmdb',
+  [
     select(
       :host_vmdb_choice,
       'fa fa-cog fa-lg',
@@ -111,141 +112,144 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
       ]
     ),
   ])
-  button_group('host_policy', [
-    select(
-      :host_policy_choice,
-      'fa fa-shield fa-lg',
-      t = N_('Policy'),
-      t,
-      :items => [
-        button(
-          :host_protect,
-          'pficon pficon-edit fa-lg',
-          N_('Manage Policies for this item'),
-          N_('Manage Policies'),
-          :klass => ApplicationHelper::Button::HostProtect
-        ),
-        button(
-          :host_tag,
-          'pficon pficon-edit fa-lg',
-          N_('Edit Tags for this item'),
-          N_('Edit Tags')
-        ),
-        button(
-          :host_check_compliance,
-          'fa fa-search fa-lg',
-          N_('Check Compliance of the last known configuration for this item'),
-          N_('Check Compliance of Last Known Configuration'),
-          :confirm => N_("Initiate Check Compliance of the last known configuration for this item?")
-        ),
-        button(
-          :host_analyze_check_compliance,
-          'fa fa-search fa-lg',
-          N_('Analyze then Check Compliance for this item'),
-          N_('Analyze then Check Compliance'),
-          :confirm => N_("Analyze then Check Compliance for this item?")
-        ),
-      ]
-    ),
+  button_group('host_policy',
+  [
+   select(
+     :host_policy_choice,
+     'fa fa-shield fa-lg',
+     t = N_('Policy'),
+     t,
+     :items => [
+       button(
+         :host_protect,
+         'pficon pficon-edit fa-lg',
+         N_('Manage Policies for this item'),
+         N_('Manage Policies'),
+         :klass => ApplicationHelper::Button::HostProtect
+       ),
+       button(
+         :host_tag,
+         'pficon pficon-edit fa-lg',
+         N_('Edit Tags for this item'),
+         N_('Edit Tags')
+       ),
+       button(
+         :host_check_compliance,
+         'fa fa-search fa-lg',
+         N_('Check Compliance of the last known configuration for this item'),
+         N_('Check Compliance of Last Known Configuration'),
+         :confirm => N_("Initiate Check Compliance of the last known configuration for this item?")
+       ),
+       button(
+         :host_analyze_check_compliance,
+         'fa fa-search fa-lg',
+         N_('Analyze then Check Compliance for this item'),
+         N_('Analyze then Check Compliance'),
+         :confirm => N_("Analyze then Check Compliance for this item?")
+       ),
+     ]
+   ),
   ])
-  button_group('host_lifecycle', [
-    select(
-      :host_lifecycle_choice,
-      'fa fa-recycle fa-lg',
-      t = N_('Lifecycle'),
-      t,
-      :items => [
-        button(
-          :host_miq_request_new,
-          'pficon pficon-add-circle-o fa-lg',
-          t = N_('Provision this item'),
-          t
-        ),
-      ]
-    ),
+  button_group('host_lifecycle',
+  [
+   select(
+     :host_lifecycle_choice,
+     'fa fa-recycle fa-lg',
+     t = N_('Lifecycle'),
+     t,
+     :items => [
+       button(
+         :host_miq_request_new,
+         'pficon pficon-add-circle-o fa-lg',
+         t = N_('Provision this item'),
+         t
+       ),
+     ]
+   ),
   ])
-  button_group('physical_server_operations', [
-    select(
-      :physical_server_power_choice,
-      'fa fa-power-off fa-lg',
-      N_('Power Operations'),
-      N_('Power'),
-      :items => [
-        button(
-          :physical_server_power_on,
-          nil,
-          N_('Power on the server'),
-          N_('Power On'),
-          :image     => "power_on",
-          :url_parms => "main_div",
-          :confirm   => N_("Power on the server?"),
-          :klass     => ApplicationHelper::Button::HostFeatureButton,
-          :options   => {:feature => :power_on}
-        ),
-        button(
-          :physical_server_power_off,
-          nil,
-          N_('Power off the server'),
-          N_('Power Off'),
-          :image     => "power_off",
-          :url_parms => "main_div",
-          :confirm   => N_("Power off the server?"),
-          :klass     => ApplicationHelper::Button::HostFeatureButton,
-          :options   => {:feature => :power_off}
-        ),
-        button(
-          :physical_server_restart,
-          nil,
-          N_('Restart the server'),
-          N_('Restart'),
-          :image     => "power_reset",
-          :url_parms => "main_div",
-          :confirm   => N_("Restart the server?"),
-          :klass     => ApplicationHelper::Button::HostFeatureButton,
-          :options   => {:feature => :restart}
-        ),
-      ]
-    ),
-    select(
-      :physical_server_identify_choice,
-      nil,
-      N_('Identify LED Operations'),
-      N_('Identify'),
-      :items => [
-        button(
-          :physical_server_blink_loc_led,
-          nil,
-          N_('Blink the Identify LED'),
-          N_('Blink LED'),
-          :image     => "blank_button",
-          :url_parms => "main_div",
-          :confirm   => N_("Blink the Identify LED?"),
-          :klass     => ApplicationHelper::Button::HostFeatureButton,
-          :options   => {:feature => :blink_loc_led}
-        ),
-        button(
-          :physical_server_turn_on_loc_led,
-          nil,
-          N_('Turn on the Idenfity LED'),
-          N_('Turn On LED'),
-          :image     => "blank_button",
-          :url_parms => "main_div",
-          :confirm   => N_("Turn on the Identify LED?"),
-          :klass     => ApplicationHelper::Button::HostFeatureButton,
-          :options   => {:feature => :turn_on_loc_led}
-        ),
-        button(
-          :physical_server_turn_off_loc_led,
-          nil,
-          N_('Turn off the Identify LED'),
-          N_('Turn Off LED'),
-          :image     => "blank_button",
-          :url_parms => "main_div",
-          :confirm   => N_("Turn off the Identify LED?"),
-          :klass     => ApplicationHelper::Button::HostFeatureButton,
-          :options   => {:feature => :turn_off_loc_led}
-        ),
-      ]
-    ),
+  button_group('physical_server_operations',
+  [
+   select(
+     :physical_server_power_choice,
+     'fa fa-power-off fa-lg',
+     N_('Power Operations'),
+     N_('Power'),
+     :items => [
+       button(
+         :physical_server_power_on,
+         nil,
+         N_('Power on the server'),
+         N_('Power On'),
+         :image     => "power_on",
+         :url_parms => "main_div",
+         :confirm   => N_("Power on the server?"),
+         :klass     => ApplicationHelper::Button::HostFeatureButton,
+         :options   => {:feature => :power_on}
+       ),
+       button(
+         :physical_server_power_off,
+         nil,
+         N_('Power off the server'),
+         N_('Power Off'),
+         :image     => "power_off",
+         :url_parms => "main_div",
+         :confirm   => N_("Power off the server?"),
+         :klass     => ApplicationHelper::Button::HostFeatureButton,
+         :options   => {:feature => :power_off}
+       ),
+       button(
+         :physical_server_restart,
+         nil,
+         N_('Restart the server'),
+         N_('Restart'),
+         :image     => "power_reset",
+         :url_parms => "main_div",
+         :confirm   => N_("Restart the server?"),
+         :klass     => ApplicationHelper::Button::HostFeatureButton,
+         :options   => {:feature => :restart}
+       ),
+     ]
+   ),
+   select(
+     :physical_server_identify_choice,
+     nil,
+     N_('Identify LED Operations'),
+     N_('Identify'),
+     :items => [
+       button(
+         :physical_server_blink_loc_led,
+         nil,
+         N_('Blink the Identify LED'),
+         N_('Blink LED'),
+         :image     => "blank_button",
+         :url_parms => "main_div",
+         :confirm   => N_("Blink the Identify LED?"),
+         :klass     => ApplicationHelper::Button::HostFeatureButton,
+         :options   => {:feature => :blink_loc_led}
+       ),
+       button(
+         :physical_server_turn_on_loc_led,
+         nil,
+         N_('Turn on the Idenfity LED'),
+         N_('Turn On LED'),
+         :image     => "blank_button",
+         :url_parms => "main_div",
+         :confirm   => N_("Turn on the Identify LED?"),
+         :klass     => ApplicationHelper::Button::HostFeatureButton,
+         :options   => {:feature => :turn_on_loc_led}
+       ),
+       button(
+         :physical_server_turn_off_loc_led,
+         nil,
+         N_('Turn off the Identify LED'),
+         N_('Turn Off LED'),
+         :image     => "blank_button",
+         :url_parms => "main_div",
+         :confirm   => N_("Turn off the Identify LED?"),
+         :klass     => ApplicationHelper::Button::HostFeatureButton,
+         :options   => {:feature => :turn_off_loc_led}
+       ),
+     ]
+   ),
   ])
 end

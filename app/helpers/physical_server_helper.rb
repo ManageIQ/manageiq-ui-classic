@@ -1,3 +1,3 @@
 module PhysicalServerHelper
-  include_concern 'TextualSummary'  
+  include_concern 'TextualSummary'
 end

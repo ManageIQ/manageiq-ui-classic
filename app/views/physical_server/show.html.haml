@@ -1,13 +1,17 @@
 #main_div
-  - if %w(physical_server physical_servers vms cloud_tenants storages miq_proxies miq_templates resource_pools ontap_logical_disks ontap_storage_systems ontap_storage_volumes ontap_file_shares).include?(@display) && @showtype != "compare"
+  - arr = %w(physical_server physical_servers vms cloud_tenants storages miq_proxies miq_templates)
+  - arr.concat(%w(resource_pools ontap_logical_disks ontap_storage_systems ontap_storage_volumes ontap_file_shares))
+  - if arr.include?(@display) && @showtype != "compare"
     = render(:partial => "layouts/gtl", :locals => {:action_url => "show/#{@ph_server.id}"})
   - else
     - case @showtype
     - when "details"
       = render(:partial => "layouts/gtl", :locals => {:action_url => @lastaction})
     - when "compare", "drift"
-      = raise 'compare or drift partial called through "show"'
+      -# TODO: (odravison) The raise was put before render method
+      -# I changed to inverse
       = render(:partial => "layouts/compare")
+      = raise 'compare or drift partial called through "show"'
     - when "drift_history", "item"
       = render(:partial => "layouts/#{@showtype}")
     - when "performance"

@@ -79,7 +79,7 @@ module EmsCommon
 
   def view_setup_params
     {
-      'physical_servers'              => [PhysicalServer,         _("Physical Servers")],
+      'physical_servers' => [PhysicalServer, _("Physical Servers")],
     }
   end
 
