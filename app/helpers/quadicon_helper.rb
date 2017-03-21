@@ -377,6 +377,7 @@ module QuadiconHelper
   end
 
   CLASSLY_NAMED_ITEMS = %w(
+    PhysicalServer
     EmsCluster
     ResourcePool
     Repository
@@ -388,25 +389,26 @@ module QuadiconHelper
   ).freeze
 
   def quadicon_named_for_base_class?(item)
-    %w(ExtManagementSystem Host).include?(item.class.base_class.name)
+    %w(ExtManagementSystem Host PhysicalServer).include?(item.class.base_class.name)
   end
 
+  def quadicon_named_for_base_model?(item)
+    %w(VmOrTempalte PhysicalServer).include?(item.class.base_model.name)
+  end
   def quadicon_builder_name_from(item)
     builder_name = if CLASSLY_NAMED_ITEMS.include?(item.class.name)
                      item.class.name.underscore
-                   elsif item.kind_of?(VmOrTemplate)
+                   elsif quadicon_named_for_base_model?(item)
                      item.class.base_model.to_s.underscore
                    elsif item.kind_of?(ManageIQ::Providers::ConfigurationManager)
                      "single_quad"
                    elsif quadicon_named_for_base_class?(item)
                      item.class.base_class.name.underscore
-                   elsif item.kind_of? PhysicalServer
-                     item.class.base_class.name.underscore
                    else
                      # All other models that only need single large icon and use name for hover text
                      "single_quad"
                    end
-
+    $log.info("quadicon_builder_name_from::builder_name::> #{builder_name}")
     builder_name = 'vm_or_template' if %w(miq_template vm).include?(builder_name)
     builder_name
   end
@@ -544,10 +546,15 @@ module QuadiconHelper
   #
   def render_ext_management_system_quadicon(item, options)
     output = []
-
+		$log.info("quadicon::> #{db_for_quadicon}")
     if settings(:quadicons, db_for_quadicon)
       output << flobj_img_simple("layout/base.png")
-      output << flobj_p_simple("a72", item.kind_of?(EmsCloud) ? item.total_vms : item.hosts.size)
+      item_count = case item
+        when EmsPhysicalInfra then item.physical_servers.size
+        when EmsCloud  then item.total_vms
+        else item.hosts.size
+      end
+      output << flobj_p_simple("a72", item_count)
       output << flobj_p_simple("b72", item.total_miq_templates) if item.kind_of?(EmsCloud)
       output << flobj_img_simple("svg/vendor-#{h(item.image_name)}.svg", "c72")
       output << flobj_img_simple(img_for_auth_status(item), "d72")
