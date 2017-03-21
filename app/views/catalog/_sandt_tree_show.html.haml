@@ -309,25 +309,27 @@
                       %th
                         = _("Default value")
                     %tbody
-                      - @record.config_info[:retirement][:extra_vars].each do |key, value|
-                        %tr
-                          %td
-                            = h(key)
-                          %td
-                            = h(value)
+                      - if retirement[:extra_vars]
+                        - retirement[:extra_vars].each do |key, value|
+                          %tr
+                            %td
+                              = h(key)
+                            %td
+                              = h(value)
               .form-group
                 %label.col-md-3.control-label
                   = _('Dialog')
                 .col-md-9
-                  - if role_allows?(:feature => "dialog_accord", :any => true)
-                    - params = {:controller => 'miq_ae_customization', :action => 'show', :id => "dg-#{to_cid(retirement[:dialog_id])}"}
-                    = link_to(retirement[:dialog],
-                            params,
-                            "data-miq_sparkle_on"  => true,
-                            "data-miq_sparkle_off" => true,
-                            :title                 => retirement[:dialog])
-                  - else
-                    = h(retirement[:dialog])
+                  - if retirement[:dialog]
+                    - if role_allows?(:feature => "dialog_accord", :any => true)
+                      - params = {:controller => 'miq_ae_customization', :action => 'show', :id => "dg-#{to_cid(retirement[:dialog_id])}"}
+                      = link_to(retirement[:dialog],
+                              params,
+                              "data-miq_sparkle_on"  => true,
+                              "data-miq_sparkle_off" => true,
+                              :title                 => retirement[:dialog])
+                    - else
+                      = h(retirement[:dialog])
 
 :javascript
   miq_tabs_init("#st_tabs");
