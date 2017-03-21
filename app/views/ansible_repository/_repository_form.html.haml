@@ -6,6 +6,7 @@
     %form#form_div{:name           => "angularForm",
                    'ng-controller' => "repositoryFormController as vm",
                    'ng-show'       => "vm.afterGet",
+                   'ng-cloak'      => '',
                     "miq-form"     => true,
                     "model"        => "vm.repositoryModel",
                     "model-copy"   => 'vm.modelCopy',
@@ -49,7 +50,7 @@
           %input.form-control{:type          => "url",
                                 :name        => "scm_url",
                                 :id          => "scm_url",
-                                'ng-model'   => "vm.repositoryModel.href",
+                                'ng-model'   => "vm.repositoryModel.scm_url",
                                 :required    => "",
                                 :checkchange => true}
           %span.help-block{"ng-show" => "angularForm.href.$error.required"}
@@ -60,11 +61,10 @@
         %label.col-md-2.control-label
           = _('SCM credentials')
         .col-md-8
-          = select_tag('scm_credentials',
-                         options_for_select([["#{_('whatever')}", "wharever"]]),
-                         "ng-model"    => "vm.repositoryModel.scm_credentials",
-                         "checkchange" => "",
-                         "pf-select" => "")
+          %select{'ng-model'   => 'vm.repositoryModel.scm_credentials',
+                  'ng-options' => 'scm_credential.value as scm_credential.name for scm_credential in vm.scm_credentials',
+                  }
+
       .form-group
         %label.col-md-2.control-label
           = _('SCM Branch')

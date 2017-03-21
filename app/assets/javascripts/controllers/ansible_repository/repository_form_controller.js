@@ -2,27 +2,38 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
   var vm = this;
 
   var init = function() {
+    vm.afterGet = false;
+
     vm.repositoryModel = {
       name: '',
       description: '',
       scm_type: 'git',
-      href: '',
-      scm_credentials: '',
+      manager_resource: {},
+      scm_url: '',
+      scm_credentials: null,
       scm_branch: '',
       scm_clean: false,
       scm_delete_on_update: false,
       scm_update_on_launch: false
     };
 
-    $scope.newRecord = repositoryId == 'new';
-
-    vm.afterGet = false;
+    API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAutomationManager')
+      .then(getManagerResource)
+      .catch(miqService.handleFailure);
 
     vm.model = 'repositoryModel';
 
+    miqService.sparkleOn();
+
     ManageIQ.angular.scope = vm;
 
-    miqService.sparkleOn();
+    $scope.newRecord = repositoryId == 'new';
+
+    vm.scm_credentials = [{name: __("<Select credentials>"), value: null}];
+    API.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ScmCredential&expand=resources')
+      .then(getCredentials)
+      .catch(miqService.handleFailure);
+
     if (repositoryId != 'new') {
       API.get('/api/configuration_script_sources/' + repositoryId)
         .then(getRepositoryFormData)
@@ -36,7 +47,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
   };
 
   $scope.cancelClicked = function() {
-    getBack(__('Action canceled by user.'), 'warning');
+    window.location.href = '/ansible_repository/show_list?message=' + __('Action canceled by user.') + '&level=warning';
   };
 
   $scope.resetClicked = function() {
@@ -46,19 +57,16 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
   };
 
   $scope.saveClicked = function() {
-    // TODO send
-    //API.put('/api/configuration_script_sources/' + repositoryId, vm.repositoryModel)
-    //  .then(getBack)
-    //  .catch(miqService.handleFailure);
-    getBack(__('Repository saved.'), 'success');
+    API.put('/api/configuration_script_sources/' + repositoryId, vm.repositoryModel.toJSON)
+      .then(getBack)
+      .catch(miqService.handleFailure);
   };
 
   $scope.addClicked = function() {
     // TODO send all info
-    //API.post('/api/configuration_script_sources/', {name: vm.repositoryModel.name, description: vm.repositoryModel.description})
-    //   .then(getBack)
-    //   .catch(miqService.handleFailure);
-    getBack(__('Repository added.'), 'success');
+    API.post('/api/configuration_script_sources/', vm.repositoryModel)
+       .then(getBack)
+       .catch(miqService.handleFailure);
   };
 
   function getRepositoryFormData(response) {
@@ -69,10 +77,29 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
     miqService.sparkleOff();
   }
 
-  function getBack(message, level) {
+  var getBack = function(response) {
+    debugger;
+    var message, level = '';
+    if (response.hasOwnProperty('results')) {
+      message = response.results[0].message;
+      level = response.results[0].success ? 'success': 'error';
+    }
+    else {
+      message = response.message;
+      level = response.success ? 'success': 'error';
+    }
     window.location.href = '/ansible_repository/show_list' + '?message=' + message + '&level=' + level;
-  }
+  };
 
+  var getCredentials = function(response) {
+    response.resources.forEach( function(resource) {
+      vm.scm_credentials.push({name: resource.name, value: resource.href});
+    });
+  };
+
+  var getManagerResource = function(response) {
+    vm.repositoryModel.manager_resource = {'href' : response.resources[0].href}
+  };
   init();
 }]);
 
