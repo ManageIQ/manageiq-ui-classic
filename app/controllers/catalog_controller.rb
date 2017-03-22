@@ -831,13 +831,13 @@ class CatalogController < ApplicationController
   def remove_resources_display(remove_resources)
     case remove_resources
     when 'no_without_playbook', 'no_with_playbook'
-      'No'
+      _('No')
     when 'pre_with_playbook'
-      'Before Playbook runs'
+      _('Before Playbook runs')
     when 'post_with_playbook'
-      'After Playbook runs'
+      _('After Playbook runs')
     else
-      'Yes'
+      _('Yes')
     end
   end
   helper_method :remove_resources_display
