@@ -3,7 +3,7 @@ module Quadicons
     attr_reader :record, :context, :options
     attr_writer :quadrants
 
-    delegate :concat, :content_tag, :link_to, :to => :context
+    delegate :concat, :content_tag, :render_link?, :link_to, :to => :context
 
     def initialize(record, context)
       @record  = record
@@ -67,10 +67,6 @@ module Quadicons
       else
         [:type_icon]
       end
-    end
-
-    def render_link?
-      context.render_link?
     end
 
     def render_full?
