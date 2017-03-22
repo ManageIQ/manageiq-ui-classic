@@ -21,7 +21,7 @@
                                   "id"             => "name",
                                   "name"           => "name",
                                   "ng-model"       => "hostModel.name",
-                                  "maxlength"      => "#{MAX_NAME_LEN}",
+                                  "maxlength"      => MAX_NAME_LEN.to_s,
                                   "miqrequired"    => "",
                                   "checkchange"    => "",
                                   "auto-focus"     => ""}
@@ -35,7 +35,7 @@
                                   "id"          => "hostname",
                                   "name"        => "hostname",
                                   "ng-model"    => "hostModel.hostname",
-                                  "maxlength"   => "#{MAX_HOSTNAME_LEN}",
+                                  "maxlength"   => MAX_HOSTNAME_LEN.to_s,
                                   "miqrequired" => "",
                                   "checkchange" => ""}
               %span.help-block{"ng-show" => "angularForm.hostname.$error.miqrequired"}
@@ -82,7 +82,7 @@
               %input#mac_address.form-control{"type"        => "text",
                                               "name"        => "mac_address",
                                               "ng-model"    => "hostModel.mac_address",
-                                              "maxlength"   => "#{MAX_NAME_LEN}",
+                                              "maxlength"   => MAX_NAME_LEN.to_s,
                                               "checkchange" => ""}
     %hr
     = render(:partial => "/layouts/angular/multi_auth_credentials",

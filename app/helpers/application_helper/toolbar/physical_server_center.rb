@@ -13,7 +13,8 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
                        N_('Refresh relationships and power states for all items related to the selected items'),
                        N_('Refresh Relationships and Power States'),
                        :url_parms => "main_div",
-                       :confirm   => N_("Refresh relationships and power states for all items related to the selected items?"),
+                       :confirm   => N_("Refresh relationships and power states" +
+                                        " for all items related to the selected items?"),
                        :enabled   => false,
                        :onwhen    => "1+"
                      ),
@@ -105,7 +106,8 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
                        N_('Remove Selected items'),
                        N_('Remove items'),
                        :url_parms => "main_div",
-                       :confirm   => N_("Warning: The selected items and ALL of their components will be permanently removed!?"),
+                       :confirm   => N_("Warning: The selected items and ALL of their" + 
+                                        " components will be permanently removed!?"),
                        :enabled   => false,
                        :onwhen    => "1+"
                      ),

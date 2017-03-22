@@ -245,7 +245,10 @@ module QuadiconHelper
       end
     else
       href = if quadicon_show_links?
-               quadicon_edit_key?(:hostitems) ? "/physical_server/edit/?selected_physical_server=#{item.id}" : url_for_record(item)
+               if quadicon_edit_key?(:hostitems)
+                 "/physical_server/edit/?selected_physical_server=#{item.id}"
+               else
+                   url_for_record(item)
              end
 
       output << content_tag(:div, :class => 'flobj') do
@@ -258,7 +261,7 @@ module QuadiconHelper
     end
     # TODO(odravison): rubocop saying that is risky use html_safe
     # to use instead safe_join or others Rails tag helpers.
-    output.collect(&:html_safe).join('').html_safe
+    output.collect(&:html_safe).join('').safe_join
   end
 
   # FIXME: Even better would be to ask the object what name to use
