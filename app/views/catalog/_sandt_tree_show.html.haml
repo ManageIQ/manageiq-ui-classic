@@ -296,6 +296,11 @@
                   = _('Hosts')
                 .col-md-9
                   = h(@record.config_info[:retirement][:hosts])
+              .form-group
+                %label.col-md-3.control-label
+                  = _('Remove Resources')
+                .col-md-9
+                  = h(remove_resources_display(retirement[:remove_resources]))
           .col-md-12.col-lg-6
             .form-horizontal.static
               .form-group
