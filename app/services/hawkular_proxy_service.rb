@@ -25,6 +25,8 @@ class HawkularProxyService
       :type           => @params['type'],
       :metric_id      => @params['metric_id'],
       :tags           => _tags,
+      :page           => @params['page'] || 1,
+      :items_per_page => @params['items_per_page'] || 15,
       :limit          => @params['limit'] || 10_000,
       :ends           => @params['ends'] || (DateTime.now.to_i * 1000),
       :starts         => @params['starts'],
@@ -36,16 +38,33 @@ class HawkularProxyService
 
     case query
     when 'metric_definitions'
+      data = metric_definitions(params[:tags], params[:limit].to_i, params[:type])
+
+      items = data.count
+      page = params[:page].to_i
+      items_per_page = params[:items_per_page].to_i
+      pages = (items.to_f / items_per_page.to_f).ceil
+      start_index = items_per_page * (page - 1)
+      end_index = start_index + items_per_page
+
       {
-        :metric_definitions => metric_definitions(params[:tags], params[:limit].to_i, params[:type])
+        :page               => page,
+        :items              => items,
+        :items_per_page     => items_per_page,
+        :pages              => pages,
+        :limit              => params[:limit].to_i,
+        :metric_definitions => data[start_index...end_index]
       }
     when 'metric_tags'
       {
         :metric_tags => metric_tags(params[:tags], params[:limit].to_i, params[:type])
       }
     when 'get_data'
+      data = get_data(params[:metric_id], params).compact
+      limit = params[:limit].to_i
+
       {
-        :data => get_data(params[:metric_id], params).compact
+        :data => data[0..limit]
       }
     when 'get_tenants'
       {
@@ -66,11 +85,12 @@ class HawkularProxyService
   def metric_definitions(tags, limit, type)
     list = _metric_definitions(tags, type).map { |m| m.json if m.json }
 
-    list.sort { |a, b| a["id"].downcase <=> b["id"].downcase }[0..limit]
+    list.sort { |a, b| a["id"].downcase <=> b["id"].downcase }[0...limit]
   end
 
   def metric_tags(tags, limit, type)
-    tags = metric_definitions(tags, limit, type).map do |x|
+    definitions = metric_definitions(tags, limit, type)
+    tags = definitions.map do |x|
       x["tags"].keys if x["tags"]
     end
 
@@ -78,14 +98,12 @@ class HawkularProxyService
   end
 
   def get_data(id, params)
-    data = client.get_data(id,
-                           :limit          => params[:limit].to_i,
-                           :starts         => params[:starts].to_i,
-                           :ends           => params[:ends].to_i,
-                           :bucketDuration => params[:bucketDuration] || nil,
-                           :order          => params[:order] || 'ASC')
-
-    data[0..params[:limit].to_i]
+    client.get_data(id,
+                    :limit          => params[:limit].to_i,
+                    :starts         => params[:starts].to_i,
+                    :ends           => params[:ends].to_i,
+                    :bucketDuration => params[:bucketDuration] || nil,
+                    :order          => params[:order] || 'ASC')
   end
 
   def tenants(limit)
@@ -97,7 +115,7 @@ class HawkularProxyService
       tenants.map! { |x| x["id"] if x["id"].include?(@params['include']) }
     end
 
-    tenants.compact[0..limit]
+    tenants.compact[0...limit]
   end
 
   private

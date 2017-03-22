@@ -29,3 +29,33 @@
                             "ng-click"    => "dash.viewGraph()",
                             "ng-disabled" => "!dash.itemSelected"}
       = _("View Graph")
+
+  = # TODO: pagination should move inside the #paging-div element once #592 is complete
+  .form-group.pagination-div
+    %ul.pagination.pagination-pf-back
+      %li
+        %a{"href"  => "#",
+           "ng-click" => "dash.setPage(1)",
+           "title" => _("First Page")}
+          %span.i.fa.fa-angle-double-left
+      %li
+        %a{"href"  => "#",
+           "ng-click" => "dash.setPage(dash.page - 1)",
+           "title" => _("Previous Page")}
+          %span.i.fa.fa-angle-left
+
+    %input.page-input.form-control{"ng-model" => "dash.page",
+                                            "readonly" => "readonly",
+                                            "type"     => "text"}
+
+    %ul.pagination.pagination-pf-forward
+      %li
+        %a{"href"  => "#",
+           "ng-click" => "dash.setPage(dash.page + 1)",
+           "title" => _("Next Page")}
+          %span.i.fa.fa-angle-right
+      %li
+        %a{"href"  => "#",
+           "ng-click" => "dash.setPage(dash.pages)",
+           "title" => _("Last Page")}
+          %span.i.fa.fa-angle-double-right

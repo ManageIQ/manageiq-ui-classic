@@ -19,9 +19,37 @@
     }
   }
 
+  .form-group.toolbar-actions.ng-scope {
+    width: calc(100% - 295px);
+  }
+
+  .toolbar-pf-include-actions.ng-scope {
+    width: 100%;
+  }
+
+  .pagination, .pagination-div, .form-group.pagination-div.ng-scope {
+    display: flex;
+    float: right;
+    margin: 0px;
+    margin-bottom: 0px;
+
+    .page-input {
+      width: 40px;
+      margin-left: 10px;
+      margin-right: 10px;
+      text-align: right;
+    }
+  }
+
+  .form-group.toolbar-pf-filter,
+  .form-group.toolbar-actions.ng-scope,
+  .toolbar-pf-actions.ng-pristine.ng-valid.no-filter-results {
+    margin-bottom: 5px;
+  }
+
   .list-view-container, .line-chart, .blank-slate-pf {
     margin-bottom: 0;
-    min-height: calc(100vh - 362px);
+    min-height: calc(100vh - 357px);
     margin-left: 20px;
     margin-right: 20px;
   }

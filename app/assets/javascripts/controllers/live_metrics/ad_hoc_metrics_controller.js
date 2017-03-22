@@ -22,6 +22,9 @@
       dash.tags = {};
       dash.chartData = {};
 
+      dash.page = 1;
+      dash.pages = 1;
+
       dash.filterConfig = {
         fields: [],
         appliedFilters: [],
@@ -52,6 +55,8 @@
       if (dash.filterConfig.appliedFilters.length === 0) {
         dash.applied = false;
         dash.items = [];
+        dash.page = 1;
+        dash.pages = 1;
         dash.filterConfig.resultsCount = 0;
         return;
       }
@@ -66,6 +71,8 @@
       // when change filter we automatically apply changes
       if (!addOnly) {
         dash.items = [];
+        dash.page = 1;
+        dash.pages = 1;
         dash.filterChanged = false;
         dash.filterConfig.resultsCount = 0;
         dash.applyFilters();
@@ -111,6 +118,7 @@
     dash.getTenants = httpUtils.getTenants;
     dash.refreshList = httpUtils.refreshList;
     dash.refreshGraph = httpUtils.refreshGraph;
+    dash.setPage = httpUtils.setPage;
 
     // try to parse config variables from page url
     // and set page config variables

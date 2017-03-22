@@ -27,11 +27,8 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
 
       angular.forEach(dash.items, getLatestData);
 
-      if (dash.items.length > dash.max_metrics) {
-        dash.filterConfig.resultsCount = __("Showing first") + " " + dash.max_metrics;
-      } else {
-        dash.filterConfig.resultsCount = dash.items.length;
-      }
+      dash.pages = (data.pages > 0) ? data.pages : 1;
+      dash.filterConfig.resultsCount = __("Page ") + data.page + __(" Of ") + dash.pages + __(", Found ") + data.items;
     }
 
     function refreshOneGraph(metricId, metricType, currentItem) {
@@ -85,7 +82,9 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
       dash.itemSelected = false;
       dash.loadingMetrics = true;
       var _tags = dash.tags !== {} ? '&tags=' + JSON.stringify(dash.tags) : '';
-      $http.get(dash.url + '&limit=' + dash.max_metrics +'&query=metric_definitions' + _tags)
+      var pagination = '&page=' + dash.page + '&items_per_page=' + dash.items_per_page;
+
+      $http.get(dash.url + '&limit=' + dash.max_metrics +'&query=metric_definitions' + _tags + pagination)
         .then(getMetricDefinitionsData)
         .catch(miqService.handleFailure);
     };
@@ -111,11 +110,23 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
       }
     };
 
+    var setPage = function(page) {
+      var _page = page || 1;
+      if (_page < 1) _page = 1;
+      if (_page > dash.pages) _page = dash.pages;
+
+      if (dash.page !== _page) {
+        dash.page = _page;
+        refreshList();
+      }
+    };
+
     return {
       getMetricTags: getMetricTags,
       getTenants: getTenants,
       refreshList: refreshList,
-      refreshGraph: refreshGraph
+      refreshGraph: refreshGraph,
+      setPage: setPage
     }
   }
 });
