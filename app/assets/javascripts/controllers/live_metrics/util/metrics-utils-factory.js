@@ -21,6 +21,7 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
 
       var data = response.data;
 
+      dash.filterConfig.fields = [];
       if (data && angular.isArray(data.metric_tags)) {
         data.metric_tags.sort();
         for (var i = 0; i < data.metric_tags.length; i++) {
@@ -32,9 +33,6 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
               filterType: 'alpha',
             });
         }
-      } else {
-        // No filters available, apply without filtering
-        dash.filterConfig.fields = [];
       }
     }
 

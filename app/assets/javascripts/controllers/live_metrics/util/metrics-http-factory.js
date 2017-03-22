@@ -68,13 +68,28 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
           miqService.handleFailure(error); });
     };
 
-    var getTenants = function(include) {
-      return $http.get(dash.url + "&query=get_tenants&limit=7&include=" + include).then(function(response) {
+    var getTenants = function() {
+      var url = '/container_dashboard/data' + dash.providerId  + '/?live=true&query=get_tenants';
+
+      return $http.get(url).then(function(response) {
         if (utils.checkResponse(response) === false) {
-          return [];
+          dash.tenantList = [];
+          dash.tenant = {value: null};
+          return;
         }
 
-        return response.data.tenants;
+        // get the tenant list, and set the current tenant
+        dash.tenantList = response.data.tenants;
+        dash.tenant = dash.tenantList[0];
+
+        // try to set the current tenant to be the default one
+        dash.tenantList.forEach(function callback(obj, i) {
+          if (obj.value === dash.DEFAULT_TENANT) {
+            dash.tenant = dash.tenantList[i];
+          }
+        });
+
+        getMetricTags();
       });
     }
 
