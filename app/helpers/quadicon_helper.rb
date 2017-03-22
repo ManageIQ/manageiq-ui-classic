@@ -260,9 +260,7 @@ module QuadiconHelper
         end
       end
     end
-    # TODO(odravison): rubocop saying that is risky use html_safe
-    # to use instead safe_join or others Rails tag helpers.
-    output.collect(&:html_safe).join('').safe_join
+    safe_join(output.collect(&:html_safe))
   end
 
   # FIXME: Even better would be to ask the object what name to use
