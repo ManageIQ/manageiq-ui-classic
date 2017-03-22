@@ -1,7 +1,7 @@
 # Filter/search/expression methods included in application.rb
 module ApplicationController::Filter
   extend ActiveSupport::Concern
-  include MiqExpression::FilterSubstMixin
+  include SubstMixin
   include ApplicationController::ExpressionHtml
 
   # Handle buttons pressed in the expression editor
