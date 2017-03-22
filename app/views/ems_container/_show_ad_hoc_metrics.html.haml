@@ -10,3 +10,7 @@
 
 :javascript
   miq_bootstrap('.ad-hoc-metrics');
+  setTimeout(function() {
+    dash = $($('.miq-metrics')[0]).scope().dash;
+    dash.predefinedTags = {};
+  })

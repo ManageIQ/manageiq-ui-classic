@@ -26,6 +26,9 @@
                                          "options"            => "dash.dateOptions",
                                          "date"               => "dash.timeFilter.date"}
 
+    %button.btn.btn-primary.pull-left{"type" => "button", "ng-click" => "dash.refreshGraph()"}
+      = _("Refresh")
+
     %dropdown.dropdown-kebab-pf
       %button.btn.btn-link.dropdown-toggle{"type"          => "button",
                                            "data-toggle"   => "dropdown",
@@ -36,7 +39,8 @@
         %li{"ng-repeat" => "range in dash.timeIntervals"}
           %a{"href"     => "#",
              "ng-click" => "dash.minBucketDurationInSecondes = range.value; dash.refreshGraph()"}
-            {{range.title}}
-
-    %button.btn.btn-primary.pull-left{"type" => "button", "ng-click" => "dash.refreshGraph()"}
-      = _("Refresh")
+            .row
+              .col-md-9
+                {{range.title}}
+              .col
+                %span.pficon{"ng-class" => "{true: 'pficon-ok'}[dash.minBucketDurationInSecondes===range.value]"}
