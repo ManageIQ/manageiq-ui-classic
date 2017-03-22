@@ -248,7 +248,7 @@ module QuadiconHelper
                if quadicon_edit_key?(:hostitems)
                  "/physical_server/edit/?selected_physical_server=#{item.id}"
                else
-                   url_for_record(item)
+                 url_for_record(item)
                end
              end
 

@@ -13,7 +13,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
                        N_('Refresh relationships and power states for all items related to the selected items'),
                        N_('Refresh Relationships and Power States'),
                        :url_parms => "main_div",
-                       :confirm   => N_("Refresh relationships and power states " << 
+                       :confirm   => N_("Refresh relationships and power states "\ 
                                         "for all items related to the selected items?"),
                        :enabled   => false,
                        :onwhen    => "1+"
@@ -106,7 +106,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
                        N_('Remove Selected items'),
                        N_('Remove items'),
                        :url_parms => "main_div",
-                       :confirm   => N_("Warning: The selected items and ALL of " << 
+                       :confirm   => N_("Warning: The selected items and ALL of "\
                                         "their components will be permanently removed!?"),
                        :enabled   => false,
                        :onwhen    => "1+"
@@ -148,7 +148,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
                        N_('Check Compliance of the last known configuration for the selected items'),
                        N_('Check Compliance of Last Known Configuration'),
                        :url_parms => "main_div",
-                       :confirm   => N_("Initiate Check Compliance of the last known " << 
+                       :confirm   => N_("Initiate Check Compliance of the last known "\
                                         "configuration for the selected items?"),
                        :enabled   => false,
                        :onwhen    => "1+"
