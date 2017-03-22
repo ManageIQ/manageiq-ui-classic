@@ -50,8 +50,8 @@ module HostHelper::TextualSummary
 
   def textual_physical_servers
     {
-      :label => _("Physical Server"), :value => @record.physical_server.name, :icon => "pficon pficon-server",
-      :link => url_for(:controller => 'physical_server', :action => 'show', :id => @record.physical_server.id)
+      :label => _("Physical Server"), :value => @record.physical_server.try(:name), :icon => "pficon pficon-server",
+      :link => url_for(:controller => 'physical_server', :action => 'show', :id => @record.physical_server.try(:id))
     }
   end
 
