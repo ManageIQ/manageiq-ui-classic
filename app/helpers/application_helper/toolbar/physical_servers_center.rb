@@ -13,7 +13,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
                        N_('Refresh relationships and power states for all items related to the selected items'),
                        N_('Refresh Relationships and Power States'),
                        :url_parms => "main_div",
-                       :confirm   => N_("Refresh relationships and power states "\ 
+                       :confirm   => N_("Refresh relationships and power states "\
                                         "for all items related to the selected items?"),
                        :enabled   => false,
                        :onwhen    => "1+"
