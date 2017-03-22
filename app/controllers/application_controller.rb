@@ -293,6 +293,9 @@ class ApplicationController < ActionController::Base
     if params[:model] && %w(miq_requests).include?(params[:model])
       options = show_list
     end
+    if params[:model] && %w(miq_tasks).include?(params[:model])
+      options = get_jobs_info
+    end
     curr_model_id = Integer(params[:model_id]) rescue nil
     unless curr_model_id.nil?
       options[:parent] = identify_record(params[:model_id]) if params[:model_id] && options[:parent].nil?
@@ -366,6 +369,7 @@ class ApplicationController < ActionController::Base
       settings = options[:pages]
     end
     settings = set_variables_report_data(settings, current_view)
+
     # Foreman has some unassigned rows which needs to be added after view is fetched
     if options && options[:unassigned_profile_row] && options[:unassigned_configuration_profile]
       options[:unassigned_profile_row][:id] ||= options[:unassigned_profile_row]['manager_id']
@@ -1005,7 +1009,9 @@ class ApplicationController < ActionController::Base
         :cells    => [],
         :quadicon => quadicon
       }
-      new_row[:parent_id] = "xx-#{to_cid(row.data['miq_report_id'])}" if defined? row.data && row.data['miq_report_id']
+      if defined? row.data
+        new_row[:parent_id] = "xx-#{to_cid(row.data['miq_report_id'])}" if row.data['miq_report_id']
+      end
       new_row[:parent_id] = "xx-#{CONTENT_TYPE_ID[target[:content_type]]}" if target && target[:content_type]
       new_row[:tree_id] = TreeBuilder.build_node_cid(target) if target
       root[:rows] << new_row
@@ -1018,6 +1024,8 @@ class ApplicationController < ActionController::Base
       if has_listicon
         item = listicon_item(view, row['id'])
         icon, icon2, image = listicon_glyphicon(item)
+        image = "100/#{(@listicon || view.db).underscore}.png" unless image
+        icon = nil if %w(pxe).include? params[:controller]
         new_row[:img_url] = ActionController::Base.helpers.image_path(image.to_s)
         new_row[:cells] << {:title => _('View this item'),
                             :image => image,

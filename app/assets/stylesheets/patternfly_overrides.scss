@@ -760,3 +760,9 @@ div.disabled {
 table .narrow {
   width: 6%;
 }
+
+.no-action .miq-data-table, .no-cation .miq-tile-section {
+  td{
+    cursor: default !important;
+  }
+}

@@ -91,6 +91,7 @@ class PxeController < ApplicationController
     when :iso_datastores_tree          then iso_datastore_get_node_info(node)
     end
     x_history_add_item(:id => node, :text => @right_cell_text)
+    {:view => @view, :pages => @pages}
   end
 
   def replace_right_cell(options = {})

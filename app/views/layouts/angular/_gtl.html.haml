@@ -13,6 +13,7 @@
     = render(:partial => "layouts/info_msg",
                :locals => {:message => "{{dataCtrl.showMessage}}"})
   %miq-tile-view{"ng-if"            => "dataCtrl.gtlType === 'grid' || dataCtrl.gtlType === 'tile'",
+                 "ng-class"         => "{'no-action': dataCtrl.initObject.showUrl === ''}",
                  "settings"         => "dataCtrl.settings",
                  "per-page"         => "dataCtrl.perPage",
                  "rows"             => "dataCtrl.gtlData.rows",
@@ -22,7 +23,8 @@
                  "load-more-items"  => "dataCtrl.onLoadNext(start, perPage)",
                  "columns"          => "dataCtrl.gtlData.cols",
                  "type"             => "dataCtrl.gtlType === 'grid' ? 'small' : 'big'"}
-  %miq-data-table{"ng-if"            =>"dataCtrl.gtlType === 'list'",
+  %miq-data-table{"ng-if"            => "dataCtrl.gtlType === 'list'",
+                  "ng-class"         => "{'no-action': dataCtrl.initObject.showUrl === false}",
                   "settings"         => "dataCtrl.settings",
                   "per-page"         => "dataCtrl.perPage",
                   "rows"             => "dataCtrl.gtlData.rows",

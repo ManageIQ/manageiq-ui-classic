@@ -16,6 +16,18 @@
     return splitUrl && (splitUrl[1] === ManageIQ.controller || splitUrl[2] === 'policies');
   }
 
+  function isCurrentOpsWorkerSelected(items, initObject) {
+    if (initObject.activeTree === 'diagnostics_tree' && ManageIQ.controller === 'ops') {
+      var lastSlash = initObject.showUrl.indexOf('/', 5) + 1;
+      var itemId = initObject.showUrl.substring(lastSlash);
+      initObject.showUrl = initObject.showUrl.substring(0, lastSlash);
+      if (itemId) {
+        itemId = itemId[itemId.length - 1] === '/' ? itemId.substring(0, itemId.length - 1) : itemId;
+        return _.find(items, {id: itemId});
+      }
+    }
+  }
+
   /**
   * Method for init paging component for GTL.
   * Default paging has 5, 10, 20, 50, 100, 1000
@@ -161,27 +173,29 @@
   ReportDataController.prototype.onItemClicked = function(item, event) {
     event.stopPropagation();
     event.preventDefault();
-    var prefix = this.initObject.showUrl;
-    var splitUrl = this.initObject.showUrl.split('/');
-    if (this.initObject.isExplorer && isCurrentControllerOrPolicies(splitUrl)) {
-      var itemId = item.id;
-      if (this.initObject.showUrl.indexOf('?id=') !== -1 ) {
-        itemId = this.initObject.showUrl.indexOf('xx-') !== -1 ? '_-' + item.id : '-' + item.id;
-        if (item.parent_id) {
-          itemId = item.parent_id + '_' + item.tree_id;
+    if (this.initObject.showUrl) {
+      var prefix = this.initObject.showUrl;
+      var splitUrl = this.initObject.showUrl.split('/');
+      if (this.initObject.isExplorer && isCurrentControllerOrPolicies(splitUrl)) {
+        var itemId = item.id;
+        if (this.initObject.showUrl.indexOf('?id=') !== -1 ) {
+          itemId = this.initObject.showUrl.indexOf('xx-') !== -1 ? '_-' + item.id : '-' + item.id;
+          if (item.parent_id && item.parent_id[item.parent_id.length - 1] !== '-') {
+            itemId = item.parent_id + '_' + item.tree_id;
+          }
         }
+        if (itemId.indexOf('unassigned') !== -1) {
+          prefix = '/' + ManageIQ.controller + '/tree_select/?id=';
+        }
+        var url = prefix + itemId;
+        $.post(url).always(function() {
+          this.setExtraClasses();
+        }.bind(this));
+      } else {
+        var lastChar = prefix[prefix.length - 1];
+        prefix = (lastChar !== '/' && lastChar !== '=') ? prefix + '/' : prefix;
+        this.$window.DoNav(prefix + (item.long_id || item.id));
       }
-      if (itemId.indexOf('unassigned') !== -1) {
-        prefix = '/' + ManageIQ.controller + '/tree_select/?id=';
-      }
-      var url = prefix + itemId;
-      $.post(url).always(function() {
-        this.setExtraClasses();
-      }.bind(this));
-    } else {
-      var lastChar = prefix[prefix.length - 1];
-      prefix = (lastChar !== '/' && lastChar !== '=') ? prefix + '/' : prefix;
-      this.$window.DoNav(prefix + (item.long_id || item.id));
     }
     return false;
   };
@@ -219,6 +233,8 @@
       } else {
         this.initObject.showUrl += '/show/';
       }
+    } else if (this.initObject.showUrl === 'false') {
+      this.initObject.showUrl = false;
     }
     this.gtlType = initObject.gtlType || 'grid';
     this.settings.isLoading = true;
@@ -358,6 +374,7 @@
             this.initObject.showUrl = splitUrl.join('/');
           }
         }
+        this.onItemSelect(isCurrentOpsWorkerSelected(this.gtlData.rows, this.initObject), true);
         return gtlData;
       }.bind(this));
   };

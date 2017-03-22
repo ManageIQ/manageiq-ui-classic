@@ -90,7 +90,7 @@ module MiqAeCustomizationController::Dialogs
     session[:dialog_sortcol] = @sortcol
     session[:dialog_sortdir] = @sortdir
 
-    update_gtl_div('dialog_list') if pagination_or_gtl_request?
+    update_gtl_div('dialog_list') if pagination_or_gtl_request? && @show_list
   end
 
   # Add new dialog

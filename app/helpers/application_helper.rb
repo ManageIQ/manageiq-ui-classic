@@ -187,6 +187,12 @@ module ApplicationHelper
       MiqProvisionRequest
       MiqProvisionRequestTemplate
       MiqWebServiceWorker
+      CustomizationTemplateSysprep
+      CustomizationTemplateCloudInit
+      CustomizationTemplateKickstart
+      PxeImageType
+      IsoDatastore
+      MiqTask
     ).include? type
   end
 
@@ -322,6 +328,11 @@ module ApplicationHelper
       if controller == "ems_network" && action == "show"
         return ems_networks_path
       end
+      # If we do not want to use redirect or any kind of click action
+      if %w(Job VmdbDatabaseSetting VmdbDatabaseConnection).include?(view.db) &&
+         %w(miq_task ops).include?(params[:controller])
+        return false
+      end
       if @explorer
         # showing a list view of another CI inside vmx
         if %w(SecurityGroup
@@ -353,8 +364,16 @@ module ApplicationHelper
         elsif %w(VmdbTableEvm VmdbIndex MiqServer).include?(view.db) &&
               %w(ops report).include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + TREE_WITH_TAB[active_tab]
-        elsif %w(MiqAction MiqAlert ScanItemSet MiqSchedule).include?(view.db) &&
-              %w(miq_policy ops).include?(params[:controller])
+        elsif %w(MiqAction
+                 MiqAlert
+                 ScanItemSet
+                 MiqSchedule
+                 PxeServer
+                 PxeImageType
+                 IsoDatastore
+                 CustomizationTemplate
+                 ).include?(view.db) &&
+              %w(miq_policy ops pxe).include?(params[:controller])
           return "/#{params[:controller]}/tree_select/?id=#{TreeBuilder.get_prefix_for_model(view.db)}"
         else
           return url_for_only_path(:action => action) + "/" # In explorer, don't jump to other controllers
