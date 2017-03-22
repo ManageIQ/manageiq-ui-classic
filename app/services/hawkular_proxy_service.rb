@@ -59,7 +59,7 @@ class HawkularProxyService
   rescue StandardError => e
     {
       :parameters => params,
-      :error      => e
+      :error      => ActionView::Base.full_sanitizer.sanitize(e.message)
     }
   end
 
