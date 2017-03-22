@@ -119,7 +119,7 @@ module Quadicons
     end
 
     def default_title_attr
-      if record.decorator_class? && record.decorate.respond_to?(:quadicon_title)
+      if record.decorate.respond_to?(:quadicon_title)
         record.decorate.quadicon_title
       else
         "#{record_class}_#{record.id}"

@@ -2,7 +2,7 @@ module Quadicons
   module Quadrants
     class TypeIcon < Quadrants::Base
       def path
-        if record.decorator_class?
+        if record.decorate
           decorator_icon
         else
           fallback_path

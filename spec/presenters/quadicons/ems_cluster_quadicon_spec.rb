@@ -16,7 +16,7 @@ describe "Quadicon for EmsCluster", :type => :helper do
     subject(:rendered) { instance.render }
 
     it 'includes the ems-cluster icon' do
-      expect(rendered).to have_selector("img[src*='emscluster']")
+      expect(rendered).to have_selector("img[src*='ems_cluster']")
     end
 
     context "when type not is listnav" do

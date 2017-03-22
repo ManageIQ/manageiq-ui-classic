@@ -31,32 +31,47 @@ describe Quadicons::SingleQuadicon, :type => :helper do
       end
 
       context "when record is decorated" do
+        # TODO: break out into EmsConfig quadicon
         context "when item is a config manager foreman" do
           before do
+            allow(record.class).to receive(:db_name) { "provider_foreman" }
+
             allow(controller).to receive(:default_url_options) do
-              {:controller => "provider_foreman"}
+              { :controller => "provider_foreman" }
             end
           end
 
           it 'includes a vendor listicon img' do
-            pending "Make inferred urls work"
-            expect(rendered).to have_selector("img[src*='vendor-#{item.image_name}']")
+            expect(rendered).to have_selector("img[src*='vendor-#{record.image_name}']")
           end
         end
 
         context "when item is a middleware deployment" do
+          # TODO: break out into MiddlewareDeploymentQuadicon
           let(:record) { FactoryGirl.create(:middleware_deployment) }
 
+          before do
+            kontext.explorer = false
+
+            allow(controller).to receive(:default_url_options) do
+              { :controller => "middleware_deployment", :action => "show" }
+            end
+          end
+
           it 'includes a vendor listicon img' do
-            pending "Make inferred urls work"
             expect(rendered).to have_selector("img[src*='middleware_deployment']")
           end
         end
       end
 
       context "when item is not decorated" do
+        let(:record) { FactoryGirl.create(:service) }
         before do
-          allow(record).to receive(:decorator_class?) { false }
+          allow(record).to receive(:decorate) { nil }
+
+          allow(controller).to receive(:default_url_options) do
+            { :controller => "service" }
+          end
         end
 
         it "includes an image with the item's base class name" do

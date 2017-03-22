@@ -6,9 +6,7 @@ describe Quadicons::LinkBuilders::VmOrTemplateLinkBuilder, :type => :helper do
   let(:instance) { Quadicons::LinkBuilders::VmOrTemplateLinkBuilder.new(record, kontext) }
 
   describe "finding url based on role" do
-    subject do
-      Quadicons::LinkBuilders::VmOrTemplateLinkBuilder.new(record, kontext).vm_link_attributes
-    end
+    subject { instance.vm_link_attributes }
 
     before do
       allow(helper).to receive(:role_allows?) { true }

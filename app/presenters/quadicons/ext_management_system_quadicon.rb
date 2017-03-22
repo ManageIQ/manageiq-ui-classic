@@ -1,6 +1,5 @@
 module Quadicons
   class ExtManagementSystemQuadicon < Base
-
     private
 
     def link_builder
