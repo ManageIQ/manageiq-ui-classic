@@ -249,6 +249,7 @@ module QuadiconHelper
                  "/physical_server/edit/?selected_physical_server=#{item.id}"
                else
                    url_for_record(item)
+               end
              end
 
       output << content_tag(:div, :class => 'flobj') do
