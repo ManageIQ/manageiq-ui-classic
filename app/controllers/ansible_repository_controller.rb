@@ -28,14 +28,14 @@ class AnsibleRepositoryController < ApplicationController
     elsif params[:pressed] == "embedded_configuration_script_source_add"
       javascript_redirect :action => 'new'
     elsif params[:pressed] == "embedded_configuration_script_source_delete"
-      ids = params[:miq_grid_checks].split(',')
+      ids = params.key?('id') ? [params[:id]] : params[:miq_grid_checks].split(',')
       ids.each do |id|
-        ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource.delete(from_cid(id).to_i)
+        ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource.find(from_cid(id).to_i).delete_in_provider
       end
       # TODO nicer way?
-      add_flash(_('Selected repositories were deleted'), :success)
+      add_flash(_('Delete of selected repositories was initialized.'), :success)
       show_list
-      replace_gtl_main_div
+      #replace_gtl_main_div
     end
   end
 

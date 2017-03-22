@@ -93,9 +93,11 @@
               = check_box_tag("clean", "1", false, 'ng-model' => 'vm.repositoryModel.scm_update_on_launch')
               = _('Update on Launch')
             %i.pficon.pficon-info
-
       = render :partial => "layouts/angular/x_edit_buttons_angular"
 
 :javascript
   ManageIQ.angular.app.value('repositoryId', '#{@id}');
   miq_bootstrap('#form_div');
+  $("#form-div").submit(function (e) {
+      miqSparkleOn();
+    });

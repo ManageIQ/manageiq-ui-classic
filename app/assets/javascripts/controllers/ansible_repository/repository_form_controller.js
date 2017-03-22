@@ -14,7 +14,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
       scm_branch: '',
       scm_clean: false,
       scm_delete_on_update: false,
-      scm_update_on_launch: false
+      scm_update_on_launch: false,
     };
 
     API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAutomationManager')
@@ -23,23 +23,22 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
 
     vm.model = 'repositoryModel';
 
-    miqService.sparkleOn();
+   // miqService.sparkleOn();
 
     ManageIQ.angular.scope = vm;
 
-    $scope.newRecord = repositoryId == 'new';
+    $scope.newRecord = repositoryId === 'new';
 
-    vm.scm_credentials = [{name: __("<Select credentials>"), value: null}];
+    vm.scm_credentials = [{name: __('Select credentials'), value: null}];
     API.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ScmCredential&expand=resources')
       .then(getCredentials)
       .catch(miqService.handleFailure);
 
-    if (repositoryId != 'new') {
+    if (repositoryId !== 'new') {
       API.get('/api/configuration_script_sources/' + repositoryId)
         .then(getRepositoryFormData)
         .catch(miqService.handleFailure);
-    }
-    else {
+    } else {
       vm.afterGet = true;
       vm.modelCopy = angular.copy( vm.repositoryModel );
       miqService.sparkleOff();
@@ -53,17 +52,16 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
   $scope.resetClicked = function() {
     vm.repositoryModel = angular.copy( vm.modelCopy );
     $scope.angularForm.$setPristine(true);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
   $scope.saveClicked = function() {
-    API.put('/api/configuration_script_sources/' + repositoryId, vm.repositoryModel.toJSON)
+    API.put('/api/configuration_script_sources/' + repositoryId, vm.repositoryModel)
       .then(getBack)
       .catch(miqService.handleFailure);
   };
 
   $scope.addClicked = function() {
-    // TODO send all info
     API.post('/api/configuration_script_sources/', vm.repositoryModel)
        .then(getBack)
        .catch(miqService.handleFailure);
@@ -78,13 +76,12 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
   }
 
   var getBack = function(response) {
-    debugger;
-    var message, level = '';
+    var message = '';
+    var level = '';
     if (response.hasOwnProperty('results')) {
       message = response.results[0].message;
       level = response.results[0].success ? 'success': 'error';
-    }
-    else {
+    } else {
       message = response.message;
       level = response.success ? 'success': 'error';
     }
@@ -98,7 +95,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
   };
 
   var getManagerResource = function(response) {
-    vm.repositoryModel.manager_resource = {'href' : response.resources[0].href}
+    vm.repositoryModel.manager_resource = {'href': response.resources[0].href};
   };
   init();
 }]);
