@@ -12,15 +12,17 @@ describe MiddlewareDomainController do
 
   describe '#show' do
     let(:domain) { FactoryGirl.create(:hawkular_middleware_domain, :properties => {}) }
-    let(:server_group) { FactoryGirl.create(:hawkular_middleware_server_group, :properties => {},
-                                            :middleware_domain => domain) }
+    let(:server_group) do
+      FactoryGirl.create(:hawkular_middleware_server_group, :properties        => {},
+                                                            :middleware_domain => domain)
+    end
 
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryGirl.create(:user)
     end
 
-    subject { get :show, :id => domain.id }
+    subject { get :show, :params => { :id => domain.id } }
 
     context 'render' do
       render_views

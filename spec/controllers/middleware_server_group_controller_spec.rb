@@ -12,14 +12,16 @@ describe MiddlewareServerGroupController do
 
   describe '#show' do
     let(:group) { FactoryGirl.create(:hawkular_middleware_server_group, :properties => {}, :middleware_domain => nil) }
-    let(:server) { FactoryGirl.create(:hawkular_middleware_server, :properties => {},
-                                      :middleware_server_group => group) }
+    let(:server) do
+      FactoryGirl.create(:hawkular_middleware_server, :properties              => {},
+                                                      :middleware_server_group => group)
+    end
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryGirl.create(:user)
     end
 
-    subject { get :show, :id => group.id }
+    subject { get :show, :params => { :id => group.id } }
 
     context 'render' do
       render_views
@@ -42,6 +44,5 @@ describe MiddlewareServerGroupController do
     it 'show associated servers' do
       assert_nested_list(group, [server], 'middleware_servers', 'All Middleware Servers')
     end
-
   end
 end

@@ -15,8 +15,10 @@ describe MiddlewareServerController do
   describe '#show' do
     let(:deployment) { FactoryGirl.create(:middleware_deployment, :middleware_server => server) }
     let(:datasource) { FactoryGirl.create(:middleware_datasource, :middleware_server => server) }
-    let(:jms_queue) { FactoryGirl.create(:hawkular_middleware_messaging_initialized_queue,
-                                         :middleware_server => server) }
+    let(:jms_queue) do
+      FactoryGirl.create(:hawkular_middleware_messaging_initialized_queue,
+                         :middleware_server => server)
+    end
 
     before do
       EvmSpecHelper.create_guid_miq_server_zone
@@ -55,8 +57,8 @@ describe MiddlewareServerController do
   context '#tags_edit' do
     let!(:user) { stub_user(:features => :all) }
     let(:classification) { FactoryGirl.create(:classification, :name => 'department', :description => 'Department') }
-    let(:tag1) { FactoryGirl.create(:classification_tag, :name   => 'tag1', :parent => classification)}
-    let(:tag2) { FactoryGirl.create(:classification_tag, :name   => 'tag2', :parent => classification)}
+    let(:tag1) { FactoryGirl.create(:classification_tag, :name   => 'tag1', :parent => classification) }
+    let(:tag2) { FactoryGirl.create(:classification_tag, :name   => 'tag2', :parent => classification) }
 
     before(:each) do
       EvmSpecHelper.create_guid_miq_server_zone
@@ -96,5 +98,4 @@ describe MiddlewareServerController do
       expect(assigns(:edit)).to be_nil
     end
   end
-
 end
