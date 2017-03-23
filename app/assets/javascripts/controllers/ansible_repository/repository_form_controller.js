@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 'repositoryId', 'miqService', function($http, $scope, repositoryId,  miqService) {
+ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 'repositoryId', 'miqService', 'API', function($http, $scope, repositoryId,  miqService, API) {
   var vm = this;
 
   var init = function() {
@@ -16,14 +16,16 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
       scm_delete_on_update: false,
       scm_update_on_launch: false,
     };
-debugger;
+
     API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAutomationManager')
       .then(getManagerResource)
       .catch(miqService.handleFailure);
 
     vm.model = 'repositoryModel';
-    
+
     ManageIQ.angular.scope = vm;
+
+    $scope.newRecord = repositoryId === 'new';
 
     vm.scm_credentials = [{name: __('Select credentials'), value: null}];
     API.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ScmCredential&expand=resources')
@@ -66,11 +68,11 @@ debugger;
   };
 
   var getRepositoryFormData = function(response) {
+    debugger;
     var data = response;
     Object.assign(vm.repositoryModel, data);
     vm.modelCopy = angular.copy( vm.repositoryModel );
     vm.afterGet = true;
-    debugger;
     miqService.sparkleOff();
   }
 
@@ -86,9 +88,9 @@ debugger;
         message = sprintf(__("Addition of Repository \"%s\" was successfully initialized."), vm.repositoryModel.name);
       }
     } else {
-      error = response.success;
+      error = !response.success;
       if (error) {
-        message = __("Unable to update Repository") +  vm.repositoryModel.name + " ." +  response.results[0].message;
+        message = __("Unable to update Repository") +  vm.repositoryModel.name + " ." +  response.message;
       }
       else {
         message = sprintf(__("Update of Repository \"%s\" was successfully initialized."), vm.repositoryModel.name);
@@ -102,14 +104,14 @@ debugger;
   };
 
   var getCredentials = function(response) {
-    debugger;
+    // TODO add check that we got what we needed
     response.resources.forEach( function(resource) {
       vm.scm_credentials.push({name: resource.name, value: resource.href});
     });
   };
 
   var getManagerResource = function(response) {
-    debugger;
+    // TODO add check that we got what we needed
     vm.repositoryModel.manager_resource = {'href': response.resources[0].href};
   };
   init();
