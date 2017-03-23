@@ -62,7 +62,6 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
 
       dash.filterConfig.fields = [];
       if (data && angular.isArray(data.metric_tags)) {
-        // filters available, apply filtering
         data.metric_tags.sort();
 
         // remember the metric tags
