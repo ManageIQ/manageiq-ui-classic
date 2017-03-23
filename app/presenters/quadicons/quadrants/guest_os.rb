@@ -4,7 +4,7 @@ module Quadicons
     #
     class GuestOs < Quadrants::Base
       def path
-        "100/os-#{os_image_name}.png"
+        "svg/os-#{os_image_name}.svg"
       end
 
       def os_image_name

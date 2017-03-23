@@ -165,6 +165,7 @@ a.quadrant-group {
   &:nth-child(2) {
     border-bottom: 1px solid #333;
     border-left: 1px solid #555;
+    border-top-right-radius: 14px;
   }
 
   &:nth-child(3) {
@@ -178,14 +179,22 @@ a.quadrant-group {
   }
 
   img{
+    display: block;
     max-width: 100%;
+    width: 28px;
     height: auto;
+    margin: 4px auto;
   }
 }
 
 .quadrant-value {
-  color: #fff;
+  display: block;
+  padding: 7px;
+  line-height: 1;
+  font-size: 16px;
+  text-align: center;
   text-decoration: none;
+  color: #fff;
 }
 
 .quadrant-snapshot_count {
@@ -193,12 +202,24 @@ a.quadrant-group {
   text-align: center;
 }
 
-.quadicon-quadrant.quadrant-guest_state {
-  padding: 0;
-}
-
 .quadicon-quadrant.quadrant-snapshot_count {
   height: auto;
+}
+
+.quadicon-quadrant.quadrant-host_vendor {
+  padding-top: 0;
+}
+
+.quadicon-quadrant.quadrant-normalized_state,
+.quadicon-quadrant.quadrant-guest_state {
+  img {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+.quadicon-quadrant.normalized_state-archived {
+  background-color: #30728c;
 }
 
 .quadicon-label {
