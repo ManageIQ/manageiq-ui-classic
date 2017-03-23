@@ -828,6 +828,20 @@ class CatalogController < ApplicationController
   end
   helper_method :ansible_playbook?
 
+  def remove_resources_display(remove_resources)
+    case remove_resources
+    when 'no_without_playbook', 'no_with_playbook'
+      _('No')
+    when 'pre_with_playbook'
+      _('Before Playbook runs')
+    when 'post_with_playbook'
+      _('After Playbook runs')
+    else
+      _('Yes')
+    end
+  end
+  helper_method :remove_resources_display
+
   def features
     [{:role     => "svc_catalog_accord",
       :role_any => true,

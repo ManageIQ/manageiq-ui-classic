@@ -1,19 +1,24 @@
-= render :partial => "layouts/textual_groups_generic"
-- if @record.type == "ServiceAnsiblePlaybook"
-  #services_tab
-    - job = @record.try(:job, "Retirement")
-    - unless job
-      -# show header when Retirement tab is not visible,
-      -# tabs are only displayed when there are are more than 1 tab on screen
-      %hr
-      %h3= _("Provisioning")
-    %ul.nav.nav-tabs
+#services_tab
+  %ul.nav.nav-tabs
+    = miq_tab_header("details") do
+      = _("Details")
+    - if @record.type == "ServiceAnsiblePlaybook"
+      - job = @record.try(:job, "Retirement")
       = miq_tab_header("provisioning") do
         = _("Provisioning")
       - if job
         = miq_tab_header("retirement") do
           = _("Retirement")
-    .tab-content
+  .tab-content
+    = miq_tab_content("details", 'default', :class => 'cm-tab') do
+      = render :partial => "layouts/textual_groups_generic"
+      .row
+        .col-md-12.col-lg-6
+          %h3
+            = _('VMs')
+          - if @view
+            = render :partial => "layouts/gtl", :locals => {:view => @view}
+    - if @record.type == "ServiceAnsiblePlaybook"
       = miq_tab_content("provisioning", 'default', :class => 'cm-tab') do
         = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_provisioning_group_list}
         - if @job && @job.try(:raw_stdout)
@@ -22,14 +27,6 @@
         = miq_tab_content("retirement", 'default', :class => 'cm-tab') do
           = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_retirement_group_list}
           = render :partial => "layouts/textual_code_mirror", :locals => {:label => 'Standard Output', :value => job.raw_stdout, :mode => "htmlmixed", :text_area_id => "retirement_output"}
-  :javascript
-    miq_tabs_init('#services_tab');
-    miq_refresh_code_mirror();
-- else
-  .row
-    .col-md-12.col-lg-6
-      %h3
-        = _('VMs')
-
-      - if @view
-        = render :partial => "layouts/gtl", :locals => {:view => @view}
+:javascript
+  miq_tabs_init('#services_tab');
+  miq_refresh_code_mirror();

@@ -12,7 +12,9 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
 
   if (networkRouterFormId == 'new') {
     $scope.networkRouterModel.name = "";
-    $scope.networkRouterModel.cloud_subnet_id = "";
+    $scope.networkRouterModel.enable_snat = true;
+    $scope.networkRouterModel.external_gateway = false;
+    $scope.networkRouterModel.cloud_subnet_id = null;
     $scope.newRecord = true;
   } else {
     miqService.sparkleOn();
@@ -66,12 +68,25 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
       .catch(miqService.handleFailure);
   };
 
+  $scope.filterCloudNetworkChanged = function(id) {
+    miqService.sparkleOn();
+    $http.get('/network_router/network_router_subnets_by_network/' + id)
+      .then(getNetworkRouterFormByNetworkData)
+      .catch(miqService.handleFailure);
+  };
+
   function getNetworkRouterFormData(response) {
     var data = response.data;
 
     $scope.afterGet = true;
+    $scope.available_networks = data.available_networks;
+    $scope.available_subnets = data.available_subnets;
     $scope.networkRouterModel.name = data.name;
-    $scope.networkRouterModel.cloud_subnet_id = '';
+    $scope.networkRouterModel.cloud_network_id = data.cloud_network_id;
+    $scope.networkRouterModel.cloud_subnet_id = data.cloud_subnet_id;
+    $scope.networkRouterModel.ems_id = data.ems_id;
+    $scope.networkRouterModel.enable_snat = data.enable_snat;
+    $scope.networkRouterModel.external_gateway = data.external_gateway;
 
     $scope.modelCopy = angular.copy( $scope.networkRouterModel );
     miqService.sparkleOff();
@@ -81,6 +96,13 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
     var data = response.data;
 
     $scope.available_networks = data.available_networks;
+    miqService.sparkleOff();
+  }
+
+  function getNetworkRouterFormByNetworkData(response) {
+    var data = response.data;
+
+    $scope.available_subnets = data.available_subnets;
     miqService.sparkleOff();
   }
 }]);

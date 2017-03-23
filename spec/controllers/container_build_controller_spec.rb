@@ -17,6 +17,7 @@ describe ContainerBuildController do
     get :show, :params => { :id => container_build.id }
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
+    expect(response).to render_template('shared/summary/_textual_multilabel')
     expect(assigns(:breadcrumbs)).to eq([{:name => "Builds",
                                           :url  => "/container_build/show_list?page=&refresh=y"},
                                          {:name => "Test Build (Summary)",

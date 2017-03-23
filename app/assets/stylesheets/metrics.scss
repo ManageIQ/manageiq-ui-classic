@@ -2,13 +2,12 @@
   overflow-x:hidden;
 
   .ad-hoc-toolbar {
-      margin-left: 10px;
+    margin-left: 10px;
   }
 
   .ad-hoc-tenant {
     margin-left: 5px;
-
-    input  {
+    input {
       display: inline;
       width: 190px;
     }
@@ -17,36 +16,114 @@
       vertical-align: top;
       margin-bottom: 10px;
     }
+
+    .btn {
+      margin-left: 0;
+    }
   }
 
-  .list-view-container, .line-chart, .blank-slate-pf {
+  .form-group {
+    &.toolbar-pf-filter {
+      margin-bottom: 0;
+    }
+
+    &.toolbar-actions.ng-scope {
+      margin-bottom: 0;
+    }
+  }
+
+  .pagination {
+    display: flex;
+    float: right;
+    margin: 0;
     margin-bottom: 0;
-    min-height: calc(100vh - 362px);
-    margin-left: 20px;
-    margin-right: 20px;
   }
 
-  .list-view-container {
-    padding-top: 10px;
+  .pagination-div {
+    display: flex;
+    float: right;
+    margin: 0;
+    margin-bottom: 0;
+    .page-input {
+      width: 40px;
+      margin-left: 10px;
+      margin-right: 10px;
+      text-align: right;
+    }
   }
 
   .graph-view {
     overflow-x: hidden;
     overflow-y: hidden;
+    .form-group.toolbar-actions.ng-scope {
+      margin-bottom: 10px;
+    }
 
     .dropdown-kebab-pf .dropdown-menu {
-      left: 0px;
+      left: 0;
+    }
+
+    .toolbar-pf-actions .dropdown-kebab-pf {
+      float: none;
+      margin-left: 10px;
     }
   }
 
+  .list-view-container {
+    min-height: calc(100vh - 362px);
+    padding-top: 10px;
+    margin-bottom: 0;
+  }
+
   .line-chart {
+    min-height: calc(100vh - 347px);
     margin-top: 36px;
     margin-left: 30px;
     margin-right: 50px;
+    margin-bottom: 0;
+  }
+
+  .blank-slate-pf {
+    min-height: calc(100vh - 362px);
+    margin-bottom: 0;
+  }
+
+  .list-view {
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+    .form-group {
+      &.toolbar-actions.ng-scope {
+        width: calc(100% - 425px);
+      }
+    }
+
+    .dropdown-kebab-pf .dropdown-menu {
+      left: -5px;
+    }
+
+    .toolbar-pf-actions .dropdown-kebab-pf {
+      float: none;
+      margin-left: 10px;
+    }
+
+    .filter-pf.filter-fields .form-group {
+      width: 410px;
+    }
+
+    .toolbar-pf .form-group {
+      .btn-group {
+        margin-left: 0;
+      }
+
+      .btn {
+        margin-left: 0;
+      }
+    }
   }
 
   .timeline-date-input {
-    width: 250px;
+    width: 300px;
   }
 
   .list-group {
@@ -55,5 +132,36 @@
 
   .bootstrap-touchspin {
     text-align: center;
+  }
+
+  .tenant-filter-bar {
+    margin-left: 5px;
+    .dropdown-menu.open {
+      margin-top: -11px;
+    }
+  }
+
+  .timeline-stepper {
+    margin-left: 5px;
+  }
+
+  .toolbar-pf-include-actions.ng-scope {
+    width: 100%;
+  }
+
+  .toolbar-pf-actions.ng-pristine.ng-valid.no-filter-results {
+    margin-bottom: 0;
+  }
+
+  .btn.btn-default.dropdown-toggle.filter-fields {
+    min-width: 100px;
+  }
+
+  .filters-selector .btn {
+    margin-left: 0;
+  }
+
+  .tenants-selector .btn {
+    margin-left: 0;
   }
 }
