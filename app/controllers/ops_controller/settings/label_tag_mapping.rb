@@ -51,10 +51,12 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def entity_ui_name_or_all(entity)
-    if entity.nil?
-      _("<All>")
-    else
+    if entity
+      entity = entity.split('::').last
+      entity = 'VmOrTemplate' if entity == 'Image'
       ui_lookup(:model => entity)
+    else
+      _("<All>")
     end
   end
 
