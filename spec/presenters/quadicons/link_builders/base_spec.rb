@@ -1,5 +1,3 @@
-require "presenters/quadicons/quadicon_shared_specs"
-
 RSpec.shared_examples :link_with_attributes do |param|
   it 'builds the link with options' do
     param ||= "quadrant_group"
@@ -45,5 +43,4 @@ describe Quadicons::LinkBuilders::Base, :type => :helper do
       end
     end
   end
-
 end

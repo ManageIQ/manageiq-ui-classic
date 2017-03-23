@@ -1,5 +1,3 @@
-require "presenters/quadicons/quadicon_shared_specs"
-
 # RSpec.shared_examples :shows_free_space do
 #   it 'shows free space' do
 #     expect(quadicon.quadrant_list).to include(:storage_usage)

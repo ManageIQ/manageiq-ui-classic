@@ -1,5 +1,3 @@
-require "presenters/quadicons/quadicon_shared_specs"
-
 RSpec.shared_examples :storage_inferred_url do
   it 'links to an inferred url' do
     expect(subject).to match(/storage\/show/)

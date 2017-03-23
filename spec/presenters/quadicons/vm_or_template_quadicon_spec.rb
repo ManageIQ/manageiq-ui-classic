@@ -1,6 +1,3 @@
-# require Rails.root.join('spec', 'presenters', 'quadicons', 'quadicon_shared_specs.rb')
-require "presenters/quadicons/quadicon_shared_specs"
-
 # RSpec.shared_examples "a quadicon with a link" do
 #   it 'renders a quadicon with a link by default' do
 #     expect(subject.render).to have_selector('div.quadicon')

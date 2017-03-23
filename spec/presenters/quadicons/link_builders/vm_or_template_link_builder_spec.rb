@@ -1,5 +1,3 @@
-require "presenters/quadicons/quadicon_shared_specs"
-
 describe Quadicons::LinkBuilders::VmOrTemplateLinkBuilder, :type => :helper do
   let(:record) { FactoryGirl.create(:vm_redhat) }
   let(:kontext) { Quadicons::Context.new(helper) }
@@ -42,10 +40,6 @@ describe Quadicons::LinkBuilders::VmOrTemplateLinkBuilder, :type => :helper do
       context "when in explorer view" do
         before do
           kontext.explorer = true
-        end
-
-        it 'has a sparkle link' do
-
         end
 
         context "when service controller and Vm view" do

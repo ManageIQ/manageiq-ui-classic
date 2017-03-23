@@ -21,8 +21,6 @@ describe Quadicons::SingleQuadicon, :type => :helper do
       allow(controller).to receive(:list_row_id).with(record) do
         ApplicationRecord.compress_id(record.id)
       end
-
-
     end
 
     context "when @listicon is nil" do
@@ -79,89 +77,120 @@ describe Quadicons::SingleQuadicon, :type => :helper do
           expect(rendered).to have_selector("img[src*='#{name}']")
         end
       end
-    end
-  end
 
-  context "when @listicon is nil" do
+      context "when type is not :listnav" do
+        context "when not embedded" do
+          before do
+            kontext.embedded = false
+          end
 
-    # context "when type is not :listnav" do
-    #   # context "when not embedded" do
-    #   #   # context "when explorer" do
-    #   #   #   before(:each) do
-    #   #   #     @explorer = true
-    #   #   #   end
-    #   #   #
-    #   #   #   include_examples :has_sparkle_link
-    #   #   #
-    #   #   #   it 'links to x_show with compressed id' do
-    #   #   #     cid = ApplicationRecord.compress_id(item.id)
-    #   #   #     expect(subject).to have_selector("a[href*='x_show/#{cid}']")
-    #   #   #   end
-    #   #   # end
-    #   #
-    #   #   # context "when not explorer" do
-    #   #   #   # FIXME: This branch will error if item is Configuration Manager,
-    #   #   #   # a bug to be handled in this refactoring
-    #   #   #   #
-    #   #   #   let(:item) { FactoryGirl.create(:middleware_deployment) }
-    #   #   #
-    #   #   #   before(:each) do
-    #   #   #     @explorer = false
-    #   #   #   end
-    #   #   #
-    #   #   #   it 'links to the record' do
-    #   #   #     cid = ApplicationRecord.compress_id(item.id)
-    #   #   #     expect(subject).to have_selector("a[href*='#{cid}']")
-    #   #   #   end
-    #   #   # end
-    #   # end
-    #
-    #   # context "when embedded" do
-    #   #   before(:each) do
-    #   #     @embedded = true
-    #   #   end
-    #   #
-    #   #   it 'links to nowhere' do
-    #   #     expect(single_quad).to have_selector("a[href='']")
-    #   #   end
-    #   # end
-    # end
-  end # => when @listicon is nil
+          context "when explorer" do
+            before do
+              kontext.explorer = true
 
-  context "when listicon is not nil" do
-    # before(:each) do
-    #   @listicon = "foo"
-    #   @parent = FactoryGirl.build(:vm_vmware)
-    # end
-    #
-    # include_examples :has_base_single
-    #
-    # it 'includes a listicon image' do
-    #   expect(single_quad).to have_selector("img[src*='foo']")
-    # end
-    #
-    # context "when listicon is scan_history" do
-    #   let(:item) { ScanHistory.new(:started_on => Time.zone.today) }
-    #
-    #   before(:each) do
-    #     @listicon = "scan_history"
-    #   end
-    #
-    #   it 'titles based on the item started_on' do
-    #     expect(single_quad).to include("title=\"#{item.started_on}\"")
-    #   end
-    # end
-    #
-    # context "when listicon is orchestration_stack_output" do
-    #   let(:item) { OrchestrationStackOutput.new(:key => "Bar") }
-    #
-    #   before(:each) do
-    #     @listicon = "orchestration_stack_output"
-    #   end
-    #
-    #   it 'titles based on the item key' do
-    #     expect(single_quad).to include("title=\"Bar\"")
-    #   end
-    # end
+              allow(record.class).to receive(:db_name) { "provider_foreman" }
+
+              allow(controller).to receive(:default_url_options) do
+                { :controller => "provider_foreman", :action => "show" }
+              end
+            end
+
+            # TODO: break link-specific examples into separate spec
+            include_examples :has_sparkle_link
+
+            it 'links to x_show with compressed id' do
+              cid = ApplicationRecord.compress_id(record.id)
+              expect(rendered).to have_selector("a[href*='x_show/#{cid}']")
+            end
+          end
+
+          context "when not explorer" do
+            # FIXME: This branch will error if item is Configuration Manager,
+            # a bug to be handled in this refactoring
+            #
+            let(:record) { FactoryGirl.create(:middleware_deployment) }
+
+            before do
+              kontext.explorer = false
+
+              allow(record.class).to receive(:db_name) { "middleware_deployment" }
+
+              allow(controller).to receive(:default_url_options) do
+                { :controller => "middleware_deployment", :action => "show" }
+              end
+            end
+
+            it 'links to the record' do
+              cid = ApplicationRecord.compress_id(record.id)
+              expect(rendered).to have_selector("a[href*='#{cid}']")
+            end
+          end
+        end
+
+        context "when embedded" do
+          before do
+            kontext.embedded = true
+
+            allow(record.class).to receive(:db_name) { "provider_foreman" }
+
+            allow(controller).to receive(:default_url_options) do
+              { :controller => "provider_foreman" }
+            end
+          end
+
+          it 'links to nowhere' do
+            expect(rendered).to have_selector("a[href='']")
+          end
+        end
+      end
+    end # => when @listicon is nil
+
+    context "when listicon is not nil" do
+      before do
+        kontext.listicon = "foo"
+        # @parent = FactoryGirl.build(:vm_vmware)
+
+        allow(record.class).to receive(:db_name) { "provider_foreman" }
+
+        allow(controller).to receive(:default_url_options) do
+          { :controller => "provider_foreman" }
+        end
+      end
+
+      # include_examples :has_base_single
+
+      it 'includes a listicon image' do
+        pending "Can we avoid getting the name of the icon from a view ivar?"
+        expect(rendered).to have_selector("img[src*='foo']")
+      end
+
+      # TODO: Break out into ScanHistory specific class
+      context "when listicon is scan_history" do
+        let(:record) { ScanHistory.new(:started_on => Time.current) }
+
+        before do
+          kontext.listicon = "scan_history"
+        end
+
+        it 'titles based on the item started_on' do
+          pending "Move to ScanHistoryQuadicon"
+          expect(rendered).to include("title=\"#{record.started_on}\"")
+        end
+      end
+
+      # TODO: break out into OrchestrationStackOutput specific class
+      context "when listicon is orchestration_stack_output" do
+        let(:record) { OrchestrationStackOutput.new(:key => "Bar") }
+
+        before do
+          kontext.listicon = "orchestration_stack_output"
+        end
+
+        it 'titles based on the item key' do
+          pending "Move to OrchestrationStackOutputQuadicon"
+          expect(rendered).to include("title=\"Bar\"")
+        end
+      end
+    end # => when listicon is not nil
   end
 end

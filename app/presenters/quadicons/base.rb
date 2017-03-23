@@ -73,6 +73,7 @@ module Quadicons
       !render_single?
     end
 
+    # Most Quadicons are just a single icon, so use this as the default for now
     def render_single?
       true
     end
