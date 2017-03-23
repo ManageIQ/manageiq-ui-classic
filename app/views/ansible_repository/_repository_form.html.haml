@@ -1,7 +1,6 @@
 #main_div
   %br
   %br
-
   .form-horizontal
     %form#form_div{:name           => "angularForm",
                    'ng-controller' => "repositoryFormController as vm",
@@ -22,8 +21,7 @@
                                 'ng-model'   => "vm.repositoryModel.name",
                                 :maxlength   => MAX_NAME_LEN,
                                 :required    => "",
-                                :checkchange => true,
-                                "auto-focus" => ""}
+                                :checkchange => true}
           %span.help-block{"ng-show" => "angularForm.name.$error.required"}
             = _("Required")
       .form-group
@@ -40,7 +38,7 @@
           = _('SCM type')
         .col-md-8
           = select_tag('scm_type',
-                       options_for_select([["#{_('git')}", "git"]], 'git'),
+                       options_for_select([["_('GIT')", "git"]], 'git'),
                        "ng-model" => "vm.repositoryModel.scm_type",
                        :disabled => true)
       .form-group
@@ -53,18 +51,16 @@
                                 'ng-model'   => "vm.repositoryModel.scm_url",
                                 :required    => "",
                                 :checkchange => true}
-          %span.help-block{"ng-show" => "angularForm.href.$error.required"}
+          %span.help-block{"ng-show" => "angularForm.scm_url.$error.required"}
             = _("Required")
-          %span.help-block{"ng-show" => "angularForm.href.$error.url"}
-            = _("URL must include a protocol")
+          %span.help-block{"ng-show" => "angularForm.scm_url.$error.url"}
+            = _("URL must include a protocol (http:// or https://)")
       .form-group
         %label.col-md-2.control-label
           = _('SCM credentials')
         .col-md-8
           %select{'ng-model'   => 'vm.repositoryModel.scm_credentials',
-                  'ng-options' => 'scm_credential.value as scm_credential.name for scm_credential in vm.scm_credentials',
-                  }
-
+                  'ng-options' => 'scm_credential.value as scm_credential.name for scm_credential in vm.scm_credentials'}
       .form-group
         %label.col-md-2.control-label
           = _('SCM Branch')
@@ -94,7 +90,6 @@
               = _('Update on Launch')
             %i.pficon.pficon-info
       = render :partial => "layouts/angular/x_edit_buttons_angular"
-
 :javascript
   ManageIQ.angular.app.value('repositoryId', '#{@id}');
   miq_bootstrap('#form_div');

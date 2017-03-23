@@ -28,14 +28,6 @@ class AnsibleRepositoryController < ApplicationController
       javascript_redirect :action => 'new'
     elsif params[:pressed] == "embedded_configuration_script_source_delete"
       delete_repositories
-      # ids = params.key?('id') ? [params[:id]] : params[:miq_grid_checks].split(',')
-     # ids.each do |id|
-     #   ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource.find(from_cid(id).to_i).delete_in_provider
-     # end
-     # binding.pry
-     # add_flash(_('Delete of selected repositories was initialized.'), :success)
-     # show_list
-     # replace_gtl_main_div
     end
   end
 
@@ -47,7 +39,9 @@ class AnsibleRepositoryController < ApplicationController
         repo.delete_in_provider_queue
         add_flash(_("Deletion of Repository \"%{name}\" was successfully initiated.") % {:name => repo.name})
       rescue => ex
-        add_flash(_("Unable to delete Credential \"%{name}\": %{details}") % {:name => repo.name, :details => ex}, :error)
+        add_flash(_("Unable to delete Credential \"%{name}\": %{details}") % {:name    => repo.name,
+                                                                              :details => ex},
+                  :error)
       end
     end
     session[:flash_msgs] = @flash_array

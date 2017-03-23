@@ -18,7 +18,7 @@ class ApplicationHelper::Toolbar::AnsibleRepositoriesCenter < ApplicationHelper:
           t = N_('Edit this Repository'),
           t,
           :enabled   => false,
-          :onwhen => "1",
+          :onwhen    => "1",
           :url_parms => "edit_div"),
         button(
           :embedded_configuration_script_source_delete,
@@ -27,7 +27,7 @@ class ApplicationHelper::Toolbar::AnsibleRepositoriesCenter < ApplicationHelper:
           t,
           :url_parms => "delete_div",
           :enabled   => false,
-          :onwhen => "1+",
+          :onwhen    => "1+",
           :confirm   => N_("Warning: The selected Repository will be permanently removed!")),
       ]
     )
