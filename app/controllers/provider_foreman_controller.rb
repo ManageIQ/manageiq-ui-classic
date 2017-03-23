@@ -82,7 +82,7 @@ class ProviderForemanController < ApplicationController
     session[:edit] = @edit
     @explorer = true
 
-    if x_active_tree != :configuration_manager_cs_filter_tree || x_node == "root"
+    if (x_active_tree != :configuration_manager_cs_filter_tree || x_node == "root") && params[:button] != 'saveit'
       listnav_search_selected(0)
     else
       @nodetype, id = parse_nodetype_and_id(valid_active_node(x_node))
@@ -96,6 +96,8 @@ class ProviderForemanController < ApplicationController
           self.x_node = params[:id]
           quick_search_show
         end
+      elsif x_active_tree == :configuration_manager_cs_filter_tree && params[:button] != 'saveit'
+        listnav_search_selected(id)
       end
     end
   end
