@@ -19,7 +19,7 @@ module PhysicalServerHelper::TextualSummary
   end
 
   def textual_product_name
-    {:label => _("Product Name"), :value => @record.productName }
+    {:label => _("Product Name"), :value => @record.product_name }
   end
 
   def textual_manufacturer
@@ -27,11 +27,11 @@ module PhysicalServerHelper::TextualSummary
   end
 
   def textual_machine_type
-    {:label => _("Machine Type"), :value => @record.machineType }
+    {:label => _("Machine Type"), :value => @record.machine_type }
   end
 
   def textual_serial_number
-    {:label => _("Serial Number"), :value => @record.serialNumber }
+    {:label => _("Serial Number"), :value => @record.serial_number }
   end
 
   def textual_uuid
