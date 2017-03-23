@@ -55,9 +55,12 @@ img.tiny { margin: 0; padding: 0;width:20px;height:20px; border: 0; vertical-ali
 .quadicon:hover{ padding: 1px 0 0 1px;}
 
 // adjust power state images for use in quad icon //
-.b72 img[src*="currentstate"] {
-  clip-path: inset(0 0 2px 0 round 0 12px 0 0);
-  -webkit-clip-path: inset(0 0 2px 0 round 0 12px 0 0);
+.b72 .stretch {
+  background-repeat: no-repeat;
+  width: 35px;
+  height: 32px;
+  margin: -3px 0 -2px 1px;
+  border-top-right-radius: 15px;
 }
 
 .b72 img[src*="archived"], .b72 img[src*="template"], .b72 img[src*="disconnected"], .b72 img[src*="orphaned"], .b72 img[src*="never"], img[src*="retired"], .b72 img[src*="unknown"] {
