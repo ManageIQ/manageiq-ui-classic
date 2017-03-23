@@ -14,6 +14,7 @@ module TextualMixins::TextualDevices
 
   def get_devices
     devices = []
+    return devices unless @record.try(:hardware)
     if @record.hardware.cpu_total_cores
       cpu_details =
         if @record.num_cpu && @record.cpu_cores_per_socket
