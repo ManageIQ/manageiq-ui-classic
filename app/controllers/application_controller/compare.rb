@@ -1399,7 +1399,7 @@ module ApplicationController::Compare
           title = _("Remove this %{title} from the comparison") % {:title => session[:db_title].singularize}
           onclick = "miqJqueryRequest('#{url}', {beforeSend: true, complete: true}); return false;"
           html_text = ViewHelper.content_tag(:button, :class => 'btn btn-default', :onclick => onclick) do
-            ViewHelper.tag(:i, :class => 'pficon pficon-delete', :title => title, :alt => title)
+            ViewHelper.content_tag(:i, '', :class => 'pficon pficon-delete', :title => title, :alt => title)
           end
           row.merge!("col#{idx + 1}".to_sym => html_text)
         end
