@@ -16,18 +16,14 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
       scm_delete_on_update: false,
       scm_update_on_launch: false,
     };
-
+debugger;
     API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAutomationManager')
       .then(getManagerResource)
       .catch(miqService.handleFailure);
 
     vm.model = 'repositoryModel';
-
-   // miqService.sparkleOn();
-
+    
     ManageIQ.angular.scope = vm;
-
-    $scope.newRecord = repositoryId === 'new';
 
     vm.scm_credentials = [{name: __('Select credentials'), value: null}];
     API.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ScmCredential&expand=resources')
@@ -46,7 +42,9 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
   };
 
   $scope.cancelClicked = function() {
-    window.location.href = '/ansible_repository/show_list?message=' + __('Action canceled by user.') + '&level=warning';
+    var message = repositoryId === 'new' ? __("Addition of Repository canceled by user.") : sprintf(__("Addition of Repository \"%s\" canceled by user."), vm.repositoryModel.name)
+    var url = '/ansible_repository/show_list' + '?flash_msg=' + message + '&escape=true&flash_warning=true&flash_error=false';
+    window.location.href = url;
   };
 
   $scope.resetClicked = function() {
@@ -56,47 +54,62 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
   };
 
   $scope.saveClicked = function() {
-    vm.repositoryModel.scm_url = 'http://' + vm.repositoryModel.scm_url;
     API.put('/api/configuration_script_sources/' + repositoryId, vm.repositoryModel)
       .then(getBack)
       .catch(miqService.handleFailure);
   };
 
   $scope.addClicked = function() {
-    vm.repositoryModel.scm_url = 'http://' + vm.repositoryModel.scm_url;
     API.post('/api/configuration_script_sources/', vm.repositoryModel)
        .then(getBack)
        .catch(miqService.handleFailure);
   };
 
-  function getRepositoryFormData(response) {
+  var getRepositoryFormData = function(response) {
     var data = response;
     Object.assign(vm.repositoryModel, data);
     vm.modelCopy = angular.copy( vm.repositoryModel );
     vm.afterGet = true;
+    debugger;
     miqService.sparkleOff();
   }
 
   var getBack = function(response) {
     var message = '';
-    var level = '';
+    var error = false;
     if (response.hasOwnProperty('results')) {
-      message = response.results[0].message;
-      level = response.results[0].success ? 'success': 'error';
+      error = !response.results[0].success;
+      if (error) {
+        message = __("Unable to add Repository ") +  vm.repositoryModel.name + " ." +  response.results[0].message;
+      }
+      else {
+        message = sprintf(__("Addition of Repository \"%s\" was successfully initialized."), vm.repositoryModel.name);
+      }
     } else {
-      message = response.message;
-      level = response.success ? 'success': 'error';
+      error = response.success;
+      if (error) {
+        message = __("Unable to update Repository") +  vm.repositoryModel.name + " ." +  response.results[0].message;
+      }
+      else {
+        message = sprintf(__("Update of Repository \"%s\" was successfully initialized."), vm.repositoryModel.name);
+      }
     }
-    window.location.href = '/ansible_repository/show_list' + '?message=' + message + '&level=' + level;
+    var url = '/ansible_repository/show_list' + '?flash_msg=' + message + '&escape=true';
+    if (error) {
+      url += '&flash_warning=false&flash_error=true';
+    }
+    window.location.href = url;
   };
 
   var getCredentials = function(response) {
+    debugger;
     response.resources.forEach( function(resource) {
       vm.scm_credentials.push({name: resource.name, value: resource.href});
     });
   };
 
   var getManagerResource = function(response) {
+    debugger;
     vm.repositoryModel.manager_resource = {'href': response.resources[0].href};
   };
   init();

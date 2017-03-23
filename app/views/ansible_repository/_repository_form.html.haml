@@ -38,7 +38,7 @@
           = _('SCM type')
         .col-md-8
           = select_tag('scm_type',
-                       options_for_select([["_('GIT')", "git"]], 'git'),
+                       options_for_select([["#{_('GIT')}", "git"]], 'git'),
                        "ng-model" => "vm.repositoryModel.scm_type",
                        :disabled => true)
       .form-group

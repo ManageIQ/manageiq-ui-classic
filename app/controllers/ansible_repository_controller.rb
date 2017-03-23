@@ -39,7 +39,7 @@ class AnsibleRepositoryController < ApplicationController
         repo.delete_in_provider_queue
         add_flash(_("Deletion of Repository \"%{name}\" was successfully initiated.") % {:name => repo.name})
       rescue => ex
-        add_flash(_("Unable to delete Credential \"%{name}\": %{details}") % {:name    => repo.name,
+        add_flash(_("Unable to delete Repository \"%{name}\": %{details}") % {:name    => repo.name,
                                                                               :details => ex},
                   :error)
       end
