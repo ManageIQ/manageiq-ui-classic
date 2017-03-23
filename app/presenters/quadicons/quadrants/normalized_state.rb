@@ -2,7 +2,7 @@ module Quadicons
   module Quadrants
     class NormalizedState < Quadrants::Base
       def path
-        "72/currentstate-#{state}.png"
+        "svg/currentstate-#{state}.svg"
       end
 
       def state
