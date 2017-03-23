@@ -805,7 +805,7 @@ function miqEnterPressed(e) {
 // Send login authentication via ajax
 function miqAjaxAuth(url) {
   miqEnableLoginFields(false);
-  miqSparkleOn(); // miqJqueryRequest starts sparkle either way, but API.login doesn't
+  miqSparkleOn(); // miqJqueryRequest starts sparkle either way, but API login doesn't
 
   var credentials = {
     login: $('#user_name').val(),
@@ -813,9 +813,9 @@ function miqAjaxAuth(url) {
     serialized: miqSerializeForm('login_div'),
   }
 
-  API.login(credentials.login, credentials.password)
+  vanillaJsAPI.login(credentials.login, credentials.password)
   .then(function() {
-    return API.ws_init();
+    return vanillaJsAPI.ws_init();
   })
   .then(function() {
     // API login ok, now do the normal one
@@ -824,7 +824,7 @@ function miqAjaxAuth(url) {
       data: credentials.serialized,
     });
 
-    // TODO API.autorenew is called on (non-login) page load - when?
+    // TODO vanillaJsAPI.autorenew is called on (non-login) page load - when?
   })
   .then(null, function() {
     add_flash(__("Incorrect username or password"), 'error', { id: 'auth_failed' });
