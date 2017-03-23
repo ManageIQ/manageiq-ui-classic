@@ -1797,11 +1797,7 @@ class CatalogController < ApplicationController
     playbook_details[:provisioning][:machine_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential.find_by(:id => provision[:credential_id]).name
     playbook_details[:provisioning][:network_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential.find_by(:id => provision[:network_credential_id]).name if provision[:network_credential_id]
     playbook_details[:provisioning][:cloud_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential.find_by(:id => provision[:cloud_credential_id]).name if provision[:cloud_credential_id]
-    if provision[:dialog_id]
-      dialog = Dialog.find_by(:id => provision[:dialog_id])
-      playbook_details[:provisioning][:dialog] = dialog.name
-      playbook_details[:provisioning][:dialog_id] = dialog.id
-    end
+    fetch_dialog(playbook_details, provision[:dialog_id], :provisioning)
 
     if @record.config_info[:retirement]
       retirement = @record.config_info[:retirement]
@@ -1813,14 +1809,17 @@ class CatalogController < ApplicationController
         playbook_details[:retirement][:machine_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential.find_by(:id => retirement[:credential_id]).name
         playbook_details[:retirement][:network_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential.find_by(:id => retirement[:network_credential_id]).name if retirement[:network_credential_id]
         playbook_details[:retirement][:cloud_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential.find_by(:id => retirement[:cloud_credential_id]).name if retirement[:cloud_credential_id]
-        if retirement[:dialog_id]
-          dialog = Dialog.find_by(:id => retirement[:dialog_id])
-          playbook_details[:retirement][:dialog] = dialog.name
-          playbook_details[:retirement][:dialog_id] = dialog.id
-        end
+        fetch_dialog(playbook_details, retirement[:dialog_id], :retirement)
       end
     end
     playbook_details
+  end
+
+  def fetch_dialog(playbook_details, dialog_id, key)
+    return nil if dialog_id.nil?
+    dialog = Dialog.find_by(:id => dialog_id)
+    playbook_details[key][:dialog] = dialog.name
+    playbook_details[key][:dialog_id] = dialog.id
   end
 
   def open_parent_nodes(record)
