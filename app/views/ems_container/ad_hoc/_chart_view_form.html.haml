@@ -29,14 +29,18 @@
     %button.btn.btn-primary.pull-left{"type" => "button", "ng-click" => "dash.refreshGraph()"}
       = _("Refresh")
 
-    %dropdown.dropdown-kebab-pf.pull-left
+    %dropdown.dropdown-kebab-pf
       %button.btn.btn-link.dropdown-toggle{"type"          => "button",
                                            "data-toggle"   => "dropdown",
                                            "aria-haspopup" => "true",
                                            "aria-expanded" => "true"}
-        %span.fa.fa-ellipsis-v
+        %span.fa.fa-fw.fa-ellipsis-v
       %ul.dropdown-menu{"aria-labelledby" => "dropdownKebab"}
         %li{"ng-repeat" => "range in dash.timeIntervals"}
           %a{"href"     => "#",
              "ng-click" => "dash.minBucketDurationInSecondes = range.value; dash.refreshGraph()"}
-            {{range.title}}
+            .row
+              .col-md-9
+                {{range.title}}
+              .col
+                %span.pficon{"ng-class" => "{true: 'pficon-ok'}[dash.minBucketDurationInSecondes===range.value]"}
