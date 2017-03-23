@@ -56,12 +56,14 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
   };
 
   $scope.saveClicked = function() {
+    vm.repositoryModel.scm_url = 'http://' + vm.repositoryModel.scm_url;
     API.put('/api/configuration_script_sources/' + repositoryId, vm.repositoryModel)
       .then(getBack)
       .catch(miqService.handleFailure);
   };
 
   $scope.addClicked = function() {
+    vm.repositoryModel.scm_url = 'http://' + vm.repositoryModel.scm_url;
     API.post('/api/configuration_script_sources/', vm.repositoryModel)
        .then(getBack)
        .catch(miqService.handleFailure);

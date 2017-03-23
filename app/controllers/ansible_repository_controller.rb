@@ -22,21 +22,36 @@ class AnsibleRepositoryController < ApplicationController
 
   def button
     if params[:pressed] == "embedded_configuration_script_source_edit"
-      #binding.pry
       id = from_cid(params[:miq_grid_checks])
       javascript_redirect :action => 'edit', :id => id
     elsif params[:pressed] == "embedded_configuration_script_source_add"
       javascript_redirect :action => 'new'
     elsif params[:pressed] == "embedded_configuration_script_source_delete"
-      ids = params.key?('id') ? [params[:id]] : params[:miq_grid_checks].split(',')
-      ids.each do |id|
-        ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource.find(from_cid(id).to_i).delete_in_provider
-      end
-      # TODO nicer way?
-      add_flash(_('Delete of selected repositories was initialized.'), :success)
-      show_list
-      #replace_gtl_main_div
+      delete_repositories
+      # ids = params.key?('id') ? [params[:id]] : params[:miq_grid_checks].split(',')
+     # ids.each do |id|
+     #   ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource.find(from_cid(id).to_i).delete_in_provider
+     # end
+     # binding.pry
+     # add_flash(_('Delete of selected repositories was initialized.'), :success)
+     # show_list
+     # replace_gtl_main_div
     end
+  end
+
+  def delete_repositories
+    checked = find_checked_items
+    checked[0] = params[:id] if checked.blank? && params[:id]
+    AnsibleRepositoryController.model.where(:id => checked).each do |repo|
+      begin
+        repo.delete_in_provider_queue
+        add_flash(_("Deletion of Repository \"%{name}\" was successfully initiated.") % {:name => repo.name})
+      rescue => ex
+        add_flash(_("Unable to delete Credential \"%{name}\": %{details}") % {:name => repo.name, :details => ex}, :error)
+      end
+    end
+    session[:flash_msgs] = @flash_array
+    javascript_redirect :action => 'show_list'
   end
 
   def edit
@@ -51,13 +66,6 @@ class AnsibleRepositoryController < ApplicationController
 
   def display_playbooks
     nested_list("ansible_playbook", ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
-  end
-
-  def show_list
-    if params[:message].present?
-      add_flash(params[:message], params[:level].to_sym)
-    end
-    super
   end
 
   private
