@@ -198,8 +198,8 @@ class CloudVolumeController < ApplicationController
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
       add_flash(_("Attaching Cloud Volume \"%{volume_name}\" to %{vm_name} finished") % {
-        :name    => volume_name,
-        :vm_name => vm.name
+        :volume_name => volume_name,
+        :vm_name     => vm.name
       })
     else
       add_flash(_("Unable to attach Cloud Volume \"%{volume_name}\" to %{vm_name}: %{details}") % {
@@ -255,14 +255,14 @@ class CloudVolumeController < ApplicationController
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
       add_flash(_("Detaching Cloud Volume \"%{volume_name}\" from %{vm_name} finished") % {
-        :name    => volume_name,
-        :vm_name => vm.name
+        :volume_name => volume_name,
+        :vm_name     => vm.name
       })
     else
       add_flash(_("Unable to detach Cloud Volume \"%{volume_name}\" from %{vm_name}: %{details}") % {
-        :name    => volume_name,
-        :vm_name => vm.name,
-        :details => task.message
+        :volume_name => volume_name,
+        :vm_name     => vm.name,
+        :details     => task.message
       }, :error)
     end
 
