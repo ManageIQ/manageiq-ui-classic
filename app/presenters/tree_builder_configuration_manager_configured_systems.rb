@@ -2,7 +2,7 @@ class TreeBuilderConfigurationManagerConfiguredSystems < TreeBuilderConfiguredSy
   private
 
   def tree_init_options(_tree_name)
-    {:leaf => "ManageIQ::Providers::ForemanProvider::ConfigurationManager::ConfiguredSystem"}
+    {:leaf => "ManageIQ::Providers::Foreman::ConfigurationManager::ConfiguredSystem"}
   end
 
   def root_options
