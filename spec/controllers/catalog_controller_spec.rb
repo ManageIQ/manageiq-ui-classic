@@ -774,8 +774,7 @@ describe CatalogController do
             :hosts           => 'many',
             :credential_id   => auth.id,
             :repository_id   => repository.id,
-            :playbook_id     => playbook.id,
-            :dialog_id       => dialog.id
+            :playbook_id     => playbook.id
           }
         }
       }
@@ -794,9 +793,7 @@ describe CatalogController do
           :remove_resources   => nil,
           :repository         => repository.name,
           :playbook           => playbook.name,
-          :machine_credential => auth.name,
-          :dialog             => "Some Label",
-          :dialog_id          => dialog.id
+          :machine_credential => auth.name
         }
       }
       expect(playbook_details).to eq(st_details)

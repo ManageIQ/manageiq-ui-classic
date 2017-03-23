@@ -1809,7 +1809,6 @@ class CatalogController < ApplicationController
         playbook_details[:retirement][:machine_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential.find_by(:id => retirement[:credential_id]).name
         playbook_details[:retirement][:network_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential.find_by(:id => retirement[:network_credential_id]).name if retirement[:network_credential_id]
         playbook_details[:retirement][:cloud_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential.find_by(:id => retirement[:cloud_credential_id]).name if retirement[:cloud_credential_id]
-        fetch_dialog(playbook_details, retirement[:dialog_id], :retirement)
       end
     end
     playbook_details
