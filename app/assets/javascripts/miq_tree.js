@@ -138,22 +138,9 @@ function miqOnCheckProvTags(node, treename) {
 
 function miqOnClickSelectRbacTreeNode(id) {
   var tree = 'rbac_tree';
-  var node = miqTreeFindNodeByKey(tree, id);
-  if (typeof node != 'undefined') {
-    miqTreeActivateNode(tree, id);
-    miqTreeScrollToNode(tree, id)
-  } else {
-    miqTreeExpandNode('rbac_tree', 'xx-' + id.split('-')[0]);
-    var promise = function() {
-      return new Promise(function(resolve) {
-        miqJqueryRequest('/' + ManageIQ.controller + '/tree_select/?id=' + id + '&tree=' + tree)
-        .then(resolve);
-      });
-    };
-    promise().then(function() {
-      miqTreeScrollToNode(tree, id)
-    });
-  }
+  miqTreeExpandNode(tree, 'xx-' + id.split('-')[0]);
+  miqJqueryRequest('/' + ManageIQ.controller + '/tree_select/?id=' + id + '&tree=' + tree);
+  miqTreeScrollToNode(tree, id);
 }
 
 function miqTreeScrollToNode(tree, id) {
