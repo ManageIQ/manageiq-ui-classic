@@ -53,13 +53,18 @@ class AnsibleRepositoryController < ApplicationController
   end
 
   def edit
+    assert_privileges('embedded_configuration_script_source_edit')
     @record = AnsibleRepositoryController.model.find(params[:id])
+    drop_breadcrumb(:name => _("Edit a Repository \"%{name}\"") % {:name => @record.name},
+                    :url  => "/ansible_repository/edit/#{@record.id}")
     @title = _("Edit Repository \"%{name}\"") % {:name => @record.name}
     @id = @record.id
     @in_a_form = true
   end
 
   def new
+    assert_privileges('embedded_configuration_script_source_add')
+    drop_breadcrumb(:name => _("Add a new Repository"), :url => "/ansible_repository/new")
     @title = _("Add new Repository")
     @id = 'new'
     @in_a_form = true
