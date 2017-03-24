@@ -14,15 +14,15 @@ module OpsHelper::TextualSummary
   end
 
   def textual_group_vmdb_tables_most_rows
-    TextualGroup.new(_("Tables with Most Rows"), %i(vmdb_tables_most_rows))
+    TextualListview.new_from_hash(textual_vmdb_tables_most_rows)
   end
 
   def textual_group_vmdb_tables_largest_size
-    TextualGroup.new(_("Largest Tables"), %i(vmdb_tables_largest_size))
+    TextualListview.new_from_hash(textual_vmdb_tables_largest_size)
   end
 
   def textual_group_vmdb_tables_most_wasted_space
-    TextualGroup.new(_("Tables with Most Wasted Space"), %i(vmdb_tables_most_wasted_space))
+    TextualListview.new_from_hash(textual_vmdb_tables_most_wasted_space)
   end
 
   def textual_group_vmdb_connection_capacity_data
@@ -107,27 +107,30 @@ module OpsHelper::TextualSummary
   end
 
   def textual_vmdb_tables_most_rows
-    h = {:label     => _("Tables with the Most Rows"),
-         :headers   => [_("Name"), _("Rows")],
-         :col_order => %w(name value)}
-    h[:value] = vmdb_table_top_rows(:rows, TOP_TABLES_BY_ROWS_COUNT)
-    h
+    {
+      :title     => _("Tables with the Most Rows"),
+      :headers   => [_("Name"), _("Rows")],
+      :col_order => %w(name value),
+      :value     => vmdb_table_top_rows(:rows, TOP_TABLES_BY_ROWS_COUNT)
+    }
   end
 
   def textual_vmdb_tables_largest_size
-    h = {:label     => _("Largest Tables"),
-         :headers   => [_("Name"), _("Size")],
-         :col_order => %w(name value)}
-    h[:value] = vmdb_table_top_rows(:size, TOP_TABLES_BY_SIZE_COUNT)
-    h
+    {
+      :title     => _("Largest Tables"),
+      :headers   => [_("Name"), _("Size")],
+      :col_order => %w(name value),
+      :value     => vmdb_table_top_rows(:size, TOP_TABLES_BY_SIZE_COUNT)
+    }
   end
 
   def textual_vmdb_tables_most_wasted_space
-    h = {:label     => _("Tables with Most Wasted Space"),
-         :headers   => [_("Name"), _("Wasted")],
-         :col_order => %w(name value)}
-    h[:value] = vmdb_table_top_rows(:wasted_bytes, TOP_TABLES_BY_WASTED_SPACE_COUNT)
-    h
+    {
+      :title     => _("Tables with Most Wasted Space"),
+      :headers   => [_("Name"), _("Wasted")],
+      :col_order => %w(name value),
+      :value     => vmdb_table_top_rows(:wasted_bytes, TOP_TABLES_BY_WASTED_SPACE_COUNT)
+    }
   end
 
   def vmdb_table_top_rows(typ, limit)
