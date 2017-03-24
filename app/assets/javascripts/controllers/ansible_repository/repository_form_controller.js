@@ -44,7 +44,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
   };
 
   $scope.cancelClicked = function() {
-    var message = $scope.newRecord ? __('Add of Repository canceled by user.') : sprintf(__('Edit of Repository \"%s\" canceled by user.'), vm.repositoryModel.name);
+    var message = $scope.newRecord ? __('Add of Repository cancelled by user.') : sprintf(__('Edit of Repository \"%s\" cancelled by user.'), vm.repositoryModel.name);
     var url = '/ansible_repository/show_list' + '?flash_msg=' + message + '&escape=true&flash_warning=true&flash_error=false';
     window.location.href = url;
   };

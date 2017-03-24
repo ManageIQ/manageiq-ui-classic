@@ -40,19 +40,20 @@
                      options_for_select([["#{_('GIT')}", "git"]], 'git'),
                      "ng-model" => "vm.repositoryModel.scm_type",
                      :disabled => true)
-    .form-group{"ng-class" => "{'has-error': angularForm.scm_url.$error.required || angularForm.scm_url.$error.url}"}
+    .form-group{"ng-class" => "{'has-error': angularForm.scm_url.$error.required || angularForm.scm_url.$error.urlValidation}"}
       %label.col-md-2.control-label
         = _('URL')
       .col-md-8
-        %input.form-control{:type          => "url",
-                              :name        => "scm_url",
-                              :id          => "scm_url",
-                              'ng-model'   => "vm.repositoryModel.scm_url",
-                              :required    => "",
-                              :checkchange => true}
+        %input.form-control{:type              => "text",
+                              :name            => "scm_url",
+                              :id              => "scm_url",
+                              'ng-model'       => "vm.repositoryModel.scm_url",
+                              :required        => "",
+                              :checkchange     => true,
+                              'url-validation' => true}
         %span.help-block{"ng-show" => "angularForm.scm_url.$error.required"}
           = _("Required")
-        %span.help-block{"ng-show" => "angularForm.scm_url.$error.url"}
+        %span.help-block{"ng-show" => "angularForm.scm_url.$error.urlValidation"}
           = _("URL must include a protocol (http:// or https://)")
     .form-group
       %label.col-md-2.control-label
