@@ -1,40 +1,48 @@
-ManageIQ.angular.app.controller('cloudNetworkFormController', ['$scope', 'cloudNetworkFormId', 'miqService', 'API', function($scope, cloudNetworkFormId, miqService, API) {
-  $scope.cloudNetworkModel = { name: '', ems_id: '', cloud_tenant_id: '', provider_network_type: ''  };
-  $scope.formId = cloudNetworkFormId;
-  $scope.afterGet = false;
-  $scope.modelCopy = angular.copy( $scope.cloudNetworkModel );
-  $scope.model = "cloudNetworkModel";
+ManageIQ.angular.app.controller('cloudNetworkFormController', ['$http', '$scope', 'cloudNetworkFormId', 'miqService', function($http, $scope, cloudNetworkFormId, miqService) {
+  var vm = this;
+  vm.cloudNetworkModel = { name: '', ems_id: '', cloud_tenant_id: '', provider_network_type: ''  };
+  vm.formId = cloudNetworkFormId;
+  vm.afterGet = false;
+  vm.modelCopy = angular.copy( vm.cloudNetworkModel );
+  vm.model = "cloudNetworkModel";
 
-  ManageIQ.angular.scope = $scope;
+  ManageIQ.angular.scope = vm;
 
   if (cloudNetworkFormId == 'new') {
-    $scope.cloudNetworkModel.name = "";
-    $scope.newRecord = true;
-    $scope.cloudNetworkModel.enabled = true;
-    $scope.cloudNetworkModel.external_facing = false;
-    $scope.cloudNetworkModel.shared = false;
-    $scope.cloudNetworkModel.vlan_transparent = false;
+    vm.cloudNetworkModel.name = "";
+    vm.newRecord = true;
+    vm.cloudNetworkModel.enabled = true;
+    vm.cloudNetworkModel.external_facing = false;
+    vm.cloudNetworkModel.shared = false;
+    vm.cloudNetworkModel.vlan_transparent = false;
   } else {
     miqService.sparkleOn();
-    API.get("/api/cloud_networks/" + cloudNetworkFormId + "?attributes=cloud_tenant").then(function(data) {
-      $scope.afterGet = true;
-      $scope.cloudNetworkModel.name = data.name;
-      $scope.cloudNetworkModel.cloud_tenant_name = data.cloud_tenant.name;
-      $scope.cloudNetworkModel.enabled = data.enabled;
-      $scope.cloudNetworkModel.external_facing = data.external_facing;
-      $scope.cloudNetworkModel.port_security_enabled = data.port_security_enabled;
-      $scope.cloudNetworkModel.provider_network_type = data.provider_network_type;
-      $scope.cloudNetworkModel.qos_policy_id = data.qos_policy_id;
-      $scope.cloudNetworkModel.shared = data.shared;
-      $scope.cloudNetworkModel.vlan_transparent = data.vlan_transparent;
-      $scope.modelCopy = angular.copy( $scope.cloudNetworkModel );
-      miqService.sparkleOff();
-    }).catch(miqService.handleFailure);
+
+    $http.get('/cloud_network/cloud_network_form_fields/' + cloudNetworkFormId)
+      .then(getCloudNetworkFormDataComplete)
+      .catch(miqService.handleFailure);
+  }
+
+  function getCloudNetworkFormDataComplete(response) {
+    var data = response.data;
+
+    vm.afterGet = true;
+    vm.cloudNetworkModel.name = $scope.cloudNetworkModel.name = data.name;
+    vm.cloudNetworkModel.cloud_tenant_name = data.cloud_tenant_name;
+    vm.cloudNetworkModel.enabled = data.enabled;
+    vm.cloudNetworkModel.external_facing = data.external_facing;
+    vm.cloudNetworkModel.port_security_enabled = data.port_security_enabled;
+    vm.cloudNetworkModel.provider_network_type = $scope.cloudNetworkModel.provider_network_type  = data.provider_network_type;
+    vm.cloudNetworkModel.qos_policy_id = data.qos_policy_id;
+    vm.cloudNetworkModel.shared = data.shared;
+    vm.cloudNetworkModel.vlan_transparent = data.vlan_transparent;
+    vm.modelCopy = angular.copy( vm.cloudNetworkModel );
+    miqService.sparkleOff();
   }
 
   $scope.addClicked = function() {
     var url = 'create/new' + '?button=add';
-    miqService.miqAjaxButton(url, $scope.cloudNetworkModel, { complete: false });
+    miqService.miqAjaxButton(url, vm.cloudNetworkModel, { complete: false });
   };
 
   $scope.cancelClicked = function() {
@@ -48,12 +56,12 @@ ManageIQ.angular.app.controller('cloudNetworkFormController', ['$scope', 'cloudN
 
   $scope.saveClicked = function() {
     var url = '/cloud_network/update/' + cloudNetworkFormId + '?button=save';
-    miqService.miqAjaxButton(url, $scope.cloudNetworkModel, { complete: false });
+    miqService.miqAjaxButton(url, vm.cloudNetworkModel, { complete: false });
   };
 
   $scope.resetClicked = function() {
-    $scope.cloudNetworkModel = angular.copy( $scope.modelCopy );
-    $scope.angularForm.$setPristine(true);
+    vm.cloudNetworkModel = angular.copy( vm.modelCopy );
+    vm.angularForm.$setPristine(true);
     miqService.miqFlash("warn", "All changes have been reset");
   };
 }]);
