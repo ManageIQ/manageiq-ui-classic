@@ -224,6 +224,22 @@ module ApplicationHelper
     users
   ).freeze
 
+  def model_to_report_data
+    current_model = if !@display.nil? && @display != "main"
+      @display
+    elsif params[:db]
+      params[:db]
+    elsif defined? controller.class.model
+      controller.class.model.to_s.tableize
+    end
+
+    # Hosts do not store correct @display in nested attributes (Relationship, Security and Attributes) so use action
+    if @display == "main" && @use_action && !params.nil? && !params[:action].nil? && params[:action] != 'show'
+      current_model = params[:action]
+    end
+    current_model
+  end
+
   def model_string_to_constant(model_string)
     MODEL_STRING[model_string] || model_string.singularize.classify.constantize
   end
@@ -295,13 +311,6 @@ module ApplicationHelper
     "report_info"             => "msc"
   }.freeze
 
-  CONTENT_TYPE_ID = {
-    "report" => "r",
-    "menu"   => "m",
-    "rss"    => "rf",
-    "chart"  => "c"
-  }.freeze
-
   # Create a url to show a record from the passed in view
   def view_to_url(view, parent = nil)
     association = view_to_association(view, parent)
@@ -364,16 +373,8 @@ module ApplicationHelper
         elsif %w(VmdbTableEvm VmdbIndex MiqServer).include?(view.db) &&
               %w(ops report).include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + TREE_WITH_TAB[active_tab]
-        elsif %w(MiqAction
-                 MiqAlert
-                 ScanItemSet
-                 MiqSchedule
-                 PxeServer
-                 PxeImageType
-                 IsoDatastore
-                 CustomizationTemplate
-                 ).include?(view.db) &&
-              %w(miq_policy ops pxe).include?(params[:controller])
+        elsif %w(MiqAction MiqAlert ScanItemSet MiqSchedule).include?(view.db) &&
+              %w(miq_policy ops).include?(params[:controller])
           return "/#{params[:controller]}/tree_select/?id=#{TreeBuilder.get_prefix_for_model(view.db)}"
         else
           return url_for_only_path(:action => action) + "/" # In explorer, don't jump to other controllers
@@ -1622,48 +1623,12 @@ module ApplicationHelper
     end
   end
 
-  def listicon_glyphicon_tag_for_widget(widget)
-    case widget.status.downcase
-    when 'complete' then 'pficon pficon-ok'
-    when 'queued'   then 'fa fa-pause'
-    when 'running'  then 'pficon pficon-running'
-    when 'error'    then 'pficon pficon-warning-triangle-o'
-    end
-  end
-
-  ICON_GLYPHICON = {
-    "MiqReportResult" => {"error"    => "pficon pficon-warning-triangle-o",
-                          "finished" => "pficon pficon-ok",
-                          "running"  => "pficon pficon-running",
-                          "queued"   => "fa fa-pause"},
-    "MiqWidget"       => {"chart"  => "fa fa-pie-chart",
-                          "menu"   => "fa fa-share-square-o",
-                          "report" => "fa fa-file-text-o",
-                          "rss"    => "fa fa-rss"},
-    "MiqSchedule"     => "fa fa-clock-o",
-    "MiqUserRole"     => "product product-role"
+  CONTENT_TYPE_ID = {
+    "report" => "r",
+    "menu"   => "m",
+    "rss"    => "rf",
+    "chart"  => "c"
   }.freeze
-
-  def listicon_glyphicon(db, row)
-    glyphicon = ICON_GLYPHICON[db]
-
-    return glyphicon if glyphicon.kind_of? String
-
-    if %w(MiqReportResult).include? db
-      glyphicon[row['status'].downcase]
-    elsif %w(MiqWidget).include? db
-      glyphicon = glyphicon[row['content_type'].downcase]
-      [glyphicon, listicon_glyphicon_tag_for_widget(row)]
-    end
-  end
-
-  def listicon_glyphicon_tag(db, row)
-    glyphicon, glyphicon2 = listicon_glyphicon(db, row)
-
-    content_tag(:i, nil, :class => glyphicon) do
-      content_tag(:i, nil, :class => glyphicon2) if glyphicon2
-    end
-  end
 
   LIST_ICON_FOR = %w(
     MiqReportResult
@@ -1676,12 +1641,9 @@ module ApplicationHelper
     if %w(MiqReportResult MiqSchedule MiqUserRole MiqWidget).include?(db)
       listicon_glyphicon_tag(db, row)
     else
-      fileicon_tag(db, row)
-=======
       content_tag(:i, nil, :class => icon) do
         content_tag(:i, nil, :class => icon2) if icon2
       end
->>>>>>> resolved conflicts from cherry-pick of #ca2dea446cfe1111bc0d1c7cd96ce4d59d439423 so report_data will use decorators for icons in listicon selection defined in application helper.
     end
   end
 
