@@ -19,6 +19,8 @@ class VmController < ApplicationController
     process_show_list(options)
   end
 
+  private ####
+
   def get_session_data
     @polArr         = session[:polArr] || ""           # current tags in effect
     @policy_options = session[:policy_options] || ""
