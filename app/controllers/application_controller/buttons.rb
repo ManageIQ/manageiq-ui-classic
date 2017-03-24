@@ -240,7 +240,7 @@ module ApplicationController::Buttons
     end
   end
 
-  private ###########
+  private
 
   BASE_MODEL_EXPLORER_CLASSES = [Vm, MiqTemplate, Service].freeze
   APPLIES_TO_CLASS_BASE_MODELS = %w(CloudTenant EmsCluster ExtManagementSystem Host MiqTemplate Service ServiceTemplate Storage Vm).freeze
@@ -263,7 +263,17 @@ module ApplicationController::Buttons
       render_flash(_('No url was returned from automate.'), :error)
     end
   end
-  private :custom_button_done
+
+  def custom_buttons_invoke(button, objs)
+    if objs.length > 1 &&
+       (button.options && button.options.key?(:submit_how) && button.options[:submit_how].to_s == 'all')
+      # FIXME: wee need something like this from the core/automate:
+      # button.invoke(:object_id => objs.map(&:id), :object_type => objs[0].class.base_class.name)
+      raise "Not implemented."
+    else
+      objs.each { |obj| button.invoke(obj) }
+    end
+  end
 
   def custom_buttons
     button = CustomButton.find_by_id(params[:button_id])
@@ -271,20 +281,34 @@ module ApplicationController::Buttons
 
     @explorer = true if BASE_MODEL_EXPLORER_CLASSES.include?(cls)
 
-    obj = cls.find_by_id(params[:id].to_i)
+    if params[:id].to_s == 'LIST'
+      objs = Rbac.filtered(cls.where(:id => find_checked_items))
+      obj = objs.first
+    else
+      obj = Rbac.filtered_object(cls.find_by_id(params[:id].to_i))
+      objs = [obj]
+    end
+
     @right_cell_text = _("%{record} - \"%{button_text}\"") % {:record => obj.name, :button_text => button.name}
     if button.resource_action.dialog_id
-      options = {}
-      options[:header] = @right_cell_text
-      options[:target_id] = obj.id
-      options[:target_kls] = obj.class.name
+      options = {
+        :header     => @right_cell_text,
+        :target_id  => obj.id,
+        :target_ids => objs.collect(&:id),
+        :target_kls => obj.class.name,
+      }
+
       dialog_initialize(button.resource_action, options)
+
     elsif button.options && button.options.key?(:open_url) && button.options[:open_url]
+      # not supported for objs: cannot do wait for task for multiple tasks
       task_id = button.invoke_async(obj)
       initiate_wait_for_task(:task_id => task_id, :action => :custom_button_done)
+
     else
       begin
-        button.invoke(obj)
+        custom_buttons_invoke(button, objs)
+
       rescue StandardError => bang
         add_flash(_("Error executing: \"%{task_description}\" %{error_message}") %
           {:task_description => params[:desc], :error_message => bang.message}, :error)
