@@ -1284,6 +1284,7 @@ module ApplicationHelper
           flavor
           floating_ip
           host
+          load_balancer
           middleware_datasource
           middleware_deployment
           middleware_domain
