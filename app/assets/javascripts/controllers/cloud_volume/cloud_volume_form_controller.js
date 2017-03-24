@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('cloudVolumeFormController', ['$http', '$scope', 'cloudVolumeFormId', 'miqService', 'API', function($http, $scope, cloudVolumeFormId, miqService, API) {
+ManageIQ.angular.app.controller('cloudVolumeFormController', ['$scope', 'cloudVolumeFormId', 'miqService', 'API', function($scope, cloudVolumeFormId, miqService, API) {
   var init = function() {
     $scope.cloudVolumeModel = {
       aws_encryption: false,
@@ -14,7 +14,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['$http', '$scope',
       { type: "io1", name: "Provisioned IOPS SSD (IO1)" },
       { type: "st1", name: "Throughput Optimized HDD (ST1)" },
       { type: "sc1", name: "Cold HDD (SC1)" },
-      { type: "magnetic", name: "Magnetic" },
+      { type: "standard", name: "Magnetic" },
     ];
 
     ManageIQ.angular.scope = $scope;
@@ -23,17 +23,21 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['$http', '$scope',
       $scope.cloudVolumeModel.name = "";
     } else {
       miqService.sparkleOn();
-      $http.get('/cloud_volume/cloud_volume_form_fields/' + cloudVolumeFormId)
+      API.get('/api/cloud_volumes/' + cloudVolumeFormId + '?attributes=ext_management_system.type')
         .then(getCloudVolumeFormDataComplete)
         .catch(miqService.handleFailure);
     }
   };
 
-  function getCloudVolumeFormDataComplete(response) {
-    var data = response.data;
-
+  function getCloudVolumeFormDataComplete(data) {
     $scope.afterGet = true;
+    $scope.cloudVolumeModel.emstype = data.ext_management_system.type;
     $scope.cloudVolumeModel.name = data.name;
+    // We have to display size in GB.
+    $scope.cloudVolumeModel.size = data.size / 1073741824;
+    // Currently, this is only relevant for AWS volumes so we are prefixing the
+    // model attribute with AWS.
+    $scope.cloudVolumeModel.aws_volume_type = data.volume_type;
 
     $scope.modelCopy = angular.copy( $scope.cloudVolumeModel );
     miqService.sparkleOff();

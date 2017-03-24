@@ -121,14 +121,6 @@ class CloudVolumeController < ApplicationController
     replace_gtl_main_div if pagination_request?
   end
 
-  def cloud_volume_form_fields
-    assert_privileges("cloud_volume_edit")
-    volume = find_by_id_filtered(CloudVolume, params[:id])
-    render :json => {
-      :name => volume.name
-    }
-  end
-
   def attach
     params[:id] = checked_item_id unless params[:id].present?
     assert_privileges("cloud_volume_attach")
@@ -696,6 +688,9 @@ class CloudVolumeController < ApplicationController
     options[:cloud_tenant_id] = params[:cloud_tenant_id] if params[:cloud_tenant_id]
     options[:vm_id] = params[:vm_id] if params[:vm_id]
     options[:device_path] = params[:device_path] if params[:device_path]
+    options[:volume_type] = params[:aws_volume_type] if params[:aws_volume_type]
+    # Only set IOPS if io1 (provisioned IOPS) and IOPS available
+    options[:iops] = params[:aws_iops] if options[:volume_type] == 'io1' && params[:aws_iops]
     options
   end
 
