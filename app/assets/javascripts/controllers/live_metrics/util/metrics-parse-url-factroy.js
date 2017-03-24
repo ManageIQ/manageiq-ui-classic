@@ -7,7 +7,7 @@ angular.module('miq.util').factory('metricsParseUrlFactory', function() {
     // TODO: get this values from GET/POST values ?
     dash.tenantList = [];
     dash.minBucketDurationInSecondes = 20 * 60;
-    dash.max_metrics = 1000;
+    dash.max_metrics = 10000;
     dash.items_per_page = 10;
   };
 });

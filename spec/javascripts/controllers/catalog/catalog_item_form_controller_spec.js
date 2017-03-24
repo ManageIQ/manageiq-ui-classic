@@ -41,8 +41,7 @@ describe('catalogItemFormController', function() {
           hosts: undefined,
           extra_vars: Object({  }),
           network_credential_id: undefined,
-          cloud_credential_id: undefined,
-          dialog_id: undefined
+          cloud_credential_id: undefined
         }
       }
     };

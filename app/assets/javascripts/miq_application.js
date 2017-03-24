@@ -1682,6 +1682,9 @@ function chartData(type, data, data2) {
   }
 
   if (_.isObject(data.miq)) {
+    if (data.miq.empty) {
+      return _.defaultsDeep({}, data, data2);
+    }
     // set maximum count of x axis tick labels for C&U charts
     if (data.miq.performance_chart) {
       data.axis.x.tick.centered = true;

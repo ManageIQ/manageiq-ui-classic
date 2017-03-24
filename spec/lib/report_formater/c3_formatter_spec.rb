@@ -146,4 +146,15 @@ describe ReportFormatter::C3Formatter do
       expect(report.chart[:miq][:category_table]).to eq(["8/19", "8/20"])
     end
   end
+
+  context '#C&U charts with no data' do
+    let(:report) { cu_chart_with_grouping }
+    before(:each) do
+      render_report(report, &proc { |e| e.options.graph_options = { :chart_type => :performance } })
+    end
+
+    it "has right empty data description" do
+      expect(report.chart[:data][:empty][:label][:text]).to eq(_("No data available."))
+    end
+  end
 end

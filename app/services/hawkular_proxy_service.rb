@@ -103,7 +103,17 @@ class HawkularProxyService
       x["tags"].keys if x["tags"]
     end
 
-    tags.compact.flatten.uniq.sort
+    tags.compact.flatten.uniq.sort.map do |tag|
+      {:tag => tag, :options => metric_tags_options(tag, definitions)}
+    end
+  end
+
+  def metric_tags_options(tag, definitions)
+    options = definitions.map do |x|
+      x["tags"][tag] if x["tags"] && x["tags"].keys.include?(tag)
+    end
+
+    options.compact.flatten.uniq.sort
   end
 
   def get_data(id, params)

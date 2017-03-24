@@ -208,9 +208,9 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     if (configData.retirement_cloud_credential_id !== '')
       catalog_item['config_info']['retirement']['cloud_credential_id'] = configData.retirement_cloud_credential_id;
 
-    if (configData.retirement_dialog_id !== '') {
+    if (angular.isDefined(vm.catalogItemModel.retirement_dialog_id) && configData.retirement_dialog_id !== '') {
       catalog_item['config_info']['retirement']['dialog_id'] = configData.retirement_dialog_id;
-    } else if (configData.retirement_dialog_name !== '')
+    } else if (angular.isDefined(vm.catalogItemModel.retirement_dialog_name) && configData.retirement_dialog_name !== '')
       catalog_item['config_info']['retirement']['new_dialog_name'] = configData.retirement_dialog_name;
 
     return catalog_item;

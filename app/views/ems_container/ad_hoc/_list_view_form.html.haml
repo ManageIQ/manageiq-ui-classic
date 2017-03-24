@@ -1,4 +1,4 @@
-.col-md-12.ad-hoc-tenant
+.col-md-12.tenant-filter-bar
   .form-group.pull-left.ad-hoc-tenant
     %button.btn.btn-primary{"type"        => "button",
                             "ng-disabled" => "!dash.tenantChanged",
@@ -28,7 +28,22 @@
                             "ng-disabled" => "!dash.itemSelected"}
       = _("View Graph")
 
-  = # TODO: pagination should move inside the #paging-div element once #592 is complete
+    %dropdown.dropdown-kebab-pf
+      %button.btn.btn-link.dropdown-toggle{"type"          => "button",
+                                           "data-toggle"   => "dropdown",
+                                           "aria-haspopup" => "true",
+                                           "aria-expanded" => "true"}
+        %span.fa.fa-fw.fa-ellipsis-v
+      %ul.dropdown-menu{"aria-labelledby" => "dropdownKebab"}
+        %li{"ng-repeat" => "range in dash.filterTypes"}
+          %a{"href"     => "#",
+             "ng-click" => "dash.filterType = range.value; dash.setFilterOptions()"}
+            .row
+              .col-md-9
+                {{range.title}}
+              .col
+                %span.pficon{"ng-class" => "{true: 'pficon-ok'}[dash.filterType===range.value]"}
+
   .form-group.pagination-div
     %ul.pagination.pagination-pf-back
       %li
