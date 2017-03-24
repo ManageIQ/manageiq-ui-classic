@@ -155,8 +155,18 @@
   }
 
   function process_response(response) {
-    if (response.status === 204)  // No content
+    if (response.status === 204) {
+      // No content
       return null;
+    }
+
+    if (response.status >= 300) {
+      // Not 1** or 2**
+      return response.json()
+        .then(function(obj) {
+          return Promise.reject(obj);
+        });
+    }
 
     return response.json();
   }
