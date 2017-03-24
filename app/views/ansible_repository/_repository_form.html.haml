@@ -77,17 +77,14 @@
           %label
             = check_box_tag("clean", "1", false, 'ng-model' => "vm.repositoryModel.scm_clean")
             = _('Clean')
-          %i.pficon.pficon-info
         %div
           %label
             = check_box_tag("scm_delete_on_update", "1", false, 'ng-model' => 'vm.repositoryModel.scm_delete_on_update')
             = _('Delete on Update')
-          %i.pficon.pficon-info
         %div
           %label
             = check_box_tag("scm_update_on_launch", "1", false, 'ng-model' => 'vm.repositoryModel.scm_update_on_launch')
             = _('Update on Launch')
-          %i.pficon.pficon-info
     = render :partial => "layouts/angular/x_edit_buttons_angular"
 :javascript
   ManageIQ.angular.app.value('repositoryId', '#{@id}');
