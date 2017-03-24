@@ -54,8 +54,24 @@ describe Quadicons::HostQuadicon, :type => :helper do
         expect(rendered).to have_selector("img[src*='checkmark']")
       end
 
-      it 'renders a shield badge' do
-        expect(rendered).to have_selector('img[src*="shield"]')
+      context 'when record has policies' do
+        before do
+          allow(record).to receive(:get_policies) { [:foo] }
+        end
+
+        it 'renders a shield badge' do
+          expect(rendered).to have_selector('img[src*="shield"]')
+        end
+      end
+
+      context 'when record has no policies' do
+        before do
+          allow(record).to receive(:get_policies) { [] }
+        end
+
+        it 'does not render a shield badge' do
+          expect(rendered).not_to have_selector('img[src*="shield"]')
+        end
       end
     end
 

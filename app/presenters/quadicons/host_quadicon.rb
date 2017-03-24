@@ -13,7 +13,9 @@ module Quadicons
     end
 
     def render_badge
-      concat(Quadicons::Badge.new(record, context).render)
+      unless record.get_policies.empty?
+        concat(Quadicons::Badge.new(record, context).render)
+      end
     end
 
     def link_builder
