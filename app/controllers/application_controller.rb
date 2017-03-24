@@ -1380,7 +1380,13 @@ class ApplicationController < ActionController::Base
     items
   end
 
-  # Common Saved Reports button handler routines
+  # Test RBAC in case there is only one record, not checked by checkbox
+  def test_item_with_rbac(klass, id)
+    assert_rbac(current_user, klass, id)
+    id
+  end
+
+# Common Saved Reports button handler routines
   def process_saved_reports(saved_reports, task)
     success_count = 0
     failure_count = 0
