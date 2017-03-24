@@ -8,11 +8,8 @@ module Mixins::CustomButtons
   end
 
   def custom_toolbar_explorer?
-    if x_tree                # Make sure we have the trees defined
-      if x_node == "root" || # If on a root, create placeholder toolbar
-         !@record            #   or no record showing
-        :blank
-      elsif @display == "main"
+    if x_tree
+      if (@display == "main" && @record) || (@lastaction == "show_list")
         true
       else
         :blank
@@ -21,7 +18,8 @@ module Mixins::CustomButtons
   end
 
   def custom_toolbar_simple?
-    @record && @lastaction == "show" && @display == "main"
+    (@record && @lastaction == "show" && @display == "main") ||
+      (@lastaction == "show_list")
   end
 
   class_methods do
