@@ -284,34 +284,25 @@ class MiqAeClassController < ApplicationController
     replace_trees_by_presenter(presenter, :ae => build_ae_tree) unless replace_trees.blank?
 
     if @sb[:action] == "miq_ae_field_seq"
-      if @flash_array
-        replace_partial_div = :flash_msg_div
-      end
-      update_partial_div = :class_fields_div
-      update_partial = "fields_seq_form"
+      presenter.update(:class_fields_div, r[:partial => "fields_seq_form"])
+
     elsif @sb[:action] == "miq_ae_domain_priority_edit"
-      if @flash_array
-        replace_partial_div = :flash_msg_div
-      end
-      update_partial_div = :ns_list_div
-      update_partial = "domains_priority_form"
+      presenter.update(:ns_list_div, r[:partial => "domains_priority_form"])
+
     elsif MIQ_AE_COPY_ACTIONS.include?(@sb[:action])
-      if @flash_array
-        replace_partial_div = :flash_msg_div
-      end
-      update_partial_div = :main_div
-      update_partial = "copy_objects_form"
+      presenter.update(:main_div, r[:partial => "copy_objects_form"])
+
     else
       if @sb[:action] == "miq_ae_class_edit"
         @sb[:active_tab] = 'props'
       else
         @sb[:active_tab] ||= 'instances'
       end
-      update_partial_div = :main_div
-      update_partial = "all_tabs"
+      presenter.update(:main_div, r[:partial => 'all_tabs'])
     end
-    presenter.replace(replace_partial_div, r[:partial => "layouts/flash_msg"]) if replace_partial_div
-    presenter.update(update_partial_div, r[:partial => update_partial]) if update_partial
+
+    presenter.replace('flash_msg_div', r[:partial => "layouts/flash_msg"]) if @flash_array
+
     if @in_a_form
       action_url =  create_action_url(nodes.first)
       # incase it was hidden for summary screen, and incase there were no records on show_list
