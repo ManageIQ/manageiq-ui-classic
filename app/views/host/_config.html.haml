@@ -7,10 +7,10 @@
       .form-group
         - devices.each do |item|
           %label.col-md-2.control-label
-            = h(item[:device])
+            = h(item[:name])
           .col-md-10
             %p.form-control-static
-              %img{:src => image_path("100/hardware-#{item[:icon].downcase}.png")}
+              %img{:src => image_path("100/hardware-#{item[:icon]}.png")}
               = h(item[:description])
 - when "os_info"
   - os_info, _ = get_os_info

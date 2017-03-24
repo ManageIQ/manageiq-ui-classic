@@ -11,9 +11,9 @@
         - devices.each do |item|
           %tr
             %td.label
-              = h(item[:device])
+              = h(item[:name])
             %td
-              %img{:src => image_path("100/hardware-#{item[:icon].downcase}.png")}
+              %img{:src => image_path("100/hardware-#{item[:icon]}.png")}
               = h(item[:description])
 - when "os_info"
   - os_info, account_policy = get_os_info
@@ -78,7 +78,7 @@
           - devices.each do |item|
             %tr
               %td.label
-                = h(item[:device])
+                = h(item[:name])
               %td
                 %img{:src => image_path("100/hardware-#{item[:icon].downcase}.png")}
                 = h(item[:description])
