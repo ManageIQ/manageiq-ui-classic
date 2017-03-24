@@ -58,7 +58,8 @@ class ApplicationHelper::ToolbarBuilder
   # for generic toolbar, or starts building custom toolbar
   def toolbar_class(toolbar_name)
     if toolbar_name == "custom_buttons_tb"
-      custom_toolbar_class(@record)
+      model = @record ? @record.class : @view_context.controller.class.model
+      custom_toolbar_class(model, @record)
     else
       predefined_toolbar_class(toolbar_name)
     end
@@ -227,10 +228,11 @@ class ApplicationHelper::ToolbarBuilder
            x_edit_view_tb history_main ems_container_dashboard ems_infra_dashboard).include?(name)
   end
 
-  def create_custom_button_hash(input, record, options = {})
+  def create_custom_button(input, model, record, options = {})
     options[:enabled] = true unless options.key?(:enabled)
     button_id = input[:id]
     button_name = input[:name].to_s
+    record_id = record.present? ? record.id : 'LIST'
     button = {
       :id        => "custom__custom_#{button_id}",
       :type      => :button,
@@ -239,13 +241,14 @@ class ApplicationHelper::ToolbarBuilder
       :enabled   => options[:enabled],
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
       :url       => "button",
-      :url_parms => "?id=#{record.id}&button_id=#{button_id}&cls=#{record.class}&pressed=custom_button&desc=#{button_name}"
+      :url_parms => "?id=#{record_id}&button_id=#{button_id}&cls=#{model}&pressed=custom_button&desc=#{button_name}"
     }
     button[:text] = button_name if input[:text_display]
     button
   end
 
   def create_raw_custom_button_hash(cb, record)
+    record_id = record.present? ? record.id : 'LIST'
     {
       :id            => cb.id,
       :class         => cb.applies_to_class,
@@ -253,19 +256,19 @@ class ApplicationHelper::ToolbarBuilder
       :name          => cb.name,
       :image         => cb.options[:button_image],
       :text_display  => cb.options.key?(:display) ? cb.options[:display] : true,
-      :target_object => record.id.to_i
+      :target_object => record_id
     }
   end
 
-  def custom_buttons_hash(record)
-    get_custom_buttons(record).collect do |group|
+  def custom_button_selects(model, record)
+    get_custom_buttons(model, record).collect do |group|
       props = {
         :id      => "custom_#{group[:id]}",
         :type    => :buttonSelect,
         :icon    => "product product-custom-#{group[:image]} fa-lg",
         :title   => group[:description],
         :enabled => true,
-        :items   => group[:buttons].collect { |b| create_custom_button_hash(b, record) }
+        :items   => group[:buttons].collect { |b| create_custom_button(b, model, record) }
       }
       props[:text] = group[:text] if group[:text_display]
 
@@ -273,28 +276,33 @@ class ApplicationHelper::ToolbarBuilder
     end
   end
 
-  def custom_toolbar_class(record)
+  def custom_toolbar_class(model, record)
     # each custom toolbar is an anonymous subclass of this class
+
     toolbar = Class.new(ApplicationHelper::Toolbar::Basic)
-    custom_buttons_hash(record).each do |button_group|
+
+    # This creates several drop-down (select) with custom buttons.
+    # Each select is placed into a separate group.
+    custom_button_selects(model, record).each do |button_group|
       toolbar.button_group(button_group[:name], button_group[:items])
     end
 
-    service_buttons = record_to_service_buttons(record)
-    unless service_buttons.empty?
-      buttons = service_buttons.collect { |b| create_custom_button_hash(b, record, :enabled => nil) }
-      toolbar.button_group("custom_buttons_", buttons)
+    # For Service, we include buttons for ServiceTemplate.
+    # These buttons are added as a single group with multiple buttons
+    if record.present?
+      service_buttons = record_to_service_buttons(record)
+      unless service_buttons.empty?
+        buttons = service_buttons.collect { |b| create_custom_button(b, model, record, :enabled => nil) }
+        toolbar.button_group("custom_buttons_", buttons)
+      end
     end
 
     toolbar
   end
 
-  def button_class_name(record)
-    case record
-    when Service then      "ServiceTemplate"            # Service Buttons are defined in the ServiceTemplate class
-    when VmOrTemplate then record.class.base_model.name
-    else               record.class.base_class.name
-    end
+  def button_class_name(model)
+    # Service Buttons are defined in the ServiceTemplate class
+    model >= Service ? "ServiceTemplate" : model.base_model.name
   end
 
   def service_template_id(record)
@@ -310,9 +318,9 @@ class ApplicationHelper::ToolbarBuilder
     record.service_template.custom_buttons.collect { |cb| create_raw_custom_button_hash(cb, record) }
   end
 
-  def get_custom_buttons(record)
-    cbses = CustomButtonSet.find_all_by_class_name(button_class_name(record), service_template_id(record))
-    cbses.sort_by { |cbs| cbs[:set_data][:group_index] }.collect do |cbs|
+  def get_custom_buttons(model, record)
+    cbses = CustomButtonSet.find_all_by_class_name(button_class_name(model), service_template_id(record))
+    cbses.sort_by { |cbs| cbs.set_data[:group_index] }.collect do |cbs|
       group = {
         :id           => cbs.id,
         :text         => cbs.name.split("|").first,
@@ -324,9 +332,9 @@ class ApplicationHelper::ToolbarBuilder
       available = CustomButton.available_for_user(current_user, cbs.name) # get all uri records for this user for specified uri set
       available = available.select { |b| cbs.members.include?(b) }            # making sure available_for_user uri is one of the members
       group[:buttons] = available.collect { |cb| create_raw_custom_button_hash(cb, record) }.uniq
-      if cbs[:set_data][:button_order] # Show custom buttons in the order they were saved
+      if cbs.set_data[:button_order] # Show custom buttons in the order they were saved
         ordered_buttons = []
-        cbs[:set_data][:button_order].each do |bidx|
+        cbs.set_data[:button_order].each do |bidx|
           group[:buttons].each do |b|
             if bidx == b[:id] && !ordered_buttons.include?(b)
               ordered_buttons.push(b)
