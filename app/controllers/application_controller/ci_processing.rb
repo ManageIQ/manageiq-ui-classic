@@ -1891,7 +1891,8 @@ module ApplicationController::CiProcessing
 
     # Either a list or coming from a different controller
     if @lastaction == "show_list" || %w(cloud_object_store_containers cloud_object_store_objects).include?(@display)
-      items = find_checked_items
+      # FIXME retrieving vms from DB two times
+      items = find_checked_items_with_rbac(klass)
       if items.empty?
         add_flash(_("No %{model} were selected for %{task}") %
                     {:model => ui_lookup(:models => klass.name), :task => display_name}, :error)
@@ -1910,7 +1911,7 @@ module ApplicationController::CiProcessing
       add_flash(_("%{task} does not apply to this item") %
                   {:task => display_name}, :error)
     else
-      items.push(params[:id])
+      items.push(test_item_with_rbac(klass,params[:id]))
       process_objects(items, method, display_name) unless items.empty?
     end
   end
@@ -1978,10 +1979,10 @@ module ApplicationController::CiProcessing
       if params[:id].nil? || !ExtManagementSystem.where(:id => params[:id]).exists?
         add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => controller_name)}, :error)
       else
-        items.push(params[:id])
+        items.push(test_item_with_rbac(ExtManagementSystem, params[:id]))
       end
     else
-      items = find_checked_items
+      items = find_checked_items_with_rbac(ExtManagementSystem)
     end
 
     if items.empty?
