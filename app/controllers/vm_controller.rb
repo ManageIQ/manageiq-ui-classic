@@ -19,6 +19,16 @@ class VmController < ApplicationController
     process_show_list(options)
   end
 
+  def get_session_data
+    @polArr         = session[:polArr] || ""           # current tags in effect
+    @policy_options = session[:policy_options] || ""
+  end
+
+  def set_session_data
+    session[:polArr]          = @polArr unless @polArr.nil?
+    session[:policy_options]  = @policy_options unless @policy_options.nil?
+  end
+
   def title
     _("Virtual Machines")
   end
