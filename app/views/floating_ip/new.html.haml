@@ -1,4 +1,8 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "floatingIpFormController"}
+%form#form_div{:name => "angularForm",
+'ng-controller' => "floatingIpFormController as vm",
+"miq-form" => true,
+"model" => "vm.floatingIpModel",
+"model-copy" => "vm.modelCopy"}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Network Management Provider')
@@ -9,19 +13,19 @@
       .col-md-8
         = select_tag("ems_id",
                       options_for_select([["<#{_('Choose')}>", nil]] + @ems_choices.sort),
-                      "ng-model"                    => "floatingIpModel.ems_id",
+                      "ng-model"                    => "vm.floatingIpModel.ems_id",
                       "required"                    => "",
                       :miqrequired                  => true,
                       :checkchange                  => true,
-                      "ng-change"                   => "filterNetworkManagerChanged(floatingIpModel.ems_id)",
+                      "ng-change"                   => "vm.filterNetworkManagerChanged(vm.floatingIpModel.ems_id)",
                       "selectpicker-for-select-tag" => "")
 
-    .form-group{"ng-if" => "floatingIpModel.ems_id"}
+    .form-group{"ng-if" => "vm.floatingIpModel.ems_id"}
       %label.col-md-2.control-label
         = _('External Network')
       .col-md-8
         %select{"name"                        => "cloud_network_id",
-                "ng-model"                    => "floatingIpModel.cloud_network_id",
+                "ng-model"                    => "vm.floatingIpModel.cloud_network_id",
                 "required"                    => "",
                 :miqrequired                  => true,
                 :checkchange                  => true,
@@ -40,7 +44,7 @@
       .col-md-8
         %input.form-control{:type          => "text",
                             :name          => "description",
-                            'ng-model'     => "floatingIpModel.network_port_ems_ref",
+                            'ng-model'     => "vm.floatingIpModel.network_port_ems_ref",
                             'ng-maxlength' => 40,
                             :checkchange   => true}
     .form-group
@@ -49,7 +53,7 @@
       .col-md-8
         %input.form-control{:type          => "text",
                             :name          => "name",
-                            'ng-model'     => "floatingIpModel.name",
+                            'ng-model'     => "vm.floatingIpModel.name",
                             'ng-maxlength' => 40,
                             :checkchange   => true}
     .form-group
@@ -58,7 +62,7 @@
       .col-md-8
         %input.form-control{:type          => "text",
                             :name          => "description",
-                            'ng-model'     => "floatingIpModel.fixed_ip_address",
+                            'ng-model'     => "vm.floatingIpModel.fixed_ip_address",
                             'ng-maxlength' => 40,
                             "readonly"     => true}
   %h3
@@ -70,7 +74,7 @@
       .col-md-8
         = select_tag("cloud_tenant_id",
           options_for_select([["<#{_('Choose')}>", nil]] + @cloud_tenant_choices.sort),
-                      "ng-model"                    => "floatingIpModel.cloud_tenant_id",
+                      "ng-model"                    => "vm.floatingIpModel.cloud_tenant_id",
                       "required"                    => "",
                       :miqrequired                  => true,
                       :checkchange                  => true,
