@@ -2,7 +2,7 @@ module Quadicons
   module Quadrants
     class StorageFreeSpace < Quadrants::Base
       def path
-        "100/piecharts/datastore-#{usage}.png"
+        "100/piecharts/datastore/#{usage}.png"
       end
 
       def usage
