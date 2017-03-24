@@ -400,7 +400,7 @@ module ApplicationController::CiProcessing
     load_edit("vm_resize__#{params[:id]}")
     flavor_id = @edit[:new][:flavor]
     flavor = find_by_id_filtered(Flavor, flavor_id)
-    @record = VmOrTemplate.find_by_id(params[:id])
+    @record = find_by_id_filtered(VmOrTemplate, params[:id])
 
     case params[:button]
     when "cancel"
