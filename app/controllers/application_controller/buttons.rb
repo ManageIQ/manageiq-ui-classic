@@ -285,7 +285,7 @@ module ApplicationController::Buttons
       objs = Rbac.filtered(cls.where(:id => find_checked_items))
       obj = objs.first
     else
-      obj = Rbac.filtered_object(cls.find_by_id(params[:id].to_i))
+      obj = Rbac.filtered_object(cls.find(params[:id].to_i))
       objs = [obj]
     end
 
