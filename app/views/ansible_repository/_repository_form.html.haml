@@ -40,7 +40,7 @@
                      options_for_select([["#{_('GIT')}", "git"]], 'git'),
                      "ng-model" => "vm.repositoryModel.scm_type",
                      :disabled => true)
-    .form-group
+    .form-group{"ng-class" => "{'has-error': angularForm.scm_url.$error.required || angularForm.scm_url.$error.url}"}
       %label.col-md-2.control-label
         = _('URL')
       .col-md-8

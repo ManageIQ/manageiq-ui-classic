@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 'repositoryId', 'miqService', 'API', function($http, $scope, repositoryId,  miqService, API) {
+ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'repositoryId', 'miqService', 'API', function($scope, repositoryId,  miqService, API) {
   var vm = this;
 
   var init = function() {
@@ -44,7 +44,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
   };
 
   $scope.cancelClicked = function() {
-    var message = repositoryId === 'new' ? __("Addition of Repository canceled by user.") : sprintf(__("Addition of Repository \"%s\" canceled by user."), vm.repositoryModel.name)
+    var message = $scope.newRecord ? __('Add of Repository canceled by user.') : sprintf(__('Edit of Repository \"%s\" canceled by user.'), vm.repositoryModel.name);
     var url = '/ansible_repository/show_list' + '?flash_msg=' + message + '&escape=true&flash_warning=true&flash_error=false';
     window.location.href = url;
   };
@@ -68,32 +68,29 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
   };
 
   var getRepositoryFormData = function(response) {
-    debugger;
     var data = response;
     Object.assign(vm.repositoryModel, data);
     vm.modelCopy = angular.copy( vm.repositoryModel );
     vm.afterGet = true;
     miqService.sparkleOff();
-  }
+  };
 
   var getBack = function(response) {
     var message = '';
     var error = false;
     if (response.hasOwnProperty('results')) {
-      error = !response.results[0].success;
+      error = ! response.results[0].success;
       if (error) {
-        message = __("Unable to add Repository ") +  vm.repositoryModel.name + " ." +  response.results[0].message;
-      }
-      else {
-        message = sprintf(__("Addition of Repository \"%s\" was successfully initialized."), vm.repositoryModel.name);
+        message = __('Unable to add Repository ') +  vm.repositoryModel.name + ' .' +  response.results[0].message;
+      } else {
+        message = sprintf(__('Add of Repository \"%s\" was successfully initialized.'), vm.repositoryModel.name);
       }
     } else {
-      error = !response.success;
+      error = ! response.success;
       if (error) {
-        message = __("Unable to update Repository") +  vm.repositoryModel.name + " ." +  response.message;
-      }
-      else {
-        message = sprintf(__("Update of Repository \"%s\" was successfully initialized."), vm.repositoryModel.name);
+        message = __('Unable to edit Repository') +  vm.repositoryModel.name + ' .' +  response.message;
+      } else {
+        message = sprintf(__('Edit of Repository \"%s\" was successfully initialized.'), vm.repositoryModel.name);
       }
     }
     var url = '/ansible_repository/show_list' + '?flash_msg=' + message + '&escape=true';
@@ -104,14 +101,12 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$http', '$scope', 
   };
 
   var getCredentials = function(response) {
-    // TODO add check that we got what we needed
     response.resources.forEach( function(resource) {
       vm.scm_credentials.push({name: resource.name, value: resource.href});
     });
   };
 
   var getManagerResource = function(response) {
-    // TODO add check that we got what we needed
     vm.repositoryModel.manager_resource = {'href': response.resources[0].href};
   };
   init();

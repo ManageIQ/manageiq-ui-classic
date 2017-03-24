@@ -20,6 +20,10 @@ class AnsibleRepositoryController < ApplicationController
     ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource
   end
 
+  def title
+    _("Repository")
+  end
+
   def button
     if params[:pressed] == "embedded_configuration_script_source_edit"
       id = from_cid(params[:miq_grid_checks])
@@ -37,7 +41,7 @@ class AnsibleRepositoryController < ApplicationController
     AnsibleRepositoryController.model.where(:id => checked).each do |repo|
       begin
         repo.delete_in_provider_queue
-        add_flash(_("Deletion of Repository \"%{name}\" was successfully initiated.") % {:name => repo.name})
+        add_flash(_("Delete of Repository \"%{name}\" was successfully initiated.") % {:name => repo.name})
       rescue => ex
         add_flash(_("Unable to delete Repository \"%{name}\": %{details}") % {:name    => repo.name,
                                                                               :details => ex},
@@ -49,11 +53,14 @@ class AnsibleRepositoryController < ApplicationController
   end
 
   def edit
-    @id = params[:id]
+    @record = AnsibleRepositoryController.model.find(params[:id])
+    @title = _("Edit Repository \"%{name}\"") % {:name => @record.name}
+    @id = @record.id
     @in_a_form = true
   end
 
   def new
+    @title = _("Add new Repository")
     @id = 'new'
     @in_a_form = true
   end
