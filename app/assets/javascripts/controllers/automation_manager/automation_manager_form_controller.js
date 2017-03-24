@@ -93,7 +93,6 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
 
   $scope.resetClicked = function () {
     $scope.$broadcast('resetClicked');
-
     vm.automationManagerModel = angular.copy( $scope.modelCopy );
     $scope.angularForm.$setPristine(true);
     miqService.miqFlash('warn', __('All changes have been reset'));
