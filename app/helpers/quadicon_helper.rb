@@ -147,18 +147,19 @@ module QuadiconHelper
       tag_options[:class] = "quadicon-listnav"
     end
 
-    # TEMP -- for visual testing
-    # if item.kind_of?(Storage)
-    #   quadicon_for(item)
-    # else
-    #   quadicon_tag(tag_options) do
-    #     quadicon_builder_factory(item, options)
-    #   end
-    # end
-
-    quadicon_tag(tag_options) do
-      quadicon_builder_factory(item, options)
+    # TEMP: for visual testing
+    case item
+    when Storage, Host, VmOrTemplate
+      quadicon_for(item).render
+    else
+      quadicon_tag(tag_options) do
+        quadicon_builder_factory(item, options)
+      end
     end
+
+    # quadicon_tag(tag_options) do
+    #   quadicon_builder_factory(item, options)
+    # end
   end
 
   # FIXME: Even better would be to ask the object what method to use
@@ -896,5 +897,30 @@ module QuadiconHelper
       attributes[:id] = "v-#{record.id}"
     end
     attributes
+  end
+
+  #######################################
+  # Use OO Builders
+  #######################################
+
+  def quadicon_for(record)
+    context = Quadicons::Context.new(self) do |c|
+      # set attributes with view state
+      c.controller  = request.parameters[:controller]
+      c.edit        = @edit
+      c.embedded    = quadicon_in_embedded_view?
+      c.explorer    = quadicon_in_explorer_view?
+      c.lastaction  = @lastaction
+      c.listicon    = @listicon
+      c.listnav     = @listnav # TODO: set from options
+      c.parent      = @parent
+      c.policies    = session[:policies]
+      c.policy_sim  = quadicon_policy_sim?
+      c.settings    = @settings
+      c.showlinks   = @showlinks
+      c.view        = @view
+    end
+
+    Quadicons.for(record, context)
   end
 end
