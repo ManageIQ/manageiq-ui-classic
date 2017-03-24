@@ -1382,7 +1382,7 @@ class ApplicationController < ActionController::Base
 
   # Test RBAC in case there is only one record, not checked by checkbox
   def test_item_with_rbac(klass, id)
-    assert_rbac(current_user, klass, id)
+    assert_rbac(current_user, klass, [id])
     id
   end
 

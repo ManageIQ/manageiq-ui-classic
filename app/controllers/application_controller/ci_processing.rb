@@ -1888,7 +1888,6 @@ module ApplicationController::CiProcessing
     end
 
     items = []
-
     # Either a list or coming from a different controller
     if @lastaction == "show_list" || %w(cloud_object_store_containers cloud_object_store_objects).include?(@display)
       # FIXME retrieving vms from DB two times
