@@ -16,7 +16,13 @@ module AnsibleCredentialHelper::TextualSummary
       options << key
 
       define_singleton_method "textual_#{key}" do
-        {:label => _(value[:label]), :value => value[:type] == :password ? '*****' : @record.options[key], :title => _(value[:help_text])}
+        h = {:label => _(value[:label]), :title => _(value[:help_text])}
+        h[:value] = if value[:type] == :password && @record.options[key].present?
+                      '●●●●●●●●'
+                    else
+                      @record.options[key]
+                    end
+        h
       end
     end
 
