@@ -11,31 +11,33 @@ describe MiddlewareDomainController do
   end
 
   describe '#show' do
+    let(:domain) { FactoryGirl.create(:hawkular_middleware_domain, :properties => {}) }
+    let(:server_group) do
+      FactoryGirl.create(:hawkular_middleware_server_group, :properties        => {},
+                                                            :middleware_domain => domain)
+    end
+
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryGirl.create(:user)
-      @domain = FactoryGirl.create(:hawkular_middleware_domain,
-                                   :name       => 'master',
-                                   :nativeid   => 'Local~/host=master',
-                                   :properties => {
-                                     'Running Mode'         => 'NORMAL',
-                                     'Version'              => '9.0.2.Final',
-                                     'Product Name'         => 'WildFly Full',
-                                     'Host State'           => 'running',
-                                     'Is Domain Controller' => 'true',
-                                     'Name'                 => 'master',
-                                   })
     end
 
-    subject { get :show, :id => @domain.id }
+    subject { get :show, :params => { :id => domain.id } }
 
     context 'render' do
       render_views
 
-      it do
+      it 'display textual groups' do
         is_expected.to have_http_status 200
-        is_expected.to render_template(:partial => 'layouts/listnav/_middleware_domain')
         is_expected.to render_template(:partial => 'layouts/_textual_groups_generic')
+      end
+
+      it 'display listnav partial' do
+        is_expected.to render_template(:partial => 'layouts/listnav/_middleware_domain')
+      end
+
+      it 'show associated server_group entities' do
+        assert_nested_list(domain, [server_group], 'middleware_server_groups', 'All Middleware Server Groups')
       end
     end
   end
