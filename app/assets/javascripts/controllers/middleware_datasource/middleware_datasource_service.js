@@ -11,7 +11,7 @@ function MwAddDatasourceService($http, $q) {
       driverName: 'h2', driverModuleName: 'com.h2database.h2', driverClass: 'org.h2.Driver',
       connectionUrl: ':mem:test;DB_CLOSE_DELAY=-1'},
     {id: 'POSTGRES', label: 'Postgres', name: 'PostgresDS', jndiName: 'java:jboss/datasources/PostgresDS',
-      driverName: 'postresql', driverModuleName: 'org.postgresql', driverClass: 'org.postgresql.Driver',
+      driverName: 'postgresql', driverModuleName: 'org.postgresql', driverClass: 'org.postgresql.Driver',
       connectionUrl: '://localhost:5432/postgresdb', alias: 'POSTGRESQL'},
     {id: 'MSSQL', label: 'Microsoft SQL Server', name: 'MSSQLDS', jndiName: 'java:jboss/datasources/MSSQLDS',
       driverName: 'sqlserver', driverModuleName: 'com.microsoft',
@@ -43,7 +43,7 @@ function MwAddDatasourceService($http, $q) {
       connectionUrl: ':mem:test;DB_CLOSE_DELAY=-1'},
     {id: 'POSTGRES', label: 'Postgres XA', name: 'PostgresXADS',
       jndiName: 'java:/PostgresXADS',
-      driverName: 'postresql',
+      driverName: 'postgresql',
       driverModuleName: 'org.postgresql',
       driverClass: 'org.postgresql.xa.PGXADataSource',
       properties: {
