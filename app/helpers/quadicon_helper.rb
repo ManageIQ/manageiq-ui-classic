@@ -23,10 +23,6 @@ module QuadiconHelper
     @settings.fetch_path(:display, :quad_truncate) || 'm'
   end
 
-  def listicon_nil?
-    @listicon.nil?
-  end
-
   def quadicon_vm_attributes(item)
     vm_quad_link_attributes(item)
   end
@@ -400,6 +396,12 @@ module QuadiconHelper
     end
   end
 
+  def flobj_fonticon_simple(icon = nil, cls = '')
+    content_tag(:div, :class => "flobj #{cls}") do
+      tag(:i, :class => "fa-fw quadicon-single-fonticon #{icon}")
+    end
+  end
+
   def flobj_img_small(image = nil, cls = '')
     flobj_img_simple(image, cls, 64)
   end
@@ -413,6 +415,7 @@ module QuadiconHelper
   # Renders a quadicon for service classes
   #
   def render_service_quadicon(item, options)
+    return render_single_quad_quadicon(item, options) #TODO: FIXME
     output = []
     output << flobj_img_simple
 
@@ -575,55 +578,23 @@ module QuadiconHelper
     output.collect(&:html_safe).join('').html_safe
   end
 
-  def render_non_listicon_single_quadicon(item, options)
-    output = []
+  # Renders a single_quad uh, quadicon
+  #
+  def render_single_quad_quadicon(item, options)
+    fonticon = item.try(:picture) ? nil : item.decorate.try(:fonticon)
 
-    img_path = if item.decorate
-                 item.decorate.try(:listicon_image)
+    img_path = if item.decorate.try(:listicon_image)
+                 item.decorate.listicon_image
+               elsif @listicon
+                 "100/#{@listicon}.png"
                else
                  "100/#{item.class.base_class.to_s.underscore}.png"
                end
 
-    output << flobj_img_simple("layout/base-single.png")
-    output << flobj_img_simple(img_path, "e72")
-
-    unless options[:typ] == :listnav
-      name = item.name
-
-      img_opts = {
-        :title => h(name),
-        :path  => "layout/clearpix.gif"
-      }
-
-      link_opts = {}
-
-      url = ""
-
-      if quadicon_show_links?
-        if quadicon_in_explorer_view?
-          img_opts.delete(:path)
-          url = quadicon_url_to_xshow_from_cid(item, options)
-          link_opts = {:sparkle => true, :remote => true}
-        else
-          url = url_for_record(item)
-        end
-      end
-
-      output << content_tag(:div, :class => "flobj") do
-        quadicon_link_to(url, **link_opts) do
-          quadicon_reflection_img(img_opts)
-        end
-      end
-    end
-
-    output
-  end
-
-  def render_listicon_single_quadicon(item, options)
     output = []
-
     output << flobj_img_simple("layout/base-single.png")
-    output << flobj_img_small("100/#{@listicon}.png", "e72")
+    output << flobj_img_simple(img_path, "e72") unless fonticon
+    output << flobj_fonticon_simple(fonticon, "e72") if fonticon
 
     unless options[:typ] == :listnav
       title = case @listicon
@@ -635,30 +606,43 @@ module QuadiconHelper
                 item.try(:name)
               end
 
-      url = nil
+      url = if !quadicon_show_links?
+              nil
+            elsif @listicon
+              quadicon_url_with_parent_and_lastaction(item)
+            elsif @explorer
+              quadicon_url_to_xshow_from_cid(item, options)
+            else
+              url_for_record(item)
+            end
 
-      if quadicon_show_links?
-        url = quadicon_url_with_parent_and_lastaction(item)
-      end
+      reflection_path = if @listicon || (@explorer && quadicon_show_links?)
+                          nil
+                        else
+                          "layout/clearpix.gif"
+                        end
 
-      output << content_tag(:div, :class => 'flobj') do
-        link_to(url, :title => title) do
-          quadicon_reflection_img
+      img_opts = if @listicon.nil?
+                   {:title => h(title),
+                    :path  => reflection_path}
+                 else
+                   {}
+                 end
+
+      link_opts = if quadicon_show_links? && quadicon_in_explorer_view? && @listicon.nil?
+                    {:sparkle => true, :remote => true}
+                  elsif @listicon
+                    {:title => title}
+                  else
+                    {}
+                  end
+
+      output << content_tag(:div, :class => "flobj") do
+        quadicon_link_to(url, **link_opts) do
+          quadicon_reflection_img(img_opts)
         end
       end
     end
-
-    output
-  end
-
-  # Renders a single_quad uh, quadicon
-  #
-  def render_single_quad_quadicon(item, options)
-    output =  if listicon_nil?
-                render_non_listicon_single_quadicon(item, options)
-              else
-                render_listicon_single_quadicon(item, options)
-              end
 
     output.collect(&:html_safe).join('').html_safe
   end
