@@ -1613,16 +1613,6 @@ module ApplicationHelper
   end
   private :listicon_glyphicon
 
-  def listicon_tag(item)
-    icon, icon2, image = listicon_glyphicon(item)
-
-    if image
-      image_tag(ActionController::Base.helpers.image_path(image))
-    else
-      image_tag(ActionController::Base.helpers.image_path(image), :title => title, :alt => nil)
-    end
-  end
-
   CONTENT_TYPE_ID = {
     "report" => "r",
     "menu"   => "m",
@@ -1637,13 +1627,30 @@ module ApplicationHelper
     MiqWidget
   ).freeze
 
-  def listicon_tag(db, row)
-    if %w(MiqReportResult MiqSchedule MiqUserRole MiqWidget).include?(db)
-      listicon_glyphicon_tag(db, row)
+  def fileicon_tag(item)
+    icon, _icon2, image = listicon_glyphicon(item)
+    if icon
+      content_tag(:i, nil, :class => icon)
     else
-      content_tag(:i, nil, :class => icon) do
-        content_tag(:i, nil, :class => icon2) if icon2
-      end
+      image_tag(ActionController::Base.helpers.image_path(image), :alt => nil)
+    end
+  end
+
+  def listicon_glyphicon_tag(item)
+    item = db.constantize.find(row["id"])
+    glyphicon, glyphicon2 = listicon_glyphicon(item)
+
+    content_tag(:i, nil, :class => glyphicon) do
+      content_tag(:i, nil, :class => glyphicon2) if glyphicon2
+    end
+  end
+
+  def listicon_tag(db, row)
+    item = db.constantize.find(row["id"])
+    if %w(MiqReportResult MiqSchedule MiqUserRole MiqWidget).include?(db)
+      listicon_glyphicon_tag(item)
+    else
+      fileicon_tag(item)
     end
   end
 

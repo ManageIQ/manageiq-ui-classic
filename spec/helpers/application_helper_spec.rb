@@ -1130,10 +1130,11 @@ describe ApplicationHelper do
   end
 
   context "#fileicon_tag" do
-    it "returns correct image for job record based upon it's status" do
-      job_attrs = {"state" => "running", "status" => "ok"}
-      image = helper.fileicon_tag("Job", job_attrs)
-      expect(image).to eq("<i class=\"pficon pficon-running\" title=\"Status = Running\"></i>")
+    it "returns correct image for miq task record based upon it's status" do
+      task = FactoryGirl.create(:miq_task)
+      task.state = "Running"
+      image = helper.fileicon_tag(task)
+      expect(image).to eq("<i class=\"pficon pficon-running\"></i>")
     end
   end
 

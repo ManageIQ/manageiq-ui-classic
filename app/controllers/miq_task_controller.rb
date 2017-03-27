@@ -43,7 +43,7 @@ class MiqTaskController < ApplicationController
 
   # Show job list for the current user
   def jobs
-    get_jobs_info
+    jobs_info
     if pagination_request?
       render :update do |page|
         page << javascript_prologue
@@ -366,14 +366,14 @@ class MiqTaskController < ApplicationController
     session[:tasks_options]       = @tasks_options unless @tasks_options.nil?
   end
 
-  def get_jobs_info
+  def jobs_info
     build_jobs_tab
     @title = _("Tasks for %{name}") % {:name => current_user.name}
     @lastaction = "jobs"
 
     @edit = {}
     @edit[:opts] = {}
-    @edit[:opts] = copy_hash(@tasks_options[@tabform])   # Backup current settings
+    @edit[:opts] = copy_hash(@tasks_options[@tabform]) # Backup current settings
 
     list_jobs
     {:view => @view, :pages => @pages}

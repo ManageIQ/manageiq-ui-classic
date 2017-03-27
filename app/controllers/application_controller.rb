@@ -294,7 +294,7 @@ class ApplicationController < ActionController::Base
       options = show_list
     end
     if params[:model] && %w(miq_tasks).include?(params[:model])
-      options = get_jobs_info
+      options = jobs_info
     end
     curr_model_id = Integer(params[:model_id]) rescue nil
     unless curr_model_id.nil?
