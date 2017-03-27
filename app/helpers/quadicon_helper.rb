@@ -458,25 +458,8 @@ module QuadiconHelper
 
   def currentstate_icon(state)
     path = "svg/currentstate-#{h(state)}.svg"
-    if %w(
-      retired
-      standby
-      unknown
-      archived
-      orphaned
-      template
-      disconnected
-      install_failed
-      not_responding
-      non_operational
-      template-no-host
-      preparing_for_maintenance
-    ).include?(state)
-      flobj_img_simple(path, "b72")
-    else
-      content_tag(:div, :class => "flobj b72") do
-        content_tag(:div, '', :class => "stretch", :style => "background-image: url('#{image_path(path)}')")
-      end
+    content_tag(:div, :class => "flobj b72") do
+      content_tag(:div, '', :class => "stretch", :style => "background-image: url('#{image_path(path)}')")
     end
   end
 

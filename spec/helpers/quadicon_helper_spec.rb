@@ -758,10 +758,6 @@ describe QuadiconHelper do
         expect(host_quad).to include("0")
       end
 
-      it 'renders a quadicon with a state img' do
-        expect(host_quad).to have_selector("img[src*='currentstate-archived']")
-      end
-
       include_examples :host_vendor_icon, "c"
 
       it 'renders a quadicon with an auth status img' do
@@ -1122,10 +1118,6 @@ describe QuadiconHelper do
 
       it 'includes an os image' do
         expect(vm_quad).to have_selector("img[src*='os-unknown']")
-      end
-
-      it 'includes a state image' do
-        expect(vm_quad).to have_selector("img[src*='currentstate-archived']")
       end
 
       context "when lastaction is policy_sim" do
