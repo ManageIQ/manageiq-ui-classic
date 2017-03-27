@@ -17,11 +17,11 @@ module Mixins
 
       # these methods are defined in MoreShowActions
       when "timeline"
-        show_timeline if respond_to?(:timeline)
+        show_timeline if respond_to?(:show_timeline)
       when "performance"
-        show_performance if respond_to?(:performance)
+        show_performance if respond_to?(:show_performance)
       when "compliance_history"
-        show_compliance_history if respond_to?(:compliance_history)
+        show_compliance_history if respond_to?(:show_compliance_history)
       when "topology"
         show_topology
 
