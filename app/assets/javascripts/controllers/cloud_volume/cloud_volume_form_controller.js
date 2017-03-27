@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('cloudVolumeFormController', ['$scope', 'cloudVolumeFormId', 'miqService', 'API', function($scope, cloudVolumeFormId, miqService, API) {
+ManageIQ.angular.app.controller('cloudVolumeFormController', ['$scope', 'miqService', 'API', 'cloudVolumeFormId', 'storageManagerId', function($scope, miqService, API, cloudVolumeFormId, storageManagerId) {
   var init = function() {
     $scope.cloudVolumeModel = {
       aws_encryption: false,
@@ -26,6 +26,11 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['$scope', 'cloudVo
       API.get('/api/cloud_volumes/' + cloudVolumeFormId + '?attributes=ext_management_system.type')
         .then(getCloudVolumeFormDataComplete)
         .catch(miqService.handleFailure);
+    }
+
+    if (storageManagerId) {
+      $scope.cloudVolumeModel.storage_manager_id = storageManagerId;
+      $scope.storageManagerChanged(storageManagerId);
     }
   };
 
