@@ -3,7 +3,7 @@ class CloudNetworkDecorator < MiqDecorator
     'product product-cloud_network'
   end
 
-  def self.listicon_image
+  def self.fileicon
     '100/cloud_network.png'
   end
 end

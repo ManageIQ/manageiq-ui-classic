@@ -878,7 +878,7 @@ class ApplicationController < ActionController::Base
         item = listicon_item(view, row['id'])
 
         new_row[:cells] << {:title => _('View this item'),
-                            :image => listicon_image(item, view),
+                            :image => fileicon(item, view),
                             :icon  => listicon_icon(item)}
       end
 
@@ -962,13 +962,13 @@ class ApplicationController < ActionController::Base
   end
 
   # Return the icon classname for the list view icon of a db,id pair
-  # this always supersedes listicon_image if not nil
+  # this always supersedes fileicon if not nil
   def listicon_icon(item)
     item.decorate.try(:fonticon)
   end
 
   # Return the image name for the list view icon of a db,id pair
-  def listicon_image(item, view)
+  def fileicon(item, view)
     default = "100/#{(@listicon || view.db).underscore}.png"
 
     image = case item
@@ -977,11 +977,11 @@ class ApplicationController < ActionController::Base
             when Storage
               "100/piecharts/datastore/#{calculate_pct_img(item.v_free_space_percent_of_total)}.png"
             when MiqRequest
-              item.decorate.listicon_image || "100/#{@listicon.downcase}.png"
+              item.decorate.fileicon || "100/#{@listicon.downcase}.png"
             when ManageIQ::Providers::CloudManager::AuthKeyPair
               "100/auth_key_pair.png"
             else
-              item.decorate.try(:listicon_image)
+              item.decorate.try(:fileicon)
             end
 
     image || default

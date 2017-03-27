@@ -3,7 +3,7 @@ class EmsClusterDecorator < MiqDecorator
     'pficon pficon-cluster'
   end
 
-  def self.listicon_image
+  def self.fileicon
     '100/ems_cluster.png'
   end
 end

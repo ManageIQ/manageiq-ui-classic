@@ -3,7 +3,7 @@ class VmOrTemplateDecorator < MiqDecorator
     nil
   end
 
-  def listicon_image
+  def fileicon
     "svg/vendor-#{vendor.downcase}.svg"
   end
 end

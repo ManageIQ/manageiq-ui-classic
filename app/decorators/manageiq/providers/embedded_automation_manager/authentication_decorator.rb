@@ -4,7 +4,7 @@ module ManageIQ::Providers
       'fa fa-lock'
     end
 
-    def self.listicon_image
+    def self.fileicon
       '100/authentication.png'
     end
   end

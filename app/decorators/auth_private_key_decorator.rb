@@ -3,7 +3,7 @@ class AuthPrivateKeyDecorator < MiqDecorator
     nil
   end
 
-  def self.listicon_image
+  def self.fileicon
     "100/auth_key_pair.png"
   end
 end

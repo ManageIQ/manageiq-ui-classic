@@ -3,7 +3,7 @@ class ServiceDecorator < MiqDecorator
     'pficon pficon-service'
   end
 
-  def listicon_image
+  def fileicon
     try(:picture) ? "/pictures/#{picture.basename}" : "100/service.png"
   end
 end

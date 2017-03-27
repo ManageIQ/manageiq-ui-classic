@@ -30,8 +30,8 @@ class EmsMiddlewareController < ApplicationController
     new_ems_middleware_path
   end
 
-  def listicon_image(item, _view)
-    icon = item.decorate.try(:listicon_image)
+  def fileicon(item, _view)
+    icon = item.decorate.try(:fileicon)
   end
 
   def restful?

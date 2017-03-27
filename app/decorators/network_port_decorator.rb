@@ -3,7 +3,7 @@ class NetworkPortDecorator < MiqDecorator
     'fa product-network_port'
   end
 
-  def self.listicon_image
+  def self.fileicon
     '100/network_port.png'
   end
 end
