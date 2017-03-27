@@ -1910,7 +1910,7 @@ module ApplicationController::CiProcessing
       add_flash(_("%{task} does not apply to this item") %
                   {:task => display_name}, :error)
     else
-      items.push(test_item_with_rbac(klass,params[:id]))
+      items.push(test_item_with_rbac(klass, params[:id]))
       process_objects(items, method, display_name) unless items.empty?
     end
   end
