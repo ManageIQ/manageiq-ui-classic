@@ -62,6 +62,7 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', funct
     $(outerMost).append(outerBox);
     $(outerMost).appendTo($("#flash_msg_div"));
   };
+  var miqFlash = this.miqFlash;
 
   this.miqFlashClear = function() {
     $('#flash_msg_div').text("");
@@ -128,8 +129,12 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', funct
   this.handleFailure = function(e) {
     miqSparkleOff();
 
-    if (e.message) {
+    if (angular.isDefined(e.error) && angular.isDefined(e.error.message)) {
+      console.error(e.error.message);
+      miqFlash('error', e.error.message);
+    } else if (e.message) {
       console.error(e.message);
+      miqFlash('error', e.message);
     }
 
     return $q.reject(e);
