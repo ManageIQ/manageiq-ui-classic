@@ -8,6 +8,7 @@
 //= require patternfly
 //= require jquery-ujs
 //= require angular
+//= require angular-drag-and-drop-lists
 //= require angular-patternfly-sass/dist/angular-patternfly
 //= require angular-ui-bootstrap
 //= require angular-ui-bootstrap-tpls
