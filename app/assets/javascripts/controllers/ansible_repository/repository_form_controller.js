@@ -98,9 +98,11 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
     }
     var url = '/ansible_repository/show_list' + '?flash_msg=' + message + '&escape=true';
     if (error) {
-      url += '&flash_warning=false&flash_error=true';
+      miqService.miqFlash('error', message);
+      miqService.sparkleOff();
+    } else {
+      window.location.href = url;
     }
-    window.location.href = url;
   };
 
   var getCredentials = function(response) {
