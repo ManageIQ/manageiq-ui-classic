@@ -63,12 +63,6 @@ img.tiny { margin: 0; padding: 0;width:20px;height:20px; border: 0; vertical-ali
   border-top-right-radius: 15px;
 }
 
-.b72 img[src*="archived"], .b72 img[src*="template"], .b72 img[src*="disconnected"], .b72 img[src*="orphaned"], .b72 img[src*="never"], img[src*="retired"], .b72 img[src*="unknown"] {
-  width: 24px; 
-  height: 24px;
-  margin-left: 4px;
-}
-
 .flobj { position: absolute;z-index: auto;width: 72px;}
 .flobj p { margin: 5px 0 0 0;padding: 0;color: #e3e4e4;vertical-align: middle;text-align:center;text-transform: none;text-shadow: 0 0 3px #000;font: normal 16px OpenSansSemibold,Arial,Helvetica,sans-serif !important;}
 .a72 { padding: 3px  0 0 5px; width: 28px; height: 28px;font-size: 1.3em;line-height: 1.8em;}
