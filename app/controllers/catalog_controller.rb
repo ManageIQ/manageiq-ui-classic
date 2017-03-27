@@ -713,9 +713,8 @@ class CatalogController < ApplicationController
 
   def ot_remove_submit
     assert_privileges("orchestration_template_remove")
-    checked = find_checked_items
-    checked[0] = params[:id] if checked.blank? && params[:id]
-    elements = OrchestrationTemplate.where(:id => checked)
+    checked = Rbac.filtered(OrchestrationTemplate.where(:id => find_checked_items))
+    elements = find_by_id_filtered(OrchestrationTemplate, params[:id]) if checked.blank? && params[:id]
     elements.each do |ot|
       if ot.in_use?
         add_flash(_("Orchestration template \"%{name}\" is read-only and cannot be deleted.") %
