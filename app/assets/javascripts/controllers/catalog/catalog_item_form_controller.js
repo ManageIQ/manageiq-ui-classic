@@ -45,7 +45,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
 
     if (catalogItemFormId == 'new') {
       $scope.newRecord = true;
-      vm.formOptions();
+      vm.formOptions(null);
       vm.afterGet = true;
       vm.modelCopy = angular.copy(vm.catalogItemModel);
     } else {
@@ -142,7 +142,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
 
   $scope.resetClicked = function() {
     vm.catalogItemModel = angular.copy(vm.modelCopy);
-    vm.formOptions();
+    vm.formOptions(null);
     $scope.angularForm.$setUntouched(true);
     $scope.angularForm.$setPristine(true);
     miqService.miqFlash("warn", __("All changes have been reset"));
@@ -219,7 +219,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
 
 
   // list of service catalogs
-  vm.formOptions = function(configData = null) {
+  vm.formOptions = function(configData) {
     API.get("/api/service_catalogs/?expand=resources&attributes=id,name" + sort_options).then(function(data) {
       vm.catalogs = data.resources;
       vm._catalog = _.find(vm.catalogs, {id: vm.catalogItemModel.catalog_id});
@@ -468,7 +468,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
 
   $scope.copyProvisioning = function() {
     closeConfirmationModal();
-    vm.formOptions();
+    vm.formOptions(null);
     vm.catalogItemModel.retirement_repository_id = vm.catalogItemModel.provisioning_repository_id;
     vm.catalogItemModel.retirement_playbook_id = vm.catalogItemModel.provisioning_playbook_id;
     vm.catalogItemModel.retirement_machine_credential_id = vm.catalogItemModel.provisioning_machine_credential_id;
