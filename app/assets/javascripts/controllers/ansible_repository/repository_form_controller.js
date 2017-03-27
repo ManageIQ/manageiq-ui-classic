@@ -28,7 +28,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
     $scope.newRecord = repositoryId === 'new';
 
     vm.scm_credentials = [{name: __('Select credentials'), value: null}];
-    API.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAutomationManager::Authentication&expand=resources')
+    API.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ScmCredential&expand=resources&sort_by=name&sort_order=ascending')
       .then(getCredentials)
       .catch(miqService.handleFailure);
 
