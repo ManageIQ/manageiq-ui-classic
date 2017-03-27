@@ -8,10 +8,9 @@ describe NumberOfVmsVisibilityService do
       context "when the platform is linux" do
         let(:platform) { "linux" }
 
-        it "adds values to field names to hide and edit" do
+        it "adds values to field names to hide" do
           expect(subject.determine_visibility(number_of_vms, platform)).to eq(
-            :hide => [:sysprep_computer_name, :linux_host_name],
-            :edit => [:ip_addr]
+            :hide => [:sysprep_computer_name, :linux_host_name, :ip_addr],
           )
         end
       end
