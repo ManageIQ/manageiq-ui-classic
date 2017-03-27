@@ -32,10 +32,6 @@ class TreeBuilderTags < TreeBuilder
     (@edit && @edit.fetch_path(:new, :filters, path)) || (@filters && @filters.key?(path))
   end
 
-  def group_id
-    (@group.present? && @group.id.present?) ? @group.id : 'new'
-  end
-
   def set_locals_for_render
     locals = super
     locals.merge!(:check_url         => "/ops/rbac_group_field_changed/#{group_id}___",
