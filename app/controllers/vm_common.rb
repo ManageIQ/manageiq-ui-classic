@@ -111,10 +111,6 @@ module VmCommon
     !User.current_user.settings.fetch_path(:display, :display_vms) # default value is false
   end
 
-  def vm_selected
-    @vm.present?
-  end
-
   def x_show
     @vm = @record = identify_record(params[:id], VmOrTemplate)
     generic_x_show
@@ -950,13 +946,16 @@ module VmCommon
     @lastaction = "explorer"
     @sb[:action] = nil
 
-    # Need to see if record is unauthorized if it's a VM node
     @nodetype, id = parse_nodetype_and_id(params[:id])
-    @vm = @record = identify_record(id, VmOrTemplate) if ["Vm", "MiqTemplate"].include?(TreeBuilder.get_model_for_prefix(@nodetype)) && !@record
+    record_requested = %w(Vm MiqTemplate).include?(TreeBuilder.get_model_for_prefix(@nodetype))
+
+    if record_requested && !@record
+      @vm = @record = identify_record(id, VmOrTemplate)
+    end
 
     # Handle filtered tree nodes
-    if x_active_tree.to_s =~ /_filter_tree$/ && # FIXME: create some property on trees for this
-       !["Vm", "MiqTemplate"].include?(TreeBuilder.get_model_for_prefix(@nodetype))
+    if x_active_tree.to_s =~ /_filter_tree$/ && !record_requested
+
       search_id = @nodetype == "root" ? 0 : from_cid(id)
       adv_search_build(vm_model_from_active_tree(x_active_tree))
       session[:edit] = @edit              # Set because next method will restore @edit from session
@@ -970,19 +969,15 @@ module VmCommon
       end
     end
 
-    unless @unauthorized
-      self.x_node = if vm_selected && hide_vms
-                      parent_folder_id(@vm)
-                    else
-                      params[:id]
-                    end
-      replace_right_cell
-    else
-      add_flash(_("User is not authorized to view %{model} \"%{name}\"") %
-        {:model => ui_lookup(:model => @record.class.base_model.to_s), :name => @record.name},
-                :error) unless flash_errors?
+    if record_requested && @record.nil?
+      unless flash_errors?
+        add_flash(_("The entity is not available or user is not authorized to access it."), :error)
+      end
       javascript_flash(:spinner_off => true, :activate_node => {:tree => x_active_tree.to_s, :node => x_node})
     end
+
+    self.x_node = (@record.present? && hide_vms ? parent_folder_id(@record) : params[:id])
+    replace_right_cell
   end
 
   private
@@ -1179,7 +1174,7 @@ module VmCommon
     end
 
     if !@in_a_form && !@sb[:action]
-      id = vm_selected && hide_vms ? TreeBuilder.build_node_cid(@vm) : x_node
+      id = @record.present? && hide_vms ? TreeBuilder.build_node_cid(@record) : x_node
       id = @sb[@sb[:active_accord]] if @sb[@sb[:active_accord]].present? && params[:action] != 'tree_select'
       get_node_info(id)
       type, _id = parse_nodetype_and_id(id)
@@ -1769,16 +1764,6 @@ module VmCommon
     else                                      # getting ALL vms
       @record_pages, @records = paginate(:vms, :per_page => @items_per_page, :order => @col_names[get_sort_col] + " " + @sortdir)
     end
-  end
-
-  def identify_record(id, klass = self.class.model)
-    record = super
-    # Need to find the unauthorized record if in explorer
-    if record.nil? && @explorer
-      record = klass.find_by_id(from_cid(id))
-      @unauthorized = true unless record.nil?
-    end
-    record
   end
 
   def update_buttons(locals)
