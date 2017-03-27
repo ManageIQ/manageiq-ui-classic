@@ -36,6 +36,7 @@ class AnsibleRepositoryController < ApplicationController
   end
 
   def delete_repositories
+    assert_privileges('embedded_configuration_script_source_delete')
     checked = find_checked_items
     checked[0] = params[:id] if checked.blank? && params[:id]
     AnsibleRepositoryController.model.where(:id => checked).each do |repo|
