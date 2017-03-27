@@ -32,6 +32,7 @@ Dir[core_support_path.join("**/*.rb")].each { |f| require f }
 Dir[Rails.root.join('spec', 'shared', '**', '*.rb')].each { |f| require f }
 
 Dir[ManageIQ::UI::Classic::Engine.root.join('spec/shared/controllers/**/*.rb')].each { |f| require f }
+Dir[ManageIQ::UI::Classic::Engine.root.join('spec/shared/presenters/**/*.rb')].each { |f| require f }
 Dir[ManageIQ::Gems::Pending.root.join("spec/support/custom_matchers/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
