@@ -5,9 +5,9 @@
                  'ng-controller' => "repositoryFormController as vm",
                  'ng-show'       => "vm.afterGet",
                  'ng-cloak'      => '',
-                  "miq-form"     => true,
-                  "model"        => "vm.repositoryModel",
-                  "model-copy"   => 'vm.modelCopy',
+                 "miq-form"     => true,
+                 "model"        => "vm.repositoryModel",
+                 "model-copy"   => 'vm.modelCopy',
                  :novalidate     => true}
     = render :partial => "layouts/flash_msg"
     .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
@@ -15,12 +15,12 @@
         = _('Name')
       .col-md-8
         %input.form-control{:type          => "text",
-                              :name        => "name",
-                              "id"         => "name",
-                              'ng-model'   => "vm.repositoryModel.name",
-                              :maxlength   => MAX_NAME_LEN,
-                              :required    => "",
-                              :checkchange => true}
+                            :name        => "name",
+                            "id"         => "name",
+                            'ng-model'   => "vm.repositoryModel.name",
+                            :maxlength   => MAX_NAME_LEN,
+                            :required    => "",
+                            :checkchange => true}
         %span.help-block{"ng-show" => "angularForm.name.$error.required"}
           = _("Required")
     .form-group
@@ -39,18 +39,18 @@
         = select_tag('scm_type',
                      options_for_select([["#{_('GIT')}", "git"]], 'git'),
                      "ng-model" => "vm.repositoryModel.scm_type",
-                     :disabled => true)
+                     :disabled  => true)
     .form-group{"ng-class" => "{'has-error': angularForm.scm_url.$error.required || angularForm.scm_url.$error.urlValidation}"}
       %label.col-md-2.control-label
         = _('URL')
       .col-md-8
-        %input.form-control{:type              => "text",
-                              :name            => "scm_url",
-                              :id              => "scm_url",
-                              'ng-model'       => "vm.repositoryModel.scm_url",
-                              :required        => "",
-                              :checkchange     => true,
-                              'url-validation' => true}
+        %input.form-control{:type            => "text",
+                            :name            => "scm_url",
+                            :id              => "scm_url",
+                            'ng-model'       => "vm.repositoryModel.scm_url",
+                            :required        => "",
+                            :checkchange     => true,
+                            'url-validation' => true}
         %span.help-block{"ng-show" => "angularForm.scm_url.$error.required"}
           = _("Required")
         %span.help-block{"ng-show" => "angularForm.scm_url.$error.urlValidation"}

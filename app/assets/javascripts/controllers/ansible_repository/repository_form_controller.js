@@ -44,7 +44,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
   };
 
   $scope.cancelClicked = function() {
-    miqService.miqSparkleOn();
+    miqService.sparkleOn();
     var message = $scope.newRecord ? __('Add of Repository cancelled by user.') : sprintf(__('Edit of Repository \"%s\" cancelled by user.'), vm.repositoryModel.name);
     var url = '/ansible_repository/show_list' + '?flash_msg=' + message + '&escape=true&flash_warning=true&flash_error=false';
     window.location.href = url;
@@ -57,14 +57,14 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
   };
 
   $scope.saveClicked = function() {
-    miqService.miqSparkleOn();
+    miqService.sparkleOn();
     API.put('/api/configuration_script_sources/' + repositoryId, vm.repositoryModel)
       .then(getBack)
       .catch(miqService.handleFailure);
   };
 
   $scope.addClicked = function() {
-    miqService.miqSparkleOn();
+    miqService.sparkleOn();
     API.post('/api/configuration_script_sources/', vm.repositoryModel)
       .then(getBack)
       .catch(miqService.handleFailure);
@@ -110,7 +110,11 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
   };
 
   var getManagerResource = function(response) {
-    vm.repositoryModel.manager_resource = {'href': response.resources[0].href};
+    if (!response.resources.length) {
+      miqService.miqFlash('error', __('Embedded Ansible Provider not found.'));
+    } else {
+      vm.repositoryModel.manager_resource = {'href': response.resources[0].href};
+    }
   };
   init();
 }]);
