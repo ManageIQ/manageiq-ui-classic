@@ -59,7 +59,7 @@
       %label.col-md-2.control-label
         = _('SCM credentials')
       .col-md-8
-        %select{'ng-model'   => 'vm.repositoryModel.scm_credentials',
+        %select{'ng-model'   => 'vm.repositoryModel.authentication_id',
                 'ng-options' => 'scm_credential.value as scm_credential.name for scm_credential in vm.scm_credentials'}
     .form-group
       %label.col-md-2.control-label
@@ -90,6 +90,3 @@
 :javascript
   ManageIQ.angular.app.value('repositoryId', '#{@id}');
   miq_bootstrap('#form_div');
-  $("#form-div").submit(function (e) {
-      miqSparkleOn();
-    });

@@ -10,7 +10,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
       scm_type: 'git',
       manager_resource: {},
       scm_url: '',
-      scm_credentials: null,
+      authentication_id: null,
       scm_branch: '',
       scm_clean: false,
       scm_delete_on_update: false,
@@ -28,7 +28,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
     $scope.newRecord = repositoryId === 'new';
 
     vm.scm_credentials = [{name: __('Select credentials'), value: null}];
-    API.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ScmCredential&expand=resources')
+    API.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAutomationManager::Authentication&expand=resources')
       .then(getCredentials)
       .catch(miqService.handleFailure);
 
@@ -44,6 +44,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
   };
 
   $scope.cancelClicked = function() {
+    miqService.miqSparkleOn();
     var message = $scope.newRecord ? __('Add of Repository cancelled by user.') : sprintf(__('Edit of Repository \"%s\" cancelled by user.'), vm.repositoryModel.name);
     var url = '/ansible_repository/show_list' + '?flash_msg=' + message + '&escape=true&flash_warning=true&flash_error=false';
     window.location.href = url;
@@ -56,15 +57,17 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
   };
 
   $scope.saveClicked = function() {
+    miqService.miqSparkleOn();
     API.put('/api/configuration_script_sources/' + repositoryId, vm.repositoryModel)
       .then(getBack)
       .catch(miqService.handleFailure);
   };
 
   $scope.addClicked = function() {
+    miqService.miqSparkleOn();
     API.post('/api/configuration_script_sources/', vm.repositoryModel)
-       .then(getBack)
-       .catch(miqService.handleFailure);
+      .then(getBack)
+      .catch(miqService.handleFailure);
   };
 
   var getRepositoryFormData = function(response) {
@@ -102,7 +105,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
 
   var getCredentials = function(response) {
     response.resources.forEach( function(resource) {
-      vm.scm_credentials.push({name: resource.name, value: resource.href});
+      vm.scm_credentials.push({name: resource.name, value: resource.id});
     });
   };
 

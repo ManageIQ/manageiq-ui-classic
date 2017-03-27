@@ -10,7 +10,6 @@ ManageIQ.angular.app.directive('urlValidation', function() {
       };
 
       var validUrl = function(s) {
-        debugger;
         return s.substring(0, 8) === 'https://' || s.substring(0, 7) === 'http://';
       };
     }
