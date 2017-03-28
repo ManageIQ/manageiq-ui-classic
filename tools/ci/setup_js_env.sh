@@ -6,9 +6,7 @@ if ! cmp --silent bower.json vendor/assets/bower_components/bower.json; then
 fi
 
 if [ -d vendor/assets/bower_components ]; then
-  # Restore the bower_components from cache
-  mkdir -p spec/manageiq/vendor/assets
-  mv vendor/assets/bower_components spec/manageiq/vendor/assets
+  # Using bower_components from cache
   echo "bower assets installed... moving on."
 else
   bower install --allow-root -F --config.analytics=false
@@ -17,5 +15,5 @@ else
 
   # fail the whole test suite if bower install failed
   [ $STATUS = 0 ] || exit 1
-  [ -d spec/manageiq/vendor/assets/bower_components ] || exit 1
+  [ -d vendor/assets/bower_components ] || exit 1
 fi
