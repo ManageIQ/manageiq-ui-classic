@@ -3,7 +3,7 @@ class NetworkRouterDecorator < MiqDecorator
     'pficon pficon-route'
   end
 
-  def self.listicon_image
+  def self.fileicon
     '100/network_router.png'
   end
 end

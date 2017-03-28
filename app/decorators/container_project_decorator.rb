@@ -3,7 +3,7 @@ class ContainerProjectDecorator < MiqDecorator
     'pficon pficon-project'
   end
 
-  def self.listicon_image
+  def self.fileicon
     '100/container_project.png'
   end
 end

@@ -3,7 +3,7 @@ class PersistentVolumeDecorator < MiqDecorator
     'pficon pficon-volume'
   end
 
-  def self.listicon_image
+  def self.fileicon
     '100/persistent_volume.png'
   end
 end

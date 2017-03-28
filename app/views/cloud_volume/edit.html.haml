@@ -1,18 +1,9 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "cloudVolumeFormController"}
+%form#form_div{:name => "angularForm", 'ng-controller' => "cloudVolumeFormController", "ng-cloak" => ""}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Edit Volume')
   .form-horizontal
-    .form-group
-      %label.col-md-2.control-label
-        = _('Volume Name')
-      .col-md-8
-        %input.form-control{:type          => "text",
-                            :name          => "name",
-                            'ng-model'     => "cloudVolumeModel.name",
-                            'ng-maxlength' => 128,
-                            :miqrequired   => false,
-                            :checkchange   => true}
+    = render :partial => "common_new_edit"
 
   %table{:width => '100%'}
     %tr

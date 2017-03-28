@@ -3,7 +3,7 @@ class ContainerReplicatorDecorator < MiqDecorator
     'pficon pficon-replicator'
   end
 
-  def self.listicon_image
+  def self.fileicon
     '100/container_replicator.png'
   end
 end

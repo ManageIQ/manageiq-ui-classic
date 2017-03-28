@@ -3,7 +3,7 @@ class FloatingIpDecorator < MiqDecorator
     'fa fa-map-marker'
   end
 
-  def self.listicon_image
+  def self.fileicon
     '100/floating_ip.png'
   end
 end

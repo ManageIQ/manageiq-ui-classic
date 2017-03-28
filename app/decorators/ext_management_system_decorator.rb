@@ -3,7 +3,7 @@ class ExtManagementSystemDecorator < MiqDecorator
     nil
   end
 
-  def listicon_image
+  def fileicon
     "svg/vendor-#{image_name}.svg"
   end
 end

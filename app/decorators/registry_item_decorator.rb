@@ -3,7 +3,7 @@ class RegistryItemDecorator < MiqDecorator
     nil
   end
 
-  def listicon_image
+  def fileicon
     "100/#{image_name.downcase}.png"
   end
 end

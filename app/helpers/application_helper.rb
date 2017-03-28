@@ -1285,6 +1285,7 @@ module ApplicationHelper
           flavor
           floating_ip
           host
+          load_balancer
           middleware_datasource
           middleware_deployment
           middleware_domain
@@ -1513,7 +1514,7 @@ module ApplicationHelper
     x_tree && ((tree_with_advanced_search? && !@record) || @show_adv_search)
   end
 
-  def listicon_image_tag(db, row)
+  def fileicon_tag(db, row)
     icon = nil
     if %w(Job MiqTask).include?(db)
       if row["state"].downcase == "finished" && row["status"]
@@ -1618,7 +1619,7 @@ module ApplicationHelper
     if %w(MiqReportResult MiqSchedule MiqUserRole MiqWidget).include?(db)
       listicon_glyphicon_tag(db, row)
     else
-      listicon_image_tag(db, row)
+      fileicon_tag(db, row)
     end
   end
 

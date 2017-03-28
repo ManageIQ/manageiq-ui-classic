@@ -739,4 +739,64 @@ describe CatalogController do
       expect(assigns(:edit)[:new][:available_resources].count).to eq(2)
     end
   end
+
+  context "#fetch_playbook_details" do
+    let(:auth) { FactoryGirl.create(:authentication, :name => "machine_cred", :manager_ref => 6, :type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential") }
+    let(:repository) { FactoryGirl.create(:configuration_script_source, :manager => ems, :type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource") }
+    let(:inventory_root_group) { FactoryGirl.create(:inventory_root_group, :name => 'Demo Inventory') }
+    let(:ems) do
+      FactoryGirl.create(:automation_manager_ansible_tower, :inventory_root_groups => [inventory_root_group], :provider => FactoryGirl.create(:provider_embedded_ansible))
+    end
+    let(:dialog) { FactoryGirl.create(:dialog, :label => "Some Label") }
+    let(:playbook) do
+      FactoryGirl.create(:embedded_playbook,
+                         :configuration_script_source => repository,
+                         :manager                     => ems,
+                         :inventory_root_group        => inventory_root_group)
+    end
+
+    it "returns playbook service template details for provision & retirement tabs for summary screen" do
+      options = {
+        :name        => 'test_ansible_catalog_item',
+        :description => 'test ansible',
+        :display     => true,
+        :config_info => {
+          :provision  => {
+            :new_dialog_name => 'test_dialog',
+            :hosts           => 'many',
+            :credential_id   => auth.id,
+            :repository_id   => repository.id,
+            :playbook_id     => playbook.id,
+            :dialog_id       => dialog.id
+          },
+          :retirement => {
+            :new_dialog_name => 'test_dialog',
+            :hosts           => 'many',
+            :credential_id   => auth.id,
+            :repository_id   => repository.id,
+            :playbook_id     => playbook.id
+          }
+        }
+      }
+      service_template = double("ServiceTemplateAnsiblePlaybook", options)
+      controller.instance_variable_set(:@record, service_template)
+      playbook_details = controller.send(:fetch_playbook_details)
+      st_details = {
+        :provisioning => {
+          :repository         => repository.name,
+          :playbook           => playbook.name,
+          :machine_credential => auth.name,
+          :dialog             => "Some Label",
+          :dialog_id          => dialog.id
+        },
+        :retirement   => {
+          :remove_resources   => nil,
+          :repository         => repository.name,
+          :playbook           => playbook.name,
+          :machine_credential => auth.name
+        }
+      }
+      expect(playbook_details).to eq(st_details)
+    end
+  end
 end

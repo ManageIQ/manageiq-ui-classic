@@ -476,7 +476,7 @@ module QuadiconHelper
 
     output << content_tag(:div, :class => "flobj e72") do
       quadicon_link_to(url, **link_opts) do
-        quadicon_reflection_img(:path => item.decorate.listicon_image)
+        quadicon_reflection_img(:path => item.decorate.fileicon)
       end
     end
 
@@ -506,6 +506,13 @@ module QuadiconHelper
     output.collect(&:html_safe).join('').html_safe
   end
 
+  def currentstate_icon(state)
+    path = "svg/currentstate-#{h(state)}.svg"
+    content_tag(:div, :class => "flobj b72") do
+      content_tag(:div, '', :class => "stretch", :style => "background-image: url('#{image_path(path)}')")
+    end
+  end
+
   # Renders a quadicon for hosts
   #
   def render_host_quadicon(item, options)
@@ -515,7 +522,7 @@ module QuadiconHelper
       output << flobj_img_simple("layout/base.png")
 
       output << flobj_p_simple("a72", item.vms.size)
-      output << flobj_img_simple("svg/currentstate-#{h(item.normalized_state.downcase)}.svg", "b72")
+      output << currentstate_icon(item.normalized_state.downcase)
       output << flobj_img_simple(img_for_host_vendor(item), "c72")
       output << flobj_img_simple(img_for_auth_status(item), "d72")
       output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
@@ -610,7 +617,7 @@ module QuadiconHelper
     output = []
 
     img_path = if item.decorate
-                 item.decorate.try(:listicon_image)
+                 item.decorate.try(:fileicon)
                else
                  "100/#{item.class.base_class.to_s.underscore}.png"
                end
@@ -778,7 +785,7 @@ module QuadiconHelper
     if settings(:quadicons, item.class.base_model.name.underscore.to_sym)
       output << flobj_img_simple("layout/base.png")
       output << flobj_img_simple("svg/os-#{h(item.os_image_name.downcase)}.svg", "a72")
-      output << flobj_img_simple("svg/currentstate-#{h(item.normalized_state.downcase)}.svg", "b72")
+      output << currentstate_icon(item.normalized_state.downcase)
       output << flobj_img_simple("svg/vendor-#{h(item.vendor.downcase)}.svg", "c72")
 
       unless item.get_policies.empty?

@@ -1,9 +1,9 @@
 angular.module('miq.notifications')
   .service('eventNotifications', eventNotifications);
 
-eventNotifications.$inject = ['$timeout'];
+eventNotifications.$inject = ['$timeout', 'API'];
 
-function eventNotifications($timeout) {
+function eventNotifications($timeout, API) {
   if (!ManageIQ.angular.eventNotificationsData) {
     ManageIQ.angular.eventNotificationsData = {
       state: {

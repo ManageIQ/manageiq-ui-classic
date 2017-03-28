@@ -488,6 +488,7 @@ class ApplicationHelper::ToolbarChooser
               container_group
               container_node
               container_service
+              persistent_volume
               ems_cloud
               ems_cluster
               ems_container

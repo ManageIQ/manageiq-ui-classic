@@ -30,9 +30,6 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       retirement_network_credential_id: '',
       retirement_cloud_credential_id: '',
       retirement_inventory: 'localhost',
-      retirement_dialog_existing: 'existing',
-      retirement_dialog_id: '',
-      retirement_dialog_name: '',
       retirement_key: '',
       retirement_value: '',
       retirement_variables: {},
@@ -60,7 +57,6 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
         vm.catalogItemModel.display = catalogItemData.display;
         vm.catalogItemModel.catalog_id = catalogItemData.service_template_catalog_id;
         vm.catalogItemModel.provisioning_dialog_id  = catalogItemData.provisioning_dialog_id;
-        vm.catalogItemModel.retirement_dialog_id  = catalogItemData.retirement_dialog_id;
         vm.formOptions();
         getConfigInfo(catalogItemData.config_info);
         vm.afterGet = true;
@@ -105,9 +101,6 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       vm.catalogItemModel.retirement_repository_id = configData.retirement.repository_id;
       vm.catalogItemModel.retirement_playbook_id = configData.retirement.playbook_id;
       vm.catalogItemModel.retirement_machine_credential_id = configData.retirement.credential_id;
-      vm.catalogItemModel.retirement_dialog_existing = configData.retirement.dialog_id ? "existing" : "create";
-      vm.catalogItemModel.retirement_dialog_id = configData.retirement.dialog_id;
-      vm.catalogItemModel.retirement_dialog_name = configData.retirement.new_dialog_name;
     }
     vm.catalogItemModel.retirement_network_credential_id = configData.retirement.network_credential_id;
     vm.catalogItemModel.retirement_cloud_credential_id = configData.retirement.cloud_credential_id;
@@ -200,18 +193,12 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       retirement['repository_id'] = configData.retirement_repository_id;
       retirement['playbook_id'] = configData.retirement_playbook_id;
       retirement['credential_id'] = configData.retirement_machine_credential_id;
-      retirement['dialog_id'] = configData.retirement_dialog_id;
     }
     if (configData.retirement_network_credential_id !== '')
       catalog_item['config_info']['retirement']['network_credential_id'] = configData.retirement_network_credential_id;
 
     if (configData.retirement_cloud_credential_id !== '')
       catalog_item['config_info']['retirement']['cloud_credential_id'] = configData.retirement_cloud_credential_id;
-
-    if (configData.retirement_dialog_id !== '') {
-      catalog_item['config_info']['retirement']['dialog_id'] = configData.retirement_dialog_id;
-    } else if (configData.retirement_dialog_name !== '')
-      catalog_item['config_info']['retirement']['new_dialog_name'] = configData.retirement_dialog_name;
 
     return catalog_item;
   }
@@ -227,7 +214,6 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     // list of service dialogs
     API.get("/api/service_dialogs/?expand=resources&attributes=id,label&sort_by=label&sort_order=ascending").then(function (data) {
       vm.dialogs = data.resources
-      vm._retirement_dialog = _.find(vm.dialogs, {id: vm.catalogItemModel.retirement_dialog_id});
       vm._provisioning_dialog = _.find(vm.dialogs, {id: vm.catalogItemModel.provisioning_dialog_id});
     })
 
@@ -397,7 +383,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
   };
 
   // watch for all the drop downs on screen
-  "catalog provisioning_playbook retirement_playbook provisioning_machine_credential retirement_machine_credential provisioning_network_credential retirement_network_credential provisioning_cloud_credential retirement_cloud_credential provisioning_dialog retirement_dialog".split(" ").forEach(idWatch)
+  "catalog provisioning_playbook retirement_playbook provisioning_machine_credential retirement_machine_credential provisioning_network_credential retirement_network_credential provisioning_cloud_credential retirement_cloud_credential provisioning_dialog".split(" ").forEach(idWatch)
 
   function idWatch(name) {
     field_name = "vm._" + name;
@@ -423,9 +409,6 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     if (vm.catalogItemModel.retirement_cloud_type !== '')
       $scope.cloudTypeChanged('retirement');
     vm.catalogItemModel.retirement_inventory = vm.catalogItemModel.provisioning_inventory;
-    vm.catalogItemModel.retirement_dialog_existing = vm.catalogItemModel.provisioning_dialog_existing;
-    vm.catalogItemModel.retirement_dialog_id = vm.catalogItemModel.provisioning_dialog_id;
-    vm.catalogItemModel.retirement_dialog_name = vm.catalogItemModel.provisioning_dialog_name;
     vm.catalogItemModel.retirement_key = '';
     vm.catalogItemModel.retirement_value = '';
     vm.catalogItemModel.retirement_variables = angular.copy(vm.catalogItemModel.provisioning_variables);

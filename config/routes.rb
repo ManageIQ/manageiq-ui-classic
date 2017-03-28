@@ -481,7 +481,6 @@ Rails.application.routes.draw do
         backup_select
         snapshot_new
         edit
-        cloud_volume_form_fields
         cloud_volume_tenants
         index
         new
@@ -2029,11 +2028,15 @@ Rails.application.routes.draw do
       :get => %w(
         download_data
         download_summary_pdf
+        edit
+        new
         show
         show_list
       ),
       :post => %w(
-        show_list)
+        button
+        show_list
+      )
     },
 
     :ansible_playbook => {
@@ -2051,11 +2054,17 @@ Rails.application.routes.draw do
       :get => %w(
         download_data
         download_summary_pdf
+        edit
+        new
         show
         show_list
       ),
       :post => %w(
-        show_list)
+        button
+        edit
+        new
+        show_list
+      )
     },
 
     :miq_ae_class             => {
