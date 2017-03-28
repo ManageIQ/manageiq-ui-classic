@@ -101,7 +101,7 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     miqService.sparkleOff();
   }
 
-  function getBack(message, warning = false, error = false) {
+  function getBack(message, warning, error) {
     var url = '/ansible_credential/show_list' + '?flash_msg=' + message + '&escape=true';
 
     if (warning) {
