@@ -1862,7 +1862,7 @@ class CatalogController < ApplicationController
 
   # Replace the right cell of the explorer
   def replace_right_cell(options = {})
-    action, replace_trees = options.values_at(:action, :replace_trees)
+    action, replace_trees = options.values_at(:nodetype, :replace_trees)
     @explorer = true
 
     # FIXME: make this functional
