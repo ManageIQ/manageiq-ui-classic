@@ -1024,7 +1024,7 @@ class ApplicationController < ActionController::Base
       if has_listicon
         item = listicon_item(view, row['id'])
         icon, icon2, image = listicon_glyphicon(item)
-        image = "100/#{(@listicon || view.db).underscore}.png" unless image
+        image = fileicon(item, view) unless image
         icon = nil if %w(pxe).include? params[:controller]
         new_row[:img_url] = ActionController::Base.helpers.image_path(image.to_s)
         new_row[:cells] << {:title => _('View this item'),

@@ -226,12 +226,12 @@ module ApplicationHelper
 
   def model_to_report_data
     current_model = if !@display.nil? && @display != "main"
-      @display
-    elsif params[:db]
-      params[:db]
-    elsif defined? controller.class.model
-      controller.class.model.to_s.tableize
-    end
+                      @display
+                    elsif params[:db]
+                      params[:db]
+                    elsif defined? controller.class.model
+                      controller.class.model.to_s.tableize
+                    end
 
     # Hosts do not store correct @display in nested attributes (Relationship, Security and Attributes) so use action
     if @display == "main" && @use_action && !params.nil? && !params[:action].nil? && params[:action] != 'show'
