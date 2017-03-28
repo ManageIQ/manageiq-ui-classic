@@ -30,9 +30,6 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
         .catch(miqService.handleFailure);
     } else {
       vm.select_options.push({'label':__('<Choose>'), 'value': ''});
-      // FIXME: this should go away once https://github.com/ManageIQ/manageiq/pull/14483 is merged
-      vm.credentialModel.organization = 1; // work-around, organization id needs to be filled in automatically by the backend
-
       // credential creation requires manager_resource
       API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAutomationManager')
         .then(setManagerResource)
@@ -64,7 +61,6 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
   };
 
   vm.addClicked = function(angularForm) {
-    addCredentialKind();
     API.post('/api/authentications/', vm.credentialModel)
        .then(getBack(sprintf(__("Add of Credential \"%s\" has been successfully queued."), vm.credentialModel.name)))
        .catch(miqService.handleFailure);
@@ -115,12 +111,6 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
 
   function setManagerResource(response) {
     vm.credentialModel.manager_resource = { "href": response.resources[0].href };
-  }
-
-  // FIXME: this should go away once https://github.com/ManageIQ/manageiq/pull/14483 is merged
-  // For creation, we need to send json like: {"kind": "scm", "type": "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ScmCredential"}
-  function addCredentialKind() {
-    vm.credentialModel.kind = vm.credential_options[vm.credentialModel.type].type;
   }
 
   init();
