@@ -128,4 +128,15 @@ class ApplicationHelper::Toolbar::XVmCloudCenter < ApplicationHelper::Toolbar::B
     ),
   ])
   include ApplicationHelper::Toolbar::Cloud::InstanceOperationsButtonGroupMixin
+  button_group('vm_access', [
+    button(
+      :cockpit_console,
+      'pficon pficon-screen fa-lg',
+      N_('Open a new browser window with Cockpit for this VM.  This requires that Cockpit is pre-configured on the VM.'),
+      N_('Web Console'),
+      # :image   => "cockpit",
+      :url   => "launch_cockpit",
+      :klass => ApplicationHelper::Button::CockpitConsole
+    )
+  ])
 end
