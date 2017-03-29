@@ -23,9 +23,6 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
       'driverClass': vm.step2DsModel.driverClass,
       'datasourceProperties': dsPropsHash(vm.step3DsModel.dsProps),
       'connectionUrl': vm.step3DsModel.connectionUrl,
-      'userName': vm.step3DsModel.userName,
-      'password': vm.step3DsModel.password,
-      'securityDomain': vm.step3DsModel.securityDomain,
     };
   };
 
@@ -74,6 +71,20 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
           driverClass: '',
         });
     }
+    if (vm.step3DsModel.userName !== '' && vm.step3DsModel.password !== '') {
+      angular.extend(payload,
+        {
+          userName: vm.step3DsModel.userName,
+          password: vm.step3DsModel.password,
+        });
+    }
+    if (vm.step3DsModel.securityDomain !== '') {
+      angular.extend(payload,
+        {
+          securityDomain: vm.step3DsModel.securityDomain,
+        });
+    }
+
     mwAddDatasourceService.sendAddDatasource(payload).then(
       function(result) { // success
         miqService.miqFlash(result.data.status, result.data.msg);
@@ -125,17 +136,17 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     vm.step2DsModel.driverClass = dsSelection.driverClass;
 
     mwAddDatasourceService.getExistingJdbcDrivers(serverId).then(function(result) {
-      var filteredResult;
+      var filteredDrivers;
       if (vm.chooseDsModel.xaDatasource) {
-        filteredResult = _.filter(result, function(item) {
+        filteredDrivers = _.filter(result, function(item) {
           return item.xaDsClass != null;
         });
       } else {
-        filteredResult = _.filter(result, function(item) {
+        filteredDrivers = _.filter(result, function(item) {
           return item.driverClass != null;
         });
       }
-      vm.step2DsModel.existingJdbcDrivers = filteredResult;
+      vm.step2DsModel.existingJdbcDrivers = filteredDrivers;
     }).catch(function(errorMsg) {
       miqService.miqFlash(errorMsg.data.status, errorMsg.data.msg);
     });
