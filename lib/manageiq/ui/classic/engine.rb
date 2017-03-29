@@ -3,7 +3,6 @@ require 'sass-rails'
 require 'coffee-rails'
 require 'patternfly-sass'
 require 'lodash-rails'
-require 'angular-ui-bootstrap-rails'
 require 'jquery-hotkeys-rails'
 
 module ManageIQ
