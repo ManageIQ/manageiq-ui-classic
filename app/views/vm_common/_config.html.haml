@@ -39,7 +39,7 @@
         %tr
           %th{:colspan => "2"}= _('Account Policies')
       %tbody
-        - if account_policy.nil? || account_policy.empty?
+        - if account_policy.blank?
           %tr
             %td
               %strong= _('Not Available')
