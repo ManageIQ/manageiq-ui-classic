@@ -4,7 +4,7 @@
   = render_quadicon(@record, :mode => :icon, :size => 72)
 - if @record.kind_of?(ConfigurationProfile)
   = render :partial => "#{controller}/main_configuration_profile"
-- elsif @record.kind_of?(ManageIQ::Providers::AutomationManager::InventoryGroup)
+- elsif @record.kind_of?(ManageIQ::Providers::ExternalAutomationManager::InventoryGroup)
   = render :partial => "#{controller}/main_inventory_group"
 - elsif @record.kind_of?(ManageIQ::Providers::AutomationManager::ConfigurationScript)
   = render :partial => "#{controller}/configuration_script"

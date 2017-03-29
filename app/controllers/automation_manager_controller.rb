@@ -113,7 +113,7 @@ class AutomationManagerController < ApplicationController
     nodes = x_node.split('-')
     case nodes.first
     when "root" then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, params[:id])
-    when "at"   then find_record(ManageIQ::Providers::AutomationManager::InventoryGroup, params[:id])
+    when "at", "e"   then find_record(ManageIQ::Providers::AutomationManager::InventoryGroup, params[:id])
     when "f"    then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem, params[:id])
     when "xx" then
       case nodes.second
@@ -228,8 +228,8 @@ class AutomationManagerController < ApplicationController
     end
 
     case model
-    when "ManageIQ::Providers::AnsibleTower::AutomationManager"
-      provider_list(id, model)
+    when "ManageIQ::Providers::AnsibleTower::AutomationManager", "ExtManagementSystem"
+      provider_list(id, "ManageIQ::Providers::AnsibleTower::AutomationManager")
     when "EmsFolder"
       inventory_group_node(id, model)
     when "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem", "ConfiguredSystem"
@@ -261,7 +261,7 @@ class AutomationManagerController < ApplicationController
       cs_provider_node(provider)
     else
       @no_checkboxes = true
-      options = {:model                 => "ManageIQ::Providers::AutomationManager::InventoryGroup",
+      options = {:model                 => "ManageIQ::Providers::AutomationManager::InventoryRootGroup",
                  :match_via_descendants => ConfiguredSystem,
                  :where_clause          => ["ems_id IN (?)", provider.id],
                  :gtl_dbname            => "automation_manager_groups"}

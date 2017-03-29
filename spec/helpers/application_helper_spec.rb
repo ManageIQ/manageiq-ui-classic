@@ -225,6 +225,11 @@ describe ApplicationHelper do
       expect(subject).to eq(helper.url_for_db(helper.controller_for_vm(helper.model_for_vm(@record)), @action))
     end
 
+    it "when record is ManageIQ::Providers::AutomationManager" do
+      @record = ManageIQ::Providers::AutomationManager.new
+      expect(subject).to eq("/automation_manager/#{@action}")
+    end
+
     it "when record is not VmOrTemplate" do
       @record = FactoryGirl.create(:host)
       expect(subject).to eq(helper.url_for_db(@record.class.base_class.to_s, @action))
