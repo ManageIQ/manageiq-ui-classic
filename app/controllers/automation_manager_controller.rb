@@ -354,10 +354,10 @@ class AutomationManagerController < ApplicationController
       self.x_node = "root"
       get_node_info("root")
     else
-      options = {:model => "ConfiguredSystem",
+      options = {:model                 => "ConfiguredSystem",
                  :match_via_descendants => ConfiguredSystem,
-                 :where_clause => ["inventory_root_group_id IN (?)", from_cid(@inventory_group_record.id)],
-                 :gtl_dbname   => "automation_manager_configured_systems"}
+                 :where_clause          => ["inventory_root_group_id IN (?)", from_cid(@inventory_group_record.id)],
+                 :gtl_dbname            => "automation_manager_configured_systems"}
       process_show_list(options)
       record_model = ui_lookup(:model => model || TreeBuilder.get_model_for_prefix(@nodetype))
       if @sb[:active_tab] == 'configured_systems'
@@ -398,7 +398,7 @@ class AutomationManagerController < ApplicationController
       process_show_list(options)
       @right_cell_text = _("All Ansible Tower Configured Systems")
     elsif x_active_tree == :configuration_scripts_tree
-      options = {:model => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript",
+      options = {:model      => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript",
                  :gtl_dbname => "automation_manager_configuration_scripts"}
       process_show_list(options)
       @right_cell_text = _("All Ansible Tower Job Templates")
