@@ -42,8 +42,6 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
   };
 
   $scope.logProtocolChanged = function() {
-    $scope.$broadcast('setNewRecord');
-
     if(miqDBBackupService.knownProtocolsList.indexOf($scope.logCollectionModel.log_protocol) == -1 &&
        $scope.logCollectionModel.log_protocol != '') {
       var url = $scope.logProtocolChangedUrl;
