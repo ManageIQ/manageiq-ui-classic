@@ -42,16 +42,17 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
   };
 
   $scope.logProtocolChanged = function() {
+    miqService.sparkleOn();
     if(miqDBBackupService.knownProtocolsList.indexOf($scope.logCollectionModel.log_protocol) == -1 &&
        $scope.logCollectionModel.log_protocol != '') {
       var url = $scope.logProtocolChangedUrl;
-      miqService.sparkleOn();
       $http.get(url + serverId + '?log_protocol=' + $scope.logCollectionModel.log_protocol)
         .then(getLogProtocolData)
         .catch(miqService.handleFailure);
     }
     $scope.$broadcast('reactiveFocus');
     miqDBBackupService.logProtocolChanged($scope.logCollectionModel);
+    miqService.sparkleOff();
   };
 
   $scope.isBasicInfoValid = function() {
