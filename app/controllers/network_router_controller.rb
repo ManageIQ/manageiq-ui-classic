@@ -41,7 +41,7 @@ class NetworkRouterController < ApplicationController
 
   def network_router_form_fields
     assert_privileges("network_router_edit")
-    router = find_by_id_filtered(NetworkRouter, params[:id])
+    router = find_record_with_rbac(NetworkRouter, params[:id])
     available_networks = get_networks_by_ems(router.ems_id)
     network_id = nil
     subnet_id = nil
@@ -201,7 +201,7 @@ class NetworkRouterController < ApplicationController
   def edit
     params[:id] = checked_item_id unless params[:id].present?
     assert_privileges("network_router_edit")
-    @router = find_by_id_filtered(NetworkRouter, params[:id])
+    @router = find_record_with_rbac(NetworkRouter, params[:id])
     @in_a_form = true
     drop_breadcrumb(
       :name => _("Edit Router \"%{name}\"") % {:model => ui_lookup(:table => 'network_router'), :name => @router.name},
@@ -211,7 +211,7 @@ class NetworkRouterController < ApplicationController
 
   def update
     assert_privileges("network_router_edit")
-    @router = find_by_id_filtered(NetworkRouter, params[:id])
+    @router = find_record_with_rbac(NetworkRouter, params[:id])
     options = form_params(params)
     if switch_to_bool(params[:external_gateway])
       options.merge!(form_external_gateway(params))
@@ -261,7 +261,7 @@ class NetworkRouterController < ApplicationController
 
   def add_interface_select
     assert_privileges("network_router_add_interface")
-    @router = find_by_id_filtered(NetworkRouter, params[:id])
+    @router = find_record_with_rbac(NetworkRouter, params[:id])
     @in_a_form = true
     @subnet_choices = {}
 
@@ -289,7 +289,7 @@ class NetworkRouterController < ApplicationController
 
   def add_interface
     assert_privileges("network_router_add_interface")
-    @router = find_by_id_filtered(NetworkRouter, params[:id])
+    @router = find_record_with_rbac(NetworkRouter, params[:id])
 
     case params[:button]
     when "cancel"
@@ -299,7 +299,7 @@ class NetworkRouterController < ApplicationController
 
     when "add"
       options = form_params(params)
-      cloud_subnet = find_by_id_filtered(CloudSubnet, options[:cloud_subnet_id])
+      cloud_subnet = find_record_with_rbac(CloudSubnet, options[:cloud_subnet_id])
 
       if @router.supports?(:add_interface)
         task_id = @router.add_interface_queue(session[:userid], cloud_subnet)
@@ -356,7 +356,7 @@ class NetworkRouterController < ApplicationController
 
   def remove_interface_select
     assert_privileges("network_router_remove_interface")
-    @router = find_by_id_filtered(NetworkRouter, params[:id])
+    @router = find_record_with_rbac(NetworkRouter, params[:id])
     @in_a_form = true
     @subnet_choices = {}
 
@@ -384,7 +384,7 @@ class NetworkRouterController < ApplicationController
 
   def remove_interface
     assert_privileges("network_router_remove_interface")
-    @router = find_by_id_filtered(NetworkRouter, params[:id])
+    @router = find_record_with_rbac(NetworkRouter, params[:id])
 
     case params[:button]
     when "cancel"
@@ -394,7 +394,7 @@ class NetworkRouterController < ApplicationController
 
     when "remove"
       options = form_params(params)
-      cloud_subnet = find_by_id_filtered(CloudSubnet, options[:cloud_subnet_id])
+      cloud_subnet = find_record_with_rbac(CloudSubnet, options[:cloud_subnet_id])
 
       if @router.supports?(:remove_interface)
         task_id = @router.remove_interface_queue(session[:userid], cloud_subnet)
@@ -477,10 +477,10 @@ class NetworkRouterController < ApplicationController
   def form_external_gateway(params)
     options = { :external_gateway_info => {} }
     if params[:cloud_network_id] && !params[:cloud_network_id].empty?
-      network = find_by_id_filtered(CloudNetwork, params[:cloud_network_id])
+      network = find_record_with_rbac(CloudNetwork, params[:cloud_network_id])
       options[:external_gateway_info][:network_id] = network.ems_ref
       if params[:cloud_subnet_id] && !params[:cloud_subnet_id].empty?
-        subnet = find_by_id_filtered(CloudSubnet, params[:cloud_subnet_id])
+        subnet = find_record_with_rbac(CloudSubnet, params[:cloud_subnet_id])
         options[:external_gateway_info][:external_fixed_ips] = [{ :subnet_id => subnet.ems_ref }]
       end
       options[:external_gateway_info][:enable_snat] = switch_to_bool(params[:enable_snat])
@@ -497,7 +497,7 @@ class NetworkRouterController < ApplicationController
 
     options[:cloud_network_id].gsub!(/number:/, '') if options[:cloud_network_id]
     if params[:cloud_tenant_id]
-      options[:cloud_tenant] = find_by_id_filtered(CloudTenant, params[:cloud_tenant_id])
+      options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant_id])
     end
     options
   end

@@ -156,7 +156,7 @@ module EmsCommon
     @doc_url = provider_documentation_url
     assert_privileges("#{permission_prefix}_edit")
     begin
-      @ems = find_by_id_filtered(model, params[:id])
+      @ems = find_record_with_rbac(model, params[:id])
     rescue => err
       return redirect_to(:action      => @lastaction || "show_list",
                          :flash_msg   => err.message,
@@ -204,7 +204,7 @@ module EmsCommon
 
   def update_button_save
     changed = edit_changed?
-    update_ems = find_by_id_filtered(model, params[:id])
+    update_ems = find_record_with_rbac(model, params[:id])
     set_record_vars(update_ems)
     if valid_record?(update_ems) && update_ems.save
       update_ems.reload
@@ -247,7 +247,7 @@ module EmsCommon
   private :update_button_reset
 
   def update_button_validate
-    verify_ems = find_by_id_filtered(model, params[:id])
+    verify_ems = find_record_with_rbac(model, params[:id])
     validate_credentials verify_ems
   end
   private :update_button_validate
@@ -380,7 +380,7 @@ module EmsCommon
       edit_record if params[:pressed] == "#{@table_name}_edit"
       if params[:pressed] == "#{@table_name}_timeline"
         @showtype = "timeline"
-        @record = find_by_id_filtered(model, params[:id])
+        @record = find_record_with_rbac(model, params[:id])
         @timeline = @timeline_filter = true
         @lastaction = "show_timeline"
         tl_build_timeline                       # Create the timeline report
@@ -391,7 +391,7 @@ module EmsCommon
       end
       if params[:pressed] == "#{@table_name}_perf"
         @showtype = "performance"
-        @record = find_by_id_filtered(model, params[:id])
+        @record = find_record_with_rbac(model, params[:id])
         drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @record.name},
                         :url  => show_link(@record, :refresh => "n", :display => "performance"))
         perf_gen_init_options # Intialize options, charts are generated async
@@ -400,7 +400,7 @@ module EmsCommon
       end
       if params[:pressed] == "#{@table_name}_ad_hoc_metrics"
         @showtype = "ad_hoc_metrics"
-        @record = find_by_id_filtered(model, params[:id])
+        @record = find_record_with_rbac(model, params[:id])
         drop_breadcrumb(:name => @record.name + _(" (Ad hoc Metrics)"), :url => show_link(@record))
         javascript_redirect polymorphic_path(@record, :display => "ad_hoc_metrics")
         return
@@ -467,7 +467,7 @@ module EmsCommon
   end
 
   def recheck_authentication(id = nil)
-    @record = find_by_id_filtered(model, id || params[:id])
+    @record = find_record_with_rbac(model, id || params[:id])
     @record.authentication_check_types_queue(@record.authentication_for_summary.pluck(:authtype), :save => true)
   end
 

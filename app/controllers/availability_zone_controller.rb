@@ -56,7 +56,7 @@ class AvailabilityZoneController < ApplicationController
       @showtype = @display
 
     when "timeline"
-      @record = find_by_id_filtered(AvailabilityZone, session[:tl_record_id])
+      @record = find_record_with_rbac(AvailabilityZone, session[:tl_record_id])
       show_timeline
 
     end

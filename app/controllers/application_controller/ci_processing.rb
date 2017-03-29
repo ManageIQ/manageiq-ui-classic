@@ -377,7 +377,7 @@ module ApplicationController::CiProcessing
     assert_privileges("instance_resize")
     recs = find_checked_items
     recs = [params[:id].to_i] if recs.blank?
-    @record = find_by_id_filtered(VmOrTemplate, recs.first) # Set the VM object
+    @record = find_record_with_rbac(VmOrTemplate, recs.first) # Set the VM object
     if @record.supports_resize?
       if @explorer
         resize
@@ -398,7 +398,7 @@ module ApplicationController::CiProcessing
     assert_privileges("instance_resize")
     load_edit("vm_resize__#{params[:id]}")
     flavor_id = @edit[:new][:flavor]
-    flavor = find_by_id_filtered(Flavor, flavor_id)
+    flavor = find_record_with_rbac(Flavor, flavor_id)
     @record = VmOrTemplate.find_by_id(params[:id])
 
     case params[:button]
@@ -459,7 +459,7 @@ module ApplicationController::CiProcessing
     assert_privileges("instance_live_migrate")
     recs = find_checked_items
     recs = [params[:id].to_i] if recs.blank?
-    @record = find_by_id_filtered(VmOrTemplate, recs.first)
+    @record = find_record_with_rbac(VmOrTemplate, recs.first)
     if @record.supports_live_migrate?
       if @explorer
         live_migrate
@@ -491,7 +491,7 @@ module ApplicationController::CiProcessing
 
   def live_migrate_form_fields
     assert_privileges("instance_live_migrate")
-    @record = find_by_id_filtered(VmOrTemplate, params[:id])
+    @record = find_record_with_rbac(VmOrTemplate, params[:id])
     hosts = []
     unless @record.ext_management_system.nil?
       # wrap in a rescue block in the event the connection to the provider fails
@@ -599,7 +599,7 @@ module ApplicationController::CiProcessing
     assert_privileges("instance_evacuate")
     recs = find_checked_items
     recs = [params[:id].to_i] if recs.blank?
-    @record = find_by_id_filtered(VmOrTemplate, recs.first)
+    @record = find_record_with_rbac(VmOrTemplate, recs.first)
     if @record.supports_evacuate?
       if @explorer
         evacuate
@@ -670,7 +670,7 @@ module ApplicationController::CiProcessing
 
   def evacuate_form_fields
     assert_privileges("instance_evacuate")
-    @record = find_by_id_filtered(VmOrTemplate, params[:id])
+    @record = find_record_with_rbac(VmOrTemplate, params[:id])
     hosts = []
     unless @record.ext_management_system.nil?
       begin
@@ -694,7 +694,7 @@ module ApplicationController::CiProcessing
     assert_privileges("instance_associate_floating_ip")
     recs = find_checked_items
     recs = [params[:id].to_i] if recs.blank?
-    @record = find_by_id_filtered(VmCloud, recs.first)
+    @record = find_record_with_rbac(VmCloud, recs.first)
     if @record.supports_associate_floating_ip? && @record.ext_management_system.present?
       if @explorer
         associate_floating_ip
@@ -718,7 +718,7 @@ module ApplicationController::CiProcessing
 
   def associate_floating_ip
     assert_privileges("instance_associate_floating_ip")
-    @record ||= find_by_id_filtered(VmCloud, params[:rec_id])
+    @record ||= find_record_with_rbac(VmCloud, params[:rec_id])
     drop_breadcrumb(
       :name => _("Associate Floating IP with Instance '%{name}'") % {:name => @record.name},
       :url  => "/vm_cloud/associate_floating_ip"
@@ -731,7 +731,7 @@ module ApplicationController::CiProcessing
 
   def associate_floating_ip_form_fields
     assert_privileges("instance_associate_floating_ip")
-    @record = find_by_id_filtered(VmCloud, params[:id])
+    @record = find_record_with_rbac(VmCloud, params[:id])
     floating_ips = []
     unless @record.cloud_tenant.nil?
       floating_ips = @record.cloud_tenant.floating_ips
@@ -743,7 +743,7 @@ module ApplicationController::CiProcessing
 
   def associate_floating_ip_vm
     assert_privileges("instance_associate_floating_ip")
-    @record = find_by_id_filtered(VmCloud, params[:id])
+    @record = find_record_with_rbac(VmCloud, params[:id])
     case params[:button]
     when "cancel"
       add_flash(_("Association of Floating IP with Instance \"%{name}\" was cancelled by the user") % {:name => @record.name})
@@ -786,7 +786,7 @@ module ApplicationController::CiProcessing
     assert_privileges("instance_disassociate_floating_ip")
     recs = find_checked_items
     recs = [params[:id].to_i] if recs.blank?
-    @record = find_by_id_filtered(VmCloud, recs.first)
+    @record = find_record_with_rbac(VmCloud, recs.first)
     if @record.supports_disassociate_floating_ip? && @record.ext_management_system.present?
       if @explorer
         disassociate_floating_ip
@@ -823,7 +823,7 @@ module ApplicationController::CiProcessing
 
   def disassociate_floating_ip_form_fields
     assert_privileges("instance_disassociate_floating_ip")
-    @record = find_by_id_filtered(VmCloud, params[:id])
+    @record = find_record_with_rbac(VmCloud, params[:id])
     floating_ips = []
     unless @record.ext_management_system.nil?
       @record.floating_ips.each do |floating_ip|
@@ -837,7 +837,7 @@ module ApplicationController::CiProcessing
 
   def disassociate_floating_ip_vm
     assert_privileges("instance_disassociate_floating_ip")
-    @record = find_by_id_filtered(VmCloud, params[:id])
+    @record = find_record_with_rbac(VmCloud, params[:id])
     case params[:button]
     when "cancel"
       add_flash(_("Disassociation of Floating IP from Instance \"%{name}\" was cancelled by the user") % {:name => @record.name})
@@ -1568,7 +1568,7 @@ module ApplicationController::CiProcessing
   # find the record that was chosen
   def identify_record(id, klass = self.class.model)
     begin
-      record = find_by_id_filtered(klass, from_cid(id))
+      record = find_record_with_rbac(klass, from_cid(id))
     rescue ActiveRecord::RecordNotFound
     rescue => @bang
       self.x_node = "root" if @explorer
