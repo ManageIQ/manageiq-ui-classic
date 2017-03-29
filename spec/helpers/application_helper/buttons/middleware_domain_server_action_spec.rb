@@ -1,29 +1,23 @@
 describe ApplicationHelper::Button::MiddlewareDomainServerAction do
-  let(:server) { FactoryGirl.create(:middleware_server, :middleware_server_group => group) }
-  subject { described_class.new(setup_view_context_with_sandbox({}), {}, {'record' => record}, {}) }
+  let(:record) { double("MiddlewareServer") }
+  subject(:action) { described_class.new(setup_view_context_with_sandbox({}), {}, {'record' => record}, {}) }
 
   describe '#visible?' do
-    context 'when record responds to #in_domain?' do
-      let(:record) { server }
-      context 'when server.in_domain? == true' do
-        let(:group) { FactoryGirl.create(:middleware_server_group) }
-        it { expect(subject.visible?).to be_truthy }
-      end
-      context 'when server.in_domain? == false' do
-        let(:group) { nil }
-        it { expect(subject.visible?).to be_falsey }
-      end
+    it 'is true if server is in domain' do
+      allow(record).to receive(:in_domain?) { true }
+
+      expect(action).to be_visible
     end
-    context 'when record does not respond to #in_domain?' do
-      let(:record) { FactoryGirl.create(:middleware_deployment, :middleware_server => server) }
-      context 'when server.in_domain? == true' do
-        let(:group) { FactoryGirl.create(:middleware_server_group) }
-        it { expect(subject.visible?).to be_truthy }
-      end
-      context 'when server.in_domain? == false' do
-        let(:group) { nil }
-        it { expect(subject.visible?).to be_falsey }
-      end
+
+    it 'is false if server is not in domain' do
+      allow(record).to receive(:in_domain?) { false }
+
+      expect(action).not_to be_visible
+    end
+
+    it 'is false if record is nil' do
+      action = described_class.new(setup_view_context_with_sandbox({}), {}, {'record' => record}, {})
+      expect(action).not_to be_visible
     end
   end
 end
