@@ -1184,6 +1184,8 @@ Rails.application.routes.draw do
         register_nodes
         introspect_nodes
         protect
+        scaledown
+        scaling
         show_list
         tagging_edit
       ) +
