@@ -44,6 +44,9 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['$scope', 'miqServ
     // model attribute with AWS.
     $scope.cloudVolumeModel.aws_volume_type = data.volume_type;
 
+    // Update the IOPS based on the current volume size.
+    $scope.sizeChanged($scope.cloudVolumeModel.size);
+
     $scope.modelCopy = angular.copy( $scope.cloudVolumeModel );
     miqService.sparkleOff();
   }
