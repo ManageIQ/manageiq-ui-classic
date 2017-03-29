@@ -394,7 +394,7 @@ class AutomationManagerController < ApplicationController
       @right_cell_text = _("All Ansible Tower Providers")
     elsif x_active_tree == :automation_manager_cs_filter_tree
       options = {:model      => "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem",
-                 :gtl_dbname => "automation_manager_cs_filter"}
+                 :gtl_dbname => "automation_manager_configured_systems"}
       process_show_list(options)
       @right_cell_text = _("All Ansible Tower Configured Systems")
     elsif x_active_tree == :configuration_scripts_tree
