@@ -1,7 +1,10 @@
 set -e
 
-git clone https://github.com/ManageIQ/manageiq.git --branch fine --depth 1 spec/manageiq
-
+git clone https://github.com/ManageIQ/manageiq.git --branch master --depth 1 spec/manageiq
+echo "XXXXX"
+echo $TRAVIS_PULL_REQUEST_BRANCH
+echo $TRAVIS_BRANCH
+echo "XXXXX"
 cd spec/manageiq
 source tools/ci/setup_vmdb_configs.sh
 cd -
