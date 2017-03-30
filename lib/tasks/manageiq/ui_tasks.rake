@@ -1,4 +1,7 @@
-# desc "Explaining what the task does"
-# task :manageiq_ui do
-#   # Task goes here
-# end
+namespace :update do
+  task :bower do
+    Dir.chdir ManageIQ::UI::Classic::Engine.root do
+      system("bower update --allow-root -F --config.analytics=false") || abort("\n== bower install failed ==")
+    end
+  end
+end
