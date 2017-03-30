@@ -41,16 +41,16 @@ module ApplicationController::CiProcessing
       ownership_items = recs.collect(&:to_i)
     end
 
+    if filter_ownership_items(get_class_from_controller_param(controller), ownership_items).empty?
+      add_flash(_('None of the selected items allow ownership changes'), :error)
+      @refresh_div = "flash_msg_div"
+      @refresh_partial = "layouts/flash_msg"
+      return
+    end
+
     if @explorer
       @sb[:explorer] = true
       ownership(ownership_items)
-      if @ownershipitems.empty?
-        add_flash(_('None of the selected items allow ownership changes'), :error)
-
-        @refresh_div = "flash_msg_div"
-        @refresh_partial = "layouts/flash_msg"
-        return
-      end
     else
       if role_allows?(:feature => "vm_ownership")
         drop_breadcrumb(:name => _("Set Ownership"), :url => "/vm_common/ownership")
