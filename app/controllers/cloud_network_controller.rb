@@ -50,7 +50,7 @@ class CloudNetworkController < ApplicationController
 
   def cloud_network_form_fields
     assert_privileges("cloud_network_edit")
-    network = find_by_id_filtered(CloudNetwork, params[:id])
+    network = find_record_with_rbac(CloudNetwork, params[:id])
     render :json => {
       :name                  => network.name,
       :cloud_tenant_name     => network.cloud_tenant.try(:name),
@@ -158,7 +158,7 @@ class CloudNetworkController < ApplicationController
   def edit
     params[:id] = checked_item_id unless params[:id].present?
     assert_privileges("cloud_network_edit")
-    @network = find_by_id_filtered(CloudNetwork, params[:id])
+    @network = find_record_with_rbac(CloudNetwork, params[:id])
     @network_provider_network_type_choices = PROVIDERS_NETWORK_TYPES
     @in_a_form = true
     drop_breadcrumb(
@@ -184,7 +184,7 @@ class CloudNetworkController < ApplicationController
 
   def update
     assert_privileges("cloud_network_edit")
-    @network = find_by_id_filtered(CloudNetwork, params[:id])
+    @network = find_record_with_rbac(CloudNetwork, params[:id])
     options = edit_form_params
     case params[:button]
     when "cancel"
@@ -272,7 +272,7 @@ class CloudNetworkController < ApplicationController
     # options[:port_security_enabled] = params[:port_security_enabled] if params[:port_security_enabled]
     options[:qos_policy_id] = params[:qos_policy_id] if params[:qos_policy_id]
     options[:provider_network_type] = params[:provider_network_type] if params[:provider_network_type]
-    options[:cloud_tenant] = find_by_id_filtered(CloudTenant, params[:cloud_tenant_id]) if params[:cloud_tenant_id]
+    options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant_id]) if params[:cloud_tenant_id]
     options
   end
 

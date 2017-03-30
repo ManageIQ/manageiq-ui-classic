@@ -30,7 +30,7 @@ class CloudTenantController < ApplicationController
         action = params[:pressed].sub("#{target_controller}_", '')
         action = "#{action}_#{target_controller.sub('cloud_','').pluralize}" if action == 'delete'
         if action == 'detach'
-          volume = find_by_id_filtered(CloudVolume, from_cid(params[:miq_grid_checks]))
+          volume = find_record_with_rbac(CloudVolume, from_cid(params[:miq_grid_checks]))
           if volume.attachments.empty?
             render_flash(_("%{volume} \"%{volume_name}\" is not attached to any %{instances}") % {
                 :volume      => ui_lookup(:table => 'cloud_volume'),
@@ -83,7 +83,7 @@ class CloudTenantController < ApplicationController
     when "add"
       @tenant = CloudTenant.new
       options = form_params
-      ems = find_by_id_filtered(ExtManagementSystem, options[:ems_id])
+      ems = find_record_with_rbac(ExtManagementSystem, options[:ems_id])
       options.delete(:ems_id)
 
       task_id = CloudTenant.create_cloud_tenant_queue(session[:userid], ems, options)
@@ -123,7 +123,7 @@ class CloudTenantController < ApplicationController
 
   def edit
     assert_privileges("cloud_tenant_edit")
-    @tenant = find_by_id_filtered(CloudTenant, params[:id])
+    @tenant = find_record_with_rbac(CloudTenant, params[:id])
     @in_a_form = true
     drop_breadcrumb(
       :name => _("Edit Cloud Tenant \"%{name}\"") % {:name => @tenant.name},
@@ -133,7 +133,7 @@ class CloudTenantController < ApplicationController
 
   def update
     assert_privileges("cloud_tenant_edit")
-    @tenant = find_by_id_filtered(CloudTenant, params[:id])
+    @tenant = find_record_with_rbac(CloudTenant, params[:id])
 
     case params[:button]
     when "cancel"
@@ -181,7 +181,7 @@ class CloudTenantController < ApplicationController
 
   def cloud_tenant_form_fields
     assert_privileges("cloud_tenant_edit")
-    tenant = find_by_id_filtered(CloudTenant, params[:id])
+    tenant = find_record_with_rbac(CloudTenant, params[:id])
     render :json => {
       :name => tenant.name
     }
@@ -243,7 +243,7 @@ class CloudTenantController < ApplicationController
       ems_id_array = params[:ems_id].split(":")
       options[:ems_id] = ems_id_array[0]
       if ems_id_array.length > 1
-        parent_id = find_by_id_filtered(CloudTenant, ems_id_array[1]).ems_ref
+        parent_id = find_record_with_rbac(CloudTenant, ems_id_array[1]).ems_ref
         options[:parent_id] = parent_id
       end
     end

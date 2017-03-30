@@ -15,7 +15,7 @@ class VmCloudController < ApplicationController
   def attach
     assert_privileges("instance_attach")
     @volume_choices = {}
-    @record = @vm = find_by_id_filtered(VmCloud, params[:id])
+    @record = @vm = find_record_with_rbac(VmCloud, params[:id])
     @vm.cloud_tenant.cloud_volumes.where(:status => 'available').each { |v| @volume_choices[v.name] = v.id }
 
     @in_a_form = true
@@ -34,7 +34,7 @@ class VmCloudController < ApplicationController
   def detach
     assert_privileges("instance_detach")
     @volume_choices = {}
-    @record = @vm = find_by_id_filtered(VmCloud, params[:id])
+    @record = @vm = find_record_with_rbac(VmCloud, params[:id])
     attached_volumes = @vm.hardware.disks.select(&:backing).map(&:backing)
     attached_volumes.each { |volume| @volume_choices[volume.name] = volume.id }
     if attached_volumes.empty?
@@ -61,7 +61,7 @@ class VmCloudController < ApplicationController
   def attach_volume
     assert_privileges("instance_attach")
 
-    @vm = find_by_id_filtered(VmCloud, params[:id])
+    @vm = find_record_with_rbac(VmCloud, params[:id])
     case params[:button]
     when "cancel"
       cancel_action(_("Attaching %{volume_model} to %{instance_model} \"%{instance_name}\" was cancelled by the user") % {
@@ -70,7 +70,7 @@ class VmCloudController < ApplicationController
         :instance_name  => @vm.name
       })
     when "attach"
-      volume = find_by_id_filtered(CloudVolume, params[:volume_id])
+      volume = find_record_with_rbac(CloudVolume, params[:volume_id])
       if volume.is_available?(:attach_volume)
         task_id = volume.attach_volume_queue(session[:userid], @vm.ems_ref, params[:device_path])
 
@@ -92,7 +92,7 @@ class VmCloudController < ApplicationController
     vm_id = session[:async][:params][:id]
     vm_name = session[:async][:params][:name]
     volume_id = session[:async][:params][:volume_id]
-    volume = find_by_id_filtered(CloudVolume, volume_id)
+    volume = find_record_with_rbac(CloudVolume, volume_id)
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
       add_flash(_("Attaching Cloud Volume \"%{volume_name}\" to %{vm_name} finished") % {
@@ -117,7 +117,7 @@ class VmCloudController < ApplicationController
   def detach_volume
     assert_privileges("instance_detach")
 
-    @vm = find_by_id_filtered(VmCloud, params[:id])
+    @vm = find_record_with_rbac(VmCloud, params[:id])
     case params[:button]
     when "cancel"
       cancel_action(_("Detaching a %{volume} from %{instance_model} \"%{instance_name}\" was cancelled by the user") % {
@@ -127,7 +127,7 @@ class VmCloudController < ApplicationController
       })
 
     when "detach"
-      volume = find_by_id_filtered(CloudVolume, params[:volume_id])
+      volume = find_record_with_rbac(CloudVolume, params[:volume_id])
       if volume.is_available?(:detach_volume)
         task_id = volume.detach_volume_queue(session[:userid], @vm.ems_ref)
 
@@ -149,7 +149,7 @@ class VmCloudController < ApplicationController
     vm_id = session[:async][:params][:id]
     vm_name = session[:async][:params][:name]
     volume_id = session[:async][:params][:volume_id]
-    volume = find_by_id_filtered(CloudVolume, volume_id)
+    volume = find_record_with_rbac(CloudVolume, volume_id)
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
       add_flash(_("Detaching Cloud Volume \"%{volume_name}\" from %{vm_name} finished") % {
