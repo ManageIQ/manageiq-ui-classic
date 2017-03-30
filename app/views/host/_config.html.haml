@@ -13,7 +13,7 @@
               %img{:src => image_path("100/hardware-#{item[:icon]}.png")}
               = h(item[:description])
 - when "os_info"
-  - os_info = get_os_info
+  - os_info = os_info_details
   - if os_info.present?
     .form-horizontal.static
       .form-group

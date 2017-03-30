@@ -23,7 +23,7 @@ module TextualMixins::TextualOsInfo
     h
   end
 
-  def os_info_details
+  def os_info_attributes
     os_info = []
     if @record.operating_system.present?
       os_info = {:product_name => _("Operating System"), :service_pack => _("Service Pack"),
@@ -51,7 +51,7 @@ module TextualMixins::TextualOsInfo
     policies.compact
   end
 
-  def get_os_info
-    os_info = os_info_details
+  def os_info_details
+    os_info_attributes
   end
 end
