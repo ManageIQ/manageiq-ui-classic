@@ -1601,7 +1601,7 @@ module ApplicationController::CiProcessing
       bc_name += " (filtered)" if @filters && (!@filters[:tags].blank? || !@filters[:cats].blank?)
       action = %w(container service vm_cloud vm_infra vm_or_template storage).include?(self.class.table_name) ? "explorer" : "show_list"
       @breadcrumbs.clear
-      drop_breadcrumb(:name => bc_name, :url => "/#{self.class.table_name}/#{action}")
+      drop_breadcrumb(:name => bc_name, :url => "/#{controller_name}/#{action}")
     end
     @layout = session["#{self.class.session_key_prefix}_type".to_sym] if session["#{self.class.session_key_prefix}_type".to_sym]
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
