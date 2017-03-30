@@ -1,6 +1,6 @@
 /* global miqFlashLater */
 
-ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 'credentialId', 'miqService', 'API', function($window, credentialId,  miqService, API) {
+ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', '$q', 'credentialId', 'miqService', 'API', function($window, $q, credentialId,  miqService, API) {
   var vm = this;
 
   var init = function() {
@@ -22,14 +22,10 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     miqService.sparkleOn();
 
     // get credential specific options for all supported credential types
-    API.options('/api/authentications')
-      .then(getCredentialOptions)
-      .catch(miqService.handleFailure);
+    var optionsPromise = API.options('/api/authentications');
 
     if (credentialId !== 'new') {
-      API.get('/api/authentications/' + credentialId)
-        .then(getCredentialFormData)
-        .catch(miqService.handleFailure);
+      var dataPromise = API.get('/api/authentications/' + credentialId);
     } else {
       vm.select_options.push({'label':__('<Choose>'), 'value': ''});
       // credential creation requires manager_resource
@@ -40,6 +36,10 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
       vm.modelCopy = angular.copy( vm.credentialModel );
       miqService.sparkleOff();
     }
+
+    $q.all([optionsPromise, dataPromise])
+      .then(getCredentialDetails)
+      .catch(miqService.handleFailure);
   };
 
   vm.cancelClicked = function(angularForm) {
@@ -68,13 +68,21 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
        .catch(miqService.handleFailure);
   };
 
+  function getCredentialDetails(response) {
+    getCredentialOptions(response[0]);
+    if (response[1]) {
+      getCredentialFormData(response[1]);
+    }
+    vm.afterGet = true;
+    miqService.sparkleOff();
+  }
+
   function getCredentialOptions(response) {
     Object.assign(vm.credential_options, response.data.credential_types.embedded_ansible_credential_types);
 
     for (var opt in vm.credential_options) {
       vm.select_options.push({'value': opt, 'label': vm.credential_options[opt].label});
     }
-    vm.afterGet = true;
   }
 
   function getCredentialFormData(response) {
@@ -95,8 +103,6 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     }
 
     vm.modelCopy = angular.copy( vm.credentialModel );
-    vm.afterGet = true;
-    miqService.sparkleOff();
   }
 
   function getBack(message, warning, error) {
