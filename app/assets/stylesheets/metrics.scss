@@ -2,6 +2,14 @@
   overflow-x: hidden;
   overflow-y: hidden;
 
+  #pagination-title {
+    font-weight: 700;
+    margin-right: 10px;
+    margin-left: 10px;
+    vertical-align: bottom;
+    line-height: 27px;
+  }
+
   .ad-hoc-toolbar {
     margin-left: 10px;
   }
@@ -96,7 +104,7 @@
       margin-top: 10px;
     }
     .form-group.toolbar-actions.ng-scope {
-      width: calc(100% - 485px);
+      width: calc(100% - 435px);
       border: 0;
     }
     .dropdown-kebab-pf {

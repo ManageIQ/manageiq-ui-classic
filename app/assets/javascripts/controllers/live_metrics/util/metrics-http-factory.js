@@ -28,7 +28,8 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
       angular.forEach(dash.items, getLatestData);
 
       dash.pages = (data.pages > 0) ? data.pages : 1;
-      dash.filterConfig.resultsCount = __("Page ") + data.page + __(" Of ") + dash.pages + __(", Found ") + data.items;
+      dash.pagesTitle = sprintf(__("Page %d of %d"), data.page, dash.pages);
+      dash.filterConfig.resultsCount = data.items;
     }
 
     function refreshOneGraph(metricId, metricType, currentItem) {
