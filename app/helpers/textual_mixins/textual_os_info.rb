@@ -53,7 +53,5 @@ module TextualMixins::TextualOsInfo
 
   def get_os_info
     os_info = os_info_details
-    account_policy = account_policy_details
-    [os_info, account_policy]
   end
 end

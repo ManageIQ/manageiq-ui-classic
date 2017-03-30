@@ -16,7 +16,7 @@
               %img{:src => image_path("100/hardware-#{item[:icon]}.png")}
               = h(item[:description])
 - when "os_info"
-  - os_info, account_policy = get_os_info
+  - os_info = get_os_info
   - if os_info
     %table.table.table-bordered.table-striped.table-summary-screen
       %thead
@@ -30,10 +30,9 @@
             %td
               %img{:src => image_path("svg/os-#{h(@record.os_image_name.downcase)}.svg")}
               = h(item[:description])
+  - unless @record.os_image_name =~ /linux/
+    - account_policy = account_policy_details
     %hr
-  - regexosname = Regexp.new(/linux/)
-  - linuxos = regexosname.match(@record.os_image_name.downcase)
-  - unless linuxos
     %table.table.table-bordered.table-striped
       %thead
         %tr
