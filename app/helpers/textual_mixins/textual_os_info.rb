@@ -31,7 +31,7 @@ module TextualMixins::TextualOsInfo
                  :bitness => _("System Type")}.map do |method, title|
                    value = @record.operating_system.send(method)
                    value ? OsInfo.new(title, value) : next
-                end
+                 end
     end
     os_info.compact
   end
