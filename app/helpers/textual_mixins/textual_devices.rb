@@ -13,7 +13,7 @@ module TextualMixins::TextualDevices
   end
 
   def textual_devices
-    devices = get_devices
+    devices = devices_details
     h = {:label    => _("Devices"),
          :icon     => "fa fa-hdd-o",
          :explorer => true,
@@ -106,7 +106,7 @@ module TextualMixins::TextualDevices
     end
   end
 
-  def get_devices
+  def devices_details
     devices = []
     return devices unless @record.try(:hardware)
     devices << processor_description

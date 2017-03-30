@@ -1,7 +1,7 @@
 = render :partial => "layouts/flash_msg"
 - case @display
 - when "devices"
-  - devices = get_devices
+  - devices = devices_details
   - if devices.present?
     %table.table.table-bordered.table-striped.table-summary-screen
       %thead
@@ -53,7 +53,7 @@
 
 - when "hv_info"
   - vmminfo = get_vmm_info
-  - devices = get_devices
+  - devices = devices_details
   - if vmminfo
     %table.table.table-bordered.table-striped.table-summary-screen
       %thead

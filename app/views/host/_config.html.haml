@@ -1,7 +1,7 @@
 = render :partial => "layouts/flash_msg"
 - case @display
 - when "devices"
-  - devices = get_devices
+  - devices = devices_details
   - if devices.present?
     .form-horizontal.static
       .form-group
