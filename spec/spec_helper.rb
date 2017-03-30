@@ -78,7 +78,7 @@ end
 
 # This bypasses the lookup of Javascript dependencies in (ruby) tests
 class << ActionController::Base.helpers
-  def image_path(path, options = {})
-    path
+  def image_path(path, _options = {})
+    "/assets/#{path}"
   end
 end
