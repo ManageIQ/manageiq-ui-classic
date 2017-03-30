@@ -272,7 +272,7 @@ class CloudVolumeController < ApplicationController
     @storage_manager_choices = {}
     if params[:storage_manager_id]
       @storage_manager_id = params[:storage_manager_id]
-      ems = find_by_id_filtered(ExtManagementSystem, @storage_manager_id)
+      ems = find_record_with_rbac(ExtManagementSystem, @storage_manager_id)
       @storage_manager_choices[ems.name] = ems.id
     else
       ExtManagementSystem.all.each { |ems| @storage_manager_choices[ems.name] = ems.id if ems.supports_block_storage? }
