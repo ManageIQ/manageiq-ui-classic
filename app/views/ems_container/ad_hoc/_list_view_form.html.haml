@@ -57,9 +57,7 @@
            "title" => _("Previous Page")}
           %span.i.fa.fa-angle-left
 
-    %input.page-input.form-control{"ng-model" => "dash.page",
-                                            "readonly" => "readonly",
-                                            "type"     => "text"}
+    #pagination-title {{dash.pagesTitle}}
 
     %ul.pagination.pagination-pf-forward
       %li

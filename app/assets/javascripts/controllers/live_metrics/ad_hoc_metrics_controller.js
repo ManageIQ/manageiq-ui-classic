@@ -38,6 +38,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
 
       dash.page = 1;
       dash.pages = 1;
+      dash.pagesTitle = "";
 
       dash.filterConfig = {
         fields: [],
@@ -75,6 +76,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
         dash.items = [];
         dash.page = 1;
         dash.pages = 1;
+        dash.pagesTitle = "";
         dash.filterConfig.resultsCount = 0;
         return;
       }
@@ -92,6 +94,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
         dash.items = [];
         dash.page = 1;
         dash.pages = 1;
+        dash.pagesTitle = "";
         dash.filterChanged = false;
         dash.filterConfig.resultsCount = 0;
         dash.applyFilters();
