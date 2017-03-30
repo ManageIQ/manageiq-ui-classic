@@ -4,7 +4,7 @@ describe TreeBuilderProtect do
       role = MiqUserRole.find_by_name("EvmRole-operator")
       @group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Select Policy Profiles")
       login_as FactoryGirl.create(:user, :userid => 'policy_profile_wilma', :miq_groups => [@group])
-      policy1 = FactoryGirl.create(:miq_policy, :mode => 'something')
+      policy1 = FactoryGirl.create(:miq_policy, :mode => 'compliance')
       set1 = FactoryGirl.create(:miq_policy_set, :description => 'first')
       set1.add_member(policy1)
       set1.save!
