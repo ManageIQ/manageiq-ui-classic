@@ -1999,6 +1999,8 @@ module ApplicationController::CiProcessing
     manager_ids, _services_out_region = filter_ids_in_region(managers, provider_class.to_s)
     return if manager_ids.empty?
 
+    assert_rbac(provider_class, manager_ids)
+
     options = {:ids => manager_ids, :task => task, :userid => session[:userid]}
     kls = provider_class.find_by(:id => manager_ids.first).class
     kls.process_tasks(options)
