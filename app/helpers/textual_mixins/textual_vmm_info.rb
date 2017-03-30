@@ -1,4 +1,6 @@
 module TextualMixins::TextualVmmInfo
+  VmmInfo = Struct.new(:vmminfo, :description)
+
   def textual_vmm_info
     h = {:label => _("VMM Information")}
     vmm_info = get_vmm_info
@@ -14,36 +16,40 @@ module TextualMixins::TextualVmmInfo
     h
   end
 
+  def host_vendor_details
+    {:vmm_vendor_display => _("Vendor"), :vmm_product => _("Product"), :vmm_version => _("Version"),
+     :vmm_buildnumber => _("Build Number")}.map do |method, title|
+      value = @record.send(method)
+      value ? VmmInfo.new(title, value) : next
+    end.compact
+  end
+
+  def vm_vendor_details
+    {:vendor_display => _("Vendor"), :format => _("Format"), :version => _("Version"),
+     :annotation => _("Notes")}.map do |method, title|
+      if method == :annotation
+        if @record.hardware
+          value = @record.hardware.send(method)
+          value ? VmmInfo.new(title, value) : VmmInfo.new(title, _("<No notes have been entered for this VM>"))
+        else
+          next
+        end
+      else
+        value = @record.send(method)
+        value ? VmmInfo.new(title, value) : next
+      end
+    end.compact
+  end
+
   def get_vmm_info
-    hw_info = []
-    if @record.respond_to?("vmm_vendor_display") # For Host table, this will pull the VMM fields
-      hw_info.push(:vmminfo     => _("Vendor"),
-                    :description => @record.vmm_vendor_display)
-      hw_info.push(:vmminfo     => _("Product"),
-                    :description => @record.vmm_product) unless @record.vmm_product.nil?
-      hw_info.push(:vmminfo     => _("Version"),
-                    :description => @record.vmm_version) unless @record.vmm_version.nil?
-      hw_info.push(:vmminfo     => _("Build Number"),
-                    :description => @record.vmm_buildnumber) unless @record.vmm_buildnumber.nil?
+    vmm_info = []
+    if @record.respond_to?("vmm_vendor_display")
+     vmm_info = host_vendor_details
     end
 
-    if @record.respond_to?("vendor_display") # For Vm table, this will pull the vendor and notes fields
-      hw_info.push(:vmminfo     => _("Vendor"),
-                    :description => @record.vendor_display)
-      hw_info.push(:vmminfo     => _("Format"),
-                    :description => @record.format) unless @record.format.nil?
-      hw_info.push(:vmminfo     => _("Version"),
-                    :description => @record.version) unless @record.version.nil?
-      unless @record.hardware.nil?
-        notes = if @record.hardware.annotation.nil?
-                  _("<No notes have been entered for this VM>")
-                else
-                  @record.hardware.annotation
-                end
-        hw_info.push(:vmminfo     => _("Notes"),
-                      :description => notes)
-      end
+    if @record.respond_to?("vendor_display")
+      vmm_info = vm_vendor_details
     end
-    hw_info
+    vmm_info
   end
 end

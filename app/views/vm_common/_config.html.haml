@@ -80,13 +80,8 @@
               %td.label
                 = h(item[:name])
               %td
-                %img{:src => image_path("100/hardware-#{item[:icon].downcase}.png")}
+                %img{:src => image_path("100/hardware-#{item[:icon]}.png")}
                 = h(item[:description])
-            - unless item[:mode].nil?
-              %tr
-                %th= _('Network Type')
-                %td
-                  = h(item[:mode])
 
 - when "snapshot_info"
   = render :partial => "vm_common/snapshots_desc"
