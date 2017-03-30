@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 'credentialId', 'miqService', 'API', function($window, credentialId,  miqService, API) {
+ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 'credentialId', 'managerResourceId', 'miqService', 'API', function($window, credentialId, managerResourceId, miqService, API) {
   var vm = this;
 
   var init = function() {
@@ -29,14 +29,11 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
         .then(getCredentialFormData)
         .catch(miqService.handleFailure);
     } else {
+      vm.credentialModel.manager_resource = { "href": "/api/providers/" + managerResourceId };
+
       vm.select_options.push({'label':__('<Choose>'), 'value': ''});
       // FIXME: this should go away once https://github.com/ManageIQ/manageiq/pull/14483 is merged
       vm.credentialModel.organization = 1; // work-around, organization id needs to be filled in automatically by the backend
-
-      // credential creation requires manager_resource
-      API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAutomationManager')
-        .then(setManagerResource)
-        .catch(miqService.handleFailure);
 
       vm.modelCopy = angular.copy( vm.credentialModel );
       miqService.sparkleOff();
@@ -111,10 +108,6 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     }
 
     $window.location.href = url;
-  }
-
-  function setManagerResource(response) {
-    vm.credentialModel.manager_resource = { "href": response.resources[0].href };
   }
 
   // FIXME: this should go away once https://github.com/ManageIQ/manageiq/pull/14483 is merged

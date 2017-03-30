@@ -39,6 +39,7 @@ class AnsibleCredentialController < ApplicationController
     drop_breadcrumb(:name => _("Add a new Credential"), :url => "/ansible_credential/new")
     @in_a_form = true
     @id = 'new'
+    @manager_resource = ExtManagementSystem.where(:type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager").first
   end
 
   def edit
