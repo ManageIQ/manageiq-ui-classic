@@ -59,6 +59,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
       var _tenant = dash.tenant.value || dash.DEFAULT_TENANT;
       dash.url = '/container_dashboard/data' + dash.providerId  + '/?live=true&tenant=' + _tenant;
 
+      httpUtils.getMetricTags();
       setAppliedFilters();
     }
 

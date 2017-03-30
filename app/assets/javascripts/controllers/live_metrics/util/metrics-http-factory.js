@@ -90,8 +90,6 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
             dash.tenant = dash.tenantList[i];
           }
         });
-
-        getMetricTags();
       });
     }
 
