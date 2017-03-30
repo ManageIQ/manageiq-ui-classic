@@ -120,13 +120,17 @@ module EmsContainerHelper::TextualSummary
     )
   end
 
-  def textual_group_miq_custom_attributes
-    TextualGroup.new(_("Custom Attributes"), textual_miq_custom_attributes)
+  def textual_group_miq_displayable_custom_attributes
+    TextualGroup.new(_("Custom Attributes"), textual_miq_displayable_custom_attributes)
   end
 
-  def textual_miq_custom_attributes
-    attrs = @record.custom_attributes
+  def textual_miq_displayable_custom_attributes
+    attrs = @record.custom_attributes.where(
+      :section => @record.decorate.try(:displayable_custom_attribute_sections)
+    )
     return nil if attrs.blank?
-    attrs.sort_by(&:name).collect { |a| {:label => a.name.tr("_", " "), :value => a.value} }
+    attrs.sort_by(&:name).collect do |a|
+      {:label => a.name.tr("_", " "), :value => a.value}
+    end
   end
 end

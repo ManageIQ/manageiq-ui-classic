@@ -39,7 +39,7 @@ class EmsContainerController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties endpoints status miq_custom_attributes), %i(relationships topology smart_management)]
+    [%i(properties endpoints status miq_displayable_custom_attributes), %i(relationships topology smart_management)]
   end
   helper_method :textual_group_list
 
