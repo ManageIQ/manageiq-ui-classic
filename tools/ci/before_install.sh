@@ -6,7 +6,9 @@ cd spec/manageiq
 source tools/ci/setup_vmdb_configs.sh
 cd -
 
-source tools/ci/setup_js_env.sh
+if [ "$TEST_SUITE" = "spec:javascript" ]; then
+  source tools/ci/setup_js_env.sh
+fi
 
 # HACK: Temporary workaround until we can get the cross-repo scripts working properly
 # source spec/manageiq/tools/ci/setup_ruby_env.sh
