@@ -74,7 +74,7 @@ class EmsClusterController < ApplicationController
       show_performance
 
     when "timeline"
-      @record = find_by_id_filtered(EmsCluster, session[:tl_record_id])
+      @record = find_record_with_rbac(EmsCluster, session[:tl_record_id])
       show_timeline
 
     when "storage"
