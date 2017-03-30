@@ -52,7 +52,7 @@
                     = h(item[:description])
 
 - when "hv_info"
-  - vmminfo = get_vmm_info
+  - vmminfo = vmm_info_details
   - devices = devices_details
   - if vmminfo
     %table.table.table-bordered.table-striped.table-summary-screen
@@ -90,7 +90,7 @@
   = render :partial => "vm_common/vmtree"
 
 - when "networks"
-  - vmminfo = get_vmm_info
+  - vmminfo = vmm_info_details
   - if vmminfo
     - @record.hardware.networks.each do |adapter|
       %table.table.table-bordered.table-striped.table-summary-screen

@@ -3,7 +3,7 @@ module TextualMixins::TextualVmmInfo
 
   def textual_vmm_info
     h = {:label => _("VMM Information")}
-    vmm_info = get_vmm_info
+    vmm_info = vmm_info_details
     if vmm_info.empty?
       h[:value] = _("None")
       h[:icon] = "fa fa-question-circle"
@@ -41,7 +41,7 @@ module TextualMixins::TextualVmmInfo
     end.compact
   end
 
-  def get_vmm_info
+  def vmm_info_details
     vmm_info = []
     if @record.respond_to?("vmm_vendor_display")
      vmm_info = host_vendor_details

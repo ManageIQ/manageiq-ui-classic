@@ -37,7 +37,7 @@
             = h(@host.ipaddress)
 
 - when "hv_info"
-  - vmminfo = get_vmm_info
+  - vmminfo = vmm_info_details
   - if vmminfo
     .form-horizontal.static
       .form-group
