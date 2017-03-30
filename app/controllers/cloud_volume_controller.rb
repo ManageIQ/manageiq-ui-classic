@@ -269,13 +269,8 @@ class CloudVolumeController < ApplicationController
     assert_privileges("cloud_volume_new")
     @volume = CloudVolume.new
     @in_a_form = true
-    @storage_manager_choices = {}
     if params[:storage_manager_id]
-      @storage_manager_id = params[:storage_manager_id]
-      ems = find_record_with_rbac(ExtManagementSystem, @storage_manager_id)
-      @storage_manager_choices[ems.name] = ems.id
-    else
-      ExtManagementSystem.all.each { |ems| @storage_manager_choices[ems.name] = ems.id if ems.supports_block_storage? }
+      @storage_manager = find_record_with_rbac(ExtManagementSystem, params[:storage_manager_id])
     end
     drop_breadcrumb(
       :name => _("Add New %{model}") % {:model => ui_lookup(:table => 'cloud_volume')},

@@ -1,18 +1,20 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "cloudVolumeFormController", "ng-cloak" => ""}
+%form#form_div{:name => "angularForm", 'ng-controller' => "cloudVolumeFormController", "ng-cloak" => "", "ng-show" => "afterGet"}
   = render :partial => "layouts/flash_msg"
   .form-horizontal
     .form-group{"ng-class" => "{'has-error': angularForm.storage_manager_id.$invalid}"}
       %label.col-md-2.control-label
         = _('Storage Manager')
       .col-md-8
-        = select_tag("storage_manager_id",
-                     options_for_select((@storage_manager_id.nil? ? [["<#{_('Choose')}>", nil]] : []) + @storage_manager_choices.sort, disabled: ["<#{_('Choose')}>", nil]),
-                     "ng-model"                    => "cloudVolumeModel.storage_manager_id",
-                     "ng-change"                   => "storageManagerChanged(cloudVolumeModel.storage_manager_id)",
-                     "required"                    => "",
-                     "disabled"                    => !@storage_manager_id.nil?,
-                     :checkchange                  => true,
-                     "selectpicker-for-select-tag" => "")
+        %select{"name"       => "storage_manager_id",
+                "ng-model"   => "cloudVolumeModel.storage_manager_id",
+                "ng-options" => "mgr.id as mgr.name for mgr in storageManagers",
+                "ng-change"  => "storageManagerChanged(cloudVolumeModel.storage_manager_id)",
+                "required"   => "",
+                "disabled"   => !@storage_manager.nil?,
+                :checkchange => true,
+                "pf-select"  => "true"}
+          %option{"value" => "", "disabled" => ""}
+            = "<#{_('Choose')}>"
         %span.help-block{"ng-show" => "angularForm.storage_manager_id.$error.required"}
           = _("Required")
 
@@ -88,5 +90,5 @@
 
 :javascript
   ManageIQ.angular.app.value('cloudVolumeFormId', '#{@volume.id || "new"}');
-  ManageIQ.angular.app.value('storageManagerId', '#{@storage_manager_id}');
+  ManageIQ.angular.app.value('storageManagerId', '#{@storage_manager.try(:id)}');
   miq_bootstrap('#form_div');
