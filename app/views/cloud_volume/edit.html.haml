@@ -3,6 +3,19 @@
   %h3
     = _('Edit Volume')
   .form-horizontal
+    .form-group{"ng-class" => "{'has-error': angularForm.storage_manager_id.$invalid}"}
+      %label.col-md-2.control-label
+        = _('Storage Manager')
+      .col-md-8
+        = select_tag("storage_manager_id",
+                     options_for_select([[@volume.ext_management_system.name, @volume.ext_management_system.id]]),
+                     "ng-model"                    => "cloudVolumeModel.storage_manager_id",
+                     "required"                    => "",
+                     "disabled"                    => true,
+                     "selectpicker-for-select-tag" => "")
+        %span.help-block{"ng-show" => "angularForm.storage_manager_id.$error.required"}
+          = _("Required")
+
     = render :partial => "common_new_edit"
 
   %table{:width => '100%'}
@@ -25,5 +38,5 @@
 
 :javascript
   ManageIQ.angular.app.value('cloudVolumeFormId', '#{@volume.id}');
-  ManageIQ.angular.app.value('storageManagerId', '');
+  ManageIQ.angular.app.value('storageManagerId', '#{@volume.ext_management_system.id}');
   miq_bootstrap(jQuery('#form_div'));
