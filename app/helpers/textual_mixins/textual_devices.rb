@@ -1,13 +1,13 @@
 module TextualMixins::TextualDevices
   Device = Struct.new(:name, :description, :units, :icon) do
     def description_value(record)
-      method = self.description
+      method = description
       self.description = if record.hardware.respond_to?(method)
-                            value = record.hardware.send(method).to_s
-                            value += " #{units}" if value.present? && units
-                            value
+                           value = record.hardware.send(method).to_s
+                           value += " #{units}" if value.present? && units
+                           value
                          else
-                            nil
+                           nil
                          end
     end
   end
@@ -17,35 +17,31 @@ module TextualMixins::TextualDevices
     h = {:label    => _("Devices"),
          :icon     => "fa fa-hdd-o",
          :explorer => true,
-         :value    => (devices.nil? || devices.empty? ? _("None") : devices.length)}
-    if devices.length > 0
+         :value    => devices.blank? ? _("None") : devices.length}
+    unless devices.blank?
       h[:title] = _("Show VMs devices")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'devices')
     end
     h
   end
 
-  def number_of_devices
-    #return just number of them
-  end
-
   def processor_description
     Device.new(_("Processors"),
                _("%{total_cores} (%{num_sockets} Sockets x %{num_cores} Cores)") %
-                                                                        {:total_cores => @record.cpu_total_cores,
-                                                                         :num_sockets => @record.num_cpu,
-                                                                         :num_cores => @record.cpu_cores_per_socket},
+                  {:total_cores => @record.cpu_total_cores,
+                   :num_sockets => @record.num_cpu,
+                   :num_cores   => @record.cpu_cores_per_socket},
                nil, :processor)
   end
 
   def cpu_attributes
-    devices = [[_("CPU Type"), :cpu_type, nil, :processor],
-       [_("CPU Speed"), :cpu_speed,  _("MHz"), :processor],
-       [_("Memory"), :memory_mb, _("MB"), :memory]].map do |attribute|
-         device = Device.new(*attribute)
-         device.description_value(@record)
-         device
-       end
+    [[_("CPU Type"), :cpu_type, nil, :processor],
+     [_("CPU Speed"), :cpu_speed, _("MHz"), :processor],
+     [_("Memory"), :memory_mb, _("MB"), :memory]].map do |attribute|
+       device = Device.new(*attribute)
+       device.description_value(@record)
+       device
+     end
   end
 
   def disks_attributes
@@ -58,18 +54,19 @@ module TextualMixins::TextualDevices
       location = disk.location
       size = disk.size
       prov = disk.used_percent_of_provisioned
-      device_name = _("Hard Disk (%{controller_type} %{location}), Size %{size}, Percent Used Provisioned Space %{space}") % {:controller_type => ctrl_type,
-                   :location => location,
-                   :size => size,
-                   :space => prov}
+      device_name = _("Hard Disk (%{controller_type} %{location}), Size %{size}, Percent Used Provisioned Space %{space}") %
+                       {:controller_type => ctrl_type,
+                        :location        => location,
+                        :size            => size,
+                        :space           => prov}
       description = _("%{filename}, Mode: %{mode}") % {:filename => disk.filename, :mode => disk.mode}
       Device.new(device_name, description, nil, :disk)
     end
 
-    #Floppies
+    # Floppies
     floppies = @record.hardware.floppies
     if floppies.present?
-     disks += floppies.map do |floppy|
+      disks += floppies.map do |floppy|
         name = floppy.controller_type.upcase
         connection = _("Connected at Power On = %{connect}") % {:connect => floppy.start_connected.to_s}
         location = floppy.location
@@ -78,7 +75,7 @@ module TextualMixins::TextualDevices
       end
     end
 
-    #CD-ROMS
+    # CD-ROMS
     cdroms = @record.hardware.cdroms
     if cdroms.present?
       disks += cdroms.map do |cd|
@@ -86,7 +83,7 @@ module TextualMixins::TextualDevices
         connection = _("Connected at Power On = %{connect}") % {:connect => cd.start_connected.to_s}
         location = cd.location
         device_name = _("CD-ROM (%{name} %{location}), %{connection}") % {:name => name, :location => location, :connection => connection}
-        Device.new(device_name,nil, nil, :cdrom)
+        Device.new(device_name, nil, nil, :cdrom)
       end
     end
     disks.compact
