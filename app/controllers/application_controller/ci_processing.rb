@@ -100,7 +100,7 @@ module ApplicationController::CiProcessing
     @ownershipitems ||= begin
       ownership_scope = klass.where(:id => ownership_items)
       ownership_scope = ownership_scope.with_ownership if klass.respond_to?(:with_ownership)
-      ownership_scope.order(:name)
+      Rbac.filtered(ownership_scope.order(:name))
     end
   end
 
