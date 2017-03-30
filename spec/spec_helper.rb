@@ -75,3 +75,10 @@ RSpec.configure do |config|
     EvmSpecHelper.clear_caches { example.run }
   end
 end
+
+# This bypasses the lookup of Javascript dependencies in (ruby) tests
+class << ActionController::Base.helpers
+  def image_path(path, options = {})
+    path
+  end
+end
