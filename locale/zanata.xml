@@ -2,6 +2,6 @@
 <config xmlns="http://zanata.org/namespace/config/">
   <url>https://translate.zanata.org/</url>
   <project>manageiq-ui-classic</project>
-  <project-version>master</project-version>
+  <project-version>fine</project-version>
   <project-type>gettext</project-type>
 </config>
