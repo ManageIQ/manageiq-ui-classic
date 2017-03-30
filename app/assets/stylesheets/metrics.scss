@@ -1,8 +1,17 @@
 .miq-metrics {
-  overflow-x:hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
 
   .ad-hoc-toolbar {
     margin-left: 10px;
+  }
+  .toolbar-pf {
+    .toolbar-pf-actions {
+      .form-group {
+        margin-bottom: 0;
+        border: 0;
+      }
+    }
   }
 
   .ad-hoc-tenant {
@@ -21,15 +30,11 @@
       margin-left: 0;
     }
   }
-
-  .form-group {
-    &.toolbar-pf-filter {
-      margin-bottom: 0;
-    }
-
-    &.toolbar-actions.ng-scope {
-      margin-bottom: 0;
-    }
+  .form-group.toolbar-pf-filter {
+    margin-bottom: 0;
+  }
+  .form-group.toolbar-actions.ng-scope {
+    margin-bottom: 0;
   }
 
   .pagination {
@@ -58,14 +63,10 @@
     .form-group.toolbar-actions.ng-scope {
       margin-bottom: 10px;
     }
-
-    .dropdown-kebab-pf .dropdown-menu {
-      left: 0;
-    }
-
-    .toolbar-pf-actions .dropdown-kebab-pf {
-      float: none;
-      margin-left: 10px;
+    .toolbar-pf-actions {
+      .dropdown-kebab-pf {
+        float: none;
+      }
     }
   }
 
@@ -74,7 +75,6 @@
     padding-top: 10px;
     margin-bottom: 0;
   }
-
   .line-chart {
     min-height: calc(100vh - 347px);
     margin-top: 36px;
@@ -92,32 +92,37 @@
     overflow-x: hidden;
     overflow-y: hidden;
 
-    .form-group {
-      &.toolbar-actions.ng-scope {
-        width: calc(100% - 425px);
+    .list-group-item-container {
+      margin-top: 10px;
+    }
+    .form-group.toolbar-actions.ng-scope {
+      width: calc(100% - 485px);
+      border: 0;
+    }
+    .dropdown-kebab-pf {
+      .dropdown-menu {
+        left: -5px;
       }
     }
-
-    .dropdown-kebab-pf .dropdown-menu {
-      left: -5px;
-    }
-
-    .toolbar-pf-actions .dropdown-kebab-pf {
-      float: none;
-      margin-left: 10px;
-    }
-
-    .filter-pf.filter-fields .form-group {
-      width: 410px;
-    }
-
-    .toolbar-pf .form-group {
-      .btn-group {
-        margin-left: 0;
+    .toolbar-pf-actions {
+      .dropdown-kebab-pf {
+        float: none;
+        margin-left: 0px;
       }
-
-      .btn {
-        margin-left: 0;
+    }
+    .filter-pf.filter-fields {
+      .form-group {
+        width: 410px;
+      }
+    }
+    .toolbar-pf {
+      .form-group {
+        .btn-group {
+          margin-left: 0;
+        }
+        .btn {
+          margin-left: 0;
+        }
       }
     }
   }
@@ -157,11 +162,15 @@
     min-width: 100px;
   }
 
-  .filters-selector .btn {
-    margin-left: 0;
+  .filters-selector {
+    .btn {
+      margin-left: 0;
+    }
   }
 
-  .tenants-selector .btn {
-    margin-left: 0;
+  .tenants-selector {
+    .btn {
+      margin-left: 0;
+    }
   }
 }

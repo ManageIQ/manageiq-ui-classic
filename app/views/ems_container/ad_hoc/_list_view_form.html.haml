@@ -13,7 +13,7 @@
                                           "data-live-search" => "true",
                                           "data-actions-box" => "true"}
 
-.ad-hoc-toolbar.filters-selector{"pf-toolbar" => "", "config" => "dash.toolbarConfig"}
+.ad-hoc-toolbar.filters-selector{"pf-toolbar" => "", "id" => "filters-selector", "config" => "dash.toolbarConfig"}
   %actions
     %button.btn.btn-default{"type"        => "button",
                             "ng-click"    => "dash.doAddFilter()",
@@ -33,7 +33,7 @@
                                            "data-toggle"   => "dropdown",
                                            "aria-haspopup" => "true",
                                            "aria-expanded" => "true"}
-        %span.fa.fa-fw.fa-ellipsis-v
+        %span.fa.fa-ellipsis-v
       %ul.dropdown-menu{"aria-labelledby" => "dropdownKebab"}
         %li{"ng-repeat" => "range in dash.filterTypes"}
           %a{"href"     => "#",
