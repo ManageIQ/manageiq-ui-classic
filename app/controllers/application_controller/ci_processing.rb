@@ -523,7 +523,7 @@ module ApplicationController::CiProcessing
 
   def live_migrate_vm
     assert_privileges("instance_live_migrate")
-    @record = find_by_id_filtered(VmOrTemplate, params[:id])
+    @record = find_record_with_rbac(VmOrTemplate, params[:id])
     case params[:button]
     when "cancel"
       add_flash(_("Live Migration of %{model} \"%{name}\" was cancelled by the user") % {
@@ -566,7 +566,7 @@ module ApplicationController::CiProcessing
   def live_migrate_finished
     task_id = session[:async][:params][:task_id]
     vm_id = session[:async][:params][:id]
-    vm = find_by_id_filtered(VmOrTemplate, vm_id)
+    vm = find_record_with_rbac(VmOrTemplate, vm_id)
     task = MiqTask.find(task_id)
     if MiqTask.status_ok?(task.status)
       add_flash(_("Live migration of Instance \"%{name}\" complete.") % {:name => vm.name})
@@ -625,7 +625,7 @@ module ApplicationController::CiProcessing
 
   def evacuate_vm
     assert_privileges("instance_evacuate")
-    @record = find_by_id_filtered(VmOrTemplate, params[:id])
+    @record = find_record_with_rbac(VmOrTemplate, params[:id])
 
     case params[:button]
     when "cancel"
