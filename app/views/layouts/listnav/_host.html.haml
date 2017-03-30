@@ -27,7 +27,7 @@
           = link_to(_('Summary'),
             {:action => 'show', :id => @record, :display => 'main'},
             :title => _("Show Summary"))
-        - devices, os_info, vmm_info = get_host_info
+        - devices, os_info, vmm_info = host_info
         = li_link(:if => !(devices.nil? || devices.empty?),
           :text       => _('Devices'),
           :record_id  => @record.id,
