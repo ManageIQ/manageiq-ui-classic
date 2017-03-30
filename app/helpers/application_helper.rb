@@ -373,9 +373,18 @@ module ApplicationHelper
         elsif %w(VmdbTableEvm VmdbIndex MiqServer).include?(view.db) &&
               %w(ops report).include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + TREE_WITH_TAB[active_tab]
-        elsif %w(MiqAction MiqAlert ScanItemSet MiqSchedule).include?(view.db) &&
-              %w(miq_policy ops).include?(params[:controller])
+        elsif %w(MiqAction
+                 MiqAlert
+                 ScanItemSet
+                 MiqSchedule
+                 PxeServer
+                 PxeImageType
+                 IsoDatastore
+                 CustomizationTemplate).include?(view.db) &&
+              %w(miq_policy ops pxe).include?(params[:controller])
           return "/#{params[:controller]}/tree_select/?id=#{TreeBuilder.get_prefix_for_model(view.db)}"
+        elsif %w(MiqPolicy).include?(view.db) && %w(miq_policy).include?(params[:controller])
+          return "/#{params[:controller]}/tree_select/?id=#{x_node}"
         else
           return url_for_only_path(:action => action) + "/" # In explorer, don't jump to other controllers
         end

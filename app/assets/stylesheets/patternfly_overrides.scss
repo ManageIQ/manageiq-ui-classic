@@ -221,11 +221,12 @@ table.table tbody td img {
   font-weight: normal
 }
 
-table .table-view-pf-select i, table .narrow i { /* font icon styling in table view (equivalent to fa-lg) */
+table .table-view-pf-select i { /* font icon styling in table view (equivalent to fa-lg) */
   padding-left: 2px;
   font-size: 1.33333333em;
   line-height: 0.75em;
   vertical-align: -15%;
+  display: inline-table;
 }
 
 /* disables hover and pointer on row */
@@ -755,10 +756,6 @@ div.disabled {
 
 .miq-page-counter {
   padding: 0 !important;
-}
-
-table .narrow {
-  width: 66px;
 }
 
 .no-action .miq-data-table, .no-cation .miq-tile-section {

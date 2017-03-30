@@ -182,6 +182,8 @@
           itemId = this.initObject.showUrl.indexOf('xx-') !== -1 ? '_-' + item.id : '-' + item.id;
           if (item.parent_id && item.parent_id[item.parent_id.length - 1] !== '-') {
             itemId = item.parent_id + '_' + item.tree_id;
+          } else {
+            itemId = '_' + item.tree_id;
           }
         }
         if (itemId.indexOf('unassigned') !== -1) {
@@ -334,6 +336,7 @@
 
   ReportDataController.prototype.movePagination = function() {
     this.$timeout(function() {
+      $('table td.narrow').addClass('table-view-pf-select').removeClass('narrow');
       var pagination = this.$document.getElementsByClassName('miq-pagination');
       var pagingDiv = this.$document.querySelector('#paging_div .col-md-12');
       if (pagination && pagination.length > 0 && pagingDiv) {
@@ -362,6 +365,9 @@
     return this.MiQDataTableService.retrieveRowsAndColumnsFromUrl(modelName, activeTree, currId, isExplorer, settings, records)
       .then(function(gtlData) {
         this.settings = gtlData.settings || basicSettings;
+        if (this.settings.sort_col === -1) {
+          this.settings.sort_col = 0;
+        }
         this.gtlData = gtlData;
         this.perPage.text = this.settings.perpage;
         this.perPage.value = this.settings.perpage;
