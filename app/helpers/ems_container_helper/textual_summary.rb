@@ -124,9 +124,25 @@ module EmsContainerHelper::TextualSummary
     TextualGroup.new(_("Custom Attributes"), textual_miq_custom_attributes)
   end
 
+  def redact_username_and_password(value)
+    begin
+      uri = URI.parse(value)
+      uri.password = '***' if uri.password
+      uri.user = '***' if uri.user
+      uri.to_s
+    rescue # dont reduct in case the value was malformed, to allow debugging it.
+      value
+    end
+  end
+
   def textual_miq_custom_attributes
     attrs = @record.custom_attributes
     return nil if attrs.blank?
-    attrs.sort_by(&:name).collect { |a| {:label => a.name.tr("_", " "), :value => a.value} }
+    attrs.sort_by(&:name).collect do |a|
+      {
+        :label => a.name.tr("_", " "),
+        :value => redact_username_and_password(a.value)
+      }
+    end
   end
 end
