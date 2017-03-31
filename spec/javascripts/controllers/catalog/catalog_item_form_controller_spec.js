@@ -33,8 +33,7 @@ describe('catalogItemFormController', function() {
             'var1': 'default_val1',
             'var2': 'default_val2'
           },
-          network_credential_id: undefined,
-          cloud_credential_id: undefined
+          network_credential_id: undefined
         },
         retirement: {
           remove_resources: 'yes_without_playbook',
