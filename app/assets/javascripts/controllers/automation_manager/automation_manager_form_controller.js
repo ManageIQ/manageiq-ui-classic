@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', function ($http, $scope, automationManagerFormId, miqService) {
+ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', function($http, $scope, automationManagerFormId, miqService) {
   var vm = this;
   vm.automationManagerModel = {
     name: '',
