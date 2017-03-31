@@ -1,15 +1,15 @@
 ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope', 'keyPairFormId', 'miqService', function($http, $scope, keyPairFormId, miqService) {
     var init = function() {
-        $scope.keyPairModel = {
+        vm.keyPairModel = {
             name: '',
             public_key: '',
             ems_id: ''
         };
-        $scope.formId = keyPairFormId;
-        $scope.afterGet = false;
-        $scope.modelCopy = angular.copy( $scope.keyPairModel );
-        $scope.model = 'keyPairModel';
-        $scope.ems_choices = [];
+        vm.formId = keyPairFormId;
+        vm.afterGet = false;
+        vm.modelCopy = angular.copy( vm.keyPairModel );
+        vm.model = 'keyPairModel';
+        vm.ems_choices = [];
         ManageIQ.angular.scope = $scope;
 
         miqService.sparkleOn();
@@ -18,9 +18,9 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
           .catch(miqService.handleFailure);
 
         if (keyPairFormId == 'new') {
-            $scope.newRecord = true;
+            vm.newRecord = true;
         } else {
-            $scope.newRecord = false;
+            vm.newRecord = false;
         }
     };
 
@@ -28,9 +28,9 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
         miqService.sparkleOn();
 
         var url = '/auth_key_pair_cloud/create/' + keyPairFormId + '?button=' + buttonName;
-        $scope.keyPairModel.ems_id = $scope.keyPairModel.ems.id;
+        vm.keyPairModel.ems_id = vm.keyPairModel.ems.id;
         if(serializeFields) {
-            miqService.miqAjaxButton(url, miqService.serializeModel($scope.keyPairModel));
+            miqService.miqAjaxButton(url, miqService.serializeModel(vm.keyPairModel));
         } else {
             miqService.miqAjaxButton(url, false);
         }
@@ -39,32 +39,32 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
 
     $scope.cancelClicked = function() {
         keyPairEditButtonClicked('cancel', false);
-        $scope.angularForm.$setPristine(true);
+        vm.angularForm.$setPristine(true);
     };
 
     $scope.resetClicked = function() {
-        $scope.keyPairModel = angular.copy( $scope.modelCopy );
-        $scope.angularForm.$setPristine(true);
+        vm.keyPairModel = angular.copy( vm.modelCopy );
+        vm.angularForm.$setPristine(true);
         miqService.miqFlash("warn", __("All changes have been reset"));
     };
 
     $scope.saveClicked = function() {
         keyPairEditButtonClicked('save', true);
-        $scope.angularForm.$setPristine(true);
+        vm.angularForm.$setPristine(true);
     };
 
     $scope.addClicked = function() {
-        $scope.saveClicked();
+        vm.saveClicked();
     };
 
     function getAuthKeyPairCloudFormDataComplete(response) {
       var data = response.data;
 
-      $scope.ems_choices = data.ems_choices;
-      if($scope.ems_choices.length > 0) {
-        $scope.keyPairModel.ems = $scope.ems_choices[0];
+      vm.ems_choices = data.ems_choices;
+      if(vm.ems_choices.length > 0) {
+        vm.keyPairModel.ems = vm.ems_choices[0];
       }
-      $scope.afterGet = true;
+      vm.afterGet = true;
       miqService.sparkleOff();
     }
 
