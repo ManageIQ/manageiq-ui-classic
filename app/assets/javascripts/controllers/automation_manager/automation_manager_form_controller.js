@@ -1,20 +1,20 @@
-ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', function($http, $scope, automationManagerFormId, miqService) {
-    var vm = this;
-    //TODO: remove scope for models, and remove some duplicity references vm. = $scope. = ...
-    vm.automationManagerModel =  {
-        name: '',
-        url: '',
-        zone: '',
-        verify_ssl: '',
-        log_userid: '',
-        log_password: '',
-        log_verify: '',
-    };
-    vm.formId = automationManagerFormId;
-    vm.afterGet =  false;
-    vm.validateClicked = $scope.validateClicked = miqService.validateWithAjax;
-    vm.modelCopy = $scope.modelCopy = angular.copy( vm.automationManagerModel );
-    vm.model = 'automationManagerModel';
+ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', function ($http, $scope, automationManagerFormId, miqService) {
+  var vm = this;
+  //TODO: remove scope for models, and remove some duplicity references vm. = $scope. = ...
+  vm.automationManagerModel = {
+    name: '',
+    url: '',
+    zone: '',
+    verify_ssl: '',
+    log_userid: '',
+    log_password: '',
+    log_verify: '',
+  };
+  vm.formId = automationManagerFormId;
+  vm.afterGet = false;
+  vm.validateClicked = $scope.validateClicked = miqService.validateWithAjax;
+  vm.modelCopy = $scope.modelCopy = angular.copy(vm.automationManagerModel);
+  vm.model = 'automationManagerModel';
 
   ManageIQ.angular.scope = $scope;
 
@@ -47,6 +47,7 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     vm.automationManagerModel.zone = data.zone;
     vm.modelCopy = $scope.modelCopy = angular.copy(vm.automationManagerModel);
   }
+
   function getAutomationManagerFormDataComplete(response) {
     var data = response.data;
     vm.afterGet = true;
@@ -76,7 +77,7 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
       $scope.angularForm.log_verify.$valid;
   };
 
-  var automationManagerEditButtonClicked = function (buttonName, serializeFields) {
+  var automationManagerEditButtonClicked = function(buttonName, serializeFields) {
     miqService.sparkleOn();
     var url = '/automation_manager/edit/' + automationManagerFormId + '?button=' + buttonName;
     if (serializeFields === undefined) {
@@ -86,24 +87,24 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     }
   };
 
-  $scope.cancelClicked = function () {
+  $scope.cancelClicked = function() {
     automationManagerEditButtonClicked('cancel');
     $scope.angularForm.$setPristine(true);
   };
 
-  $scope.resetClicked = function () {
+  $scope.resetClicked = function() {
     $scope.$broadcast('resetClicked');
-    vm.automationManagerModel = angular.copy( $scope.modelCopy );
+    vm.automationManagerModel = angular.copy($scope.modelCopy);
     $scope.angularForm.$setPristine(true);
     miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
-  $scope.saveClicked = function () {
+  $scope.saveClicked = function() {
     automationManagerEditButtonClicked('save', true);
     $scope.angularForm.$setPristine(true);
   };
 
-  $scope.addClicked = function () {
+  $scope.addClicked = function() {
     $scope.saveClicked();
   };
 }]);
