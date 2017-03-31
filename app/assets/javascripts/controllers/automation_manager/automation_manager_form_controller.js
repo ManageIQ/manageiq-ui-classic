@@ -1,6 +1,5 @@
 ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', function ($http, $scope, automationManagerFormId, miqService) {
   var vm = this;
-  //TODO: remove scope for models, and remove some duplicity references vm. = $scope. = ...
   vm.automationManagerModel = {
     name: '',
     url: '',
@@ -65,12 +64,11 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     vm.modelCopy = $scope.modelCopy = angular.copy(vm.automationManagerModel);
   }
 
-  /**simple vm change not enough*/
-  $scope.canValidateBasicInfo = function () {
-    return !!vm.isBasicInfoValid();
+  $scope.canValidateBasicInfo = function() {
+    return vm.isBasicInfoValid();
   };
 
-  vm.isBasicInfoValid = function () {
+  vm.isBasicInfoValid = function() {
     return $scope.angularForm.url.$valid &&
       $scope.angularForm.log_userid.$valid &&
       $scope.angularForm.log_password.$valid &&
