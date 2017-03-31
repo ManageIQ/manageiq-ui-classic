@@ -6,9 +6,9 @@
 .form-horizontal
   %form#form_div{:name           => 'angularForm',
                  'ng-controller' => 'keyPairCloudFormController as vm',
-                 'ng-show'       => 'afterGet',
                  'ng-cloak'      => '',
                  'form-changed'  => true,
+                 'ng-show'       => 'vm.afterGet',
                  'miq-form'      => true,
                  'model'         => 'vm.keyPairModel',
                  'model-copy'    => 'vm.modelCopy',
