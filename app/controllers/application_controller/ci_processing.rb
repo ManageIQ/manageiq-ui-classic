@@ -1993,22 +1993,14 @@ module ApplicationController::CiProcessing
   end
 
   def manager_button_operation(method, display_name)
-    items = []
-    if params[:id]
-      if params[:id].nil? || !ExtManagementSystem.where(:id => params[:id]).exists?
-        add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => controller_name)}, :error)
-      else
-        items.push(find_id_with_rbac(ExtManagementSystem, params[:id]))
-      end
-    else
-      items = find_checked_ids_with_rbac(ExtManagementSystem)
-    end
+    items = params[:id] ? [params[:id]] : find_checked_items
 
     if items.empty?
       add_flash(_("No providers were selected for %{task}") % {:task  => display_name}, :error)
-    else
-      process_managers(items, method) unless items.empty? && !flash_errors?
+      return
     end
+
+    process_managers(items, method)
   end
 
   def process_managers(managers, task)
@@ -2020,6 +2012,8 @@ module ApplicationController::CiProcessing
 
     manager_ids, _services_out_region = filter_ids_in_region(managers, provider_class.to_s)
     return if manager_ids.empty?
+
+    assert_rbac(provider_class, manager_ids)
 
     options = {:ids => manager_ids, :task => task, :userid => session[:userid]}
     kls = provider_class.find_by(:id => manager_ids.first).class
