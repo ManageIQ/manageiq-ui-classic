@@ -1941,41 +1941,41 @@ module ApplicationController::CiProcessing
   end
 
   def process_objects(objs, task, display_name = nil)
-    case get_rec_cls.to_s
-    when "OrchestrationStack"
-      objs, _objs_out_reg = filter_ids_in_region(objs, "OrchestrationStack")
-      klass = OrchestrationStack
-    when "Service"
-      objs, _objs_out_reg = filter_ids_in_region(objs, "Service")
-      klass = Service
-    when "VmOrTemplate"
+    klass = get_rec_cls
+    klass_str = klass.to_s
+
+    assert_rbac(klass, objs)
+
+    case klass_str
+    when 'OrchestrationStack', 'Service', 'CloudObjectStoreContainer', 'CloudObjectStoreObject'
+      objs, _objs_out_reg = filter_ids_in_region(objs, klass.to_s)
+    when 'VmOrTemplate'
       objs, _objs_out_reg = filter_ids_in_region(objs, "VM") unless VmOrTemplate::REMOTE_REGION_TASKS.include?(task)
       klass = Vm
-    when "CloudObjectStoreContainer"
-      objs, _objs_out_reg = filter_ids_in_region(objs, "CloudObjectStoreContainer")
-      klass = CloudObjectStoreContainer
-    when "CloudObjectStoreObject"
-      objs, _objs_out_reg = filter_ids_in_region(objs, "CloudObjectStoreObject")
-      klass = CloudObjectStoreObject
     end
-
-    assert_rbac(get_rec_cls, objs)
-
     return if objs.empty?
 
     options = {:ids => objs, :task => task, :userid => session[:userid]}
     options[:snap_selected] = session[:snap_selected] if task == "remove_snapshot" || task == "revert_to_snapshot"
+
     klass.process_tasks(options)
   rescue => err
     add_flash(_("Error during '%{task}': %{error_message}") % {:task => task, :error_message => err.message}, :error)
   else
-    add_flash(n_("%{task} initiated for %{number} %{model} from the %{product} Database",
-                 "%{task} initiated for %{number} %{models} from the %{product} Database", objs.length) %
-      {:task    => display_name ? display_name.titleize : task_name(task),
-       :number  => objs.length,
-       :product => I18n.t('product.name'),
-       :model   => ui_lookup(:model => klass.to_s),
-       :models  => ui_lookup(:models => klass.to_s)})
+    add_flash(
+      n_(
+        "%{task} initiated for %{number} %{model} from the %{product} Database",
+        "%{task} initiated for %{number} %{models} from the %{product} Database",
+        objs.length
+      ) %
+      {
+        :task    => display_name ? display_name.titleize : task_name(task),
+        :number  => objs.length,
+        :product => I18n.t('product.name'),
+        :model   => ui_lookup(:model => klass.to_s),
+        :models  => ui_lookup(:models => klass.to_s)
+      }
+    )
   end
 
   def manager_button_operation(method, display_name)
