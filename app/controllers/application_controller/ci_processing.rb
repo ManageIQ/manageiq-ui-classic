@@ -2887,6 +2887,7 @@ module ApplicationController::CiProcessing
     @record = identify_record(params[:id], controller_to_model)
     @view = session[:view]                  # Restore the view from the session to get column names for the display
     return if record_no_longer_exists?(@record, klass.to_s)
+
     @lastaction = action
     if params[:show] || params[:x_show]
       id = params[:show] ? params[:show] : params[:x_show]
@@ -2912,11 +2913,8 @@ module ApplicationController::CiProcessing
       drop_breadcrumb(:name => "#{@record.name} (#{display_name})",
                       :url  => "/#{controller_name}/#{action}/#{@record.id}")
       @listicon = listicon
-      if association.nil?
-        show_details(klass, :conditions => conditions)
-      else
-        show_details(klass, :association => association, :conditions => conditions)
-      end
+
+      show_details(klass, :association => association, :conditions => conditions)
     end
   end
 end
