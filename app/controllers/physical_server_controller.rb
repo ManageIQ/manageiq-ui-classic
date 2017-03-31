@@ -49,17 +49,23 @@ class PhysicalServerController < ApplicationController
 
   # Maps button actions to actual method names to be called and the
   # corresponding result status messages to be displayed
-  ACTIONS = {"physical_server_power_on"         => [:power_on,         "Power On"],
-             "physical_server_power_off"        => [:power_off,        "Power Off"],
-             "physical_server_restart"          => [:restart,          "Restart"],
-             "physical_server_blink_loc_led"    => [:blink_loc_led,    "Blink LED"],
-             "physical_server_turn_on_loc_led"  => [:turn_on_loc_led,  "Turn On LED"],
-             "physical_server_turn_off_loc_led" => [:turn_off_loc_led, "Turn Off LED"]}.freeze
+  ACTIONS = {"physical_server_power_on"         => [:power_on,         _("Power On")],
+             "physical_server_power_off"        => [:power_off,        _("Power Off")],
+             "physical_server_restart"          => [:restart,          _("Restart")],
+             "physical_server_blink_loc_led"    => [:blink_loc_led,    _("Blink LED")],
+             "physical_server_turn_on_loc_led"  => [:turn_on_loc_led,  _("Turn On LED")],
+             "physical_server_turn_off_loc_led" => [:turn_off_loc_led, _("Turn Off LED")]}.freeze
 
   # Displays an error message
   def display_error_message(msg)
     display_message(msg, :error)
   end
+
+  def textual_group_list
+    [%i(properties), %i(relationships)]
+  end
+  helper_method :textual_group_list
+
 
   # Displays a success message
   def display_success_message(msg)
