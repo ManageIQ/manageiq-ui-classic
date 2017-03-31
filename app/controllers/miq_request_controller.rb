@@ -591,8 +591,7 @@ class MiqRequestController < ApplicationController
     super
     @title        = _("Requests")
     @request_tab  = session[:request_tab] if session[:request_tab]
-    @showtype     = session[:request_lastaction]
-    @current_page = session[:request_current_page]
+    @layout       = layout_from_tab_name(@request_tab)
     @options      = session[:prov_options]
   end
 
@@ -600,7 +599,6 @@ class MiqRequestController < ApplicationController
     super
     session[:edit]                 = @edit unless @edit.nil?
     session[:request_tab]          = @request_tab unless @request_tab.nil?
-    session[:request_current_page] = @current_page
     session[:prov_options]         = @options if @options
   end
 
