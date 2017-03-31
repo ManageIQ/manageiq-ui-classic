@@ -28,14 +28,14 @@ class ContainerDashboardController < ApplicationController
   end
 
   def title
-    "container_dashboard"
+    _("Container Dashboard")
   end
-
-  private
 
   def self.session_key_prefix
     "container_dashboard"
   end
+
+  private
 
   def get_session_data
     super
