@@ -1924,11 +1924,11 @@ module ApplicationController::CiProcessing
   def get_rec_cls
     case request.parameters["controller"]
     when "miq_template"
-      return MiqTemplate
+      MiqTemplate
     when "orchestration_stack"
-      return OrchestrationStack
+      OrchestrationStack
     when "service"
-      return Service
+      Service
     when "cloud_object_store_container"
       params[:pressed].starts_with?("cloud_object_store_object") ? CloudObjectStoreObject : CloudObjectStoreContainer
     when "cloud_object_store_object"
@@ -1936,7 +1936,7 @@ module ApplicationController::CiProcessing
     when "ems_storage"
       params[:pressed].starts_with?("cloud_object_store_object") ? CloudObjectStoreObject : CloudObjectStoreContainer
     else
-      return VmOrTemplate
+      VmOrTemplate
     end
   end
 
