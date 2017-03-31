@@ -18,8 +18,8 @@ describe('catalogItemFormController', function() {
     $scope.vm.catalogItemModel = {
       name:                         'catalogItemName',
       description:                  'catalogItemDescription',
-      service_template_catalog_id:  10000000000012,
       display:                      true,
+      service_template_catalog_id:  10000000000012,
       prov_type: 'generic_ansible_playbook',
       type: 'ServiceTemplateAnsiblePlaybook',
       config_info:                  {
@@ -28,20 +28,17 @@ describe('catalogItemFormController', function() {
           repository_id: undefined,
           playbook_id:          10000000000493,
           credential_id:        10000000000090,
-          hosts:                undefined,
+          hosts:                'localhost',
           extra_vars:           {
             'var1': 'default_val1',
             'var2': 'default_val2'
           },
-          network_credential_id: undefined,
-          cloud_credential_id: undefined
+          network_credential_id: undefined
         },
         retirement: {
           remove_resources: 'yes_without_playbook',
-          hosts: undefined,
-          extra_vars: Object({  }),
-          network_credential_id: undefined,
-          cloud_credential_id: undefined
+          hosts: 'localhost',
+          extra_vars: Object({  })
         }
       }
     };

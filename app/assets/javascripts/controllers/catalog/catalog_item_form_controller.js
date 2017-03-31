@@ -23,7 +23,6 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       provisioning_value: '',
       provisioning_variables: {},
       provisioning_editMode: false,
-      provisioning_cloud_type: '',
       retirement_repository_id: '',
       retirement_playbook_id: '',
       retirement_machine_credential_id: '',
@@ -34,9 +33,10 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       retirement_value: '',
       retirement_variables: {},
       retirement_editMode: false,
-      retirement_cloud_type: ''
     };
     getRemoveResourcesTypes();
+    vm.provisioning_cloud_type = '';
+    vm.retirement_cloud_type = '';
     vm.formId = catalogItemFormId;
     vm.afterGet = false;
     vm.model = "catalogItemModel";
@@ -46,8 +46,9 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     if (catalogItemFormId == 'new') {
       $scope.newRecord = true;
       vm.formOptions();
-      vm.afterGet  = true;
-      vm.modelCopy = angular.copy( vm.catalogItemModel );
+      vm.formCloudCredentials(null, null);
+      vm.afterGet = true;
+      vm.modelCopy = angular.copy(vm.catalogItemModel);
     } else {
       vm.newRecord = false;
       catalogItemDataFactory.getCatalogItemData(catalogItemFormId).then(function (catalogItemData) {
@@ -56,8 +57,9 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
         vm.catalogItemModel.description = catalogItemData.description;
         vm.catalogItemModel.display = catalogItemData.display;
         vm.catalogItemModel.catalog_id = catalogItemData.service_template_catalog_id;
-        vm.catalogItemModel.provisioning_dialog_id  = catalogItemData.provisioning_dialog_id;
+        vm.catalogItemModel.provisioning_dialog_id = catalogItemData.provisioning_dialog_id;
         vm.formOptions();
+        vm.formCloudCredentials(catalogItemData.config_info.provision.cloud_credential_id, catalogItemData.config_info.retirement.cloud_credential_id);
         getConfigInfo(catalogItemData.config_info);
         vm.afterGet = true;
         vm.modelCopy = angular.copy(vm.catalogItemModel);
@@ -65,16 +67,16 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     }
   };
 
-  var getRemoveResourcesTypes = function() {
-    if (angular.isUndefined(vm.catalogItemModel.retirement_playbook_id) || vm.catalogItemModel.retirement_playbook_id === '') {
+  var getRemoveResourcesTypes = function () {
+    if (angular.isUndefined(vm.catalogItemModel.retirement_repository_id) || vm.catalogItemModel.retirement_repository_id === '') {
       vm.catalogItemModel.retirement_remove_resources = 'yes_without_playbook';
-      vm.catalogItemModel['remove_resources_types'] = {
+      vm['remove_resources_types'] = {
         "No": "no_without_playbook",
         "Yes": "yes_without_playbook"
       };
     } else {
       vm.catalogItemModel.retirement_remove_resources = 'no_with_playbook';
-      vm.catalogItemModel['remove_resources_types'] = {
+      vm['remove_resources_types'] = {
         "No": "no_with_playbook",
         "Before Playbook runs": "pre_with_playbook",
         "After Playbook runs": "post_with_playbook"
@@ -82,12 +84,28 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     }
   }
 
-  var getConfigInfo = function(configData) {
+  var getCredentialType = function (prefix, credentialId) {
+    var url = '/api/authentications/' + credentialId;
+    API.get(url).then(function (data) {
+      vm[prefix + '_cloud_type'] = data.type;
+
+      if (vm.cloud_types[vm[prefix + '_cloud_type']] !== 'undefined') {
+        vm['_' + prefix + '_cloud_type'] = data.type;
+        getCloudCredentialsforType(prefix, data.type);
+      }
+    })
+  };
+
+  var setIfDefined = function(value) {
+    return (typeof value !== 'undefined') ? value : '';
+  };
+
+  var getConfigInfo = function (configData) {
     vm.catalogItemModel.provisioning_repository_id = configData.provision.repository_id;
     vm.catalogItemModel.provisioning_playbook_id = configData.provision.playbook_id;
     vm.catalogItemModel.provisioning_machine_credential_id = configData.provision.credential_id;
     vm.catalogItemModel.provisioning_network_credential_id = configData.provision.network_credential_id;
-    vm.catalogItemModel.provisioning_cloud_credential_id = configData.provision.cloud_credential_id;
+    vm.catalogItemModel.provisioning_cloud_credential_id = setIfDefined(configData.provision.cloud_credential_id);
     vm.catalogItemModel.provisioning_inventory = configData.provision.hosts;
     vm.catalogItemModel.provisioning_dialog_existing = configData.provision.dialog_id ? "existing" : "create";
     vm.catalogItemModel.provisioning_dialog_id = configData.provision.dialog_id;
@@ -96,23 +114,25 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.catalogItemModel.provisioning_value = '';
     setExtraVars('provisioning_variables', configData.provision.extra_vars);
 
-    vm.catalogItemModel.retirement_remove_resources = configData.retirement.remove_resources;
     if (typeof configData.retirement.repository_id !== 'undefined') {
       vm.catalogItemModel.retirement_repository_id = configData.retirement.repository_id;
       vm.catalogItemModel.retirement_playbook_id = configData.retirement.playbook_id;
+      getRemoveResourcesTypes();
+      vm.catalogItemModel.retirement_remove_resources = configData.retirement.remove_resources;
       vm.catalogItemModel.retirement_machine_credential_id = configData.retirement.credential_id;
     }
     vm.catalogItemModel.retirement_network_credential_id = configData.retirement.network_credential_id;
-    vm.catalogItemModel.retirement_cloud_credential_id = configData.retirement.cloud_credential_id;
+    vm.catalogItemModel.retirement_cloud_credential_id = setIfDefined(configData.retirement.cloud_credential_id);
     vm.catalogItemModel.retirement_inventory = configData.retirement.hosts;
     vm.catalogItemModel.retirement_key = '';
     vm.catalogItemModel.retirement_value = '';
     setExtraVars('retirement_variables', configData.retirement.extra_vars);
   };
 
-  var setExtraVars = function(variableName, extraVars) {
+  var setExtraVars = function (variableName, extraVars) {
     if (typeof extraVars !== 'undefined')
       vm.catalogItemModel[variableName] = extraVars;
+    $scope.checkFormPristine();
   }
 
   var redirectUrl = '/catalog/explorer/' + catalogItemFormId;
@@ -127,8 +147,9 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
   };
 
   $scope.resetClicked = function() {
-    vm.catalogItemModel = angular.copy( vm.modelCopy );
+    vm.catalogItemModel = angular.copy(vm.modelCopy);
     vm.formOptions();
+    cloudCredentialsList(vm.catalogItemModel.provisioning_cloud_credential_id, vm.catalogItemModel.retirement_cloud_credential_id);
     $scope.angularForm.$setUntouched(true);
     $scope.angularForm.$setPristine(true);
     miqService.miqFlash("warn", __("All changes have been reset"));
@@ -155,7 +176,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
   var setConfigInfo = function(configData) {
     catalog_item = {
       name: configData.name,
-      description:  configData.description,
+      description: configData.description,
       display: configData.display,
       service_template_catalog_id: configData.catalog_id,
       prov_type: "generic_ansible_playbook",
@@ -212,32 +233,35 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     })
 
     // list of service dialogs
-    API.get("/api/service_dialogs/?expand=resources&attributes=id,label&sort_by=label&sort_order=ascending").then(function (data) {
+    API.get("/api/service_dialogs/?expand=resources&attributes=id,label&sort_by=label&sort_order=ascending").then(function(data) {
       vm.dialogs = data.resources
       vm._provisioning_dialog = _.find(vm.dialogs, {id: vm.catalogItemModel.provisioning_dialog_id});
     })
 
     // list of repositories
-    API.get("/api/configuration_script_sources?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource&expand=resources&attributes=id,name" + sort_options).then(function (data) {
+    API.get("/api/configuration_script_sources?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource&expand=resources&attributes=id,name" + sort_options).then(function(data) {
       vm.repositories = data.resources;
       vm._retirement_repository = _.find(vm.repositories, {id: vm.catalogItemModel.retirement_repository_id});
       vm._provisioning_repository = _.find(vm.repositories, {id: vm.catalogItemModel.provisioning_repository_id});
     })
 
     // list of machine credentials
-    API.get("/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential&expand=resources&attributes=id,name" + sort_options).then(function (data) {
+    API.get("/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential&expand=resources&attributes=id,name" + sort_options).then(function(data) {
       vm.machine_credentials = data.resources;
       vm._retirement_machine_credential = _.find(vm.machine_credentials, {id: vm.catalogItemModel.retirement_machine_credential_id});
       vm._provisioning_machine_credential = _.find(vm.machine_credentials, {id: vm.catalogItemModel.provisioning_machine_credential_id});
     })
 
     // list of network credentials
-    API.get("/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential&expand=resources&attributes=id,name" + sort_options).then(function (data) {
+    API.get("/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential&expand=resources&attributes=id,name" + sort_options).then(function(data) {
       vm.network_credentials = data.resources;
       vm._retirement_network_credential = _.find(vm.network_credentials, {id: vm.catalogItemModel.retirement_network_credential_id});
       vm._provisioning_network_credential = _.find(vm.network_credentials, {id: vm.catalogItemModel.provisioning_network_credential_id});
     })
+  };
 
+  // list of cloud credentials
+  vm.formCloudCredentials = function(provisionCredentialId, retirementCredentialId) {
     API.options('/api/authentications').then(function(data) {
       var cloud_types = {};
       angular.forEach(data.data.credential_types.embedded_ansible_credential_types, function(cred_object, cred_type) {
@@ -245,7 +269,23 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
           cloud_types[cred_type] = cred_object.label;
       });
       vm.cloud_types = getSortedHash(cloud_types);
+      cloudCredentialsList(provisionCredentialId, retirementCredentialId);
     });
+  };
+
+  var cloudCredentialsList = function(provisionCredentialId, retirementCredentialId) {
+    if (provisionCredentialId) {
+      getCredentialType('provisioning', provisionCredentialId);
+    } else {
+      vm._provisioning_cloud_type = '';
+      vm._provisioning_cloud_credential_id = '';
+    }
+    if (retirementCredentialId) {
+      getCredentialType('retirement', retirementCredentialId);
+    } else {
+      vm._retirement_cloud_type = '';
+      vm._retirement_cloud_credential_id = '';
+    }
   };
 
   var getSortedHash = function(inputHash) {
@@ -265,8 +305,8 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
 
   // get playbooks for selected repository
   vm.repositoryChanged = function(prefix, id) {
-    API.get("/api/configuration_script_sources/" + id + "?attributes=configuration_script_payloads" + sort_options).then(function(data) {
-      vm[prefix + '_playbooks']  = data.configuration_script_payloads;
+    API.get("/api/configuration_script_sources/" + id + "?attributes=configuration_script_payloads" + sort_options).then(function (data) {
+      vm[prefix + '_playbooks'] = data.configuration_script_payloads;
       // if repository has changed
       if (id !== vm.catalogItemModel[prefix + '_repository_id']) {
         vm.catalogItemModel[prefix + '_playbook_id'] = '';
@@ -280,8 +320,10 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
   $scope.$watch('vm._provisioning_repository', function(value) {
     if (value) {
       vm.repositoryChanged("provisioning", value.id)
-    } else
+    } else {
       vm.catalogItemModel['provisioning_repository_id'] = '';
+    }
+    $scope.checkFormPristine();
   });
 
   $scope.$watch('vm._retirement_repository', function(value) {
@@ -292,13 +334,36 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       vm.catalogItemModel['retirement_repository_id'] = '';
       getRemoveResourcesTypes();
     }
+    $scope.checkFormPristine();
   });
 
-  $scope.cloudTypeChanged = function(prefix) {
-    var typ = vm.catalogItemModel[prefix + "_cloud_type"];
+  $scope.checkFormPristine = function() {
+    if (angular.equals(vm.catalogItemModel, vm.modelCopy)) {
+      $scope.angularForm.$setPristine();
+    } else {
+      $scope.angularForm.$setDirty();
+    }
+  };
+
+  $scope.cloudTypeChanged = function(prefix, value) {
+    var valueChanged = (value !== vm[prefix + '_cloud_type']);
+    if (value) {
+      vm[prefix + '_cloud_type'] = value;
+    } else {
+      vm[prefix + '_cloud_type'] = '';
+    }
+    if (valueChanged) {
+      var typ = vm[prefix + "_cloud_type"];
+      vm.catalogItemModel[prefix + '_cloud_credential_id'] = '';
+      getCloudCredentialsforType(prefix, typ);
+    }
+    $scope.checkFormPristine();
+  };
+
+  var getCloudCredentialsforType = function(prefix, typ) {
     // list of cloud credentials based upon selected cloud type
     var url = '/api/authentications?collection_class=' + typ + '&expand=resources&attributes=id,name' + sort_options;
-    API.get(url).then(function (data) {
+    API.get(url).then(function(data) {
       vm[prefix + '_cloud_credentials'] = data.resources;
       findObjectForDropDown(prefix, '_cloud_credential', '_cloud_credentials');
     })
@@ -306,24 +371,29 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
 
   var findObjectForDropDown = function(prefix, fieldName, listName) {
     vm['_' + prefix + fieldName] = _.find(vm[prefix + listName], {id: vm.catalogItemModel[prefix + fieldName + '_id']});
-  }
-
-  vm.playbookTypeChanged = function(prefix) {
-    if (prefix === "retirement")
-      getRemoveResourcesTypes();
+    $scope.checkFormPristine();
   };
 
   $scope.$watch('vm._retirement_playbook', function(value) {
     if (value) {
       vm.catalogItemModel['retirement_playbook_id'] = value.id;
-    } else
+    } else {
       vm.catalogItemModel['retirement_playbook_id'] = '';
-    vm.playbookTypeChanged("retirement");
+    }
+    $scope.checkFormPristine();
   });
 
   $scope.$watch('vm.catalogItemModel.display', function(value) {
     vm.catalogItemModel.display = value;
     return vm.catalogItemModel.display;
+  })
+
+  $scope.$watch('vm._provisioning_cloud_type', function(value) {
+    $scope.cloudTypeChanged("provisioning", value);
+  })
+
+  $scope.$watch('vm._retirement_cloud_type', function(value) {
+    $scope.cloudTypeChanged("retirement", value);
   })
 
   vm.addKeyValue = function(prefix) {
@@ -390,6 +460,19 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     $scope.$watch(field_name, function(value) {
       if (value)
         vm.catalogItemModel[name + '_id'] = value.id;
+      $scope.checkFormPristine();
+    });
+  }
+
+   // watch for all the drop downs on screen
+  "retirement_remove_resources".split(" ").forEach(typeWatch)
+
+  function typeWatch(name) {
+    field_name = "vm.catalogItemModel." + name;
+    $scope.$watch(field_name, function(value) {
+      if (value)
+        vm.catalogItemModel[name] = value;
+      $scope.checkFormPristine();
     });
   }
 
@@ -404,14 +487,14 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.catalogItemModel.retirement_playbook_id = vm.catalogItemModel.provisioning_playbook_id;
     vm.catalogItemModel.retirement_machine_credential_id = vm.catalogItemModel.provisioning_machine_credential_id;
     vm.catalogItemModel.retirement_network_credential_id = vm.catalogItemModel.provisioning_network_credential_id;
-    vm.catalogItemModel.retirement_cloud_type = vm.catalogItemModel.provisioning_cloud_type;
+    vm.retirement_cloud_type = vm.provisioning_cloud_type;
+    vm._retirement_cloud_type = vm.provisioning_cloud_type;
     vm.catalogItemModel.retirement_cloud_credential_id = vm.catalogItemModel.provisioning_cloud_credential_id;
-    if (vm.catalogItemModel.retirement_cloud_type !== '')
-      $scope.cloudTypeChanged('retirement');
     vm.catalogItemModel.retirement_inventory = vm.catalogItemModel.provisioning_inventory;
     vm.catalogItemModel.retirement_key = '';
     vm.catalogItemModel.retirement_value = '';
     vm.catalogItemModel.retirement_variables = angular.copy(vm.catalogItemModel.provisioning_variables);
+    $scope.checkFormPristine();
   }
 
   var closeConfirmationModal = function() {
@@ -424,7 +507,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
 // Javascript function to be called from confirmation modal outside of Angular controller.
 function cancelOrCopyProvisioning(buttonType) {
   var scope = angular.element("#form_div").scope();
-  scope.$apply(function () {
+  scope.$apply(function() {
     if (buttonType == "cancel")
       scope.cancelCopyProvisioning();
     else
