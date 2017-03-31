@@ -646,6 +646,10 @@ class HostController < ApplicationController
     @host_pages, @hosts = paginate(:hosts, :per_page => @items_per_page, :order => @col_names[get_sort_col] + " " + @sortdir)
   end
 
+  def title
+    _("Host")
+  end
+
   def get_session_data
     super
     @drift_db   = "Host"
