@@ -2889,8 +2889,9 @@ module ApplicationController::CiProcessing
     return if record_no_longer_exists?(@record, klass.to_s)
 
     @lastaction = action
-    if params[:show] || params[:x_show]
-      id = params[:show] ? params[:show] : params[:x_show]
+
+    id = params[:show] ? params[:show] : params[:x_show]
+    if id.present?
       if method.kind_of?(Array)
         obj = @record
         while meth = method.shift
