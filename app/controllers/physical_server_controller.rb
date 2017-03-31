@@ -66,7 +66,6 @@ class PhysicalServerController < ApplicationController
   end
   helper_method :textual_group_list
 
-
   # Displays a success message
   def display_success_message(msg)
     display_message(msg, :success)

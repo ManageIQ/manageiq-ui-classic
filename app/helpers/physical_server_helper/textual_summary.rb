@@ -9,7 +9,7 @@ module PhysicalServerHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(host)    
+      %i(host)
     )
   end
 
