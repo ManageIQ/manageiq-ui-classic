@@ -1,10 +1,16 @@
 module PhysicalServerHelper::TextualSummary
   def textual_group_properties
-    %i(name model product_name manufacturer machine_type serial_number uuid)
+    TextualGroup.new(
+      _("Properties"),
+      %i(name model product_name manufacturer machine_type serial_number uuid)
+    )
   end
 
   def textual_group_relationships
-    %i(host)
+    TextualGroup.new(
+      _("Relationships"),
+      %i(host)    
+    )
   end
 
   def textual_host
