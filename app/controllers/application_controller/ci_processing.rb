@@ -2877,6 +2877,14 @@ module ApplicationController::CiProcessing
     @edit[:new][owner] != @edit[:current][owner]
   end
 
+  def send_nested(record, methods)
+    obj = record
+    Array(methods).each do |method|
+      obj = obj.send(method)
+    end
+    obj
+  end
+
   def show_association(action, display_name, listicon, method, klass, association = nil, conditions = nil)
     # Ajax request means in explorer, or if current explorer is one of the explorer controllers
     @explorer = true if request.xml_http_request? && explorer_controller?
@@ -2892,15 +2900,7 @@ module ApplicationController::CiProcessing
 
     id = params[:show] ? params[:show] : params[:x_show]
     if id.present?
-      if method.kind_of?(Array)
-        obj = @record
-        while meth = method.shift
-          obj = obj.send(meth)
-        end
-        @item = obj.find(from_cid(id))
-      else
-        @item = @record.send(method).find(from_cid(id))
-      end
+      @item = send_nested(@record, method).find(from_cid(id))
 
       drop_breadcrumb(:name => "#{@record.name} (#{display_name})",
                       :url  => "/#{controller_name}/#{action}/#{@record.id}?page=#{@current_page}")
