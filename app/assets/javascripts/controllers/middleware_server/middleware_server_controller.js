@@ -1,7 +1,7 @@
 ManageIQ.angular.app.controller('mwServerController', MwServerController);
 ManageIQ.angular.app.controller('mwServerGroupController', MwServerGroupController);
 
-MwServerController.$inject = ['$scope', 'miqService' ];
+MwServerController.$inject = ['$scope', 'miqService', 'mwAddDatasourceService'];
 MwServerGroupController.$inject = ['$scope', 'miqService' ];
 
 /**
@@ -25,17 +25,18 @@ MwServerGroupController.$inject = ['$scope', 'miqService' ];
  * parent/child controller relationships.
  * @param $scope
  * @param miqService
+ * @param mwAddDatasourceService
  * @constructor
  */
-function MwServerController($scope, miqService) {
-  return MwServerControllerFactory($scope, miqService, false);
+function MwServerController($scope, miqService, mwAddDatasourceService) {
+  return MwServerControllerFactory($scope, miqService, mwAddDatasourceService, false);
 }
 
-function MwServerGroupController($scope, miqService) {
-  return MwServerControllerFactory($scope, miqService, true);
+function MwServerGroupController($scope, miqService, mwAddDatasourceService) {
+  return MwServerControllerFactory($scope, miqService, mwAddDatasourceService, true);
 }
 
-function MwServerControllerFactory($scope, miqService, isGroupDeployment) {
+function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, isGroupDeployment) {
   ManageIQ.angular.scope = $scope;
 
   ManageIQ.angular.rxSubject.subscribe(function(event) {
@@ -121,10 +122,31 @@ function MwServerControllerFactory($scope, miqService, isGroupDeployment) {
   $scope.resetJdbcDriverForm = function () {
     $scope.jdbcDriverModel = {};
     $scope.jdbcDriverModel.serverId = angular.element('#server_id').val();
+    $scope.jdbcDriverModel.xaDatasource = true;
+    $scope.jdbcDriverModel.datasources = mwAddDatasourceService.getXaDatasources();
+    $scope.jdbcDriverModel.selectedDatasource = undefined;
     angular.element('#jdbc_add_div :file#jdbc_driver_file').val('');
     angular.element('#jdbc_add_div input[type="text"]:disabled').val('');
     $scope.$broadcast('mwAddJdbcDriverReset');
   };
+
+  $scope.onDriverXaChange = function() {
+    if ($scope.jdbcDriverModel) {
+      if ($scope.jdbcDriverModel.xaDatasource) {
+        $scope.jdbcDriverModel.datasources = mwAddDatasourceService.getXaDatasources();
+      } else {
+        $scope.jdbcDriverModel.datasources = mwAddDatasourceService.getDatasources();
+      }
+    }
+  };
+
+  $scope.$watch('jdbcDriverModel.selectedDatasource', function(newValue) {
+    if (newValue) {
+      $scope.jdbcDriverModel.driverName = newValue.driverName;
+      $scope.jdbcDriverModel.moduleName = newValue.driverModuleName;
+      $scope.jdbcDriverModel.driverClass = newValue.driverClass;
+    }
+  });
 
   $scope.$watch('jdbcDriverModel.filePath', function(newValue) {
     if (newValue) {
@@ -195,7 +217,7 @@ function ServerGroupOpsService($http, $q) {
 
 function ServerOpsServiceFactory($http, $q, isGroup) {
   var runOperation = function runOperation(id, operation, timeout) {
-    var errorMsg = isGroup ? _('Error running operation on this server.') 
+    var errorMsg = isGroup ? _('Error running operation on this server.')
                            : _('Error running operation on this server group.');
     var deferred = $q.defer();
     var payload = {
