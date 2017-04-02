@@ -131,11 +131,7 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
 
   $scope.onDriverXaChange = function() {
     if ($scope.jdbcDriverModel) {
-      if ($scope.jdbcDriverModel.xaDatasource) {
-        $scope.jdbcDriverModel.datasources = mwAddDatasourceService.getXaDatasources();
-      } else {
-        $scope.jdbcDriverModel.datasources = mwAddDatasourceService.getDatasources();
-      }
+      $scope.jdbcDriverModel.datasources = mwAddDatasourceService.getDatasources($scope.jdbcDriverModel.xaDatasource);
     }
   };
 
