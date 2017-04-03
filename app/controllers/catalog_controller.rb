@@ -709,7 +709,7 @@ class CatalogController < ApplicationController
     assert_privileges("orchestration_template_remove")
     checked = find_checked_items
     checked[0] = params[:id] if checked.blank? && params[:id]
-    elements = OrchestrationTemplate.where(:id => checked)
+    elements = find_checked_records_with_rbac(OrchestrationTemplate, checked)
     elements.each do |ot|
       if ot.in_use?
         add_flash(_("Orchestration template \"%{name}\" is read-only and cannot be deleted.") %
@@ -2097,7 +2097,7 @@ class CatalogController < ApplicationController
 
   def x_edit_tags_reset(db)
     @tagging = session[:tag_db] = db
-    @object_ids = find_checked_items
+    @object_ids = find_checked_ids_with_rbac(db)
     if params[:button] == 'reset'
       id = params[:id] if params[:id]
       return unless load_edit("#{session[:tag_db]}_edit_tags__#{id}", 'replace_cell__explorer')
