@@ -314,8 +314,8 @@
                       %th
                         = _("Default value")
                     %tbody
-                      - if retirement[:extra_vars]
-                        - retirement[:extra_vars].each do |key, value|
+                      - if @record.config_info[:retirement][:extra_vars]
+                        - @record.config_info[:retirement][:extra_vars].each do |key, value|
                           %tr
                             %td
                               = h(key)
