@@ -8,6 +8,8 @@ class AutomationManagerController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::ManagerControllerMixin
 
+  menu_section :automation_manager
+
   def self.model
     ManageIQ::Providers::AutomationManager
   end
@@ -560,6 +562,4 @@ class AutomationManagerController < ApplicationController
       replace_right_cell
     end
   end
-
-  menu_section :aut
 end
