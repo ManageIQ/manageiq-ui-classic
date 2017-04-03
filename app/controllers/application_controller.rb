@@ -1983,7 +1983,7 @@ class ApplicationController < ActionController::Base
     section_id = menu_section_id(params)
     return if section_id.nil?
 
-    section = Menu::Manager.section(section_id)
+    section = Menu::Manager.section(section_id) || Menu::Manager.section_for_item_id(section_id.to_s)
     return if section.nil?
 
     url = URI.parse(request.url).path
