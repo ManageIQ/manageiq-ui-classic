@@ -1938,11 +1938,11 @@ module ApplicationController::CiProcessing
   def get_rec_cls
     case request.parameters["controller"]
     when "miq_template"
-      return MiqTemplate
+      MiqTemplate
     when "orchestration_stack"
-      return OrchestrationStack
+      OrchestrationStack
     when "service"
-      return Service
+      Service
     when "cloud_object_store_container"
       params[:pressed].starts_with?("cloud_object_store_object") ? CloudObjectStoreObject : CloudObjectStoreContainer
     when "cloud_object_store_object"
@@ -1950,46 +1950,46 @@ module ApplicationController::CiProcessing
     when "ems_storage"
       params[:pressed].starts_with?("cloud_object_store_object") ? CloudObjectStoreObject : CloudObjectStoreContainer
     else
-      return VmOrTemplate
+      VmOrTemplate
     end
   end
 
   def process_objects(objs, task, display_name = nil)
-    case get_rec_cls.to_s
-    when "OrchestrationStack"
-      objs, _objs_out_reg = filter_ids_in_region(objs, "OrchestrationStack")
-      klass = OrchestrationStack
-    when "Service"
-      objs, _objs_out_reg = filter_ids_in_region(objs, "Service")
-      klass = Service
-    when "VmOrTemplate"
+    klass = get_rec_cls
+    klass_str = klass.to_s
+
+    assert_rbac(klass, objs)
+
+    case klass_str
+    when 'OrchestrationStack', 'Service', 'CloudObjectStoreContainer', 'CloudObjectStoreObject'
+      objs, _objs_out_reg = filter_ids_in_region(objs, klass.to_s)
+    when 'VmOrTemplate'
       objs, _objs_out_reg = filter_ids_in_region(objs, "VM") unless VmOrTemplate::REMOTE_REGION_TASKS.include?(task)
       klass = Vm
-    when "CloudObjectStoreContainer"
-      objs, _objs_out_reg = filter_ids_in_region(objs, "CloudObjectStoreContainer")
-      klass = CloudObjectStoreContainer
-    when "CloudObjectStoreObject"
-      objs, _objs_out_reg = filter_ids_in_region(objs, "CloudObjectStoreObject")
-      klass = CloudObjectStoreObject
     end
-
-    assert_rbac(get_rec_cls, objs)
-
     return if objs.empty?
 
     options = {:ids => objs, :task => task, :userid => session[:userid]}
     options[:snap_selected] = session[:snap_selected] if task == "remove_snapshot" || task == "revert_to_snapshot"
+
     klass.process_tasks(options)
   rescue => err
     add_flash(_("Error during '%{task}': %{error_message}") % {:task => task, :error_message => err.message}, :error)
   else
-    add_flash(n_("%{task} initiated for %{number} %{model} from the %{product} Database",
-                 "%{task} initiated for %{number} %{models} from the %{product} Database", objs.length) %
-      {:task    => display_name ? display_name.titleize : task_name(task),
-       :number  => objs.length,
-       :product => I18n.t('product.name'),
-       :model   => ui_lookup(:model => klass.to_s),
-       :models  => ui_lookup(:models => klass.to_s)})
+    add_flash(
+      n_(
+        "%{task} initiated for %{number} %{model} from the %{product} Database",
+        "%{task} initiated for %{number} %{models} from the %{product} Database",
+        objs.length
+      ) %
+      {
+        :task    => display_name ? display_name.titleize : task_name(task),
+        :number  => objs.length,
+        :product => I18n.t('product.name'),
+        :model   => ui_lookup(:model => klass.to_s),
+        :models  => ui_lookup(:models => klass.to_s)
+      }
+    )
   end
 
   def manager_button_operation(method, display_name)
@@ -2885,6 +2885,14 @@ module ApplicationController::CiProcessing
     @edit[:new][owner] != @edit[:current][owner]
   end
 
+  def send_nested(record, methods)
+    obj = record
+    Array(methods).each do |method|
+      obj = obj.send(method)
+    end
+    obj
+  end
+
   def show_association(action, display_name, listicon, method, klass, association = nil, conditions = nil)
     # Ajax request means in explorer, or if current explorer is one of the explorer controllers
     @explorer = true if request.xml_http_request? && explorer_controller?
@@ -2895,18 +2903,12 @@ module ApplicationController::CiProcessing
     @record = identify_record(params[:id], controller_to_model)
     @view = session[:view]                  # Restore the view from the session to get column names for the display
     return if record_no_longer_exists?(@record, klass.to_s)
+
     @lastaction = action
-    if params[:show] || params[:x_show]
-      id = params[:show] ? params[:show] : params[:x_show]
-      if method.kind_of?(Array)
-        obj = @record
-        while meth = method.shift
-          obj = obj.send(meth)
-        end
-        @item = obj.find(from_cid(id))
-      else
-        @item = @record.send(method).find(from_cid(id))
-      end
+
+    id = params[:show] ? params[:show] : params[:x_show]
+    if id.present?
+      @item = send_nested(@record, method).find(from_cid(id))
 
       drop_breadcrumb(:name => "#{@record.name} (#{display_name})",
                       :url  => "/#{controller_name}/#{action}/#{@record.id}?page=#{@current_page}")
@@ -2920,11 +2922,8 @@ module ApplicationController::CiProcessing
       drop_breadcrumb(:name => "#{@record.name} (#{display_name})",
                       :url  => "/#{controller_name}/#{action}/#{@record.id}")
       @listicon = listicon
-      if association.nil?
-        show_details(klass, :conditions => conditions)
-      else
-        show_details(klass, :association => association, :conditions => conditions)
-      end
+
+      show_details(klass, :association => association, :conditions => conditions)
     end
   end
 end
