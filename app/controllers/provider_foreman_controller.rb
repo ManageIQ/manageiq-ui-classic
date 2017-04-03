@@ -29,13 +29,11 @@ class ProviderForemanController < ApplicationController
   def new
     assert_privileges("provider_foreman_add_provider")
     @provider_manager = ManageIQ::Providers::ConfigurationManager.new
-    @provider_types = [ui_lookup(:ui_title => 'foreman')]
     @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
     render_form
   end
 
   def edit
-    @provider_types = [ui_lookup(:ui_title => 'foreman')]
     @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
     case params[:button]
     when "cancel"
@@ -133,8 +131,7 @@ class ProviderForemanController < ApplicationController
     manager = find_record(ManageIQ::Providers::ConfigurationManager, params[:id])
     provider = manager.provider
 
-    render :json => {:provtype   => self.class.model_to_name(manager.type),
-                     :name       => provider.name,
+    render :json => {:name       => provider.name,
                      :zone       => provider.zone.name,
                      :url        => provider.url,
                      :verify_ssl => provider.verify_ssl,

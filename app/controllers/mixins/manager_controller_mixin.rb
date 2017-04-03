@@ -427,11 +427,9 @@ module Mixins
     def construct_edit_for_audit
       @edit ||= {}
       @edit[:current] = {:name       => @provider.name,
-                         :provtype   => self.class.model_to_name(@provider.type),
                          :url        => @provider.url,
                          :verify_ssl => @provider.verify_ssl}
       @edit[:new] = {:name       => params[:name],
-                     :provtype   => params[:provtype],
                      :url        => params[:url],
                      :verify_ssl => params[:verify_ssl]}
     end
