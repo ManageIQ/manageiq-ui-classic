@@ -210,9 +210,12 @@ function miqOnClickHostNet(id) {
   }
 }
 
-// OnClick handler for Report Menu Tree
+// OnClick handler for Timeline Tree
 function miqOnClickTimelineSelection(id) {
   var allIds = id.split('xx-');
+  /*
+   Valid id should be something like xx-r__name_xx-p__name_xx-10000000000215__name, so it should return three 'ids' if split by xx- identifier
+   */
   if (allIds.length > 3) {
     var rep_id = allIds[allIds.length - 1].split('__');
     miqJqueryRequest(ManageIQ.tree.clickUrl + '?id=' + rep_id[0], {beforeSend: true, complete: true});

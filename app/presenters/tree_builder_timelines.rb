@@ -1,6 +1,7 @@
 class TreeBuilderTimelines < TreeBuilder
   has_kids_for Hash, [:x_get_tree_hash_kids]
 
+  # Needs to be true only for first two levels. Move to better place later
   def override(node, object, _pid, _options)
     node[:expand] = object[:expand] if object[:expand].present?
   end
