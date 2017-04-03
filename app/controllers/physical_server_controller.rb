@@ -113,7 +113,7 @@ class PhysicalServerController < ApplicationController
       servers.each do |server|
         server.send(method)
       end
-      msg = "Successfully initiated the #{action_str} action"
+      msg = _("Successfully initiated the #{action_str} action")
       display_success_message(msg)
     else
       display_error_message("Unknown action: #{button_pressed}")
