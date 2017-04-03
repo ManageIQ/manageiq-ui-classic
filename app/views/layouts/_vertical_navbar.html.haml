@@ -2,7 +2,7 @@
   %ul#maintab.list-group
     - Menu::Manager.menu do |menu_section|
       - if menu_section.visible?
-        %li.list-group-item.secondary-nav-item-pf{"data-target" => "#menu-#{menu_section.id}", :class => primary_nav_class(menu_section.id)}
+        %li.list-group-item.secondary-nav-item-pf{"data-target" => "#menu-#{menu_section.id}", :class => section_nav_class(menu_section)}
           %a{:href => menu_section.url, :onclick => 'return miqCheckForChanges()'}
             %span{:class => menu_section.icon}
             %span.list-group-item-value
@@ -18,13 +18,13 @@
               %ul.list-group
                 - menu_section.items.each do |menu_item|
                   - if menu_item.visible? && menu_item.leaf?
-                    %li.list-group-item{:class => tertiary_nav_class(menu_item)}
+                    %li.list-group-item{:class => item_nav_class(menu_item)}
                       %a{:href => menu_item.url, :onclick => 'return miqCheckForChanges()'}
                         %span.list-group-item-value
                           = _(menu_item.name)
 
                   - elsif menu_item.visible?
-                    %li.list-group-item.tertiary-nav-item-pf{"data-target" => "#menu-#{menu_item.id}", :class => secondary_nav_class(menu_item)}
+                    %li.list-group-item.tertiary-nav-item-pf{"data-target" => "#menu-#{menu_item.id}", :class => section_nav_class(menu_item)}
                       %a{:href => menu_item.url, :onclick => 'return miqCheckForChanges()'}
                         %span.list-group-item-value
                           = _(menu_item.name)
@@ -37,7 +37,7 @@
                         %ul.list-group
                           - menu_item.items.each do |menu_item_deep|
                             - if menu_item_deep.visible?
-                              %li.list-group-item{:class => menu_item_deep.id == @layout ? 'active' : nil}
+                              %li.list-group-item{:class => item_nav_class(menu_item_deep)}
                                 %a{:href => menu_item_deep.url, :onclick => 'return miqCheckForChanges()'}
                                   %span.list-group-item-value
                                     = _(menu_item_deep.name)
@@ -51,7 +51,7 @@
               %ul.list-group
                 - menu_section.items.each do |menu_item|
                   - if menu_item.visible?
-                    %li.list-group-item{:class => tertiary_nav_class(menu_item)}
+                    %li.list-group-item{:class => item_nav_class(menu_item)}
                       %a{:href => menu_item.url, :onclick => 'return miqCheckForChanges()'}
                         %span.list-group-item-value
                           = _(menu_item.name)
