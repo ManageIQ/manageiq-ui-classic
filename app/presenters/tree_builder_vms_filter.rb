@@ -2,13 +2,13 @@ class TreeBuilderVmsFilter < TreeBuilder
   def tree_init_options(_tree_name)
     {
       :open_all => true,
-      :leaf      => 'ManageIQ::Providers::InfraManager::Vm'
+      :leaf     => 'ManageIQ::Providers::InfraManager::Vm'
     }
   end
 
   def set_locals_for_render
     locals = super
-    locals.merge!(:tree_id => "vms_filter_treebox", :tree_name => "vms_filter_tree")
+    locals.merge!(:tree_id => "vms_filter_treebox", :tree_name => "vms_filter_tree", :allow_reselect => true)
   end
 
   def root_options
