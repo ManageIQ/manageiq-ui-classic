@@ -35,7 +35,7 @@ module Mixins
         AuditEvent.success(build_created_audit(@provider, @edit))
         @in_a_form = false
         @sb[:action] = nil
-        model = "#{model_to_name(@provider.type)} #{ui_lookup(:model => 'ExtManagementSystem')}"
+        model = "#{self.class.model_to_name(@provider.type)} #{ui_lookup(:model => 'ExtManagementSystem')}"
         if params[:id] == "new"
           add_flash(_("%{model} \"%{name}\" was added") % {:model => model, :name => @provider.name})
           process_managers([@provider.instance_eval(manager_prefix).id], "refresh_ems")
@@ -248,7 +248,7 @@ module Mixins
     def provider_list(id, model)
       return provider_node(id, model) if id
       options = {:model => model.to_s}
-      @right_cell_text = _("All %{title} Providers") % {:title => model_to_name(model)}
+      @right_cell_text = _("All %{title} Providers") % {:title => self.class.model_to_name(model)}
       process_show_list(options)
     end
 
@@ -256,7 +256,7 @@ module Mixins
       return configured_system_node(id, model) if id
       if x_active_tree == :configuration_manager_cs_filter_tree || x_active_tree == :automation_manager_cs_filter_tree
         options = {:model => model.to_s}
-        @right_cell_text = _("All %{title} Configured Systems") % {:title => model_to_name(model)}
+        @right_cell_text = _("All %{title} Configured Systems") % {:title => self.class.model_to_name(model)}
         process_show_list(options)
       end
     end
@@ -427,7 +427,7 @@ module Mixins
     def construct_edit_for_audit
       @edit ||= {}
       @edit[:current] = {:name       => @provider.name,
-                         :provtype   => model_to_name(@provider.type),
+                         :provtype   => self.class.model_to_name(@provider.type),
                          :url        => @provider.url,
                          :verify_ssl => @provider.verify_ssl}
       @edit[:new] = {:name       => params[:name],
