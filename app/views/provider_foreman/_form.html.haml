@@ -25,28 +25,6 @@
         %span.help-block{"ng-show" => "angularForm.name.$error.required"}
           = _("Required")
 
-    .form-group{"ng-class" => "{'has-error': angularForm.type.$invalid}"}
-      %label.col-md-2.control-label{"for" => "provider_type"}
-        = _('Type')
-      .col-md-8
-        = select_tag('provtype',
-                     options_for_select([["<#{_('Choose')}>", nil]] + @provider_types, disabled: ["<#{_('Choose')}>", nil]),
-                     "ng-if"                       => "vm.newRecord",
-                     "ng-model"                    => "vm.providerForemanModel.provtype",
-                     "ng-change"                   => "providerTypeChanged()",
-                     "id"                          => "provider_type",
-                     "required"                    => "",
-                     "checkchange"                 => "",
-                     "selectpicker-for-select-tag" => "")
-        %div{"ng-if" => "!vm.newRecord"}
-          %input.form-control{:type      => "text",
-                              :name      => "provtype",
-                              "ng-model" => "vm.providerForemanModel.provtype",
-                              "ng-if"    => "!vm.newRecord",
-                              "id"       => "provider_type",
-                              "readonly" => true,
-                              "style"    => "color: black; font-weight: normal;"}
-
     .form-group{"ng-class" => "{'has-error': angularForm.zone.$invalid}"}
       %label.col-md-2.control-label{"for" => "prov_zone"}
         = _("Zone")

@@ -26,10 +26,6 @@ class AutomationManagerController < ApplicationController
     end
   end
 
-  def model_to_name(provmodel)
-    AutomationManagerController.model_to_name(provmodel)
-  end
-
   def managed_group_kls
     ManageIQ::Providers::AutomationManager::InventoryGroup
   end
@@ -57,7 +53,7 @@ class AutomationManagerController < ApplicationController
       assert_privileges("automation_manager_edit_provider")
       manager_id            = from_cid(params[:miq_grid_checks] || params[:id] || find_checked_items[0])
       @provider_manager     = find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, manager_id)
-      @providerdisplay_type = model_to_name(@provider_manager.type)
+      @providerdisplay_type = self.class.model_to_name(@provider_manager.type)
       render_form
     end
   end
@@ -331,7 +327,7 @@ class AutomationManagerController < ApplicationController
                  :where_clause          => ["ems_id IN (?)", provider.id],
                  :gtl_dbname            => "automation_manager_groups"}
       process_show_list(options)
-      record_model = ui_lookup(:model => model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
+      record_model = ui_lookup(:model => self.class.model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
       @right_cell_text = _("%{model} \"%{name}\"") % {:name  => provider.name,
                                                       :model => "#{ui_lookup(:tables => "inventory_group")} under #{record_model} Provider"}
     end

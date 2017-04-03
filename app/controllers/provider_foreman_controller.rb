@@ -22,24 +22,22 @@ class ProviderForemanController < ApplicationController
     end
   end
 
-  def manager_prefix
-    'configuration_manager'
+  def managed_group_kls
+    ConfigurationProfile
   end
 
-  def model_to_name(provmodel)
-    ProviderForemanController.model_to_name(provmodel)
+  def manager_prefix
+    'configuration_manager'
   end
 
   def new
     assert_privileges("provider_foreman_add_provider")
     @provider_manager = ManageIQ::Providers::ConfigurationManager.new
-    @provider_types = [ui_lookup(:ui_title => 'foreman')]
     @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
     render_form
   end
 
   def edit
-    @provider_types = [ui_lookup(:ui_title => 'foreman')]
     @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
     case params[:button]
     when "cancel"
@@ -51,7 +49,7 @@ class ProviderForemanController < ApplicationController
       assert_privileges("provider_foreman_edit_provider")
       manager_id            = from_cid(params[:miq_grid_checks] || params[:id] || find_checked_items[0])
       @provider_manager     = find_record(ManageIQ::Providers::ConfigurationManager, manager_id)
-      @providerdisplay_type = model_to_name(@provider_manager.type)
+      @providerdisplay_type = self.class.model_to_name(@provider_manager.type)
       render_form
     end
   end
@@ -137,16 +135,11 @@ class ProviderForemanController < ApplicationController
     manager = find_record(ManageIQ::Providers::ConfigurationManager, params[:id])
     provider = manager.provider
 
-    render :json => {:provtype   => model_to_name(manager.type),
-                     :name       => provider.name,
+    render :json => {:name       => provider.name,
                      :zone       => provider.zone.name,
                      :url        => provider.url,
                      :verify_ssl => provider.verify_ssl,
                      :log_userid => provider.authentications.first.userid}
-  end
-
-  def managed_group_kls
-    ConfigurationProfile
   end
 
   def load_or_clear_adv_search
@@ -264,13 +257,13 @@ class ProviderForemanController < ApplicationController
   end
   helper_method :textual_group_list
 
-  def find_or_build_provider
-    @provider = provider_class_from_provtype.new if params[:id] == "new"
-    @provider ||= find_record(ManageIQ::Providers::ConfigurationManager, params[:id]).provider # TODO: Why is params[:id] an ExtManagementSystem ID instead of Provider ID?
+  def provider_class
+    ManageIQ::Providers::Foreman::Provider
   end
 
-  def provider_class_from_provtype
-    params[:provtype] = ManageIQ::Providers::Foreman::Provider
+  def find_or_build_provider
+    @provider = provider_class.new if params[:id] == "new"
+    @provider ||= find_record(ManageIQ::Providers::ConfigurationManager, params[:id]).provider # TODO: Why is params[:id] an ExtManagementSystem ID instead of Provider ID?
   end
 
   def features
@@ -347,7 +340,7 @@ class ProviderForemanController < ApplicationController
         options = {:model => "ConfigurationProfile", :match_via_descendants => ConfiguredSystem, :where_clause => ["manager_id IN (?)", provider.id]}
         process_show_list(options)
         add_unassigned_configuration_profile_record(provider.id)
-        record_model = ui_lookup(:model => model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
+        record_model = ui_lookup(:model => self.class.model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
         @right_cell_text = _("%{model} \"%{name}\"") %
         {:name => provider.name,
          :model => "#{ui_lookup(:tables => "configuration_profile")} under #{record_model} Provider"}
