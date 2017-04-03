@@ -2,6 +2,7 @@ module HostHelper::TextualSummary
   include TextualMixins::TextualDevices
   include TextualMixins::TextualOsInfo
   include TextualMixins::TextualVmmInfo
+  include TextualMixins::TextualVisibleCustomAttributes
   # TODO: Determine if DoNav + url_for + :title is the right way to do links, or should it be link_to with :title
 
   #
@@ -404,12 +405,6 @@ module HostHelper::TextualSummary
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'event_logs')
     end
     h
-  end
-
-  def textual_miq_custom_attributes
-    attrs = @record.miq_custom_attributes
-    return nil if attrs.blank?
-    attrs.sort_by(&:name).collect { |a| {:label => a.name, :value => a.value} }
   end
 
   def textual_ems_custom_attributes

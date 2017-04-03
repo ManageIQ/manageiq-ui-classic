@@ -2,6 +2,7 @@ module ServiceHelper::TextualSummary
   include TextualMixins::TextualDescription
   include TextualMixins::TextualGroupTags
   include TextualMixins::TextualName
+  include TextualMixins::TextualVisibleCustomAttributes
   #
   # Groups
   #
@@ -174,12 +175,6 @@ module ServiceHelper::TextualSummary
 
   def textual_created
     {:label => _("Created On"), :value => format_timezone(@record.created_at)}
-  end
-
-  def textual_miq_custom_attributes
-    attrs = @record.miq_custom_attributes
-    return nil if attrs.blank?
-    attrs.sort_by(&:name).collect { |a| {:label => a.name, :value => a.value} }
   end
 
   def textual_status

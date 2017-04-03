@@ -1,5 +1,6 @@
 module ContainerSummaryHelper
   include TextualMixins::TextualName
+  include TextualMixins::TextualVisibleCustomAttributes
 
   def textual_ems
     textual_link(@record.ext_management_system)
@@ -75,12 +76,6 @@ module ContainerSummaryHelper
 
   def textual_group_miq_custom_attributes
     TextualGroup.new(_("Custom Attributes"), textual_miq_custom_attributes)
-  end
-
-  def textual_miq_custom_attributes
-    attrs = @record.custom_attributes
-    return nil if attrs.blank?
-    attrs.sort_by(&:name).collect { |a| {:label => a.name.tr("_", " "), :value => a.value} }
   end
 
   def textual_group_container_selectors
