@@ -7,6 +7,7 @@ module ApplicationHelper::Toolbar::Service::LifecycleMixin
         t = N_('Lifecycle'),
         t,
         :enabled => false,
+        :onwhen  => "1+",
         :items   => [
           included_class.button(
             :service_retire,

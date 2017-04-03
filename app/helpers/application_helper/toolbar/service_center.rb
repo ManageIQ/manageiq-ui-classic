@@ -62,9 +62,8 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
         button(
           :service_retire,
           'fa fa-clock-o fa-lg',
-          t = N_('Set Retirement Date for this Service'),
+          t = N_('Set Retirement Dates for this Service'),
           t,
-          :confirm => N_("Set Retirement this Service?"),
           :klass   => ApplicationHelper::Button::ServiceRetire
         ),
         button(
