@@ -22,6 +22,10 @@ class ProviderForemanController < ApplicationController
     end
   end
 
+  def managed_group_kls
+    ConfigurationProfile
+  end
+
   def manager_prefix
     'configuration_manager'
   end
@@ -136,10 +140,6 @@ class ProviderForemanController < ApplicationController
                      :url        => provider.url,
                      :verify_ssl => provider.verify_ssl,
                      :log_userid => provider.authentications.first.userid}
-  end
-
-  def managed_group_kls
-    ConfigurationProfile
   end
 
   def load_or_clear_adv_search
