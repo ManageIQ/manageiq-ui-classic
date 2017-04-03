@@ -26,10 +26,6 @@ class ProviderForemanController < ApplicationController
     'configuration_manager'
   end
 
-  def model_to_name(provmodel)
-    ProviderForemanController.model_to_name(provmodel)
-  end
-
   def new
     assert_privileges("provider_foreman_add_provider")
     @provider_manager = ManageIQ::Providers::ConfigurationManager.new
