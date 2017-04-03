@@ -241,11 +241,6 @@ class AutomationManagerController < ApplicationController
     ManageIQ::Providers::AnsibleTower::Provider
   end
 
-  def find_or_build_provider
-    @provider = provider_class.new if params[:id] == "new"
-    @provider ||= find_record(ManageIQ::Providers::AutomationManager, params[:id]).provider
-  end
-
   def features
     [
       {:role     => "automation_manager_providers",

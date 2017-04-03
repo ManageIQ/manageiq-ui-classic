@@ -261,11 +261,6 @@ class ProviderForemanController < ApplicationController
     ManageIQ::Providers::Foreman::Provider
   end
 
-  def find_or_build_provider
-    @provider = provider_class.new if params[:id] == "new"
-    @provider ||= find_record(ManageIQ::Providers::ConfigurationManager, params[:id]).provider # TODO: Why is params[:id] an ExtManagementSystem ID instead of Provider ID?
-  end
-
   def features
     [{:role     => "providers_accord",
       :role_any => true,

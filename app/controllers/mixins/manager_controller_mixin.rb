@@ -8,6 +8,11 @@ module Mixins
       redirect_to :action => 'explorer', :flash_msg => @flash_array.try(:fetch_path, 0, :message)
     end
 
+    def find_or_build_provider
+      @provider = provider_class.new if params[:id] == "new"
+      @provider ||= find_record(self.class.model, params[:id]).provider
+    end
+
     def add_provider
       find_or_build_provider
       sync_form_to_instance
