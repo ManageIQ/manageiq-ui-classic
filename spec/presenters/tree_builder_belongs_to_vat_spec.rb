@@ -49,8 +49,7 @@ describe TreeBuilderBelongsToVat do
   describe '#set_locals_for_render' do
     it 'set locals for render correctly' do
       locals = subject.send(:set_locals_for_render)
-      expect(locals).to include(:id_prefix         => 'vat_',
-                                :checkboxes        => true,
+      expect(locals).to include(:checkboxes        => true,
                                 :check_url         => "/ops/rbac_group_field_changed/#{group.id || "new"}___",
                                 :onclick           => false,
                                 :oncheck           => edit ? "miqOnCheckUserFilters" : nil,

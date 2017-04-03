@@ -80,7 +80,6 @@ describe TreeBuilderBelongsToHac do
       expect(subject.send(:set_locals_for_render)).to include(:onclick           => false,
                                                               :tree_state        => true,
                                                               :checkboxes        => true,
-                                                              :id_prefix         => "hac_",
                                                               :check_url         => "/ops/rbac_group_field_changed/#{group.id || "new"}___",
                                                               :oncheck           => nil,
                                                               :highlight_changes => true)

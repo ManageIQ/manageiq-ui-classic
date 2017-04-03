@@ -14,7 +14,7 @@ class ContainerBuildController < ApplicationController
   helper_method :textual_group_list
 
   def display_name
-    "Builds"
+    _("Builds")
   end
 
   menu_section :cnt

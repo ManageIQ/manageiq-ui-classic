@@ -4,6 +4,8 @@ class MiqTaskController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericSessionMixin
+
   def index
     @tabform = nil
     @tabform ||= "tasks_1" if role_allows?(:feature => "job_my_smartproxy")
@@ -445,18 +447,16 @@ class MiqTaskController < ApplicationController
   end
 
   def get_session_data
-    @layout        = get_layout
-    @jobs_tab      = session[:jobs_tab] if session[:jobs_tab]
+    super
+    @layout = get_layout
     @tabform       = session[:tabform]  if session[:tabform]
-    @lastaction    = session[:jobs_lastaction]
     @tasks_options = session[:tasks_options] || ""
   end
 
   def set_session_data
-    session[:jobs_tab]            = @jobs_tab
+    super
     session[:tabform]             = @tabform
     session[:layout]              = @layout
-    session[:jobs_lastaction]     = @lastaction
     session[:tasks_options]       = @tasks_options unless @tasks_options.nil?
   end
 

@@ -10,10 +10,11 @@
  * API.logout() - clears login info, no return
  * API.autorenew() - registers a 60second interval to query /api, returns a function to clear the interval
  *
- * can also be used from angular - depend on miq.api module and use the API service
- * when used as an angular service, all the promises are $q, so they work within the angular digest cycle
- *
  * the API token is persisted into sessionStorage
+ *
+ * the angular service is called API, and lives in the miq.api module
+ * the pure-JS version used to be called API as well, but given the confusion this caused in angular code, we're calling it vanillaJsAPI now
+ *
  */
 
 (function() {
@@ -114,7 +115,7 @@
     });
   };
 
-  window.API = API;
+  window.vanillaJsAPI = API;
 
 
   function process_options(o) {
@@ -177,19 +178,19 @@ angular.module('miq.api', [])
 .factory('API', ['$q', function($q) {
   var angularify = function(what) {
     return function() {
-      return $q.when(what.apply(API, arguments));
+      return $q.when(what.apply(vanillaJsAPI, arguments));
     };
   };
 
   return {
-    get: angularify(API.get),
-    post: angularify(API.post),
-    delete: angularify(API.delete),
-    put: angularify(API.put),
-    patch: angularify(API.patch),
-    options: angularify(API.options),
-    login: angularify(API.login),
-    logout: API.logout,
-    autorenew: API.autorenew,
+    get: angularify(vanillaJsAPI.get),
+    post: angularify(vanillaJsAPI.post),
+    delete: angularify(vanillaJsAPI.delete),
+    put: angularify(vanillaJsAPI.put),
+    patch: angularify(vanillaJsAPI.patch),
+    options: angularify(vanillaJsAPI.options),
+    login: angularify(vanillaJsAPI.login),
+    logout: vanillaJsAPI.logout,
+    autorenew: vanillaJsAPI.autorenew,
   };
 }]);

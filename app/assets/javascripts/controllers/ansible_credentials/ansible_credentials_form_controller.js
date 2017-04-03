@@ -38,7 +38,6 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
         .then(setManagerResource)
         .catch(miqService.handleFailure);
 
-      vm.afterGet = true;
       vm.modelCopy = angular.copy( vm.credentialModel );
       miqService.sparkleOff();
     }
@@ -77,6 +76,7 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     for (var opt in vm.credential_options) {
       vm.select_options.push({'value': opt, 'label': vm.credential_options[opt].label});
     }
+    vm.afterGet = true;
   }
 
   function getCredentialFormData(response) {
@@ -101,7 +101,7 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     miqService.sparkleOff();
   }
 
-  function getBack(message, warning = false, error = false) {
+  function getBack(message, warning, error) {
     var url = '/ansible_credential/show_list' + '?flash_msg=' + message + '&escape=true';
 
     if (warning) {

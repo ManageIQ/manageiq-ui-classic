@@ -335,7 +335,7 @@ class ApplicationController < ActionController::Base
 
     @display = "show_statistics"
     session[:stats_record_id] = params[:id] if params[:id]
-    @record = find_by_id_filtered(db, session[:stats_record_id])
+    @record = find_record_with_rbac(db, session[:stats_record_id])
 
     # Need to use paged_view_search code, once the relationship is working. Following is workaround for the demo
     @stats = @record.derived_metrics
@@ -1374,10 +1374,64 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def find_checked_items_with_rbac(klass, prefix = nil)
+  # Test RBAC on every item checked
+  # Params:
+  #   klass - class of accessed objects
+  # Returns:
+  #   array of checked items. If user does not have rigts for it,
+  #   raises exception
+  def find_checked_ids_with_rbac(klass, prefix = nil)
     items = find_checked_items(prefix)
-    assert_rbac(current_user, klass, items)
+    assert_rbac(klass, items)
     items
+  end
+
+  # Test RBAC on every item checked
+  # Params:
+  #   klass - class of accessed objects
+  # Returns:
+  #   array of records. If user does not have rigts for it,
+  #   raises exception
+  def find_checked_records_with_rbac(klass, ids=nil)
+    ids ||= find_checked_items
+    filtered = Rbac.filtered(klass.where(:id => ids))
+    raise _("Unauthorized object or action") unless ids.length == filtered.length
+    filtered
+  end
+
+  # Test RBAC in case there is only one record
+  # Params:
+  #   klass - class of accessed object
+  #   id    - accessed object id
+  # Returns:
+  #   database record of checked item. If user does not have rights for it,
+  #   raises an exception
+  def find_record_with_rbac(klass, id, options = {})
+    raise _("Invalid input") unless is_integer?(id)
+    tested_object = klass.find_by(:id => id)
+    if tested_object.nil?
+      raise(_("User '%{user_id}' is not authorized to access '%{model}' record id '%{record_id}'") %
+              {:user_id   => current_userid,
+               :record_id => id,
+               :model     => ui_lookup(:model => klass.to_s)})
+    end
+    Rbac.filtered_object(tested_object, :user => current_user, :named_scope => options[:named_scope]) ||
+      raise(_("User '%{user_id}' is not authorized to access '%{model}' record id '%{record_id}'") %
+              {:user_id   => current_userid,
+               :record_id => id,
+               :model     => ui_lookup(:model => klass.to_s)})
+  end
+
+  # Test RBAC in case there is only one record
+  # Params:
+  #   klass - class of accessed object
+  #   id    - accessed object id
+  # Returns:
+  #   id of checked item. If user does not have rights for it,
+  #   raises an exception
+  def find_id_with_rbac(klass, id)
+    assert_rbac(klass, Array.wrap(id))
+    id
   end
 
   # Common Saved Reports button handler routines
@@ -2215,23 +2269,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Following 3 methods moved here to ensure they are loaded at the right time and will be available to all controllers
-  def find_by_id_filtered(db, id, options = {})
-    raise _("Invalid input") unless is_integer?(id)
-
-    db_obj = db.find_by(:id => from_cid(id))
-    if db_obj.nil?
-      msg = _("Selected %{model_name} no longer exists") % {:model_name => ui_lookup(:model => db.to_s)}
-      raise msg
-    end
-
-    Rbac.filtered_object(db_obj, :user => current_user, :named_scope => options[:named_scope]) ||
-      raise(_("User '%{user_id}' is not authorized to access '%{model}' record id '%{record_id}'") %
-              {:user_id   => current_userid,
-               :record_id => id,
-               :model     => ui_lookup(:model => db.to_s)})
-  end
-
   def find_filtered(db)
     user     = current_user
     mfilters = user ? user.get_managed_filters : []
@@ -2282,7 +2319,7 @@ class ApplicationController < ActionController::Base
     rec = model.constantize.find_by_id(id)
     if rec
       begin
-        authrec = find_by_id_filtered(model.constantize, id)
+        authrec = find_record_with_rbac(model.constantize, id)
       rescue ActiveRecord::RecordNotFound
       rescue => @bang
       end
@@ -2315,8 +2352,16 @@ class ApplicationController < ActionController::Base
           _("The user is not authorized for this task or item.") unless role_allows?(:feature => feature)
   end
 
-  def assert_rbac(user, klass, ids)
-    filtered, _ = Rbac.search(:targets => ids.map(&:to_i), :user => user, :class => klass, :results_format => :ids)
+  # Method tests, whether the user has rights to access records sent in request
+  # Params:
+  #   klass - class of accessed objects
+  #   ids   - array of accessed object ids
+  def assert_rbac(klass, ids)
+    filtered, _ = Rbac.search(
+      :targets => ids.map(&:to_i),
+      :user => current_user,
+      :class => klass,
+      :results_format => :ids)
     raise _("Unauthorized object or action") unless ids.length == filtered.length
   end
 

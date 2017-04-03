@@ -16,8 +16,6 @@ before_install: source tools/ci/before_install.sh
 before_script: bundle exec rake $TEST_SUITE:setup
 script: bundle exec rake $TEST_SUITE
 before_cache:
-- mkdir -p vendor/assets
-- mv spec/manageiq/vendor/assets/bower_components vendor/assets
 - cp bower.json vendor/assets/bower_components
 after_script: source tools/ci/after_install.sh
 notifications:

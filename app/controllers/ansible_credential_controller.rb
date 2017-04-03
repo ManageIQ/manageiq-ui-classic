@@ -47,7 +47,7 @@ class AnsibleCredentialController < ApplicationController
     drop_breadcrumb(:name => _("Edit a Credential \"%{name}\"") % {:name => auth.name},
                     :url  => "/ansible_credential/edit/#{params[:id]}")
     @in_a_form = true
-    @id = params[:id]
+    @id = auth.id
   end
 
   private

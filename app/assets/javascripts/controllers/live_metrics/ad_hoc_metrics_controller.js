@@ -38,6 +38,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
 
       dash.page = 1;
       dash.pages = 1;
+      dash.pagesTitle = "";
 
       dash.filterConfig = {
         fields: [],
@@ -57,6 +58,9 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
 
       var _tenant = dash.tenant.value || dash.DEFAULT_TENANT;
       dash.url = '/container_dashboard/data' + dash.providerId  + '/?live=true&tenant=' + _tenant;
+
+      httpUtils.getMetricTags();
+      setAppliedFilters();
     }
 
     var filterChange = function (filters, addOnly) {
@@ -68,9 +72,11 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
       if (dash.filterConfig.appliedFilters.length === 0) {
         dash.applied = false;
         dash.itemSelected = false;
+        dash.tagsLoaded = true;
         dash.items = [];
         dash.page = 1;
         dash.pages = 1;
+        dash.pagesTitle = "";
         dash.filterConfig.resultsCount = 0;
         return;
       }
@@ -88,6 +94,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
         dash.items = [];
         dash.page = 1;
         dash.pages = 1;
+        dash.pagesTitle = "";
         dash.filterChanged = false;
         dash.filterConfig.resultsCount = 0;
         dash.applyFilters();
@@ -109,6 +116,24 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
       // add a filter but only add (do not apply)
       filterChange(null, true);
     };
+
+    var setAppliedFilters = function() {
+      // if user did not send any tags, just exit
+      if (!dash.params.tags) return;
+
+      // add the user defined tags as filters
+      var tags = JSON.parse(dash.params.tags);
+      angular.forEach(tags, function(value, key) {
+        dash.filterConfig.appliedFilters.push({
+          id: key,
+          title: key,
+          value: value,
+        });
+      });
+
+      // apply the new filters
+      filterChange();
+    }
 
     dash.applyFilters = function() {
       dash.applied = true;

@@ -10,8 +10,8 @@
 //= require angular
 //= require angular-drag-and-drop-lists
 //= require angular-patternfly-sass/dist/angular-patternfly
-//= require angular-ui-bootstrap
-//= require angular-ui-bootstrap-tpls
+//= require angular-bootstrap/ui-bootstrap
+//= require angular-bootstrap/ui-bootstrap-tpls
 //= require angular-sanitize
 //= require angular.validators
 //= require moment
@@ -49,7 +49,6 @@
 //= require bootstrap-select
 //= require bootstrap-hover-dropdown
 //= require bootstrap-switch
-//= require angular-ui-bootstrap
 //= require angular-bootstrap-switch
 //= require angular-ui-codemirror
 //= require patternfly-bootstrap-treeview
