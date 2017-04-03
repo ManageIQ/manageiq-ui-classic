@@ -1000,7 +1000,7 @@ module ApplicationHelper
 
     # FIXME remove @layout condition when every controller sets menu_section properly
     item.id.to_sym == active ||
-    item.id.to_sym == @layout.to_sym ? 'active' : nil
+      item.id.to_sym == @layout.to_sym ? 'active' : nil
   end
 
   def section_nav_class(section)
@@ -1019,7 +1019,7 @@ module ApplicationHelper
 
     # FIXME remove to_s, to_sym once all items use symbol ids
     section.contains_item_id?(active.to_s) ||
-    section.contains_item_id?(active.to_sym) ? 'active' : nil
+      section.contains_item_id?(active.to_sym) ? 'active' : nil
   end
 
   def render_flash_msg?
