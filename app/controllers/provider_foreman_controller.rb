@@ -260,13 +260,13 @@ class ProviderForemanController < ApplicationController
   end
   helper_method :textual_group_list
 
-  def find_or_build_provider
-    @provider = provider_class_from_provtype.new if params[:id] == "new"
-    @provider ||= find_record(ManageIQ::Providers::ConfigurationManager, params[:id]).provider # TODO: Why is params[:id] an ExtManagementSystem ID instead of Provider ID?
+  def provider_class
+    ManageIQ::Providers::Foreman::Provider
   end
 
-  def provider_class_from_provtype
-    params[:provtype] = ManageIQ::Providers::Foreman::Provider
+  def find_or_build_provider
+    @provider = provider_class.new if params[:id] == "new"
+    @provider ||= find_record(ManageIQ::Providers::ConfigurationManager, params[:id]).provider # TODO: Why is params[:id] an ExtManagementSystem ID instead of Provider ID?
   end
 
   def features
