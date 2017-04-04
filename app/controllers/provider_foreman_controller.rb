@@ -22,6 +22,10 @@ class ProviderForemanController < ApplicationController
     end
   end
 
+  def concrete_model
+    ManageIQ::Providers::ConfigurationManager
+  end
+
   def managed_group_kls
     ConfigurationProfile
   end
@@ -36,7 +40,7 @@ class ProviderForemanController < ApplicationController
 
   def new
     assert_privileges("#{priviledge_prefix}_add_provider")
-    @provider_manager = ManageIQ::Providers::ConfigurationManager.new
+    @provider_manager = concrete_model.new
     @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
     render_form
   end
@@ -52,7 +56,7 @@ class ProviderForemanController < ApplicationController
     else
       assert_privileges("#{priviledge_prefix}_edit_provider")
       manager_id            = from_cid(params[:miq_grid_checks] || params[:id] || find_checked_items[0])
-      @provider_manager     = find_record(ManageIQ::Providers::ConfigurationManager, manager_id)
+      @provider_manager     = find_record(concrete_model, manager_id)
       @providerdisplay_type = self.class.model_to_name(@provider_manager.type)
       render_form
     end
@@ -62,7 +66,7 @@ class ProviderForemanController < ApplicationController
     assert_privileges("#{priviledge_prefix}_delete_provider")
     checked_items = find_checked_items
     checked_items.push(params[:id]) if checked_items.empty? && params[:id]
-    providers = ManageIQ::Providers::ConfigurationManager.where(:id => checked_items).includes(:provider).collect(&:provider)
+    providers = concrete_model.where(:id => checked_items).includes(:provider).collect(&:provider)
     if providers.empty?
       add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => "providers"), :task => "deletion"}, :error)
     else
@@ -136,7 +140,7 @@ class ProviderForemanController < ApplicationController
       return render :json => {:zone => Zone.in_my_region.size >= 1 ? Zone.in_my_region.first.name : nil}
     end
 
-    manager = find_record(ManageIQ::Providers::ConfigurationManager, params[:id])
+    manager = find_record(concrete_model, params[:id])
     provider = manager.provider
 
     render :json => {:name       => provider.name,
