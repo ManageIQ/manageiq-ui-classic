@@ -16,7 +16,8 @@ ManageIQ.angular.app.service('postService', ['miqService', '$timeout', '$window'
           miqService.miqFlash('error', msg);
           miqService.sparkleOff();
         } else {
-          $window.location.href = redirectURL + '&flash_msg=' + successMsg;
+          miqFlashLater({ message: successMsg });
+          $window.location.href = redirectURL;
         }
       });
     }
@@ -38,7 +39,8 @@ ManageIQ.angular.app.service('postService', ['miqService', '$timeout', '$window'
           miqService.miqFlash('error', msg);
           miqService.sparkleOff();
         } else {
-          $window.location.href = redirectURL + '&flash_msg=' + successMsg;
+          miqFlashLater({ message: successMsg });
+          $window.location.href = redirectURL;
         }
       });
     }
@@ -46,7 +48,8 @@ ManageIQ.angular.app.service('postService', ['miqService', '$timeout', '$window'
 
   this.cancelOperation = function(redirectURL, msg) {
     $timeout(function () {
-      $window.location.href = redirectURL + '&flash_msg=' + msg;
+      miqFlashLater({ message: msg });
+      $window.location.href = redirectURL;
     });
   };
 }]);

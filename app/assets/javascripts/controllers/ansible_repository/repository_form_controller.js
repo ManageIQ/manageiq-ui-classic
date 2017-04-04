@@ -41,7 +41,11 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
   $scope.cancelClicked = function() {
     miqService.sparkleOn();
     var message = $scope.newRecord ? __('Add of Repository cancelled by user.') : sprintf(__('Edit of Repository \"%s\" cancelled by user.'), vm.repositoryModel.name);
-    var url = '/ansible_repository/show_list' + '?flash_msg=' + message + '&escape=true&flash_warning=true&flash_error=false';
+    var url = '/ansible_repository/show_list';
+    miqFlashLater({
+      message: message,
+      level: 'warning',
+    });
     window.location.href = url;
   };
 
@@ -95,11 +99,13 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
         message = sprintf(__('Edit of Repository \"%s\" was successfully initialized.'), vm.repositoryModel.name);
       }
     }
-    var url = '/ansible_repository/show_list' + '?flash_msg=' + message + '&escape=true';
+
+    var url = '/ansible_repository/show_list';
     if (error) {
       miqService.miqFlash('error', message);
       miqService.sparkleOff();
     } else {
+      miqFlashLater({ message: message });
       window.location.href = url;
     }
   };
