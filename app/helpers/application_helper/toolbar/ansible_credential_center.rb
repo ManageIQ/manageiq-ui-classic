@@ -11,12 +11,14 @@ class ApplicationHelper::Toolbar::AnsibleCredentialCenter < ApplicationHelper::T
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Credential'),
           t,
+          :klass => ApplicationHelper::Button::EmbeddedAnsible,
           :url => "/edit"),
         button(
           :embedded_automation_manager_credentials_delete,
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Credential'),
           t,
+          :klass => ApplicationHelper::Button::EmbeddedAnsible,
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: The selected Credential will be permanently removed!")),
       ]
