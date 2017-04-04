@@ -1631,6 +1631,7 @@ Rails.application.routes.draw do
       :get  => %w(
         edit
         download_data
+        download_summary_pdf
         index
         new
         security_group_form_fields
@@ -1662,6 +1663,7 @@ Rails.application.routes.draw do
     :floating_ip              => {
       :get  => %w(
         download_data
+        download_summary_pdf
         edit
         floating_ip_form_fields
         index
@@ -1762,6 +1764,7 @@ Rails.application.routes.draw do
     :network_port             => {
       :get  => %w(
         download_data
+        download_summary_pdf
         index
         show
         show_list
@@ -1792,6 +1795,7 @@ Rails.application.routes.draw do
       :get  => %w(
         add_interface_select
         download_data
+        download_summary_pdf
         edit
         index
         network_router_form_fields
@@ -1831,6 +1835,7 @@ Rails.application.routes.draw do
     :load_balancer             => {
       :get  => %w(
         download_data
+        download_summary_pdf
         index
         show
         show_list
