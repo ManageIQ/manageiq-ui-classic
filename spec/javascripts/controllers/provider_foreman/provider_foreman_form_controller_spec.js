@@ -21,7 +21,7 @@ describe('providerForemanFormController', function() {
     };
 
     $httpBackend = _$httpBackend_;
-    $httpBackend.whenGET('/provider_foreman/provider_foreman_form_fields/new').respond(providerForemanFormResponse);
+    $httpBackend.whenGET('/provider_foreman/form_fields/new').respond(providerForemanFormResponse);
     vm = _$controller_('providerForemanFormController', {
       $scope: $scope,
       providerForemanFormId: 'new',
@@ -70,7 +70,7 @@ describe('providerForemanFormController', function() {
       };
 
       beforeEach(inject(function(_$controller_) {
-        $httpBackend.whenGET('/provider_foreman/provider_foreman_form_fields/12345').respond(providerForemanFormResponse);
+        $httpBackend.whenGET('/provider_foreman/form_fields/12345').respond(providerForemanFormResponse);
         vm = _$controller_('providerForemanFormController',
           {
             $scope: $scope,
