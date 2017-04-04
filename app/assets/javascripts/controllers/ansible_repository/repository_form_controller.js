@@ -8,7 +8,6 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
       name: '',
       description: '',
       scm_type: 'git',
-      manager_resource: {},
       scm_url: '',
       authentication_id: null,
       scm_branch: '',
@@ -16,10 +15,6 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
       scm_delete_on_update: false,
       scm_update_on_launch: false,
     };
-
-    API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAutomationManager')
-      .then(getManagerResource)
-      .catch(miqService.handleFailure);
 
     vm.model = 'repositoryModel';
 
@@ -37,9 +32,9 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
         .then(getRepositoryFormData)
         .catch(miqService.handleFailure);
     } else {
-      vm.afterGet = true;
-      vm.modelCopy = angular.copy( vm.repositoryModel );
-      miqService.sparkleOff();
+      API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAutomationManager')
+        .then(getManagerResource)
+        .catch(miqService.handleFailure);
     }
   };
 
@@ -70,12 +65,16 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
       .catch(miqService.handleFailure);
   };
 
-  var getRepositoryFormData = function(response) {
-    var data = response;
-    Object.assign(vm.repositoryModel, data);
+  function setForm() {
     vm.modelCopy = angular.copy( vm.repositoryModel );
     vm.afterGet = true;
     miqService.sparkleOff();
+  }
+
+  var getRepositoryFormData = function(response) {
+    var data = response;
+    Object.assign(vm.repositoryModel, data);
+    setForm();
   };
 
   var getBack = function(response) {
@@ -117,6 +116,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
     } else {
       vm.repositoryModel.manager_resource = {'href': response.resources[0].href};
     }
+    setForm();
   };
   init();
 }]);
