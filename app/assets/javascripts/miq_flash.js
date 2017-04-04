@@ -48,3 +48,27 @@ function add_flash(msg, level, options) {
 
   $('#flash_msg_div').append(text_div).show();
 }
+
+function _miqFlashLoad() {
+  return JSON.parse(sessionStorage.getItem('flash_msgs') || '[]');
+}
+function _miqFlashSave(arr) {
+  return sessionStorage.setItem('flash_msgs', JSON.stringify(arr));
+}
+
+// stores a flash message (keys: message, level) for later
+function miqFlashLater(object) {
+  var ary = _miqFlashLoad();
+  ary.push(object);
+  _miqFlashSave(ary);
+}
+
+// shows all stored flash messages
+function miqFlashSaved() {
+  var ary = _miqFlashLoad();
+  ary.forEach(function(obj) {
+    add_flash(obj.message, obj.level);
+  });
+
+  _miqFlashSave([]);
+}
