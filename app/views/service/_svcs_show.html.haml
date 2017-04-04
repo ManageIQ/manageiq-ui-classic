@@ -22,11 +22,19 @@
       = miq_tab_content("provisioning", 'default', :class => 'cm-tab') do
         = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_provisioning_group_list}
         - if @job && @job.try(:raw_stdout)
-          = render :partial => "layouts/textual_code_mirror", :locals => {:label => 'Standard Output', :value => @job.raw_stdout, :mode => "htmlmixed", :text_area_id => "provision_output"}
+          = render :partial => "layouts/textual_code_mirror",
+                   :locals  => {:label        => _('Standard Output'),
+                                :value        => @job.raw_stdout.force_encoding("UTF-8"),
+                                :mode         => "htmlmixed",
+                                :text_area_id => "provision_output"}
       - if job
         = miq_tab_content("retirement", 'default', :class => 'cm-tab') do
           = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_retirement_group_list}
-          = render :partial => "layouts/textual_code_mirror", :locals => {:label => 'Standard Output', :value => job.raw_stdout, :mode => "htmlmixed", :text_area_id => "retirement_output"}
+          = render :partial => "layouts/textual_code_mirror",
+                   :locals  => {:label        => _('Standard Output'),
+                                :value        => job.raw_stdout.force_encoding("UTF-8"),
+                                :mode         => "htmlmixed",
+                                :text_area_id => "retirement_output"}
 :javascript
   miq_tabs_init('#services_tab');
   miq_refresh_code_mirror();
