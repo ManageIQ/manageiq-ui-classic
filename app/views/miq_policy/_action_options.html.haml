@@ -348,10 +348,10 @@
           = label_tag('inventory_localhost', _("Localhost"), "title" => _('Run on localhost'))
           %br
           = radio_button_tag('inventory', "event_target", false,
-            "title"            => _('Run on the target machine of the alert'),
+            "title"            => _('Run on the target of the Policy Event'),
             "checked"          => @edit[:new][:inventory_type] == "event_target",
             "data-miq_observe" => observe)
-          = label_tag('inventory_event_target', _("Target Machine"), "title" => _('Run on the target machine of the alert'))
+          = label_tag('inventory_event_target', _("Target Machine"), "title" => _('Run on the target of the Policy Event'))
           %br
           = radio_button_tag('inventory', "manual", false,
             "title" => _('Enter a comma separated list of IP or DNS names'),
