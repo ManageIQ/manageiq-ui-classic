@@ -722,7 +722,17 @@ class MiqAeClassController < ApplicationController
     @edit[:new][:scope] = "instance"
     @edit[:new][:language] = "ruby"
     @edit[:new][:available_locations] = MiqAeMethod.available_locations
+    @edit[:new][:available_expression_objects] = MiqAeMethod.available_expression_objects.sort
     @edit[:new][:location] = @ae_method.location.nil? ? "inline" : @ae_method.location
+    if @edit[:new][:location] == "expression"
+       hash = YAML.load(@ae_method.data)
+       if hash[:db] && hash[:expression]
+         @edit[:new][:expression] = hash[:expression]
+         expression_setup(hash[:db])
+       end
+     else
+       @edit[:new][:data] = @ae_method.data.to_s
+     end
     @edit[:new][:data] = @ae_method.data.to_s
     if @edit[:new][:location] == "inline" && !@ae_method.data
       @edit[:new][:data] = MiqAeMethod.default_method_text
@@ -745,6 +755,18 @@ class MiqAeClassController < ApplicationController
     session[:edit] = @edit
     session[:changed] = @changed = false
   end
+
+  def expression_setup(db)
+    @edit[:expression_method] = true
+    @edit[:new][:exp_object] = db
+    adv_search_build(db)
+  end
+ 
+  def expression_cleanup
+    @edit[:expression_method] = false
+    # @edit[:new][:expression]  = nil
+    # @edit[:expression] = nil
+   end
 
   def ae_class_for_instance_or_method(record)
     record.id ? record.ae_class : MiqAeClass.find_by_id(from_cid(x_node.split("-").last))
@@ -844,6 +866,14 @@ class MiqAeClassController < ApplicationController
       return unless load_edit("aemethod_edit__#{params[:id]}", "replace_cell__explorer")
       @prev_location = @edit[:new][:location]
       get_method_form_vars
+
+      if @edit[:new][:location] == 'expression'
+        @edit[:new][:exp_object] ||= @edit[:new][:available_expression_objects].first
+        exp_object = params[:cls_exp_object] || params[:exp_object] || @edit[:new][:exp_object]
+        expression_setup(exp_object) if exp_object
+      else
+         expression_cleanup
+      end
       if row_selected_in_grid?
         @refresh_div = "class_methods_div"
         @refresh_partial = "class_methods"
@@ -869,6 +899,7 @@ class MiqAeClassController < ApplicationController
       @edit[:default_verify_status] = @edit[:new][:location] == "inline" && @edit[:new][:data] && @edit[:new][:data] != ""
       render :update do |page|
         page << javascript_prologue
+        page.replace_html('form_div', :partial => 'method_form', :locals => {:prefix => ""}) if @edit[:new][:location] == 'expression'
         page.replace_html(@refresh_div, :partial => @refresh_partial)  if @refresh_div && @prev_location != @edit[:new][:location]
         # page.replace_html("hider_1", :partial=>"method_data", :locals=>{:field_name=>@field_name})  if @prev_location != @edit[:new][:location]
         if params[:cls_field_datatype]
@@ -927,6 +958,7 @@ class MiqAeClassController < ApplicationController
           end
         end
         page << javascript_for_miq_button_visibility_changed(@changed)
+        page << "miqSparkle(false)"
       end
     end
   end
@@ -1175,6 +1207,11 @@ class MiqAeClassController < ApplicationController
       @changed = session[:changed] = (@edit[:new] != @edit[:current])
       replace_right_cell(:replace_trees => [:ae])
     end
+  end
+
+  def data_for_expression
+    {:db         => @edit[:new][:exp_object],
+     :expression => @edit[:new][:expression]}.to_yaml
   end
 
   def create_method
@@ -2147,6 +2184,11 @@ class MiqAeClassController < ApplicationController
     miqaemethod.location = @edit[:new][:location]
     miqaemethod.language = @edit[:new][:language]
     miqaemethod.data = @edit[:new][:data]
+    miqaemethod.data = if @edit[:new][:location] == 'expression'
+                         data_for_expression
+                       else
+                          @edit[:new][:data]
+                       end
     miqaemethod.class_id = from_cid(@edit[:ae_class_id])
   end
 
@@ -2502,6 +2544,10 @@ class MiqAeClassController < ApplicationController
       inputs = @record.inputs
       @sb[:squash_state] = true
       @sb[:active_tab] = "methods"
+      if @record.location == 'expression'
+        hash = YAML.load(@record.data)
+        @expression = hash[:expression] ? MiqExpression.new(hash[:expression]).to_human : ""
+      end
       domain_overrides
       set_right_cell_text(x_node, @record)
     end
