@@ -210,7 +210,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     var retirement = catalog_item['config_info']['retirement'];
     retirement['hosts'] = configData.retirement_inventory;
     retirement['extra_vars'] = configData.retirement_variables;
-    if (angular.isDefined(vm.catalogItemModel.retirement_repository_id) && configData.retirement_repository_id !== '') {
+    if (vm.catalogItemModel.retirement_repository_id !== undefined && configData.retirement_repository_id !== '') {
       retirement['repository_id'] = configData.retirement_repository_id;
       retirement['playbook_id'] = configData.retirement_playbook_id;
       retirement['credential_id'] = configData.retirement_machine_credential_id;

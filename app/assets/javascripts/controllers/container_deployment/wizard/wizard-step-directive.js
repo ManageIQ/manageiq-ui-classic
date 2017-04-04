@@ -72,7 +72,7 @@ angular.module('miq.wizard').directive('miqWizardStep', function() {
 
       $scope.getReviewSteps = function() {
         var reviewSteps = $scope.getEnabledSteps().filter(function(step){
-          return angular.isDefined(step.reviewTemplate);
+          return step.reviewTemplate !== undefined;
         });
         return reviewSteps;
       };
@@ -231,7 +231,7 @@ angular.module('miq.wizard').directive('miqWizardStep', function() {
             watchSelectedStep();
 
             // Make sure current step is not undefined
-            if (angular.isDefined($scope.currentStep)) {
+            if ($scope.currentStep !== undefined) {
               $scope.currentStep = step.wzTitle;
             }
 

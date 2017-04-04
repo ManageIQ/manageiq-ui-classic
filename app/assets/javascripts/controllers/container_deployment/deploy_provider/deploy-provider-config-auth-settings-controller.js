@@ -50,7 +50,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
     };
 
     var validString = function(value) {
-      return angular.isDefined(value) && value.length > 0;
+      return value !== undefined && value.length > 0;
     };
 
     var validHtPassword = function() {
@@ -75,7 +75,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
       }
 
       return (
-        angular.isDefined($scope.data.authentication.ldap) &&
+        $scope.data.authentication.ldap !== undefined &&
         validString($scope.data.authentication.ldap.id) &&
         validString($scope.data.authentication.ldap.email) &&
         validString($scope.data.authentication.ldap.name) &&
@@ -95,7 +95,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
       }
 
       return (
-        angular.isDefined($scope.data.authentication.requestHeader) &&
+        $scope.data.authentication.requestHeader !== undefined &&
         validString($scope.data.authentication.requestHeader.challengeUrl) &&
         validString($scope.data.authentication.requestHeader.loginUrl) &&
         validString($scope.data.authentication.requestHeader.clientCA) &&
@@ -109,7 +109,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
       }
 
       return (
-        angular.isDefined($scope.data.authentication.openId) &&
+        $scope.data.authentication.openId !== undefined &&
         validString($scope.data.authentication.openId.clientId) &&
         validString($scope.data.authentication.openId.clientSecret) &&
         validString($scope.data.authentication.openId.subClaim) &&
@@ -124,7 +124,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
       }
 
       return (
-        angular.isDefined($scope.data.authentication.google) &&
+        $scope.data.authentication.google !== undefined &&
         validString($scope.data.authentication.google.clientId) &&
         validString($scope.data.authentication.google.clientSecret) &&
         validString($scope.data.authentication.google.hostedDomain)
@@ -137,7 +137,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
       }
 
       return (
-        angular.isDefined($scope.data.authentication.github) &&
+        $scope.data.authentication.github !== undefined &&
         validString($scope.data.authentication.github.clientId) &&
         validString($scope.data.authentication.github.clientSecret)
       );
