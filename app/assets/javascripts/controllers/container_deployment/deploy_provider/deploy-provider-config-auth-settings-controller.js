@@ -75,7 +75,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
       }
 
       return (
-        !angular.isUndefined($scope.data.authentication.ldap) &&
+        angular.isDefined($scope.data.authentication.ldap) &&
         validString($scope.data.authentication.ldap.id) &&
         validString($scope.data.authentication.ldap.email) &&
         validString($scope.data.authentication.ldap.name) &&
@@ -95,7 +95,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
       }
 
       return (
-        !angular.isUndefined($scope.data.authentication.requestHeader) &&
+        angular.isDefined($scope.data.authentication.requestHeader) &&
         validString($scope.data.authentication.requestHeader.challengeUrl) &&
         validString($scope.data.authentication.requestHeader.loginUrl) &&
         validString($scope.data.authentication.requestHeader.clientCA) &&
@@ -109,7 +109,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
       }
 
       return (
-        !angular.isUndefined($scope.data.authentication.openId) &&
+        angular.isDefined($scope.data.authentication.openId) &&
         validString($scope.data.authentication.openId.clientId) &&
         validString($scope.data.authentication.openId.clientSecret) &&
         validString($scope.data.authentication.openId.subClaim) &&
@@ -124,7 +124,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
       }
 
       return (
-        !angular.isUndefined($scope.data.authentication.google) &&
+        angular.isDefined($scope.data.authentication.google) &&
         validString($scope.data.authentication.google.clientId) &&
         validString($scope.data.authentication.google.clientSecret) &&
         validString($scope.data.authentication.google.hostedDomain)
@@ -137,7 +137,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
       }
 
       return (
-        !angular.isUndefined($scope.data.authentication.github) &&
+        angular.isDefined($scope.data.authentication.github) &&
         validString($scope.data.authentication.github.clientId) &&
         validString($scope.data.authentication.github.clientSecret)
       );

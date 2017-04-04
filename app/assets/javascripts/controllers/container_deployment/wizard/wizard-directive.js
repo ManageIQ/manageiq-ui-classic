@@ -72,7 +72,7 @@ angular.module('miq.wizard').directive('miqWizard', function () {
       this.getReviewSteps = function() {
         return $scope.steps.filter(function(step){
           return !step.disabled &&
-            (!angular.isUndefined(step.reviewTemplate) || step.getReviewSteps().length > 0);
+            (angular.isDefined(step.reviewTemplate) || step.getReviewSteps().length > 0);
         });
       };
 
@@ -196,7 +196,7 @@ angular.module('miq.wizard').directive('miqWizard', function () {
           watchSelectedStep();
 
           // Make sure current step is not undefined
-          if (!angular.isUndefined($scope.currentStep)) {
+          if (angular.isDefined($scope.currentStep)) {
             $scope.currentStep = step.wzTitle;
           }
 
