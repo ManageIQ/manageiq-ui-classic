@@ -454,7 +454,7 @@ module Mixins
     def find_record(model, id)
       raise _("Invalid input") unless is_integer?(from_cid(id))
       begin
-        record = model.where(:id => from_cid(id)).first
+        record = Rbac.filtered(model.where(:id => from_cid(id))).first
       rescue ActiveRecord::RecordNotFound, StandardError => ex
         if @explorer
           self.x_node = "root"
@@ -497,7 +497,7 @@ module Mixins
       assert_privileges("#{priviledge_prefix}_delete_provider")
       checked_items = find_checked_items
       checked_items.push(params[:id]) if checked_items.empty? && params[:id]
-      providers = concrete_model.where(:id => checked_items).includes(:provider).collect(&:provider)
+      providers = Rbac.filtered(concrete_model.where(:id => checked_items).includes(:provider).collect(&:provider))
       if providers.empty?
         add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => "providers"), :task => "deletion"}, :error)
       else
