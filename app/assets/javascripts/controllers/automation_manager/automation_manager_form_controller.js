@@ -26,14 +26,14 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     $scope.automationManagerModel.log_password = '';
     $scope.automationManagerModel.log_verify = '';
 
-    $http.get('/automation_manager/automation_manager_form_fields/' + automationManagerFormId)
+    $http.get('/automation_manager/form_fields/' + automationManagerFormId)
       .then(getAutomationManagerNewFormDataComplete)
       .catch(miqService.handleFailure);
   } else {
     $scope.newRecord = false;
     miqService.sparkleOn();
 
-    $http.get('/automation_manager/automation_manager_form_fields/' + automationManagerFormId)
+    $http.get('/automation_manager/form_fields/' + automationManagerFormId)
       .then(getAutomationManagerFormDataComplete)
       .catch(miqService.handleFailure);
 

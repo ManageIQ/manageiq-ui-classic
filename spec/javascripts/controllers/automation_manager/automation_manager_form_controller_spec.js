@@ -21,7 +21,7 @@ describe('automationManagerFormController', function() {
     };
 
     $httpBackend = _$httpBackend_;
-    $httpBackend.whenGET('/automation_manager/automation_manager_form_fields/new').respond(automationManagerFormResponse);
+    $httpBackend.whenGET('/automation_manager/form_fields/new').respond(automationManagerFormResponse);
     $controller = _$controller_('automationManagerFormController', {
       $scope: $scope,
       automationManagerFormId: 'new',
@@ -70,7 +70,7 @@ describe('automationManagerFormController', function() {
       };
 
       beforeEach(inject(function(_$controller_) {
-        $httpBackend.whenGET('/automation_manager/automation_manager_form_fields/12345').respond(automationManagerFormResponse);
+        $httpBackend.whenGET('/automation_manager/form_fields/12345').respond(automationManagerFormResponse);
         $controller = _$controller_('automationManagerFormController',
           {
             $scope: $scope,

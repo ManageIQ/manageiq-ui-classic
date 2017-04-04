@@ -22,6 +22,10 @@ class ProviderForemanController < ApplicationController
     end
   end
 
+  def concrete_model
+    ManageIQ::Providers::ConfigurationManager
+  end
+
   def managed_group_kls
     ConfigurationProfile
   end
@@ -30,61 +34,8 @@ class ProviderForemanController < ApplicationController
     'configuration_manager'
   end
 
-  def new
-    assert_privileges("provider_foreman_add_provider")
-    @provider_manager = ManageIQ::Providers::ConfigurationManager.new
-    @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
-    render_form
-  end
-
-  def edit
-    @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
-    case params[:button]
-    when "cancel"
-      cancel_provider
-    when "save"
-      add_provider
-      save_provider
-    else
-      assert_privileges("provider_foreman_edit_provider")
-      manager_id            = from_cid(params[:miq_grid_checks] || params[:id] || find_checked_items[0])
-      @provider_manager     = find_record(ManageIQ::Providers::ConfigurationManager, manager_id)
-      @providerdisplay_type = self.class.model_to_name(@provider_manager.type)
-      render_form
-    end
-  end
-
-  def delete
-    assert_privileges("provider_foreman_delete_provider") # TODO: Privelege name should match generic ways from Infra and Cloud
-    checked_items = find_checked_items # TODO: Checked items are managers, not providers.  Make them providers
-    checked_items.push(params[:id]) if checked_items.empty? && params[:id]
-    providers = ManageIQ::Providers::ConfigurationManager.where(:id => checked_items).includes(:provider).collect(&:provider)
-    if providers.empty?
-      add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => "providers"), :task => "deletion"}, :error)
-    else
-      providers.each do |provider|
-        AuditEvent.success(
-          :event        => "provider_record_delete_initiated",
-          :message      => "[#{provider.name}] Record delete initiated",
-          :target_id    => provider.id,
-          :target_class => provider.type,
-          :userid       => session[:userid]
-        )
-        provider.destroy_queue
-      end
-
-      add_flash(n_("Delete initiated for %{count} Provider",
-                   "Delete initiated for %{count} Providers",
-                   providers.length) % {:count => providers.length})
-    end
-    replace_right_cell
-  end
-
-  def refresh
-    assert_privileges("provider_foreman_refresh_provider")
-    @explorer = true
-    manager_button_operation('refresh_ems', _('Refresh'))
-    replace_right_cell
+  def privilege_prefix
+    'provider_foreman'
   end
 
   def provision
@@ -123,23 +74,6 @@ class ProviderForemanController < ApplicationController
       tagging_edit('ConfiguredSystem', false)
     end
     render_tagging_form
-  end
-
-  def provider_foreman_form_fields
-    assert_privileges("provider_foreman_edit_provider")
-    # set value of read only zone text box, when there is only single zone
-    if params[:id] == "new"
-      return render :json => {:zone => Zone.in_my_region.size >= 1 ? Zone.in_my_region.first.name : nil}
-    end
-
-    manager = find_record(ManageIQ::Providers::ConfigurationManager, params[:id])
-    provider = manager.provider
-
-    render :json => {:name       => provider.name,
-                     :zone       => provider.zone.name,
-                     :url        => provider.url,
-                     :verify_ssl => provider.verify_ssl,
-                     :log_userid => provider.authentications.first.userid}
   end
 
   def load_or_clear_adv_search
@@ -259,11 +193,6 @@ class ProviderForemanController < ApplicationController
 
   def provider_class
     ManageIQ::Providers::Foreman::Provider
-  end
-
-  def find_or_build_provider
-    @provider = provider_class.new if params[:id] == "new"
-    @provider ||= find_record(ManageIQ::Providers::ConfigurationManager, params[:id]).provider # TODO: Why is params[:id] an ExtManagementSystem ID instead of Provider ID?
   end
 
   def features
