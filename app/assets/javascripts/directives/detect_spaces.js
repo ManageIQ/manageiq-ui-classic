@@ -3,7 +3,7 @@ ManageIQ.angular.app.directive('detectSpaces', function() {
     require: 'ngModel',
     link: function (_scope, _elem, _attrs, ctrl) {
       ctrl.$validators.detectedSpaces = function (modelValue, viewValue) {
-        if (angular.isUndefined(viewValue) || (viewValue !== undefined && !detectedSpaces(viewValue))) {
+        if (viewValue === undefined || (viewValue !== undefined && !detectedSpaces(viewValue))) {
           return true;
         }
         return false;

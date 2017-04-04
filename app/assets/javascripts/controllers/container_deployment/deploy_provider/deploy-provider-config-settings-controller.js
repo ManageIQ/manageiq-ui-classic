@@ -25,7 +25,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
     };
 
     $scope.validateStorageNode = function() {
-      if (angular.isUndefined($scope.data.storageNodes) || $scope.data.storageNodes.length != 1) {
+      if ($scope.data.storageNodes === undefined || $scope.data.storageNodes.length != 1) {
         if ($scope.data.serverConfigType == 'integratedNFS') {
           $scope.data.serverConfigType = 'none';
         }
@@ -36,7 +36,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
     };
 
     $scope.validateInfraNode = function() {
-      if (angular.isUndefined($scope.data.infrastructureNodes) || $scope.data.infrastructureNodes.length == 0) {
+      if ($scope.data.infrastructureNodes === undefined || $scope.data.infrastructureNodes.length == 0) {
         $scope.data.configureRouter = false;
         return false;
       }

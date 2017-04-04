@@ -130,7 +130,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
         });
 
         // set parameter value (use 'true' if empty)
-        var filterValue = angular.isUndefined(filter[1]) ? true : filter[1];
+        var filterValue = filter[1] === undefined ? true : filter[1];
         filterValue = decodeURIComponent(filterValue);
 
         var filterField = _.find(fields, function(field) {
@@ -668,7 +668,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
           _this.displayFilters.push(summaryItem.displayType);
         }
 
-        if (angular.isUndefined(item.severity)) {
+        if (item.severity === undefined) {
           item.severity = 'info';
         }
         summaryItem[item.severity].push(item);
@@ -684,7 +684,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
     if (response.results && response.results.length > 0) {
       newState = response.results[0];
 
-      if (angular.isUndefined(_this.editItem.alert_actions)) {
+      if (_this.editItem.alert_actions === undefined) {
         _this.editItem.alert_actions = [];
       }
       _this.editItem.alert_actions.push(newState);

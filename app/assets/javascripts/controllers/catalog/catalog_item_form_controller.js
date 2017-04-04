@@ -68,7 +68,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
   };
 
   var getRemoveResourcesTypes = function () {
-    if (angular.isUndefined(vm.catalogItemModel.retirement_repository_id) || vm.catalogItemModel.retirement_repository_id === '') {
+    if (vm.catalogItemModel.retirement_repository_id === undefined || vm.catalogItemModel.retirement_repository_id === '') {
       vm.catalogItemModel.retirement_remove_resources = 'yes_without_playbook';
       vm['remove_resources_types'] = {
         "No": "no_without_playbook",

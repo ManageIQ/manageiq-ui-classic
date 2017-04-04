@@ -58,7 +58,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
         return true;
       }
 
-      if (angular.isUndefined($scope.data.authentication.htPassword)) {
+      if ($scope.data.authentication.htPassword === undefined) {
         return false;
       }
 

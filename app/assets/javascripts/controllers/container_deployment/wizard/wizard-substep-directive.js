@@ -23,35 +23,35 @@ angular.module('miq.wizard').directive('miqWizardSubstep', function() {
     require: '^miq-wizard-step',
     templateUrl: '/static/wizard-substep.html',
     controller: ['$scope', function($scope) {
-      if (angular.isUndefined($scope.nextEnabled)) {
+      if ($scope.nextEnabled === undefined) {
         $scope.nextEnabled = true;
       }
-      if (angular.isUndefined($scope.prevEnabled)) {
+      if ($scope.prevEnabled === undefined) {
         $scope.prevEnabled = true;
       }
-      if (angular.isUndefined($scope.nextTooltip)) {
+      if ($scope.nextTooltip === undefined) {
         $scope.nextEnabled = true;
       }
-      if (angular.isUndefined($scope.prevToolitp)) {
+      if ($scope.prevToolitp === undefined) {
         $scope.prevEnabled = true;
       }
-      if (angular.isUndefined($scope.showReviewDetails)) {
+      if ($scope.showReviewDetails === undefined) {
         $scope.showReviewDetails = false;
       }
-      if (angular.isUndefined($scope.stepPriority)) {
+      if ($scope.stepPriority === undefined) {
         $scope.stepPriority = 999;
       } else {
         $scope.stepPriority = parseInt($scope.stepPriority);
       }
-      if (angular.isUndefined($scope.okToNavAway)) {
+      if ($scope.okToNavAway === undefined) {
         $scope.okToNavAway = true;
       }
-      if (angular.isUndefined($scope.allowClickNav)) {
+      if ($scope.allowClickNav === undefined) {
         $scope.allowClickNav = true;
       }
 
       $scope.isPrevEnabled = function () {
-        var enabled = angular.isUndefined($scope.prevEnabled) || $scope.prevEnabled;
+        var enabled = $scope.prevEnabled === undefined || $scope.prevEnabled;
         if ($scope.substeps) {
           angular.forEach($scope.getEnabledSteps(), function(step) {
             enabled = enabled && step.prevEnabled;

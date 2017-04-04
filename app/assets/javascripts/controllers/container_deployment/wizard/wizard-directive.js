@@ -35,7 +35,7 @@ angular.module('miq.wizard').directive('miqWizard', function () {
         $scope.stepCount = 0;
       }
 
-      if (angular.isUndefined($scope.wizardReady)) {
+      if ($scope.wizardReady === undefined) {
         $scope.wizardReady = true;
       }
 
@@ -115,7 +115,7 @@ angular.module('miq.wizard').directive('miqWizard', function () {
       //if edit mode is truthy, then all steps are marked as completed
       $scope.$watch('[editMode, steps.length]', function () {
         var editMode = $scope.editMode;
-        if (angular.isUndefined(editMode) || (editMode === null)) {
+        if (editMode === undefined || (editMode === null)) {
           return;
         }
 

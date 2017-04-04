@@ -210,7 +210,7 @@ angular.module('alertsCenter').controller('alertsOverviewController',
       var foundGroup;
       var groupCategory = category;
 
-      if (angular.isUndefined(category)) {
+      if (category === undefined) {
         foundGroup = vm.unGroupedGroup;
       } else {
         angular.forEach(vm.groups, function(nextGroup) {

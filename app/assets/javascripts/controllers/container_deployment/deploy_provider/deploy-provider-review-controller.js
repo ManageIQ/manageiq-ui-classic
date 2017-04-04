@@ -5,9 +5,9 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
 
     // Find the data!
     var next = $scope;
-    while (angular.isUndefined($scope.data)) {
+    while ($scope.data === undefined) {
       next = next.$parent;
-      if (angular.isUndefined(next)) {
+      if (next === undefined) {
         $scope.data = {};
       } else {
         $scope.data = next.wizardData;
