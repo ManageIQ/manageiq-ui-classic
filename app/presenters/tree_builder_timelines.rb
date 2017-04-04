@@ -51,6 +51,8 @@ class TreeBuilderTimelines < TreeBuilder
   end
 
   def x_get_tree_hash_kids(parent, count_only)
+    subsection_reports = MiqReport.where(:name => parent[:subsections].select {|r| r.kind_of? String})
+                           .pluck(:name, :id).to_h
     subsections = parent[:subsections].map do |item|
       if item.kind_of?(Array)
         title = item.first
@@ -63,19 +65,16 @@ class TreeBuilderTimelines < TreeBuilder
           :cfmeNoClick => true,
           :subsections => item.last
         }
-      else
-        report = MiqReport.find_by(:name => item)
-        if report.present?
-          {
-            :text        => item,
-            :id          => "#{report.id}__#{item}",
-            :icon        => "fa fa-arrow-circle-o-right",
-            :tip         => _("Report: %{:name}" % {:name => item}),
-            :subsections => []
-          }
-        end
+      elsif subsection_reports[item]
+        {
+          :text        => item,
+          :id          => "#{subsection_reports[item]}__#{item}",
+          :icon        => "fa fa-arrow-circle-o-right",
+          :tip         => _("Report: %{:name}" % {:name => item}),
+          :subsections => []
+        }
       end
-    end
+     end
     count_only_or_objects(count_only, subsections.compact)
   end
 end
