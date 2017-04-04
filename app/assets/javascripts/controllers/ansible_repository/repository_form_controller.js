@@ -1,3 +1,5 @@
+/* global miqFlashLater */
+
 ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'repositoryId', 'miqService', 'API', function($scope, repositoryId,  miqService, API) {
   var vm = this;
 

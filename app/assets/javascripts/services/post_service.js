@@ -1,3 +1,5 @@
+/* global miqFlashLater */
+
 ManageIQ.angular.app.service('postService', ['miqService', '$timeout', '$window', 'API', function(miqService, $timeout, $window, API) {
 
   this.saveRecord = function(apiURL, redirectURL, updateObject, successMsg) {

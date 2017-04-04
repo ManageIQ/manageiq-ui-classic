@@ -23,30 +23,32 @@ function add_flash(msg, level, options) {
       cls.alert = 'alert alert-success';
       cls.icon = 'pficon pficon-ok';
       break;
+    default:
+      throw("add_flash: unknown level: " + level);
   }
 
-  var icon_span = $('<span class="' + cls.icon + '"></span>');
+  var iconSpan = $('<span class="' + cls.icon + '"></span>');
 
-  var text_strong = $('<strong></strong>');
-  text_strong.text(msg);
+  var textStrong = $('<strong></strong>');
+  textStrong.text(msg);
 
-  var alert_div = $('<div class="' + cls.alert + '"></div>');
-  alert_div.append(icon_span, text_strong);
+  var alertDiv = $('<div class="' + cls.alert + '"></div>');
+  alertDiv.append(iconSpan, textStrong);
 
-  var text_div = $('<div class="flash_text_div"></div>');
-  text_div.attr('title', __('Click to remove message'));
-  text_div.on('click', function() {
-    text_div.remove();
+  var textDiv = $('<div class="flash_text_div"></div>');
+  textDiv.attr('title', __('Click to remove message'));
+  textDiv.on('click', function() {
+    textDiv.remove();
   });
-  text_div.append(alert_div);
+  textDiv.append(alertDiv);
 
   // if options.id is provided, only one flash message with that id may exist
   if (options.id) {
     $('#' + options.id).filter('#flash_msg_div > *').remove();
-    text_div.attr('id', options.id);
+    textDiv.attr('id', options.id);
   }
 
-  $('#flash_msg_div').append(text_div).show();
+  $('#flash_msg_div').append(textDiv).show();
 }
 
 function _miqFlashLoad() {

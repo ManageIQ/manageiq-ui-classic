@@ -1,4 +1,4 @@
-/* global dialogFieldRefresh miqBrowserDetect miqExpressionPrefill miqGridCheckAll miqGridGetCheckedRows miqLoadTL miqMenu miqValueStylePrefill performFiltering */
+/* global dialogFieldRefresh miqBrowserDetect miqExpressionPrefill miqGridCheckAll miqGridGetCheckedRows miqLoadTL miqMenu miqValueStylePrefill performFiltering add_flash miqFlashLater */
 
 // MIQ specific JS functions
 
