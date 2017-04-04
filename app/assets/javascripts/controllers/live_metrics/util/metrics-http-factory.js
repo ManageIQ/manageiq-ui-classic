@@ -107,15 +107,7 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
     var refreshGraph = function() {
       dash.loadCount = 0;
       dash.loadingData = true;
-
-      // TODO: becaouse of a bug in Angular-Patternfly version < v3.21.0 we need this hack
-      // it cleans the graph cache, so we can draw new data on a chart that already has some other data.
-      // please remove the folowing 2 lines once Angular-Patternfly version is >= v3.21
-      var chartScope = $('#ad-hoc-metrics-chartlineChart').scope();
-      if (chartScope) chartScope.chartConfig.data.columns = [];
-
       dash.chartData = {};
-
       dash.selectedItems = dash.items.filter(function(item) { return item.selected });
 
       for (var i = 0; i < dash.selectedItems.length; i++) {
