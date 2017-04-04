@@ -30,8 +30,12 @@ class ProviderForemanController < ApplicationController
     'configuration_manager'
   end
 
+  def priviledge_prefix
+    'provider_foreman'
+  end
+
   def new
-    assert_privileges("provider_foreman_add_provider")
+    assert_privileges("#{priviledge_prefix}_add_provider")
     @provider_manager = ManageIQ::Providers::ConfigurationManager.new
     @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
     render_form
@@ -46,7 +50,7 @@ class ProviderForemanController < ApplicationController
       add_provider
       save_provider
     else
-      assert_privileges("provider_foreman_edit_provider")
+      assert_privileges("#{priviledge_prefix}_edit_provider")
       manager_id            = from_cid(params[:miq_grid_checks] || params[:id] || find_checked_items[0])
       @provider_manager     = find_record(ManageIQ::Providers::ConfigurationManager, manager_id)
       @providerdisplay_type = self.class.model_to_name(@provider_manager.type)
@@ -55,8 +59,8 @@ class ProviderForemanController < ApplicationController
   end
 
   def delete
-    assert_privileges("provider_foreman_delete_provider") # TODO: Privelege name should match generic ways from Infra and Cloud
-    checked_items = find_checked_items # TODO: Checked items are managers, not providers.  Make them providers
+    assert_privileges("#{priviledge_prefix}_delete_provider")
+    checked_items = find_checked_items
     checked_items.push(params[:id]) if checked_items.empty? && params[:id]
     providers = ManageIQ::Providers::ConfigurationManager.where(:id => checked_items).includes(:provider).collect(&:provider)
     if providers.empty?
@@ -81,7 +85,7 @@ class ProviderForemanController < ApplicationController
   end
 
   def refresh
-    assert_privileges("provider_foreman_refresh_provider")
+    assert_privileges("#{priviledge_prefix}_refresh_provider")
     @explorer = true
     manager_button_operation('refresh_ems', _('Refresh'))
     replace_right_cell

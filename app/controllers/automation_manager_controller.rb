@@ -34,8 +34,12 @@ class AutomationManagerController < ApplicationController
     'automation_manager'
   end
 
+  def priviledge_prefix
+    'automation_manager'
+  end
+
   def new
-    assert_privileges("automation_manager_add_provider")
+    assert_privileges("#{priviledge_prefix}_add_provider")
     @provider_manager = ManageIQ::Providers::AnsibleTower::AutomationManager.new
     @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
     render_form
@@ -50,7 +54,7 @@ class AutomationManagerController < ApplicationController
       add_provider
       save_provider
     else
-      assert_privileges("automation_manager_edit_provider")
+      assert_privileges("#{priviledge_prefix}_edit_provider")
       manager_id            = from_cid(params[:miq_grid_checks] || params[:id] || find_checked_items[0])
       @provider_manager     = find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, manager_id)
       @providerdisplay_type = self.class.model_to_name(@provider_manager.type)
@@ -59,7 +63,7 @@ class AutomationManagerController < ApplicationController
   end
 
   def delete
-    assert_privileges("automation_manager_delete_provider")
+    assert_privileges("#{priviledge_prefix}_delete_provider")
     checked_items = find_checked_items
     checked_items.push(params[:id]) if checked_items.empty? && params[:id]
     providers = ManageIQ::Providers::AutomationManager.where(:id => checked_items).includes(:provider).collect(&:provider)
@@ -85,7 +89,7 @@ class AutomationManagerController < ApplicationController
   end
 
   def refresh
-    assert_privileges("automation_manager_refresh_provider")
+    assert_privileges("#{priviledge_prefix}_refresh_provider")
     @explorer = true
     manager_button_operation('refresh_ems', _('Refresh'))
     replace_right_cell
