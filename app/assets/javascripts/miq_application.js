@@ -331,9 +331,7 @@ function miqValidateButtons(h_or_s, prefix) {
   var buttonsOnId = prefix + 'validate_buttons_on';
   var buttonsOffId = prefix + 'validate_buttons_off';
 
-  if (miqDomElementExists('flash_msg_div')) {
-    $('flash_msg_div').hide();
-  }
+  $('#flash_msg_div').hide();
 
   if (h_or_s == "show") {
     if (miqDomElementExists(buttonsOnId)) {
