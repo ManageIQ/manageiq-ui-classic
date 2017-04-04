@@ -42,62 +42,6 @@ class AutomationManagerController < ApplicationController
     'automation_manager'
   end
 
-  def new
-    assert_privileges("#{priviledge_prefix}_add_provider")
-    @provider_manager = concrete_model.new
-    @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
-    render_form
-  end
-
-  def edit
-    @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
-    case params[:button]
-    when "cancel"
-      cancel_provider
-    when "save"
-      add_provider
-      save_provider
-    else
-      assert_privileges("#{priviledge_prefix}_edit_provider")
-      manager_id            = from_cid(params[:miq_grid_checks] || params[:id] || find_checked_items[0])
-      @provider_manager     = find_record(concrete_model, manager_id)
-      @providerdisplay_type = self.class.model_to_name(@provider_manager.type)
-      render_form
-    end
-  end
-
-  def delete
-    assert_privileges("#{priviledge_prefix}_delete_provider")
-    checked_items = find_checked_items
-    checked_items.push(params[:id]) if checked_items.empty? && params[:id]
-    providers = concrete_model.where(:id => checked_items).includes(:provider).collect(&:provider)
-    if providers.empty?
-      add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => "providers"), :task => "deletion"}, :error)
-    else
-      providers.each do |provider|
-        AuditEvent.success(
-          :event        => "provider_record_delete_initiated",
-          :message      => "[#{provider.name}] Record delete initiated",
-          :target_id    => provider.id,
-          :target_class => provider.type,
-          :userid       => session[:userid]
-        )
-        provider.destroy_queue
-      end
-
-      add_flash(n_("Delete initiated for %{count} Provider",
-                   "Delete initiated for %{count} Providers",
-                   providers.length) % {:count => providers.length})
-    end
-    replace_right_cell
-  end
-
-  def refresh
-    assert_privileges("#{priviledge_prefix}_refresh_provider")
-    @explorer = true
-    manager_button_operation('refresh_ems', _('Refresh'))
-    replace_right_cell
-  end
 
   def tagging
     case x_active_accord
