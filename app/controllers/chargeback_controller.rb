@@ -517,7 +517,6 @@ class ChargebackController < ApplicationController
       temp[:per_time] ||= "hourly"
 
       temp[:currency] = detail.detail_currency.id
-      temp[:detail_measure] = detail.detail_measure
 
       if detail.detail_measure.present?
         temp[:detail_measure] = {}
