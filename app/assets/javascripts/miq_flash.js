@@ -10,6 +10,7 @@ function add_flash(msg, level, options) {
       cls.alert = 'alert alert-danger';
       cls.icon = 'pficon pficon-error-circle-o';
       break;
+    case 'warn':  // miqFlash compatibility
     case 'warning':
       cls.alert = 'alert alert-warning';
       cls.icon = 'pficon pficon-warning-triangle-o';

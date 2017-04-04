@@ -1,4 +1,4 @@
-/* global miqAjaxButton miqBuildCalendar miqButtons miqJqueryRequest miqRESTAjaxButton miqSparkleOff miqSparkleOn */
+/* global miqAjaxButton miqBuildCalendar miqButtons miqJqueryRequest miqRESTAjaxButton miqSparkleOff miqSparkleOn add_flash */
 
 ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', function($timeout, $document, $q) {
   this.storedPasswordPlaceholder = "●●●●●●●●";
@@ -40,27 +40,9 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', funct
     miqSparkleOff();
   };
 
-  // FIXME: merge with add_flash in miq_application.js
   this.miqFlash = function(type, msg) {
-    $('#flash_msg_div').text("");
-    $("#flash_msg_div").show();
-    var outerMost = $("<div id='flash_text_div' onclick=$('#flash_msg_div').text(''); title='" + __("Click to remove messages") + "'>");
-    var txt = $('<strong>' + msg + '</strong>');
-
-    if(type == "error") {
-      var outerBox = $('<div class="alert alert-danger">');
-      var innerSpan = $('<span class="pficon pficon-error-circle-o">');
-    } else if (type == "warn") {
-      var outerBox = $('<div class="alert alert-warning">');
-      var innerSpan = $('<span class="pficon pficon-warning-triangle-o">');
-    } else if (type == "success") {
-      var outerBox = $('<div class="alert alert-success">');
-      var innerSpan = $('<span class="pficon pficon-ok">');
-    }
-    $(outerBox).append(innerSpan);
-    $(outerBox).append(txt);
-    $(outerMost).append(outerBox);
-    $(outerMost).appendTo($("#flash_msg_div"));
+    this.miqFlashClear();
+    add_flash(msg, type);
   };
 
   // FIXME: usually we just hide it, merge the logic
