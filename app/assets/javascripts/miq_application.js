@@ -57,6 +57,7 @@ function miqOnLoad() {
 
   miqInitAccordions();
   miqInitMainContent();
+  miqFlashSaved();
 }
 
 function miqPrepRightCellForm(tree) {
