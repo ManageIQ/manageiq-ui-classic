@@ -34,7 +34,7 @@ class ProviderForemanController < ApplicationController
     'configuration_manager'
   end
 
-  def priviledge_prefix
+  def privilege_prefix
     'provider_foreman'
   end
 
@@ -77,7 +77,7 @@ class ProviderForemanController < ApplicationController
   end
 
   def form_fields
-    assert_privileges("#{priviledge_prefix}_edit_provider")
+    assert_privileges("#{privilege_prefix}_edit_provider")
     # set value of read only zone text box, when there is only single zone
     if params[:id] == "new"
       return render :json => {:zone => Zone.in_my_region.size >= 1 ? Zone.in_my_region.first.name : nil}

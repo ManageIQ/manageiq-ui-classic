@@ -470,7 +470,7 @@ module Mixins
     end
 
     def new
-      assert_privileges("#{priviledge_prefix}_add_provider")
+      assert_privileges("#{privilege_prefix}_add_provider")
       @provider_manager = concrete_model.new
       @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
       render_form
@@ -485,7 +485,7 @@ module Mixins
         add_provider
         save_provider
       else
-        assert_privileges("#{priviledge_prefix}_edit_provider")
+        assert_privileges("#{privilege_prefix}_edit_provider")
         manager_id            = from_cid(params[:miq_grid_checks] || params[:id] || find_checked_items[0])
         @provider_manager     = find_record(concrete_model, manager_id)
         @providerdisplay_type = self.class.model_to_name(@provider_manager.type)
@@ -494,7 +494,7 @@ module Mixins
     end
 
     def delete
-      assert_privileges("#{priviledge_prefix}_delete_provider")
+      assert_privileges("#{privilege_prefix}_delete_provider")
       checked_items = find_checked_items
       checked_items.push(params[:id]) if checked_items.empty? && params[:id]
       providers = Rbac.filtered(concrete_model.where(:id => checked_items).includes(:provider).collect(&:provider))
@@ -520,7 +520,7 @@ module Mixins
     end
 
     def refresh
-      assert_privileges("#{priviledge_prefix}_refresh_provider")
+      assert_privileges("#{privilege_prefix}_refresh_provider")
       @explorer = true
       manager_button_operation('refresh_ems', _('Refresh'))
       replace_right_cell
