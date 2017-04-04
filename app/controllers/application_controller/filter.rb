@@ -90,7 +90,7 @@ module ApplicationController::Filter
     token = params[:token].to_i
     if token == @edit[@expkey][:exp_token] || # User selected same token as already selected
        (@edit[@expkey][:exp_token] && @edit[:edit_exp].key?("???")) # or new token in process
-      javascript_flash
+      javascript_flash(:spinner_off => true)
     else
       exp = exp_find_by_token(@edit[@expkey][:expression], token)
       @edit[:edit_exp] = copy_hash(exp)
