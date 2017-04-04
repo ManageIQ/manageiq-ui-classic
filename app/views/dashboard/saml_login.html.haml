@@ -7,8 +7,10 @@
   %body
     - if api_auth_token && validation_url
       :javascript
+        miqFlashClearSaved();
         sessionStorage.miq_token = '#{j_str api_auth_token}';
         window.location = '#{j_str validation_url}';
     - else
       :javascript
+        miqFlashClearSaved();
         window.location = '/dashboard/logout';

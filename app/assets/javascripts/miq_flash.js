@@ -70,5 +70,10 @@ function miqFlashSaved() {
     add_flash(obj.message, obj.level);
   });
 
+  miqFlashClearSaved();
+}
+
+// also called on login
+function miqFlashClearSaved() {
   _miqFlashSave([]);
 }
