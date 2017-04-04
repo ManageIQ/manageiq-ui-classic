@@ -441,6 +441,9 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
 
   vm.toggleDialogSelection = function(prefix, selected_value) {
     vm.catalogItemModel[prefix + "_dialog_existing"] = selected_value;
+    vm._provisioning_dialog = ""
+    vm.catalogItemModel[prefix + "_dialog_id"] = ""
+    vm.catalogItemModel[prefix  + "_dialog_name"] = ""
   };
 
   vm.fieldsRequired = function(prefix) {
