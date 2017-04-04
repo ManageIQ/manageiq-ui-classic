@@ -6,6 +6,17 @@ class ApplicationHelper::Toolbar::AnsibleCredentialsCenter < ApplicationHelper::
       t = N_('Configuration'),
       t,
       :items => [
+       button(
+          :embedded_automation_manager_credentials_refresh,
+          'fa fa-refresh fa-lg',
+          N_('Refresh Embedded Ansible Provider'),
+          N_('Refresh Embedded Ansible Provider'),
+          :klass => ApplicationHelper::Button::EmbeddedAnsible,
+          :url       => "credential_refresh",
+          :url_parms => "main_div",
+          :confirm   => N_("Refresh relationships for all items from Embedded Ansible Provider?"),
+          :enabled   => true),
+        separator,
         button(
           :embedded_automation_manager_credentials_add,
           'pficon pficon-edit fa-lg',

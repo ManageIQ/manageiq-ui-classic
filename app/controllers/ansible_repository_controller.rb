@@ -8,6 +8,7 @@ class AnsibleRepositoryController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
+  include Mixins::EmbeddedAnsibleRefreshMixin
 
   menu_section :ansible_repositories
   toolbar :ansible_repository
@@ -73,6 +74,11 @@ class AnsibleRepositoryController < ApplicationController
 
   def display_playbooks
     nested_list("ansible_playbook", ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
+  end
+
+  def repository_refresh
+    # Targeted refresh for embedded ansible hasn't been implemented yet
+    embedded_ansible_refresh
   end
 
   private
