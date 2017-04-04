@@ -76,8 +76,8 @@ class ProviderForemanController < ApplicationController
     render_tagging_form
   end
 
-  def provider_foreman_form_fields
-    assert_privileges("provider_foreman_edit_provider")
+  def form_fields
+    assert_privileges("#{priviledge_prefix}_edit_provider")
     # set value of read only zone text box, when there is only single zone
     if params[:id] == "new"
       return render :json => {:zone => Zone.in_my_region.size >= 1 ? Zone.in_my_region.first.name : nil}

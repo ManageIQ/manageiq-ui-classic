@@ -159,7 +159,7 @@ Rails.application.routes.draw do
       :get  => %w(
         download_data
         explorer
-        automation_manager_form_fields
+        form_fields
         show
         show_list
         tagging_edit
@@ -2623,7 +2623,7 @@ Rails.application.routes.draw do
         download_data
         download_summary_pdf
         explorer
-        provider_foreman_form_fields
+        form_fields
         show
         show_list
         tagging_edit

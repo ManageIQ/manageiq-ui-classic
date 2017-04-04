@@ -25,7 +25,7 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
   if (providerForemanFormId == 'new') {
     vm.newRecord = true;
 
-    $http.get('/provider_foreman/provider_foreman_form_fields/' + providerForemanFormId)
+    $http.get('/provider_foreman/form_fields/' + providerForemanFormId)
       .then(getProviderForemanFormData)
       .catch(miqService.handleFailure);
   } else {
@@ -33,7 +33,7 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
 
     miqService.sparkleOn();
 
-    $http.get('/provider_foreman/provider_foreman_form_fields/' + providerForemanFormId)
+    $http.get('/provider_foreman/form_fields/' + providerForemanFormId)
       .then(getProviderForemanFormData)
       .catch(miqService.handleFailure);
   }
