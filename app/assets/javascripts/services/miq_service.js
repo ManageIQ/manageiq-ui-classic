@@ -62,11 +62,11 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', funct
     $(outerMost).append(outerBox);
     $(outerMost).appendTo($("#flash_msg_div"));
   };
-  var miqFlash = this.miqFlash;
 
+  // FIXME: usually we just hide it, merge the logic
   this.miqFlashClear = function() {
     $('#flash_msg_div').text("");
-  }
+  };
 
   this.saveable = function(form) {
     return form.$valid && form.$dirty;
@@ -131,10 +131,10 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', funct
 
     if (angular.isDefined(e.error) && angular.isDefined(e.error.message)) {
       console.error(e.error.message);
-      miqFlash('error', e.error.message);
+      this.miqFlash('error', e.error.message);
     } else if (e.message) {
       console.error(e.message);
-      miqFlash('error', e.message);
+      this.miqFlash('error', e.message);
     }
 
     return $q.reject(e);
