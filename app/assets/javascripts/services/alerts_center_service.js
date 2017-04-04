@@ -119,7 +119,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
   _this.getFiltersFromLocation = function(searchString, fields) {
     var currentFilters = [];
 
-    if (angular.isString(searchString)) {
+    if (_.isString(searchString)) {
       var filterString = searchString.slice(1);
       var filters = filterString.split('&');
       _.forEach(filters, function(nextFilter) {
@@ -152,7 +152,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
   function filterStringCompare(value1, value2) {
     var match = false;
 
-    if (angular.isString(value1) && angular.isString(value2)) {
+    if (_.isString(value1) && _.isString(value2)) {
       match = value1.toLowerCase().indexOf(value2.toLowerCase()) !== -1;
     }
 

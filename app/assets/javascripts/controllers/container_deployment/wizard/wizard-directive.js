@@ -31,7 +31,7 @@ angular.module('miq.wizard').directive('miqWizard', function () {
       $scope.context = {};
       this.context = $scope.context;
 
-      if (!angular.isNumber($scope.stepCount)) {
+      if (!_.isNumber($scope.stepCount)) {
         $scope.stepCount = 0;
       }
 
@@ -188,7 +188,7 @@ angular.module('miq.wizard').directive('miqWizard', function () {
           step.selected = true;
 
           $timeout(function() {
-            if (angular.isFunction(step.onShow)) {
+            if (_.isFunction(step.onShow)) {
               step.onShow();
             }
           }, 100);
@@ -294,7 +294,7 @@ angular.module('miq.wizard').directive('miqWizard', function () {
         var enabledSteps = $scope.getEnabledSteps();
         var stepTo;
 
-        if (angular.isNumber(step)) {
+        if (_.isNumber(step)) {
           stepTo = enabledSteps[step];
         } else {
           stepTo = stepByTitle(step);
@@ -317,7 +317,7 @@ angular.module('miq.wizard').directive('miqWizard', function () {
         }
 
         // Check if callback is a function
-        if (angular.isFunction(callback)) {
+        if (_.isFunction(callback)) {
           if (callback($scope.selectedStep)) {
             if (index === enabledSteps.length - 1) {
               this.finish();
@@ -354,7 +354,7 @@ angular.module('miq.wizard').directive('miqWizard', function () {
         }
 
         // Check if callback is a function
-        if (angular.isFunction(callback)) {
+        if (_.isFunction(callback)) {
           if (callback($scope.selectedStep)) {
             if (index === 0) {
               throw new Error("Can't go back. It's already in step 0");

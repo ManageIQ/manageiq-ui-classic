@@ -31,7 +31,7 @@ function NotificationsDrawerCtrl($scope, eventNotifications, $timeout) {
 
   var clearGroupWatchers = function() {
     angular.forEach(vm.notificationGroups, function (group) {
-      if (angular.isFunction(group.watcher)) {
+      if (_.isFunction(group.watcher)) {
         group.watcher();
       }
     });

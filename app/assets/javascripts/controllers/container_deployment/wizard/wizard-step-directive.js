@@ -31,7 +31,7 @@ angular.module('miq.wizard').directive('miqWizardStep', function() {
       $scope.context = {};
       this.context = $scope.context;
 
-      if (!angular.isNumber($scope.subStepCount)) {
+      if (!_.isNumber($scope.subStepCount)) {
         $scope.subStepCount = 0;
       }
       if ($scope.nextEnabled === undefined) {
@@ -224,7 +224,7 @@ angular.module('miq.wizard').directive('miqWizardStep', function() {
           if (step) {
             step.selected = true;
 
-            if (angular.isFunction($scope.selectedStep.onShow)) {
+            if (_.isFunction($scope.selectedStep.onShow)) {
               $scope.selectedStep.onShow();
             }
 
@@ -313,7 +313,7 @@ angular.module('miq.wizard').directive('miqWizardStep', function() {
         var enabledSteps = $scope.getEnabledSteps();
         var stepTo;
 
-        if (angular.isNumber(step)) {
+        if (_.isNumber(step)) {
           stepTo = enabledSteps[step];
         } else {
           stepTo = stepByTitle(step);
@@ -330,7 +330,7 @@ angular.module('miq.wizard').directive('miqWizardStep', function() {
         var index = stepIdx($scope.selectedStep);
 
         // Check if callback is a function
-        if (angular.isFunction(callback)) {
+        if (_.isFunction(callback)) {
           if (callback($scope.selectedStep)) {
             if (index === enabledSteps.length - 1) {
               return false;
@@ -361,7 +361,7 @@ angular.module('miq.wizard').directive('miqWizardStep', function() {
         var index = stepIdx($scope.selectedStep);
 
         // Check if callback is a function
-        if (angular.isFunction(callback)) {
+        if (_.isFunction(callback)) {
           if (callback($scope.selectedStep)) {
             if (index === 0) {
               return false;
