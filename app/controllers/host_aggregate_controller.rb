@@ -5,7 +5,6 @@ class HostAggregateController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericListMixin
-  include Mixins::CheckedIdMixin
   include Mixins::GenericSessionMixin
 
   def show
