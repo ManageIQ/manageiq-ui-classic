@@ -129,7 +129,7 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', funct
   this.handleFailure = function(e) {
     miqSparkleOff();
 
-    if (angular.isDefined(e.error) && angular.isDefined(e.error.message)) {
+    if (e.error !== undefined && e.error.message !== undefined) {
       console.error(e.error.message);
       miqFlash('error', e.error.message);
     } else if (e.message) {

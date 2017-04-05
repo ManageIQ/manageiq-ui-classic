@@ -87,7 +87,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
 
       $scope.timer_items        = timerOptionService.getOptions($scope.scheduleModel.timer_typ);
 
-      if (data.filter_type === 'all' || (angular.isDefined(data.protocol) && data.protocol !== null)) {
+      if (data.filter_type === 'all' || (data.protocol !== undefined && data.protocol !== null)) {
         $scope.filterValuesEmpty = true;
       } else {
         buildFilterList(data);
@@ -97,7 +97,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       }
 
       if (data.filter_type === null &&
-        (angular.isDefined(data.protocol) && data.protocol !== null && data.protocol !== 'Samba')) {
+        (data.protocol !== undefined && data.protocol !== null && data.protocol !== 'Samba')) {
         $scope.scheduleModel.filter_typ = 'all';
       }
 

@@ -293,7 +293,7 @@ function miqDimDiv(divname, status) {
 // Check for changes and prompt
 function miqCheckForChanges() {
   if (ManageIQ.angular.scope) {
-    if (angular.isDefined(ManageIQ.angular.scope.angularForm) &&
+    if (ManageIQ.angular.scope.angularForm !== undefined &&
       ManageIQ.angular.scope.angularForm.$dirty &&
       !miqDomElementExists('ignore_form_changes')) {
       var answer = confirm(__("Abandon changes?"));

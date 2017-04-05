@@ -18,12 +18,12 @@ angular.module('miq.dialogs').directive('miqModal', function () {
     controller: ['$scope', function($scope) {
       $scope.settings = {};
 
-      if (angular.isUndefined($scope.showHeader)) {
+      if ($scope.showHeader === undefined) {
         $scope.settings.showHeader = true;
       } else {
         $scope.settings.showHeader = $scope.showHeader !== 'false';
       }
-      if (angular.isUndefined($scope.showClose)) {
+      if ($scope.showClose === undefined) {
         $scope.settings.showClose = true;
       } else {
         $scope.settings.showClose = $scope.showClose !== 'false';

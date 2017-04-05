@@ -31,11 +31,11 @@ angular.module('miq.wizard').directive('miqWizard', function () {
       $scope.context = {};
       this.context = $scope.context;
 
-      if (!angular.isNumber($scope.stepCount)) {
+      if (!_.isNumber($scope.stepCount)) {
         $scope.stepCount = 0;
       }
 
-      if (angular.isUndefined($scope.wizardReady)) {
+      if ($scope.wizardReady === undefined) {
         $scope.wizardReady = true;
       }
 
@@ -72,7 +72,7 @@ angular.module('miq.wizard').directive('miqWizard', function () {
       this.getReviewSteps = function() {
         return $scope.steps.filter(function(step){
           return !step.disabled &&
-            (!angular.isUndefined(step.reviewTemplate) || step.getReviewSteps().length > 0);
+            (step.reviewTemplate !== undefined || step.getReviewSteps().length > 0);
         });
       };
 
@@ -115,7 +115,7 @@ angular.module('miq.wizard').directive('miqWizard', function () {
       //if edit mode is truthy, then all steps are marked as completed
       $scope.$watch('[editMode, steps.length]', function () {
         var editMode = $scope.editMode;
-        if (angular.isUndefined(editMode) || (editMode === null)) {
+        if (editMode === undefined || (editMode === null)) {
           return;
         }
 
@@ -188,7 +188,7 @@ angular.module('miq.wizard').directive('miqWizard', function () {
           step.selected = true;
 
           $timeout(function() {
-            if (angular.isFunction(step.onShow)) {
+            if (_.isFunction(step.onShow)) {
               step.onShow();
             }
           }, 100);
@@ -196,7 +196,7 @@ angular.module('miq.wizard').directive('miqWizard', function () {
           watchSelectedStep();
 
           // Make sure current step is not undefined
-          if (!angular.isUndefined($scope.currentStep)) {
+          if ($scope.currentStep !== undefined) {
             $scope.currentStep = step.wzTitle;
           }
 
@@ -294,7 +294,7 @@ angular.module('miq.wizard').directive('miqWizard', function () {
         var enabledSteps = $scope.getEnabledSteps();
         var stepTo;
 
-        if (angular.isNumber(step)) {
+        if (_.isNumber(step)) {
           stepTo = enabledSteps[step];
         } else {
           stepTo = stepByTitle(step);
@@ -317,7 +317,7 @@ angular.module('miq.wizard').directive('miqWizard', function () {
         }
 
         // Check if callback is a function
-        if (angular.isFunction(callback)) {
+        if (_.isFunction(callback)) {
           if (callback($scope.selectedStep)) {
             if (index === enabledSteps.length - 1) {
               this.finish();
@@ -354,7 +354,7 @@ angular.module('miq.wizard').directive('miqWizard', function () {
         }
 
         // Check if callback is a function
-        if (angular.isFunction(callback)) {
+        if (_.isFunction(callback)) {
           if (callback($scope.selectedStep)) {
             if (index === 0) {
               throw new Error("Can't go back. It's already in step 0");

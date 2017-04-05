@@ -61,7 +61,7 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
       var data = response.data;
 
       dash.filterConfig.fields = [];
-      if (data && angular.isArray(data.metric_tags)) {
+      if (data && _.isArray(data.metric_tags)) {
         data.metric_tags.sort();
 
         // remember the metric tags
@@ -120,7 +120,7 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
 
       if (data.length > 1) {
         var prevValue = data[1].value;
-        if (angular.isNumber(lastValue) && angular.isNumber(prevValue)) {
+        if (_.isNumber(lastValue) && _.isNumber(prevValue)) {
           var change;
           if (prevValue !== 0 && lastValue !== 0) {
             change = Math.round((lastValue - prevValue) / lastValue);

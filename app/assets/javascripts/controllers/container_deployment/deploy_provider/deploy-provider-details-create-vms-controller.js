@@ -69,7 +69,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
     };
 
     var validString = function(value) {
-      return angular.isDefined(value) && value.length > 0;
+      return value !== undefined && value.length > 0;
     };
 
     $scope.masterCountValid = function(count) {
@@ -84,17 +84,17 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
       var valid =  $scope.masterCountValid($scope.data.createMastersCount) && $scope.nodeCountValid($scope.data.createNodesCount);
       valid = valid &&
         validString($scope.data.createMastersBaseName) &&
-        angular.isDefined($scope.data.createMastersMemory) &&
-        angular.isDefined($scope.data.createMastersCpu) &&
-        angular.isDefined($scope.data.createMastersDisk) &&
+        $scope.data.createMastersMemory !== undefined &&
+        $scope.data.createMastersCpu !== undefined &&
+        $scope.data.createMastersDisk !== undefined &&
         validString($scope.data.createNodesBaseName);
 
 
       if (!$scope.data.createNodesLikeMasters) {
         valid = valid &&
-          angular.isDefined($scope.data.createNodesMemory) &&
-          angular.isDefined($scope.data.createNodesCpu) &&
-          angular.isDefined($scope.data.createNodesDisk);
+          $scope.data.createNodesMemory !== undefined &&
+          $scope.data.createNodesCpu !== undefined &&
+          $scope.data.createNodesDisk !== undefined;
       }
 
       if (valid) {
