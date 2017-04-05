@@ -2818,7 +2818,6 @@ Rails.application.routes.draw do
         retire
         service_form_fields
         show
-        ownership_form_fields
       ),
       :post => %w(
         button
@@ -2835,6 +2834,7 @@ Rails.application.routes.draw do
         x_button
         x_history
         x_show
+        ownership_form_fields
       ) +
                dialog_runner_post
     },
@@ -2950,7 +2950,6 @@ Rails.application.routes.draw do
         right_size
         show
         show_list
-        ownership_form_fields
       ),
       :post => %w(
         edit_vm
@@ -2976,6 +2975,7 @@ Rails.application.routes.draw do
         genealogy_tree_selected
         ownership_update
         wait_for_task
+        ownership_form_fields
       ) +
                ownership_post +
                pre_prov_post
@@ -3005,7 +3005,6 @@ Rails.application.routes.draw do
         detach
         evacuate
         evacuate_form_fields
-        ownership_form_fields
         associate_floating_ip
         associate_floating_ip_form_fields
         disassociate_floating_ip
@@ -3074,6 +3073,7 @@ Rails.application.routes.draw do
         associate_floating_ip_vm
         disassociate_floating_ip_vm
         wait_for_task
+        ownership_form_fields
       ) +
                adv_search_post +
                compare_post +
@@ -3106,7 +3106,6 @@ Rails.application.routes.draw do
         retire
         show
         tagging_edit
-        ownership_form_fields
       ) +
                compare_get,
       :post => %w(
@@ -3164,6 +3163,7 @@ Rails.application.routes.draw do
         wait_for_task
         win32_services
         ownership_update
+        ownership_form_fields
       ) +
                adv_search_post +
                compare_post +
@@ -3196,7 +3196,6 @@ Rails.application.routes.draw do
         util_report_download
         utilization
         vm_show
-        ownership_form_fields
       ) +
                compare_get,
       :post => %w(
@@ -3265,6 +3264,7 @@ Rails.application.routes.draw do
         x_search_by_name
         x_show
         ownership_update
+        ownership_form_fields
       ) +
                adv_search_post +
                compare_post +
