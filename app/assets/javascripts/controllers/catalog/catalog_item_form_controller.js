@@ -311,6 +311,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       if (id !== vm.catalogItemModel[prefix + '_repository_id']) {
         vm.catalogItemModel[prefix + '_playbook_id'] = '';
         vm.catalogItemModel[prefix + '_repository_id'] = id;
+        getRemoveResourcesTypes();
       } else {
         findObjectForDropDown(prefix, '_playbook', '_playbooks');
       }
