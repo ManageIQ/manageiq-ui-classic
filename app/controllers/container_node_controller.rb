@@ -27,7 +27,7 @@ class ContainerNodeController < ApplicationController
 
   def show_ad_hoc_metrics
     if @record && @record.try(:ems_id)
-      ems = ExtManagementSystem.find(@record.ems_id)
+      ems = find_record_with_rbac(ExtManagementSystem, @record.ems_id)
       tags = {:type => "node", :hostname => @record.name}.to_json
       redirect_to polymorphic_path(ems, :display => "ad_hoc_metrics", :tags => tags)
     end
