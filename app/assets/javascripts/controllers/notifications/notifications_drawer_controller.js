@@ -10,9 +10,7 @@ function NotificationsDrawerCtrl($scope, eventNotifications, $timeout) {
   vm.drawerExpanded = sessionStorage.getItem(cookieId + "-expanded") == 'true';
   vm.notificationsDrawerShown = eventNotifications.state().drawerShown;
 
-  var watchExpanded = $scope.$watch(angular.bind(vm, function () {
-    return vm.drawerExpanded;
-  }), function () {
+  var watchExpanded = $scope.$watch('vm.drawerExpanded', function() {
     sessionStorage.setItem(cookieId + "-expanded", vm.drawerExpanded);
   });
 
@@ -21,9 +19,9 @@ function NotificationsDrawerCtrl($scope, eventNotifications, $timeout) {
       if (group.watcher) {
         group.watcher();
       }
-      group.watcher = $scope.$watch(angular.bind(vm, function () {
+      group.watcher = $scope.$watch(function () {
         return vm.notificationGroups[index];
-      }), function(newVal) {
+      }, function(newVal) {
         sessionStorage.setItem(cookieId + "-" + newVal.notificationType + "-open", newVal.open);
       }, true);
     });

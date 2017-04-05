@@ -85,9 +85,7 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     miqService.sparkleOff();
   });
 
-  $scope.$watch(angular.bind(this, function() {
-    return vm.step2DsModel.selectedJdbcDriver;
-  }), function(driverSelection) {
+  $scope.$watch('vm.step2DsModel.selectedJdbcDriver', function(driverSelection) {
     var dsSelection = mwAddDatasourceService.findDsSelectionFromDriver(driverSelection);
     if (dsSelection) {
       vm.step1DsModel.datasourceName = dsSelection.name;
