@@ -35,6 +35,7 @@
 //= require kubernetes-topology-graph/dist/topology-graph
 //= require miq_browser_detect
 //= require miq_application
+//= require miq_flash
 //= require miq_change_stored_password
 //= require miq_qe
 //= require git_import
