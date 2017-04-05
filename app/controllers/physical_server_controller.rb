@@ -56,26 +56,10 @@ class PhysicalServerController < ApplicationController
              "physical_server_turn_on_loc_led"  => [:turn_on_loc_led,  _("Turn On LED")],
              "physical_server_turn_off_loc_led" => [:turn_off_loc_led, _("Turn Off LED")]}.freeze
 
-  # Displays an error message
-  def display_error_message(msg)
-    display_message(msg, :error)
-  end
-
   def textual_group_list
     [%i(properties), %i(relationships)]
   end
   helper_method :textual_group_list
-
-  # Displays a success message
-  def display_success_message(msg)
-    display_message(msg, :success)
-  end
-
-  # Displays a message
-  def display_message(msg, level)
-    add_flash(_(msg), level)
-    render_flash
-  end
 
   # Returns a list of servers to which the button action will be applied
   def retrieve_servers
@@ -84,16 +68,19 @@ class PhysicalServerController < ApplicationController
 
     # A list of servers
     if @lastaction == "show_list"
-      server_ids = find_checked_items
-      server_ids.each do |id|
-        servers.push(PhysicalServer.find_by('id' => id))
-      end
+      #server_ids = find_checked_items
+      #server_ids.each do |id|
+        #servers.push(PhysicalServer.find_by('id' => id))
+      #end
+      Rbac.filtered(PhysicalServer.where(:id => find_checked_items))
       if server_ids.empty?
-        display_error_message("No server IDs found for the selected servers")
+				msg = _("No server IDs found for the selected servers")
+        render_flash(msg, :error)
       end
     # A single server
     elsif server_id.nil? || PhysicalServer.find_by('id' => server_id).nil?
-      display_error_message("No server ID found for the current server")
+			msg = _("No server ID found for the current server")
+      render_flash(msg, :error)
     else
       servers.push(PhysicalServer.find_by('id' => server_id))
     end
@@ -114,9 +101,10 @@ class PhysicalServerController < ApplicationController
         server.send(method)
       end
       msg = _("Successfully initiated the #{action_str} action")
-      display_success_message(msg)
+      render_flash(msg, :success)
     else
-      display_error_message("Unknown action: #{button_pressed}")
+			msg = _("Unknown action: #{button_pressed}")
+      render_flash(msg, :error)
     end
   end
 end
