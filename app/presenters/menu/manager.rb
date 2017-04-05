@@ -5,7 +5,7 @@ module Menu
     class << self
       extend Forwardable
 
-      delegate %i(menu item_in_section? item section section_id_string_to_symbol each) => :instance
+      delegate %i(menu item_in_section? item section section_id_string_to_symbol each section_for_item_id) => :instance
     end
 
     private
@@ -33,6 +33,17 @@ module Menu
       # prevent .to_sym call on section_id
       section_id = section_id_string_to_symbol(section_id) if section_id.kind_of?(String)
       @id_to_section[section_id]
+    end
+
+    def section_for_item_id(item_id)
+      found = nil
+      @id_to_section.each do |_id, section|
+        next unless section.contains_item_id?(item_id)
+
+        found = section if !found || section.parent
+      end
+
+      found
     end
 
     def item_in_section?(item_id, section_id)

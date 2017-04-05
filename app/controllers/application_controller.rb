@@ -1905,10 +1905,10 @@ class ApplicationController < ActionController::Base
   end
 
   def remember_tab
-    section_id = menu_section_id(params)
-    return if section_id.nil?
+    section_or_item_id = menu_section_id(params)
+    return if section_or_item_id.nil?
 
-    section = Menu::Manager.section(section_id)
+    section = Menu::Manager.section(section_or_item_id) || Menu::Manager.section_for_item_id(section_or_item_id.to_s)
     return if section.nil?
 
     url = URI.parse(request.url).path
