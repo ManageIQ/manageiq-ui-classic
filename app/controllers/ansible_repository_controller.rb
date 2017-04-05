@@ -9,7 +9,7 @@ class AnsibleRepositoryController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
 
-  menu_section :ansible
+  menu_section :ansible_repositories
   toolbar :ansible_repository
 
   def self.display_methods

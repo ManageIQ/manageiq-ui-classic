@@ -995,22 +995,31 @@ module ApplicationHelper
     link_to(link_text, link_params, tag_args)
   end
 
-  def primary_nav_class(nav_id)
-    test_layout = @layout
-    # FIXME: exception behavior to remove
-    test_layout = 'my_tasks' if %w(my_tasks my_ui_tasks all_tasks all_ui_tasks).include?(@layout)
-    test_layout = 'cloud_volume' if @layout == 'cloud_volume_snapshot' || @layout == 'cloud_volume_backup'
-    test_layout = 'cloud_object_store_container' if @layout == 'cloud_object_store_object'
+  def item_nav_class(item)
+    active = controller.menu_section_id(controller.params) || @layout.to_sym
 
-    Menu::Manager.item_in_section?(test_layout, nav_id) ? 'active' : nil
+    # FIXME remove @layout condition when every controller sets menu_section properly
+    item.id.to_sym == active ||
+      item.id.to_sym == @layout.to_sym ? 'active' : nil
   end
 
-  def secondary_nav_class(item)
-    item.items.collect(&:id).include?(@layout) ? 'active' : nil
-  end
+  def section_nav_class(section)
+    active = controller.menu_section_id(controller.params) || @layout.to_sym
 
-  def tertiary_nav_class(item)
-    item.id == @layout ? 'active' : nil
+    if section.parent.nil?
+      # first-level, fallback to old logic for now
+      # FIXME: exception behavior to remove
+      active = 'my_tasks' if %w(my_tasks my_ui_tasks all_tasks all_ui_tasks).include?(@layout)
+      active = 'cloud_volume' if @layout == 'cloud_volume_snapshot' || @layout == 'cloud_volume_backup'
+      active = 'cloud_object_store_container' if @layout == 'cloud_object_store_object'
+      active = active.to_sym
+    end
+
+    return 'active' if section.id.to_sym == active
+
+    # FIXME remove to_s, to_sym once all items use symbol ids
+    section.contains_item_id?(active.to_s) ||
+      section.contains_item_id?(active.to_sym) ? 'active' : nil
   end
 
   def render_flash_msg?
