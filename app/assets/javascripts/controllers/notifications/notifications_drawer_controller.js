@@ -86,7 +86,7 @@ function NotificationsDrawerCtrl($scope, eventNotifications, $timeout) {
 
   eventNotifications.registerObserverCallback(refresh);
 
-  $scope.$on('destroy', destroy);
+  $scope.$on('$destroy', destroy);
 
   if (vm.notificationsDrawerShown) {
     angular.element(document).ready(watchPositioning);
