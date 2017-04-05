@@ -33,5 +33,9 @@ class ContainerNodeController < ApplicationController
     end
   end
 
+  def self.custom_display_modes
+    %w(ad_hoc_metrics)
+  end
+
   menu_section :cnt
 end
