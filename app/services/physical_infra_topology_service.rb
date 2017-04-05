@@ -13,10 +13,7 @@ class PhysicalInfraTopologyService < TopologyService
 
     included_relations = [
       :tags,
-      :ems_clusters => [
-        :tags,
-        :hosts,
-      ],
+      :physical_servers => [:tags],
     ]
 
     entity_relationships = {:PhysicalInfraManager => build_entity_relationships(included_relations)}
@@ -58,15 +55,13 @@ class PhysicalInfraTopologyService < TopologyService
     case entity
     when ManageIQ::Providers::PhysicalInfraManager
       entity.authentications.blank? ? _('Unknown') : entity.authentications.first.status.try(:capitalize)
-    when Host
-      entity.state ? entity.state.downcase.capitalize : _('Unknown')
     else
       _('Unknown')
     end
   end
 
   def build_kinds
-    kinds = [:PhysicalInfraManager, :EmsCluster, :Host]
+    kinds = [:PhysicalInfraManager, :PhysicalServer, :Tag]
     build_legend_kinds(kinds)
   end
 end
