@@ -8,7 +8,6 @@ class NetworkRouterController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
-  include Mixins::CheckedIdMixin
   include Mixins::GenericFormMixin
 
   def self.display_methods
