@@ -27,15 +27,19 @@
                    :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'adv_search_button', :button => "apply")}');")
     - if @edit[@expkey][:selected] && @edit[@expkey][:selected][:typ] != "default" && @edit[@expkey][:selected][:id] != 0
       - if admin_user? || @edit[@expkey][:selected][:typ] == "user"
-        - confirm_msg = _("Delete the %{model} filter named %{filter}?") % {:model  => ui_lookup(:model => @edit[@expkey][:exp_mode]),
-                                                                            :filter => @edit[:adv_search_name]}
-
-        = button_tag(_('Delete'),
-                   :class   => "btn btn-danger",
-                   'data-confirm' => confirm_msg,
-                   :alt     => t = _("Delete the filter named %{filter_name}") % {:filter_name => @edit[@expkey][:selected][:description]},
-                   :title   => t,
-                   :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'adv_search_button', :button => "delete")}');")
+        - actual_filter = @edit[@expkey][:selected][:description]
+        - confirm_msg = _("Delete the %{model} filter named %{filter}?") % {:model  => ui_lookup(:model => @edit[@expkey][:exp_model]),
+                                                                            :filter => actual_filter}
+        - t = _("Delete the filter named %{filter_name}") % {:filter_name => actual_filter}
+        = link_to('Delete',
+                  url_for_only_path(:action => 'adv_search_button',
+                                    :button => "delete"),
+                  :alt           => t,
+                  :class         => "btn btn-danger",
+                  'data-confirm' => confirm_msg,
+                  "data-method"  => :post,
+                  :remote        => true,
+                  :title         => t)
     - if @edit[@expkey][:exp_table].flatten.first == "???"
       = button_tag(_("Save"),
                    :class => "btn btn-primary disabled",
