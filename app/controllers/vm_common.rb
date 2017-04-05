@@ -1496,11 +1496,11 @@ module VmCommon
       action = nil
     when "live_migrate"
       partial = "vm_common/live_migrate"
-      header = _("Live Migrating %{model}") % {:name => name, :model => ui_lookup(:tables => table)}
+      header = _("Live Migrating %{models}") % {:models => ui_lookup(:tables => table)}
       action = "live_migrate_vm"
     when "evacuate"
       partial = "vm_common/evacuate"
-      header = _("Evacuating %{model} \"%{name}\"") % {:name => name, :model => ui_lookup(:table => table)}
+      header = _("Evacuating %{models}") % {:models => ui_lookup(:tables => table)}
       action = "evacuate_vm"
     when "associate_floating_ip"
       partial = "vm_common/associate_floating_ip"

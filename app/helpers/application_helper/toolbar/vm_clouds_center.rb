@@ -155,7 +155,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
         button(
           :instance_live_migrate,
           'product product-migrate fa-lg',
-          t = N_('Migrate selected Instance'),
+          t = N_('Migrate selected Instances'),
           t,
           :url_parms => 'main_div',
           :enabled   => false,
@@ -163,11 +163,11 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
         button(
           :instance_evacuate,
           'product product-migrate fa-lg',
-          t = N_('Evacuate selected Instance'),
+          t = N_('Evacuate selected Instances'),
           t,
           :url_parms => 'main_div',
           :enabled   => false,
-          :onwhen    => '1')
+          :onwhen    => '1+')
       ]
     ),
   ])
