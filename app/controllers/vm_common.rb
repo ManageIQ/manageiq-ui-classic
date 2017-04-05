@@ -1197,7 +1197,7 @@ module VmCommon
       record_showing = type && ["Vm", "MiqTemplate"].include?(TreeBuilder.get_model_for_prefix(type))
       c_tb = build_toolbar(center_toolbar_filename) # Use vm or template tb
       if record_showing
-        cb_tb = build_toolbar("custom_buttons_tb")
+        cb_tb = build_toolbar(Mixins::CustomToolbarResult.new(:single))
         v_tb = build_toolbar("x_summary_view_tb")
       else
         v_tb = build_toolbar("x_gtl_view_tb")

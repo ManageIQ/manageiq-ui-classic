@@ -57,9 +57,10 @@ class ApplicationHelper::ToolbarBuilder
   # According to toolbar name in parameter `toolbar_name` either returns class
   # for generic toolbar, or starts building custom toolbar
   def toolbar_class(toolbar_name)
-    if toolbar_name == "custom_buttons_tb"
+    binding.pry
+    if Mixins::CustomToolbarResult === toolbar_name
       model = @record ? @record.class : @view_context.controller.class.model
-      custom_toolbar_class(model, @record)
+      custom_toolbar_class(model, @record, toolbar_name)
     else
       predefined_toolbar_class(toolbar_name)
     end
@@ -260,8 +261,8 @@ class ApplicationHelper::ToolbarBuilder
     }
   end
 
-  def custom_button_selects(model, record)
-    get_custom_buttons(model, record).collect do |group|
+  def custom_button_selects(model, record, toolbar_result)
+    get_custom_buttons(model, record, toolbar_result).collect do |group|
       props = {
         :id      => "custom_#{group[:id]}",
         :type    => :buttonSelect,
@@ -276,14 +277,14 @@ class ApplicationHelper::ToolbarBuilder
     end
   end
 
-  def custom_toolbar_class(model, record)
+  def custom_toolbar_class(model, record, toolbar_result)
     # each custom toolbar is an anonymous subclass of this class
 
     toolbar = Class.new(ApplicationHelper::Toolbar::Basic)
 
     # This creates several drop-down (select) with custom buttons.
     # Each select is placed into a separate group.
-    custom_button_selects(model, record).each do |button_group|
+    custom_button_selects(model, record, toolbar_result).each do |button_group|
       toolbar.button_group(button_group[:name], button_group[:items])
     end
 
@@ -318,7 +319,7 @@ class ApplicationHelper::ToolbarBuilder
     record.service_template.custom_buttons.collect { |cb| create_raw_custom_button_hash(cb, record) }
   end
 
-  def get_custom_buttons(model, record)
+  def get_custom_buttons(model, record, toolbar_result)
     cbses = CustomButtonSet.find_all_by_class_name(button_class_name(model), service_template_id(record))
     cbses.sort_by { |cbs| cbs.set_data[:group_index] }.collect do |cbs|
       group = {
@@ -330,7 +331,10 @@ class ApplicationHelper::ToolbarBuilder
       }
 
       available = CustomButton.available_for_user(current_user, cbs.name) # get all uri records for this user for specified uri set
-      available = available.select { |b| cbs.members.include?(b) }            # making sure available_for_user uri is one of the members
+      available = available.select do |b|
+        cbs.members.include?(b) && toolbar_result.plural_form_matches(b)
+      end
+
       group[:buttons] = available.collect { |cb| create_raw_custom_button_hash(cb, record) }.uniq
       if cbs.set_data[:button_order] # Show custom buttons in the order they were saved
         ordered_buttons = []

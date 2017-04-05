@@ -718,11 +718,11 @@ module ApplicationHelper
     end
 
     toolbars['center_tb'] = center_toolbar_filename
+    toolbars['custom_tb'] = controller.custom_toolbar?
 
-    custom_toolbar = controller.custom_toolbar?
-    if custom_toolbar
-      toolbars['custom_tb'] = custom_toolbar == :blank ? 'blank_view_tb' : 'custom_buttons_tb'
-    end
+    #if custom_toolbar
+    #  custom_toolbar# == :blank ? 'blank_view_tb' : 'custom_buttons_tb'
+    #end
 
     toolbars['view_tb'] = inner_layout_present? ? x_view_toolbar_filename : view_toolbar_filename
     toolbars
