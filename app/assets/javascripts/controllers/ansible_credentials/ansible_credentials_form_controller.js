@@ -1,3 +1,5 @@
+/* global miqFlashLater */
+
 ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 'credentialId', 'miqService', 'API', function($window, credentialId,  miqService, API) {
   var vm = this;
 
@@ -98,14 +100,16 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
   }
 
   function getBack(message, warning, error) {
-    var url = '/ansible_credential/show_list' + '?flash_msg=' + message + '&escape=true';
+    var url = '/ansible_credential/show_list';
+    var flash = { message: message };
 
     if (warning) {
-      url += '&flash_warning=true&flash_error=false';
+      flash.level = 'warning';
     } else if (error) {
-      url += '&flash_warning=false&flash_error=true';
+      flash.level = 'error';
     }
 
+    miqFlashLater(flash);
     $window.location.href = url;
   }
 
