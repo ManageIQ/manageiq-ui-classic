@@ -20,8 +20,6 @@ module Mixins
         show_timeline if respond_to?(:show_timeline)
       when "performance"
         show_performance if respond_to?(:show_performance)
-      when "ad_hoc_metrics"
-        show_ad_hoc_metrics if respond_to?(:show_ad_hoc_metrics)
       when "compliance_history"
         show_compliance_history if respond_to?(:show_compliance_history)
       when "topology"
