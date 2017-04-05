@@ -29,7 +29,7 @@ module UiServiceMixin
       :CloudTenant             => {:type => "glyph", :icon => "\uE904", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-cloud-tenant
       :LoadBalancer            => {:type => "glyph", :icon => "\uE637", :fontfamily => "IcoMoon"},                 # product-load_balancer
       :Tag                     => {:type => "glyph", :icon => "\uF02b", :fontfamily => "FontAwesome"},             # fa-tag
-      :PhysicalServer          => {:type => "glyph", :icon => "\uE91a", :fontfamily => "PatternFlyIcons-webfont"}, # product-physical_server
+      :PhysicalServer          => {:type => "glyph", :icon => "\uE91a", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-server-group
       :Openstack               => {:type => "image", :icon => provider_icon(:Openstack)},
       :Amazon                  => {:type => "image", :icon => provider_icon(:Amazon)},
       :Azure                   => {:type => "image", :icon => provider_icon(:Azure)},
