@@ -13,7 +13,8 @@
       :title                 => t)
     %br
     - if @edit[:expression_table].nil?
-      = _("No expression defined, a condition must contain a valid expression.")
+      = render :partial => 'layouts/info_msg',
+               :locals  => {:message => _("No expression defined, a condition must contain a valid expression.")}
     - else
       - @edit[:expression_table].each do |token|
         - if !["AND", "OR", "(", ")"].include?([token].flatten.first)
