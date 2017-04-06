@@ -139,7 +139,7 @@ function miqOnCheckProvTags(node, treename) {
 function miqOnClickSelectRbacTreeNode(id) {
   var tree = 'rbac_tree';
   miqTreeExpandNode(tree, 'xx-' + id.split('-')[0]);
-  miqJqueryRequest('/' + ManageIQ.controller + '/tree_select/?id=' + id + '&tree=' + tree);
+  miqJqueryRequest('/' + ManageIQ.controller + '/tree_select/?id=' + id + '&tree=' + tree, {beforeSend: true});
   miqTreeScrollToNode(tree, id);
 }
 
