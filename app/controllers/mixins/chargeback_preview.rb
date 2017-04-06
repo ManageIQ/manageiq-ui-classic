@@ -4,6 +4,10 @@ module ChargebackPreview
   def vm_chargeback
     @sb[:action] ||= 'chargeback'
     @vm = @record = identify_record(params[:id], VmOrTemplate)
+    unless @record.has_perf_data?
+      add_flash(_('No Capacity & Utilization data has been collected for this VM'))
+      add_flash(_('Chargeback was calculated based on flat allocation'))
+    end
 
     if params[:task_id]
       miq_task = MiqTask.find(params[:task_id])
@@ -19,6 +23,7 @@ module ChargebackPreview
     else
       rpt = perf_get_chart_rpt('vm_chargeback')
       rpt.db_options[:options][:entity_id] = @vm.id
+      rpt.db_options[:options][:include_metrics] = @record.has_perf_data?
       # TODO: Use user's timezone
       initiate_wait_for_task(:task_id => rpt.async_generate_table(:userid => session[:userid]))
     end
