@@ -8,14 +8,6 @@ class ApplicationHelper::Button::SmartStateScan < ApplicationHelper::Button::Bas
     end
   end
 
-  def calculate_properties
-    super
-    if disabled?
-      self[:onwhen] = nil
-      self[:title] = @error_message
-    end
-  end
-
   def disabled?
     check_smart_roles
     @error_message.present?
