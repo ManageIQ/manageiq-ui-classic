@@ -90,7 +90,7 @@ describe('middlewareTopologyController', function () {
     }
   };
 
-  beforeEach(module('mwTopologyApp'));
+  beforeEach(module('ManageIQ'));
 
   beforeEach(inject(function (_$httpBackend_, $rootScope, _$controller_, $location) {
     spyOn($location, 'absUrl').and.returnValue('/middleware_topology/show');
