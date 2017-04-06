@@ -1530,8 +1530,7 @@ module ApplicationController::Performance
   # get JSON encoded in Base64
   def parse_chart_click(click_params)
     click_parts = JSON.parse(Base64.decode64(click_params))
-    Struct.new('ChartClickData', :legend_index, :data_index, :chart_index, :cmd, :model, :type)
-    Struct::ChartClickData.new(
+    ApplicationController::Performance::ChartClickData.new(
       click_parts['row'].to_i,
       click_parts['column'].to_i,
       click_parts['chart_index'].to_i,
