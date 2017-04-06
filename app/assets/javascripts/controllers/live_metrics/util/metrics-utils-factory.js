@@ -139,7 +139,7 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
         item.lastValues.xData.push(new Date(d.timestamp));
         item.lastValues.yData.push((d.value / m.divisor).toFixed(2));
       });
-      item.lastValue = '' + item.lastValues.yData[item.data.length] + units
+      item.lastValue = '' + item.lastValues.yData[item.data.length] + ' ' + units
 
       item.configTrend = {
         chartId: id,
