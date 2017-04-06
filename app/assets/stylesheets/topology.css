@@ -6,20 +6,20 @@ kubernetes-topology-graph {
   padding: 10px;
 }
 
-.container_topology .legend {
+.topology .legend {
   padding-top: 5px;
   font-family: sans-serif;
   font-size: 15px;
   display: inline-block;
   vertical-align: middle;
 }
-.container_topology .legend label {
+.topology .legend label {
   font-weight: 400;
   cursor: pointer;
   vertical-align: 10px;
 }
 
-.container_topology #selected {
+.topology #selected {
   float: right;
   display: block;
   margin-top: 15px;
@@ -74,11 +74,11 @@ kubernetes-topology-icon svg {
   stroke: #bbb;
 }
 
-.container_topology .canvas {
+.topology .canvas {
   position: absolute;
 }
 
-.container_topology .popup {
+.topology .popup {
   position: absolute;
   left: 0;
   top: 0;
@@ -91,19 +91,19 @@ kubernetes-topology-icon svg {
   font-size: 14px;
 }
 
-.container_topology .popup h5 {
+.topology .popup h5 {
   font-weight: bold;
 }
 
-.container_topology .popup p {
+.topology .popup p {
   margin: 0 0 4px;
 }
 
-.container_topology .popup p:hover {
+.topology .popup p:hover {
   color : #0099cc;
   cursor: pointer;
 }
 
-.container_topology label.checkbox-inline {
+.topology label.checkbox-inline {
   font-size:14px;
 }

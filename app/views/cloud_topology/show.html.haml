@@ -1,5 +1,5 @@
 - tooltipOptions = {"tooltip-placement" => "bottom", "tooltip" => "{{legendTooltip}}"}
-.container_topology{'ng-controller' => "cloudTopologyController"}
+.topology{'ng-controller' => "cloudTopologyController"}
   .row.toolbar-pf
     .col-md-12
       = render :partial => "shared/topology_header"
@@ -48,4 +48,4 @@
   %kubernetes-topology-graph{:items => "items", :relations => "relations", :kinds => "kinds"}
 
 :javascript
-  miq_bootstrap('.container_topology', 'cloudTopologyApp');
+  miq_bootstrap('.topology', 'cloudTopologyApp');

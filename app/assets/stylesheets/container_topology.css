@@ -4,11 +4,11 @@
     stroke-dasharray: 5.5;
 }
 
-.container_topology .legend { /* prevents tooltip from conflicting with the nav bar*/
+.topology .legend { /* prevents tooltip from conflicting with the nav bar*/
   margin-left: 40px;
 }
 
-.container_topology g.EntityLegend {
+.topology g.EntityLegend {
     transform: translate(21px,21px);
 }
 
