@@ -4,7 +4,7 @@ describe('networkTopologyController', function() {
     var cloud_subnet = { id:"396086e5-7b0d-11e5-8286-18037327aaeb",  item:{display_kind:"CloudSubnet", name:"EmsRefreshSpec-SubnetPrivate_3000", kind:"CloudSubnet", id:"396086e5-7b0d-11e5-8286-18037327aaeb", miq_id:"100012"}};
     var network_provider = { id:"4",  item:{display_kind:"Openstack", name:"myProvider", kind:"NetworkManager", id:"2", miq_id:"2"}};
 
-    beforeEach(module('netTopologyApp'));
+    beforeEach(module('ManageIQ'));
 
     beforeEach(inject(function(_$httpBackend_, $rootScope, _$controller_, $location) {
       spyOn($location, 'absUrl').and.returnValue('/network_topology/show');

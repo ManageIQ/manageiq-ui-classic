@@ -1,8 +1,4 @@
-/* global miqHttpInject */
-
-miqHttpInject(angular.module('infraTopologyApp', ['kubernetesUI', 'ui.bootstrap', 'ManageIQ']))
-.controller('infraTopologyController', InfraTopologyCtrl);
-
+angular.module('ManageIQ').controller('infraTopologyController', InfraTopologyCtrl);
 InfraTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', 'topologyService', 'miqService'];
 
 function InfraTopologyCtrl($scope, $http, $interval, $location, topologyService, miqService) {
