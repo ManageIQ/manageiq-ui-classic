@@ -16,6 +16,7 @@
 .ad-hoc-toolbar.filters-selector{"pf-toolbar" => "", "id" => "filters-selector", "config" => "dash.toolbarConfig"}
   %actions
     %button.btn.btn-default{"type"        => "button",
+                            "ng-show"     => "dash.filterType!=='simple'",
                             "ng-click"    => "dash.doAddFilter()",
                             "ng-disabled" => "!dash.filterConfig.currentValue"}
       = _("Add Filter")
