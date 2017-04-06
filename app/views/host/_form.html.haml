@@ -2,8 +2,8 @@
 
 .form-horizontal{:id => "start_form_div", :style => "display:none"}
   %form#form_div{"name"            => "angularForm",
-                 "ng-controller"   => "hostFormController",
-                 "ng-show"         => "afterGet",
+                 "ng-controller"   => "hostFormController as vm",
+                 "ng-show"         => "vm.afterGet",
                  "form-fields-url" => "/#{controller_name}/host_form_fields/",
                  "create-url"      => "/#{controller_name}/create/",
                  "update-url"      => "/#{controller_name}/update/",
@@ -20,7 +20,7 @@
               %input.form-control{"type"           => "text",
                                   "id"             => "name",
                                   "name"           => "name",
-                                  "ng-model"       => "hostModel.name",
+                                  "ng-model"       => "vm.hostModel.name",
                                   "maxlength"      => "#{MAX_NAME_LEN}",
                                   "miqrequired"    => "",
                                   "checkchange"    => "",
@@ -34,21 +34,21 @@
               %input.form-control{"type"        => "text",
                                   "id"          => "hostname",
                                   "name"        => "hostname",
-                                  "ng-model"    => "hostModel.hostname",
+                                  "ng-model"    => "vm.hostModel.hostname",
                                   "maxlength"   => "#{MAX_HOSTNAME_LEN}",
                                   "miqrequired" => "",
                                   "checkchange" => ""}
               %span.help-block{"ng-show" => "angularForm.hostname.$error.miqrequired"}
                 = _("Required")
-          .form-group{"ng-class" => "{'has-error': angularForm.user_assigned_os.$invalid}", "ng-hide" => "hostModel.operating_system"}
+          .form-group{"ng-class" => "{'has-error': angularForm.user_assigned_os.$invalid}", "ng-hide" => "vm.hostModel.operating_system"}
             %label.col-md-2.control-label
               = _("Host platform")
             .col-md-8
               = select_tag('user_assigned_os',
                            options_for_select([["<#{_('Choose')}>", nil]] + Host.host_create_os_types.to_a, disabled: ["<#{_('Choose')}>", nil]),
-                           "ng-model"                    => "hostModel.user_assigned_os",
+                           "ng-model"                    => "vm.hostModel.user_assigned_os",
                            "checkchange"                 => "",
-                           "ng-required"                 => "!hostModel.operating_system",
+                           "ng-required"                 => "!vm.hostModel.operating_system",
                            "selectpicker-for-select-tag" => "")
               %span.help-block{"ng-show" => "angularForm.user_assigned_os.$error.required"}
                 = _("Required")
@@ -58,7 +58,7 @@
             .col-md-8
               %input#custom_1.form-control{"type"        => "text",
                                            "name"        => "custom_1",
-                                           "ng-model"    => "hostModel.custom_1",
+                                           "ng-model"    => "vm.hostModel.custom_1",
                                            "maxlength"   => 50,
                                            "checkchange" => ""}
           .form-group{"ng-class" => "{'has-error': angularForm.ipmi_address.$error.requiredDependsOn}"}
@@ -68,8 +68,8 @@
               %input.form-control#ipmi_address{"type"                => "text",
                                                "id"                  => "ipmi_address",
                                                "name"                => "ipmi_address",
-                                               "ng-model"            => "hostModel.ipmi_address",
-                                               "required-depends-on" => "hostModel.ipmi_userid",
+                                               "ng-model"            => "vm.hostModel.ipmi_address",
+                                               "required-depends-on" => "vm.hostModel.ipmi_userid",
                                                "required-if-exists"  => "ipmi_userid",
                                                "maxlength"           => 15,
                                                "checkchange"         => ""}
@@ -81,12 +81,12 @@
             .col-md-8
               %input#mac_address.form-control{"type"        => "text",
                                               "name"        => "mac_address",
-                                              "ng-model"    => "hostModel.mac_address",
+                                              "ng-model"    => "vm.hostModel.mac_address",
                                               "maxlength"   => "#{MAX_NAME_LEN}",
                                               "checkchange" => ""}
     %hr
     = render(:partial => "/layouts/angular/multi_auth_credentials",
-             :locals  => {:record => @host, :ng_model => "hostModel"})
+             :locals  => {:record => @host, :ng_model => "vm.hostModel"})
     = render :partial => "layouts/angular/x_edit_buttons_angular"
 
   - unless session[:host_items].nil?
