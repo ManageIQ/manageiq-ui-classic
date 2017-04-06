@@ -3,15 +3,14 @@
   %br
   %br
 
-%form.form-horizontal#form_div{:name            => "angularForm",
-                               'ng-controller'  => "timeProfileFormController as vm",
-                               "miq-form"       => true,
-                               'ng-show'        => "vm.afterGet",
-                               "model"          => "vm.timeProfileModel",
-                               "model-copy"     => 'vm.modelCopy',
-                               :novalidate      => true,
-                               :style           => 'display: none',
-                               "start-form-div" => "form_div"}
+%form.form-horizontal#form_div{:name           => "angularForm",
+                               'ng-controller' => "timeProfileFormController as vm",
+                               "miq-form"      => true,
+                               'ng-show'       => "vm.afterGet",
+                               'ng-cloak'      => "",
+                               "model"         => "vm.timeProfileModel",
+                               "model-copy"    => 'vm.modelCopy',
+                               :novalidate     => true}
   = render :partial => "layouts/flash_msg"
   .form-group{"ng-class" => "{'has-error': angularForm.description.$invalid}"}
     %label.col-md-2.control-label{"for" => "description"}
