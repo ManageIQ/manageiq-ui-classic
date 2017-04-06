@@ -131,12 +131,9 @@ function MwAddDatasourceService($http, $q) {
     return deferred.promise;
   };
 
-  self.getDatasources = function() {
-    return Object.freeze(datasources);
-  };
-
-  self.getXaDatasources = function() {
-    return Object.freeze(xaDatasources);
+  self.getDatasources = function(xa) {
+    var selectedDatasources = xa ? xaDatasources : datasources;
+    return Object.freeze(selectedDatasources);
   };
 
   self.isXaDriver = function(driver) {

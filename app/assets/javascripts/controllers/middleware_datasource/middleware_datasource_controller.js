@@ -63,7 +63,7 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     dsAddPropertyValue: '',
   };
 
-  vm.chooseDsModel.datasources = mwAddDatasourceService.getXaDatasources();
+  vm.chooseDsModel.datasources = mwAddDatasourceService.getDatasources(vm.chooseDsModel.xaDatasource);
 
   $scope.$on(ADD_DATASOURCE_EVENT, function(_event, payload) {
     if (mwAddDatasourceService.isXaDriver(vm.step2DsModel.selectedJdbcDriver)) {
@@ -103,11 +103,7 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
   });
 
   vm.onXaChange = function() {
-    if (vm.chooseDsModel.xaDatasource) {
-      vm.chooseDsModel.datasources = mwAddDatasourceService.getXaDatasources();
-    } else {
-      vm.chooseDsModel.datasources = mwAddDatasourceService.getDatasources();
-    }
+    vm.chooseDsModel.datasources = mwAddDatasourceService.getDatasources(vm.chooseDsModel.xaDatasource);
   };
 
   vm.addDatasourceChooseNext = function() {
