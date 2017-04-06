@@ -345,9 +345,14 @@ module MiqPolicyController::Alerts
   end
 
   def alert_default_repeat_time
-    (@edit[:new][:expression][:eval_method] && @edit[:new][:expression][:eval_method] == "hourly_performance") ||
-      @edit[:new][:exp_event] == "_hourly_timer_" ?
-      1.hour.to_i : 10.minutes.to_i
+    if (@edit[:new][:expression][:eval_method] && @edit[:new][:expression][:eval_method] == "hourly_performance") ||
+       @edit[:new][:exp_event] == "_hourly_timer_"
+      1.hour.to_i
+    elsif @edit[:new][:expression][:eval_method] && @edit[:new][:expression][:eval_method] == "dwh_generic"
+      0.minutes.to_i
+    else
+      10.minutes.to_i
+    end
   end
 
   def alert_get_perf_column_unit(val)
@@ -487,6 +492,11 @@ module MiqPolicyController::Alerts
       15.minutes.to_i => _("15 Minutes"), 30.minutes.to_i => _("30 Minutes"), 1.hour.to_i => _("1 Hour"),
       2.hours.to_i => _("2 Hours"), 3.hours.to_i => _("3 Hours"), 4.hours.to_i => _("4 Hours"),
       6.hours.to_i => _("6 Hours"), 12.hours.to_i => _("12 Hours"), 1.day.to_i => _("1 Day")
+    }
+
+    # repeat times for Notify Datawarehouse pull down
+    @sb[:alert][:repeat_times_dwh] ||= {
+      0.minutes.to_i => _("Always Notify")
     }
   end
 
