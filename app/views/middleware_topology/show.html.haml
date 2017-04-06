@@ -1,5 +1,5 @@
 - tooltipOptions = {"tooltip-placement" => "bottom", "tooltip" => "{{legendTooltip}}"}
-.container_topology{'ng-controller' => "middlewareTopologyController"}
+.topology{'ng-controller' => "middlewareTopologyController"}
   .row.toolbar-pf
     .col-md-12
       = render :partial => "shared/topology_header"
@@ -69,4 +69,4 @@
   %kubernetes-topology-graph.middleware{:items => "items", :relations => "relations", :kinds => "kinds"}
 
 :javascript
-  miq_bootstrap('.container_topology', 'mwTopologyApp');
+  miq_bootstrap('.topology', 'mwTopologyApp');
