@@ -13,7 +13,7 @@ MwServerGroupController.$inject = ['$scope', 'miqService' ];
  * interacting with the page via $scope and then 'sendDataWithRx' events down to the sub
  * controllers to handle them in isolation.
  *
- * Controller Hierarchy is:
+ * Nested Controller Hierarchy is:
  * - MwServerController
  * -- MwServerOpsController
  * -- MwAddDeploymentController
@@ -23,9 +23,9 @@ MwServerGroupController.$inject = ['$scope', 'miqService' ];
  * This is certainly not ideal, but allows us to use multiple controllers on a page.
  * And provides loose coupling of controllers via events instead of depending on
  * parent/child controller relationships.
- * @param $scope
- * @param miqService
- * @param mwAddDatasourceService
+ * @param {scope} $scope  - angular $scope object
+ * @param {MiqService} miqService - MiqServices
+ * @param {MwAddDatasourceService} mwAddDatasourceService - Datasource services
  * @constructor
  */
 function MwServerController($scope, miqService, mwAddDatasourceService) {
@@ -40,9 +40,9 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
   ManageIQ.angular.scope = $scope;
 
   ManageIQ.angular.rxSubject.subscribe(function(event) {
-    var eventType = event.type,
-      operation = event.operation,
-      timeout = event.timeout;
+    var eventType = event.type;
+    var  operation = event.operation;
+    var  timeout = event.timeout;
 
     $scope.paramsModel = $scope.paramsModel || {};
     if (eventType === 'mwServerOps'  && operation) {
@@ -55,24 +55,24 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
     }
   });
 
-  /////////////////////////////////////////////////////////////////////////
+  // //////////////////////////////////////////////////////////////////////
   // Server Ops
-  /////////////////////////////////////////////////////////////////////////
+  // //////////////////////////////////////////////////////////////////////
 
   $scope.runOperation = function() {
-    var newMwServerOpsEvent = {},
-      mwServerTypePart = {type: 'mwSeverOpsEvent'};
+    var newMwServerOpsEvent = {};
+    var mwServerTypePart = {type: 'mwSeverOpsEvent'};
     angular.extend(newMwServerOpsEvent, mwServerTypePart, $scope.paramsModel);
     sendDataWithRx(newMwServerOpsEvent);
   };
 
-  var formatOpDisplayName = function (operation) {
+  var formatOpDisplayName = function(operation) {
     return _.capitalize(operation);
   };
 
-  /////////////////////////////////////////////////////////////////////////
+  // //////////////////////////////////////////////////////////////////////
   // Add Deployment
-  /////////////////////////////////////////////////////////////////////////
+  // //////////////////////////////////////////////////////////////////////
 
   $scope.deployAddModel = {};
   $scope.deployAddModel.isGroupDeployment = isGroupDeployment;
@@ -80,7 +80,7 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
   $scope.deployAddModel.forceDeploy = false;
   $scope.deployAddModel.serverId = angular.element('#server_id').val();
 
-  $scope.showDeployListener = function () {
+  $scope.showDeployListener = function() {
     $scope.deployAddModel.showDeployModal = true;
     $scope.resetDeployForm();
   };
@@ -109,9 +109,9 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
     $scope.$broadcast('mwAddDeploymentEvent', $scope.deployAddModel);
   };
 
-  /////////////////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////////////////
   // Add JDBC Driver
-  /////////////////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////////////////
 
   $scope.showJdbcDriverListener = function() {
     $scope.resetJdbcDriverForm();
@@ -131,11 +131,7 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
 
   $scope.onDriverXaChange = function() {
     if ($scope.jdbcDriverModel) {
-      if ($scope.jdbcDriverModel.xaDatasource) {
-        $scope.jdbcDriverModel.datasources = mwAddDatasourceService.getXaDatasources();
-      } else {
-        $scope.jdbcDriverModel.datasources = mwAddDatasourceService.getDatasources();
-      }
+      $scope.jdbcDriverModel.datasources = mwAddDatasourceService.getDatasources($scope.jdbcDriverModel.xaDatasource);
     }
   };
 
@@ -164,12 +160,6 @@ ManageIQ.angular.app.controller('mwServerGroupOpsController', MwServerGroupOpsCo
 
 MwServerOpsController.$inject = ['miqService', 'serverOpsService'];
 
-/**
- * Angular MwServerOpsController to respond to Rx Observable events of type: mwSeverOpsEvent
- * @param miqService
- * @param serverOpsService
- * @constructor
- */
 function MwServerOpsController(miqService, serverOpsService) {
   return MwServerOpsControllerFactory(miqService, serverOpsService);
 }
@@ -222,7 +212,7 @@ function ServerOpsServiceFactory($http, $q, isGroup) {
       'timeout': timeout,
     };
 
-    var url = '/middleware_server' + (isGroup ? '_group' : '') + '/run_operation'
+    var url = '/middleware_server' + (isGroup ? '_group' : '') + '/run_operation';
     $http.post(url, angular.toJson(payload))
       .then(
         function(response) { // success
@@ -237,7 +227,7 @@ function ServerOpsServiceFactory($http, $q, isGroup) {
       .catch(function() {
         deferred.reject(errorMsg);
       })
-      .finally(function() {
+      .finally(function(data) {
         angular.element("#modal_param_div").modal('hide');
         // we should already be resolved and promises can only fire once
         deferred.resolve(data.msg);
