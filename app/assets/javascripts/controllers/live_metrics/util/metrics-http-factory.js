@@ -3,15 +3,6 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
     var NUMBER_OF_MILLISEC_IN_HOUR = 60 * 60 * 1000;
     var NUMBER_OF_MILLISEC_IN_SEC = 1000;
 
-    function getLatestData(item) {
-      var params = '&query=get_data&type=' + item.type + '&metric_id=' + item.id +
-        '&limit=5&order=DESC';
-
-      $http.get(dash.url + params)
-        .then(function(response) { utils.getContainerDashboardData(item, response); })
-        .catch(miqService.handleFailure);
-    };
-
     function getMetricDefinitionsData(response) {
       'use strict';
       var data = response.data;
@@ -25,7 +16,7 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
         return item.id && item.type;
       });
 
-      angular.forEach(dash.items, getLatestData);
+      angular.forEach(dash.items, function(item) { utils.getContainerDashboardData(item); });
 
       dash.pages = (data.pages > 0) ? data.pages : 1;
       dash.pagesTitle = sprintf(__("Page %d of %d"), data.page, dash.pages);
