@@ -570,6 +570,7 @@ module ApplicationHelper
 
   def show_taskbar_in_header?
     return false if @explorer
+    return false if controller.action_name.end_with?("tagging_edit")
 
     ! (@layout == "" &&
       %w(auth_error
@@ -601,7 +602,7 @@ module ApplicationHelper
          rss
          server_build
         ).include?(@layout) ||
-      (@layout == "configuration" && @tabform != "ui_4")) && !controller.action_name.end_with?("tagging_edit")
+      (@layout == "configuration" && @tabform != "ui_4"))
   end
 
   def taskbar_in_header?
