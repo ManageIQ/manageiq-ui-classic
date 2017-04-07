@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', function($http, $scope, automationManagerFormId, miqService) {
+ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', function ($http, $scope, automationManagerFormId, miqService) {
   var vm = this;
   vm.automationManagerModel = {
     name: '',
@@ -18,27 +18,27 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
   ManageIQ.angular.scope = $scope;
 
 
-    if (automationManagerFormId === 'new') {
+  if (automationManagerFormId === 'new') {
 
-        vm.newRecord = $scope.newRecord = true;
-        vm.automationManagerModel.name = '';
-        vm.automationManagerModel.url = '';
-        vm.automationManagerModel.verify_ssl = false;
-        vm.automationManagerModel.log_userid = '';
-        vm.automationManagerModel.log_password = '';
-        vm.automationManagerModel.log_verify = '';
+    vm.newRecord = $scope.newRecord = true;
+    vm.automationManagerModel.name = '';
+    vm.automationManagerModel.url = '';
+    vm.automationManagerModel.verify_ssl = false;
+    vm.automationManagerModel.log_userid = '';
+    vm.automationManagerModel.log_password = '';
+    vm.automationManagerModel.log_verify = '';
 
-      $http.get('/automation_manager/form_fields/' + automationManagerFormId)
-        .then(getAutomationManagerNewFormDataComplete)
-        .catch(miqService.handleFailure);
-    } else {
-        vm.newRecord = false;
-        miqService.sparkleOn();
-      $http.get('/automation_manager/form_fields/' + automationManagerFormId)
-        .then(getAutomationManagerFormDataComplete)
-        .catch(miqService.handleFailure);
-        miqService.sparkleOff();
-    }
+    $http.get('/automation_manager/form_fields/' + automationManagerFormId)
+      .then(getAutomationManagerNewFormDataComplete)
+      .catch(miqService.handleFailure);
+  } else {
+    vm.newRecord = false;
+    miqService.sparkleOn();
+    $http.get('/automation_manager/form_fields/' + automationManagerFormId)
+      .then(getAutomationManagerFormDataComplete)
+      .catch(miqService.handleFailure);
+    miqService.sparkleOff();
+  }
 
   function getAutomationManagerNewFormDataComplete(response) {
     var data = response.data;
@@ -64,18 +64,18 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     vm.modelCopy = $scope.modelCopy = angular.copy(vm.automationManagerModel);
   }
 
-  $scope.canValidateBasicInfo = function() {
+  $scope.canValidateBasicInfo = function () {
     return vm.isBasicInfoValid();
   };
 
-  vm.isBasicInfoValid = function() {
+  vm.isBasicInfoValid = function () {
     return $scope.angularForm.url.$valid &&
       $scope.angularForm.log_userid.$valid &&
       $scope.angularForm.log_password.$valid &&
       $scope.angularForm.log_verify.$valid;
   };
 
-  var automationManagerEditButtonClicked = function(buttonName, serializeFields) {
+  var automationManagerEditButtonClicked = function (buttonName, serializeFields) {
     miqService.sparkleOn();
     var url = '/automation_manager/edit/' + automationManagerFormId + '?button=' + buttonName;
     if (serializeFields === undefined) {
@@ -85,24 +85,24 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     }
   };
 
-  $scope.cancelClicked = function() {
+  $scope.cancelClicked = function () {
     automationManagerEditButtonClicked('cancel');
     $scope.angularForm.$setPristine(true);
   };
 
-  $scope.resetClicked = function() {
+  $scope.resetClicked = function () {
     $scope.$broadcast('resetClicked');
     vm.automationManagerModel = angular.copy($scope.modelCopy);
     $scope.angularForm.$setPristine(true);
     miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
-  $scope.saveClicked = function() {
+  $scope.saveClicked = function () {
     automationManagerEditButtonClicked('save', true);
     $scope.angularForm.$setPristine(true);
   };
 
-  $scope.addClicked = function() {
+  $scope.addClicked = function () {
     $scope.saveClicked();
   };
 }]);
