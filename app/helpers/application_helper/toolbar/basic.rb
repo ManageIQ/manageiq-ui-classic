@@ -1,10 +1,7 @@
 class ApplicationHelper::Toolbar::Basic
   include Singleton
-
-  class << self
-    extend Forwardable
-    delegate %i(button select twostate separator definition button_group custom_content) => :instance
-  end
+  extend SingleForwardable
+  delegate %i(button select twostate separator definition button_group custom_content) => :instance
 
   attr_reader :definition
 
