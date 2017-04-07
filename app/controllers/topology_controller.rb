@@ -8,14 +8,35 @@ class TopologyController < ApplicationController
   #
   # @layout = 'xxx_topology';
   # @service_class = XxxTopologyService;
+  # @ng_controller = 'xxTopologyController'
   #
   # Layout has to match the route to the controller and in turn the controller
   # name as it is used in the #show action.
 
   class << self
-    attr_reader :layout
-    attr_reader :service_class
+    attr_reader :layout, :service_class, :entities, :ng_controller
+
+    private
+
+    # Method to declare entities for a topology controller
+    # The created entities can be accessed in the views using `controller.entities`
+    #
+    # The required params are:
+    #   :kind   - an ActiveRecord class as a string
+    #   :class  - an array of CSS classes for the legend
+    #   :icon   - an UTF-8 character for the corresponding fonticon
+    #   :height - the height of the icon in pixels
+    #   :label  - The displayed label, ideally wrapped with a _() call
+    def add_entity(entity)
+      @entities ||= []
+      @entities << entity
+    end
   end
+
+  delegate :entities, :to => :class
+  delegate :ng_controller, :to => :class
+
+  toolbar :topology
 
   def show
     # When navigated here without id, it means this is a general view for all providers (not for a specific provider)
@@ -25,6 +46,7 @@ class TopologyController < ApplicationController
     drop_breadcrumb(:name => _('Topology'), :url => "/#{self.class.layout}/show/#{params[:id]}")
     @lastaction = 'show'
     @display = @showtype = 'topology'
+    render :template => 'shared/topology'
   end
 
   def index

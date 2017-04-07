@@ -2,11 +2,14 @@ angular.module('ManageIQ').controller('networkTopologyController', NetworkTopolo
 NetworkTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', 'topologyService', 'miqService'];
 
 function NetworkTopologyCtrl($scope, $http, $interval, $location, topologyService, miqService) {
+  ManageIQ.angular.scope = $scope;
   var self = this;
   $scope.vs = null;
   var icons = null;
 
   var d3 = window.d3;
+  $scope.d3 = d3;
+
   $scope.refresh = function() {
     var id;
     if ($location.absUrl().match("show/$") || $location.absUrl().match("show$")) {
@@ -29,17 +32,19 @@ function NetworkTopologyCtrl($scope, $http, $interval, $location, topologyServic
   $scope.legendTooltip = __("Click here to show/hide entities of this type");
 
   $scope.show_hide_names = function() {
-     var vertices = $scope.vs;
+    $scope.checkboxModel.value = $('input#box_display_names')[0].checked;
+    var vertices = $scope.vs;
 
-     if ($scope.checkboxModel.value) {
-       vertices.selectAll("text.attached-label")
-         .classed("visible", true);
-     } else {
-       vertices.selectAll("text.attached-label")
-         .classed("visible", false);
-     }
+    if ($scope.checkboxModel.value) {
+      vertices.selectAll("text.attached-label")
+        .classed("visible", true);
+    } else {
+      vertices.selectAll("text.attached-label")
+        .classed("visible", false);
+    }
   };
 
+  $('input#box_display_names').click($scope.show_hide_names)
   $scope.refresh();
   var promise = $interval($scope.refresh, 1000 * 60 * 3);
 
@@ -253,17 +258,17 @@ function NetworkTopologyCtrl($scope, $http, $interval, $location, topologyServic
   };
 
   $scope.searchNode = function() {
-    var svg = topologyService.getSVG(d3);
-    var query = $scope.search.query;
+    var svg = topologyService.getSVG($scope.d3);
+    var query = $('input#search_topology')[0].value;
 
-   topologyService.searchNode(svg, query);
+    topologyService.searchNode(svg, query);
   };
 
   $scope.resetSearch = function() {
-    topologyService.resetSearch(d3);
+    topologyService.resetSearch($scope.d3);
 
     // Reset the search term in search input
-    $scope.search.query = "";
+    $('input#search_topology')[0].value = "";
   };
 
   function getNetworkTopologyData(response) {

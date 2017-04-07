@@ -1,19 +1,16 @@
-- tooltipOptions = {"tooltip-placement" => "bottom-right", "tooltip" => "{{legendTooltip}}"}
-.topology{'ng-controller' => "physicalInfraTopologyController"}
-  .row.toolbar-pf
-    .col-md-12
-      = render :partial => "shared/topology_header"
+.topology{'ng-controller' => controller.ng_controller}
   .legend
     %label#selected
     %div{'ng-if' => "kinds"}
-      %kubernetes-topology-icon{tooltipOptions, :kind => "PhysicalServer"}
-        %svg.kube-topology
-          %g.EntityLegend.PhysicalInfra
-            %circle{:r => "17"}
-            -# pficon-server-group
-            %text{:y => "9"} &#xe91a;
-        %label
-          = _("Physical Servers")
+      - (controller.entities || []).each do |entity|
+        %kubernetes-topology-icon{"tooltip-placement" => "bottom", :tooltip => "{{legendTooltip}}", :kind => entity[:kind]}
+          %svg.kube-topology
+            %g.EntityLegend{:class => entity[:class].join(' ')}
+              %circle{:r => "17"}
+              %text{:y => entity[:ypos], :x => entity[:xpos], :class => entity[:iclass]}
+                != entity[:icon]
+          %label
+            = entity[:label]
 
   .alert.alert-info.alert-dismissable
     %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"}

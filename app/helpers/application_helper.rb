@@ -578,12 +578,9 @@ module ApplicationHelper
           ).include?(controller.action_name) ||
         %w(about
            chargeback
-           cloud_topology
            container_dashboard
            ems_infra_dashboard
            exception
-           infra_topology
-           middleware_topology
            miq_ae_automate_button
            miq_ae_class
            miq_ae_export
@@ -598,9 +595,7 @@ module ApplicationHelper
            monitor_alerts_overview
            monitor_alerts_list
            monitor_alerts_most_recent
-           network_topology
            ops
-           physical_infra_topology
            pxe
            report
            rss
