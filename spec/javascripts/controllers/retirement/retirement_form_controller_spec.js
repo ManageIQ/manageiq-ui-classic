@@ -12,7 +12,7 @@ describe('retirementFormController', function() {
     $scope = $rootScope.$new();
     $scope.retirementInfo = { retirementDate: '', retirementWarning: ''};
     $httpBackend = _$httpBackend_;
-    $controller = _$controller_('retirementFormController', {
+    $controller = _$controller_('retirementFormController as vm', {
       $scope: $scope,
       objectIds: [1000000000001],
       miqService: miqService
@@ -35,11 +35,11 @@ describe('retirementFormController', function() {
 
   describe('initialization', function() {
     it('sets the retirementDate to the value returned with http request', function() {
-      expect($scope.retirementInfo.retirementDate).toEqual(new Date('2015-12-31'));
+      expect($scope.vm.retirementInfo.retirementDate).toEqual(new Date('2015-12-31'));
     });
 
     it('sets the retirementWarning to the value returned with http request', function() {
-      expect($scope.retirementInfo.retirementWarning).toEqual('0');
+      expect($scope.vm.retirementInfo.retirementWarning).toEqual('0');
     });
   });
 
@@ -48,7 +48,7 @@ describe('retirementFormController', function() {
       $scope.angularForm = {
         $setPristine: function(value) {}
       };
-      $scope.cancelClicked();
+      $scope.vm.cancelClicked();
     });
 
     it('turns the spinner on via the miqService', function() {
@@ -69,7 +69,7 @@ describe('retirementFormController', function() {
       $scope.angularForm = {
         $setPristine: function (value){}
       };
-      $scope.saveClicked();
+      $scope.vm.saveClicked();
     });
 
     it('turns the spinner on via the miqService', function() {
@@ -82,8 +82,8 @@ describe('retirementFormController', function() {
 
     it('delegates to miqService.miqAjaxButton', function() {
       var saveContent = {
-        retire_date: $scope.retirementInfo.retirementDate,
-        retire_warn: $scope.retirementInfo.retirementWarning
+        retire_date: $scope.vm.retirementInfo.retirementDate,
+        retire_warn: $scope.vm.retirementInfo.retirementWarning
       };
       expect(miqService.miqAjaxButton).toHaveBeenCalledWith('retire?button=save', saveContent);
     });
