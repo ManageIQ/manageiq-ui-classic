@@ -13,6 +13,7 @@ module VmCommon
   included do
     private :textual_group_list
     helper_method :textual_group_list
+    helper_method :parent_choices
   end
 
   # handle buttons pressed on the button bar
@@ -980,6 +981,18 @@ module VmCommon
     replace_right_cell
   end
 
+  def parent_choices
+    @parent_choices = {}
+    @parent_choices[@record.id] ||= begin
+      parent_item_scope = Rbac.filtered(VmOrTemplate.where.not(:id => @record.id).order(:name))
+      choices = parent_item_scope.pluck(:name, :location, :id).each_with_object({}) do |vm, memo|
+        memo[vm[0] + " -- #{vm[1]}"] = vm[2]
+      end
+      choices['"no parent"'] = -1 # Add "no parent" entry
+      choices
+    end
+  end
+
   private
 
   # Check for parent nodes missing from vandt tree and return them if any
@@ -1389,13 +1402,6 @@ module VmCommon
 
     @edit[:current][:custom_1] = @edit[:new][:custom_1] = @record.custom_1.to_s
     @edit[:current][:description] = @edit[:new][:description] = @record.description.to_s
-    @edit[:pchoices] = {}                                 # Build a hash for the parent choices box
-    parent_item_scope = Rbac.filtered(VmOrTemplate.where.not(:id => @record.id))
-    @edit[:pchoices] = parent_item_scope.pluck(:name, :location, :id).each_with_object({}) do |vm, memo|
-      memo[vm[0] + " -- #{vm[1]}"] = vm[2]
-    end
-
-    @edit[:pchoices]['"no parent"'] = -1                        # Add "no parent" entry
     if @record.parents.length == 0                                            # Set the currently selected parent
       @edit[:new][:parent] = -1
     else
@@ -1736,7 +1742,7 @@ module VmCommon
           # if @edit[:new][k].is_a?(Hash)
           msg = msg + k.to_s + ":[" + @edit[:current][k].keys.join(",") + "] to [" + @edit[:new][k].keys.join(",") + "]"
         elsif k == :parent
-          msg = msg + k.to_s + ":[" + @edit[:pchoices].invert[@edit[:current][k]] + "] to [" + @edit[:pchoices].invert[@edit[:new][k]] + "]"
+          msg = msg + k.to_s + ":[" + parent_choices.invert[@edit[:current][k]] + "] to [" + parent_choices.invert[@edit[:new][k]] + "]"
         else
           msg = msg + k.to_s + ":[" + @edit[:current][k].to_s + "] to [" + @edit[:new][k].to_s + "]"
         end

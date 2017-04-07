@@ -41,7 +41,7 @@
         = _('Parent VM')
       .col-md-8
         = select_tag("chosen_parent",
-                      options_for_select(@edit[:pchoices].sort, @edit[:new][:parent]),
+                      options_for_select(parent_choices.sort, @edit[:new][:parent]),
                       :multiple => false,
                       "data-miq_sparkle_on" => true,
                       "data-miq_sparkle_off" => true,
