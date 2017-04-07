@@ -576,11 +576,11 @@ module ApplicationHelper
   end
 
   def hide_taskbar_in_header?
-    @layout == "" &&
+    (@layout == "" &&
       %w(auth_error
          change_tab
          show
-        ).include?(controller.action_name) ||
+        ).include?(controller.action_name)) ||
       %w(about
          chargeback
          container_dashboard
