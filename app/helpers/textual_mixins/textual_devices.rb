@@ -1,17 +1,5 @@
+require 'textual_mixins/device'
 module TextualMixins::TextualDevices
-  Device = Struct.new(:name, :description, :units, :icon) do
-    def description_value(record)
-      method = description
-      self.description = if record.hardware.respond_to?(method)
-                           value = record.hardware.send(method).to_s
-                           value += " #{units}" if value.present? && units
-                           value
-                         else
-                           nil
-                         end
-    end
-  end
-
   def textual_devices
     devices = devices_details
     h = {:label    => _("Devices"),
