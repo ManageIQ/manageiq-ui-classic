@@ -1,0 +1,24 @@
+.topology{'ng-controller' => controller.ng_controller}
+  .legend
+    %label#selected
+    %div{'ng-if' => "kinds"}
+      - (controller.entities || []).each do |entity|
+        %kubernetes-topology-icon{"tooltip-placement" => "bottom", :tooltip => "{{legendTooltip}}", :kind => entity[:kind]}
+          %svg.kube-topology
+            %g.EntityLegend{:class => entity[:class].join(' ')}
+              %circle{:r => "17"}
+              %text{:y => entity[:ypos], :x => entity[:xpos], :class => entity[:iclass]}
+                != entity[:icon]
+          %label
+            = entity[:label]
+
+  .alert.alert-info.alert-dismissable
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"}
+      %span.pficon.pficon-close
+    %span.pficon.pficon-info
+    %strong
+      = _("Click on the legend to show/hide entities, and double click/right click the entities in the graph to navigate to their summary pages.")
+  %kubernetes-topology-graph{:items => "items", :relations => "relations", :kinds => "kinds"}
+
+:javascript
+  miq_bootstrap('.topology');
