@@ -44,7 +44,7 @@
           = select_tag('ems_id',
                   '',
                   'ng-model'                   => 'vm.keyPairModel.ems',
-                  'ng-options'                 => 'ems.name for ems in ems_choices',
+                  'ng-options'                 => 'ems.name for ems in vm.ems_choices',
                   :id                          => 'ems_id',
                   :required                    => '',
                   'pf-select'                  => true)
