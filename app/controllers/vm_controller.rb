@@ -18,6 +18,10 @@ class VmController < ApplicationController
     options[:model] = "ManageIQ::Providers::CloudManager::Vm" if params['sb_controller'] == 'availability_zone'
     process_show_list(options)
   end
+  
+  def title
+    _("Virtual Machines")
+  end
 
   private ####
 
@@ -31,7 +35,4 @@ class VmController < ApplicationController
     session[:policy_options]  = @policy_options unless @policy_options.nil?
   end
 
-  def title
-    _("Virtual Machines")
-  end
 end
