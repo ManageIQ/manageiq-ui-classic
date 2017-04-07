@@ -97,15 +97,13 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
   });
 
   $scope.$watch('vm.step2DsModel.selectedJdbcDriver', function(driverSelection) {
-    var dsSelection = mwAddDatasourceService.findDsSelectionFromDriver(driverSelection);
-    if (dsSelection) {
-      vm.step1DsModel.datasourceName = dsSelection.name;
-      vm.step1DsModel.jndiName = dsSelection.jndiName;
-      vm.step2DsModel.jdbcDriverName = dsSelection.driverName;
-      vm.step3DsModel.connectionUrl = '';
+    if (driverSelection) {
+      vm.step1DsModel.datasourceName = driverSelection.id;
+      vm.step2DsModel.jdbcDriverName = driverSelection.label;
+      vm.step2DsModel.jdbcModuleName = driverSelection.moduleName;
     }
     if (mwAddDatasourceService.isXaDriver(driverSelection)) {
-      vm.step2DsModel.xaDsClass = driverSelection.xaDsClass;
+      vm.step2DsModel.driverClass = driverSelection.xaDsClass;
     } else {
       vm.step2DsModel.driverClass = driverSelection.driverClass;
     }
@@ -135,21 +133,22 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     vm.step2DsModel.jdbcModuleName = dsSelection.driverModuleName;
     vm.step2DsModel.driverClass = dsSelection.driverClass;
 
-    mwAddDatasourceService.getExistingJdbcDrivers(serverId).then(function(result) {
-      var filteredDrivers;
-      if (vm.chooseDsModel.xaDatasource) {
-        filteredDrivers = _.filter(result, function(item) {
-          return item.xaDsClass != null;
-        });
-      } else {
-        filteredDrivers = _.filter(result, function(item) {
-          return item.driverClass != null;
-        });
-      }
-      vm.step2DsModel.existingJdbcDrivers = filteredDrivers;
+    mwAddDatasourceService.getExistingJdbcDrivers(serverId).then(function(drivers) {
+      vm.step2DsModel.existingJdbcDrivers = vm.filterXa(vm.chooseDsModel.xaDatasource, drivers);
     }).catch(function(errorMsg) {
       miqService.miqFlash(errorMsg.data.status, errorMsg.data.msg);
     });
+  };
+
+  vm.filterXa = function(isXa, drivers) {
+    var filteredDrivers;
+
+    if (isXa) {
+      filteredDrivers = _.filter(drivers, function(driver) { return driver.xaDsClass != null; });
+    } else {
+      filteredDrivers = _.filter(drivers, function(driver) { return driver.driverClass != null; });
+    }
+    return filteredDrivers;
   };
 
   vm.addDatasourceStep1Back = function() {
