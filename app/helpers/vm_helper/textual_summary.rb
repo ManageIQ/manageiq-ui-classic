@@ -11,6 +11,8 @@ module VmHelper::TextualSummary
   include TextualMixins::TextualPowerState
   include TextualMixins::TextualRegion
   include TextualMixins::TextualScanHistory
+  include TextualMixins::TextualDevices
+  include TextualMixins::TextualVmmInfo
   # TODO: Determine if DoNav + url_for + :title is the right way to do links, or should it be link_to with :title
 
   #
@@ -817,18 +819,6 @@ module VmHelper::TextualSummary
       value = @record.send("max_mem_usage_absolute_average_#{key}_over_time_period")
       h[:value] << {:label => label,
                     :value => (value.nil? ? _("Not Available") : number_to_percentage(value, :precision => 2))}
-    end
-    h
-  end
-
-  def textual_devices
-    h = {:label    => _("Devices"),
-         :icon     => "fa fa-hdd-o",
-         :explorer => true,
-         :value    => (@devices.nil? || @devices.empty? ? _("None") : @devices.length)}
-    if @devices.length > 0
-      h[:title] = _("Show VMs devices")
-      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'devices')
     end
     h
   end

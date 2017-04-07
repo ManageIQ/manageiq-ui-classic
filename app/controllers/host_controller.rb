@@ -7,17 +7,6 @@ class HostController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::MoreShowActions
 
-  def show_association(action, display_name, listicon, method, klass, association = nil, conditions = nil)
-    set_config(identify_record(params[:id]))
-    super
-  end
-
-  def download_summary_pdf
-    super do
-      set_config(@record)
-    end
-  end
-
   def show
     return if perfmenu_click?
 
@@ -31,7 +20,6 @@ class HostController < ApplicationController
 
     @gtl_url = "/show"
     @showtype = "config"
-    set_config(@host)
     case @display
     when "main", "summary_only"
       get_tagdata(@host)
@@ -123,10 +111,6 @@ class HostController < ApplicationController
     return label, condition
   end
 
-  def set_config_local
-    set_config(identify_record(params[:id]))
-    super
-  end
   alias_method :set_config_local, :drift_history
   alias_method :set_config_local, :groups
   alias_method :set_config_local, :patches

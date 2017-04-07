@@ -162,7 +162,6 @@ module ApplicationController::ReportDownloads
       @display = "main"
       if @record.kind_of?(VmOrTemplate)
         get_host_for_vm(@record)
-        set_config(@record)
       end
 
       disable_client_cache
