@@ -1,5 +1,5 @@
 describe('keyPairCloudFormController', function() {
-    var $scope, $controller, $httpBackend, miqService;
+    var $scope, vm, $httpBackend, miqService;
 
     beforeEach(module('ManageIQ'));
 
@@ -13,7 +13,6 @@ describe('keyPairCloudFormController', function() {
         spyOn(miqService, 'sparkleOff');
         $scope = $rootScope.$new();
         spyOn($scope, '$broadcast');
-        $scope.keyPairModel = { name: 'name', public_key: 'key', ems_id: 4, ems: { id: 4 } };
 
         //$scope.hostForm.$invalid = false;
         $httpBackend = _$httpBackend_;
@@ -22,11 +21,12 @@ describe('keyPairCloudFormController', function() {
         ]};
 
         $httpBackend.whenGET('/auth_key_pair_cloud/ems_form_choices').respond(providerResponse);
-        $controller = _$controller_('keyPairCloudFormController', {
+        vm = _$controller_('keyPairCloudFormController as vm', {
             $scope: $scope,
             keyPairFormId: 'new',
             miqService: miqService
         });
+        vm.keyPairModel = { name: 'name', public_key: 'key', ems_id: 4, ems: { id: 4 } };
     }));
 
     afterEach(function() {
@@ -37,16 +37,16 @@ describe('keyPairCloudFormController', function() {
     describe('initialization', function() {
         beforeEach(function() {
             $httpBackend.flush();
-            $scope.angularForm = {
+            vm.angularForm = {
                 $setPristine: function (value){}
             };
         });
         describe('when the keyPairFormId is new', function() {
             it('sets the name to blank', function () {
-                expect($scope.keyPairModel.name).toEqual('');
+                expect(vm.keyPairModel.name).toEqual('');
             });
             it('sets the hostname to blank', function () {
-                expect($scope.keyPairModel.public_key).toEqual('');
+                expect(vm.keyPairModel.public_key).toEqual('');
             });
         });
     });
@@ -54,10 +54,10 @@ describe('keyPairCloudFormController', function() {
     describe('#saveClicked', function() {
         beforeEach(function() {
             $httpBackend.flush();
-            $scope.angularForm = {
+            vm.angularForm = {
                 $setPristine: function (value){}
             };
-            $scope.saveClicked();
+            vm.saveClicked();
         });
 
         it('turns the spinner on via the miqService', function() {
@@ -69,17 +69,17 @@ describe('keyPairCloudFormController', function() {
         });
 
         it('delegates to miqService.miqAjaxButton', function() {
-            expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/auth_key_pair_cloud/create/new?button=save', miqService.serializeModel($scope.keyPairModel));
+            expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/auth_key_pair_cloud/create/new?button=save', miqService.serializeModel(vm.keyPairModel));
         });
     });
 
     describe('#cancelClicked', function() {
         beforeEach(function() {
             $httpBackend.flush();
-            $scope.angularForm = {
+            vm.angularForm = {
                 $setPristine: function (value){}
             };
-            $scope.cancelClicked();
+            vm.cancelClicked();
         });
 
         it('turns the spinner on via the miqService', function() {
