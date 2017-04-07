@@ -572,18 +572,14 @@ module ApplicationHelper
     return false if @explorer
     return false if controller.action_name.end_with?("tagging_edit")
 
-    ! hide_taskbar_in_header?
-  end
-
-  def hide_taskbar_in_header?
-    return true if @layout == "" &&
+    return false if @layout == "" &&
       %w(
          auth_error
          change_tab
          show
       ).include?(controller.action_name)
 
-    return true if %w(
+    return false if %w(
          about
          chargeback
          container_dashboard
@@ -610,9 +606,9 @@ module ApplicationHelper
          server_build
         ).include?(@layout)
 
-    return true if @layout == "configuration" && @tabform != "ui_4"
+    return false if @layout == "configuration" && @tabform != "ui_4"
 
-    false
+    true
   end
 
   def taskbar_in_header?
