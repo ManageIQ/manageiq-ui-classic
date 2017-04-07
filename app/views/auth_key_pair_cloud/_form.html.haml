@@ -3,10 +3,11 @@
   %br
   %br
 
-.form-horizontal{:id => 'start_form_div', :style => 'display:none'}
+.form-horizontal
   %form#form_div{:name           => 'angularForm',
                  'ng-controller' => 'keyPairCloudFormController',
                  'ng-show'       => 'afterGet',
+                 'ng-cloak'      => '',
                  :novalidate     => true}
     = render :partial => 'layouts/flash_msg'
     .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
@@ -20,8 +21,7 @@
                             :maxlength       => MAX_NAME_LEN,
                             :required        => true,
                             :checkchange     => '',
-                            'auto-focus'     => true,
-                            'start-form-div' => 'start_form_div'}
+                            'auto-focus'     => true}
         %span.help-block{"ng-show" => "angularForm.name.$error.required"}
           = _("Required")
     .form-group
