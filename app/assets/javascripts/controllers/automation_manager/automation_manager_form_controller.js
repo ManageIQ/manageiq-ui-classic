@@ -74,7 +74,7 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
       $scope.angularForm.log_verify.$valid;
   };
 
-  var automationManagerEditButtonClicked = function (buttonName, serializeFields) {
+  var automationManagerEditButtonClicked = function(buttonName, serializeFields) {
     miqService.sparkleOn();
     var url = '/automation_manager/edit/' + automationManagerFormId + '?button=' + buttonName;
     if (serializeFields === undefined) {
