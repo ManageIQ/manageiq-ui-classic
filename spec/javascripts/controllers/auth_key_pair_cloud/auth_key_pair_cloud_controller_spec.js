@@ -26,7 +26,6 @@ describe('keyPairCloudFormController', function() {
             keyPairFormId: 'new',
             miqService: miqService
         });
-        vm.keyPairModel = { name: 'name', public_key: 'key', ems_id: 4, ems: { id: 4 } };
     }));
 
     afterEach(function() {
@@ -57,7 +56,7 @@ describe('keyPairCloudFormController', function() {
             vm.angularForm = {
                 $setPristine: function (value){}
             };
-            vm.saveClicked();
+            $scope.saveClicked();
         });
 
         it('turns the spinner on via the miqService', function() {
@@ -79,7 +78,7 @@ describe('keyPairCloudFormController', function() {
             vm.angularForm = {
                 $setPristine: function (value){}
             };
-            vm.cancelClicked();
+            $scope.cancelClicked();
         });
 
         it('turns the spinner on via the miqService', function() {
