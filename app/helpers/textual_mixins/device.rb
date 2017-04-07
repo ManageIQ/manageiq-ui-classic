@@ -5,8 +5,6 @@ Device = Struct.new(:name, :description, :units, :icon) do
                          value = record.hardware.send(method).to_s
                          value += " #{units}" if value.present? && units
                          value
-                       else
-                         nil
                        end
   end
 end

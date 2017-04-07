@@ -42,11 +42,11 @@ module TextualMixins::TextualDevices
       location = disk.location
       size = disk.size
       prov = disk.used_percent_of_provisioned
-      device_name = _("Hard Disk (%{controller_type} %{location}), Size %{size}, Percent Used Provisioned Space %{space}") %
-                       {:controller_type => ctrl_type,
-                        :location        => location,
-                        :size            => size,
-                        :space           => prov}
+      device_name = _("Hard Disk (%{controller_type} %{location}), Size %{size}, " \
+                      "Percent Used Provisioned Space %{space}") % {:controller_type => ctrl_type,
+                                                                    :location        => location,
+                                                                    :size            => size,
+                                                                    :space           => prov}
       description = _("%{filename}, Mode: %{mode}") % {:filename => disk.filename, :mode => disk.mode}
       Device.new(device_name, description, nil, :disk)
     end
@@ -86,7 +86,7 @@ module TextualMixins::TextualDevices
       address = port.address
       filename = port.filename
       autodetect = port.auto_detect ? "" : _("Default Adapter")
-      desc = "#{location}, #{address}, #{filename}, #{autodetect}"
+      desc = [location, address, filename, autodetect].compact.join(', ')
       Device.new(name, desc, nil, port.device_type)
     end
   end
