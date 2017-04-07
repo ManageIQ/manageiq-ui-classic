@@ -988,8 +988,8 @@ module VmCommon
       choices = parent_item_scope.pluck(:name, :location, :id).each_with_object({}) do |vm, memo|
         memo[vm[0] + " -- #{vm[1]}"] = vm[2]
       end
-      choices['"no parent"'] = -1 # Add "no parent" entry
-      choices
+      # Add "no parent" entry as 1 entry in hash
+      {'"no parent"' => -1}.merge(choices)
     end
   end
 
