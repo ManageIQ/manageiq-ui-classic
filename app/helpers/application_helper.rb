@@ -576,12 +576,15 @@ module ApplicationHelper
   end
 
   def hide_taskbar_in_header?
-    (@layout == "" &&
-      %w(auth_error
+    return true if @layout == "" &&
+      %w(
+         auth_error
          change_tab
          show
-        ).include?(controller.action_name)) ||
-      %w(about
+      ).include?(controller.action_name)
+
+    return true if %w(
+         about
          chargeback
          container_dashboard
          ems_infra_dashboard
@@ -605,8 +608,11 @@ module ApplicationHelper
          report
          rss
          server_build
-        ).include?(@layout) ||
-      (@layout == "configuration" && @tabform != "ui_4")
+        ).include?(@layout)
+
+    return true if @layout == "configuration" && @tabform != "ui_4"
+
+    false
   end
 
   def taskbar_in_header?
