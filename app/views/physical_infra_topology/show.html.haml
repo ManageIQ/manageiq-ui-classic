@@ -1,8 +1,5 @@
 - tooltipOptions = {"tooltip-placement" => "bottom-right", "tooltip" => "{{legendTooltip}}"}
 .topology{'ng-controller' => "physicalInfraTopologyController"}
-  .row.toolbar-pf
-    .col-md-12
-      = render :partial => "shared/topology_header"
   .legend
     %label#selected
     %div{'ng-if' => "kinds"}

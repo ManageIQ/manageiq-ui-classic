@@ -2,9 +2,11 @@ angular.module('ManageIQ').controller('middlewareTopologyController', Middleware
 MiddlewareTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', 'topologyService', 'miqService'];
 
 function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologyService, miqService) {
+  ManageIQ.angular.scope = $scope;
   var self = this;
   $scope.vs = null;
   var d3 = window.d3;
+  $scope.d3 = d3;
   var icons;
 
   $scope.refresh = function() {
@@ -26,6 +28,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
   $scope.legendTooltip = 'Click here to show/hide entities of this type';
 
   $scope.show_hide_names = function() {
+    $scope.checkboxModel.value = $('input#box_display_names')[0].checked;
     var vertices = $scope.vs;
 
     if ($scope.checkboxModel.value) {
@@ -37,6 +40,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     }
   };
 
+  $('input#box_display_names').click($scope.show_hide_names)
   $scope.refresh();
   var promise = $interval($scope.refresh, 1000 * 60 * 3);
 
@@ -169,17 +173,17 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
   }
 
   $scope.searchNode = function() {
-    var svg = topologyService.getSVG(d3);
-    var query = $scope.search.query;
+    var svg = topologyService.getSVG($scope.d3);
+    var query = $('input#search_topology')[0].value;
 
     topologyService.searchNode(svg, query);
   };
 
   $scope.resetSearch = function() {
-    topologyService.resetSearch(d3);
+    topologyService.resetSearch($scope.d3);
 
     // Reset the search term in search input
-    $scope.search.query = '';
+    $('input#search_topology')[0].value = "";
   };
 
   function getMiddlewareTopologyData(response) {
