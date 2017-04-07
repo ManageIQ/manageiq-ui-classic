@@ -13,11 +13,12 @@ module ApplicationHelper::Toolbar::ConfiguredSystem::LifecycleMixin
             'pficon pficon-add-circle-o fa-lg',
             t = N_('Provision Configured Systems'),
             t,
-            :url       => "provision",
-            :url_parms => "main_div",
-            :enabled   => false,
-            :onwhen    => "1+",
-            :klass     => ApplicationHelper::Button::ConfiguredSystemProvision),
+            :url          => "provision",
+            :url_parms    => "main_div",
+            :send_checked => true,
+            :enabled      => false,
+            :onwhen       => "1+",
+            :klass        => ApplicationHelper::Button::ConfiguredSystemProvision),
         ]
       ),
     ])

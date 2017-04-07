@@ -6,7 +6,7 @@ class ApplicationHelper::Toolbar::VmPerformance < ApplicationHelper::Toolbar::Ba
       N_('Initiate refresh of recent C&U data'),
       nil,
       :confirm => N_("Initiate refresh of recent C&U data?"),
-      :klass => ApplicationHelper::Button::PerfRefresh),
+      :klass   => ApplicationHelper::Button::PerfRefresh),
     button(
       :perf_reload,
       'fa fa-repeat fa-lg',

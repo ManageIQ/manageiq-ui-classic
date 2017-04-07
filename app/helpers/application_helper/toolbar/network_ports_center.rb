@@ -13,9 +13,10 @@ class ApplicationHelper::Toolbar::NetworkPortsCenter < ApplicationHelper::Toolba
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for the selected Network Ports'),
           N_('Edit Tags'),
-          :url_parms => "main_div",
-          :enabled   => false,
-          :onwhen    => "1+"),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])

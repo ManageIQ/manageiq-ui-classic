@@ -29,7 +29,7 @@ class ApplicationHelper::Toolbar::OrchestrationTemplateCenter < ApplicationHelpe
           'pficon pficon-delete fa-lg',
           t = N_('Remove this Orchestration Template'),
           t,
-          :klass => ApplicationHelper::Button::OrchestrationTemplateEditRemove,
+          :klass   => ApplicationHelper::Button::OrchestrationTemplateEditRemove,
           :confirm => N_("Remove this Orchestration Template?")),
       ]
     ),

@@ -114,7 +114,7 @@ class ApplicationHelper::Toolbar::EmsContainerCenter < ApplicationHelper::Toolba
           'fa fa-search fa-lg',
           N_('Re-check Authentication Status for this Containers Provider'),
           N_('Re-check Authentication Status'),
-          :klass => ApplicationHelper::Button::GenericFeatureButton,
+          :klass   => ApplicationHelper::Button::GenericFeatureButton,
           :options => {:feature => :authentication_status}),
       ]
     ),

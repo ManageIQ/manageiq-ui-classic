@@ -31,14 +31,14 @@ class ApplicationHelper::Toolbar::CompareCenter < ApplicationHelper::Toolbar::Ba
       'fa fa-bars fa-lg',
       N_('Details Mode'),
       nil,
-      :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
-      :url => "compare_mode"),
+      :klass => ApplicationHelper::Button::ButtonWithoutRbacCheck,
+      :url   => "compare_mode"),
     twostate(
       :comparemode_exists,
       'product product-exists fa-lg',
       N_('Exists Mode'),
       nil,
-      :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
-      :url => "compare_mode"),
+      :klass => ApplicationHelper::Button::ButtonWithoutRbacCheck,
+      :url   => "compare_mode"),
   ])
 end

@@ -139,17 +139,19 @@ class ApplicationHelper::Toolbar::OpenstackVmCloudCenter < ApplicationHelper::To
           'product product-migrate fa-lg',
           t = N_('Migrate Instance'),
           t,
-          :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-          :options   => {:feature => :live_migrate},
-          :url_parms => 'main_div'),
+          :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+          :options      => {:feature => :live_migrate},
+          :url_parms    => 'main_div',
+          :send_checked => true),
         button(
           :instance_evacuate,
           'product product-migrate fa-lg',
           t = N_('Evacuate Instance'),
           t,
-          :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-          :options   => {:feature => :evacuate},
-          :url_parms => 'main_div')
+          :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+          :options      => {:feature => :evacuate},
+          :url_parms    => 'main_div',
+          :send_checked => true)
       ]
     ),
   ])

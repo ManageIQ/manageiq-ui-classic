@@ -11,10 +11,11 @@ class ApplicationHelper::Toolbar::ContainerBuildsCenter < ApplicationHelper::Too
           'fa fa-search fa-lg',
           N_('Perform SmartState Analysis on the selected items'),
           N_('Perform SmartState Analysis'),
-          :url_parms => "main_div",
-          :confirm   => N_("Perform SmartState Analysis on the selected items?"),
-          :enabled   => false,
-          :onwhen    => "1+"),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :confirm      => N_("Perform SmartState Analysis on the selected items?"),
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])
@@ -32,9 +33,10 @@ class ApplicationHelper::Toolbar::ContainerBuildsCenter < ApplicationHelper::Too
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for these Container Builds'),
           N_('Edit Tags'),
-          :url_parms => "main_div",
-          :enabled   => false,
-          :onwhen    => "1+"),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])

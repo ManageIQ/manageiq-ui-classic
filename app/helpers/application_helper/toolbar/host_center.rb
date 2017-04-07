@@ -12,14 +12,14 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           N_('Refresh relationships and power states for all items related to this item'),
           N_('Refresh Relationships and Power States'),
           :confirm => N_("Refresh relationships and power states for all items related to this item?"),
-          :klass => ApplicationHelper::Button::HostRefresh),
+          :klass   => ApplicationHelper::Button::HostRefresh),
         button(
           :host_scan,
           'fa fa-search fa-lg',
           N_('Perform SmartState Analysis on this item'),
           N_('Perform SmartState Analysis'),
           :confirm => N_("Perform SmartState Analysis on this item?"),
-          :klass => ApplicationHelper::Button::HostScan),
+          :klass   => ApplicationHelper::Button::HostScan),
         button(
           :host_manageable,
           'pficon pficon-edit fa-lg',
@@ -130,7 +130,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           N_('Utilization'),
           :url       => "/show",
           :url_parms => "?display=performance",
-          :klass   => ApplicationHelper::Button::HostPerformance),
+          :klass     => ApplicationHelper::Button::HostPerformance),
         button(
           :host_timeline,
           'product product-timeline fa-lg',
@@ -138,7 +138,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           N_('Timelines'),
           :url       => "/show",
           :url_parms => "?display=timeline",
-          :klass   => ApplicationHelper::Button::HostTimeline),
+          :klass     => ApplicationHelper::Button::HostTimeline),
       ]
     ),
   ])

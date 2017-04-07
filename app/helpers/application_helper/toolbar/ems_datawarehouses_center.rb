@@ -11,10 +11,11 @@ class ApplicationHelper::Toolbar::EmsDatawarehousesCenter < ApplicationHelper::T
           'icon fa fa-refresh fa-lg',
           N_('Refresh Items and Relationships for these Datawarehouse Providers'),
           N_('Refresh Items and Relationships'),
-          :confirm   => N_("Refresh Items and Relationships related to these Datawarehouse Providers?"),
-          :enabled   => false,
-          :url_parms => "main_div",
-          :onwhen    => "1+"),
+          :confirm      => N_("Refresh Items and Relationships related to these Datawarehouse Providers?"),
+          :enabled      => false,
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :onwhen       => "1+"),
         separator,
         button(
           :ems_datawarehouse_new,
@@ -28,19 +29,21 @@ class ApplicationHelper::Toolbar::EmsDatawarehousesCenter < ApplicationHelper::T
           'pficon pficon-edit fa-lg',
           N_('Select a single Datawarehouse Providers to edit'),
           N_('Edit Selected Datawarehouse Providers'),
-          :url_parms => "main_div",
-          :enabled   => false,
-          :onwhen    => "1"),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1"),
         button(
           :ems_datawarehouse_delete,
           'pficon pficon-delete fa-lg',
           N_('Remove selected Datawarehouse Providers'),
           N_('Remove Datawarehouse Providers'),
-          :url_parms => "main_div",
-          :confirm   => N_("Warning: The selected Datawarehouse Providers and ALL " \
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :confirm      => N_("Warning: The selected Datawarehouse Providers and ALL " \
                            "of their components will be permanently removed!"),
-          :enabled   => false,
-          :onwhen    => "1+"),
+          :enabled => false,
+          :onwhen  => "1+"),
       ]
     ),
   ])
@@ -58,9 +61,10 @@ class ApplicationHelper::Toolbar::EmsDatawarehousesCenter < ApplicationHelper::T
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for these Datawarehouse Providers'),
           N_('Edit Tags'),
-          :url_parms => "main_div",
-          :enabled   => false,
-          :onwhen    => "1+"),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])
@@ -78,9 +82,10 @@ class ApplicationHelper::Toolbar::EmsDatawarehousesCenter < ApplicationHelper::T
           'fa fa-search fa-lg',
           N_('Re-check Authentication Status for the selected Datawarehouse Providers'),
           N_('Re-check Authentication Status'),
-          :url_parms => "main_div",
-          :enabled   => false,
-          :onwhen    => "1+"),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1+"),
       ]
     ),
   ])

@@ -12,11 +12,12 @@ class ApplicationHelper::Toolbar::AutomationManagerProvidersCenter < Application
           'fa fa-refresh fa-lg',
           N_('Refresh relationships for all items related to the selected items'),
           N_('Refresh Relationships and Power states'),
-          :url       => "refresh",
-          :url_parms => "main_div",
-          :confirm   => N_("Refresh relationships for all items related to the selected items?"),
-          :enabled   => false,
-          :onwhen    => "1+"
+          :url          => "refresh",
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :confirm      => N_("Refresh relationships for all items related to the selected items?"),
+          :enabled      => false,
+          :onwhen       => "1+"
         ),
         separator,
         button(
@@ -32,21 +33,23 @@ class ApplicationHelper::Toolbar::AutomationManagerProvidersCenter < Application
           'pficon pficon-edit fa-lg',
           N_('Select a single item to edit'),
           N_('Edit Selected item'),
-          :url       => "edit",
-          :url_parms => "main_div",
-          :enabled   => false,
-          :onwhen    => "1"
+          :url          => "edit",
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :enabled      => false,
+          :onwhen       => "1"
         ),
         button(
           :automation_manager_delete_provider,
           'pficon pficon-delete fa-lg',
           t = N_('Remove selected items'),
           t,
-          :url       => "delete",
-          :url_parms => "main_div",
-          :confirm   => N_("Warning: The selected items and ALL of their components will be permanently removed!"),
-          :enabled   => false,
-          :onwhen    => "1+"
+          :url          => "delete",
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :confirm      => N_("Warning: The selected items and ALL of their components will be permanently removed!"),
+          :enabled      => false,
+          :onwhen       => "1+"
         ),
         separator,
       ]

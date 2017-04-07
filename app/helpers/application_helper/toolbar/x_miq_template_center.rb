@@ -12,14 +12,14 @@ class ApplicationHelper::Toolbar::XMiqTemplateCenter < ApplicationHelper::Toolba
           N_('Refresh relationships and power states for all items related to this Template'),
           N_('Refresh Relationships and Power States'),
           :confirm => N_("Refresh relationships and power states for all items related to this Template?"),
-          :klass => ApplicationHelper::Button::TemplateRefresh),
+          :klass   => ApplicationHelper::Button::TemplateRefresh),
         button(
           :miq_template_scan,
           'fa fa-search fa-lg',
           N_('Perform SmartState Analysis on this Template'),
           N_('Perform SmartState Analysis'),
           :confirm => N_("Perform SmartState Analysis on this Template?"),
-          :klass => ApplicationHelper::Button::VmInstanceTemplateScan),
+          :klass   => ApplicationHelper::Button::VmInstanceTemplateScan),
         separator,
         button(
           :miq_template_edit,
@@ -94,7 +94,7 @@ class ApplicationHelper::Toolbar::XMiqTemplateCenter < ApplicationHelper::Toolba
           'product product-clone fa-lg',
           t = N_('Clone this Template'),
           t,
-          :klass => ApplicationHelper::Button::GenericFeatureButton,
+          :klass   => ApplicationHelper::Button::GenericFeatureButton,
           :options => {:feature => :clone}),
       ]
     ),
@@ -141,9 +141,10 @@ class ApplicationHelper::Toolbar::XMiqTemplateCenter < ApplicationHelper::Toolba
           'pficon pficon-delete fa-lg',
           t = N_('Delete Selected Snapshot'),
           t,
-          :confirm   => N_("The selected snapshot will be permanently deleted. Are you sure you want to delete the selected snapshot?"),
-          :url_parms => "main_div",
-          :onwhen    => "1"),
+          :confirm      => N_("The selected snapshot will be permanently deleted. Are you sure you want to delete the selected snapshot?"),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :onwhen       => "1"),
         button(
           :miq_template_snapshot_delete_all,
           'pficon pficon-delete fa-lg',
@@ -171,8 +172,9 @@ class ApplicationHelper::Toolbar::XMiqTemplateCenter < ApplicationHelper::Toolba
       'product product-compare fa-lg',
       N_('Compare selected Templates'),
       nil,
-      :url_parms => "main_div",
-      :enabled   => false,
-      :onwhen    => "2+"),
+      :url_parms    => "main_div",
+      :send_checked => true,
+      :enabled      => false,
+      :onwhen       => "2+"),
   ])
 end

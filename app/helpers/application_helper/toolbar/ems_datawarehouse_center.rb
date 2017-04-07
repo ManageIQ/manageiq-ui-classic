@@ -72,7 +72,7 @@ class ApplicationHelper::Toolbar::EmsDatawarehouseCenter < ApplicationHelper::To
           'fa fa-search fa-lg',
           N_("Re-check Authentication Status for this Datawarehouse Provider"),
           N_('Re-check Authentication Status'),
-          :klass => ApplicationHelper::Button::GenericFeatureButton,
+          :klass   => ApplicationHelper::Button::GenericFeatureButton,
           :options => {:feature => :authentication_status}),
       ]
     ),

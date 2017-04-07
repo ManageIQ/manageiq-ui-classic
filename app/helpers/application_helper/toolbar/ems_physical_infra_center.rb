@@ -88,7 +88,7 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfraCenter < ApplicationHelper::To
           'fa fa-search fa-lg',
           N_('Re-check Authentication Status for this Physical Infrastructure Provider'),
           N_('Re-check Authentication Status'),
-          :klass => ApplicationHelper::Button::GenericFeatureButton,
+          :klass   => ApplicationHelper::Button::GenericFeatureButton,
           :options => {:feature => :authentication_status}),
       ]
     ),

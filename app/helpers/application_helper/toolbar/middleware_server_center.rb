@@ -24,7 +24,7 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
       t = N_('Policy'),
       t,
       :enabled => "false",
-      :items => [
+      :items   => [
         button(
           :middleware_server_tag,
           'pficon pficon-edit fa-lg',
@@ -45,12 +45,12 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           nil,
           N_('Gracefully shut this server down'),
           N_('Gracefully shutdown Server'),
-          :image => 'guest_shutdown',
-          :data  => {'toggle'        => 'modal',
+          :image                     => 'guest_shutdown',
+          :data                      => {'toggle'        => 'modal',
                      'target'        => '#modal_param_div',
                      'function'      => 'sendDataWithRx',
                      'function-data' => '{"type": "mwServerOps", "operation": "shutdown", "timeout": 0}'},
-          :klass => ApplicationHelper::Button::MiddlewareStandaloneServerAction),
+          :klass                     => ApplicationHelper::Button::MiddlewareStandaloneServerAction),
         button(
           :middleware_server_restart,
           nil,
@@ -73,12 +73,12 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           nil,
           N_('Suspend this server'),
           N_('Suspend Server'),
-          :image => 'suspend',
-          :data  => {'toggle'        => 'modal',
+          :image                     => 'suspend',
+          :data                      => {'toggle'        => 'modal',
                      'target'        => '#modal_param_div',
                      'function'      => 'sendDataWithRx',
                      'function-data' => '{"type": "mwServerOps", "operation": "suspend", "timeout": 10}'},
-          :klass => ApplicationHelper::Button::MiddlewareServerAction),
+          :klass                     => ApplicationHelper::Button::MiddlewareServerAction),
         button(
           :middleware_server_resume,
           nil,
@@ -142,11 +142,11 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           'pficon pficon-add-circle-o fa-lg',
           N_('Add a new Middleware Deployment'),
           N_('Add Deployment'),
-          :data => {'toggle'        => 'modal',
+          :data                     => {'toggle'        => 'modal',
                     'target'        => '#modal_d_div',
                     'function'      => 'miqCallAngular',
                     'function-data' => '{"name": "showDeployListener", "args": []}'},
-          :klass => ApplicationHelper::Button::MiddlewareStandaloneServerAction)
+          :klass                    => ApplicationHelper::Button::MiddlewareStandaloneServerAction)
       ]
     ),
   ])
@@ -162,11 +162,11 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           'fa fa-plug fa-lg',
           N_('Add a new Middleware JDBC Driver'),
           N_('Add JDBC Driver'),
-          :data => {'toggle'        => 'modal',
+          :data                     => {'toggle'        => 'modal',
                     'target'        => '#modal_jdbc_div',
                     'function'      => 'miqCallAngular',
                     'function-data' => '{"name": "showJdbcDriverListener", "args": []}'},
-          :klass => ApplicationHelper::Button::MiddlewareStandaloneServerAction)
+          :klass                    => ApplicationHelper::Button::MiddlewareStandaloneServerAction)
       ]
     ),
   ])
@@ -182,11 +182,11 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           'fa fa-database fa-lg',
           N_('Add a new Middleware Datasource'),
           N_('Add Datasource'),
-          :data => {'toggle'        => 'modal',
+          :data                     => {'toggle'        => 'modal',
                     'target'        => '#modal_ds_div',
                     'function'      => 'miqCallAngular',
                     'function-data' => '{"name": "showDatasourceListener", "args": []}'},
-          :klass => ApplicationHelper::Button::MiddlewareStandaloneServerAction)
+          :klass                    => ApplicationHelper::Button::MiddlewareStandaloneServerAction)
       ]
     ),
   ])

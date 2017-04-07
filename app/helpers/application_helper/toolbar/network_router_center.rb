@@ -13,33 +13,37 @@ class ApplicationHelper::Toolbar::NetworkRouterCenter < ApplicationHelper::Toolb
             'pficon pficon-edit fa-lg',
             t = N_('Edit this Router'),
             t,
-            :url_parms => 'main_div'
+            :url_parms    => 'main_div',
+            :send_checked => true
           ),
           button(
             :network_router_add_interface,
             'pficon pficon-edit fa-lg',
             t = N_('Add Interface to this Router'),
             t,
-            :url_parms => 'main_div',
-            :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-            :options   => {:feature => :add_interface}
+            :url_parms    => 'main_div',
+            :send_checked => true,
+            :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+            :options      => {:feature => :add_interface}
           ),
           button(
             :network_router_remove_interface,
             'pficon pficon-edit fa-lg',
             t = N_('Remove Interface from this Router'),
             t,
-            :url_parms => 'main_div',
-            :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-            :options   => {:feature => :remove_interface}
+            :url_parms    => 'main_div',
+            :send_checked => true,
+            :klass        => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
+            :options      => {:feature => :remove_interface}
           ),
           button(
             :network_router_delete,
             'pficon pficon-delete fa-lg',
             t = N_('Delete this Router'),
             t,
-            :url_parms => 'main_div',
-            :confirm   => N_('Warning: This Router and ALL of its components will be removed!'),
+            :url_parms    => 'main_div',
+            :send_checked => true,
+            :confirm      => N_('Warning: This Router and ALL of its components will be removed!'),
           )
         ]
       )

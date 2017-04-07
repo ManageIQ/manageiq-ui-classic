@@ -96,7 +96,7 @@ class ApplicationHelper::Toolbar::EmsCloudCenter < ApplicationHelper::Toolbar::B
           'fa fa-search fa-lg',
           N_('Re-check Authentication Status for this Cloud Provider'),
           N_('Re-check Authentication Status'),
-          :klass => ApplicationHelper::Button::GenericFeatureButton,
+          :klass   => ApplicationHelper::Button::GenericFeatureButton,
           :options => {:feature => :authentication_status}),
       ]
     ),

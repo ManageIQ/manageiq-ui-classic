@@ -17,8 +17,9 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
           'pficon pficon-delete fa-lg',
           N_('Remove this Service'),
           N_('Remove Service'),
-          :url_parms => "main_div",
-          :confirm   => N_("Warning: This Service and ALL of their components will be permanently removed!")),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :confirm      => N_("Warning: This Service and ALL of their components will be permanently removed!")),
         separator,
         button(
           :service_ownership,
@@ -31,7 +32,7 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
           'pficon pficon-edit fa-lg',
           N_('Reconfigure the options of this Service'),
           N_('Reconfigure this Service'),
-          :klass => ApplicationHelper::Button::GenericFeatureButton,
+          :klass   => ApplicationHelper::Button::GenericFeatureButton,
           :options => {:feature => :reconfigure}),
       ]
     ),
@@ -48,7 +49,8 @@ class ApplicationHelper::Toolbar::ServiceCenter < ApplicationHelper::Toolbar::Ba
           'pficon pficon-edit fa-lg',
           N_('Edit Tags for this Service'),
           N_('Edit Tags'),
-          :url_parms => "main_div"),
+          :url_parms    => "main_div",
+          :send_checked => true),
       ]
     ),
   ])

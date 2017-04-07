@@ -5,15 +5,15 @@ class ApplicationHelper::Toolbar::CompareView < ApplicationHelper::Toolbar::Basi
       'product product-view_expanded fa-lg',
       N_('Expanded View'),
       nil,
-      :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
-      :url => "compare_compress"),
+      :klass => ApplicationHelper::Button::ButtonWithoutRbacCheck,
+      :url   => "compare_compress"),
     twostate(
       :compare_compressed,
       'fa fa-bars fa-rotate-90 fa-lg',
       N_('Compressed View'),
       nil,
-      :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
-      :url => "compare_compress"),
+      :klass => ApplicationHelper::Button::ButtonWithoutRbacCheck,
+      :url   => "compare_compress"),
   ])
   button_group('compare_downloading', [
     select(
@@ -39,8 +39,8 @@ class ApplicationHelper::Toolbar::CompareView < ApplicationHelper::Toolbar::Basi
           'fa fa-file-pdf-o fa-lg',
           N_('Download comparison report in PDF format'),
           N_('Download as PDF'),
-          :klass     => ApplicationHelper::Button::Pdf,
-          :url => "/compare_to_pdf"),
+          :klass => ApplicationHelper::Button::Pdf,
+          :url   => "/compare_to_pdf"),
       ]
     ),
   ])

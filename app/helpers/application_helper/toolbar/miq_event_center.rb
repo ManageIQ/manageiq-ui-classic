@@ -11,8 +11,9 @@ class ApplicationHelper::Toolbar::MiqEventCenter < ApplicationHelper::Toolbar::B
           'pficon pficon-edit fa-lg',
           t = N_('Edit Actions for this Policy Event'),
           t,
-          :url_parms => "main_div",
-          :klass     => ApplicationHelper::Button::MiqActionModify),
+          :url_parms    => "main_div",
+          :send_checked => true,
+          :klass        => ApplicationHelper::Button::MiqActionModify),
       ]
     ),
   ])
