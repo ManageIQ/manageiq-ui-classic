@@ -569,6 +569,8 @@ module ApplicationHelper
   end
 
   def show_taskbar_in_header?
+    return false if @explorer
+
     show_taskbar = false
     if ! (@layout == "" &&
       %w(auth_error
@@ -601,9 +603,7 @@ module ApplicationHelper
          server_build
         ).include?(@layout) ||
       (@layout == "configuration" && @tabform != "ui_4")) && !controller.action_name.end_with?("tagging_edit")
-      unless @explorer
-        show_taskbar = true
-      end
+      show_taskbar = true
     end
     show_taskbar
   end
