@@ -14,25 +14,25 @@ class ApplicationHelper::Toolbar::FloatingIpsCenter < ApplicationHelper::Toolbar
             t = N_('Add a new Floating IP'),
             t),
           separator,
-          # TODO: Uncomment until cross controllers show_list issue fully in place
-          # https://github.com/ManageIQ/manageiq/pull/12551
-          # button(
-          #  :floating_ip_edit,
-          #  'pficon pficon-edit fa-lg',
-          #  t = N_('Manage the port association of this Floating'),
-          #  t,
-          #  :url_parms => 'main_div',
-          #  :enabled   => false,
-          #  :onwhen    => '1'),
-          # button(
-          #  :floating_ip_delete,
-          #  'pficon pficon-delete fa-lg',
-          #  t = N_('Delete selected Floating IPs'),
-          #  t,
-          #  :url_parms => 'main_div',
-          #  :confirm   => N_('Warning: The selected Floating IPs and ALL of their components will be removed!'),
-          #  :enabled   => false,
-          #  :onwhen    => '1+')
+          button(
+            :floating_ip_edit,
+            'pficon pficon-edit fa-lg',
+            t = N_('Manage the port association of this Floating'),
+            t,
+            :url_parms => 'main_div',
+            :enabled   => false,
+            :onwhen    => '1',
+            :klass     => ApplicationHelper::Button::FloatingIp),
+            button(
+            :floating_ip_delete,
+            'pficon pficon-delete fa-lg',
+            t = N_('Delete selected Floating IPs'),
+            t,
+            :url_parms => 'main_div',
+            :confirm   => N_('Warning: The selected Floating IPs and ALL of their components will be removed!'),
+            :enabled   => false,
+            :onwhen    => '1+',
+            :klass     => ApplicationHelper::Button::FloatingIp)
         ]
       )
     ]
