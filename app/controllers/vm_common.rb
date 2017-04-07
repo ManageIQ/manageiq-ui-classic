@@ -1742,7 +1742,10 @@ module VmCommon
           # if @edit[:new][k].is_a?(Hash)
           msg = msg + k.to_s + ":[" + @edit[:current][k].keys.join(",") + "] to [" + @edit[:new][k].keys.join(",") + "]"
         elsif k == :parent
-          msg = msg + k.to_s + ":[" + parent_choices.invert[@edit[:current][k]] + "] to [" + parent_choices.invert[@edit[:new][k]] + "]"
+          parent_choices_invert = parent_choices.invert
+          current_parent_choice = parent_choices_invert[@edit[:current][k]]
+          new_parent_choice     = parent_choices_invert[@edit[:new][k]]
+          msg = "#{msg}#{k}:[#{current_parent_choice}] to [#{new_parent_choice}]"
         else
           msg = msg + k.to_s + ":[" + @edit[:current][k].to_s + "] to [" + @edit[:new][k].to_s + "]"
         end
