@@ -568,46 +568,57 @@ module ApplicationHelper
     nil
   end
 
+  def show_taskbar_in_header?
+    return false if @explorer
+    return false if controller.action_name.end_with?("tagging_edit")
+
+    hide_actions = %w(
+      auth_error
+      change_tab
+      show
+    )
+    return false if @layout == "" && hide_actions.include?(controller.action_name)
+
+    hide_layouts = %w(
+      about
+      chargeback
+      container_dashboard
+      ems_infra_dashboard
+      exception
+      miq_ae_automate_button
+      miq_ae_class
+      miq_ae_export
+      miq_ae_tools
+      miq_capacity_bottlenecks
+      miq_capacity_planning
+      miq_capacity_utilization
+      miq_capacity_waste
+      miq_policy
+      miq_policy_export
+      miq_policy_rsop
+      monitor_alerts_list
+      monitor_alerts_most_recent
+      monitor_alerts_overview
+      ops
+      pxe
+      report
+      rss
+      server_build
+    )
+    return false if hide_layouts.include?(@layout)
+
+    return false if @layout == "configuration" && @tabform != "ui_4"
+
+    true
+  end
+
   def taskbar_in_header?
+    # this is just @show_taskbar ||= show_taskbar_in_header? .. but nil
     if @show_taskbar.nil?
-      @show_taskbar = false
-      if ! (@layout == "" &&
-        %w(auth_error
-           change_tab
-           show
-          ).include?(controller.action_name) ||
-        %w(about
-           chargeback
-           container_dashboard
-           ems_infra_dashboard
-           exception
-           miq_ae_automate_button
-           miq_ae_class
-           miq_ae_export
-           miq_ae_tools
-           miq_capacity_bottlenecks
-           miq_capacity_planning
-           miq_capacity_utilization
-           miq_capacity_waste
-           miq_policy
-           miq_policy_export
-           miq_policy_rsop
-           monitor_alerts_overview
-           monitor_alerts_list
-           monitor_alerts_most_recent
-           ops
-           pxe
-           report
-           rss
-           server_build
-          ).include?(@layout) ||
-        (@layout == "configuration" && @tabform != "ui_4")) && !controller.action_name.end_with?("tagging_edit")
-        unless @explorer
-          @show_taskbar = true
-        end
-      end
+      @show_taskbar = show_taskbar_in_header?
+    else
+      @show_taskbar
     end
-    @show_taskbar
   end
 
   # checking if any of the toolbar is visible
