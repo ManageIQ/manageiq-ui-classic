@@ -79,7 +79,7 @@ module ApplicationController::Performance
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
     if params[:menu_choice]
       chart_click_data = parse_chart_click(params[:menu_choice])
-      report = @sb[:chart_reports].kind_of?(Array) ? report = @sb[:chart_reports][chart_click_data.chart_index] : @sb[:chart_reports]
+      report = @sb[:chart_reports].kind_of?(Array) ? @sb[:chart_reports][chart_click_data.chart_index] : @sb[:chart_reports]
       data_row = report.table.data[chart_click_data.data_index]
       if @perf_options[:cat]
         top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click_data.legend_index]}"][chart_click_data.model.downcase.to_sym][:on]
