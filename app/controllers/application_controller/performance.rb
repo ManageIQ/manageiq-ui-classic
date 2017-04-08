@@ -1531,12 +1531,12 @@ module ApplicationController::Performance
   def parse_chart_click(click_params)
     click_parts = JSON.parse(Base64.decode64(click_params))
     ApplicationController::Performance::ChartClickData.new(
-      click_parts['row'].to_i,
-      click_parts['column'].to_i,
-      click_parts['chart_index'].to_i,
-      click_parts['chart_name'].split("-").first,
-      click_parts['chart_name'].split("-").second,
-      click_parts['chart_name'].split("-").third
+      click_parts['row'].to_i, # legend_index
+      click_parts['column'].to_i, # data_index
+      click_parts['chart_index'].to_i, # chart_index
+      click_parts['chart_name'].split("-").first, # cmd
+      click_parts['chart_name'].split("-").second, # model
+      click_parts['chart_name'].split("-").third # type
     )
   end
 
