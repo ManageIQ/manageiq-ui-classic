@@ -238,7 +238,7 @@ module ApplicationController::Performance
   # display selected resources from a tag chart
   def display_by_tag(chart_click_data, data_row, report, ts, bc_model)
     top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click_data.legend_index]}"][chart_click_data.model.downcase.to_sym][:on]
-    bc_tag =  "#{Classification.find_by(:name => @perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][chart_click_data.legend_index]}"
+    bc_tag = breadcrumb_tag(report, chart_click_data.legend_index)
     if top_ids.blank?
       message = _("No %{tag} %{model} were running %{time}") %
         {:tag => bc_tag, :model => bc_model, :time => date_time_running_msg(chart_click_data.type, ts)}
@@ -478,7 +478,7 @@ module ApplicationController::Performance
     @record = identify_tl_or_perf_record
     @perf_record = @record.kind_of?(MiqServer) ? @record.vm : @record # Use related server vm record
     top_ids = data_row["assoc_ids_#{report.extras[:group_by_tags][chart_click_data.legend_index]}"][chart_click_data.model.downcase.to_sym][:on]
-    bc_tag =  "#{Classification.find_by_name(@perf_options[:cat]).description}:#{report.extras[:group_by_tag_descriptions][chart_click_data.legend_index]}"
+    bc_tag = breadcrumb_tag(report, chart_click_data.legend_index)
     if top_ids.blank?
       message = _("No %{tag} %{model}  were running %{time}") %
                           {:tag => bc_tag, :model => bc_model, :time => date_time_running_msg(chart_click_data.type, ts)}
@@ -1538,5 +1538,11 @@ module ApplicationController::Performance
       click_parts['chart_name'].split("-").second,
       click_parts['chart_name'].split("-").third
     )
+  end
+
+  def breadcrumb_tag(report, legend_index)
+    category = Classification.find_by(:name => @perf_options[:cat]).description
+    group_by = report.extras[:group_by_tag_descriptions][legend_index]
+    "#{category}:#{group_by}"
   end
 end
