@@ -263,7 +263,7 @@ class ReportController < ApplicationController
   end
 
   def title
-	nil
+    nil
   end
 
   private ###########################
@@ -900,7 +900,7 @@ class ReportController < ApplicationController
   end
 
   def get_session_data
-	super
+    super
     @lastaction       = session[:report_lastaction]
     @report_tab       = session[:report_tab]
     @report_result_id = session[:report_result_id]
@@ -914,7 +914,7 @@ class ReportController < ApplicationController
   end
 
   def set_session_data
-	super
+    super
     session[:report_lastaction] = @lastaction
     session[:report_tab]        = @report_tab
     session[:panels]            = @panels
