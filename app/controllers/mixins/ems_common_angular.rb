@@ -475,7 +475,7 @@ module Mixins
       client = ems.class.raw_connect(endpoint.hostname, endpoint.port,
                                      :service => :openshift, :bearer => token, :ssl_options => ssl_options)
       client.get_route('hawkular-metrics', 'openshift-infra').try(:spec).try(:host)
-    rescue KubeException => e
+    rescue KubeException, OpenSSL::SSL::SSLError => e
       $log.warn("MIQ(#{controller_name}_controller-#{action_name}): get_hostname_from_routes error: #{e}")
       nil
     end
