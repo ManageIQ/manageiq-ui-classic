@@ -202,13 +202,13 @@ describe EmsContainerController do
       it "tolerates missing hawkular-metrics route" do
         expect_get_route { nil }
         test_creating('openshift')
-        expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq(nil)
+        expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('mytest.com')
       end
 
       it "tolerates errors fetching hawkular-metrics route" do
         expect_get_route { raise KubeException.new(418, "I'm a Teapot", double('response')) }
         test_creating('openshift')
-        expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq(nil)
+        expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('mytest.com')
       end
     end
 
