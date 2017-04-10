@@ -6,14 +6,11 @@ class ApplicationHelper::Button::VmVmrcConsole < ApplicationHelper::Button::VmCo
   end
 
   def disabled?
-    super { remote_control_supported? }
-  end
-
-  private
-
-  def remote_control_supported?
-    @record.validate_remote_console_vmrc_support
-  rescue MiqException::RemoteConsoleNotSupportedError => err
-    @error_message = _('VM VMRC Console error: %{error}') % {:error => err}
+    begin
+      @record.validate_remote_console_vmrc_support
+    rescue MiqException::RemoteConsoleNotSupportedError => err
+      @error_message = _('VM VMRC Console error: %{error}') % {:error => err}
+    end
+    @error_message.present?
   end
 end
