@@ -1,6 +1,7 @@
 - @angular_form = true
 
-.form-horizontal
+.form-horizontal{'ng-cloak' => '',
+                 'ng-show'  => 'afterGet'}
   = render :partial => "layouts/flash_msg"
   %div
     .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
@@ -14,9 +15,7 @@
                             "maxlength"   => MAX_NAME_LEN.to_s,
                             "required"    => "",
                             "checkchange" => "",
-                            "auto-focus"  => "",
-                            'ng-cloak'    => '',
-                            'ng-show'     => 'afterGet'}
+                            "auto-focus"  => ""}
         %span.help-block{"ng-show" => "angularForm.name.$error.required"}
           = _("Required")
 
