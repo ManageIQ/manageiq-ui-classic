@@ -22,10 +22,14 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     miqService.sparkleOn();
 
     // get credential specific options for all supported credential types
-    var optionsPromise = API.options('/api/authentications');
+    var optionsPromise = API.options('/api/authentications')
+      .then(getCredentialOptions)
+      .catch(miqService.handleFailure);
 
     if (credentialId !== 'new') {
-      var dataPromise = API.get('/api/authentications/' + credentialId);
+      var dataPromise = API.get('/api/authentications/' + credentialId)
+        .then(getCredentialFormData)
+        .catch(miqService.handleFailure);
     } else {
       vm.select_options.push({'label':__('<Choose>'), 'value': ''});
       // credential creation requires manager_resource
@@ -38,8 +42,7 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     }
 
     $q.all([optionsPromise, dataPromise])
-      .then(getCredentialDetails)
-      .catch(miqService.handleFailure);
+      .then(retrievedCredentialDetails);
   };
 
   vm.cancelClicked = function(angularForm) {
@@ -68,11 +71,7 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
        .catch(miqService.handleFailure);
   };
 
-  function getCredentialDetails(response) {
-    getCredentialOptions(response[0]);
-    if (response[1]) {
-      getCredentialFormData(response[1]);
-    }
+  function retrievedCredentialDetails() {
     vm.afterGet = true;
     miqService.sparkleOff();
   }
