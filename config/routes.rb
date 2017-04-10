@@ -158,6 +158,7 @@ Rails.application.routes.draw do
     :automation_manager => {
       :get  => %w(
         download_data
+        download_summary_pdf
         explorer
         form_fields
         show
