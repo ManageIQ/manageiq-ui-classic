@@ -247,14 +247,6 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
       N_('Access'),
       :items => [
         button(
-          :vm_console,
-          'pficon pficon-screen fa-lg',
-          N_('Open a web-based MKS console for this VM'),
-          N_('VM Console'),
-          :url     => "console",
-          :confirm => N_("Opening a VM web-based console can take a while and requires that the VMware MKS plugin version configured for Management Engine already be installed and working.  Are you sure?"),
-          :klass   => ApplicationHelper::Button::VmConsole),
-        button(
           :vm_webmks_console,
           'pficon pficon-screen fa-lg',
           N_('Open a web-based WebMKS console for this VM'),
