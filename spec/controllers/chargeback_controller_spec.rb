@@ -342,7 +342,18 @@ describe ChargebackController do
     end
 
     def expect_chargeback_rate_to_eq_hash(expected_rate, rate_hash)
-      rate_hash[:rates].sort_by! { |rd| [rd[:group], rd[:description]] }
+      rate_hash[:rates].sort_by! do |rd|
+        if rd[:group].nil? || rd[:description].nil?
+          field = if rd[:chargeable_field_id]
+                    ChargeableField.find(rd[:chargeable_field_id])
+                  else
+                    ChargeableField.find_by(:metric => rd[:metric])
+                  end
+          [field.group, field.description]
+        else
+          [rd[:group], rd[:description]] # this can be after ManageIQ/manageiq#13960
+        end
+      end
 
       expect(expected_rate.chargeback_rate_details.count).to eq(rate_hash[:rates].count)
 
@@ -351,12 +362,6 @@ describe ChargebackController do
 
         expect(rate_detail).to have_attributes(rate_detail_hash.slice(*ChargebackRateDetail::FORM_ATTRIBUTES))
         expect(rate_detail.detail_currency.name).to eq(rate_detail_hash[:type_currency])
-
-        if rate_detail_hash[:measure].nil?
-          expect(rate_detail.chargeable_field.detail_measure).to be_nil
-        else
-          expect(rate_detail.chargeable_field.detail_measure.name).to eq(rate_detail_hash[:measure])
-        end
 
         rate_detail.chargeback_tiers.each_with_index do |tier, tier_index|
           tier_hash = rate_detail_hash[:tiers][tier_index]

@@ -22,8 +22,8 @@ class AlertsListController < ApplicationController
       'ManageIQ::Providers::Kubernetes::ContainerManager::ContainerNode',
       'ManageIQ::Providers::Openshift::ContainerManager',
     ].each do |klass|
-      listicon_image = klass.constantize.decorate.listicon_image
-      res[klass] = ActionController::Base.helpers.image_path(listicon_image)
+      fileicon = klass.constantize.decorate.fileicon
+      res[klass] = ActionController::Base.helpers.image_path(fileicon)
     end
     render :json => res
   end

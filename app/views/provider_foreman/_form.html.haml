@@ -1,8 +1,9 @@
 - @angular_form = true
 
-.form-horizontal{:id => "start_form_div", :style => "display:none"}
+.form-horizontal
   %form#form_div{:name           => "angularForm",
                  'ng-controller' => "providerForemanFormController as vm",
+                 'ng-cloak'      => '',
                  'ng-show'       => "vm.afterGet",
                  "miq-form"      => true,
                  "model"         => "vm.providerForemanModel",
@@ -14,38 +15,15 @@
       %label.col-md-2.control-label
         = _("Name")
       .col-md-8
-        %input.form-control{:type            => "text",
-                            :name            => "name",
-                            'ng-model'       => "vm.providerForemanModel.name",
-                            :maxlength       => MAX_NAME_LEN,
-                            :required        => "",
-                            :checkchange     => true,
-                            "auto-focus"     => "",
-                            "start-form-div" => "start_form_div"}
+        %input.form-control{:type        => "text",
+                            :name        => "name",
+                            'ng-model'   => "vm.providerForemanModel.name",
+                            :maxlength   => MAX_NAME_LEN,
+                            :required    => "",
+                            :checkchange => true,
+                            "auto-focus" => ""}
         %span.help-block{"ng-show" => "angularForm.name.$error.required"}
           = _("Required")
-
-    .form-group{"ng-class" => "{'has-error': angularForm.type.$invalid}"}
-      %label.col-md-2.control-label{"for" => "provider_type"}
-        = _('Type')
-      .col-md-8
-        = select_tag('provtype',
-                     options_for_select([["<#{_('Choose')}>", nil]] + @provider_types, disabled: ["<#{_('Choose')}>", nil]),
-                     "ng-if"                       => "vm.newRecord",
-                     "ng-model"                    => "vm.providerForemanModel.provtype",
-                     "ng-change"                   => "providerTypeChanged()",
-                     "id"                          => "provider_type",
-                     "required"                    => "",
-                     "checkchange"                 => "",
-                     "selectpicker-for-select-tag" => "")
-        %div{"ng-if" => "!vm.newRecord"}
-          %input.form-control{:type      => "text",
-                              :name      => "provtype",
-                              "ng-model" => "vm.providerForemanModel.provtype",
-                              "ng-if"    => "!vm.newRecord",
-                              "id"       => "provider_type",
-                              "readonly" => true,
-                              "style"    => "color: black; font-weight: normal;"}
 
     .form-group{"ng-class" => "{'has-error': angularForm.zone.$invalid}"}
       %label.col-md-2.control-label{"for" => "prov_zone"}

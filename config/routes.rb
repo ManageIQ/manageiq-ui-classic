@@ -159,7 +159,7 @@ Rails.application.routes.draw do
       :get  => %w(
         download_data
         explorer
-        automation_manager_form_fields
+        form_fields
         show
         show_list
         tagging_edit
@@ -481,7 +481,6 @@ Rails.application.routes.draw do
         backup_select
         snapshot_new
         edit
-        cloud_volume_form_fields
         cloud_volume_tenants
         index
         new
@@ -1185,6 +1184,8 @@ Rails.application.routes.draw do
         register_nodes
         introspect_nodes
         protect
+        scaledown
+        scaling
         show_list
         tagging_edit
       ) +
@@ -1648,6 +1649,7 @@ Rails.application.routes.draw do
       :get  => %w(
         edit
         download_data
+        download_summary_pdf
         index
         new
         security_group_form_fields
@@ -1679,6 +1681,7 @@ Rails.application.routes.draw do
     :floating_ip              => {
       :get  => %w(
         download_data
+        download_summary_pdf
         edit
         floating_ip_form_fields
         index
@@ -1779,6 +1782,7 @@ Rails.application.routes.draw do
     :network_port             => {
       :get  => %w(
         download_data
+        download_summary_pdf
         index
         show
         show_list
@@ -1809,6 +1813,7 @@ Rails.application.routes.draw do
       :get  => %w(
         add_interface_select
         download_data
+        download_summary_pdf
         edit
         index
         network_router_form_fields
@@ -1848,6 +1853,7 @@ Rails.application.routes.draw do
     :load_balancer             => {
       :get  => %w(
         download_data
+        download_summary_pdf
         index
         show
         show_list
@@ -2029,11 +2035,15 @@ Rails.application.routes.draw do
       :get => %w(
         download_data
         download_summary_pdf
+        edit
+        new
         show
         show_list
       ),
       :post => %w(
-        show_list)
+        button
+        show_list
+      )
     },
 
     :ansible_playbook => {
@@ -2051,11 +2061,17 @@ Rails.application.routes.draw do
       :get => %w(
         download_data
         download_summary_pdf
+        edit
+        new
         show
         show_list
       ),
       :post => %w(
-        show_list)
+        button
+        edit
+        new
+        show_list
+      )
     },
 
     :miq_ae_class             => {
@@ -2630,7 +2646,7 @@ Rails.application.routes.draw do
         download_data
         download_summary_pdf
         explorer
-        provider_foreman_form_fields
+        form_fields
         show
         show_list
         tagging_edit
@@ -2810,7 +2826,6 @@ Rails.application.routes.draw do
         retire
         service_form_fields
         show
-        ownership_form_fields
       ),
       :post => %w(
         button
@@ -2827,6 +2842,7 @@ Rails.application.routes.draw do
         x_button
         x_history
         x_show
+        ownership_form_fields
       ) +
                dialog_runner_post
     },
@@ -2942,7 +2958,6 @@ Rails.application.routes.draw do
         right_size
         show
         show_list
-        ownership_form_fields
       ),
       :post => %w(
         edit_vm
@@ -2968,6 +2983,7 @@ Rails.application.routes.draw do
         genealogy_tree_selected
         ownership_update
         wait_for_task
+        ownership_form_fields
       ) +
                ownership_post +
                pre_prov_post
@@ -2997,7 +3013,6 @@ Rails.application.routes.draw do
         detach
         evacuate
         evacuate_form_fields
-        ownership_form_fields
         associate_floating_ip
         associate_floating_ip_form_fields
         disassociate_floating_ip
@@ -3066,6 +3081,7 @@ Rails.application.routes.draw do
         associate_floating_ip_vm
         disassociate_floating_ip_vm
         wait_for_task
+        ownership_form_fields
       ) +
                adv_search_post +
                compare_post +
@@ -3098,7 +3114,6 @@ Rails.application.routes.draw do
         retire
         show
         tagging_edit
-        ownership_form_fields
       ) +
                compare_get,
       :post => %w(
@@ -3156,6 +3171,7 @@ Rails.application.routes.draw do
         wait_for_task
         win32_services
         ownership_update
+        ownership_form_fields
       ) +
                adv_search_post +
                compare_post +
@@ -3188,7 +3204,6 @@ Rails.application.routes.draw do
         util_report_download
         utilization
         vm_show
-        ownership_form_fields
       ) +
                compare_get,
       :post => %w(
@@ -3257,6 +3272,7 @@ Rails.application.routes.draw do
         x_search_by_name
         x_show
         ownership_update
+        ownership_form_fields
       ) +
                adv_search_post +
                compare_post +

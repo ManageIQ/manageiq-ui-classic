@@ -3,7 +3,7 @@ class CloudTenantDecorator < MiqDecorator
     'pficon pficon-cloud-tenant'
   end
 
-  def self.listicon_image
+  def self.fileicon
     '100/cloud_tenant.png'
   end
 end

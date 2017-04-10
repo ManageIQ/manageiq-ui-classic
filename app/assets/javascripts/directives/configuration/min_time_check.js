@@ -3,7 +3,7 @@ ManageIQ.angular.app.directive('minTimeCheck', function() {
     require: 'ngModel',
     link: function (scope, _elem, attrs, ctrl) {
       scope.$watch(attrs.ngModel, function() {
-        if (angular.isDefined(ctrl.viewValue)) {
+        if (ctrl.viewValue !== undefined) {
           setSomePeriodCheckedValidity(ctrl, attrs);
         }
       });

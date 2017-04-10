@@ -40,7 +40,6 @@
                   "required"         => "",
                   :miqrequired       => true,
                   "ng-change"        => "playbookTypeChanged('#{prefix}')",
-                  :checkchange       => true,
                   "data-live-search" => "true",
                   'pf-select'        => true}
             %option{"value" => ""}
@@ -56,7 +55,6 @@
                     'ng-options'       => 'machine_credential as machine_credential.name for machine_credential in vm.machine_credentials',
                     "required"         => "",
                     :miqrequired       => true,
-                    :checkchange       => true,
                     "data-live-search" => "true",
                     'pf-select'        => true}
               %option{"value" => ""}
@@ -78,15 +76,13 @@
           %label.col-md-3.control-label{"for" => "vm.#{prefix}_cloud_type"}
             = _('Cloud Type')
           .col-md-9
-            %select{"ng-model"    => "#{ng_model}.#{prefix}_cloud_type",
+            %select{"ng-model"    => "vm._#{prefix}_cloud_type",
                     "name"        => "#{prefix}_cloud_type",
-                    'ng-options'  => "k as v for (k, v) in vm.cloud_types",
-                    "ng-change"   => "cloudTypeChanged('#{prefix}')",
-                    :checkchange  => true,
+                    'ng-options'  => "k as v for (k,v) in vm.cloud_types",
                     "pf-select"   => true}
               %option{"value" => ""}
                 = "<#{_('Choose')}>"
-        #cloud_credentials_div{"ng-show" => "#{ng_model}.#{prefix}_cloud_type !== ''"}
+        #cloud_credentials_div{"ng-show" => "vm.#{prefix}_cloud_type !== ''"}
           .form-group
             %label.col-md-3.control-label{"for" => "vm.#{prefix}_cloud_credential_id"}
               = _('Cloud Credential')
@@ -94,7 +90,6 @@
               %select{"ng-model"         => "vm._#{prefix}_cloud_credential",
                       "name"             => "#{prefix}_cloud_credential_id",
                       'ng-options'       => "cloud_credential as cloud_credential.name for cloud_credential in vm.#{prefix}_cloud_credentials",
-                      :checkchange       => true,
                       "data-live-search" => "true",
                       'pf-select'        => true}
                 %option{"value" => ""}
@@ -109,7 +104,7 @@
                             :name         => "#{prefix}_inventory",
                             :maxlength    => 50,
                             "miqrequired" => "",
-                            "checkchange" => ""}
+                            "checkchange" => true}
           %span.help-block{"ng-show" => "angularForm.#{prefix}_inventory.$error.miqrequired"}
             = _("Required")
 
@@ -120,7 +115,7 @@
         .col-md-9
           %select{"ng-model"   => "vm.catalogItemModel.retirement_remove_resources",
                   "name"       => "vm.catalogItemModel.retirement_remove_resources",
-                  'ng-options' => "v as k for (k, v) in vm.catalogItemModel.remove_resources_types",
+                  'ng-options' => "v as k for (k, v) in vm.remove_resources_types",
                   :checkchange => true,
                   "pf-select"  => true}
   .col-md-12.col-lg-6
@@ -192,38 +187,39 @@
                     %button{:class => "btn btn-link", :type => "button", "ng-click" => "vm.removeKeyValue('#{prefix}', this.key, this.key_value, $index)", "ng-disabled" => "#{ng_model}.#{prefix}_editMode"}
                       %span{:class => "pficon pficon-delete"}
 
-    .form-group
-      %label.col-md-3.control-label
-        = _("Dialog")
-      .col-md-3
-        %label.radio-inline
-          %input{"ng-model" => "vm.#{prefix}_dialog_existing", :type => "radio", :value => "existing", "ng-click" => "vm.toggleDialogSelection('#{prefix}', 'existing')", "ng-checked" => "#{ng_model}.#{prefix}_dialog_existing == 'existing'"}
-          = _("Use Existing")
-      .col-md-6{"ng-class" => "{'has-error': angularForm.#{prefix}_dialog_id.$invalid}", "ng-if" => "#{ng_model}.#{prefix}_dialog_existing == 'existing'"}
-        %select{"ng-model"         => "vm._#{prefix}_dialog",
-                "name"             => "#{prefix}_dialog_id",
-                'ng-options'       => 'dialog as dialog.label for dialog in vm.dialogs',
-                "ng-required"      => "vm.fieldsRequired('#{prefix}') && #{ng_model}.#{prefix}_dialog_existing == 'existing'",
-                :checkchange       => true,
-                "data-live-search" => "true",
-                'pf-select'        => true}
-          %option{"value" => ""}
-            = "<#{_('Choose')}>"
-          %span.help-block{"ng-show" => "angularForm.#{prefix}_dialog_id.$error.$invalid"}
-            = _("Required")
+    - if prefix == "provisioning"
+      .form-group
+        %label.col-md-3.control-label
+          = _("Dialog")
+        .col-md-3
+          %label.radio-inline
+            %input{"ng-model" => "vm.#{prefix}_dialog_existing", :type => "radio", :value => "existing", "ng-click" => "vm.toggleDialogSelection('#{prefix}', 'existing')", "ng-checked" => "#{ng_model}.#{prefix}_dialog_existing == 'existing'"}
+            = _("Use Existing")
+        .col-md-6{"ng-class" => "{'has-error': angularForm.#{prefix}_dialog_id.$invalid}", "ng-if" => "#{ng_model}.#{prefix}_dialog_existing == 'existing'"}
+          %select{"ng-model"         => "vm._#{prefix}_dialog",
+                  "name"             => "#{prefix}_dialog_id",
+                  'ng-options'       => 'dialog as dialog.label for dialog in vm.dialogs',
+                  "ng-required"      => "vm.fieldsRequired('#{prefix}') && #{ng_model}.#{prefix}_dialog_existing == 'existing'",
+                  :checkchange       => true,
+                  "data-live-search" => "true",
+                  'pf-select'        => true}
+            %option{"value" => ""}
+              = "<#{_('Choose')}>"
+            %span.help-block{"ng-show" => "angularForm.#{prefix}_dialog_id.$error.$invalid"}
+              = _("Required")
 
-    .form-group
-      %label.col-md-3.control-label
-      .col-md-3
-        %label.radio-inline
-          %input{"ng-model" => "vm.#{prefix}_dialog_existing", :type => "radio", :value => "create", "ng-click" => "vm.toggleDialogSelection('#{prefix}', 'create')", "ng-checked" => ("#{ng_model}.#{prefix}_dialog_existing == 'create'")}
-          = _("Create New")
-      .col-md-6{"ng-class" => "{'has-error': angularForm.#{prefix}_dialog_name.$invalid}", "ng-if" => "#{ng_model}.#{prefix}_dialog_existing == 'create'"}
-        %input.form-control{:type         => "text",
-                            'ng-model'    => "#{ng_model}.#{prefix}_dialog_name",
-                            :name         => "vm.#{prefix}_dialog_name",
-                            :maxlength    => 50,
-                            "ng-required" => "vm.fieldsRequired('#{prefix}') && #{ng_model}.#{prefix}_dialog_existing == 'create'",
-                            "checkchange" => ""}
-          %span.help-block{"ng-show" => "angularForm.#{prefix}_dialog_name.$error.$invalid"}
-            = _("Required")
+      .form-group
+        %label.col-md-3.control-label
+        .col-md-3
+          %label.radio-inline
+            %input{"ng-model" => "vm.#{prefix}_dialog_existing", :type => "radio", :value => "create", "ng-click" => "vm.toggleDialogSelection('#{prefix}', 'create')", "ng-checked" => ("#{ng_model}.#{prefix}_dialog_existing == 'create'")}
+            = _("Create New")
+        .col-md-6{"ng-class" => "{'has-error': angularForm.#{prefix}_dialog_name.$invalid}", "ng-if" => "#{ng_model}.#{prefix}_dialog_existing == 'create'"}
+          %input.form-control{:type         => "text",
+                              'ng-model'    => "#{ng_model}.#{prefix}_dialog_name",
+                              :name         => "vm.#{prefix}_dialog_name",
+                              :maxlength    => 50,
+                              "ng-required" => "vm.fieldsRequired('#{prefix}') && #{ng_model}.#{prefix}_dialog_existing == 'create'",
+                              "checkchange" => ""}
+            %span.help-block{"ng-show" => "angularForm.#{prefix}_dialog_name.$error.$invalid"}
+              = _("Required")

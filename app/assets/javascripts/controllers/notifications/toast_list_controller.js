@@ -28,7 +28,7 @@ function ToastListCtrl($scope, eventNotifications, $timeout) {
 
   eventNotifications.registerObserverCallback(refresh);
 
-  $scope.$on('destroy', destroy);
+  $scope.$on('$destroy', destroy);
 
   refresh();
 }

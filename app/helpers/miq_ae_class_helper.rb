@@ -72,7 +72,7 @@ module MiqAeClassHelper
       'product product-string'
     when 'symbol'
       'product product-symbol'
-    when 'integer'
+    when 'integer', 'fixnum'
       'product product-integer'
     when 'float'
       'product product-float'

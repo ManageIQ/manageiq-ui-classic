@@ -1,5 +1,5 @@
 module TreeNode
   class AvailabilityZone < Node
-    set_attribute(:tooltip) { |object| _("Availability Zone: %{name}") % {:name => object.name} }
+    set_attribute(:tooltip) { _("Availability Zone: %{name}") % {:name => @object.name} }
   end
 end

@@ -17,6 +17,8 @@ class TopologyController < ApplicationController
     attr_reader :service_class
   end
 
+  toolbar :topology
+
   def show
     # When navigated here without id, it means this is a general view for all providers (not for a specific provider)
     # all previous navigation should not be displayed in breadcrumbs as the user could arrive from

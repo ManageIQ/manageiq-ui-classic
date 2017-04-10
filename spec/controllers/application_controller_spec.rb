@@ -2,7 +2,7 @@ require 'ostruct'
 
 describe ApplicationController do
 
-  context "#find_by_id_filtered" do
+  context "#find_record_with_rbac" do
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       controller.instance_variable_set(:@sb, {})
@@ -13,16 +13,16 @@ describe ApplicationController do
     end
 
     it "Verify Invalid input flash error message when invalid id is passed in" do
-      expect { controller.send(:find_by_id_filtered, ExtManagementSystem, "invalid") }.to raise_error(RuntimeError, "Invalid input")
+      expect { controller.send(:find_record_with_rbac, ExtManagementSystem, "invalid") }.to raise_error(RuntimeError, "Invalid input")
     end
 
     it "Verify flash error message when passed in id no longer exists in database" do
-      expect { controller.send(:find_by_id_filtered, ExtManagementSystem, "1") }.to raise_error(RuntimeError, "Selected Provider no longer exists")
+      expect { controller.send(:find_record_with_rbac, ExtManagementSystem, "1") }.to raise_error(RuntimeError, match(/User 'user[0-9]+' is not authorized to access 'Provider' record id '1'/))
     end
 
     it "Verify record gets set when valid id is passed in" do
       ems = FactoryGirl.create(:ext_management_system)
-      expect(controller.send(:find_by_id_filtered, ExtManagementSystem, ems.id)).to eq(ems)
+      expect(controller.send(:find_record_with_rbac, ExtManagementSystem, ems.id)).to eq(ems)
     end
   end
 
@@ -98,40 +98,6 @@ describe ApplicationController do
     it "returns false for sub list views" do
       controller.instance_variable_set(:@_params, :action => "host_services")
       expect(controller.send(:render_gtl_view_tb?)).to be_falsey
-    end
-  end
-
-  context "#set_config" do
-    it "sets Processors details successfully" do
-      host_hardware = FactoryGirl.create(:hardware, :cpu_sockets => 2, :cpu_cores_per_socket => 4, :cpu_total_cores => 8)
-      host = FactoryGirl.create(:host, :hardware => host_hardware)
-      stub_user(:features => :all)
-
-      controller.send(:set_config, host)
-      expect(response.status).to eq(200)
-      expect(assigns(:devices)).to_not be_empty
-    end
-
-    it "doesn't crash on nil filename" do
-      disk = FactoryGirl.create(:disk, :filename => nil, :controller_type => nil, :device_type => 'disk', :mode => "foo")
-      host_hardware = FactoryGirl.create(:hardware, :cpu_sockets => 2, :cpu_cores_per_socket => 4, :cpu_total_cores => 8, :disks => [disk])
-      host = FactoryGirl.create(:host, :hardware => host_hardware)
-      stub_user(:features => :all)
-
-      controller.send(:set_config, host)
-      expect(response.status).to eq(200)
-      expect(assigns(:devices)).to_not be_empty
-    end
-
-    it "doesn't crash on one letter controller_type" do
-      disk = FactoryGirl.create(:disk, :controller_type => nil)
-      host_hardware = FactoryGirl.create(:hardware, :cpu_sockets => 2, :cpu_cores_per_socket => 4, :cpu_total_cores => 8, :disks => [disk])
-      host = FactoryGirl.create(:host, :hardware => host_hardware)
-      stub_user(:features => :all)
-
-      controller.send(:set_config, host)
-      expect(response.status).to eq(200)
-      expect(assigns(:devices)).to_not be_empty
     end
   end
 

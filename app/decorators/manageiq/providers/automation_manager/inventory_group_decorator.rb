@@ -4,7 +4,7 @@ module ManageIQ::Providers
       'pficon pficon-folder-close'
     end
 
-    def self.listicon_image
+    def self.fileicon
       '100/inventory_group.png'
     end
   end

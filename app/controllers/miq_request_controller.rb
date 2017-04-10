@@ -1,4 +1,7 @@
 class MiqRequestController < ApplicationController
+
+  include Mixins::GenericSessionMixin
+
   before_action :check_privileges, :except => :post_install_callback
   before_action :get_session_data
   after_action :cleanup_action
@@ -585,24 +588,17 @@ class MiqRequestController < ApplicationController
   end
 
   def get_session_data
+    super
     @title        = _("Requests")
     @request_tab  = session[:request_tab] if session[:request_tab]
     @layout       = layout_from_tab_name(@request_tab)
-    @lastaction   = session[:request_lastaction]
-    @showtype     = session[:request_lastaction]
-    @display      = session[:request_display]
-    @current_page = session[:request_current_page]
     @options      = session[:prov_options]
   end
 
   def set_session_data
+    super
     session[:edit]                 = @edit unless @edit.nil?
-    session[:layout]               = @layout unless @layout.nil?
-    session[:request_lastaction]   = @lastaction
-    session[:request_showtype]     = @showtype
-    session[:request_display]      = @display unless @display.nil?
     session[:request_tab]          = @request_tab unless @request_tab.nil?
-    session[:request_current_page] = @current_page
     session[:prov_options]         = @options if @options
   end
 

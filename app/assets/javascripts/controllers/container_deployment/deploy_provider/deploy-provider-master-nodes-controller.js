@@ -341,7 +341,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
     };
 
     var validString = function(value) {
-      return angular.isDefined(value) && value.length > 0;
+      return value !== undefined && value.length > 0;
     };
 
     $scope.updateNodeSettings = function () {

@@ -11,9 +11,9 @@ describe ApplicationController do
         allow(PdfGenerator).to receive(:pdf_from_string).and_return("")
       end
 
-      it "sets devices array for a template" do
+      it "returns 200" do
         controller.send(:set_summary_pdf_data)
-        expect(assigns(:devices)).not_to be_empty
+        expect(response).to have_http_status 200
       end
     end
   end

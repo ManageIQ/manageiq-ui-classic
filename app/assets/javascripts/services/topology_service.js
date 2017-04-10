@@ -46,6 +46,9 @@ ManageIQ.angular.app.service('topologyService', function() {
       case "ContainerManager":
         entity_url = "ems_container";
         break;
+      case "PhysicalInfraManager":
+        entity_url = "ems_physical_infra";
+        break;
       case "NetworkManager":
         entity_url = "ems_network";
         break;

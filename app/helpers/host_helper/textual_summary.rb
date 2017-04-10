@@ -1,4 +1,7 @@
 module HostHelper::TextualSummary
+  include TextualMixins::TextualDevices
+  include TextualMixins::TextualOsInfo
+  include TextualMixins::TextualVmmInfo
   # TODO: Determine if DoNav + url_for + :title is the right way to do links, or should it be link_to with :title
 
   #
@@ -9,7 +12,7 @@ module HostHelper::TextualSummary
     TextualGroup.new(
       _("Properties"),
       %i(
-        hostname ipaddress ipmi_ipaddress custom_1 vmm_vendor_display model asset_tag service_tag osinfo
+        hostname ipaddress ipmi_ipaddress custom_1 vmm_info model asset_tag service_tag osinfo
         power_state lockdown_mode maintenance_mode devices network storage_adapters num_cpu num_cpu_cores
         cpu_cores_per_socket memory guid
       )
@@ -147,20 +150,6 @@ module HostHelper::TextualSummary
     h
   end
 
-  def textual_vmm_vendor_display
-    h = {:label => _("VMM Information")}
-    if @vmminfo.nil? || @vmminfo.empty?
-      h[:value] = _("None")
-      h[:icon] = "fa fa-question-circle"
-    else
-      h[:image] = "svg/vendor-#{@vmminfo[0][:description].downcase}.svg"
-      h[:value] = @vmminfo[0][:description]
-      h[:title] = _("Show VMM container information")
-      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'hv_info')
-    end
-    h
-  end
-
   def textual_model
     h = {:label => _("Manufacturer / Model")}
     if !@record.hardware.nil? && (!@record.hardware.manufacturer.blank? || !@record.hardware.model.blank?)
@@ -177,27 +166,6 @@ module HostHelper::TextualSummary
 
   def textual_service_tag
     @record.service_tag
-  end
-
-  def textual_osinfo
-    h = {:label => _("Operating System")}
-    if @osinfo.nil? || @osinfo.empty?
-      h[:value] = _("Unknown")
-      h[:image] = "svg/os-unknown.svg"
-    else
-      h[:image] = "svg/os-#{@record.os_image_name.downcase}.svg"
-      h[:value] = @osinfo[0][:description]
-      unless @record.operating_system.version.blank?
-        h[:value] << " #{@record.operating_system.version}"
-      end
-      unless @record.operating_system.build_number.blank?
-        h[:value] << _(" Build %{number}") % {:number => @record.operating_system.build_number}
-      end
-
-      h[:title] = _("Show OS container information")
-      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'os_info')
-    end
-    h
   end
 
   def textual_power_state
@@ -232,17 +200,6 @@ module HostHelper::TextualSummary
     if num > 0
       h[:title] = _("Show %{title} Network") % {:title => host_title}
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'network')
-    end
-    h
-  end
-
-  def textual_devices
-    h = {:label => _("Devices"),
-         :icon  => "fa fa-hdd-o",
-         :value => (@devices.nil? || @devices.empty? ? _("None") : @devices.length)}
-    if @devices.length > 0
-      h[:title] = _("Show %{title} devices") % {:title => host_title}
-      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'devices')
     end
     h
   end

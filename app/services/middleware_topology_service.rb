@@ -60,7 +60,7 @@ class MiddlewareTopologyService < TopologyService
     data[:display_kind] = entity_display_type(entity)
 
     unless glyph? entity
-      data[:icon] = ActionController::Base.helpers.image_path(entity.decorate.try(:listicon_image))
+      data[:icon] = ActionController::Base.helpers.image_path(entity.decorate.try(:fileicon))
     end
 
     if entity.kind_of?(Vm)

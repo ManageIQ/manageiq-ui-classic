@@ -51,10 +51,19 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def entity_ui_name_or_all(entity)
-    if entity.nil?
-      _("<All>")
+    if entity
+      provider, model = entity.split('::')
+
+      case model
+      when 'Vm'
+        model = "ManageIQ::Providers::#{provider}::CloudManager::Vm"
+      when 'Image'
+        model = "ManageIQ::Providers::#{provider}::CloudManager::Template"
+      end
+
+      ui_lookup(:model => model)
     else
-      ui_lookup(:model => entity)
+      _("<All>")
     end
   end
 

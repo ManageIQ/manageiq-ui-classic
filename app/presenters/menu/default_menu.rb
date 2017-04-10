@@ -80,6 +80,7 @@ module Menu
         Menu::Section.new(:phy, N_("Physical Infrastructure"), 'fa fa-plus fa-2x', [
           Menu::Item.new('ems_physical_infra',    N_('Providers'), 'ems_physical_infra',    {:feature => 'ems_physical_infra_show_list'},    '/ems_physical_infra'),
           Menu::Item.new('physical_server', N_('Servers'),   'physical_server', {:feature => 'physical_server_show_list'}, '/physical_server'),
+          Menu::Item.new('physical_infra_topology', N_('Topology'), 'physical_infra_topology', {:feature => 'physical_infra_topology', :any => true}, '/physical_infra_topology')
         ])
       end
 
@@ -219,9 +220,9 @@ module Menu
 
       def automation_menu_section
         Menu::Section.new(:aut, N_("Automation"), 'fa fa-recycle', [
-          automate_menu_section,
           ansible_menu_section,
-          automation_manager_menu_section
+          automation_manager_menu_section,
+          automate_menu_section
         ])
       end
 
@@ -234,9 +235,9 @@ module Menu
 
       def ansible_menu_section
         Menu::Section.new(:ansible, N_("Ansible"), 'fa fa-recycle', [
-          Menu::Item.new('ansible_credentials', N_('Credentials'), 'embedded_automation_manager_credentials', {:feature => 'embedded_automation_manager_credentials', :any => true}, '/ansible_credential'),
           Menu::Item.new('ansible_playbooks', N_('Playbooks'), 'embedded_configuration_script_payload', {:feature => 'embedded_configuration_script_payload'}, '/ansible_playbook', :any => true),
           Menu::Item.new('ansible_repositories', N_('Repositories'), 'embedded_configuration_script_source', {:feature => 'embedded_configuration_script_source'}, '/ansible_repository', :any => true),
+          Menu::Item.new('ansible_credentials', N_('Credentials'), 'embedded_automation_manager_credentials', {:feature => 'embedded_automation_manager_credentials', :any => true}, '/ansible_credential'),
         ])
       end
 

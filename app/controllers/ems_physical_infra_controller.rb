@@ -28,7 +28,7 @@ class EmsPhysicalInfraController < ApplicationController
   def ems_physical_infra_form_fields
     assert_privileges("#{permission_prefix}_edit")
     @ems = model.new if params[:id] == 'new'
-    @ems = find_by_id_filtered(model, params[:id]) if params[:id] != 'new'
+    @ems = find_record_with_rbac(model, params[:id]) if params[:id] != 'new'
 
     render :json => {
       :name                => @ems.name,

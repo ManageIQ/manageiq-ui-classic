@@ -258,7 +258,7 @@ module ProviderForemanHelper
 
   def textual_survey_group(items)
     return unless items
-    h = {:label     => _("Questions"),
+    h = {:title     => _("Surveys"),
          :headers   => [_('Question Name'), _('Question Description'), _('Variable'),
                         _('Type'),  _('Min'), _('Max'), _('Default'), _('Required'), _('Choices')],
          :col_order => %w(question_name question_description variable type min max default required choices)}

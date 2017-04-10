@@ -4,7 +4,7 @@ module ManageIQ::Providers::AnsibleTower
       'product product-template'
     end
 
-    def self.listicon_image
+    def self.fileicon
       '100/configuration_script.png'
     end
   end

@@ -53,26 +53,6 @@ describe EmsCloudController do
       end
     end
 
-    context "#form_field_changed" do
-      before :each do
-        stub_user(:features => :all)
-      end
-
-      it "form_div should be updated when server type is sent up" do
-        controller.instance_variable_set(:@edit, :new => {}, :key => "ems_edit__new")
-        session[:edit] = assigns(:edit)
-        post :form_field_changed, :params => { :server_emstype => "rhevm", :id => "new" }
-        expect(response.body).to include("form_div")
-      end
-
-      it "form_div should not be updated when other fields are sent up" do
-        controller.instance_variable_set(:@edit, :new => {}, :key => "ems_edit__new")
-        session[:edit] = assigns(:edit)
-        post :form_field_changed, :params => { :name => "Test", :id => "new" }
-        expect(response.body).not_to include("form_div")
-      end
-    end
-
     context "#set_record_vars" do
       context "strip leading/trailing whitespace from hostname/ipaddress" do
         after :each do
@@ -104,7 +84,7 @@ describe EmsCloudController do
         let(:mocked_ems_cloud) { double(EmsCloud) }
         before(:each) do
           controller.instance_variable_set(:@_params, :id => "42", :type => "amqp")
-          expect(controller).to receive(:find_by_id_filtered).with(EmsCloud, "42").and_return(mocked_ems_cloud)
+          expect(controller).to receive(:find_record_with_rbac).with(EmsCloud, "42").and_return(mocked_ems_cloud)
           expect(controller).to receive(:set_record_vars).with(mocked_ems_cloud, :validate).and_return(mocked_ems_cloud)
         end
 

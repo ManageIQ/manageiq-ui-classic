@@ -8,6 +8,7 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'miq.api',
   'miq.card',
   'miq.util',
+  'kubernetesUI',
 ]);
 miqHttpInject(ManageIQ.angular.app);
 

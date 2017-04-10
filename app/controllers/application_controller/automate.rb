@@ -142,11 +142,11 @@ module ApplicationController::Automate
   def build_results
     options = {
       :vmdb_object => @sb[:obj],
-      :fqclass     => @resolve[:new][:starting_object],
-      :message     => @resolve[:new][:object_message]
+      :fqclass     => @resolve[:new][:starting_object]
     }
     @resolve[:state_attributes] = {} if params[:button] == 'throw'
     automation_attrs = @sb[:attrs].reverse_merge(@resolve[:state_attributes])
+    automation_attrs["message"] = @resolve[:new][:object_message]
     ws = MiqAeEngine.resolve_automation_object(@sb[:name],
                                                User.current_user,
                                                automation_attrs,

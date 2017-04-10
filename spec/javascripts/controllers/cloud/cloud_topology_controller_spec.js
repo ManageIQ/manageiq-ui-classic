@@ -4,7 +4,7 @@ describe('cloudTopologyController', function() {
     var cloud_tenant = { id:"396086e5-7b0d-11e5-8286-18037327aaeb",  item:{display_kind:"CloudTenant", name:"admin", kind:"CloudTenant", id:"396086e5-7b0d-11e5-8286-18037327aaeb", miq_id:"100012"}};
     var cloud_provider = { id:"4",  item:{display_kind:"Openstack", name:"myProvider", kind:"CloudManager", id:"2", miq_id:"2"}};
 
-    beforeEach(module('cloudTopologyApp'));
+    beforeEach(module('ManageIQ'));
 
     beforeEach(inject(function(_$httpBackend_, $rootScope, _$controller_, $location) {
       spyOn($location, 'absUrl').and.returnValue('/network_topology/show');

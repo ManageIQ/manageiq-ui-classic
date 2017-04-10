@@ -1,6 +1,4 @@
 class ApplicationHelper::Button::SmartStateScan < ApplicationHelper::Button::Basic
-  needs :@record
-
   def check_smart_roles
     my_zone = MiqServer.my_server.my_zone
     MiqServer::ServerSmartProxy::SMART_ROLES.each do |role|

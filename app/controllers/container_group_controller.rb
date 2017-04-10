@@ -21,7 +21,7 @@ class ContainerGroupController < ApplicationController
   helper_method :textual_group_list
 
   def display_name
-    "Pods"
+    _("Pods")
   end
 
   menu_section :cnt

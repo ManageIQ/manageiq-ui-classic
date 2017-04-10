@@ -3,7 +3,7 @@ class MiddlewareDomainDecorator < MiqDecorator
     'pficon-domain'
   end
 
-  def self.listicon_image
+  def self.fileicon
     '100/middleware_domain.png'
   end
 end

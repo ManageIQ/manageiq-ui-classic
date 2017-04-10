@@ -1124,10 +1124,10 @@ describe ApplicationHelper do
     end
   end
 
-  context "#listicon_image_tag" do
+  context "#fileicon_tag" do
     it "returns correct image for job record based upon it's status" do
       job_attrs = {"state" => "running", "status" => "ok"}
-      image = helper.listicon_image_tag("Job", job_attrs)
+      image = helper.fileicon_tag("Job", job_attrs)
       expect(image).to eq("<i class=\"pficon pficon-running\" title=\"Status = Running\"></i>")
     end
   end

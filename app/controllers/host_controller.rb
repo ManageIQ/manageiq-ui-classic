@@ -4,19 +4,9 @@ class HostController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericSessionMixin
   include Mixins::GenericListMixin
   include Mixins::MoreShowActions
-
-  def show_association(action, display_name, listicon, method, klass, association = nil, conditions = nil)
-    set_config(identify_record(params[:id]))
-    super
-  end
-
-  def download_summary_pdf
-    super do
-      set_config(@record)
-    end
-  end
 
   def show
     return if perfmenu_click?
@@ -31,7 +21,6 @@ class HostController < ApplicationController
 
     @gtl_url = "/show"
     @showtype = "config"
-    set_config(@host)
     case @display
     when "main", "summary_only"
       get_tagdata(@host)
@@ -123,10 +112,6 @@ class HostController < ApplicationController
     return label, condition
   end
 
-  def set_config_local
-    set_config(identify_record(params[:id]))
-    super
-  end
   alias_method :set_config_local, :drift_history
   alias_method :set_config_local, :groups
   alias_method :set_config_local, :patches
@@ -255,7 +240,7 @@ class HostController < ApplicationController
   def edit
     assert_privileges("host_edit")
     if session[:host_items].nil?
-      @host = find_by_id_filtered(Host, params[:id])
+      @host = find_record_with_rbac(Host, params[:id])
       @in_a_form = true
       session[:changed] = false
       drop_breadcrumb(:name => _("Edit Host '%{name}'") % {:name => @host.name}, :url => "/host/edit/#{@host.id}")
@@ -263,7 +248,7 @@ class HostController < ApplicationController
     else            # if editing credentials for multi host
       @title = _("Credentials/Settings")
       if params[:selected_host]
-        @host = find_by_id_filtered(Host, params[:selected_host])
+        @host = find_record_with_rbac(Host, params[:selected_host])
       else
         @host = Host.new
       end
@@ -295,16 +280,16 @@ class HostController < ApplicationController
         # redirect_to :action => @lastaction, :display=>session[:host_display], :flash_msg=>flash
         javascript_redirect :action => @lastaction, :display => session[:host_display], :flash_msg => flash
       else
-        @host = find_by_id_filtered(Host, params[:id])
+        @host = find_record_with_rbac(Host, params[:id])
         flash = _("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "Host"), :name => @host.name}
         javascript_redirect :action => @lastaction, :id => @host.id, :display => session[:host_display], :flash_msg => flash
       end
 
     when "save"
       if session[:host_items].nil?
-        @host = find_by_id_filtered(Host, params[:id])
+        @host = find_record_with_rbac(Host, params[:id])
         old_host_attributes = @host.attributes.clone
-        valid_host = find_by_id_filtered(Host, params[:id])
+        valid_host = find_record_with_rbac(Host, params[:id])
         set_record_vars(valid_host, :validate)                      # Set the record variables, but don't save
         if valid_record?(valid_host) && set_record_vars(@host) && @host.save
           add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "Host"), :name => @host.name})
@@ -323,7 +308,7 @@ class HostController < ApplicationController
           javascript_flash
         end
       else
-        valid_host = find_by_id_filtered(Host, !params[:validate_id].blank? ?
+        valid_host = find_record_with_rbac(Host, !params[:validate_id].blank? ?
                                                params[:validate_id] :
                                                session[:host_items].first.to_i)
         # Set the record variables, but don't save
@@ -348,7 +333,7 @@ class HostController < ApplicationController
       session[:flash_msgs] = @flash_array.dup                 # Put msgs in session for next transaction
       javascript_redirect :action => 'edit', :id => @host.id.to_s
     when "validate"
-      verify_host = find_by_id_filtered(Host, params[:validate_id] ? params[:validate_id].to_i : params[:id])
+      verify_host = find_record_with_rbac(Host, params[:validate_id] ? params[:validate_id].to_i : params[:id])
       if session[:host_items].nil?
         set_record_vars(verify_host, :validate)
       else
@@ -523,7 +508,7 @@ class HostController < ApplicationController
 
   def host_form_fields
     assert_privileges("host_edit")
-    host = find_by_id_filtered(Host, params[:id])
+    host = find_record_with_rbac(Host, params[:id])
     validate_against = session.fetch_path(:edit, :validate_against) &&
                        params[:button] != "reset" ? session.fetch_path(:edit, :validate_against) : nil
 
@@ -645,21 +630,17 @@ class HostController < ApplicationController
     @host_pages, @hosts = paginate(:hosts, :per_page => @items_per_page, :order => @col_names[get_sort_col] + " " + @sortdir)
   end
 
+  def title
+    _("Host")
+  end
+
   def get_session_data
-    @title      = _("Hosts")
-    @layout     = "host"
+    super
     @drift_db   = "Host"
-    @lastaction = session[:host_lastaction]
-    @display    = session[:host_display]
-    @filters    = session[:host_filters]
-    @catinfo    = session[:host_catinfo]
   end
 
   def set_session_data
-    session[:host_lastaction] = @lastaction
-    session[:host_display]    = @display unless @display.nil?
-    session[:host_filters]    = @filters
-    session[:host_catinfo]    = @catinfo
+    super
     session[:miq_compressed]  = @compressed  unless @compressed.nil?
     session[:miq_exists_mode] = @exists_mode unless @exists_mode.nil?
   end

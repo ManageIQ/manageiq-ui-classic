@@ -8,7 +8,7 @@ class MiqRequestDecorator < MiqDecorator
     end
   end
 
-  def listicon_image
+  def fileicon
     case request_status.to_s.downcase
     when "ok"
       "100/checkmark.png"

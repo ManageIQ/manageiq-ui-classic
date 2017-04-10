@@ -8,9 +8,10 @@
 //= require patternfly
 //= require jquery-ujs
 //= require angular
+//= require angular-drag-and-drop-lists
 //= require angular-patternfly-sass/dist/angular-patternfly
-//= require angular-ui-bootstrap
-//= require angular-ui-bootstrap-tpls
+//= require angular-bootstrap/ui-bootstrap
+//= require angular-bootstrap/ui-bootstrap-tpls
 //= require angular-sanitize
 //= require angular.validators
 //= require moment
@@ -34,6 +35,7 @@
 //= require kubernetes-topology-graph/dist/topology-graph
 //= require miq_browser_detect
 //= require miq_application
+//= require miq_flash
 //= require miq_change_stored_password
 //= require miq_qe
 //= require git_import
@@ -48,7 +50,6 @@
 //= require bootstrap-select
 //= require bootstrap-hover-dropdown
 //= require bootstrap-switch
-//= require angular-ui-bootstrap
 //= require angular-bootstrap-switch
 //= require angular-ui-codemirror
 //= require patternfly-bootstrap-treeview

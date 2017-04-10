@@ -6,7 +6,7 @@ describe('containerTopologyController', function() {
     var vm = { id:"4",  item:{display_kind:"VM", kind:"Vm", id:"4", miq_id:"25"}};
     var pod = { id:"3",  item:{display_kind:"Pod", kind:"ContainerGroup", id:"3"}};
 
-    beforeEach(module('topologyApp'));
+    beforeEach(module('ManageIQ'));
 
     beforeEach(function() {
       var $window = {location: { pathname: '/ems_container/1' }};

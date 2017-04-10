@@ -1,6 +1,8 @@
 class ContainerDashboardController < ApplicationController
   extend ActiveSupport::Concern
 
+  include Mixins::GenericSessionMixin
+
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
@@ -25,10 +27,18 @@ class ContainerDashboardController < ApplicationController
     render :json => collect_live_data(params[:id], params[:query])
   end
 
+  def title
+    _("Container Dashboard")
+  end
+
+  def self.session_key_prefix
+    "container_dashboard"
+  end
+
   private
 
   def get_session_data
-    @layout = "container_dashboard"
+    super
   end
 
   def collect_data(provider_id)
@@ -37,10 +47,6 @@ class ContainerDashboardController < ApplicationController
 
   def collect_live_data(provider_id, query)
     HawkularProxyService.new(provider_id, self).data(query)
-  end
-
-  def set_session_data
-    session[:layout] = @layout
   end
 
   menu_section :cnt

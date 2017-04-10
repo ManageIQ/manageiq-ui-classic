@@ -57,7 +57,7 @@ module ReportFormatter
       type = c3_convert_type(mri.graph[:type].to_s)
       mri.chart = {
         :miqChart => type,
-        :data     => {:columns => [], :names => {}},
+        :data     => {:columns => [], :names => {}, :empty => {:label => {:text => _('No data available.')}}},
         :axis     => {:x => {:tick => {}}, :y => {:tick => {}, :padding => {:bottom => 0}}},
         :tooltip  => {:format => {}},
         :miq      => {:name_table => {}, :category_table => {}},
@@ -122,11 +122,9 @@ module ReportFormatter
 
     def no_records_found_chart(*)
       mri.chart = {
-        :miqChart => 'Line',
-        :data     => {:columns => [], :names => {}},
-        :axis     => {:x => {:tick => {}}, :y => {:tick => {}}},
-        :tooltip  => {:format => {}},
-        :miq      => {:name_table => {}}
+        :axis => {:y => {:show => false}},
+        :data => {:columns => [], :empty => {:label => {:text => _('No data available.')}}},
+        :miq  => {:empty => true},
       }
     end
 

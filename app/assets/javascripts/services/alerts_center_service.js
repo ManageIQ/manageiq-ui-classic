@@ -119,7 +119,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
   _this.getFiltersFromLocation = function(searchString, fields) {
     var currentFilters = [];
 
-    if (angular.isString(searchString)) {
+    if (_.isString(searchString)) {
       var filterString = searchString.slice(1);
       var filters = filterString.split('&');
       _.forEach(filters, function(nextFilter) {
@@ -130,13 +130,13 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
         });
 
         // set parameter value (use 'true' if empty)
-        var filterValue = angular.isUndefined(filter[1]) ? true : filter[1];
+        var filterValue = filter[1] === undefined ? true : filter[1];
         filterValue = decodeURIComponent(filterValue);
 
         var filterField = _.find(fields, function(field) {
           return field.id === filterId;
         });
-        if (angular.isDefined(filterField)) {
+        if (filterField !== undefined) {
           currentFilters.push({
             id: filterField.id,
             value: filterValue,
@@ -152,7 +152,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
   function filterStringCompare(value1, value2) {
     var match = false;
 
-    if (angular.isString(value1) && angular.isString(value2)) {
+    if (_.isString(value1) && _.isString(value2)) {
       match = value1.toLowerCase().indexOf(value2.toLowerCase()) !== -1;
     }
 
@@ -472,7 +472,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
       updateAlert.numComments = 0;
       for (i = 0; i < updateAlert.alert_actions.length; i++) {
         actionUser = _this.getUserByIdOrUserId(updateAlert.alert_actions[i].user_id);
-        updateAlert.alert_actions[i].username = angular.isDefined(actionUser) ? actionUser.name : '';
+        updateAlert.alert_actions[i].username = actionUser !== undefined ? actionUser.name : '';
 
         // Bump the comments count if a comment was made
         if (updateAlert.alert_actions[i].comment) {
@@ -495,7 +495,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
       id: alertData.id,
       description: alertData.description,
       assignee: alertData.assignee,
-      acknowledged: angular.isDefined(alertData.acknowledged) ? alertData.acknowledged : false,
+      acknowledged: alertData.acknowledged !== undefined ? alertData.acknowledged : false,
       hostName: alertData.resource.name,
       hostType: hostType,
       hostImg: _this.icons[hostType],
@@ -523,7 +523,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
     newAlert.lastUpdate = newAlert.evaluated_on;
     newAlert.numComments = 0;
 
-    if (angular.isDefined(alertData.assignee)) {
+    if (alertData.assignee !== undefined) {
       newAlert.assigned = true;
       newAlert.assignee_name = alertData.assignee.name;
       newAlert.assignee_id = alertData.assignee.id;
@@ -555,7 +555,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
         return provider.id === item.ems_id;
       });
 
-      if (angular.isDefined(alertProvider)) {
+      if (alertProvider !== undefined) {
         key = 'providers';
         objectType = getObjectType(alertProvider);
         objectName = alertProvider.name;
@@ -636,7 +636,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
                 matchingTag = _.find(_this.tags, function(nextTag) {
                   return nextTag.id === providerTag.id;
                 });
-                if (angular.isDefined(matchingTag)) {
+                if (matchingTag !== undefined) {
                   summaryItem.tags.push({
                     id: providerTag.id,
                     categoryName: matchingTag.categorization.category.name,
@@ -652,7 +652,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
                 foundTag = _.find(summaryItem.tags, function(nextTag) {
                   return nextTag.categoryTitle === nextCategory;
                 });
-                if (angular.isDefined(foundTag)) {
+                if (foundTag !== undefined) {
                   summaryItem[nextCategory] = foundTag.title;
                 }
               });
@@ -668,7 +668,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
           _this.displayFilters.push(summaryItem.displayType);
         }
 
-        if (angular.isUndefined(item.severity)) {
+        if (item.severity === undefined) {
           item.severity = 'info';
         }
         summaryItem[item.severity].push(item);
@@ -684,7 +684,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
     if (response.results && response.results.length > 0) {
       newState = response.results[0];
 
-      if (angular.isUndefined(_this.editItem.alert_actions)) {
+      if (_this.editItem.alert_actions === undefined) {
         _this.editItem.alert_actions = [];
       }
       _this.editItem.alert_actions.push(newState);
@@ -707,7 +707,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
 
       notifyObservers();
 
-      if (angular.isDefined(_this.doAfterStateChange)) {
+      if (_this.doAfterStateChange !== undefined) {
         _this.newComment = '';
         _this.doAfterStateChange();
         _this.doAfterStateChange = undefined;

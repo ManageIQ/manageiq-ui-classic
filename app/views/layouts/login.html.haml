@@ -20,6 +20,7 @@
       = yield
 
     :javascript
-      API.logout();
+      vanillaJsAPI.logout();
       delete localStorage['patternfly-navigation-secondary'];
       delete localStorage['patternfly-navigation-tertiary'];
+      miqFlashClearSaved();

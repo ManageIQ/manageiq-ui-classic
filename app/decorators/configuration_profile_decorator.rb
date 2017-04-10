@@ -7,7 +7,7 @@ class ConfigurationProfileDecorator < MiqDecorator
     end
   end
 
-  def listicon_image
+  def fileicon
     if id.nil?
       "100/folder.png"
     else

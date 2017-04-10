@@ -1,8 +1,5 @@
-- tooltipOptions = {"tooltip-placement" => "bottom-right", "tooltip" => "{{legendTooltip}}"}
-.container_topology{'ng-controller' => "infraTopologyController"}
-  .row.toolbar-pf
-    .col-md-12
-      = render :partial => "shared/topology_header"
+- tooltipOptions = {"tooltip-placement" => "bottom", "tooltip" => "{{legendTooltip}}"}
+.topology{'ng-controller' => "infraTopologyController"}
   .legend
     %label#selected
     %div{'ng-if' => "kinds"}
@@ -48,4 +45,4 @@
   %kubernetes-topology-graph{:items => "items", :relations => "relations", :kinds => "kinds"}
 
 :javascript
-  miq_bootstrap('.container_topology', 'infraTopologyApp');
+  miq_bootstrap('.topology');

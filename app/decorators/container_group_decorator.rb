@@ -3,7 +3,7 @@ class ContainerGroupDecorator < MiqDecorator
     'fa fa-cubes'
   end
 
-  def self.listicon_image
+  def self.fileicon
     '100/container_group.png'
   end
 end

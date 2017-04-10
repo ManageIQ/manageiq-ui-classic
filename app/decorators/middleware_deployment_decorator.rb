@@ -13,7 +13,7 @@ class MiddlewareDeploymentDecorator < MiqDecorator
     end
   end
 
-  def listicon_image
+  def fileicon
     if name.end_with? '.ear'
       '100/middleware_deployment_ear.png'
     elsif name.end_with? '.war'

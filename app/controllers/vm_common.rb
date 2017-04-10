@@ -13,6 +13,7 @@ module VmCommon
   included do
     private :textual_group_list
     helper_method :textual_group_list
+    helper_method :parent_choices
   end
 
   # handle buttons pressed on the button bar
@@ -89,7 +90,7 @@ module VmCommon
     db = get_rec_cls
     @display = "timeline"
     session[:tl_record_id] = params[:id] if params[:id]
-    @record = find_by_id_filtered(db, from_cid(session[:tl_record_id]))
+    @record = find_record_with_rbac(db, from_cid(session[:tl_record_id]))
     @timeline = @timeline_filter = true
     @lastaction = "show_timeline"
     tl_build_timeline                       # Create the timeline report
@@ -109,10 +110,6 @@ module VmCommon
 
   def hide_vms
     !User.current_user.settings.fetch_path(:display, :display_vms) # default value is false
-  end
-
-  def vm_selected
-    @vm.present?
   end
 
   def x_show
@@ -263,7 +260,6 @@ module VmCommon
                       :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
     end
 
-    set_config(@record)
     get_host_for_vm(@record)
     session[:tl_record_id] = @record.id
 
@@ -561,7 +557,7 @@ module VmCommon
   end
 
   def evm_relationship
-    @record = find_by_id_filtered(VmOrTemplate, params[:id])  # Set the VM object
+    @record = find_record_with_rbac(VmOrTemplate, params[:id])  # Set the VM object
     @edit = {}
     @edit[:vm_id] = @record.id
     @edit[:key] = "evm_relationship_edit__new"
@@ -648,7 +644,7 @@ module VmCommon
   end
 
   def destroy
-    find_by_id_filtered(VmOrTemplate, params[:id]).destroy
+    find_record_with_rbac(VmOrTemplate, params[:id]).destroy
     redirect_to :action => 'list'
   end
 
@@ -684,7 +680,7 @@ module VmCommon
   end
 
   def add_to_service
-    @record = find_by_id_filtered(Vm, params[:id])
+    @record = find_record_with_rbac(Vm, params[:id])
     @svcs = {}
     Service.all.each { |s| @svcs[s.name] = s.id }
     drop_breadcrumb(:name => _("Add VM to a Service"), :url => "/vm/add_to_service")
@@ -692,7 +688,7 @@ module VmCommon
   end
 
   def add_vm_to_service
-    @record = find_by_id_filtered(Vm, params[:id])
+    @record = find_record_with_rbac(Vm, params[:id])
     if params["cancel.x"]
       flash = _("Add VM \"%{name}\" to a Service was cancelled by the user") % {:name => @record.name}
       redirect_to :action => @lastaction, :id => @record.id, :flash_msg => flash
@@ -710,7 +706,7 @@ module VmCommon
 
   def remove_service
     assert_privileges(params[:pressed])
-    @record = find_by_id_filtered(Vm, params[:id])
+    @record = find_record_with_rbac(Vm, params[:id])
     begin
       @vervice_name = Service.find_by_name(@record.location).name
       @record.remove_from_vsc(@vervice_name)
@@ -722,7 +718,7 @@ module VmCommon
   end
 
   def edit
-    @record = find_by_id_filtered(VmOrTemplate, params[:id])  # Set the VM object
+    @record = find_record_with_rbac(VmOrTemplate, params[:id])  # Set the VM object
     set_form_vars
     build_edit_screen
     session[:changed] = false
@@ -950,13 +946,16 @@ module VmCommon
     @lastaction = "explorer"
     @sb[:action] = nil
 
-    # Need to see if record is unauthorized if it's a VM node
     @nodetype, id = parse_nodetype_and_id(params[:id])
-    @vm = @record = identify_record(id, VmOrTemplate) if ["Vm", "MiqTemplate"].include?(TreeBuilder.get_model_for_prefix(@nodetype)) && !@record
+    record_requested = %w(Vm MiqTemplate).include?(TreeBuilder.get_model_for_prefix(@nodetype))
+
+    if record_requested && !@record
+      @vm = @record = identify_record(id, VmOrTemplate)
+    end
 
     # Handle filtered tree nodes
-    if x_active_tree.to_s =~ /_filter_tree$/ && # FIXME: create some property on trees for this
-       !["Vm", "MiqTemplate"].include?(TreeBuilder.get_model_for_prefix(@nodetype))
+    if x_active_tree.to_s =~ /_filter_tree$/ && !record_requested
+
       search_id = @nodetype == "root" ? 0 : from_cid(id)
       adv_search_build(vm_model_from_active_tree(x_active_tree))
       session[:edit] = @edit              # Set because next method will restore @edit from session
@@ -970,18 +969,26 @@ module VmCommon
       end
     end
 
-    unless @unauthorized
-      self.x_node = if vm_selected && hide_vms
-                      parent_folder_id(@vm)
-                    else
-                      params[:id]
-                    end
-      replace_right_cell
-    else
-      add_flash(_("User is not authorized to view %{model} \"%{name}\"") %
-        {:model => ui_lookup(:model => @record.class.base_model.to_s), :name => @record.name},
-                :error) unless flash_errors?
+    if record_requested && @record.nil?
+      unless flash_errors?
+        add_flash(_("The entity is not available or user is not authorized to access it."), :error)
+      end
       javascript_flash(:spinner_off => true, :activate_node => {:tree => x_active_tree.to_s, :node => x_node})
+    end
+
+    self.x_node = (@record.present? && hide_vms ? parent_folder_id(@record) : params[:id])
+    replace_right_cell
+  end
+
+  def parent_choices
+    @parent_choices = {}
+    @parent_choices[@record.id] ||= begin
+      parent_item_scope = Rbac.filtered(VmOrTemplate.where.not(:id => @record.id).order(:name))
+      choices = parent_item_scope.pluck(:name, :location, :id).each_with_object({}) do |vm, memo|
+        memo[vm[0] + " -- #{vm[1]}"] = vm[2]
+      end
+      # Add "no parent" entry as 1 entry in hash
+      {'"no parent"' => -1}.merge(choices)
     end
   end
 
@@ -1179,7 +1186,7 @@ module VmCommon
     end
 
     if !@in_a_form && !@sb[:action]
-      id = vm_selected && hide_vms ? TreeBuilder.build_node_cid(@vm) : x_node
+      id = @record.present? && hide_vms ? TreeBuilder.build_node_cid(@record) : x_node
       id = @sb[@sb[:active_accord]] if @sb[@sb[:active_accord]].present? && params[:action] != 'tree_select'
       get_node_info(id)
       type, _id = parse_nodetype_and_id(id)
@@ -1394,9 +1401,6 @@ module VmCommon
 
     @edit[:current][:custom_1] = @edit[:new][:custom_1] = @record.custom_1.to_s
     @edit[:current][:description] = @edit[:new][:description] = @record.description.to_s
-    @edit[:pchoices] = {}                                 # Build a hash for the parent choices box
-    VmOrTemplate.all.each { |vm| @edit[:pchoices][vm.name + " -- #{vm.location}"] =  vm.id unless vm.id == @record.id }   # Build a hash for the parents to choose from, not matching current VM
-    @edit[:pchoices]['"no parent"'] = -1                        # Add "no parent" entry
     if @record.parents.length == 0                                            # Set the currently selected parent
       @edit[:new][:parent] = -1
     else
@@ -1408,7 +1412,20 @@ module VmCommon
     vms.each { |vm| @edit[:new][:kids][vm.name + " -- #{vm.location}"] = vm.id }      # Build a hash for the kids list box
 
     @edit[:choices] = {}
-    VmOrTemplate.all.each { |vm| @edit[:choices][vm.name + " -- #{vm.location}"] =  vm.id if vm.parents.length == 0 }   # Build a hash for the VMs to choose from, only if they have no parent
+    # items with parents
+    ids_with_parents = Relationship.filtered(VmOrTemplate, nil)
+                                   .where.not(:ancestry => ['', nil])
+                                   .in_relationship('genealogy')
+                                   .pluck(:resource_id)
+
+    # Build a hash for the VMs to choose from, only if they have no parent
+    available_item_scope = VmOrTemplate.where.not(:id => ids_with_parents)
+    @edit[:choices] = Rbac.filtered(available_item_scope)
+                          .pluck(:name, :location, :id)
+                          .each_with_object({}) do |vm, memo|
+                            memo[vm[0] + " -- #{vm[1]}"] = vm[2]
+                          end
+
     @edit[:new][:kids].each_key { |key| @edit[:choices].delete(key) }   # Remove any VMs that are in the kids list box from the choices
 
     @edit[:choices].delete(@record.name + " -- #{@record.location}")                                    # Remove the current VM from the choices list
@@ -1724,7 +1741,10 @@ module VmCommon
           # if @edit[:new][k].is_a?(Hash)
           msg = msg + k.to_s + ":[" + @edit[:current][k].keys.join(",") + "] to [" + @edit[:new][k].keys.join(",") + "]"
         elsif k == :parent
-          msg = msg + k.to_s + ":[" + @edit[:pchoices].invert[@edit[:current][k]] + "] to [" + @edit[:pchoices].invert[@edit[:new][k]] + "]"
+          parent_choices_invert = parent_choices.invert
+          current_parent_choice = parent_choices_invert[@edit[:current][k]]
+          new_parent_choice     = parent_choices_invert[@edit[:new][k]]
+          msg = "#{msg}#{k}:[#{current_parent_choice}] to [#{new_parent_choice}]"
         else
           msg = msg + k.to_s + ":[" + @edit[:current][k].to_s + "] to [" + @edit[:new][k].to_s + "]"
         end
@@ -1769,16 +1789,6 @@ module VmCommon
     else                                      # getting ALL vms
       @record_pages, @records = paginate(:vms, :per_page => @items_per_page, :order => @col_names[get_sort_col] + " " + @sortdir)
     end
-  end
-
-  def identify_record(id, klass = self.class.model)
-    record = super
-    # Need to find the unauthorized record if in explorer
-    if record.nil? && @explorer
-      record = klass.find_by_id(from_cid(id))
-      @unauthorized = true unless record.nil?
-    end
-    record
   end
 
   def update_buttons(locals)

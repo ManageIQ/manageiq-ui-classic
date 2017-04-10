@@ -9,7 +9,6 @@ class OpsController < ApplicationController
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
-  after_action :set_session_data
 
   def index
     redirect_to :action => 'explorer'
@@ -831,11 +830,6 @@ class OpsController < ApplicationController
   def get_session_data
     @title         = _("Configuration")
     @layout        = "ops"
-    @tasks_options = session[:tasks_options] || ""
-  end
-
-  def set_session_data
-    session[:tasks_options] = @tasks_options unless @tasks_options.nil?
   end
 
   menu_section :set

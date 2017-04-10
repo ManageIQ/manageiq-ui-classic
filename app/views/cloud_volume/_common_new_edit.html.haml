@@ -1,0 +1,60 @@
+.form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
+  %label.col-md-2.control-label
+    = _('Volume Name')
+  .col-md-8
+    %input.form-control{:type          => "text",
+                        :name          => "name",
+                        'ng-model'     => "cloudVolumeModel.name",
+                        'ng-maxlength' => 128,
+                        :required      => "",
+                        :checkchange   => true}
+    %span.help-block{"ng-show" => "angularForm.name.$error.required"}
+      = _("Required")
+
+.form-group{"ng-class" => "{'has-error': angularForm.aws_volume_type.$invalid}",
+            "ng-if"    => "cloudVolumeModel.emstype == 'ManageIQ::Providers::Amazon::StorageManager::Ebs'"}
+  %label.col-md-2.control-label
+    = _('Cloud Volume Type')
+  .col-md-8
+    %select{"name"                        => "aws_volume_type",
+            "ng-model"                    => "cloudVolumeModel.aws_volume_type",
+            "ng-options"                  => "voltype.type as voltype.name for voltype in awsVolumeTypes",
+            "ng-change"                   => "awsVolumeTypeChanged(cloudVolumeModel.aws_volume_type)",
+            "ng-disabled" 				  => "formId != 'new' && cloudVolumeModel.aws_volume_type == 'standard'",
+            "required"                    => "",
+            :checkchange                  => true,
+            "selectpicker-for-select-tag" => ""}
+      %option{"value" => "", "disabled" => ""}
+        = "<#{_('Choose')}>"
+    %span.help-block{"ng-show" => "angularForm.aws_volume_type.$error.required"}
+      = _("Required")
+
+.form-group{"ng-class" => "{'has-error': angularForm.size.$invalid}"}
+  %label.col-md-2.control-label
+    = _('Size (in gigabytes)')
+  .col-md-8
+    %input.form-control{:type          => "text",
+                        :name          => "size",
+                        'ng-model'     => "cloudVolumeModel.size",
+                        'ng-maxlength' => 10,
+                        'ng-change'    => "sizeChanged(cloudVolumeModel.size)",
+                        'ng-disabled'  => "formId != 'new' && (cloudVolumeModel.emstype != 'ManageIQ::Providers::Amazon::StorageManager::Ebs' || cloudVolumeModel.aws_volume_type == 'standard')",
+                        :required      => "",
+                        :checkchange   => true}
+    %span.help-block{"ng-show" => "angularForm.size.$error.required"}
+      = _("Required")
+
+.form-group{"ng-class" => "{'has-error': angularForm.aws_iops.$invalid}",
+            "ng-if"    => "cloudVolumeModel.emstype == 'ManageIQ::Providers::Amazon::StorageManager::Ebs'"}
+  %label.col-md-2.control-label
+    = _('IOPS')
+  .col-md-8
+    %input.form-control{:type          => "text",
+                        :name          => "aws_iops",
+                        'ng-model'     => "cloudVolumeModel.aws_iops",
+                        'ng-maxlength' => 50,
+                        'ng-disabled'  => "cloudVolumeModel.aws_volume_type != 'io1'",
+                        "ng-required"  => "cloudVolumeModel.aws_volume_type == 'io1'",
+                        :checkchange   => true}
+    %span.help-block{"ng-show" => "cloudVolumeModel.aws_volume_type == 'io1' && angularForm.aws_iops.$error.required"}
+      = _("Required")

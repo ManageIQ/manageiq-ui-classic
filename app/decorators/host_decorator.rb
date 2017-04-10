@@ -3,7 +3,7 @@ class HostDecorator < MiqDecorator
     'pficon pficon-screen'
   end
 
-  def listicon_image
+  def fileicon
     "svg/vendor-#{vmm_vendor_display.downcase}.svg"
   end
 end

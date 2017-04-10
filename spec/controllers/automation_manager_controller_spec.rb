@@ -347,7 +347,7 @@ describe AutomationManagerController do
       allow(controller).to receive(:x_active_accord).and_return(:automation_manager_providers)
       allow(controller).to receive(:build_listnav_search_list)
       controller.instance_variable_set(:@_params, :id => "automation_manager_providers")
-      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::AutomationManager", :dbname => :automation_manager_providers).and_call_original
+      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::AutomationManager", :gtl_dbname => "automation_manager_providers").and_call_original
       controller.send(:accordion_select)
     end
 
@@ -356,7 +356,7 @@ describe AutomationManagerController do
       allow(controller).to receive(:x_node).and_return("root")
       allow(controller).to receive(:x_tree).and_return(:type => :filter)
       controller.instance_variable_set(:@_params, :id => "automation_manager_cs_filter")
-      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem", :dbname => :automation_manager_configured_systems).and_call_original
+      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem", :gtl_dbname => "automation_manager_configured_systems").and_call_original
       allow(controller).to receive(:build_listnav_search_list)
       controller.send(:accordion_select)
     end
@@ -366,7 +366,7 @@ describe AutomationManagerController do
       allow(controller).to receive(:x_active_tree).and_return(:configuration_scripts_tree)
       allow(controller).to receive(:x_active_accord).and_return(:configuration_scripts)
       controller.instance_variable_set(:@_params, :id => "configuration_scripts")
-      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript", :dbname => :configuration_scripts).and_call_original
+      expect(controller).to receive(:get_view).with("ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript", :gtl_dbname => "automation_manager_configuration_scripts").and_call_original
       controller.send(:accordion_select)
     end
   end
@@ -434,7 +434,7 @@ describe AutomationManagerController do
       # then get to explorer renders the data for the active node
       # we test the textual_summary for a configured system
 
-      seed_session_trees('automation_manager', :automation_manager_cs_filter_tree, "cs-#{tree_node_id}")
+      seed_session_trees('automation_manager', :automation_manager_cs_filter, "cs-#{tree_node_id}")
       get :explorer
 
       expect(response.status).to eq(200)
@@ -444,7 +444,7 @@ describe AutomationManagerController do
 
   context "ansible tower job template accordion " do
     before do
-      login_as user_with_feature(%w(automation_manager_providers nsible_tower_cs_filter_accord automation_manager_configuration_scripts_accord))
+      login_as user_with_feature(%w(automation_manager_providers automation_manager_cs_filter_accord automation_manager_configuration_scripts_accord))
       controller.instance_variable_set(:@right_cell_text, nil)
     end
     render_views
@@ -488,7 +488,7 @@ describe AutomationManagerController do
 
     it "fetches list type = 'grid' from settings for Providers accordion" do
       key = ems_key_for_provider(automation_provider1)
-      allow(controller).to receive(:x_active_accord).and_return(:automation_manager_providers)
+      allow(controller).to receive(:x_active_tree).and_return(:automation_manager_providers_tree)
       controller.send(:get_node_info, key)
       list_type = controller.instance_variable_get(:@gtl_type)
       expect(list_type).to eq("grid")
@@ -496,7 +496,7 @@ describe AutomationManagerController do
 
     it "fetches list type = 'tile' from settings for Configured Systems accordion" do
       key = ems_key_for_provider(automation_provider1)
-      allow(controller).to receive(:x_active_accord).and_return(:automation_manager_cs_filter)
+      allow(controller).to receive(:x_active_tree).and_return(:automation_manager_cs_filter_tree)
       controller.send(:get_node_info, key)
       list_type = controller.instance_variable_get(:@gtl_type)
       expect(list_type).to eq("tile")

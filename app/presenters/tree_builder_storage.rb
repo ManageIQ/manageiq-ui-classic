@@ -7,7 +7,7 @@ class TreeBuilderStorage < TreeBuilder
 
   def set_locals_for_render
     locals = super
-    locals.merge!(:autoload => true)
+    locals.merge!(:autoload => true, :allow_reselect => true)
   end
 
   def root_options

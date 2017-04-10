@@ -3,7 +3,7 @@ class MiddlewareDatasourceDecorator < MiqDecorator
     'fa fa-database'
   end
 
-  def self.listicon_image
+  def self.fileicon
     '100/middleware_datasource.png'
   end
 end

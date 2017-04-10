@@ -58,25 +58,19 @@ class CatalogController < ApplicationController
   end
 
   def servicetemplate_edit
-    assert_privileges(params[:pressed]) if params[:pressed]
-    checked = find_checked_items
+    assert_privileges(params[:pressed]) if params[:pressed].present?
+    checked_id = find_checked_items.first || params[:id]
     @sb[:cached_waypoint_ids] = MiqAeClass.waypoint_ids_for_state_machines
-    checked[0] = params[:id] if checked.blank? && params[:id]
-    @record = checked[0] ? find_by_id_filtered(ServiceTemplate, checked[0]) : ServiceTemplate.new
+    @record = checked_id.present? ? find_record_with_rbac(ServiceTemplate, checked_id) : ServiceTemplate.new
     @sb[:st_form_active_tab] = "basic"
-    if checked[0]
-      if @record.service_type == "composite"
-        st_edit
-      else
-        atomic_st_edit
-      end
+    composite_type = @record.service_type == "composite"
+    new_atomic_item = params[:pressed] == "atomic_catalogitem_new" ||
+      (params[:button].present? &&
+       session[:edit][:new][:service_type] == "atomic")
+    if checked_id.present? && composite_type || checked_id.nil? && !new_atomic_item
+      st_edit
     else
-      # check for service_type incase add/cancel button was pressed to direct to correct method
-      if params[:pressed] == "atomic_catalogitem_new" || (params[:button] && session[:edit][:new][:service_type] == "atomic")
-        atomic_st_edit
-      else
-        st_edit
-      end
+      atomic_st_edit
     end
   end
 
@@ -278,7 +272,7 @@ class CatalogController < ApplicationController
         {:record => ui_lookup(:table => "service_template")}) if @flash_array.nil?
       self.x_node = "root"
     else # showing 1 element, delete it
-      elements = find_checked_items
+      elements = find_checked_ids_with_rbac(ServiceTemplate)
       if elements.empty?
         add_flash(_("No %{model} were selected for deletion") %
           {:model => ui_lookup(:tables => "service_template")}, :error)
@@ -533,7 +527,7 @@ class CatalogController < ApplicationController
     assert_privileges("svc_catalog_provision")
     checked = find_checked_items
     checked[0] = params[:id] if checked.blank? && params[:id]
-    st = find_by_id_filtered(ServiceTemplate, checked[0])
+    st = find_record_with_rbac(ServiceTemplate, checked[0])
     @right_cell_text = _("Order %{model} \"%{name}\"") % {:name  => st.name,
                                                           :model => ui_lookup(:model => "Service")}
     ra = nil
@@ -659,7 +653,7 @@ class CatalogController < ApplicationController
     assert_privileges("orchestration_template_edit")
     checked = find_checked_items
     checked[0] = params[:id] if checked.blank? && params[:id]
-    @record = find_by_id_filtered(OrchestrationTemplate, checked[0])
+    @record = find_record_with_rbac(OrchestrationTemplate, checked[0])
     if @record.in_use?
       add_flash(_("Orchestration template \"%{name}\" is read-only and cannot be edited.") %
         {:name => @record.name}, :error)
@@ -715,7 +709,7 @@ class CatalogController < ApplicationController
     assert_privileges("orchestration_template_remove")
     checked = find_checked_items
     checked[0] = params[:id] if checked.blank? && params[:id]
-    elements = OrchestrationTemplate.where(:id => checked)
+    elements = find_checked_records_with_rbac(OrchestrationTemplate, checked)
     elements.each do |ot|
       if ot.in_use?
         add_flash(_("Orchestration template \"%{name}\" is read-only and cannot be deleted.") %
@@ -979,7 +973,7 @@ class CatalogController < ApplicationController
   def ot_edit_set_form_vars(right_cell_text)
     checked = find_checked_items
     checked[0] = params[:id] if checked.blank? && params[:id]
-    @record = checked[0] ? find_by_id_filtered(OrchestrationTemplate, checked[0]) : OrchestrationTemplate.new
+    @record = checked[0] ? find_record_with_rbac(OrchestrationTemplate, checked[0]) : OrchestrationTemplate.new
     @edit = {:current => {:name        => @record.name,
                           :description => @record.description,
                           :content     => @record.content,
@@ -1181,7 +1175,7 @@ class CatalogController < ApplicationController
     checked = find_checked_items
     checked[0] = params[:id] if checked.blank? && params[:id]
 
-    @record = checked[0] ? find_by_id_filtered(ServiceTemplateCatalog, checked[0]) : ServiceTemplateCatalog.new
+    @record = checked[0] ? find_record_with_rbac(ServiceTemplateCatalog, checked[0]) : ServiceTemplateCatalog.new
     @right_cell_text = @record.id ?
         _("Editing %{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => "ServiceTemplateCatalog")} :
         _("Adding a new %{model}") % {:model => ui_lookup(:model => "ServiceTemplateCatalog")}
@@ -1792,35 +1786,38 @@ class CatalogController < ApplicationController
     playbook_details = {}
     provision = @record.config_info[:provision]
     playbook_details[:provisioning] = {}
-    playbook_details[:provisioning][:repository] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource.find_by(:id => provision[:repository_id]).name
-    playbook_details[:provisioning][:playbook] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook.find_by(:id => provision[:playbook_id]).name
-    playbook_details[:provisioning][:machine_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential.find_by(:id => provision[:credential_id]).name
-    playbook_details[:provisioning][:network_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential.find_by(:id => provision[:network_credential_id]).name if provision[:network_credential_id]
-    playbook_details[:provisioning][:cloud_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential.find_by(:id => provision[:cloud_credential_id]).name if provision[:cloud_credential_id]
-    dialog = provision[:dialog_id] ? Dialog.find_by(:id => provision[:dialog_id]) : Dialog.find_by(:name => provision[:dialog_name])
-    if dialog
-      playbook_details[:provisioning][:dialog] = dialog.name
-      playbook_details[:provisioning][:dialog_id] = dialog.id
-    end
+    playbook_details[:provisioning][:repository] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, provision[:repository_id])
+    playbook_details[:provisioning][:playbook] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, provision[:playbook_id])
+    playbook_details[:provisioning][:machine_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, provision[:credential_id])
+    playbook_details[:provisioning][:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, provision[:network_credential_id]) if provision[:network_credential_id]
+    playbook_details[:provisioning][:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, provision[:cloud_credential_id]) if provision[:cloud_credential_id]
+    fetch_dialog(playbook_details, provision[:dialog_id], :provisioning)
 
     if @record.config_info[:retirement]
       retirement = @record.config_info[:retirement]
       playbook_details[:retirement] = {}
       playbook_details[:retirement][:remove_resources] = retirement[:remove_resources]
       if retirement[:repository_id]
-        playbook_details[:retirement][:repository] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource.find_by(:id => retirement[:repository_id]).name
-        playbook_details[:retirement][:playbook] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook.find_by(:id => retirement[:playbook_id]).name
-        playbook_details[:retirement][:machine_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential.find_by(:id => retirement[:credential_id]).name
-        playbook_details[:retirement][:network_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential.find_by(:id => retirement[:network_credential_id]).name if retirement[:network_credential_id]
-        playbook_details[:retirement][:cloud_credential] = ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential.find_by(:id => retirement[:cloud_credential_id]).name if retirement[:cloud_credential_id]
-        dialog = provision[:dialog_id] ? Dialog.find_by(:id => retirement[:dialog_id]) : Dialog.find_by(:name => retirement[:dialog_name])
-        if dialog
-          playbook_details[:retirement][:dialog] = dialog.name
-          playbook_details[:retirement][:dialog_id] = dialog.id
-        end
+        playbook_details[:retirement][:repository] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, retirement[:repository_id])
+        playbook_details[:retirement][:playbook] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, retirement[:playbook_id])
+        playbook_details[:retirement][:machine_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, retirement[:credential_id])
+        playbook_details[:retirement][:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, retirement[:network_credential_id]) if retirement[:network_credential_id]
+        playbook_details[:retirement][:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, retirement[:cloud_credential_id]) if retirement[:cloud_credential_id]
       end
     end
     playbook_details
+  end
+
+  def fetch_name_from_object(klass, id)
+    klass.find_by(:id => id).try(:name)
+  end
+
+  def fetch_dialog(playbook_details, dialog_id, key)
+    return nil if dialog_id.nil?
+    dialog = Dialog.find_by(:id => dialog_id)
+    return nil if dialog.nil?
+    playbook_details[key][:dialog] = dialog.name
+    playbook_details[key][:dialog_id] = dialog.id
   end
 
   def open_parent_nodes(record)
@@ -2105,7 +2102,7 @@ class CatalogController < ApplicationController
 
   def x_edit_tags_reset(db)
     @tagging = session[:tag_db] = db
-    @object_ids = find_checked_items
+    @object_ids = find_checked_ids_with_rbac(db)
     if params[:button] == 'reset'
       id = params[:id] if params[:id]
       return unless load_edit("#{session[:tag_db]}_edit_tags__#{id}", 'replace_cell__explorer')

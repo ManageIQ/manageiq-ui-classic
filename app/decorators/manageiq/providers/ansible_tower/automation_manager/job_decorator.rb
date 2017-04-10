@@ -4,7 +4,7 @@ module ManageIQ::Providers::AnsibleTower
       'product product-orchestration_stack'
     end
 
-    def self.listicon_image
+    def self.fileicon
       '100/orchestration_stack.png'
     end
   end

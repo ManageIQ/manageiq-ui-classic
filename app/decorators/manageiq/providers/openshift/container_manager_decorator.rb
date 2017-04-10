@@ -1,6 +1,6 @@
 module ManageIQ::Providers::Openshift
   class ContainerManagerDecorator < MiqDecorator
-    def self.listicon_image
+    def self.fileicon
       "svg/vendor-openshift.svg"
     end
   end

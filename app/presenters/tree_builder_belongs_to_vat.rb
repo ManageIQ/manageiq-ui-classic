@@ -23,11 +23,6 @@ class TreeBuilderBelongsToVat < TreeBuilderBelongsToHac
     end
   end
 
-  def set_locals_for_render
-    locals = super
-    locals.merge!(:id_prefix => 'vat_')
-  end
-
   def x_get_tree_datacenter_kids(parent, count_only)
     kids = []
     parent.folders.each do |child|

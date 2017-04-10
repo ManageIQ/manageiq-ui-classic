@@ -218,7 +218,7 @@ module EmsCommon
     @doc_url = provider_documentation_url
     assert_privileges("#{permission_prefix}_edit")
     begin
-      @ems = find_by_id_filtered(model, params[:id])
+      @ems = find_record_with_rbac(model, params[:id])
     rescue => err
       return redirect_to(:action      => @lastaction || "show_list",
                          :flash_msg   => err.message,
@@ -229,48 +229,6 @@ module EmsCommon
     session[:changed] = false
     drop_breadcrumb(:name => _("Edit %{object_type} '%{object_name}'") % {:object_type => ui_lookup(:tables => @table_name), :object_name => @ems.name},
                     :url  => "/#{controller_name}/#{@ems.id}/edit")
-  end
-
-  # AJAX driven routine to check for changes in ANY field on the form
-  def form_field_changed
-    return unless load_edit("ems_edit__#{params[:id]}")
-    get_form_vars
-
-    changed = edit_changed?
-    render :update do |page|
-      page << javascript_prologue
-      if params[:server_emstype] || params[:default_security_protocol] # Server/protocol type changed
-        page.replace_html("form_div", :partial => "shared/views/ems_common/form")
-      end
-      if params[:server_emstype] # Server type changed
-        unless @ems.kind_of?(ManageIQ::Providers::CloudManager)
-          # Hide/show C&U credentials tab
-          page << "$('#metrics_li').#{params[:server_emstype] == "rhevm" ? "show" : "hide"}();"
-        end
-        if ["openstack", "openstack_infra"].include?(params[:server_emstype])
-          page << "$('#port').val(#{j_str(@edit[:new][:port].to_s)});"
-        end
-        # Hide/show port field
-        page << "$('#port_tr').#{%w(openstack openstack_infra rhevm).include?(params[:server_emstype]) ? "show" : "hide"}();"
-      end
-      page << javascript_for_miq_button_visibility(changed)
-      if @edit[:default_verify_status] != @edit[:saved_default_verify_status]
-        @edit[:saved_default_verify_status] = @edit[:default_verify_status]
-        page << "miqValidateButtons('#{@edit[:default_verify_status] ? 'show' : 'hide'}', 'default_');"
-      end
-      if @edit[:metrics_verify_status] != @edit[:saved_metrics_verify_status]
-        @edit[:saved_metrics_verify_status] = @edit[:metrics_verify_status]
-        page << "miqValidateButtons('#{@edit[:metrics_verify_status] ? 'show' : 'hide'}', 'metrics_');"
-      end
-      if @edit[:amqp_verify_status] != @edit[:saved_amqp_verify_status]
-        @edit[:saved_amqp_verify_status] = @edit[:amqp_verify_status]
-        page << "miqValidateButtons('#{@edit[:amqp_verify_status] ? 'show' : 'hide'}', 'amqp_');"
-      end
-      if @edit[:bearer_verify_status] != @edit[:saved_bearer_verify_status]
-        @edit[:saved_bearer_verify_status] = @edit[:bearer_verify_status]
-        page << "miqValidateButtons('#{@edit[:bearer_verify_status] ? 'show' : 'hide'}', 'bearer_');"
-      end
-    end
   end
 
   def update
@@ -308,7 +266,7 @@ module EmsCommon
 
   def update_button_save
     changed = edit_changed?
-    update_ems = find_by_id_filtered(model, params[:id])
+    update_ems = find_record_with_rbac(model, params[:id])
     set_record_vars(update_ems)
     if valid_record?(update_ems) && update_ems.save
       update_ems.reload
@@ -351,7 +309,7 @@ module EmsCommon
   private :update_button_reset
 
   def update_button_validate
-    verify_ems = find_by_id_filtered(model, params[:id])
+    verify_ems = find_record_with_rbac(model, params[:id])
     validate_credentials verify_ems
   end
   private :update_button_validate
@@ -488,7 +446,7 @@ module EmsCommon
       edit_record if params[:pressed] == "#{@table_name}_edit"
       if params[:pressed] == "#{@table_name}_timeline"
         @showtype = "timeline"
-        @record = find_by_id_filtered(model, params[:id])
+        @record = find_record_with_rbac(model, params[:id])
         @timeline = @timeline_filter = true
         @lastaction = "show_timeline"
         tl_build_timeline                       # Create the timeline report
@@ -499,7 +457,7 @@ module EmsCommon
       end
       if params[:pressed] == "#{@table_name}_perf"
         @showtype = "performance"
-        @record = find_by_id_filtered(model, params[:id])
+        @record = find_record_with_rbac(model, params[:id])
         drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @record.name},
                         :url  => show_link(@record, :refresh => "n", :display => "performance"))
         perf_gen_init_options # Intialize options, charts are generated async
@@ -508,7 +466,7 @@ module EmsCommon
       end
       if params[:pressed] == "#{@table_name}_ad_hoc_metrics"
         @showtype = "ad_hoc_metrics"
-        @record = find_by_id_filtered(model, params[:id])
+        @record = find_record_with_rbac(model, params[:id])
         drop_breadcrumb(:name => @record.name + _(" (Ad hoc Metrics)"), :url => show_link(@record))
         javascript_redirect polymorphic_path(@record, :display => "ad_hoc_metrics")
         return
@@ -560,6 +518,12 @@ module EmsCommon
       javascript_redirect :controller => "host_aggregate", :action => "edit", :id => find_checked_items[0]
     elsif params[:pressed] == "cloud_tenant_edit"
       javascript_redirect :controller => "cloud_tenant", :action => "edit", :id => find_checked_items[0]
+    elsif params[:pressed] == "cloud_volume_new"
+      javascript_redirect :controller => "cloud_volume", :action => "new", :storage_manager_id => params[:id]
+    elsif params[:pressed] == "cloud_volume_attach"
+      javascript_redirect :controller => "cloud_volume", :action => "attach", :id => find_checked_items[0]
+    elsif params[:pressed] == "cloud_volume_detach"
+      javascript_redirect :controller => "cloud_volume", :action => "detach", :id => find_checked_items[0]
     elsif params[:pressed] == "cloud_volume_edit"
       javascript_redirect :controller => "cloud_volume", :action => "edit", :id => find_checked_items[0]
     elsif params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new", "#{pfx}_clone",
@@ -575,7 +539,7 @@ module EmsCommon
   end
 
   def recheck_authentication(id = nil)
-    @record = find_by_id_filtered(model, id || params[:id])
+    @record = find_record_with_rbac(model, id || params[:id])
     @record.authentication_check_types_queue(@record.authentication_for_summary.pluck(:authtype), :save => true)
   end
 

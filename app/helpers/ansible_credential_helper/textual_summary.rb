@@ -9,6 +9,26 @@ module AnsibleCredentialHelper::TextualSummary
     TextualGroup.new(_("Relationships"), %i(repositories))
   end
 
+  def textual_group_options
+    options = []
+
+    @record.type.constantize::API_ATTRIBUTES.each do |key, value|
+      options << key
+
+      define_singleton_method "textual_#{key}" do
+        h = {:label => _(value[:label]), :title => _(value[:help_text])}
+        h[:value] = if value[:type] == :password && @record.options[key].present?
+                      '●●●●●●●●'
+                    else
+                      @record.options[key]
+                    end
+        h
+      end
+    end
+
+    TextualGroup.new(_("Credential Options"), options)
+  end
+
   def textual_type
     {:label => _("Authentication Type"), :value => ui_lookup(:model => @record.type)}
   end

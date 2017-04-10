@@ -4,7 +4,7 @@ module ManageIQ::Providers
       nil
     end
 
-    def listicon_image
+    def fileicon
       "svg/vendor-#{image_name.downcase}.svg"
     end
   end

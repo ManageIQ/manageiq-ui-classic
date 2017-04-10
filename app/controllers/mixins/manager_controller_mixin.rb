@@ -8,6 +8,11 @@ module Mixins
       redirect_to :action => 'explorer', :flash_msg => @flash_array.try(:fetch_path, 0, :message)
     end
 
+    def find_or_build_provider
+      @provider = provider_class.new if params[:id] == "new"
+      @provider ||= find_record(self.class.model, params[:id]).provider
+    end
+
     def add_provider
       find_or_build_provider
       sync_form_to_instance
@@ -35,7 +40,7 @@ module Mixins
         AuditEvent.success(build_created_audit(@provider, @edit))
         @in_a_form = false
         @sb[:action] = nil
-        model = "#{model_to_name(@provider.type)} #{ui_lookup(:model => 'ExtManagementSystem')}"
+        model = "#{self.class.model_to_name(@provider.type)} #{ui_lookup(:model => 'ExtManagementSystem')}"
         if params[:id] == "new"
           add_flash(_("%{model} \"%{name}\" was added") % {:model => model, :name => @provider.name})
           process_managers([@provider.instance_eval(manager_prefix).id], "refresh_ems")
@@ -204,7 +209,81 @@ module Mixins
       end
     end
 
-    private ###########
+    def new
+      assert_privileges("#{privilege_prefix}_add_provider")
+      @provider_manager = concrete_model.new
+      @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
+      render_form
+    end
+
+    def edit
+      @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
+      case params[:button]
+      when "cancel"
+        cancel_provider
+      when "save"
+        add_provider
+        save_provider
+      else
+        assert_privileges("#{privilege_prefix}_edit_provider")
+        manager_id            = from_cid(params[:miq_grid_checks] || params[:id] || find_checked_items[0])
+        @provider_manager     = find_record(concrete_model, manager_id)
+        @providerdisplay_type = self.class.model_to_name(@provider_manager.type)
+        render_form
+      end
+    end
+
+    def delete
+      assert_privileges("#{privilege_prefix}_delete_provider")
+      checked_items = find_checked_items
+      checked_items.push(params[:id]) if checked_items.empty? && params[:id]
+      providers = Rbac.filtered(concrete_model.where(:id => checked_items).includes(:provider).collect(&:provider))
+      if providers.empty?
+        add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => "providers"), :task => "deletion"}, :error)
+      else
+        providers.each do |provider|
+          AuditEvent.success(
+            :event        => "provider_record_delete_initiated",
+            :message      => "[#{provider.name}] Record delete initiated",
+            :target_id    => provider.id,
+            :target_class => provider.type,
+            :userid       => session[:userid]
+          )
+          provider.destroy_queue
+        end
+
+        add_flash(n_("Delete initiated for %{count} Provider",
+                     "Delete initiated for %{count} Providers",
+                     providers.length) % {:count => providers.length})
+      end
+      replace_right_cell
+    end
+
+    def refresh
+      assert_privileges("#{privilege_prefix}_refresh_provider")
+      @explorer = true
+      manager_button_operation('refresh_ems', _('Refresh'))
+      replace_right_cell
+    end
+
+    def form_fields
+      assert_privileges("#{privilege_prefix}_edit_provider")
+      # set value of read only zone text box, when there is only single zone
+      if params[:id] == "new"
+        return render :json => {:zone => Zone.in_my_region.size >= 1 ? Zone.in_my_region.first.name : nil}
+      end
+
+      manager = find_record(concrete_model, params[:id])
+      provider = manager.provider
+
+      render :json => {:name       => provider.name,
+                       :zone       => provider.zone.name,
+                       :url        => provider.url,
+                       :verify_ssl => provider.verify_ssl,
+                       :log_userid => provider.authentications.first.userid}
+    end
+
+    private
 
     def replace_right_cell(options = {})
       replace_trees = options[:replace_trees]
@@ -248,7 +327,7 @@ module Mixins
     def provider_list(id, model)
       return provider_node(id, model) if id
       options = {:model => model.to_s}
-      @right_cell_text = _("All %{title} Providers") % {:title => model_to_name(model)}
+      @right_cell_text = _("All %{title} Providers") % {:title => self.class.model_to_name(model)}
       process_show_list(options)
     end
 
@@ -256,7 +335,7 @@ module Mixins
       return configured_system_node(id, model) if id
       if x_active_tree == :configuration_manager_cs_filter_tree || x_active_tree == :automation_manager_cs_filter_tree
         options = {:model => model.to_s}
-        @right_cell_text = _("All %{title} Configured Systems") % {:title => model_to_name(model)}
+        @right_cell_text = _("All %{title} Configured Systems") % {:title => self.class.model_to_name(model)}
         process_show_list(options)
       end
     end
@@ -427,11 +506,9 @@ module Mixins
     def construct_edit_for_audit
       @edit ||= {}
       @edit[:current] = {:name       => @provider.name,
-                         :provtype   => model_to_name(@provider.type),
                          :url        => @provider.url,
                          :verify_ssl => @provider.verify_ssl}
       @edit[:new] = {:name       => params[:name],
-                     :provtype   => params[:provtype],
                      :url        => params[:url],
                      :verify_ssl => params[:verify_ssl]}
     end
@@ -451,7 +528,7 @@ module Mixins
     def find_record(model, id)
       raise _("Invalid input") unless is_integer?(from_cid(id))
       begin
-        record = model.where(:id => from_cid(id)).first
+        record = Rbac.filtered(model.where(:id => from_cid(id))).first
       rescue ActiveRecord::RecordNotFound, StandardError => ex
         if @explorer
           self.x_node = "root"

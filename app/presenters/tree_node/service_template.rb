@@ -2,7 +2,7 @@ module TreeNode
   class ServiceTemplate < Node
     set_attributes(:image, :icon) do
       if @object.picture
-        image = @object.decorate.listicon_image
+        image = @object.decorate.fileicon
       else
         icon = @object.decorate.fonticon
       end

@@ -4,7 +4,9 @@ class MiqAeCustomizationController < ApplicationController
   include_concern 'Dialogs'
 
   include AutomateTreeHelper
+
   helper ApplicationHelper::ImportExportHelper
+  include Mixins::GenericSessionMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -103,6 +105,14 @@ class MiqAeCustomizationController < ApplicationController
     self.x_active_tree   = "#{x_active_accord}_tree"
     get_node_info
     replace_right_cell(:nodetype => x_node)
+  end
+
+  def self.session_key_prefix
+    "miq_ae_customization"
+  end
+
+  def title
+    _("Automate Customization")
   end
 
   def explorer
@@ -358,11 +368,12 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def get_session_data
-    @layout  = "miq_ae_customization"
+    super
     @resolve = session[:resolve] if session[:resolve]
   end
 
   def set_session_data
+    super
     session[:resolve] = @resolve if @resolve
   end
 

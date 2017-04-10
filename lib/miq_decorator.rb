@@ -12,12 +12,12 @@ class MiqDecorator < SimpleDelegator
     end
 
     # Initialize these two attributes with default to nil
-    attr_reader :fonticon, :listicon_image
+    attr_reader :fonticon, :fileicon
   end
 
   # Call the class methods with identical names if these are not set
   delegate :fonticon, :to => :class
-  delegate :listicon_image, :to => :class
+  delegate :fileicon, :to => :class
 end
 
 module MiqDecorator::Instance

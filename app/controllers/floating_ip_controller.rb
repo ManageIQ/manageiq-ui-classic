@@ -4,7 +4,6 @@ class FloatingIpController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  include Mixins::CheckedIdMixin
   include Mixins::GenericButtonMixin
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
@@ -95,27 +94,17 @@ class FloatingIpController < ApplicationController
 
   def delete_floating_ips
     assert_privileges("floating_ip_delete")
-
     floating_ips = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "floating_ip")
-                     find_checked_items
+                     find_checked_records_with_rbac(FloatingIp)
                    else
-                     [params[:id]]
+                     [find_record_with_rbac(FloatingIp, params[:id])]
                    end
 
     if floating_ips.empty?
       add_flash(_("No Floating IPs were selected for deletion."), :error)
     end
 
-    floating_ips_to_delete = []
-    floating_ips.each do |s|
-      floating_ip = FloatingIp.find(s)
-      if floating_ip.nil?
-        add_flash(_("Floating IP no longer exists."), :error)
-      else
-        floating_ips_to_delete.push(floating_ip)
-      end
-    end
-    process_floating_ips(floating_ips_to_delete, "destroy") unless floating_ips_to_delete.empty?
+    process_floating_ips(floating_ips, "destroy") unless floating_ips.empty?
 
     # refresh the list if applicable
     if @lastaction == "show_list"
@@ -133,7 +122,7 @@ class FloatingIpController < ApplicationController
 
   def edit
     assert_privileges("floating_ip_edit")
-    @floating_ip = find_by_id_filtered(FloatingIp, params[:id])
+    @floating_ip = find_record_with_rbac(FloatingIp, params[:id])
     @in_a_form = true
     drop_breadcrumb(
       :name => _("Associate Floating IP \"%{name}\"") % { :name  => @floating_ip.name },
@@ -142,7 +131,7 @@ class FloatingIpController < ApplicationController
 
   def floating_ip_form_fields
     assert_privileges("floating_ip_edit")
-    floating_ip = find_by_id_filtered(FloatingIp, params[:id])
+    floating_ip = find_record_with_rbac(FloatingIp, params[:id])
     network_port_ems_ref = if floating_ip.network_port
                              floating_ip.network_port.ems_ref
                            else
@@ -189,7 +178,7 @@ class FloatingIpController < ApplicationController
 
   def update
     assert_privileges("floating_ip_edit")
-    @floating_ip = find_by_id_filtered(FloatingIp, params[:id])
+    @floating_ip = find_record_with_rbac(FloatingIp, params[:id])
 
     case params[:button]
     when "cancel"
@@ -243,7 +232,7 @@ class FloatingIpController < ApplicationController
     options[:ems_id] = params[:ems_id] if params[:ems_id] && params[:ems_id] != 'new'
     options[:floating_ip_address] = params[:floating_ip_address] if params[:floating_ip_address]
     options[:cloud_network_id] = params[:cloud_network_id] if params[:cloud_network_id]
-    options[:cloud_tenant] = find_by_id_filtered(CloudTenant, params[:cloud_tenant_id]) if params[:cloud_tenant_id]
+    options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant_id]) if params[:cloud_tenant_id]
     options[:network_port_ems_ref] = params[:network_port_ems_ref] if params[:network_port_ems_ref]
     options[:router_id] = params[:router_id] if params[:router_id]
     options

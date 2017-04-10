@@ -208,14 +208,14 @@ module ApplicationHelper
             "vm_or_template"
           elsif record.kind_of?(VmOrTemplate)
             controller_for_vm(model_for_vm(record))
-          elsif record.class.respond_to?(:db_name)
-            record.class.db_name
           elsif record.kind_of?(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
             "ansible_playbook"
           elsif record.kind_of?(ManageIQ::Providers::EmbeddedAutomationManager::Authentication)
             "ansible_credential"
           elsif record.kind_of?(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
             "ansible_repository"
+          elsif record.class.respond_to?(:db_name)
+            record.class.db_name
           else
             record.class.base_class.to_s
           end
@@ -568,51 +568,57 @@ module ApplicationHelper
     nil
   end
 
+  def show_taskbar_in_header?
+    return false if @explorer
+    return false if controller.action_name.end_with?("tagging_edit")
+
+    hide_actions = %w(
+      auth_error
+      change_tab
+      show
+    )
+    return false if @layout == "" && hide_actions.include?(controller.action_name)
+
+    hide_layouts = %w(
+      about
+      chargeback
+      container_dashboard
+      ems_infra_dashboard
+      exception
+      miq_ae_automate_button
+      miq_ae_class
+      miq_ae_export
+      miq_ae_tools
+      miq_capacity_bottlenecks
+      miq_capacity_planning
+      miq_capacity_utilization
+      miq_capacity_waste
+      miq_policy
+      miq_policy_export
+      miq_policy_rsop
+      monitor_alerts_list
+      monitor_alerts_most_recent
+      monitor_alerts_overview
+      ops
+      pxe
+      report
+      rss
+      server_build
+    )
+    return false if hide_layouts.include?(@layout)
+
+    return false if @layout == "configuration" && @tabform != "ui_4"
+
+    true
+  end
+
   def taskbar_in_header?
+    # this is just @show_taskbar ||= show_taskbar_in_header? .. but nil
     if @show_taskbar.nil?
-      @show_taskbar = false
-      if ! (@layout == "" &&
-        %w(auth_error
-           change_tab
-           show
-          ).include?(controller.action_name) ||
-        %w(about
-           chargeback
-           cloud_topology
-           container_dashboard
-           ems_infra_dashboard
-           exception
-           infra_topology
-           middleware_topology
-           miq_ae_automate_button
-           miq_ae_class
-           miq_ae_export
-           miq_ae_tools
-           miq_capacity_bottlenecks
-           miq_capacity_planning
-           miq_capacity_utilization
-           miq_capacity_waste
-           miq_policy
-           miq_policy_export
-           miq_policy_rsop
-           monitor_alerts_overview
-           monitor_alerts_list
-           monitor_alerts_most_recent
-           network_topology
-           ops
-           physical_infra_topology
-           pxe
-           report
-           rss
-           server_build
-          ).include?(@layout) ||
-        (@layout == "configuration" && @tabform != "ui_4")) && !controller.action_name.end_with?("tagging_edit")
-        unless @explorer
-          @show_taskbar = true
-        end
-      end
+      @show_taskbar = show_taskbar_in_header?
+    else
+      @show_taskbar
     end
-    @show_taskbar
   end
 
   # checking if any of the toolbar is visible
@@ -995,22 +1001,31 @@ module ApplicationHelper
     link_to(link_text, link_params, tag_args)
   end
 
-  def primary_nav_class(nav_id)
-    test_layout = @layout
-    # FIXME: exception behavior to remove
-    test_layout = 'my_tasks' if %w(my_tasks my_ui_tasks all_tasks all_ui_tasks).include?(@layout)
-    test_layout = 'cloud_volume' if @layout == 'cloud_volume_snapshot' || @layout == 'cloud_volume_backup'
-    test_layout = 'cloud_object_store_container' if @layout == 'cloud_object_store_object'
+  def item_nav_class(item)
+    active = controller.menu_section_id(controller.params) || @layout.to_sym
 
-    Menu::Manager.item_in_section?(test_layout, nav_id) ? 'active' : nil
+    # FIXME remove @layout condition when every controller sets menu_section properly
+    item.id.to_sym == active ||
+      item.id.to_sym == @layout.to_sym ? 'active' : nil
   end
 
-  def secondary_nav_class(item)
-    item.items.collect(&:id).include?(@layout) ? 'active' : nil
-  end
+  def section_nav_class(section)
+    active = controller.menu_section_id(controller.params) || @layout.to_sym
 
-  def tertiary_nav_class(item)
-    item.id == @layout ? 'active' : nil
+    if section.parent.nil?
+      # first-level, fallback to old logic for now
+      # FIXME: exception behavior to remove
+      active = 'my_tasks' if %w(my_tasks my_ui_tasks all_tasks all_ui_tasks).include?(@layout)
+      active = 'cloud_volume' if @layout == 'cloud_volume_snapshot' || @layout == 'cloud_volume_backup'
+      active = 'cloud_object_store_container' if @layout == 'cloud_object_store_object'
+      active = active.to_sym
+    end
+
+    return 'active' if section.id.to_sym == active
+
+    # FIXME remove to_s, to_sym once all items use symbol ids
+    section.contains_item_id?(active.to_s) ||
+      section.contains_item_id?(active.to_sym) ? 'active' : nil
   end
 
   def render_flash_msg?
@@ -1285,6 +1300,7 @@ module ApplicationHelper
           flavor
           floating_ip
           host
+          load_balancer
           middleware_datasource
           middleware_deployment
           middleware_domain
@@ -1513,7 +1529,7 @@ module ApplicationHelper
     x_tree && ((tree_with_advanced_search? && !@record) || @show_adv_search)
   end
 
-  def listicon_image_tag(db, row)
+  def fileicon_tag(db, row)
     icon = nil
     if %w(Job MiqTask).include?(db)
       if row["state"].downcase == "finished" && row["status"]
@@ -1618,7 +1634,7 @@ module ApplicationHelper
     if %w(MiqReportResult MiqSchedule MiqUserRole MiqWidget).include?(db)
       listicon_glyphicon_tag(db, row)
     else
-      listicon_image_tag(db, row)
+      fileicon_tag(db, row)
     end
   end
 

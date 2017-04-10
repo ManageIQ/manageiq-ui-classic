@@ -16,8 +16,8 @@
         - ["name", "image?", "operating_system.product_name", "platform",
             "logical_cpus", "mem_cpu", "allocated_disk_storage", "deprecated",
             "ext_management_system.name", "v_total_snapshots", "cloud_tenant"].each do |column_name|
-          %th
-            - if @edit[:vm_headers].include?(column_name)
+          - if @edit[:vm_headers].include?(column_name)
+            %th
               -# Replaced to exclude non-view table fields from sorting
               = link_to(h(@edit[:vm_headers][column_name]),
                 {:action => "vm_pre_prov", :sort_choice => column_name, :id => id.to_s},

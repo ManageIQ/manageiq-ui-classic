@@ -801,7 +801,7 @@ module OpsController::Diagnostics
   def diagnostics_set_form_vars
     active_node = x_node
     if active_node && active_node.split('-').first == "z"
-      @record = @selected_server = Zone.find_by_id(from_cid(active_node.split('-').last))
+      @record = @selected_zone = @selected_server = Zone.find_by_id(from_cid(active_node.split('-').last))
       @sb[:selected_server_id] = @selected_server.id
       @sb[:selected_typ] = "zone"
       if @selected_server.miq_servers.length >= 1 &&

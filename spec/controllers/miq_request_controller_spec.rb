@@ -36,7 +36,7 @@ describe MiqRequestController do
     it "displays miq_request for parent_tenant, when request was added by child_parent" do
       login_as user_parent_tenant
       controller.instance_variable_set(:@settings, {})
-      allow_any_instance_of(MiqRequestController).to receive(:listicon_image)
+      allow_any_instance_of(MiqRequestController).to receive(:fileicon)
 
       view, _pages = controller.send(:get_view, MiqRequest, {})
       expect(view.table.data.count).to eq(1)

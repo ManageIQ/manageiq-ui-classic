@@ -10,6 +10,10 @@ module AnsibleRepositoryHelper::TextualSummary
     TextualGroup.new(_("Relationships"), %i(provider playbooks credential))
   end
 
+  def textual_group_options
+    TextualGroup.new(_("Repository Options"), %i(scm_type scm_url scm_branch scm_clean scm_delete_on_update scm_update_on_launch))
+  end
+
   def textual_created
     {:label => _("Created On"), :value => format_timezone(@record.created_at)}
   end
@@ -41,5 +45,29 @@ module AnsibleRepositoryHelper::TextualSummary
                :value => @record.authentication.name)
     end
     h
+  end
+
+  def textual_scm_type
+    {:label => _('SCM Type'), :title => _("Show Credential's SCM type"), :value => @record.scm_type}
+  end
+
+  def textual_scm_url
+    {:label => _('SCM URL'), :title => _("Show Credential's SCM URL"), :value => @record.scm_url}
+  end
+
+  def textual_scm_branch
+    {:label => _('SCM Branch'), :title => _("Show Credential's SCM branch"), :value => @record.scm_branch}
+  end
+
+  def textual_scm_clean
+    {:label => _('SCM Clean'), :title => _("Show Credential's SCM clean flag"), :value => @record.scm_clean}
+  end
+
+  def textual_scm_delete_on_update
+    {:label => _('SCM Delete on Update'), :title => _("Show Credential's SCM delete on update flag"), :value => @record.scm_delete_on_update}
+  end
+
+  def textual_scm_update_on_launch
+    {:label => _('SCM Update on Launch'), :title => _("Show Credential's SCM update on launch flag"), :value => @record.scm_update_on_launch}
   end
 end

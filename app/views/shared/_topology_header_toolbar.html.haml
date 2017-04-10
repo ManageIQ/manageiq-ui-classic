@@ -1,6 +1,6 @@
 .form-group.text
   %label.topology-checkbox.checkbox-inline
-    %input#box{'id' => "display_names", :type => "checkbox"}
+    %input#box_display_names{:type => "checkbox"}
     = _("Display Names")
 .form-group
   %button.btn.btn-default{'data' => {'function' => 'miqCallAngular', 'function-data' => '{"name":"refresh", "args":[]}'}}
@@ -11,7 +11,7 @@
     .search-pf-input-group
       %label.sr-only{:for => "search"}
         = _("Search")
-      %input#search.form-control{:id => 'topology', 'placeholder' => _("Search"), 'type' => "search", "ng-model" => "search.query"}
+      %input#search_topology.form-control{'placeholder' => _("Search"), 'type' => "search", "ng-model" => "search.query"}
         %button.clear{"aria-hidden" => "true", :type => "button", 'data' => {'function' => 'miqCallAngular', 'function-data' => '{"name":"resetSearch", "args":[]}'}}
           %span.pficon.pficon-close
   .form-group.search-button
