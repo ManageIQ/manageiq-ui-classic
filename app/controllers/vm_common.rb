@@ -1427,12 +1427,7 @@ module VmCommon
                                    .pluck(:resource_id)
 
     # Build a hash for the VMs to choose from, only if they have no parent
-    available_item_scope = VmOrTemplate.where.not(:id => ids_with_parents + [@record.id] + vms.pluck(:id))
-    @edit[:choices] = Rbac.filtered(available_item_scope)
-                          .pluck(:name, :location, :id)
-                          .each_with_object({}) do |vm, memo|
-                            memo[vm[0] + " -- #{vm[1]}"] = vm[2]
-                          end
+    @edit[:choices] = parent_choices(ids_with_parents + [@record.id] + vms.pluck(:id))
 
     @edit[:current][:parent] = @edit[:new][:parent]
     @edit[:current][:kids] = @edit[:new][:kids].dup
