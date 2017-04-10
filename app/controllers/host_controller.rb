@@ -4,6 +4,7 @@ class HostController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::GenericSessionMixin
   include Mixins::GenericListMixin
   include Mixins::MoreShowActions
 
@@ -629,21 +630,17 @@ class HostController < ApplicationController
     @host_pages, @hosts = paginate(:hosts, :per_page => @items_per_page, :order => @col_names[get_sort_col] + " " + @sortdir)
   end
 
+  def title
+    _("Host")
+  end
+
   def get_session_data
-    @title      = _("Hosts")
-    @layout     = "host"
+    super
     @drift_db   = "Host"
-    @lastaction = session[:host_lastaction]
-    @display    = session[:host_display]
-    @filters    = session[:host_filters]
-    @catinfo    = session[:host_catinfo]
   end
 
   def set_session_data
-    session[:host_lastaction] = @lastaction
-    session[:host_display]    = @display unless @display.nil?
-    session[:host_filters]    = @filters
-    session[:host_catinfo]    = @catinfo
+    super
     session[:miq_compressed]  = @compressed  unless @compressed.nil?
     session[:miq_exists_mode] = @exists_mode unless @exists_mode.nil?
   end
