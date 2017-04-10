@@ -37,11 +37,12 @@
       = _('Display for')
     .col-md-8
       = @custom_button.options[:display_for]
-  .form-group
-    %label.control-label.col-md-2
-      = _('Submit')
-    .col-md-8
-      = @custom_button.options[:submit_how]
+  -# TODO: temporary disabled until the backend supports "submit all"
+  -#  .form-group
+  -#    %label.control-label.col-md-2
+  -#      = _('Submit')
+  -#    .col-md-8
+  -#      = @custom_button.options[:submit_how]
 %hr
 
 %h3

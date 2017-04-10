@@ -73,15 +73,15 @@
                      options_for_select([[_('Single entity'), 'single'], [_('List'), 'list'], [_('Single and list'), 'both']], @edit[:new][:display_for]),
                      "data-miq_sparkle_on" => true,
                     )
-
-    .form-group
-      %label.control-label.col-md-2
-        = _('Submit')
-      .col-md-8
-        = select_tag("submit_how",
-                     options_for_select([[_('Submit all'), 'all'], [_('One by one'), 'one']], @edit[:new][:submit_how]),
-                     "data-miq_sparkle_on" => true,
-                    )
+    -# TODO: temporary disabled until the backend supports "submit all"
+    -#    .form-group
+    -#      %label.control-label.col-md-2
+    -#        = _('Submit')
+    -#      .col-md-8
+    -#        = select_tag("submit_how",
+    -#                     options_for_select([[_('Submit all'), 'all'], [_('One by one'), 'one']], @edit[:new][:submit_how]),
+    -#                     "data-miq_sparkle_on" => true,
+    -#                    )
 
   = render(:partial => "layouts/ae_resolve_options",
     :locals         => {:resolve => @edit,
