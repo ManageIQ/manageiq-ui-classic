@@ -208,7 +208,8 @@ module ApplicationHelper
             "vm_or_template"
           elsif record.kind_of?(VmOrTemplate)
             controller_for_vm(model_for_vm(record))
-          elsif record.kind_of?(ManageIQ::Providers::AutomationManager)
+          elsif record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager) ||
+                record.kind_of?(ManageIQ::Providers::ExternalAutomationManager::InventoryRootGroup)
             "automation_manager"
           elsif record.kind_of?(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
             "ansible_playbook"
@@ -237,7 +238,7 @@ module ApplicationHelper
                     )
     elsif @host && ["Patch", "GuestApplication"].include?(db)
       return url_for_only_path(:controller => "host", :action => @lastaction, :id => @host, :show => @id)
-    elsif %w(ConfiguredSystem ConfigurationProfile EmsFolder).include?(db)
+    elsif %w(ConfiguredSystem ConfigurationProfile).include?(db)
       return url_for_only_path(:controller => "provider_foreman", :action => @lastaction, :id => @record, :show => @id)
     else
       controller, action = db_to_controller(db, action)

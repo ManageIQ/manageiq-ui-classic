@@ -225,8 +225,8 @@ describe ApplicationHelper do
       expect(subject).to eq(helper.url_for_db(helper.controller_for_vm(helper.model_for_vm(@record)), @action))
     end
 
-    it "when record is ManageIQ::Providers::AutomationManager" do
-      @record = ManageIQ::Providers::AutomationManager.new
+    it "when record is ManageIQ::Providers::AnsibleTower::AutomationManager" do
+      @record = ManageIQ::Providers::AnsibleTower::AutomationManager.new
       expect(subject).to eq("/automation_manager/#{@action}")
     end
 
