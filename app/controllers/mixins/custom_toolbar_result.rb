@@ -5,7 +5,7 @@ module Mixins
         %w(list both).include?(button.options.try(:[], :display_for))
 
       else # :single
-        %w(nil single both).include?(button.options.try(:[], :display_for))
+        [nil, 'single', 'both'].include?(button.options.try(:[], :display_for))
 
       end
     end

@@ -4,7 +4,7 @@ shared_examples 'controller with custom buttons' do
     controller.instance_variable_set(:@lastaction, 'show')
     controller.instance_variable_set(:@record, true)
 
-    expect(controller.custom_toolbar?).to be true
+    expect(controller.custom_toolbar?).to be_a_kind_of Mixins::CustomToolbarResult
   end
 
   it "has no custom toolbar when showing main view w/o @record" do
@@ -34,7 +34,7 @@ shared_examples 'explorer controller with custom buttons' do
       :trees       => {"my_tree" => {:active_node => 'root'}}
     )
 
-    expect(controller.custom_toolbar?).to eq(:blank)
+    expect(controller.custom_toolbar?).to eq('blank_view_tb')
   end
 
   it "has no custom toolbar when not showing main view w/ @record" do
@@ -47,7 +47,7 @@ shared_examples 'explorer controller with custom buttons' do
       :trees       => {"my_tree" => {:active_node => 'v-1r35'}}
     )
 
-    expect(controller.custom_toolbar?).to eq(:blank)
+    expect(controller.custom_toolbar?).to eq('blank_view_tb')
   end
 
   it "has custom toolbar when showing main view w/ @record" do
@@ -60,6 +60,6 @@ shared_examples 'explorer controller with custom buttons' do
       :trees       => {"my_tree" => {:active_node => 'v-1r35'}}
     )
 
-    expect(controller.custom_toolbar?).to be(true)
+    expect(controller.custom_toolbar?).to be_a_kind_of Mixins::CustomToolbarResult
   end
 end
