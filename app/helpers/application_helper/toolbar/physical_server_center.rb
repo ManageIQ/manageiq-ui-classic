@@ -61,7 +61,7 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
           nil,
           N_('Power off the server'),
           N_('Power Off'),
-          :image     => "power_off",
+            :image     => "power_off",
           :url_parms => "main_div",
           :confirm   => N_("Power off the server?"),
           :klass     => ApplicationHelper::Button::PhysicalServerFeatureButton,
