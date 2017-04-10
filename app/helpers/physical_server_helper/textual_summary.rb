@@ -2,7 +2,7 @@ module PhysicalServerHelper::TextualSummary
 
 
   def textual_group_properties
-    %i(name model product_name manufacturer  machine_type serial_number ems_ref)
+    %i(name model product_name manufacturer  machine_type serial_number ems_ref memory cores)
   end
 
   def textual_group_relationships
@@ -25,28 +25,36 @@ module PhysicalServerHelper::TextualSummary
    def textual_product_name
      {:label => _("Product Name"), :value => @record.product_name }
    end
-  
+
    def textual_manufacturer
      {:label => _("Manufacturer"), :value => @record.manufacturer }
    end
-  
-  
+
+
    def textual_machine_type
      {:label =>_("Machine Type"), :value =>  @record.machine_type }
    end
-  
-  
+
+
    def textual_serial_number
      {:label => _("Serial Number"), :value => @record.serial_number }
    end
-  
+
    def textual_ems_ref
      {:label => _("UUID"), :value => @record.ems_ref }
-  
+
    end
 
    def textual_model
       {:label =>  _("Model"), :value  =>  @record.model}
    end
-    
+
+   def textual_memory
+     {:label => _("Total memory (mb)"), :value => @record.hardware.memory_mb }
+   end
+
+   def textual_cores
+     {:label => _("CPU total cores"), :value => @record.hardware.cpu_total_cores }
+   end
+
 end
