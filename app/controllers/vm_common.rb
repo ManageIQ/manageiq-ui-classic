@@ -1200,6 +1200,7 @@ module VmCommon
         cb_tb = build_toolbar(Mixins::CustomToolbarResult.new(:single))
         v_tb = build_toolbar("x_summary_view_tb")
       else
+        cb_tb = build_toolbar(Mixins::CustomToolbarResult.new(:list))
         v_tb = build_toolbar("x_gtl_view_tb")
       end
     elsif ["compare", "drift"].include?(@sb[:action])
