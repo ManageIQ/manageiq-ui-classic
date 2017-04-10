@@ -8,6 +8,7 @@ class AnsibleCredentialController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
+  include Mixins::EmbeddedAnsibleRefreshMixin
 
   menu_section :ansible_credentials
   toolbar :ansible_credential
@@ -48,6 +49,11 @@ class AnsibleCredentialController < ApplicationController
                     :url  => "/ansible_credential/edit/#{params[:id]}")
     @in_a_form = true
     @id = auth.id
+  end
+
+  def credential_refresh
+    # Targeted refresh for embedded ansible hasn't been implemented yet
+    embedded_ansible_refresh
   end
 
   private

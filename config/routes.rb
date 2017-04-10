@@ -2025,6 +2025,7 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
+        credential_refresh
         show_list
       )
     },
@@ -2053,6 +2054,7 @@ Rails.application.routes.draw do
         button
         edit
         new
+        repository_refresh
         show_list
       )
     },
