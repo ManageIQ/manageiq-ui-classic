@@ -54,11 +54,15 @@ class ApplicationHelper::ToolbarBuilder
     class_name.constantize
   end
 
+  def controller
+    @view_context.respond_to?(:controller) ? @view_context.controller : @view_context
+  end
+
   # According to toolbar name in parameter `toolbar_name` either returns class
   # for generic toolbar, or starts building custom toolbar
   def toolbar_class(toolbar_name)
     if Mixins::CustomToolbarResult === toolbar_name
-      model = @record ? @record.class : @view_context.controller.class.model
+      model = @record ? @record.class : controller.class.model
       custom_toolbar_class(model, @record, toolbar_name)
     else
       predefined_toolbar_class(toolbar_name)
