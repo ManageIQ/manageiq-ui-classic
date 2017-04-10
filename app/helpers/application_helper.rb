@@ -208,14 +208,14 @@ module ApplicationHelper
             "vm_or_template"
           elsif record.kind_of?(VmOrTemplate)
             controller_for_vm(model_for_vm(record))
-          elsif record.class.respond_to?(:db_name)
-            record.class.db_name
           elsif record.kind_of?(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
             "ansible_playbook"
           elsif record.kind_of?(ManageIQ::Providers::EmbeddedAutomationManager::Authentication)
             "ansible_credential"
           elsif record.kind_of?(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
             "ansible_repository"
+          elsif record.class.respond_to?(:db_name)
+            record.class.db_name
           else
             record.class.base_class.to_s
           end
