@@ -24,8 +24,6 @@ module Mixins::CustomButtons
       Mixins::CustomToolbarResult.new(:single)
     elsif @lastaction == "show_list"
       Mixins::CustomToolbarResult.new(:list)
-    else
-      nil
     end
   end
 
