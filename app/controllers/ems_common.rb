@@ -848,7 +848,9 @@ module EmsCommon
   end
 
   def process_emss(emss, task)
-    emss, emss_out_region = filter_ids_in_region(emss, "Provider")
+    emss, _emss_out_region = filter_ids_in_region(emss, "Provider")
+    assert_rbac(model, emss)
+
     return if emss.empty?
 
     if task == "refresh_ems"
