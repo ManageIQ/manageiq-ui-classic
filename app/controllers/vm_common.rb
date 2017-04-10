@@ -980,15 +980,16 @@ module VmCommon
     replace_right_cell
   end
 
-  def parent_choices
+  def parent_choices(exclude_ids = nil)
     @parent_choices = {}
-    @parent_choices[@record.id] ||= begin
-      parent_item_scope = Rbac.filtered(VmOrTemplate.where.not(:id => @record.id).order(:name))
+    ids = exclude_ids ? exclude_ids : @record.id
+    @parent_choices[Digest::MD5.hexdigest(ids.inspect)] ||= begin
+      parent_item_scope = Rbac.filtered(VmOrTemplate.where.not(:id => ids).order(:name))
       choices = parent_item_scope.pluck(:name, :location, :id).each_with_object({}) do |vm, memo|
         memo[vm[0] + " -- #{vm[1]}"] = vm[2]
       end
       # Add "no parent" entry as 1 entry in hash
-      {'"no parent"' => -1}.merge(choices)
+      exclude_ids ? choices : {'"no parent"' => -1}.merge(choices)
     end
   end
 
