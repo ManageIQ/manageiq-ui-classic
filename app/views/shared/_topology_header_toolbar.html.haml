@@ -19,6 +19,14 @@
 
       %input#search_topology.form-control{:type         => 'search',
                                           'placeholder' => _("Search")}
+
+      -# this hidden button is a workaround
+      -# pressing enter in ^input triggers a *click* event on the next button
+      -# without this, that button is resetSearch, which ..is undesirable :)
+      %button.hidden{'data-function'      => 'miqCallAngular',
+                     'data-function-data' => {:name => 'searchNode',
+                                              :args => []}.to_json}
+
       %button.clear{'aria-hidden'        => 'true',
                     'data-function'      => 'miqCallAngular',
                     'data-function-data' => {:name => 'resetSearch',
