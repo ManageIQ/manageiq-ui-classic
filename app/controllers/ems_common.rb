@@ -102,7 +102,6 @@ module EmsCommon
 
 
   def new
-    @doc_url = provider_documentation_url
     assert_privileges("#{permission_prefix}_new")
     @ems = model.new
     set_form_vars
@@ -153,7 +152,6 @@ module EmsCommon
   end
 
   def edit
-    @doc_url = provider_documentation_url
     assert_privileges("#{permission_prefix}_edit")
     begin
       @ems = find_record_with_rbac(model, params[:id])
@@ -486,10 +484,6 @@ module EmsCommon
     process_emss(ids, "check_compliance")
     params[:display] = "main"
     showlist ? show_list : show
-  end
-
-  def provider_documentation_url
-    "http://manageiq.org/documentation/getting-started/#adding-a-provider"
   end
 
   private ############################
