@@ -203,7 +203,6 @@ module ApplicationController::CiProcessing
   # Retire 1 or more items (vms, stacks, services)
   def retirevms
     assert_privileges(params[:pressed])
-    vms = find_checked_items
     klass = get_class_from_controller_param(params[:controller])
     selected_items = find_checked_ids_with_rbac(klass)
     if !%w(orchestration_stack service).include?(request.parameters["controller"]) && !%w(orchestration_stacks).include?(params[:display]) &&
