@@ -17,7 +17,12 @@ class CloudObjectStoreContainerController < ApplicationController
     @edit = session[:edit] # Restore @edit for adv search box
     params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
 
-    process_cloud_object_storage_buttons(params[:pressed])
+    case params[:pressed]
+    when "cloud_object_store_container_new"
+      return javascript_redirect(:action => "new")
+    else
+      process_cloud_object_storage_buttons(params[:pressed])
+    end
 
     if !@flash_array.nil? && params[:pressed].ends_with?("delete")
       javascript_redirect :action      => 'show_list',
