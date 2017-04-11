@@ -447,23 +447,41 @@ module EmsCommon
                           :flash_msg   => @flash_array[0][:message],
                           :flash_error => @flash_array[0][:level] == :error
     elsif params[:pressed] == "host_aggregate_edit"
-      javascript_redirect :controller => "host_aggregate", :action => "edit", :id => find_checked_items[0]
+      javascript_redirect :controller => "host_aggregate",
+                          :action => "edit",
+                          :id => find_checked_ids_with_rbac(HostAggregate).first
     elsif params[:pressed] == "cloud_tenant_edit"
-      javascript_redirect :controller => "cloud_tenant", :action => "edit", :id => find_checked_items[0]
+      javascript_redirect :controller => "cloud_tenant",
+                          :action => "edit",
+                          :id => find_checked_ids_with_rbac(CloudTenant).first
     elsif params[:pressed] == "cloud_volume_new"
-      javascript_redirect :controller => "cloud_volume", :action => "new", :storage_manager_id => params[:id]
+      javascript_redirect :controller => "cloud_volume",
+                          :action => "new",
+                          :storage_manager_id => find_id_with_rbac(CloudVolume, params[:id])
     elsif params[:pressed] == "cloud_volume_attach"
-      javascript_redirect :controller => "cloud_volume", :action => "attach", :id => find_checked_items[0]
+      javascript_redirect :controller => "cloud_volume",
+                          :action => "attach",
+                          :id => find_checked_ids_with_rbac(CloudVolume).first
     elsif params[:pressed] == "cloud_volume_detach"
-      javascript_redirect :controller => "cloud_volume", :action => "detach", :id => find_checked_items[0]
+      javascript_redirect :controller => "cloud_volume",
+                          :action => "detach",
+                          :id => find_checked_ids_with_rbac(CloudVolume).first
     elsif params[:pressed] == "cloud_volume_edit"
-      javascript_redirect :controller => "cloud_volume", :action => "edit", :id => find_checked_items[0]
+      javascript_redirect :controller => "cloud_volume",
+                          :action => "edit",
+                          :id => find_checked_ids_with_rbac(CloudVolume).first
     elsif params[:pressed] == "network_router_edit"
-      javascript_redirect :controller => "network_router", :action => "edit", :id => find_checked_items[0]
+      javascript_redirect :controller => "network_router",
+                          :action => "edit",
+                          :id => find_checked_ids_with_rbac(NetworkRouter).first
     elsif params[:pressed] == "network_router_add_interface"
-      javascript_redirect :controller => "network_router", :action => "add_interface_select", :id => find_checked_items[0]
+      javascript_redirect :controller => "network_router",
+                          :action => "add_interface_select",
+                          :id => find_checked_ids_with_rbac(NetworkRouter).first
     elsif params[:pressed] == "network_router_remove_interface"
-      javascript_redirect :controller => "network_router", :action => "remove_interface_select", :id => find_checked_items[0]
+      javascript_redirect :controller => "network_router",
+                          :action => "remove_interface_select",
+                          :id => find_checked_ids_with_rbac(NetworkRouter).first
     elsif params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new", "#{pfx}_clone",
                                                    "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
       render_or_redirect_partial(pfx)
