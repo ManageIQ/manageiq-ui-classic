@@ -7,24 +7,22 @@ class MiddlewareTopologyService < TopologyService
     topo_items = {}
     links = []
 
-    entity_relationships = {
-      :MiddlewareManager => {
-        :MiddlewareDomains => {
-          :MiddlewareServerGroups => {
-            :MiddlewareServers => nil
-          }
-        },
-        :MiddlewareServers => {
-          :MiddlewareDeployments => nil,
-          :MiddlewareDatasources => nil,
-          :MiddlewareMessagings  => nil,
-          :lives_on              => {:Host => nil}
-        }}}
+    included_relations = [
+      :middleware_domains => [
+        :middleware_server_groups => [:middleware_servers => nil]
+      ],
+      :middleware_servers => [
+        :middleware_deployments,
+        :middleware_datasources,
+        :middleware_messagings,
+        :lives_on => [:host]
+      ]
+    ]
 
-    preloaded = @providers.includes(:middleware_server => [:middleware_deployment, :middleware_datasource])
+    preloaded = @providers.includes(included_relations)
 
     preloaded.each do |entity|
-      topo_items, links = build_recursive_topology(entity, entity_relationships[:MiddlewareManager], topo_items, links)
+      topo_items, links = build_recursive_topology(entity, build_entity_relationships(included_relations), topo_items, links)
     end
 
     # filter out the redundant edges from ems to server, if there is also path ems -> domain -> sg -> server

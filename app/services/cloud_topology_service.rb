@@ -17,12 +17,10 @@ class CloudTopologyService < TopologyService
       :cloud_tenants      => [:tags, :vms => :tags],
     ]
 
-    entity_relationships = { :CloudManager => build_entity_relationships(included_relations) }
-
     preloaded = @providers.includes(included_relations)
 
     preloaded.each do |entity|
-      topo_items, links = build_recursive_topology(entity, entity_relationships[:CloudManager], topo_items, links)
+      topo_items, links = build_recursive_topology(entity, build_entity_relationships(included_relations), topo_items, links)
     end
 
     populate_topology(topo_items, links, build_kinds, icons)

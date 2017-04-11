@@ -8,16 +8,21 @@ class ContainerTopologyService < TopologyService
     topo_items = {}
     links = []
 
-    entity_relationships = {:ContainerManager => {:ContainerNodes =>
-                                                      {:ContainerGroups =>
-                                                         {:Containers => nil, :ContainerReplicator => nil, :ContainerServices => {:ContainerRoutes => nil}},
-                                                       :lives_on => {:Host => nil}
-                                                   }}}
+    included_relations = [
+      :container_nodes => [
+        :container_groups => [
+          :containers,
+          :container_replicator,
+          :container_services => [:container_routes]
+        ],
+        :lives_on         => [:host]
+      ]
+    ]
 
-    preloaded = @providers.includes(:container_nodes => [:container_groups => [:containers, :container_replicator, :container_services => [:container_routes]],
-                                                         :lives_on => [:host]])
+    preloaded = @providers.includes(included_relations)
+
     preloaded.each do |entity|
-      topo_items, links = build_recursive_topology(entity, entity_relationships[:ContainerManager], topo_items, links)
+      topo_items, links = build_recursive_topology(entity, build_entity_relationships(included_relations), topo_items, links)
     end
 
     populate_topology(topo_items, links, build_kinds, icons)
