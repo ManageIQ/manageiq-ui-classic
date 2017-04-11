@@ -3,10 +3,6 @@ class PhysicalInfraTopologyService < TopologyService
 
   @provider_class = ManageIQ::Providers::PhysicalInfraManager
 
-  def entity_type(entity)
-    entity.class.name.demodulize
-  end
-
   def build_topology
     topo_items = {}
     links = []

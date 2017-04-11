@@ -3,10 +3,6 @@ class CloudTopologyService < TopologyService
 
   @provider_class = ManageIQ::Providers::CloudManager
 
-  def entity_type(entity)
-    entity.class.name.demodulize
-  end
-
   def build_topology
     topo_items = {}
     links = []

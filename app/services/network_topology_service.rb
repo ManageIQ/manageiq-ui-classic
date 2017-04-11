@@ -7,7 +7,7 @@ class NetworkTopologyService < TopologyService
     if entity.kind_of?(CloudNetwork)
       entity.class.base_class.name.demodulize
     else
-      entity.class.name.demodulize
+      super
     end
   end
 
