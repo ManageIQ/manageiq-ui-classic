@@ -1,4 +1,10 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "cloudObjectStoreContainerFormController", "ng-cloak" => ""}
+%form#form_div{:name           => "angularForm",
+               'ng-controller' => "cloudObjectStoreContainerFormController as vm",
+               "ng-show"       => "vm.afterGet",
+               "ng-cloak"      => "",
+               "miq-form"      => true,
+               "model"         => "vm.cloudContainerModel",
+               "model-copy"    => "vm.modelCopy"}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Basic Information')
@@ -7,44 +13,50 @@
       %label.col-md-2.control-label
         = _('Storage Manager')
       .col-md-8
-        = select_tag("storage_manager_id",
-          options_for_select([["<#{_('Choose')}>", nil]] + @storage_manager_choices.sort, disabled: ["<#{_('Choose')}>", nil]),
-                      "ng-model"                    => "cloudContainerModel.storage_manager_id",
-                      "ng-change"                   => "storageManagerChanged(cloudContainerModel.storage_manager_id)",
-                      "required"                    => "",
-                      :checkchange                  => true,
-                      "selectpicker-for-select-tag" => "")
+        %select{"name"        => "storage_manager_id",
+                "ng-model"    => "vm.cloudContainerModel.storage_manager_id",
+                "ng-options"  => "mgr.id as mgr.name for mgr in vm.storageManagers",
+                "ng-change"   => "vm.storageManagerChanged(vm.cloudContainerModel.storage_manager_id)",
+                "required"    => "",
+                "disabled"    => !@storage_manager.nil?,
+                :checkchange  => true,
+                "pf-select"   => true}
+          %option{"value" => "", "disabled" => ""}
+            = "<#{_('Choose')}>"
+        %span.help-block{"ng-show" => "angularForm.storage_manager_id.$error.required"}
+          = _("Required")
 
-    .form-group
+    .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
       %label.col-md-2.control-label
         = _('Container Name')
       .col-md-8
         %input.form-control{:type          => "text",
                             :name          => "name",
-                            'ng-model'     => "cloudContainerModel.name",
+                            'ng-model'     => "vm.cloudContainerModel.name",
                             'ng-maxlength' => 255,
                             :miqrequired   => true,
                             :checkchange   => true}
-  %div{"ng-if" => "cloudContainerModel.emstype == 'ManageIQ::Providers::Amazon::StorageManager::S3'"}
+  %div{"ng-if" => "vm.cloudContainerModel.emstype === 'ManageIQ::Providers::Amazon::StorageManager::S3'"}
     %h3
       = _('Placement')
     .form-horizontal
       .form-group{"ng-class"  => "{'has-error': angularForm.provider_region.$invalid}",
-                  "ng-if"     => "#{@provider_regions.keys.to_json}.includes(cloudContainerModel.parent_emstype)",
+                  "ng-if"     => "#{@provider_regions.keys.to_json}.includes(vm.cloudContainerModel.parent_emstype)",
                   "ng-switch" => "",
-                  "on"        => "cloudContainerModel.parent_emstype"}
+                  "on"        => "vm.cloudContainerModel.parent_emstype"}
         %label.col-md-2.control-label{"for" => "ems_region"}
           = _('Region')
         .col-md-8
           - @provider_regions.each do |name, regions|
             = select_tag('provider_region',
                          options_for_select([["<#{_('Choose')}>", nil]] + regions, disabled: ["<#{_('Choose')}>", nil]),
-                         "ng-model"                    => "cloudContainerModel.provider_region",
+                         "ng-model"                    => "vm.cloudContainerModel.provider_region",
                          "ng-switch-when"              => name,
                          "required"                    => "",
                          "checkchange"                 => "",
                          "selectpicker-for-select-tag" => "")
-  = render :partial => "layouts/angular/x_edit_buttons_angular"
+  = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript
+  ManageIQ.angular.app.value('storageManagerId', '#{@storage_manager.try(:id)}');
   miq_bootstrap('#form_div');

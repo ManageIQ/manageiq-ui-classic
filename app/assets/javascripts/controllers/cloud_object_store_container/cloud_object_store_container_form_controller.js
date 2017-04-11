@@ -1,43 +1,73 @@
-ManageIQ.angular.app.controller('cloudObjectStoreContainerFormController', ['$scope', 'miqService', 'API', function($scope, miqService, API) {
+ManageIQ.angular.app.controller('cloudObjectStoreContainerFormController', ['miqService', 'API', 'storageManagerId', function(miqService, API, storageManagerId) {
+  var vm = this;
+
   var init = function() {
-    $scope.cloudContainerModel = {
+    vm.afterGet = false;
+    vm.cloudContainerModel = {
       name: '',
       emstype: '',
       parent_emstype: '',
-      storage_manager_id: '',
       provider_region: '',
     };
-    $scope.afterGet = false;
-    $scope.modelCopy = angular.copy( $scope.cloudContainerModel );
-    $scope.model = 'cloudContainerModel';
-    $scope.newRecord = true;
 
-    ManageIQ.angular.scope = $scope;
+    // fetch StorageManager from querystring
+    if (! isNaN(parseInt(storageManagerId, 10))) {
+      vm.cloudContainerModel.storage_manager_id = parseInt(storageManagerId, 10);
+    }
+
+    vm.model = 'cloudContainerModel';
+    vm.newRecord = true;
+
+    ManageIQ.angular.scope = vm;
+    vm.saveable = miqService.saveable;
+
+    miqService.sparkleOn();
+    API.get('/api/providers?expand=resources&attributes=id,name&filter[]=supports_cloud_object_store_container_create?=true')
+      .then(getStorageManagers)
+      .catch(miqService.handleFailure);
+
+    setForm();
   };
 
-  $scope.addClicked = function() {
+  vm.addClicked = function() {
     var url = 'create' + '?button=add';
-    miqService.miqAjaxButton(url, $scope.cloudContainerModel, { complete: false });
+    miqService.miqAjaxButton(url, vm.cloudContainerModel, { complete: false });
   };
 
-  $scope.cancelClicked = function() {
+  vm.cancelClicked = function() {
     miqService.miqAjaxButton('/cloud_object_store_container/create?button=cancel');
   };
 
-  $scope.storageManagerChanged = function(id) {
+  vm.storageManagerChanged = function(id) {
     miqService.sparkleOn();
 
     API.get('/api/providers/' + id + '?attributes=type,parent_manager.type')
-      .then(getStorageManagerFormDataComplete)
+      .then(getStorageManagerFormData)
       .catch(miqService.handleFailure);
   };
 
-  function getStorageManagerFormDataComplete(data) {
-    $scope.afterGet = true;
-    $scope.cloudContainerModel.emstype = data.type;
-    $scope.cloudContainerModel.parent_emstype = data.parent_manager.type;
+  function getStorageManagerFormData(data) {
+    vm.afterGet = true;
+    vm.cloudContainerModel.emstype = data.type;
+    vm.cloudContainerModel.parent_emstype = data.parent_manager.type;
 
     miqService.sparkleOff();
+  }
+
+  function setForm() {
+    vm.modelCopy = angular.copy(vm.cloudContainerModel);
+    vm.afterGet = true;
+    miqService.sparkleOff();
+  }
+
+  function getStorageManagers(data) {
+    vm.storageManagers = data.resources;
+
+    // If storage manager ID was provided, we need to refresh the form and show
+    // corresponding form fields.
+    if (storageManagerId) {
+      vm.storageManagerChanged(vm.cloudContainerModel.storage_manager_id);
+    }
   }
 
   init();

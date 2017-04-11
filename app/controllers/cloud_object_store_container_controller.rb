@@ -40,11 +40,8 @@ class CloudObjectStoreContainerController < ApplicationController
   def new
     assert_privileges("cloud_object_store_container_new")
     @in_a_form = true
-    @storage_manager_choices = {}
-    ExtManagementSystem.all.each do |ems|
-      if ems.supports?(:cloud_object_store_container_create)
-        @storage_manager_choices[ems.name] = ems.id
-      end
+    if params[:storage_manager_id]
+      @storage_manager = find_record_with_rbac(ExtManagementSystem, params[:storage_manager_id])
     end
     @provider_regions = retrieve_provider_regions
     drop_breadcrumb(
@@ -116,7 +113,7 @@ class CloudObjectStoreContainerController < ApplicationController
 
       # Get the storage manager.
       storage_manager_id = params[:storage_manager_id] if params[:storage_manager_id]
-      options[:ems] = find_by_id_filtered(ExtManagementSystem, storage_manager_id)
+      options[:ems] = find_record_with_rbac(ExtManagementSystem, storage_manager_id)
     end
     options
   end
