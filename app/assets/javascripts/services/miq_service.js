@@ -1,6 +1,8 @@
 /* global miqAjaxButton miqBuildCalendar miqButtons miqJqueryRequest miqRESTAjaxButton miqSparkleOff miqSparkleOn add_flash */
 
 ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', function($timeout, $document, $q) {
+  var miqService = this;
+
   this.storedPasswordPlaceholder = "●●●●●●●●";
 
   this.showButtons = function() {
@@ -41,7 +43,7 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', funct
   };
 
   this.miqFlash = function(type, msg) {
-    this.miqFlashClear();
+    miqService.miqFlashClear();
     add_flash(msg, type);
   };
 
@@ -113,10 +115,10 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', funct
 
     if (angular.isDefined(e.error) && angular.isDefined(e.error.message)) {
       console.error(e.error.message);
-      this.miqFlash('error', e.error.message);
+      miqService.miqFlash('error', e.error.message);
     } else if (e.message) {
       console.error(e.message);
-      this.miqFlash('error', e.message);
+      miqService.miqFlash('error', e.message);
     }
 
     return $q.reject(e);
