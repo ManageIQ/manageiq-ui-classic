@@ -9,6 +9,15 @@ module ApplicationHelper::Dialogs
     values
   end
 
+  def dialog_dropdown_selected_value(field)
+    values = field.values
+    if values && values.to_h.include?(field.value)
+      values.to_h[field.value]
+    else
+      field.value
+    end
+  end
+
   def category_tags(category_id)
     classification = Classification.find_by(:id => category_id)
     return [] if classification.nil?
