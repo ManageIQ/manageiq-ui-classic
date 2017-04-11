@@ -19,9 +19,14 @@ class MiddlewareTopologyService < TopologyService
     topology = super
     # filter out the redundant edges from ems to server, if there is also path ems -> domain -> sg -> server
     # this ensures the graph will remain a tree (instead of more general DAG)
-    to_delete = topology[:relations].select { |e| e[:target].match(/^MiddlewareServer[[:digit:]]/) && e[:source].match(/ServerGro/) }
-                        .map { |e| e[:target] }
-    topology[:relations] = topology[:relations].select { |e| !e[:source].match(/^MiddlewareManager/) || !to_delete.include?(e[:target]) }
+    to_delete = topology[:relations].map do |link|
+      next unless link[:target].match(/^MiddlewareServer[[:digit:]]/) && link[:source].match(/ServerGro/)
+      link[:target]
+    end.compact
+
+    topology[:relations].reject! do |link|
+      link[:source].match(/^MiddlewareManager/) && to_delete.include?(link[:target])
+    end
     topology
   end
 
