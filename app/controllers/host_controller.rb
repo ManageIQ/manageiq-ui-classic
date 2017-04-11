@@ -6,95 +6,44 @@ class HostController < ApplicationController
 
   include Mixins::GenericSessionMixin
   include Mixins::GenericListMixin
+  include Mixins::GenericShowMixin
   include Mixins::MoreShowActions
 
-  def show
-    return if perfmenu_click?
-
-    @lastaction = "show"
-    @showtype = "config"
-
-    @display = params[:display] || "main" unless pagination_or_gtl_request?
-
-    @host = @record = identify_record(params[:id])
-    return if record_no_longer_exists?(@host, 'Host')
-
-    @gtl_url = "/show"
-    @showtype = "config"
-    case @display
-    when "main", "summary_only"
-      get_tagdata(@host)
-      drop_breadcrumb({:name => _("Hosts"), :url => "/host/show_list?page=#{@current_page}&refresh=y"}, true)
-      drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @host.name }, :url => "/host/show/#{@host.id}")
-      @showtype = "main"
-      set_summary_pdf_data if @display == "summary_only"
-
-    when "devices"
-      drop_breadcrumb(:name => _("%{name} (Devices)") % {:name => @host.name},
-                      :url  => "/host/show/#{@host.id}?display=devices")
-
-    when "os_info"
-      drop_breadcrumb(:name => _("%{name} (OS Information)") % {:name => @host.name},
-                      :url  => "/host/show/#{@host.id}?display=os_info")
-
-    when "hv_info"
-      drop_breadcrumb(:name => _("%{name} (VM Monitor Information)") % {:name => @host.name},
-                      :url  => "/host/show/#{@host.id}?display=hv_info")
-
-    when "network"
-      drop_breadcrumb(:name => _("%{name} (Network)") % {:name => @host.name},
-                      :url  => "/host/show/#{@host.id}?display=network")
-
-      @network_tree = TreeBuilderNetwork.new(:network_tree, :network, @sb, true, @host)
-      self.x_active_tree = :network_tree
-
-    when "performance"
-      show_performance
-
-    when "timeline"
-      show_timeline
-
-    when "compliance_history"
-      show_compliance_history
-
-    when "storage_adapters"
-      drop_breadcrumb(:name => _("%{name} (Storage Adapters)") % {:name => @host.name},
-                      :url  => "/host/show/#{@host.id}?display=storage_adapters")
-      @sa_tree = TreeBuilderStorageAdapters.new(:sa_tree, :sa, @sb, true, @host)
-      self.x_active_tree = :sa_tree
-
-    when "miq_templates", "vms"
-      title = @display == "vms" ? _("VMs") : _("Templates")
-      kls = @display == "vms" ? Vm : MiqTemplate
-      drop_breadcrumb(:name => _("%{name} (All %{title})") % {:name => @host.name, :title => title},
-                      :url  => "/host/show/#{@host.id}?display=#{@display}")
-      @view, @pages = get_view(kls, :parent => @host) # Get the records (into a view) and the paginator
-      @showtype = @display
-
-    when "cloud_tenants"
-      drop_breadcrumb(:name => _("%{name} (All cloud tenants present on this host)") % {:name => @host.name},
-                      :url  => "/host/show/#{@host.id}?display=cloud_tenants")
-      @view, @pages = get_view(CloudTenant, :parent => @host) # Get the records (into a view) and the paginator
-      @showtype = "cloud_tenants"
-
-    when "resource_pools"
-      drop_breadcrumb(:name => _("%{name} (All Resource Pools)") % {:name => @host.name},
-                      :url  => "/host/show/#{@host.id}?display=resource_pools")
-      @view, @pages = get_view(ResourcePool, :parent => @host)  # Get the records (into a view) and the paginator
-      @showtype = "resource_pools"
-
-    when "storages"
-      drop_breadcrumb(:name => _("%{name} (All %{tables})") % {:name   => @host.name,
-                                                               :tables => ui_lookup(:tables => "storages")},
-                      :url  => "/host/show/#{@host.id}?display=storages")
-      @view, @pages = get_view(Storage, :parent => @host) # Get the records (into a view) and the paginator
-      @showtype = "storages"
-    end
-    @lastaction = "show"
-    session[:tl_record_id] = @record.id
-
-    replace_gtl_main_div if pagination_request?
+  def self.display_methods
+    %w(hv_info os_info devices network storage_adapters performance timeline storages resource_pools vms miq_templates compliance_history)
   end
+
+  def display_config_info
+    @showtype = "config"
+    title = case @display
+            when "hv_info" then _("VM Monitor Information")
+            when "os_info" then _("OS Information")
+            when "devices" then _("Devices")
+            end
+    drop_breadcrumb(:name => "#{@record.name} (#{title})",
+                    :url  => show_link(@record, :display => @display))
+  end
+
+  alias display_hv_info display_config_info
+  alias display_os_info display_config_info
+  alias display_devices display_config_info
+
+  def display_tree_resources
+    @showtype = "config"
+    title, tree = if @display == "network"
+                    @network_tree = TreeBuilderNetwork.new(:network_tree, :network, @sb, true, @record)
+                    [_("Network"), :network_tree]
+                  else
+                    @sa_tree = TreeBuilderStorageAdapters.new(:sa_tree, :sa, @sb, true, @record)
+                    [_("Storage Adapters"), :sa_tree]
+                  end
+    drop_breadcrumb(:name => "#{@record.name} (#{title})",
+                    :url  => show_link(@record, :display => @display))
+    self.x_active_tree = tree
+  end
+
+  alias display_network display_tree_resources
+  alias display_storage_adapters display_tree_resources
 
   def filesystems_subsets
     condition = nil
@@ -111,11 +60,6 @@ class HostController < ApplicationController
 
     return label, condition
   end
-
-  alias_method :set_config_local, :drift_history
-  alias_method :set_config_local, :groups
-  alias_method :set_config_local, :patches
-  alias_method :set_config_local, :users
 
   def filesystems
     label, condition = filesystems_subsets

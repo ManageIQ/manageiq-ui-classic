@@ -28,13 +28,13 @@
           = _('Hostname')
         .col-md-10
           %p.form-control-static
-            = h(@host.hostname)
+            = h(@record.hostname)
       .form-group
         %label.col-md-2.control-label
           = _('IP Address')
         .col-md-10
           %p.form-control-static
-            = h(@host.ipaddress)
+            = h(@record.ipaddress)
 
 - when "hv_info"
   - vmminfo = vmm_info_details

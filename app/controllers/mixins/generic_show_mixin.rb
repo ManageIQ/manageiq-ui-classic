@@ -1,6 +1,7 @@
 module Mixins
   module GenericShowMixin
     def show
+      return if perfmenu_click?
       return unless init_show
       @center_toolbar = self.class.toolbar_singular if self.class.toolbar_singular
 
