@@ -718,7 +718,7 @@ module ApplicationHelper
     end
 
     toolbars['center_tb'] = center_toolbar_filename
-    toolbars['custom_tb'] = controller.custom_toolbar?
+    toolbars['custom_tb'] = controller.custom_toolbar
 
     toolbars['view_tb'] = inner_layout_present? ? x_view_toolbar_filename : view_toolbar_filename
     toolbars

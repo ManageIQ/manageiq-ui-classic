@@ -1,13 +1,13 @@
 module Mixins::CustomButtons
   extend ActiveSupport::Concern
 
-  def custom_toolbar?
+  def custom_toolbar
     return nil unless self.class.instance_eval { @custom_buttons }
 
-    @explorer ? custom_toolbar_explorer? : custom_toolbar_simple?
+    @explorer ? custom_toolbar_explorer : custom_toolbar_simple
   end
 
-  def custom_toolbar_explorer?
+  def custom_toolbar_explorer
     if x_tree
       if @display == "main" && @record
         Mixins::CustomButtons::Result.new(:single)
@@ -19,7 +19,7 @@ module Mixins::CustomButtons
     end
   end
 
-  def custom_toolbar_simple?
+  def custom_toolbar_simple
     if @record && @lastaction == "show" && @display == "main"
       Mixins::CustomButtons::Result.new(:single)
     elsif @lastaction == "show_list"
