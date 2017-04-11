@@ -16,15 +16,15 @@ describe ApplicationHelper, "::ToolbarBuilder" do
 
     shared_examples "no custom buttons" do
       it ("#get_custom_buttons") do
-        expect(toolbar_builder.get_custom_buttons(subject.class, subject, Mixins::CustomToolbarResult.new(:single))).to be_blank
+        expect(toolbar_builder.get_custom_buttons(subject.class, subject, Mixins::CustomButtons::Result.new(:single))).to be_blank
       end
 
       it ("#custom_button_selects") do
-        expect(toolbar_builder.custom_button_selects(subject.class, subject, Mixins::CustomToolbarResult.new(:single))).to be_blank
+        expect(toolbar_builder.custom_button_selects(subject.class, subject, Mixins::CustomButtons::Result.new(:single))).to be_blank
       end
 
       it ("#custom_toolbar_class") do
-        expect(toolbar_builder.custom_toolbar_class(subject.class, subject, Mixins::CustomToolbarResult.new(:single)).definition).to be_blank
+        expect(toolbar_builder.custom_toolbar_class(subject.class, subject, Mixins::CustomButtons::Result.new(:single)).definition).to be_blank
       end
 
       it("#record_to_service_buttons") { expect(toolbar_builder.record_to_service_buttons(subject)).to be_blank }
@@ -57,7 +57,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :buttons      => [expected_button1]
         }
 
-        expect(toolbar_builder.get_custom_buttons(subject.class, subject, Mixins::CustomToolbarResult.new(:single))).to eq([expected_button_set])
+        expect(toolbar_builder.get_custom_buttons(subject.class, subject, Mixins::CustomButtons::Result.new(:single))).to eq([expected_button_set])
       end
 
       it "#record_to_service_buttons" do
@@ -89,7 +89,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         }
         items = [button_set_item1]
         name = "custom_buttons_#{@button_set.name}"
-        result = toolbar_builder.custom_button_selects(subject.class, subject, Mixins::CustomToolbarResult.new(:single))
+        result = toolbar_builder.custom_button_selects(subject.class, subject, Mixins::CustomButtons::Result.new(:single))
         expect(result).to eq([:name => name, :items => items])
       end
 
@@ -117,7 +117,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :items   => button_set_item1_items
         }
         group_name = "custom_buttons_#{@button_set.name}"
-        expect(toolbar_builder.custom_toolbar_class(subject.class, subject, Mixins::CustomToolbarResult.new(:single)).definition[group_name].buttons).to eq([button_set_item1])
+        expect(toolbar_builder.custom_toolbar_class(subject.class, subject, Mixins::CustomButtons::Result.new(:single)).definition[group_name].buttons).to eq([button_set_item1])
       end
     end
 

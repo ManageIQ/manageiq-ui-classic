@@ -10,9 +10,9 @@ module Mixins::CustomButtons
   def custom_toolbar_explorer?
     if x_tree
       if @display == "main" && @record
-        Mixins::CustomToolbarResult.new(:single)
+        Mixins::CustomButtons::Result.new(:single)
       elsif @lastaction == "show_list"
-        Mixins::CustomToolbarResult.new(:list)
+        Mixins::CustomButtons::Result.new(:list)
       else
         'blank_view_tb'
       end
@@ -21,9 +21,9 @@ module Mixins::CustomButtons
 
   def custom_toolbar_simple?
     if @record && @lastaction == "show" && @display == "main"
-      Mixins::CustomToolbarResult.new(:single)
+      Mixins::CustomButtons::Result.new(:single)
     elsif @lastaction == "show_list"
-      Mixins::CustomToolbarResult.new(:list)
+      Mixins::CustomButtons::Result.new(:list)
     end
   end
 

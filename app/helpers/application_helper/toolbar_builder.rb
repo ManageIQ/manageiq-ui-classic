@@ -61,7 +61,7 @@ class ApplicationHelper::ToolbarBuilder
   # According to toolbar name in parameter `toolbar_name` either returns class
   # for generic toolbar, or starts building custom toolbar
   def toolbar_class(toolbar_name)
-    if Mixins::CustomToolbarResult === toolbar_name
+    if Mixins::CustomButtons::Result === toolbar_name
       model = @record ? @record.class : controller.class.model
       custom_toolbar_class(model, @record, toolbar_name)
     else
