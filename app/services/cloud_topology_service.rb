@@ -3,15 +3,16 @@ class CloudTopologyService < TopologyService
 
   @provider_class = ManageIQ::Providers::CloudManager
 
+  @included_relations = [
+    :tags,
+    :availability_zones => [:tags, :vms => :tags],
+    :cloud_tenants      => [:tags, :vms => :tags],
+  ]
+
   def build_topology
+    included_relations = self.class.instance_variable_get(:@included_relations)
     topo_items = {}
     links = []
-
-    included_relations = [
-      :tags,
-      :availability_zones => [:tags, :vms => :tags],
-      :cloud_tenants      => [:tags, :vms => :tags],
-    ]
 
     preloaded = @providers.includes(included_relations)
 

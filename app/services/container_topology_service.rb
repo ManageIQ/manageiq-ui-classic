@@ -4,20 +4,21 @@ class ContainerTopologyService < TopologyService
 
   @provider_class = ManageIQ::Providers::ContainerManager
 
+  @included_relations = [
+    :container_nodes => [
+      :container_groups => [
+        :containers,
+        :container_replicator,
+        :container_services => [:container_routes]
+      ],
+      :lives_on         => [:host]
+    ]
+  ]
+
   def build_topology
+    included_relations = self.class.instance_variable_get(:@included_relations)
     topo_items = {}
     links = []
-
-    included_relations = [
-      :container_nodes => [
-        :container_groups => [
-          :containers,
-          :container_replicator,
-          :container_services => [:container_routes]
-        ],
-        :lives_on         => [:host]
-      ]
-    ]
 
     preloaded = @providers.includes(included_relations)
 

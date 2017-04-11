@@ -3,14 +3,15 @@ class PhysicalInfraTopologyService < TopologyService
 
   @provider_class = ManageIQ::Providers::PhysicalInfraManager
 
+  @included_relations = [
+    :tags,
+    :physical_servers => [:tags],
+  ]
+
   def build_topology
+    included_relations = self.class.instance_variable_get(:@included_relations)
     topo_items = {}
     links = []
-
-    included_relations = [
-      :tags,
-      :physical_servers => [:tags],
-    ]
 
     preloaded = @providers.includes(included_relations)
 

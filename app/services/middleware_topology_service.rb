@@ -3,21 +3,22 @@ class MiddlewareTopologyService < TopologyService
 
   @provider_class = ManageIQ::Providers::MiddlewareManager
 
+  @included_relations = [
+    :middleware_domains => [
+      :middleware_server_groups => [:middleware_servers => nil]
+    ],
+    :middleware_servers => [
+      :middleware_deployments,
+      :middleware_datasources,
+      :middleware_messagings,
+      :lives_on => [:host]
+    ]
+  ]
+
   def build_topology
+    included_relations = self.class.instance_variable_get(:@included_relations)
     topo_items = {}
     links = []
-
-    included_relations = [
-      :middleware_domains => [
-        :middleware_server_groups => [:middleware_servers => nil]
-      ],
-      :middleware_servers => [
-        :middleware_deployments,
-        :middleware_datasources,
-        :middleware_messagings,
-        :lives_on => [:host]
-      ]
-    ]
 
     preloaded = @providers.includes(included_relations)
 

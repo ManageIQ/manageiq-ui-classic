@@ -4,20 +4,21 @@ class ContainerProjectTopologyService < TopologyService
 
   @provider_class = ContainerProject
 
+  @included_relations = [
+    :container_groups => [
+      :containers,
+      :container_replicator,
+      :container_node     => [
+        :lives_on => [:host]
+      ],
+      :container_services => [:container_routes]
+    ]
+  ]
+
   def build_topology
+    included_relations = self.class.instance_variable_get(:@included_relations)
     topo_items = {}
     links = []
-
-    included_relations = [
-      :container_groups => [
-        :containers,
-        :container_replicator,
-        :container_node     => [
-          :lives_on => [:host]
-        ],
-        :container_services => [:container_routes]
-      ]
-    ]
 
     preloaded = @providers.includes(included_relations)
 

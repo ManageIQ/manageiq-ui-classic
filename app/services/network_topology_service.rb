@@ -3,6 +3,31 @@ class NetworkTopologyService < TopologyService
 
   @provider_class = ManageIQ::Providers::NetworkManager
 
+  @included_relations = [
+    :tags,
+    :availability_zones => [
+      :vms => [
+        :tags,
+        :load_balancers  => :tags,
+        :floating_ips    => :tags,
+        :cloud_tenant    => :tags,
+        :security_groups => :tags
+      ]
+    ],
+    :cloud_subnets      => [
+      :parent_cloud_subnet,
+      :tags,
+      :vms,
+      :cloud_network  => :tags,
+      :network_router => [
+        :tags,
+        :cloud_network => [
+          :floating_ips => :tags
+        ]
+      ]
+    ]
+  ]
+
   def entity_type(entity)
     if entity.kind_of?(CloudNetwork)
       entity.class.base_class.name.demodulize
@@ -12,33 +37,9 @@ class NetworkTopologyService < TopologyService
   end
 
   def build_topology
+    included_relations = self.class.instance_variable_get(:@included_relations)
     topo_items = {}
     links      = []
-
-    included_relations = [
-      :tags,
-      :availability_zones => [
-        :vms => [
-          :tags,
-          :load_balancers  => :tags,
-          :floating_ips    => :tags,
-          :cloud_tenant    => :tags,
-          :security_groups => :tags
-        ]
-      ],
-      :cloud_subnets      => [
-        :parent_cloud_subnet,
-        :tags,
-        :vms,
-        :cloud_network  => :tags,
-        :network_router => [
-          :tags,
-          :cloud_network => [
-            :floating_ips => :tags
-          ]
-        ]
-      ]
-    ]
 
     preloaded = @providers.includes(included_relations)
 

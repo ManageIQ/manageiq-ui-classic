@@ -3,6 +3,17 @@ class InfraTopologyService < TopologyService
 
   @provider_class = ManageIQ::Providers::InfraManager
 
+  @included_relations = [
+    :tags,
+    :ems_clusters => [
+      :tags,
+      :hosts => [
+        :tags,
+        :vms => :tags
+      ]
+    ],
+  ]
+
   def entity_type(entity)
     if entity.kind_of?(Host)
       entity.class.base_class.name.demodulize
@@ -12,19 +23,9 @@ class InfraTopologyService < TopologyService
   end
 
   def build_topology
+    included_relations = self.class.instance_variable_get(:@included_relations)
     topo_items = {}
     links = []
-
-    included_relations = [
-      :tags,
-      :ems_clusters => [
-        :tags,
-        :hosts => [
-          :tags,
-          :vms => :tags
-        ]
-      ],
-    ]
 
     preloaded = @providers.includes(included_relations)
 
