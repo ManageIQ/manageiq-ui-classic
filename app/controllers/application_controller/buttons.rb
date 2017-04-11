@@ -289,7 +289,13 @@ module ApplicationController::Buttons
       objs = [obj]
     end
 
+    if objs.length == 0
+      render_flash(_("Error executing custom button: No item was selected."), :error)
+      return
+    end
+
     @right_cell_text = _("%{record} - \"%{button_text}\"") % {:record => obj.name, :button_text => button.name}
+
     if button.resource_action.dialog_id
       options = {
         :header     => @right_cell_text,
@@ -876,7 +882,7 @@ module ApplicationController::Buttons
       :display        => @custom_button.options.try(:[], :display).nil? ? true : @custom_button.options[:display],
       :open_url       => @custom_button.options.try(:[], :open_url) ? @custom_button.options[:open_url] : false,
       :display_for    => @custom_button.options.try(:[], :display_for) ? @custom_button.options[:display_for] : 'single',
-      :submit_how     => @custom_button.options.try(:[], :submit_how) ? @custom_button.options[:submit_how] : 'all',
+      :submit_how     => @custom_button.options.try(:[], :submit_how) ? @custom_button.options[:submit_how] : 'one',
       :object_message => @custom_button.uri_message || "create",
     )
     @edit[:current] = copy_hash(@edit[:new])
