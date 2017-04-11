@@ -65,7 +65,7 @@ module HostHelper::TextualSummary
 
   def textual_group_openstack_service_status
     return nil unless @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)
-    TextualGroup.new(_("OpenStack Service Status"), textual_generate_openstack_status)
+    TextualMultilink.new(_("OpenStack Service Status"), :items => textual_generate_openstack_status)
   end
 
   def textual_group_openstack_hardware_status
