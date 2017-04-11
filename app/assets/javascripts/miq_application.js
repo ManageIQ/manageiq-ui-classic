@@ -1448,7 +1448,7 @@ function miqToolbarOnClick(_e) {
     // support data-function and data-function-data
     var fn = new Function("return " + button.data('function')); // eval - returns a function returning the right function
     fn().call(button, button.data('functionData'));
-    return;
+    return false;
   } else {
     // No url specified, run standard button ajax transaction
     if (typeof button.data('explorer') != "undefined" && button.data('explorer')) {
