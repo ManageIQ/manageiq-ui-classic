@@ -58,13 +58,13 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
 
   vm.saveClicked = function(angularForm) {
     API.put('/api/authentications/' + credentialId, vm.credentialModel)
-       .then(getBack(sprintf(__("Modification of Credential \"%s\" has been successfully queued."), vm.credentialModel.name), false))
+       .then(getBack.bind(vm, sprintf(__("Modification of Credential \"%s\" has been successfully queued."), vm.credentialModel.name), false, false))
        .catch(miqService.handleFailure);
   };
 
   vm.addClicked = function(angularForm) {
     API.post('/api/authentications/', vm.credentialModel)
-       .then(getBack(sprintf(__("Add of Credential \"%s\" has been successfully queued."), vm.credentialModel.name)))
+       .then(getBack.bind(vm, sprintf(__("Add of Credential \"%s\" has been successfully queued."), vm.credentialModel.name), false, false))
        .catch(miqService.handleFailure);
   };
 
