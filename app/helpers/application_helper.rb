@@ -208,6 +208,9 @@ module ApplicationHelper
             "vm_or_template"
           elsif record.kind_of?(VmOrTemplate)
             controller_for_vm(model_for_vm(record))
+          elsif record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager) ||
+                record.kind_of?(ManageIQ::Providers::ExternalAutomationManager::InventoryRootGroup)
+            "automation_manager"
           elsif record.kind_of?(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
             "ansible_playbook"
           elsif record.kind_of?(ManageIQ::Providers::EmbeddedAutomationManager::Authentication)
@@ -235,7 +238,7 @@ module ApplicationHelper
                     )
     elsif @host && ["Patch", "GuestApplication"].include?(db)
       return url_for_only_path(:controller => "host", :action => @lastaction, :id => @host, :show => @id)
-    elsif %w(ConfiguredSystem ConfigurationProfile EmsFolder).include?(db)
+    elsif %w(ConfiguredSystem ConfigurationProfile).include?(db)
       return url_for_only_path(:controller => "provider_foreman", :action => @lastaction, :id => @record, :show => @id)
     else
       controller, action = db_to_controller(db, action)
@@ -284,10 +287,10 @@ module ApplicationHelper
         elsif ["Vm"].include?(view.db) && parent && request.parameters[:controller] != "vm"
           # this is to handle link to a vm in vm explorer from service explorer
           return url_for_only_path(:controller => "vm_or_template", :action => "show") + "/"
-        elsif %w(ConfigurationProfile EmsFolder).include?(view.db) &&
+        elsif %w(ConfigurationProfile).include?(view.db) &&
               request.parameters[:controller] == "provider_foreman"
           return url_for_only_path(:action => action, :id => nil) + "/"
-        elsif %w(ManageIQ::Providers::AutomationManager::InventoryGroup EmsFolder).include?(view.db) &&
+        elsif %w(ManageIQ::Providers::AutomationManager::InventoryRootGroup EmsFolder).include?(view.db) &&
               request.parameters[:controller] == "automation_manager"
           return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w(ConfiguredSystem).include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
