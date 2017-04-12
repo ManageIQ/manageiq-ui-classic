@@ -33,6 +33,36 @@ describe ApplicationHelper::Dialogs do
     end
   end
 
+  describe "#dialog_dropdown_selected_value" do
+    let(:dialog_field) { instance_double("DialogFieldDropDownList", :values => values, :type => type, :value => value) }
+    let(:type) { "OneDropDown" }
+    let(:values) { [%w(key1 Val1), %w(key2 Val2)] }
+    let(:value) { nil }
+
+    context "when the the selected item exists in the values list" do
+      let(:value) { 'key2' }
+      it "returns the value for the selected item" do
+        expect(helper.dialog_dropdown_selected_value(dialog_field)).to eq('Val2')
+      end
+    end
+
+    context "when the the selected item does not exists in the values list" do
+      let(:value) { 'oldkey' }
+      it "returns the key value for the selected item" do
+        expect(helper.dialog_dropdown_selected_value(dialog_field)).to eq('oldkey')
+      end
+    end
+
+    context "when the drop down option list is empty" do
+      let(:values) {}
+      let(:value) { 'key' }
+
+      it "returns nil if the options list is empty" do
+        expect(helper.dialog_dropdown_selected_value(dialog_field)).to eq('key')
+      end
+    end
+  end
+
   describe "#category_tags" do
     before do
       allow(Classification).to receive(:find_by).with(:id => 123).and_return(classification)
