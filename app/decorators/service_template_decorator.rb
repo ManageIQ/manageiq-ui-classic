@@ -1,6 +1,6 @@
 class ServiceTemplateDecorator < MiqDecorator
   def self.fonticon
-    'fa fa-cube'
+    'product product-template'
   end
 
   def fileicon
