@@ -162,6 +162,7 @@ Rails.application.routes.draw do
         explorer
         form_fields
         show
+        x_show
         show_list
         tagging_edit
       ),
