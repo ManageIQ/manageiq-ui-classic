@@ -4,7 +4,11 @@ class InfraTopologyService < TopologyService
   @provider_class = ManageIQ::Providers::InfraManager
 
   def entity_type(entity)
-    entity.class.name.demodulize
+    if entity.kind_of?(Host)
+      entity.class.base_class.name.demodulize
+    else
+      super
+    end
   end
 
   def build_topology
