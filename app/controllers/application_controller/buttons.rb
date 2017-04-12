@@ -289,7 +289,7 @@ module ApplicationController::Buttons
       objs = [obj]
     end
 
-    if objs.length == 0
+    if objs.empty?
       render_flash(_("Error executing custom button: No item was selected."), :error)
       return
     end

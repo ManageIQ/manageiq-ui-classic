@@ -71,8 +71,7 @@
       .col-md-8
         = select_tag("display_for",
                      options_for_select([[_('Single entity'), 'single'], [_('List'), 'list'], [_('Single and list'), 'both']], @edit[:new][:display_for]),
-                     "data-miq_sparkle_on" => true,
-                    )
+                     "data-miq_sparkle_on" => true)
     -# TODO: temporary disabled until the backend supports "submit all"
     -#    .form-group
     -#      %label.control-label.col-md-2

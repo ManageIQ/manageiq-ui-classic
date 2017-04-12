@@ -15,15 +15,15 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     let(:user) { FactoryGirl.create(:user, :role => "super_administrator") }
 
     shared_examples "no custom buttons" do
-      it ("#get_custom_buttons") do
+      it "#get_custom_buttons" do
         expect(toolbar_builder.get_custom_buttons(subject.class, subject, Mixins::CustomButtons::Result.new(:single))).to be_blank
       end
 
-      it ("#custom_button_selects") do
+      it "#custom_button_selects" do
         expect(toolbar_builder.custom_button_selects(subject.class, subject, Mixins::CustomButtons::Result.new(:single))).to be_blank
       end
 
-      it ("#build_custom_toolbar_class") do
+      it "#build_custom_toolbar_class" do
         expect(toolbar_builder.build_custom_toolbar_class(subject.class, subject, Mixins::CustomButtons::Result.new(:single)).definition).to be_blank
       end
 
