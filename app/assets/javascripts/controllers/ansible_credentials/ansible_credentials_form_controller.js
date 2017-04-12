@@ -3,6 +3,8 @@
 ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', '$q', 'credentialId', 'miqService', 'API', function($window, $q, credentialId,  miqService, API) {
   var vm = this;
 
+  var optionsPromise = null;
+
   var init = function() {
     vm.credentialModel = {
       id: null,
@@ -22,7 +24,7 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     miqService.sparkleOn();
 
     // get credential specific options for all supported credential types
-    var optionsPromise = API.options('/api/authentications')
+    optionsPromise = API.options('/api/authentications')
       .then(getCredentialOptions)
       .catch(miqService.handleFailure);
 
@@ -89,19 +91,22 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     vm.credentialModel.name = response.name;
     vm.credentialModel.type = response.type;
 
-    // we need to merge options and vm.credentialModel
-    for (var opt in response.options) {
-      var item = vm.credential_options[vm.credentialModel.type]['attributes'][opt];
+    // we need to wait for vm.credential_options here
+    optionsPromise.then(function() {
+      // we need to merge options and vm.credentialModel
+      for (var opt in response.options) {
+        var item = vm.credential_options[vm.credentialModel.type]['attributes'][opt];
 
-      // void the password fields first
-      if (item.hasOwnProperty('type') && item['type'] === 'password') {
-        vm.credentialModel[opt] = '';
-      } else {
-        vm.credentialModel[opt] = response.options[opt];
+        // void the password fields first
+        if (item.hasOwnProperty('type') && item['type'] === 'password') {
+          vm.credentialModel[opt] = '';
+        } else {
+          vm.credentialModel[opt] = response.options[opt];
+        }
       }
-    }
 
-    vm.modelCopy = angular.copy( vm.credentialModel );
+      vm.modelCopy = angular.copy( vm.credentialModel );
+    });
   }
 
   function getBack(message, warning, error) {
