@@ -18,7 +18,7 @@ class ContainerNodeController < ApplicationController
   def launch_cockpit
     node = identify_record(params[:id], ContainerNode)
 
-    if node.ipaddress
+    if node.kubernetes_hostname
       javascript_open_window(node.cockpit_url.to_s)
     else
       javascript_flash(:text => node.unsupported_reason(:launch_cockpit), :severity => :error, :spinner_off => true)
