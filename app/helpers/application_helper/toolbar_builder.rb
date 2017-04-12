@@ -58,12 +58,15 @@ class ApplicationHelper::ToolbarBuilder
     @view_context.respond_to?(:controller) ? @view_context.controller : @view_context
   end
 
+  def model_for_custom_toolbar
+    controller.instance_eval { @tree_selected_model } || controller.class.model
+  end
+
   # According to toolbar name in parameter `toolbar_name` either returns class
   # for generic toolbar, or starts building custom toolbar
   def toolbar_class(toolbar_name)
     if Mixins::CustomButtons::Result === toolbar_name
-      model = @record ? @record.class : controller.class.model
-      custom_toolbar_class(model, @record, toolbar_name)
+      custom_toolbar_class(toolbar_name)
     else
       predefined_toolbar_class(toolbar_name)
     end
@@ -280,7 +283,12 @@ class ApplicationHelper::ToolbarBuilder
     end
   end
 
-  def custom_toolbar_class(model, record, toolbar_result)
+  def custom_toolbar_class(toolbar_result)
+    model = @record ? @record.class : model_for_custom_toolbar
+    build_custom_toolbar_class(model, @record, toolbar_result)
+  end
+
+  def build_custom_toolbar_class(model, record, toolbar_result)
     # each custom toolbar is an anonymous subclass of this class
 
     toolbar = Class.new(ApplicationHelper::Toolbar::Basic)

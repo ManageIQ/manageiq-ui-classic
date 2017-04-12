@@ -1157,6 +1157,11 @@ module VmCommon
       end
       # Add adv search filter to header
       @right_cell_text += @edit[:adv_search_applied][:text] if @edit && @edit[:adv_search_applied]
+
+      # save model being displayed for custom buttons
+      @tree_selected_model = if model.present?
+                               model.constantize
+                             end
     end
 
     if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
