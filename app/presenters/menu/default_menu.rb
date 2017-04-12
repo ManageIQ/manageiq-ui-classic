@@ -7,7 +7,8 @@ module Menu
           clouds_menu_section,
           infrastructure_menu_section,
           physical_infrastructure_menu_section,
-          container_menu_section
+          container_menu_section,
+          bigdata_menu_section
         ])
       end
 
@@ -32,6 +33,12 @@ module Menu
       def consumption_menu_section
         Menu::Section.new(:cons, N_("Consumption"), 'fa fa-plus', [
           Menu::Item.new('consumption', N_('Dashboard'), 'consumption', {:feature => 'consumption', :any => true}, '/consumption/show')
+        ])
+      end
+
+      def bigdata_menu_section
+        Menu::Section.new(:bigdata, N_("BigData"), 'fa fa-plus', [
+          Menu::Item.new('ems_hadoop_yarn_infra', N_('Yarn'), 'ems_hadoop_yarn_infra', {:feature => 'ems_hadoop_yarn_infra_show_list'}, '/ems_hadoop_yarn_infra')
         ])
       end
 
