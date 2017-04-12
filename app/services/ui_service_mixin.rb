@@ -3,7 +3,7 @@ module UiServiceMixin
     {
       :AvailabilityZone        => {:type => "glyph", :icon => "\uE911", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-zone
       :ContainerReplicator     => {:type => "glyph", :icon => "\uE624", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-replicator
-      :ContainerProject        => {:type => "glyph", :icon => "\uE622", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-project
+      :ContainerProject        => {:type => "glyph", :icon => "\uE905", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-project
       :ContainerGroup          => {:type => "glyph", :icon => "\uF1B3", :fontfamily => "FontAwesome"},             # fa-cubes
       :ContainerNode           => {:type => "glyph", :icon => "\uE621", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-container-node
       :ContainerService        => {:type => "glyph", :icon => "\uE61E", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-service
