@@ -43,14 +43,14 @@ module ConfigurationJobHelper::TextualSummary
   end
 
   def textual_provider
-    h = {:label => _("Provider"), :image => "svg/vendor-automation_manager_configuration.svg"}
+    h = {:label => _("Provider"), :image => "svg/vendor-ansible.svg"}
     provider = @record.ext_management_system
     if provider.nil?
       h[:value] = _("None")
     else
       h[:value] = provider.name
       h[:title] = _("Show this Parent Provider")
-      h[:link]  = url_for_only_path(:controller => 'provider_foreman', :action => 'explorer', :id => "at-#{to_cid(provider.id)}")
+      h[:link]  = url_for_only_path(:controller => 'automation_manager', :action => 'explorer', :id => "at-#{to_cid(provider.id)}")
     end
     h
   end
