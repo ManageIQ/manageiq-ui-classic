@@ -42,9 +42,15 @@ class ApplicationHelper::Button::Basic < Hash
   #   self[:prompt]  -- the user has to confirm the action
   #   self[:hidden]  -- the button is not displayed in the toolbar
   #   self[:text]    -- text for the button
+  #   self[:onwhen]  -- enable button if items are selected
   def calculate_properties
-    self[:enabled] = !disabled? if self[:enabled].nil?
-    self[:title] = @error_message if @error_message.present?
+    enabled = !disabled?
+    self[:enabled] = enabled if self[:enabled].nil?
+
+    unless self[:enabled] || enabled
+      self[:onwhen] = nil
+      self[:title] = @error_message if @error_message.present?
+    end
   end
 
   # Check if all instance variables for that button works with are set and
