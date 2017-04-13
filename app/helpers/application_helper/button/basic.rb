@@ -43,8 +43,16 @@ class ApplicationHelper::Button::Basic < Hash
   #   self[:hidden]  -- the button is not displayed in the toolbar
   #   self[:text]    -- text for the button
   def calculate_properties
-    self[:enabled] = !disabled? if self[:enabled].nil?
-    self[:title] = @error_message if @error_message.present?
+    if disabled?
+      if self[:enabled].nil?
+        self[:enabled] = true
+      else
+        self[:onwhen] = nil
+      end
+      self[:title] = @error_message
+    else
+      self[:enabled] = false if self[:enabled].nil?
+    end
   end
 
   # Check if all instance variables for that button works with are set and
