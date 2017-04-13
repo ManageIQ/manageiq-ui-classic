@@ -456,6 +456,12 @@ module EmsCommon
       javascript_redirect :controller => "cloud_volume", :action => "new", :storage_manager_id => params[:id]
     elsif params[:pressed] == "cloud_volume_edit"
       javascript_redirect :controller => "cloud_volume", :action => "edit", :id => find_checked_items[0]
+    elsif params[:pressed] == "network_router_edit"
+      javascript_redirect :controller => "network_router", :action => "edit", :id => find_checked_items[0]
+    elsif params[:pressed] == "network_router_add_interface"
+      javascript_redirect :controller => "network_router", :action => "add_interface_select", :id => find_checked_items[0]
+    elsif params[:pressed] == "network_router_remove_interface"
+      javascript_redirect :controller => "network_router", :action => "remove_interface_select", :id => find_checked_items[0]
     elsif params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new", "#{pfx}_clone",
                                                    "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
       render_or_redirect_partial(pfx)
