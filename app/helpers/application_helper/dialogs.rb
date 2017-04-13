@@ -10,12 +10,19 @@ module ApplicationHelper::Dialogs
   end
 
   def dialog_dropdown_selected_value(field)
-    values = field.values
-    if values && values.to_h.include?(field.value)
-      values.to_h[field.value]
-    else
-      field.value
+    if !field.values || field.values.empty?
+      return field.value
     end
+
+    values = field.values.to_h
+    result = field.value.split(',').collect do |val|
+      if values.include?(val)
+        values.to_h[val]
+      else
+        val
+      end
+    end
+    result.join(',')
   end
 
   def category_tags(category_id)

@@ -53,11 +53,27 @@ describe ApplicationHelper::Dialogs do
       end
     end
 
+    context "shows a list of display values for multiselect" do
+      let(:values) { [%w(key1 Val1), %w(key2 Val2), %w(key3 Val3), %w(key4 Val4)] }
+      let(:value) { 'key2,key4' }
+      it "returns the key value for the selected item" do
+        expect(helper.dialog_dropdown_selected_value(dialog_field)).to eq('Val2,Val4')
+      end
+    end
+
+    context "shows a list of display values and keys for multiselect when some keys not in values" do
+      let(:values) { [%w(key1 Val1), %w(key2 Val2), %w(key3 Val3), %w(key4 Val4)] }
+      let(:value) { 'oldkey,key4' }
+      it "returns the key value for the selected item" do
+        expect(helper.dialog_dropdown_selected_value(dialog_field)).to eq('oldkey,Val4')
+      end
+    end
+
     context "when the drop down option list is empty" do
       let(:values) {}
       let(:value) { 'key' }
 
-      it "returns nil if the options list is empty" do
+      it "returns the field value if the options list is empty" do
         expect(helper.dialog_dropdown_selected_value(dialog_field)).to eq('key')
       end
     end
