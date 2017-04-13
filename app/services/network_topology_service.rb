@@ -3,52 +3,37 @@ class NetworkTopologyService < TopologyService
 
   @provider_class = ManageIQ::Providers::NetworkManager
 
+  @included_relations = [
+    :tags,
+    :availability_zones => [
+      :vms => [
+        :tags,
+        :load_balancers  => :tags,
+        :floating_ips    => :tags,
+        :cloud_tenant    => :tags,
+        :security_groups => :tags
+      ]
+    ],
+    :cloud_subnets      => [
+      :parent_cloud_subnet,
+      :tags,
+      :vms,
+      :cloud_network  => :tags,
+      :network_router => [
+        :tags,
+        :cloud_network => [
+          :floating_ips => :tags
+        ]
+      ]
+    ]
+  ]
+
   def entity_type(entity)
     if entity.kind_of?(CloudNetwork)
       entity.class.base_class.name.demodulize
     else
-      entity.class.name.demodulize
+      super
     end
-  end
-
-  def build_topology
-    topo_items = {}
-    links      = []
-
-    included_relations = [
-      :tags,
-      :availability_zones => [
-        :vms => [
-          :tags,
-          :load_balancers  => :tags,
-          :floating_ips    => :tags,
-          :cloud_tenant    => :tags,
-          :security_groups => :tags
-        ]
-      ],
-      :cloud_subnets      => [
-        :parent_cloud_subnet,
-        :tags,
-        :vms,
-        :cloud_network  => :tags,
-        :network_router => [
-          :tags,
-          :cloud_network => [
-            :floating_ips => :tags
-          ]
-        ]
-      ]
-    ]
-
-    entity_relationships = {:NetworkManager => build_entity_relationships(included_relations)}
-
-    preloaded = @providers.includes(included_relations)
-
-    preloaded.each do |entity|
-      topo_items, links = build_recursive_topology(entity, entity_relationships[:NetworkManager], topo_items, links)
-    end
-
-    populate_topology(topo_items, links, build_kinds, icons)
   end
 
   def entity_display_type(entity)

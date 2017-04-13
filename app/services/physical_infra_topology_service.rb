@@ -3,28 +3,10 @@ class PhysicalInfraTopologyService < TopologyService
 
   @provider_class = ManageIQ::Providers::PhysicalInfraManager
 
-  def entity_type(entity)
-    entity.class.name.demodulize
-  end
-
-  def build_topology
-    topo_items = {}
-    links = []
-
-    included_relations = [
-      :tags,
-      :physical_servers => [:tags],
-    ]
-
-    entity_relationships = {:PhysicalInfraManager => build_entity_relationships(included_relations)}
-    preloaded = @providers.includes(included_relations)
-
-    preloaded.each do |entity|
-      topo_items, links = build_recursive_topology(entity, entity_relationships[:PhysicalInfraManager], topo_items, links)
-    end
-
-    populate_topology(topo_items, links, build_kinds, icons)
-  end
+  @included_relations = [
+    :tags,
+    :physical_servers => [:tags],
+  ]
 
   def entity_display_type(entity)
     if entity.kind_of?(ManageIQ::Providers::PhysicalInfraManager)

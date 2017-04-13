@@ -3,37 +3,23 @@ class InfraTopologyService < TopologyService
 
   @provider_class = ManageIQ::Providers::InfraManager
 
+  @included_relations = [
+    :tags,
+    :ems_clusters => [
+      :tags,
+      :hosts => [
+        :tags,
+        :vms => :tags
+      ]
+    ],
+  ]
+
   def entity_type(entity)
     if entity.kind_of?(Host)
       entity.class.base_class.name.demodulize
     else
       super
     end
-  end
-
-  def build_topology
-    topo_items = {}
-    links = []
-
-    included_relations = [
-      :tags,
-      :ems_clusters => [
-        :tags,
-        :hosts => [
-          :tags,
-          :vms => :tags
-        ]
-      ],
-    ]
-
-    entity_relationships = {:InfraManager => build_entity_relationships(included_relations)}
-    preloaded = @providers.includes(included_relations)
-
-    preloaded.each do |entity|
-      topo_items, links = build_recursive_topology(entity, entity_relationships[:InfraManager], topo_items, links)
-    end
-
-    populate_topology(topo_items, links, build_kinds, icons)
   end
 
   def entity_display_type(entity)
