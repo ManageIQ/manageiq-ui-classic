@@ -8,7 +8,7 @@ describe TreeNode::ServiceTemplateCatalog do
   end
 
   include_examples 'TreeNode::Node#key prefix', 'stc-'
-  include_examples 'TreeNode::Node#icon', 'product product-template'
+  include_examples 'TreeNode::Node#icon', 'pficon pficon-folder-close'
 
   describe '#title' do
     it 'returns with the catalog name and tenant name as a suffix' do
