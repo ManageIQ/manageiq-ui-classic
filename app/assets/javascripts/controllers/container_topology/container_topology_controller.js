@@ -6,14 +6,11 @@ miqHttpInject(angular.module('topologyApp', ['kubernetesUI', 'ui.bootstrap', 'Ma
 ContainerTopologyCtrl.$inject = ['$scope', '$http', '$interval', 'topologyService', '$window', 'miqService'];
 
 function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $window, miqService) {
-  ManageIQ.angular.scope = $scope;
-  miqHideSearchClearButton();
   var self = this;
   $scope.vs = null;
   var icons = null;
 
   var d3 = window.d3;
-  $scope.d3 = d3;
 
   $scope.refresh = function() {
     var id, type;
@@ -50,7 +47,6 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
   $scope.legendTooltip = __("Click here to show/hide entities of this type");
 
   $scope.show_hide_names = function() {
-    $scope.checkboxModel.value = $('input#box_display_names')[0].checked
     var vertices = $scope.vs;
 
     if ($scope.checkboxModel.value) {
@@ -62,7 +58,6 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
     }
   };
 
-  $('input#box_display_names').click($scope.show_hide_names)
   $scope.refresh();
   var promise = $interval($scope.refresh, 1000 * 60 * 3);
 
@@ -285,17 +280,17 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
   };
 
   $scope.searchNode = function() {
-    var svg = topologyService.getSVG($scope.d3);
-    var query = $('input#search_topology')[0].value;
+    var svg = topologyService.getSVG(d3);
+    var query = $scope.search.query;
 
     topologyService.searchNode(svg, query);
   };
 
   $scope.resetSearch = function() {
-    topologyService.resetSearch($scope.d3);
+    topologyService.resetSearch(d3);
 
     // Reset the search term in search input
-    $('input#search_topology')[0].value = "";
+    $scope.search.query = "";
   };
 
   function getContainerTopologyData(response) {
