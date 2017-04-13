@@ -3,7 +3,7 @@
   - selected ||= wf.value(field.name)
   = select_tag(field.name, options_for_select(select_values,
                                               selected),
-                                              drop_down_options(field, url))  
+                                              drop_down_options(field, url))
 
   :javascript
     dialogFieldRefresh.initializeDialogSelectPicker(
@@ -35,6 +35,5 @@
           dialogFieldRefresh.triggerAutoRefresh(JSON.parse('#{j(auto_refresh_options.to_json)}'));
         });
       });
-
 - else
-  = h(field.value.nil? ? "<None>" : field.value)
+  = h(field.value.nil? ? "<None>" : dialog_dropdown_selected_value(field))

@@ -9,6 +9,22 @@ module ApplicationHelper::Dialogs
     values
   end
 
+  def dialog_dropdown_selected_value(field)
+    if !field.values || field.values.empty?
+      return field.value
+    end
+
+    values = field.values.to_h
+    result = field.value.split(',').collect do |val|
+      if values.include?(val)
+        values.to_h[val]
+      else
+        val
+      end
+    end
+    result.join(',')
+  end
+
   def category_tags(category_id)
     classification = Classification.find_by(:id => category_id)
     return [] if classification.nil?
