@@ -1484,6 +1484,10 @@ function miqToolbarOnClick(_e) {
       } else {
         params = miqSerializeForm(button.data('url_parms'));
       }
+    } else if (button.data('url_parms').match("id=LIST")) {
+      // this is used by custom buttons in lists
+      params = button.data('url_parms').split("?")[1] +
+        "&miq_grid_checks=" + ManageIQ.gridChecks.join(',');
     } else {
       params = button.data('url_parms').split("?")[1];
     }

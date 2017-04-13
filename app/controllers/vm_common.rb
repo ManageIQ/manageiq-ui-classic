@@ -1158,6 +1158,11 @@ module VmCommon
       end
       # Add adv search filter to header
       @right_cell_text += @edit[:adv_search_applied][:text] if @edit && @edit[:adv_search_applied]
+
+      # save model being displayed for custom buttons
+      @tree_selected_model = if model.present?
+                               model.constantize
+                             end
     end
 
     if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
@@ -1198,9 +1203,10 @@ module VmCommon
       record_showing = type && ["Vm", "MiqTemplate"].include?(TreeBuilder.get_model_for_prefix(type))
       c_tb = build_toolbar(center_toolbar_filename) # Use vm or template tb
       if record_showing
-        cb_tb = build_toolbar("custom_buttons_tb")
+        cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:single))
         v_tb = build_toolbar("x_summary_view_tb")
       else
+        cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:list))
         v_tb = build_toolbar("x_gtl_view_tb")
       end
     elsif ["compare", "drift"].include?(@sb[:action])
