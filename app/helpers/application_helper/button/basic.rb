@@ -43,6 +43,9 @@ class ApplicationHelper::Button::Basic < Hash
   #   self[:hidden]  -- the button is not displayed in the toolbar
   #   self[:text]    -- text for the button
   #   self[:onwhen]  -- enable button if items are selected
+  #
+  # If disabled? is true, disable onwhen and set state and title unless
+  # user specifically enabled the button
   def calculate_properties
     enabled = !disabled?
 
