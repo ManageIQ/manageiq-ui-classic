@@ -45,8 +45,14 @@ class ApplicationHelper::Button::Basic < Hash
   #   self[:onwhen]  -- enable button if items are selected
   def calculate_properties
     enabled = !disabled?
+
+    # if :enabled is not set, use disabled?
     self[:enabled] = enabled if self[:enabled].nil?
 
+    # if disabled? is true and user did not specify that :enabled is true
+    # then:
+    #     set :onwhen to nil => do not enable when user select items
+    #     set :title to error => show user the error message
     unless self[:enabled] || enabled
       self[:onwhen] = nil
       self[:title] = @error_message if @error_message.present?
