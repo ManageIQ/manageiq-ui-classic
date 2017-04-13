@@ -715,6 +715,7 @@ module OpsController::OpsRbac
 
     if record.valid? && !flash_errors? && record.save
       set_role_features(record) if what == "role"
+      self.current_user = record if what == 'user' && @edit[:current][:userid] == current_userid
       AuditEvent.success(build_saved_audit(record, add_pressed))
       subkey = (key == :group) ? :description : :name
       add_flash(_("%{model} \"%{name}\" was saved") % {:model => what.titleize, :name => @edit[:new][subkey]})
