@@ -128,21 +128,13 @@ module ApplicationController::Tags
     if !session[:checked_items].nil? && @lastaction == "set_checked_items"
       recs = session[:checked_items]
     else
-      recs = find_checked_items
+      recs = find_checked_ids_with_rbac(@tagging)
     end
     if recs.blank?
       recs = [params[:id]]
     end
-    if recs.length < 1
-      add_flash(_("One or more %{model} must be selected to Smart Tagging") %
-        {:model => Dictionary.gettext(db.to_s, :type => :model, :notfound => :titleize, :plural => true)}, :error)
-      @refresh_div = "flash_msg_div"
-      @refresh_partial = "layouts/flash_msg"
-      return
-    else
-      session[:tag_items] = recs    # Set the array of tag items
-      session[:assigned_filters] = assigned_filters
-    end
+    session[:tag_items] = recs    # Set the array of tag items
+    session[:assigned_filters] = assigned_filters
   end
 
   def tagging_edit_tags_reset
