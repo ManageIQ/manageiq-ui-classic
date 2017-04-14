@@ -19,23 +19,19 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['$scope', 'miqServ
 
     ManageIQ.angular.scope = $scope;
 
+    miqService.sparkleOn();
     if (cloudVolumeFormId == 'new') {
       $scope.cloudVolumeModel.name = "";
+      formOptions();
     } else {
       miqService.sparkleOn();
       API.get('/api/cloud_volumes/' + cloudVolumeFormId + '?attributes=ext_management_system.type')
         .then(getCloudVolumeFormDataComplete)
         .catch(miqService.handleFailure);
     }
-
-    if (storageManagerId) {
-      $scope.cloudVolumeModel.storage_manager_id = storageManagerId;
-      $scope.storageManagerChanged(storageManagerId);
-    }
   };
 
   function getCloudVolumeFormDataComplete(data) {
-    $scope.afterGet = true;
     $scope.cloudVolumeModel.emstype = data.ext_management_system.type;
     $scope.cloudVolumeModel.name = data.name;
     // We have to display size in GB.
@@ -43,6 +39,8 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['$scope', 'miqServ
     // Currently, this is only relevant for AWS volumes so we are prefixing the
     // model attribute with AWS.
     $scope.cloudVolumeModel.aws_volume_type = data.volume_type;
+
+    formOptions();
 
     $scope.modelCopy = angular.copy( $scope.cloudVolumeModel );
     miqService.sparkleOff();
@@ -56,7 +54,6 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['$scope', 'miqServ
   };
 
   function getStorageManagerFormDataComplete(data) {
-    $scope.afterGet = true;
     $scope.cloudVolumeModel.emstype = data.type;
     $scope.cloudTenantChoices = data.parent_manager.cloud_tenants;
     $scope.availabilityZoneChoices = data.parent_manager.availability_zones;
@@ -178,6 +175,20 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['$scope', 'miqServ
         $scope.cloudVolumeModel.aws_iops = 'Not Applicable';
         break;
     }
+  };
+
+  var formOptions = function() {
+    API.get("/api/providers?expand=resources&attributes=id,name&filter[]=supports_block_storage?=true").then(function(data) {
+      $scope.storageManagers = data.resources;
+
+      if (storageManagerId) {
+        $scope.cloudVolumeModel.storage_manager_id = parseInt(storageManagerId, 10);
+        $scope.storageManagerChanged($scope.cloudVolumeModel.storage_manager_id);
+      }
+
+      $scope.afterGet = true;
+      miqService.sparkleOff();
+    });
   };
 
   init();
