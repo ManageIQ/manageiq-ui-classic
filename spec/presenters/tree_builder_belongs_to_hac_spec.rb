@@ -61,7 +61,7 @@ describe TreeBuilderBelongsToHac do
                         true,
                         :edit     => edit,
                         :filters  => {},
-                        :group    => group,
+                        :group    => nil,
                         :selected => {})
   end
 
@@ -81,7 +81,7 @@ describe TreeBuilderBelongsToHac do
                                                               :tree_state        => true,
                                                               :checkboxes        => true,
                                                               :id_prefix         => "hac_",
-                                                              :check_url         => "/ops/rbac_group_field_changed/#{group.id || "new"}___",
+                                                              :check_url         => "/ops/rbac_group_field_changed/new___",
                                                               :oncheck           => nil,
                                                               :highlight_changes => true)
     end
