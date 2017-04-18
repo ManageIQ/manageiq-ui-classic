@@ -17,13 +17,13 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.5.8",
-    "angular-animate": "~1.5.8",
+    "angular": "~1.6.3",
+    "angular-animate": "~1.6.3",
     "angular-bootstrap-switch": "~0.5.1",
     "angular-dragdrop": "~1.0.13",
-    "angular-mocks": "~1.5.8",
+    "angular-mocks": "~1.6.3",
     "angular-patternfly-sass": "~3.23.1",
-    "angular-sanitize": "~1.5.8",
+    "angular-sanitize": "~1.6.3",
     "angular-ui-codemirror": "~0.3.0",
     "angular-ui-sortable": "~0.16.1",
     "angular.validators": "~4.4.2",
@@ -62,6 +62,9 @@
     "patternfly-bootstrap-treeview": "~2.1.1",
     "moment": ">=2.10.5",
     "d3": "~3.5.0",
-    "jquery": "~2.2.4"
+    "jquery": "~2.2.4",
+    "angular": "~1.6.3",
+    "angular-sanitize": "~1.6.3",
+    "angular-animate": "~1.6.3"
   }
 }
