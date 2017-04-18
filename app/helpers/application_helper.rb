@@ -731,6 +731,8 @@ module ApplicationHelper
   def display_back_button?
     # don't need to back button if @record is not there or @record doesnt have name or
     # evm_display_name column, i.e MiqProvisionRequest
+    return false if @display == "dashboard"
+
     if (@lastaction != "show" || (@lastaction == "show" && @display != "main")) &&
        @record &&
        (@record.respond_to?('name') && !@record.name.nil?)
