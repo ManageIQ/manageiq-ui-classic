@@ -45,7 +45,7 @@ class ApplicationHelper::ToolbarChooser
       'dashboard_summary_toggle_view_tb'
     elsif %w(container_project).include?(@layout)
       'container_project_view_tb'
-    elsif !%w(all_tasks all_ui_tasks timeline diagnostics my_tasks my_ui_tasks miq_server usage).include?(@layout) &&
+    elsif !%w(all_tasks timeline diagnostics my_tasks miq_server usage).include?(@layout) &&
           (!@layout.starts_with?("miq_request")) && !@treesize_buttons &&
           @display == "main" && @showtype == "main" && !@in_a_form
       controller_restful? ? "summary_view_restful_tb" : "summary_view_tb"
@@ -551,7 +551,7 @@ class ApplicationHelper::ToolbarChooser
           else
             return "miq_request_center_tb"
           end
-        elsif ["my_tasks", "my_ui_tasks", "all_tasks", "all_ui_tasks"].include?(@layout)
+        elsif %w(my_tasks all_tasks).include?(@layout)
           return "tasks_center_tb"
         end
       end

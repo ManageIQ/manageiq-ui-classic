@@ -1014,7 +1014,7 @@ module ApplicationHelper
     if section.parent.nil?
       # first-level, fallback to old logic for now
       # FIXME: exception behavior to remove
-      active = 'my_tasks' if %w(my_tasks my_ui_tasks all_tasks all_ui_tasks).include?(@layout)
+      active = 'my_tasks' if %w(my_tasks all_tasks).include?(@layout)
       active = 'cloud_volume' if @layout == 'cloud_volume_snapshot' || @layout == 'cloud_volume_backup'
       active = 'cloud_object_store_container' if @layout == 'cloud_object_store_object'
       active = active.to_sym
