@@ -78,13 +78,11 @@ describe VmCloudController do
       flavor = FactoryGirl.create(:flavor_openstack)
       allow(controller).to receive(:load_edit).and_return(true)
       allow(controller).to receive(:previous_breadcrumb_url).and_return("/vm_cloud/explorer")
-      controller.instance_variable_set(:@edit,
-                                       :new      => {:flavor => flavor.id},
-                                       :explorer => false)
       expect_any_instance_of(VmCloud).to receive(:resize_queue).with(controller.current_user.userid, flavor)
       post :resize_vm, :params => {
-        :button => 'submit',
-        :id     => vm_openstack.id
+        :button    => 'submit',
+        :id        => vm_openstack.id,
+        :flavor_id => flavor.id
       }
       expect(response.status).to eq(200)
     end
