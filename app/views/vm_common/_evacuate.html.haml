@@ -52,7 +52,7 @@
   %hr
   %div
     %h3
-      = n_("1 Instance to be Evacuated", "#{@evacuate_items.length} Instances to be Evacuated", @evacuate_items.length)
+      = n_("1 Instance to be Evacuated", "%{amount} Instances to be Evacuated", @evacuate_items.length) % {:amount => @evacuate_items.length}
     - if @evacuate_items
       - @embedded = true
       - @quadicon_no_url = true

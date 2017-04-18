@@ -56,7 +56,7 @@
   %hr
   %div
     %h3
-      = n_("1 Instance to be Live Migrated", "#{@live_migrate_items.length} Instances to be Live Migrated", @live_migrate_items.length)
+      = n_("1 Instance to be Live Migrated", "%{amount} Instances to be Live Migrated", @live_migrate_items.length) % {:amount => @live_migrate_items.length}
     - if @live_migrate_items
       - @embedded = true
       - @quadicon_no_url = true

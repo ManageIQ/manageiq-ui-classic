@@ -522,9 +522,7 @@ module ApplicationController::CiProcessing
     assert_privileges("instance_live_migrate")
     case params[:button]
     when "cancel"
-      add_flash(_("Live migration of %{models} was cancelled by the user") % {
-        :models => ui_lookup(:tables => "vm_cloud")
-      })
+      add_flash(_("Live migration of Instances was cancelled by the user"))
     when "submit"
       @live_migrate_items = VmOrTemplate.find(session[:live_migrate_items]).sort_by(&:name)
       @live_migrate_items.each do |vm|
@@ -593,9 +591,7 @@ module ApplicationController::CiProcessing
     assert_privileges("instance_evacuate")
     case params[:button]
     when "cancel"
-      add_flash(_("Evacuation of %{models} was cancelled by the user") % {
-        :models => ui_lookup(:tables => "vm_cloud")
-      })
+      add_flash(_("Evacuation of Instances was cancelled by the user"))
     when "submit"
       @evacuate_items = VmOrTemplate.find(session[:evacuate_items]).sort_by(&:name)
       @evacuate_items.each do |vm|
