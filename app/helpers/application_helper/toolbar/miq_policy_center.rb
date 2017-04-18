@@ -31,8 +31,7 @@ class ApplicationHelper::Toolbar::MiqPolicyCenter < ApplicationHelper::Toolbar::
                           }
                         end,
           :url_parms => "main_div",
-          :klass     => ApplicationHelper::Button::PolicyCopy,
-          :options   => {:feature => 'policy_copy'}),
+          :klass     => ApplicationHelper::Button::PolicyCopy),
         button(
           :policy_delete,
           'pficon pficon-delete fa-lg',
