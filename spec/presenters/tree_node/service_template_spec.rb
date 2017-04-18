@@ -13,7 +13,7 @@ describe TreeNode::ServiceTemplate do
       let(:object) { FactoryGirl.create(factory, :name => 'foo', :tenant => tenant) }
 
       include_examples 'TreeNode::Node#key prefix', 'st-'
-      include_examples 'TreeNode::Node#icon', 'product product-template'
+      include_examples 'TreeNode::Node#icon', 'fa fa-cube'
 
       describe '#title' do
         it 'returns with the catalog name and tenant name as a suffix' do
