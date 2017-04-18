@@ -598,7 +598,7 @@ module VmCommon
 
   def evm_relationship_get_form_vars
     @record = VmOrTemplate.find_by_id(@edit[:vm_id])
-    @edit[:new][:server] = params[:server_id] if params[:server_id]
+    @edit[:new][:server] = params[:server_id] == "" ? nil : params[:server_id] if params[:server_id]
   end
 
   def evm_relationship_update
