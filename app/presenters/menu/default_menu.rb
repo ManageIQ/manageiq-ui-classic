@@ -6,9 +6,9 @@ module Menu
         Menu::Section.new(:compute, N_("Compute"), 'pficon pficon-cpu', [
           clouds_menu_section,
           infrastructure_menu_section,
-          physical_infrastructure_menu_section,
+          ::Settings.product.physical_infrastructure ? physical_infrastructure_menu_section : nil,
           container_menu_section
-        ])
+        ].compact)
       end
 
       def configuration_menu_section
