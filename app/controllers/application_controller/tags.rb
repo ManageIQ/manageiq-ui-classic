@@ -4,6 +4,7 @@ module ApplicationController::Tags
   # Edit user, group or tenant tags
   def tagging_edit(db = nil, assert = true)
     assert_privileges("#{controller_for_common_methods}_tag") if assert
+    @showlinks = true
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
     case params[:button]
     when "cancel"
