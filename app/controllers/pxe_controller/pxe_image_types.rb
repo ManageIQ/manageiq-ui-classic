@@ -62,11 +62,7 @@ module PxeController::PxeImageTypes
     else
       # first time in or reset
       add_flash(_("All changes have been reset"), :warning) if params[:button] == "reset"
-      unless params[:id]
-        obj           = find_checked_items
-        @_params[:id] = obj[0] unless obj.empty?
-      end
-      @pxe_image_type = @record = identify_record(params[:id], PxeImageType) if params[:id]
+      @pxe_image_type = @record = find_record_with_rbac(PxeImageType, @_params[:id] = checked_or_params_id)
       pxe_image_type_set_form_vars
       @in_a_form = true
       session[:changed] = false
@@ -92,7 +88,7 @@ module PxeController::PxeImageTypes
 
     # Either a list or coming from a different controller (eg from host screen, go to its vms)
     if !params[:id]
-      pxes = find_checked_items
+      pxes = find_checked_ids_with_rbac(PxeImageType)
       if pxes.empty?
         add_flash(_("No %{model} were selected to %{button}") % {:model => ui_lookup(:models => "PxeImageType"), :button => display_name},
                   :error)
