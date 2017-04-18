@@ -48,6 +48,11 @@ module TextualSummaryHelper
     }
   end
 
+  def textual_key_value_group(items)
+    res = items.collect { |item| {:label => item.name.to_s, :value => item.value.to_s} }
+    res.sort_by { |k| k[:label] }
+  end
+
   def textual_tags
     label = _("%{name} Tags") % {:name => session[:customer_name]}
     h = {:label => label}
