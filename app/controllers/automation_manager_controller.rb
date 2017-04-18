@@ -33,7 +33,7 @@ class AutomationManagerController < ApplicationController
   end
 
   def managed_group_kls
-    ManageIQ::Providers::AutomationManager::InventoryGroup
+    ManageIQ::Providers::AutomationManager::InventoryRootGroup
   end
 
   def manager_prefix
@@ -93,6 +93,13 @@ class AutomationManagerController < ApplicationController
     generic_x_show
   end
 
+  def identify_record(id, klass = self.class.model)
+    type, _id = parse_nodetype_and_id(x_node)
+    klass = TreeBuilder.get_model_for_prefix(type).constantize if type
+    record = super(id, klass)
+    record
+  end
+
   def tree_record
     @record =
       case x_active_tree
@@ -106,7 +113,7 @@ class AutomationManagerController < ApplicationController
     nodes = x_node.split('-')
     case nodes.first
     when "root" then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, params[:id])
-    when "at"   then find_record(ManageIQ::Providers::AutomationManager::InventoryGroup, params[:id])
+    when "at", "e" then find_record(ManageIQ::Providers::AutomationManager::InventoryRootGroup, params[:id])
     when "f"    then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem, params[:id])
     when "xx" then
       case nodes.second
@@ -221,8 +228,8 @@ class AutomationManagerController < ApplicationController
     end
 
     case model
-    when "ManageIQ::Providers::AnsibleTower::AutomationManager"
-      provider_list(id, model)
+    when "ManageIQ::Providers::AnsibleTower::AutomationManager", "ExtManagementSystem"
+      provider_list(id, "ManageIQ::Providers::AnsibleTower::AutomationManager")
     when "EmsFolder"
       inventory_group_node(id, model)
     when "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem", "ConfiguredSystem"
@@ -254,10 +261,10 @@ class AutomationManagerController < ApplicationController
       cs_provider_node(provider)
     else
       @no_checkboxes = true
-      options = {:model                 => "ManageIQ::Providers::AutomationManager::InventoryGroup",
+      options = {:model                 => "ManageIQ::Providers::AutomationManager::InventoryRootGroup",
                  :match_via_descendants => ConfiguredSystem,
                  :where_clause          => ["ems_id IN (?)", provider.id],
-                 :gtl_dbname            => "automation_manager_groups"}
+                 :gtl_dbname            => "automation_manager_providers"}
       process_show_list(options)
       record_model = ui_lookup(:model => self.class.model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
       @right_cell_text = _("%{model} \"%{name}\"") % {:name  => provider.name,
@@ -276,7 +283,7 @@ class AutomationManagerController < ApplicationController
   end
 
   def inventory_group_node(id, model)
-    @record = @inventory_group_record = find_record(ManageIQ::Providers::AutomationManager::InventoryGroup, id) if model
+    @record = @inventory_group_record = find_record(ManageIQ::Providers::AutomationManager::InventoryRootGroup, id) if model
 
     if @inventory_group_record.nil?
       self.x_node = "root"

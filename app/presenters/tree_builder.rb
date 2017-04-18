@@ -182,6 +182,10 @@ class TreeBuilder
     end
   end
 
+  def group_id
+    (@group.present? && @group.id.present?) ? @group.id : 'new'
+  end
+
   def set_locals_for_render
     {
       :tree_id    => "#{@name}box",

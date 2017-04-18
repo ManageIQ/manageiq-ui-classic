@@ -8,6 +8,7 @@ class ReportController < ApplicationController
   include_concern 'Schedules'
   include_concern 'Widgets'
 
+  helper ApplicationHelper::ImportExportHelper
   include ReportHelper
 
   before_action :check_privileges

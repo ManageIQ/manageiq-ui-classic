@@ -1,19 +1,40 @@
 .form-group.text
   %label.topology-checkbox.checkbox-inline
-    %input#box_display_names{:type => "checkbox"}
+    %input#box_display_names{:type => 'checkbox'}
     = _("Display Names")
+
 .form-group
-  %button.btn.btn-default{'data' => {'function' => 'miqCallAngular', 'function-data' => '{"name":"refresh", "args":[]}'}}
-    %i{:class => "fa fa-refresh fa-lg"}
+  %button.btn.btn-default{'data-function'      => 'miqCallAngular',
+                          'data-function-data' => {:name => 'refresh',
+                                                   :args => []}.to_json}
+    %i.fa.fa-refresh.fa-lg
     = _("Refresh")
-%form.search-pf.topology-search{:role => "form"}
+
+%form.search-pf.topology-search{:role     => 'form',
+                                :onsubmit => 'miqCallAngular({ name: "searchNode", args: [] }); return false'}
   .form-group.has-clear
     .search-pf-input-group
-      %label.sr-only{:for => "search"}
+      %label.sr-only{:for => 'search'}
         = _("Search")
-      %input#search_topology.form-control{'placeholder' => _("Search"), 'type' => "search", "ng-model" => "search.query"}
-        %button.clear{"aria-hidden" => "true", :type => "button", 'data' => {'function' => 'miqCallAngular', 'function-data' => '{"name":"resetSearch", "args":[]}'}}
-          %span.pficon.pficon-close
+
+      %input#search_topology.form-control{:type         => 'search',
+                                          'placeholder' => _("Search")}
+
+      -# this hidden button is a workaround
+      -# pressing enter in ^input triggers a *click* event on the next button
+      -# without this, that button is resetSearch, which ..is undesirable :)
+      %button.hidden{'data-function'      => 'miqCallAngular',
+                     'data-function-data' => {:name => 'searchNode',
+                                              :args => []}.to_json}
+
+      %button.clear{'aria-hidden'        => 'true',
+                    'data-function'      => 'miqCallAngular',
+                    'data-function-data' => {:name => 'resetSearch',
+                                             :args => []}.to_json}
+        %span.pficon.pficon-close
+
   .form-group.search-button
-    %button.btn.btn-default.search-topology-button{:type => "button",  'data' => {'function' => 'miqCallAngular', 'function-data' => '{"name":"searchNode", "args":[]}'}}
+    %button.btn.btn-default.search-topology-button{'data-function'      => 'miqCallAngular',
+                                                   'data-function-data' => {:name => 'searchNode',
+                                                                            :args => []}.to_json}
       %span.fa.fa-search

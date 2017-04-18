@@ -637,11 +637,13 @@ module OpsController::OpsRbac
 
   def rbac_edit_reset(operation, what, klass)
     key = what.to_sym
-    record = find_record_with_rbac(klass, checked_or_params_id)
-    if [:group, :role].include?(key) && record && record.read_only && operation != 'copy'
-      add_flash(_("Read Only %{model} \"%{name}\" can not be edited") % {:model => key == :role ? ui_lookup(:model => "MiqUserRole") : ui_lookup(:model => "MiqGroup"), :name => key == :role ? record.name : record.description}, :warning)
-      javascript_flash
-      return
+    if (operation != "new")
+      record = find_record_with_rbac(klass, checked_or_params_id)
+      if [:group, :role].include?(key) && record && record.read_only && operation != 'copy'
+        add_flash(_("Read Only %{model} \"%{name}\" can not be edited") % {:model => key == :role ? ui_lookup(:model => "MiqUserRole") : ui_lookup(:model => "MiqGroup"), :name => key == :role ? record.name : record.description}, :warning)
+        javascript_flash
+        return
+      end
     end
 
     case operation
@@ -713,6 +715,7 @@ module OpsController::OpsRbac
 
     if record.valid? && !flash_errors? && record.save
       set_role_features(record) if what == "role"
+      self.current_user = record if what == 'user' && @edit[:current][:userid] == current_userid
       AuditEvent.success(build_saved_audit(record, add_pressed))
       subkey = (key == :group) ? :description : :name
       add_flash(_("%{model} \"%{name}\" was saved") % {:model => what.titleize, :name => @edit[:new][subkey]})

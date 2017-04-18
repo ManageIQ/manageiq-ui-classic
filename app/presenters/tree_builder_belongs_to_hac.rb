@@ -35,7 +35,7 @@ class TreeBuilderBelongsToHac < TreeBuilder
 
   def set_locals_for_render
     locals = super
-    locals.merge!(:check_url         => "/ops/rbac_group_field_changed/#{@group.present? ? @group.id : "new"}___",
+    locals.merge!(:check_url         => "/ops/rbac_group_field_changed/#{group_id}___",
                   :oncheck           => @edit ? "miqOnCheckUserFilters" : nil,
                   :checkboxes        => true,
                   :highlight_changes => true,

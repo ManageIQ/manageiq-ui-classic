@@ -338,36 +338,6 @@ module ApplicationController::CiProcessing
     @refresh_partial = "shared/views/retire" if @explorer || @layout == "orchestration_stack"
   end
 
-  def resize
-    @record ||= VmOrTemplate.find_by_id(params[:rec_id])
-    drop_breadcrumb(
-      :name => _("Reconfigure Instance '%{name}'") % {:name => @record.name},
-      :url  => "/vm/resize"
-    ) unless @explorer
-    @flavors = {}
-    unless @record.ext_management_system.nil?
-      @record.ext_management_system.flavors.each do |ems_flavor|
-        # include only flavors with root disks at least as big as the instance's current root disk.
-        if (ems_flavor != @record.flavor) && (ems_flavor.root_disk_size >= @record.flavor.root_disk_size)
-          @flavors[ems_flavor.name_with_details] = ems_flavor.id
-        end
-      end
-    end
-    @edit = {}
-    @edit[:new] ||= {}
-    unless @record.flavor.nil?
-      @edit[:new][:flavor] = @record.flavor.id
-    end
-    @edit[:key] = "vm_resize__#{@record.id}"
-    @edit[:vm_id] = @record.id
-    @edit[:explorer] = true if params[:action] == "x_button" || session.fetch_path(:edit, :explorer)
-    session[:edit] = @edit
-    @in_a_form = true
-    @resize = true
-    @sb[:explorer] = @explorer
-    render :action => "show" unless @explorer
-  end
-
   def resizevms
     assert_privileges("instance_resize")
     recs = find_checked_items
@@ -389,11 +359,23 @@ module ApplicationController::CiProcessing
   end
   alias instance_resize resizevms
 
+  def resize
+    assert_privileges("instance_resize")
+    @record ||= find_record_with_rbac(session[:userid], params[:rec_id])
+    unless @explorer
+      drop_breadcrumb(
+        :name => _("Reconfigure Instance '%{name}'") % {:name => @record.name},
+        :url  => "/vm/resize"
+      )
+    end
+    @sb[:explorer] = @explorer
+    @in_a_form = true
+    @resize = true
+    render :action => "show" unless @explorer
+  end
+
   def resize_vm
     assert_privileges("instance_resize")
-    load_edit("vm_resize__#{params[:id]}")
-    flavor_id = @edit[:new][:flavor]
-    flavor = find_record_with_rbac(Flavor, flavor_id)
     @record = find_record_with_rbac(VmOrTemplate, params[:id])
 
     case params[:button]
@@ -404,6 +386,8 @@ module ApplicationController::CiProcessing
     when "submit"
       if @record.supports_resize?
         begin
+          flavor_id = params['flavor_id']
+          flavor = find_record_with_rbac(Flavor, flavor_id)
           old_flavor = @record.flavor
           @record.resize_queue(session[:userid], flavor)
           add_flash(_("Reconfiguring %{instance} \"%{name}\" from %{old_flavor} to %{new_flavor}") % {
@@ -436,18 +420,21 @@ module ApplicationController::CiProcessing
     return
   end
 
-  def resize_field_changed
-    return unless load_edit("vm_resize__#{params[:id]}")
-    @edit ||= {}
-    @edit[:new] ||= {}
-    @edit[:new][:flavor] = params[:flavor]
-    render :update do |page|
-      page << javascript_prologue
-      page.replace_html("main_div",
-                        :partial => "vm_common/resize") if %w(allright left right).include?(params[:button])
-      page << javascript_for_miq_button_visibility(true)
-      page << "miqSparkle(false);"
+  def resize_form_fields
+    assert_privileges("instance_resize")
+    @record = find_record_with_rbac(VmOrTemplate, params[:id])
+    flavors = []
+    unless @record.ext_management_system.nil?
+      @record.ext_management_system.flavors.each do |ems_flavor|
+        # include only flavors with root disks at least as big as the instance's current root disk.
+        if (ems_flavor != @record.flavor) && (ems_flavor.root_disk_size >= @record.flavor.root_disk_size)
+          flavors << {:name => ems_flavor.name_with_details, :id => ems_flavor.id}
+        end
+      end
     end
+    render :json => {
+      :flavors => flavors
+    }
   end
 
   def livemigratevms
