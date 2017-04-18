@@ -45,7 +45,7 @@ module MiddlewareServerHelper::TextualSummary
   def textual_server_state
     {
       :label => _('Server State'),
-      :value => @record.properties['Server State'].to_s.capitalize
+      :value => (@record.properties['Calculated Server State'] || @record.properties['Server State']).to_s.capitalize
     }
   end
 
