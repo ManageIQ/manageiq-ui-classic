@@ -14,15 +14,17 @@
   */
   function subscribeToSubject() {
     ManageIQ.angular.rxSubject.subscribe(function(event) {
-      if (event.eventType === 'updateToolbarCount') {
-        this.MiQToolbarSettingsService.setCount(event.countSelected);
-      } else if (event.rowSelect) {
-        this.onRowSelect(event.rowSelect);
-      } else if (event.redrawToolbar) {
-         this.onUpdateToolbar(event.redrawToolbar);
-      } else if (event.update) {
-        this.onUpdateItem(event);
-      }
+      this.$timeout(function() {
+        if (event.eventType === 'updateToolbarCount') {
+          this.MiQToolbarSettingsService.setCount(event.countSelected);
+        } else if (event.rowSelect) {
+          this.onRowSelect(event.rowSelect);
+        } else if (event.redrawToolbar) {
+           this.onUpdateToolbar(event.redrawToolbar);
+        } else if (event.update) {
+          this.onUpdateItem(event);
+        }
+      }.bind(this));
     }.bind(this),
     function (err) {
       console.error('Angular RxJs Error: ', err);
@@ -51,11 +53,12 @@
   * @param $location service for managing browser's location.
   * this contructor will assign all params to `this`, it will init endpoits, set if toolbar is used on list page.
   */
-  var ToolbarController = function(MiQToolbarSettingsService, MiQEndpointsService, $scope, $location) {
+  var ToolbarController = function(MiQToolbarSettingsService, MiQEndpointsService, $scope, $location, $timeout) {
     this.MiQToolbarSettingsService = MiQToolbarSettingsService;
     this.MiQEndpointsService = MiQEndpointsService;
     this.$scope = $scope;
     this.$location = $location;
+    this.$timeout = $timeout;
     initEndpoints(this.MiQEndpointsService);
     this.isList = _.contains(location.pathname, 'show_list');
   }
@@ -65,9 +68,6 @@
   */
   ToolbarController.prototype.onRowSelect = function(data) {
     this.MiQToolbarSettingsService.checkboxClicked(data.checked);
-    if(!this.$scope.$$phase) {
-      this.$scope.$digest();
-    }
   }
 
   /**
@@ -141,18 +141,12 @@
 
   ToolbarController.prototype.onUpdateToolbar = function(toolbarObject) {
     this.updateToolbar(toolbarObject);
-    if(!this.$scope.$$phase) {
-      this.$scope.$digest();
-    }
   }
 
   ToolbarController.prototype.onUpdateItem = function(updateData) {
     var toolbarItem = _.find(_.flatten(this.toolbarItems), {id: updateData.update});
     if (toolbarItem && toolbarItem.hasOwnProperty(updateData.type)) {
       toolbarItem[updateData.type] = updateData.value;
-      if(!this.$scope.$$phase) {
-        this.$scope.$digest();
-      }
     }
   }
 
@@ -164,7 +158,7 @@
     this.setClickHandler();
   }
 
-  ToolbarController.$inject = ['MiQToolbarSettingsService', 'MiQEndpointsService', '$scope', '$location'];
+  ToolbarController.$inject = ['MiQToolbarSettingsService', 'MiQEndpointsService', '$scope', '$location', '$timeout'];
   miqHttpInject(angular.module('ManageIQ.toolbar'))
     .controller('miqToolbarController', ToolbarController);
 })();
