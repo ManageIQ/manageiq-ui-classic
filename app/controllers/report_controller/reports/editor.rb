@@ -1413,9 +1413,6 @@ module ReportController::Reports::Editor
       provider.container_projects.all.each do |project|
         @cb_entities_by_provider_id[provider.id][:container_project][project.id] = project.name
       end
-      provider.container_images.all.each do |image|
-        @cb_entities_by_provider_id[provider.id][:container_image][image.id] = image.name
-      end
     end
   end
 
