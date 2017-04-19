@@ -1,4 +1,5 @@
 describe "layouts/listnav/_host_aggregate.html.haml" do
+  helper(ImageEncodeHelper)
   helper(QuadiconHelper)
 
   before :each do

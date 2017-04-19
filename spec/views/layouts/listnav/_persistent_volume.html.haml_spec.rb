@@ -1,4 +1,5 @@
 describe "layouts/listnav/_persistent_volume.html.haml" do
+  helper(ImageEncodeHelper)
   helper(QuadiconHelper)
 
   before :each do

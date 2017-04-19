@@ -1,4 +1,5 @@
 describe "layouts/listnav/_network_port.html.haml" do
+  helper(ImageEncodeHelper)
   helper(QuadiconHelper)
 
   before :each do

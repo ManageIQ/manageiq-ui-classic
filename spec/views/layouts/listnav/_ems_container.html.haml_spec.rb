@@ -1,4 +1,5 @@
 describe "layouts/listnav/_ems_container.html.haml" do
+  helper(ImageEncodeHelper)
   helper(QuadiconHelper)
 
   before :each do
