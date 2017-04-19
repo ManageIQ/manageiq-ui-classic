@@ -14,8 +14,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Refresh relationships and power states for all items related to the selected items?"),
           :enabled   => false,
-          :onwhen    => "1+"
-        ),
+          :onwhen    => "1+"),
         button(
           :physical_server_edit,
           'pficon pficon-edit fa-lg',
@@ -23,8 +22,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           t,
           :url_parms => "main_div",
           :enabled   => false,
-          :onwhen    => "1+"
-        ),
+          :onwhen    => "1+"),
         button(
           :physical_server_delete,
           'pficon pficon-delete fa-lg',
@@ -33,8 +31,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Warning: The selected items and ALL of their components will be permanently removed!?"),
           :enabled   => false,
-          :onwhen    => "1+"
-        ),
+          :onwhen    => "1+"),
       ]
     ),
   ])
@@ -56,8 +53,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Power on the server?"),
           :klass     => ApplicationHelper::Button::PhysicalServerFeatureButton,
-          :options   => {:feature => :power_on}
-        ),
+          :options   => {:feature => :power_on}),
         button(
           :physical_server_power_off,
           nil,
@@ -67,8 +63,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Power off the server?"),
           :klass     => ApplicationHelper::Button::PhysicalServerFeatureButton,
-          :options   => {:feature => :power_off}
-        ),
+          :options   => {:feature => :power_off}),
         button(
           :physical_server_restart,
           nil,
@@ -78,8 +73,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Restart the server?"),
           :klass     => ApplicationHelper::Button::PhysicalServerFeatureButton,
-          :options   => {:feature => :restart}
-        ),
+          :options   => {:feature => :restart}),
       ]
     ),
     select(
@@ -99,8 +93,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Blink the Identify LED?"),
           :klass     => ApplicationHelper::Button::PhysicalServerFeatureButton,
-          :options   => {:feature => :blink_loc_led}
-        ),
+          :options   => {:feature => :blink_loc_led}),
         button(
           :physical_server_turn_on_loc_led,
           nil,
@@ -110,8 +103,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Turn on the Identify LED?"),
           :klass     => ApplicationHelper::Button::PhysicalServerFeatureButton,
-          :options   => {:feature => :turn_on_loc_led}
-        ),
+          :options   => {:feature => :turn_on_loc_led}),
         button(
           :physical_server_turn_off_loc_led,
           nil,
@@ -121,8 +113,7 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
           :url_parms => "main_div",
           :confirm   => N_("Turn off the Identify LED?"),
           :klass     => ApplicationHelper::Button::PhysicalServerFeatureButton,
-          :options   => {:feature => :turn_off_loc_led}
-        ),
+          :options   => {:feature => :turn_off_loc_led}),
       ]
     ),
   ])
