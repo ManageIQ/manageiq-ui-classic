@@ -3,7 +3,7 @@
   - elsif @sb[:bottlenecks][:report]
     #chart_placeholder{:style => 'position: relative'}
     = render(:partial => "layouts/timeline",
-             :locals  => {:tl_json       => @tl_json || {},
+             :locals  => {:tl_json       => @tl_json,
                           :position_time => session[:tl_position]})
     - if @sb[:bottlenecks][:report].filter_summary
       = @sb[:bottlenecks][:report].filter_summary

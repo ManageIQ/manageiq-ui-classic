@@ -117,3 +117,22 @@
     }
   };
 })(ManageIQ);
+
+function miqInitTimeline(json) {
+  if (!json) {
+    return;
+  }
+
+  var parsed = JSON.parse(json);
+
+  var start, end;
+  if (!ManageIQ.calendar.calDateFrom || !ManageIQ.calendar.calDateTo) {
+    end = new Date();
+    start = new Date(end - 24 * 60 * 60 * 1000 * 7);
+  } else {
+    start = new Date(ManageIQ.calendar.calDateFrom);
+    end = new Date(ManageIQ.calendar.calDateTo);
+  }
+
+  ManageIQ.Timeline.load(parsed, start, end);
+}
