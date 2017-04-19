@@ -1,8 +1,12 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::InstanceCheckCompare do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record, 'display' => display} }
+  let(:props) { Hash.new }
   let(:display) { nil }
   let(:record) { FactoryGirl.create(:vm) }
-  subject { described_class.new(view_context, {}, {'record' => record, 'display' => display}, {}) }
 
   describe '#visible?' do
     context 'when record is not kind of OrchestrationStack && display != instances' do

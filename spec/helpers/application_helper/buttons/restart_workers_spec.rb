@@ -1,10 +1,13 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::RestartWorkers do
+  include_context 'ApplicationHelper::Button::Basic'
   let(:sandbox) { {:selected_worker_id => worker_id} }
-  let(:view_context) { setup_view_context_with_sandbox(sandbox) }
-  let(:button) { described_class.new(view_context, {}, {'sb' => sandbox}, {}) }
+  let(:instance_data) { {'sb' => sandbox} }
+  let(:props) { Hash.new }
 
   describe '#calculate_properties' do
-    before { button.calculate_properties }
+    before { subject.calculate_properties }
     context 'when worker is not selected' do
       let(:worker_id) { nil }
       it_behaves_like 'a disabled button', 'Select a worker to restart'

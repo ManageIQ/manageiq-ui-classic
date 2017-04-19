@@ -1,6 +1,10 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::ConfiguredSystemProvision do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  subject { described_class.new(view_context, {}, {'record' => record}, {}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
 
   describe '#visible?' do
     context 'when record is present' do

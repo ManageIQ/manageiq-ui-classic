@@ -1,15 +1,14 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::ViewGHT do
-  let(:view_context) { setup_view_context_with_sandbox(:active_tree => tree) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { {:active_tree => tree} }
+  let(:instance_data) { {'ght_type' => ght_type, 'report' => report, 'zgraph' => zgraph} }
+  let(:props) { Hash.new }
   let(:ght_type) { 'tabular' }
   let(:report) { FactoryGirl.create(:miq_report) }
   let(:zgraph) { nil }
   let(:graph) { nil }
-  subject do
-    described_class.new(view_context, {},
-                        { 'ght_type' => ght_type,
-                          'report'   => report,
-                          'zgraph'   => zgraph }, {})
-  end
 
   before { allow(report).to receive(:graph).and_return(graph) }
 

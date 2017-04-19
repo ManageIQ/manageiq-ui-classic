@@ -1,9 +1,13 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::Reload do
-  let(:view_context) { setup_view_context_with_sandbox(:active_tree => tree, :active_tab => tab) }
-  let(:x_node) { nil }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { {:active_tree => tree, :active_tab => tab} }
+  let(:instance_data) { Hash.new }
+  let(:props) { Hash.new }
   let(:tree) { nil }
   let(:tab) { nil }
-  subject { described_class.new(view_context, {}, {}, {}) }
+  let(:x_node) { nil }
 
   before { allow(view_context).to receive(:x_node).and_return(x_node) }
 

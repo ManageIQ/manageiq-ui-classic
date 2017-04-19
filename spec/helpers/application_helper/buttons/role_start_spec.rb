@@ -1,6 +1,10 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::RoleStart do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  subject { described_class.new(view_context, {}, {'record' => record}, {}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
 
   before { allow(view_context).to receive(:x_active_tree).and_return(:diagnostics_tree) }
   before { subject.instance_variable_set(:@sb, :active_tab => "diagnostics_roles_servers") }

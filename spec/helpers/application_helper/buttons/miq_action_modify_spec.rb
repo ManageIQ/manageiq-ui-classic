@@ -1,32 +1,33 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::MiqActionModify do
-  let(:view_context) { setup_view_context_with_sandbox(:active_tree => tree) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { {:active_tree => tree} }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:miq_event_definition) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
   let(:tree) { :policy_tree }
 
   describe '#visible?' do
-    subject { button.visible? }
-
     context 'when active_tree == :event_tree' do
       let(:tree) { :event_tree }
-      it { expect(subject).to be_falsey }
+      it { expect(subject.visible?).to be_falsey }
     end
     context 'when active_tree == :policy_tree' do
-      it { expect(subject).to be_truthy }
+      it { expect(subject.visible?).to be_truthy }
     end
   end
 
   describe '#disabled?' do
-    subject { button.disabled? }
     before { allow(view_context).to receive(:x_node).and_return("p-#{policy.id}_ev-1") }
 
     context 'when policy is read_only' do
       let(:policy) { FactoryGirl.create(:miq_policy_read_only) }
-      it { expect(subject).to be_truthy }
+      it { expect(subject.disabled?).to be_truthy }
     end
     context 'when policy is not read-only' do
       let(:policy) { FactoryGirl.create(:miq_policy) }
-      it { expect(subject).to be_falsey }
+      it { expect(subject.disabled?).to be_falsey }
     end
   end
 
@@ -37,7 +38,6 @@ describe ApplicationHelper::Button::MiqActionModify do
        nil]
     end
     let(:policy) { FactoryGirl.create(:miq_policy_read_only) }
-    subject { button[:title] }
 
     before { allow(view_context).to receive(:x_node).and_return("p-#{policy.id}_#{type}-1") }
     before(:each) { button.calculate_properties }
@@ -45,7 +45,7 @@ describe ApplicationHelper::Button::MiqActionModify do
     %w(a ev u).each_with_index do |type, i|
       context "when #{type} is active" do
         let(:type) { type }
-        it { expect(subject).to eq(messages[i]) }
+        it { expect(subject[:title]).to eq(messages[i]) }
       end
     end
   end

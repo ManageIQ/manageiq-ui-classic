@@ -1,12 +1,15 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::HostTimeline do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:vm) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#disabled?' do
-    subject { button[:title] }
     before { allow(record).to receive(:has_events?).and_return(has_events) }
-    before(:each) { button.calculate_properties }
+    before(:each) { subject.calculate_properties }
 
     context 'and record has events' do
       let(:has_events) { true }

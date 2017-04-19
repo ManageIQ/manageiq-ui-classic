@@ -1,17 +1,20 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::ReportOnly do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:result_detail) { FactoryGirl.create(:miq_report_result_detail, :miq_report_result_id => report_result_id) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record, 'report' => report, 'report_result_id' => report_result_id} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:miq_report_result, :miq_report_result_details => []) }
   let(:report) { FactoryGirl.create(:miq_report, :miq_report_results => []) }
   let(:report_result_id) { record.id }
-  let(:instance_data) { {'record' => record, 'report' => report, 'report_result_id' => report_result_id} }
-  let(:button) { described_class.new(view_context, {}, instance_data, {}) }
+  let(:result_detail) { FactoryGirl.create(:miq_report_result_detail, :miq_report_result_id => report_result_id) }
 
   describe '#calculate_properties' do
     let(:setup_report_result_details) { record.miq_report_result_details << result_detail if record }
     before do
       setup_report_result_details
-      button.calculate_properties
+      subject.calculate_properties
     end
 
     context 'when record not present' do

@@ -1,7 +1,11 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::SavedReportDelete do
-  let(:view_context) { setup_view_context_with_sandbox(:active_tree => tree, :active_tab => tab) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { {:active_tree => tree, :active_tab => tab} }
+  let(:instance_data) { Hash.new }
+  let(:props) { Hash.new }
   let(:tab) { nil }
-  subject { described_class.new(view_context, {}, {}, {}) }
 
   describe '#visible?' do
     context 'when active_tree == reports_tree' do

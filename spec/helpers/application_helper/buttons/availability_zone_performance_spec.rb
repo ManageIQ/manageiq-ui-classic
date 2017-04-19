@@ -1,10 +1,13 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::AvailabilityZonePerformance do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_examples 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:vm) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#disabled?' do
-    subject { button[:title] }
     before { allow(record).to receive(:has_perf_data?).and_return(has_perf_data) }
     before(:each) { button.calculate_properties }
 

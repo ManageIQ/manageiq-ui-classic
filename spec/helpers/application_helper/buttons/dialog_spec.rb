@@ -1,6 +1,10 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::Dialog do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  subject { described_class.new(view_context, {}, {'edit' => edit}, {}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'edit' => edit} }
+  let(:props) { Hash.new }
 
   context 'when edit == false' do
     let(:edit) { false }

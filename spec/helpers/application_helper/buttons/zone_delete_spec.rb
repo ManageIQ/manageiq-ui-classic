@@ -1,14 +1,18 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::ZoneDelete do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:zone_name) { 'NotDefault' }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'selected_zone' => selected_zone} }
+  let(:props) { Hash.new }
   let(:selected_zone) { FactoryGirl.create(:zone, :name => zone_name) }
-  let(:button) { described_class.new(view_context, {}, {'selected_zone' => selected_zone}, {}) }
+  let(:zone_name) { 'NotDefault' }
 
   describe '#calculate_properties' do
     let(:set_relationships) {}
     before do
       set_relationships
-      button.calculate_properties
+      subject.calculate_properties
     end
 
     context 'when selected zone is the default one' do

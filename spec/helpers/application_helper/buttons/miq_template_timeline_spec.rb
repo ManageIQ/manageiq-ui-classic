@@ -1,7 +1,11 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::MiqTemplateTimeline do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:template_redhat) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   it_behaves_like 'a timeline button', :entity => 'Template'
 end

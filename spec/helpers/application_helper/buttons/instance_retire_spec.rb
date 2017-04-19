@@ -1,6 +1,11 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::InstanceRetire do
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:vm, :retired => retired) }
-  subject { described_class.new(setup_view_context_with_sandbox({}), {}, {'record' => record}, {}) }
 
   describe '#disabled?' do
     [true, false].each do |retired|

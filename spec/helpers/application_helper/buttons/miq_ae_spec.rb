@@ -1,7 +1,11 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::MiqAe do
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { {:child_id => child_id} }
   let(:session) { Hash.new }
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  subject { described_class.new(view_context, {}, {'record' => record}, {:child_id => child_id}) }
 
   before { login_as FactoryGirl.create(:user, :with_miq_edit_features) }
 

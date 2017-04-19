@@ -1,6 +1,10 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::MiqReportAction do
-  let(:view_context) { setup_view_context_with_sandbox(:active_tab => tab) }
-  subject { described_class.new(view_context, {}, {}, {}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { {:active_tab => tab} }
+  let(:instance_data) { Hash.new }
+  let(:props) { Hash.new }
 
   describe '#visible?' do
     context 'when active_tab == saved_reports' do

@@ -1,13 +1,10 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::AbGroupEdit do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  subject do
-    described_class.new(
-      view_context,
-      {},
-      {},
-      {:child_id => 'ab_group_edit', :options => {:action => 'edited'}}
-    )
-  end
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { Hash.new }
+  let(:props) { {:child_id => 'ab_group_edit', :options => {:action => 'edited'}} }
 
   before { allow(view_context).to receive(:x_node).and_return(x_node) }
 

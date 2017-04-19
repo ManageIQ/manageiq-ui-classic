@@ -1,7 +1,11 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::VmWebmksConsole do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:vm) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#visible?' do
     subject { button.visible? }
@@ -18,7 +22,7 @@ describe ApplicationHelper::Button::VmWebmksConsole do
 
   describe '#calculate_properties?' do
     before { allow(record).to receive(:current_state).and_return(power_state) }
-    before(:each) { button.calculate_properties }
+    before(:each) { subject.calculate_properties }
 
     context 'when record.vendor == vmware' do
       let(:power_state) { 'on' }

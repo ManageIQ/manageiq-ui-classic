@@ -1,8 +1,10 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::VmSnapshotRevert do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:zone) { EvmSpecHelper.local_miq_server(:is_master => true).zone }
-  let(:ems) { FactoryGirl.create(:ems_vmware, :zone => zone, :name => 'Test EMS') }
-  let(:host) { FactoryGirl.create(:host) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record, 'active' => active} }
+  let(:props) { Hash.new }
   let(:record) do
     record = FactoryGirl.create(:vm_vmware, :ems_id => ems.id, :host_id => host.id)
     record.snapshots = [FactoryGirl.create(:snapshot,
@@ -14,21 +16,22 @@ describe ApplicationHelper::Button::VmSnapshotRevert do
     record
   end
   let(:active) { true }
-  let(:button) { described_class.new(view_context, {}, {'record' => record, 'active' => active}, {}) }
+  let(:ems) { FactoryGirl.create(:ems_vmware, :zone => zone, :name => 'Test EMS') }
+  let(:host) { FactoryGirl.create(:host) }
+  let(:zone) { EvmSpecHelper.local_miq_server(:is_master => true).zone }
 
   describe '#visible?' do
-    subject { button.visible? }
     context 'when record.kind_of?(ManageIQ::Providers::Openstack::CloudManager::Vm)' do
       let(:record) { FactoryGirl.create(:vm_openstack) }
-      it { is_expected.to be_falsey }
+      it { expect(subject.visible?).to be_falsey }
     end
     context 'when !record.kind_of?(ManageIQ::Providers::Openstack::CloudManager::Vm)' do
-      it { is_expected.to be_truthy }
+      it { expect(subject.visible?).to be_truthy }
     end
   end
 
   describe '#calculate_properties' do
-    before { button.calculate_properties }
+    before { subject.calculate_properties }
 
     context 'when reverting to a snapshot is available' do
       it_behaves_like 'an enabled button'

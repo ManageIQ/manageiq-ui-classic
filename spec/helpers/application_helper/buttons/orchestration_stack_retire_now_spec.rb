@@ -1,10 +1,14 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::OrchestrationStackRetireNow do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:orchestration_stack, :retired => retired) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#calculate_properties' do
-    before { button.calculate_properties }
+    before { subject.calculate_properties }
 
     context 'when Orchestration Stack is retired' do
       let(:retired) { true }

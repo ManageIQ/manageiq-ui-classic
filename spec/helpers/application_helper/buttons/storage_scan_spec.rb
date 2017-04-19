@@ -1,12 +1,15 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::StorageScan do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:host) { FactoryGirl.create(:host, :state => 'on') }
-  let(:hosts) { [host] }
-  let(:authenticated_hosts) { hosts }
-  let(:record) { FactoryGirl.create(:storage, :hosts => hosts) }
-  let(:feature) { :smartstate_analysis }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
   let(:props) { {:options => {:feature => feature}} }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, props) }
+  let(:record) { FactoryGirl.create(:storage, :hosts => hosts) }
+  let(:hosts) { [host] }
+  let(:host) { FactoryGirl.create(:host, :state => 'on') }
+  let(:feature) { :smartstate_analysis }
+  let(:authenticated_hosts) { hosts }
 
   before { allow(record).to receive(:active_hosts_with_authentication_status_ok).and_return(authenticated_hosts) }
 
@@ -20,7 +23,7 @@ describe ApplicationHelper::Button::StorageScan do
     describe '#calculate_properties' do
       before do
         allow(record).to receive(:supports?).and_return(true)
-        button.calculate_properties
+        subject.calculate_properties
       end
 
       context 'and there are active hosts' do

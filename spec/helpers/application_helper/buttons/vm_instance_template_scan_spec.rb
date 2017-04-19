@@ -1,11 +1,14 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::VmInstanceTemplateScan do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:vm_or_template) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#visible?' do
     let(:has_proxy?) { true }
-    subject { button.visible? }
     before do
       allow(record).to receive(:supports?).with(:smartstate_analysis).and_return(supports_feature?)
       allow(record).to receive(:has_proxy?).and_return(has_proxy?)
@@ -14,16 +17,16 @@ describe ApplicationHelper::Button::VmInstanceTemplateScan do
     context 'when record supports smartstate analysis' do
       let(:supports_feature?) { true }
       context 'when record has proxy' do
-        it { is_expected.to be_truthy }
+        it { expect(subject.visible?).to be_truthy }
       end
       context 'when record does not have proxy' do
         let(:has_proxy?) { false }
-        it { is_expected.to be_falsey }
+        it { expect(subject.visible?).to be_falsey }
       end
     end
     context 'when record does not support smartstate analysis' do
       let(:supports_feature?) { false }
-      it { is_expected.to be_falsey }
+      it { expect(subject.visible?).to be_falsey }
     end
   end
 
@@ -40,7 +43,7 @@ describe ApplicationHelper::Button::VmInstanceTemplateScan do
       before do
         roles = %w(smartproxy smartstate).collect { |role| FactoryGirl.create(:server_role, :name => role) }
         FactoryGirl.create(:miq_server, :zone => MiqServer.my_server.zone, :active_roles => roles)
-        button.calculate_properties
+        subject.calculate_properties
       end
 
       context 'when record has active proxy' do

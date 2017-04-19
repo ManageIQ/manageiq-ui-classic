@@ -1,9 +1,14 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::AbGroupReorder do
-  subject { described_class.new(view_context, {}, {}, {:options => {:action => 'edited'}}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { {:active_tree => tree} }
+  let(:instance_data) { Hash.new }
+  let(:props) { {:options => {:action => 'edited'}} }
 
   describe '#disabled?' do
     context 'when :active_tree == :ab_tree' do
-      let(:view_context) { setup_view_context_with_sandbox(:active_tree => :ab_tree) }
+      let(:tree) { :ab_tree }
 
       before do
         custom_button_sets_count.times do
@@ -25,7 +30,7 @@ describe ApplicationHelper::Button::AbGroupReorder do
     end
 
     context 'when :active_tree != :ab_tree' do
-      let(:view_context) { setup_view_context_with_sandbox(:active_tree => :not_ab_tree) }
+      let(:tree) { :not_ab_tree }
       let(:cb_class) { 'ServiceTemplate' }
       let(:service_template) { FactoryGirl.create(:service_template, :custom_button_sets => custom_button_sets) }
       let(:custom_button_sets) do

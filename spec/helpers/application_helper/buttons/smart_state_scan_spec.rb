@@ -1,6 +1,10 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::SmartStateScan do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:button) { described_class.new(view_context, {}, {}, {}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { Hash.new }
+  let(:props) { Hash.new }
 
   it_behaves_like 'a smart state scan button'
 end

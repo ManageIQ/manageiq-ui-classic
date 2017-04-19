@@ -1,9 +1,13 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::ZoneCollectLogs do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:file_depot) { FactoryGirl.create(:file_depot) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:zone, :log_file_depot => file_depot) }
+  let(:file_depot) { FactoryGirl.create(:file_depot) }
   let(:miq_server) { FactoryGirl.create(:miq_server, :status => server_status) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   def tear_down
     LogFile.delete_all
@@ -19,7 +23,7 @@ describe ApplicationHelper::Button::ZoneCollectLogs do
       setup_log_files
       setup_tasks
       record.miq_servers << miq_server
-      button.calculate_properties
+      subject.calculate_properties
     end
     after(:each) { tear_down }
 

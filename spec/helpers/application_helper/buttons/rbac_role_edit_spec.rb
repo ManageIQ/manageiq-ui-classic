@@ -1,10 +1,14 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::RbacRoleEdit do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
+  let(:record) { FactoryGirl.create(:miq_user_role, :read_only => read_only) }
 
   describe '#calculate_properties' do
-    let(:record) { FactoryGirl.create(:miq_user_role, :read_only => read_only) }
-    before { button.calculate_properties }
+    before { subject.calculate_properties }
 
     context 'when role is writable' do
       let(:read_only) { false }

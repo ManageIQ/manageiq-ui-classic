@@ -1,9 +1,13 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::MiqReportEdit do
-  let(:view_context) { setup_view_context_with_sandbox(:active_tab => tab, :active_tree => tree) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { {:active_tab => tab, :active_tree => tree} }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:tab) { nil }
   let(:tree) { nil }
   let(:record) { nil }
-  subject { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#visible?' do
     context 'when active_tree == reports_tree' do

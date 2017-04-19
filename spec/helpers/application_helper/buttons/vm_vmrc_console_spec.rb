@@ -1,7 +1,11 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::VmVmrcConsole do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:vm_vmware) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#visible?' do
     it_behaves_like 'vm_console_visible?', 'VMRC'
@@ -10,7 +14,7 @@ describe ApplicationHelper::Button::VmVmrcConsole do
   describe '#calculate_properties' do
     before do
       remote_console_validation
-      button.calculate_properties
+      subject.calculate_properties
     end
 
     context 'and remote control is supported' do

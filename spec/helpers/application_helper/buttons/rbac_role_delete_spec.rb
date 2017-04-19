@@ -1,14 +1,18 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::RbacRoleDelete do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:read_only) { false }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:miq_user_role, :read_only => read_only) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
+  let(:read_only) { false }
 
   describe '#calculate_properties' do
     let(:setup_miq_groups) {}
     before do
       setup_miq_groups
-      button.calculate_properties
+      subject.calculate_properties
     end
     after(:each) { tear_down }
 

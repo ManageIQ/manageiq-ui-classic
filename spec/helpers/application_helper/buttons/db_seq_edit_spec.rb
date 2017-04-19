@@ -1,11 +1,15 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::DbSeqEdit do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'widgetsets' => widgetsets} }
+  let(:props) { Hash.new }
   let(:dashboard_count) { 2 }
   let(:widgetsets) { Array.new(dashboard_count) { |_i| FactoryGirl.create(:miq_widget_set) } }
-  let(:button) { described_class.new(view_context, {}, {'widgetsets' => widgetsets}, {}) }
 
   describe '#calculate_properties' do
-    before { button.calculate_properties }
+    before { subject.calculate_properties }
 
     context 'when there is enough dashboards to edit sequence' do
       it_behaves_like 'an enabled button'

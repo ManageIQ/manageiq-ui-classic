@@ -1,7 +1,11 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::CustomizationTemplateCopy do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { nil }
-  subject { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   before { allow(view_context).to receive(:x_node).and_return(x_node) }
 

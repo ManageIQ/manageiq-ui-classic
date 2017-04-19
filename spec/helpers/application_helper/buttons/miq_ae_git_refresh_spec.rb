@@ -1,7 +1,11 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::MiqAeGitRefresh do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:miq_ae_git_domain) }
-  subject { described_class.new(view_context, {}, {'record' => record}, {:child_id => 'miq_ae_git_refresh'}) }
 
   before { MiqRegion.seed }
 

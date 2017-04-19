@@ -1,5 +1,10 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::ShowSummary do
-  subject { described_class.new(setup_view_context_with_sandbox({}), {}, {'explorer' => explorer}, {}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'explorer' => explorer} }
+  let(:props) { Hash.new }
 
   describe '#visible?' do
     [true, false].each do |explorer|

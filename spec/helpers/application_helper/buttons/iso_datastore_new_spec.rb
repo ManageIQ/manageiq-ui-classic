@@ -1,6 +1,10 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::IsoDatastoreNew do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:button) { described_class.new(view_context, {}, {}, {}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { Hash.new }
+  let(:props) { Hash.new }
 
   before(:all) { clean_up }
 
@@ -11,7 +15,7 @@ describe ApplicationHelper::Button::IsoDatastoreNew do
   describe '#calculate_properties' do
     before(:each) do
       setup
-      button.calculate_properties
+      subject.calculate_properties
     end
     after(:each) { clean_up }
 

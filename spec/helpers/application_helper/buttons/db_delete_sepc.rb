@@ -1,10 +1,14 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::DbDelete do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'db' => dashboard} }
+  let(:props) { Hash.new }
   let(:dashboard) { FactoryGirl.create(:miq_widget_set, :read_only => read_only) }
-  let(:button) { described_class.new(view_context, {}, {'db' => dashboard}, {}) }
 
   describe '#calculate_properties' do
-    before { button.calculate_properties }
+    before { subject.calculate_properties }
 
     context 'when dashboard is read-only' do
       let(:read_only) { true }

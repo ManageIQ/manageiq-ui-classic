@@ -1,6 +1,10 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::DialogResourceRemove do
-  let(:view_context) { setup_view_context_with_sandbox(:edit_typ => edit_typ) }
-  subject { described_class.new(view_context, {}, {'edit' => edit}, {}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { {:edit_typ => edit_typ} }
+  let(:instance_data) { {'edit' => edit} }
+  let(:props) { Hash.new }
 
   before { allow(view_context).to receive(:x_node).and_return(x_node) }
 

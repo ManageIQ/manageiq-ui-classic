@@ -1,8 +1,11 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::EmsStorageTimeline do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:ext_management_system) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
   let(:props) { {:options => {:feature => :timeline}} }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, props) }
+  let(:record) { FactoryGirl.create(:ext_management_system) }
 
   it_behaves_like 'a timeline button', :entity => 'Storage Manager'
 end

@@ -1,10 +1,14 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::MiqAeDomainEdit do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  subject { described_class.new(view_context, {}, {'record' => record}, {:child_id => 'miq_ae_domain_edit'}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
+  let(:record) { FactoryGirl.create(:miq_ae_domain_disabled) }
 
   describe '#visible?' do
     context 'when domain is locked' do
-      let(:record) { FactoryGirl.create(:miq_ae_domain_disabled) }
       it { expect(subject.visible?).to be_truthy }
     end
   end

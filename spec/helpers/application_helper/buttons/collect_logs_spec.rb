@@ -1,8 +1,12 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::CollectLogs do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:file_depot) { FactoryGirl.create(:file_depot) }
   let(:record) { FactoryGirl.create(:miq_server, :status => server_status, :log_file_depot => file_depot) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   def tear_down
     LogFile.delete_all
@@ -15,7 +19,7 @@ describe ApplicationHelper::Button::CollectLogs do
     before(:each) do
       setup_log_files
       setup_tasks
-      button.calculate_properties
+      subject.calculate_properties
     end
     after(:each) { tear_down }
 

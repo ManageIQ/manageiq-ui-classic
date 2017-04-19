@@ -1,5 +1,11 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::WidgetGenerateContent do
-  let(:view_context) { setup_view_context_with_sandbox(:wtype => wtype) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { {:wtype => wtype} }
+  let(:instance_data) { {'record' => record, 'widget_running' => widget_running} }
+  let(:props) { Hash.new }
+  let(:wtype) { 'not_m' }
   let(:record) do
     rec = FactoryGirl.create(:miq_widget)
     set = FactoryGirl.create(:miq_widget_set)
@@ -8,8 +14,6 @@ describe ApplicationHelper::Button::WidgetGenerateContent do
     rec
   end
   let(:widget_running) { false }
-  let(:wtype) { 'not_m' }
-  subject { described_class.new(view_context, {}, {'record' => record, 'widget_running' => widget_running}, {}) }
 
   describe '#visible?' do
     context 'when it is a menu widget' do

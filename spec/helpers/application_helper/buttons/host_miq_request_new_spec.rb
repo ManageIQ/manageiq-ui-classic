@@ -1,13 +1,16 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::HostMiqRequestNew do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:vm) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#disabled?' do
-    subject { button[:title] }
     before { allow(record).to receive(:mac_address).and_return(mac_address) }
     before { allow(PxeServer).to receive(:all).and_return(serverAll) }
-    before(:each) { button.calculate_properties }
+    before(:each) { subject.calculate_properties }
 
     context 'and record has mac address and servers' do
       let(:mac_address) { "00:0D:93:13:51:1A" }
