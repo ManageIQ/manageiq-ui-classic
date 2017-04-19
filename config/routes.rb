@@ -2026,7 +2026,6 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
-        credential_refresh
         show_list
       )
     },

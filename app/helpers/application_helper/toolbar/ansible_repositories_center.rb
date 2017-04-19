@@ -9,12 +9,13 @@ class ApplicationHelper::Toolbar::AnsibleRepositoriesCenter < ApplicationHelper:
         button(
           :embedded_configuration_script_source_refresh,
           'fa fa-refresh fa-lg',
-          N_('Refresh Embedded Ansible Provider'),
-          N_('Refresh Embedded Ansible Provider'),
+          N_('Refresh Selected Ansible Repositories'),
+          N_('Refresh Selected Ansible Repositories'),
           :klass => ApplicationHelper::Button::EmbeddedAnsible,
           :url       => "repository_refresh",
-          :url_parms => "main_div",
-          :confirm   => N_("Refresh relationships for all items from Embedded Ansible Provider?")),
+          :confirm   => N_("Refresh selected Ansible Repositories?"),
+          :enabled   => false,
+          :onwhen    => "1+"),
         separator,
         button(
           :embedded_configuration_script_source_add,

@@ -77,8 +77,12 @@ class AnsibleRepositoryController < ApplicationController
   end
 
   def repository_refresh
-    # Targeted refresh for embedded ansible hasn't been implemented yet
-    embedded_ansible_refresh
+    assert_privileges("embedded_configuration_script_source_refresh")
+    checked = find_checked_items
+    checked[0] = params[:id] if checked.blank? && params[:id]
+    objects = AnsibleRepositoryController.model.find(checked)
+    embedded_ansible_refresh(objects)
+    javascript_flash
   end
 
   private
