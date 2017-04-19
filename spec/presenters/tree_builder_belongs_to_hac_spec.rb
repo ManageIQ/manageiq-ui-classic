@@ -61,7 +61,7 @@ describe TreeBuilderBelongsToHac do
                         true,
                         :edit     => edit,
                         :filters  => {},
-                        :group    => group,
+                        :group    => nil,
                         :selected => {})
   end
 
@@ -80,7 +80,7 @@ describe TreeBuilderBelongsToHac do
       expect(subject.send(:set_locals_for_render)).to include(:onclick           => false,
                                                               :tree_state        => true,
                                                               :checkboxes        => true,
-                                                              :check_url         => "/ops/rbac_group_field_changed/#{group.id || "new"}___",
+                                                              :check_url         => "/ops/rbac_group_field_changed/new___",
                                                               :oncheck           => nil,
                                                               :highlight_changes => true)
     end

@@ -6,89 +6,15 @@ class EmsClusterController < ApplicationController
 
   include Mixins::GenericListMixin
   include Mixins::MoreShowActions
+  include Mixins::GenericShowMixin
 
   def drift_history
     @display = "drift_history"
     super
   end
 
-  def show
-    return if perfmenu_click?
-    @display = params[:display] || "main" unless pagination_or_gtl_request?
-
-    @lastaction = "show"
-    @showtype = "config"
-    @ems_cluster = @record = identify_record(params[:id])
-    return if record_no_longer_exists?(@ems_cluster)
-
-    @gtl_url = "/show"
-
-    case @display
-    when "main", "summary_only"
-      get_tagdata(@ems_cluster)
-      drop_breadcrumb({:name => _("Clusters"), :url => "/ems_cluster/show_list?page=#{@current_page}&refresh=y"}, true)
-      drop_breadcrumb(:name => @ems_cluster.name + _(" (Summary)"), :url => "/ems_cluster/show/#{@ems_cluster.id}")
-      @showtype = "main"
-      set_summary_pdf_data if @display == "summary_only"
-
-    when "descendant_vms"
-      drop_breadcrumb(:name => @ems_cluster.name + _(" (All VMs - Tree View)"),
-                      :url  => "/ems_cluster/show/#{@ems_cluster.id}?display=descendant_vms&treestate=true")
-      @showtype = "config"
-
-      cluster = @ems_cluster
-      @datacenter_tree = TreeBuilderDatacenter.new(:datacenter_tree, :datacenter, @sb, true, cluster)
-      self.x_active_tree = :datacenter_tree
-
-    when "all_vms"
-      drop_breadcrumb(:name => @ems_cluster.name + _(" (All VMs)"),
-                      :url  => "/ems_cluster/show/#{@ems_cluster.id}?display=all_vms")
-      @view, @pages = get_view(Vm, :parent => @ems_cluster, :association => "all_vms")  # Get the records (into a view) and the paginator
-      @showtype = "vms"
-
-    when "miq_templates", "vms"
-      title, kls = @display == "vms" ? ["VMs", Vm] : ["Templates", MiqTemplate]
-      drop_breadcrumb(:name => @ems_cluster.name + _(" (Direct %{title})") % {:title => title},
-                      :url  => "/ems_cluster/show/#{@ems_cluster.id}?display=#{@display}")
-      @view, @pages = get_view(kls, :parent => @ems_cluster)  # Get the records (into a view) and the paginator
-      @showtype = @display
-
-    when "hosts"
-      label, condition, breadcrumb_suffix = hosts_subsets
-
-      drop_breadcrumb(:name => label, :url => "/ems_cluster/show/#{@ems_cluster.id}?display=hosts#{breadcrumb_suffix}")
-      @view, @pages = get_view(Host, :parent => @ems_cluster, :conditions => condition) # Get the records (into a view) and the paginator
-      @showtype = "hosts"
-
-    when "resource_pools"
-      drop_breadcrumb(:name => @ems_cluster.name + _(" (All Resource Pools)"),
-                      :url  => "/ems_cluster/show/#{@ems_cluster.id}?display=resource_pools")
-      @view, @pages = get_view(ResourcePool, :parent => @ems_cluster) # Get the records (into a view) and the paginator
-      @showtype = "resource_pools"
-
-    when "config_info"
-      @showtype = "config"
-      drop_breadcrumb(:name => _("Configuration"), :url => "/ems_cluster/show/#{@ems_cluster.id}?display=#{@display}")
-
-    when "performance"
-      show_performance
-
-    when "timeline"
-      @record = find_record_with_rbac(EmsCluster, session[:tl_record_id])
-      show_timeline
-
-    when "storage"
-      drop_breadcrumb(:name => @ems_cluster.name + _(" (All Descendant %{table}(s))") %
-        {:table => ui_lookup(:table => "storages")},
-                      :url  => "/ems_cluster/show/#{@ems_cluster.id}?display=storage")
-      @view, @pages = get_view(Storage, :parent => @ems_cluster)  # Get the records (into a view) and the paginator
-      @showtype = "storage"
-    end
-
-    set_config(@ems_cluster)
-    session[:tl_record_id] = @record.id
-
-    replace_gtl_main_div if pagination_request?
+  def self.display_methods
+    %w(descendant_vms all_vms miq_templates vms hosts resource_pools config_info storage)
   end
 
   # handle buttons pressed on the button bar

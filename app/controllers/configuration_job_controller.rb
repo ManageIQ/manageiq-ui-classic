@@ -92,5 +92,5 @@ class ConfigurationJobController < ApplicationController
   end
   helper_method :textual_group_list
 
-  menu_section :conf
+  menu_section :aut
 end

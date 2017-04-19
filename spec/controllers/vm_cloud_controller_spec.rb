@@ -78,13 +78,11 @@ describe VmCloudController do
       flavor = FactoryGirl.create(:flavor_openstack)
       allow(controller).to receive(:load_edit).and_return(true)
       allow(controller).to receive(:previous_breadcrumb_url).and_return("/vm_cloud/explorer")
-      controller.instance_variable_set(:@edit,
-                                       :new      => {:flavor => flavor.id},
-                                       :explorer => false)
       expect_any_instance_of(VmCloud).to receive(:resize_queue).with(controller.current_user.userid, flavor)
       post :resize_vm, :params => {
-        :button => 'submit',
-        :id     => vm_openstack.id
+        :button    => 'submit',
+        :id        => vm_openstack.id,
+        :flavor_id => flavor.id
       }
       expect(response.status).to eq(200)
     end
@@ -105,10 +103,10 @@ describe VmCloudController do
       controller.instance_variable_set(:@edit,
                                        :new      => {},
                                        :explorer => false)
+      session[:live_migrate_items] = [vm_openstack.id]
       expect(VmCloud).to receive(:live_migrate_queue)
       post :live_migrate_vm, :params => {
-        :button => 'submit',
-        :id     => vm_openstack.id
+        :button => 'submit'
       }
       expect(response.status).to eq(200)
     end
@@ -129,10 +127,10 @@ describe VmCloudController do
       controller.instance_variable_set(:@edit,
                                        :new      => {},
                                        :explorer => false)
-      expect_any_instance_of(VmCloud).to receive(:evacuate_queue)
+      session[:evacuate_items] = [vm_openstack.id]
+      expect(VmCloud).to receive(:evacuate_queue)
       post :evacuate_vm, :params => {
-        :button => 'submit',
-        :id     => vm_openstack.id
+        :button => 'submit'
       }
       expect(response.status).to eq(200)
     end

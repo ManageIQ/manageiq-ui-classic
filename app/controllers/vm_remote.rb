@@ -26,11 +26,6 @@ module VmRemote
     console_type = ::Settings.server.remote_console_type.downcase
     @vm = @record = identify_record(params[:id], VmOrTemplate)
     options = case console_type
-              when "mks"
-                @sb[:mks].update(
-                  :version     => ::Settings.server.mks_version,
-                  :mks_classid => ::Settings.server.mks_classid
-                )
               when "webmks"
                 override_content_security_policy_directives(
                   :connect_src => ["'self'", "wss://#{params[:host]}"]
@@ -113,7 +108,7 @@ module VmRemote
     end
   end
 
-  # Task complete, show error or launch console using VNC/MKS/VMRC task info
+  # Task complete, show error or launch console using VNC/WebMKS/VMRC task info
   def console_after_task(console_type)
     miq_task = MiqTask.find(params[:task_id])
     unless miq_task.results_ready?

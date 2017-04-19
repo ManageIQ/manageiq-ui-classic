@@ -53,6 +53,16 @@ describe AutomationManagerController do
     expect(response.body).to_not be_empty
   end
 
+  it "renders explorer sorted by url" do
+    login_as user_with_feature(%w(automation_manager_providers automation_manager_configured_system automation_manager_configuration_scripts_accord))
+    FactoryGirl.create(:provider_ansible_tower, :name => "ansibletest3", :url => "z_url", :zone => zone)
+    FactoryGirl.create(:provider_ansible_tower, :name => "ansibletest4", :url => "a_url", :zone => zone)
+
+    get :explorer, :params => {:sortby => '2'}
+    expect(response.status).to eq(200)
+    expect(response.body).to match('https://a_url/api/v1(.|\n)*https://z_url/api/v1')
+  end
+
   context "renders the explorer based on RBAC" do
     it "renders explorer based on RBAC access to feature 'automation_manager_configured_system_tag'" do
       login_as user_with_feature %w(automation_manager_configured_system_tag)

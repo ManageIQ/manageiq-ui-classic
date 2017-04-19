@@ -42,10 +42,6 @@ module ApplicationHelper
                 _(": Analysis Profiles")
               when "miq_policy_rsop"
                 _(": Policy Simulation")
-              when "all_ui_tasks"
-                _(": All UI Tasks")
-              when "my_ui_tasks"
-                _(": My UI Tasks")
               when "rss"
                 _(": RSS")
               when "storage_manager"

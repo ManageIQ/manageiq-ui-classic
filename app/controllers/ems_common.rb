@@ -164,7 +164,6 @@ module EmsCommon
 
 
   def new
-    @doc_url = provider_documentation_url
     assert_privileges("#{permission_prefix}_new")
     @ems = model.new
     set_form_vars
@@ -215,7 +214,6 @@ module EmsCommon
   end
 
   def edit
-    @doc_url = provider_documentation_url
     assert_privileges("#{permission_prefix}_edit")
     begin
       @ems = find_record_with_rbac(model, params[:id])
@@ -515,17 +513,41 @@ module EmsCommon
                           :flash_msg   => @flash_array[0][:message],
                           :flash_error => @flash_array[0][:level] == :error
     elsif params[:pressed] == "host_aggregate_edit"
-      javascript_redirect :controller => "host_aggregate", :action => "edit", :id => find_checked_items[0]
+      javascript_redirect :controller => "host_aggregate",
+                          :action     => "edit",
+                          :id         => find_checked_ids_with_rbac(HostAggregate).first
     elsif params[:pressed] == "cloud_tenant_edit"
-      javascript_redirect :controller => "cloud_tenant", :action => "edit", :id => find_checked_items[0]
+      javascript_redirect :controller => "cloud_tenant",
+                          :action     => "edit",
+                          :id         => find_checked_ids_with_rbac(CloudTenant).first
     elsif params[:pressed] == "cloud_volume_new"
-      javascript_redirect :controller => "cloud_volume", :action => "new", :storage_manager_id => params[:id]
+      javascript_redirect :controller         => "cloud_volume",
+                          :action             => "new",
+                          :storage_manager_id => find_id_with_rbac(CloudVolume, params[:id])
     elsif params[:pressed] == "cloud_volume_attach"
-      javascript_redirect :controller => "cloud_volume", :action => "attach", :id => find_checked_items[0]
+      javascript_redirect :controller => "cloud_volume",
+                          :action     => "attach",
+                          :id         => find_checked_ids_with_rbac(CloudVolume).first
     elsif params[:pressed] == "cloud_volume_detach"
-      javascript_redirect :controller => "cloud_volume", :action => "detach", :id => find_checked_items[0]
+      javascript_redirect :controller => "cloud_volume",
+                          :action     => "detach",
+                          :id         => find_checked_ids_with_rbac(CloudVolume).first
     elsif params[:pressed] == "cloud_volume_edit"
-      javascript_redirect :controller => "cloud_volume", :action => "edit", :id => find_checked_items[0]
+      javascript_redirect :controller => "cloud_volume",
+                          :action     => "edit",
+                          :id         => find_checked_ids_with_rbac(CloudVolume).first
+    elsif params[:pressed] == "network_router_edit"
+      javascript_redirect :controller => "network_router",
+                          :action     => "edit",
+                          :id         => find_checked_ids_with_rbac(NetworkRouter).first
+    elsif params[:pressed] == "network_router_add_interface"
+      javascript_redirect :controller => "network_router",
+                          :action     => "add_interface_select",
+                          :id         => find_checked_ids_with_rbac(NetworkRouter).first
+    elsif params[:pressed] == "network_router_remove_interface"
+      javascript_redirect :controller => "network_router",
+                          :action     => "remove_interface_select",
+                          :id         => find_checked_ids_with_rbac(NetworkRouter).first
     elsif params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new", "#{pfx}_clone",
                                                    "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
       render_or_redirect_partial(pfx)
@@ -552,10 +574,6 @@ module EmsCommon
     process_emss(ids, "check_compliance")
     params[:display] = "main"
     showlist ? show_list : show
-  end
-
-  def provider_documentation_url
-    "http://manageiq.org/documentation/getting-started/#adding-a-provider"
   end
 
   private ############################
@@ -914,7 +932,9 @@ module EmsCommon
   end
 
   def process_emss(emss, task)
-    emss, emss_out_region = filter_ids_in_region(emss, "Provider")
+    emss, _emss_out_region = filter_ids_in_region(emss, "Provider")
+    assert_rbac(model, emss)
+
     return if emss.empty?
 
     if task == "refresh_ems"
@@ -1045,44 +1065,36 @@ module EmsCommon
     end
   end
 
+  def call_ems_refresh(emss)
+    process_emss(emss, "refresh_ems") unless emss.empty?
+    return if @flash_array.present?
+
+    add_flash(n_("Refresh initiated for %{count} %{model} from the %{product} Database",
+                 "Refresh initiated for %{count} %{models} from the %{product} Database", emss.length) %
+      {:count   => emss.length,
+       :product => I18n.t('product.name'),
+       :model   => ui_lookup(:table => @table_name),
+       :models  => ui_lookup(:tables => @table_name)})
+  end
+
   # Refresh VM states for all selected or single displayed ems(s)
   def refreshemss
     assert_privileges(params[:pressed])
-    emss = []
-    if @lastaction == "show_list" # showing a list, scan all selected emss
+    if @lastaction == "show_list"
       emss = find_checked_items
       if emss.empty?
         add_flash(_("No %{model} were selected for refresh") % {:model => ui_lookup(:table => @table_name)}, :error)
       end
-      process_emss(emss, "refresh_ems") unless emss.empty?
-      add_flash(n_("Refresh initiated for %{count} %{model} from the %{product} Database",
-                   "Refresh initiated for %{count} %{models} from the %{product} Database", emss.length) %
-        {:count   => emss.length,
-         :product => I18n.t('product.name'),
-         :model   => ui_lookup(:table => @table_name),
-         :models  => ui_lookup(:tables => @table_name)}) if @flash_array.nil?
+      call_ems_refresh(emss)
       show_list
       @refresh_partial = "layouts/gtl"
-    else # showing 1 ems, scan it
+    else
       if params[:id].nil? || model.find_by_id(params[:id]).nil?
         add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => @table_name)}, :error)
       else
-        emss.push(params[:id])
+        call_ems_refresh([params[:id]])
       end
-      process_emss(emss, "refresh_ems") unless emss.empty?
-      add_flash(n_("Refresh initiated for %{count} %{model} from the %{product} Database",
-                   "Refresh initiated for %{count} %{models} from the %{product} Database", emss.length) %
-        {:count   => emss.length,
-         :product => I18n.t('product.name'),
-         :model   => ui_lookup(:table => @table_name),
-         :models  => ui_lookup(:tables => @table_name)}) if @flash_array.nil?
       params[:display] = @display
-      show
-      if ["vms", "hosts", "storages"].include?(@display)
-        @refresh_partial = "layouts/gtl"
-      else
-        @refresh_partial = "main"
-      end
     end
   end
 

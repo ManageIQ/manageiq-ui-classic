@@ -23,6 +23,25 @@ describe OpsController do
       get :x_button, :params => { :pressed => 'random_dude', :format => :html }
       expect(response).to render_template('layouts/exception')
     end
+
+    describe 'x_button actions' do
+      it 'rbac group add' do
+        post :x_button, :params => {:pressed => 'rbac_group_add'}
+        expect(response.status).to eq(200)
+      end
+
+      it 'rbac group edit' do
+        post :x_button, :params => {:pressed => 'rbac_group_edit', :id => MiqGroup.first.id}
+        expect(response.status).to eq(200)
+      end
+
+      it 'rbac role add' do
+        MiqProductFeature.seed
+        allow(MiqProductFeature).to receive(:feature_root).and_return('everything')
+        post :x_button, :params => {:pressed => 'rbac_role_add'}
+        expect(response.status).to eq(200)
+      end
+    end
   end
 
   it 'can view the db_settings tab' do
