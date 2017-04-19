@@ -4,6 +4,7 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', funct
   var miqService = this;
 
   this.storedPasswordPlaceholder = "●●●●●●●●";
+  this.deploymentExists = 'EXISTS';
 
   this.showButtons = function() {
     miqButtons('show');

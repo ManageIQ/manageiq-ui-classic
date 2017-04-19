@@ -19,6 +19,7 @@
   "extends": [],
 
   "globals": {
+    "sendDataWithRx": false,
     "API": false, // local: miq_api.js
     "ManageIQ": false, // local: mig_global.js
     "Promise": false, // bower: es6-shim
