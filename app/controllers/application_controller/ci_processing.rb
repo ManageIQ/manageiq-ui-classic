@@ -450,35 +450,33 @@ module ApplicationController::CiProcessing
 
   def livemigratevms
     assert_privileges("instance_live_migrate")
-    recs = find_checked_items
+    recs = find_checked_ids_with_rbac(VmOrTemplate)
     recs = [params[:id].to_i] if recs.blank?
-    @record = find_record_with_rbac(VmOrTemplate, recs.first)
-    if @record.supports_live_migrate?
-      if @explorer
-        live_migrate
-        @refresh_partial = "vm_common/live_migrate"
-      else
-        javascript_redirect :controller => 'vm', :action => 'live_migrate', :rec_id => @record.id, :escape => false
-      end
+    session[:live_migrate_items] = recs
+    if @explorer
+      live_migrate
+      @refresh_partial = "vm_common/live_migrate"
     else
-      add_flash(_("Unable to live migrate %{instance} \"%{name}\": %{details}") % {
-        :instance => ui_lookup(:table => 'vm_cloud'),
-        :name     => @record.name,
-        :details  => @record.unsupported_reason(:live_migrate)}, :error)
+      javascript_redirect :controller => 'vm', :action => 'live_migrate', :escape => false
     end
   end
   alias instance_live_migrate livemigratevms
 
   def live_migrate
     assert_privileges("instance_live_migrate")
-    @record ||= VmOrTemplate.find_by(:id => params[:rec_id])
     drop_breadcrumb(
-      :name => _("Live Migrate Instance '%{name}'") % {:name => @record.name},
+      :name => _("Live Migrate Instances"),
       :url  => "/vm_cloud/live_migrate"
     ) unless @explorer
     @sb[:explorer] = @explorer
     @in_a_form = true
     @live_migrate = true
+
+    @live_migrate_items = VmOrTemplate.find(session[:live_migrate_items]).sort_by(&:name)
+    build_targets_hash(@live_migrate_items)
+    @view = get_db_view(VmOrTemplate)
+    @view.table = MiqFilter.records2table(@live_migrate_items, @view.cols + ['id'])
+
     render :action => "show" unless @explorer
   end
 
@@ -509,63 +507,31 @@ module ApplicationController::CiProcessing
 
   def live_migrate_vm
     assert_privileges("instance_live_migrate")
-    @record = find_record_with_rbac(VmOrTemplate, params[:id])
     case params[:button]
     when "cancel"
-      add_flash(_("Live Migration of %{model} \"%{name}\" was cancelled by the user") % {
-        :model => ui_lookup(:table => "vm_cloud"), :name => @record.name
-      })
-      @record = @sb[:action] = nil
+      add_flash(_("Live migration of Instances was cancelled by the user"))
     when "submit"
-      if @record.supports_live_migrate?
-        options = {
-          :hostname         => params['auto_select_host'] == 'on' ? nil : params[:destination_host],
-          :block_migration  => params['block_migration']   == 'on',
-          :disk_over_commit => params['disk_over_commit']  == 'on'
-        }
-        task_id = @record.class.live_migrate_queue(session[:userid], @record, options)
-        unless task_id.kind_of?(Integer)
-          add_flash(_("Instance live migration task failed."), :error)
+      @live_migrate_items = VmOrTemplate.find(session[:live_migrate_items]).sort_by(&:name)
+      @live_migrate_items.each do |vm|
+        if vm.supports_live_migrate?
+          options = {
+            :hostname         => params['auto_select_host'] == 'on' ? nil : params['destination_host'],
+            :block_migration  => params['block_migration']   == 'on',
+            :disk_over_commit => params['disk_over_commit']  == 'on'
+          }
+          task_id = vm.class.live_migrate_queue(session[:userid], vm, options)
+          unless task_id.kind_of?(Integer)
+            add_flash(_("Instance live migration task failed."), :error)
+          end
+          add_flash(_("Queued live migration of Instance \"%{name}\"") % {:name => vm.name})
+        else
+          add_flash(_("Unable to live migrate Instance \"%{name}\": %{details}") % {
+            :name    => vm.name,
+            :details => vm.unsupported_reason(:live_migrate)
+          }, :error)
         end
-
-        return javascript_flash(:spinner_off => true) if @flash_array
-        return initiate_wait_for_task(:task_id => task_id, :action => "live_migrate_finished")
-      else
-        add_flash(_("Unable to live migrate %{instance} \"%{name}\": %{details}") % {
-          :instance => ui_lookup(:table => 'vm_cloud'),
-          :name     => @record.name,
-          :details  => @record.unsupported_reason(:live_migrate)
-        }, :error)
-        params[:id] = @record.id.to_s # reset id in params for show
-        @record = nil
-        @sb[:action] = nil
       end
     end
-    if @sb[:explorer]
-      replace_right_cell
-    else
-      session[:flash_msgs] = @flash_array.dup
-      javascript_redirect previous_breadcrumb_url
-    end
-  end
-
-  def live_migrate_finished
-    task_id = session[:async][:params][:task_id]
-    vm_id = session[:async][:params][:id]
-    vm = find_record_with_rbac(VmOrTemplate, vm_id)
-    task = MiqTask.find(task_id)
-    if MiqTask.status_ok?(task.status)
-      add_flash(_("Live migration of Instance \"%{name}\" complete.") % {:name => vm.name})
-    else
-      add_flash(_("Unable to live migrate Instance \"%{name}\": %{details}") % {
-        :name    => vm.name,
-        :details => get_error_message_from_fog(task.message)
-      }, :error)
-    end
-    @breadcrumbs.pop if @breadcrumbs
-    session[:edit] = nil
-    params[:id] = vm.id.to_s # reset id in params for show
-    @record = nil
     @sb[:action] = nil
     if @sb[:explorer]
       replace_right_cell
@@ -579,80 +545,63 @@ module ApplicationController::CiProcessing
     assert_privileges("instance_evacuate")
     @record ||= VmOrTemplate.find_by_id(params[:rec_id])
     drop_breadcrumb(
-      :name => _("Evacuate Instance '%{name}'") % {:name => @record.name},
+      :name => _("Evacuate Instances"),
       :url  => "/vm_cloud/evacuate"
     ) unless @explorer
     @sb[:explorer] = @explorer
     @in_a_form = true
     @evacuate = true
+
+    @evacuate_items = VmOrTemplate.find(session[:evacuate_items]).sort_by(&:name)
+    build_targets_hash(@evacuate_items)
+    @view = get_db_view(VmOrTemplate)
+    @view.table = MiqFilter.records2table(@evacuate_items, @view.cols + ['id'])
+
     render :action => "show" unless @explorer
   end
 
   def evacuatevms
     assert_privileges("instance_evacuate")
-    recs = find_checked_items
+    recs = find_checked_ids_with_rbac(VmOrTemplate)
     recs = [params[:id].to_i] if recs.blank?
-    @record = find_record_with_rbac(VmOrTemplate, recs.first)
-    if @record.supports_evacuate?
-      if @explorer
-        evacuate
-        @refresh_partial = "vm_common/evacuate"
-      else
-        javascript_redirect :controller => 'vm', :action => 'evacuate', :rec_id => @record.id, :escape => false
-      end
+    session[:evacuate_items] = recs
+    if @explorer
+      evacuate
+      @refresh_partial = "vm_common/evacuate"
     else
-      add_flash(_("Unable to evacuate %{instance} \"%{name}\": %{details}") % {
-        :instance => ui_lookup(:table => 'vm_cloud'),
-        :name     => @record.name,
-        :details  => @record.unsupported_reason(:evacuate)}, :error)
+      javascript_redirect :controller => 'vm', :action => 'evacuate', :escape => false
     end
   end
   alias instance_evacuate evacuatevms
 
   def evacuate_vm
     assert_privileges("instance_evacuate")
-    @record = find_record_with_rbac(VmOrTemplate, params[:id])
-
     case params[:button]
     when "cancel"
-      add_flash(_("Evacuation of %{model} \"%{name}\" was cancelled by the user") % {
-        :model => ui_lookup(:table => "vm_cloud"), :name => @record.name})
-      @record = @sb[:action] = nil
+      add_flash(_("Evacuation of Instances was cancelled by the user"))
     when "submit"
-      if @record.supports_evacuate?
-        if params['auto_select_host'] == 'on'
-          hostname = nil
+      @evacuate_items = VmOrTemplate.find(session[:evacuate_items]).sort_by(&:name)
+      @evacuate_items.each do |vm|
+        if vm.supports_evacuate?
+          options = {
+            :hostname          => params['auto_select_host']  == 'on' ? nil : params['destination_host'],
+            :on_shared_storage => params['on_shared_storage'] == 'on',
+            :admin_password    => params['on_shared_storage'] == 'on' ? nil : params['admin_password']
+          }
+          task_id = vm.class.evacuate_queue(session[:userid], vm, options)
+          unless task_id.kind_of?(Integer)
+            add_flash(_("Instance evacuation task failed."), :error)
+          end
+          add_flash(_("Queued evacuation of Instance \"%{name}\"") % {:name => vm.name})
         else
-          hostname = params[:destination_host]
+          add_flash(_("Unable to evacuate Instance \"%{name}\": %{details}") % {
+            :name    => vm.name,
+            :details => vm.unsupported_reason(:evacuate)
+          }, :error)
         end
-        on_shared_storage = params[:on_shared_storage] == 'on'
-        admin_password = on_shared_storage ? nil : params[:admin_password]
-        begin
-          @record.evacuate_queue(
-            session[:userid],
-            :hostname          => hostname,
-            :on_shared_storage => on_shared_storage,
-            :admin_password    => admin_password
-          )
-          add_flash(_("Evacuating %{instance} \"%{name}\"") % {
-            :instance => ui_lookup(:table => 'vm_cloud'),
-            :name     => @record.name})
-        rescue => ex
-          add_flash(_("Unable to evacuate %{instance} \"%{name}\": %{details}") % {
-            :instance => ui_lookup(:table => 'vm_cloud'),
-            :name     => @record.name,
-            :details  => get_error_message_from_fog(ex)}, :error)
-        end
-      else
-        add_flash(_("Unable to evacuate %{instance} \"%{name}\": %{details}") % {
-          :instance => ui_lookup(:table => 'vm_cloud'),
-          :name     => @record.name,
-          :details  => @record.unsupported_reason(:evacuate)}, :error)
       end
-      params[:id] = @record.id.to_s # reset id in params for show
-      @record = nil
-      @sb[:action] = nil
     end
+    @sb[:action] = nil
     if @sb[:explorer]
       replace_right_cell
     else
