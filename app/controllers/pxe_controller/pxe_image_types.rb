@@ -85,37 +85,33 @@ module PxeController::PxeImageTypes
   # Common VM button handler routines
   def pxe_image_type_button_operation(method, display_name)
     pxes = []
-
-    # Either a list or coming from a different controller (eg from host screen, go to its vms)
     if !params[:id]
+      # Either a list or coming from a different controller (eg from host screen, go to its vms)
       pxes = find_checked_ids_with_rbac(PxeImageType)
       if pxes.empty?
-        add_flash(_("No %{model} were selected to %{button}") % {:model => ui_lookup(:models => "PxeImageType"), :button => display_name},
-                  :error)
+        add_flash(_("No %{model} were selected to %{button}") % {:model => ui_lookup(:models => "PxeImageType"),
+                                                                 :button => display_name}, :error)
       else
         process_pxe_image_type(pxes, method)
       end
-
       get_node_info(x_node)
       replace_right_cell(:nodetype => "root", :replace_trees => [:pxe_image_types, :customization_templates])
-    else # showing 1 vm
-      if params[:id].nil? || PxeImageType.find_by_id(params[:id]).nil?
-        add_flash(_("%{model} no longer exists") % {:model => ui_lookup(:model => "PxeImageType")},
-                  :error)
-        pxe_image_type_list
-        @refresh_partial = "layouts/x_gtl"
-      else
-        pxes.push(params[:id])
-        process_pxe_image_type(pxes, method)  unless pxes.empty?
-        # TODO: tells callers to go back to show_list because this SMIS Agent may be gone
-        # Should be refactored into calling show_list right here
-        if method == 'destroy'
-          self.x_node = "root"
-          @single_delete = true unless flash_errors?
-        end
-        get_node_info(x_node)
-        replace_right_cell(:nodetype => x_node, :replace_trees => [:pxe_image_types, :customization_templates])
+    elsif params[:id].nil? || find_id_with_rbac(PxeImageType, params[:id]).nil?
+      # showing 1 vm
+      add_flash(_("%{model} no longer exists") % {:model => ui_lookup(:model => "PxeImageType")}, :error)
+      pxe_image_type_list
+      @refresh_partial = "layouts/x_gtl"
+    else
+      pxes.push(find_id_with_rbac(PxeImageType, params[:id]))
+      process_pxe_image_type(pxes, method)  unless pxes.empty?
+      # TODO: tells callers to go back to show_list because this SMIS Agent may be gone
+      # Should be refactored into calling show_list right here
+      if method == 'destroy'
+        self.x_node = "root"
+        @single_delete = true unless flash_errors?
       end
+      get_node_info(x_node)
+      replace_right_cell(:nodetype => x_node, :replace_trees => [:pxe_image_types, :customization_templates])
     end
     pxes.count
   end
