@@ -2,7 +2,7 @@ module AnsibleCredentialHelper::TextualSummary
   include TextualMixins::TextualName
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name type user created updated))
+    TextualGroup.new(_("Properties"), %i(name type created updated))
   end
 
   def textual_group_relationships
@@ -17,10 +17,10 @@ module AnsibleCredentialHelper::TextualSummary
 
       define_singleton_method "textual_#{key}" do
         h = {:label => _(value[:label]), :title => _(value[:help_text])}
-        h[:value] = if value[:type] == :password && @record.options[key].present?
+        h[:value] = if value[:type] == :password && (@record.try(key).present? || @record.options[key].present?)
                       '●●●●●●●●'
                     else
-                      @record.options[key]
+                      @record.try(key) || @record.options[key]
                     end
         h
       end
@@ -31,10 +31,6 @@ module AnsibleCredentialHelper::TextualSummary
 
   def textual_type
     {:label => _("Authentication Type"), :value => ui_lookup(:model => @record.type)}
-  end
-
-  def textual_user
-    {:label => _("User"), :value => @record.userid}
   end
 
   def textual_created
