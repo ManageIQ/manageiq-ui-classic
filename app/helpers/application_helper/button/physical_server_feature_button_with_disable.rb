@@ -1,5 +1,4 @@
 class ApplicationHelper::Button::PhysicalServerFeatureButtonWithDisable < ApplicationHelper::Button::GenericFeatureButtonWithDisable
-
   def visible?
     true
   end

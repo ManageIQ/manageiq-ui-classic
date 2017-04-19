@@ -67,9 +67,9 @@
             :record_id    => @record.id,
             :display      => 'resource_pools',
             :title        => _("Show Resource Pools"))
-        - if role_allows?(:feature => "resource_pool_show_list")
+        - if role_allows?(:feature => "ems_cluster_drift")
           = li_link(:text => _('Drift History'),
             :count        => @record.number_of(:drift_states),
             :record_id    => @record.id,
-            :display      => nil,
+            :action       => 'drift_history',
             :title        => _("Show %{cluster_title} drift history") % {:cluster_title => cluster_title})

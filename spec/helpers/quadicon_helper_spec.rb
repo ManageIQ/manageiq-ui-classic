@@ -226,6 +226,7 @@ describe QuadiconHelper do
   describe "#render_quadicon_text" do
     before(:each) do
       @settings = {:display => {:quad_truncate => "m"}}
+      allow(controller).to receive(:controller_name).and_return("service")
     end
 
     let(:item) do
@@ -277,6 +278,10 @@ describe QuadiconHelper do
     end
 
     context "when item is an EmsCluster" do
+      before do
+        allow(controller).to receive(:controller_name).and_return("ems_cluster")
+      end
+
       let(:ems) do
         FactoryGirl.build(:ems_cluster)
       end
@@ -312,6 +317,10 @@ describe QuadiconHelper do
     end
 
     context "when item is a StorageManager" do
+      before do
+        allow(controller).to receive(:controller_name).and_return("storage_manager")
+      end
+
       let(:stor) do
         FactoryGirl.create(:storage_manager, :name => "Store Man")
       end
@@ -327,6 +336,10 @@ describe QuadiconHelper do
     end
 
     context "when item is a FloatingIP" do
+      before do
+        allow(controller).to receive(:controller_name).and_return("floating_ip")
+      end
+
       let(:item) do
         FactoryGirl.create(:floating_ip_openstack)
       end
@@ -344,6 +357,10 @@ describe QuadiconHelper do
     end
 
     context "when item is an Authentication" do
+      before do
+        allow(controller).to receive(:controller_name).and_return("auth_key_pair_cloud")
+      end
+
       let(:item) do
         FactoryGirl.create(:authentication)
       end
@@ -450,6 +467,7 @@ describe QuadiconHelper do
     context "default case" do
       before(:each) do
         @id = item.id
+        allow(controller).to receive(:controller_name).and_return("vm")
       end
 
       let(:item) do
@@ -504,6 +522,7 @@ describe QuadiconHelper do
   describe "#render_quadicon_label" do
     before(:each) do
       @settings = {:display => {:quad_truncate => "m"}}
+      allow(controller).to receive(:controller_name).and_return("service")
     end
 
     subject { helper.render_quadicon_label(item, row) }

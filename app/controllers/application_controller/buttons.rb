@@ -106,11 +106,14 @@ module ApplicationController::Buttons
       @edit[:new][:name] = params[:name] if params[:name]
       @edit[:new][:display] = params[:display] == "1" if params[:display]
       @edit[:new][:open_url] = params[:open_url] == "1" if params[:open_url]
+      @edit[:new][:display_for] = params[:display_for] if params[:display_for]
+      @edit[:new][:submit_how] = params[:submit_how] if params[:submit_how]
       @edit[:new][:description] = params[:description] if params[:description]
       @edit[:new][:button_image] = params[:button_image].to_i if params[:button_image]
       @edit[:new][:dialog_id] = params[:dialog_id] if params[:dialog_id]
       visibility_box_edit
     end
+
     render :update do |page|
       page << javascript_prologue
       if params.key?(:instance_name) || params.key?(:other_name) || params.key?(:target_class)
@@ -237,7 +240,7 @@ module ApplicationController::Buttons
     end
   end
 
-  private ###########
+  private
 
   BASE_MODEL_EXPLORER_CLASSES = [Vm, MiqTemplate, Service].freeze
   APPLIES_TO_CLASS_BASE_MODELS = %w(CloudTenant EmsCluster ExtManagementSystem Host MiqTemplate Service ServiceTemplate Storage Vm).freeze
@@ -260,7 +263,17 @@ module ApplicationController::Buttons
       render_flash(_('No url was returned from automate.'), :error)
     end
   end
-  private :custom_button_done
+
+  def custom_buttons_invoke(button, objs)
+    if objs.length > 1 &&
+       (button.options && button.options.key?(:submit_how) && button.options[:submit_how].to_s == 'all')
+      # FIXME: wee need something like this from the core/automate:
+      # button.invoke(:object_id => objs.map(&:id), :object_type => objs[0].class.base_class.name)
+      raise "Not implemented."
+    else
+      objs.each { |obj| button.invoke(obj) }
+    end
+  end
 
   def custom_buttons
     button = CustomButton.find_by_id(params[:button_id])
@@ -268,20 +281,40 @@ module ApplicationController::Buttons
 
     @explorer = true if BASE_MODEL_EXPLORER_CLASSES.include?(cls)
 
-    obj = cls.find_by_id(params[:id].to_i)
+    if params[:id].to_s == 'LIST'
+      objs = Rbac.filtered(cls.where(:id => find_checked_items))
+      obj = objs.first
+    else
+      obj = Rbac.filtered_object(cls.find(params[:id].to_i))
+      objs = [obj]
+    end
+
+    if objs.empty?
+      render_flash(_("Error executing custom button: No item was selected."), :error)
+      return
+    end
+
     @right_cell_text = _("%{record} - \"%{button_text}\"") % {:record => obj.name, :button_text => button.name}
+
     if button.resource_action.dialog_id
-      options = {}
-      options[:header] = @right_cell_text
-      options[:target_id] = obj.id
-      options[:target_kls] = obj.class.name
+      options = {
+        :header     => @right_cell_text,
+        :target_id  => obj.id,
+        :target_ids => objs.collect(&:id),
+        :target_kls => obj.class.name,
+      }
+
       dialog_initialize(button.resource_action, options)
+
     elsif button.options && button.options.key?(:open_url) && button.options[:open_url]
+      # not supported for objs: cannot do wait for task for multiple tasks
       task_id = button.invoke_async(obj)
       initiate_wait_for_task(:task_id => task_id, :action => :custom_button_done)
+
     else
       begin
-        button.invoke(obj)
+        custom_buttons_invoke(button, objs)
+
       rescue StandardError => bang
         add_flash(_("Error executing: \"%{task_description}\" %{error_message}") %
           {:task_description => params[:desc], :error_message => bang.message}, :error)
@@ -757,8 +790,10 @@ module ApplicationController::Buttons
       button[:options][:button_image] ||= {}
       button[:options][:button_image] = @edit[:new][:button_image]
     end
-    button[:options][:display] = @edit[:new][:display]
-    button[:options][:open_url] = @edit[:new][:open_url]
+
+    %i(display open_url display_for submit_how).each do |key|
+      button[:options][key] = @edit[:new][key]
+    end
     button.visibility ||= {}
     if @edit[:new][:visibility_typ] == "role"
       roles = []
@@ -846,6 +881,8 @@ module ApplicationController::Buttons
       :button_image   => @custom_button.options.try(:[], :button_image).to_s,
       :display        => @custom_button.options.try(:[], :display).nil? ? true : @custom_button.options[:display],
       :open_url       => @custom_button.options.try(:[], :open_url) ? @custom_button.options[:open_url] : false,
+      :display_for    => @custom_button.options.try(:[], :display_for) ? @custom_button.options[:display_for] : 'single',
+      :submit_how     => @custom_button.options.try(:[], :submit_how) ? @custom_button.options[:submit_how] : 'one',
       :object_message => @custom_button.uri_message || "create",
     )
     @edit[:current] = copy_hash(@edit[:new])

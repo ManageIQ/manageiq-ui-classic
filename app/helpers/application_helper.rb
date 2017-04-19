@@ -208,6 +208,9 @@ module ApplicationHelper
             "vm_or_template"
           elsif record.kind_of?(VmOrTemplate)
             controller_for_vm(model_for_vm(record))
+          elsif record.kind_of?(ManageIQ::Providers::AnsibleTower::AutomationManager) ||
+                record.kind_of?(ManageIQ::Providers::ExternalAutomationManager::InventoryRootGroup)
+            "automation_manager"
           elsif record.kind_of?(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
             "ansible_playbook"
           elsif record.kind_of?(ManageIQ::Providers::EmbeddedAutomationManager::Authentication)
@@ -235,7 +238,7 @@ module ApplicationHelper
                     )
     elsif @host && ["Patch", "GuestApplication"].include?(db)
       return url_for_only_path(:controller => "host", :action => @lastaction, :id => @host, :show => @id)
-    elsif %w(ConfiguredSystem ConfigurationProfile EmsFolder).include?(db)
+    elsif %w(ConfiguredSystem ConfigurationProfile).include?(db)
       return url_for_only_path(:controller => "provider_foreman", :action => @lastaction, :id => @record, :show => @id)
     else
       controller, action = db_to_controller(db, action)
@@ -284,10 +287,10 @@ module ApplicationHelper
         elsif ["Vm"].include?(view.db) && parent && request.parameters[:controller] != "vm"
           # this is to handle link to a vm in vm explorer from service explorer
           return url_for_only_path(:controller => "vm_or_template", :action => "show") + "/"
-        elsif %w(ConfigurationProfile EmsFolder).include?(view.db) &&
+        elsif %w(ConfigurationProfile).include?(view.db) &&
               request.parameters[:controller] == "provider_foreman"
           return url_for_only_path(:action => action, :id => nil) + "/"
-        elsif %w(ManageIQ::Providers::AutomationManager::InventoryGroup EmsFolder).include?(view.db) &&
+        elsif %w(ManageIQ::Providers::AutomationManager::InventoryRootGroup EmsFolder).include?(view.db) &&
               request.parameters[:controller] == "automation_manager"
           return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w(ConfiguredSystem).include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
@@ -385,7 +388,7 @@ module ApplicationHelper
       action = "diagnostics_worker_selected"
     when "OrchestrationStackOutput", "OrchestrationStackParameter", "OrchestrationStackResource",
         "ManageIQ::Providers::CloudManager::OrchestrationStack",
-        "ManageIQ::Providers::AnsibleTower::AutomationManager::Job"
+        "ManageIQ::Providers::AnsibleTower::AutomationManager::Job", "ConfigurationScriptBase"
       controller = request.parameters[:controller]
     when "ContainerVolume"
       controller = "persistent_volume"
@@ -718,11 +721,7 @@ module ApplicationHelper
     end
 
     toolbars['center_tb'] = center_toolbar_filename
-
-    custom_toolbar = controller.custom_toolbar?
-    if custom_toolbar
-      toolbars['custom_tb'] = custom_toolbar == :blank ? 'blank_view_tb' : 'custom_buttons_tb'
-    end
+    toolbars['custom_tb'] = controller.custom_toolbar
 
     toolbars['view_tb'] = inner_layout_present? ? x_view_toolbar_filename : view_toolbar_filename
     toolbars
@@ -732,6 +731,8 @@ module ApplicationHelper
   def display_back_button?
     # don't need to back button if @record is not there or @record doesnt have name or
     # evm_display_name column, i.e MiqProvisionRequest
+    return false if @display == "dashboard"
+
     if (@lastaction != "show" || (@lastaction == "show" && @display != "main")) &&
        @record &&
        (@record.respond_to?('name') && !@record.name.nil?)
@@ -1015,7 +1016,7 @@ module ApplicationHelper
     if section.parent.nil?
       # first-level, fallback to old logic for now
       # FIXME: exception behavior to remove
-      active = 'my_tasks' if %w(my_tasks my_ui_tasks all_tasks all_ui_tasks).include?(@layout)
+      active = 'my_tasks' if %w(my_tasks all_tasks).include?(@layout)
       active = 'cloud_volume' if @layout == 'cloud_volume_snapshot' || @layout == 'cloud_volume_backup'
       active = 'cloud_object_store_container' if @layout == 'cloud_object_store_object'
       active = active.to_sym

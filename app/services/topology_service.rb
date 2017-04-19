@@ -49,6 +49,20 @@ class TopologyService
     }
   end
 
+  def build_topology
+    included_relations = self.class.instance_variable_get(:@included_relations)
+    topo_items = {}
+    links = []
+
+    preloaded = @providers.includes(included_relations)
+
+    preloaded.each do |entity|
+      topo_items, links = build_recursive_topology(entity, build_entity_relationships(included_relations), topo_items, links)
+    end
+
+    populate_topology(topo_items, links, build_kinds, icons)
+  end
+
   def build_recursive_topology(entity, entity_relationships_mapping, topo_items, links)
     unless entity.nil?
       topo_items[entity_id(entity)] = build_entity_data(entity)

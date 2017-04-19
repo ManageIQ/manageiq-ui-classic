@@ -28,9 +28,9 @@ describe ApplicationHelper::Title do
       expect(subject).to eq(title + ": Policy Simulation")
     end
 
-    it "when layout = 'all_ui_tasks'" do
-      @layout = "all_ui_tasks"
-      expect(subject).to eq(title + ": All UI Tasks")
+    it "when layout = 'all_tasks'" do
+      @layout = "all_tasks"
+      expect(subject).to eq(title + ": All Tasks")
     end
 
     it "when layout = 'rss'" do

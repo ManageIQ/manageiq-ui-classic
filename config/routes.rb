@@ -158,9 +158,11 @@ Rails.application.routes.draw do
     :automation_manager => {
       :get  => %w(
         download_data
+        download_summary_pdf
         explorer
         form_fields
         show
+        x_show
         show_list
         tagging_edit
       ),
@@ -2042,6 +2044,7 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
+        credential_refresh
         show_list
       )
     },
@@ -2070,6 +2073,7 @@ Rails.application.routes.draw do
         button
         edit
         new
+        repository_refresh
         show_list
       )
     },
@@ -2946,6 +2950,7 @@ Rails.application.routes.draw do
         reconfigure
         reconfigure_form_fields
         resize
+        resize_form_fields
         evacuate
         evacuate_form_fields
         live_migrate
@@ -2969,7 +2974,6 @@ Rails.application.routes.draw do
         reconfigure
         reconfigure_form_fields
         reconfigure_update
-        resize_field_changed
         resize_vm
         evacuate_vm
         live_migrate_vm
@@ -3007,6 +3011,7 @@ Rails.application.routes.draw do
         show
         tagging_edit
         resize
+        resize_form_fields
         migrate
         live_migrate_form_fields
         attach

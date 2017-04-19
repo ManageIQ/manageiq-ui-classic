@@ -9,7 +9,6 @@ Rails.application.config.assets.precompile += %w(
   codemirror/modes/*.js
   codemirror/themes/*.css
   jquery
-  jquery-1.8/jquery.js
   jquery-ui
   jquery_overrides.js
   novnc-rails
@@ -17,7 +16,6 @@ Rails.application.config.assets.precompile += %w(
   remote_consoles/*.js
   spice-html5-bower
   spice-html5-bower/spiceHTML5/spicearraybuffer.js
-  vmrc.css
   webmks.css
   webmks.js
 )

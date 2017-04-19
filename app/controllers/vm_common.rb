@@ -597,7 +597,7 @@ module VmCommon
 
   def evm_relationship_get_form_vars
     @record = VmOrTemplate.find_by_id(@edit[:vm_id])
-    @edit[:new][:server] = params[:server_id] if params[:server_id]
+    @edit[:new][:server] = params[:server_id] == "" ? nil : params[:server_id] if params[:server_id]
   end
 
   def evm_relationship_update
@@ -1157,6 +1157,11 @@ module VmCommon
       end
       # Add adv search filter to header
       @right_cell_text += @edit[:adv_search_applied][:text] if @edit && @edit[:adv_search_applied]
+
+      # save model being displayed for custom buttons
+      @tree_selected_model = if model.present?
+                               model.constantize
+                             end
     end
 
     if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
@@ -1197,9 +1202,10 @@ module VmCommon
       record_showing = type && ["Vm", "MiqTemplate"].include?(TreeBuilder.get_model_for_prefix(type))
       c_tb = build_toolbar(center_toolbar_filename) # Use vm or template tb
       if record_showing
-        cb_tb = build_toolbar("custom_buttons_tb")
+        cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:single))
         v_tb = build_toolbar("x_summary_view_tb")
       else
+        cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:list))
         v_tb = build_toolbar("x_gtl_view_tb")
       end
     elsif ["compare", "drift"].include?(@sb[:action])
@@ -1348,7 +1354,7 @@ module VmCommon
           ])
         # these subviews use angular, so they need to use a special partial
         # so the form buttons on the outer frame can be updated.
-        elsif %w(attach detach live_migrate evacuate ownership
+        elsif %w(attach detach live_migrate resize evacuate ownership
                  associate_floating_ip disassociate_floating_ip).include?(@sb[:action])
           presenter.update(:form_buttons_div, r[:partial => "layouts/angular/paging_div_buttons"])
         elsif action != "retire" && action != "reconfigure_update"
@@ -1518,11 +1524,11 @@ module VmCommon
       action = nil
     when "live_migrate"
       partial = "vm_common/live_migrate"
-      header = _("Live Migrating %{model} \"%{name}\"") % {:name => name, :model => ui_lookup(:table => table)}
+      header = _("Live Migrating %{models}") % {:models => ui_lookup(:tables => table)}
       action = "live_migrate_vm"
     when "evacuate"
       partial = "vm_common/evacuate"
-      header = _("Evacuating %{model} \"%{name}\"") % {:name => name, :model => ui_lookup(:table => table)}
+      header = _("Evacuating %{models}") % {:models => ui_lookup(:tables => table)}
       action = "evacuate_vm"
     when "associate_floating_ip"
       partial = "vm_common/associate_floating_ip"

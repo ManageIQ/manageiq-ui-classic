@@ -285,8 +285,9 @@ class ServiceController < ApplicationController
     record_showing = type && ["Service"].include?(TreeBuilder.get_model_for_prefix(type))
     if x_active_tree == :svcs_tree && !@in_a_form && !@sb[:action]
       if record_showing && @sb[:action].nil?
-        cb_tb = build_toolbar("custom_buttons_tb")
+        cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:single))
       else
+        cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:list))
         v_tb = build_toolbar("x_gtl_view_tb")
       end
       c_tb = build_toolbar(center_toolbar_filename)

@@ -15,9 +15,18 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     let(:user) { FactoryGirl.create(:user, :role => "super_administrator") }
 
     shared_examples "no custom buttons" do
-      it("#get_custom_buttons")        { expect(toolbar_builder.get_custom_buttons(subject)).to be_blank }
-      it("#custom_buttons_hash")       { expect(toolbar_builder.custom_buttons_hash(subject)).to be_blank }
-      it("#custom_toolbar_class")      { expect(toolbar_builder.custom_toolbar_class(subject).definition).to be_blank }
+      it "#get_custom_buttons" do
+        expect(toolbar_builder.get_custom_buttons(subject.class, subject, Mixins::CustomButtons::Result.new(:single))).to be_blank
+      end
+
+      it "#custom_button_selects" do
+        expect(toolbar_builder.custom_button_selects(subject.class, subject, Mixins::CustomButtons::Result.new(:single))).to be_blank
+      end
+
+      it "#build_custom_toolbar_class" do
+        expect(toolbar_builder.build_custom_toolbar_class(subject.class, subject, Mixins::CustomButtons::Result.new(:single)).definition).to be_blank
+      end
+
       it("#record_to_service_buttons") { expect(toolbar_builder.record_to_service_buttons(subject)).to be_blank }
     end
 
@@ -48,14 +57,14 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :buttons      => [expected_button1]
         }
 
-        expect(toolbar_builder.get_custom_buttons(subject)).to eq([expected_button_set])
+        expect(toolbar_builder.get_custom_buttons(subject.class, subject, Mixins::CustomButtons::Result.new(:single))).to eq([expected_button_set])
       end
 
       it "#record_to_service_buttons" do
         expect(toolbar_builder.record_to_service_buttons(subject)).to be_blank
       end
 
-      it "#custom_buttons_hash" do
+      it "#custom_button_selects" do
         escaped_button1_text = CGI.escapeHTML(@button1.name.to_s)
         button1 = {
           :id        => "custom__custom_#{@button1.id}",
@@ -80,10 +89,11 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         }
         items = [button_set_item1]
         name = "custom_buttons_#{@button_set.name}"
-        expect(toolbar_builder.custom_buttons_hash(subject)).to eq([:name => name, :items => items])
+        result = toolbar_builder.custom_button_selects(subject.class, subject, Mixins::CustomButtons::Result.new(:single))
+        expect(result).to eq([:name => name, :items => items])
       end
 
-      it "#custom_toolbar_class" do
+      it "#build_custom_toolbar_class" do
         escaped_button1_text = CGI.escapeHTML(@button1.name.to_s)
         button1 = {
           :id        => "custom__custom_#{@button1.id}",
@@ -107,7 +117,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :items   => button_set_item1_items
         }
         group_name = "custom_buttons_#{@button_set.name}"
-        expect(toolbar_builder.custom_toolbar_class(subject).definition[group_name].buttons).to eq([button_set_item1])
+        expect(toolbar_builder.build_custom_toolbar_class(subject.class, subject, Mixins::CustomButtons::Result.new(:single)).definition[group_name].buttons).to eq([button_set_item1])
       end
     end
 

@@ -14,19 +14,28 @@ ManageIQ.angular.app.controller('vmCloudLiveMigrateFormController', ['$http', '$
 
   ManageIQ.angular.scope = $scope;
 
-  $http.get('/vm_cloud/live_migrate_form_fields/' + vmCloudLiveMigrateFormId)
-    .then(getLiveMigrateFormData)
-    .catch(miqService.handleFailure);
+  if (vmCloudLiveMigrateFormId) {
+    $http.get('/vm_cloud/live_migrate_form_fields/' + vmCloudLiveMigrateFormId)
+      .then(getLiveMigrateFormData)
+      .catch(miqService.handleFailure);
+  }
 
   $scope.cancelClicked = function() {
     miqService.sparkleOn();
-    var url = '/vm_cloud/live_migrate_vm/' + vmCloudLiveMigrateFormId + '?button=cancel';
+    var url = '/vm_cloud/live_migrate_vm/?button=cancel';
+    if (vmCloudLiveMigrateFormId) {
+      url = '/vm_cloud/live_migrate_vm/' + vmCloudLiveMigrateFormId + '?button=cancel';
+    }
+
     miqService.miqAjaxButton(url);
   };
 
   $scope.submitClicked = function() {
     miqService.sparkleOn();
-    var url = '/vm_cloud/live_migrate_vm/' + vmCloudLiveMigrateFormId + '?button=submit';
+    var url = '/vm_cloud/live_migrate_vm?button=submit';
+    if (vmCloudLiveMigrateFormId) {
+      url = '/vm_cloud/live_migrate_vm/' + vmCloudLiveMigrateFormId + '?button=submit';
+    }
     miqService.miqAjaxButton(url, true);
   };
 

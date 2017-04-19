@@ -82,7 +82,7 @@ module EmsInfraHelper::TextualSummary
     return nil if @record.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
     label     = "#{title_for_hosts} & #{title_for_clusters}"
     available = @record.number_of(:ems_folders) > 0 && @record.ems_folder_root
-    h         = {:label => label, :icon => "pficon pficon-virtual-machine", :value => available ? _("Available") : _("N/A")}
+    h         = {:label => label, :icon => "pficon pficon-screen", :value => available ? _("Available") : _("N/A")}
     if available
       h[:link]  = ems_infra_path(@record.id, :display => 'ems_folders')
       h[:title] = _("Show %{label}") % {:label => label}

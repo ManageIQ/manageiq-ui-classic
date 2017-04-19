@@ -1,27 +1,30 @@
 module Mixins::CustomButtons
   extend ActiveSupport::Concern
 
-  def custom_toolbar?
+  def custom_toolbar
     return nil unless self.class.instance_eval { @custom_buttons }
 
-    @explorer ? custom_toolbar_explorer? : custom_toolbar_simple?
+    @explorer ? custom_toolbar_explorer : custom_toolbar_simple
   end
 
-  def custom_toolbar_explorer?
-    if x_tree                # Make sure we have the trees defined
-      if x_node == "root" || # If on a root, create placeholder toolbar
-         !@record            #   or no record showing
-        :blank
-      elsif @display == "main"
-        true
+  def custom_toolbar_explorer
+    if x_tree
+      if @display == "main" && @record
+        Mixins::CustomButtons::Result.new(:single)
+      elsif @lastaction == "show_list"
+        Mixins::CustomButtons::Result.new(:list)
       else
-        :blank
+        'blank_view_tb'
       end
     end
   end
 
-  def custom_toolbar_simple?
-    @record && @lastaction == "show" && @display == "main"
+  def custom_toolbar_simple
+    if @record && @lastaction == "show" && @display == "main"
+      Mixins::CustomButtons::Result.new(:single)
+    elsif @lastaction == "show_list"
+      Mixins::CustomButtons::Result.new(:list)
+    end
   end
 
   class_methods do
