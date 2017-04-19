@@ -22,6 +22,8 @@ angular.module('miq.notifications').directive('miqNotificationDrawer', ['$window
       if (!$scope.allowExpand || angular.isUndefined($scope.drawerExpanded)) {
         $scope.drawerExpanded = false;
       }
+
+      $scope.limit = { notifications: 100 };
     }],
     link: function (scope, element) {
 
