@@ -1,5 +1,5 @@
 class ServiceTemplateCatalogDecorator < MiqDecorator
   def self.fonticon
-    'product product-template'
+    'pficon pficon-folder-close'
   end
 end
