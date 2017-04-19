@@ -85,7 +85,7 @@ module ServiceHelper::TextualSummary
   end
 
   def textual_aggregate_all_vm_memory
-    {:label => _("Memory"), :value => number_to_human_size(@record.aggregate_all_vm_memory.megabytes, :precision => 2)}
+    {:label => _("Memory"), :value => number_to_human_size(@record.aggregate_all_vm_memory.try(:megabytes), :precision => 2)}
   end
 
   def textual_aggregate_all_vm_disk_count
