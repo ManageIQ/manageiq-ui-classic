@@ -516,6 +516,7 @@ function miqInitTree(options, tree) {
   // Pre-process partially checkbox state for parent nodes
   if (options.post_check && options.hierarchical_check) {
     var nodes = [];
+    var parents = [];
     var stack = tree.slice(0);
 
     // Collect nodes
@@ -524,18 +525,35 @@ function miqInitTree(options, tree) {
       nodes.push(node);
 
       if (node.nodes) {
+        parents.push(node);
         node.nodes.forEach(function (child) {
-          if (child.nodes) {
-            stack.push(child);
-          }
+          stack.push(child);
         });
       }
     }
 
-    // Process nodes
+
+    // Process nodes top-to-bottom
+    nodes.reverse();
     while (nodes.length > 0) {
-      var node = nodes.pop();
-      if (!node.state) node.state = {};
+      var parent = nodes.pop();
+      if (!parent.nodes) {
+        continue;
+      }
+      if (!parent.state) {
+        parent.state = {};
+      }
+      parent.nodes.forEach(function (node) {
+        if (parent.state.checked === true) {
+          if (!node.state) node.state = {};
+          node.state.checked = true;
+        }
+      });
+    }
+
+    // Process nodes bottom-to-top
+    while (parents.length > 0) {
+      var node = parents.pop();
       node.state.checked = node.nodes.map(function(node) {
         return node.state ? node.state.checked : false;
       }).reduce(function (acc, curr) {
