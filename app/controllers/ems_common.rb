@@ -113,7 +113,7 @@ module EmsCommon
       'hosts'                         => [Host,                   _("Managed Hosts")],
       'physical_servers'              => [PhysicalServer,         _("Physical Servers")],
     }
-  end 
+  end
 
   def display_block_storage_managers
     nested_list('block_storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :block_storage_managers)

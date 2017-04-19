@@ -2442,15 +2442,15 @@ module ApplicationController::CiProcessing
   end
 
   def refreshphysicalservers
-    #TODO refresh physical servers
+    # TODO: refresh physical servers
   end
 
   def deletephysicalservers
-    #TODO delete physical servers
+    # TODO: delete physical servers
   end
 
   def editphysicalservers
-    #TODO edit physical servers
+    # TODO: edit physical servers
   end
 
   # Scan all selected or single displayed host(s)
