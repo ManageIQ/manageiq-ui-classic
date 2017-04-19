@@ -561,7 +561,7 @@ module VmHelper::TextualSummary
     os = @record.os_image_name.downcase
     return nil if os == "unknown" || os =~ /linux/
     num = @record.number_of(:win32_services)
-    h = {:label => _("Win32 Services"), :icon0 => "fa fa-cog", :value => num}
+    h = {:label => _("Win32 Services"), :icon => "fa fa-cog", :value => num}
     if num > 0
       h[:title] = n_("Show the Win32 Service installed on this VM", "Show the Win32 Services installed on this VM", num)
       h[:explorer] = true
