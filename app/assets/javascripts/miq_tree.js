@@ -212,13 +212,11 @@ function miqOnClickHostNet(id) {
 
 // OnClick handler for Timeline Tree
 function miqOnClickTimelineSelection(id) {
-  var allIds = id.split('xx-');
-  /*
-   Valid id should be something like xx-r__name_xx-p__name_xx-10000000000215__name, so it should return three 'ids' if split by xx- identifier
-   */
-  if (allIds.length > 3) {
-    var rep_id = allIds[allIds.length - 1].split('__');
-    miqJqueryRequest(ManageIQ.tree.clickUrl + '?id=' + rep_id[0], {beforeSend: true, complete: true});
+  var allIds = id.split('rep-');
+  // Valid id should be something like xx-first_xx-second_rep-1r215, so it should return two 'ids' if split by rep- identifier
+  if (allIds.length === 2) {
+    var rep_id = allIds[allIds.length - 1];
+    miqJqueryRequest(ManageIQ.tree.clickUrl + '?id=' + rep_id, {beforeSend: true, complete: true});
   }
 }
 
