@@ -91,6 +91,10 @@ module QuadiconHelper
     !!(@edit && @edit[key])
   end
 
+  def quadicon_encode_images?
+    !!@quadicon_encode_images
+  end
+
   #
   # Ways of Building URLs
   # Collect here to see if any can be eliminated
@@ -145,6 +149,8 @@ module QuadiconHelper
       tag_options[:style] = quadicon_default_inline_styles
       tag_options[:class] = ""
     end
+
+    @quadicon_encode_images = options[:encode_images]
 
     quadicon_tag(tag_options) do
       quadicon_builder_factory(item, options)
@@ -323,14 +329,8 @@ module QuadiconHelper
   #
   def quadicon_reflection_img(options = {})
     path = options.delete(:path) || "layout/reflection.png"
-
-    options = {
-      :border => 0,
-      :width  => 72,
-      :height => 72,
-    }.merge(options)
-
-    image_tag(image_path(path), options)
+    options = { :border => 0, :size => 72 }.merge(options)
+    quadicon_img_tag(path, options)
   end
 
   CLASSLY_NAMED_ITEMS = %w(
@@ -391,16 +391,43 @@ module QuadiconHelper
     value.first(trunc_to / 2) + "..." + value.last(trunc_to / 2)
   end
 
+  def quadicon_img_tag(path = nil, options = {})
+    # if quadicon_encode_images? && path.present?
+    #   quadicon_encoded_img(path, options)
+    # else
+    #   image_tag(image_path(path), options)
+    # end
+    image_tag(quadicon_img_path(path), options)
+  end
+
+  def quadicon_img_path(path = nil)
+    if quadicon_encode_images? && path.present?
+      quadicon_encoded_uri(path)
+    else
+      image_path(path)
+    end
+  end
+
+  def quadicon_encoded_uri(path)
+    asset = Rails.application.assets[path]
+
+    if asset.content_type == 'image/svg+xml'
+      encoding = 'charset=utf-8'
+      data = CGI.escape(asset.source).gsub('+', '%20')
+    else
+      encoding = 'base64'
+      data = Base64.encode64(asset.source)
+    end
+
+    "data:#{asset.content_type};#{encoding},#{data}"
+  end
+
   def flobj_img_simple(image = nil, cls = '', size = 72)
     image ||= "layout/base-single.png"
 
     content_tag(:div, :class => "flobj #{cls}") do
-      image_tag(image, :size => size)
+      quadicon_img_tag(image, :size => size)
     end
-  end
-
-  def flobj_img_small(image = nil, cls = '')
-    flobj_img_simple(image, cls, 64)
   end
 
   def flobj_p_simple(cls, text)
@@ -425,7 +452,7 @@ module QuadiconHelper
 
     output << content_tag(:div, :class => "flobj e72") do
       quadicon_link_to(url, **link_opts) do
-        quadicon_reflection_img(:path => item.decorate.fileicon)
+        quadicon_reflection_img(options.merge!(:path => item.decorate.fileicon))
       end
     end
 
@@ -439,7 +466,7 @@ module QuadiconHelper
     output = []
 
     output << flobj_img_simple
-    output << flobj_img_small(img, "e72")
+    output << flobj_img_simple(img, "e72", 64)
     output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
 
     unless options[:typ] == :listnav
@@ -458,7 +485,7 @@ module QuadiconHelper
   def currentstate_icon(state)
     path = "svg/currentstate-#{h(state)}.svg"
     content_tag(:div, :class => "flobj b72") do
-      content_tag(:div, '', :class => "stretch", :style => "background-image: url('#{image_path(path)}')")
+      content_tag(:div, '', :class => "stretch", :style => "background-image: url('#{quadicon_img_path(path)}')")
     end
   end
 
@@ -477,7 +504,7 @@ module QuadiconHelper
       output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
     else
       output << flobj_img_simple
-      output << flobj_img_small(img_for_host_vendor(item), "e72")
+      output << flobj_img_simple(img_for_host_vendor(item), "e72", 64)
     end
 
     if options[:typ] == :listnav
@@ -515,7 +542,7 @@ module QuadiconHelper
       output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
     else
       output << flobj_img_simple("layout/base-single.png")
-      output << flobj_img_small("svg/vendor-#{h(item.image_name)}.svg", "e72")
+      output << flobj_img_simple("svg/vendor-#{h(item.image_name)}.svg", "e72", 64)
     end
 
     if options[:typ] == :listnav
@@ -541,7 +568,7 @@ module QuadiconHelper
     output = []
 
     output << flobj_img_simple("layout/base-single.png")
-    output << flobj_img_small("100/emscluster.png", "e72")
+    output << flobj_img_simple("100/emscluster.png", "e72", 64)
     output << flobj_img_simple("100/shield.png", "g72") unless item.get_policies.empty?
 
     unless options[:typ] == :listnav
@@ -607,7 +634,7 @@ module QuadiconHelper
     output = []
 
     output << flobj_img_simple("layout/base-single.png")
-    output << flobj_img_small("100/#{@listicon}.png", "e72")
+    output << flobj_img_simple("100/#{@listicon}.png", "e72", 64)
 
     unless options[:typ] == :listnav
       title = case @listicon
@@ -740,10 +767,10 @@ module QuadiconHelper
       output << flobj_img_simple("layout/base-single.png")
 
       if quadicon_policy_sim? && !session[:policies].empty?
-        output << flobj_img_small(img_for_compliance(item), "e72")
+        output << flobj_img_simple(img_for_compliance(item), "e72", 64)
       end
 
-      output << flobj_img_small(img_for_vendor(item), "e72")
+      output << flobj_img_simple(img_for_vendor(item), "e72", 64)
     end
 
     unless options[:typ] == :listnav
