@@ -883,7 +883,6 @@ module ApplicationController::MiqRequestMethods
         else
           @edit[:template_sortdir] ||= "ASC"
           @edit[:template_sortcol] ||= "name"
-          build_tags_tree(@edit[:wf], @edit[:new][:tag_ids], true)
           build_pxe_img_grid(@edit[:wf].send("allowed_images"), @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
           build_iso_img_grid(@edit[:wf].send("allowed_iso_images"), @edit[:iso_img_sortdir], @edit[:iso_img_sortcol])
           build_host_grid(@edit[:wf].send("allowed_hosts"), @edit[:host_sortdir], @edit[:host_sortcol])
