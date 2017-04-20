@@ -1,5 +1,4 @@
-(function(){
-
+(function() {
   function isButton(item) {
     return item.type === 'button';
   }
@@ -19,7 +18,7 @@
       } else if (event.rowSelect) {
         this.onRowSelect(event.rowSelect);
       } else if (event.redrawToolbar) {
-         this.onUpdateToolbar(event.redrawToolbar);
+        this.onUpdateToolbar(event.redrawToolbar);
       } else if (event.update) {
         this.onUpdateItem(event);
       }
@@ -29,10 +28,10 @@
         this.$scope.$digest();
       }
     }.bind(this),
-    function (err) {
+    function(err) {
       console.error('Angular RxJs Error: ', err);
     },
-    function () {
+    function() {
       console.debug('Angular RxJs subject completed, no more events to catch.');
     });
   }
@@ -97,11 +96,8 @@
         this.toolbarItems = toolbarItems.items;
         this.dataViews = toolbarItems.dataViews;
       }.bind(this));
-  }
+  };
 
-  /**
-  *
-  */
   ToolbarController.prototype.setClickHandler = function() {
     var buttons = _
       .chain(this.toolbarItems)
@@ -110,7 +106,7 @@
         return (item && item.hasOwnProperty('items')) ? item.items : item;
       })
       .flatten()
-      .filter(function(item){
+      .filter(function(item) {
         return item.type &&
           (isButton(item) || isButtonTwoState(item))
       })
@@ -120,11 +116,11 @@
         }
       })
       .value();
-  }
+  };
 
- /**
- * Public method for changing view over data.
- */
+  /**
+   * Public method for changing view over data.
+   */
   ToolbarController.prototype.onViewClick = function(item, $event) {
     if (item.url.indexOf('/') === 0) {
       var delimiter = (item.url === '/') ? '' : '/';
@@ -134,23 +130,23 @@
     } else {
       miqToolbarOnClick.bind($event.delegateTarget)($event);
     }
-  }
+  };
 
   ToolbarController.prototype.initObject = function(toolbarString) {
     subscribeToSubject.bind(this)();
     this.updateToolbar(JSON.parse(toolbarString));
-  }
+  };
 
   ToolbarController.prototype.onUpdateToolbar = function(toolbarObject) {
     this.updateToolbar(toolbarObject);
-  }
+  };
 
   ToolbarController.prototype.onUpdateItem = function(updateData) {
     var toolbarItem = _.find(_.flatten(this.toolbarItems), {id: updateData.update});
     if (toolbarItem && toolbarItem.hasOwnProperty(updateData.type)) {
       toolbarItem[updateData.type] = updateData.value;
     }
-  }
+  };
 
   ToolbarController.prototype.updateToolbar = function(toolbarObject) {
     toolbarItems = this.MiQToolbarSettingsService.generateToolbarObject(toolbarObject);
@@ -158,7 +154,7 @@
     this.dataViews = toolbarItems.dataViews;
     this.defaultViewUrl();
     this.setClickHandler();
-  }
+  };
 
   ToolbarController.$inject = ['MiQToolbarSettingsService', 'MiQEndpointsService', '$scope', '$location'];
   miqHttpInject(angular.module('ManageIQ.toolbar'))
