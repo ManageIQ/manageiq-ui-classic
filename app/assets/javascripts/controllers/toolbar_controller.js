@@ -23,6 +23,11 @@
       } else if (event.update) {
         this.onUpdateItem(event);
       }
+
+      // sync changes
+      if (! this.$scope.$$phase) {
+        this.$scope.$digest();
+      }
     }.bind(this),
     function (err) {
       console.error('Angular RxJs Error: ', err);
@@ -65,9 +70,6 @@
   */
   ToolbarController.prototype.onRowSelect = function(data) {
     this.MiQToolbarSettingsService.checkboxClicked(data.checked);
-    if(!this.$scope.$$phase) {
-      this.$scope.$digest();
-    }
   }
 
   /**
@@ -141,18 +143,12 @@
 
   ToolbarController.prototype.onUpdateToolbar = function(toolbarObject) {
     this.updateToolbar(toolbarObject);
-    if(!this.$scope.$$phase) {
-      this.$scope.$digest();
-    }
   }
 
   ToolbarController.prototype.onUpdateItem = function(updateData) {
     var toolbarItem = _.find(_.flatten(this.toolbarItems), {id: updateData.update});
     if (toolbarItem && toolbarItem.hasOwnProperty(updateData.type)) {
       toolbarItem[updateData.type] = updateData.value;
-      if(!this.$scope.$$phase) {
-        this.$scope.$digest();
-      }
     }
   }
 
