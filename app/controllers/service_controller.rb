@@ -179,6 +179,12 @@ class ServiceController < ApplicationController
     replace_right_cell(:action => 'retire')
   end
 
+  def service_retire_now
+    @explorer = true
+    retirevms_now
+    replace_right_cell
+  end
+
   def service_set_record_vars(svc)
     svc.name = params[:name] if params[:name]
     svc.description = params[:description] if params[:description]
