@@ -268,9 +268,11 @@ class CatalogController < ApplicationController
     if params[:id]
       elements.push(params[:id])
       process_sts(elements, 'destroy') unless elements.empty?
-      add_flash(_("The selected %{record} was deleted") %
-        {:record => ui_lookup(:table => "service_template")}) if @flash_array.nil?
-      self.x_node = "root"
+      if @flash_array.nil?
+        add_flash(_("The selected %{record} was deleted") %
+          {:record => ui_lookup(:table => "service_template")})
+        self.x_node = "root"
+      end
     else # showing 1 element, delete it
       elements = find_checked_ids_with_rbac(ServiceTemplate)
       if elements.empty?
@@ -632,7 +634,13 @@ class CatalogController < ApplicationController
         add_flash(_("%{model} \"%{name}\": Error during '%{task}': %{error_message}") %
           {:model => model_name, :name => st_name, :task => task, :error_message => bang.message}, :error)
       else
-        AuditEvent.success(audit)
+        if st.errors
+          st.errors.each do |field, msg|
+            add_flash("#{field.to_s.capitalize} #{msg}", :error)
+          end
+        else
+          AuditEvent.success(audit)
+        end
       end
     end
   end
