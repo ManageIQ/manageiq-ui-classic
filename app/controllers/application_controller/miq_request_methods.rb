@@ -870,7 +870,6 @@ module ApplicationController::MiqRequestMethods
           @edit[:template_sortdir] ||= "ASC"
           @edit[:template_sortcol] ||= "name"
           build_vm_grid(@edit[:wf].send("allowed_templates"), @edit[:vm_sortdir], @edit[:vm_sortcol], build_template_filter)
-          build_tags_tree(@edit[:wf], @edit[:new][:vm_tags], true)
           if @edit[:wf].supports_pxe?
             build_pxe_img_grid(@edit[:wf].send("allowed_images"), @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
             build_host_grid(@edit[:wf].send("allowed_hosts"), @edit[:host_sortdir], @edit[:host_sortcol])
