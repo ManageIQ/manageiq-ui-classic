@@ -793,7 +793,6 @@ module ApplicationController::MiqRequestMethods
           end
         end
         @options[tag_symbol_for_workflow] ||= []  # Initialize if came back nil from record
-        build_tags_tree(options[:wf], @options[tag_symbol_for_workflow], false) if @miq_request.resource_type != "VmMigrateRequest"
         unless ["MiqHostProvisionRequest", "VmMigrateRequest"].include?(@miq_request.resource_type)
           svm = VmOrTemplate.where(:id => @options[:src_vm_id][0]).first if @options[:src_vm_id] && @options[:src_vm_id][0]
           @sb[:vm_os] = svm.platform if svm
