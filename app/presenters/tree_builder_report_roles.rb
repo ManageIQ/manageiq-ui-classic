@@ -16,7 +16,7 @@ class TreeBuilderReportRoles < TreeBuilder
   def root_options
     user = User.current_user
     title = if user.super_admin_user?
-              _("All EVM Grouops")
+              _("All EVM Groups")
             else
               _("My EVM Groups")
             end
