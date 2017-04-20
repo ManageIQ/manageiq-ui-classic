@@ -23,9 +23,6 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
       'driverClass': vm.step2DsModel.driverClass,
       'datasourceProperties': dsPropsHash(vm.step3DsModel.dsProps),
       'connectionUrl': vm.step3DsModel.connectionUrl,
-      'userName': vm.step3DsModel.userName,
-      'password': vm.step3DsModel.password,
-      'securityDomain': vm.step3DsModel.securityDomain,
     };
   };
 
@@ -74,6 +71,20 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
           driverClass: '',
         });
     }
+    if (vm.step3DsModel.userName !== '' && vm.step3DsModel.password !== '') {
+      angular.extend(payload,
+        {
+          userName: vm.step3DsModel.userName,
+          password: vm.step3DsModel.password,
+        });
+    }
+    if (vm.step3DsModel.securityDomain !== '') {
+      angular.extend(payload,
+        {
+          securityDomain: vm.step3DsModel.securityDomain,
+        });
+    }
+
     mwAddDatasourceService.sendAddDatasource(payload).then(
       function(result) { // success
         miqService.miqFlash(result.data.status, result.data.msg);
@@ -86,15 +97,13 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
   });
 
   $scope.$watch('vm.step2DsModel.selectedJdbcDriver', function(driverSelection) {
-    var dsSelection = mwAddDatasourceService.findDsSelectionFromDriver(driverSelection);
-    if (dsSelection) {
-      vm.step1DsModel.datasourceName = dsSelection.name;
-      vm.step1DsModel.jndiName = dsSelection.jndiName;
-      vm.step2DsModel.jdbcDriverName = dsSelection.driverName;
-      vm.step3DsModel.connectionUrl = '';
+    if (driverSelection) {
+      vm.step1DsModel.datasourceName = driverSelection.id;
+      vm.step2DsModel.jdbcDriverName = driverSelection.label;
+      vm.step2DsModel.jdbcModuleName = driverSelection.moduleName;
     }
     if (mwAddDatasourceService.isXaDriver(driverSelection)) {
-      vm.step2DsModel.xaDsClass = driverSelection.xaDsClass;
+      vm.step2DsModel.driverClass = driverSelection.xaDsClass;
     } else {
       vm.step2DsModel.driverClass = driverSelection.driverClass;
     }
@@ -120,21 +129,22 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     vm.step2DsModel.jdbcModuleName = dsSelection.driverModuleName;
     vm.step2DsModel.driverClass = dsSelection.driverClass;
 
-    mwAddDatasourceService.getExistingJdbcDrivers(serverId).then(function(result) {
-      var filteredResult;
-      if (vm.chooseDsModel.xaDatasource) {
-        filteredResult = _.filter(result, function(item) {
-          return item.xaDsClass != null;
-        });
-      } else {
-        filteredResult = _.filter(result, function(item) {
-          return item.driverClass != null;
-        });
-      }
-      vm.step2DsModel.existingJdbcDrivers = filteredResult;
+    mwAddDatasourceService.getExistingJdbcDrivers(serverId).then(function(drivers) {
+      vm.step2DsModel.existingJdbcDrivers = vm.filterXa(vm.chooseDsModel.xaDatasource, drivers);
     }).catch(function(errorMsg) {
       miqService.miqFlash(errorMsg.data.status, errorMsg.data.msg);
     });
+  };
+
+  vm.filterXa = function(isXa, drivers) {
+    var filteredDrivers;
+
+    if (isXa) {
+      filteredDrivers = _.filter(drivers, function(driver) { return driver.xaDsClass != null; });
+    } else {
+      filteredDrivers = _.filter(drivers, function(driver) { return driver.driverClass != null; });
+    }
+    return filteredDrivers;
   };
 
   vm.addDatasourceStep1Back = function() {
