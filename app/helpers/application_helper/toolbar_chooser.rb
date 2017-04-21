@@ -528,7 +528,6 @@ class ApplicationHelper::ToolbarChooser
               orchestration_stack
               physical_infra_topology
               resource_pool
-              storage_manager
               container_template
               ems_block_storage
               ems_object_storage

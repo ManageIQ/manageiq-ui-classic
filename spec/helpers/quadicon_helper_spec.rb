@@ -316,25 +316,6 @@ describe QuadiconHelper do
       end
     end
 
-    context "when item is a StorageManager" do
-      before do
-        allow(controller).to receive(:controller_name).and_return("storage_manager")
-      end
-
-      let(:stor) do
-        FactoryGirl.create(:storage_manager, :name => "Store Man")
-      end
-
-      subject { helper.render_quadicon_text(stor, row) }
-
-      it "renders a link to storage_manager" do
-        @id = ApplicationRecord.compress_id(stor.id)
-
-        expect(subject).to have_selector('a')
-        expect(subject).to include("/storage_manager/show/#{@id}")
-      end
-    end
-
     context "when item is a FloatingIP" do
       before do
         allow(controller).to receive(:controller_name).and_return("floating_ip")

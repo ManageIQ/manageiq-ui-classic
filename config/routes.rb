@@ -2900,29 +2900,6 @@ Rails.application.routes.draw do
                x_post
     },
 
-    :storage_manager          => {
-      :get  => %w(
-        download_data
-        download_summary_pdf
-        edit
-        index
-        new
-        show
-        show_list
-      ),
-      :post => %w(
-        button
-        create
-        form_field_changed
-        quick_search
-        show
-        show_list
-        update
-      ) +
-               adv_search_post +
-               exp_post
-    },
-
     :support                  => {
       :get  => %w(index)
     },

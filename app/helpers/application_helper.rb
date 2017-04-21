@@ -891,7 +891,6 @@ module ApplicationHelper
        security_group
        service
        storage
-       storage_manager
        templates
        vm
       ).include?(@layout)
@@ -1330,7 +1329,6 @@ module ApplicationHelper
                         security_group
                         service
                         storage
-                        storage_manager
                         templates
                       )
 
@@ -1485,7 +1483,6 @@ module ApplicationHelper
              scan_profile
              security_group
              service
-             storage_manager
              timeline).include?(@layout)
       @layout
     end
@@ -1543,7 +1540,6 @@ module ApplicationHelper
       retired
       security_group
       service
-      storage_manager
       templates
       vm
     )

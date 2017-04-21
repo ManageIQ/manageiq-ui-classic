@@ -43,11 +43,6 @@ describe ApplicationHelper::Title do
       expect(subject).to eq(title + ": Management Systems")
     end
 
-    it "when layout = 'storage_manager'" do
-      @layout = "storage_manager"
-      expect(subject).to eq(title + ": Storage - Storage Managers")
-    end
-
     it "when layout = 'ops'" do
       @layout = "ops"
       expect(subject).to eq(title + ": Configuration")
