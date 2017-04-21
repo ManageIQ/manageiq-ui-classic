@@ -49,16 +49,6 @@ class SecurityGroupController < ApplicationController
                         :flash_msg => message
   end
 
-  def security_group_form_fields
-    assert_privileges("security_group_edit")
-    security_group = find_record_with_rbac(SecurityGroup, params[:id])
-    render :json => {
-      :name              => security_group.name,
-      :description       => security_group.description,
-      :cloud_tenant_name => security_group.cloud_tenant.try(:name),
-    }
-  end
-
   def create
     assert_privileges("security_group_new")
     case params[:button]
