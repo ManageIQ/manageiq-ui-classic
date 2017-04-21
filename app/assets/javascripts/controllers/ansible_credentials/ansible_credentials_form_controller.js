@@ -93,21 +93,16 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
 
     // we need to wait for vm.credential_options here
     optionsPromise.then(function() {
+      // we need to merge options and vm.credentialModel
       Object.keys(vm.credential_options[vm.credentialModel.type].attributes).forEach(function(key) {
         vm.credentialModel[key] = '';
-      });
 
-      // we need to merge options and vm.credentialModel
-      for (var opt in response.options) {
-        var item = vm.credential_options[vm.credentialModel.type]['attributes'][opt];
-
-        // void the password fields first
-        if (item.hasOwnProperty('type') && item['type'] === 'password') {
-          vm.credentialModel[opt] = '';
-        } else {
-          vm.credentialModel[opt] = response.options[opt];
+        var item = vm.credential_options[vm.credentialModel.type]['attributes'][key];
+        if (response.options[key]
+          && !(item.hasOwnProperty('type') && item['type'] === 'password')) {
+          vm.credentialModel[key] = response.options[key];
         }
-      }
+      });
 
       vm.modelCopy = angular.copy( vm.credentialModel );
     });
