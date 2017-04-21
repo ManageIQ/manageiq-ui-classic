@@ -2,9 +2,8 @@ describe AnsibleRepositoryController do
   include CompressedIds
 
   before do
-    EvmSpecHelper.create_guid_miq_server_zone
     @repository = FactoryGirl.create(:embedded_ansible_configuration_script_source)
-
+    EvmSpecHelper.create_guid_miq_server_zone
     login_as FactoryGirl.create(:user_admin)
   end
 
@@ -12,19 +11,25 @@ describe AnsibleRepositoryController do
     subject do
       get :show, :params => {:id => @repository.id}
     end
-
-    it "render specific repostitory" do
+    render_views
+    it "return correct http response code" do
       is_expected.to have_http_status 200
+    end
+    it "render view for specific repostitory" do
+      is_expected.to render_template(:partial => "layouts/extual_groups_generic")
     end
   end
 
   context "showList" do
     subject do
-      get :show_list
+      get :show_list, :params => {}
     end
-
-    it "render list of repositories" do
+    render_views
+    it "return correct http response code" do
       is_expected.to have_http_status 200
+    end
+    it "render view for list of repositories" do
+      is_expected.to render_template(:partial => "layouts/gtl")
     end
   end
 end
