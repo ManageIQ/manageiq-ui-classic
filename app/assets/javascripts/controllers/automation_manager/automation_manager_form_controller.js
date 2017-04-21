@@ -11,15 +11,15 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
   };
   vm.formId = automationManagerFormId;
   vm.afterGet = false;
-  vm.validateClicked = $scope.validateClicked = miqService.validateWithAjax;
-  vm.modelCopy = $scope.modelCopy = angular.copy(vm.automationManagerModel);
+  $scope.validateClicked = miqService.validateWithAjax;
+  vm.saveable = miqService.saveable;
+  vm.modelCopy = angular.copy(vm.automationManagerModel);
   vm.model = 'automationManagerModel';
 
   ManageIQ.angular.scope = $scope;
 
-
   if (automationManagerFormId === 'new') {
-    vm.newRecord = $scope.newRecord = true;
+    vm.newRecord  = true;
     vm.automationManagerModel.name = '';
     vm.automationManagerModel.url = '';
     vm.automationManagerModel.verify_ssl = false;
@@ -43,7 +43,7 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     var data = response.data;
     vm.afterGet = true;
     vm.automationManagerModel.zone = data.zone;
-    vm.modelCopy = $scope.modelCopy = angular.copy(vm.automationManagerModel);
+    vm.modelCopy  = angular.copy(vm.automationManagerModel);
   }
 
   function getAutomationManagerFormDataComplete(response) {
@@ -60,14 +60,11 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     if (vm.automationManagerModel.log_userid != '') {
       vm.automationManagerModel.log_password = vm.automationManagerModel.log_verify = miqService.storedPasswordPlaceholder;
     }
-    vm.modelCopy = $scope.modelCopy = angular.copy(vm.automationManagerModel);
+    vm.modelCopy = angular.copy(vm.automationManagerModel);
   }
-
   $scope.canValidateBasicInfo = function() {
     return vm.isBasicInfoValid();
-  };
-
-  vm.isBasicInfoValid = function() {
+  };vm.isBasicInfoValid = function() {
     return $scope.angularForm.url.$valid &&
       $scope.angularForm.log_userid.$valid &&
       $scope.angularForm.log_password.$valid &&
@@ -83,25 +80,21 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
       miqService.miqAjaxButton(url, serializeFields);
     }
   };
-
-  $scope.cancelClicked = function() {
+  vm.cancelClicked = function() {
     automationManagerEditButtonClicked('cancel');
     $scope.angularForm.$setPristine(true);
   };
-
-  $scope.resetClicked = function() {
+  vm.resetClicked = function() {
     $scope.$broadcast('resetClicked');
-    vm.automationManagerModel = angular.copy($scope.modelCopy);
+    vm.automationManagerModel = angular.copy(vm.modelCopy);
     $scope.angularForm.$setPristine(true);
     miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
-  $scope.saveClicked = function() {
+  vm.saveClicked = function() {
     automationManagerEditButtonClicked('save', true);
     $scope.angularForm.$setPristine(true);
   };
-
-  $scope.addClicked = function() {
-    $scope.saveClicked();
+  vm.addClicked = function() {vm.saveClicked();
   };
 }]);
