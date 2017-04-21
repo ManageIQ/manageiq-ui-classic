@@ -11,9 +11,9 @@ describe('ownershipFormController', function() {
     spyOn(miqService, 'sparkleOff');
     $scope = $rootScope.$new();
     $scope.ownershipModel = {owner: '',
-                             group: ''};
+      group: ''};
     $httpBackend = _$httpBackend_;
-    $controller = _$controller_('ownershipFormController', { $scope: $scope,
+    $controller = _$controller_('ownershipFormController as vm', { $scope: $scope,
       objectIds:  [1000000000001,1000000000003],
       user:       'testUser',
       group:      'testGroup',
@@ -36,8 +36,8 @@ describe('ownershipFormController', function() {
   describe('initialization', function() {
     it('sets the owner and group to the values returned via the http request', function() {
       describe('#cancelClicked', function() {
-        expect($scope.ownershipModel.user).toEqual('testUser2');
-        expect($scope.ownershipModel.group).toEqual('testGroup2');
+        expect($scope.vm.ownershipModel.user).toEqual('testUser2');
+        expect($scope.vm.ownershipModel.group).toEqual('testGroup2');
       });
     });
 
@@ -70,9 +70,9 @@ describe('ownershipFormController', function() {
     });
 
     it('delegates to miqService.miqAjaxButton', function() {
-      submitContent = { objectIds:  $scope.objectIds,
-        user: $scope.ownershipModel.user,
-        group: $scope.ownershipModel.group};
+      submitContent = { objectIds:  $scope.vm.objectIds,
+        user: $scope.vm.ownershipModel.user,
+        group: $scope.vm.ownershipModel.group};
 
       expect(miqService.miqAjaxButton).toHaveBeenCalledWith('ownership_update/?button=save', submitContent);
     });
