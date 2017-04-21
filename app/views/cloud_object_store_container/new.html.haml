@@ -6,8 +6,6 @@
                "model"         => "vm.cloudContainerModel",
                "model-copy"    => "vm.modelCopy"}
   = render :partial => "layouts/flash_msg"
-  %h3
-    = _('Basic Information')
   .form-horizontal
     .form-group{"ng-class" => "{'has-error': angularForm.storage_manager_id.$invalid}"}
       %label.col-md-2.control-label
@@ -15,7 +13,7 @@
       .col-md-8
         %select{"name"        => "storage_manager_id",
                 "ng-model"    => "vm.cloudContainerModel.storage_manager_id",
-                "ng-options"  => "mgr.id as mgr.name for mgr in vm.storageManagers",
+                "ng-options"  => "mgr.id|number as mgr.name for mgr in vm.storageManagers",
                 "ng-change"   => "vm.storageManagerChanged(vm.cloudContainerModel.storage_manager_id)",
                 "required"    => "",
                 "disabled"    => !@storage_manager.nil?,
@@ -32,13 +30,14 @@
       .col-md-8
         %input.form-control{:type          => "text",
                             :name          => "name",
-                            'ng-model'     => "vm.cloudContainerModel.name",
-                            'ng-maxlength' => 255,
+                            "ng-model"     => "vm.cloudContainerModel.name",
+                            "ng-maxlength" => 255,
+                            "required"     => "",
                             :miqrequired   => true,
                             :checkchange   => true}
+        %span.help-block{"ng-show" => "angularForm.name.$error.required"}
+          = _("Required")
   %div{"ng-if" => "vm.cloudContainerModel.emstype === 'ManageIQ::Providers::Amazon::StorageManager::S3'"}
-    %h3
-      = _('Placement')
     .form-horizontal
       .form-group{"ng-class"  => "{'has-error': angularForm.provider_region.$invalid}",
                   "ng-if"     => "#{@provider_regions.keys.to_json}.includes(vm.cloudContainerModel.parent_emstype)",
@@ -55,6 +54,8 @@
                          "required"                    => "",
                          "checkchange"                 => "",
                          "selectpicker-for-select-tag" => "")
+          %span.help-block{"ng-show" => "angularForm.provider_region.$error.required"}
+            = _("Required")
   = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript

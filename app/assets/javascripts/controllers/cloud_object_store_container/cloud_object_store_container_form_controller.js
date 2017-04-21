@@ -11,9 +11,7 @@ ManageIQ.angular.app.controller('cloudObjectStoreContainerFormController', ['miq
     };
 
     // fetch StorageManager from querystring
-    if (! isNaN(parseInt(storageManagerId, 10))) {
-      vm.cloudContainerModel.storage_manager_id = parseInt(storageManagerId, 10);
-    }
+    vm.cloudContainerModel.storage_manager_id = storageManagerId;
 
     vm.model = 'cloudContainerModel';
     vm.newRecord = true;
