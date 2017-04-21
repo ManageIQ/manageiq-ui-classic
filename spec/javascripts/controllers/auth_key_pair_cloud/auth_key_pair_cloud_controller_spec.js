@@ -56,7 +56,7 @@ describe('keyPairCloudFormController', function() {
             vm.angularForm = {
                 $setPristine: function (value){}
             };
-            $scope.saveClicked();
+            vm.saveClicked();
         });
 
         it('turns the spinner on via the miqService', function() {
@@ -78,7 +78,7 @@ describe('keyPairCloudFormController', function() {
             vm.angularForm = {
                 $setPristine: function (value){}
             };
-            $scope.cancelClicked();
+            vm.cancelClicked();
         });
 
         it('turns the spinner on via the miqService', function() {
