@@ -50,7 +50,7 @@
                   'pf-select'                  => true)
           :javascript
             miqInitSelectPicker();
-    = render :partial => 'layouts/angular/x_edit_buttons_angular'
+    = render :partial => 'layouts/angular/generic_form_buttons'
 
 :javascript
   ManageIQ.angular.app.value('keyPairFormId', '#{@key_pair.id || "new"}');

@@ -38,23 +38,23 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
         miqService.sparkleOff();
     };
 
-    $scope.cancelClicked = function() {
+    vm.cancelClicked = function() {
         keyPairEditButtonClicked('cancel', false);
         vm.angularForm.$setPristine(true);
     };
 
-    $scope.resetClicked = function() {
+    vm.resetClicked = function() {
         vm.keyPairModel = angular.copy( vm.modelCopy );
         vm.angularForm.$setPristine(true);
         miqService.miqFlash("warn", __("All changes have been reset"));
     };
 
-    $scope.saveClicked = function() {
+    vm.saveClicked = function() {
         keyPairEditButtonClicked('save', true);
         vm.angularForm.$setPristine(true);
     };
 
-    $scope.addClicked = function() {
+    vm.addClicked = function() {
         vm.saveClicked();
     };
 
