@@ -73,4 +73,17 @@ describe PxeController do
       expect(assigns(:edit)[:new][:log_password]).to eq(ps.authentication_password(:default))
     end
   end
+
+  describe "#tree_select" do
+    before { login_as FactoryGirl.create(:user_admin) }
+
+    subject { post :tree_select, :params => {:id => 'root'} }
+
+    render_views
+    it "renders the pxe partial" do
+      is_expected.to have_http_status 200
+      is_expected.to render_template(:partial => "pxe_server_details",
+                                     :locals  => {:action_url => "pxe_server_list"})
+    end
+  end
 end
