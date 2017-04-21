@@ -64,7 +64,8 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
   }
   $scope.canValidateBasicInfo = function() {
     return vm.isBasicInfoValid();
-  };vm.isBasicInfoValid = function() {
+  };
+  vm.isBasicInfoValid = function() {
     return $scope.angularForm.url.$valid &&
       $scope.angularForm.log_userid.$valid &&
       $scope.angularForm.log_password.$valid &&
@@ -95,6 +96,7 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     automationManagerEditButtonClicked('save', true);
     $scope.angularForm.$setPristine(true);
   };
-  vm.addClicked = function() {vm.saveClicked();
+  vm.addClicked = function() {
+    vm.saveClicked();
   };
 }]);

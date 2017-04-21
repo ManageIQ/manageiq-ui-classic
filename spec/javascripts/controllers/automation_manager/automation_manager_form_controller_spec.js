@@ -111,8 +111,7 @@ describe('automationManagerFormController', function() {
       $scope.angularForm = {
         $setPristine: function (value){},
         $setUntouched: function (value){},
-      };
-      $scope.resetClicked();
+      };vm.resetClicked();
     });
 
     it('does not turn the spinner on', function() {
@@ -125,7 +124,7 @@ describe('automationManagerFormController', function() {
       $scope.angularForm = {
         $setPristine: function (value){}
       };
-      $scope.saveClicked();
+      vm.saveClicked();
     });
 
     it('turns the spinner on via the miqService', function() {
@@ -145,8 +144,7 @@ describe('automationManagerFormController', function() {
     beforeEach(function() {
       $scope.angularForm = {
         $setPristine: function (value){}
-      };
-      $scope.addClicked();
+      };vm.addClicked();
     });
 
     it('turns the spinner on via the miqService', function() {
