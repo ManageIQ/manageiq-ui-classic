@@ -7,6 +7,17 @@ class ApplicationHelper::Toolbar::AnsibleRepositoryCenter < ApplicationHelper::T
       t,
       :items => [
         button(
+          :embedded_configuration_script_source_refresh,
+          'fa fa-refresh fa-lg',
+          N_('Refresh this Repository'),
+          N_('Refresh this Repository'),
+          :klass => ApplicationHelper::Button::EmbeddedAnsible,
+          :url       => "repository_refresh",
+          :confirm   => N_("Refresh this Repository?"),
+          :enabled   => true,
+          :onwhen    => "1"),
+        separator,
+        button(
           :embedded_configuration_script_source_edit,
           'pficon pficon-edit fa-lg',
           t = N_('Edit this Repository'),
