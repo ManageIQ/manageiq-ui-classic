@@ -396,7 +396,7 @@ module OpsController::Diagnostics
     else
       add_flash(_("Database Garbage Collection successfully initiated"))
     end
-    javascript_flash
+    javascript_flash(:spinner_off => true)
   end
 
   # to delete orphaned records for user that was delete from db
