@@ -26,6 +26,8 @@
         return _.find(items, {id: itemId});
       }
     }
+
+    return;
   }
 
   /**
@@ -182,7 +184,7 @@
           itemId = this.initObject.showUrl.indexOf('xx-') !== -1 ? '_-' + item.id : '-' + item.id;
           if (item.parent_id && item.parent_id[item.parent_id.length - 1] !== '-') {
             itemId = item.parent_id + '_' + item.tree_id;
-          } else {
+          } else if (['pxe', 'ops'].indexOf(ManageIQ.controller) === -1) {
             itemId = '_' + item.tree_id;
           }
         }

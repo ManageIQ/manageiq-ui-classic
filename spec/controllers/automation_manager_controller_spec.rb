@@ -60,7 +60,11 @@ describe AutomationManagerController do
 
     get :explorer, :params => {:sortby => '2'}
     expect(response.status).to eq(200)
-    expect(response.body).to match('https://a_url/api/v1(.|\n)*https://z_url/api/v1')
+    expect(response.body).to include("modelName: 'manageiq/providers/automation_managers'")
+    expect(response.body).to include("activeTree: 'automation_manager_providers_tree'")
+    expect(response.body).to include("gtlType: 'list'")
+    expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
+    expect(response.body).to include("showUrl: '/automation_manager/x_show/'")
   end
 
   context "renders the explorer based on RBAC" do

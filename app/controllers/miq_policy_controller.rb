@@ -381,7 +381,7 @@ class MiqPolicyController < ApplicationController
     session[sortcol_key]     = @sortcol
     session[sortdir_key]     = @sortdir
 
-    if pagination_or_gtl_request?
+    if pagination_or_gtl_request? && @show_list
       render :update do |page|
         page << javascript_prologue
         page.replace("gtl_div", :partial => "layouts/gtl", :locals => {:action_url => "#{what}_get_all", :button_div => 'policy_bar'})
@@ -395,7 +395,8 @@ class MiqPolicyController < ApplicationController
   end
 
   # Get all info for the node about to be displayed
-  def get_node_info(treenodeid, _show_list = true)
+  def get_node_info(treenodeid, show_list = true)
+    @show_list = show_list
     _modelname, nodeid, @nodetype = TreeBuilder.extract_node_model_and_id(valid_active_node(treenodeid))
     node_ids = {}
     treenodeid.split("_").each do |p|

@@ -67,7 +67,11 @@ describe ProviderForemanController do
 
     get :explorer, :params => {:sortby => '2'}
     expect(response.status).to eq(200)
-    expect(response.body).to match('a_url(.|\n)*z_url')
+    expect(response.body).to include("modelName: 'manageiq/providers/configuration_managers'")
+    expect(response.body).to include("activeTree: 'configuration_manager_providers_tree'")
+    expect(response.body).to include("gtlType: 'list'")
+    expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
+    expect(response.body).to include("showUrl: '/provider_foreman/x_show/'")
   end
 
   context "renders explorer based on RBAC" do

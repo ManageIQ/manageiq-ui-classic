@@ -307,7 +307,6 @@ module ApplicationHelper
   TREE_WITH_TAB = {
     "diagnostics_server_list" => "svr",
     "db_details"              => "tb",
-    "db_indexes"              => "ti",
     "report_info"             => "msc"
   }.freeze
 
@@ -338,7 +337,7 @@ module ApplicationHelper
         return ems_networks_path
       end
       # If we do not want to use redirect or any kind of click action
-      if %w(Job VmdbDatabaseSetting VmdbDatabaseConnection).include?(view.db) &&
+      if %w(Job VmdbDatabaseSetting VmdbDatabaseConnection VmdbIndex).include?(view.db) &&
          %w(miq_task ops).include?(params[:controller])
         return false
       end
@@ -370,7 +369,7 @@ module ApplicationHelper
         elsif %w(User MiqGroup MiqUserRole Tenant).include?(view.db) &&
               %w(ops).include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node.split("-")[1]
-        elsif %w(VmdbTableEvm VmdbIndex MiqServer).include?(view.db) &&
+        elsif %w(VmdbTableEvm MiqServer).include?(view.db) &&
               %w(ops report).include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + TREE_WITH_TAB[active_tab]
         elsif %w(MiqAction
