@@ -14,8 +14,7 @@ class ApplicationHelper::Toolbar::AnsibleRepositoriesCenter < ApplicationHelper:
           :klass => ApplicationHelper::Button::EmbeddedAnsible,
           :url       => "repository_refresh",
           :url_parms => "main_div",
-          :confirm   => N_("Refresh relationships for all items from Embedded Ansible Provider?"),
-          :enabled   => true),
+          :confirm   => N_("Refresh relationships for all items from Embedded Ansible Provider?")),
         separator,
         button(
           :embedded_configuration_script_source_add,
