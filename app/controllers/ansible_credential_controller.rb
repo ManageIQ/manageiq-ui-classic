@@ -51,11 +51,6 @@ class AnsibleCredentialController < ApplicationController
     @id = auth.id
   end
 
-  def credential_refresh
-    # Targeted refresh for embedded ansible hasn't been implemented yet
-    embedded_ansible_refresh
-  end
-
   private
 
   def textual_group_list
