@@ -48,7 +48,7 @@
              :children           => children}
 
 :javascript
-  miqInitTree(#{options.to_json.html_safe}, #{bs_tree.html_safe})
+  miqInitTree(#{options.to_json}, #{bs_tree})
 
 - if session[:group_changed]
   - session[:group_changed] = false
