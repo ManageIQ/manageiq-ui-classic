@@ -968,7 +968,7 @@ module OpsController::Diagnostics
       @sb[:diag_selected_id] = nil
       diagnostics_set_form_vars
     when "svr"
-      @selected_server = MiqServer.find(from_cid(x_node.downcase.split("-").last))
+      @record = @selected_server = MiqServer.find(from_cid(x_node.downcase.split("-").last))
       @sb[:selected_server_id] = @selected_server.id
       diagnostics_set_form_vars
     end
