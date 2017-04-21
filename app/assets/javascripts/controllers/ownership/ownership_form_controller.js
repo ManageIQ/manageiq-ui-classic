@@ -2,9 +2,9 @@ ManageIQ.angular.app.controller('ownershipFormController', ['$http', '$scope', '
   var vm = this;
   var init = function() {
     vm.ownershipModel = {
-        user: '',
-        group: ''
-      };
+      user: '',
+      group: ''
+    };
     vm.afterGet  = false;
     vm.newRecord = false;
     vm.modelCopy = angular.copy( vm.ownershipModel );
@@ -15,7 +15,7 @@ ManageIQ.angular.app.controller('ownershipFormController', ['$http', '$scope', '
     ManageIQ.angular.scope = vm;
 
     miqService.sparkleOn();
-    http.post('ownership_form_fields', {object_ids: objectIds})
+    $http.post('ownership_form_fields', {object_ids: objectIds})
       .then(getOwnershipFormData)
       .catch(miqService.handleFailure);
   };
@@ -34,14 +34,14 @@ ManageIQ.angular.app.controller('ownershipFormController', ['$http', '$scope', '
     miqService.sparkleOn();
     var url = 'ownership_update/' + '?button=' + buttonName;
     if (serializeFields === undefined) {
-        miqService.miqAjaxButton(url);
-      } else {
-        miqService.miqAjaxButton(url, {
-            objectIds: vm.objectIds,
-            user:  vm.ownershipModel.user,
-            group: vm.ownershipModel.group
-          });
-      }
+      miqService.miqAjaxButton(url);
+    } else {
+      miqService.miqAjaxButton(url, {
+          objectIds: vm.objectIds,
+          user:  vm.ownershipModel.user,
+          group: vm.ownershipModel.group
+        });
+    }
   };
 
   $scope.cancelClicked = function() {
