@@ -25,7 +25,8 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
       :checkboxes   => true,
       :three_checks => true,
       :check_url    => "/ops/rbac_role_field_changed/",
-      :onclick      => nil
+      :onclick      => nil,
+      :post_check   => true
     }
 
     locals[:oncheck] = "miqOnCheckHandler" if editable
