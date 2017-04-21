@@ -23,11 +23,7 @@ module PxeController::IsoDatastores
   end
 
   def iso_datastore_edit
-    unless params[:id]
-      obj           = find_checked_items
-      @_params[:id] = obj[0] unless obj.empty?
-    end
-    @isd = @record = identify_record(params[:id], IsoDatastore) if params[:id]
+    @isd = @record = find_record_with_rbac(IsoDatastore, @_params[:id] = checked_or_params_id)
     iso_datastore_set_form_vars
     @in_a_form = true
     session[:changed] = false
@@ -99,7 +95,7 @@ module PxeController::IsoDatastores
 
     # Either a list or coming from a different controller (eg from host screen, go to its vms)
     if !params[:id]
-      isds = find_checked_items
+      isds = find_checked_ids_with_rbac(IsoDatastore)
       if isds.empty?
         add_flash(_("No %{model} were selected to %{button}") % {:model => ui_lookup(:models => "IsoDatastore"), :button => display_name},
                   :error)
@@ -109,24 +105,23 @@ module PxeController::IsoDatastores
 
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node, :replace_trees => [:iso_datastores])
-    else # showing 1 vm
-      if params[:id].nil? || IsoDatastore.find_by_id(params[:id]).nil?
-        add_flash(_("%{model} no longer exists") % {:model => ui_lookup(:model => "IsoDatastore")},
-                  :error)
-        iso_datastore_list
-        @refresh_partial = "layouts/x_gtl"
-      else
-        isds.push(params[:id])
-        process_iso_datastores(isds, method, display_name)  unless isds.empty?
-        # TODO: tells callers to go back to show_list because this iso_datastore may be gone
-        # Should be refactored into calling show_list right here
-        if method == 'destroy'
-          self.x_node = "root"
-          @single_delete = true unless flash_errors?
-        end
-        get_node_info(x_node)
-        replace_right_cell(:nodetype => x_node, :replace_trees => [:iso_datastores])
+    elsif params[:id].nil? ||find_id_with_rbac(IsoDatastore, params[:id]).nil?
+      # showing 1 vm
+      add_flash(_("%{model} no longer exists") % {:model => ui_lookup(:model => "IsoDatastore")},
+                :error)
+      iso_datastore_list
+      @refresh_partial = "layouts/x_gtl"
+    else
+      isds.push(find_id_with_rbac(IsoDatastore, params[:id]))
+      process_iso_datastores(isds, method, display_name)  unless isds.empty?
+      # TODO: tells callers to go back to show_list because this iso_datastore may be gone
+      # Should be refactored into calling show_list right here
+      if method == 'destroy'
+        self.x_node = "root"
+        @single_delete = true unless flash_errors?
       end
+      get_node_info(x_node)
+      replace_right_cell(:nodetype => x_node, :replace_trees => [:iso_datastores])
     end
     isds.count
   end
