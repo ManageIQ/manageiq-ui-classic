@@ -3,7 +3,7 @@
   = render(:partial => 'layouts/quick_search')
 
 -# These are the initial divs that will go inside center_cell_div
-- if @inventory_group_record
+- if @record.kind_of?(ManageIQ::Providers::AutomationManager::InventoryGroup)
   #main_div
     - @pages = nil if @sb[:active_tab] == 'summary'
     = render(:partial => 'automation_manager/inventory_group')
@@ -11,7 +11,7 @@
 - elsif @configured_system_record
   #main_div
     = render :partial => "layouts/textual_groups_generic"
-- elsif @configuration_script_record
+- elsif @record.kind_of?(ConfigurationScript)
   #main_div
     = render(:partial => 'automation_manager/configuration_script', :locals => {:controller => "automation_manager"})
 - else

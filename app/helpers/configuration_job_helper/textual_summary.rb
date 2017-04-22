@@ -50,7 +50,7 @@ module ConfigurationJobHelper::TextualSummary
     else
       h[:value] = provider.name
       h[:title] = _("Show this Parent Provider")
-      h[:link]  = url_for_only_path(:controller => 'automation_manager', :action => 'explorer', :id => "at-#{to_cid(provider.id)}")
+      h[:link]  = url_for_only_path(:controller => 'automation_manager', :action => 'explorer', :accordion => "automation_manager_providers", :id => "at-#{to_cid(provider.id)}")
     end
     h
   end
