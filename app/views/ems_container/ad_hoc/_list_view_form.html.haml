@@ -1,10 +1,5 @@
 .col-md-12.tenant-filter-bar
   .form-group.pull-left.ad-hoc-tenant
-    %button.btn.btn-primary{"type"        => "button",
-                            "ng-disabled" => "!dash.tenantChanged",
-                            "ng-click"    => "dash.refreshTenant()"}
-      = _("Set Tenant")
-
     %select.selectpicker.tenants-selector{"pf-select"        => "",
                                           "id"               => "tenant-slector",
                                           "ng-options"       => "o.label for o in dash.tenantList",
@@ -12,6 +7,11 @@
                                           "ng-change"        => "dash.tenantChanged = true",
                                           "data-live-search" => "true",
                                           "data-actions-box" => "true"}
+
+    %button.btn.btn-primary{"type"        => "button",
+                            "ng-disabled" => "!dash.tenantChanged",
+                            "ng-click"    => "dash.refreshTenant()"}
+      = _("Set Hawkular Tenant")
 
 .ad-hoc-toolbar.filters-selector{"pf-toolbar" => "", "id" => "filters-selector", "config" => "dash.toolbarConfig"}
   %actions
