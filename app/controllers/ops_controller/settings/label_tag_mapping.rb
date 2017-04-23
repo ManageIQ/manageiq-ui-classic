@@ -7,10 +7,10 @@ module OpsController::Settings::LabelTagMapping
       @lt_map = session[:edit][:lt_map] if session[:edit] && session[:edit][:lt_map]
       if !@lt_map || @lt_map.id.blank?
         add_flash(_("Add of new %{model} was cancelled by the user") %
-                    {:model => ui_lookup(:model => "ContainerLabelTagMapping")})
+                    {:model => ui_lookup(:model => "ResourceLabelTagMapping")})
       else
         add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") %
-                    {:model => ui_lookup(:model => "ContainerLabelTagMapping"), :name => @lt_map.label_name})
+                    {:model => ui_lookup(:model => "ResourceLabelTagMapping"), :name => @lt_map.label_name})
       end
       get_node_info(x_node)
       @lt_map = @edit = session[:edit] = nil # clean out the saved info
@@ -36,7 +36,7 @@ module OpsController::Settings::LabelTagMapping
       end
     when "reset", nil # Reset or first time in
       if params[:id]
-        @lt_map = ContainerLabelTagMapping.find(params[:id])
+        @lt_map = ResourceLabelTagMapping.find(params[:id])
         lt_map_set_form_vars
       else
         lt_map_set_new_form_vars
@@ -69,7 +69,7 @@ module OpsController::Settings::LabelTagMapping
 
   def label_tag_mapping_get_all
     # Current UI only supports any-value -> category mappings
-    mapping = ContainerLabelTagMapping.in_my_region.where(:label_value => nil)
+    mapping = ResourceLabelTagMapping.in_my_region.where(:label_value => nil)
     @lt_mapping = []
     mapping.each do |m|
       lt_map = {}
@@ -91,7 +91,7 @@ module OpsController::Settings::LabelTagMapping
     @edit[:new][:label_name] = @lt_map.label_name
     @edit[:new][:category] = @lt_map.tag.category.description
     @edit[:current] = copy_hash(@edit[:new])
-    @edit[:new][:options] = ContainerLabelTagMapping::MAPPABLE_ENTITIES.collect do |name|
+    @edit[:new][:options] = ResourceLabelTagMapping::MAPPABLE_ENTITIES.collect do |name|
       [entity_ui_name_or_all(name), name]
     end
     session[:edit] = @edit
@@ -107,7 +107,7 @@ module OpsController::Settings::LabelTagMapping
     @edit[:new][:label_name] = nil
     @edit[:new][:category] = nil
     @edit[:current] = copy_hash(@edit[:new])
-    @edit[:new][:options] = ContainerLabelTagMapping::MAPPABLE_ENTITIES.collect do |name|
+    @edit[:new][:options] = ResourceLabelTagMapping::MAPPABLE_ENTITIES.collect do |name|
       [entity_ui_name_or_all(name), name]
     end
     session[:edit] = @edit
@@ -138,7 +138,7 @@ module OpsController::Settings::LabelTagMapping
 
   def label_tag_mapping_add(entity, label_name, cat_description)
     entity_str = ''
-    prefix = ContainerLabelTagMapping::AUTOTAG_PREFIX
+    prefix = ResourceLabelTagMapping::AUTOTAG_PREFIX
 
     # The entity is a string in the form "Provider::ResourceType".
     if entity && entity.include?('::')
@@ -165,14 +165,14 @@ module OpsController::Settings::LabelTagMapping
                                                    :description  => cat_description,
                                                    :single_value => true,
                                                    :read_only    => true)
-        ContainerLabelTagMapping.create!(:labeled_resource_type => entity, :label_name => label_name,
+        ResourceLabelTagMapping.create!(:labeled_resource_type => entity, :label_name => label_name,
                                          :tag => category.tag)
       end
     rescue StandardError => bang
       add_flash(_("Error during 'add': %{message}") % {:message => bang.message}, :error)
       javascript_flash
     else
-      add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "ContainerLabelTagMapping"),
+      add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "ResourceLabelTagMapping"),
                                                        :name  => label_name})
       get_node_info(x_node)
       @lt_map = @edit = session[:edit] = nil # clean out the saved info
@@ -181,7 +181,7 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def label_tag_mapping_update(id, cat_description)
-    mapping = ContainerLabelTagMapping.find(id)
+    mapping = ResourceLabelTagMapping.find(id)
     update_category = mapping.tag.classification
     update_category.description = cat_description
     begin
@@ -190,7 +190,7 @@ module OpsController::Settings::LabelTagMapping
       add_flash(_("Error during 'save': %{message}") % {:message => bang.message}, :error)
       javascript_flash
     else
-      add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "ContainerLabelTagMapping"),
+      add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "ResourceLabelTagMapping"),
                                                        :name  => mapping.label_name})
       get_node_info(x_node)
       @lt_map = @edit = session[:edit] = nil # clean out the saved info
@@ -199,7 +199,7 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def label_tag_mapping_delete
-    mapping = ContainerLabelTagMapping.find(params[:id])
+    mapping = ResourceLabelTagMapping.find(params[:id])
     category = mapping.tag.category
     label_name = mapping.label_name
 
@@ -211,7 +211,7 @@ module OpsController::Settings::LabelTagMapping
 
     if deleted
       add_flash(_("%{model} \"%{name}\": Delete successful") %
-                  {:model => ui_lookup(:model => "ContainerLabelTagMapping"), :name => label_name})
+                  {:model => ui_lookup(:model => "ResourceLabelTagMapping"), :name => label_name})
       label_tag_mapping_get_all
       render :update do |page|
         page << javascript_prologue
