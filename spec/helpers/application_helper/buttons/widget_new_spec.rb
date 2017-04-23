@@ -16,10 +16,10 @@ describe ApplicationHelper::Button::WidgetNew do
   describe '#visible?' do
     context 'when x_node == root' do
       let(:x_node) { 'root' }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
     context 'when x_node != root' do
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
   end
 end

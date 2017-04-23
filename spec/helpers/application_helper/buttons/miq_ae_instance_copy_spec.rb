@@ -17,10 +17,10 @@ describe ApplicationHelper::Button::MiqAeInstanceCopy do
         let(:child_id) { 'miq_ae_instance_copy' }
         context 'with record as domain' do
           let(:record) { domain }
-          it { expect(subject.visible?).to be_truthy }
+          include_examples 'ApplicationHelper::Button::Basic#visible?', true
         end
         context 'with record as class of locked domain' do
-          it { expect(subject.visible?).to be_truthy }
+          include_examples 'ApplicationHelper::Button::Basic#visible?', true
         end
       end
       context 'and button is miq_ae_method_copy with method record' do
@@ -30,7 +30,7 @@ describe ApplicationHelper::Button::MiqAeInstanceCopy do
           FactoryGirl.create(:miq_ae_method, :scope => 'class', :language => 'ruby',
                                           :location => 'builtin', :ae_class => klass)
         end
-        it { expect(subject.visible?).to be_truthy }
+        include_examples 'ApplicationHelper::Button::Basic#visible?', true
       end
     end
   end
@@ -44,7 +44,7 @@ describe ApplicationHelper::Button::MiqAeInstanceCopy do
       end
       context 'and button is miq_ae_method_copy' do
         let(:child_id) { 'miq_ae_method_copy' }
-        it { expect(subject.visible?).to be_truthy }
+        include_examples 'ApplicationHelper::Button::Basic#visible?', true
       end
     end
   end

@@ -12,20 +12,20 @@ describe ApplicationHelper::Button::CustomizationTemplateCopy do
   describe '#visible?' do
     context 'when root node is active' do
       let(:x_node) { 'root' }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
     context 'when system node is active' do
       let(:x_node) { 'xx-xx-system' }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
     context 'when record has system' do
       let(:x_node) { 'does-not-matter' }
       let(:record) { FactoryGirl.create(:customization_template_cloud_init, :system => true) }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
     context 'when other node is active' do
       let(:x_node) { 'xx-xx-10r3' }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
   end
 end

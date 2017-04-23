@@ -12,16 +12,16 @@ describe ApplicationHelper::Button::SavedReportDelete do
       let(:tree) { :reports_tree }
       context 'and active_tab == saved_reports' do
         let(:tab) { 'saved_reports' }
-        it { expect(subject.visible?).to be_truthy }
+        include_examples 'ApplicationHelper::Button::Basic#visible?', true
       end
       context 'and active_tab != saved_reports' do
         let(:tab) { 'not_saved_reports' }
-        it { expect(subject.visible?).to be_falsey }
+        include_examples 'ApplicationHelper::Button::Basic#visible?', false
       end
     end
     context 'when active_tree != reports_tree' do
       let(:tree) { :savedreports_tree }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
   end
 end

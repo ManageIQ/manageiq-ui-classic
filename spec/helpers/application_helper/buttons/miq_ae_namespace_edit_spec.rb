@@ -12,15 +12,15 @@ describe ApplicationHelper::Button::MiqAeNamespaceEdit do
   describe '#visible?' do
     context 'when domain is unlocked' do
       let(:record) { FactoryGirl.create(:miq_ae_domain) }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
     context 'when record is a namespace with user domain' do
       let(:record) { FactoryGirl.create(:miq_ae_namespace, :parent => FactoryGirl.create(:miq_ae_domain)) }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
     context 'when record is a namespace with user locked domain' do
       let(:record) { FactoryGirl.create(:miq_ae_namespace, :parent => FactoryGirl.create(:miq_ae_domain_user_locked)) }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
   end
 

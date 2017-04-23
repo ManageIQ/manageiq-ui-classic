@@ -13,11 +13,11 @@ describe ApplicationHelper::Button::MiqAeDefault do
   describe '#visible?' do
     context 'when button does not copy and domains are not editable' do
       let(:domain) { FactoryGirl.create(:miq_ae_domain_user_locked) }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
     context 'when button does not copy but domains are editable' do
       let(:domain) { FactoryGirl.create(:miq_ae_domain) }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
     context 'when user has view access only' do
       let(:domain) { FactoryGirl.create(:miq_ae_domain) }

@@ -9,7 +9,7 @@ describe ApplicationHelper::Button::HostRegisterNodes do
 
   describe '#visible?' do
     context 'when record.class == ManageIQ::Providers::Openstack::InfraManager' do
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
     context 'when recor.class != ManageIQ::Providers::Openstack::InfraManager' do
       let(:record) { FactoryGirl.create(:host_openstack_infra) }

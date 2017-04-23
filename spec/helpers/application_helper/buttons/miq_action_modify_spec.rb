@@ -11,10 +11,10 @@ describe ApplicationHelper::Button::MiqActionModify do
   describe '#visible?' do
     context 'when active_tree == :event_tree' do
       let(:tree) { :event_tree }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
     context 'when active_tree == :policy_tree' do
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
   end
 

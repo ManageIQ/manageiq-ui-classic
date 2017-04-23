@@ -9,11 +9,11 @@ describe ApplicationHelper::Button::MiqReportAction do
   describe '#visible?' do
     context 'when active_tab == saved_reports' do
       let(:tab) { 'saved_reports' }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
     context 'when active_tab != saved_reports' do
       let(:tab) { 'does_not_matter' }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
   end
 end

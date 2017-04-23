@@ -15,15 +15,15 @@ describe ApplicationHelper::Button::MiqAeGitRefresh do
         allow(record).to receive(:git_enabled?).and_return(false)
         allow(MiqRegion.my_region).to receive(:role_active?).with('git_owner').and_return(true)
       end
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
     context 'when GitBasedDomainImportService not available' do
       before { allow(MiqRegion.my_region).to receive(:role_active?).with('git_owner').and_return(false) }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
     context 'when git enabled and GitBasedDomainImportService available' do
       before { allow(MiqRegion.my_region).to receive(:role_active?).with('git_owner').and_return(true) }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
   end
 end

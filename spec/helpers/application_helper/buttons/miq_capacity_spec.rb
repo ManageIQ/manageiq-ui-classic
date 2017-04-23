@@ -9,11 +9,11 @@ describe ApplicationHelper::Button::MiqCapacity do
   describe '#visible?' do
     context 'when active_tab == report' do
       let(:tab) { 'report' }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
     context 'when active_tab != report' do
       let(:tab) { 'not_report' }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
   end
 end

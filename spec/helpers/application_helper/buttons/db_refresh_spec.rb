@@ -10,12 +10,12 @@ describe ApplicationHelper::Button::DbRefresh do
     %w(db_details db_indexes db_settings db_connections).each do |tree|
       context "when active_tree == #{tree}" do
         let(:tab) { tree }
-        it { expect(subject.visible?).to be_truthy }
+        include_examples 'ApplicationHelper::Button::Basic#visible?', true
       end
     end
     context 'when !active_tree.in?(%w(db_details db_indexes db_settings db_connections))' do
       let(:tab) { 'something_else' }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
   end
 end

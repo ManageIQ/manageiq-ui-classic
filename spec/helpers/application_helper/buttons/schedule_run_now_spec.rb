@@ -9,11 +9,11 @@ describe ApplicationHelper::Button::ScheduleRunNow do
   describe '#visible?' do
     context 'when active_tree != settings_tree' do
       let(:tree) { :not_settings_tree }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
     context 'when active_tree == settings_tree' do
       let(:tree) { :settings_tree }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
   end
 end

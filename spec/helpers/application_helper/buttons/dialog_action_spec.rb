@@ -10,16 +10,16 @@ describe ApplicationHelper::Button::DialogAction do
     let(:edit) { {:current => current} }
     context 'and edit[:current]' do
       let(:current) { 'something' }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
     context 'and edit[:current] == nil' do
       let(:current) { nil }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
   end
 
   context 'when edit == nil' do
     let(:edit) { nil }
-    it { expect(subject.visible?).to be_truthy }
+    include_examples 'ApplicationHelper::Button::Basic#visible?', true
   end
 end

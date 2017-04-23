@@ -13,16 +13,16 @@ describe ApplicationHelper::Button::View do
     context 'when gtl buttons is set' do
       let(:gtl_buttons) { gtl_buttons_orig }
       context 'and contains gtl button' do
-        it { expect(subject.visible?).to be_truthy }
+        include_examples 'ApplicationHelper::Button::Basic#visible?', true
       end
       context 'and does not contain gtl button' do
         let(:gtl_buttons) { gtl_buttons_orig - [button_id] }
-        it { expect(subject.visible?).to be_falsey }
+        include_examples 'ApplicationHelper::Button::Basic#visible?', false
       end
     end
     context 'when gtl_buttons is not set or is false' do
       let(:gtl_buttons) { false }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
   end
 

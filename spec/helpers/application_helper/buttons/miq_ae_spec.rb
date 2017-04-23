@@ -13,17 +13,17 @@ describe ApplicationHelper::Button::MiqAe do
     context 'when button does not copy' do
       let(:child_id) { 'miq_ae_domain_edit' }
       let(:record) { FactoryGirl.build(:miq_ae_domain_enabled) }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
     context do
       let(:child_id) { 'miq_ae_class_copy' }
       context 'when editable domains not available' do
         let(:record) { FactoryGirl.build(:miq_ae_domain_disabled) }
-        it { expect(subject.visible?).to be_falsey }
+        include_examples 'ApplicationHelper::Button::Basic#visible?', false
       end
       context 'when editable domains available' do
         let(:record) { FactoryGirl.create(:miq_ae_class, :of_domain, :domain => FactoryGirl.create(:miq_ae_domain)) }
-        it { expect(subject.visible?).to be_truthy }
+        include_examples 'ApplicationHelper::Button::Basic#visible?', true
       end
     end
   end

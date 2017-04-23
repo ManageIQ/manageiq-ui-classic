@@ -10,16 +10,16 @@ describe ApplicationHelper::Button::EmsInfraScale do
   describe '#visible?' do
     context 'when record is OpenStack Provider' do
       context 'and orchestration stack is empty' do
-        it { expect(subject.visible?).to be_falsey }
+        include_examples 'ApplicationHelper::Button::Basic#visible?', false
       end
       context 'and orchestration stack is not empty' do
         let(:record) { FactoryGirl.create(:ems_openstack_infra_with_stack) }
-        it { expect(subject.visible?).to be_truthy }
+        include_examples 'ApplicationHelper::Button::Basic#visible?', true
       end
     end
     context 'when record is not an OpenStack provider' do
       let(:record) { :ems_redhat }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
   end
 end

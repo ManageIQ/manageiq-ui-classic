@@ -23,10 +23,10 @@ describe ApplicationHelper::Button::VmSnapshotRevert do
   describe '#visible?' do
     context 'when record.kind_of?(ManageIQ::Providers::Openstack::CloudManager::Vm)' do
       let(:record) { FactoryGirl.create(:vm_openstack) }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
     context 'when !record.kind_of?(ManageIQ::Providers::Openstack::CloudManager::Vm)' do
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
   end
 

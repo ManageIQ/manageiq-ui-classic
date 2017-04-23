@@ -8,10 +8,10 @@ describe ApplicationHelper::Button::Dialog do
 
   context 'when edit == false' do
     let(:edit) { false }
-    it { expect(subject.visible?).to be_falsey }
+    include_examples 'ApplicationHelper::Button::Basic#visible?', false
   end
   context 'when edit does not evaluate as false' do
     let(:edit) { true }
-    it { expect(subject.visible?).to be_truthy }
+    include_examples 'ApplicationHelper::Button::Basic#visible?', true
   end
 end

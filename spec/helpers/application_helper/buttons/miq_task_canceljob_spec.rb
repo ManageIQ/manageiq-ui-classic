@@ -10,12 +10,12 @@ describe ApplicationHelper::Button::MiqTaskCanceljob do
     %w(all_tasks my_tasks).each do |layout|
       context "when layout == #{layout}" do
         let(:layout) { layout }
-        it { expect(subject.visible?).to be_falsey }
+        include_examples 'ApplicationHelper::Button::Basic#visible?', false
       end
     end
     context 'when !layout.in(%w(all_tasks my_tasks))' do
       let(:layout) { 'something' }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
   end
 end

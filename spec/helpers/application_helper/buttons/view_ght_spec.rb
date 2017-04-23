@@ -18,24 +18,24 @@ describe ApplicationHelper::Button::ViewGHT do
         let(:tree) { tree.to_sym }
         context 'when ght_type != tabular' do
           let(:ght_type) { 'hybrid' }
-          it { expect(subject.visible?).to be_truthy }
+          include_examples 'ApplicationHelper::Button::Basic#visible?', true
         end
         context 'when report has graph' do
           let(:graph) { true }
-          it { expect(subject.visible?).to be_truthy }
+          include_examples 'ApplicationHelper::Button::Basic#visible?', true
         end
         context 'when zgraph is available' do
           let(:zgraph) { true }
-          it { expect(subject.visible?).to be_truthy }
+          include_examples 'ApplicationHelper::Button::Basic#visible?', true
         end
         context 'when ght_type == tabular && report does not have graph && not a zgraph' do
-          it { expect(subject.visible?).to be_falsey }
+          include_examples 'ApplicationHelper::Button::Basic#visible?', false
         end
       end
     end
     context 'when !%w(reports_tree savedreports_tree).include?(x_active_tree)' do
       let(:tree) { :not_any_of_reports_trees }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
   end
 end

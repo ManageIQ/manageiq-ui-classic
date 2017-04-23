@@ -17,17 +17,17 @@ describe ApplicationHelper::Button::RoleStart do
                           )
       end
       before { allow(record.miq_server).to receive(:started?).and_return(true) }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
 
     context 'when record is server role' do
       let(:record) { FactoryGirl.create(:server_role, :name => 'server_role') }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
 
     context 'when record is miq server' do
       let(:record) { FactoryGirl.create(:miq_server) }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
   end
 

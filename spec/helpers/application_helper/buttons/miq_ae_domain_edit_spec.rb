@@ -9,7 +9,7 @@ describe ApplicationHelper::Button::MiqAeDomainEdit do
 
   describe '#visible?' do
     context 'when domain is locked' do
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
   end
 end

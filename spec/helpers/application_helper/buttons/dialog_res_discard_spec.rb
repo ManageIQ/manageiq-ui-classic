@@ -10,17 +10,17 @@ describe ApplicationHelper::Button::DialogResDiscard do
     let(:edit) { true }
     context 'and @sb[:edit_typ] == add' do
       let(:edit_typ) { 'add' }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
     context 'and @sb[:edit_typ] != add' do
       let(:edit_typ) { 'not_add' }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
   end
 
   context 'when edit == nil' do
     let(:edit) { nil }
     let(:edit_typ) { 'does not matter' }
-    it { expect(subject.visible?).to be_falsey }
+    include_examples 'ApplicationHelper::Button::Basic#visible?', false
   end
 end

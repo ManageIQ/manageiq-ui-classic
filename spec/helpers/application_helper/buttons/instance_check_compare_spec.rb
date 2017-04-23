@@ -10,16 +10,16 @@ describe ApplicationHelper::Button::InstanceCheckCompare do
 
   describe '#visible?' do
     context 'when record is not kind of OrchestrationStack && display != instances' do
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
     context 'when record is kind of OrchestrationStack && display != instances' do
       let(:record) { FactoryGirl.create(:orchestration_stack) }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
     context 'when record is an OrchestrationStack && display == instances' do
       let(:record) { FactoryGirl.create(:orchestration_stack) }
       let(:display) { 'instances' }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
   end
 

@@ -16,21 +16,21 @@ describe ApplicationHelper::Button::MiqReportEdit do
         let(:tab) { 'report_info' }
         context 'and record.rpt_type == Custom' do
           let(:record) { FactoryGirl.create(:miq_report, :rpt_type => 'Custom') }
-          it { expect(subject.visible?).to be_truthy }
+          include_examples 'ApplicationHelper::Button::Basic#visible?', true
         end
         context 'and record.rpt_type != Custom' do
           let(:record) { FactoryGirl.create(:miq_report) }
-          it { expect(subject.visible?).to be_falsey }
+          include_examples 'ApplicationHelper::Button::Basic#visible?', false
         end
       end
       context 'and active_tab != report_info' do
         let(:tab) { 'not_report_info' }
-        it { expect(subject.visible?).to be_falsey }
+        include_examples 'ApplicationHelper::Button::Basic#visible?', false
       end
     end
     context 'when active_tree != reports_tree' do
       let(:tree) { :not_reports_tree }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
   end
 end
