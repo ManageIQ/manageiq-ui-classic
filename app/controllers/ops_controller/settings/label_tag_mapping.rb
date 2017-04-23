@@ -11,22 +11,22 @@ module OpsController::Settings::LabelTagMapping
   # This const is arranged as a model => provider hash so we can figure the provider
   # when editing an existing mapping.
   MAPPABLE_ENTITIES = {
-    nil => nil, # map all entities
-    "Vm" => "Amazon",
-    "Image" => "Amazon",
-    "ContainerProject" => "Kubernetes",
-    "ContainerRoute" => "Kubernetes",
-    "ContainerNode" => "Kubernetes",
+    nil                   => nil, # map all entities
+    "Vm"                  => "Amazon",
+    "Image"               => "Amazon",
+    "ContainerProject"    => "Kubernetes",
+    "ContainerRoute"      => "Kubernetes",
+    "ContainerNode"       => "Kubernetes",
     "ContainerReplicator" => "Kubernetes",
-    "ContainerService" => "Kubernetes",
-    "ContainerGroup" => "Kubernetes",
-    "ContainerBuild" => "Kubernetes"
+    "ContainerService"    => "Kubernetes",
+    "ContainerGroup"      => "Kubernetes",
+    "ContainerBuild"      => "Kubernetes"
   }.freeze
 
   # TODO: support per-provider "All Amazon" etc?
   # Currently we have only global "All".  For backward compatibility the categories
   # are named "kubernetes::..."
-  ALL_PREFIX = 'kubernetes'
+  ALL_PREFIX = 'kubernetes'.freeze
 
   def label_tag_mapping_edit
     case params[:button]
