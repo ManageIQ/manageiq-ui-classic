@@ -34,29 +34,33 @@ describe ApplicationHelper::Button::CollectLogs do
       context 'and log collection is not yet in progress' do
         let(:log_state) { 'not_collecting' }
         context 'and Log Depot settings is configured' do
-          it_behaves_like 'an enabled button'
+          include_examples 'ApplicationHelper::Button::Basic enabled'
         end
         context 'and Log Depot settings is not configured' do
           let(:file_depot) { nil }
-          it_behaves_like 'a disabled button', 'Log collection requires the Log Depot settings to be configured'
+          include_examples 'ApplicationHelper::Button::Basic disabled',
+                           'Log collection requires the Log Depot settings to be configured'
         end
       end
       context 'and log collection is currently in progress' do
         let(:log_state) { 'collecting' }
-        it_behaves_like 'a disabled button', 'Log collection is already in progress for this Server'
+        include_examples 'ApplicationHelper::Button::Basic disabled',
+                         'Log collection is already in progress for this Server'
 
         context 'and has an unfinished task' do
           let(:setup_tasks) do
             task = FactoryGirl.create(:miq_task, :name => 'Zipped log retrieval for XXX', :miq_server_id => record.id)
             task.save
           end
-          it_behaves_like 'a disabled button', 'Log collection is already in progress for this Server'
+          include_examples 'ApplicationHelper::Button::Basic disabled',
+                           'Log collection is already in progress for this Server'
         end
       end
     end
     context 'when server is not started' do
       let(:server_status) { 'not_responding' }
-      it_behaves_like 'a disabled button', 'Cannot collect current logs unless the Server is started'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       'Cannot collect current logs unless the Server is started'
     end
   end
 end

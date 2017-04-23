@@ -24,27 +24,28 @@ describe ApplicationHelper::Button::MiqRequestDelete do
 
     context 'requester is admin' do
       let(:requester_name) { {:requester_name => 'FrantaSkocDoPole'} }
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
 
     context 'request is approved and user is admin' do
       let(:approval_state) { 'approved' }
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
 
     context 'user is requester and approval state is not approved nor denied' do
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
 
     context 'request is approved and suer is not admin' do
       let(:approval_state) { 'approved' }
       let(:current_user) { FactoryGirl.create(:user, :role => "test") }
-      it_behaves_like 'a disabled button', 'Approved requests cannot be deleted'
+      include_examples 'ApplicationHelper::Button::Basic disabled', 'Approved requests cannot be deleted'
     end
 
     context 'request is approved' do
       let(:current_user) { FactoryGirl.create(:user, :role => "test") }
-      it_behaves_like 'a disabled button', 'Users are only allowed to delete their own requests'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       'Users are only allowed to delete their own requests'
     end
   end
 end

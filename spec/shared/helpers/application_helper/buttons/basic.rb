@@ -9,3 +9,17 @@ shared_examples 'ApplicationHelper::Button::Basic#visible?' do |visible|
     expect(subject.visible?).to visible ? be_truthy : be_falsey
   end
 end
+
+shared_examples 'ApplicationHelper::Button::Basic enabled' do
+  it 'is enabled' do
+    expect(subject[:enabled]).to be_truthy
+    expect(subject[:title]).to be_nil
+  end
+end
+
+shared_examples 'ApplicationHelper::Button::Basic disabled' do |err_message|
+  it 'is disabled' do
+    expect(subject[:enabled]).to be_falsey
+    expect(subject[:title]).to eq(err_message)
+  end
+end

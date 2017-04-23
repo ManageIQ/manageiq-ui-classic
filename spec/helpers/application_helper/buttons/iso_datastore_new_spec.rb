@@ -21,14 +21,15 @@ describe ApplicationHelper::Button::IsoDatastoreNew do
 
     context 'when there is a RedHat InfraManager without iso datastores' do
       let(:setup) { FactoryGirl.create(:ems_redhat) }
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
     context 'when all RedHat InfraManagers have iso datastores' do
       let(:setup) do
         ems = FactoryGirl.create(:ems_redhat)
         FactoryGirl.create(:iso_datastore, :ems_id => ems.id)
       end
-      it_behaves_like 'a disabled button', 'No Providers are available to create an ISO Datastore on'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       'No Providers are available to create an ISO Datastore on'
     end
   end
 end

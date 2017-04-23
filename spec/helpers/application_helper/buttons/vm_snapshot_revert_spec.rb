@@ -34,11 +34,11 @@ describe ApplicationHelper::Button::VmSnapshotRevert do
     before { subject.calculate_properties }
 
     context 'when reverting to a snapshot is available' do
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
     context 'when reverting to a snapshot is not available' do
       let(:record) { FactoryGirl.create(:vm_amazon) }
-      it_behaves_like 'a disabled button', 'Operation not supported'
+      include_examples 'ApplicationHelper::Button::Basic disabled', 'Operation not supported'
     end
   end
 end

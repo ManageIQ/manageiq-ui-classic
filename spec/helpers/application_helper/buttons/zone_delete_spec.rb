@@ -17,13 +17,13 @@ describe ApplicationHelper::Button::ZoneDelete do
 
     context 'when selected zone is the default one' do
       let(:zone_name) { 'Default' }
-      it_behaves_like 'a disabled button', "'Default' zone cannot be deleted"
+      include_examples 'ApplicationHelper::Button::Basic disabled', "'Default' zone cannot be deleted"
     end
 
     context 'when selected zone is not the default one' do
       context 'and zone has ext_management_systems' do
         let(:set_relationships) { selected_zone.ext_management_systems << FactoryGirl.create(:ext_management_system) }
-        it_behaves_like 'a disabled button', 'Cannot delete a Zone that has Relationships'
+        include_examples 'ApplicationHelper::Button::Basic disabled', 'Cannot delete a Zone that has Relationships'
       end
 
       context 'and zone has miq_schedules' do
@@ -31,16 +31,16 @@ describe ApplicationHelper::Button::ZoneDelete do
           MiqServer.seed
           selected_zone.miq_schedules << FactoryGirl.create(:miq_schedule)
         end
-        it_behaves_like 'a disabled button', 'Cannot delete a Zone that has Relationships'
+        include_examples 'ApplicationHelper::Button::Basic disabled', 'Cannot delete a Zone that has Relationships'
       end
 
       context 'and zone has miq_servers' do
         let(:set_relationships) { selected_zone.miq_servers << FactoryGirl.create(:miq_server) }
-        it_behaves_like 'a disabled button', 'Cannot delete a Zone that has Relationships'
+        include_examples 'ApplicationHelper::Button::Basic disabled', 'Cannot delete a Zone that has Relationships'
       end
 
       context 'and zone has no relationships' do
-        it_behaves_like 'an enabled button'
+        include_examples 'ApplicationHelper::Button::Basic enabled'
       end
     end
   end

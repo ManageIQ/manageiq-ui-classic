@@ -47,11 +47,11 @@ describe ApplicationHelper::Button::VmInstanceTemplateScan do
       end
 
       context 'when record has active proxy' do
-        it_behaves_like 'an enabled button'
+        include_examples 'ApplicationHelper::Button::Basic enabled'
       end
       context 'when record does not have active proxy' do
         let(:has_active_proxy?) { false }
-        it_behaves_like 'a disabled button', 'No active SmartProxies found to analyze this VM'
+        include_examples 'ApplicationHelper::Button::Basic disabled', 'No active SmartProxies found to analyze this VM'
       end
     end
   end

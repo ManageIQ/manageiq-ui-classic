@@ -25,21 +25,21 @@ describe ApplicationHelper::Button::ReportOnly do
       context 'and record has report' do
         context 'and record has report_result_id' do
           context 'and report has result details' do
-            it_behaves_like 'an enabled button'
+            include_examples 'ApplicationHelper::Button::Basic enabled'
           end
           context 'and report has no result details' do
             let(:setup_report_result_details) {}
-            it_behaves_like 'a disabled button', 'No records found for this report'
+            include_examples 'ApplicationHelper::Button::Basic disabled', 'No records found for this report'
           end
         end
         context 'and record does not have report_result_id' do
           let(:report_result_id) { nil }
-          it_behaves_like 'a disabled button', 'No records found for this report'
+          include_examples 'ApplicationHelper::Button::Basic disabled', 'No records found for this report'
         end
       end
       context 'and record does not have report' do
         let(:report) { nil }
-        it_behaves_like 'a disabled button', 'No records found for this report'
+        include_examples 'ApplicationHelper::Button::Basic disabled', 'No records found for this report'
       end
     end
   end

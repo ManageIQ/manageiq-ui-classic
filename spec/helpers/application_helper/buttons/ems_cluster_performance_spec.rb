@@ -13,12 +13,12 @@ describe ApplicationHelper::Button::EmsClusterPerformance do
 
     context 'and record has events' do
       let(:has_perf_data) { true }
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
 
     context 'and record has not events' do
       let(:has_perf_data) { false }
-      it_behaves_like 'a disabled button',
+      include_examples 'ApplicationHelper::Button::Basic disabled',
                       'No Capacity & Utilization data has been collected for this Cluster'
     end
   end

@@ -12,11 +12,11 @@ describe ApplicationHelper::Button::ServiceRetireNow do
 
     context 'when Service is retired' do
       let(:retired) { true }
-      it_behaves_like 'a disabled button', 'Service is already retired'
+      include_examples 'ApplicationHelper::Button::Basic disabled', 'Service is already retired'
     end
     context 'when Service is not retired' do
       let(:retired) { false }
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
   end
 end

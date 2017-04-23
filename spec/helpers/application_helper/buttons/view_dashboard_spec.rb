@@ -14,7 +14,7 @@ describe ApplicationHelper::Button::ViewDashboard do
     end
     context 'when showtype != dashboard' do
       let(:showtype) { 'not_dashboard' }
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
   end
 end

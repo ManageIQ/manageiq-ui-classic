@@ -37,11 +37,11 @@ describe ApplicationHelper::Button::ZoneCollectLogs do
 
       context 'and Log Depot settings is configured' do
         context 'and log collection is not yet in progress' do
-          it_behaves_like 'an enabled button'
+          include_examples 'ApplicationHelper::Button::Basic enabled'
         end
         context 'and log collection is currently in progress' do
           let(:log_state) { 'collecting' }
-          it_behaves_like 'a disabled button',
+          include_examples 'ApplicationHelper::Button::Basic disabled',
                           'Log collection is already in progress for one or more Servers in this Zone'
 
           context 'and has an unfinished task' do
@@ -49,20 +49,21 @@ describe ApplicationHelper::Button::ZoneCollectLogs do
               task = FactoryGirl.create(:miq_task, :name => 'Zipped log retrieval for XXX', :miq_server_id => record.id)
               task.save
             end
-            it_behaves_like 'a disabled button',
+            include_examples 'ApplicationHelper::Button::Basic disabled',
                             'Log collection is already in progress for one or more Servers in this Zone'
           end
         end
       end
       context 'and Log Depot settings is not configured' do
         let(:file_depot) { nil }
-        it_behaves_like 'a disabled button',
+        include_examples 'ApplicationHelper::Button::Basic disabled',
                         'This Zone do not have Log Depot settings configured, collection not allowed'
       end
     end
     context 'when there is no miq_server started' do
       let(:server_status) { 'not_responding' }
-      it_behaves_like 'a disabled button', 'Cannot collect current logs unless there are started Servers in the Zone'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       'Cannot collect current logs unless there are started Servers in the Zone'
     end
   end
 end

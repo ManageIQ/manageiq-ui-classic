@@ -15,21 +15,21 @@ describe ApplicationHelper::Button::HostMiqRequestNew do
     context 'and record has mac address and servers' do
       let(:mac_address) { "00:0D:93:13:51:1A" }
       let(:serverAll) { ['FancyServer'] }
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
 
     context 'and record has no mac address' do
       let(:mac_address) { false }
       let(:serverAll) { ['FancyServer'] }
-      it_behaves_like 'a disabled button',
+      include_examples 'ApplicationHelper::Button::Basic disabled',
                       'This Host can not be provisioned because the MAC address is not known'
     end
 
     context 'and record has mac address but no servers' do
       let(:mac_address) { "00:0D:93:13:51:1A" }
       let(:serverAll) { [] }
-      it_behaves_like 'a disabled button',
-                      'No PXE Servers are available for Host provisioning'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       'No PXE Servers are available for Host provisioning'
     end
   end
 end

@@ -13,13 +13,13 @@ describe ApplicationHelper::Button::HostPerformance do
 
     context 'and record has performance data' do
       let(:has_perf_data) { true }
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
 
     context 'and record has not performance data' do
       let(:has_perf_data) { false }
-      it_behaves_like 'a disabled button',
-                      'No Capacity & Utilization data has been collected for this Host'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       'No Capacity & Utilization data has been collected for this Host'
     end
   end
 end

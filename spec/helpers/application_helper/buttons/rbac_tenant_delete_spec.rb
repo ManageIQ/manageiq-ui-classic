@@ -12,11 +12,11 @@ describe ApplicationHelper::Button::RbacTenantDelete do
 
     context 'when record is a child tenant' do
       let(:tenant_parent) { FactoryGirl.create(:tenant) }
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
     context 'when record is the default tenant' do
       let(:tenant_parent) { nil }
-      it_behaves_like 'a disabled button', 'Default Tenant can not be deleted'
+      include_examples 'ApplicationHelper::Button::Basic disabled', 'Default Tenant can not be deleted'
     end
   end
 end

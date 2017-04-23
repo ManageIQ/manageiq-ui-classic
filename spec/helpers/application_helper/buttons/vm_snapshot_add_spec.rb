@@ -32,20 +32,20 @@ describe ApplicationHelper::Button::VmSnapshotAdd do
       end
       context 'and the selected snapshot may be active but the vm is not connected to a host' do
         let(:record) { FactoryGirl.create(:vm_vmware) }
-        it_behaves_like 'a disabled button', 'The VM is not connected to a Host'
+        include_examples 'ApplicationHelper::Button::Basic disabled', 'The VM is not connected to a Host'
       end
       context 'and the selected snapshot is active and current' do
         context 'and current' do
-          it_behaves_like 'an enabled button'
+          include_examples 'ApplicationHelper::Button::Basic enabled'
         end
       end
     end
     context 'when creating snapshots is not available' do
       let(:record) { FactoryGirl.create(:vm_amazon) }
-      it_behaves_like 'a disabled button', 'Operation not supported'
+      include_examples 'ApplicationHelper::Button::Basic disabled', 'Operation not supported'
     end
     context 'when user has permissions to create snapsnots' do
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
   end
   describe 'user lacks permissions to create snapshots' do
@@ -54,7 +54,8 @@ describe ApplicationHelper::Button::VmSnapshotAdd do
       subject.calculate_properties
     end
     context 'when user lacks permissions to create snapsnots' do
-      it_behaves_like 'a disabled button', 'Current user lacks permissions to create a new snapshot for this VM'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       'Current user lacks permissions to create a new snapshot for this VM'
     end
   end
 end

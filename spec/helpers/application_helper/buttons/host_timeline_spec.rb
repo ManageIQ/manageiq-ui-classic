@@ -13,13 +13,12 @@ describe ApplicationHelper::Button::HostTimeline do
 
     context 'and record has events' do
       let(:has_events) { true }
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
 
     context 'and record has not events' do
       let(:has_events) { false }
-      it_behaves_like 'a disabled button',
-                      'No Timeline data has been collected for this Host'
+      include_examples 'ApplicationHelper::Button::Basic disabled', 'No Timeline data has been collected for this Host'
     end
   end
 end

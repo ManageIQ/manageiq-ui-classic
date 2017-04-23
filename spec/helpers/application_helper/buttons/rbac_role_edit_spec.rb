@@ -12,11 +12,11 @@ describe ApplicationHelper::Button::RbacRoleEdit do
 
     context 'when role is writable' do
       let(:read_only) { false }
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
     context 'when role is read-only' do
       let(:read_only) { true }
-      it_behaves_like 'a disabled button', 'This Role is Read Only and can not be edited'
+      include_examples 'ApplicationHelper::Button::Basic disabled', 'This Role is Read Only and can not be edited'
     end
   end
 end

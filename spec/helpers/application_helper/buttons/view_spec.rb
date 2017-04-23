@@ -31,11 +31,11 @@ describe ApplicationHelper::Button::View do
     before { subject.calculate_properties }
 
     context 'when gtl_type is set' do
-      it_behaves_like 'a disabled button'
+      include_examples 'ApplicationHelper::Button::Basic disabled', nil
     end
     context 'when gtl_type is not set or false' do
       let(:gtl_type) { false }
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
   end
 end

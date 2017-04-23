@@ -12,11 +12,12 @@ describe ApplicationHelper::Button::DbSeqEdit do
     before { subject.calculate_properties }
 
     context 'when there is enough dashboards to edit sequence' do
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
     context 'when there is not enough dashboards to edit sequence' do
       let(:dashboard_count) { 1 }
-      it_behaves_like 'a disabled button', 'There should be at least 2 Dashboards to Edit Sequence'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       'There should be at least 2 Dashboards to Edit Sequence'
     end
   end
 end

@@ -13,10 +13,10 @@ describe ApplicationHelper::Button::DbNew do
 
     context 'when dashboard group is full' do
       let(:dashboard_count) { 10 }
-      it_behaves_like 'a disabled button', 'Only 10 Dashboards are allowed for a group'
+      include_examples 'ApplicationHelper::Button::Basic disabled', 'Only 10 Dashboards are allowed for a group'
     end
     context 'when dashboard group has still room for a new dashboard' do
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
   end
 end

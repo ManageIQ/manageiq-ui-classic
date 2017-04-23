@@ -15,17 +15,17 @@ describe ApplicationHelper::Button::SetOwnership do
 
     context 'when provider has tenant mapping enabled' do
       let(:tenant_mapping_enabled) { true }
-      it_behaves_like 'a disabled button', 'Ownership is controlled by tenant mapping'
+      include_examples 'ApplicationHelper::Button::Basic disabled', 'Ownership is controlled by tenant mapping'
     end
 
     context 'when provider has tenant mapping disabled' do
       let(:tenant_mapping_enabled) { false }
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
 
     context 'when vm is not belong to any Vm' do
       let(:ext_management_system)  { nil }
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
   end
 end

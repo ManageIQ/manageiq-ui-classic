@@ -14,13 +14,12 @@ describe ApplicationHelper::Button::MiqActionEdit do
 
     context 'and record has no policies' do
       let(:action_type) { "Non-default" }
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
 
     context 'and record has default action type' do
       let(:action_type) { "default" }
-      it_behaves_like 'a disabled button',
-                      'Default actions can not be changed.'
+      include_examples 'ApplicationHelper::Button::Basic disabled', 'Default actions can not be changed.'
     end
   end
 end
