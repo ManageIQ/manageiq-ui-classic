@@ -1,92 +1,15 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "cloudVolumeFormController", "ng-cloak" => ""}
+%form#form_div{:name           => "angularForm",
+               'ng-controller' => "cloudVolumeFormController as vm",
+               "ng-show"       => "vm.afterGet",
+               "ng-cloak"      => "",
+               "miq-form"      => true,
+               "model"         => "vm.cloudVolumeModel",
+               "model-copy"    => "vm.modelCopy"}
   = render :partial => "layouts/flash_msg"
   .form-horizontal
-    .form-group{"ng-class" => "{'has-error': angularForm.storage_manager_id.$invalid}"}
-      %label.col-md-2.control-label
-        = _('Storage Manager')
-      .col-md-8
-        = select_tag("storage_manager_id",
-                     options_for_select((@storage_manager_id.nil? ? [["<#{_('Choose')}>", nil]] : []) + @storage_manager_choices.sort, disabled: ["<#{_('Choose')}>", nil]),
-                     "ng-model"                    => "cloudVolumeModel.storage_manager_id",
-                     "ng-change"                   => "storageManagerChanged(cloudVolumeModel.storage_manager_id)",
-                     "required"                    => "",
-                     "disabled"                    => !@storage_manager_id.nil?,
-                     :checkchange                  => true,
-                     "selectpicker-for-select-tag" => "")
-        %span.help-block{"ng-show" => "angularForm.storage_manager_id.$error.required"}
-          = _("Required")
-
-    .form-group{"ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}",
-                "ng-if"    => "cloudVolumeModel.emstype == 'ManageIQ::Providers::StorageManager::CinderManager'"}
-      %label.col-md-2.control-label
-        = _('Cloud Tenant')
-      .col-md-8
-        %select{"name"                        => "cloud_tenant_id",
-                "ng-model"                    => "cloudVolumeModel.cloud_tenant_id",
-                "ng-options"                  => "tenant.id as tenant.name for tenant in cloudTenantChoices",
-                "required"                    => "",
-                :checkchange                  => true,
-                "selectpicker-for-select-tag" => ""}
-          %option{"value" => "", "disabled" => ""}
-            = "<#{_('Choose')}>"
-        %span.help-block{"ng-show" => "angularForm.cloud_tenant_id.$error.required"}
-          = _("Required")
-
-    .form-group{"ng-class" => "{'has-error': angularForm.aws_availability_zone_id.$invalid}",
-                "ng-if"    => "cloudVolumeModel.emstype == 'ManageIQ::Providers::Amazon::StorageManager::Ebs'"}
-      %label.col-md-2.control-label
-        = _('Availability Zone')
-      .col-md-8
-        %select{"name"                        => "aws_availability_zone_id",
-                "ng-model"                    => "cloudVolumeModel.aws_availability_zone_id",
-                "ng-options"                  => "az.ems_ref as az.name for az in availabilityZoneChoices",
-                "required"                    => "",
-                :checkchange                  => true,
-                "selectpicker-for-select-tag" => ""}
-          %option{"value" => "", "disabled" => ""}
-            = "<#{_('Choose')}>"
-        %span.help-block{"ng-show" => "angularForm.aws_availability_zone_id.$error.required"}
-          = _("Required")
-
     = render :partial => "common_new_edit"
-
-    .form-group{"ng-if" => "cloudVolumeModel.emstype == 'ManageIQ::Providers::Amazon::StorageManager::Ebs'"}
-      %label.col-md-2.control-label
-        = _('Encryption')
-      .col-md-8
-        %input.form-control{"bs-switch"  => "",
-                            :data        => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
-                            :type        => "checkbox",
-                            :name        => "encryption",
-                            'ng-model'   => "cloudVolumeModel.aws_encryption",
-                            :checkchange => true}
-
-  %table{:width => '100%'}
-    %tr
-      %td{:align => 'right'}
-        #buttons_on
-          - if @volume.id.nil?
-            = button_tag(_("Add"),
-                         :class        => "btn btn-primary",
-                         "ng-class"    => "{ disabled: angularForm.$invalid}",
-                         "ng-disabled" => "angularForm.$invalid",
-                         "ng-click"    => "addClicked()")
-          - else
-            = button_tag(_("Save"),
-                         :class        => "btn btn-primary",
-                         "ng-click"    => "saveClicked()",
-                         "ng-disabled" => "angularForm.$pristine || angularForm.$invalid",
-                         "ng-class"    => "{ disabled: angularForm.$pristine || angularForm.$invalid}")
-            = button_tag(_("Reset"),
-                         :class        => "btn btn-primary",
-                         "ng-click"    => "resetClicked()",
-                         "ng-disabled" => "angularForm.$pristine",
-                         "ng-class"    => "{ disabled: angularForm.$pristine}")
-          = button_tag(_("Cancel"),
-                        :class     => "btn btn-default",
-                        "ng-click" => "cancelClicked()")
 
 :javascript
   ManageIQ.angular.app.value('cloudVolumeFormId', '#{@volume.id || "new"}');
-  ManageIQ.angular.app.value('storageManagerId', '#{@storage_manager_id}');
+  ManageIQ.angular.app.value('storageManagerId', '#{@storage_manager.try(:id)}');
   miq_bootstrap('#form_div');

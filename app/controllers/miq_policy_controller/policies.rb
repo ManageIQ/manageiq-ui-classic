@@ -121,7 +121,12 @@ module MiqPolicyController::Policies
       add_flash(_("%{models} no longer exists") % {:models => ui_lookup(:model => "MiqPolicy")},
                 :error)
     else
-      policies.push(params[:id])
+      if pol.read_only
+        add_flash(_("%{models} is read only") % {:models => ui_lookup(:model => "MiqPolicy")},
+        :error)
+      else
+        policies.push(params[:id])
+      end
       self.x_node = @new_policy_node = policies_node(pol.mode, pol.towhat)
     end
     process_policies(policies, "destroy") unless policies.empty?

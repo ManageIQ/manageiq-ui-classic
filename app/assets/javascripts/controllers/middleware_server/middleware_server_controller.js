@@ -53,6 +53,11 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
       $scope.paramsModel.timeout = timeout;
       $scope.$apply();
     }
+
+    if (eventType === 'mwReloadDeployDialog') {
+      $scope.warnMsg = event.msg;
+      $scope.$apply();
+    }
   });
 
   // //////////////////////////////////////////////////////////////////////
@@ -94,6 +99,7 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
     $scope.deployAddModel.forceDeploy = false;
     $scope.deployAddModel.runtimeName = undefined;
     $scope.deployAddModel.filePath = undefined;
+    $scope.warnMsg = undefined;
     angular.element('#deploy_div :file#upload_file').val('');
     angular.element('#deploy_div input[type="text"]:disabled').val('');
   };
@@ -238,4 +244,3 @@ function ServerOpsServiceFactory($http, $q, isGroup) {
     runOperation: runOperation,
   };
 }
-

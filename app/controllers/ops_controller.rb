@@ -180,6 +180,7 @@ class OpsController < ApplicationController
         db_get_info
         replace_right_cell(:nodetype => "root")
       elsif x_active_tree == :diagnostics_tree
+        diagnostics_get_info
         case @sb[:active_tab]
         when "diagnostics_roles_servers"
           @sb[:diag_tree_type] = "roles"

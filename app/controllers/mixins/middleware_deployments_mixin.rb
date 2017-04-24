@@ -16,9 +16,9 @@ module Mixins::MiddlewareDeploymentsMixin
 
   def find_existing_deployment
     if @is_server
-      MiddlewareDeployment.find_by(:name => @deployment_name, :server_id => @entity_id)
+      MiddlewareDeployment.find_by(:name => @deployment_name, :server_id => from_cid(@entity_id))
     else
-      MiddlewareDeployment.find_by(:name => @deployment_name, :server_group_id => @entity_id)
+      MiddlewareDeployment.find_by(:name => @deployment_name, :server_group_id => from_cid(@entity_id))
     end
   end
 
@@ -60,8 +60,9 @@ module Mixins::MiddlewareDeploymentsMixin
                 _('Deployment "%{deployment}" already exists on this server group.') % {:deployment => @deployment_name}
               end
         render :json => {
-          :status => :warn,
-          :msg    => msg
+          :status     => :warn,
+          :error_type => "EXISTS",
+          :msg        => msg
         }
         return false
       end

@@ -20,15 +20,23 @@ function MwAddDeploymentController($scope, $http, miqService) {
     })
       .then(
         function(result) { // success
+          if (result.data.error_type === miqService.deploymentExists) {
+            sendDataWithRx({
+              type: 'mwReloadDeployDialog',
+              msg: result.data.msg
+            });
+          } else {
+            angular.element("#modal_d_div").modal('hide');
+          }
           miqService.miqFlash(result.data.status, result.data.msg);
         },
         function() { // error
-          var msg = sprintf(__('Unable to deploy %s on this server %s"'), data.runtimeName,
+          var msg = sprintf(__('Unable to deploy %s on this server %s'), data.runtimeName,
               (isGroupDeployment ? ' group.' : '.'));
           miqService.miqFlash('error', msg);
+          angular.element("#modal_d_div").modal('hide');
         })
       .finally(function() {
-        angular.element("#modal_d_div").modal('hide');
         miqService.sparkleOff();
       });
   });
