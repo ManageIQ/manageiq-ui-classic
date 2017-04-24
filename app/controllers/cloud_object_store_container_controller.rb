@@ -54,9 +54,7 @@ class CloudObjectStoreContainerController < ApplicationController
     assert_privileges("cloud_object_store_container_new")
     case params[:button]
     when "cancel"
-      javascript_redirect :action    => 'show_list',
-                          :flash_msg => _("Add of new %{model} was cancelled by the user") %
-                                        {:model => ui_lookup(:table => 'cloud_object_store_container')}
+      javascript_redirect previous_breadcrumb_url
     when "add"
       options = form_params_create
       ext_management_system = options.delete(:ems)
@@ -92,10 +90,8 @@ class CloudObjectStoreContainerController < ApplicationController
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
     session[:flash_msgs] = @flash_array.dup if @flash_array
-
-    javascript_redirect :action => "show_list"
+    javascript_redirect previous_breadcrumb_url
   end
 
   def form_params_create
