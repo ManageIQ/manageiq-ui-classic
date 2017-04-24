@@ -363,7 +363,13 @@ module EmsCommon
         end
       end
     elsif params[:pressed].starts_with?("cloud_object_store_")
-      process_cloud_object_storage_buttons(params[:pressed])
+      case params[:pressed]
+      when "cloud_object_store_container_new"
+        return javascript_redirect(:controller => "cloud_object_store_container", :action => "new",
+                                   :storage_manager_id => params[:id])
+      else
+        process_cloud_object_storage_buttons(params[:pressed])
+      end
     else
       @refresh_div = "main_div" # Default div for button.rjs to refresh
       redirect_to :action => "new" if params[:pressed] == "new"
