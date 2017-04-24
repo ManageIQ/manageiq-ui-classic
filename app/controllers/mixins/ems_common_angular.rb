@@ -56,13 +56,17 @@ module Mixins
       @in_a_form = true
       begin
         set_ems_record_vars(verify_ems, :validate)
-        result, details = verify_ems.authentication_check(params[:cred_type],
-                                                          :save     => false,
-                                                          :database => params[:metrics_database_name])
-        if result
-          add_flash(_("Credential validation was successful"))
+        unless verify_ems.valid?
+          add_flash(_("Errors: %{details}") % {:details => verify_ems.errors.full_messages.join(', ')}, :error)
         else
-          add_flash(_("Credential validation was not successful: %{details}") % {:details => details}, :error)
+          result, details = verify_ems.authentication_check(params[:cred_type],
+                                                            :save     => false,
+                                                            :database => params[:metrics_database_name])
+          if result
+            add_flash(_("Credential validation was successful"))
+          else
+            add_flash(_("Credential validation was not successful: %{details}") % {:details => details}, :error)
+          end
         end
       rescue => err
         $log.warn("MIQ(#{controller_name}_controller-#{action_name}): #{err.class.name}: #{err}")
