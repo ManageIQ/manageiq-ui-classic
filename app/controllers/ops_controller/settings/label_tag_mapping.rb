@@ -153,7 +153,7 @@ module OpsController::Settings::LabelTagMapping
 
     # UI currently can't allow 2 mappings for same (entity, label).
     if Classification.find_by_name(cat_name)
-      add_flash(_("Mapping for %{entity}, %{label} already exists") %
+      add_flash(_("Mapping for %{entity}, Label \"%{label}\" already exists") %
                   {:entity => entity_ui_name_or_all(entity), :label => label_name}, :error)
       javascript_flash
       return
