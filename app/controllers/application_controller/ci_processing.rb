@@ -2012,7 +2012,6 @@ module ApplicationController::CiProcessing
   end
   alias_method :instance_retire_now, :retirevms_now
   alias_method :vm_retire_now, :retirevms_now
-  alias_method :service_retire_now, :retirevms_now
   alias_method :orchestration_stack_retire_now, :retirevms_now
 
   def check_compliance_vms
