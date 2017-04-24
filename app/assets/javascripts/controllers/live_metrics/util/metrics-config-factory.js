@@ -34,7 +34,7 @@ angular.module('miq.util').factory('metricsConfigFactory', function() {
 
     // Graphs
     dash.chartConfig = {
-      legend       : { show: false },
+      legend       : { show: true },
       chartId      : 'ad-hoc-metrics-chart',
       point        : { r: 1 },
       axis         : {
