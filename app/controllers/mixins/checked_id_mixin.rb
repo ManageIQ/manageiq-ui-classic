@@ -24,6 +24,10 @@ module Mixins
       end
     end
 
+    # !============================================!
+    # PLEASE PREFER find_records_with_rbac OVER THIS
+    # !============================================!
+    #
     # Test RBAC on every item checked
     # Params:
     #   klass - class of accessed objects
@@ -36,6 +40,10 @@ module Mixins
       items
     end
 
+    # !============================================!
+    # PLEASE PREFER find_records_with_rbac OVER THIS
+    # !============================================!
+    #
     # Test RBAC on every item checked
     # Params:
     #   klass - class of accessed objects
@@ -49,6 +57,10 @@ module Mixins
       filtered
     end
 
+    # !============================================!
+    # PLEASE PREFER find_records_with_rbac OVER THIS
+    # !============================================!
+    #
     # Test RBAC in case there is only one record
     # Params:
     #   klass - class of accessed object
@@ -72,6 +84,10 @@ module Mixins
                  :model     => ui_lookup(:model => klass.to_s)})
     end
 
+    # !============================================!
+    # PLEASE PREFER find_records_with_rbac OVER THIS
+    # !============================================!
+    #
     # Test RBAC in case there is only one record
     # Params:
     #   klass - class of accessed object
@@ -84,6 +100,10 @@ module Mixins
       id
     end
 
+    # !============================================!
+    # PLEASE PREFER find_records_with_rbac OVER THIS
+    # !============================================!
+    #
     # Find a record by model and ID.
     # Set flash errors for not found/not authorized.
     def find_record_with_rbac_flash(model, id, resource_name = nil)
@@ -104,6 +124,10 @@ module Mixins
       checked_object
     end
 
+    # !============================================!
+    # PLEASE PREFER checked_or_params OVER THIS
+    # !============================================!
+    #
     # Tries to load a single checked item on from params.
     # If there's none, takes the id sent in params[:id].
     #
@@ -115,6 +139,51 @@ module Mixins
       obj = objs.blank? && params[:id].present? ? params[:id] : objs[0]
       obj = from_cid(obj) if obj.present?
       obj
+    end
+
+
+    # Find a record by model and id and test it with RBAC
+    # Params:
+    #   klass   - class of accessed objects
+    #   ids     - accessed object ids
+    #   options - :with_flash : set flash in case user is not authorized,
+    # TODO:       :named_scope :
+    #
+    # Returns:
+    #   Array of selected class instances. If user does not have rights for it,
+    #   either sets flash or raises exception
+    #
+    def find_records_with_rbac(klass, ids, options = {})
+      ids ||= checked_or_params
+      filtered = Rbac.filtered(klass.where(:id => ids),
+                               :user => current_user,
+                               :named_scope => options[:named_scope])
+      unless ids.length == filtered.length
+        unauthorized_record = (ids - filtered.map { |record| record.id }).first
+        if options[:with_flash]
+          add_flash(_("You are not authorized to view '%{model}' record id '%{record_id}'") %
+                    {:record_id => unauthorized_record,
+                     :model     => ui_lookup(:model => klass.to_s)}, :error)
+          return nil
+        end
+        raise(_("User '%{userid}' is not authorized to access '%{model}' record id '%{record_id}'") %
+              {:user_id   => current_userid,
+               :record_id => unauthorized_record,
+               :model     => ui_lookup(:model => klass.to_s)})
+      end
+      filtered
+    end
+
+    # Tries to load checked items from params.
+    # If there are none, takes the id sent in params[:id]
+    #
+    # Returns:
+    #   Array of ids of the items as a Fixnum
+    #
+    def checked_or_params
+      objs = (checked = find_checked_items).blank? && params[:id].present? ? Array(params[:id]) : checked
+      objs.map! { |compressed| from_cid(compressed) } if objs.present?
+      objs
     end
 
     # Either creates a new instance or loads the one passed in 'ids'.
