@@ -269,8 +269,7 @@ class CatalogController < ApplicationController
       elements.push(params[:id])
       process_sts(elements, 'destroy') unless elements.empty?
       if @flash_array.nil?
-        add_flash(_("The selected %{record} was deleted") %
-          {:record => ui_lookup(:table => "service_template")})
+        add_flash(_("The selected Catalog Item was deleted"))
         self.x_node = "root"
       end
     else # showing 1 element, delete it
