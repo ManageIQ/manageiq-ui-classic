@@ -445,23 +445,15 @@ class CloudVolumeController < ApplicationController
           :name      => volume.name,
           :instances => ui_lookup(:tables => 'vm_cloud')}, :warning)
       else
-        begin
-          valid_delete = volume.validate_delete_volume
-          if valid_delete[:available]
-            volumes_to_delete.push(volume)
-          else
-            add_flash(_("Couldn't initiate deletion of %{model} \"%{name}\": %{details}") % {
-              :model   => ui_lookup(:table => 'cloud_volume'),
-              :name    => volume.name,
-              :details => valid_delete[:message]}, :error)
-          end
-        rescue Excon::Error::Unauthorized => e
+        valid_delete = volume.validate_delete_volume
+        if valid_delete[:available]
+          volumes_to_delete.push(volume)
+        else
           add_flash(_("Couldn't initiate deletion of %{model} \"%{name}\": %{details}") % {
             :model   => ui_lookup(:table => 'cloud_volume'),
             :name    => volume.name,
-            :details => e}, :error)
+            :details => valid_delete[:message]}, :error)
         end
-
       end
     end
     process_cloud_volumes(volumes_to_delete, "destroy") unless volumes_to_delete.empty?
