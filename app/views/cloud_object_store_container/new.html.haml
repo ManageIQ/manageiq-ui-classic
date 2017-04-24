@@ -53,7 +53,9 @@
                          "ng-switch-when"              => name,
                          "required"                    => "",
                          "checkchange"                 => "",
-                         "selectpicker-for-select-tag" => "")
+                         "selectpicker-for-select-tag" => "",
+                         "multiple"                    => false,
+                         "data-live-search"            => true)
           %span.help-block{"ng-show" => "angularForm.provider_region.$error.required"}
             = _("Required")
   = render :partial => "layouts/angular/generic_form_buttons"
