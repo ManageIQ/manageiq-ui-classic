@@ -15,9 +15,9 @@ describe OpsController do
       post :label_tag_mapping_edit, :button => 'add'
     end
 
-    def use_form_to_create_scoped_mapping
+    def use_form_to_create_amazon_mapping
       post :label_tag_mapping_edit
-      post :label_tag_mapping_field_changed, :id => 'new', :entity => 'Amazon::Vm'
+      post :label_tag_mapping_field_changed, :id => 'new', :entity => 'Vm'
       post :label_tag_mapping_field_changed, :id => 'new', :label_name => 'some-amazon-label'
       post :label_tag_mapping_field_changed, :id => 'new', :category => 'Amazon Vms'
       post :label_tag_mapping_edit, :button => 'add'
@@ -34,7 +34,7 @@ describe OpsController do
     end
 
     it "creates new scoped mapping on save" do
-      use_form_to_create_scoped_mapping
+      use_form_to_create_amazon_mapping
       mapping = ContainerLabelTagMapping.last
       expect(mapping.labeled_resource_type).to eq('Vm')
       expect(mapping.label_name).to eq('some-amazon-label')
@@ -75,7 +75,7 @@ describe OpsController do
     end
 
     it "can edit an existing scoped mapping" do
-      use_form_to_create_scoped_mapping
+      use_form_to_create_amazon_mapping
       mapping = ContainerLabelTagMapping.last
 
       post :label_tag_mapping_edit, :id => mapping.id.to_s
