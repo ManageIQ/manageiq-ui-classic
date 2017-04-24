@@ -2680,9 +2680,15 @@ module ApplicationController::CiProcessing
   # Delete all selected or single displayed datastore(s)
   def deletestorages
     assert_privileges("storage_delete")
+    storages = find_checked_ids_with_rbac(Storage)
+    unless Storage.batch_operation_supported?('delete', storages)
+      add_flash(_("Only storage without VMs and Hosts can be removed"), :error)
+      return
+    end
+
     datastores = []
     if %w(show_list storage_list storage_pod_list).include?(@lastaction) || (@lastaction == "show" && @layout != "storage") # showing a list, scan all selected hosts
-      datastores = find_checked_ids_with_rbac(Storage)
+      datastores = storages
       if datastores.empty?
         add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => "storage"), :task => display_name}, :error)
       end
