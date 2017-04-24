@@ -18,9 +18,8 @@ class CloudObjectStoreObjectController < ApplicationController
     process_cloud_object_storage_buttons(params[:pressed])
 
     if !@flash_array.nil? && params[:pressed].ends_with?("delete")
-      javascript_redirect :action      => 'show_list',
-                          :flash_msg   => @flash_array[0][:message],
-                          :flash_error => @flash_array[0][:level] == :error
+      session[:flash_msgs] = @flash_array.dup
+      javascript_redirect previous_breadcrumb_url
     elsif !@flash_array.nil?
       render_flash unless performed?
     end

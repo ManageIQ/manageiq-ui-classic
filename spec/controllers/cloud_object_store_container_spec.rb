@@ -57,6 +57,7 @@ describe CloudObjectStoreContainerController do
       login_as FactoryGirl.create(:user, :features => "everything")
       request.parameters["controller"] = "cloud_object_store_container"
       allow(controller).to receive(:role_allows?).and_return(true)
+      allow(controller).to receive(:previous_breadcrumb_url).and_return("previous-url")
     end
 
     it "delete invokes process_cloud_object_storage_buttons" do
@@ -77,11 +78,7 @@ describe CloudObjectStoreContainerController do
     end
 
     it "delete redirects to show_list" do
-      expect(controller).to receive(:javascript_redirect).with(
-        :action      => 'show_list',
-        :flash_msg   => anything,
-        :flash_error => false
-      )
+      expect(controller).to receive(:javascript_redirect).with("previous-url")
       post :button, :params => {
         :pressed => "cloud_object_store_container_delete", :format => :js, :id => @container.id
       }
