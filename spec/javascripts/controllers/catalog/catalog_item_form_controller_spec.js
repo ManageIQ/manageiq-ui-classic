@@ -30,8 +30,8 @@ describe('catalogItemFormController', function() {
           credential_id:        10000000000090,
           hosts:                'localhost',
           extra_vars:           {
-            'var1': 'default_val1',
-            'var2': 'default_val2'
+            'var1': {'default': 'default_val1'},
+            'var2': {'default': 'default_val2'}
           },
           network_credential_id: undefined
         },

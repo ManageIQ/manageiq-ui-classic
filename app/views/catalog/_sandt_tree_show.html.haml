@@ -246,7 +246,7 @@
                         %td
                           = h(key)
                         %td
-                          = h(value)
+                          = h(value[:default])
             .form-group
               %label.col-md-3.control-label
                 = _('Dialog')
@@ -321,7 +321,7 @@
                             %td
                               = h(key)
                             %td
-                              = h(value)
+                              = h(value[:default])
 
 :javascript
   miq_tabs_init("#st_tabs");

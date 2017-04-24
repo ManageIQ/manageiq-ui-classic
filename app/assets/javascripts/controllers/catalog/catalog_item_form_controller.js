@@ -130,8 +130,12 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
   };
 
   var setExtraVars = function (variableName, extraVars) {
-    if (typeof extraVars !== 'undefined')
-      vm.catalogItemModel[variableName] = extraVars;
+    if (typeof extraVars !== 'undefined') {
+      vm.catalogItemModel[variableName] = {};
+      for (var key in extraVars) {
+        vm.catalogItemModel[variableName][key] = extraVars[key]['default'];
+      }
+    }
     $scope.checkFormPristine();
   }
 
@@ -173,6 +177,16 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     $scope.angularForm.$setPristine(true);
   };
 
+  var formatExtraVars = function(extraVars){
+    if (typeof extraVars !== 'undefined') {
+      formattedExtraVars = {};
+      for (var key in extraVars) {
+        formattedExtraVars[key] = {'default': extraVars[key]};
+      }
+    }
+    return formattedExtraVars;
+  }
+
   var setConfigInfo = function(configData) {
     catalog_item = {
       name: configData.name,
@@ -187,7 +201,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
           playbook_id: configData.provisioning_playbook_id,
           credential_id: configData.provisioning_machine_credential_id,
           hosts: configData.provisioning_inventory,
-          extra_vars: configData.provisioning_variables
+          extra_vars: formatExtraVars(configData.provisioning_variables)
         }
       }
     }
@@ -209,7 +223,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
 
     var retirement = catalog_item['config_info']['retirement'];
     retirement['hosts'] = configData.retirement_inventory;
-    retirement['extra_vars'] = configData.retirement_variables;
+    retirement['extra_vars'] = formatExtraVars(configData.retirement_variables);
     if (vm.catalogItemModel.retirement_repository_id !== undefined && configData.retirement_repository_id !== '') {
       retirement['repository_id'] = configData.retirement_repository_id;
       retirement['playbook_id'] = configData.retirement_playbook_id;
