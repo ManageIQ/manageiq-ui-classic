@@ -47,6 +47,7 @@ class PxeController < ApplicationController
     @explorer = true
 
     build_accordions_and_trees
+    return if request.xml_http_request?
 
     @right_cell_div ||= "pxe_server_list"
     @right_cell_text ||= _("All PXE Servers")
@@ -156,14 +157,14 @@ class PxeController < ApplicationController
                         end
     when :customization_templates_tree
       presenter.update(:main_div, r[:partial => "template_list"])
-      nodes = nodetype.split('_')
+      presenter.update(:paging_div, r[:partial => "layouts/x_pagingcontrols"])
       if @in_a_form
         right_cell_text =
           if @ct.id.blank?
             _("Adding a new %{model}") % {:model => ui_lookup(:model => "PxeCustomizationTemplate")}
           else
-            @edit ? _("Editing %{model} \"%{name}\"") % {:name  => @ct.name, :model => ui_lookup(:model => "PxeCustomizationTemplate")} :
-                    _("%{model} \"%{name}\"") % {:name  => @ct.name, :model => ui_lookup(:model => "PxeCustomizationTemplate")}
+            @edit ? _("Editing %{model} \"%{name}\"") % {:name => @ct.name, :model => ui_lookup(:model => "PxeCustomizationTemplate")} :
+                    _("%{model} \"%{name}\"") % {:name => @ct.name, :model => ui_lookup(:model => "PxeCustomizationTemplate")}
           end
         # resetting ManageIQ.oneTransition.oneTrans when tab loads
         presenter.reset_one_trans
