@@ -40,6 +40,7 @@ module ApplicationHelper::PageLayouts
     return false if %w(
       ad_hoc_metrics
       consumption
+      dashboard
       dialog_provision
       topology
     ).include?(@showtype)
@@ -47,8 +48,6 @@ module ApplicationHelper::PageLayouts
     return false if dashboard_no_listnav?
 
     return false if @layout.starts_with?("miq_request")
-
-    return false if @showtype == "dashboard" && @lastaction.ends_with?("_dashboard")
 
     return false if controller.action_name.end_with?("tagging_edit")
 
