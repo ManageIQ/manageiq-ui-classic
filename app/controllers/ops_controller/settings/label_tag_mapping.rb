@@ -1,6 +1,33 @@
 module OpsController::Settings::LabelTagMapping
   extend ActiveSupport::Concern
 
+  # TODO: Multi-provider support is hacky:
+  # --------------------------------------
+  # Currently we store in labeled_resource_type just the model name, without provider.
+  # It's not even always a model name, sometimes fake string like "Vm" -
+  # all that matters is these strings match what refresh passes to `map_labels`.
+  #
+  # In any case, this requires different providers use disjoint sets of strings.
+  # This const is arranged as a model => provider hash so we can figure the provider
+  # when editing an existing mapping.
+  MAPPABLE_ENTITIES = {
+    nil => nil, # map all entities
+    "Vm" => "Amazon",
+    "Image" => "Amazon",
+    "ContainerProject" => "Kubernetes",
+    "ContainerRoute" => "Kubernetes",
+    "ContainerNode" => "Kubernetes",
+    "ContainerReplicator" => "Kubernetes",
+    "ContainerService" => "Kubernetes",
+    "ContainerGroup" => "Kubernetes",
+    "ContainerBuild" => "Kubernetes"
+  }.freeze
+
+  # TODO: support per-provider "All Amazon" etc?
+  # Currently we have only global "All".  For backward compatibility the categories
+  # are named "kubernetes::..."
+  ALL_PREFIX = 'kubernetes'
+
   def label_tag_mapping_edit
     case params[:button]
     when "cancel"
@@ -52,14 +79,15 @@ module OpsController::Settings::LabelTagMapping
 
   def entity_ui_name_or_all(entity)
     if entity
-      provider, model = entity.split('::')
-
-      case model
-      when 'Vm'
-        model = "ManageIQ::Providers::#{provider}::CloudManager::Vm"
-      when 'Image'
-        model = "ManageIQ::Providers::#{provider}::CloudManager::Template"
-      end
+      provider = MAPPABLE_ENTITIES[entity]
+      model = case entity
+              when 'Vm'
+                "ManageIQ::Providers::#{provider}::CloudManager::Vm"
+              when 'Image'
+                "ManageIQ::Providers::#{provider}::CloudManager::Template"
+              else
+                entity
+              end
 
       ui_lookup(:model => model)
     else
@@ -67,9 +95,18 @@ module OpsController::Settings::LabelTagMapping
     end
   end
 
+  def entity_options
+    MAPPABLE_ENTITIES.collect do |entity, _provider|
+      [entity_ui_name_or_all(entity), entity]
+    end
+  end
+
   def label_tag_mapping_get_all
     # Current UI only supports any-value -> category mappings
     mapping = ContainerLabelTagMapping.in_my_region.where(:label_value => nil)
+
+    # This renders into label_tag_mapping_form view, fields are different from other
+    # functions here, notably `:entity` is the translated ui name.
     @lt_mapping = []
     mapping.each do |m|
       lt_map = {}
@@ -87,13 +124,11 @@ module OpsController::Settings::LabelTagMapping
     @edit[:lt_map] = @lt_map
     @edit[:new] = {}
     @edit[:key] = "label_tag_mapping_edit__#{@lt_map.id || "new"}"
-    @edit[:new][:entity] = @lt_map.labeled_resource_type.nil? ? "<All>" : @lt_map.labeled_resource_type
+    @edit[:new][:entity] = @lt_map.labeled_resource_type
     @edit[:new][:label_name] = @lt_map.label_name
     @edit[:new][:category] = @lt_map.tag.category.description
     @edit[:current] = copy_hash(@edit[:new])
-    @edit[:new][:options] = ContainerLabelTagMapping::MAPPABLE_ENTITIES.collect do |name|
-      [entity_ui_name_or_all(name), name]
-    end
+    @edit[:new][:options] = entity_options
     session[:edit] = @edit
   end
 
@@ -107,9 +142,7 @@ module OpsController::Settings::LabelTagMapping
     @edit[:new][:label_name] = nil
     @edit[:new][:category] = nil
     @edit[:current] = copy_hash(@edit[:new])
-    @edit[:new][:options] = ContainerLabelTagMapping::MAPPABLE_ENTITIES.collect do |name|
-      [entity_ui_name_or_all(name), name]
-    end
+    @edit[:new][:options] = entity_options
     session[:edit] = @edit
   end
 
@@ -137,19 +170,15 @@ module OpsController::Settings::LabelTagMapping
   end
 
   def label_tag_mapping_add(entity, label_name, cat_description)
-    entity_str = ''
-    prefix = ContainerLabelTagMapping::AUTOTAG_PREFIX
-
-    # The entity is a string in the form "Provider::ResourceType".
-    if entity && entity.include?('::')
-      prefix, entity = entity.split('::')
-      prefix.downcase!
-      entity_str = entity.underscore
+    if entity.nil?
+      provider = ALL_PREFIX
+      entity_str = ''
     else
-      entity_str = entity.underscore if entity
+      provider = MAPPABLE_ENTITIES[entity].downcase
+      entity_str = entity.underscore
     end
 
-    cat_name = "#{prefix}:#{entity_str}:" + Classification.sanitize_name(label_name.tr("/", ":"))
+    cat_name = "#{provider}:#{entity_str}:" + Classification.sanitize_name(label_name.tr("/", ":"))
 
     # UI currently can't allow 2 mappings for same (entity, label).
     if Classification.find_by_name(cat_name)
