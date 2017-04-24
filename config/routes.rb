@@ -401,6 +401,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
+        new
       ) + compare_get,
       :post => %w(
         button
@@ -412,6 +413,8 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
+        create
+        wait_for_task
       ) + compare_post + adv_search_post + exp_post + save_post
     },
 
