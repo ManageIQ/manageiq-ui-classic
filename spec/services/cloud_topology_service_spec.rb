@@ -1,22 +1,6 @@
 describe CloudTopologyService do
   let(:cloud_topology_service) { described_class.new(nil) }
 
-  describe "#build_kinds" do
-    it "creates the expected number of entity types" do
-      expect(cloud_topology_service.build_kinds.keys).to match_array(
-        [:AvailabilityZone, :CloudManager, :CloudTenant, :Tag, :Vm])
-    end
-  end
-
-  describe "#build_link" do
-    it "creates link between source to target" do
-      expect(cloud_topology_service.build_link(
-               "95e49048-3e00-11e5-a0d2-18037327aaeb",
-               "96c35f65-3e00-11e5-a0d2-18037327aaeb")).to eq(:source => "95e49048-3e00-11e5-a0d2-18037327aaeb",
-                                                              :target => "96c35f65-3e00-11e5-a0d2-18037327aaeb")
-    end
-  end
-
   describe "#build_topology" do
     subject { cloud_topology_service.build_topology }
 

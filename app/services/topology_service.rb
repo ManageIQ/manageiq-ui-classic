@@ -1,22 +1,8 @@
 class TopologyService
-  class << self
-    attr_reader :provider_class
-  end
-
-  def initialize(provider_id)
-    @providers = retrieve_providers(provider_id)
-  end
-
-  def retrieve_providers(provider_id = nil)
-    if provider_id
-      retrieve_entity(provider_id)
-    else  # provider id is empty when the topology is generated for all the providers together
-      self.class.provider_class.all
-    end
-  end
-
-  def retrieve_entity(entity_id)
-    self.class.provider_class.where(:id => entity_id)
+  def initialize(provider_id = nil)
+    provider_class = self.class.instance_variable_get(:@provider_class)
+    # If the provider ID is not set, the topology needs to be generated for all the providers
+    @providers = provider_id ? provider_class.where(:id => provider_id) : provider_class.all
   end
 
   def build_link(source, target)
@@ -27,7 +13,8 @@ class TopologyService
     entity.class.name.demodulize
   end
 
-  def build_legend_kinds(kinds)
+  def build_kinds
+    kinds = self.class.instance_variable_get(:@kinds)
     kinds.each_with_object({}) { |kind, h| h[kind] = true }
   end
 
@@ -36,16 +23,19 @@ class TopologyService
   end
 
   def build_base_entity_data(entity)
-    {:name   => entity.name,
-     :kind   => entity_type(entity),
-     :miq_id => entity.id}
+    {
+      :name   => entity.name,
+      :kind   => entity_type(entity),
+      :miq_id => entity.id
+    }
   end
 
   def populate_topology(topo_items, links, kinds, icons)
-    {:items     => topo_items,
-     :relations => links,
-     :kinds     => kinds,
-     :icons     => icons
+    {
+      :items     => topo_items,
+      :relations => links,
+      :kinds     => kinds,
+      :icons     => icons
     }
   end
 
@@ -95,17 +85,17 @@ class TopologyService
   def build_entity_relationships(included_relations)
     hash = {}
     case included_relations
-      when Hash
-        included_relations.each_pair do |key, hash_value|
-          hash_value = build_entity_relationships(hash_value)
-          hash[key.to_s.camelize.to_sym] = hash_value
-        end
-      when Array
-        included_relations.each do |array_value|
-          hash.merge!(build_entity_relationships(array_value))
-        end
-      when Symbol
-        hash[included_relations.to_s.camelize.to_sym] = nil
+    when Hash
+      included_relations.each_pair do |key, hash_value|
+        hash_value = build_entity_relationships(hash_value)
+        hash[key.to_s.camelize.to_sym] = hash_value
+      end
+    when Array
+      included_relations.each do |array_value|
+        hash.merge!(build_entity_relationships(array_value))
+      end
+    when Symbol
+      hash[included_relations.to_s.camelize.to_sym] = nil
     end
     hash
   end
