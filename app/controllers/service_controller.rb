@@ -81,11 +81,11 @@ class ServiceController < ApplicationController
     @explorer = true
     case params[:button]
     when "cancel"
-      service = Service.find_by_id(params[:id])
+      service = find_record_with_rbac(Service, params[:id])
       add_flash(_("Edit of Service \"%{name}\" was cancelled by the user") % {:name => service.description})
       replace_right_cell
     when "save", "add"
-      service = Service.find_by_id(params[:id])
+      service = find_record_with_rbac(Service, params[:id])
       service_set_record_vars(service)
 
       begin
