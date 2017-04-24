@@ -105,7 +105,7 @@ module PxeController::IsoDatastores
 
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node, :replace_trees => [:iso_datastores])
-    elsif params[:id].nil? ||find_id_with_rbac(IsoDatastore, params[:id]).nil?
+    elsif params[:id].nil? || find_id_with_rbac(IsoDatastore, params[:id]).nil?
       # showing 1 vm
       add_flash(_("%{model} no longer exists") % {:model => ui_lookup(:model => "IsoDatastore")},
                 :error)
@@ -113,7 +113,7 @@ module PxeController::IsoDatastores
       @refresh_partial = "layouts/x_gtl"
     else
       isds.push(find_id_with_rbac(IsoDatastore, params[:id]))
-      process_iso_datastores(isds, method, display_name)  unless isds.empty?
+      process_iso_datastores(isds, method, display_name) unless isds.empty?
       # TODO: tells callers to go back to show_list because this iso_datastore may be gone
       # Should be refactored into calling show_list right here
       if method == 'destroy'
