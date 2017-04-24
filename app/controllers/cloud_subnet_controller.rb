@@ -134,12 +134,7 @@ class CloudSubnetController < ApplicationController
 
   def delete_subnets
     assert_privileges("cloud_subnet_delete")
-    subnets = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_subnet") || @lastaction.nil?
-                find_checked_records_with_rbac(CloudSubnet)
-              else
-                [find_record_with_rbac(CloudSubnet, params[:id])]
-              end
-
+    subnets = find_records_with_rbac(CloudSubnet, nil)
     if subnets.empty?
       add_flash(_("No Cloud Subnet were selected for deletion."), :error)
     end

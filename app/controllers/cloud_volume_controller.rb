@@ -420,14 +420,7 @@ class CloudVolumeController < ApplicationController
   # delete selected volumes
   def delete_volumes
     assert_privileges("cloud_volume_delete")
-    volumes = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_volume")
-                find_checked_ids_with_rbac(CloudVolume)
-              elsif params[:id].present?
-                [params[:id]]
-              else
-                find_checked_ids_with_rbac(CloudVolume)
-              end
-
+    volumes = find_records_with_rbac(CloudVolume, nil)
     if volumes.empty?
       add_flash(_("No %{models} were selected for deletion.") % {
         :models => ui_lookup(:tables => "cloud_volume")
@@ -435,8 +428,7 @@ class CloudVolumeController < ApplicationController
     end
 
     volumes_to_delete = []
-    volumes.each do |v|
-      volume = CloudVolume.find_by_id(v)
+    volumes.each do |volume|
       if volume.nil?
         add_flash(_("%{model} no longer exists.") % {:model => ui_lookup(:table => "cloud_volume")}, :error)
       elsif !volume.attachments.empty?
