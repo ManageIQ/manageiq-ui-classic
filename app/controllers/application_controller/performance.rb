@@ -524,12 +524,16 @@ module ApplicationController::Performance
 
   # Send error message if record is found and authorized, else return the record
   def perf_menu_record_valid(model, id, resource_name)
-    rec = find_record_with_rbac_flash(model.constantize, id, resource_name)
+    record = find_records_with_rbac(model.constantize, id)
+    if record.empty?
+      record_name = resource_name ? "#{ui_lookup(:model => model)} '#{resource_name}'" : _("The selected record")
+      add_flash(_("%{record_name} no longer exists in the database") % {:record_name => record_name}, :error)
+    end
     unless @flash_array.blank?
       javascript_flash(:spinner_off => true)
       return false
     end
-    rec  # Record is found and authorized
+    record # Record is found and authorized
   end
 
   # Load a chart miq_report object from YML

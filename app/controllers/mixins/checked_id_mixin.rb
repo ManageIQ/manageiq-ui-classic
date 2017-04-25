@@ -101,30 +101,6 @@ module Mixins
     end
 
     # !============================================!
-    # PLEASE PREFER find_records_with_rbac OVER THIS
-    # !============================================!
-    #
-    # Find a record by model and ID.
-    # Set flash errors for not found/not authorized.
-    def find_record_with_rbac_flash(model, id, resource_name = nil)
-      tested_object = klass.find(id)
-      if tested_object.nil?
-        record_name = resource_name ? "#{ui_lookup(:model => model)} '#{resource_name}'" : _("The selected record")
-        add_flash(_("%{record_name} no longer exists in the database") % {:record_name => record_name}, :error)
-        return nil
-      end
-
-      checked_object = Rbac.filtered_object(tested_object, :user => current_user)
-      if checked_object.nil?
-        add_flash(_("You are not authorized to view %{model_name} '%{resource_name}'") %
-          {:model_name => ui_lookup(:model => tested_object.class.base_model.to_s), :resource_name => resource_name}, :error)
-        return nil
-      end
-
-      checked_object
-    end
-
-    # !============================================!
     # PLEASE PREFER checked_or_params OVER THIS
     # !============================================!
     #
@@ -160,12 +136,6 @@ module Mixins
                                :named_scope => options[:named_scope])
       unless ids.length == filtered.length
         unauthorized_record = (ids - filtered.map { |record| record.id }).first
-        if options[:with_flash]
-          add_flash(_("You are not authorized to view '%{model}' record id '%{record_id}'") %
-                    {:record_id => unauthorized_record,
-                     :model     => ui_lookup(:model => klass.to_s)}, :error)
-          return nil
-        end
         raise(_("User '%{userid}' is not authorized to access '%{model}' record id '%{record_id}'") %
               {:user_id   => current_userid,
                :record_id => unauthorized_record,
