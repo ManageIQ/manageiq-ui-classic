@@ -119,6 +119,7 @@ function MwAddDatasourceService($http, $q) {
         .map(function(driver) {
           return {'id': driver.properties['Driver Name'].toUpperCase(),
                   'label': driver.properties['Driver Name'],
+                  'moduleName': driver.properties['Module Name'],
                   'xaDsClass': driver.properties['XA DS Class'],
                   'driverClass': driver.properties['Driver Class']};
       })

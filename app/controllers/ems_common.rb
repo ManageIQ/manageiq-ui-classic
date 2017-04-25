@@ -113,7 +113,7 @@ module EmsCommon
       'hosts'                         => [Host,                   _("Managed Hosts")],
       'physical_servers'              => [PhysicalServer,         _("Physical Servers")],
     }
-  end 
+  end
 
   def display_block_storage_managers
     nested_list('block_storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :block_storage_managers)
@@ -427,7 +427,13 @@ module EmsCommon
         end
       end
     elsif params[:pressed].starts_with?("cloud_object_store_")
-      process_cloud_object_storage_buttons(params[:pressed])
+      case params[:pressed]
+      when "cloud_object_store_container_new"
+        return javascript_redirect(:controller => "cloud_object_store_container", :action => "new",
+                                   :storage_manager_id => params[:id])
+      else
+        process_cloud_object_storage_buttons(params[:pressed])
+      end
     else
       @refresh_div = "main_div" # Default div for button.rjs to refresh
       redirect_to :action => "new" if params[:pressed] == "new"
@@ -513,23 +519,41 @@ module EmsCommon
                           :flash_msg   => @flash_array[0][:message],
                           :flash_error => @flash_array[0][:level] == :error
     elsif params[:pressed] == "host_aggregate_edit"
-      javascript_redirect :controller => "host_aggregate", :action => "edit", :id => find_checked_items[0]
+      javascript_redirect :controller => "host_aggregate",
+                          :action     => "edit",
+                          :id         => find_checked_ids_with_rbac(HostAggregate).first
     elsif params[:pressed] == "cloud_tenant_edit"
-      javascript_redirect :controller => "cloud_tenant", :action => "edit", :id => find_checked_items[0]
+      javascript_redirect :controller => "cloud_tenant",
+                          :action     => "edit",
+                          :id         => find_checked_ids_with_rbac(CloudTenant).first
     elsif params[:pressed] == "cloud_volume_new"
-      javascript_redirect :controller => "cloud_volume", :action => "new", :storage_manager_id => params[:id]
+      javascript_redirect :controller         => "cloud_volume",
+                          :action             => "new",
+                          :storage_manager_id => params[:id]
     elsif params[:pressed] == "cloud_volume_attach"
-      javascript_redirect :controller => "cloud_volume", :action => "attach", :id => find_checked_items[0]
+      javascript_redirect :controller => "cloud_volume",
+                          :action     => "attach",
+                          :id         => find_checked_ids_with_rbac(CloudVolume).first
     elsif params[:pressed] == "cloud_volume_detach"
-      javascript_redirect :controller => "cloud_volume", :action => "detach", :id => find_checked_items[0]
+      javascript_redirect :controller => "cloud_volume",
+                          :action     => "detach",
+                          :id         => find_checked_ids_with_rbac(CloudVolume).first
     elsif params[:pressed] == "cloud_volume_edit"
-      javascript_redirect :controller => "cloud_volume", :action => "edit", :id => find_checked_items[0]
+      javascript_redirect :controller => "cloud_volume",
+                          :action     => "edit",
+                          :id         => find_checked_ids_with_rbac(CloudVolume).first
     elsif params[:pressed] == "network_router_edit"
-      javascript_redirect :controller => "network_router", :action => "edit", :id => find_checked_items[0]
+      javascript_redirect :controller => "network_router",
+                          :action     => "edit",
+                          :id         => find_checked_ids_with_rbac(NetworkRouter).first
     elsif params[:pressed] == "network_router_add_interface"
-      javascript_redirect :controller => "network_router", :action => "add_interface_select", :id => find_checked_items[0]
+      javascript_redirect :controller => "network_router",
+                          :action     => "add_interface_select",
+                          :id         => find_checked_ids_with_rbac(NetworkRouter).first
     elsif params[:pressed] == "network_router_remove_interface"
-      javascript_redirect :controller => "network_router", :action => "remove_interface_select", :id => find_checked_items[0]
+      javascript_redirect :controller => "network_router",
+                          :action     => "remove_interface_select",
+                          :id         => find_checked_ids_with_rbac(NetworkRouter).first
     elsif params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new", "#{pfx}_clone",
                                                    "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
       render_or_redirect_partial(pfx)
@@ -746,6 +770,14 @@ module EmsCommon
     @vmware_cloud_api_versions = retrieve_vmware_cloud_api_versions
     @emstype_display = model.supported_types_and_descriptions_hash[@ems.emstype]
     @nuage_api_versions = retrieve_nuage_api_versions
+    @hawkular_security_protocols = retrieve_hawkular_security_protocols
+  end
+
+  def retrieve_hawkular_security_protocols
+    [[_('SSL'), 'ssl-with-validation'],
+     [_('SSL trusting custom CA'), 'ssl-with-validation-custom-ca'],
+     [_('SSL without validation'), 'ssl-without-validation'],
+     [_('Non-SSL'), 'non-ssl']]
   end
 
   def retrieve_provider_regions

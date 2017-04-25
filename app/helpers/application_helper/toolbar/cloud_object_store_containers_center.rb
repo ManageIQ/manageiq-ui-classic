@@ -7,9 +7,16 @@ class ApplicationHelper::Toolbar::CloudObjectStoreContainersCenter < Application
         'fa fa-cog fa-lg',
         t = N_('Configuration'),
         t,
-        :enabled => false,
-        :onwhen  => "1+",
+        :enabled => true,
         :items   => [
+          button(
+            :cloud_object_store_container_new,
+            'pficon pficon-add-circle-o fa-lg',
+            t = N_('Add a new Cloud Object Store Container'),
+            t,
+            :klass => ApplicationHelper::Button::CloudObjectStoreContainerNew
+          ),
+          separator,
           button(
             :cloud_object_store_container_clear,
             'pficon pficon-delete fa-lg',
@@ -21,7 +28,6 @@ class ApplicationHelper::Toolbar::CloudObjectStoreContainersCenter < Application
             :enabled   => false,
             :onwhen    => "1+"
           ),
-          separator,
           button(
             :cloud_object_store_container_delete,
             'pficon pficon-delete fa-lg',

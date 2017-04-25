@@ -136,6 +136,19 @@ function miqOnCheckProvTags(node, treename) {
   return true;
 }
 
+function miqOnClickSelectRbacTreeNode(id) {
+  var tree = 'rbac_tree';
+  miqTreeExpandNode(tree, 'xx-' + id.split('-')[0]);
+  miqJqueryRequest('/' + ManageIQ.controller + '/tree_select/?id=' + id + '&tree=' + tree, {beforeSend: true});
+  miqTreeScrollToNode(tree, id);
+}
+
+function miqTreeScrollToNode(tree, id) {
+  var node = miqTreeFindNodeByKey(tree, id);
+  var parentPanelBody = node.$el.parents('div.panel-body');
+  parentPanelBody.animate({scrollTop: (parentPanelBody.position().top + node.$el.position().top)});
+}
+
 function miqOnClickSelectAETreeNode(id) {
   miqTreeExpandNode('automate_tree', id);
   miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select/?id=' + id + '&tree=automate_tree');
@@ -210,11 +223,13 @@ function miqOnClickHostNet(id) {
   }
 }
 
-// OnClick handler for Report Menu Tree
+// OnClick handler for Timeline Tree
 function miqOnClickTimelineSelection(id) {
-  if (id.split('__')[0] != 'p') {
-    var rep_id = id.split('__');
-    miqJqueryRequest(ManageIQ.tree.clickUrl + '?id=' + rep_id[0], {beforeSend: true, complete: true});
+  var allIds = id.split('rep-');
+  // Valid id should be something like xx-first_xx-second_rep-1r215, so it should return two 'ids' if split by rep- identifier
+  if (allIds.length === 2) {
+    var rep_id = allIds[allIds.length - 1];
+    miqJqueryRequest(ManageIQ.tree.clickUrl + '?id=' + rep_id, {beforeSend: true, complete: true});
   }
 }
 
@@ -503,6 +518,7 @@ function miqInitTree(options, tree) {
   // Pre-process partially checkbox state for parent nodes
   if (options.post_check && options.hierarchical_check) {
     var nodes = [];
+    var parents = [];
     var stack = tree.slice(0);
 
     // Collect nodes
@@ -511,18 +527,35 @@ function miqInitTree(options, tree) {
       nodes.push(node);
 
       if (node.nodes) {
+        parents.push(node);
         node.nodes.forEach(function (child) {
-          if (child.nodes) {
-            stack.push(child);
-          }
+          stack.push(child);
         });
       }
     }
 
-    // Process nodes
+
+    // Process nodes top-to-bottom
+    nodes.reverse();
     while (nodes.length > 0) {
-      var node = nodes.pop();
-      if (!node.state) node.state = {};
+      var parent = nodes.pop();
+      if (!parent.nodes) {
+        continue;
+      }
+      if (!parent.state) {
+        parent.state = {};
+      }
+      parent.nodes.forEach(function (node) {
+        if (parent.state.checked === true) {
+          if (!node.state) node.state = {};
+          node.state.checked = true;
+        }
+      });
+    }
+
+    // Process nodes bottom-to-top
+    while (parents.length > 0) {
+      var node = parents.pop();
       node.state.checked = node.nodes.map(function(node) {
         return node.state ? node.state.checked : false;
       }).reduce(function (acc, curr) {

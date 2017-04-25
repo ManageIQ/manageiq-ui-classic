@@ -11,19 +11,27 @@ ManageIQ.angular.app.controller('vmCloudEvacuateFormController', ['$http', '$sco
 
   ManageIQ.angular.scope = $scope;
 
-  $http.get('/vm_cloud/evacuate_form_fields/' + vmCloudEvacuateFormId)
-    .then(getEvacuateFormData)
-    .catch(miqService.handleFailure);
+  if (vmCloudEvacuateFormId) {
+    $http.get('/vm_cloud/evacuate_form_fields/' + vmCloudEvacuateFormId)
+      .then(getEvacuateFormData)
+      .catch(miqService.handleFailure);
+  }
 
   $scope.cancelClicked = function() {
     miqService.sparkleOn();
-    var url = '/vm_cloud/evacuate_vm/' + vmCloudEvacuateFormId + '?button=cancel';
+    var url = '/vm_cloud/evacuate_vm?button=cancel';
+    if (vmCloudEvacuateFormId) {
+      url = '/vm_cloud/evacuate_vm/' + vmCloudEvacuateFormId + '?button=cancel';
+    }
     miqService.miqAjaxButton(url);
   };
 
   $scope.submitClicked = function() {
     miqService.sparkleOn();
-    var url = '/vm_cloud/evacuate_vm/' + vmCloudEvacuateFormId + '?button=submit';
+    var url = '/vm_cloud/evacuate_vm?button=submit';
+    if (vmCloudEvacuateFormId) {
+      url = '/vm_cloud/evacuate_vm/' + vmCloudEvacuateFormId + '?button=submit';
+    }
     miqService.miqAjaxButton(url, true);
   };
 

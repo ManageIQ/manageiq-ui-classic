@@ -37,17 +37,17 @@ module ApplicationHelper::PageLayouts
       storage_pod
     ).include?(@layout)
 
+    return false if %w(
+      ad_hoc_metrics
+      consumption
+      dashboard
+      dialog_provision
+      topology
+    ).include?(@showtype)
+
     return false if dashboard_no_listnav?
 
     return false if @layout.starts_with?("miq_request")
-
-    return false if @showtype == "dialog_provision"
-
-    return false if @showtype == "dashboard" && @lastaction.ends_with?("_dashboard")
-
-    return false if @showtype == "consumption"
-
-    return false if @showtype == "topology"
 
     return false if controller.action_name.end_with?("tagging_edit")
 

@@ -3,7 +3,7 @@ module AnsibleRepositoryHelper::TextualSummary
   include TextualMixins::TextualDescription
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name description created updated))
+    TextualGroup.new(_("Properties"), %i(name description created updated status))
   end
 
   def textual_group_relationships
@@ -20,6 +20,10 @@ module AnsibleRepositoryHelper::TextualSummary
 
   def textual_updated
     {:label => _("Updated On"), :value => format_timezone(@record.updated_at)}
+  end
+
+  def textual_status
+    {:label => _("Status"), :value => @record.status}
   end
 
   def textual_provider
