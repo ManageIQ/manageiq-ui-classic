@@ -1,14 +1,9 @@
-require 'shared/helpers/application_helper/buttons/basic'
+require 'shared/helpers/application_helper/buttons/generic_feature_button'
 
 describe ApplicationHelper::Button::HostFeatureButton do
-  include_context 'ApplicationHelper::Button::Basic'
-  let(:sandbox) { Hash.new }
-  let(:instance_data) { {'record' => record} }
-  let(:props) { {:options => {:feature => feature}} }
+  include_context 'ApplicationHelper::Button::GenericFeatureButton'
   let(:record) { FactoryGirl.create(:ems_openstack_infra) }
   let(:feature) { :standby }
-
-  it_behaves_like 'a generic feature button after initialization'
 
   describe '#visible?' do
     context 'when record.kind_of?(ManageIQ::Providers::Openstack::InfraManager)' do

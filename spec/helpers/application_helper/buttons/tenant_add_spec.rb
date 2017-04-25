@@ -1,15 +1,9 @@
-require 'shared/helpers/application_helper/buttons/basic'
+require 'shared/helpers/application_helper/buttons/generic_feature_button'
 
 describe ApplicationHelper::Button::TenantAdd do
-  include_context 'ApplicationHelper::Button::Basic'
-  let(:sandbox) { Hash.new }
-  let(:instance_data) { {'record' => record} }
-  let(:props) { {:options => {:feature => feature}} }
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::GenericFeatureButton'
   let(:record) { FactoryGirl.create(:tenant) }
   let(:feature) { 'rbac_project_add' }
-
-  it_behaves_like 'a generic feature button after initialization'
 
   describe '#visible?' do
     context 'when record is a project' do

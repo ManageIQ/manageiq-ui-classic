@@ -1,12 +1,11 @@
-require 'shared/helpers/application_helper/buttons/basic'
+require 'shared/helpers/application_helper/buttons/generic_feature_button'
 
 describe ApplicationHelper::Button::GenericFeatureButton do
-  include_context 'ApplicationHelper::Button::Basic'
-  let(:sandbox) { Hash.new }
-  let(:instance_data) { {'record' => record} }
-  let(:props) { {:options => {:feature => feature}} }
+  include_context 'ApplicationHelper::Button::GenericFeatureButton'
   let(:record) { double }
   let(:feature) { :some_feature }
 
-  it_behaves_like 'a generic feature button'
+  describe '#visible?' do
+    include_context 'ApplicationHelper::Button::GenericFeatureButton#visible?'
+  end
 end

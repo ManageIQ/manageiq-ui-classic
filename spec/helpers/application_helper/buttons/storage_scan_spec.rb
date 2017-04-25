@@ -1,10 +1,7 @@
-require 'shared/helpers/application_helper/buttons/basic'
+require 'shared/helpers/application_helper/buttons/generic_feature_button'
 
 describe ApplicationHelper::Button::StorageScan do
-  include_context 'ApplicationHelper::Button::Basic'
-  let(:sandbox) { Hash.new }
-  let(:instance_data) { {'record' => record} }
-  let(:props) { {:options => {:feature => feature}} }
+  include_context 'ApplicationHelper::Button::GenericFeatureButton'
   let(:record) { FactoryGirl.create(:storage, :hosts => hosts) }
   let(:hosts) { [host] }
   let(:host) { FactoryGirl.create(:host, :state => 'on') }
@@ -12,8 +9,6 @@ describe ApplicationHelper::Button::StorageScan do
   let(:authenticated_hosts) { hosts }
 
   before { allow(record).to receive(:active_hosts_with_authentication_status_ok).and_return(authenticated_hosts) }
-
-  it_behaves_like 'a generic feature button after initialization'
 
   context 'when feature is not supported' do
     it_behaves_like 'GenericFeatureButtonWithDisabled#calculate_properties'
