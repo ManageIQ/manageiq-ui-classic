@@ -296,9 +296,11 @@ class ApplicationController < ActionController::Base
     if params[:model] && %w(miq_tasks).include?(params[:model])
       options = jobs_info
     end
-    curr_model_id = Integer(params[:model_id]) rescue nil
-    unless curr_model_id.nil?
-      options[:parent] = identify_record(params[:model_id]) if params[:model_id] && options[:parent].nil?
+    if params[:model_id] && (params[:model_id].is_a?(Integer) || /\A\d+\z/.match(params[:model_id]))
+      curr_model_id = Integer(params[:model_id])
+      unless curr_model_id.nil?
+        options[:parent] = identify_record(params[:model_id]) if params[:model_id] && options[:parent].nil?
+      end
     end
     options[:parent] = options[:parent] || @parent
     options[:association] = params[:model] if HAS_ASSOCATION.include? params[:model]
