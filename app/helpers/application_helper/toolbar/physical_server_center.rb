@@ -89,8 +89,7 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
           :url_parms => "main_div",
           :confirm   => N_("Blink the Identify LED?"),
           :klass     => ApplicationHelper::Button::PhysicalServerFeatureButton,
-          :options   => {:feature => :blink_loc_led}
-        ),
+          :options   => {:feature => :blink_loc_led}),
         button(
           :physical_server_turn_on_loc_led,
           nil,
@@ -100,8 +99,7 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
           :url_parms => "main_div",
           :confirm   => N_("Turn on the Identify LED?"),
           :klass     => ApplicationHelper::Button::PhysicalServerFeatureButton,
-          :options   => {:feature => :turn_on_loc_led}
-        ),
+          :options   => {:feature => :turn_on_loc_led}),
         button(
           :physical_server_turn_off_loc_led,
           nil,
