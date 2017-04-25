@@ -396,7 +396,7 @@ module OpsController::Diagnostics
     else
       add_flash(_("Database Garbage Collection successfully initiated"))
     end
-    javascript_flash
+    javascript_flash(:spinner_off => true)
   end
 
   # to delete orphaned records for user that was delete from db
@@ -968,7 +968,7 @@ module OpsController::Diagnostics
       @sb[:diag_selected_id] = nil
       diagnostics_set_form_vars
     when "svr"
-      @selected_server = MiqServer.find(from_cid(x_node.downcase.split("-").last))
+      @record = @selected_server = MiqServer.find(from_cid(x_node.downcase.split("-").last))
       @sb[:selected_server_id] = @selected_server.id
       diagnostics_set_form_vars
     end
