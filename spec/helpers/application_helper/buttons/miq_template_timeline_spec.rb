@@ -1,4 +1,4 @@
-require 'shared/helpers/application_helper/buttons/basic'
+require 'shared/helpers/application_helper/buttons/timeline'
 
 describe ApplicationHelper::Button::MiqTemplateTimeline do
   include_context 'ApplicationHelper::Button::Basic'
@@ -7,5 +7,7 @@ describe ApplicationHelper::Button::MiqTemplateTimeline do
   let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:template_redhat) }
 
-  it_behaves_like 'a timeline button', :entity => 'Template'
+  describe '#calculate_properties' do
+    include_context 'ApplicationHelper::Button::Timeline#calculate_properties', 'Template'
+  end
 end

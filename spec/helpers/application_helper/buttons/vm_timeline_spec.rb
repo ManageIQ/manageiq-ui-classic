@@ -1,4 +1,4 @@
-require 'shared/helpers/application_helper/buttons/basic'
+require 'shared/helpers/application_helper/buttons/timeline'
 
 describe ApplicationHelper::Button::VmTimeline do
   include_context 'ApplicationHelper::Button::Basic'
@@ -7,5 +7,7 @@ describe ApplicationHelper::Button::VmTimeline do
   let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:vm) }
 
-  it_behaves_like 'a timeline button', :entity => 'VM'
+  describe '#calculate_properties' do
+    include_context 'ApplicationHelper::Button::Timeline#calculate_properties', 'VM'
+  end
 end

@@ -1,4 +1,4 @@
-require 'shared/helpers/application_helper/buttons/basic'
+require 'shared/helpers/application_helper/buttons/timeline'
 
 describe ApplicationHelper::Button::ContainerTimeline do
   include_context 'ApplicationHelper::Button::Basic'
@@ -7,5 +7,7 @@ describe ApplicationHelper::Button::ContainerTimeline do
   let(:props) { {:options => {:entity => 'Container'}} }
   let(:record) { FactoryGirl.create(:container) }
 
-  it_behaves_like 'a timeline button', :entity => 'Container'
+  describe '#calculate_properties' do
+    include_context 'ApplicationHelper::Button::Timeline#calculate_properties', 'Container'
+  end
 end

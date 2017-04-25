@@ -1,4 +1,4 @@
-require 'shared/helpers/application_helper/buttons/basic'
+require 'shared/helpers/application_helper/buttons/timeline'
 
 describe ApplicationHelper::Button::EmsStorageTimeline do
   include_context 'ApplicationHelper::Button::Basic'
@@ -7,5 +7,7 @@ describe ApplicationHelper::Button::EmsStorageTimeline do
   let(:props) { {:options => {:feature => :timeline}} }
   let(:record) { FactoryGirl.create(:ext_management_system) }
 
-  it_behaves_like 'a timeline button', :entity => 'Storage Manager'
+  describe '#calculate_properties' do
+    include_context 'ApplicationHelper::Button::Timeline#calculate_properties', 'Storage Manager'
+  end
 end
