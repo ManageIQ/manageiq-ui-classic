@@ -203,15 +203,7 @@ module ApplicationController::CiProcessing
   # Retire 1 or more items (vms, stacks, services)
   def retirevms
     assert_privileges(params[:pressed])
-    klass = get_class_from_controller_param(params[:controller])
-    selected_items = find_checked_ids_with_rbac(klass)
-    if !%w(orchestration_stack service).include?(request.parameters["controller"]) && !%w(orchestration_stacks).include?(params[:display]) &&
-       VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_retire? }
-      add_flash(_("Set Retirement Date does not apply to selected %{model}") %
-        {:model => ui_lookup(:table => "miq_template")}, :error)
-      javascript_flash(:scroll_top => true)
-      return
-    end
+
     # check to see if coming from show_list or drilled into vms from another CI
     if request.parameters[:controller] == "vm" || %w(all_vms instances vms).include?(params[:display])
       rec_cls = "vm"
@@ -222,6 +214,15 @@ module ApplicationController::CiProcessing
     elsif request.parameters[:controller] == "orchestration_stack" || %w(orchestration_stacks).include?(params[:display])
       rec_cls = "orchestration_stack"
       bc_msg = _("Retire Orchestration Stack")
+    end
+    klass = rec_cls ? rec_cls.camelize.constantize : get_class_from_controller_param(params[:controller])
+    selected_items = find_checked_ids_with_rbac(klass)
+    if !%w(orchestration_stack service).include?(request.parameters["controller"]) && !%w(orchestration_stacks).include?(params[:display]) &&
+       VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_retire? }
+      add_flash(_("Set Retirement Date does not apply to selected %{model}") %
+        {:model => ui_lookup(:table => "miq_template")}, :error)
+      javascript_flash(:scroll_top => true)
+      return
     end
     if selected_items.blank?
       session[:retire_items] = [params[:id]]

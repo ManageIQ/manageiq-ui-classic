@@ -21,6 +21,7 @@ class EmsContainerController < ApplicationController
   end
 
   def show_list
+    @showtype = "main"
     process_show_list(:gtl_dbname => 'emscontainer')
   end
 

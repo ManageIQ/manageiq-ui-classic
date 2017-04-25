@@ -38,7 +38,7 @@ class ApplicationHelper::Toolbar::EmsBlockStoragesCenter < ApplicationHelper::To
                    :onwhen  => "1+",
                    :items   => [
                      button(
-                       :ems_storage_protect,
+                       :ems_block_storage_protect,
                        'pficon pficon-edit fa-lg',
                        N_('Manage Policies for the selected Block Storage Managers'),
                        N_('Manage Policies'),
@@ -46,7 +46,7 @@ class ApplicationHelper::Toolbar::EmsBlockStoragesCenter < ApplicationHelper::To
                        :enabled   => false,
                        :onwhen    => "1+"),
                      button(
-                       :ems_storage_tag,
+                       :ems_block_storage_tag,
                        'pficon pficon-edit fa-lg',
                        N_('Edit Tags for the selected Block Storage Managers'),
                        N_('Edit Tags'),
