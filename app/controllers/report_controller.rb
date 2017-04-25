@@ -263,7 +263,7 @@ class ReportController < ApplicationController
   end
 
   def title
-    nil
+    _("Reports")
   end
 
   private ###########################
@@ -901,27 +901,23 @@ class ReportController < ApplicationController
 
   def get_session_data
     super
-    @lastaction       = session[:report_lastaction]
     @report_tab       = session[:report_tab]
     @report_result_id = session[:report_result_id]
     @menu             = session[:report_menu]
     @folders          = session[:report_folders]
     @ght_type         = session[:ght_type] || "tabular"
     @report_groups    = session[:report_groups]
-    @edit             = session[:edit] unless session[:edit].nil?
     @catinfo          = session[:vm_catinfo]
     @grid_folders     = session[:report_grid_folders]
   end
 
   def set_session_data
     super
-    session[:report_lastaction] = @lastaction
     session[:report_tab]        = @report_tab
     session[:panels]            = @panels
     session[:ght_type]          = @ght_type
     session[:report_groups]     = @report_groups
     session[:vm_catinfo]        = @catinfo
-    session[:edit]              = @edit unless @edit.nil?
     session[:report_result_id]  = @report_result_id
     session[:report_menu]       = @menu
     session[:report_folders]    = @folders
