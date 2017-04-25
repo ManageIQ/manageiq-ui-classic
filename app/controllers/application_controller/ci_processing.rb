@@ -61,6 +61,7 @@ module ApplicationController::CiProcessing
       end
     end
   end
+
   alias_method :image_ownership, :set_ownership
   alias_method :instance_ownership, :set_ownership
   alias_method :vm_ownership, :set_ownership
@@ -84,6 +85,7 @@ module ApplicationController::CiProcessing
     drop_breadcrumb(:name => _("Set Ownership"), :url => "/vm_common/ownership")
     ownership_items = params[:rec_ids] if params[:rec_ids]
     build_ownership_info(ownership_items)
+    return if @ownershipitems.empty?
     build_targets_hash(@ownershipitems)
     if @sb[:explorer]
       @refresh_partial = "shared/views/ownership"
@@ -132,9 +134,16 @@ module ApplicationController::CiProcessing
     @group = group ? group.id.to_s : nil
     Rbac.filtered(MiqGroup).each { |g| @groups[g.description] = g.id.to_s }
     @user = @group = DONT_CHANGE_OWNER if ownership_items.length > 1
-    @ownershipitems = klass.find(ownership_items).sort_by(&:name)
+    @ownershipitems = Rbac.filtered(klass.where(:id => ownership_items).order(:name), :class => klass)
+    raise _('Invalid items passed') unless @ownershipitems.pluck(:id).to_set == ownership_items.map(&:to_i).to_set
     {:user  => @user,
      :group => @group}
+  end
+
+  def valid_items_for(klass, param_ids)
+    scope = klass.respond_to?(:with_ownership) ? klass.with_ownership : klass
+    checked_ids = Rbac.filtered(scope.where(:id => param_ids)).pluck(:id)
+    checked_ids.to_set == param_ids.to_set
   end
 
   def ownership_update
@@ -167,7 +176,10 @@ module ApplicationController::CiProcessing
       end
 
       klass = get_class_from_controller_param(request.parameters[:controller])
-      result = klass.set_ownership(params[:objectIds].map(&:to_i), opts)
+      param_ids = params[:objectIds].map(&:to_i)
+      raise _('Invalid items selected.') unless valid_items_for(klass, param_ids)
+
+      result = klass.set_ownership(param_ids, opts)
       unless result == true
         result["missing_ids"].each { |msg| add_flash(msg, :error) } if result["missing_ids"]
         result["error_updating"].each { |msg| add_flash(msg, :error) } if result["error_updating"]
@@ -203,15 +215,7 @@ module ApplicationController::CiProcessing
   # Retire 1 or more items (vms, stacks, services)
   def retirevms
     assert_privileges(params[:pressed])
-    klass = get_class_from_controller_param(params[:controller])
-    selected_items = find_checked_ids_with_rbac(klass)
-    if !%w(orchestration_stack service).include?(request.parameters["controller"]) && !%w(orchestration_stacks).include?(params[:display]) &&
-       VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_retire? }
-      add_flash(_("Set Retirement Date does not apply to selected %{model}") %
-        {:model => ui_lookup(:table => "miq_template")}, :error)
-      javascript_flash(:scroll_top => true)
-      return
-    end
+
     # check to see if coming from show_list or drilled into vms from another CI
     if request.parameters[:controller] == "vm" || %w(all_vms instances vms).include?(params[:display])
       rec_cls = "vm"
@@ -222,6 +226,15 @@ module ApplicationController::CiProcessing
     elsif request.parameters[:controller] == "orchestration_stack" || %w(orchestration_stacks).include?(params[:display])
       rec_cls = "orchestration_stack"
       bc_msg = _("Retire Orchestration Stack")
+    end
+    klass = rec_cls ? rec_cls.camelize.constantize : get_class_from_controller_param(params[:controller])
+    selected_items = find_checked_ids_with_rbac(klass)
+    if !%w(orchestration_stack service).include?(request.parameters["controller"]) && !%w(orchestration_stacks).include?(params[:display]) &&
+       VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_retire? }
+      add_flash(_("Set Retirement Date does not apply to selected %{model}") %
+        {:model => ui_lookup(:table => "miq_template")}, :error)
+      javascript_flash(:scroll_top => true)
+      return
     end
     if selected_items.blank?
       session[:retire_items] = [params[:id]]
@@ -1819,8 +1832,15 @@ module ApplicationController::CiProcessing
   end
 
   def cloud_object_store_button_operation(klass, task)
-    method = "#{task}_#{klass.name.underscore.to_sym}"
-    display_name = _(task.capitalize)
+    # Map to instance method name
+    case task
+    when "delete"
+      method = "#{task}_#{klass.name.underscore.to_sym}"
+      display_name = _(task.capitalize)
+    else
+      display_name = _(task.capitalize)
+      method = task = "#{klass.name.underscore.to_sym}_#{task}"
+    end
 
     items = []
     # Either a list or coming from a different controller
@@ -1859,9 +1879,11 @@ module ApplicationController::CiProcessing
     when "service"
       Service
     when "cloud_object_store_container"
-      CloudObjectStoreContainer
+      params[:pressed].starts_with?("cloud_object_store_object") ? CloudObjectStoreObject : CloudObjectStoreContainer
+    when "cloud_object_store_object"
+      CloudObjectStoreObject
     when "ems_storage"
-      CloudObjectStoreContainer
+      params[:pressed].starts_with?("cloud_object_store_object") ? CloudObjectStoreObject : CloudObjectStoreContainer
     else
       VmOrTemplate
     end
@@ -2440,18 +2462,6 @@ module ApplicationController::CiProcessing
     host_button_operation('refresh_ems', _('Refresh'))
   end
 
-  def refreshphysicalservers
-    # TODO: refresh physical servers
-  end
-
-  def deletephysicalservers
-    # TODO: delete physical servers
-  end
-
-  def editphysicalservers
-    # TODO: edit physical servers
-  end
-
   # Scan all selected or single displayed host(s)
   def scanhosts
     assert_privileges("host_scan")
@@ -2496,6 +2506,18 @@ module ApplicationController::CiProcessing
   def providehosts
     assert_privileges("host_provide")
     host_button_operation('provide', _('Provide'))
+  end
+
+  def refreshphysicalservers
+    # TODO: refresh physical servers
+  end
+
+  def deletephysicalservers
+    # TODO: delete physical servers
+  end
+
+  def editphysicalservers
+    # TODO: edit physical servers
   end
 
   # Handle the Host power buttons
