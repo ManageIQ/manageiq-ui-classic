@@ -149,6 +149,13 @@ describe CloudObjectStoreContainerController do
 
     context "in Amazon S3" do
       before do
+        stub_settings_merge(
+          :prototype => {
+            :amazon => {
+              :s3 => true
+            }
+          }
+        )
         @cloud_manager = FactoryGirl.create(:ems_amazon)
         @ems = @cloud_manager.s3_storage_manager
 
