@@ -427,6 +427,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
 
   vm.removeKeyValue = function(prefix, key) {
     delete vm.catalogItemModel[prefix + "_variables"][key];
+    $scope.checkFormPristine();
   }
 
   vm.editKeyValue = function(prefix, key, key_value, index) {
