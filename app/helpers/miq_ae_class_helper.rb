@@ -84,7 +84,7 @@ module MiqAeClassHelper
       'product product-array'
     when 'password'
       'product product-password'
-    when 'null coalescing'
+    when 'null coalescing', 'nil_class'
       'fa fa-question'
     when 'host'
       'pficon pficon-screen'
@@ -116,8 +116,13 @@ module MiqAeClassHelper
       'product product-state'
     when 'element'
       'product product-element'
+    when 'hash'
+      'fa fa-hashtag'
+    when 'key'
+      'pficon pficon-key'
     else
-      raise NotImplementedError, "Missing fonticon for MiqAeField type #{field}"
+      Rails.logger.warn("Missing fonticon for MiqAeField type \"#{field}\"")
+      'fa fa-file-text-o'
     end
   end
 end
