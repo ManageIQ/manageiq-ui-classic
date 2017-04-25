@@ -117,7 +117,6 @@ module Mixins
       obj
     end
 
-
     # Find a record by model and id and test it with RBAC
     # Params:
     #   klass   - class of accessed objects
@@ -132,10 +131,10 @@ module Mixins
     def find_records_with_rbac(klass, ids, options = {})
       ids ||= checked_or_params
       filtered = Rbac.filtered(klass.where(:id => ids),
-                               :user => current_user,
+                               :user        => current_user,
                                :named_scope => options[:named_scope])
       unless ids.length == filtered.length
-        unauthorized_record = (ids - filtered.map { |record| record.id }).first
+        unauthorized_record = (ids - filtered.map(&:id)).first
         raise(_("User '%{userid}' is not authorized to access '%{model}' record id '%{record_id}'") %
               {:user_id   => current_userid,
                :record_id => unauthorized_record,
