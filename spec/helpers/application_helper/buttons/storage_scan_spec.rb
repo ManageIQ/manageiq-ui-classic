@@ -1,4 +1,4 @@
-require 'shared/helpers/application_helper/buttons/generic_feature_button'
+require 'shared/helpers/application_helper/buttons/generic_feature_button_with_disabled'
 
 describe ApplicationHelper::Button::StorageScan do
   include_context 'ApplicationHelper::Button::GenericFeatureButton'
@@ -10,12 +10,12 @@ describe ApplicationHelper::Button::StorageScan do
 
   before { allow(record).to receive(:active_hosts_with_authentication_status_ok).and_return(authenticated_hosts) }
 
-  context 'when feature is not supported' do
-    it_behaves_like 'GenericFeatureButtonWithDisabled#calculate_properties'
-  end
+  describe '#calculate_properties' do
+    context 'when feature is not supported' do
+      include_context 'ApplicationHelper::Button::GenericFeatureButtonWithDisabled#calculate_properties'
+    end
 
-  context 'when feature is supported' do
-    describe '#calculate_properties' do
+    context 'when feature is supported' do
       before do
         allow(record).to receive(:supports?).and_return(true)
         subject.calculate_properties
