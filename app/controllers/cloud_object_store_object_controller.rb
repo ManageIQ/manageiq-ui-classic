@@ -17,11 +17,12 @@ class CloudObjectStoreObjectController < ApplicationController
 
     process_cloud_object_storage_buttons(params[:pressed])
 
-    if !@flash_array.nil? && params[:pressed].ends_with?("delete")
-      session[:flash_msgs] = @flash_array.dup
-      javascript_redirect previous_breadcrumb_url
-    elsif !@flash_array.nil?
-      render_flash unless performed?
+    # redirect in case we are on deleted object details page
+    if @display == "main" && params[:pressed].ends_with?("delete")
+      session[:flash_msgs] = @flash_array.dup if @flash_array
+      javascript_redirect(previous_breadcrumb_url)
+    else # otherwise just show the flash
+      render_flash unless @flash_array.nil? || performed?
     end
   end
 

@@ -82,8 +82,18 @@ describe CloudObjectStoreObjectController do
       }
     end
 
-    it "delete redirects to show_list" do
+    it "delete redirects to previous breadcrumb if on object's details page" do
+      session[:cloud_object_store_object_display] = "main"
       expect(controller).to receive(:javascript_redirect).with("previous-url")
+      post :button, :params => {
+        :pressed => "cloud_object_store_object_delete", :format => :js, :id => object.id
+      }
+    end
+
+    it "delete does not redirect if on object list page" do
+      session[:cloud_object_store_object_display] = "show_list"
+      expect(controller).not_to receive(:javascript_redirect)
+
       post :button, :params => {
         :pressed => "cloud_object_store_object_delete", :format => :js, :id => object.id
       }
