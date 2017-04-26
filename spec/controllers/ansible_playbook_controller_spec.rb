@@ -3,15 +3,14 @@ describe AnsiblePlaybookController do
   include CompressedIds
 
   before do
-    @playbook = FactoryGirl.create(:embedded_playbook)
     EvmSpecHelper.create_guid_miq_server_zone
     login_as FactoryGirl.create(:user_admin)
   end
 
   context "#show" do
-    #let(:playbook) { FactoryGirl.create(:embedded_playbook) }
+    let(:playbook) { FactoryGirl.create(:embedded_playbook) }
     subject do
-      get :show, :params => {:id => @playbook.id}
+      get :show, :params => {:id => playbook.id}
     end
     render_views
     it "returns status 200" do
