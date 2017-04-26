@@ -173,10 +173,12 @@
     - else
       -# export_button
       = button_tag(_("Export"),
-        :class  => "btn btn-primary #{@export_reports.empty? ? "disabled" : ""}",
-        :type   => "application/txt",
-        :id     => "export_button",
-        :alt    => _("Download Report to YAML"))
+        :class    => "btn btn-primary",
+        :type     => "application/txt",
+        :id       => "export_button",
+        :alt      => _("Download Report to YAML"),
+        :disabled => true)
+
 - elsif ["compare"].include?(@sb[:action])
   #buttons
     -# Button to cancel policy simulation and return to latest tree node
