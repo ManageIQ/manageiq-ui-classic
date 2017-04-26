@@ -122,7 +122,6 @@ module Mixins
     #   either sets flash or raises exception
     #
     def find_records_with_rbac(klass, ids, options = {})
-      ids ||= checked_or_params
       filtered = Rbac.filtered(klass.where(:id => ids),
                                :user        => current_user,
                                :named_scope => options[:named_scope])

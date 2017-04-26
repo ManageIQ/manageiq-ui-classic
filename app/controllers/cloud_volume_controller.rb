@@ -420,7 +420,7 @@ class CloudVolumeController < ApplicationController
   # delete selected volumes
   def delete_volumes
     assert_privileges("cloud_volume_delete")
-    volumes = find_records_with_rbac(CloudVolume, nil)
+    volumes = find_records_with_rbac(CloudVolume, checked_or_params)
     if volumes.empty?
       add_flash(_("No %{models} were selected for deletion.") % {
         :models => ui_lookup(:tables => "cloud_volume")
