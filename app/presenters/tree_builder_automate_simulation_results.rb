@@ -101,8 +101,6 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
 
   def nontreenode_icon(obj)
     case obj
-    when ArbitrationProfile
-      'fa fa-list-ul'
     when Authentication
       'fa fa-lock'
     when CloudResourceQuota
