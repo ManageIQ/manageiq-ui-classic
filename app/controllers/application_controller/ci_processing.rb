@@ -373,7 +373,7 @@ module ApplicationController::CiProcessing
 
   def resize
     assert_privileges("instance_resize")
-    @record ||= find_record_with_rbac(session[:userid], params[:rec_id])
+    @record ||= find_record_with_rbac(VmOrTemplate, params[:rec_id])
     unless @explorer
       drop_breadcrumb(
         :name => _("Reconfigure Instance '%{name}'") % {:name => @record.name},
