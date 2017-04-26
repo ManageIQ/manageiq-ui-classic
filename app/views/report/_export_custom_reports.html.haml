@@ -41,9 +41,16 @@
           options_for_select(@export_reports.sort),
           :size              => 15,
           :style             => "width:400px; min-width:375px; background-color:#fff; border: 0px;",
-          :multiple          => true,
-          :onchange          => "toggleConvertButtonToLink($('#export_button'),
-                                  'download_report', $('#choices_chosen').val() != null);")
+          :multiple          => true)
+
         :javascript
           miqInitSelectPicker();
           miqSelectPickerEvent("choices_chosen", "#{url}");
+          $('#choices_chosen').on("change",
+            function() {
+              if ($(this).val()) {
+                $('#export_button').prop('disabled', false);
+              } else {
+                $('#export_button').prop('disabled', true);
+              }
+            });
