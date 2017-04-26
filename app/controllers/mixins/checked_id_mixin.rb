@@ -53,7 +53,7 @@ module Mixins
     def find_checked_records_with_rbac(klass, ids = nil)
       ids ||= find_checked_items
       filtered = Rbac.filtered(klass.where(:id => ids))
-      raise _("Unauthorized object or action") unless ids.length == filtered.length
+      raise _("Can't access selected records") unless ids.length == filtered.length
       filtered
     end
 
@@ -72,16 +72,10 @@ module Mixins
       raise _("Invalid input") unless is_integer?(id)
       tested_object = klass.find_by(:id => id)
       if tested_object.nil?
-        raise(_("User '%{user_id}' is not authorized to access '%{model}' record id '%{record_id}'") %
-                {:user_id   => current_userid,
-                 :record_id => id,
-                 :model     => ui_lookup(:model => klass.to_s)})
+        raise(_("Can't access selected records"))
       end
       Rbac.filtered_object(tested_object, :user => current_user, :named_scope => options[:named_scope]) ||
-        raise(_("User '%{user_id}' is not authorized to access '%{model}' record id '%{record_id}'") %
-                {:user_id   => current_userid,
-                 :record_id => id,
-                 :model     => ui_lookup(:model => klass.to_s)})
+        raise(_("Can't access selected records"))
     end
 
     # !============================================!
@@ -133,13 +127,7 @@ module Mixins
       filtered = Rbac.filtered(klass.where(:id => ids),
                                :user        => current_user,
                                :named_scope => options[:named_scope])
-      unless ids.length == filtered.length
-        unauthorized_record = (ids - filtered.map(&:id)).first
-        raise(_("User '%{userid}' is not authorized to access '%{model}' record id '%{record_id}'") %
-              {:user_id   => current_userid,
-               :record_id => unauthorized_record,
-               :model     => ui_lookup(:model => klass.to_s)})
-      end
+      raise(_("Can't access selected records")) unless ids.length == filtered.length
       filtered
     end
 
