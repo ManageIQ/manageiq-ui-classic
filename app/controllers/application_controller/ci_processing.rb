@@ -400,12 +400,12 @@ module ApplicationController::CiProcessing
         begin
           flavor_id = params['flavor_id']
           flavor = find_record_with_rbac(Flavor, flavor_id)
-          old_flavor = @record.flavor
+          old_flavor_name = @record.flavor.try(:name) || _("unknown")
           @record.resize_queue(session[:userid], flavor)
           add_flash(_("Reconfiguring %{instance} \"%{name}\" from %{old_flavor} to %{new_flavor}") % {
             :instance   => ui_lookup(:table => 'vm_cloud'),
             :name       => @record.name,
-            :old_flavor => old_flavor.name,
+            :old_flavor => old_flavor_name,
             :new_flavor => flavor.name})
         rescue => ex
           add_flash(_("Unable to reconfigure %{instance} \"%{name}\": %{details}") % {
