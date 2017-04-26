@@ -7,6 +7,7 @@ class CloudObjectStoreContainerController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericShowMixin
   include Mixins::GenericSessionMixin
+  include Mixins::GenericFormMixin
 
   def breadcrumb_name(_model)
     ui_lookup(:tables => "cloud_object_store_container")
@@ -24,11 +25,9 @@ class CloudObjectStoreContainerController < ApplicationController
       process_cloud_object_storage_buttons(params[:pressed])
     end
 
-    # redirect in case we are on deleted container details page
-    if @display == "main" && params[:pressed].ends_with?("delete")
-      session[:flash_msgs] = @flash_array.dup if @flash_array
-      javascript_redirect(previous_breadcrumb_url)
-    else # otherwise just show the flash
+    if params[:pressed].ends_with?("delete")
+      delete_action
+    else
       render_flash unless @flash_array.nil? || performed?
     end
   end
