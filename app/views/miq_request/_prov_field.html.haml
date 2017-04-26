@@ -195,27 +195,6 @@
           = text_area_tag(field_id, options[field],
             :readonly => "readonly",
             :style    => "width: 600px; height: 250px;")
-      - elsif [:ldap_ous].include?(field)
-        -# tree control for tags fields
-        .col-md-8
-          #ldap_ous_treebox.treeview-pf-hover.treeview-pf-select{:style => "color:#000; overflow: hidden;"}
-          - if @edit && @edit[:req_id]
-            - click = @edit[:req_id]
-          - elsif @miq_request
-            - click = @miq_request.id
-          - else
-            - click = 'new'
-          = render(:partial => "layouts/tree",
-                   :locals  => {:tree_id       => "ldap_ous_treebox",
-                                :tree_name     => session[:tree_name],
-                                :bs_tree       => @ldap_ous_tree,
-                                :onclick       => "miqOnClickProvLdapOus",
-                                :click_url     => "/miq_request/prov_field_changed/#{click}",
-                                :cookie_prefix => "prov_",
-                                :tree_state    => true})
-          - unless field_hash[:notes_display] == :hide || field_hash[:notes].blank?
-            -# Display notes if available
-            = field_hash[:notes]
       - elsif [:placement_folder_name].include?(field)
         -# wider Pull Down field that fits into 1280 wide screens
         .col-md-8
