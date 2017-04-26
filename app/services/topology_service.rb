@@ -69,7 +69,7 @@ class TopologyService
       unless entity_relationships_mapping.nil?
         entity_relationships_mapping.keys.each do |rel_name|
           relations = entity.send(rel_name.to_s.underscore.downcase)
-          if relations.kind_of?(ActiveRecord::Associations::CollectionProxy)
+          if relations.respond_to?(:each)
             relations.each do |relation|
               build_rel_data_and_links(entity, entity_relationships_mapping, rel_name, links, relation, topo_items)
             end
