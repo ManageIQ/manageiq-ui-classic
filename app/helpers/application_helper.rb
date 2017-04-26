@@ -1221,6 +1221,7 @@ module ApplicationHelper
                         offline
                         orchestration_stack
                         physical_infra_topology
+                        physical_server
                         persistent_volume
                         policy
                         policy_group
