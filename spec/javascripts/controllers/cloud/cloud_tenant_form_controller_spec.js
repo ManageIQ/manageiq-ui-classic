@@ -1,7 +1,3 @@
-/**
- * Created by xvybira5@mendelu.cz on 21/04/2017.
- */
-
 describe('cloudTenantFormController', function() {
   var scope, vm, $controller, $httpBackend, miqService;
 
