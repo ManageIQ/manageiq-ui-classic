@@ -296,7 +296,7 @@ class ApplicationController < ActionController::Base
     if params[:model] && %w(miq_tasks).include?(params[:model])
       options = jobs_info
     end
-    if params[:model_id] && (params[:model_id].is_a?(Integer) || /\A\d+\z/.match(params[:model_id]))
+    if params[:model_id] && (params[:model_id].kind_of?(Integer) || /\A\d+\z/.match(params[:model_id]))
       curr_model_id = Integer(params[:model_id])
       unless curr_model_id.nil?
         options[:parent] = identify_record(params[:model_id]) if params[:model_id] && options[:parent].nil?
@@ -358,6 +358,7 @@ class ApplicationController < ActionController::Base
   # From these options and model we get view (for fetching data) and settings (will hold info about paging).
   # Then this method will return JSON object with settings and data.
   def report_data
+    @in_report_data = true
     if params[:explorer]
       params[:action] = "explorer"
     end
@@ -1004,7 +1005,9 @@ class ApplicationController < ActionController::Base
     view_context.instance_variable_set(:@explorer, @explorer)
     table.data.each do |row|
       target = @targets_hash[row.id] unless row['id'].nil?
-      quadicon = view_context.render_quadicon(target) if !target.nil? && type_has_quadicon(target.class.name)
+      if @in_report_data
+        quadicon = view_context.render_quadicon(target) if !target.nil? && type_has_quadicon(target.class.name)
+      end
       new_row = {
         :id       => list_row_id(row),
         :long_id  => row['id'],
