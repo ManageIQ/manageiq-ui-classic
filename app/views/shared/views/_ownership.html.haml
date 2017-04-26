@@ -1,8 +1,11 @@
 - @angular_form = true
 
 %form#form_div.form-horizontal{"name"          => "angularForm",
-                               "ng-controller" => "ownershipFormController",
-                               "ng-show"       => "afterGet"}
+                               "ng-controller" => "ownershipFormController as vm",
+                               "ng-show"       => "vm.afterGet",
+                               "miq-form"      => true,
+                               "model"         => "vm.ownershipModel",
+                               "model-copy"    => "vm.modelCopy"}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Changes')
@@ -18,7 +21,7 @@
         - opts += ownership_user_options.sort
         = select_tag("user",
                     options_for_select(opts, @user),
-                      "ng-model"                    => "ownershipModel.user",
+                      "ng-model"                    => "vm.ownershipModel.user",
                       "id"                          => "user_name",
                       "checkchange"                 => "",
                       "selectpicker-for-select-tag" => "")
@@ -33,7 +36,7 @@
           - opts = @groups.sort
         = select_tag("group",
                       options_for_select(opts, @group),
-                      "ng-model"                    => "ownershipModel.group",
+                      "ng-model"                    => "vm.ownershipModel.group",
                       "id"                          => "group_name",
                       "checkchange"                 => "",
                       "selectpicker-for-select-tag" => "")
