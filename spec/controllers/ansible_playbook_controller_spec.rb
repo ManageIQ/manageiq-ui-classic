@@ -9,10 +9,9 @@ describe AnsiblePlaybookController do
 
   context "#show" do
     let(:playbook) { FactoryGirl.create(:embedded_playbook) }
-    subject do
-      get :show, :params => {:id => playbook.id}
-    end
+    subject { get :show, :params => {:id => playbook.id} }
     render_views
+
     it "returns status 200" do
       is_expected.to have_http_status 200
     end
@@ -23,9 +22,8 @@ describe AnsiblePlaybookController do
   end
 
   context "#show_list" do
-    subject do
-      get :show_list, :params => {}
-    end
+    subject { get :show_list }
+    render_views
 
     it "returns status 200" do
       is_expected.to have_http_status 200
