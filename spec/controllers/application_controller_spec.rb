@@ -17,7 +17,7 @@ describe ApplicationController do
     end
 
     it "Verify flash error message when passed in id no longer exists in database" do
-      expect { controller.send(:find_record_with_rbac, ExtManagementSystem, "1") }.to raise_error(RuntimeError, match(/User 'user[0-9]+' is not authorized to access 'Provider' record id '1'/))
+      expect { controller.send(:find_record_with_rbac, ExtManagementSystem, "1") }.to raise_error(RuntimeError, match(/Can't access selected records/))
     end
 
     it "Verify record gets set when valid id is passed in" do
