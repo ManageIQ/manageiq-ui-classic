@@ -260,7 +260,7 @@ module QuadiconHelper
         end
       end
     end
-    safe_join(output.collect(&:html_safe))
+    safe_join(output)
   end
 
   # FIXME: Even better would be to ask the object what name to use
@@ -561,11 +561,11 @@ module QuadiconHelper
     if settings(:quadicons, db_for_quadicon)
       output << flobj_img_simple("layout/base.png")
       item_count = case item
-                  when EmsPhysicalInfra then item.physical_servers.size
-                  when EmsCloud         then item.total_vms
-                  else
-                    item.hosts.size
-                  end
+                   when EmsPhysicalInfra then item.physical_servers.size
+                   when EmsCloud         then item.total_vms
+                   else
+                     item.hosts.size
+                   end
       output << flobj_p_simple("a72", item_count)
       output << flobj_p_simple("b72", item.total_miq_templates) if item.kind_of?(EmsCloud)
       output << flobj_img_simple("svg/vendor-#{h(item.image_name)}.svg", "c72")
@@ -705,7 +705,7 @@ module QuadiconHelper
 
   def img_for_health_state(item)
     case item.health_state
-    when "Valid"    then "100/healthstate-normal.png"
+    when "Valid"    then "svg/healthstate-normal.svg"
     when "Critical" then "svg/healthstate-critical.svg"
     when "None"     then "svg/healthstate-unknown.svg"
     when "Warning"  then "100/warning.png"
