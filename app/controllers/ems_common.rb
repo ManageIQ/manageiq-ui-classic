@@ -501,7 +501,7 @@ module EmsCommon
 
   def check_compliance(model)
     showlist = @lastaction == "show_list"
-    ids = showlist ? find_checked_items : [params[:id]]
+    ids = showlist ? find_checked_ids_with_rbac(model) : find_id_with_rbac(model, [params[:id]])
     if ids.blank?
       add_flash(_("No %{model} were selected for Compliance Check") % {:model => ui_lookup(:models => model.to_s)}, :error)
     end
