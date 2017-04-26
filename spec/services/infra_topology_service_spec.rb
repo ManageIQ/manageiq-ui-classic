@@ -1,22 +1,6 @@
 describe InfraTopologyService do
   let(:infra_topology_service) { described_class.new(nil) }
 
-  describe "#build_kinds" do
-    it "creates the expected number of entity types" do
-      expect(infra_topology_service.build_kinds.keys).to match_array(
-        [:InfraManager, :EmsCluster, :Host, :Vm])
-    end
-  end
-
-  describe "#build_link" do
-    it "creates link between source to target" do
-      expect(infra_topology_service.build_link(
-               "95e49048-3e00-11e5-a0d2-18037327aaeb",
-               "96c35f65-3e00-11e5-a0d2-18037327aaeb")).to eq(:source => "95e49048-3e00-11e5-a0d2-18037327aaeb",
-                                                              :target => "96c35f65-3e00-11e5-a0d2-18037327aaeb")
-    end
-  end
-
   describe "#build_topology" do
     subject { infra_topology_service.build_topology }
 

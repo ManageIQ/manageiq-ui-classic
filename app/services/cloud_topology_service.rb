@@ -9,6 +9,8 @@ class CloudTopologyService < TopologyService
     :cloud_tenants      => [:tags, :vms => :tags],
   ]
 
+  @kinds = %i(CloudManager AvailabilityZone CloudTenant Vm Tag)
+
   def entity_display_type(entity)
     if entity.kind_of?(ManageIQ::Providers::CloudManager)
       entity.class.short_token
@@ -46,10 +48,5 @@ class CloudTopologyService < TopologyService
     else
       'Unknown'
     end
-  end
-
-  def build_kinds
-    kinds = [:CloudManager, :AvailabilityZone, :CloudTenant, :Vm, :Tag]
-    build_legend_kinds(kinds)
   end
 end

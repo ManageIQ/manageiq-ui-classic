@@ -28,6 +28,8 @@ class NetworkTopologyService < TopologyService
     ]
   ]
 
+  @kinds = %i(NetworkRouter CloudSubnet Vm NetworkManager FloatingIp CloudNetwork NetworkPort CloudTenant SecurityGroup LoadBalancer Tag AvailabilityZone)
+
   def entity_type(entity)
     if entity.kind_of?(CloudNetwork)
       entity.class.base_class.name.demodulize
@@ -76,11 +78,5 @@ class NetworkTopologyService < TopologyService
     else
       'Unknown'
     end
-  end
-
-  def build_kinds
-    kinds = [:NetworkRouter, :CloudSubnet, :Vm, :NetworkManager, :FloatingIp, :CloudNetwork, :NetworkPort, :CloudTenant,
-             :SecurityGroup, :LoadBalancer, :Tag, :AvailabilityZone]
-    build_legend_kinds(kinds)
   end
 end

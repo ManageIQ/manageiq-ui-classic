@@ -18,6 +18,8 @@ class InfraTopologyService < TopologyService
     ],
   ]
 
+  @kinds = %i(InfraManager EmsCluster Host Vm)
+
   def entity_type(entity)
     if entity.kind_of?(Host)
       entity.class.base_class.name.demodulize
@@ -62,10 +64,5 @@ class InfraTopologyService < TopologyService
     else
       'Unknown'
     end
-  end
-
-  def build_kinds
-    kinds = [:InfraManager, :EmsCluster, :Host, :Vm]
-    build_legend_kinds(kinds)
   end
 end

@@ -15,9 +15,5 @@ class ContainerProjectTopologyService < TopologyService
     ]
   ]
 
-  def build_kinds
-    kinds = [:ContainerReplicator, :ContainerGroup, :Container, :ContainerNode,
-             :ContainerService, :Host, :Vm, :ContainerRoute, :ContainerManager, :ContainerProject]
-    build_legend_kinds(kinds)
-  end
+  @kinds = %i(ContainerReplicator ContainerGroup Container ContainerNode ContainerService Host Vm ContainerRoute ContainerManager ContainerProject)
 end

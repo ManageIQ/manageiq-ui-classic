@@ -8,6 +8,8 @@ class PhysicalInfraTopologyService < TopologyService
     :physical_servers => [:tags],
   ]
 
+  @kinds = %i(PhysicalInfraManager PhysicalServer Tag)
+
   def entity_display_type(entity)
     if entity.kind_of?(ManageIQ::Providers::PhysicalInfraManager)
       entity.class.short_token
@@ -40,10 +42,5 @@ class PhysicalInfraTopologyService < TopologyService
     else
       _('Unknown')
     end
-  end
-
-  def build_kinds
-    kinds = [:PhysicalInfraManager, :PhysicalServer, :Tag]
-    build_legend_kinds(kinds)
   end
 end

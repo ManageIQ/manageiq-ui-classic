@@ -3,18 +3,6 @@ describe ContainerTopologyService do
   let(:container_topology_service) { described_class.new(nil) }
   let(:long_id) { "3572afee-3a41-11e5-a79a-001a4a231290_ruby-helloworld-database_openshift\n/mysql-55-centos7:latest" }
 
-  describe "#build_kinds" do
-    it "creates the expected number of entity types" do
-      expect(container_topology_service.build_kinds.keys).to match_array([:Container, :Host, :ContainerManager, :ContainerNode, :ContainerGroup, :ContainerReplicator, :ContainerRoute, :ContainerService, :Vm])
-    end
-  end
-
-  describe "#build_link" do
-    it "creates link between source to target" do
-      expect(container_topology_service.build_link("95e49048-3e00-11e5-a0d2-18037327aaeb", "96c35f65-3e00-11e5-a0d2-18037327aaeb")).to eq(:source => "95e49048-3e00-11e5-a0d2-18037327aaeb", :target => "96c35f65-3e00-11e5-a0d2-18037327aaeb")
-    end
-  end
-
   describe "#build_topology" do
     subject { container_topology_service.build_topology }
 

@@ -15,6 +15,8 @@ class MiddlewareTopologyService < TopologyService
     ]
   ]
 
+  @kinds = %i(MiddlewareDeployment MiddlewareDatasource MiddlewareDomain MiddlewareManager Vm MiddlewareServer MiddlewareServerGroup MiddlewareMessaging)
+
   def build_topology
     topology = super
     # filter out the redundant edges from ems to server, if there is also path ems -> domain -> sg -> server
@@ -67,11 +69,5 @@ class MiddlewareTopologyService < TopologyService
   def glyph?(entity)
     [MiddlewareDatasource, MiddlewareDeployment, Vm, MiddlewareDomain, MiddlewareServerGroup, MiddlewareMessaging]
       .any? { |klass| entity.kind_of? klass }
-  end
-
-  def build_kinds
-    kinds = [:MiddlewareDeployment, :MiddlewareDatasource, :MiddlewareDomain, :MiddlewareManager, :Vm,
-             :MiddlewareServer, :MiddlewareServerGroup, :MiddlewareMessaging]
-    build_legend_kinds(kinds)
   end
 end
