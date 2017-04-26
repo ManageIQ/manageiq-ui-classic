@@ -39,7 +39,7 @@ describe "layouts/listnav/_network_router.html.haml" do
         render
         expect(response).to include("href=\"/network_router/show/#{@record.id}?display=main\">Summary")
         expect(response).to include("Show this Network Router&#39;s parent Network Provider\" href=\"/ems_network/#{@record.ext_management_system.id}\">")
-        expect(response).to include("Show all Instances\" onclick=\"return miqCheckForChanges()\" href=\"/network_router/show/#{@record.id}?display=instances\">")
+        expect(response).to include("Show all Instances\" href=\"/network_router/show/#{@record.id}?display=instances\">")
       end
     end
   end

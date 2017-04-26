@@ -34,7 +34,7 @@ describe "layouts/listnav/_cloud_subnet.html.haml" do
         render
         expect(response).to include("href=\"/cloud_subnet/show/#{@record.id}?display=main\">Summary")
         expect(response).to include("Show this Cloud Subnet&#39;s parent Network Provider\" href=\"/ems_network/#{@record.ext_management_system.id}\">")
-        expect(response).to include("Show all Instances\" onclick=\"return miqCheckForChanges()\" href=\"/cloud_subnet/show/#{@record.id}?display=instances\">")
+        expect(response).to include("Show all Instances\" href=\"/cloud_subnet/show/#{@record.id}?display=instances\">")
       end
     end
   end

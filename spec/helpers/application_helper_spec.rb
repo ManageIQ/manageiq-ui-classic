@@ -1233,10 +1233,6 @@ describe ApplicationHelper do
         expect(subject).to have_xpath("//a", :text => %r{\/availability_zone\/show_list\/\d+\?display=something})
       end
 
-      it 'renders onclick correctly' do
-        expect(subject).to have_xpath("//a[@onclick = 'return miqCheckForChanges()']")
-      end
-
       it 'renders title correctly' do
         expect(subject).to have_xpath("//a[@title = 'sometitle']")
       end
@@ -1256,10 +1252,6 @@ describe ApplicationHelper do
 
       it 'renders url correctly' do
         expect(subject).to have_xpath("//a", :text => %r{\/availability_zone\/show_list\/\d+\?display=something})
-      end
-
-      it 'renders onclick correctly' do
-        expect(subject).to have_xpath("//a[@onclick = 'return miqCheckForChanges()']")
       end
 
       it 'renders title correctly' do
