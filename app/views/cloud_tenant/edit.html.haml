@@ -1,8 +1,8 @@
-%form#form_div{:name => "angularForm",
-                'ng-controller' => "cloudTenantFormController as vm",
-                'miq-form'     => true,
-                'model'        => 'vm.cloudTenantModel',
-                'model-copy'   => 'vm.modelCopy'}
+%form#form_div{:name            => "angularForm",
+               'ng-controller'  => "cloudTenantFormController as vm",
+               'miq-form'       => true,
+               'model'          => 'vm.cloudTenantModel',
+               'model-copy'     => 'vm.modelCopy'}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Edit Cloud Tenant')
