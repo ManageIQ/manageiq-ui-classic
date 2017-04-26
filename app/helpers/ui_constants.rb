@@ -161,7 +161,8 @@ module UiConstants
       :host         => true,
       :miq_template => true,
       :storage      => true,
-      :vm           => true
+      :vm           => true,
+      :physical_server=> true
     },
     :views     => { # List view setting, by resource type
       :authkeypaircloud                         => "list",
@@ -207,6 +208,7 @@ module UiConstants
       :manageiq_providers_inframanager_vm       => "grid",
       :manageiq_providers_inframanager_template => "list",
       :manageiq_providers_middlewaremanager     => "grid",
+      :manageiq_providers_physicalinframanager  => "grid",
       :manageiq_providers_storagemanager        => "list",
       :middlewaredatasource                     => "list",
       :middlewaredeployment                     => "list",
@@ -229,6 +231,7 @@ module UiConstants
       :storagemanager                           => "list",
       :miqtask                                  => "list",
       :ms                                       => "grid",
+      :physical_server                          => "grid",
       :policy                                   => "list",
       :policyset                                => "grid",
       :resourcepool                             => "grid",
