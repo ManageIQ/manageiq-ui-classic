@@ -115,8 +115,7 @@ module Mixins
     # Params:
     #   klass   - class of accessed objects
     #   ids     - accessed object ids
-    #   options - :with_flash : set flash in case user is not authorized,
-    # TODO:       :named_scope :
+    #   options - :named_scope :
     #
     # Returns:
     #   Array of selected class instances. If user does not have rights for it,
