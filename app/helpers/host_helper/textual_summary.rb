@@ -14,7 +14,7 @@ module HostHelper::TextualSummary
       %i(
         hostname ipaddress ipmi_ipaddress custom_1 vmm_info model asset_tag service_tag osinfo
         power_state lockdown_mode maintenance_mode devices network storage_adapters num_cpu num_cpu_cores
-        cpu_cores_per_socket memory guid
+        cpu_cores_per_socket memory guid physical_servers
       )
     )
   end
