@@ -6,6 +6,7 @@ describe ApplicationHelper::Button::EmbeddedAnsible do
     before do
       # Add embedded Ansible provider if there is none
       FactoryGirl.create(:provider_embedded_ansible) if ManageIQ::Providers::EmbeddedAnsible::Provider.count == 0
+      allow_any_instance_of(ManageIQ::Providers::EmbeddedAnsible::AutomationManager).to receive(:last_refresh_status).and_return("success")
     end
     it '#disabled? returns false' do
       expect(subject.disabled?).to be false
