@@ -17,12 +17,16 @@ class InfraTopologyService < TopologyService
 
     included_relations = [
       :tags,
-      :ems_clusters => [
+      :ems_clusters      => [
         :tags,
         :hosts => [
           :tags,
           :vms => :tags
         ]
+      ],
+      :clusterless_hosts => [
+        :tags,
+        :vms => :tags
       ],
     ]
 
