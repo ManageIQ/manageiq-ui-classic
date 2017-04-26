@@ -1221,6 +1221,7 @@ module ApplicationHelper
                         offline
                         orchestration_stack
                         physical_infra_topology
+                        physical_server
                         persistent_volume
                         policy
                         policy_group
@@ -1313,6 +1314,7 @@ module ApplicationHelper
           offline
           orchestration_stack
           persistent_volume
+          physical_server
           resource_pool
           retired
           security_group
@@ -1381,6 +1383,7 @@ module ApplicationHelper
              network_router
              orchestration_stack
              persistent_volume
+             physical_server
              policy
              resource_pool
              scan_profile
