@@ -57,6 +57,7 @@ describe CloudObjectStoreContainerController do
       login_as FactoryGirl.create(:user, :features => "everything")
       request.parameters["controller"] = "cloud_object_store_container"
       allow(controller).to receive(:role_allows?).and_return(true)
+      allow(controller).to receive(:previous_breadcrumb_url).and_return("previous-url")
     end
 
     it "delete invokes process_cloud_object_storage_buttons" do
@@ -76,14 +77,43 @@ describe CloudObjectStoreContainerController do
       }
     end
 
-    it "delete redirects to show_list" do
-      expect(controller).to receive(:javascript_redirect).with(
-        :action      => 'show_list',
-        :flash_msg   => anything,
-        :flash_error => false
-      )
+    it "delete redirects to previous breadcrumb if on container's details page" do
+      session[:cloud_object_store_container_display] = "main"
+      expect(controller).to receive(:javascript_redirect).with("previous-url")
+      expect(controller).not_to receive(:render_flash)
+
       post :button, :params => {
         :pressed => "cloud_object_store_container_delete", :format => :js, :id => @container.id
+      }
+    end
+
+    it "delete does not redirect if on container list page" do
+      session[:cloud_object_store_container_display] = nil
+      expect(controller).not_to receive(:javascript_redirect)
+      expect(controller).to receive(:render_flash)
+
+      post :button, :params => {
+        :pressed => "cloud_object_store_container_delete", :format => :js, :id => @container.id
+      }
+    end
+
+    it "delete does not redirect if on object list page" do
+      session[:cloud_object_store_container_display] = "cloud_object_store_objects"
+      expect(controller).not_to receive(:javascript_redirect)
+      expect(controller).to receive(:render_flash)
+
+      post :button, :params => {
+        :pressed => "cloud_object_store_container_delete", :format => :js, :id => @container.id
+      }
+    end
+
+    it "clear does not redirect but only renders flash" do
+      session[:cloud_object_store_container_display] = nil
+      expect(controller).not_to receive(:javascript_redirect)
+      expect(controller).to receive(:render_flash)
+
+      post :button, :params => {
+        :pressed => "cloud_object_store_container_clear", :format => :js, :id => @container.id
       }
     end
 
@@ -186,5 +216,5 @@ describe CloudObjectStoreContainerController do
     end
   end
 
-  include_examples '#download_summary_pdf', :cloud_object_store_container
+  # include_examples '#download_summary_pdf', :cloud_object_store_container
 end
