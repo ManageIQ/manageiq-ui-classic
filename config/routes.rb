@@ -1639,7 +1639,6 @@ Rails.application.routes.draw do
         download_summary_pdf
         index
         new
-        security_group_form_fields
         show
         show_list
         tagging_edit
