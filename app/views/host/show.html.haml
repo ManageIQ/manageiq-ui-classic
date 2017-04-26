@@ -1,6 +1,6 @@
 #main_div
   - if %w(vms cloud_tenants storages miq_proxies miq_templates resource_pools).include?(@display) && @showtype != "compare"
-    = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@host.id}"}
+    = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
   - else
     - case @showtype
     - when "details"
