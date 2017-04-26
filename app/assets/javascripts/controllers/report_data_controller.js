@@ -1,6 +1,7 @@
 (function() {
   var COTNROLLER_NAME = 'reportDataController';
   var MAIN_CONTETN_ID = 'main-content';
+  var EXPAND_TREES = ['savedreports_treebox', 'widgets_treebox'];
 
   /**
   * Private method for setting rootPoint of MiQEndpointsService.
@@ -187,6 +188,7 @@
           } else if (['pxe', 'ops'].indexOf(ManageIQ.controller) === -1) {
             itemId = '_' + item.tree_id;
           }
+          this.activateNodeSilently(itemId);
         }
         if (itemId.indexOf('unassigned') !== -1) {
           prefix = '/' + ManageIQ.controller + '/tree_select/?id=';
@@ -335,6 +337,13 @@
       pagination[0].parentNode.removeChild(pagination[0]);
     }
   };
+
+  ReportDataController.prototype.activateNodeSilently = function(itemId) {
+    var treeId = angular.element(".collapse.in .treeview").attr("id");
+    if (EXPAND_TREES.indexOf(treeId) !== -1) {
+      miqTreeExpandRecursive(treeId, itemId);
+    }
+  }
 
   ReportDataController.prototype.movePagination = function() {
     this.$timeout(function() {

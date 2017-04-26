@@ -364,7 +364,11 @@ module ApplicationHelper
         elsif %w(ConfiguredSystem).include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
           return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w(MiqWidget MiqReportResult).include?(view.db) && %w(report).include?(request.parameters[:controller])
-          return "/" + request.parameters[:controller] + "/tree_select/?id="
+          suffix = ""
+          if (params[:tab_id] == "saved_reports")
+            suffix = x_node
+          end
+          return "/" + request.parameters[:controller] + "/tree_select/?id=" + suffix
         elsif %w(User MiqGroup MiqUserRole Tenant).include?(view.db) &&
               %w(ops).include?(request.parameters[:controller])
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node.split("-")[1]

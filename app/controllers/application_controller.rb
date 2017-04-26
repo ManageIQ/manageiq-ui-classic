@@ -1014,7 +1014,7 @@ class ApplicationController < ActionController::Base
         :cells    => [],
         :quadicon => quadicon
       }
-      if defined? row.data
+      if defined?(row.data) && defined?(params) && params[:active_tree] != "reports_tree"
         new_row[:parent_id] = "xx-#{to_cid(row.data['miq_report_id'])}" if row.data['miq_report_id']
       end
       new_row[:parent_id] = "xx-#{CONTENT_TYPE_ID[target[:content_type]]}" if target && target[:content_type]
