@@ -15,6 +15,7 @@ class ApplicationHelper::Toolbar::AnsibleRepositoriesCenter < ApplicationHelper:
           :url       => "repository_refresh",
           :confirm   => N_("Refresh selected Ansible Repositories?"),
           :enabled   => false,
+          :url_parms => 'unused_div',
           :onwhen    => "1+"),
         separator,
         button(
