@@ -30,56 +30,54 @@ class TopologyService
     }
   end
 
-  def populate_topology(topo_items, links, kinds, icons)
+  def build_topology
+    included_relations = self.class.instance_variable_get(:@included_relations)
+    preloaded = @providers.includes(included_relations)
+    nodes, edges = map_to_graph(preloaded, build_entity_relationships(included_relations))
+
     {
-      :items     => topo_items,
-      :relations => links,
-      :kinds     => kinds,
+      :items     => nodes,
+      :relations => edges,
+      :kinds     => build_kinds,
       :icons     => icons
     }
   end
 
-  def build_topology
-    included_relations = self.class.instance_variable_get(:@included_relations)
+  def map_to_graph(providers, graph)
     topo_items = {}
     links = []
 
-    preloaded = @providers.includes(included_relations)
-
-    preloaded.each do |entity|
-      topo_items, links = build_recursive_topology(entity, build_entity_relationships(included_relations), topo_items, links)
+    stack = providers.map do |entity|
+      [entity, graph, nil]
     end
 
-    populate_topology(topo_items, links, build_kinds, icons)
-  end
+    # Nonrecursively build and traverse the topology structure
+    while stack.any?
+      entity, relations, parent = stack.pop
+      # Cache the entity ID as it will be used multiple times
+      id = entity_id(entity)
 
-  def build_recursive_topology(entity, entity_relationships_mapping, topo_items, links)
-    unless entity.nil?
-      topo_items[entity_id(entity)] = build_entity_data(entity)
-      unless entity_relationships_mapping.nil?
-        entity_relationships_mapping.keys.each do |rel_name|
-          relations = entity.send(rel_name.to_s.underscore.downcase)
-          if relations.respond_to?(:each)
-            relations.each do |relation|
-              build_rel_data_and_links(entity, entity_relationships_mapping, rel_name, links, relation, topo_items)
-            end
-          else
-            # single relation such as has_one or belongs_to, can't iterate with '.each'
-            build_rel_data_and_links(entity, entity_relationships_mapping, rel_name, links, relations, topo_items)
-          end
+      # Build a node from the current item
+      topo_items[id] = build_entity_data(entity)
+      # Create an edge if the node has a parent
+      links << build_link(parent, id) if parent
+      # Skip if there are no more items in the generator graph
+      next if relations.nil?
+
+      relations.each_pair do |head, tail|
+        # Apply the generator graph's first node on the entity
+        children = entity.send(head.to_s.underscore.downcase)
+        next if children.nil?
+        # Push the child/children to the stack with the chunked generator graph
+        if children.respond_to?(:each)
+          children.each { |child| stack.push([child, tail, id]) }
+        else
+          stack.push([children, tail, id])
         end
       end
     end
 
     [topo_items, links]
-  end
-
-  def build_rel_data_and_links(entity, entity_relationships, key, links, relation, topo_items)
-    unless relation.nil?
-      topo_items[entity_id(relation)] = build_entity_data(relation)
-      links << build_link(entity_id(entity), entity_id(relation))
-    end
-    build_recursive_topology(relation, entity_relationships[key], topo_items, links)
   end
 
   def build_entity_relationships(included_relations)
