@@ -1,5 +1,4 @@
 describe AnsiblePlaybookController do
-
   include CompressedIds
 
   before do
@@ -33,5 +32,4 @@ describe AnsiblePlaybookController do
       is_expected.to render_template(:layout => "layouts/application")
     end
   end
-
 end
