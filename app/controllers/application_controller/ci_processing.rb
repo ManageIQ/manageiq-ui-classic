@@ -78,6 +78,8 @@ module ApplicationController::CiProcessing
       Service
     when "vm_or_template", "vm_infra", "vm_cloud", "vm"
       VmOrTemplate
+    when "miq_template"
+      MiqTemplate
     end
   end
 
