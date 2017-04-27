@@ -742,7 +742,7 @@ module OpsController::OpsRbac
   # Show the main Users/Gropus/Roles list views
   def rbac_list(rec_type)
     rbac_build_list(rec_type)
-    update_gtl_div("rbac_#{rec_type.pluralize}_list") if pagination_or_gtl_request?
+    update_gtl_div("rbac_#{rec_type.pluralize}_list") if pagination_or_gtl_request? && @show_list
   end
 
   def allowed_tenant_names

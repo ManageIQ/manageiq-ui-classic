@@ -70,6 +70,11 @@ if (! window.ManageIQ) {
       clickUrl: null,
       checkUrl: null
     },
+    gtl: {
+      loading: null,
+      isLast: null,
+      isFirst: null
+    },
     gridChecks: [], // list of checked checkboxes in current list grid
     observe: { // keeping track of data-miq_observe requests
       processing: false, // is a request currently being processed?

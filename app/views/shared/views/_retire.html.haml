@@ -49,11 +49,6 @@
     - elsif %w(vm_cloud vm_infra).include?(request.parameters[:controller])
       = n_("New setting will affect VM", "New setting will affect VMs", @retireitems.length)
 
-  - if @retireitems
-    - @embedded = true
-    - @quadicon_no_url = true
-    = render :partial => "layouts/gtl"
-
   %table{:width => "100%"}
     %tr
       %td#buttons_on{:align => "right"}
@@ -67,7 +62,10 @@
                      :class     => "btn btn-default",
                      :alt          => _("Cancel"),
                      "ng-click" => "cancelClicked()")
-
+- if @retireitems
+  - @embedded = true
+  - @quadicon_no_url = true
+  = render :partial => "layouts/gtl"
 :javascript
   ManageIQ.angular.app.value('objectIds', #{ @retireitems.collect(&:id) });
   miq_bootstrap('#form_div');

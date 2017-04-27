@@ -43,7 +43,9 @@ module OpsController::Db
     @showlinks = true # Need to set @showlinks if @no_checkboxes is set to true
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
 
-    update_gtl_div('db_list') if params[:action] == "list_view_filter" || pagination_or_gtl_request?
+    if @show_list
+      update_gtl_div('db_list') if params[:action] == "list_view_filter" || pagination_or_gtl_request?
+    end
   end
 
   def list_view_filter

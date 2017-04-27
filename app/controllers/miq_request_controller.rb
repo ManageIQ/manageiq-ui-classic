@@ -155,6 +155,7 @@ class MiqRequestController < ApplicationController
     session[:request_sortdir] = @sortdir
 
     replace_gtl_main_div if pagination_request?
+    {:view => @view, :pages => @pages}
   end
 
   def show

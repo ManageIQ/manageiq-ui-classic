@@ -101,6 +101,7 @@ class HostController < ApplicationController
   def host_services
     label, condition = host_services_subsets
     show_association('host_services', label, 'service', :host_services, SystemService, nil, condition)
+    session[:host_display] = "host_services"
   end
 
   def host_cloud_services
@@ -581,6 +582,7 @@ class HostController < ApplicationController
   def get_session_data
     super
     @drift_db   = "Host"
+    @use_action = true
   end
 
   def set_session_data

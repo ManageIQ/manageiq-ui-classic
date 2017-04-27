@@ -95,9 +95,9 @@ describe OrchestrationStackController do
       end
 
       it "hides ansible jobs" do
-        expect(response.body).to include(@os_cloud.name)
-        expect(response.body).to include(@os_infra.name)
-        expect(response.body).not_to include(@tower_job.name)
+        expect(response.body).to include("modelName: 'orchestration_stacks'")
+        expect(response.body).to include("gtlType: 'list'")
+        expect(response.body).not_to include("modelName: 'configuration_managers'")
       end
     end
   end

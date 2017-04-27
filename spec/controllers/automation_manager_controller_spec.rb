@@ -60,7 +60,11 @@ describe AutomationManagerController do
 
     get :explorer, :params => {:sortby => '2'}
     expect(response.status).to eq(200)
-    expect(response.body).to match('https://a_url/api/v1(.|\n)*https://z_url/api/v1')
+    expect(response.body).to include("modelName: 'manageiq/providers/automation_managers'")
+    expect(response.body).to include("activeTree: 'automation_manager_providers_tree'")
+    expect(response.body).to include("gtlType: 'list'")
+    expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
+    expect(response.body).to include("showUrl: '/automation_manager/x_show/'")
   end
 
   context "renders the explorer based on RBAC" do
@@ -347,8 +351,8 @@ describe AutomationManagerController do
       controller.instance_variable_set(:@_params, :id => "at-" + ApplicationRecord.compress_id(@automation_manager1.id))
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0].name).to eq("ConfigScript1")
-      expect(view.table.data[1].name).to eq("ConfigScript3")
+      expect(view.table.data[0].name).to eq("ConfigScript3")
+      expect(view.table.data[1].name).to eq("ConfigScript1")
     end
 
     it "calls get_view with the associated dbname for the Ansible Tower Providers accordion" do

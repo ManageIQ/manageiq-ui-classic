@@ -460,9 +460,10 @@ class OpsController < ApplicationController
   end
 
   # Get all info for the node about to be displayed
-  def get_node_info(treenodeid)
+  def get_node_info(treenodeid, show_list = true)
     return if params[:cls_id] # no need to do get_node_info if redirected from show_product_update
     @nodetype = valid_active_node(treenodeid).split("-").first
+    @show_list = show_list
     if @replace_trees
       @sb[:active_tab] = case x_active_tree
                          when :diagnostics_tree then 'diagnostics_zones'
@@ -487,6 +488,7 @@ class OpsController < ApplicationController
                          when :rbac_tree        then _("Access Control %{text}") % {:text => region_text}
                          when :vmdb_tree        then _("Database []")
                          end
+    {:view => @view, :pages => @pages}
   end
 
   def open_parent_nodes

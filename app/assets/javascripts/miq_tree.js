@@ -281,6 +281,25 @@ function miqTreeExpandNode(treename, key) {
   miqTreeObject(treename).expandNode(node);
 }
 
+function miqTreeExpandRecursive(treeId, fullNodeId) {
+  var currId = '';
+  var indexOfBox = treeId.indexOf('box');
+  var splitNodeId = fullNodeId.split('_');
+  if (indexOfBox !== -1 && treeId.length - 3 === indexOfBox) {
+    treeId = treeId.substring(0, indexOfBox);
+  }
+  splitNodeId.forEach(function(item, key) {
+    if (key + 1 !== splitNodeId.length) {
+      if (key !== 0) {
+        currId += '_' + item;
+      } else {
+        currId = item;
+      }
+      miqTreeExpandNode(treeId, currId);
+    }
+  });
+}
+
 // OnClick handler for Server Roles Tree
 function miqOnClickServerRoles(id) {
   var typ = id.split('-')[0]; // Break apart the node ids

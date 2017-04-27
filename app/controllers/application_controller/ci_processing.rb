@@ -22,6 +22,8 @@ module ApplicationController::CiProcessing
                  else
                    request.parameters[:controller]
                  end
+    @edit ||= {}
+    @edit[:controller] = controller
     recs = []
     if !session[:checked_items].nil? && @lastaction == "set_checked_items"
       recs = session[:checked_items]
@@ -32,6 +34,7 @@ module ApplicationController::CiProcessing
       id = find_id_with_rbac(get_class_from_controller_param(params[:controller]), params[:id])
       recs = [id.to_i]
     end
+    @edit[:object_ids] = recs
     if recs.length < 1
       add_flash(_("One or more %{model} must be selected to Set Ownership") % {
         :model => Dictionary.gettext(db.to_s, :type => :model, :notfound => :titleize, :plural => true)}, :error)
@@ -106,6 +109,7 @@ module ApplicationController::CiProcessing
   end
 
   def build_ownership_info(ownership_items)
+    @edit ||= {}
     klass = get_class_from_controller_param(params[:controller])
     record = klass.find(ownership_items[0])
     user = record.evm_owner if ownership_items.length == 1
@@ -118,9 +122,10 @@ module ApplicationController::CiProcessing
     Rbac.filtered(MiqGroup.non_tenant_groups).each { |g| @groups[g.description] = g.id.to_s }
 
     @user = @group = DONT_CHANGE_OWNER if ownership_items.length > 1
-    filter_ownership_items(klass, ownership_items)
+    @edit[:object_ids] = filter_ownership_items(klass, ownership_items)
     @view = get_db_view(klass == VmOrTemplate ? Vm : klass) # Instantiate the MIQ Report view object
     @view.table = MiqFilter.records2table(@ownershipitems, @view.cols + ['id'])
+    session[:edit] = @edit
   end
 
   # Build the ownership assignment screen
@@ -215,7 +220,6 @@ module ApplicationController::CiProcessing
   # Retire 1 or more items (vms, stacks, services)
   def retirevms
     assert_privileges(params[:pressed])
-
     # check to see if coming from show_list or drilled into vms from another CI
     if request.parameters[:controller] == "vm" || %w(all_vms instances vms).include?(params[:display])
       rec_cls = "vm"
@@ -229,6 +233,9 @@ module ApplicationController::CiProcessing
     end
     klass = rec_cls ? rec_cls.camelize.constantize : get_class_from_controller_param(params[:controller])
     selected_items = find_checked_ids_with_rbac(klass)
+    @edit ||= {}
+    @edit[:object_ids] = selected_items
+    session[:edit] = @edit
     if !%w(orchestration_stack service).include?(request.parameters["controller"]) && !%w(orchestration_stacks).include?(params[:display]) &&
        VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_retire? }
       add_flash(_("Set Retirement Date does not apply to selected %{model}") %
@@ -347,6 +354,9 @@ module ApplicationController::CiProcessing
     session[:retire_date] = t.nil? ? nil : "#{t.month}/#{t.day}/#{t.year}"
     session[:retire_warn] = w
     @in_a_form = true
+    @edit ||= {}
+    @edit[:object_ids] = @retireitems
+    session[:edit] = @edit
     @refresh_partial = "shared/views/retire" if @explorer || @layout == "orchestration_stack"
   end
 
@@ -2155,6 +2165,7 @@ module ApplicationController::CiProcessing
       if @explorer
         @edit ||= {}
         @edit[:explorer] = true       # Since no @edit, create @edit and save explorer to use while building url for vms in policy sim grid
+        @edit[:pol_items] = vms
         session[:edit] = @edit
         policy_sim
         @refresh_partial = "layouts/policy_sim"
