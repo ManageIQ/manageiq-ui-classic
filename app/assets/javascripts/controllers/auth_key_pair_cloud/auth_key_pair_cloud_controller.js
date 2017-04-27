@@ -32,11 +32,10 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
         var url = '/auth_key_pair_cloud/create/' + keyPairFormId + '?button=' + buttonName;
         vm.keyPairModel.ems_id = vm.keyPairModel.ems.id;
         if (serializeFields) {
-            miqService.miqAjaxButton(url, miqService.serializeModel(vm.keyPairModel));
+            miqService.miqAjaxButton(url, miqService.serializeModel(vm.keyPairModel), { complete: false });
         } else {
-            miqService.miqAjaxButton(url, false);
+            miqService.miqAjaxButton(url);
         }
-        miqService.sparkleOff();
     };
 
     vm.cancelClicked = function() {

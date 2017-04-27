@@ -68,7 +68,7 @@ describe('keyPairCloudFormController', function() {
         });
 
         it('delegates to miqService.miqAjaxButton', function() {
-            expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/auth_key_pair_cloud/create/new?button=save', miqService.serializeModel(vm.keyPairModel));
+            expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/auth_key_pair_cloud/create/new?button=save', miqService.serializeModel(vm.keyPairModel), { complete: false });
         });
     });
 
@@ -86,7 +86,7 @@ describe('keyPairCloudFormController', function() {
         });
 
         it('delegates to miqService.restAjaxButton', function() {
-            expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/auth_key_pair_cloud/create/new?button=cancel', false);
+            expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/auth_key_pair_cloud/create/new?button=cancel');
         });
     });
 });
