@@ -450,14 +450,10 @@ module ApplicationController::Filter
       if ["delete", "saveit"].include?(params[:button])
         if @edit[:in_explorer] || x_active_tree == :storage_tree
           tree_name = x_active_tree.to_s
-          if "configuration_manager_cs_filter_tree_tree" == tree_name
-            page.replace_html("#{tree_name}_div", :partial => "provider_foreman/#{tree_name}")
-          else
-            page.replace_html("#{tree_name}_div", :partial => "shared/tree", :locals => {
-              :tree => tree,
-              :name => tree_name
-            })
-          end
+          page.replace("#{tree_name}_div", :partial => "shared/tree", :locals => {
+            :tree => tree,
+            :name => tree_name
+          })
         else
           page.replace(:listnav_div, :partial => "layouts/listnav")
         end
