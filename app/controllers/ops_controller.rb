@@ -521,10 +521,7 @@ class OpsController < ApplicationController
     locals = set_form_locals if @in_a_form
     build_supported_depots_for_select
 
-    presenter = ExplorerPresenter.new(
-      :active_tree => x_active_tree,
-    )
-    # Update the tree with any new nodes
+    presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
     presenter[:add_nodes] = add_nodes if add_nodes
 
     r = proc { |opts| render_to_string(opts) }
@@ -534,6 +531,8 @@ class OpsController < ApplicationController
     handle_bottom_cell(nodetype, presenter, r, locals)
     x_active_tree_replace_cell(nodetype, presenter, r)
     extra_js_commands(presenter)
+
+    presenter.replace(:flash_msg_div, r[:partial => "layouts/flash_msg"]) if @flash_array
 
     render :json => presenter.for_render
   end
@@ -673,7 +672,6 @@ class OpsController < ApplicationController
     if %w(accordion_select change_tab tree_select).include?(params[:action])
       presenter.replace(:ops_tabs, r[:partial => "all_tabs"])
     elsif nodetype == "group_seq"
-      presenter.replace(:flash_msg_div, r[:partial => "layouts/flash_msg"])
       presenter.update(:rbac_details, r[:partial => "ldap_seq_form"])
     elsif nodetype == "tenant_edit"         # schedule edit
       # when editing/adding schedule in settings tree
