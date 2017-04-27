@@ -53,5 +53,61 @@ describe EmsContainerController do
     end
   end
 
+  describe "Hawkular Disabled/Enabled" do
+    let(:zone) { FactoryGirl.build(:zone) }
+    let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }
+
+    before do
+      allow(controller).to receive(:check_privileges).and_return(true)
+      allow(controller).to receive(:assert_privileges).and_return(true)
+    end
+
+    it "Creates a provider with only one endpoint if hawkular is disabled" do
+      post :create, :params => {
+        "button"                    => "add",
+        "cred_type"                 => "hawkular",
+        "name"                      => "openshift_no_hawkular",
+        "emstype"                   => "openshift",
+        "zone"                      => 'default',
+        "default_security_protocol" => "ssl-without-validation",
+        "default_hostname"          => "default_hostname",
+        "default_api_port"          => "5000",
+        "default_userid"            => "",
+        "default_password"          => "",
+        "default_verify"            => "",
+        "provider_region"           => "",
+        "metrics_selection"         => "hawkular_disabled"
+      }
+      expect(response.status).to eq(200)
+      ems_openshift = ManageIQ::Providers::ContainerManager.first
+      expect(ems_openshift.endpoints.pluck(:role)).to contain_exactly('default')
+    end
+
+    it "Creates a provider with two endpoints if hawkular is enabled" do
+      post :create, :params => {
+        "button"                     => "add",
+        "cred_type"                  => "hawkular",
+        "name"                       => "openshift_no_hawkular",
+        "emstype"                    => "openshift",
+        "zone"                       => 'default',
+        "default_security_protocol"  => "ssl-without-validation",
+        "default_hostname"           => "default_hostname",
+        "default_api_port"           => "5000",
+        "default_userid"             => "",
+        "default_password"           => "",
+        "default_verify"             => "",
+        "provider_region"            => "",
+        "metrics_selection"          => "hawkular_enabled",
+        "hawkular_security_protocol" => "ssl-without-validation",
+        "hawkular_hostname"          => "hawkular_hostname",
+        "hawkular_api_port"          => "443",
+      }
+      expect(response.status).to eq(200)
+      ems_openshift = ManageIQ::Providers::ContainerManager.first
+      expect(ems_openshift.endpoints.count).to be(2)
+      expect(ems_openshift.endpoints.pluck(:role)).to contain_exactly('default', 'hawkular')
+    end
+  end
+
   include_examples '#download_summary_pdf', :ems_kubernetes
 end

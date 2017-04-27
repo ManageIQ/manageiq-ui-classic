@@ -176,21 +176,24 @@ describe EmsContainerController do
   context "::EmsCommon" do
     context "adding new provider without hawkular endpoint" do
       def test_creating(emstype)
+        raise ArgumentError, "Unsupported type [#{emstype}]" unless %w(kubernetes openshift).include?(emstype)
+        metrics_selection = "hawkular_#{emstype == 'kubernetes' ? 'disabled' : 'enabled'}"
         @ems = ExtManagementSystem.model_from_emstype(emstype).new
         controller.instance_variable_set(:@_params,
-                                         :name             => 'NimiCule',
-                                         :default_userid   => '_',
-                                         :default_hostname => 'mytest.com',
-                                         :default_api_port => '8443',
-                                         :default_password => 'valid-token',
-                                         :emstype          => emstype)
+                                         :name              => 'NimiCule',
+                                         :default_userid    => '_',
+                                         :default_hostname  => 'mytest.com',
+                                         :metrics_selection => metrics_selection,
+                                         :default_api_port  => '8443',
+                                         :default_password  => 'valid-token',
+                                         :emstype           => emstype)
         controller.send(:set_ems_record_vars, @ems)
         expect(@flash_array).to be_nil
       end
 
       it "doesn't probe routes for kubernetes" do
         test_creating('kubernetes')
-        expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq(nil)
+        expect(@ems.connection_configurations.hawkular).to eq(nil)
       end
 
       it "fetches hawkular-metrics route" do
@@ -227,6 +230,7 @@ describe EmsContainerController do
                                                       :default_security_protocol  => 'ssl-with-validation-custom-ca',
                                                       :default_tls_ca_certs       => '-----BEGIN DUMMY...',
                                                       :default_password           => 'valid-token',
+                                                      :metrics_selection          => 'hawkular_enabled',
                                                       :hawkular_hostname          => '10.10.10.10',
                                                       :hawkular_api_port          => '8443',
                                                       :hawkular_security_protocol => 'ssl-with-validation',
@@ -251,7 +255,7 @@ describe EmsContainerController do
 
         def test_setting_few_fields
           controller.remove_instance_variable(:@_params)
-          controller.instance_variable_set(:@_params, :name => 'EMS 3', :default_userid => '_')
+          controller.instance_variable_set(:@_params, :name => 'EMS 3', :default_userid => '_', :metrics_selection => 'hawkular_enabled')
           controller.send(:set_ems_record_vars, @ems)
           expect(@flash_array).to be_nil
           expect(@ems.authentication_token("bearer")).to eq('valid-token')
@@ -272,7 +276,6 @@ describe EmsContainerController do
           @type = 'openshift'
           @ems  = ManageIQ::Providers::Openshift::ContainerManager.new
           test_setting_many_fields
-
           expect_get_route { myhawkularroute }
           test_setting_few_fields
           expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('myhawkularroute.com')

@@ -37,6 +37,10 @@ class EmsContainerController < ApplicationController
     ems_form_fields
   end
 
+  def retrieve_metrics_selection
+    @ems.endpoints.count == 1 ? 'hawkular_disabled' : 'hawkular_enabled'
+  end
+
   private
 
   def textual_group_list
