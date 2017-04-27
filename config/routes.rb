@@ -1739,7 +1739,6 @@ Rails.application.routes.draw do
 
     :cloud_network             => {
       :get  => %w(
-        cloud_network_form_fields
         download_data
         download_summary_pdf
         edit

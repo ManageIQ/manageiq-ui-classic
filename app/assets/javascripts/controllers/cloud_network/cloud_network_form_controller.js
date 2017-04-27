@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('cloudNetworkFormController', ['$http', '$scope', 'cloudNetworkFormId', 'miqService', function($http, $scope, cloudNetworkFormId, miqService) {
+ManageIQ.angular.app.controller('cloudNetworkFormController', ['$scope', 'cloudNetworkFormId', 'miqService', 'API', function($scope, cloudNetworkFormId, miqService, API) {
   $scope.cloudNetworkModel = { name: '', ems_id: '', cloud_tenant_id: '' };
   $scope.formId = cloudNetworkFormId;
   $scope.afterGet = false;
@@ -16,27 +16,20 @@ ManageIQ.angular.app.controller('cloudNetworkFormController', ['$http', '$scope'
     $scope.cloudNetworkModel.vlan_transparent = false;
   } else {
     miqService.sparkleOn();
-
-    $http.get('/cloud_network/cloud_network_form_fields/' + cloudNetworkFormId)
-      .then(getCloudNetworkFormDataComplete)
-      .catch(miqService.handleFailure);
-  }
-
-  function getCloudNetworkFormDataComplete(response) {
-    var data = response.data;
-
-    $scope.afterGet = true;
-    $scope.cloudNetworkModel.name = data.name;
-    $scope.cloudNetworkModel.cloud_tenant_name = data.cloud_tenant_name;
-    $scope.cloudNetworkModel.enabled = data.enabled;
-    $scope.cloudNetworkModel.external_facing = data.external_facing;
-    $scope.cloudNetworkModel.port_security_enabled = data.port_security_enabled;
-    $scope.cloudNetworkModel.provider_network_type = data.provider_network_type;
-    $scope.cloudNetworkModel.qos_policy_id = data.qos_policy_id;
-    $scope.cloudNetworkModel.shared = data.shared;
-    $scope.cloudNetworkModel.vlan_transparent = data.vlan_transparent;
-    $scope.modelCopy = angular.copy( $scope.cloudNetworkModel );
-    miqService.sparkleOff();
+    API.get("/api/cloud_networks/" + cloudNetworkFormId + "?attributes=cloud_tenant").then(function(data) {
+      $scope.afterGet = true;
+      $scope.cloudNetworkModel.name = data.name;
+      $scope.cloudNetworkModel.cloud_tenant_name = data.cloud_tenant.name;
+      $scope.cloudNetworkModel.enabled = data.enabled;
+      $scope.cloudNetworkModel.external_facing = data.external_facing;
+      $scope.cloudNetworkModel.port_security_enabled = data.port_security_enabled;
+      $scope.cloudNetworkModel.provider_network_type = data.provider_network_type;
+      $scope.cloudNetworkModel.qos_policy_id = data.qos_policy_id;
+      $scope.cloudNetworkModel.shared = data.shared;
+      $scope.cloudNetworkModel.vlan_transparent = data.vlan_transparent;
+      $scope.modelCopy = angular.copy( $scope.cloudNetworkModel );
+      miqService.sparkleOff();
+    }).catch(miqService.handleFailure);
   }
 
   $scope.addClicked = function() {
