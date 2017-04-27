@@ -15,9 +15,7 @@ module ContainerReplicatorHelper::TextualSummary
   end
 
   def textual_group_smart_management
-    items = %w(tags)
-    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
-    TextualTags.new(_("Smart Management"), i)
+    TextualTags.new(_("Smart Management"), %i(tags))
   end
 
   #
