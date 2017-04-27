@@ -289,7 +289,7 @@ module Mixins
                        :bearer_token_exists        => @ems.authentication_token(:bearer).nil? ? false : true,
                        :ems_controller             => controller_name,
                        :default_auth_status        => default_auth_status,
-                       :hawkular_auth_status       => hawkular_auth_status.nil? ? true : hawkular_auth_status,
+                       :hawkular_auth_status       => hawkular_auth_status,
       } if controller_name == "ems_container"
 
       if controller_name == "ems_middleware"

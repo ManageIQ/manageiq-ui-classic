@@ -195,7 +195,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.service_account_auth_status     = data.service_account_auth_status;
       $scope.emsCommonModel.metrics_auth_status             = true;
       $scope.emsCommonModel.ssh_keypair_auth_status         = true;
-      $scope.emsCommonModel.hawkular_auth_status            = true;
+      $scope.emsCommonModel.hawkular_auth_status            = data.hawkular_auth_status;
       $scope.emsCommonModel.vmware_cloud_api_version        = '9.0';
       miqService.sparkleOff();
 
