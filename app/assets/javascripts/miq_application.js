@@ -976,7 +976,7 @@ function miq_tabs_init(id, url) {
     } else if (typeof(url) != 'undefined') {
       // Load remote tab if an URL is specified
       var currTabTarget = $(e.target).attr('href').substring(1);
-      miqJqueryRequest(url + '/?tab_id=' + currTabTarget, {beforeSend: true})
+      miqObserveRequest(url + '/?tab_id=' + currTabTarget, {beforeSend: true})
         .catch(function(err){
           add_flash(__("Error requesting data from server"), 'error');
           console.log(err);
