@@ -98,17 +98,6 @@ function miqTreeForceActivateNode(tree, key) {
   miqTreeObject(tree).options.onNodeSelected(0, miqTreeFindNodeByKey(tree, key));
 }
 
-// OnClick handler for catgories Tree
-function miqOnClickProvLdapOus(id) {
-  var node = miqTreeFindNodeByKey('ldap_ous_tree', id);
-  miqTreeObject('ldap_ous_tree').expandNode(node);
-
-  if (id.split('_-_').length > 1) {
-    miqJqueryRequest(ManageIQ.tree.clickUrl + '?ou_id=' + id);
-    return true;
-  }
-}
-
 // expand all parent nodes of selected node on initial load
 function miqExpandParentNodes(treename, selected_node) {
   var node = miqTreeFindNodeByKey(treename, selected_node);
@@ -436,7 +425,6 @@ function miqTreeEventSafeEval(func) {
     'miqOnCheckUserFilters',
     'miqOnClickGenealogyTree',
     'miqOnClickHostNet',
-    'miqOnClickProvLdapOus',
     'miqOnClickSelectAETreeNode',
     'miqOnClickSelectDlgEditTreeNode',
     'miqOnClickSelectOptimizeTreeNode',
