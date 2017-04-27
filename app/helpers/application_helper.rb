@@ -363,9 +363,12 @@ module ApplicationHelper
           return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w(ConfiguredSystem).include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
           return url_for_only_path(:action => action, :id => nil) + "/"
-        elsif %w(MiqWidget MiqReportResult).include?(view.db) && %w(report).include?(request.parameters[:controller])
+        elsif %w(MiqWidget
+                 ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript
+                 MiqReportResult).include?(view.db) &&
+              %w(report automation_manager).include?(request.parameters[:controller])
           suffix = ""
-          if (params[:tab_id] == "saved_reports")
+          if params[:tab_id] == "saved_reports"
             suffix = x_node
           end
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + suffix

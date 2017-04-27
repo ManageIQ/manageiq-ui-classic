@@ -2,7 +2,25 @@
   var COTNROLLER_NAME = 'reportDataController';
   var MAIN_CONTETN_ID = 'main-content';
   var EXPAND_TREES = ['savedreports_treebox', 'widgets_treebox'];
+  var TREES_WITHOUT_PARENT = ['pxe', 'ops'];
+  var TREE_TABS_WITHOUT_PARENT = ['action_tree', 'alert_tree'];
+  var USE_TREE_ID = ['automation_manager'];
 
+  function isAllowedParent(initObject) {
+    return TREES_WITHOUT_PARENT.indexOf(ManageIQ.controller) === -1 &&
+      TREE_TABS_WITHOUT_PARENT.indexOf(initObject.activeTree) === -1;
+  }
+
+  function constructSuffixForTreeUrl(initObject, item) {
+    var itemId = initObject.showUrl.indexOf('xx-') !== -1 ? '_-' + item.id : '-' + item.id;
+    if (item.parent_id && item.parent_id[item.parent_id.length - 1] !== '-') {
+      itemId = item.parent_id + '_' + item.tree_id;
+    } else if (isAllowedParent(initObject)) {
+      itemId = (USE_TREE_ID.indexOf(ManageIQ.controller) === -1) ? '_' : '';
+      itemId = itemId + item.tree_id;
+    }
+    return itemId;
+  }
   /**
   * Private method for setting rootPoint of MiQEndpointsService.
   * @param {Object} MiQEndpointsService service responsible for endpoits.
@@ -182,12 +200,7 @@
       if (this.initObject.isExplorer && isCurrentControllerOrPolicies(splitUrl)) {
         var itemId = item.id;
         if (this.initObject.showUrl.indexOf('?id=') !== -1 ) {
-          itemId = this.initObject.showUrl.indexOf('xx-') !== -1 ? '_-' + item.id : '-' + item.id;
-          if (item.parent_id && item.parent_id[item.parent_id.length - 1] !== '-') {
-            itemId = item.parent_id + '_' + item.tree_id;
-          } else if (['pxe', 'ops'].indexOf(ManageIQ.controller) === -1) {
-            itemId = '_' + item.tree_id;
-          }
+          itemId = constructSuffixForTreeUrl(this.initObject, item);
           this.activateNodeSilently(itemId);
         }
         if (itemId.indexOf('unassigned') !== -1) {
@@ -339,11 +352,11 @@
   };
 
   ReportDataController.prototype.activateNodeSilently = function(itemId) {
-    var treeId = angular.element(".collapse.in .treeview").attr("id");
+    var treeId = angular.element('.collapse.in .treeview').attr('id');
     if (EXPAND_TREES.indexOf(treeId) !== -1) {
       miqTreeExpandRecursive(treeId, itemId);
     }
-  }
+  };
 
   ReportDataController.prototype.movePagination = function() {
     this.$timeout(function() {
