@@ -1,4 +1,6 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "cloudTenantFormController"}
+%form#form_div{:name           => "angularForm",
+               'ng-controller' => "cloudTenantFormController",
+               'form-changed'  => true}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Basic Information')
@@ -9,11 +11,9 @@
       .col-md-8
         = select_tag("ems_id",
           options_for_select([["<#{_('Choose')}>", nil]] + @ems_choices.sort),
-                      "ng-model"                    => "cloudTenantModel.ems_id",
-                      "required"                    => "",
-                      :miqrequired                  => true,
-                      :checkchange                  => true,
-                      "selectpicker-for-select-tag" => "")
+                      "ng-model"  => "cloudTenantModel.ems_id",
+                      "required"  => "",
+                      "pf-select" => "")
   .form-horizontal
     .form-group
       %label.col-md-2.control-label
@@ -23,8 +23,7 @@
                             :name          => "name",
                             'ng-model'     => "cloudTenantModel.name",
                             'ng-maxlength' => 128,
-                            :miqrequired   => true,
-                            :checkchange   => true}
+                            :required      => ''}
 
   = render :partial => "layouts/angular/x_edit_buttons_angular"
 
