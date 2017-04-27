@@ -8,6 +8,7 @@
                  'ng-controller' => 'keyPairCloudFormController',
                  'ng-show'       => 'afterGet',
                  'ng-cloak'      => '',
+                 'form-changed'  => true,
                  :novalidate     => true}
     = render :partial => 'layouts/flash_msg'
     .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
@@ -20,7 +21,6 @@
                             'ng-model'       => 'keyPairModel.name',
                             :maxlength       => MAX_NAME_LEN,
                             :required        => true,
-                            :checkchange     => '',
                             'auto-focus'     => true}
         %span.help-block{"ng-show" => "angularForm.name.$error.required"}
           = _("Required")

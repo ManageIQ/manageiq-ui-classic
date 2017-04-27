@@ -9,6 +9,7 @@ ManageIQ.angular.app.controller('cloudTenantFormController', ['$http', '$scope',
 
   if (cloudTenantFormId == 'new') {
     $scope.cloudTenantModel.name = "";
+    $scope.newRecord = true;
   } else {
     miqService.sparkleOn();
 
@@ -36,12 +37,13 @@ ManageIQ.angular.app.controller('cloudTenantFormController', ['$http', '$scope',
     miqService.miqAjaxButton(url);
   };
 
+  $scope.addClicked = function() {
+    var url = 'create/new' + '?button=add';
+    miqService.miqAjaxButton(url, $scope.cloudTenantModel, { complete: false });
+  };
+
   $scope.saveClicked = function() {
-    if (cloudTenantFormId == 'new') {
-      var url = 'create/new' + '?button=add';
-    } else {
     var url = '/cloud_tenant/update/' + cloudTenantFormId + '?button=save';
-    }
     miqService.miqAjaxButton(url, $scope.cloudTenantModel, { complete: false });
   };
 
