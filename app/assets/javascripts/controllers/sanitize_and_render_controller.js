@@ -3,6 +3,6 @@ angular
   .controller('SanitizeAndRenderController', ['$sce', function SanitizeAndRenderCtrl($sce) {
     var vm = this;
     vm.sanitizeRenderHtml = function(str) {
-      return $sce.trustAsHtml(decodeURI(str));
+      return $sce.trustAsHtml(str);
     };
   }]);
