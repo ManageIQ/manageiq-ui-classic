@@ -2,7 +2,7 @@
 
 var dialogFieldRefresh = {
   unbindAllPreviousListeners: function() {
-    $(document).off('autoRefresh');
+    $(document).off('dialog::autoRefresh');
   },
 
   listenForAutoRefreshMessages: function(autoRefreshOptions, callbackFunction) {
@@ -13,7 +13,7 @@ var dialogFieldRefresh = {
       return tabIndex === autoRefreshOptions.tab_index && groupIndex === autoRefreshOptions.group_index && fieldIndex === autoRefreshOptions.field_index;
     };
 
-    $(document).on('autoRefresh', function(_event, data) {
+    $(document).on('dialog::autoRefresh', function(_event, data) {
       if (thisIsTheFieldToUpdate(data)) {
         callbackFunction.call();
       }
@@ -185,7 +185,7 @@ var dialogFieldRefresh = {
       nextAvailable = nextAvailable[0];
 
       if (nextAvailable !== undefined) {
-        $(document).trigger('autoRefresh', {
+        $(document).trigger('dialog::autoRefresh', {
           tabIndex: nextAvailable.tab_index,
           groupIndex: nextAvailable.group_index,
           fieldIndex: nextAvailable.field_index,

@@ -16,7 +16,7 @@ describe('dialogFieldRefresh', function() {
 
       context('when the tab index, group index, and field index match the corresponding field', function() {
         beforeEach(function() {
-          $(document).trigger('autoRefresh', {tabIndex: 1, groupIndex: 2, fieldIndex: 3});
+          $(document).trigger('dialog::autoRefresh', {tabIndex: 1, groupIndex: 2, fieldIndex: 3});
         });
 
         it('executes the callback', function() {
@@ -26,7 +26,7 @@ describe('dialogFieldRefresh', function() {
 
       context('when the tab index, group index, and field index do not match the corresponding field', function() {
         beforeEach(function() {
-          $(document).trigger('autoRefresh', {tabIndex: 1, groupIndex: 1, fieldIndex: 3});
+          $(document).trigger('dialog::autoRefresh', {tabIndex: 1, groupIndex: 1, fieldIndex: 3});
         });
 
         it('does not execute the callback', function() {
@@ -44,7 +44,7 @@ describe('dialogFieldRefresh', function() {
     it('unbinds all autoRefresh messages from the document', function() {
       dialogFieldRefresh.unbindAllPreviousListeners();
       expect($.fn.off.calls.mostRecent().object).toEqual(document);
-      expect($.fn.off).toHaveBeenCalledWith('autoRefresh');
+      expect($.fn.off).toHaveBeenCalledWith('dialog::autoRefresh');
     });
   });
 
@@ -668,7 +668,7 @@ describe('dialogFieldRefresh', function() {
         });
 
         it('posts a message', function() {
-          expect($.fn.trigger).toHaveBeenCalledWith('autoRefresh', {tabIndex: 1, groupIndex: 1, fieldIndex: 2});
+          expect($.fn.trigger).toHaveBeenCalledWith('dialog::autoRefresh', {tabIndex: 1, groupIndex: 1, fieldIndex: 2});
         });
       });
     });
@@ -701,7 +701,7 @@ describe('dialogFieldRefresh', function() {
         });
 
         it('posts a message', function() {
-          expect($.fn.trigger).toHaveBeenCalledWith('autoRefresh', {tabIndex: 1, groupIndex: 1, fieldIndex: 2});
+          expect($.fn.trigger).toHaveBeenCalledWith('dialog::autoRefresh', {tabIndex: 1, groupIndex: 1, fieldIndex: 2});
         });
       });
     });
