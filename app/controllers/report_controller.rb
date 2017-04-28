@@ -907,6 +907,7 @@ class ReportController < ApplicationController
     @folders          = session[:report_folders]
     @ght_type         = session[:ght_type] || "tabular"
     @report_groups    = session[:report_groups]
+    @edit             = session[:edit] unless session[:edit].nil?
     @catinfo          = session[:vm_catinfo]
     @grid_folders     = session[:report_grid_folders]
   end
