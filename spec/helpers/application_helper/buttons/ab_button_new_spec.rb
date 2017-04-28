@@ -1,20 +1,14 @@
-require 'shared/helpers/application_helper/buttons/basic'
+require 'shared/helpers/application_helper/buttons/new'
 
 describe ApplicationHelper::Button::AbButtonNew do
-  include_context 'ApplicationHelper::Button::Basic'
+  include_context 'ApplicationHelper::Button::New'
   let(:sandbox) { {:active_tree => tree} }
-  let(:instance_data) { {'lastaction' => lastaction, 'display' => display} }
-  let(:props) { Hash.new }
   let(:tree) { :not_ab_tree }
-  let(:lastaction) { '' }
-  let(:display) { '' }
   let(:x_node) { 'xx-ab_12345' }
 
-  before { allow(view_context).to receive(:x_node).and_return(x_node) }
-
-  it_behaves_like 'a _new or _discover button'
-
   describe '#visible?' do
+    include_context 'ApplicationHelper::Button::New#visible?'
+
     context 'when x_active_tree != :ab_tree' do
       include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
