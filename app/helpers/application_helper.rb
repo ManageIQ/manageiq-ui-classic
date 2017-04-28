@@ -396,6 +396,7 @@ module ApplicationHelper
       else
         controller = "vm_cloud" if controller == "template_cloud"
         controller = "vm_infra" if controller == "template_infra"
+        action = "jobs" if controller == "miq_task"
         return url_for_only_path(:controller => controller, :action => action, :id => nil) + "/"
       end
 
