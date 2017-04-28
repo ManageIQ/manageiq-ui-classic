@@ -1,5 +1,6 @@
 - current_model = model_to_report_data
 - gtl_type_string = j_str(@gtl_type)
+- active_tree = x_active_tree unless params[:display] || @use_action
 - selected_records = @edit[:object_ids] unless @edit.nil? || @edit[:object_ids].nil?
 - selected_records = @edit[:pol_items] unless @edit.nil? || @edit[:pol_items].nil?
 - selected_records = params[:rec_ids] unless params.nil? || params[:rec_ids].nil?
@@ -41,7 +42,7 @@
     name: 'reportDataController',
     data: {
       modelName: '#{h(j_str(current_model))}',
-      activeTree: '#{x_active_tree}',
+      activeTree: '#{active_tree}',
       gtlType: '#{h(gtl_type_string)}',
       currId: '#{h(j_str(params[:id])) unless @display.nil?}',
       sortColIdx: '#{@sortcol}',

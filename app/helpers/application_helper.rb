@@ -228,6 +228,8 @@ module ApplicationHelper
                       @display
                     elsif params[:db]
                       params[:db]
+                    elsif params[:display]
+                      params[:display]
                     elsif defined? controller.class.model
                       controller.class.model.to_s.tableize
                     end
