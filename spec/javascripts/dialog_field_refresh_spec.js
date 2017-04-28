@@ -1,4 +1,41 @@
 describe('dialogFieldRefresh', function() {
+  describe('#listenForAutoRefreshMessages', function() {
+    context('when an autoRefresh event gets triggered', function() {
+      var callback;
+      var autoRefreshOptions;
+
+      beforeEach(function() {
+        callback = jasmine.createSpyObj('callback', ['call']);
+        autoRefreshOptions = {
+          tab_index: 1,
+          group_index: 2,
+          field_index: 3
+        };
+        dialogFieldRefresh.listenForAutoRefreshMessages(autoRefreshOptions, callback);
+      });
+
+      context('when the tab index, group index, and field index match the corresponding field', function() {
+        beforeEach(function() {
+          $(document).trigger('autoRefresh', {tabIndex: 1, groupIndex: 2, fieldIndex: 3});
+        });
+
+        it('executes the callback', function() {
+          expect(callback.call).toHaveBeenCalled();
+        });
+      });
+
+      context('when the tab index, group index, and field index do not match the corresponding field', function() {
+        beforeEach(function() {
+          $(document).trigger('autoRefresh', {tabIndex: 1, groupIndex: 1, fieldIndex: 3});
+        });
+
+        it('does not execute the callback', function() {
+          expect(callback.call).not.toHaveBeenCalled();
+        });
+      });
+    });
+  });
+
   describe('#addOptionsToDropDownList', function() {
     var data = {};
 
@@ -581,13 +618,13 @@ describe('dialogFieldRefresh', function() {
 
   describe('#triggerAutoRefresh', function() {
     beforeEach(function() {
-      spyOn(parent, 'postMessage');
+      spyOn($.fn, 'trigger');
     });
 
     context('when the trigger passed in falsy', function() {
       it('does not post any messages', function() {
         dialogFieldRefresh.triggerAutoRefresh({trigger: ""});
-        expect(parent.postMessage).not.toHaveBeenCalled();
+        expect($.fn.trigger).not.toHaveBeenCalled();
       });
     });
 
@@ -602,7 +639,7 @@ describe('dialogFieldRefresh', function() {
         });
 
         it('does not post a message', function() {
-          expect(parent.postMessage).not.toHaveBeenCalled();
+          expect($.fn.trigger).not.toHaveBeenCalled();
         });
       });
 
@@ -619,7 +656,7 @@ describe('dialogFieldRefresh', function() {
         });
 
         it('posts a message', function() {
-          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 1, groupIndex: 1, fieldIndex: 2}, '*');
+          expect($.fn.trigger).toHaveBeenCalledWith('autoRefresh', {tabIndex: 1, groupIndex: 1, fieldIndex: 2});
         });
       });
     });
@@ -635,7 +672,7 @@ describe('dialogFieldRefresh', function() {
         });
 
         it('does not post a message', function() {
-          expect(parent.postMessage).not.toHaveBeenCalled();
+          expect($.fn.trigger).not.toHaveBeenCalled();
         });
       });
 
@@ -652,7 +689,7 @@ describe('dialogFieldRefresh', function() {
         });
 
         it('posts a message', function() {
-          expect(parent.postMessage).toHaveBeenCalledWith({tabIndex: 1, groupIndex: 1, fieldIndex: 2}, '*');
+          expect($.fn.trigger).toHaveBeenCalledWith('autoRefresh', {tabIndex: 1, groupIndex: 1, fieldIndex: 2});
         });
       });
     });
