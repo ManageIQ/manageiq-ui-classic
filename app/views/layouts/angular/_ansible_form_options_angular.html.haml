@@ -107,7 +107,18 @@
                             "checkchange" => true}
           %span.help-block{"ng-show" => "angularForm.#{prefix}_inventory.$error.miqrequired"}
             = _("Required")
-
+    #escalate_privilege{"ng-if" => "vm.retirement_playbook_selected('#{prefix}')"}
+      .form-group
+        %label.col-md-3.control-label
+          = _("Escalate Privilege")
+        .col-md-9
+          %input#become_enabled{"bs-switch"       => "",
+                                "type"            => "checkbox",
+                                "name"            => "#{prefix}_become_enabled",
+                                "ng-model"        => "#{ng_model}.#{prefix}_become_enabled",
+                                "switch-on-text"  => _("Yes"),
+                                "switch-off-text" => _("No"),
+                                "checkchange"     => ""}
     - if prefix == "retirement"
       .form-group
         %label.col-md-3.control-label{"for" => "catalog_id"}

@@ -787,13 +787,15 @@ describe CatalogController do
           :playbook           => playbook.name,
           :machine_credential => auth.name,
           :dialog             => "Some Label",
-          :dialog_id          => dialog.id
+          :dialog_id          => dialog.id,
+          :become_enabled     => "No"
         },
         :retirement   => {
           :remove_resources   => nil,
           :repository         => repository.name,
           :playbook           => playbook.name,
-          :machine_credential => auth.name
+          :machine_credential => auth.name,
+          :become_enabled     => "No"
         }
       }
       expect(playbook_details).to eq(st_details)
@@ -829,13 +831,15 @@ describe CatalogController do
         :provisioning => {
           :repository         => nil,
           :playbook           => playbook.name,
-          :machine_credential => auth.name
+          :machine_credential => auth.name,
+          :become_enabled     => "No"
         },
         :retirement   => {
           :remove_resources   => nil,
           :repository         => repository.name,
           :playbook           => nil,
-          :machine_credential => auth.name
+          :machine_credential => auth.name,
+          :become_enabled     => "No"
         }
       }
       expect(playbook_details).to eq(st_details)

@@ -33,6 +33,7 @@ describe('catalogItemFormController', function() {
             'var1': {'default': 'default_val1'},
             'var2': {'default': 'default_val2'}
           },
+          become_enabled: undefined,
           network_credential_id: undefined
         },
         retirement: {
