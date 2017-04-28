@@ -1036,7 +1036,7 @@ module ApplicationHelper
       link_params[:controller] = args[:controller] if args.key?(:controller)
 
       tag_attrs = {:title => title}
-      check_changes = args[:check_changes] || args[:check_changes].nil?
+      check_changes ||= args[:check_changes]
       tag_attrs[:onclick] = 'return miqCheckForChanges()' if check_changes
       content_tag(:li) do
         link_args = {:display => args[:display], :vat => args[:vat]}.compact
