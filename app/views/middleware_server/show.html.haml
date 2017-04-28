@@ -1,10 +1,4 @@
-- if %w(middleware_datasources middleware_messagings middleware_deployments).include?(@display)
-  = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
-- elsif @showtype == "performance"
-  = render(:partial => "layouts/performance_async")
-- elsif @showtype == 'main'
-  = render :partial => "layouts/textual_groups_generic"
-
+= render :partial => "shared/views/ems_common/show"
 - @angular_form = true
 %ng-form#mw_server_form{"name"          => "mw_server_form",
                         "ng-controller" => "mwServerController",
