@@ -1,6 +1,10 @@
 /* global miqInitSelectPicker miqSelectPickerEvent miqSparkle miqSparkleOn */
 
 var dialogFieldRefresh = {
+  unbindAllPreviousListeners: function() {
+    $(document).off('autoRefresh');
+  },
+
   listenForAutoRefreshMessages: function(autoRefreshOptions, callbackFunction) {
     var thisIsTheFieldToUpdate = function(data) {
       var tabIndex = data.tabIndex;

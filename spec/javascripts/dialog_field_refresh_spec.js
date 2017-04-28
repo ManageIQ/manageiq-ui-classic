@@ -36,6 +36,18 @@ describe('dialogFieldRefresh', function() {
     });
   });
 
+  describe('#unbindAllPreviousListeners', function() {
+    beforeEach(function() {
+      spyOn($.fn, 'off');
+    });
+
+    it('unbinds all autoRefresh messages from the document', function() {
+      dialogFieldRefresh.unbindAllPreviousListeners();
+      expect($.fn.off.calls.mostRecent().object).toEqual(document);
+      expect($.fn.off).toHaveBeenCalledWith('autoRefresh');
+    });
+  });
+
   describe('#addOptionsToDropDownList', function() {
     var data = {};
 
