@@ -200,10 +200,12 @@ class OpsController < ApplicationController
     _, group_id = TreeBuilder.extract_node_model_and_id(x_node)
     @sb[:active_rbac_group_tab] = tab_id
     @edit = session[:edit]
+    explorer_opts = {}
+    explorer_opts[:show_miq_buttons] = session[:changed] if @edit
 
     rbac_group_get_details(group_id)
 
-    presenter = ExplorerPresenter.new
+    presenter = ExplorerPresenter.new(explorer_opts)
 
     # needed to make tooolbar Configuration > Edit still work after lazy-loading a tab
     presenter[:record_id] = group_id
