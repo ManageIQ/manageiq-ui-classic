@@ -296,10 +296,10 @@ class ApplicationController < ActionController::Base
     if params[:model] && %w(miq_tasks).include?(params[:model])
       options = jobs_info
     end
-    if params[:model_id] && (params[:model_id].kind_of?(Integer) || /\A\d+\z/.match(params[:model_id]))
-      curr_model_id = Integer(params[:model_id])
+    if params[:model_id]
+      curr_model_id = from_cid(params[:model_id])
       unless curr_model_id.nil?
-        options[:parent] = identify_record(params[:model_id]) if params[:model_id] && options[:parent].nil?
+        options[:parent] = identify_record(curr_model_id, controller_to_model) if curr_model_id && options[:parent].nil?
       end
     end
     options[:parent] = options[:parent] || @parent
@@ -326,7 +326,7 @@ class ApplicationController < ActionController::Base
     if model_view.nil? && params[:active_tree]
       model_view = vm_model_from_active_tree(params[:active_tree].to_sym)
     end
-    if model_view.nil? && CONTROLLER_TO_MODEL[self.class.model.to_s].nil? && params[:model]
+    if model_view.nil? && params[:model]
       model_view = model_string_to_constant(params[:model])
     end
 

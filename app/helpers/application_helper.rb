@@ -228,6 +228,8 @@ module ApplicationHelper
                       @display
                     elsif params[:db]
                       params[:db]
+                    elsif params[:display]
+                      params[:display]
                     elsif defined? controller.class.model
                       controller.class.model.to_s.tableize
                     end
@@ -336,8 +338,8 @@ module ApplicationHelper
         return ems_networks_path
       end
       # If we do not want to use redirect or any kind of click action
-      if %w(Job VmdbDatabaseSetting VmdbDatabaseConnection VmdbIndex).include?(view.db) &&
-         %w(miq_task ops).include?(params[:controller])
+      if %w(Job VmdbDatabaseSetting VmdbDatabaseConnection VmdbIndex MiqTask).include?(view.db) &&
+         %w(miq_task ops miq_task).include?(params[:controller])
         return false
       end
       if @explorer
