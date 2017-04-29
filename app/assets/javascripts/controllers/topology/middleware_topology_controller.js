@@ -24,7 +24,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
   };
 
   $scope.checkboxModel = {
-    value: false
+    value: false,
   };
   $scope.legendTooltip = 'Click here to show/hide entities of this type';
 
@@ -41,7 +41,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     }
   };
 
-  $('input#box_display_names').click($scope.show_hide_names)
+  $('input#box_display_names').click($scope.show_hide_names);
   $scope.refresh();
   var promise = $interval($scope.refresh, 1000 * 60 * 3);
 
@@ -109,6 +109,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
           .attr('style', fontFamily)
           .attr('x', 0)
           .attr('y', 8);
+      });
 
         // override some properties for container glyph, because it looks too small and alignment is wrong
         if (d.item.kind === 'Container') {
@@ -151,7 +152,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
           y: -20,
           height: 40,
           width: 40,
-          r: 28
+          r: 28,
         };
       case 'MiddlewareServer':
         return {
@@ -159,7 +160,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
           y: -12,
           height: 23,
           width: 23,
-          r: 19
+          r: 19,
         };
       case 'Vm':
         return {
@@ -167,7 +168,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
           y: defaultDimensions.y,
           height: 40,
           width: 40,
-          r: 21
+          r: 21,
         };
       default:
         return {
@@ -175,10 +176,10 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
           y: -9,
           height: 18,
           width: 18,
-          r: defaultDimensions.r
+          r: defaultDimensions.r,
         };
     }
-  }
+  };
 
   $scope.searchNode = function() {
     var svg = topologyService.getSVG($scope.d3);

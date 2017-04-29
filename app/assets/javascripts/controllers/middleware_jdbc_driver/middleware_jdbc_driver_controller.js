@@ -25,7 +25,7 @@ function MwAddJdbcDriverController($scope, $http, miqService) {
     }
     $http.post('/middleware_server/add_jdbc_driver', fd, {
       transformRequest: angular.identity,
-      headers: {'Content-Type': undefined}
+      headers: {'Content-Type': undefined},
     })
       .then(
         function(result) { // success

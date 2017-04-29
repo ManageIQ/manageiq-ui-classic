@@ -16,7 +16,7 @@ function MwAddDeploymentController($scope, $http, miqService) {
     var path = '/middleware_server' + (isGroupDeployment ? '_group' : '') + '/add_deployment';
     $http.post(path, fd, {
       transformRequest: angular.identity,
-      headers: {'Content-Type': undefined}
+      headers: {'Content-Type': undefined},
     })
       .then(
         function(result) { // success
