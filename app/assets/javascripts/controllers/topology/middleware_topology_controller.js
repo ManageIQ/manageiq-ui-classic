@@ -33,11 +33,11 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     var vertices = $scope.vs;
 
     if ($scope.checkboxModel.value) {
-      vertices.selectAll("text.attached-label")
-        .classed("visible", true);
+      vertices.selectAll('text.attached-label')
+        .classed('visible', true);
     } else {
-      vertices.selectAll("text.attached-label")
-        .classed("visible", false);
+      vertices.selectAll('text.attached-label')
+        .classed('visible', false);
     }
   };
 
@@ -72,7 +72,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     added.append('image')
       .attr('xlink:href', function(d) {
         var iconInfo = self.getIcon(d);
-        return (iconInfo.type == 'glyph' ? "" : iconInfo.icon);
+        return (iconInfo.type == 'glyph' ? '' : iconInfo.icon);
       })
       .attr('y', function(d) {
         return self.getCircleDimensions(d).y;
@@ -191,7 +191,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     topologyService.resetSearch($scope.d3);
 
     // Reset the search term in search input
-    $('input#search_topology')[0].value = "";
+    $('input#search_topology')[0].value = '';
   };
 
   function getMiddlewareTopologyData(response) {

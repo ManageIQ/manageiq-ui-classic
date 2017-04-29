@@ -234,7 +234,7 @@ function ServerOpsServiceFactory($http, $q, isGroup) {
         deferred.reject(errorMsg);
       })
       .finally(function(data) {
-        angular.element("#modal_param_div").modal('hide');
+        angular.element('#modal_param_div').modal('hide');
         // we should already be resolved and promises can only fire once
         deferred.resolve(data.msg);
       });
