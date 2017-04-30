@@ -20,11 +20,12 @@
   }
 
   .ad-hoc-toolbar {
-    margin-left: 10px;
+    margin-left: 15px;
   }
   .toolbar-pf {
     .toolbar-pf-actions {
       .form-group {
+        padding-right: 0;
         margin-bottom: 0;
         border: 0;
       }
@@ -197,6 +198,7 @@
   }
 
   .toolbar-pf-include-actions.ng-scope {
+    margin-left: 10px;
     width: 100%;
   }
 
