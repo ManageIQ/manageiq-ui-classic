@@ -851,6 +851,7 @@ module ApplicationHelper
        cloud_tenant
        cloud_volume
        configuration_job
+       container
        container_build
        container_group
        container_image
@@ -1272,6 +1273,7 @@ module ApplicationHelper
                         condition
                         configuration_job
                         configuration_script_source
+                        container
                         container_build
                         container_dashboard
                         container_group
@@ -1377,6 +1379,7 @@ module ApplicationHelper
           cloud_volume_backup
           cloud_volume_snapshot
           configuration_job
+          container
           container_build
           container_group
           container_image
@@ -1444,6 +1447,7 @@ module ApplicationHelper
              cloud_volume_snapshot
              condition
              configuration_job
+             container
              container_build
              container_group
              container_image
@@ -1504,6 +1508,7 @@ module ApplicationHelper
       cloud_volume_backup
       cloud_volume_snapshot
       configuration_job
+      container
       container_build
       container_group
       container_image
@@ -1601,8 +1606,6 @@ module ApplicationHelper
   def tree_with_advanced_search?
     %i(automation_manager_providers
        automation_manager_cs_filter
-       containers
-       containers_filter
        configuration_manager_cs_filter
        configuration_scripts
        configuration_manager_providers

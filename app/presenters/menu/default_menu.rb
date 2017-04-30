@@ -104,7 +104,7 @@ module Menu
           Menu::Item.new('container_service',        N_('Container Services'),  'container_service',        {:feature => 'container_service_show_list'},               '/container_service'),
           Menu::Item.new('container_replicator',     N_('Replicators'),         'container_replicator',     {:feature => 'container_replicator_show_list'},            '/container_replicator'),
           Menu::Item.new('container_group',          N_('Pods'),                'container_group',          {:feature => 'container_group_show_list'},                 '/container_group'),
-          Menu::Item.new('container',                N_('Containers'),          'containers',               {:feature => 'containers', :any => true},                  '/container/explorer'),
+          Menu::Item.new('container',                N_('Containers'),          'container',                {:feature => 'container_show_list'},                       '/container'),
           Menu::Item.new('container_node',           N_('Container Nodes'),     'container_node',           {:feature => 'container_node_show_list'},                  '/container_node'),
           Menu::Item.new('persistent_volume',        N_('Volumes'),             'persistent_volume',        {:feature => 'persistent_volume_show_list', :any => true}, '/persistent_volume'),
           Menu::Item.new('container_build',          N_('Container Builds'),    'container_build',          {:feature => 'container_build_show_list'},                 '/container_build'),
