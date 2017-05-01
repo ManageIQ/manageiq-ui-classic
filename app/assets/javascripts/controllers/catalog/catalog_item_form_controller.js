@@ -226,14 +226,14 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     }
 
     var retirement = catalog_item['config_info']['retirement'];
-    retirement['hosts'] = configData.retirement_inventory;
-    retirement['extra_vars'] = formatExtraVars(configData.retirement_variables);
     if (vm.catalogItemModel.retirement_repository_id !== undefined && configData.retirement_repository_id !== '') {
       retirement['repository_id'] = configData.retirement_repository_id;
       retirement['playbook_id'] = configData.retirement_playbook_id;
       retirement['credential_id'] = configData.retirement_machine_credential_id;
     }
     if (vm.catalogItemModel.retirement_playbook_id !== undefined && configData.retirement_playbook_id !== '') {
+      retirement['hosts'] = configData.retirement_inventory;
+      retirement['extra_vars'] = formatExtraVars(configData.retirement_variables);
       catalog_item['config_info']['retirement']['become_enabled'] = configData.retirement_become_enabled;
     }
     if (configData.retirement_network_credential_id !== '')
