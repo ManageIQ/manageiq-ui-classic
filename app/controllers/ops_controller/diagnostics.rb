@@ -268,23 +268,6 @@ module OpsController::Diagnostics
     end
   end
 
-  def replication_reset
-    begin
-      MiqReplicationWorker.reset_replication
-    rescue => bang
-      add_flash(_("Error during 'Reset/synchronization process': %{message}") % {:message => bang.message}, :error)
-    else
-      add_flash(_("Reset/synchronization process successfully initiated"))
-    end
-    javascript_flash
-  end
-
-  def replication_reload
-    @selected_server = MiqRegion.my_region
-    @refresh_div = "diagnostics_replication"
-    @refresh_partial = "diagnostics_replication_tab"
-  end
-
   def db_backup_form_field_changed
     schedule     = MiqSchedule.find_by_id(params[:id])
     depot        = schedule.file_depot
