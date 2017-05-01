@@ -346,7 +346,7 @@ module Mixins
     end
 
     def display_adv_searchbox
-      !(@configured_system_record || @in_a_form || group_summary_tab_selected?)
+      !(@configured_system_record || @configuration_script_record || @in_a_form || group_summary_tab_selected?)
     end
 
     def miq_search_node
