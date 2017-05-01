@@ -94,9 +94,5 @@ module Menu
       acc << id
       @parent.present? ? @parent.parent_path(acc) : acc
     end
-
-    def load_children?
-      true
-    end
   end
 end

@@ -3,8 +3,6 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
   has_kids_for Menu::Item,        [:x_get_tree_item_kids]
   has_kids_for MiqProductFeature, [:x_get_tree_feature_kids]
 
-  attr_reader :role, :features, :editable, :root_counter
-
   def initialize(name, type, sandbox, build, role:, editable: false)
     @role     = role
     @editable = editable
@@ -29,7 +27,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
       :post_check   => true
     }
 
-    locals[:oncheck] = "miqOnCheckHandler" if editable
+    locals[:oncheck] = "miqOnCheckHandler" if @editable
 
     super.merge!(locals)
   end
@@ -72,9 +70,9 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
     {
       :lazy           => false,
       :add_root       => true,
-      :role           => role,
-      :features       => features,
-      :editable       => editable,
+      :role           => @role,
+      :features       => @features,
+      :editable       => @editable,
       :node_id_prefix => node_id_prefix
     }
   end
@@ -84,11 +82,11 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
       :key         => "#{node_id_prefix}__#{root_feature}",
       :icon        => "pficon pficon-folder-close",
       :title       => _(root_details[:name]),
-      :tooltip     => root_tooltip,
+      :tooltip     => _(root_details[:description]) || _(root_details[:name]),
       :expand      => true,
       :cfmeNoClick => true,
       :select      => root_select_state,
-      :checkable   => editable
+      :checkable   => @editable
     }
   end
 
@@ -96,24 +94,20 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
     @root_details ||= MiqProductFeature.feature_details(root_feature)
   end
 
-  def root_tooltip
-    _(root_details[:description]) || _(root_details[:name])
-  end
-
   def root_select_state
-    features.include?(root_feature) || select_state_from_counter
+    @features.include?(root_feature) || select_state_from_counter
   end
 
   def select_state_from_counter
-    return false if root_counter.empty?
-    return true if root_counter.all? { |n| n == true } # true not truthy
-    return 'undefined' if root_counter.any? { |n| n || n == 'undefined' }
+    return false if @root_counter.empty?
+    return true if @root_counter.all? { |n| n == true } # true not truthy
+    return 'undefined' if @root_counter.any? { |n| n || n == 'undefined' }
 
     false
   end
 
   def node_id_prefix
-    role.id || "new"
+    @role.id || "new"
   end
 
   def root_feature
@@ -122,7 +116,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
   def all_vm_options
     text = _("Access Rules for all Virtual Machines")
-    checked = features.include?("all_vm_rules") || root_select_state
+    checked = @features.include?("all_vm_rules") || root_select_state
 
     {
       :key     => "#{node_id_prefix}___tab_all_vm_rules",
@@ -136,7 +130,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
   def override(node, object, _, _)
     case object
     when Menu::Section
-      root_counter << node[:select]
+      @root_counter << node[:select]
     when MiqProductFeature
       if object.identifier == "all_vm_rules"
         node.merge!(all_vm_options)

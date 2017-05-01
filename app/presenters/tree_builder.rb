@@ -262,7 +262,8 @@ class TreeBuilder
 
     # Process the node's children
     load_children = if object.kind_of?(Struct)
-                      object.respond_to?(:load_children?) && object.load_children?
+                      # Load children for Sections, don't for other Menu Structs.
+                      object.kind_of?(Menu::Section)
                     else
                       object[:load_children]
                     end
