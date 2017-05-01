@@ -341,7 +341,9 @@ describe AutomationManagerController do
       search_text = controller.instance_variable_get(:@search_text)
       expect(search_text).to eq("manager")
       view = controller.instance_variable_get(:@view)
+      show_adv_search = controller.instance_variable_get(:@show_adv_search)
       expect(view.table.data.size).to eq(2)
+      expect(show_adv_search).to eq(true)
     end
 
     it "renders tree_select for ansible tower job templates tree node" do
@@ -351,6 +353,11 @@ describe AutomationManagerController do
       controller.instance_variable_set(:@_params, :id => "at-" + ApplicationRecord.compress_id(@automation_manager1.id))
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
+      show_adv_search = controller.instance_variable_get(:@show_adv_search)
+      expect(show_adv_search).to eq(true)
+      expect(view.table.data.size).to eq(2)
+      expect(show_adv_search).to eq(true)
+
       expect(view.table.data[0].name).to eq("ConfigScript3")
       expect(view.table.data[1].name).to eq("ConfigScript1")
     end
@@ -450,7 +457,8 @@ describe AutomationManagerController do
 
       seed_session_trees('automation_manager', :automation_manager_cs_filter, "cs-#{tree_node_id}")
       get :explorer
-
+      show_adv_search = controller.instance_variable_get(:@show_adv_search)
+      expect(show_adv_search).to be_falsey
       expect(response.status).to eq(200)
       expect(response).to render_template(:partial => 'layouts/_textual_groups_generic')
     end
@@ -476,6 +484,8 @@ describe AutomationManagerController do
       allow(controller).to receive(:x_active_accord).and_return(:configuration_scripts)
       allow(controller).to receive(:x_node).and_return(tree_node_id)
       get :explorer
+      show_adv_search = controller.instance_variable_get(:@show_adv_search)
+      expect(show_adv_search).to eq(false)
       expect(response.status).to eq(200)
       expect(response.body).to include("Question Name")
       expect(response.body).to include("Question Description")
