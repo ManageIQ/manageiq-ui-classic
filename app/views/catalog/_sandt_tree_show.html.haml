@@ -228,6 +228,11 @@
                 = _('Hosts')
               .col-md-9
                 = h(@record.config_info[:provision][:hosts])
+            .form-group
+              %label.col-md-3.control-label
+                = _('Escalate Privilege')
+              .col-md-9
+                = h(provisioning[:become_enabled])
         .col-md-12.col-lg-6
           .form-horizontal.static
             .form-group
@@ -297,6 +302,11 @@
                   = _('Hosts')
                 .col-md-9
                   = h(@record.config_info[:retirement][:hosts])
+              .form-group
+                %label.col-md-3.control-label
+                  = _('Escalate Privilege')
+                .col-md-9
+                  = h(retirement[:become_enabled])
               .form-group
                 %label.col-md-3.control-label
                   = _('Remove Resources')
