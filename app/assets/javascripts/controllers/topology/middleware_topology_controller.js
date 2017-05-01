@@ -1,13 +1,12 @@
 angular.module('ManageIQ').controller('middlewareTopologyController', MiddlewareTopologyCtrl);
-MiddlewareTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', 'topologyService', 'miqService'];
+MiddlewareTopologyCtrl.$inject = ['$scope', '$window', '$http', '$interval', '$location', 'topologyService', 'miqService'];
 
-function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologyService, miqService) {
+function MiddlewareTopologyCtrl($scope, $window, $http, $interval, $location, topologyService, miqService) {
   ManageIQ.angular.scope = $scope;
   miqHideSearchClearButton();
   var self = this;
   $scope.vs = null;
-  var d3 = window.d3;
-  $scope.d3 = d3;
+  $scope.d3 = $window.d3;
   var icons;
 
   $scope.refresh = function() {
@@ -113,8 +112,8 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
         // override some properties for container glyph, because it looks too small and alignment is wrong
         if (d.item.kind === 'Container') {
           $(this).text(iconInfo.icon)
-            .attr('style', 'font-size: 20px;' + fontFamily)
-            .attr('y', 7);
+          .attr('style', 'font-size: 20px;' + fontFamily)
+          .attr('y', 7);
         }
       });
 
