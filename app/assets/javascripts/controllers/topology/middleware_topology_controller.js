@@ -25,7 +25,7 @@ function MiddlewareTopologyCtrl($scope, $window, $http, $interval, $location, to
   $scope.checkboxModel = {
     value: false,
   };
-  $scope.legendTooltip = 'Click here to show/hide entities of this type';
+  $scope.legendTooltip = __('Click here to show/hide entities of this type');
 
   $scope.show_hide_names = function() {
     $scope.checkboxModel.value = $('input#box_display_names')[0].checked;
