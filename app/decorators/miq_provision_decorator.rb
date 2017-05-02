@@ -1,5 +1,5 @@
 class MiqProvisionDecorator < MiqDecorator
-  def self.listicon_image
+  def self.fileicon
     '100/miq_request.png'
   end
 end

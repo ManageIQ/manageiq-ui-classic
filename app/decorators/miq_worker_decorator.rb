@@ -1,5 +1,5 @@
 class MiqWorkerDecorator < MiqDecorator
-  def listicon_image
+  def fileicon
     "100/processmanager-#{normalized_type}.png"
   end
 end
