@@ -799,7 +799,7 @@ module OpsController::OpsRbac
     when "role"  then rbac_role_get_form_vars
     end
 
-    changed = (@edit[:new] != @edit[:current])
+    session[:changed] = changed = (@edit[:new] != @edit[:current])
     bad = false
     if rec_type == "group"
       bad = (@edit[:new][:role].blank? || @edit[:new][:group_tenant].blank?)
