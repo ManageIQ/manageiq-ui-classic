@@ -3,7 +3,7 @@
   var MAIN_CONTETN_ID = 'main-content';
   var EXPAND_TREES = ['savedreports_treebox', 'widgets_treebox'];
   var TREES_WITHOUT_PARENT = ['pxe', 'ops'];
-  var TREE_TABS_WITHOUT_PARENT = ['action_tree', 'alert_tree'];
+  var TREE_TABS_WITHOUT_PARENT = ['action_tree', 'alert_tree', 'schedules_tree'];
   var USE_TREE_ID = ['automation_manager'];
 
   function isAllowedParent(initObject) {
