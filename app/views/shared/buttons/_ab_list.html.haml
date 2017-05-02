@@ -73,9 +73,14 @@
         .col-md-8
           = @record.name.split('|').first
           - display = @record.set_data.key?(:display) ? @record.set_data[:display] : true
-          = check_box_tag(display, true, display, :disabled => true)
           &nbsp;
-          = _("Display on Button")
+          .checkbox-inline
+            %label{:style => "font-weight: normal"}
+              = check_box_tag(display, true, display, :disabled => true)
+              = _('Display on Button')
+
+
+
       .form-group
         %label.control-label.col-md-2
           = _('Button Hover Text')
