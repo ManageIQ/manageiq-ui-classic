@@ -296,7 +296,7 @@ class ApplicationController < ActionController::Base
     if params[:model] && %w(miq_tasks).include?(params[:model])
       options = jobs_info
     end
-    if params[:model_id]
+    if params[:model_id] && !params[:active_tree]
       curr_model_id = from_cid(params[:model_id])
       unless curr_model_id.nil?
         options[:parent] = identify_record(curr_model_id, controller_to_model) if curr_model_id && options[:parent].nil?
