@@ -38,8 +38,6 @@ describe('catalogItemFormController', function() {
         },
         retirement: {
           remove_resources: 'yes_without_playbook',
-          hosts: 'localhost',
-          extra_vars: Object({  })
         }
       }
     };
