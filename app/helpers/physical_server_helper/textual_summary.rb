@@ -27,6 +27,10 @@ module PhysicalServerHelper::TextualSummary
     TextualGroup.new(_("Networks"), %i(mac ipv4 ipv6))
   end
 
+  def textual_group_assets
+    %i(support_contact description location room_id rack_name lowest_rack_unit)
+  end
+
   def textual_host
     {:label => _("Host"), :value => @record.host.try(:name), :icon => "pficon pficon-virtual-machine", :link => url_for(:controller => 'host', :action => 'show', :id => @record.host.try(:id))}
   end
@@ -89,5 +93,29 @@ module PhysicalServerHelper::TextualSummary
 
   def textual_loc_led_state
     {:label => _("Identify LED State"), :value => @record.location_led_state}
+  end
+
+  def textual_support_contact
+    {:label => _("Support contact"), :value => @record.asset_details['contact']}
+  end
+
+  def textual_description
+    {:label => _("Description"), :value => @record.asset_details['description']}
+  end
+
+  def textual_location
+    {:label => _("Location"), :value => @record.asset_details['location']}
+  end
+
+  def textual_room_id
+    {:label => _("Room"), :value => @record.asset_details['room_id']}
+  end
+
+  def textual_rack_name
+    {:label => _("Rack name"), :value => @record.asset_details['rack_name']}
+  end
+
+  def textual_lowest_rack_unit
+    {:label => _("Lowest rack name"), :value => @record.asset_details['lowest_rack_unit']}
   end
 end
