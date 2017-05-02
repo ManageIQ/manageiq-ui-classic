@@ -1133,7 +1133,7 @@ class ApplicationController < ActionController::Base
             when Storage
               "100/piecharts/datastore/#{calculate_pct_img(item.v_free_space_percent_of_total)}.png"
             when MiqRequest
-              item.decorate.listicon_image || "100/#{@listicon.downcase}.png" if @listicon.try(:downcase)
+              item.decorate.fileicon || "100/#{@listicon.downcase}.png" if @listicon.try(:downcase)
             when Account
               "100/#{item.accttype}.png"
             when SystemService
