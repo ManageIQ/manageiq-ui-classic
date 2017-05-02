@@ -66,7 +66,8 @@ class TopologyService
 
       relations.each_pair do |head, tail|
         # Apply the generator graph's first node on the entity
-        children = entity.send(head.to_s.underscore.downcase)
+        method = head.to_s.underscore.downcase
+        children = entity.send(method) if entity.respond_to?(method)
         next if children.nil?
         # Push the child/children to the stack with the chunked generator graph
         if children.respond_to?(:each)
