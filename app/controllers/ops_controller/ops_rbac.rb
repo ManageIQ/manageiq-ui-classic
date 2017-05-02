@@ -87,7 +87,7 @@ module OpsController::OpsRbac
     case params[:button]
     when 'cancel'      then rbac_edit_cancel('role')
     when 'save', 'add' then rbac_edit_save_or_add('role', 'miq_user_role')
-    when 'reset', nil  then rbac_edit_reset(params[:typ], 'role', MiqUserRole) # Reset or first time in
+    when 'reset', nil  then rbac_edit_reset(params[:typ], 'role', MiqUserRole) # Reset or form load
     end
   end
 
@@ -962,13 +962,12 @@ module OpsController::OpsRbac
   def rbac_role_get_details(id)
     @edit = nil
     @record = @role = MiqUserRole.find_by_id(from_cid(id))
-    @role_features = @role.feature_identifiers.sort
-    @features_tree = rbac_build_features_tree
+    @rbac_menu_tree = build_rbac_feature_tree
   end
 
-  def rbac_build_features_tree
+  def build_rbac_feature_tree
     @role = @sb[:typ] == "copy" ? @record.dup : @record if @role.nil? # if on edit screen use @record
-    TreeBuilder.convert_bs_tree(OpsController::RbacTree.build(@role, @role_features, !@edit.nil?)).to_json
+    TreeBuilderOpsRbacFeatures.new("features_tree", "features", @sb, true, :role => @role, :editable => @edit.present?)
   end
 
   # Set form variables for role edit
@@ -1198,7 +1197,7 @@ module OpsController::OpsRbac
     @edit[:current] = copy_hash(@edit[:new])
 
     @role_features = @record.feature_identifiers.sort
-    @features_tree = rbac_build_features_tree
+    @rbac_menu_tree = build_rbac_feature_tree
   end
 
   # Get array of total set of features from the children of selected features

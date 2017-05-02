@@ -37,7 +37,7 @@ describe OpsController do
 
       it 'rbac role add' do
         MiqProductFeature.seed
-        allow(MiqProductFeature).to receive(:feature_root).and_return('everything')
+        session[:sandboxes] = { "ops" => { :trees => {} } }
         post :x_button, :params => {:pressed => 'rbac_role_add'}
         expect(response.status).to eq(200)
       end
