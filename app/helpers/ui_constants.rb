@@ -155,13 +155,14 @@ module UiConstants
   # Default UI settings
   DEFAULT_SETTINGS = {
     :quadicons => { # Show quad icons, by resource type
-      :service      => true,
-      :ems          => true,
-      :ems_cloud    => true,
-      :host         => true,
-      :miq_template => true,
-      :storage      => true,
-      :vm           => true
+      :service          => true,
+      :ems              => true,
+      :ems_cloud        => true,
+      :host             => true,
+      :miq_template     => true,
+      :storage          => true,
+      :vm               => true,
+      :physical_server  => true
     },
     :views     => { # List view setting, by resource type
       :authkeypaircloud                         => "list",
@@ -208,6 +209,8 @@ module UiConstants
       :manageiq_providers_inframanager_template => "list",
       :manageiq_providers_middlewaremanager     => "grid",
       :manageiq_providers_storagemanager        => "list",
+      :manageiq_providers_physicalinframanager  => "grid",
+      :physicalserver                           => "grid",
       :middlewaredatasource                     => "list",
       :middlewaredeployment                     => "list",
       :middlewaredomain                         => "list",

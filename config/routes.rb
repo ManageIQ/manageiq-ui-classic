@@ -1266,6 +1266,7 @@ Rails.application.routes.draw do
         update
         wait_for_task
         x_show
+        squash_toggle
       ) +
                adv_search_post +
                compare_post +
@@ -1273,6 +1274,24 @@ Rails.application.routes.draw do
                discover_get_post +
                exp_post +
                save_post
+    },
+
+    :physical_server    =>  {
+      :get  =>  %w(
+        download_data
+        perf_top_chart
+        protect
+        show_list
+        show
+      ) + compare_get,
+
+      :post   =>  %w(
+        button
+        show_list
+        create
+        update
+
+      )
     },
 
     :ems_physical_infra_dashboard      => {
@@ -1328,6 +1347,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
+        jdbc_drivers
       ) +
                compare_get,
       :post => %w(

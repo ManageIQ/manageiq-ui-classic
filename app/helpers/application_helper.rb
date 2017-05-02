@@ -324,7 +324,7 @@ module ApplicationHelper
       end
       if controller == "ems_physical_infra" && action == "show"
         return ems_physical_infras_path
-      end
+      end      
       if controller == "ems_container" && action == "show"
         return ems_containers_path
       end
@@ -1321,6 +1321,7 @@ module ApplicationHelper
                         orchestration_stack
                         physical_infra_topology
                         persistent_volume
+                        physical_server
                         policy
                         policy_group
                         policy_profile
@@ -1412,6 +1413,7 @@ module ApplicationHelper
           offline
           orchestration_stack
           persistent_volume
+          physical_server
           resource_pool
           retired
           security_group
@@ -1463,9 +1465,11 @@ module ApplicationHelper
              ems_network
              ems_physical_infra
              ems_storage
+             ems_physical_infra
              flavor
              floating_ip
              host
+             physical_server
              host_aggregate
              load_balancer
              middleware_datasource
@@ -1480,6 +1484,7 @@ module ApplicationHelper
              network_router
              orchestration_stack
              persistent_volume
+             physical_server
              policy
              resource_pool
              scan_profile
@@ -1554,6 +1559,8 @@ module ApplicationHelper
 
   def db_for_quadicon
     case @layout
+    when "ems_physical_infra"
+      :ems    
     when "ems_infra"
       :ems
     when "ems_cloud"

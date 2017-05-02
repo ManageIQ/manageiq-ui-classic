@@ -510,6 +510,7 @@ class ApplicationHelper::ToolbarChooser
               container_image_registry
               ems_infra
               ems_physical_infra
+              physical_server
               flavor
               host
               container_build

@@ -22,7 +22,7 @@ module HostHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(ems cluster availability_zone used_tenants storages resource_pools vms templates drift_history)
+      %i(ems cluster availability_zone used_tenants storages resource_pools vms templates drift_history physical_servers)
     )
   end
 
@@ -42,6 +42,10 @@ module HostHelper::TextualSummary
 
   def textual_group_smart_management
     TextualTags.new(_("Smart Management"), %i(tags))
+  end
+  
+  def textual_physical_servers
+    {:label =>  _("Physical Server"), :value  =>  @record.physical_server.name, :icon =>  "pficon pficon-server", :link => url_for(:controller  =>  'physical_server',  :action =>  'show', :id =>  @record.physical_server.id) }
   end
 
   def textual_group_miq_custom_attributes
