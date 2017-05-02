@@ -152,6 +152,10 @@ class ApplicationController < ActionController::Base
   end
 
   def download_summary_pdf
+    # do not build quadicon links
+    @embedded = true
+    @showlinks = false
+
     @record = identify_record(params[:id])
     yield if block_given?
     return if record_no_longer_exists?(@record)
