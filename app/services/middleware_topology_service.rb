@@ -11,11 +11,11 @@ class MiddlewareTopologyService < TopologyService
       :middleware_deployments,
       :middleware_datasources,
       :middleware_messagings,
-      :lives_on => [:host]
+      :lives_on => [:host, :container]
     ]
   ]
 
-  @kinds = %i(MiddlewareDeployment MiddlewareDatasource MiddlewareDomain MiddlewareManager Vm MiddlewareServer MiddlewareServerGroup MiddlewareMessaging)
+  @kinds = %i(MiddlewareDeployment MiddlewareDatasource MiddlewareDomain MiddlewareManager Vm Container MiddlewareServer MiddlewareServerGroup MiddlewareMessaging)
 
   def build_topology
     topology = super
@@ -67,7 +67,7 @@ class MiddlewareTopologyService < TopologyService
   end
 
   def glyph?(entity)
-    [MiddlewareDatasource, MiddlewareDeployment, Vm, MiddlewareDomain, MiddlewareServerGroup, MiddlewareMessaging]
+    [MiddlewareDatasource, MiddlewareDeployment, Vm, Container, MiddlewareDomain, MiddlewareServerGroup, MiddlewareMessaging]
       .any? { |klass| entity.kind_of? klass }
   end
 end

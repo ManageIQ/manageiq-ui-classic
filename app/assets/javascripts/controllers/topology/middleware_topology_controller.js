@@ -103,13 +103,20 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
         if (iconInfo.type != 'glyph') {
           return;
         }
+        var fontFamily = 'font-family:' + iconInfo.fontfamily + ';';
         $(this).text(iconInfo.icon)
           .attr('class', 'glyph')
-          .attr('style', 'font-family:' + iconInfo.fontfamily + ';')
+          .attr('style', fontFamily)
           .attr('x', 0)
           .attr('y', 8);
-      })
 
+        // override some properties for container glyph, because it looks too small and alignment is wrong
+        if (d.item.kind === 'Container') {
+          $(this).text(iconInfo.icon)
+          .attr('style', 'font-size: 20px;' + fontFamily)
+          .attr('y', 7)
+        }
+      })
 
     added.selectAll('title').text(function(d) {
       return topologyService.tooltip(d).join('\n');
@@ -154,7 +161,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
           width: 23,
           r: 19
         };
-      case "Vm":
+      case 'Vm':
         return {
           x: defaultDimensions.x,
           y: defaultDimensions.y,
