@@ -71,7 +71,7 @@ function MiddlewareTopologyCtrl($scope, $window, $http, $interval, $location, to
     added.append('image')
       .attr('xlink:href', function(d) {
         var iconInfo = self.getIcon(d);
-        return (iconInfo.type == 'glyph' ? '' : iconInfo.icon);
+        return (iconInfo.type === 'glyph' ? '' : iconInfo.icon);
       })
       .attr('y', function(d) {
         return self.getCircleDimensions(d).y;
@@ -99,7 +99,7 @@ function MiddlewareTopologyCtrl($scope, $window, $http, $interval, $location, to
     added.append('text')
       .each(function(d) {
         var iconInfo = self.getIcon(d);
-        if (iconInfo.type != 'glyph') {
+        if (iconInfo.type !== 'glyph') {
           return;
         }
         var fontFamily = 'font-family:' + iconInfo.fontfamily + ';';
