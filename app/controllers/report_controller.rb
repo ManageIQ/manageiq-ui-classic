@@ -10,6 +10,7 @@ class ReportController < ApplicationController
 
   helper ApplicationHelper::ImportExportHelper
   include ReportHelper
+  include Mixins::GenericSessionMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -255,6 +256,14 @@ class ReportController < ApplicationController
     end
 
     replace_right_cell(:partial => 'export_widgets')
+  end
+
+  def self.session_key_prefix
+    'report'
+  end
+
+  def title
+    _("Reports")
   end
 
   private ###########################
@@ -891,8 +900,7 @@ class ReportController < ApplicationController
   end
 
   def get_session_data
-    @layout           = 'report'
-    @lastaction       = session[:report_lastaction]
+    super
     @report_tab       = session[:report_tab]
     @report_result_id = session[:report_result_id]
     @menu             = session[:report_menu]
@@ -905,13 +913,12 @@ class ReportController < ApplicationController
   end
 
   def set_session_data
-    session[:report_lastaction] = @lastaction
+    super
     session[:report_tab]        = @report_tab
     session[:panels]            = @panels
     session[:ght_type]          = @ght_type
     session[:report_groups]     = @report_groups
     session[:vm_catinfo]        = @catinfo
-    session[:edit]              = @edit unless @edit.nil?
     session[:report_result_id]  = @report_result_id
     session[:report_menu]       = @menu
     session[:report_folders]    = @folders
