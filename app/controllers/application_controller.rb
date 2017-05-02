@@ -1307,7 +1307,7 @@ class ApplicationController < ActionController::Base
       @sortcol = 0
       @sortdir = "ASC"
     end
-    @sortdir = params[:is_ascending] ? 'ASC' : 'DESC' if defined? params[:is_ascending]
+    @sortdir = params[:is_ascending] ? 'ASC' : 'DESC' unless params[:is_ascending].nil?
     @sortcol
   end
 
