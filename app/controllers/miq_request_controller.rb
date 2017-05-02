@@ -147,7 +147,7 @@ class MiqRequestController < ApplicationController
     @sb[:prov_options] ||= {}
     @sb[:def_prov_options] ||= {}
     @sb[:prov_options][:resource_type] = resource_type.to_sym                   # storing current resource type
-    # prov_set_default_options if !@sb[:prov_options] || (@sb[:prov_options] && @sb[:prov_options][:req_typ] != get_request_tab_type)    # reset default options if requests sub tab has changed
+
     prov_set_default_options if !@sb[:prov_options] || (@sb[:prov_options] && !@sb[:prov_options].key?(resource_type.to_sym))   # reset default options if requests sub tab has changed
 
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
