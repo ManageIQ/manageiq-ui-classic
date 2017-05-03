@@ -386,7 +386,7 @@ class ApplicationController < ActionController::Base
     render :json => {
       :settings => settings,
       :data     => view_to_hash(current_view),
-      :messages => @flash_array || session[:flash_msg]
+      :messages => @flash_array
     }
   end
 

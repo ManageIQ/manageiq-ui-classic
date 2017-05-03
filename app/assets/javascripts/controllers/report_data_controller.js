@@ -1,3 +1,4 @@
+/* global add_flash */
 (function() {
   var COTNROLLER_NAME = 'reportDataController';
   var MAIN_CONTETN_ID = 'main-content';
@@ -283,7 +284,6 @@
     initObject.modelName = decodeURIComponent(initObject.modelName);
     this.initObjects(initObject);
     this.setExtraClasses(initObject.gtlType);
-    this.showMessage = this.$location.search().flash_msg;
     return this.getData(initObject.modelName,
                         initObject.activeTree,
                         initObject.currId,
@@ -405,6 +405,9 @@
           }
         }
         this.onItemSelect(isCurrentOpsWorkerSelected(this.gtlData.rows, this.initObject), true);
+        gtlData.messages && gtlData.messages.forEach(function(oneMessage) {
+          add_flash(oneMessage.msg, oneMessage.level);
+        });
         return gtlData;
       }.bind(this));
   };
