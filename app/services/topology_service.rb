@@ -32,7 +32,7 @@ class TopologyService
 
   def build_topology
     included_relations = self.class.instance_variable_get(:@included_relations)
-    preloaded = @providers.includes(included_relations)
+    preloaded = @providers.includes(included_relations).references(included_relations)
     nodes, edges = map_to_graph(preloaded, build_entity_relationships(included_relations))
 
     {
