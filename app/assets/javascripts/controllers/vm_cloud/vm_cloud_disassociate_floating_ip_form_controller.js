@@ -1,10 +1,12 @@
 ManageIQ.angular.app.controller('vmCloudDisassociateFloatingIpFormController', ['$http', '$scope', 'vmCloudDisassociateFloatingIpFormId', 'miqService', function($http, $scope, vmCloudDisassociateFloatingIpFormId, miqService) {
-  $scope.vmCloudModel = {
+  vm = this;
+  
+  vm.vmCloudModel = {
     floating_ip: null,
   };
-  $scope.floating_ips = [];
-  $scope.formId = vmCloudDisassociateFloatingIpFormId;
-  $scope.modelCopy = angular.copy( $scope.vmCloudModel );
+  vm.floating_ips = [];
+  vm.formId = vmCloudDisassociateFloatingIpFormId;
+  vm.modelCopy = angular.copy( vm.vmCloudModel );
 
   ManageIQ.angular.scope = $scope;
 
@@ -12,13 +14,13 @@ ManageIQ.angular.app.controller('vmCloudDisassociateFloatingIpFormController', [
     .then(getDisassociateFloatingIpFormData)
     .catch(miqService.handleFailure);
 
-  $scope.cancelClicked = function() {
+  vm.cancelClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/disassociate_floating_ip_vm/' + vmCloudDisassociateFloatingIpFormId + '?button=cancel';
     miqService.miqAjaxButton(url);
   };
 
-  $scope.submitClicked = function() {
+  vm.submitClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/disassociate_floating_ip_vm/' + vmCloudDisassociateFloatingIpFormId + '?button=submit';
     miqService.miqAjaxButton(url, true);
@@ -27,8 +29,8 @@ ManageIQ.angular.app.controller('vmCloudDisassociateFloatingIpFormController', [
   function getDisassociateFloatingIpFormData(response) {
     var data = response.data;
 
-    $scope.floating_ips = data.floating_ips;
-    $scope.modelCopy = angular.copy( $scope.vmCloudModel );
+    vm.floating_ips = data.floating_ips;
+    vm.modelCopy = angular.copy( vm.vmCloudModel );
     miqService.sparkleOff();
   }
 }]);
