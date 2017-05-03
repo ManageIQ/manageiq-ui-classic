@@ -12,7 +12,12 @@
           "show-top-border"           => "true",
           :status                     => "objectStatus.providers",
           "ng-if"                     => "!isSingleProvider"}
-    .col-xs-12.col-sm-12.col-md-10
+    .col-xs-12.col-sm-12.col-md-2
+      %div{:layout                     => "tall",
+          "pf-aggregate-status-card"  => "",
+          "show-top-border"           => "true",
+          :status                     => "objectStatus.alerts"}
+    .col-xs-12.col-sm-12.col-md-8
       .row
         .col-xs-6.col-sm-6.col-md-3
           %div{:layout                    => "mini",
@@ -64,7 +69,7 @@
               :url                       => "navigation"}
 
   .row.row-tile-pf
-    .col-xs-12.col-sm-6.col-md-7
+    .col-xs-12.col-sm-6.col-md-8
       %div{"head-title"   => _("Aggregated Node Utilization"),
           :hidetopborder => "true",
           "pf-card"      => ""}
@@ -92,7 +97,7 @@
             %span.trend-footer-pf{"ng-class" => "{ 'chart-transparent-text': !memoryUsageData }"}
               {{memoryUsageConfig.timeFrame}}
 
-    .col-xs-12.col-sm-6.col-md-5
+    .col-xs-12.col-sm-6.col-md-4
       .row.row-tile-pf
         .col-xs-12.col-sm-12.col-md-12
           %div{"head-title" => "{{networkUtilizationConfig.headTitle}}",
@@ -121,7 +126,7 @@
               {{imageEntityTrendConfig.timeFrame}}
 
   .row.row-tile-pf.row-tile-pf-last
-    .col-xs-12.col-sm-6.col-md-7
+    .col-xs-12.col-sm-6.col-md-8
       %div{"column-sizing-class"          => "col-xs-8 col-sm-6 col-md-6",
           "heat-map-usage-legend-labels" => "nodeHeatMapUsageLegendLabels",
           "heatmap-chart-height"         => "dashboardHeatmapChartHeight",
@@ -130,7 +135,7 @@
           :hidetopborder                 => "true",
           :title                         => _("Node Utilization")}
 
-    .col-xs-12.col-sm-6.col-md-5
+    .col-xs-12.col-sm-6.col-md-4
       .row.row-tile-pf
         .col-xs-12.col-sm-12.col-md-12
           %div{"head-title" => "{{podEntityTrendConfig.headTitle}}",

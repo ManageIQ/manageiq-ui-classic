@@ -7,6 +7,7 @@
       // Obj-status cards init
       $scope.objectStatus = {
         providers:  dashboardUtilsFactory.createProvidersStatus(),
+        alerts:     dashboardUtilsFactory.createAlertsStatus(),
         nodes:      dashboardUtilsFactory.createNodesStatus(),
         containers: dashboardUtilsFactory.createContainersStatus(),
         registries: dashboardUtilsFactory.createRegistriesStatus(),
@@ -109,6 +110,7 @@
           }
         }
 
+        dashboardUtilsFactory.updateAlertsStatus($scope.objectStatus.alerts, data.alerts);
         dashboardUtilsFactory.updateStatus($scope.objectStatus.nodes, data.status.nodes);
         dashboardUtilsFactory.updateStatus($scope.objectStatus.containers, data.status.containers);
         dashboardUtilsFactory.updateStatus($scope.objectStatus.registries, data.status.registries);

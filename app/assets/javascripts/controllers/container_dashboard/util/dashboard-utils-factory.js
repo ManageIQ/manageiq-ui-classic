@@ -6,6 +6,13 @@ angular.module('miq.util').factory('dashboardUtilsFactory', function() {
       notifications: []
     };
   };
+  var createAlertsStatus = function() {
+    return {
+      title: __("Alerts"),
+      count: 0,
+      notifications: []
+    };
+  };
   var createNodesStatus = function() {
     return {
       title: __("Nodes"),
@@ -70,6 +77,17 @@ angular.module('miq.util').factory('dashboardUtilsFactory', function() {
       notification: {}
     };
   };
+  var updateAlertsStatus = function (statusObject, data) {
+    statusObject.notification = [];
+    statusObject.count = 0;
+    delete statusObject.href;
+
+    if (data) {
+      statusObject.href = data.href;
+      statusObject.count = data.count;
+      statusObject.notifications = data.notifications;
+    }
+  };
   var updateStatus = function (statusObject, data) {
     statusObject.notification = {};
     if (data) {
@@ -100,6 +118,7 @@ angular.module('miq.util').factory('dashboardUtilsFactory', function() {
   return {
     parseDate: parseDate,
     createProvidersStatus: createProvidersStatus,
+    createAlertsStatus: createAlertsStatus,
     createNodesStatus: createNodesStatus,
     createContainersStatus: createContainersStatus,
     createRegistriesStatus: createRegistriesStatus,
@@ -108,6 +127,7 @@ angular.module('miq.util').factory('dashboardUtilsFactory', function() {
     createServicesStatus: createServicesStatus,
     createImagesStatus: createImagesStatus,
     createRoutesStatus: createRoutesStatus,
+    updateAlertsStatus: updateAlertsStatus,
     updateStatus: updateStatus
   };
 });

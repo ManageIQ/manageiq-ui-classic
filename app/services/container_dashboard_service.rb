@@ -14,6 +14,7 @@ class ContainerDashboardService
       :providers_link  => get_url_to_entity(:ems_container),
       :status          => status,
       :providers       => providers,
+      :alerts          => alerts,
       :heatmaps        => heatmaps,
       :ems_utilization => ems_utilization,
       :network_metrics => network_metrics,
@@ -94,6 +95,30 @@ class ContainerDashboardService
       (result[ui_type] ||= build_provider_status(ui_type))[:count] += count
     end
     result.values
+  end
+
+  def alerts
+    if @ems.present?
+      warnings = @ems.miq_alert_statuses.where(:severity => "warning").count
+      errors = @ems.miq_alert_statuses.where(:severity => "error").count
+    else
+      warnings = MiqAlertStatus.where.not(:ems_id => nil).where(:severity => "warning").count
+      errors = MiqAlertStatus.where.not(:ems_id => nil).where(:severity => "error").count
+    end
+    {
+      :count         => warnings + errors,
+      :href          => @controller.url_for_only_path(:action => 'show', :controller => :alerts_overview),
+      :notifications => [
+        {
+          :iconClass => "pficon pficon-error-circle-o",
+          :count     => errors
+        },
+        {
+          :iconClass => "pficon pficon-warning-triangle-o",
+          :count     => warnings
+        }
+      ]
+    }
   end
 
   def build_provider_status(provider_type)
