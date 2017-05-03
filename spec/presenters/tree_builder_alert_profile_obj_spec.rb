@@ -1,15 +1,11 @@
 describe TreeBuilderAlertProfileObj do
-  let(:role) do
-    MiqUserRole.find_by(:name => "EvmRole-operator")
-  end
-  let(:group) do
-    FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Tags Group")
-  end
-
+  
   before do
+   role = MiqUserRole.find_by(:name => "EvmRole-operator")
+   group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Tags Group")
    login_as FactoryGirl.create(:user, :userid => 'tags_wilma', :miq_groups => [group])
   end
-
+  
   let(:tag1a) { FactoryGirl.create(:classification, :name => 'tag1a') }
   let(:tag2a) { FactoryGirl.create(:classification, :name => 'tag2a') }
   let(:tag3a) { FactoryGirl.create(:classification, :name => 'tag3a') }
@@ -35,13 +31,13 @@ describe TreeBuilderAlertProfileObj do
     end
 
     describe '#tree_init_options' do
-      it 'set init options correctly' do
+      it 'sets init options correctly' do
         expect(subject.send(:tree_init_options, :alert_profile_obj)).to eq(:expand => true)
       end
     end
 
     describe '#set_locals_for_render' do
-      it 'set locals for render correctly' do
+      it 'sets locals for render correctly' do
         locals = subject.send(:set_locals_for_render)
         expect(locals[:check_url]).to eq("/miq_policy/alert_profile_assign_changed/")
         expect(locals[:oncheck]).to eq("miqOnCheckHandler")
@@ -52,18 +48,18 @@ describe TreeBuilderAlertProfileObj do
     end
 
     describe '#override' do
-      it 'set node1' do
+      it 'sets node1' do
         node = {}
         subject.send(:override, node, tag1a, nil, nil)
         expect(node[:hideCheckbox]).to be_falsey
         expect(node[:select]).to be_truthy
       end
-      it 'set node2' do
+      it 'sets node2' do
         node = {}
         subject.send(:override, node, tag2a, nil, nil)
         expect(node[:select]).to be_truthy
       end
-      it 'set node3' do
+      it 'sets node3' do
         node = {}
         subject.send(:override, node, tag3a, nil, nil)
         expect(node[:select]).to be_falsey
@@ -109,18 +105,18 @@ describe TreeBuilderAlertProfileObj do
     end
 
     describe '#override' do
-      it 'set node1' do
+      it 'sets node1' do
         node = {}
         subject.send(:override, node, tag1b, nil, nil)
         expect(node[:hideCheckbox]).to be_falsey
         expect(node[:select]).to be_truthy
       end
-      it 'set node2' do
+      it 'sets node2' do
         node = {}
         subject.send(:override, node, tag2b, nil, nil)
         expect(node[:select]).to be_falsey
       end
-      it 'set node3' do
+      it 'sets node3' do
         node = {}
         subject.send(:override, node, tag3b, nil, nil)
         expect(node[:select]).to be_falsey

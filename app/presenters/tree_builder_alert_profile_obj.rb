@@ -20,8 +20,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
   end
 
   def set_locals_for_render
-    locals = super
-    locals.merge!(
+    super.merge!(
       :oncheck     => "miqOnCheckHandler",
       :check_url   => "/miq_policy/alert_profile_assign_changed/",
       :checkboxes  => true,
@@ -31,9 +30,8 @@ class TreeBuilderAlertProfileObj < TreeBuilder
   end
 
   def root_options
-    t = @cat_tree ? _("Tags") : ui_lookup(:tables => @assign_to)
     {
-      :title        => t,
+      :title        => @cat_tree ? _("Tags") : ui_lookup(:tables => @assign_to),
       :tooltip      => "",
       :icon         => "pficon pficon-folder-open",
       :hideCheckbox => true,

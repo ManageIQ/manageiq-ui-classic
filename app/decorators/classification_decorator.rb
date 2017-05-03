@@ -1,6 +1,6 @@
 class ClassificationDecorator < MiqDecorator
   def self.fonticon
-    'pficon pficon-folder-close'
+    super
   end
 
   def fonticon
