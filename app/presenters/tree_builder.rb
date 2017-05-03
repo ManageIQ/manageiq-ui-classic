@@ -233,10 +233,8 @@ class TreeBuilder
   #   [Object, {Object1 => {}, Object2 => {Object2a => {}}}]
   #
   def object_from_ancestry(object)
-    if object.kind_of?(Array) && object.size == 2 && object[1].kind_of?(Hash)
-      obj = object.first
-      children = object.last
-      [obj, children]
+    if object.kind_of?(Array) && object.size == 2 && (object[1].kind_of?(Hash) || object[1].kind_of?(Array))
+      object
     else
       [object, nil]
     end
