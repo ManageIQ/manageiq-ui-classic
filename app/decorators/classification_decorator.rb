@@ -1,9 +1,9 @@
 class ClassificationDecorator < MiqDecorator
   def self.fonticon
-    super
+    'pficon pficon-folder-close'
   end
 
   def fonticon
-    category? ? 'pficon pficon-folder-close' : 'fa fa-tag'
+    category? ? super : 'fa fa-tag'
   end
 end
