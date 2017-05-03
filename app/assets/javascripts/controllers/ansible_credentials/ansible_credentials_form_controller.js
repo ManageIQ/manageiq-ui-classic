@@ -14,6 +14,7 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
 
     vm.credential_options = {};
     vm.select_options = [];
+    vm.deleteFromModel = [];
 
     vm.newRecord = credentialId === 'new';
     vm.afterGet = false;
@@ -65,7 +66,7 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
   };
 
   vm.saveClicked = function(angularForm) {
-    API.put('/api/authentications/' + credentialId, vm.credentialModel)
+    API.put('/api/authentications/' + credentialId, purgeModel())
        .then(getBack.bind(vm, sprintf(__("Modification of Credential \"%s\" has been successfully queued."), vm.credentialModel.name), false, false))
        .catch(miqService.handleFailure);
   };
@@ -75,6 +76,10 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
        .then(getBack.bind(vm, sprintf(__("Add of Credential \"%s\" has been successfully queued."), vm.credentialModel.name), false, false))
        .catch(miqService.handleFailure);
   };
+
+  function purgeModel() {
+    return _.omit(vm.credentialModel, vm.deleteFromModel);
+  }
 
   function toggleResetFlag() {
     if (vm.reset) {

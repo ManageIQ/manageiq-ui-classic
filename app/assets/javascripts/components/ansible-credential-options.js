@@ -5,6 +5,7 @@ ManageIQ.angular.app.component('ansibleCredentialOptions', {
     type: '<',
     newRecord: '<',
     reset: '=',
+    deleteFromModel: '=',
     storedPasswordPlaceholder: '<',
   },
 
@@ -30,6 +31,7 @@ ManageIQ.angular.app.component('ansibleCredentialOptions', {
       this.model[name] = '';
       // The temp variable is required to make the form dirty and enable Save button
       this.model[name + '_temp'] = this.storedPasswordPlaceholder;
+      this.deleteFromModel.push(name + '_temp');
       $scope.$broadcast('reactiveFocus');
     };
 
