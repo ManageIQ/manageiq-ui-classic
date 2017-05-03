@@ -24,6 +24,10 @@ module Mixins
       end
     end
 
+    # !============================================!
+    # PLEASE PREFER find_records_with_rbac OVER THIS
+    # !============================================!
+    #
     # Test RBAC on every item checked
     # Params:
     #   klass - class of accessed objects
@@ -36,6 +40,10 @@ module Mixins
       items
     end
 
+    # !============================================!
+    # PLEASE PREFER find_records_with_rbac OVER THIS
+    # !============================================!
+    #
     # Test RBAC on every item checked
     # Params:
     #   klass - class of accessed objects
@@ -45,10 +53,14 @@ module Mixins
     def find_checked_records_with_rbac(klass, ids = nil)
       ids ||= find_checked_items
       filtered = Rbac.filtered(klass.where(:id => ids))
-      raise _("Unauthorized object or action") unless ids.length == filtered.length
+      raise _("Can't access selected records") unless ids.length == filtered.length
       filtered
     end
 
+    # !============================================!
+    # PLEASE PREFER find_records_with_rbac OVER THIS
+    # !============================================!
+    #
     # Test RBAC in case there is only one record
     # Params:
     #   klass - class of accessed object
@@ -60,18 +72,16 @@ module Mixins
       raise _("Invalid input") unless is_integer?(id)
       tested_object = klass.find_by(:id => id)
       if tested_object.nil?
-        raise(_("User '%{user_id}' is not authorized to access '%{model}' record id '%{record_id}'") %
-                {:user_id   => current_userid,
-                 :record_id => id,
-                 :model     => ui_lookup(:model => klass.to_s)})
+        raise(_("Can't access selected records"))
       end
       Rbac.filtered_object(tested_object, :user => current_user, :named_scope => options[:named_scope]) ||
-        raise(_("User '%{user_id}' is not authorized to access '%{model}' record id '%{record_id}'") %
-                {:user_id   => current_userid,
-                 :record_id => id,
-                 :model     => ui_lookup(:model => klass.to_s)})
+        raise(_("Can't access selected records"))
     end
 
+    # !============================================!
+    # PLEASE PREFER find_records_with_rbac OVER THIS
+    # !============================================!
+    #
     # Test RBAC in case there is only one record
     # Params:
     #   klass - class of accessed object
@@ -84,26 +94,10 @@ module Mixins
       id
     end
 
-    # Find a record by model and ID.
-    # Set flash errors for not found/not authorized.
-    def find_record_with_rbac_flash(model, id, resource_name = nil)
-      tested_object = klass.find(id)
-      if tested_object.nil?
-        record_name = resource_name ? "#{ui_lookup(:model => model)} '#{resource_name}'" : _("The selected record")
-        add_flash(_("%{record_name} no longer exists in the database") % {:record_name => record_name}, :error)
-        return nil
-      end
-
-      checked_object = Rbac.filtered_object(tested_object, :user => current_user)
-      if checked_object.nil?
-        add_flash(_("You are not authorized to view %{model_name} '%{resource_name}'") %
-          {:model_name => ui_lookup(:model => tested_object.class.base_model.to_s), :resource_name => resource_name}, :error)
-        return nil
-      end
-
-      checked_object
-    end
-
+    # !============================================!
+    # PLEASE PREFER checked_or_params OVER THIS
+    # !============================================!
+    #
     # Tries to load a single checked item on from params.
     # If there's none, takes the id sent in params[:id].
     #
@@ -115,6 +109,36 @@ module Mixins
       obj = objs.blank? && params[:id].present? ? params[:id] : objs[0]
       obj = from_cid(obj) if obj.present?
       obj
+    end
+
+    # Find a record by model and id and test it with RBAC
+    # Params:
+    #   klass   - class of accessed objects
+    #   ids     - accessed object ids
+    #   options - :named_scope :
+    #
+    # Returns:
+    #   Array of selected class instances. If user does not have rights for it,
+    #   either sets flash or raises exception
+    #
+    def find_records_with_rbac(klass, ids, options = {})
+      filtered = Rbac.filtered(klass.where(:id => ids),
+                               :user        => current_user,
+                               :named_scope => options[:named_scope])
+      raise(_("Can't access selected records")) unless ids.length == filtered.length
+      filtered
+    end
+
+    # Tries to load checked items from params.
+    # If there are none, takes the id sent in params[:id]
+    #
+    # Returns:
+    #   Array of ids of the items as a Fixnum
+    #
+    def checked_or_params
+      objs = (checked = find_checked_items).blank? && params[:id].present? ? Array(params[:id]) : checked
+      objs.map! { |compressed| from_cid(compressed) } if objs.present?
+      objs
     end
 
     # Either creates a new instance or loads the one passed in 'ids'.
