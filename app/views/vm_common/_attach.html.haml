@@ -1,4 +1,8 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "vmCloudAttachFormController"}
+%form#form_div{:name           => "angularForm",
+               'ng-controller' => "vmCloudAttachFormController as vm",
+               "miq-form"      => true,
+               "model"         => "vm.vmCloudModel",
+               "model-copy"    => 'vm.modelCopy'}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Attach Volume')
@@ -9,24 +13,22 @@
       .col-md-8
         = select_tag("volume_id",
                       options_for_select(@volume_choices),
-                      "ng-model"                    => "vmCloudModel.volume_id",
+                      "ng-model"                    => "vm.vmCloudModel.volume_id",
                       :miqrequired                  => true,
                       :checkchange                  => true,
-                      "selectpicker-for-select-tag" => "")
+                      "selectpicker-for-select-tag" => true)
     .form-group
       %label.col-md-2.control-label
         = _('Device Mountpoint (optional)')
       .col-md-8
         %input.form-control{:type          => "text",
                             :name          => "device_path",
-                            'ng-model'     => "vmCloudModel.device_path",
+                            'ng-model'     => "vm.vmCloudModel.device_path",
                             'ng-maxlength' => 128,
                             :miqrequired   => false,
                             :checkchange   => true}
 
-  %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
-                  'paging_div_buttons_id'            => "angular_paging_div_buttons",
-                  'paging_div_buttons_type'          => "Submit"}
+  = render :partial => "layouts/angular/paging_group_buttons.html.haml"
 
 :javascript
   ManageIQ.angular.app.value('vmCloudAttachFormId', '#{@vm.id}');
