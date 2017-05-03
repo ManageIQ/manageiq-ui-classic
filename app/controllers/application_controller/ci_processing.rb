@@ -97,12 +97,11 @@ module ApplicationController::CiProcessing
         replace_gtl_main_div
       elsif request.xml_http_request?
         # reload toolbars - AJAX request
-        c_tb = build_toolbar(center_toolbar_filename)
         render :update do |page|
           page << javascript_prologue
           page.replace("flash_msg_div", :partial => "layouts/flash_msg")
           page.replace_html("main_div", :partial => "shared/views/ems_common/show") # Replace main div area contents
-          page << javascript_pf_toolbar_reload('center_tb', c_tb)
+          page << javascript_reload_toolbars
           page.replace_html("paging_div",
                             :partial => 'layouts/pagingcontrols',
                             :locals  => {:pages      => @pages,

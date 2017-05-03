@@ -35,11 +35,10 @@ module MiqPolicyController::Rsop
           @rsop_tree = TreeBuilderPolicySimulationResults.new(:rsop_tree, :rsop, @sb, true, @sb[:rsop])
         end
       end
-      c_tb = build_toolbar(center_toolbar_filename)
       render :update do |page|
         page << javascript_prologue
         page.replace_html("main_div", :partial => "rsop_results")
-        page << javascript_pf_toolbar_reload('center_tb', c_tb)
+        page << javascript_reload_toolbars
         page << "miqSparkle(false);"
       end
     elsif params[:button] == "reset"
@@ -135,7 +134,6 @@ module MiqPolicyController::Rsop
   end
 
   def rsop_button_pressed
-    c_tb = build_toolbar(center_toolbar_filename)
     render :update do |page|
       page << javascript_prologue
       if params[:action] == "rsop_toggle"
@@ -152,7 +150,7 @@ module MiqPolicyController::Rsop
         # if rsop_show_options came in
         page.replace_html("main_div", :partial => "rsop_results")
       end
-      page << javascript_pf_toolbar_reload('center_tb', c_tb)
+      page << javascript_reload_toolbars
     end
   end
 end

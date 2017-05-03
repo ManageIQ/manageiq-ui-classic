@@ -634,7 +634,8 @@ module ApplicationHelper
     javascript_for_miq_button_visibility(changed)
   end
 
-  def javascript_pf_toolbar_reload(div_id, toolbar)
+  # reload all toolbars
+  def javascript_reload_toolbars
     "sendDataWithRx({redrawToolbar: #{toolbar_from_hash.to_json}});"
   end
 

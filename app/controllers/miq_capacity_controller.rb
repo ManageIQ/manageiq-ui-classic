@@ -130,13 +130,12 @@ class MiqCapacityController < ApplicationController
       # build timeline data when coming back to Summary tab for bottlenecks
       bottleneck_get_node_info(x_node)
     end
-    if x_active_tree != :bottlenecks_tree
-      v_tb = build_toolbar("miq_capacity_view_tb")
-    end
+    show_view_toolbar = x_active_tree != :bottlenecks_tree
     render :update do |page|
       page << javascript_prologue
-      page << javascript_pf_toolbar_reload('view_tb', v_tb)
-      if @sb[:active_tab] == 'report' && v_tb.present?
+      page << javascript_reload_toolbars if show_view_toolbar
+
+      if @sb[:active_tab] == 'report' && show_view_toolbar
         page << "$('#toolbar').show();"
       else
         page << "$('#toolbar').hide();"
@@ -557,11 +556,11 @@ class MiqCapacityController < ApplicationController
     if params[:button] == "reset"
       session[:changed] = false
       add_flash(_("Planning options have been reset by the user"))
-      v_tb = build_toolbar("miq_capacity_view_tb")
+
       render :update do |page|
         page << javascript_prologue
         page << "$('#toolbar').show();"
-        page << javascript_pf_toolbar_reload('view_tb', v_tb) if v_tb.present?
+        page << javascript_reload_toolbars
         page << javascript_for_miq_button_visibility(session[:changed])
         page.replace("planning_options_div", :partial => "planning_options")
         page.replace_html("main_div", :partial => "planning_tabs")

@@ -49,11 +49,10 @@ class MiqRequestController < ApplicationController
     elsif params[:pressed] == "miq_request_reload"
       if @display == "main" && params[:id].present?
         show
-        c_tb = build_toolbar(center_toolbar_filename)
         render :update do |page|
           page << javascript_prologue
           page.replace("request_div", :partial => "miq_request/request")
-          page << javascript_pf_toolbar_reload('center_tb', c_tb)
+          page << javascript_reload_toolbars
         end
       elsif @display == "miq_provisions"
         show

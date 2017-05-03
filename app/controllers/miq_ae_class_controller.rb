@@ -20,11 +20,10 @@ class MiqAeClassController < ApplicationController
     @explorer = true
     @record = @ae_class = MiqAeClass.find_by_id(from_cid(x_node.split('-').last))
     @sb[:active_tab] = params[:tab_id]
-    c_tb = build_toolbar(center_toolbar_filename)
     render :update do |page|
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-      page << javascript_pf_toolbar_reload('center_tb', c_tb)
+      page << javascript_reload_toolbars
       page << "miqSparkle(false);"
     end
   end
