@@ -3,6 +3,7 @@ ManageIQ.angular.app.component('ansibleCredentialOptions', {
     model: '=',
     options: '<',
     type: '<',
+    storedPasswordPlaceholder: '<',
   },
 
   controllerAs: 'vm',

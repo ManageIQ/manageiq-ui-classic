@@ -21,6 +21,8 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     ManageIQ.angular.scope = vm;
     vm.saveable = miqService.saveable;
 
+    vm.storedPasswordPlaceholder = miqService.storedPasswordPlaceholder;
+
     miqService.sparkleOn();
 
     // get credential specific options for all supported credential types
