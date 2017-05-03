@@ -22,13 +22,12 @@ class TreeBuilderAutomationManagerConfigurationScripts < TreeBuilder
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only, _options)
-    count_only_or_objects(count_only,
-                          Rbac.filtered(ManageIQ::Providers::AnsibleTower::AutomationManager.order("lower(name)"),
-                                        :match_via_descendants => ConfigurationScript), "name")
+    roots = ManageIQ::Providers::AnsibleTower::AutomationManager
+    count_only_or_objects_filtered(count_only, roots, "name", :match_via_descendants => ConfigurationScript)
   end
 
   def x_get_tree_cmat_kids(object, count_only)
-    count_only_or_objects(count_only,
-                          Rbac.filtered(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript.where(:manager_id => object.id)), "name")
+    scripts = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript.where(:manager_id => object.id)
+    count_only_or_objects_filtered(count_only, scripts, "name")
   end
 end

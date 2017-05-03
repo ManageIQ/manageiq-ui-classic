@@ -57,6 +57,6 @@ class TreeBuilderOrchestrationTemplates < TreeBuilder
       "otvnf" => OrchestrationTemplateVnfd,
       "otvap" => ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate
     }
-    count_only_or_objects_filtered(count_only, classes[object[:id]].where(["orderable=?", true]), "name")
+    count_only_or_objects_filtered(count_only, classes[object[:id]].where(:orderable => true), "name")
   end
 end
