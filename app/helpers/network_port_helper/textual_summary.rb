@@ -16,7 +16,7 @@ module NetworkPortHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(parent_ems_cloud ems_network cloud_tenant instance cloud_subnets floating_ips host)
+      %i(parent_ems_cloud ems_network cloud_tenant device cloud_subnets floating_ips security_groups host)
     )
   end
 
@@ -47,17 +47,22 @@ module NetworkPortHelper::TextualSummary
     @record.ext_management_system.try(:parent_manager)
   end
 
-  def textual_instance
-    label    = ui_lookup(:table => "vm_cloud")
-    instance = @record.device
-    h        = nil
-    if instance && role_allows?(:feature => "vm_show")
-      h = {:label => label, :icon => "pficon pficon-virtual-machine"}
-      h[:value] = instance.name
-      h[:link]  = url_for_only_path(:controller => 'vm_cloud', :action => 'show', :id => instance.id)
-      h[:title] = _("Show %{label}") % {:label => label}
+  def textual_device
+    device = @record.device
+    if device.kind_of?(VmOrTemplate)
+      label    = ui_lookup(:table => "vm_cloud")
+      instance = @record.device
+      h        = nil
+      if instance && role_allows?(:feature => "vm_show")
+        h         = {:label => label, :icon => "pficon pficon-virtual-machine"}
+        h[:value] = instance.name
+        h[:link]  = url_for_only_path(:controller => 'vm_cloud', :action => 'show', :id => instance.id)
+        h[:title] = _("Show %{label}") % {:label => label}
+      end
+      h
+    else
+      device
     end
-    h
   end
 
   def textual_cloud_tenant
@@ -70,6 +75,10 @@ module NetworkPortHelper::TextualSummary
 
   def textual_floating_ips
     @record.floating_ips
+  end
+
+  def textual_security_groups
+    @record.security_groups
   end
 
   def textual_host
