@@ -12,29 +12,29 @@ describe Mixins::CheckedIdMixin do
     end
     # create records
     before :each do
-      @vm_1 = FactoryGirl.create(:vm_or_template, :id => 1000000000001)
-      @vm_2 = FactoryGirl.create(:vm_or_template, :id => 1000000000002)
-      @vm_3 = FactoryGirl.create(:vm_or_template, :id => 1000000000003)
+      @vm1 = FactoryGirl.create(:vm_or_template, :id => 1_000_000_000_001)
+      @vm2 = FactoryGirl.create(:vm_or_template, :id => 1_000_000_000_002)
+      @vm3 = FactoryGirl.create(:vm_or_template, :id => 1_000_000_000_003)
     end
 
     subject { mixin.send(:find_records_with_rbac, model, id) }
 
     context 'when single record is checked in show list' do
       let(:model) { VmOrTemplate }
-      let(:id) { [1000000000001] }
-      it { is_expected.to eq([@vm_1]) }
+      let(:id) { [1_000_000_000_001] }
+      it { is_expected.to eq([@vm1]) }
     end
 
     context 'when multiple records are checked in show list' do
       let(:model) { VmOrTemplate }
-      let(:id) { [1000000000001, 1000000000002] }
-      it { is_expected.to eq([@vm_1, @vm_2]) }
+      let(:id) { [1_000_000_000_001, 1_000_000_000_002] }
+      it { is_expected.to eq([@vm1, @vm2]) }
     end
 
     context 'when user is not authorized to access the record' do
-      before { allow(Rbac).to receive(:filtered).and_return([@vm_1, @vm_2]) }
+      before { allow(Rbac).to receive(:filtered).and_return([@vm1, @vm2]) }
       let(:model) { VmOrTemplate }
-      let(:id) { [1000000000001, 1000000000002, 1000000000003] }
+      let(:id) { [1_000_000_000_001, 1_000_000_000_002, 1_000_000_000_003] }
       it 'is expected to raise exeption' do
         expect { subject }.to raise_error("Can't access selected records")
       end
@@ -42,7 +42,7 @@ describe Mixins::CheckedIdMixin do
 
     context 'when user tries to access non-existent record' do
       let(:model) { VmOrTemplate }
-      let(:id) { [1000000000001, 1000000000002, 1000000000004] }
+      let(:id) { [1_000_000_000_001, 1_000_000_000_002, 1_000_000_000_004] }
       it 'is expected to raise exeption' do
         expect { subject }.to raise_error("Can't access selected records")
       end

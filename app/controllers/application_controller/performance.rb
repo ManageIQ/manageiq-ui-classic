@@ -322,7 +322,8 @@ module ApplicationController::Performance
 
   # display timeline for the selected CI
   def timeline_selected(chart_click_data, data_row, ts)
-    return [true, nil] unless @record = perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"])
+    @record = perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"])
+    return [true, nil] unless @record
     controller = data_row["resource_type"].underscore
     new_opts = tl_session_data(controller) || ApplicationController::Timelines::Options.new
     new_opts[:model] = data_row["resource_type"]
@@ -436,7 +437,8 @@ module ApplicationController::Performance
 
   # Create daily/hourly chart for selected CI
   def chart_selected(chart_click_data, data_row, ts)
-    return [true, nil] unless @record = perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"])
+    @record = perf_menu_record_valid(data_row["resource_type"], data_row["resource_id"])
+    return [true, nil] unless @record
     # Set the perf options in the selected controller's sandbox
     cont = data_row["resource_type"].underscore.downcase.to_sym
     session[:sandboxes][cont] ||= {}
