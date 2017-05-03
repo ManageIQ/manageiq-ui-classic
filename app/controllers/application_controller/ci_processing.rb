@@ -1151,6 +1151,18 @@ module ApplicationController::CiProcessing
     host_button_operation('provide', _('Provide'))
   end
 
+  def refreshphysicalservers
+    # TODO: refresh physical servers
+  end
+
+  def deletephysicalservers
+    # TODO: delete physical servers
+  end
+
+  def editphysicalservers
+    # TODO: edit physical servers
+  end
+
   # Handle the Host power buttons
   POWER_BUTTON_NAMES = {
     "reboot"           => _("Restart"),

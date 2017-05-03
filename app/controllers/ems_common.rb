@@ -53,6 +53,68 @@ module EmsCommon
     drop_breadcrumb(:name => @ems.name + _(" (Ad hoc Metrics)"), :url => show_link(@ems))
   end
 
+  def show_topology
+    @showtype = "topology"
+    @lastaction = "show_topology"
+    drop_breadcrumb(:name => @ems.name + _(" (Topology)"), :url => show_link(@ems))
+  end
+
+  def view_setup_params
+    {
+      "instances"                     => [ManageIQ::Providers::CloudManager::Vm, _("Instances")],
+      "images"                        => [ManageIQ::Providers::CloudManager::Template, _("Images")],
+      "block_storage_managers"        => [ManageIQ::Providers::StorageManager,
+                                          _("Block Storage Managers"),
+                                          :block_storage_managers],
+      "object_storage_managers"       => [ManageIQ::Providers::StorageManager,
+                                          _("Object Storage Managers"),
+                                          :object_storage_managers],
+      "storage_managers"              => [ManageIQ::Providers::StorageManager,
+                                          _("Storage Managers"),
+                                          :storage_managers],
+      "miq_templates"                 => [MiqTemplate,            _("Templates")],
+      "vms"                           => [Vm,                     _("VMs")],
+      "orchestration_stacks"          => [OrchestrationStack,     _("Stacks")],
+      # "configuration_jobs"            => [ConfigurationJob, _("Configuration Jobs")],
+      "cloud_object_store_containers" => [CloudObjectStoreContainer, _('Cloud Object Store Containers')],
+      'containers'                    => [Container,              _('Containers')],
+      'container_replicators'         => [ContainerReplicator,    _('Container Replicators')],
+      'container_nodes'               => [ContainerNode,          _('Container Nodes')],
+      'container_groups'              => [ContainerGroup,         _('Pods')],
+      'container_services'            => [ContainerService,       _('Container Services')],
+      'container_images'              => [ContainerImage,         _('Container Images')],
+      'container_routes'              => [ContainerRoute,         _('Container Routes')],
+      'container_builds'              => [ContainerBuild,         _('Container Builds')],
+      'container_projects'            => [ContainerProject,       _('Container Projects')],
+      'container_image_registries'    => [ContainerImageRegistry, _('Container Image Registries')],
+      'container_templates'           => [ContainerTemplate,      _('Container Templates')],
+      'availability_zones'            => [AvailabilityZone,       _('Availability Zones')],
+      'host_aggregates'               => [HostAggregate,          _('Host Aggregates')],
+      'middleware_servers'            => [MiddlewareServer,       _('Middleware Servers')],
+      'middleware_deployments'        => [MiddlewareDeployment,   _('Middleware Deployments')],
+      'middleware_datasources'        => [MiddlewareDatasource,   _('Middleware Datasources')],
+      'middleware_domains'            => [MiddlewareDomain,       _('Middleware Domains')],
+      'middleware_server_groups'      => [MiddlewareServerGroup,  _('Middleware Server Groups')],
+      'middleware_messagings'         => [MiddlewareMessaging,    _('Middleware Messagings')],
+      'cloud_tenants'                 => [CloudTenant,            _('Cloud Tenants')],
+      'cloud_volumes'                 => [CloudVolume,            _('Cloud Volumes')],
+      'cloud_volume_snapshots'        => [CloudVolumeSnapshot,    _('Cloud Volume Snapshots')],
+      'flavors'                       => [Flavor,                 _('Flavors')],
+      'security_groups'               => [SecurityGroup,          _('Security Groups')],
+      'floating_ips'                  => [FloatingIp,             _('Floating IPs')],
+      'network_routers'               => [NetworkRouter,          _('Network Routers')],
+      'network_ports'                 => [NetworkPort,            _('Network Ports')],
+      'cloud_subnets'                 => [CloudSubnet,            _('Cloud Subnets')],
+      'cloud_networks'                => [CloudNetwork,           _('Cloud Networks')],
+      'load_balancers'                => [LoadBalancer,           _('Load Balancers')],
+      'storages'                      => [Storage,                _('Managed Datastores')],
+      'ems_clusters'                  => [EmsCluster,             title_for_clusters],
+      'persistent_volumes'            => [PersistentVolume,       _('Volumes'), :persistent_volumes],
+      'hosts'                         => [Host,                   _("Managed Hosts")],
+      'physical_servers'              => [PhysicalServer,         _("Physical Servers")],
+    }
+  end
+
   def display_block_storage_managers
     nested_list('block_storage_manager', ManageIQ::Providers::StorageManager, :parent_method => :block_storage_managers)
   end
@@ -335,6 +397,10 @@ module EmsCommon
       when "network_router_tag"               then tag(NetworkRouter)
       when "orchestration_stack_tag"          then tag(OrchestrationStack)
       when "security_group_tag"               then tag(SecurityGroup)
+      # Physical server
+      when "physical_server_refresh"          then refreshphysicalservers
+      when "physical_server_delete"           then deletephysicalservers
+      when "physical_server_edit"             then editphysicalservers
       end
 
       pfx = pfx_for_vm_button_pressed(params[:pressed])
@@ -707,6 +773,13 @@ module EmsCommon
     @hawkular_security_protocols = retrieve_hawkular_security_protocols
   end
 
+  def retrieve_hawkular_security_protocols
+    [[_('SSL'), 'ssl-with-validation'],
+     [_('SSL trusting custom CA'), 'ssl-with-validation-custom-ca'],
+     [_('SSL without validation'), 'ssl-without-validation'],
+     [_('Non-SSL'), 'non-ssl']]
+  end
+
   def retrieve_provider_regions
     managers = model.supported_subclasses.select(&:supports_regions?)
     managers.each_with_object({}) do |manager, provider_regions|
@@ -755,13 +828,6 @@ module EmsCommon
     [[_('SSL'), 'ssl-with-validation'],
      [_('SSL trusting custom CA'), 'ssl-with-validation-custom-ca'],
      [_('SSL without validation'), 'ssl-without-validation']]
-  end
-
-  def retrieve_hawkular_security_protocols
-    [[_('SSL'), 'ssl-with-validation'],
-     [_('SSL trusting custom CA'), 'ssl-with-validation-custom-ca'],
-     [_('SSL without validation'), 'ssl-without-validation'],
-     [_('Non-SSL'), 'non-ssl']]
   end
 
   # Get variables from edit form
