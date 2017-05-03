@@ -12,7 +12,7 @@ class ApplicationHelper::ToolbarChooser
 
   def history_toolbar_filename
     if x_active_tree == :dialogs_tree || %w(chargeback miq_ae_tools miq_capacity_planning miq_capacity_utilization miq_policy_rsop ops).include?(@layout)
-      'blank_view_tb'
+      nil
     else
       'x_history_tb'
     end
@@ -24,13 +24,13 @@ class ApplicationHelper::ToolbarChooser
     elsif %w(miq_capacity_planning miq_capacity_utilization).include?(@layout)
       'miq_capacity_view_tb'
     elsif @record && @explorer && (%w(services catalogs).include?(@layout) || %w(performance timeline).include?(@display))
-      'blank_view_tb'
+      nil
     elsif @layout == 'report'
-      @report ? "report_view_tb" : "blank_view_tb"
+      @report ? "report_view_tb" : nil
     elsif @layout == 'provider_foreman'
       @showtype == 'main' ? "x_summary_view_tb" : "x_gtl_view_tb"
     else
-      'blank_view_tb'
+      nil
     end
   end
 
@@ -50,7 +50,7 @@ class ApplicationHelper::ToolbarChooser
           @display == "main" && @showtype == "main" && !@in_a_form
       controller_restful? ? "summary_view_restful_tb" : "summary_view_tb"
     else
-      'blank_view_tb'
+      nil
     end
   end
 
@@ -117,7 +117,7 @@ class ApplicationHelper::ToolbarChooser
         elsif @layout == "chargeback"
           return center_toolbar_filename_chargeback
         elsif @layout == "miq_ae_tools"
-          return super_admin_user? ? "miq_ae_tools_simulate_center_tb" : "blank_view_tb"
+          return super_admin_user? ? "miq_ae_tools_simulate_center_tb" : nil
         elsif @layout == "miq_policy"
           return center_toolbar_filename_miq_policy
         elsif @layout == "ops"
@@ -133,7 +133,7 @@ class ApplicationHelper::ToolbarChooser
         end
       end
     end
-    "blank_view_tb"
+    nil
   end
 
   def center_toolbar_filename_automate
@@ -159,7 +159,7 @@ class ApplicationHelper::ToolbarChooser
     elsif !ns.domain?
       "miq_ae_namespace_center_tb"
     else
-      "blank_view_tb"
+      nil
     end
   end
 
@@ -187,7 +187,7 @@ class ApplicationHelper::ToolbarChooser
     elsif @in_a_form      # to show buttons on dialog add/edit screens
       return "dialog_center_tb"
     end
-    "blank_view_tb"
+    nil
   end
 
   def center_toolbar_filename_services
@@ -247,7 +247,7 @@ class ApplicationHelper::ToolbarChooser
         return "chargeback_center_tb"
       end
     end
-    "blank_view_tb"
+    nil
   end
 
   def center_toolbar_filename_miq_policy
@@ -266,7 +266,7 @@ class ApplicationHelper::ToolbarChooser
       when :policy_profile_tree then  "miq_policy_profiles_center_tb"
       when :action_tree then          "miq_actions_center_tb"
       when :alert_tree then           "miq_alerts_center_tb"
-      else                        "blank_view_tb"
+      else nil
       end
     when "pp" then  "miq_policy_profile_center_tb"
     when "p" then   "miq_policy_center_tb"
@@ -275,7 +275,7 @@ class ApplicationHelper::ToolbarChooser
     when "a" then   "miq_action_center_tb"
     when "al" then  "miq_alert_center_tb"
     when "ap" then  "miq_alert_profile_center_tb"
-    else        "blank_view_tb"
+    else nil
     end
   end
 
@@ -334,14 +334,14 @@ class ApplicationHelper::ToolbarChooser
         return "vmdb_table_center_tb"
       end
     end
-    "blank_view_tb"
+    nil
   end
 
   def center_toolbar_filename_report
     if x_active_tree == :db_tree
       node = x_node
       if node == "root" || node == "xx-g"
-        return "blank_view_tb"
+        return nil
       elsif node.split('-').length == 3
         return "miq_widget_sets_center_tb"
       else
@@ -373,7 +373,7 @@ class ApplicationHelper::ToolbarChooser
       return node == "root" || node.split('-').length == 2 ?
           "miq_widgets_center_tb" : "miq_widget_center_tb"
     end
-    "blank_view_tb"
+    nil
   end
 
   def center_toolbar_filename_pxe
@@ -415,7 +415,7 @@ class ApplicationHelper::ToolbarChooser
         end
       end
     end
-    "blank_view_tb"
+    nil
   end
 
   def center_toolbar_filename_storage
@@ -433,7 +433,7 @@ class ApplicationHelper::ToolbarChooser
         return "storages_center_tb"
       end
     end
-    "blank_view_tb"
+    nil
   end
 
   # Return non-explorer based toolbar file name
@@ -555,7 +555,7 @@ class ApplicationHelper::ToolbarChooser
         end
       end
     end
-    "blank_view_tb"
+    nil
   end
 
   def center_toolbar_filename_configuration_manager_providers
@@ -650,7 +650,7 @@ class ApplicationHelper::ToolbarChooser
     if @sb[:active_tab] == "configured_systems"
       "unassigned_profiles_group_center_tb"
     else
-      "blank_view_tb"
+      nil
     end
   end
 
@@ -658,7 +658,7 @@ class ApplicationHelper::ToolbarChooser
     if @sb[:active_tab] == "configured_systems"
       "configured_systems_ansible_center_tb"
     else
-      "blank_view_tb"
+      nil
     end
   end
 
