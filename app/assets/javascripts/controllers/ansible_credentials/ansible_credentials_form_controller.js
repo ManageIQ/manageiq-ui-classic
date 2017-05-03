@@ -115,6 +115,8 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
 
           if (response.options[key]) {
             vm.credentialModel[key] = response.options[key];
+          } else if (response[key]) {
+            vm.credentialModel[key] = response[key];
           }
         }
       });
