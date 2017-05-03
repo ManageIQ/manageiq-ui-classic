@@ -1,11 +1,9 @@
 describe TreeBuilderAlertProfileObj do
-  
   before do
-   role = MiqUserRole.find_by(:name => "EvmRole-operator")
-   group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Tags Group")
-   login_as FactoryGirl.create(:user, :userid => 'tags_wilma', :miq_groups => [group])
+    role = MiqUserRole.find_by(:name => "EvmRole-operator")
+    group = FactoryGirl.create(:miq_group, :miq_user_role => role, :description => "Tags Group")
+    login_as FactoryGirl.create(:user, :userid => 'tags_wilma', :miq_groups => [group])
   end
-  
   let(:tag1a) { FactoryGirl.create(:classification, :name => 'tag1a') }
   let(:tag2a) { FactoryGirl.create(:classification, :name => 'tag2a') }
   let(:tag3a) { FactoryGirl.create(:classification, :name => 'tag3a') }
@@ -48,19 +46,18 @@ describe TreeBuilderAlertProfileObj do
     end
 
     describe '#override' do
+      let(:node) { {} }
+
       it 'sets node1' do
-        node = {}
         subject.send(:override, node, tag1a, nil, nil)
         expect(node[:hideCheckbox]).to be_falsey
         expect(node[:select]).to be_truthy
       end
       it 'sets node2' do
-        node = {}
         subject.send(:override, node, tag2a, nil, nil)
         expect(node[:select]).to be_truthy
       end
       it 'sets node3' do
-        node = {}
         subject.send(:override, node, tag3a, nil, nil)
         expect(node[:select]).to be_falsey
       end
@@ -101,25 +98,6 @@ describe TreeBuilderAlertProfileObj do
       it 'sets first level nodes correctly' do
         s = subject.send(:x_get_tree_roots, false, nil)
         expect(s).to eq(Tenant.all.sort_by { |o| (o.name.presence || o.description).downcase })
-      end
-    end
-
-    describe '#override' do
-      it 'sets node1' do
-        node = {}
-        subject.send(:override, node, tag1b, nil, nil)
-        expect(node[:hideCheckbox]).to be_falsey
-        expect(node[:select]).to be_truthy
-      end
-      it 'sets node2' do
-        node = {}
-        subject.send(:override, node, tag2b, nil, nil)
-        expect(node[:select]).to be_falsey
-      end
-      it 'sets node3' do
-        node = {}
-        subject.send(:override, node, tag3b, nil, nil)
-        expect(node[:select]).to be_falsey
       end
     end
   end
