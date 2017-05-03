@@ -72,12 +72,12 @@ class MiddlewareTopologyService < TopologyService
   end
 
   def glyph?(entity)
-    [MiddlewareDatasource, MiddlewareDeployment, Vm, MiddlewareDomain, MiddlewareServerGroup, MiddlewareMessaging]
+    [MiddlewareDatasource, MiddlewareDeployment, Vm, Container, MiddlewareDomain, MiddlewareServerGroup, MiddlewareMessaging]
       .any? { |klass| entity.kind_of? klass }
   end
 
   def build_kinds
-    kinds = [:MiddlewareDeployment, :MiddlewareDatasource, :MiddlewareDomain, :MiddlewareManager, :Vm,
+    kinds = [:MiddlewareDeployment, :MiddlewareDatasource, :MiddlewareDomain, :MiddlewareManager, :Vm, :Container,
              :MiddlewareServer, :MiddlewareServerGroup, :MiddlewareMessaging]
     build_legend_kinds(kinds)
   end
