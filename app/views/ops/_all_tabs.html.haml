@@ -14,6 +14,7 @@
         = miq_tab_content("settings_evm_servers", @sb[:active_tab]) do
           = render :partial => "settings_evm_servers_tab"
     - elsif selected?(x_node, "svr")
+      = render :partial => "layouts/flash_msg"
       - cur_svr_id = from_cid(x_node.split("-").last).to_i
       %ul.nav.nav-tabs
         = miq_tab_header("settings_server", @sb[:active_tab]) do
