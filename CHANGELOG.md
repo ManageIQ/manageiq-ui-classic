@@ -2,10 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
+## Fine Release Candidate
+
+### Added
+- Services
+  - Show additional fields for dynamic fields [(#1199)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1199)
+  - Added "Escalate Privilege" checkbox [(#1207)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1207)
+
+### Fixed
+- Ansible
+  - Ansible refresh button: correctly send miq_grid_checks [(#1176)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1176)
+  - Advanced search bar ansible tower fix [(#1209)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1209)
+- Compute
+  - Cloud: Fix VmCloud Resize/Reconfigure form bugs [(#1163)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1163)
+  - Containers
+    - Add UI support for Pod to PV relationship [(#682)](https://github.com/ManageIQ/manageiq-ui-classic/pull/682)
+    - Fix tags format [(#1180)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1180)
+- GTL: Fixed quadicon text links. [(#1188)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1188)
+- Services
+  - Show VMware credential in service provisioning summary [(#1160)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1160)
+  - Fix for Service Catalogs: Dialogs are hanging and keeps buffering [(#1197)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1197)
+  - Check whether form is pristine after deleting extra var during edit [(#1146)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1146)
+  - Removed decodeURI call. [(#1167)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1167)
+  - Add VMWare vApp type to the Create Orchestration Template type list [(#1201)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1201)
+  - Send extra_vars & hosts values only when retirement playbook is selected [(#1210)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1210)
+- Trees: Add some missing icons into automate simulation results tree [(#1153)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1153)
+
 ## Fine Beta-2
 
 ### Added
-
 - Ansible: UI for targeted Embedded Ansible refresh [(#1083)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1083)
 - Automate:
   - Ansible: UI for Embedded Ansible Provider refresh [(#934)](https://github.com/ManageIQ/manageiq-ui-classic/pull/934)
