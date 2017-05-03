@@ -13,10 +13,10 @@
           :status                     => "objectStatus.providers",
           "ng-if"                     => "!isSingleProvider"}
     .col-xs-12.col-sm-12.col-md-2
-      %div{:layout                     => "tall",
-          "pf-aggregate-status-card"  => "",
-          "show-top-border"           => "true",
-          :status                     => "objectStatus.alerts"}
+      .alerts-card{:layout                     => "tall",
+                  "pf-aggregate-status-card"  => "",
+                  "show-top-border"           => "true",
+                  :status                     => "objectStatus.alerts"}
     .col-xs-12.col-sm-12.col-md-8
       .row
         .col-xs-6.col-sm-6.col-md-3

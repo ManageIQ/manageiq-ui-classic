@@ -105,19 +105,19 @@ class ContainerDashboardService
       warnings = MiqAlertStatus.where.not(:ems_id => nil).where(:severity => "warning").count
       errors = MiqAlertStatus.where.not(:ems_id => nil).where(:severity => "error").count
     end
+
+    errors_struct = errors > 0 ? {:iconClass => "pficon pficon-error-circle-o", :count => errors} : nil
+    warnings_struct = warnings > 0 ? {:iconClass => "pficon pficon-warning-triangle-o", :count => warnings} : nil
+    notifications = if (errors + warnings) > 0
+                      [errors_struct, warnings_struct].compact
+                    else
+                      [{:iconClass => "pficon-large pficon-ok"}]
+                    end
+
     {
-      :count         => warnings + errors,
+      :count         => (errors + warnings) > 0 ? (errors + warnings) : nil,
       :href          => @controller.url_for_only_path(:action => 'show', :controller => :alerts_overview),
-      :notifications => [
-        {
-          :iconClass => "pficon pficon-error-circle-o",
-          :count     => errors
-        },
-        {
-          :iconClass => "pficon pficon-warning-triangle-o",
-          :count     => warnings
-        }
-      ]
+      :notifications => notifications
     }
   end
 
