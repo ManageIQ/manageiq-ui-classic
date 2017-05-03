@@ -1,4 +1,9 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "vmCloudLiveMigrateFormController"}
+%form#form_div{:name           => "angularForm",
+               'ng-controller' => "vmCloudLiveMigrateFormController as vm",
+               "miq-form"      => true,
+               "model"         => "vm.vmCloudModel",
+               "model-copy"    => 'vm.modelCopy',
+               'form-changed'  => ''}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Migrate Instance')
@@ -9,23 +14,20 @@
       .col-md-8
         %input{:type         => "checkbox",
                :name         => "auto_select_host",
-               'ng-model'    => "vmCloudModel.auto_select_host",
-               :miqrequired  => true,
-               :checkchange  => true,
-               'ng-disabled' => "hosts.length == 0"}
+               'ng-model'    => "vm.vmCloudModel.auto_select_host",
+               'ng-disabled' => "vm.hosts.length == 0"}
 
         %input{:type         => "hidden",
                :name         => "auto_select_host",
                :value        => "on",
-               'ng-if'       => "hosts.length == 0"}
+               'ng-if'       => "vm.hosts.length == 0"}
     .form-group
       %label.col-md-2.control-label
         = _('Block Migration')
       .col-md-8
         %input{:type        => "checkbox",
                :name        => "block_migration",
-               'ng-model'   => "vmCloudModel.block_migration",
-               :miqrequired => true,
+               'ng-model'   => "vm.vmCloudModel.block_migration",
                :checkchange => true}
     .form-group
       %label.col-md-2.control-label
@@ -33,10 +35,9 @@
       .col-md-8
         %input{:type        => "checkbox",
                :name        => "disk_over_commit",
-               'ng-model'   => "vmCloudModel.disk_over_commit",
-               :miqrequired => true,
+               'ng-model'   => "vm.vmCloudModel.disk_over_commit",
                :checkchange => true}
-  #live-migrate-select-destination-host{'ng-hide' => 'vmCloudModel.auto_select_host'}
+  #live-migrate-select-destination-host{'ng-hide' => 'vm.vmCloudModel.auto_select_host'}
     %h3
       = _('Select Destination Host')
     .form-horizontal
@@ -45,13 +46,8 @@
           = _('Destination Host')
         .col-md-8
           %select{:name      => 'destination_host_id',
-                  'ng-model' => 'vmCloudModel.host',
-                  'ng-options' => 'host.name as host.name for host in hosts track by host.id'}
-
-  %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
-                  'paging_div_buttons_state_enabled' => true,
-                  'paging_div_buttons_id'            => "angular_paging_div_buttons",
-                  'paging_div_buttons_type'          => "Submit"}
+                  'ng-model' => 'vm.mCloudModel.host',
+                  'ng-options' => 'host.name as host.name for host in vm.hosts track by host.id'}
 
   %hr
   %div
@@ -61,6 +57,8 @@
       - @embedded = true
       - @quadicon_no_url = true
       = render :partial => "layouts/gtl"
+
+  = render :partial => "layouts/angular/paging_group_buttons.html.haml"
 
 - unless @explorer
   %table{:width => '100%'}
