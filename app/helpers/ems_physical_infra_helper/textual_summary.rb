@@ -7,7 +7,7 @@ module EmsPhysicalInfraHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(hostname ipaddress type port guid)
+      %i(hostname type port guid)
     )
   end
 
@@ -37,12 +37,19 @@ module EmsPhysicalInfraHelper::TextualSummary
   # Items
   #
 
-  def textual_hostname
-    @record.hostname
+  def textual_hosts
+    label = title_for_hosts
+    num   = @ems.number_of(:hosts)
+    h     = {:label => label, :icon => "pficon pficon-screen", :value => num}
+    if num > 0 && role_allows?(:feature => "host_show_list")
+      h[:link]  = ems_infra_path(@ems.id, :display => 'hosts')
+      h[:title] = _("Show all %{label}") % {:label => label}
+    end
+    h
   end
 
-  def textual_ipaddress
-    {:label => _("Discovered IP Address"), :value => @record.ipaddress}
+  def textual_hostname
+    @record.hostname
   end
 
   def textual_type
