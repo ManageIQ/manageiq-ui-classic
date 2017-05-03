@@ -5,7 +5,7 @@ describe ApplicationController do
       "current"  => 1,
       "items"    => 0,
       "total"    => 0,
-      "sort_dir" => "DESC",
+      "sort_dir" => "ASC",
       "sort_col" => 0
     }
   end

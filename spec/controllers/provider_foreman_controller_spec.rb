@@ -326,7 +326,7 @@ describe ProviderForemanController do
       expect(gtl_init_data[:data][:currId]).to eq(ems_id)
       expect(gtl_init_data[:data][:isExplorer]).to eq(true)
       view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0].description).to eq("testprofile2")
+      expect(view.table.data[0].description).to eq("testprofile")
 
       controller.instance_variable_set(:@search_text, "2")
       controller.send(:tree_select)
@@ -341,7 +341,7 @@ describe ProviderForemanController do
       expect(gtl_init_data[:data][:currId]).to eq(config_profile_id2)
       expect(gtl_init_data[:data][:isExplorer]).to eq(true)
       view = controller.instance_variable_get(:@view)
-      expect(view.table.data[0].hostname).to eq("test2b_configured_system")
+      expect(view.table.data[0].hostname).to eq("test2a_configured_system")
 
       controller.instance_variable_set(:@search_text, "2b")
       controller.send(:tree_select)
@@ -375,7 +375,7 @@ describe ProviderForemanController do
       expect(gtl_init_data[:data][:activeTree]).to eq("configuration_manager_providers_tree")
       expect(gtl_init_data[:data][:currId]).to eq(ems_id)
       expect(gtl_init_data[:data][:isExplorer]).to eq(true)
-      expect(view.table.data[0].data).to include('description' => "testprofile2")
+      expect(view.table.data[0].data).to include('description' => "testprofile")
       expect(view.table.data[2]).to include('description' => _("Unassigned Profiles Group"),
                                             'name'        => _("Unassigned Profiles Group"))
     end

@@ -358,8 +358,8 @@ describe AutomationManagerController do
       expect(view.table.data.size).to eq(2)
       expect(show_adv_search).to eq(true)
 
-      expect(view.table.data[0].name).to eq("ConfigScript3")
-      expect(view.table.data[1].name).to eq("ConfigScript1")
+      expect(view.table.data[0].name).to eq("ConfigScript1")
+      expect(view.table.data[1].name).to eq("ConfigScript3")
     end
 
     it "calls get_view with the associated dbname for the Ansible Tower Providers accordion" do
