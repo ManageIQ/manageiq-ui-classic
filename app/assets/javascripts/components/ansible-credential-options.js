@@ -3,6 +3,7 @@ ManageIQ.angular.app.component('ansibleCredentialOptions', {
     model: '=',
     options: '<',
     type: '<',
+    newRecord: '<',
     storedPasswordPlaceholder: '<',
   },
 
@@ -46,13 +47,13 @@ ManageIQ.angular.app.component('ansibleCredentialOptions', {
        '<div ng-switch="attr.type" class="text">',
          // password or ssh input (must be textarea to prevent EOL getting lost)
          '<div ng-switch-when="password" class="col-md-8">',
-           '<input ng-if="!attr.multiline" type="password" value="{{vm.storedPasswordPlaceholder}}" class="form-control" title="{{ __(attr.help_text) }}" ng-disabled="true" ng-hide="vm[name]">',
-           '<textarea ng-if="attr.multiline" class="form-control" title="{{ __(attr.help_text) }}" ng-disabled="true" ng-hide="vm[name]">{{vm.storedPasswordPlaceholder}}</textarea>',
-           '<input ng-if="!attr.multiline" type="password" class="form-control" title="{{ __(attr.help_text) }}" ng-hide="!vm[name]" auto-focus="reactiveFocus" ng-model="vm.model[name]">',
-           '<textarea ng-if="attr.multiline" class="form-control" title="{{ __(attr.help_text) }}" ng-hide="!vm[name]" auto-focus="reactiveFocus" ng-model="vm.model[name]"></textarea>',
+           '<input ng-if="!attr.multiline" type="password" value="{{vm.storedPasswordPlaceholder}}" class="form-control" title="{{ __(attr.help_text) }}" ng-disabled="true" ng-hide="vm[name] || vm.newRecord">',
+           '<textarea ng-if="attr.multiline" class="form-control" title="{{ __(attr.help_text) }}" ng-disabled="true" ng-hide="vm[name] || vm.newRecord">{{vm.storedPasswordPlaceholder}}</textarea>',
+           '<input ng-if="!attr.multiline" type="password" class="form-control" title="{{ __(attr.help_text) }}" ng-hide="!vm[name] && !vm.newRecord" auto-focus="reactiveFocus" ng-model="vm.model[name]">',
+           '<textarea ng-if="attr.multiline" class="form-control" title="{{ __(attr.help_text) }}" ng-hide="!vm[name] && !vm.newRecord" auto-focus="reactiveFocus" ng-model="vm.model[name]"></textarea>',
          '</div>',
-         '<a href="" ng-switch-when="password" ng-hide="vm[name]" ng-click="vm.updatePassword(name)">{{__("Update")}}</a>',
-         '<a href="" ng-switch-when="password" ng-hide="!vm[name]" ng-click="vm.cancelPassword(name)">{{__("Cancel")}}</a>',
+         '<a href="" ng-switch-when="password" ng-hide="vm[name] || vm.newRecord" ng-click="vm.updatePassword(name)">{{__("Update")}}</a>',
+         '<a href="" ng-switch-when="password" ng-hide="!vm[name] || vm.newRecord" ng-click="vm.cancelPassword(name)">{{__("Cancel")}}</a>',
          // select
          '<div ng-switch-when="choice" class="col-md-8">',
             '<select pf-select ng-options="opt as opt for opt in attr.choices" class="form-control" ng-model="vm.model[name]" />',
