@@ -27,7 +27,7 @@ ManageIQ.angular.app.component('ansibleCredentialOptions', {
 
     this.updatePassword = function(name) {
       this[name] = true;
-      this.model[name] = "";
+      this.model[name] = '';
       // The temp variable is required to make the form dirty and enable Save button
       this.model[name + '_temp'] = this.storedPasswordPlaceholder;
       $scope.$broadcast('reactiveFocus');
