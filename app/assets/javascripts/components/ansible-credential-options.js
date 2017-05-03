@@ -4,6 +4,7 @@ ManageIQ.angular.app.component('ansibleCredentialOptions', {
     options: '<',
     type: '<',
     newRecord: '<',
+    reset: '=',
     storedPasswordPlaceholder: '<',
   },
 
@@ -52,7 +53,7 @@ ManageIQ.angular.app.component('ansibleCredentialOptions', {
            '<input ng-if="!attr.multiline" type="password" class="form-control" title="{{ __(attr.help_text) }}" ng-hide="!vm[name] && !vm.newRecord" auto-focus="reactiveFocus" ng-model="vm.model[name]">',
            '<textarea ng-if="attr.multiline" class="form-control" title="{{ __(attr.help_text) }}" ng-hide="!vm[name] && !vm.newRecord" auto-focus="reactiveFocus" ng-model="vm.model[name]"></textarea>',
          '</div>',
-         '<a href="" ng-switch-when="password" ng-hide="vm[name] || vm.newRecord" ng-click="vm.updatePassword(name)">{{__("Update")}}</a>',
+         '<a href="" ng-switch-when="password" adjust-on-reset="{{name}}" ng-hide="vm[name] || vm.newRecord" ng-click="vm.updatePassword(name)">{{__("Update")}}</a>',
          '<a href="" ng-switch-when="password" ng-hide="!vm[name] || vm.newRecord" ng-click="vm.cancelPassword(name)">{{__("Cancel")}}</a>',
          // select
          '<div ng-switch-when="choice" class="col-md-8">',

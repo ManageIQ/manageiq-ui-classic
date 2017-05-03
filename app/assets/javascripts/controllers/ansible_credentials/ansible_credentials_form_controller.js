@@ -60,6 +60,7 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
   vm.resetClicked = function(angularForm) {
     vm.credentialModel = angular.copy( vm.modelCopy );
     angularForm.$setPristine(true);
+    toggleResetFlag();
     miqService.miqFlash("warn", __("All changes have been reset"));
   };
 
@@ -74,6 +75,14 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
        .then(getBack.bind(vm, sprintf(__("Add of Credential \"%s\" has been successfully queued."), vm.credentialModel.name), false, false))
        .catch(miqService.handleFailure);
   };
+
+  function toggleResetFlag() {
+    if (vm.reset) {
+      vm.reset = ! vm.reset;
+    } else {
+      vm.reset = true;
+    }
+  }
 
   function retrievedCredentialDetails() {
     vm.afterGet = true;
