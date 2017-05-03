@@ -1,4 +1,8 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "vmCloudEvacuateFormController"}
+%form#form_div{:name           => "angularForm",
+               'ng-controller' => "vmCloudEvacuateFormController as vm",
+               "miq-form"      => true,
+               "model"         => "vm.vmCloudModel",
+               "model-copy"    => 'vm.modelCopy'}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Evacuate Host')
@@ -9,30 +13,30 @@
       .col-md-8
         %input{:type         => "checkbox",
                :name         => "auto_select_host",
-               'ng-model'    => "vmCloudModel.auto_select_host",
+               'ng-model'    => "vm.vmCloudModel.auto_select_host",
                :miqrequired  => true,
                :checkchange  => true,
-               'ng-disabled' => "hosts.length == 0"}
+               'ng-disabled' => "vm.hosts.length == 0"}
 
         %input{:type         => "hidden",
                :name         => "auto_select_host",
                :value        => "on",
-               'ng-if'       => "hosts.length == 0"}
+               'ng-if'       => "vm.hosts.length == 0"}
     .form-group
       %label.col-md-2.control-label
         = _('On Shared Storage')
       .col-md-8
         %input{:type         => "checkbox",
                :name         => "on_shared_storage",
-               'ng-model'    => "vmCloudModel.on_shared_storage"}
-    .form-group{'ng-hide' => 'vmCloudModel.on_shared_storage'}
+               'ng-model'    => "vm.vmCloudModel.on_shared_storage"}
+    .form-group{'ng-hide' => 'vm.vmCloudModel.on_shared_storage'}
       %label.col-md-2.control-label
         = _('Admin Password')
       .col-md-8
         %input.form-control{:type         => "password",
                             :name         => "admin_password",
-                            'ng-model'    => "vmCloudModel.admin_password"}
-  #evacuate-select-destination-host{'ng-hide' => 'vmCloudModel.auto_select_host'}
+                            'ng-model'    => "vm.vmCloudModel.admin_password"}
+  #evacuate-select-destination-host{'ng-hide' => 'vm.vmCloudModel.auto_select_host'}
     %h3
       = _('Select Destination Host')
     .form-horizontal
@@ -41,13 +45,10 @@
           = _('Destination Host')
         .col-md-8
           %select{:name        => 'destination_host',
-                  'ng-model'   => 'vmCloudModel.host',
-                  'ng-options' => 'host.name as host.name for host in hosts track by host.id'}
+                  'ng-model'   => 'vm.vmCloudModel.host',
+                  'ng-options' => 'host.name as host.name for host in vm.hosts track by host.id'}
 
-  %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
-                  'paging_div_buttons_state_enabled' => true,
-                  'paging_div_buttons_id'            => "angular_paging_div_buttons",
-                  'paging_div_buttons_type'          => "Submit"}
+  = render :partial => "layouts/angular/paging_group_buttons.html.haml"
 
   %hr
   %div
