@@ -422,12 +422,11 @@ module OpsController::Diagnostics
     @explorer = true
     @sb[:selected_worker_id] = params[:id]
     get_workers
-    @sb[:center_tb_filename] = c_tb = center_toolbar_filename
 
     render :update do |page|
       page << javascript_prologue
       page.replace_html(@sb[:active_tab], :partial => "#{@sb[:active_tab]}_tab")
-      if c_tb.present?
+      if center_toolbar_filename.present?
         page << "$('#toolbar').show();"
         page << javascript_reload_toolbars
       else
@@ -734,7 +733,6 @@ module OpsController::Diagnostics
     end
     @selected_server = parent if params[:action] == "x_button"
     build_server_tree(parent)
-    @sb[:center_tb_filename] = c_tb = center_toolbar_filename
     render :update do |page|
       page << javascript_prologue
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
@@ -751,7 +749,7 @@ module OpsController::Diagnostics
         page.replace("zone_tree_div", :partial => "zone_tree")
       end
 
-      if c_tb.present?
+      if center_toolbar_filename.present?
         page << "$('#toolbar').show();"
         page << javascript_reload_toolbars
       else
