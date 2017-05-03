@@ -79,7 +79,11 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
 
   var getRepositoryFormData = function(response) {
     var data = response;
-    Object.assign(vm.repositoryModel, data);
+    for (var key in vm.repositoryModel) {
+      if (vm.repositoryModel.hasOwnProperty( key ) && data.hasOwnProperty( key ) ) {
+        vm.repositoryModel[key] = data[key];
+      }
+    }
     setForm();
   };
 
