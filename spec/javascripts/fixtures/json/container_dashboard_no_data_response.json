@@ -56,6 +56,11 @@
         "iconImage": "...kubernetes..."
       }
     ],
+    "alerts": {
+      "count": 1,
+      "href": "/alerts_overview/show",
+      "notifications": []
+    },
     "ems_utilization": {
       "interval_name": "realtime",
       "xy_data": {

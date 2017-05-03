@@ -72,6 +72,20 @@
         "iconImage": "...kubernetes..."
       }
     ],
+    "alerts": {
+      "count": 5,
+      "href": "/alerts_overview/show",
+      "notifications": [
+        {
+          "count": 2,
+          "iconImage": "...error..."
+        },
+        {
+          "count": 1,
+          "iconImage": "...warning..."
+        }
+      ]
+    },
     "ems_utilization": {
       "interval_name": "daily",
       "xy_data": {
