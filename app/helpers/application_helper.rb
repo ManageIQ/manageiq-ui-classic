@@ -1625,7 +1625,7 @@ module ApplicationHelper
   end
 
   def listicon_glyphicon(item)
-    [item.decorate.try(:fonticon), item.decorate.try(:secondary_icon), item.decorate.try(:listicon_image)] if item
+    [item.decorate.try(:fonticon), item.decorate.try(:secondary_icon), item.decorate.try(:fileicon)] if item
   end
   private :listicon_glyphicon
 
