@@ -14,13 +14,13 @@ ManageIQ.angular.app.controller('vmCloudResizeFormController', ['$http', '$scope
       .catch(miqService.handleFailure);
   };
 
-  $scope.cancelClicked = function() {
+  vm.cancelClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/resize_vm/' + vmCloudResizeFormId + '?button=cancel';
     miqService.miqAjaxButton(url);
   };
 
-  $scope.submitClicked = function() {
+  vm.submitClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/resize_vm/' + vmCloudResizeFormId + '?button=submit';
     miqService.miqAjaxButton(url, vm.vmCloudModel);

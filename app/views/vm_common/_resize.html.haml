@@ -22,9 +22,7 @@
                 :miqrequired => true,
                 :checkchange => true}
 
-  %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
-                  'paging_div_buttons_id'            => "angular_paging_div_buttons",
-                  'paging_div_buttons_type'          => "Submit"}
+    = render :partial => "layouts/angular/paging_group_buttons.html.haml"
 
   - unless @explorer
     %table{:width => '100%'}
@@ -32,12 +30,12 @@
         %td{:align => 'right'}
           = button_tag(_("Submit"),
                        :class        => "btn btn-primary",
-                       "ng-click"    => "submitClicked()",
+                       "ng-click"    => "vm.submitClicked()",
                        "ng-disabled" => "angularForm.$pristine || angularForm.$invalid",
                        "ng-class"    => "{'btn-disabled': angularForm.$pristine || angularForm.$invalid}")
           = button_tag(_("Cancel"),
                         :class     => "btn btn-default",
-                        "ng-click" => "cancelClicked()")
+                        "ng-click" => "vm.cancelClicked()")
 
 :javascript
   ManageIQ.angular.app.value('vmCloudResizeFormId', '#{@record.id}');
