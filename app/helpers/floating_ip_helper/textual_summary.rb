@@ -38,6 +38,8 @@ module FloatingIpHelper::TextualSummary
   end
 
   def textual_instance
+    return unless @record.vm
+
     label    = ui_lookup(:table => "vm_cloud")
     instance = @record.vm
     h        = {:label => label, :icon => "pficon pficon-virtual-machine"}
