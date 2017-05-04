@@ -1,13 +1,12 @@
 angular.module('ManageIQ').controller('middlewareTopologyController', MiddlewareTopologyCtrl);
-MiddlewareTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', 'topologyService', 'miqService'];
+MiddlewareTopologyCtrl.$inject = ['$scope', '$window', '$http', '$interval', '$location', 'topologyService', 'miqService'];
 
-function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologyService, miqService) {
+function MiddlewareTopologyCtrl($scope, $window, $http, $interval, $location, topologyService, miqService) {
   ManageIQ.angular.scope = $scope;
   miqHideSearchClearButton();
   var self = this;
   $scope.vs = null;
-  var d3 = window.d3;
-  $scope.d3 = d3;
+  $scope.d3 = $window.d3;
   var icons;
 
   $scope.refresh = function() {
@@ -26,7 +25,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
   $scope.checkboxModel = {
     value: false,
   };
-  $scope.legendTooltip = 'Click here to show/hide entities of this type';
+  $scope.legendTooltip = __('Click here to show/hide entities of this type');
 
   $scope.show_hide_names = function() {
     $scope.checkboxModel.value = $('input#box_display_names')[0].checked;
@@ -72,7 +71,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     added.append('image')
       .attr('xlink:href', function(d) {
         var iconInfo = self.getIcon(d);
-        return (iconInfo.type == 'glyph' ? '' : iconInfo.icon);
+        return (iconInfo.type === 'glyph' ? '' : iconInfo.icon);
       })
       .attr('y', function(d) {
         return self.getCircleDimensions(d).y;
@@ -100,7 +99,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     added.append('text')
       .each(function(d) {
         var iconInfo = self.getIcon(d);
-        if (iconInfo.type != 'glyph') {
+        if (iconInfo.type !== 'glyph') {
           return;
         }
         var fontFamily = 'font-family:' + iconInfo.fontfamily + ';';
@@ -113,8 +112,8 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
         // override some properties for container glyph, because it looks too small and alignment is wrong
         if (d.item.kind === 'Container') {
           $(this).text(iconInfo.icon)
-            .attr('style', 'font-size: 20px;' + fontFamily)
-            .attr('y', 7);
+          .attr('style', 'font-size: 20px;' + fontFamily)
+          .attr('y', 7);
         }
       });
 
