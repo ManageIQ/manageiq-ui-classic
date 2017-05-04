@@ -126,26 +126,15 @@ class MiqCapacityController < ApplicationController
 
   def change_tab
     @sb[:active_tab] = params[:tab_id]
-    if x_active_tree == :bottlenecks_tree && @sb[:active_tab] == "summary"
-      # build timeline data when coming back to Summary tab for bottlenecks
-      bottleneck_get_node_info(x_node)
-    end
-    show_view_toolbar = x_active_tree != :bottlenecks_tree
+
+    # build timeline data when coming back to Summary tab for bottlenecks
+    displaying_timeline = (x_active_tree == :bottlenecks_tree && @sb[:active_tab] == "summary")
+    bottleneck_get_node_info(x_node) if displaying_timeline
+
     render :update do |page|
       page << javascript_prologue
-      page << javascript_reload_toolbars if show_view_toolbar
-
-      if @sb[:active_tab] == 'report' && show_view_toolbar
-        page << "$('#toolbar').show();"
-      else
-        page << "$('#toolbar').hide();"
-      end
-
-      if x_active_tree == :bottlenecks_tree && @sb[:active_tab] == "summary"
-        # need to replace timeline div incase it wasn't there earlier
-        page.replace("tl_div", :partial => "bottlenecks_tl_detail")
-      end
-      # FIXME: we don't need the reload here for the flash charts
+      page << javascript_reload_toolbars
+      page.replace("tl_div", :partial => "bottlenecks_tl_detail") if displaying_timeline
       page << Charting.js_load_statement
       page << "miqSparkle(false);"
     end
