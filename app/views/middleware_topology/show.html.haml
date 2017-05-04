@@ -45,6 +45,13 @@
             %text{:y => "9"} &#xE90f;
         %label
           = _("VMs")
+      %kubernetes-topology-icon{tooltipOptions, :kind => "Container"}
+        %svg.kube-topology
+          %g.EntityLegend
+            %circle{:r => "17"}
+            %text{:y => "7", :class => "fa fa-cube glyph"} &#xF1B2;
+        %label
+          = _("Containers")
       %kubernetes-topology-icon{tooltipOptions, :kind => "MiddlewareDomain"}
         %svg.kube-topology
           %g.MiddlewareDomain{:transform => "translate(21, 21)"}
