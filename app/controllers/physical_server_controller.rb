@@ -31,4 +31,9 @@ class PhysicalServerController < ApplicationController
 
     process_show_list
   end
+
+  def textual_group_list
+    []
+  end
+  helper_method :textual_group_list
 end
