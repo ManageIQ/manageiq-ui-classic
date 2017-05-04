@@ -11,8 +11,10 @@ module LoadBalancerHelper::TextualSummary
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(parent_ems_cloud ems_network cloud_tenant instances network_ports
-                                                floating_ips security_groups))
+    TextualGroup.new(
+      _("Relationships"),
+      %i(parent_ems_cloud ems_network cloud_tenant instances network_ports floating_ips security_groups)
+    )
   end
 
   #
