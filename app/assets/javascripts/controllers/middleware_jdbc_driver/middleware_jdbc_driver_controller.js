@@ -25,7 +25,7 @@ function MwAddJdbcDriverController($scope, $http, miqService) {
     }
     $http.post('/middleware_server/add_jdbc_driver', fd, {
       transformRequest: angular.identity,
-      headers: {'Content-Type': undefined}
+      headers: {'Content-Type': undefined},
     })
       .then(
         function(result) { // success
@@ -35,7 +35,7 @@ function MwAddJdbcDriverController($scope, $http, miqService) {
           miqService.miqFlash('error', 'Unable to add JDBC Driver "' + data.driverName + '" on this server.');
         })
       .finally(function() {
-        angular.element("#modal_jdbc_div").modal('hide');
+        angular.element('#modal_jdbc_div').modal('hide');
         miqService.sparkleOff();
       });
   });
