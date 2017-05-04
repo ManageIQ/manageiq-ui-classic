@@ -9,7 +9,7 @@ class MiddlewareTopologyService < TopologyService
       :middleware_deployments,
       :middleware_datasources,
       :middleware_messagings,
-      :lives_on => [:host, :container]
+      :lives_on => [:host]
     ]
   ]
 
