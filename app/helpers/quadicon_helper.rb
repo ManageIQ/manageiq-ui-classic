@@ -151,10 +151,6 @@ module QuadiconHelper
     end
   end
 
-  def img_for_physical_vendor(item)
-    "svg/vendor-#{h(item.label_for_vendor.downcase)}.svg"
-  end
-
   # FIXME: Even better would be to ask the object what method to use
   def quadicon_builder_factory(item, options)
     case quadicon_builder_name_from(item)
@@ -230,8 +226,8 @@ module QuadiconHelper
 
       output << flobj_p_simple("a72", (item.host ? 1 : 0))
       output << flobj_img_simple("svg/currentstate-#{h(item.power_state.downcase)}.svg", "b72")
-      output << flobj_img_simple(img_for_physical_vendor(item), "c72")
-      output << flobj_img_simple(img_for_health_state(item), "d72")
+      output << flobj_img_simple(item.decorate.img_for_physical_vendor, "c72")
+      output << flobj_img_simple(item.decorate.img_for_health_state, "d72")
       output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
     else
       output << flobj_img_simple(size)
@@ -701,15 +697,6 @@ module QuadiconHelper
               end
 
     output.collect(&:html_safe).join('').html_safe
-  end
-
-  def img_for_health_state(item)
-    case item.health_state
-    when "Valid"    then "svg/healthstate-normal.svg"
-    when "Critical" then "svg/healthstate-critical.svg"
-    when "None"     then "svg/healthstate-unknown.svg"
-    when "Warning"  then "100/warning.png"
-    end
   end
 
   # Renders a storage quadicon
