@@ -1,5 +1,5 @@
 ManageIQ.angular.app.controller('vmCloudAttachFormController', ['$scope', 'vmCloudAttachFormId', 'miqService', function($scope, vmCloudAttachFormId, miqService) {
-  vm = this;
+  var vm = this;
 
   vm.vmCloudModel = { name: '' };
   vm.formId = vmCloudAttachFormId;

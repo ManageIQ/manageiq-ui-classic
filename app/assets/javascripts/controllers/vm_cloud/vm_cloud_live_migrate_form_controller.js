@@ -1,5 +1,5 @@
 ManageIQ.angular.app.controller('vmCloudLiveMigrateFormController', ['$http', '$scope', 'vmCloudLiveMigrateFormId', 'miqService', function($http, $scope, vmCloudLiveMigrateFormId, miqService) {
-  vm = this;
+  var vm = this;
 
   vm.vmCloudModel = {
     auto_select_host:    true,

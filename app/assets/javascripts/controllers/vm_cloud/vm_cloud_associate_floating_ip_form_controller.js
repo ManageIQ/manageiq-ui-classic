@@ -1,5 +1,5 @@
 ManageIQ.angular.app.controller('vmCloudAssociateFloatingIpFormController', ['$http', '$scope', 'vmCloudAssociateFloatingIpFormId', 'miqService', function($http, $scope, vmCloudAssociateFloatingIpFormId, miqService) {
-  vm = this;
+  var vm = this;
   vm.vmCloudModel = {
     floating_ip: null,
   };
