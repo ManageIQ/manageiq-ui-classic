@@ -1,6 +1,4 @@
 class CloudTopologyService < TopologyService
-  include UiServiceMixin
-
   @provider_class = ManageIQ::Providers::CloudManager
 
   @included_relations = [

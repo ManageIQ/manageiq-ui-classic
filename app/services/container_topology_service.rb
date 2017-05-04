@@ -1,6 +1,4 @@
 class ContainerTopologyService < TopologyService
-  include UiServiceMixin
-
   @provider_class = ManageIQ::Providers::ContainerManager
 
   @included_relations = [

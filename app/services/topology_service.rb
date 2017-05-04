@@ -1,4 +1,6 @@
 class TopologyService
+  include UiServiceMixin
+
   def initialize(provider_id = nil)
     provider_class = self.class.instance_variable_get(:@provider_class)
     # If the provider ID is not set, the topology needs to be generated for all the providers
