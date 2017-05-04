@@ -513,10 +513,11 @@ class ChargebackController < ApplicationController
     rate_details.each_with_index do |detail, detail_index|
       temp = detail.slice(*ChargebackRateDetail::FORM_ATTRIBUTES)
       temp[:group] = detail.chargeable_field.group
+      temp[:description] = detail.chargeable_field.description
+      temp[:per_unit_display] = detail.per_unit_display
       temp[:per_time] ||= "hourly"
 
       temp[:currency] = detail.detail_currency.id
-      temp[:detail_measure] = detail.detail_measure
 
       if detail.detail_measure.present?
         temp[:detail_measure] = {}
