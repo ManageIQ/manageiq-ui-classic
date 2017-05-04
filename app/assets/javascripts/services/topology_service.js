@@ -100,14 +100,24 @@ ManageIQ.angular.app.service('topologyService', function() {
   this.searchNode = function(svg, query) {
     var nodes = svg.selectAll("g");
     nodes.style("opacity", "1");
+
+    var found = true;
+
     if (query != "") {
       var selected = nodes.filter(function (d) {
         return d.item.name.indexOf(query) == -1;
       });
       selected.style("opacity", "0.2");
+
       var links = svg.selectAll("line");
       links.style("opacity", "0.2");
+
+      if (nodes.length == selected.length) {
+        found = false;
+      }
     }
+
+    return found;
   };
 
   this.resetSearch = function(d3) {
@@ -201,11 +211,15 @@ ManageIQ.angular.app.service('topologyService', function() {
   this.mixinSearch = function($scope) {
     var topologyService = this;
 
+    $scope.searching = false;
+    $scope.notFound = false;
+
     $scope.searchNode = function() {
       var svg = topologyService.getSVG($scope.d3);
       var query = $('input#search_topology')[0].value;
 
-      topologyService.searchNode(svg, query);
+      $scope.searching = true;
+      $scope.notFound = ! topologyService.searchNode(svg, query);
     };
 
     $scope.resetSearch = function() {
@@ -213,6 +227,9 @@ ManageIQ.angular.app.service('topologyService', function() {
 
       // Reset the search term in search input
       $('input#search_topology')[0].value = "";
+
+      $scope.searching = false;
+      $scope.notFound = false;
     };
   };
 });
