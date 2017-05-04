@@ -1,9 +1,9 @@
 #rates_tabs_div
-  -# Toplevel Tabbar
-  - if x_active_tree == :cb_rates_tree
-    - if x_node == "root"
-      = render :partial => "rates_list"
-    - elsif %w(Compute Storage).include?(x_node.split('-').last)
-      = render :partial => "cb_rates"
-    - else
-      = render :partial => "cb_rate_show"
+  - if x_node == "root"
+    = render :partial => "rates_list"
+  - elsif @edit && @edit[:new] && params[:pressed] && params[:pressed] != "chargeback_rates_delete"
+    = render :partial => "cb_rate_edit"
+  - elsif %w(Compute Storage).include?(x_node.split('-').last)
+    = render :partial => 'layouts/x_gtl', :locals => {:action_url => "cb_rates_list"}
+  - else
+    = render :partial => "cb_rate_show"
