@@ -98,13 +98,8 @@ class ContainerDashboardService
   end
 
   def alerts
-    if @ems.present?
-      warnings = @ems.miq_alert_statuses.where(:severity => "warning").count
-      errors = @ems.miq_alert_statuses.where(:severity => "error").count
-    else
-      warnings = MiqAlertStatus.where.not(:ems_id => nil).where(:severity => "warning").count
-      errors = MiqAlertStatus.where.not(:ems_id => nil).where(:severity => "error").count
-    end
+    relation = @ems ? @ems.miq_alert_statuses : MiqAlertStatus.where.not(:ems_id => nil)
+    warnings, errors = relation.group(:severity).count.values_at(*%w(warning error))
 
     errors_struct = errors > 0 ? {:iconClass => "pficon pficon-error-circle-o", :count => errors} : nil
     warnings_struct = warnings > 0 ? {:iconClass => "pficon pficon-warning-triangle-o", :count => warnings} : nil
