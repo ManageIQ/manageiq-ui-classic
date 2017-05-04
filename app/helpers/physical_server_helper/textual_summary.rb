@@ -28,7 +28,10 @@ module PhysicalServerHelper::TextualSummary
   end
 
   def textual_group_assets
-    %i(support_contact description location room_id rack_name lowest_rack_unit)
+    TextualGroup.new(
+      _("Assets"),
+      %i(support_contact description location room_id rack_name lowest_rack_unit)
+    )
   end
 
   def textual_host
