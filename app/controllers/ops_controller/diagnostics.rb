@@ -86,7 +86,6 @@ module OpsController::Diagnostics
       @in_a_form = false
       @edit = session[:edit] = nil
       add_flash(_("Edit Log Depot settings was cancelled by the user"))
-      @record = nil
       diagnostics_set_form_vars
       replace_right_cell(:nodetype => x_node)
     when "save"
@@ -120,7 +119,6 @@ module OpsController::Diagnostics
       else
         add_flash(_("Log Depot Settings were saved"))
         @edit = nil
-        @record = nil
         diagnostics_set_form_vars
         replace_right_cell(:nodetype => x_node)
       end
