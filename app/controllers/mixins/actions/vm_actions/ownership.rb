@@ -96,8 +96,6 @@ module Mixins
           end
         end
 
-        DONT_CHANGE_OWNER = "0"
-
         def filter_ownership_items(klass, ownership_items)
           @origin_ownership_items = ownership_items
           @ownershipitems ||= begin
@@ -120,7 +118,7 @@ module Mixins
           @group = group ? group.id.to_s : nil
           Rbac.filtered(MiqGroup.non_tenant_groups).each { |g| @groups[g.description] = g.id.to_s }
 
-          @user = @group = DONT_CHANGE_OWNER if ownership_items.length > 1
+          @user = @group = 'dont-change' if ownership_items.length > 1
           @edit[:object_ids] = filter_ownership_items(klass, ownership_items)
           @view = get_db_view(klass == VmOrTemplate ? Vm : klass) # Instantiate the MIQ Report view object
           @view.table = MiqFilter.records2table(@ownershipitems, @view.cols + ['id'])
@@ -137,7 +135,7 @@ module Mixins
           group = record.miq_group if ownership_items.length == 1
           @group = group ? group.id.to_s : nil
           Rbac.filtered(MiqGroup).each { |g| @groups[g.description] = g.id.to_s }
-          @user = @group = DONT_CHANGE_OWNER if ownership_items.length > 1
+          @user = @group = 'dont-change' if ownership_items.length > 1
           @ownershipitems = Rbac.filtered(klass.where(:id => ownership_items).order(:name), :class => klass)
           raise _('Invalid items passed') unless @ownershipitems.pluck(:id).to_set == ownership_items.map(&:to_i).to_set
           {:user  => @user,
@@ -163,7 +161,7 @@ module Mixins
             end
           when "save"
             opts = {}
-            unless params[:user] == DONT_CHANGE_OWNER
+            unless params[:user] == 'dont-change'
               if params[:user].blank?     # to clear previously set user
                 opts[:owner] = nil
               elsif params[:user] != @user
@@ -171,7 +169,7 @@ module Mixins
               end
             end
 
-            unless params[:group] == DONT_CHANGE_OWNER
+            unless params[:group] == 'dont-change'
               if params[:group].blank?    # to clear previously set group
                 opts[:group] = nil
               elsif params[:group] != @group
