@@ -129,13 +129,28 @@ describe EmsInfraController do
         "Assigning #{@ems.hosts.count * 2} but only have #{@ems.hosts.count} hosts available.")
     end
 
-    it "when values are changed, and values do not exceed number of hosts available" do
+    it "when values are changed, values do not exceed number of hosts available, and not using workflows" do
       allow_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
         .to receive(:raw_update_stack)
       expect_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
         .not_to receive(:queue_post_scaledown_task)
+      expect_any_instance_of(EmsInfraController)
+        .to receive(:can_use_scale_up_workflow?).and_return(false)
       post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @ems.orchestration_stacks.first.id,
            @orchestration_stack_parameter_compute.name => 2 }
+      expect(controller.send(:flash_errors?)).to be_falsey
+      expect(response.body).to include("redirected")
+      expect(response.body).to include("ems_infra")
+      expect(response.body).to include("1+to+2")
+    end
+
+    it "when values are changed, values do not exceed number of hosts available, and using workflows" do
+      expect_any_instance_of(EmsInfraController)
+        .to receive(:can_use_scale_up_workflow?).and_return(true)
+      expect_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
+        .to receive(:scale_up_queue)
+      post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @ems.orchestration_stacks.first.id,
+                                  @orchestration_stack_parameter_compute.name => 2 }
       expect(controller.send(:flash_errors?)).to be_falsey
       expect(response.body).to include("redirected")
       expect(response.body).to include("ems_infra")
@@ -151,13 +166,15 @@ describe EmsInfraController do
     end
 
     it "when patch operation fails, an error message should be displayed" do
-      allow_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
+      expect_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
         .to receive(:update_stack_queue) { raise "my error" }
+      expect_any_instance_of(EmsInfraController)
+        .to receive(:can_use_scale_up_workflow?).and_return(false)
       post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @ems.orchestration_stacks.first.id,
            @orchestration_stack_parameter_compute.name => 2 }
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include("Unable to initiate scaling: my error")
+      expect(flash_messages.first[:message]).to include("Unable to initiate scale up: my error")
     end
 
     it "when operation in progress, an error message should be displayed" do
@@ -198,13 +215,28 @@ describe EmsInfraController do
         "Not all hosts can be removed from the deployment.")
     end
 
-    it "when values are changed, and selected host is in correct state" do
+    it "when values are changed, selected host is in correct state, and workflows are not used" do
       allow_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
         .to receive(:raw_update_stack)
       expect_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
         .to receive(:queue_post_scaledown_task)
+      expect_any_instance_of(EmsInfraController)
+        .to receive(:can_use_scale_down_workflow?).and_return(false)
       post :scaledown, :params => {:id => @ems.id, :scaledown => "",
            :orchestration_stack_id => @ems.orchestration_stacks.first.id, :host_ids => [@ems.hosts[1].id]}
+      expect(controller.send(:flash_errors?)).to be_falsey
+      expect(response.body).to include("redirected")
+      expect(response.body).to include("ems_infra")
+      expect(response.body).to include("down+to+1")
+    end
+
+    it "when values are changed, selected host is in correct state, and workflows are used" do
+      expect_any_instance_of(EmsInfraController)
+        .to receive(:can_use_scale_down_workflow?).and_return(true)
+      expect_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
+        .to receive(:scale_down_queue)
+      post :scaledown, :params => {:id => @ems.id, :scaledown => "",
+                                   :orchestration_stack_id => @ems.orchestration_stacks.first.id, :host_ids => [@ems.hosts[1].id]}
       expect(controller.send(:flash_errors?)).to be_falsey
       expect(response.body).to include("redirected")
       expect(response.body).to include("ems_infra")
@@ -220,13 +252,15 @@ describe EmsInfraController do
     end
 
     it "when patch operation fails, an error message should be displayed" do
-      allow_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
+      expect_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
         .to receive(:update_stack_queue) { raise "my error" }
+      expect_any_instance_of(EmsInfraController)
+        .to receive(:can_use_scale_down_workflow?).and_return(false)
       post :scaledown, :params => {:id => @ems.id, :scaledown => "",
            :orchestration_stack_id => @ems.orchestration_stacks.first.id, :host_ids => [@ems.hosts[1].id]}
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include("Unable to initiate scaling: my error")
+      expect(flash_messages.first[:message]).to include("Unable to initiate scale down: my error")
     end
 
     it "when operation in progress, an error message should be displayed" do
