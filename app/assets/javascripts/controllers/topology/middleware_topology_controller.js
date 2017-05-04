@@ -109,15 +109,14 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
           .attr('style', fontFamily)
           .attr('x', 0)
           .attr('y', 8);
-      });
 
         // override some properties for container glyph, because it looks too small and alignment is wrong
         if (d.item.kind === 'Container') {
           $(this).text(iconInfo.icon)
-          .attr('style', 'font-size: 20px;' + fontFamily)
-          .attr('y', 7)
+            .attr('style', 'font-size: 20px;' + fontFamily)
+            .attr('y', 7);
         }
-      })
+      });
 
     added.selectAll('title').text(function(d) {
       return topologyService.tooltip(d).join('\n');
@@ -139,7 +138,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     return icons[d.item.display_kind];
   };
 
-  this.dblclick = function dblclick(d) {
+  self.dblclick = function dblclick(d) {
     window.location.assign(topologyService.geturl(d));
   };
 
