@@ -723,7 +723,6 @@ class CatalogController < ApplicationController
           {:name => ot.name}, :error)
       else
         begin
-          ot.remote_proxy = true
           ot.destroy
         rescue => bang
           add_flash(_("Error during 'Orchestration Template Deletion': %{error_message}") %
@@ -1015,7 +1014,6 @@ class CatalogController < ApplicationController
       ot.name = @edit[:new][:name]
       ot.description = @edit[:new][:description]
       ot.ems_id = @edit[:new][:manager_id]
-      ot.remote_proxy = true
       unless ot.in_use?
         ot.content = params[:template_content]
         ot.draft = @edit[:new][:draft]
@@ -1071,8 +1069,8 @@ class CatalogController < ApplicationController
         :type         => old_ot.type,
         :content      => params[:template_content],
         :draft        => @edit[:new][:draft] == true || @edit[:new][:draft] == "true",
-        :ems_id       => @edit[:new][:manager_id],
-        :remote_proxy => true)
+        :ems_id       => @edit[:new][:manager_id]
+      )
       begin
         ot.save_as_orderable!
       rescue => bang
@@ -1117,8 +1115,8 @@ class CatalogController < ApplicationController
         :type         => @edit[:new][:type],
         :content      => params[:content],
         :draft        => @edit[:new][:draft],
-        :ems_id       => @edit[:new][:manager_id],
-        :remote_proxy => true)
+        :ems_id       => @edit[:new][:manager_id]
+      )
       begin
         ot.save_as_orderable!
       rescue => bang
