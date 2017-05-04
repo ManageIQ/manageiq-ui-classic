@@ -124,7 +124,7 @@ module ApplicationController::Tags
   private ############################
 
   def get_tag_items
-    record_ids = find_records_with_rbac(@tagging, checked_or_params).map(&:id)
+    record_ids = find_records_with_rbac(@tagging.safe_constantize, checked_or_params).map(&:id)
     session[:tag_items] = record_ids
     session[:assigned_filters] = assigned_filters
   end
