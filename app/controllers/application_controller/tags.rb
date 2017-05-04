@@ -124,16 +124,8 @@ module ApplicationController::Tags
   private ############################
 
   def get_tag_items
-    recs = []
-    if !session[:checked_items].nil? && @lastaction == "set_checked_items"
-      recs = session[:checked_items]
-    else
-      recs = find_checked_ids_with_rbac(@tagging)
-    end
-    if recs.blank?
-      recs = [params[:id]]
-    end
-    session[:tag_items] = recs    # Set the array of tag items
+    record_ids = find_records_with_rbac(@tagging, checked_or_params).map(&:id)
+    session[:tag_items] = record_ids
     session[:assigned_filters] = assigned_filters
   end
 
