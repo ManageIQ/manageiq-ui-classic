@@ -1,6 +1,4 @@
 class NetworkTopologyService < TopologyService
-  include UiServiceMixin
-
   @provider_class = ManageIQ::Providers::NetworkManager
 
   @included_relations = [

@@ -1,6 +1,4 @@
 class ContainerProjectTopologyService < ContainerTopologyService
-  include UiServiceMixin
-
   @provider_class = ContainerProject
 
   @included_relations = [

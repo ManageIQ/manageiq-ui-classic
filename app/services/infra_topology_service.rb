@@ -1,6 +1,4 @@
 class InfraTopologyService < TopologyService
-  include UiServiceMixin
-
   @provider_class = ManageIQ::Providers::InfraManager
 
   @included_relations = [

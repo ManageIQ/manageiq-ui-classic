@@ -1,6 +1,4 @@
 class PhysicalInfraTopologyService < TopologyService
-  include UiServiceMixin
-
   @provider_class = ManageIQ::Providers::PhysicalInfraManager
 
   @included_relations = [

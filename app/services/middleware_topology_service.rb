@@ -1,6 +1,4 @@
 class MiddlewareTopologyService < TopologyService
-  include UiServiceMixin
-
   @provider_class = ManageIQ::Providers::MiddlewareManager
 
   @included_relations = [
