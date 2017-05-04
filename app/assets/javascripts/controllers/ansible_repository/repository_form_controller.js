@@ -18,6 +18,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
       scm_update_on_launch: false,
     };
 
+    vm.attributes = ['name', 'description', 'scm_type', 'scm_url', 'authentication_id', 'scm_branch:', 'scm_clean', 'scm_delete_on_update', 'scm_update_on_launch'];
     vm.model = 'repositoryModel';
 
     ManageIQ.angular.scope = vm;
@@ -30,7 +31,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
       .catch(miqService.handleFailure);
 
     if (repositoryId !== 'new') {
-      API.get('/api/configuration_script_sources/' + repositoryId)
+      API.get('/api/configuration_script_sources/' + repositoryId + '?attributes=' + vm.attributes.join(','))
         .then(getRepositoryFormData)
         .catch(miqService.handleFailure);
     } else {
@@ -79,6 +80,9 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
 
   var getRepositoryFormData = function(response) {
     var data = response;
+    if ( data.hasOwnProperty( 'href' ) ) {
+      delete data.href;
+    }
     Object.assign(vm.repositoryModel, data);
     setForm();
   };
