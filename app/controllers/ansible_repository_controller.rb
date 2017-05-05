@@ -8,8 +8,9 @@ class AnsibleRepositoryController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
+  include Mixins::EmbeddedAnsibleRefreshMixin
 
-  menu_section :ansible
+  menu_section :ansible_repositories
   toolbar :ansible_repository
 
   def self.display_methods
@@ -73,6 +74,15 @@ class AnsibleRepositoryController < ApplicationController
 
   def display_playbooks
     nested_list("ansible_playbook", ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook)
+  end
+
+  def repository_refresh
+    assert_privileges("embedded_configuration_script_source_refresh")
+    checked = find_checked_items
+    checked[0] = params[:id] if checked.blank? && params[:id]
+    objects = AnsibleRepositoryController.model.find(checked)
+    embedded_ansible_refresh(objects)
+    javascript_flash
   end
 
   private

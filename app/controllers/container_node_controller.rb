@@ -18,11 +18,23 @@ class ContainerNodeController < ApplicationController
   def launch_cockpit
     node = identify_record(params[:id], ContainerNode)
 
-    if node.ipaddress
+    if node.kubernetes_hostname
       javascript_open_window(node.cockpit_url.to_s)
     else
       javascript_flash(:text => node.unsupported_reason(:launch_cockpit), :severity => :error, :spinner_off => true)
     end
+  end
+
+  def show_ad_hoc_metrics
+    if @record && @record.try(:ems_id)
+      ems = find_record_with_rbac(ExtManagementSystem, @record.ems_id)
+      tags = {:type => "node", :hostname => @record.name}.to_json
+      redirect_to polymorphic_path(ems, :display => "ad_hoc_metrics", :tags => tags)
+    end
+  end
+
+  def self.custom_display_modes
+    %w(ad_hoc_metrics)
   end
 
   menu_section :cnt

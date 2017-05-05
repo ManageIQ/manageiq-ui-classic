@@ -29,9 +29,10 @@ ManageIQ.angular.app.component('ansibleCredentialOptions', {
         '{{ __(attr.label) }}',
        '</label>',
        '<div ng-switch="attr.type" class="text">',
-         // password
+         // password or ssh input (must be textarea to prevent EOL getting lost)
          '<div ng-switch-when="password" class="col-md-8">',
-           '<input type="password" class="form-control" title="{{ __(attr.help_text) }}" ng-model="vm.model[name]">',
+           '<input ng-if="!attr.multiline" type="password" class="form-control" title="{{ __(attr.help_text) }}" ng-model="vm.model[name]">',
+           '<textarea ng-if="attr.multiline" class="form-control" title="{{ __(attr.help_text) }}" ng-model="vm.model[name]"></textarea>',
          '</div>',
          // select
          '<div ng-switch-when="choice" class="col-md-8">',

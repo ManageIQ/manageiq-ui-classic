@@ -1,3 +1,5 @@
+/* global miqFlashLater */
+
 ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'repositoryId', 'miqService', 'API', function($scope, repositoryId,  miqService, API) {
   var vm = this;
 
@@ -8,7 +10,6 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
       name: '',
       description: '',
       scm_type: 'git',
-      manager_resource: {},
       scm_url: '',
       authentication_id: null,
       scm_branch: '',
@@ -17,10 +18,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
       scm_update_on_launch: false,
     };
 
-    API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAutomationManager')
-      .then(getManagerResource)
-      .catch(miqService.handleFailure);
-
+    vm.attributes = ['name', 'description', 'scm_type', 'scm_url', 'authentication_id', 'scm_branch:', 'scm_clean', 'scm_delete_on_update', 'scm_update_on_launch'];
     vm.model = 'repositoryModel';
 
     ManageIQ.angular.scope = vm;
@@ -33,20 +31,24 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
       .catch(miqService.handleFailure);
 
     if (repositoryId !== 'new') {
-      API.get('/api/configuration_script_sources/' + repositoryId)
+      API.get('/api/configuration_script_sources/' + repositoryId + '?attributes=' + vm.attributes.join(','))
         .then(getRepositoryFormData)
         .catch(miqService.handleFailure);
     } else {
-      vm.afterGet = true;
-      vm.modelCopy = angular.copy( vm.repositoryModel );
-      miqService.sparkleOff();
+      API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAutomationManager')
+        .then(getManagerResource)
+        .catch(miqService.handleFailure);
     }
   };
 
   $scope.cancelClicked = function() {
     miqService.sparkleOn();
     var message = $scope.newRecord ? __('Add of Repository cancelled by user.') : sprintf(__('Edit of Repository \"%s\" cancelled by user.'), vm.repositoryModel.name);
-    var url = '/ansible_repository/show_list' + '?flash_msg=' + message + '&escape=true&flash_warning=true&flash_error=false';
+    var url = '/ansible_repository/show_list';
+    miqFlashLater({
+      message: message,
+      level: 'warning',
+    });
     window.location.href = url;
   };
 
@@ -70,12 +72,19 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
       .catch(miqService.handleFailure);
   };
 
-  var getRepositoryFormData = function(response) {
-    var data = response;
-    Object.assign(vm.repositoryModel, data);
+  function setForm() {
     vm.modelCopy = angular.copy( vm.repositoryModel );
     vm.afterGet = true;
     miqService.sparkleOff();
+  }
+
+  var getRepositoryFormData = function(response) {
+    var data = response;
+    if ( data.hasOwnProperty( 'href' ) ) {
+      delete data.href;
+    }
+    Object.assign(vm.repositoryModel, data);
+    setForm();
   };
 
   var getBack = function(response) {
@@ -96,11 +105,13 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
         message = sprintf(__('Edit of Repository \"%s\" was successfully initialized.'), vm.repositoryModel.name);
       }
     }
-    var url = '/ansible_repository/show_list' + '?flash_msg=' + message + '&escape=true';
+
+    var url = '/ansible_repository/show_list';
     if (error) {
       miqService.miqFlash('error', message);
       miqService.sparkleOff();
     } else {
+      miqFlashLater({ message: message });
       window.location.href = url;
     }
   };
@@ -117,6 +128,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
     } else {
       vm.repositoryModel.manager_resource = {'href': response.resources[0].href};
     }
+    setForm();
   };
   init();
 }]);

@@ -1,9 +1,10 @@
 - @angular_form = true
 
-.form-horizontal{:id => "start_form_div", :style => "display:none"}
+.form-horizontal
   %form#form_div{:name           => "angularForm",
                  'ng-controller' => "automationManagerFormController",
                  'ng-show'       => "afterGet",
+                 'ng-cloak'      => '',
                  :novalidate     => true}
     = render :partial => "layouts/flash_msg"
     %br
@@ -17,8 +18,7 @@
                             :maxlength       => MAX_NAME_LEN,
                             :required        => "",
                             :checkchange     => true,
-                            "auto-focus"     => "",
-                            "start-form-div" => "start_form_div"}
+                            "auto-focus"     => ""}
         %span.help-block{"ng-show" => "angularForm.name.$error.required"}
           = _("Required")
 

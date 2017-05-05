@@ -1,4 +1,7 @@
 class MiqRequestController < ApplicationController
+
+  include Mixins::GenericSessionMixin
+
   before_action :check_privileges, :except => :post_install_callback
   before_action :get_session_data
   after_action :cleanup_action
@@ -144,7 +147,7 @@ class MiqRequestController < ApplicationController
     @sb[:prov_options] ||= {}
     @sb[:def_prov_options] ||= {}
     @sb[:prov_options][:resource_type] = resource_type.to_sym                   # storing current resource type
-    # prov_set_default_options if !@sb[:prov_options] || (@sb[:prov_options] && @sb[:prov_options][:req_typ] != get_request_tab_type)    # reset default options if requests sub tab has changed
+
     prov_set_default_options if !@sb[:prov_options] || (@sb[:prov_options] && !@sb[:prov_options].key?(resource_type.to_sym))   # reset default options if requests sub tab has changed
 
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
@@ -152,6 +155,7 @@ class MiqRequestController < ApplicationController
     session[:request_sortdir] = @sortdir
 
     replace_gtl_main_div if pagination_request?
+    {:view => @view, :pages => @pages}
   end
 
   def show
@@ -408,10 +412,10 @@ class MiqRequestController < ApplicationController
 
   def get_request_tab_type
     case @layout
-    when "miq_request_ae"                then "AutomateRequest"
-    when "miq_request_configured_system" then "MiqProvisionConfiguredSystemRequest"
-    when "miq_request_host"              then "MiqHostProvisionRequest"
-    when "miq_request_vm"                then "MiqProvisionRequest"
+    when "miq_request_ae"                        then "AutomateRequest"
+    when "miq_request_configured_system"         then "MiqProvisionConfiguredSystemRequest"
+    when "miq_request_host"                      then "MiqHostProvisionRequest"
+    when "miq_request_vm", "miq_request_service" then "MiqProvisionRequest"
     end
   end
 
@@ -585,24 +589,17 @@ class MiqRequestController < ApplicationController
   end
 
   def get_session_data
+    super
     @title        = _("Requests")
     @request_tab  = session[:request_tab] if session[:request_tab]
     @layout       = layout_from_tab_name(@request_tab)
-    @lastaction   = session[:request_lastaction]
-    @showtype     = session[:request_lastaction]
-    @display      = session[:request_display]
-    @current_page = session[:request_current_page]
     @options      = session[:prov_options]
   end
 
   def set_session_data
+    super
     session[:edit]                 = @edit unless @edit.nil?
-    session[:layout]               = @layout unless @layout.nil?
-    session[:request_lastaction]   = @lastaction
-    session[:request_showtype]     = @showtype
-    session[:request_display]      = @display unless @display.nil?
     session[:request_tab]          = @request_tab unless @request_tab.nil?
-    session[:request_current_page] = @current_page
     session[:prov_options]         = @options if @options
   end
 

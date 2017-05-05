@@ -81,11 +81,11 @@ class ServiceController < ApplicationController
     @explorer = true
     case params[:button]
     when "cancel"
-      service = Service.find_by_id(params[:id])
+      service = find_record_with_rbac(Service, params[:id])
       add_flash(_("Edit of Service \"%{name}\" was cancelled by the user") % {:name => service.description})
       replace_right_cell
     when "save", "add"
-      service = Service.find_by_id(params[:id])
+      service = find_record_with_rbac(Service, params[:id])
       service_set_record_vars(service)
 
       begin
@@ -179,6 +179,12 @@ class ServiceController < ApplicationController
     replace_right_cell(:action => 'retire')
   end
 
+  def service_retire_now
+    @explorer = true
+    retirevms_now
+    replace_right_cell
+  end
+
   def service_set_record_vars(svc)
     svc.name = params[:name] if params[:name]
     svc.description = params[:description] if params[:description]
@@ -208,7 +214,7 @@ class ServiceController < ApplicationController
   end
 
   # Get all info for the node about to be displayed
-  def get_node_info(treenodeid)
+  def get_node_info(treenodeid, _show_list = true)
     @nodetype, id = parse_nodetype_and_id(valid_active_node(treenodeid))
     # resetting action that was stored during edit to determine what is being edited
     @sb[:action] = nil
@@ -243,6 +249,7 @@ class ServiceController < ApplicationController
       end
     end
     x_history_add_item(:id => treenodeid, :text => @right_cell_text)
+    {:view => @view, :pages => @pages}
   end
 
   # set partial name and cell header for edit screens
@@ -285,8 +292,9 @@ class ServiceController < ApplicationController
     record_showing = type && ["Service"].include?(TreeBuilder.get_model_for_prefix(type))
     if x_active_tree == :svcs_tree && !@in_a_form && !@sb[:action]
       if record_showing && @sb[:action].nil?
-        cb_tb = build_toolbar("custom_buttons_tb")
+        cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:single))
       else
+        cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:list))
         v_tb = build_toolbar("x_gtl_view_tb")
       end
       c_tb = build_toolbar(center_toolbar_filename)

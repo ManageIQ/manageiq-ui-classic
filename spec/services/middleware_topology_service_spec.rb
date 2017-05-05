@@ -9,14 +9,6 @@ describe MiddlewareTopologyService do
   let(:long_id_6) { "Local~/subsystem=datasources/data-source=ExampleDS" }
   let(:long_id_7) { "Local~/subsystem=messaging-activemq/server=default/jms-topic=HawkularMetricData" }
 
-  describe "#build_kinds" do
-    it "creates the expected number of entity types" do
-      supported_kinds = [:MiddlewareServer, :MiddlewareDeployment, :MiddlewareDatasource, :MiddlewareManager, :Vm,
-                         :MiddlewareDomain, :MiddlewareServerGroup, :MiddlewareMessaging]
-      expect(middleware_topology_service.build_kinds.keys).to match_array(supported_kinds)
-    end
-  end
-
   describe "#build_topology" do
     subject { middleware_topology_service.build_topology }
 

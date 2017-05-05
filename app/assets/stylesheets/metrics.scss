@@ -2,6 +2,15 @@
   overflow-x: hidden;
   overflow-y: hidden;
 
+  i.pficon-trend-up::before {
+    color: #1e4f18;
+    margin-right: 10px;
+  }
+  i.fa-tachometer::before {
+    color: #004368;
+    margin-right: 10px;
+  }
+
   #pagination-title {
     font-weight: 700;
     margin-right: 10px;
@@ -11,11 +20,12 @@
   }
 
   .ad-hoc-toolbar {
-    margin-left: 10px;
+    margin-left: 15px;
   }
   .toolbar-pf {
     .toolbar-pf-actions {
       .form-group {
+        padding-right: 0;
         margin-bottom: 0;
         border: 0;
       }
@@ -68,6 +78,9 @@
   .graph-view {
     overflow-x: hidden;
     overflow-y: hidden;
+    .bootstrap-select.btn-group .dropdown-menu {
+      margin-left: 5px;
+    }
     .form-group.toolbar-actions.ng-scope {
       margin-bottom: 10px;
     }
@@ -100,8 +113,32 @@
     overflow-x: hidden;
     overflow-y: hidden;
 
+    label {
+      font-weight: 500;
+      font-size: 14px;
+      color: #004368;
+    }
+
+    .toolbar-pf-results .list-inline {
+      margin-left: 2px;
+    }
+
+    .tooltip-inner {
+      padding: 0;
+      padding-right: 10px;
+      padding-left: 10px
+    }
+
+    .list-view-pf-expand-active {
+      border: 0;
+      border-top: 1px solid #39a5dc;
+      border-bottom: 1px solid #39a5dc;
+    }
+
     .list-group-item-container {
       margin-top: 10px;
+      padding: 15px;
+      border: 0;
     }
     .form-group.toolbar-actions.ng-scope {
       width: calc(100% - 435px);
@@ -125,6 +162,8 @@
     }
     .toolbar-pf {
       .form-group {
+        padding-right: 0;
+
         .btn-group {
           margin-left: 0;
         }
@@ -148,7 +187,7 @@
   }
 
   .tenant-filter-bar {
-    margin-left: 5px;
+    margin-left: 0;
     .dropdown-menu.open {
       margin-top: -11px;
     }
@@ -159,6 +198,7 @@
   }
 
   .toolbar-pf-include-actions.ng-scope {
+    margin-left: 10px;
     width: 100%;
   }
 

@@ -27,7 +27,8 @@
           = link_to(_('Summary'),
             {:action => 'show', :id => @record, :display => 'main'},
             :title => _("Show Summary"))
-        = li_link(:if => !(@devices.nil? || @devices.empty?),
+        - devices, os_info, vmm_info = host_info
+        = li_link(:if => !(devices.nil? || devices.empty?),
           :text       => _('Devices'),
           :record_id  => @record.id,
           :display    => 'devices',
@@ -42,12 +43,12 @@
           :record_id  => @record.id,
           :display    => 'storage_adapters',
           :title      => _("Show %{host} storage adapters") % {:host => host_title})
-        = li_link(:if => !(@osinfo.nil? || @osinfo.empty?),
+        = li_link(:if => !(os_info.nil? || os_info.empty?),
           :text       => _('OS Information'),
           :record_id  => @record.id,
           :display    => 'os_info',
           :title      => _("Show %{host} OS information") % {:host => host_title})
-        = li_link(:if => !(@vmminfo.nil? || @vmminfo.empty?),
+        = li_link(:if => !(vmm_info.nil? || vmm_info.empty?),
           :text       => _('VMM Information'),
           :record_id  => @record.id,
           :display    => 'hv_info',

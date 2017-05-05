@@ -11,6 +11,7 @@ module ReportController::Reports::Editor
     -archived
     -chargeback_rates
     -vm_guid
+    -vm_uid
   ).freeze
 
   def miq_report_new
@@ -1405,17 +1406,9 @@ module ReportController::Reports::Editor
 
   def cb_entities_by_provider
     @edit[:cb_providers] = { :container_project => {}, :container_image => {} }
-    @cb_entities_by_provider_id = { :container_project => {}, :container_image => {} }
     ManageIQ::Providers::ContainerManager.includes(:container_projects, :container_images).all.each do |provider|
       @edit[:cb_providers][:container_project][provider.name] = provider.id
       @edit[:cb_providers][:container_image][provider.name] = provider.id
-      @cb_entities_by_provider_id[provider.id] = {:container_project => {}, :container_image => {}}
-      provider.container_projects.all.each do |project|
-        @cb_entities_by_provider_id[provider.id][:container_project][project.id] = project.name
-      end
-      provider.container_images.all.each do |image|
-        @cb_entities_by_provider_id[provider.id][:container_image][image.id] = image.name
-      end
     end
   end
 
@@ -1441,7 +1434,7 @@ module ReportController::Reports::Editor
     rpt.col_order.each_with_index do |col, idx|
       if col.starts_with?(CustomAttributeMixin::CUSTOM_ATTRIBUTES_PREFIX)
         field_key = rpt.db + "-" + col
-        field_value =_("Labels: %{name}") % { :name => col.gsub(CustomAttributeMixin::CUSTOM_ATTRIBUTES_PREFIX, "") }
+        field_value = CustomAttributeMixin.to_human(col)
       elsif !col.include?(".")  # Main table field
         field_key = rpt.db + "-" + col
         field_value = friendly_model_name(rpt.db) +

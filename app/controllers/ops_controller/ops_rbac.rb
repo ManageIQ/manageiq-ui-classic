@@ -87,7 +87,7 @@ module OpsController::OpsRbac
     case params[:button]
     when 'cancel'      then rbac_edit_cancel('role')
     when 'save', 'add' then rbac_edit_save_or_add('role', 'miq_user_role')
-    when 'reset', nil  then rbac_edit_reset(params[:typ], 'role', MiqUserRole) # Reset or first time in
+    when 'reset', nil  then rbac_edit_reset(params[:typ], 'role', MiqUserRole) # Reset or form load
     end
   end
 
@@ -142,7 +142,7 @@ module OpsController::OpsRbac
     when "reset", nil # Reset or first time in
       obj = find_checked_items
       obj[0] = params[:id] if obj.blank? && params[:id]
-      @tenant = params[:typ] == "new" ? Tenant.new : Tenant.find(obj[0])          # Get existing or new record
+      @tenant = params[:typ] == "new" ? Tenant.new : find_checked_records_with_rbac(Tenant, obj).first # Get existing or new record
 
       # This is only because ops_controller tries to set form locals, otherwise we should not use the @edit variable
       @edit = {:tenant_id => @tenant.id}
@@ -211,7 +211,7 @@ module OpsController::OpsRbac
     when "reset", nil # Reset or first time in
       obj = find_checked_items
       obj[0] = params[:id] if obj.blank? && params[:id]
-      @tenant = Tenant.find(obj[0])          # Get existing or new record
+      @tenant = find_checked_records_with_rbac(Tenant, obj).first # Get existing or new record
       # This is only because ops_controller tries to set form locals, otherwise we should not use the @edit variable
       @edit = {:tenant_id => @tenant.id}
       session[:edit] = {:key => "tenant_manage_quotas__#{@tenant.id}"}
@@ -311,11 +311,7 @@ module OpsController::OpsRbac
       roles = MiqUserRole.where(:id => ids)
       process_roles(roles, "destroy") unless roles.empty?
     else # showing 1 role, delete it
-      if params[:id].nil? || MiqUserRole.find_by_id(params[:id]).nil?
-        add_flash(_("Role no longer exists"), :error)
-      else
-        roles.push(params[:id])
-      end
+      roles.push(params[:id])
       process_roles(roles, "destroy") unless roles.empty?
       self.x_node  = "xx-ur" if MiqUserRole.find_by_id(params[:id]).nil? # reset node to show list
     end
@@ -350,15 +346,10 @@ module OpsController::OpsRbac
         t.parent.nil?
       end
     else # showing 1 tenant, delete it
-      if params[:id].nil? || Tenant.find_by_id(params[:id]).nil?
-        add_flash(_("Tenant no longer exists"), :error)
-      else
-        tenants.push(params[:id])
-      end
+      tenants.push(params[:id])
       parent_id = Tenant.find_by_id(params[:id]).parent.id
       self.x_node = "tn-#{to_cid(parent_id)}"
     end
-
     process_tenants(tenants, "destroy") unless tenants.empty?
     get_node_info(x_node)
     replace_right_cell(:nodetype => x_node, :replace_trees => [:rbac])
@@ -373,11 +364,7 @@ module OpsController::OpsRbac
       process_groups(groups, "destroy") unless groups.empty?
       self.x_node  = "xx-g"  # reset node to show list
     else # showing 1 group, delete it
-      if params[:id].nil? || MiqGroup.find_by_id(params[:id]).nil?
-        add_flash(_("MiqGroup no longer exists"), :error)
-      else
-        groups.push(params[:id])
-      end
+      groups.push(params[:id])
       process_groups(groups, "destroy") unless groups.empty?
       self.x_node  = "xx-g" if MiqGroup.find_by_id(params[:id]).nil? # reset node to show list
     end
@@ -588,7 +575,7 @@ module OpsController::OpsRbac
   end
 
   def rbac_edit_tags_reset(tagging)
-    @object_ids = find_checked_items
+    @object_ids = find_checked_ids_with_rbac(tagging.constantize)
     if params[:button] == "reset"
       id = params[:id] if params[:id]
       return unless load_edit("#{session[:tag_db]}_edit_tags__#{id}", "replace_cell__explorer")
@@ -650,15 +637,15 @@ module OpsController::OpsRbac
 
   def rbac_edit_reset(operation, what, klass)
     key = what.to_sym
-    obj = find_checked_items
-    obj[0] = params[:id] if obj.blank? && params[:id]
-    record = klass.find_by_id(from_cid(obj[0])) if obj[0]
-
-    if [:group, :role].include?(key) && record && record.read_only && operation != 'copy'
-      add_flash(_("Read Only %{model} \"%{name}\" can not be edited") % {:model => key == :role ? ui_lookup(:model => "MiqUserRole") : ui_lookup(:model => "MiqGroup"), :name => key == :role ? record.name : record.description}, :warning)
-      javascript_flash
-      return
+    if (operation != "new")
+      record = find_record_with_rbac(klass, checked_or_params_id)
+      if [:group, :role].include?(key) && record && record.read_only && operation != 'copy'
+        add_flash(_("Read Only %{model} \"%{name}\" can not be edited") % {:model => key == :role ? ui_lookup(:model => "MiqUserRole") : ui_lookup(:model => "MiqGroup"), :name => key == :role ? record.name : record.description}, :warning)
+        javascript_flash
+        return
+      end
     end
+
     case operation
     when "new"
       # create new record
@@ -683,12 +670,14 @@ module OpsController::OpsRbac
       @record = record
     end
     @sb[:typ] = operation
+
     # set form fields according to what is copied
     case key
     when :user  then rbac_user_set_form_vars
     when :group then rbac_group_set_form_vars
     when :role  then rbac_role_set_form_vars
     end
+
     @in_a_form = true
     session[:changed] = false
     add_flash(_("All changes have been reset"), :warning)  if params[:button] == "reset"
@@ -726,6 +715,7 @@ module OpsController::OpsRbac
 
     if record.valid? && !flash_errors? && record.save
       set_role_features(record) if what == "role"
+      self.current_user = record if what == 'user' && @edit[:current][:userid] == current_userid
       AuditEvent.success(build_saved_audit(record, add_pressed))
       subkey = (key == :group) ? :description : :name
       add_flash(_("%{model} \"%{name}\" was saved") % {:model => what.titleize, :name => @edit[:new][subkey]})
@@ -752,7 +742,7 @@ module OpsController::OpsRbac
   # Show the main Users/Gropus/Roles list views
   def rbac_list(rec_type)
     rbac_build_list(rec_type)
-    update_gtl_div("rbac_#{rec_type.pluralize}_list") if pagination_or_gtl_request?
+    update_gtl_div("rbac_#{rec_type.pluralize}_list") if pagination_or_gtl_request? && @show_list
   end
 
   def allowed_tenant_names
@@ -809,7 +799,7 @@ module OpsController::OpsRbac
     when "role"  then rbac_role_get_form_vars
     end
 
-    changed = (@edit[:new] != @edit[:current])
+    session[:changed] = changed = (@edit[:new] != @edit[:current])
     bad = false
     if rec_type == "group"
       bad = (@edit[:new][:role].blank? || @edit[:new][:group_tenant].blank?)
@@ -972,13 +962,12 @@ module OpsController::OpsRbac
   def rbac_role_get_details(id)
     @edit = nil
     @record = @role = MiqUserRole.find_by_id(from_cid(id))
-    @role_features = @role.feature_identifiers.sort
-    @features_tree = rbac_build_features_tree
+    @rbac_menu_tree = build_rbac_feature_tree
   end
 
-  def rbac_build_features_tree
+  def build_rbac_feature_tree
     @role = @sb[:typ] == "copy" ? @record.dup : @record if @role.nil? # if on edit screen use @record
-    TreeBuilder.convert_bs_tree(OpsController::RbacTree.build(@role, @role_features, !@edit.nil?)).to_json
+    TreeBuilderOpsRbacFeatures.new("features_tree", "features", @sb, true, :role => @role, :editable => @edit.present?)
   end
 
   # Set form variables for role edit
@@ -1093,6 +1082,10 @@ module OpsController::OpsRbac
       else                                          # Belongsto tag checked
         class_prefix, id = parse_nodetype_and_id(params[:id])
         klass = TreeBuilder.get_model_for_prefix(class_prefix)
+        # If ExtManagementSystem is returned get specific class
+        if klass == 'ExtManagementSystem'
+          klass = ExtManagementSystem.find(from_cid(id)).class.to_s
+        end
         if params[:check] == "0"                    #   unchecked
           @edit[:new][:belongsto].delete("#{klass}_#{from_cid(id)}") #     Remove the tag from the belongsto hash
         else
@@ -1204,7 +1197,7 @@ module OpsController::OpsRbac
     @edit[:current] = copy_hash(@edit[:new])
 
     @role_features = @record.feature_identifiers.sort
-    @features_tree = rbac_build_features_tree
+    @rbac_menu_tree = build_rbac_feature_tree
   end
 
   # Get array of total set of features from the children of selected features

@@ -8,8 +8,9 @@ class AnsibleCredentialController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
+  include Mixins::EmbeddedAnsibleRefreshMixin
 
-  menu_section :ansible
+  menu_section :ansible_credentials
   toolbar :ansible_credential
 
   def self.display_methods

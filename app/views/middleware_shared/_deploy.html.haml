@@ -21,6 +21,9 @@
           %h4.modal-title#mw_modal_label
             = _("Add Middleware Deployment")
         .modal-body
+          .alert.alert-warning{"ng-if" => "warnMsg"}
+            %span.pficon.pficon-warning-triangle-o
+            {{warnMsg}}
           %input#server_id{:type => "hidden", :value => params[:id]}
           .form-group
             %label.col-md-4.control-label{:for => "enable_deployment_cb"}

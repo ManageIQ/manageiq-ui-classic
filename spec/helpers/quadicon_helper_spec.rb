@@ -226,6 +226,7 @@ describe QuadiconHelper do
   describe "#render_quadicon_text" do
     before(:each) do
       @settings = {:display => {:quad_truncate => "m"}}
+      allow(controller).to receive(:controller_name).and_return("service")
     end
 
     let(:item) do
@@ -277,6 +278,10 @@ describe QuadiconHelper do
     end
 
     context "when item is an EmsCluster" do
+      before do
+        allow(controller).to receive(:controller_name).and_return("ems_cluster")
+      end
+
       let(:ems) do
         FactoryGirl.build(:ems_cluster)
       end
@@ -311,22 +316,11 @@ describe QuadiconHelper do
       end
     end
 
-    context "when item is a StorageManager" do
-      let(:stor) do
-        FactoryGirl.create(:storage_manager, :name => "Store Man")
-      end
-
-      subject { helper.render_quadicon_text(stor, row) }
-
-      it "renders a link to storage_manager" do
-        @id = stor.id
-
-        expect(subject).to have_selector('a')
-        expect(subject).to include("/storage_manager/show/#{@id}")
-      end
-    end
-
     context "when item is a FloatingIP" do
+      before do
+        allow(controller).to receive(:controller_name).and_return("floating_ip")
+      end
+
       let(:item) do
         FactoryGirl.create(:floating_ip_openstack)
       end
@@ -336,14 +330,18 @@ describe QuadiconHelper do
       subject { helper.render_quadicon_text(item, row) }
 
       it "renders a label based on the address" do
-        @id = item.id
+        @id = ApplicationRecord.compress_id(item.id)
 
         expect(subject).to have_link(item.address)
-        expect(subject).to include("/floating_ip/show/#{item.id}")
+        expect(subject).to include("/floating_ip/show/#{@id}")
       end
     end
 
     context "when item is an Authentication" do
+      before do
+        allow(controller).to receive(:controller_name).and_return("auth_key_pair_cloud")
+      end
+
       let(:item) do
         FactoryGirl.create(:authentication)
       end
@@ -355,8 +353,9 @@ describe QuadiconHelper do
       subject { helper.render_quadicon_text(item, row) }
 
       it 'renders a link with auth_key_pair_cloud path' do
+        cid = ApplicationRecord.compress_id(item.id)
         expect(subject).to have_link("Auth")
-        expect(subject).to include('href="/auth_key_pair_cloud/show"')
+        expect(subject).to include("href=\"/auth_key_pair_cloud/show/#{cid}\"")
       end
     end
 
@@ -450,6 +449,7 @@ describe QuadiconHelper do
     context "default case" do
       before(:each) do
         @id = item.id
+        allow(controller).to receive(:controller_name).and_return("vm")
       end
 
       let(:item) do
@@ -470,9 +470,9 @@ describe QuadiconHelper do
         )
 
         subject = helper.render_quadicon_text(item, row)
-
+        cid = ApplicationRecord.compress_id(item.id)
         expect(subject).to include("evm")
-        expect(subject).to include("/vm/show/#{item.id}")
+        expect(subject).to include("/vm_infra/show/#{cid}")
       end
 
       it 'renders a link with the row key if set' do
@@ -488,9 +488,10 @@ describe QuadiconHelper do
         row = Ruport::Data::Record.new(:id => rand(9999), "name" => "name")
 
         subject = helper.render_quadicon_text(item, row)
+        cid = ApplicationRecord.compress_id(item.id)
 
         expect(subject).to include("name")
-        expect(subject).to include("/vm/show/#{item.id}")
+        expect(subject).to include("/vm_infra/show/#{cid}")
       end
     end
   end
@@ -504,6 +505,7 @@ describe QuadiconHelper do
   describe "#render_quadicon_label" do
     before(:each) do
       @settings = {:display => {:quad_truncate => "m"}}
+      allow(controller).to receive(:controller_name).and_return("service")
     end
 
     subject { helper.render_quadicon_label(item, row) }

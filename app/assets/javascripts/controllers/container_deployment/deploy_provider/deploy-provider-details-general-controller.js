@@ -15,7 +15,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
             name: provider.provider.name
           })
         });
-        if (angular.isDefined($scope.existingProviders) && $scope.existingProviders.length > 0) {
+        if ($scope.existingProviders !== undefined && $scope.existingProviders.length > 0) {
           $scope.data.existingProviderId = $scope.existingProviders[0].id;
           $scope.data.existingProvider = $scope.existingProviders[0];
         }
@@ -27,7 +27,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
             name: provider.provider.name
           })
         });
-        if (angular.isDefined($scope.newVmProviders) && $scope.newVmProviders.length > 0) {
+        if ($scope.newVmProviders !== undefined && $scope.newVmProviders.length > 0) {
           $scope.data.newVmProviderId = $scope.newVmProviders[0].id;
           $scope.data.newVmProvider = $scope.newVmProviders[0];
         }
@@ -38,7 +38,7 @@ miqHttpInject(angular.module('miq.containers.providersModule')).controller('cont
       }
     };
     $scope.updateProviderName = function() {
-      $scope.deploymentDetailsGeneralComplete = angular.isDefined($scope.data.providerName) && $scope.data.providerName.length > 0;
+      $scope.deploymentDetailsGeneralComplete = $scope.data.providerName !== undefined && $scope.data.providerName.length > 0;
     };
   }
 ]);

@@ -22,7 +22,7 @@ module ServiceHelper::TextualSummary
 
   def textual_group_provisioning_credentials
     return nil unless provisioning_get_job
-    TextualGroup.new(_("Credentials"), %i(machine_credential network_credential cloud_credential))
+    TextualGroup.new(_("Credentials"), %i(machine_credential network_credential cloud_credential vmware_credential))
   end
 
   def textual_group_provisioning_plays
@@ -85,7 +85,7 @@ module ServiceHelper::TextualSummary
   end
 
   def textual_aggregate_all_vm_memory
-    {:label => _("Memory"), :value => number_to_human_size(@record.aggregate_all_vm_memory.megabytes, :precision => 2)}
+    {:label => _("Memory"), :value => number_to_human_size(@record.aggregate_all_vm_memory.try(:megabytes) || 0, :precision => 2)}
   end
 
   def textual_aggregate_all_vm_disk_count
@@ -94,17 +94,17 @@ module ServiceHelper::TextualSummary
 
   def textual_aggregate_all_vm_disk_space_allocated
     {:label => _("Disk Space Allocated"),
-     :value => number_to_human_size(@record.aggregate_all_vm_disk_space_allocated, :precision => 2)}
+     :value => number_to_human_size(@record.aggregate_all_vm_disk_space_allocated || 0, :precision => 2)}
   end
 
   def textual_aggregate_all_vm_disk_space_used
     {:label => _("Disk Space Used"),
-     :value => number_to_human_size(@record.aggregate_all_vm_disk_space_used, :precision => 2)}
+     :value => number_to_human_size(@record.aggregate_all_vm_disk_space_used || 0, :precision => 2)}
   end
 
   def textual_aggregate_all_vm_memory_on_disk
     {:label => _("Memory on Disk"),
-     :value => number_to_human_size(@record.aggregate_all_vm_memory_on_disk, :precision => 2)}
+     :value => number_to_human_size(@record.aggregate_all_vm_memory_on_disk || 0, :precision => 2)}
   end
 
   def textual_retirement_date
@@ -232,6 +232,15 @@ module ServiceHelper::TextualSummary
     credential = @job.authentications.find_by(:type => 'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential')
     return nil unless credential
     credential(credential, _("Cloud"))
+  end
+
+  def textual_vmware_credential
+    credential = @job.authentications.find_by(:type => 'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VmwareCredential')
+    return nil unless credential
+    {:label => _('VMware'),
+     :value => credential.name,
+     :title => _('VMware Credential'),
+     :link  => url_for_only_path(:action => 'show', :id => credential.id, :controller => 'ansible_credential')}
   end
 
   def credential(credential, label)

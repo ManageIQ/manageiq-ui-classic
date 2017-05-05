@@ -6,9 +6,9 @@ module Menu
         Menu::Section.new(:compute, N_("Compute"), 'pficon pficon-cpu', [
           clouds_menu_section,
           infrastructure_menu_section,
-          physical_infrastructure_menu_section,
+          ::Settings.product.physical_infrastructure ? physical_infrastructure_menu_section : nil,
           container_menu_section
-        ])
+        ].compact)
       end
 
       def configuration_menu_section
@@ -40,7 +40,7 @@ module Menu
           Menu::Item.new('services',       N_('My Services'), 'service',     {:feature => 'service', :any => true},     '/service/explorer'),
           Menu::Item.new('catalogs',       N_('Catalogs'),    'catalog',     {:feature => 'catalog', :any => true},     '/catalog/explorer'),
           Menu::Item.new('vm_or_template', N_('Workloads'),   'vm_explorer', {:feature => 'vm_explorer', :any => true}, '/vm_or_template/explorer'),
-          Menu::Item.new('miq_request_vm', N_('Requests'),    'miq_request', {:feature => 'miq_request_show_list'},     '/miq_request?typ=vm')
+          Menu::Item.new('miq_request_vm', N_('Requests'),    'miq_request', {:feature => 'miq_request_show_list'},     '/miq_request?typ=service')
         ])
       end
 
@@ -80,6 +80,7 @@ module Menu
         Menu::Section.new(:phy, N_("Physical Infrastructure"), 'fa fa-plus fa-2x', [
           Menu::Item.new('ems_physical_infra',    N_('Providers'), 'ems_physical_infra',    {:feature => 'ems_physical_infra_show_list'},    '/ems_physical_infra'),
           Menu::Item.new('physical_server', N_('Servers'),   'physical_server', {:feature => 'physical_server_show_list'}, '/physical_server'),
+          Menu::Item.new('physical_infra_topology', N_('Topology'), 'physical_infra_topology', {:feature => 'physical_infra_topology', :any => true}, '/physical_infra_topology')
         ])
       end
 
@@ -202,12 +203,6 @@ module Menu
                           ])
       end
 
-      def netapp_storage_menu_section
-        Menu::Section.new(:nap, N_("NetApp"), 'fa fa-plus', [
-          Menu::Item.new('storage_manager',      N_('Storage Managers'), 'storage_manager',      {:feature => 'storage_manager_show_list'},      '/storage_manager')
-        ])
-      end
-
       def control_menu_section
         Menu::Section.new(:con, N_("Control"), 'fa fa-shield', [
           Menu::Item.new('miq_policy',        N_('Explorer'),        'control_explorer',     {:feature => 'control_explorer_view'}, '/miq_policy/explorer'),
@@ -219,9 +214,9 @@ module Menu
 
       def automation_menu_section
         Menu::Section.new(:aut, N_("Automation"), 'fa fa-recycle', [
-          automate_menu_section,
           ansible_menu_section,
-          automation_manager_menu_section
+          automation_manager_menu_section,
+          automate_menu_section
         ])
       end
 
@@ -234,9 +229,9 @@ module Menu
 
       def ansible_menu_section
         Menu::Section.new(:ansible, N_("Ansible"), 'fa fa-recycle', [
-          Menu::Item.new('ansible_credentials', N_('Credentials'), 'embedded_automation_manager_credentials', {:feature => 'embedded_automation_manager_credentials', :any => true}, '/ansible_credential'),
           Menu::Item.new('ansible_playbooks', N_('Playbooks'), 'embedded_configuration_script_payload', {:feature => 'embedded_configuration_script_payload'}, '/ansible_playbook', :any => true),
           Menu::Item.new('ansible_repositories', N_('Repositories'), 'embedded_configuration_script_source', {:feature => 'embedded_configuration_script_source'}, '/ansible_repository', :any => true),
+          Menu::Item.new('ansible_credentials', N_('Credentials'), 'embedded_automation_manager_credentials', {:feature => 'embedded_automation_manager_credentials', :any => true}, '/ansible_credential'),
         ])
       end
 

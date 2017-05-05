@@ -3,7 +3,7 @@ module UiServiceMixin
     {
       :AvailabilityZone        => {:type => "glyph", :icon => "\uE911", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-zone
       :ContainerReplicator     => {:type => "glyph", :icon => "\uE624", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-replicator
-      :ContainerProject        => {:type => "glyph", :icon => "\uE622", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-project
+      :ContainerProject        => {:type => "glyph", :icon => "\uE905", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-project
       :ContainerGroup          => {:type => "glyph", :icon => "\uF1B3", :fontfamily => "FontAwesome"},             # fa-cubes
       :ContainerNode           => {:type => "glyph", :icon => "\uE621", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-container-node
       :ContainerService        => {:type => "glyph", :icon => "\uE61E", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-service
@@ -29,6 +29,7 @@ module UiServiceMixin
       :CloudTenant             => {:type => "glyph", :icon => "\uE904", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-cloud-tenant
       :LoadBalancer            => {:type => "glyph", :icon => "\uE637", :fontfamily => "IcoMoon"},                 # product-load_balancer
       :Tag                     => {:type => "glyph", :icon => "\uF02b", :fontfamily => "FontAwesome"},             # fa-tag
+      :PhysicalServer          => {:type => "glyph", :icon => "\uE91a", :fontfamily => "PatternFlyIcons-webfont"}, # pficon-server-group
       :Openstack               => {:type => "image", :icon => provider_icon(:Openstack)},
       :Amazon                  => {:type => "image", :icon => provider_icon(:Amazon)},
       :Azure                   => {:type => "image", :icon => provider_icon(:Azure)},
@@ -36,6 +37,7 @@ module UiServiceMixin
       :Microsoft               => {:type => "image", :icon => provider_icon(:Microsoft)},
       :Redhat                  => {:type => "image", :icon => provider_icon(:Redhat)},
       :Vmware                  => {:type => "image", :icon => provider_icon(:Vmware)},
+      :Lenovo                  => {:type => "image", :icon => provider_icon(:Lenovo)},
       :Nuage                   => {:type => "image", :icon => provider_icon(:Nuage_Network)},
     }
   end

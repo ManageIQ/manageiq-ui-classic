@@ -9,9 +9,12 @@
     .col-md-8
       = @custom_button.name
       - display = @custom_button.options.key?(:display) ? @custom_button.options[:display] : true
-      = check_box_tag(display, true, display, :disabled => true)
       &nbsp;
-      = _('Display on Button')
+      .checkbox-inline
+        %label{:style => "font-weight: normal"}
+          = check_box_tag(display, true, display, :disabled => true)
+          = _('Display on Button')
+
   .form-group
     %label.control-label.col-md-2
       = _('Button Hover Text')
@@ -32,6 +35,17 @@
       = _('Open URL')
     .col-md-8
       = h(@custom_button.options.key?(:open_url) ? @custom_button.options[:open_url] : false)
+  .form-group
+    %label.control-label.col-md-2
+      = _('Display for')
+    .col-md-8
+      = @custom_button.options[:display_for]
+  -# TODO: temporary disabled until the backend supports "submit all"
+  -#  .form-group
+  -#    %label.control-label.col-md-2
+  -#      = _('Submit')
+  -#    .col-md-8
+  -#      = @custom_button.options[:submit_how]
 %hr
 
 %h3

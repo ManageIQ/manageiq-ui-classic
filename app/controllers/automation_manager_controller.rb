@@ -8,6 +8,8 @@ class AutomationManagerController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::ManagerControllerMixin
 
+  menu_section :automation_manager
+
   def self.model
     ManageIQ::Providers::AutomationManager
   end
@@ -26,76 +28,25 @@ class AutomationManagerController < ApplicationController
     end
   end
 
-  def model_to_name(provmodel)
-    AutomationManagerController.model_to_name(provmodel)
+  def concrete_model
+    ManageIQ::Providers::AnsibleTower::AutomationManager
   end
 
   def managed_group_kls
-    ManageIQ::Providers::AutomationManager::InventoryGroup
+    ManageIQ::Providers::AutomationManager::InventoryRootGroup
   end
 
   def manager_prefix
     'automation_manager'
   end
 
-  def new
-    assert_privileges("automation_manager_add_provider")
-    @provider_manager = ManageIQ::Providers::AnsibleTower::AutomationManager.new
-    @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
-    render_form
+  def privilege_prefix
+    'automation_manager'
   end
 
-  def edit
-    @server_zones = Zone.in_my_region.order('lower(description)').pluck(:description, :name)
-    case params[:button]
-    when "cancel"
-      cancel_provider
-    when "save"
-      add_provider
-      save_provider
-    else
-      assert_privileges("automation_manager_edit_provider")
-      manager_id            = from_cid(params[:miq_grid_checks] || params[:id] || find_checked_items[0])
-      @provider_manager     = find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, manager_id)
-      @providerdisplay_type = model_to_name(@provider_manager.type)
-      render_form
-    end
-  end
-
-  def delete
-    assert_privileges("automation_manager_delete_provider")
-    checked_items = find_checked_items
-    checked_items.push(params[:id]) if checked_items.empty? && params[:id]
-    providers = ManageIQ::Providers::AutomationManager.where(:id => checked_items).includes(:provider).collect(&:provider)
-    if providers.empty?
-      add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => "providers"), :task => "deletion"}, :error)
-    else
-      providers.each do |provider|
-        AuditEvent.success(
-          :event        => "provider_record_delete_initiated",
-          :message      => "[#{provider.name}] Record delete initiated",
-          :target_id    => provider.id,
-          :target_class => provider.type,
-          :userid       => session[:userid]
-        )
-        provider.destroy_queue
-      end
-
-      add_flash(n_("Delete initiated for %{count} Provider",
-                   "Delete initiated for %{count} Providers",
-                   providers.length) % {:count => providers.length})
-    end
-    replace_right_cell
-  end
-
-  def refresh
-    assert_privileges("automation_manager_refresh_provider")
-    @explorer = true
-    manager_button_operation('refresh_ems', _('Refresh'))
-    replace_right_cell
-  end
 
   def tagging
+    @explorer ||= true
     case x_active_accord
     when :automation_manager_providers
       assert_privileges("automation_manager_provider_configured_system_tag")
@@ -108,23 +59,6 @@ class AutomationManagerController < ApplicationController
       tagging_edit('ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript', false)
     end
     render_tagging_form
-  end
-
-  def automation_manager_form_fields
-    assert_privileges("automation_manager_edit_provider")
-    # set value of read only zone text box, when there is only single zone
-    if params[:id] == "new"
-      return render :json => {:zone => Zone.in_my_region.size >= 1 ? Zone.in_my_region.first.name : nil}
-    end
-
-    manager = find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, params[:id])
-    provider = manager.provider
-
-    render :json => {:name       => provider.name,
-                     :zone       => provider.zone.name,
-                     :url        => provider.url,
-                     :verify_ssl => provider.verify_ssl,
-                     :log_userid => provider.authentications.first.userid}
   end
 
   def load_or_clear_adv_search
@@ -160,6 +94,13 @@ class AutomationManagerController < ApplicationController
     generic_x_show
   end
 
+  def identify_record(id, klass = self.class.model)
+    type, _id = parse_nodetype_and_id(x_node)
+    klass = TreeBuilder.get_model_for_prefix(type).constantize if type
+    record = super(id, klass)
+    record
+  end
+
   def tree_record
     @record =
       case x_active_tree
@@ -173,7 +114,7 @@ class AutomationManagerController < ApplicationController
     nodes = x_node.split('-')
     case nodes.first
     when "root" then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager, params[:id])
-    when "at"   then find_record(ManageIQ::Providers::AutomationManager::InventoryGroup, params[:id])
+    when "at", "e" then find_record(ManageIQ::Providers::AutomationManager::InventoryRootGroup, params[:id])
     when "f"    then find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem, params[:id])
     when "xx" then
       case nodes.second
@@ -245,11 +186,6 @@ class AutomationManagerController < ApplicationController
     ManageIQ::Providers::AnsibleTower::Provider
   end
 
-  def find_or_build_provider
-    @provider = provider_class.new if params[:id] == "new"
-    @provider ||= find_record(ManageIQ::Providers::AutomationManager, params[:id]).provider
-  end
-
   def features
     [
       {:role     => "automation_manager_providers",
@@ -282,7 +218,7 @@ class AutomationManagerController < ApplicationController
     tree
   end
 
-  def get_node_info(treenodeid)
+  def get_node_info(treenodeid, _show_list = true)
     @sb[:action] = nil
     @nodetype, id = parse_nodetype_and_id(valid_active_node(treenodeid))
 
@@ -293,8 +229,8 @@ class AutomationManagerController < ApplicationController
     end
 
     case model
-    when "ManageIQ::Providers::AnsibleTower::AutomationManager"
-      provider_list(id, model)
+    when "ManageIQ::Providers::AnsibleTower::AutomationManager", "ExtManagementSystem"
+      provider_list(id, "ManageIQ::Providers::AnsibleTower::AutomationManager")
     when "EmsFolder"
       inventory_group_node(id, model)
     when "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfiguredSystem", "ConfiguredSystem"
@@ -315,6 +251,7 @@ class AutomationManagerController < ApplicationController
     else
       x_history_add_item(:id => treenodeid, :text => @right_cell_text) # Add to history pulldown array
     end
+    {:view => @view, :pages => @pages}
   end
 
   def provider_node(id, model)
@@ -325,13 +262,14 @@ class AutomationManagerController < ApplicationController
     elsif x_active_tree == :configuration_scripts_tree
       cs_provider_node(provider)
     else
+      @show_adv_search = true
       @no_checkboxes = true
-      options = {:model                 => "ManageIQ::Providers::AutomationManager::InventoryGroup",
+      options = {:model                 => "ManageIQ::Providers::AutomationManager::InventoryRootGroup",
                  :match_via_descendants => ConfiguredSystem,
                  :where_clause          => ["ems_id IN (?)", provider.id],
-                 :gtl_dbname            => "automation_manager_groups"}
+                 :gtl_dbname            => "automation_manager_providers"}
       process_show_list(options)
-      record_model = ui_lookup(:model => model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
+      record_model = ui_lookup(:model => self.class.model_to_name(model || TreeBuilder.get_model_for_prefix(@nodetype)))
       @right_cell_text = _("%{model} \"%{name}\"") % {:name  => provider.name,
                                                       :model => "#{ui_lookup(:tables => "inventory_group")} under #{record_model} Provider"}
     end
@@ -342,18 +280,20 @@ class AutomationManagerController < ApplicationController
                :match_via_descendants => ConfigurationScript,
                :where_clause          => ["manager_id IN (?)", provider.id],
                :gtl_dbname            => "automation_manager_configuration_scripts"}
+    @show_adv_search = true
     process_show_list(options)
     @right_cell_text = _("%{model} \"%{name}\"") % {:name  => provider.name,
                                                     :model => "#{ui_lookup(:tables => "job_templates")} under "}
   end
 
   def inventory_group_node(id, model)
-    @record = @inventory_group_record = find_record(ManageIQ::Providers::AutomationManager::InventoryGroup, id) if model
+    @record = @inventory_group_record = find_record(ManageIQ::Providers::AutomationManager::InventoryRootGroup, id) if model
 
     if @inventory_group_record.nil?
       self.x_node = "root"
       get_node_info("root")
     else
+      @show_adv_search = true
       options = {:model                 => "ConfiguredSystem",
                  :match_via_descendants => ConfiguredSystem,
                  :where_clause          => ["inventory_root_group_id IN (?)", from_cid(@inventory_group_record.id)],
@@ -371,6 +311,7 @@ class AutomationManagerController < ApplicationController
 
   def configuration_scripts_list(id, model)
     return configuration_script_node(id) if id
+    @show_adv_search = true
     @listicon = "configuration_script"
     if x_active_tree == :configuration_scripts_tree
       options = {:model      => model.to_s,
@@ -382,11 +323,13 @@ class AutomationManagerController < ApplicationController
 
   def configuration_script_node(id)
     @record = @configuration_script_record = find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript, id)
+    @show_adv_search = false
     display_node(id, nil)
   end
 
   def default_node
     return unless x_node == "root"
+    @show_adv_search = true
     if x_active_tree == :automation_manager_providers_tree
       options = {:model      => "ManageIQ::Providers::AnsibleTower::AutomationManager",
                  :gtl_dbname => "automation_manager_providers"}
@@ -564,6 +507,4 @@ class AutomationManagerController < ApplicationController
       replace_right_cell
     end
   end
-
-  menu_section :aut
 end

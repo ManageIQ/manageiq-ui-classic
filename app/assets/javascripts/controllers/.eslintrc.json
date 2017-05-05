@@ -11,9 +11,12 @@
     "angular/log": 0,
     "angular/no-service-method": 0,
     "angular/di": [ "error", "array" ], // strictDi
+    "angular/controller-as": 2,
+    "angular/prefer-component": 2,
+    "angular/no-http-callback": 2,
+    "angular/on-destroy": 1,
 
     // only warnings for now
-    "angular/controller-as": 1,
     "angular/module-getter": 1,
     "angular/no-services": [ "warn", ["$http"] ],
 

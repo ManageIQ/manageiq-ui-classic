@@ -1,35 +1,29 @@
 class InfraTopologyService < TopologyService
-  include UiServiceMixin
-
   @provider_class = ManageIQ::Providers::InfraManager
 
-  def entity_type(entity)
-    entity.class.name.demodulize
-  end
-
-  def build_topology
-    topo_items = {}
-    links = []
-
-    included_relations = [
+  @included_relations = [
+    :tags,
+    :ems_clusters      => [
       :tags,
-      :ems_clusters => [
+      :hosts => [
         :tags,
-        :hosts => [
-          :tags,
-          :vms => :tags
-        ]
-      ],
-    ]
+        :vms => :tags
+      ]
+    ],
+    :clusterless_hosts => [
+      :tags,
+      :vms => :tags
+    ],
+  ]
 
-    entity_relationships = {:InfraManager => build_entity_relationships(included_relations)}
-    preloaded = @providers.includes(included_relations)
+  @kinds = %i(InfraManager EmsCluster Host Vm)
 
-    preloaded.each do |entity|
-      topo_items, links = build_recursive_topology(entity, entity_relationships[:InfraManager], topo_items, links)
+  def entity_type(entity)
+    if entity.kind_of?(Host)
+      entity.class.base_class.name.demodulize
+    else
+      super
     end
-
-    populate_topology(topo_items, links, build_kinds, icons)
   end
 
   def entity_display_type(entity)
@@ -68,10 +62,5 @@ class InfraTopologyService < TopologyService
     else
       'Unknown'
     end
-  end
-
-  def build_kinds
-    kinds = [:InfraManager, :EmsCluster, :Host, :Vm]
-    build_legend_kinds(kinds)
   end
 end

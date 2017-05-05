@@ -34,7 +34,7 @@ function HeaderCtrl($scope, eventNotifications, $timeout) {
       text: 0
     };
 
-    if (angular.isArray(groups)) {
+    if (_.isArray(groups)) {
       angular.forEach(groups, function(group) {
         notificationCount.text += group.unreadCount;
       });
@@ -46,7 +46,7 @@ function HeaderCtrl($scope, eventNotifications, $timeout) {
 
   eventNotifications.registerObserverCallback(refresh);
 
-  $scope.$on('destroy', destroy);
+  $scope.$on('$destroy', destroy);
 
   refresh();
 }

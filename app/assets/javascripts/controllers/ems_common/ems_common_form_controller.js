@@ -104,13 +104,13 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
       $scope.emsCommonModel.openstack_infra_providers_exist = data.openstack_infra_providers_exist;
 
-      $scope.emsCommonModel.provider_id                     = angular.isDefined(data.provider_id) ? data.provider_id.toString() : "";
+      $scope.emsCommonModel.provider_id                     = data.provider_id !== undefined ? data.provider_id.toString() : "";
 
-      $scope.emsCommonModel.default_api_port                = angular.isDefined(data.default_api_port) && data.default_api_port !== '' ? data.default_api_port.toString() : $scope.getDefaultApiPort($scope.emsCommonModel.emstype);
-      $scope.emsCommonModel.amqp_api_port                   = angular.isDefined(data.amqp_api_port) && data.amqp_api_port !== '' ? data.amqp_api_port.toString() : '5672';
-      $scope.emsCommonModel.hawkular_api_port               = angular.isDefined(data.hawkular_api_port) && data.hawkular_api_port !== '' ? data.hawkular_api_port.toString() : '443';
-      $scope.emsCommonModel.metrics_api_port                = angular.isDefined(data.metrics_api_port) && data.metrics_api_port !== '' ? data.metrics_api_port.toString() : '';
-      $scope.emsCommonModel.metrics_database_name           = angular.isDefined(data.metrics_database_name) && data.metrics_database_name !== '' ? data.metrics_database_name : data.metrics_default_database_name;
+      $scope.emsCommonModel.default_api_port                = data.default_api_port !== undefined && data.default_api_port !== '' ? data.default_api_port.toString() : $scope.getDefaultApiPort($scope.emsCommonModel.emstype);
+      $scope.emsCommonModel.amqp_api_port                   = data.amqp_api_port !== undefined && data.amqp_api_port !== '' ? data.amqp_api_port.toString() : '5672';
+      $scope.emsCommonModel.hawkular_api_port               = data.hawkular_api_port !== undefined && data.hawkular_api_port !== '' ? data.hawkular_api_port.toString() : '443';
+      $scope.emsCommonModel.metrics_api_port                = data.metrics_api_port !== undefined && data.metrics_api_port !== '' ? data.metrics_api_port.toString() : '';
+      $scope.emsCommonModel.metrics_database_name           = data.metrics_database_name !== undefined && data.metrics_database_name !== '' ? data.metrics_database_name : data.metrics_default_database_name;
       $scope.emsCommonModel.api_version                     = data.api_version;
       $scope.emsCommonModel.default_security_protocol       = data.default_security_protocol;
       $scope.emsCommonModel.realm                           = data.realm;
@@ -195,7 +195,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.service_account_auth_status     = data.service_account_auth_status;
       $scope.emsCommonModel.metrics_auth_status             = true;
       $scope.emsCommonModel.ssh_keypair_auth_status         = true;
-      $scope.emsCommonModel.hawkular_auth_status            = true;
+      $scope.emsCommonModel.hawkular_auth_status            = data.hawkular_auth_status;
       $scope.emsCommonModel.vmware_cloud_api_version        = '9.0';
       miqService.sparkleOff();
 
@@ -228,9 +228,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       return true;
     } else if(($scope.currentTab == "amqp") &&
       ($scope.emsCommonModel.amqp_hostname) &&
-      ($scope.emsCommonModel.amqp_userid != '' && angular.isDefined($scope.angularForm.amqp_userid) && $scope.angularForm.amqp_userid.$valid &&
-       $scope.emsCommonModel.amqp_password != '' && angular.isDefined($scope.angularForm.amqp_password) && $scope.angularForm.amqp_password.$valid &&
-       $scope.emsCommonModel.amqp_verify != '' && angular.isDefined($scope.angularForm.amqp_verify) && $scope.angularForm.amqp_verify.$valid)) {
+      ($scope.emsCommonModel.amqp_userid != '' && $scope.angularForm.amqp_userid !== undefined && $scope.angularForm.amqp_userid.$valid &&
+       $scope.emsCommonModel.amqp_password != '' && $scope.angularForm.amqp_password !== undefined && $scope.angularForm.amqp_password.$valid &&
+       $scope.emsCommonModel.amqp_verify != '' && $scope.angularForm.amqp_verify !== undefined && $scope.angularForm.amqp_verify.$valid)) {
       return true;
     } else if(($scope.currentTab == "default" && $scope.emsCommonModel.emstype == "azure") &&
       ($scope.emsCommonModel.azure_tenant_id != '' && $scope.angularForm.azure_tenant_id.$valid) &&
@@ -417,7 +417,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   };
 
   $scope.postValidationModelRegistry = function(prefix) {
-    if (!angular.isDefined($scope.postValidationModel)) {
+    if ($scope.postValidationModel === undefined) {
       $scope.postValidationModel = {default: {},
                                     amqp: {},
                                     metrics: {},
@@ -525,7 +525,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   $scope.radioSelectionChanged = function() {
     if ($scope.emsCommonModel.event_stream_selection === "ceilometer" ||
         $scope.emsCommonModel.event_stream_selection === "none") {
-      if (angular.isDefined($scope.postValidationModel)) {
+      if ($scope.postValidationModel !== undefined) {
         $scope.emsCommonModel.amqp_hostname = $scope.postValidationModel.amqp.amqp_hostname;
         $scope.emsCommonModel.amqp_api_port = $scope.postValidationModel.amqp.amqp_api_port;
         $scope.emsCommonModel.amqp_security_protocol = $scope.postValidationModel.amqp.amqp_security_protocol;

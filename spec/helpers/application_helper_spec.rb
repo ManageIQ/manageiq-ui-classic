@@ -225,6 +225,11 @@ describe ApplicationHelper do
       expect(subject).to eq(helper.url_for_db(helper.controller_for_vm(helper.model_for_vm(@record)), @action))
     end
 
+    it "when record is ManageIQ::Providers::AnsibleTower::AutomationManager" do
+      @record = ManageIQ::Providers::AnsibleTower::AutomationManager.new
+      expect(subject).to eq("/automation_manager/#{@action}")
+    end
+
     it "when record is not VmOrTemplate" do
       @record = FactoryGirl.create(:host)
       expect(subject).to eq(helper.url_for_db(@record.class.base_class.to_s, @action))
@@ -1125,10 +1130,11 @@ describe ApplicationHelper do
   end
 
   context "#fileicon_tag" do
-    it "returns correct image for job record based upon it's status" do
-      job_attrs = {"state" => "running", "status" => "ok"}
-      image = helper.fileicon_tag("Job", job_attrs)
-      expect(image).to eq("<i class=\"pficon pficon-running\" title=\"Status = Running\"></i>")
+    it "returns correct image for miq task record based upon it's status" do
+      task = FactoryGirl.create(:miq_task)
+      task.state = "Running"
+      image = helper.fileicon_tag(task)
+      expect(image).to eq("<i class=\"pficon pficon-running\"></i>")
     end
   end
 
@@ -1228,10 +1234,6 @@ describe ApplicationHelper do
         expect(subject).to have_xpath("//a", :text => %r{\/availability_zone\/show_list\/\d+\?display=something})
       end
 
-      it 'renders onclick correctly' do
-        expect(subject).to have_xpath("//a[@onclick = 'return miqCheckForChanges()']")
-      end
-
       it 'renders title correctly' do
         expect(subject).to have_xpath("//a[@title = 'sometitle']")
       end
@@ -1251,10 +1253,6 @@ describe ApplicationHelper do
 
       it 'renders url correctly' do
         expect(subject).to have_xpath("//a", :text => %r{\/availability_zone\/show_list\/\d+\?display=something})
-      end
-
-      it 'renders onclick correctly' do
-        expect(subject).to have_xpath("//a[@onclick = 'return miqCheckForChanges()']")
       end
 
       it 'renders title correctly' do

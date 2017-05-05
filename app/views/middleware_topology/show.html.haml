@@ -1,8 +1,5 @@
-- tooltipOptions = {"tooltip-placement" => "bottom-right", "tooltip" => "{{legendTooltip}}"}
-.container_topology{'ng-controller' => "middlewareTopologyController"}
-  .row.toolbar-pf
-    .col-md-12
-      = render :partial => "shared/topology_header"
+- tooltipOptions = {"tooltip-placement" => "bottom", "tooltip" => "{{legendTooltip}}"}
+.topology{'ng-controller' => "middlewareTopologyController"}
   .legend.middleware
     %label#selected
     %div{'ng-if' => "kinds"}
@@ -45,6 +42,13 @@
             %text{:y => "9"} &#xE90f;
         %label
           = _("VMs")
+      %kubernetes-topology-icon{tooltipOptions, :kind => "Container"}
+        %svg.kube-topology
+          %g.EntityLegend
+            %circle{:r => "17"}
+            %text{:y => "7", :class => "fa fa-cube glyph"} &#xF1B2;
+        %label
+          = _("Containers")
       %kubernetes-topology-icon{tooltipOptions, :kind => "MiddlewareDomain"}
         %svg.kube-topology
           %g.MiddlewareDomain{:transform => "translate(21, 21)"}
@@ -69,4 +73,4 @@
   %kubernetes-topology-graph.middleware{:items => "items", :relations => "relations", :kinds => "kinds"}
 
 :javascript
-  miq_bootstrap('.container_topology', 'mwTopologyApp');
+  miq_bootstrap('.topology');

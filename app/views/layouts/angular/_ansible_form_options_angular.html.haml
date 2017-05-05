@@ -40,7 +40,6 @@
                   "required"         => "",
                   :miqrequired       => true,
                   "ng-change"        => "playbookTypeChanged('#{prefix}')",
-                  :checkchange       => true,
                   "data-live-search" => "true",
                   'pf-select'        => true}
             %option{"value" => ""}
@@ -56,7 +55,6 @@
                     'ng-options'       => 'machine_credential as machine_credential.name for machine_credential in vm.machine_credentials',
                     "required"         => "",
                     :miqrequired       => true,
-                    :checkchange       => true,
                     "data-live-search" => "true",
                     'pf-select'        => true}
               %option{"value" => ""}
@@ -78,15 +76,13 @@
           %label.col-md-3.control-label{"for" => "vm.#{prefix}_cloud_type"}
             = _('Cloud Type')
           .col-md-9
-            %select{"ng-model"    => "#{ng_model}.#{prefix}_cloud_type",
+            %select{"ng-model"    => "vm._#{prefix}_cloud_type",
                     "name"        => "#{prefix}_cloud_type",
-                    'ng-options'  => "k as v for (k, v) in vm.cloud_types",
-                    "ng-change"   => "cloudTypeChanged('#{prefix}')",
-                    :checkchange  => true,
+                    'ng-options'  => "k as v for (k,v) in vm.cloud_types",
                     "pf-select"   => true}
               %option{"value" => ""}
                 = "<#{_('Choose')}>"
-        #cloud_credentials_div{"ng-show" => "#{ng_model}.#{prefix}_cloud_type !== ''"}
+        #cloud_credentials_div{"ng-show" => "vm.#{prefix}_cloud_type !== ''"}
           .form-group
             %label.col-md-3.control-label{"for" => "vm.#{prefix}_cloud_credential_id"}
               = _('Cloud Credential')
@@ -94,7 +90,6 @@
               %select{"ng-model"         => "vm._#{prefix}_cloud_credential",
                       "name"             => "#{prefix}_cloud_credential_id",
                       'ng-options'       => "cloud_credential as cloud_credential.name for cloud_credential in vm.#{prefix}_cloud_credentials",
-                      :checkchange       => true,
                       "data-live-search" => "true",
                       'pf-select'        => true}
                 %option{"value" => ""}
@@ -109,10 +104,21 @@
                             :name         => "#{prefix}_inventory",
                             :maxlength    => 50,
                             "miqrequired" => "",
-                            "checkchange" => ""}
+                            "checkchange" => true}
           %span.help-block{"ng-show" => "angularForm.#{prefix}_inventory.$error.miqrequired"}
             = _("Required")
-
+    #escalate_privilege{"ng-if" => "vm.retirement_playbook_selected('#{prefix}')"}
+      .form-group
+        %label.col-md-3.control-label
+          = _("Escalate Privilege")
+        .col-md-9
+          %input#become_enabled{"bs-switch"       => "",
+                                "type"            => "checkbox",
+                                "name"            => "#{prefix}_become_enabled",
+                                "ng-model"        => "#{ng_model}.#{prefix}_become_enabled",
+                                "switch-on-text"  => _("Yes"),
+                                "switch-off-text" => _("No"),
+                                "checkchange"     => ""}
     - if prefix == "retirement"
       .form-group
         %label.col-md-3.control-label{"for" => "catalog_id"}
@@ -120,7 +126,7 @@
         .col-md-9
           %select{"ng-model"   => "vm.catalogItemModel.retirement_remove_resources",
                   "name"       => "vm.catalogItemModel.retirement_remove_resources",
-                  'ng-options' => "v as k for (k, v) in vm.catalogItemModel.remove_resources_types",
+                  'ng-options' => "v as k for (k, v) in vm.remove_resources_types",
                   :checkchange => true,
                   "pf-select"  => true}
   .col-md-12.col-lg-6

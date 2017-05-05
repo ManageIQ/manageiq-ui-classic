@@ -1,22 +1,10 @@
 class TopologyService
-  class << self
-    attr_reader :provider_class
-  end
+  include UiServiceMixin
 
-  def initialize(provider_id)
-    @providers = retrieve_providers(provider_id)
-  end
-
-  def retrieve_providers(provider_id = nil)
-    if provider_id
-      retrieve_entity(provider_id)
-    else  # provider id is empty when the topology is generated for all the providers together
-      self.class.provider_class.all
-    end
-  end
-
-  def retrieve_entity(entity_id)
-    self.class.provider_class.where(:id => entity_id)
+  def initialize(provider_id = nil)
+    provider_class = self.class.instance_variable_get(:@provider_class)
+    # If the provider ID is not set, the topology needs to be generated for all the providers
+    @providers = provider_id ? provider_class.where(:id => provider_id) : provider_class.all
   end
 
   def build_link(source, target)
@@ -27,7 +15,8 @@ class TopologyService
     entity.class.name.demodulize
   end
 
-  def build_legend_kinds(kinds)
+  def build_kinds
+    kinds = self.class.instance_variable_get(:@kinds)
     kinds.each_with_object({}) { |kind, h| h[kind] = true }
   end
 
@@ -36,33 +25,57 @@ class TopologyService
   end
 
   def build_base_entity_data(entity)
-    {:name   => entity.name,
-     :kind   => entity_type(entity),
-     :miq_id => entity.id}
-  end
-
-  def populate_topology(topo_items, links, kinds, icons)
-    {:items     => topo_items,
-     :relations => links,
-     :kinds     => kinds,
-     :icons     => icons
+    {
+      :name   => entity.name,
+      :kind   => entity_type(entity),
+      :miq_id => entity.id
     }
   end
 
-  def build_recursive_topology(entity, entity_relationships_mapping, topo_items, links)
-    unless entity.nil?
-      topo_items[entity_id(entity)] = build_entity_data(entity)
-      unless entity_relationships_mapping.nil?
-        entity_relationships_mapping.keys.each do |rel_name|
-          relations = entity.send(rel_name.to_s.underscore.downcase)
-          if relations.kind_of?(ActiveRecord::Associations::CollectionProxy)
-            relations.each do |relation|
-              build_rel_data_and_links(entity, entity_relationships_mapping, rel_name, links, relation, topo_items)
-            end
-          else
-            # single relation such as has_one or belongs_to, can't iterate with '.each'
-            build_rel_data_and_links(entity, entity_relationships_mapping, rel_name, links, relations, topo_items)
-          end
+  def build_topology
+    included_relations = self.class.instance_variable_get(:@included_relations)
+    preloaded = @providers.includes(included_relations)
+    nodes, edges = map_to_graph(preloaded, build_entity_relationships(included_relations))
+
+    {
+      :items     => nodes,
+      :relations => edges,
+      :kinds     => build_kinds,
+      :icons     => icons
+    }
+  end
+
+  def map_to_graph(providers, graph)
+    topo_items = {}
+    links = []
+
+    stack = providers.map do |entity|
+      [entity, graph, nil]
+    end
+
+    # Nonrecursively build and traverse the topology structure
+    while stack.any?
+      entity, relations, parent = stack.pop
+      # Cache the entity ID as it will be used multiple times
+      id = entity_id(entity)
+
+      # Build a node from the current item
+      topo_items[id] = build_entity_data(entity)
+      # Create an edge if the node has a parent
+      links << build_link(parent, id) if parent
+      # Skip if there are no more items in the generator graph
+      next if relations.nil?
+
+      relations.each_pair do |head, tail|
+        # Apply the generator graph's first node on the entity
+        method = head.to_s.underscore.downcase
+        children = entity.send(method) if entity.respond_to?(method)
+        next if children.nil?
+        # Push the child/children to the stack with the chunked generator graph
+        if children.respond_to?(:each)
+          children.each { |child| stack.push([child, tail, id]) }
+        else
+          stack.push([children, tail, id])
         end
       end
     end
@@ -70,28 +83,20 @@ class TopologyService
     [topo_items, links]
   end
 
-  def build_rel_data_and_links(entity, entity_relationships, key, links, relation, topo_items)
-    unless relation.nil?
-      topo_items[entity_id(relation)] = build_entity_data(relation)
-      links << build_link(entity_id(entity), entity_id(relation))
-    end
-    build_recursive_topology(relation, entity_relationships[key], topo_items, links)
-  end
-
   def build_entity_relationships(included_relations)
     hash = {}
     case included_relations
-      when Hash
-        included_relations.each_pair do |key, hash_value|
-          hash_value = build_entity_relationships(hash_value)
-          hash[key.to_s.camelize.to_sym] = hash_value
-        end
-      when Array
-        included_relations.each do |array_value|
-          hash.merge!(build_entity_relationships(array_value))
-        end
-      when Symbol
-        hash[included_relations.to_s.camelize.to_sym] = nil
+    when Hash
+      included_relations.each_pair do |key, hash_value|
+        hash_value = build_entity_relationships(hash_value)
+        hash[key.to_s.camelize.to_sym] = hash_value
+      end
+    when Array
+      included_relations.each do |array_value|
+        hash.merge!(build_entity_relationships(array_value))
+      end
+    when Symbol
+      hash[included_relations.to_s.camelize.to_sym] = nil
     end
     hash
   end

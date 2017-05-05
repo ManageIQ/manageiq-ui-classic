@@ -4,7 +4,6 @@ module ApplicationHelper::PageLayouts
     return false if %w(
       about
       all_tasks
-      all_ui_tasks
       chargeback
       configuration
       container_dashboard
@@ -28,7 +27,6 @@ module ApplicationHelper::PageLayouts
       monitor_alerts_list
       monitor_alerts_most_recent
       my_tasks
-      my_ui_tasks
       ops
       physical_infra_topology
       pxe
@@ -39,17 +37,17 @@ module ApplicationHelper::PageLayouts
       storage_pod
     ).include?(@layout)
 
+    return false if %w(
+      ad_hoc_metrics
+      consumption
+      dashboard
+      dialog_provision
+      topology
+    ).include?(@showtype)
+
     return false if dashboard_no_listnav?
 
     return false if @layout.starts_with?("miq_request")
-
-    return false if @showtype == "dialog_provision"
-
-    return false if @showtype == "dashboard" && @lastaction.ends_with?("_dashboard")
-
-    return false if @showtype == "consumption"
-
-    return false if @showtype == "topology"
 
     return false if controller.action_name.end_with?("tagging_edit")
 
@@ -60,12 +58,10 @@ module ApplicationHelper::PageLayouts
     # listnav always implies paging, this only handles the non-listnav case
     %w(
       all_tasks
-      all_ui_tasks
       miq_request_ae
       miq_request_host
       miq_request_vm
       my_tasks
-      my_ui_tasks
     ).include? @layout
   end
 
@@ -94,11 +90,7 @@ module ApplicationHelper::PageLayouts
       "exception",
       "support",
       "configuration",
-      "rss",
-      "my_tasks",
-      "my_ui_tasks",
-      "all_tasks",
-      "all_ui_tasks"].include?(@layout)
+      "rss"].include?(@layout)
   end
 
   def dashboard_no_listnav?

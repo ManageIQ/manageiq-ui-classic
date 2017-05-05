@@ -5,7 +5,6 @@ class CloudVolumeController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericListMixin
-  include Mixins::CheckedIdMixin
   include Mixins::GenericFormMixin
   include Mixins::GenericSessionMixin
 
@@ -269,13 +268,8 @@ class CloudVolumeController < ApplicationController
     assert_privileges("cloud_volume_new")
     @volume = CloudVolume.new
     @in_a_form = true
-    @storage_manager_choices = {}
     if params[:storage_manager_id]
-      @storage_manager_id = params[:storage_manager_id]
-      ems = find_record_with_rbac(ExtManagementSystem, @storage_manager_id)
-      @storage_manager_choices[ems.name] = ems.id
-    else
-      ExtManagementSystem.all.each { |ems| @storage_manager_choices[ems.name] = ems.id if ems.supports_block_storage? }
+      @storage_manager = find_record_with_rbac(ExtManagementSystem, params[:storage_manager_id])
     end
     drop_breadcrumb(
       :name => _("Add New %{model}") % {:model => ui_lookup(:table => 'cloud_volume')},
@@ -426,14 +420,7 @@ class CloudVolumeController < ApplicationController
   # delete selected volumes
   def delete_volumes
     assert_privileges("cloud_volume_delete")
-    volumes = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_volume")
-                find_checked_items
-              elsif params[:id].present?
-                [params[:id]]
-              else
-                find_checked_items
-              end
-
+    volumes = find_records_with_rbac(CloudVolume, checked_or_params)
     if volumes.empty?
       add_flash(_("No %{models} were selected for deletion.") % {
         :models => ui_lookup(:tables => "cloud_volume")
@@ -441,8 +428,7 @@ class CloudVolumeController < ApplicationController
     end
 
     volumes_to_delete = []
-    volumes.each do |v|
-      volume = CloudVolume.find_by_id(v)
+    volumes.each do |volume|
       if volume.nil?
         add_flash(_("%{model} no longer exists.") % {:model => ui_lookup(:table => "cloud_volume")}, :error)
       elsif !volume.attachments.empty?
@@ -451,23 +437,15 @@ class CloudVolumeController < ApplicationController
           :name      => volume.name,
           :instances => ui_lookup(:tables => 'vm_cloud')}, :warning)
       else
-        begin
-          valid_delete = volume.validate_delete_volume
-          if valid_delete[:available]
-            volumes_to_delete.push(volume)
-          else
-            add_flash(_("Couldn't initiate deletion of %{model} \"%{name}\": %{details}") % {
-              :model   => ui_lookup(:table => 'cloud_volume'),
-              :name    => volume.name,
-              :details => valid_delete[:message]}, :error)
-          end
-        rescue Excon::Error::Unauthorized => e
+        valid_delete = volume.validate_delete_volume
+        if valid_delete[:available]
+          volumes_to_delete.push(volume)
+        else
           add_flash(_("Couldn't initiate deletion of %{model} \"%{name}\": %{details}") % {
             :model   => ui_lookup(:table => 'cloud_volume'),
             :name    => volume.name,
-            :details => e}, :error)
+            :details => valid_delete[:message]}, :error)
         end
-
       end
     end
     process_cloud_volumes(volumes_to_delete, "destroy") unless volumes_to_delete.empty?

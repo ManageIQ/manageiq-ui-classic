@@ -31,6 +31,8 @@ class ApplicationController < ActionController::Base
   include Mixins::MenuSection
   include Mixins::GenericToolbarMixin
   include Mixins::CustomButtons
+  include Mixins::CheckedIdMixin
+
   helper ToolbarHelper
   helper JsHelper
   helper QuadiconHelper
@@ -79,7 +81,9 @@ class ApplicationController < ActionController::Base
 
   # Convert Controller Name to Actual Model
   def self.model
-    @model ||= name[0..-11].constantize
+    @model ||= name[0..-11].safe_constantize
+  rescue
+    @model = nil
   end
 
   def self.permission_prefix
@@ -148,6 +152,10 @@ class ApplicationController < ActionController::Base
   end
 
   def download_summary_pdf
+    # do not build quadicon links
+    @embedded = true
+    @showlinks = false
+
     @record = identify_record(params[:id])
     yield if block_given?
     return if record_no_longer_exists?(@record)
@@ -248,6 +256,139 @@ class ApplicationController < ActionController::Base
     browser_refresh_task(task_id)
   end
   private :initiate_wait_for_task
+
+  # Method for creating object with data for report.
+  # Report is either grid/table or list.
+  # @param controller_name name of JS controller. Typically `reportDataController`.
+  def init_report_data(controller_name)
+    view_url = view_to_url(@view) unless @view.nil?
+    {
+      :controller_name => controller_name,
+      :data            => {
+        :modelName  => @display.nil? && !self.class.model.nil? ? self.class.model.to_s.tableize : @display,
+        :activeTree => x_active_tree.to_s,
+        :gtlType    => @gtl_type,
+        :currId     => params[:id],
+        :sortColIdx => @sortcol,
+        :sortDir    => @sortdir,
+        :isExplorer => @explorer,
+        :showUrl    => view_url
+      }
+    }
+  end
+
+  # Private method for processing params.
+  # params can contain these options:
+  # @param params parameters object.
+  # @option params :explorer [String]
+  #     String value of boolean if we are fetching data for explorer or not. "true" | "false"
+  # @option params :active_tree [String]
+  #     String value of active tree node.
+  # @option params :model_id [String]
+  #     String value of model's ID to be filtered with.
+  def process_params_options(params)
+    options = {}
+    @explorer = params[:explorer] == "true" if params[:explorer]
+
+    if params[:active_tree] && defined? get_node_info
+      node_info = get_node_info(x_node, false)
+      options.merge!(node_info) if node_info.kind_of?(Hash)
+    end
+    if params[:model] && %w(miq_requests).include?(params[:model])
+      options = show_list
+    end
+    if params[:model] && %w(miq_tasks).include?(params[:model])
+      options = jobs_info
+    end
+    if params[:model_id] && !params[:active_tree]
+      curr_model_id = from_cid(params[:model_id])
+      unless curr_model_id.nil?
+        options[:parent] = identify_record(curr_model_id, controller_to_model) if curr_model_id && options[:parent].nil?
+      end
+    end
+    options[:parent] = options[:parent] || @parent
+    options[:association] = params[:model] if HAS_ASSOCATION.include? params[:model]
+    options[:selected_ids] = params[:records]
+    options
+  end
+  private :process_params_options
+
+  # Method for processing params and finding correct model for current params.
+  # @param params parameters object.
+  # @option params :active_tree [String]
+  #     String value of active tree node.
+  # @option params :model [String]
+  #     String value of model to be selected.
+  # @param options options Object.
+  # @option options :model [Object]
+  #     If model was chosen somehow before calling this method use this model instead of finding it.
+  def process_params_model_view(params, options)
+    if options[:model]
+      model_view = options[:model].constantize
+    end
+
+    if model_view.nil? && params[:active_tree]
+      model_view = vm_model_from_active_tree(params[:active_tree].to_sym)
+    end
+    if model_view.nil? && params[:model]
+      model_view = model_string_to_constant(params[:model])
+    end
+
+    if model_view.nil?
+      model_view = controller_to_model
+    end
+    model_view
+  end
+  private :process_params_model_view
+
+  def set_variables_report_data(settings, current_view)
+    settings[:sort_dir] = @sortdir unless settings.nil?
+    settings[:sort_col] = @sortcol unless settings.nil?
+    @edit = session[:edit]
+    @policy_sim = @edit[:policy_sim] unless @edit.nil?
+    controller, _action = db_to_controller(current_view.db) unless current_view.nil?
+    if !@policy_sim.nil? && session[:policies] && !session[:policies].empty?
+      settings[:url] = '/' + controller + '/policies/'
+    end
+    if session[:sandboxes] && @sb && controller
+      session[:sandboxes][controller] = @sb
+    end
+    settings
+  end
+  private :set_variables_report_data
+
+  # Method for fetching report data. These data can be displayed in Grid/Tile/List.
+  # This method will first process params for options and then for current model.
+  # From these options and model we get view (for fetching data) and settings (will hold info about paging).
+  # Then this method will return JSON object with settings and data.
+  def report_data
+    @in_report_data = true
+    if params[:explorer]
+      params[:action] = "explorer"
+    end
+    options = process_params_options(params)
+    if options.nil? || options[:view].nil?
+      model_view = process_params_model_view(params, options)
+      @edit = session[:edit]
+      current_view, settings = get_view(model_view, options)
+    else
+      current_view = options[:view]
+      settings = options[:pages]
+    end
+    settings = set_variables_report_data(settings, current_view)
+
+    # Foreman has some unassigned rows which needs to be added after view is fetched
+    if options && options[:unassigned_profile_row] && options[:unassigned_configuration_profile]
+      options[:unassigned_profile_row][:id] ||= options[:unassigned_profile_row]['manager_id']
+      current_view.table.data.push(options[:unassigned_profile_row])
+      @targets_hash[options[:unassigned_profile_row]['id']] = options[:unassigned_configuration_profile]
+    end
+    render :json => {
+      :settings => settings,
+      :data     => view_to_hash(current_view),
+      :messages => @flash_array || session[:flash_msg]
+    }
+  end
 
   def event_logs
     @record = identify_record(params[:id])
@@ -865,8 +1006,23 @@ class ApplicationController < ActionController::Base
 
     # Add table elements
     table = view.sub_table ? view.sub_table : view.table
+    view_context.instance_variable_set(:@explorer, @explorer)
     table.data.each do |row|
-      new_row = {:id => list_row_id(row), :cells => []}
+      target = @targets_hash[row.id] unless row['id'].nil?
+      if @in_report_data
+        quadicon = view_context.render_quadicon(target) if !target.nil? && type_has_quadicon(target.class.name)
+      end
+      new_row = {
+        :id       => list_row_id(row),
+        :long_id  => row['id'],
+        :cells    => [],
+        :quadicon => quadicon
+      }
+      if defined?(row.data) && defined?(params) && params[:active_tree] != "reports_tree"
+        new_row[:parent_id] = "xx-#{to_cid(row.data['miq_report_id'])}" if row.data['miq_report_id']
+      end
+      new_row[:parent_id] = "xx-#{CONTENT_TYPE_ID[target[:content_type]]}" if target && target[:content_type]
+      new_row[:tree_id] = TreeBuilder.build_node_cid(target) if target
       root[:rows] << new_row
 
       if has_checkbox
@@ -876,10 +1032,15 @@ class ApplicationController < ActionController::Base
       # Generate html for the list icon
       if has_listicon
         item = listicon_item(view, row['id'])
-
+        icon, icon2, image = listicon_glyphicon(item)
+        image = fileicon(item, view) unless image
+        icon = nil if %w(pxe).include? params[:controller]
+        new_row[:img_url] = ActionController::Base.helpers.image_path(image.to_s)
         new_row[:cells] << {:title => _('View this item'),
-                            :image => fileicon(item, view),
-                            :icon  => listicon_icon(item)}
+                            :image => image,
+                            :icon  => icon,
+                            :icon2 => icon2}
+
       end
 
       view.col_order.each_with_index do |col, col_idx|
@@ -970,18 +1131,23 @@ class ApplicationController < ActionController::Base
   # Return the image name for the list view icon of a db,id pair
   def fileicon(item, view)
     default = "100/#{(@listicon || view.db).underscore}.png"
-
     image = case item
             when EventLog, OsProcess
               "100/#{@listicon.downcase}.png"
             when Storage
               "100/piecharts/datastore/#{calculate_pct_img(item.v_free_space_percent_of_total)}.png"
             when MiqRequest
-              item.decorate.fileicon || "100/#{@listicon.downcase}.png"
+              item.decorate.fileicon || "100/#{@listicon.downcase}.png" if @listicon.try(:downcase)
+            when Account
+              "100/#{item.accttype}.png"
+            when SystemService
+              "100/service.png"
             when ManageIQ::Providers::CloudManager::AuthKeyPair
               "100/auth_key_pair.png"
+            when MiqWorker
+              "100/processmanager-#{item.normalized_type}.png" if item.try(:normalized_type)
             else
-              item.decorate.try(:fileicon)
+              item.decorate.try(:fileicon) if item
             end
 
     image || default
@@ -1141,284 +1307,8 @@ class ApplicationController < ActionController::Base
       @sortcol = 0
       @sortdir = "ASC"
     end
+    @sortdir = params[:is_ascending] ? 'ASC' : 'DESC' unless params[:is_ascending].nil?
     @sortcol
-  end
-
-  # set up info for the _config partial
-  def set_config(db_record) # pass in the db record, either @host or @vm
-    @devices = []    # This will be an array of hashes to allow the rhtml to pull out each device field by name
-    unless db_record.hardware.nil?
-      if db_record.hardware.cpu_total_cores
-        cpu_details =
-          if db_record.num_cpu && db_record.cpu_cores_per_socket
-            " (#{pluralize(db_record.num_cpu, 'socket')} x #{pluralize(db_record.cpu_cores_per_socket, 'core')})"
-          else
-            ""
-          end
-
-        @devices.push(:device      => _("Processors"),
-                      :description => "#{db_record.hardware.cpu_total_cores}#{cpu_details}",
-                      :icon        => "processor")
-      end
-
-      @devices.push(:device      => _("CPU Type"),
-                    :description => db_record.hardware.cpu_type,
-                    :icon        => "processor") if db_record.hardware.cpu_type
-      @devices.push(:device      => _("CPU Speed"),
-                    :description => "#{db_record.hardware.cpu_speed} MHz",
-                    :icon        => "processor") if db_record.hardware.cpu_speed
-      @devices.push(:device      => _("Memory"),
-                    :description => "#{db_record.hardware.memory_mb} MB",
-                    :icon        => "memory") if db_record.hardware.memory_mb
-
-      # Add disks to the device array
-      unless db_record.hardware.disks.nil?
-        db_record.hardware.disks.each do |disk|
-          # relying on to_s to force nils into ""
-          loc = disk.location.to_s
-
-          # default device is controller_type
-          dev = disk.controller_type ? "#{disk.controller_type} #{loc}" : ""
-
-          # default description is filename
-          desc = disk.filename.to_s
-
-          # default icon prefix is device_name
-          icon = disk.device_name.to_s
-
-          conn = disk.start_connected ? _(", Connect at Power On = Yes") : _(", Connect at Power On = No")
-
-          # Customize disk entries by type
-          if disk.device_type == "cdrom-raw"
-            dev = _("CD-ROM (IDE %{location})%{connection}") % {:location => loc, :connection => conn}
-            icon = "cdrom"
-          elsif disk.device_type == "atapi-cdrom"
-            dev = _("ATAPI CD-ROM (IDE %{location})%{connection}") % {:location => loc, :connection => conn}
-            icon = "cdrom"
-          elsif disk.device_type == "cdrom-image"
-            dev = _("CD-ROM Image (IDE %{location})%{connection}") % {:location => loc, :connection => conn}
-            icon = "cdrom"
-          elsif disk.device_type == "disk"
-            icon = "disk"
-            if disk.controller_type == "ide"
-              dev = _("Hard Disk (IDE %{location})") % {:location => loc}
-            elsif disk.controller_type == "scsi"
-              dev = _("Hard Disk (SCSI %{location})") % {:location => loc}
-              icon = "scsi"
-            end
-            unless disk.size.nil?
-              dev += _(", Size: %{number}") % {:number => number_to_human_size(disk.size, :precision => 2)}
-            end
-            unless disk.size_on_disk.nil?
-              dev += _(", Size on disk: %{number}") % {:number => number_to_human_size(disk.size_on_disk,
-                                                                                       :precision => 2)}
-            end
-            unless disk.used_percent_of_provisioned.nil?
-              dev += _(", Percent Used Provisioned Space: %{number}%%") %
-                {:number => disk.used_percent_of_provisioned.to_s}
-            end
-            desc += _(", Mode: %{mode}") % {:mode => disk.mode} unless disk.mode.nil?
-          elsif disk.device_type == "ide"
-            dev = _("Hard Disk (IDE %{location})") % {:location => loc}
-            unless disk.size.nil?
-              dev += _(", Size: %{number}") % {:number => number_to_human_size(disk.size, :precision => 2)}
-            end
-            unless disk.size_on_disk.nil?
-              dev += _(", Size on disk: %{number}") % {:number => number_to_human_size(disk.size_on_disk, :precision => 2)}
-            end
-            unless disk.used_percent_of_provisioned.nil?
-              dev += _(", Percent Used Provisioned Space: %{number}%%") %
-                {:number => disk.used_percent_of_provisioned.to_s}
-            end
-            desc += _(", Mode: %{mode}") % {:mode => disk.mode} unless disk.mode.nil?
-            icon = "disk"
-          elsif ["scsi", "scsi-hardDisk"].include?(disk.device_type)
-            dev = _("Hard Disk (SCSI %{location})") % {:location => loc}
-            unless disk.size.nil?
-              dev += _(", Size: %{number}") % {:number => number_to_human_size(disk.size, :precision => 2)}
-            end
-            unless disk.size_on_disk.nil?
-              dev += _(", Size on disk: %{number}") % {:number => number_to_human_size(disk.size_on_disk,
-                                                                                       :precision => 2)}
-            end
-            unless disk.used_percent_of_provisioned.nil?
-              dev += _(", Percent Used Provisioned Space: %{number}%%") %
-                {:number => disk.used_percent_of_provisioned.to_s}
-            end
-            desc += _(", Mode: %{mode}") % {:mode => disk.mode} unless disk.mode.nil?
-            icon = "scsi"
-          elsif disk.device_type == "scsi-passthru"
-            dev = _("Generic SCSI (%{location})") % {:location => loc}
-            icon = "scsi"
-          elsif disk.device_type == "floppy"
-            dev += conn
-            icon = "floppy"
-          end
-          # uppercase the first character of the device name and description
-          dev = dev[0..0].upcase + dev[1..-1].to_s
-          desc = desc[0..0].upcase + desc[1..-1].to_s
-
-          @devices.push(:device      => dev,
-                        :description => desc,
-                        :icon        => icon)
-        end
-      end
-
-      # Add ports to the device array
-      unless db_record.hardware.ports.nil?
-        db_record.hardware.ports.each do |port|
-          loc = port.location.nil? ? "" : port.location
-          loc = loc.strip == "0" ? "" : loc.next
-          dev = port.controller_type << " " << loc
-          desc = port.filename.nil? ? "" : port.filename
-          icon = port.device_type
-          # Customize port entries by type
-          if port.device_type == "sound"
-            dev = "Audio"
-            desc = port.auto_detect.nil? ? "" : _("Default Adapter")
-          end
-          # uppercase the first character of the device name and description
-          dev = dev[0..0].upcase + dev[1..-1]
-          desc = desc[0..0].upcase + desc[1..-1] if desc.length > 0
-          @devices.push(:device      => dev,
-                        :description => desc,
-                        :icon        => icon)
-        end
-      end
-    end
-
-    unless db_record.operating_system.nil?
-      @osinfo = []   # This will be an array of hashes to allow the rhtml to pull out each field by name
-      @account_policy = []   # This will be an array of hashes to allow the rhtml to pull out each field by name for account policy
-      # add OS entry to the array
-      @osinfo.push(:osinfo      => _("Operating System"),
-                   :description => db_record.operating_system.product_name) unless db_record.operating_system.product_name.nil?
-      @osinfo.push(:osinfo      => _("Service Pack"),
-                   :description => db_record.operating_system.service_pack) unless db_record.operating_system.service_pack.nil?
-      @osinfo.push(:osinfo      => _("Product ID"),
-                   :description => db_record.operating_system.productid) unless db_record.operating_system.productid.nil?
-      @osinfo.push(:osinfo      => _("Version"),
-                   :description => db_record.operating_system.version) unless db_record.operating_system.version.nil?
-      @osinfo.push(:osinfo      => _("Build Number"),
-                   :description => db_record.operating_system.build_number) unless db_record.operating_system.build_number.nil?
-      @osinfo.push(:osinfo      => _("System Type"),
-                   :description => db_record.operating_system.bitness.to_s + "-bit OS") unless db_record.operating_system.bitness.nil?
-      @account_policy.push(:field       => _("Password History"),
-                           :description => db_record.operating_system.pw_hist) unless db_record.operating_system.pw_hist.nil?
-      @account_policy.push(:field       => _("Max Password Age"),
-                           :description => db_record.operating_system.max_pw_age) unless db_record.operating_system.max_pw_age.nil?
-      @account_policy.push(:field       => _("Min Password Age"),
-                           :description => db_record.operating_system.min_pw_age) unless db_record.operating_system.min_pw_age.nil?
-      @account_policy.push(:field       => _("Min Password Length"),
-                           :description => db_record.operating_system.min_pw_len) unless db_record.operating_system.min_pw_len.nil?
-      @account_policy.push(:field       => _("Password Complex"),
-                           :description => db_record.operating_system.pw_complex) unless db_record.operating_system.pw_complex.nil?
-      @account_policy.push(:field       => _("Password Encrypt"),
-                           :description => db_record.operating_system.pw_encrypt) unless db_record.operating_system.pw_encrypt.nil?
-      @account_policy.push(:field       => _("Lockout Threshold"),
-                           :description => db_record.operating_system.lockout_threshold) unless db_record.operating_system.lockout_threshold.nil?
-      @account_policy.push(:field       => _("Lockout Duration"),
-                           :description => db_record.operating_system.lockout_duration) unless db_record.operating_system.lockout_duration.nil?
-      @account_policy.push(:field       => _("Reset Lockout Counter"),
-                           :description => db_record.operating_system.reset_lockout_counter) unless db_record.operating_system.reset_lockout_counter.nil?
-    end
-    if db_record.respond_to?("vmm_vendor_display") # For Host table, this will pull the VMM fields
-      @vmminfo = []    # This will be an array of hashes to allow the rhtml to pull out each field by name
-
-      @vmminfo.push(:vmminfo     => _("Vendor"),
-                    :description => db_record.vmm_vendor_display)
-      @vmminfo.push(:vmminfo     => _("Product"),
-                    :description => db_record.vmm_product) unless db_record.vmm_product.nil?
-      @vmminfo.push(:vmminfo     => _("Version"),
-                    :description => db_record.vmm_version) unless db_record.vmm_version.nil?
-      @vmminfo.push(:vmminfo     => _("Build Number"),
-                    :description => db_record.vmm_buildnumber) unless db_record.vmm_buildnumber.nil?
-    end
-
-    if db_record.respond_to?("vendor_display") # For Vm table, this will pull the vendor and notes fields
-      @vmminfo = []    # This will be an array of hashes to allow the rhtml to pull out each field by name
-
-      @vmminfo.push(:vmminfo     => _("Vendor"),
-                    :description => db_record.vendor_display)
-      @vmminfo.push(:vmminfo     => _("Format"),
-                    :description => db_record.format) unless db_record.format.nil?
-      @vmminfo.push(:vmminfo     => _("Version"),
-                    :description => db_record.version) unless db_record.version.nil?
-      unless db_record.hardware.nil?
-        notes = if db_record.hardware.annotation.nil?
-                  _("<No notes have been entered for this VM>")
-                else
-                  db_record.hardware.annotation
-                end
-        @vmminfo.push(:vmminfo     => _("Notes"),
-                      :description => notes)
-      end
-    end
-  end # set_config
-
-  # Common routine to find checked items on a page (checkbox ids are "check_xxx" where xxx is the item id or index)
-  def find_checked_items(prefix = nil)
-    if !params[:miq_grid_checks].blank?
-      return params[:miq_grid_checks].split(",").collect { |c| from_cid(c) }
-    else
-      prefix = "check" if prefix.nil?
-      items = []
-      params.each do |var, val|
-        vars = var.to_s.split("_")
-        if vars[0] == prefix && val == "1"
-          ids = vars[1..-1].collect { |v| v = from_cid(v) }  # Decompress any compressed ids
-          items.push(ids.join("_"))
-        end
-      end
-      return items
-    end
-  end
-
-  # Test RBAC on every item checked
-  # Params:
-  #   klass - class of accessed objects
-  # Returns:
-  #   array of checked items. If user does not have rigts for it,
-  #   raises exception
-  def find_checked_ids_with_rbac(klass, prefix = nil)
-    items = find_checked_items(prefix)
-    assert_rbac(klass, items)
-    items
-  end
-
-  # Test RBAC in case there is only one record
-  # Params:
-  #   klass - class of accessed object
-  #   id    - accessed object id
-  # Returns:
-  #   database record of checked item. If user does not have rights for it,
-  #   raises an exception
-  def find_record_with_rbac(klass, id, options = {})
-    raise _("Invalid input") unless is_integer?(id)
-    tested_object = klass.find_by(:id => id)
-    if tested_object.nil?
-      raise(_("User '%{user_id}' is not authorized to access '%{model}' record id '%{record_id}'") %
-              {:user_id   => current_userid,
-               :record_id => id,
-               :model     => ui_lookup(:model => klass.to_s)})
-    end
-    Rbac.filtered_object(tested_object, :user => current_user, :named_scope => options[:named_scope]) ||
-      raise(_("User '%{user_id}' is not authorized to access '%{model}' record id '%{record_id}'") %
-              {:user_id   => current_userid,
-               :record_id => id,
-               :model     => ui_lookup(:model => klass.to_s)})
-  end
-
-  # Test RBAC in case there is only one record
-  # Params:
-  #   klass - class of accessed object
-  #   id    - accessed object id
-  # Returns:
-  #   id of checked item. If user does not have rights for it,
-  #   raises an exception
-  def find_id_with_rbac(klass, id)
-    assert_rbac(klass, Array.wrap(id))
-    id
   end
 
   # Common Saved Reports button handler routines
@@ -1534,9 +1424,14 @@ class ApplicationController < ActionController::Base
 
   # Create view and paginator for a DB records with/without tags
   def get_view(db, options = {})
-    db     = db.to_s
-    dbname = options[:dbname] || db.gsub('::', '_').downcase # Get db name as text
-    db_sym = (options[:gtl_dbname] || dbname).to_sym # Get db name as symbol
+    unless @edit.nil?
+      object_ids = @edit[:object_ids] unless @edit[:object_ids].nil?
+      object_ids = @edit[:pol_items] unless @edit[:pol_items].nil?
+    end
+    object_ids   = params[:records].map(&:to_i) unless params[:records].nil?
+    db           = db.to_s
+    dbname       = options[:dbname] || db.gsub('::', '_').downcase # Get db name as text
+    db_sym       = (options[:gtl_dbname] || dbname).to_sym # Get db name as symbol
     refresh_view = false
 
     # Determine if the view should be refreshed or use the existing view
@@ -1584,7 +1479,9 @@ class ApplicationController < ActionController::Base
     # Check for changed settings in params
     if params[:ppsetting]                             # User selected new per page value
       @settings.store_path(:perpage, perpage_key(dbname), params[:ppsetting].to_i)
-    elsif params[:sortby]                             # New sort order (by = col click, choice = pull down)
+    end
+
+    if params[:sortby] # New sort order (by = col click, choice = pull down)
       params[:sortby]      = params[:sortby].to_i - 1
       params[:sort_choice] = view.headers[params[:sortby]]
     elsif params[:sort_choice]                        # If user chose new sortcol, set sortby parm
@@ -1611,7 +1508,6 @@ class ApplicationController < ActionController::Base
 
     # Save the paged_view_search_options for download buttons to use later
     session[:paged_view_search_options] = {
-      # Make a copy of parent object (to avoid saving related objects)
       :parent                    => parent ? minify_ar_object(parent) : nil,
       :parent_method             => options[:parent_method],
       :targets_hash              => true,
@@ -1625,6 +1521,7 @@ class ApplicationController < ActionController::Base
       :named_scope               => options[:named_scope],
       :display_filter_hash       => options[:display_filter_hash],
       :userid                    => session[:userid],
+      :selected_ids              => object_ids,
       :match_via_descendants     => options[:match_via_descendants]
     }
     # Call paged_view_search to fetch records and build the view.table and additional attrs
@@ -1837,14 +1734,13 @@ class ApplicationController < ActionController::Base
   end
 
   def task_supported?(typ)
-    vm_ids = find_checked_items.map(&:to_i).uniq
+    vms = find_checked_records_with_rbac(VmOrTemplate)
 
-    if %w(migrate publish).include?(typ) && VmOrTemplate.includes_template?(vm_ids)
+    if %w(migrate publish).include?(typ) && vms.any?(&:template?)
       render_flash_not_applicable_to_model(typ, ui_lookup(:table => "miq_template"))
       return
     end
 
-    vms = VmOrTemplate.where(:id => vm_ids)
     if typ == "migrate"
       # if one of the providers in question cannot support simultaneous migration of his subset of
       # the selected VMs, we abort
@@ -1878,11 +1774,12 @@ class ApplicationController < ActionController::Base
     @in_a_form = true
     if request.parameters[:pressed].starts_with?("host_")       # need host id for host prov
       @org_controller = "host"                                  # request originated from controller
+      klass = Host
       @refresh_partial = "prov_edit"
       if params[:id]
-        @prov_id = params[:id]
+        @prov_id = find_id_with_rbac(Host, params[:id])
       else
-        @prov_id = find_checked_items.map(&:to_i).uniq
+        @prov_id = find_checked_ids_with_rbac(Host).map(&:to_i).uniq
         res = Host.ready_for_provisioning?(@prov_id)
         if res != true
           res.each do |field, msg|
@@ -1894,19 +1791,19 @@ class ApplicationController < ActionController::Base
       end
     else
       @org_controller = "vm"                                      # request originated from controller
+      klass = VmOrTemplate
       @refresh_partial = typ ? "prov_edit" : "pre_prov"
     end
     if typ
-      vms = find_checked_items
+      vms = find_checked_ids_with_rbac(klass)
+      @prov_id = vms.empty? ? find_id_with_rbac(klass, params[:id]) : vms[0]
       case typ
       when "clone"
-        @prov_id = !vms.empty? ? vms[0] : params[:id]
         @prov_type = "clone_to_vm"
       when "migrate"
-        @prov_id = !vms.empty? ? vms : [params[:id]]
+        @prov_id = [@prov_id]
         @prov_type = "migrate"
       when "publish"
-        @prov_id = !vms.empty? ? vms[0] : params[:id]
         @prov_type = "clone_to_template"
       end
       @_params[:prov_id] = @prov_id
@@ -1921,14 +1818,13 @@ class ApplicationController < ActionController::Base
         if %w(image_miq_request_new miq_template_miq_request_new).include?(params[:pressed])
           # skip pre prov grid
           set_pre_prov_vars
-          templates = find_checked_items
-          templates = [params[:id]] if templates.blank?
+          template = find_checked_records_with_rbac(VmOrTemplate).first
+          template = find_record_with_rbac(VmOrTemplate, params[:id]) if template.nil?
 
-          template = VmOrTemplate.find_by_id(from_cid(templates.first))
           render_flash_not_applicable_to_model("provisioning") unless template.supports_provisioning?
           return if performed?
 
-          @edit[:src_vm_id] = templates.first
+          @edit[:src_vm_id] = template
           session[:edit] = @edit
           @_params[:button] = "continue"
         end
@@ -1967,10 +1863,10 @@ class ApplicationController < ActionController::Base
   end
 
   def remember_tab
-    section_id = menu_section_id(params)
-    return if section_id.nil?
+    section_or_item_id = menu_section_id(params)
+    return if section_or_item_id.nil?
 
-    section = Menu::Manager.section(section_id)
+    section = Menu::Manager.section(section_or_item_id) || Menu::Manager.section_for_item_id(section_or_item_id.to_s)
     return if section.nil?
 
     url = URI.parse(request.url).path
@@ -2164,8 +2060,6 @@ class ApplicationController < ActionController::Base
       # These controllers don't use breadcrumbs, see above get method to store URL
       when "dashboard", "report", "support", "alert", "alert_center", "jobs", "ui_jobs", "miq_ae_tools", "miq_policy", "miq_action", "miq_capacity", "chargeback", "service"
 
-      when "storage_manager"
-        session[:tab_bc][:sto] = @breadcrumbs.dup if ["show", "show_list", "index"].include?(action_name)
       when "ems_cloud", "availability_zone", "host_aggregate", "flavor"
         session[:tab_bc][:clo] = @breadcrumbs.dup if ["show", "show_list"].include?(action_name)
       when "ems_infra", "datacenter", "ems_cluster", "resource_pool", "storage", "pxe_server"
@@ -2299,26 +2193,6 @@ class ApplicationController < ActionController::Base
       @edit[:new][:roles] ||= []
       @edit[:new][:roles] |= ["_ALL_"]
     end
-  end
-
-  # Find a record by model name and ID, set flash errors for not found/not authorized
-  def find_by_model_and_id_check_rbac(model, id, resource_name = nil)
-    rec = model.constantize.find_by_id(id)
-    if rec
-      begin
-        authrec = find_record_with_rbac(model.constantize, id)
-      rescue ActiveRecord::RecordNotFound
-      rescue => @bang
-      end
-    end
-    if rec.nil?
-      record_name = resource_name ? "#{ui_lookup(:model => model)} '#{resource_name}'" : "The selected record"
-      add_flash(_("%{record_name} no longer exists in the database") % {:record_name => record_name}, :error)
-    elsif authrec.nil?
-      add_flash(_("You are not authorized to view %{model_name} '%{resource_name}'") %
-        {:model_name => ui_lookup(:model => rec.class.base_model.to_s), :resource_name => resource_name}, :error)
-    end
-    rec
   end
 
   def get_record_display_name(record)

@@ -86,7 +86,6 @@ module OpsController::Diagnostics
       @in_a_form = false
       @edit = session[:edit] = nil
       add_flash(_("Edit Log Depot settings was cancelled by the user"))
-      @record = nil
       diagnostics_set_form_vars
       replace_right_cell(:nodetype => x_node)
     when "save"
@@ -120,7 +119,6 @@ module OpsController::Diagnostics
       else
         add_flash(_("Log Depot Settings were saved"))
         @edit = nil
-        @record = nil
         diagnostics_set_form_vars
         replace_right_cell(:nodetype => x_node)
       end
@@ -268,23 +266,6 @@ module OpsController::Diagnostics
     end
   end
 
-  def replication_reset
-    begin
-      MiqReplicationWorker.reset_replication
-    rescue => bang
-      add_flash(_("Error during 'Reset/synchronization process': %{message}") % {:message => bang.message}, :error)
-    else
-      add_flash(_("Reset/synchronization process successfully initiated"))
-    end
-    javascript_flash
-  end
-
-  def replication_reload
-    @selected_server = MiqRegion.my_region
-    @refresh_div = "diagnostics_replication"
-    @refresh_partial = "diagnostics_replication_tab"
-  end
-
   def db_backup_form_field_changed
     schedule     = MiqSchedule.find_by_id(params[:id])
     depot        = schedule.file_depot
@@ -396,7 +377,7 @@ module OpsController::Diagnostics
     else
       add_flash(_("Database Garbage Collection successfully initiated"))
     end
-    javascript_flash
+    javascript_flash(:spinner_off => true)
   end
 
   # to delete orphaned records for user that was delete from db
@@ -968,7 +949,7 @@ module OpsController::Diagnostics
       @sb[:diag_selected_id] = nil
       diagnostics_set_form_vars
     when "svr"
-      @selected_server = MiqServer.find(from_cid(x_node.downcase.split("-").last))
+      @record = @selected_server = MiqServer.find(from_cid(x_node.downcase.split("-").last))
       @sb[:selected_server_id] = @selected_server.id
       diagnostics_set_form_vars
     end

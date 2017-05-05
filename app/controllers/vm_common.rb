@@ -13,6 +13,7 @@ module VmCommon
   included do
     private :textual_group_list
     helper_method :textual_group_list
+    helper_method :parent_choices
   end
 
   # handle buttons pressed on the button bar
@@ -259,7 +260,6 @@ module VmCommon
                       :url  => "/#{rec_cls}/show/#{@record.id}?display=#{@display}")
     end
 
-    set_config(@record)
     get_host_for_vm(@record)
     session[:tl_record_id] = @record.id
 
@@ -497,7 +497,7 @@ module VmCommon
         return
       end
       @in_a_form = true
-      replace_right_cell
+      replace_right_cell(:action => 'policy_sim')
     else
       render :template => 'vm/show'
     end
@@ -597,7 +597,7 @@ module VmCommon
 
   def evm_relationship_get_form_vars
     @record = VmOrTemplate.find_by_id(@edit[:vm_id])
-    @edit[:new][:server] = params[:server_id] if params[:server_id]
+    @edit[:new][:server] = params[:server_id] == "" ? nil : params[:server_id] if params[:server_id]
   end
 
   def evm_relationship_update
@@ -980,6 +980,18 @@ module VmCommon
     replace_right_cell
   end
 
+  def parent_choices
+    @parent_choices = {}
+    @parent_choices[@record.id] ||= begin
+      parent_item_scope = Rbac.filtered(VmOrTemplate.where.not(:id => @record.id).order(:name))
+      choices = parent_item_scope.pluck(:name, :location, :id).each_with_object({}) do |vm, memo|
+        memo[vm[0] + " -- #{vm[1]}"] = vm[2]
+      end
+      # Add "no parent" entry as 1 entry in hash
+      {'"no parent"' => -1}.merge(choices)
+    end
+  end
+
   private
 
   # Check for parent nodes missing from vandt tree and return them if any
@@ -1037,7 +1049,7 @@ module VmCommon
   public :resolve_node_info
 
   # Get all info for the node about to be displayed
-  def get_node_info(treenodeid)
+  def get_node_info(treenodeid, show_list = true)
     # resetting action that was stored during edit to determine what is being edited
     @sb[:action] = nil
     @nodetype, id = if (treenodeid.split('-')[0] == 'v' || treenodeid.split('-')[0] == 't')  && hide_vms
@@ -1090,7 +1102,7 @@ module VmCommon
           klass = ManageIQ::Providers::InfraManager::VmOrTemplate
           options[:where_clause] = ["vms.type IN (?)", klass.vm_descendants.collect(&:name)]
         end
-        process_show_list(options)  # Get all VMs & Templates
+        process_show_list(options) if show_list # Get all VMs & Templates
         # :model=>ui_lookup(:models=>"VmOrTemplate"))
         # TODO: Change ui_lookup/dictionary to handle VmOrTemplate, returning VMs And Templates
         @right_cell_text = if title
@@ -1106,7 +1118,7 @@ module VmCommon
           end
           if id == "orph"
             options[:where_clause] = MiqExpression.merge_where_clauses(options[:where_clause], VmOrTemplate::ORPHANED_CONDITIONS)
-            process_show_list(options)
+            process_show_list(options) if show_list
             @right_cell_text = if model
                                  _("Orphaned %{models}") % {:models => ui_lookup(:models => model)}
                                else
@@ -1114,7 +1126,7 @@ module VmCommon
                                end
           elsif id == "arch"
             options[:where_clause] = MiqExpression.merge_where_clauses(options[:where_clause], VmOrTemplate::ARCHIVED_CONDITIONS)
-            process_show_list(options)
+            process_show_list(options) if show_list
             @right_cell_text = if model
                                  _("Archived %{models}") % {:models => ui_lookup(:models => model)}
                                else
@@ -1122,7 +1134,7 @@ module VmCommon
                                end
           end
         elsif TreeBuilder.get_model_for_prefix(@nodetype) == "MiqSearch"
-          process_show_list(options)  # Get all VMs & Templates
+          process_show_list(options) if show_list # Get all VMs & Templates
           @right_cell_text = if model
                                _("All %{models}") % {:models => ui_lookup(:models => model)}
                              else
@@ -1134,7 +1146,7 @@ module VmCommon
           options[:where_clause] = MiqExpression.merge_where_clauses(
             options[:where_clause], VmOrTemplate::NOT_ARCHIVED_NOR_OPRHANED_CONDITIONS
           )
-          process_show_list(options)
+          process_show_list(options) if show_list
           model_name = @nodetype == "d" ? _("Datacenter") : ui_lookup(:model => rec.class.base_class.to_s)
           @right_cell_text = _("%{object_types} under %{datastore_or_provider} \"%{provider_or_datastore_name}\"") % {
             :object_types               => model ? ui_lookup(:models => model) : _("VMs & Templates"),
@@ -1145,6 +1157,11 @@ module VmCommon
       end
       # Add adv search filter to header
       @right_cell_text += @edit[:adv_search_applied][:text] if @edit && @edit[:adv_search_applied]
+
+      # save model being displayed for custom buttons
+      @tree_selected_model = if model.present?
+                               model.constantize
+                             end
     end
 
     if @edit && @edit.fetch_path(:adv_search_applied, :qs_exp) # If qs is active, save it in history
@@ -1161,6 +1178,7 @@ module VmCommon
         @right_cell_text += _(" (Names with \"%{search_text}\")") % {:search_text => @search_text}
       end
     end
+    options
   end
 
   # Replace the right cell of the explorer
@@ -1185,9 +1203,10 @@ module VmCommon
       record_showing = type && ["Vm", "MiqTemplate"].include?(TreeBuilder.get_model_for_prefix(type))
       c_tb = build_toolbar(center_toolbar_filename) # Use vm or template tb
       if record_showing
-        cb_tb = build_toolbar("custom_buttons_tb")
+        cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:single))
         v_tb = build_toolbar("x_summary_view_tb")
       else
+        cb_tb = build_toolbar(Mixins::CustomButtons::Result.new(:list))
         v_tb = build_toolbar("x_gtl_view_tb")
       end
     elsif ["compare", "drift"].include?(@sb[:action])
@@ -1336,7 +1355,7 @@ module VmCommon
           ])
         # these subviews use angular, so they need to use a special partial
         # so the form buttons on the outer frame can be updated.
-        elsif %w(attach detach live_migrate evacuate ownership
+        elsif %w(attach detach live_migrate resize evacuate ownership
                  associate_floating_ip disassociate_floating_ip).include?(@sb[:action])
           presenter.update(:form_buttons_div, r[:partial => "layouts/angular/paging_div_buttons"])
         elsif action != "retire" && action != "reconfigure_update"
@@ -1389,9 +1408,6 @@ module VmCommon
 
     @edit[:current][:custom_1] = @edit[:new][:custom_1] = @record.custom_1.to_s
     @edit[:current][:description] = @edit[:new][:description] = @record.description.to_s
-    @edit[:pchoices] = {}                                 # Build a hash for the parent choices box
-    VmOrTemplate.all.each { |vm| @edit[:pchoices][vm.name + " -- #{vm.location}"] =  vm.id unless vm.id == @record.id }   # Build a hash for the parents to choose from, not matching current VM
-    @edit[:pchoices]['"no parent"'] = -1                        # Add "no parent" entry
     if @record.parents.length == 0                                            # Set the currently selected parent
       @edit[:new][:parent] = -1
     else
@@ -1403,7 +1419,20 @@ module VmCommon
     vms.each { |vm| @edit[:new][:kids][vm.name + " -- #{vm.location}"] = vm.id }      # Build a hash for the kids list box
 
     @edit[:choices] = {}
-    VmOrTemplate.all.each { |vm| @edit[:choices][vm.name + " -- #{vm.location}"] =  vm.id if vm.parents.length == 0 }   # Build a hash for the VMs to choose from, only if they have no parent
+    # items with parents
+    ids_with_parents = Relationship.filtered(VmOrTemplate, nil)
+                                   .where.not(:ancestry => ['', nil])
+                                   .in_relationship('genealogy')
+                                   .pluck(:resource_id)
+
+    # Build a hash for the VMs to choose from, only if they have no parent
+    available_item_scope = VmOrTemplate.where.not(:id => ids_with_parents)
+    @edit[:choices] = Rbac.filtered(available_item_scope)
+                          .pluck(:name, :location, :id)
+                          .each_with_object({}) do |vm, memo|
+                            memo[vm[0] + " -- #{vm[1]}"] = vm[2]
+                          end
+
     @edit[:new][:kids].each_key { |key| @edit[:choices].delete(key) }   # Remove any VMs that are in the kids list box from the choices
 
     @edit[:choices].delete(@record.name + " -- #{@record.location}")                                    # Remove the current VM from the choices list
@@ -1496,11 +1525,11 @@ module VmCommon
       action = nil
     when "live_migrate"
       partial = "vm_common/live_migrate"
-      header = _("Live Migrating %{model} \"%{name}\"") % {:name => name, :model => ui_lookup(:table => table)}
+      header = _("Live Migrating %{models}") % {:models => ui_lookup(:tables => table)}
       action = "live_migrate_vm"
     when "evacuate"
       partial = "vm_common/evacuate"
-      header = _("Evacuating %{model} \"%{name}\"") % {:name => name, :model => ui_lookup(:table => table)}
+      header = _("Evacuating %{models}") % {:models => ui_lookup(:tables => table)}
       action = "evacuate_vm"
     when "associate_floating_ip"
       partial = "vm_common/associate_floating_ip"
@@ -1719,7 +1748,10 @@ module VmCommon
           # if @edit[:new][k].is_a?(Hash)
           msg = msg + k.to_s + ":[" + @edit[:current][k].keys.join(",") + "] to [" + @edit[:new][k].keys.join(",") + "]"
         elsif k == :parent
-          msg = msg + k.to_s + ":[" + @edit[:pchoices].invert[@edit[:current][k]] + "] to [" + @edit[:pchoices].invert[@edit[:new][k]] + "]"
+          parent_choices_invert = parent_choices.invert
+          current_parent_choice = parent_choices_invert[@edit[:current][k]]
+          new_parent_choice     = parent_choices_invert[@edit[:new][k]]
+          msg = "#{msg}#{k}:[#{current_parent_choice}] to [#{new_parent_choice}]"
         else
           msg = msg + k.to_s + ":[" + @edit[:current][k].to_s + "] to [" + @edit[:new][k].to_s + "]"
         end

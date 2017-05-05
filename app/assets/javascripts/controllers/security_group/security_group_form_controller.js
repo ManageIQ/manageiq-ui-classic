@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('securityGroupFormController', ['$http', '$scope', 'securityGroupFormId', 'miqService', function($http, $scope, securityGroupFormId, miqService) {
+ManageIQ.angular.app.controller('securityGroupFormController', ['$scope', 'securityGroupFormId', 'miqService', 'API', function($scope, securityGroupFormId, miqService, API) {
   $scope.securityGroupModel = { name: '' };
   $scope.formId = securityGroupFormId;
   $scope.afterGet = false;
@@ -13,10 +13,14 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['$http', '$scope
     $scope.newRecord = true;
   } else {
     miqService.sparkleOn();
-
-    $http.get('/security_group/security_group_form_fields/' + securityGroupFormId)
-      .then(getSecurityGroupFormData)
-      .catch(miqService.handleFailure);
+    API.get("/api/security_groups/" + securityGroupFormId + "?attributes=cloud_tenant").then(function(data) {
+      $scope.afterGet = true;
+      $scope.securityGroupModel.name = data.name;
+      $scope.securityGroupModel.description = data.description;
+      $scope.securityGroupModel.cloud_tenant_name = data.cloud_tenant.name;
+      $scope.modelCopy = angular.copy( $scope.securityGroupModel );
+      miqService.sparkleOff();
+    }).catch(miqService.handleFailure);
   }
 
   $scope.addClicked = function() {
@@ -43,15 +47,4 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['$http', '$scope
     $scope.angularForm.$setPristine(true);
     miqService.miqFlash("warn", "All changes have been reset");
   };
-
-  function getSecurityGroupFormData(response) {
-    var data = response.data;
-
-    $scope.afterGet = true;
-    $scope.securityGroupModel.name = data.name;
-    $scope.securityGroupModel.description = data.description;
-    $scope.securityGroupModel.cloud_tenant_name = data.cloud_tenant_name;
-    $scope.modelCopy = angular.copy( $scope.securityGroupModel );
-    miqService.sparkleOff();
-  }
 }]);

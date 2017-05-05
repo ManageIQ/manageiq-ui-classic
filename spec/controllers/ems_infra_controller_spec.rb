@@ -115,7 +115,7 @@ describe EmsInfraController do
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include(
-        _("A value must be changed or provider stack will not be updated."))
+        "A value must be changed or provider stack will not be updated.")
     end
 
     it "when values are changed, but exceed number of hosts available" do
@@ -124,7 +124,7 @@ describe EmsInfraController do
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include(
-        _("Assigning #{@ems.hosts.count * 2} but only have #{@ems.hosts.count} hosts available."))
+        "Assigning #{@ems.hosts.count * 2} but only have #{@ems.hosts.count} hosts available.")
     end
 
     it "when values are changed, and values do not exceed number of hosts available" do
@@ -145,17 +145,17 @@ describe EmsInfraController do
       post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => nil }
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include(_("Orchestration stack could not be found."))
+      expect(flash_messages.first[:message]).to include("Orchestration stack could not be found.")
     end
 
     it "when patch operation fails, an error message should be displayed" do
       allow_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
-        .to receive(:update_stack_queue) { raise _("my error") }
+        .to receive(:update_stack_queue) { raise "my error" }
       post :scaling, :params => { :id => @ems.id, :scale => "", :orchestration_stack_id => @ems.orchestration_stacks.first.id,
            @orchestration_stack_parameter_compute.name => 2 }
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include(_("Unable to initiate scaling: my error"))
+      expect(flash_messages.first[:message]).to include("Unable to initiate scaling: my error")
     end
 
     it "when operation in progress, an error message should be displayed" do
@@ -166,7 +166,7 @@ describe EmsInfraController do
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include(
-        _("Provider stack is not ready to be updated, another operation is in progress."))
+        "Provider stack is not ready to be updated, another operation is in progress.")
     end
   end
 
@@ -184,7 +184,7 @@ describe EmsInfraController do
            :orchestration_stack_id => @ems.orchestration_stacks.first.id, :host_ids => []}
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include(_("No compute hosts were selected for scale down."))
+      expect(flash_messages.first[:message]).to include("No compute hosts were selected for scale down.")
     end
 
     it "when values are changed, but selected host is in incorrect state" do
@@ -193,7 +193,7 @@ describe EmsInfraController do
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include(
-        _("Not all hosts can be removed from the deployment."))
+        "Not all hosts can be removed from the deployment.")
     end
 
     it "when values are changed, and selected host is in correct state" do
@@ -214,17 +214,17 @@ describe EmsInfraController do
       post :scaledown, :params => {:id => @ems.id, :scaledown => "", :orchestration_stack_id => nil}
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include(_("Orchestration stack could not be found."))
+      expect(flash_messages.first[:message]).to include("Orchestration stack could not be found.")
     end
 
     it "when patch operation fails, an error message should be displayed" do
       allow_any_instance_of(ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack)
-        .to receive(:update_stack_queue) { raise _("my error") }
+        .to receive(:update_stack_queue) { raise "my error" }
       post :scaledown, :params => {:id => @ems.id, :scaledown => "",
            :orchestration_stack_id => @ems.orchestration_stacks.first.id, :host_ids => [@ems.hosts[1].id]}
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include(_("Unable to initiate scaling: my error"))
+      expect(flash_messages.first[:message]).to include("Unable to initiate scaling: my error")
     end
 
     it "when operation in progress, an error message should be displayed" do
@@ -235,7 +235,7 @@ describe EmsInfraController do
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include(
-        _("Provider stack is not ready to be updated, another operation is in progress."))
+        "Provider stack is not ready to be updated, another operation is in progress.")
     end
   end
 
@@ -265,7 +265,7 @@ describe EmsInfraController do
       post :register_nodes, :params => {:id => @ems.id, :nodes_json => @nodes_example, :register => 1}
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
-      message = _("Cannot connect to workflow service")
+      message = "Cannot connect to workflow service"
       expect(flash_messages.first[:message]).to include(message)
     end
 
@@ -275,7 +275,7 @@ describe EmsInfraController do
       post :register_nodes, :params => {:id => @ems.id, :nodes_json => @nodes_example, :register => 1}
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
-      message = _("Error executing register and configure workflows")
+      message = "Error executing register and configure workflows"
       expect(flash_messages.first[:message]).to include(message)
     end
 
@@ -283,7 +283,7 @@ describe EmsInfraController do
       post :register_nodes, :params => {:id => @ems.id, :register => 1}
       expect(controller.send(:flash_errors?)).to be_truthy
       flash_messages = assigns(:flash_array)
-      message = _("Please select a JSON file containing the nodes you would like to register.")
+      message = "Please select a JSON file containing the nodes you would like to register."
       expect(flash_messages.first[:message]).to include(message)
     end
   end

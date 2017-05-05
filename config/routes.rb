@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   # rubocop:disable AlignHash
+  # rubocop:disable MultilineOperationIndentation
+  # default routes for each controller
+  default_routes = %w(
+    report_data
+  )
+
   # grouped routes
   adv_search_post = %w(
     adv_search_button
@@ -158,9 +164,11 @@ Rails.application.routes.draw do
     :automation_manager => {
       :get  => %w(
         download_data
+        download_summary_pdf
         explorer
-        automation_manager_form_fields
+        form_fields
         show
+        x_show
         show_list
         tagging_edit
       ),
@@ -399,6 +407,7 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
+        new
       ) + compare_get,
       :post => %w(
         button
@@ -410,6 +419,8 @@ Rails.application.routes.draw do
         show_list
         tagging_edit
         tag_edit_form_field_changed
+        create
+        wait_for_task
       ) + compare_post + adv_search_post + exp_post + save_post
     },
 
@@ -1264,6 +1275,23 @@ Rails.application.routes.draw do
                save_post
     },
 
+    :physical_server    =>  {
+      :get  =>  %w(
+        download_data
+        perf_top_chart
+        protect
+        show_list
+        show
+      ) + compare_get,
+
+      :post   =>  %w(
+        button
+        show_list
+        create
+        update
+      )
+    },
+
     :ems_physical_infra_dashboard      => {
       :get => %w(
         show
@@ -1631,9 +1659,9 @@ Rails.application.routes.draw do
       :get  => %w(
         edit
         download_data
+        download_summary_pdf
         index
         new
-        security_group_form_fields
         show
         show_list
         tagging_edit
@@ -1662,6 +1690,7 @@ Rails.application.routes.draw do
     :floating_ip              => {
       :get  => %w(
         download_data
+        download_summary_pdf
         edit
         floating_ip_form_fields
         index
@@ -1728,7 +1757,6 @@ Rails.application.routes.draw do
 
     :cloud_network             => {
       :get  => %w(
-        cloud_network_form_fields
         download_data
         download_summary_pdf
         edit
@@ -1762,6 +1790,7 @@ Rails.application.routes.draw do
     :network_port             => {
       :get  => %w(
         download_data
+        download_summary_pdf
         index
         show
         show_list
@@ -1792,6 +1821,7 @@ Rails.application.routes.draw do
       :get  => %w(
         add_interface_select
         download_data
+        download_summary_pdf
         edit
         index
         network_router_form_fields
@@ -1831,6 +1861,7 @@ Rails.application.routes.draw do
     :load_balancer             => {
       :get  => %w(
         download_data
+        download_summary_pdf
         index
         show
         show_list
@@ -2047,6 +2078,7 @@ Rails.application.routes.draw do
         button
         edit
         new
+        repository_refresh
         show_list
       )
     },
@@ -2623,7 +2655,7 @@ Rails.application.routes.draw do
         download_data
         download_summary_pdf
         explorer
-        provider_foreman_form_fields
+        form_fields
         show
         show_list
         tagging_edit
@@ -2803,7 +2835,6 @@ Rails.application.routes.draw do
         retire
         service_form_fields
         show
-        ownership_form_fields
       ),
       :post => %w(
         button
@@ -2820,6 +2851,7 @@ Rails.application.routes.draw do
         x_button
         x_history
         x_show
+        ownership_form_fields
       ) +
                dialog_runner_post
     },
@@ -2885,29 +2917,6 @@ Rails.application.routes.draw do
                x_post
     },
 
-    :storage_manager          => {
-      :get  => %w(
-        download_data
-        download_summary_pdf
-        edit
-        index
-        new
-        show
-        show_list
-      ),
-      :post => %w(
-        button
-        create
-        form_field_changed
-        quick_search
-        show
-        show_list
-        update
-      ) +
-               adv_search_post +
-               exp_post
-    },
-
     :support                  => {
       :get  => %w(index)
     },
@@ -2923,6 +2932,7 @@ Rails.application.routes.draw do
         reconfigure
         reconfigure_form_fields
         resize
+        resize_form_fields
         evacuate
         evacuate_form_fields
         live_migrate
@@ -2935,7 +2945,6 @@ Rails.application.routes.draw do
         right_size
         show
         show_list
-        ownership_form_fields
       ),
       :post => %w(
         edit_vm
@@ -2947,7 +2956,6 @@ Rails.application.routes.draw do
         reconfigure
         reconfigure_form_fields
         reconfigure_update
-        resize_field_changed
         resize_vm
         evacuate_vm
         live_migrate_vm
@@ -2961,6 +2969,7 @@ Rails.application.routes.draw do
         genealogy_tree_selected
         ownership_update
         wait_for_task
+        ownership_form_fields
       ) +
                ownership_post +
                pre_prov_post
@@ -2984,13 +2993,13 @@ Rails.application.routes.draw do
         show
         tagging_edit
         resize
+        resize_form_fields
         migrate
         live_migrate_form_fields
         attach
         detach
         evacuate
         evacuate_form_fields
-        ownership_form_fields
         associate_floating_ip
         associate_floating_ip_form_fields
         disassociate_floating_ip
@@ -3059,6 +3068,7 @@ Rails.application.routes.draw do
         associate_floating_ip_vm
         disassociate_floating_ip_vm
         wait_for_task
+        ownership_form_fields
       ) +
                adv_search_post +
                compare_post +
@@ -3091,7 +3101,6 @@ Rails.application.routes.draw do
         retire
         show
         tagging_edit
-        ownership_form_fields
       ) +
                compare_get,
       :post => %w(
@@ -3149,6 +3158,7 @@ Rails.application.routes.draw do
         wait_for_task
         win32_services
         ownership_update
+        ownership_form_fields
       ) +
                adv_search_post +
                compare_post +
@@ -3181,7 +3191,6 @@ Rails.application.routes.draw do
         util_report_download
         utilization
         vm_show
-        ownership_form_fields
       ) +
                compare_get,
       :post => %w(
@@ -3250,6 +3259,7 @@ Rails.application.routes.draw do
         x_search_by_name
         x_show
         ownership_update
+        ownership_form_fields
       ) +
                adv_search_post +
                compare_post +
@@ -3273,6 +3283,12 @@ Rails.application.routes.draw do
       :ems_cloud, :ems_infra, :ems_physical_infra, :ems_container, :ems_middleware, :ems_datawarehouse, :ems_network
     ].include?(controller_name)
       match controller_name.to_s, :controller => controller_name, :action => :index, :via => :get
+    end
+
+    default_routes.each do |action_name|
+      get "#{controller_name}/#{action_name}(/:id)",
+          :action     => action_name,
+          :controller => controller_name
     end
 
     # One-by-one get/post routes for defined controllers

@@ -29,7 +29,7 @@ describe TreeBuilderTags do
     it 'set locals for render correctly' do
       locals = @tags_tree.send(:set_locals_for_render)
       expect(locals[:checkboxes]).to eq(true)
-      expect(locals[:check_url]).to eq("/ops/rbac_group_field_changed/#{@group.id || "new"}___")
+      expect(locals[:check_url]).to eq("/ops/rbac_group_field_changed/#{@group.id}___")
       expect(locals[:highlight_changes]).to eq(true)
       expect(locals[:oncheck]).to eq(nil)
       expect(locals[:cfmeNoClick]).to eq(true)
@@ -72,7 +72,15 @@ describe TreeBuilderTags do
                                        :tag_tree,
                                        {},
                                        true,
-                                       :edit => @edit, :filters => @filters, :group => @group)
+                                       :edit => @edit, :filters => @filters, :group => nil)
+    end
+    it 'set locals for render correctly' do
+      locals = @tags_tree.send(:set_locals_for_render)
+      expect(locals[:checkboxes]).to eq(true)
+      expect(locals[:check_url]).to eq("/ops/rbac_group_field_changed/new___")
+      expect(locals[:highlight_changes]).to eq(true)
+      expect(locals[:oncheck]).to eq("miqOnCheckUserFilters")
+      expect(locals[:cfmeNoClick]).to eq(true)
     end
     it 'sets second level nodes correctly' do
       selected_kid = @tags_tree.send(:x_get_classification_kids, @folder_selected, false)

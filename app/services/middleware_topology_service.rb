@@ -1,40 +1,33 @@
 class MiddlewareTopologyService < TopologyService
-  include UiServiceMixin
-
   @provider_class = ManageIQ::Providers::MiddlewareManager
 
+  @included_relations = [
+    :middleware_domains => [
+      :middleware_server_groups => [:middleware_servers => nil]
+    ],
+    :middleware_servers => [
+      :middleware_deployments,
+      :middleware_datasources,
+      :middleware_messagings,
+      :lives_on => [:host]
+    ]
+  ]
+
+  @kinds = %i(MiddlewareDeployment MiddlewareDatasource MiddlewareDomain MiddlewareManager Vm Container MiddlewareServer MiddlewareServerGroup MiddlewareMessaging)
+
   def build_topology
-    topo_items = {}
-    links = []
-
-    entity_relationships = {
-      :MiddlewareManager => {
-        :MiddlewareDomains => {
-          :MiddlewareServerGroups => {
-            :MiddlewareServers => nil
-          }
-        },
-        :MiddlewareServers => {
-          :MiddlewareDeployments => nil,
-          :MiddlewareDatasources => nil,
-          :MiddlewareMessagings  => nil,
-          :lives_on              => {:Host => nil}
-        }}}
-
-    preloaded = @providers.includes(:middleware_server => [:middleware_deployment, :middleware_datasource])
-
-    preloaded.each do |entity|
-      topo_items, links = build_recursive_topology(entity, entity_relationships[:MiddlewareManager], topo_items, links)
-    end
-
+    topology = super
     # filter out the redundant edges from ems to server, if there is also path ems -> domain -> sg -> server
     # this ensures the graph will remain a tree (instead of more general DAG)
-    to_delete = links.select { |e| e[:target].match(/^MiddlewareServer[[:digit:]]/) && e[:source].match(/ServerGro/) }
-                     .map { |e| e[:target] }
+    to_delete = topology[:relations].map do |link|
+      next unless link[:target].match(/^MiddlewareServer[[:digit:]]/) && link[:source].match(/ServerGro/)
+      link[:target]
+    end.compact
 
-    filtered_links = links.select { |e| !e[:source].match(/^MiddlewareManager/) || !to_delete.include?(e[:target]) }
-
-    populate_topology(topo_items, filtered_links, build_kinds, icons)
+    topology[:relations].reject! do |link|
+      link[:source].match(/^MiddlewareManager/) && to_delete.include?(link[:target])
+    end
+    topology
   end
 
   def entity_display_type(entity)
@@ -72,13 +65,7 @@ class MiddlewareTopologyService < TopologyService
   end
 
   def glyph?(entity)
-    [MiddlewareDatasource, MiddlewareDeployment, Vm, MiddlewareDomain, MiddlewareServerGroup, MiddlewareMessaging]
+    [MiddlewareDatasource, MiddlewareDeployment, Vm, Container, MiddlewareDomain, MiddlewareServerGroup, MiddlewareMessaging]
       .any? { |klass| entity.kind_of? klass }
-  end
-
-  def build_kinds
-    kinds = [:MiddlewareDeployment, :MiddlewareDatasource, :MiddlewareDomain, :MiddlewareManager, :Vm,
-             :MiddlewareServer, :MiddlewareServerGroup, :MiddlewareMessaging]
-    build_legend_kinds(kinds)
   end
 end

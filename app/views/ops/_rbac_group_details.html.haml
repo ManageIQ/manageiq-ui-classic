@@ -2,7 +2,7 @@
   - url = url_for_only_path(:action => 'rbac_group_field_changed', :id => (@edit[:group_id] || "new"))
   - combo_url = "/ops/rbac_group_field_changed/#{@edit[:group_id] || 'new'}"
 = render :partial => "layouts/flash_msg"
-#main_div
+#group_info
   %h3
     = _("Group Information")
   - if @edit
@@ -36,7 +36,7 @@
           - if @group.miq_user_role
             - if role_allows?(:feature => "rbac_role_show")
               - params = {:class   => "pointer",
-                          :onclick => "miqTreeActivateNode('rbac_tree', 'ur-#{to_cid(@group.miq_user_role.id)}');",
+                          :onclick => "miqOnClickSelectRbacTreeNode('ur-#{to_cid(@group.miq_user_role.id)}');",
                           :title   => _("View this Role")}
             - else
               - params = {}

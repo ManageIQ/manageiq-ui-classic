@@ -23,6 +23,25 @@ describe OpsController do
       get :x_button, :params => { :pressed => 'random_dude', :format => :html }
       expect(response).to render_template('layouts/exception')
     end
+
+    describe 'x_button actions' do
+      it 'rbac group add' do
+        post :x_button, :params => {:pressed => 'rbac_group_add'}
+        expect(response.status).to eq(200)
+      end
+
+      it 'rbac group edit' do
+        post :x_button, :params => {:pressed => 'rbac_group_edit', :id => MiqGroup.first.id}
+        expect(response.status).to eq(200)
+      end
+
+      it 'rbac role add' do
+        MiqProductFeature.seed
+        session[:sandboxes] = { "ops" => { :trees => {} } }
+        post :x_button, :params => {:pressed => 'rbac_role_add'}
+        expect(response.status).to eq(200)
+      end
+    end
   end
 
   it 'can view the db_settings tab' do
@@ -310,7 +329,7 @@ describe OpsController do
         allow(controller).to receive(:check_privileges).and_return(true)
         allow(controller).to receive(:assert_privileges).and_return(true)
         seed_session_trees('ops', :settings_tree, 'root')
-        expect(controller).to receive(:render_to_string).with(any_args).twice
+        expect(controller).to receive(:render_to_string).with(any_args).exactly(3).times
         post :change_tab, :params => {:tab_id => tab}
       end
 

@@ -136,7 +136,7 @@ class MiqAeClassController < ApplicationController
     end
   end
 
-  def get_node_info(node)
+  def get_node_info(node, _show_list = true)
     id = valid_active_node(node).split('-')
     @sb[:row_selected] = nil if params[:action] == "tree_select"
     case id[0]
@@ -543,12 +543,7 @@ class MiqAeClassController < ApplicationController
   def form_instance_field_changed
     return unless load_edit("aeinst_edit__#{params[:id]}", "replace_cell__explorer")
     get_instances_form_vars
-
-    render :update do |page|
-      page << javascript_prologue
-      @changed = (@edit[:current] != @edit[:new])
-      page << javascript_for_miq_button_visibility(@changed)
-    end
+    javascript_miq_button_visibility(@edit[:current] != @edit[:new])
   end
 
   def update_instance
@@ -796,12 +791,7 @@ class MiqAeClassController < ApplicationController
   def form_field_changed
     return unless load_edit("aeclass_edit__#{params[:id]}", "replace_cell__explorer")
     get_form_vars
-    @changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
-      page.replace_html(@refresh_div, :partial => @refresh_partial) if @refresh_div
-      page << javascript_for_miq_button_visibility(@changed)
-    end
+    javascript_miq_button_visibility(@edit[:new] != @edit[:current])
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
@@ -811,7 +801,6 @@ class MiqAeClassController < ApplicationController
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
-      page.replace_html(@refresh_div, :partial => @refresh_partial) if @refresh_div
       unless ["up", "down"].include?(params[:button])
         if params[:field_datatype] == "password"
           page << javascript_hide("field_default_value")
@@ -1840,10 +1829,10 @@ class MiqAeClassController < ApplicationController
       self.x_node = "root"
     else
       selected = find_checked_items
-      selected.each do |items|
-        item = items.split('-')
-        domain = MiqAeDomain.find_by_id(from_cid(item[1]))
-        next unless domain
+      selected_ids = selected.map { |x| from_cid(x.split('-')[1]) }
+      # TODO replace with RBAC safe method #14665 is merged
+      domains = MiqAeDomain.where(:id => selected_ids)
+      domains.each do |domain|
         if domain.editable_properties?
           domain.git_enabled? ? git_domains.push(domain) : aedomains.push(domain.id)
         else

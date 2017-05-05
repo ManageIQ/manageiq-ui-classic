@@ -11,6 +11,8 @@ module VmHelper::TextualSummary
   include TextualMixins::TextualPowerState
   include TextualMixins::TextualRegion
   include TextualMixins::TextualScanHistory
+  include TextualMixins::TextualDevices
+  include TextualMixins::TextualVmmInfo
   # TODO: Determine if DoNav + url_for + :title is the right way to do links, or should it be link_to with :title
 
   #
@@ -561,7 +563,7 @@ module VmHelper::TextualSummary
     os = @record.os_image_name.downcase
     return nil if os == "unknown" || os =~ /linux/
     num = @record.number_of(:win32_services)
-    h = {:label => _("Win32 Services"), :icon0 => "fa fa-cog", :value => num}
+    h = {:label => _("Win32 Services"), :icon => "fa fa-cog", :value => num}
     if num > 0
       h[:title] = n_("Show the Win32 Service installed on this VM", "Show the Win32 Services installed on this VM", num)
       h[:explorer] = true
@@ -817,18 +819,6 @@ module VmHelper::TextualSummary
       value = @record.send("max_mem_usage_absolute_average_#{key}_over_time_period")
       h[:value] << {:label => label,
                     :value => (value.nil? ? _("Not Available") : number_to_percentage(value, :precision => 2))}
-    end
-    h
-  end
-
-  def textual_devices
-    h = {:label    => _("Devices"),
-         :icon     => "fa fa-hdd-o",
-         :explorer => true,
-         :value    => (@devices.nil? || @devices.empty? ? _("None") : @devices.length)}
-    if @devices.length > 0
-      h[:title] = _("Show VMs devices")
-      h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'devices')
     end
     h
   end

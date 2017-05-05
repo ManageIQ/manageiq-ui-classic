@@ -1,35 +1,16 @@
 - tooltipOptions = {"tooltip-placement" => "bottom-right", "tooltip" => "{{legendTooltip}}"}
-.physical_infra_topology{'ng-controller' => "physicalInfraTopologyController"}
-  .row.toolbar-pf
-    .col-md-12
-      = render :partial => "shared/topology_header"
+.topology{'ng-controller' => "physicalInfraTopologyController"}
   .legend
     %label#selected
     %div{'ng-if' => "kinds"}
-      %kubernetes-topology-icon{tooltipOptions, :kind => "Host"}
-        %svg.kube-topology
-          %g.EntityLegend.PhysicalInfra.Host
-            %circle{:r => "17"}
-            -# pficon-host
-            %text{:y => "8"} &#xE600;
-        %label
-          = _("Nodes")
-      %kubernetes-topology-icon{tooltipOptions, :kind => "EmsCluster"}
+      %kubernetes-topology-icon{tooltipOptions, :kind => "PhysicalServer"}
         %svg.kube-topology
           %g.EntityLegend.PhysicalInfra
             %circle{:r => "17"}
-            -# pficon-cluster
-            %text{:y => "9"} &#xE620;
+            -# pficon-server-group
+            %text{:y => "9"} &#xe91a;
         %label
-          = _("Roles")
-      %kubernetes-topology-icon{tooltipOptions, :kind => "Tag"}
-        %svg.kube-topology
-          %g.EntityLegend.Network.FloatingIp
-            %circle{:r => "17"}
-            -# pficon-cloud-tenant
-            %text{:y => "9"} &#xF02b;
-        %label
-          = _("Tags")
+          = _("Physical Servers")
 
   .alert.alert-info.alert-dismissable
     %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"}
@@ -40,4 +21,4 @@
   %kubernetes-topology-graph{:items => "items", :relations => "relations", :kinds => "kinds"}
 
 :javascript
-  miq_bootstrap('.physical_infra_topology', 'physicalInfraTopologyApp');
+  miq_bootstrap('.topology');

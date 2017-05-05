@@ -1,6 +1,7 @@
 module Mixins
   module GenericShowMixin
     def show
+      return if perfmenu_click?
       return unless init_show
       @center_toolbar = self.class.toolbar_singular if self.class.toolbar_singular
 
@@ -20,13 +21,6 @@ module Mixins
         show_timeline if respond_to?(:show_timeline)
       when "performance"
         show_performance if respond_to?(:show_performance)
-      when "ad_hoc_metrics"
-        if @record && @record.try(:ems_id)
-          ems = ExtManagementSystem.find(@record.ems_id)
-          tags = {:type => "node", :hostname => @record.name}.to_json
-          url = polymorphic_path(ems, :display => "ad_hoc_metrics", :tags => tags)
-          redirect_to(url)
-        end
       when "compliance_history"
         show_compliance_history if respond_to?(:show_compliance_history)
       when "topology"

@@ -8,7 +8,6 @@ class CloudSubnetController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
-  include Mixins::CheckedIdMixin
   include Mixins::GenericFormMixin
 
   def self.display_methods
@@ -135,20 +134,13 @@ class CloudSubnetController < ApplicationController
 
   def delete_subnets
     assert_privileges("cloud_subnet_delete")
-
-    subnets = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_subnet") || @lastaction.nil?
-                find_checked_items
-              else
-                [params[:id]]
-              end
-
+    subnets = find_records_with_rbac(CloudSubnet, checked_or_params)
     if subnets.empty?
       add_flash(_("No Cloud Subnet were selected for deletion."), :error)
     end
 
     subnets_to_delete = []
-    subnets.each do |s|
-      subnet = CloudSubnet.find_by_id(s)
+    subnets.each do |subnet|
       if subnet.nil?
         add_flash(_("Cloud Subnet no longer exists."), :error)
       elsif subnet.supports_delete?

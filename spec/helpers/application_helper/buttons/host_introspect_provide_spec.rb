@@ -1,6 +1,6 @@
 describe ApplicationHelper::Button::HostIntrospectProvide do
   let(:provision_state) { 'not_manageable' }
-  let(:record) { FactoryGirl.create(:host_openstack_infra, :with_hardware) }
+  let(:record) { FactoryGirl.create(:host_openstack_infra) }
   let(:button) { described_class.new(setup_view_context_with_sandbox({}), {}, {'record' => record}, {}) }
 
   before { allow(record).to receive_message_chain(:hardware, :provision_state).and_return(provision_state) }

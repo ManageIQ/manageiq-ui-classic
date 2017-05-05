@@ -57,6 +57,7 @@ describe CloudObjectStoreContainerController do
       login_as FactoryGirl.create(:user, :features => "everything")
       request.parameters["controller"] = "cloud_object_store_container"
       allow(controller).to receive(:role_allows?).and_return(true)
+      allow(controller).to receive(:previous_breadcrumb_url).and_return("previous-url")
     end
 
     it "delete invokes process_cloud_object_storage_buttons" do
@@ -76,14 +77,43 @@ describe CloudObjectStoreContainerController do
       }
     end
 
-    it "delete redirects to show_list" do
-      expect(controller).to receive(:javascript_redirect).with(
-        :action      => 'show_list',
-        :flash_msg   => anything,
-        :flash_error => false
-      )
+    it "delete redirects to previous breadcrumb if on container's details page" do
+      session[:cloud_object_store_container_display] = "main"
+      expect(controller).to receive(:javascript_redirect).with("previous-url")
+      expect(controller).not_to receive(:render_flash)
+
       post :button, :params => {
         :pressed => "cloud_object_store_container_delete", :format => :js, :id => @container.id
+      }
+    end
+
+    it "delete does not redirect if on container list page" do
+      session[:cloud_object_store_container_display] = nil
+      expect(controller).not_to receive(:javascript_redirect)
+      expect(controller).to receive(:render_flash)
+
+      post :button, :params => {
+        :pressed => "cloud_object_store_container_delete", :format => :js, :id => @container.id
+      }
+    end
+
+    it "delete does not redirect if on object list page" do
+      session[:cloud_object_store_container_display] = "cloud_object_store_objects"
+      expect(controller).not_to receive(:javascript_redirect)
+      expect(controller).to receive(:render_flash)
+
+      post :button, :params => {
+        :pressed => "cloud_object_store_container_delete", :format => :js, :id => @container.id
+      }
+    end
+
+    it "clear does not redirect but only renders flash" do
+      session[:cloud_object_store_container_display] = nil
+      expect(controller).not_to receive(:javascript_redirect)
+      expect(controller).to receive(:render_flash)
+
+      post :button, :params => {
+        :pressed => "cloud_object_store_container_clear", :format => :js, :id => @container.id
       }
     end
 
@@ -112,5 +142,79 @@ describe CloudObjectStoreContainerController do
     end
   end
 
-  include_examples '#download_summary_pdf', :cloud_object_store_container
+  describe "create object store container" do
+    before do
+      stub_user(:features => :all)
+    end
+
+    shared_examples "queue create container task" do
+      let(:task_options) do
+        {
+          :action => "creating Cloud Object Store Container for user %{user}" %
+            {:user => controller.current_user.userid},
+          :userid => controller.current_user.userid
+        }
+      end
+
+      let(:queue_options) do
+        {
+          :class_name  => "CloudObjectStoreContainer",
+          :method_name => 'cloud_object_store_container_create',
+          :role        => 'ems_operations',
+          :zone        => @ems.my_zone,
+          :args        => [@ems.id, @expected_args]
+        }
+      end
+
+      it "builds add new container screen" do
+        post :button, :params => { :pressed => "cloud_object_store_container_new", :format => :js }
+        expect(assigns(:flash_array)).to be_nil
+      end
+
+      it "queues the create cloud object store container action form" do
+        expect(MiqTask).to receive(:generic_action_with_callback).with(task_options, queue_options)
+        post :create, :params => @form_params.merge(:button => "add", :format => :js)
+      end
+    end
+
+    context "in Amazon S3" do
+      before do
+        stub_settings_merge(
+          :prototype => {
+            :amazon => {
+              :s3 => true
+            }
+          }
+        )
+        @cloud_manager = FactoryGirl.create(:ems_amazon)
+        @ems = @cloud_manager.s3_storage_manager
+
+        @form_params = {
+          :name               => "bucket-01",
+          :emstype            => "ManageIQ::Providers::Amazon::StorageManager::S3",
+          :parent_emstype     => "ManageIQ::Providers::Amazon::CloudManager",
+          :storage_manager_id => @ems.id,
+          :provider_region    => "eu-central-1",
+        }
+
+        @expected_args = {
+          :name                        => "bucket-01",
+          :create_bucket_configuration => {:location_constraint => "eu-central-1"}
+        }
+      end
+
+      context "create" do
+        it_behaves_like "queue create container task"
+      end
+
+      it "aws regions" do
+        provider_regions = controller.send(:retrieve_provider_regions)
+
+        expect(provider_regions["ManageIQ::Providers::Amazon::CloudManager"]).not_to be_nil
+        expect(provider_regions["ManageIQ::Providers::Amazon::CloudManager"].count).to be > 0
+      end
+    end
+  end
+
+  # include_examples '#download_summary_pdf', :cloud_object_store_container
 end

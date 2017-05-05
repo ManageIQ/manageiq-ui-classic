@@ -240,7 +240,7 @@ module QuadiconHelper
     if quadicon_in_explorer_view?
       quadicon_build_explorer_url(item, row)
     else
-      url_for_db(quadicon_model_name(item), "show", item)
+      url_for_record(item)
     end
   end
 
@@ -395,8 +395,7 @@ module QuadiconHelper
     image ||= "layout/base-single.png"
 
     content_tag(:div, :class => "flobj #{cls}") do
-      tag(:img, :border => 0, :src => ActionController::Base.helpers.image_path(image),
-          :width => size, :height => size)
+      image_tag(image, :size => size)
     end
   end
 
@@ -561,17 +560,19 @@ module QuadiconHelper
   def render_non_listicon_single_quadicon(item, options)
     output = []
 
-    img_path = if item.decorate
-                 item.decorate.try(:fileicon)
-               else
-                 "100/#{item.class.base_class.to_s.underscore}.png"
-               end
+    img_path = item.try(:decorate).try(:fileicon) || "100/#{item.class.base_class.to_s.underscore}.png"
 
     output << flobj_img_simple("layout/base-single.png")
     output << flobj_img_simple(img_path, "e72")
 
     unless options[:typ] == :listnav
-      name = item.name
+      name = if item.kind_of?(MiqCimInstance)
+               item.evm_display_name
+             elsif item.kind_of?(MiqProvisionRequest)
+               item.message
+             else
+               item.try(:name)
+             end
 
       img_opts = {
         :title => h(name),

@@ -99,6 +99,7 @@ module ApplicationController::PolicySupport
   # Add selected policy to the simulation
   def policy_sim_add
     @edit = session[:edit]
+    @explorer = @edit[:explorer]
     # Profile was selected
     if params[:profile_id] != "<select>"
       prof = MiqPolicySet.find(params[:profile_id])               # Go thru all the profiles
@@ -149,29 +150,28 @@ module ApplicationController::PolicySupport
   private ############################
 
   # Assign policies to selected records of db
-  def assign_policies(db = nil)
+  def assign_policies(db)
     assert_privileges(params[:pressed])
-    session[:pol_db] = db                               # Remember the DB
-    recs = []
-    recs = find_checked_items
-    if recs.blank?
-      recs = [params[:id]]
+    session[:pol_db] = db # Remember the DB
+    ids = find_checked_ids_with_rbac(db)
+    if ids.blank?
+      ids = [find_id_with_rbac(db, params[:id])]
     end
-    if recs.length < 1
+    if ids.empty?
       add_flash(_("One or more %{model} must be selected to Policy assignment") % {
         :model => Dictionary.gettext(db.to_s, :type => :model, :notfound => :titleize, :plural => true)}, :error)
       @refresh_div = "flash_msg_div"
       @refresh_partial = "layouts/flash_msg"
       return
     else
-      session[:pol_items] = recs    # Set the array of tag items
+      session[:pol_items] = ids # Set the array of tag items
     end
     @in_a_form = true
     if @explorer
       protect
       @refresh_partial = "layouts/protect"
     else
-      javascript_redirect :action => 'protect' # redirect to build policy screen
+      javascript_redirect :action => 'protect', :db => db # redirect to build policy screen
     end
   end
   %w(image instance vm miq_template
@@ -247,7 +247,9 @@ module ApplicationController::PolicySupport
 
   # Build the policy simulation screen
   def policy_sim_build_screen
+    @edit ||= {}
     @tagitems = session[:tag_db].find(session[:tag_items]).sort_by(&:name)  # Get the db records that are being tagged
+    @edit[:pol_items] = session[:tag_items]
     @catinfo = {}
     @lastaction = "policy_sim"
     @pol_view = get_db_view(session[:tag_db])       # Instantiate the MIQ Report view object

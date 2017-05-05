@@ -1,6 +1,5 @@
 - if @sb[:active_tab] == "settings_server"
   - url = url_for_only_path(:action => 'settings_form_field_changed', :id => @sb[:active_tab].split('_').last)
-  = render :partial => "layouts/flash_msg"
   %h3
     = _("Basic Information")
   .form-horizontal
@@ -127,23 +126,11 @@
         = _("Use")
       .col-md-8
         = select_tag('console_type',
-                    options_for_select([[_("VMware MKS Plugin"), "MKS"], [_("VNC"), "VNC"], [_("VMware VMRC Plugin"), "VMRC"]],
+                    options_for_select([[_("VMware WebMKS"), "WebMKS"], [_("VNC"), "VNC"], [_("VMware VMRC Plugin"), "VMRC"]],
                     @edit[:new][:server][:remote_console_type]),
                     :class    => "selectpicker")
       :javascript
         miqSelectPickerEvent('console_type', "#{url}")
-
-    - if @edit[:new][:server][:remote_console_type] == "MKS"
-      .form-group
-        %label.col-md-2.control-label
-          = _("VMware MKS Plugin Version")
-        .col-md-8
-          = select_tag('server_mks_version',
-                        options_for_select(MKS_VERSIONS,
-                        @edit[:new][:server][:mks_version]),
-                        :class    => "selectpicker")
-      :javascript
-        miqSelectPickerEvent('server_mks_version', "#{url}")
   %hr
   %h3
     = _("NTP Servers")

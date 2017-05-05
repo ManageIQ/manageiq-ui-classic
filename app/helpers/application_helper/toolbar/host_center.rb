@@ -77,7 +77,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           'pficon pficon-edit fa-lg',
           N_('Manage Policies for this item'),
           N_('Manage Policies'),
-          :klass => ApplicationHelper::Button::HostProtect),
+          :klass => ApplicationHelper::Button::Basic),
         button(
           :host_tag,
           'pficon pficon-edit fa-lg',

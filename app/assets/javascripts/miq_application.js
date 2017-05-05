@@ -1,4 +1,4 @@
-/* global dialogFieldRefresh miqBrowserDetect miqExpressionPrefill miqGridCheckAll miqGridGetCheckedRows miqLoadTL miqMenu miqValueStylePrefill performFiltering */
+/* global dialogFieldRefresh miqBrowserDetect miqExpressionPrefill miqGridCheckAll miqGridGetCheckedRows miqLoadTL miqMenu miqValueStylePrefill performFiltering add_flash miqFlashLater */
 
 // MIQ specific JS functions
 
@@ -57,6 +57,7 @@ function miqOnLoad() {
 
   miqInitAccordions();
   miqInitMainContent();
+  miqFlashSaved();
 }
 
 function miqPrepRightCellForm(tree) {
@@ -293,7 +294,7 @@ function miqDimDiv(divname, status) {
 // Check for changes and prompt
 function miqCheckForChanges() {
   if (ManageIQ.angular.scope) {
-    if (angular.isDefined(ManageIQ.angular.scope.angularForm) &&
+    if (ManageIQ.angular.scope.angularForm !== undefined &&
       ManageIQ.angular.scope.angularForm.$dirty &&
       !miqDomElementExists('ignore_form_changes')) {
       var answer = confirm(__("Abandon changes?"));
@@ -331,9 +332,7 @@ function miqValidateButtons(h_or_s, prefix) {
   var buttonsOnId = prefix + 'validate_buttons_on';
   var buttonsOffId = prefix + 'validate_buttons_off';
 
-  if (miqDomElementExists('flash_msg_div')) {
-    $('flash_msg_div').hide();
-  }
+  $('#flash_msg_div').hide();
 
   if (h_or_s == "show") {
     if (miqDomElementExists(buttonsOnId)) {
@@ -348,24 +347,6 @@ function miqValidateButtons(h_or_s, prefix) {
     }
     if (miqDomElementExists(buttonsOnId)) {
       $('#' + buttonsOnId).hide();
-    }
-  }
-}
-
-// Convert Button image to hyperlink
-function toggleConvertButtonToLink(button, url, toggle) {
-  if (toggle) {
-    button.removeClass('dimmed');
-    if (!button.parent().is('a[href]')) {
-      button
-        .wrap($('<a/>')
-          .attr('href', url)
-          .attr('title', button.attr('alt')));
-    }
-  } else {
-    button.addClass('dimmed');
-    if (button.parent().is('a[href]')) {
-      button.unwrap();
     }
   }
 }
@@ -448,31 +429,18 @@ function miqButtonOnWhen(button, onwhen, count) {
 
 // Set the buttons in a div based on the count of checked items passed in
 function miqSetButtons(count, button_div) {
-  if (!miqDomElementExists(button_div)) {
-    return
+  if (button_div.match("_tb$") && count === 0) {
+    // FIXME: this should be happening regardless of `count === 0`
+    // ..but that needs more refactoring around miqUpdateAllCheckboxes, miqUpdateButtons, etc.
+    sendDataWithRx({
+      eventType: 'updateToolbarCount',
+      countSelected: count,
+    });
+
+    return;
   }
 
-  if (button_div.match("_tb$")) {
-    var toolbar = $('#' + button_div);
-
-    // Non-dropdown master buttons
-    toolbar.find('button:not(.dropdown-toggle)').each(function (_k, v) {
-      var button = $(v);
-      miqButtonOnWhen(button, button.data('onwhen'), count);
-    });
-
-    // Dropdown master buttons
-    toolbar.find('button.dropdown-toggle').each(function (_k, v) {
-      var button = $(v);
-      miqButtonOnWhen(button, button.data('onwhen'), count);
-    });
-
-    // Dropdown button items
-    toolbar.find('ul.dropdown-menu > li > a').each(function (_k, v) {
-      var button = $(v);
-      miqButtonOnWhen(button.parent(), button.data('onwhen'), count);
-    });
-  } else if (button_div.match("_buttons$")) { // Handle buttons that are not part of miq toolbars
+  if (miqDomElementExists(button_div) && button_div.match("_buttons$")) { // Handle buttons that are not part of miq toolbars
     if (count === 0) {
       $("#" + button_div + " button[id$=on_1]").prop('disabled', true);
     } else if (count == 1) {
@@ -805,7 +773,7 @@ function miqEnterPressed(e) {
 // Send login authentication via ajax
 function miqAjaxAuth(url) {
   miqEnableLoginFields(false);
-  miqSparkleOn(); // miqJqueryRequest starts sparkle either way, but API.login doesn't
+  miqSparkleOn(); // miqJqueryRequest starts sparkle either way, but API login doesn't
 
   var credentials = {
     login: $('#user_name').val(),
@@ -813,9 +781,9 @@ function miqAjaxAuth(url) {
     serialized: miqSerializeForm('login_div'),
   }
 
-  API.login(credentials.login, credentials.password)
+  vanillaJsAPI.login(credentials.login, credentials.password)
   .then(function() {
-    return API.ws_init();
+    return vanillaJsAPI.ws_init();
   })
   .then(function() {
     // API login ok, now do the normal one
@@ -824,7 +792,7 @@ function miqAjaxAuth(url) {
       data: credentials.serialized,
     });
 
-    // TODO API.autorenew is called on (non-login) page load - when?
+    // TODO vanillaJsAPI.autorenew is called on (non-login) page load - when?
   })
   .then(null, function() {
     add_flash(__("Incorrect username or password"), 'error', { id: 'auth_failed' });
@@ -867,56 +835,6 @@ function miqAjaxExtAuth(url) {
     beforeSend: true,
     data: credentials.serialized,
   });
-}
-
-// add a flash message to an existing #flash_msg_div
-// levels are error, warning, info, success
-function add_flash(msg, level, options) {
-  level = level || 'success';
-  options = options || {};
-  var cls = { alert: '', icon: '' };
-
-  switch (level) {
-    case 'error':
-      cls.alert = 'alert alert-danger';
-      cls.icon = 'pficon pficon-error-circle-o';
-      break;
-    case 'warning':
-      cls.alert = 'alert alert-warning';
-      cls.icon = 'pficon pficon-warning-triangle-o';
-      break;
-    case 'info':
-      cls.alert = 'alert alert-info';
-      cls.icon = 'pficon pficon-info';
-      break;
-    case 'success':
-      cls.alert = 'alert alert-success';
-      cls.icon = 'pficon pficon-ok';
-      break;
-  }
-
-  var icon_span = $('<span class="' + cls.icon + '"></span>');
-
-  var text_strong = $('<strong></strong>');
-  text_strong.text(msg);
-
-  var alert_div = $('<div class="' + cls.alert + '"></div>');
-  alert_div.append(icon_span, text_strong);
-
-  var text_div = $('<div class="flash_text_div"></div>');
-  text_div.attr('title', __('Click to remove message'));
-  text_div.on('click', function() {
-    text_div.remove();
-  });
-  text_div.append(alert_div);
-
-  // if options.id is provided, only one flash message with that id may exist
-  if (options.id) {
-    $('#' + options.id).filter('#flash_msg_div > *').remove();
-    text_div.attr('id', options.id);
-  }
-
-  $('#flash_msg_div').append(text_div).show();
 }
 
 function miqEnableLoginFields(enabled) {
@@ -1499,7 +1417,7 @@ function miqToolbarOnClick(_e) {
     // support data-function and data-function-data
     var fn = new Function("return " + button.data('function')); // eval - returns a function returning the right function
     fn().call(button, button.data('functionData'));
-    return;
+    return false;
   } else {
     // No url specified, run standard button ajax transaction
     if (typeof button.data('explorer') != "undefined" && button.data('explorer')) {
@@ -1535,6 +1453,10 @@ function miqToolbarOnClick(_e) {
       } else {
         params = miqSerializeForm(button.data('url_parms'));
       }
+    } else if (button.data('url_parms').match("id=LIST")) {
+      // this is used by custom buttons in lists
+      params = button.data('url_parms').split("?")[1] +
+        "&miq_grid_checks=" + ManageIQ.gridChecks.join(',');
     } else {
       params = button.data('url_parms').split("?")[1];
     }
@@ -1630,7 +1552,7 @@ function miqHideSearchClearButton() {
   // Show the clear button upon entering text in the search input
   $(".search-pf .has-clear .form-control").keyup(function () {
     var t = $(this);
-    t.next('button').toggle(Boolean(t.val()));
+    t.nextAll('button.clear').toggle(Boolean(t.val()));
   });
   // Upon clicking the clear button, empty the entered text and hide the clear button
   $(".search-pf .has-clear .clear").click(function () {

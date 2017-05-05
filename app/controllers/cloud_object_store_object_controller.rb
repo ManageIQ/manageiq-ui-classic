@@ -6,6 +6,7 @@ class CloudObjectStoreObjectController < ApplicationController
 
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
+  include Mixins::GenericFormMixin
 
   def breadcrumb_name(_model)
     ui_lookup(:tables => "cloud_object_store_object")
@@ -17,13 +18,7 @@ class CloudObjectStoreObjectController < ApplicationController
 
     process_cloud_object_storage_buttons(params[:pressed])
 
-    if !@flash_array.nil? && params[:pressed].ends_with?("delete")
-      javascript_redirect :action      => 'show_list',
-                          :flash_msg   => @flash_array[0][:message],
-                          :flash_error => @flash_array[0][:level] == :error
-    elsif !@flash_array.nil?
-      render_flash unless performed?
-    end
+    delete_action if params[:pressed].ends_with?("delete")
   end
 
   def show

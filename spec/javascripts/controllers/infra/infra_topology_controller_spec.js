@@ -4,7 +4,7 @@ describe('infraTopologyController', function() {
     var cluster = { id:"396086e5-7b0d-11e5-8286-18037327aaeb",  item:{display_kind:"EmsCluster", name:"overcloud-Compute-xr5gaw2saehi", kind:"EmsCluster", id:"396086e5-7b0d-11e5-8286-18037327aaeb", miq_id:"100012"}};
     var infra_provider = { id:"4",  item:{display_kind:"Openstack", name:"myProvider", kind:"InfraManager", id:"2", miq_id:"2"}};
 
-    beforeEach(module('infraTopologyApp'));
+    beforeEach(module('ManageIQ'));
 
     beforeEach(inject(function(_$httpBackend_, $rootScope, _$controller_, $location) {
       spyOn($location, 'absUrl').and.returnValue('/infra_topology/show');

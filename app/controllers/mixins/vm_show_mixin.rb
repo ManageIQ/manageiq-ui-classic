@@ -121,7 +121,6 @@ module VmShowMixin
       tl_build_timeline                    # Create the timeline report
     end
 
-    set_config(@record)
     get_host_for_vm(@record)
     session[:tl_record_id] = @record.id
   end

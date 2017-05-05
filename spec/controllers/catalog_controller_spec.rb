@@ -584,7 +584,7 @@ describe CatalogController do
     it "Renders list of orchestration templates using correct GTL type" do
       %w(root xx-otcfn xx-othot xx-otazu).each do |id|
         post :tree_select, :params => { :id => id, :format => :js }
-        expect(response).to render_template('layouts/gtl/_grid')
+        expect(response).to render_template('layouts/angular/_gtl')
       end
     end
 
@@ -787,13 +787,59 @@ describe CatalogController do
           :playbook           => playbook.name,
           :machine_credential => auth.name,
           :dialog             => "Some Label",
-          :dialog_id          => dialog.id
+          :dialog_id          => dialog.id,
+          :become_enabled     => "No"
         },
         :retirement   => {
           :remove_resources   => nil,
           :repository         => repository.name,
           :playbook           => playbook.name,
-          :machine_credential => auth.name
+          :machine_credential => auth.name,
+          :become_enabled     => "No"
+        }
+      }
+      expect(playbook_details).to eq(st_details)
+    end
+
+    it "returns nil for objects that are not found in the database for provision & retirement tabs on summary screen" do
+      options = {
+        :name        => 'test_ansible_catalog_item',
+        :description => 'test ansible',
+        :display     => true,
+        :config_info => {
+          :provision  => {
+            :new_dialog_name => 'test_dialog',
+            :hosts           => 'many',
+            :credential_id   => auth.id,
+            :repository_id   => 1,
+            :playbook_id     => playbook.id,
+            :dialog_id       => 2
+          },
+          :retirement => {
+            :new_dialog_name => 'test_dialog',
+            :hosts           => 'many',
+            :credential_id   => auth.id,
+            :repository_id   => repository.id,
+            :playbook_id     => 2
+          }
+        }
+      }
+      service_template = double("ServiceTemplateAnsiblePlaybook", options)
+      controller.instance_variable_set(:@record, service_template)
+      playbook_details = controller.send(:fetch_playbook_details)
+      st_details = {
+        :provisioning => {
+          :repository         => nil,
+          :playbook           => playbook.name,
+          :machine_credential => auth.name,
+          :become_enabled     => "No"
+        },
+        :retirement   => {
+          :remove_resources   => nil,
+          :repository         => repository.name,
+          :playbook           => nil,
+          :machine_credential => auth.name,
+          :become_enabled     => "No"
         }
       }
       expect(playbook_details).to eq(st_details)

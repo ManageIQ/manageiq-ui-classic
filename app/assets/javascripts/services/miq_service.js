@@ -1,7 +1,10 @@
-/* global miqAjaxButton miqBuildCalendar miqButtons miqJqueryRequest miqRESTAjaxButton miqSparkleOff miqSparkleOn */
+/* global miqAjaxButton miqBuildCalendar miqButtons miqJqueryRequest miqRESTAjaxButton miqSparkleOff miqSparkleOn add_flash */
 
 ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', function($timeout, $document, $q) {
+  var miqService = this;
+
   this.storedPasswordPlaceholder = "●●●●●●●●";
+  this.deploymentExists = 'EXISTS';
 
   this.showButtons = function() {
     miqButtons('show');
@@ -40,33 +43,15 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', funct
     miqSparkleOff();
   };
 
-  // FIXME: merge with add_flash in miq_application.js
   this.miqFlash = function(type, msg) {
-    $('#flash_msg_div').text("");
-    $("#flash_msg_div").show();
-    var outerMost = $("<div id='flash_text_div' onclick=$('#flash_msg_div').text(''); title='" + __("Click to remove messages") + "'>");
-    var txt = $('<strong>' + msg + '</strong>');
-
-    if(type == "error") {
-      var outerBox = $('<div class="alert alert-danger">');
-      var innerSpan = $('<span class="pficon pficon-error-circle-o">');
-    } else if (type == "warn") {
-      var outerBox = $('<div class="alert alert-warning">');
-      var innerSpan = $('<span class="pficon pficon-warning-triangle-o">');
-    } else if (type == "success") {
-      var outerBox = $('<div class="alert alert-success">');
-      var innerSpan = $('<span class="pficon pficon-ok">');
-    }
-    $(outerBox).append(innerSpan);
-    $(outerBox).append(txt);
-    $(outerMost).append(outerBox);
-    $(outerMost).appendTo($("#flash_msg_div"));
+    miqService.miqFlashClear();
+    add_flash(msg, type);
   };
-  var miqFlash = this.miqFlash;
 
+  // FIXME: usually we just hide it, merge the logic
   this.miqFlashClear = function() {
     $('#flash_msg_div').text("");
-  }
+  };
 
   this.saveable = function(form) {
     return form.$valid && form.$dirty;
@@ -129,12 +114,12 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', funct
   this.handleFailure = function(e) {
     miqSparkleOff();
 
-    if (angular.isDefined(e.error) && angular.isDefined(e.error.message)) {
+    if (e.error !== undefined && e.error.message !== undefined) {
       console.error(e.error.message);
-      miqFlash('error', e.error.message);
+      miqService.miqFlash('error', e.error.message);
     } else if (e.message) {
       console.error(e.message);
-      miqFlash('error', e.message);
+      miqService.miqFlash('error', e.message);
     }
 
     return $q.reject(e);

@@ -155,7 +155,6 @@ describe HostController do
       expect(response).to render_template('host/show')
       expect(assigns(:breadcrumbs)).to eq([{:name => "#{@host.name} (Packages)",
                                             :url  => "/host/guest_applications/#{@host.id}"}])
-      expect(assigns(:devices)).to be_kind_of(Array)
     end
 
     it "shows associated datastores" do

@@ -5,9 +5,10 @@
                  'ng-controller' => "repositoryFormController as vm",
                  'ng-show'       => "vm.afterGet",
                  'ng-cloak'      => '',
-                 "miq-form"     => true,
-                 "model"        => "vm.repositoryModel",
-                 "model-copy"   => 'vm.modelCopy',
+                 "miq-form"      => true,
+                 "model"         => "vm.repositoryModel",
+                 "model-copy"    => 'vm.modelCopy',
+                 'form-changed'  => true,
                  :novalidate     => true}
     = render :partial => "layouts/flash_msg"
     .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
@@ -19,8 +20,7 @@
                             "id"         => "name",
                             'ng-model'   => "vm.repositoryModel.name",
                             :maxlength   => MAX_NAME_LEN,
-                            :required    => "",
-                            :checkchange => true}
+                            :required    => ""}
         %span.help-block{"ng-show" => "angularForm.name.$error.required"}
           = _("Required")
     .form-group
@@ -30,8 +30,7 @@
         %input.form-control{:type        => "text",
                             :name        => "description",
                             "id"         => "description",
-                            'ng-model'   => "vm.repositoryModel.description",
-                            :checkchange => true}
+                            'ng-model'   => "vm.repositoryModel.description"}
     .form-group
       %label.col-md-2.control-label
         = _('SCM type')
@@ -40,7 +39,6 @@
                      options_for_select([[_("GIT"), "git"]], 'git'),
                      "ng-model"   => "vm.repositoryModel.scm_type",
                      :disabled    => true,
-                     :checkchange => true,
                      'pf-select'  => true)
     .form-group{"ng-class" => "{'has-error': angularForm.scm_url.$error.required || angularForm.scm_url.$error.urlValidation}"}
       %label.col-md-2.control-label
@@ -51,7 +49,6 @@
                             :id              => "scm_url",
                             'ng-model'       => "vm.repositoryModel.scm_url",
                             :required        => "",
-                            :checkchange     => true,
                             'url-validation' => true}
         %span.help-block{"ng-show" => "angularForm.scm_url.$error.required"}
           = _("Required")
@@ -64,7 +61,6 @@
         %select{'name'       => 'authentication_id',
                 'ng-model'   => 'vm.repositoryModel.authentication_id',
                 'ng-options' => 'scm_credential.value as scm_credential.name for scm_credential in vm.scm_credentials',
-                :checkchange => true,
                 'pf-select'  => true}
     .form-group
       %label.col-md-2.control-label
@@ -73,8 +69,7 @@
         %input.form-control{:type        => "text",
                             :name        => "scm_branch",
                             "id"         => "scm_branch",
-                            'ng-model'   => "vm.repositoryModel.scm_branch",
-                            :checkchange => true}
+                            'ng-model'   => "vm.repositoryModel.scm_branch"}
     .form-group
       %label.col-md-2.control-label
         = _('SCM Update Options')

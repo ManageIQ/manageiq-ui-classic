@@ -15,3 +15,11 @@
             = link_to("#{ui_lookup(:table => "ems_container")}: #{@record.parent.name}",
                 polymorphic_path(@record.parent),
                 :title => _("Show this persistent volume's parent Containers Provider"))
+        - if @record.number_of(:container_groups).zero?
+          %li.disabled
+            = link_to(_("%{container_groups} (0)") % {:container_groups => ui_lookup(:tables => "container_groups")}, "#")
+        - else
+          %li
+            = link_to(_("%{container_groups} (%{count})") % {:container_groups => ui_lookup(:table => "container_groups"), 
+                                                            :count => @record.number_of(:container_groups)},
+                        url_for_only_path(:id => @record.id, :action => "show", :display => "container_groups"))

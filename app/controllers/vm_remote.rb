@@ -26,11 +26,16 @@ module VmRemote
     console_type = ::Settings.server.remote_console_type.downcase
     @vm = @record = identify_record(params[:id], VmOrTemplate)
     options = case console_type
-              when "mks"
-                @sb[:mks].update(
-                  :version     => ::Settings.server.mks_version,
-                  :mks_classid => ::Settings.server.mks_classid
+              when "webmks"
+                override_content_security_policy_directives(
+                  :connect_src => ["'self'", "wss://#{params[:host]}"]
                 )
+                {
+                  :webmks_uri => URI::Generic.build(:scheme => 'wss',
+                                                    :host   => params[:host],
+                                                    :port   => params[:port],
+                                                    :path   => "/ticket/#{params[:ticket]}")
+                }
               when "vmrc"
                 host = @record.ext_management_system.ipaddress || @record.ext_management_system.hostname
                 vmid = @record.ems_ref
@@ -103,7 +108,7 @@ module VmRemote
     end
   end
 
-  # Task complete, show error or launch console using VNC/MKS/VMRC task info
+  # Task complete, show error or launch console using VNC/WebMKS/VMRC task info
   def console_after_task(console_type)
     miq_task = MiqTask.find(params[:task_id])
     unless miq_task.results_ready?
@@ -116,9 +121,10 @@ module VmRemote
               miq_task.task_results[:remote_url]
             else
               console_action = console_type == 'html5' ? 'launch_html5_console' : 'launch_vmware_console'
-              url_for_only_path(miq_task.task_results.merge(:controller => controller_name,
-                                                  :action     => console_action,
-                                                  :id         => j(params[:id])))
+              url_for_only_path(:controller => controller_name,
+                                :action     => console_action,
+                                :id         => j(params[:id]),
+                                :params     => miq_task.task_results)
             end
       javascript_open_window(url)
     end

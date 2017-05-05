@@ -126,10 +126,10 @@
           %th= _('Type')
           %th{"ng-if" => @reconfigitems.first.vendor == 'vmware'}= _('Mode')
           %th= _('Size')
-          %th.table-view-pf-select
-          %th.table-view-pf-select{"ng-if" => @reconfigitems.first.vendor == 'vmware'}= _('Dependent')
-          %th.table-view-pf-select= _('Delete Backing')
-          %th.table-view-pf-select{"ng-if" => @reconfigitems.first.vendor == 'redhat'}= _('Bootable')
+          %th
+          %th{"ng-if" => @reconfigitems.first.vendor == 'vmware'}= _('Dependent')
+          %th= _('Delete Backing')
+          %th{"ng-if" => @reconfigitems.first.vendor == 'redhat'}= _('Bootable')
           %th= _('Actions')
         %tbody
           %tr{"ng-if"       => "reconfigureModel.addEnabled",
@@ -163,7 +163,7 @@
                                   "ng-change"   => "hdChanged()"}
               %span{"style" => "color:red", "ng-show" => "rowForm.dvcSize.$invalid"}
                 = _(" Valid numeric disk size required ")
-            %td.table-view-pf-select
+            %td
               = select_tag('hdUnit',
                        options_for_select(%w(MB GB)),
                        "ng-model"                    => "reconfigureModel.hdUnit",
@@ -171,14 +171,14 @@
                        "data-width"                  => "auto",
                        "required"                    => "",
                        "selectpicker-for-select-tag" => "")
-            %td.table-view-pf-select{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
+            %td{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
               %input{"bs-switch" => "",
                      :data       => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
                      "type"      => "checkbox",
                      "name"      => "cb_dependent",
                      "ng-model"  => "reconfigureModel.cb_dependent"}
-            %td.table-view-pf-select
-            %td.table-view-pf-select{"ng-if" => @reconfigitems.first.vendor == 'redhat'}
+            %td
+            %td{"ng-if" => @reconfigitems.first.vendor == 'redhat'}
               %input{"bs-switch" => "",
                      :data           => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
                      "type"          => "checkbox",
@@ -195,9 +195,9 @@
               {{disk.hdMode}}
             %td
               {{disk.hdSize}}
-            %td.table-view-pf-select
+            %td
               {{disk.hdUnit}}
-            %td.table-view-pf-select{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
+            %td{"ng-if" => @reconfigitems.first.vendor == 'vmware'}
               %input{"bs-switch"     => "",
                      :data           => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
                      "type"          => "checkbox",
@@ -206,7 +206,7 @@
                      "switch-active" => "{{disk.add_remove!='add'}}",
                      "ng-readonly"   => "disk.add_remove=='add'",
                      "ng-if"         => "disk.add_remove=='add'"}
-            %td.table-view-pf-select
+            %td
               %input{"bs-switch"     => "",
                      :data           => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
                      "type"          => "checkbox",
@@ -215,7 +215,7 @@
                      "ng-readonly"   => "disk.add_remove=='remove'",
                      "switch-active" => "{{disk.add_remove!='remove'}}",
                      "ng-if"         => "disk.add_remove!='add'"}
-            %td.table-view-pf-select{"ng-if" => @reconfigitems.first.vendor == 'redhat'}
+            %td{"ng-if" => @reconfigitems.first.vendor == 'redhat'}
               %input{"bs-switch"     => "",
                      :data           => {:on_text => 'Yes', :off_text => 'No', :size => 'mini'},
                      "type"          => "checkbox",
@@ -234,11 +234,6 @@
                                              "ng-if"    => "disk.add_remove == 'add'",
                                              "ng-click" => "cancelAddRemoveDisk(disk)"}= _('Cancel Add')
   %hr
-  %h3= _('Affected VMs')
-  - if @reconfigitems
-    - @embedded = true
-    - @gtl_type = "list"
-    = render :partial => "layouts/gtl"
 
   %table{:width => "100%", :align => "bottom"}
     %tr
@@ -260,6 +255,13 @@
                     :alt       => t,
                     :enabled   => "true",
                     'on-click' => "cancelClicked()"}
+%h3= _('Affected VMs')
+- if @reconfigitems
+  - @edit ||={}
+  - @edit[:object_ids] = @reconfigitems.collect(&:id)
+  - @embedded = true
+  - @gtl_type = "list"
+  = render :partial => "layouts/gtl"
 
 :javascript
   ManageIQ.angular.app.value('reconfigureFormId', '#{@request_id || "new"}');

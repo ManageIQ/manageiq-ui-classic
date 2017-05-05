@@ -1,8 +1,9 @@
-#main_div
-  - url = url_for_only_path(:action => 'resize_field_changed', :id => @record.id.to_s)
-
+%form#form_div{"name"          => "angularForm",
+               "ng-controller" => "vmCloudResizeFormController as vm",
+               "miq-form"      => true,
+               "model"         => "vm.vmCloudModel",
+               "model-copy"    => "vm.modelCopy"}
   = render :partial => "layouts/flash_msg"
-
   %h3
     = _('Reconfigure Instance')
   .form-horizontal
@@ -15,41 +16,29 @@
       %label.col-md-2.control-label
         = _('Choose Flavor')
       .col-md-8
-        = select_tag('flavor',
-            options_for_select(@flavors.sort_by),
-            :class             => "selectpicker",
-            "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true,
-            :multiple          => false,
-            :id                => "flavor",
-            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-      :javascript
-        miqInitSelectPicker();
-        miqSelectPickerEvent("flavor", "#{url}");
-- unless @explorer
-  %table{:width => "100%"}
-    %tr
-      %td{:align => 'right'}
-        #buttons_on{:style => "display:#{@changed ? "display" : "none"};"}
+        %select{:name        => 'flavor_id',
+                'ng-model'   => 'vm.vmCloudModel.flavor_id',
+                'ng-options' => 'flavor.id as flavor.name for flavor in vm.flavors track by flavor.id',
+                :miqrequired => true,
+                :checkchange => true}
+
+  %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
+                  'paging_div_buttons_id'            => "angular_paging_div_buttons",
+                  'paging_div_buttons_type'          => "Submit"}
+
+  - unless @explorer
+    %table{:width => '100%'}
+      %tr
+        %td{:align => 'right'}
           = button_tag(_("Submit"),
-                         :class   => 'btn btn-primary',
-                         :alt     => 'Submit',
-                         :title   => 'Submit',
-                         :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'resize_vm',
-                                                               :id     => @edit[:vm_id],
-                                                               :button => "submit")}');")
+                       :class        => "btn btn-primary",
+                       "ng-click"    => "submitClicked()",
+                       "ng-disabled" => "angularForm.$pristine || angularForm.$invalid",
+                       "ng-class"    => "{'btn-disabled': angularForm.$pristine || angularForm.$invalid}")
           = button_tag(_("Cancel"),
-                           :class   => 'btn btn-default',
-                           :alt     => t = _("Cancel Changes"),
-                           :title   => t,
-                           :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'resize_vm',
-                                                                 :id     => @edit[:vm_id],
-                                                                 :button => "cancel")}');")
-        #buttons_off{:style => "display:#{@changed ? "none" : "display"};"}
-          = button_tag(_("Submit"), :class => "btn btn-primary disabled")
-          = button_tag(_("Cancel"),
-                           :class   => 'btn btn-default',
-                           :alt     => t = _("Cancel Changes"),
-                           :title   => t,
-                           :onclick => "miqAjaxButton('#{url_for_only_path(:action => 'resize_vm',
-                                                                 :id     => @edit[:vm_id],
-                                                                 :button => "cancel")}');")
+                        :class     => "btn btn-default",
+                        "ng-click" => "cancelClicked()")
+
+:javascript
+  ManageIQ.angular.app.value('vmCloudResizeFormId', '#{@record.id}');
+  miq_bootstrap('#form_div');

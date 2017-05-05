@@ -87,7 +87,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
 
       $scope.timer_items        = timerOptionService.getOptions($scope.scheduleModel.timer_typ);
 
-      if (data.filter_type === 'all' || (angular.isDefined(data.protocol) && data.protocol !== null)) {
+      if (data.filter_type === 'all' || (data.protocol !== undefined && data.protocol !== null)) {
         $scope.filterValuesEmpty = true;
       } else {
         buildFilterList(data);
@@ -97,7 +97,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       }
 
       if (data.filter_type === null &&
-        (angular.isDefined(data.protocol) && data.protocol !== null && data.protocol !== 'Samba')) {
+        (data.protocol !== undefined && data.protocol !== null && data.protocol !== 'Samba')) {
         $scope.scheduleModel.filter_typ = 'all';
       }
 
@@ -152,9 +152,9 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     } else {
       if ($scope.scheduleModel.action_typ === 'automation_request') {
         // should ignore list of targets as this list can be really long no need to send that up to server
-        var moreUrlParams = $.param(miqService.serializeModelWithIgnoredFields($scope.scheduleModel, ["targets"]));
+        var moreUrlParams = $.param(miqService.serializeModelWithIgnoredFields($scope.scheduleModel, ["targets", "time_zone"]));
         if (moreUrlParams) {
-          url += '&' + decodeURIComponent(moreUrlParams);
+          url += '&' + decodeURIComponent(moreUrlParams) + encodeURIComponent($scope.scheduleModel.time_zone);
         }
       }
       miqService.miqAjaxButton(url, serializeFields);

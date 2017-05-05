@@ -5,6 +5,7 @@ class OrchestrationStackController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericSessionMixin
+  include Mixins::GenericShowMixin
 
   def self.table_name
     @table_name ||= "orchestration_stack"
@@ -14,50 +15,13 @@ class OrchestrationStackController < ApplicationController
     redirect_to :action => 'show_list'
   end
 
-  def show
-    return if perfmenu_click?
-    @display = params[:display] || "main" unless pagination_or_gtl_request?
+  def self.display_methods
+    %w(instances children security_groups stack_orchestration_template)
+  end
 
-    @lastaction = "show"
-    @orchestration_stack = @record = identify_record(params[:id])
-    return if record_no_longer_exists?(@orchestration_stack)
-
-    @gtl_url = "/show"
-    drop_breadcrumb({:name => _("Orchestration Stacks"),
-                     :url  => "/orchestration_stack/show_list?page=#{@current_page}&refresh=y"}, true)
-    case @display
-    when "main", "summary_only"
-      get_tagdata(@orchestration_stack)
-      drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @orchestration_stack.name},
-                      :url  => "/orchestration_stack/show/#{@orchestration_stack.id}")
-      @showtype = "main"
-      set_summary_pdf_data if @display == 'summary_only'
-    when "instances"
-      title = ui_lookup(:tables => "vm_cloud")
-      drop_breadcrumb(:name => _("%{name} (All %{title})") % {:name => @orchestration_stack.name, :title => title},
-                      :url  => "/orchestration_stack/show/#{@orchestration_stack.id}?display=#{@display}")
-      @view, @pages = get_view(ManageIQ::Providers::CloudManager::Vm, :parent => @orchestration_stack)
-      @showtype = @display
-    when "children"
-      title = ui_lookup(:tables => "orchestration_stack")
-      kls   = OrchestrationStack
-      drop_breadcrumb(:name => _("%{name} (All %{title})") % {:name => @orchestration_stack.name, :title => title},
-                      :url  => "/orchestration_stack/show/#{@orchestration_stack.id}?display=#{@display}")
-      @view, @pages = get_view(kls, :parent => @orchestration_stack)
-      @showtype = @display
-    when "security_groups"
-      title = ui_lookup(:tables => "security_group")
-      kls   = SecurityGroup
-      drop_breadcrumb(:name => _("%{name} (All %{title})") % {:name => @orchestration_stack.name, :title => title},
-                      :url  => "/orchestration_stack/show/#{@orchestration_stack.id}?display=#{@display}")
-      @view, @pages = get_view(kls, :parent => @orchestration_stack)  # Get the records (into a view) and the paginator
-      @showtype = @display
-    when "stack_orchestration_template"
-      drop_breadcrumb(:name => "%{name} (Orchestration Template)" % {:name => @orchestration_stack.name},
-                      :url  => "/orchestration_stack/show/#{@orchestration_stack.id}?display=#{@display}")
-    end
-
-    replace_gtl_main_div if pagination_request?
+  def display_stack_orchestration_template
+    drop_breadcrumb(:name => "%{name} (Orchestration Template)" % {:name => @record.name},
+                    :url  => show_link(@record, :display => @display))
   end
 
   def show_list

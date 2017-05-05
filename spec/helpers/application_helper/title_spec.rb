@@ -28,9 +28,9 @@ describe ApplicationHelper::Title do
       expect(subject).to eq(title + ": Policy Simulation")
     end
 
-    it "when layout = 'all_ui_tasks'" do
-      @layout = "all_ui_tasks"
-      expect(subject).to eq(title + ": All UI Tasks")
+    it "when layout = 'all_tasks'" do
+      @layout = "all_tasks"
+      expect(subject).to eq(title + ": All Tasks")
     end
 
     it "when layout = 'rss'" do
@@ -41,11 +41,6 @@ describe ApplicationHelper::Title do
     it "when layout = 'management_system'" do
       @layout = "management_system"
       expect(subject).to eq(title + ": Management Systems")
-    end
-
-    it "when layout = 'storage_manager'" do
-      @layout = "storage_manager"
-      expect(subject).to eq(title + ": Storage - Storage Managers")
     end
 
     it "when layout = 'ops'" do

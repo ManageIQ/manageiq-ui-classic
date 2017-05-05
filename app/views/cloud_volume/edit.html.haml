@@ -1,28 +1,17 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "cloudVolumeFormController", "ng-cloak" => ""}
+%form#form_div{:name           => "angularForm",
+               'ng-controller' => "cloudVolumeFormController as vm",
+               "ng-show"       => "vm.afterGet",
+               "ng-cloak"      => "",
+               "miq-form"      => true,
+               "model"         => "vm.cloudVolumeModel",
+               "model-copy"    => "vm.modelCopy"}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Edit Volume')
   .form-horizontal
     = render :partial => "common_new_edit"
 
-  %table{:width => '100%'}
-    %tr
-      %td{:align => 'right'}
-        #buttons_on
-          = button_tag(_("Save"),
-                       :class        => "btn btn-primary",
-                       "ng-click"    => "saveClicked()",
-                       "ng-disabled" => "angularForm.$pristine || angularForm.$invalid",
-                       "ng-class"    => "{ disabled: cloudVolumeForm.$pristine || angularForm.$invalid}")
-          = button_tag(_("Reset"),
-                       :class        => "btn btn-primary",
-                       "ng-click"    => "resetClicked()",
-                       "ng-disabled" => "angularForm.$pristine",
-                       "ng-class"    => "{ disabled: cloudVolumeForm.$pristine}")
-          = button_tag(_("Cancel"),
-                        :class     => "btn btn-default",
-                        "ng-click" => "cancelClicked()")
-
 :javascript
   ManageIQ.angular.app.value('cloudVolumeFormId', '#{@volume.id}');
+  ManageIQ.angular.app.value('storageManagerId', '#{@volume.ext_management_system.id}');
   miq_bootstrap(jQuery('#form_div'));

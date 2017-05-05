@@ -60,6 +60,20 @@ describe ProviderForemanController do
     expect(response.body).to_not be_empty
   end
 
+  it "renders explorer sorted by url" do
+    login_as user_with_feature(%w(providers_accord configured_systems_filter_accord))
+    FactoryGirl.create(:provider_foreman, :name => "foremantest1", :url => "z_url")
+    FactoryGirl.create(:provider_foreman, :name => "foremantest2", :url => "a_url")
+
+    get :explorer, :params => {:sortby => '2'}
+    expect(response.status).to eq(200)
+    expect(response.body).to include("modelName: 'manageiq/providers/configuration_managers'")
+    expect(response.body).to include("activeTree: 'configuration_manager_providers_tree'")
+    expect(response.body).to include("gtlType: 'list'")
+    expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
+    expect(response.body).to include("showUrl: '/provider_foreman/x_show/'")
+  end
+
   context "renders explorer based on RBAC" do
     it "renders explorer based on RBAC access to feature 'configured_system_tag'" do
       login_as user_with_feature %w(configured_system_tag)
@@ -306,6 +320,11 @@ describe ProviderForemanController do
       ems_id = ems_key_for_provider(@provider)
       controller.instance_variable_set(:@_params, :id => ems_id)
       controller.send(:tree_select)
+      gtl_init_data = controller.init_report_data('reportDataController')
+      expect(gtl_init_data[:data][:modelName]).to eq("manageiq/providers/configuration_managers")
+      expect(gtl_init_data[:data][:activeTree]).to eq("configuration_manager_providers_tree")
+      expect(gtl_init_data[:data][:currId]).to eq(ems_id)
+      expect(gtl_init_data[:data][:isExplorer]).to eq(true)
       view = controller.instance_variable_get(:@view)
       expect(view.table.data[0].description).to eq("testprofile")
 
@@ -316,6 +335,11 @@ describe ProviderForemanController do
       config_profile_id2 = config_profile_key(@config_profile2)
       controller.instance_variable_set(:@_params, :id => config_profile_id2)
       controller.send(:tree_select)
+      gtl_init_data = controller.init_report_data('reportDataController')
+      expect(gtl_init_data[:data][:modelName]).to eq("manageiq/providers/configuration_managers")
+      expect(gtl_init_data[:data][:activeTree]).to eq("configuration_manager_providers_tree")
+      expect(gtl_init_data[:data][:currId]).to eq(config_profile_id2)
+      expect(gtl_init_data[:data][:isExplorer]).to eq(true)
       view = controller.instance_variable_get(:@view)
       expect(view.table.data[0].hostname).to eq("test2a_configured_system")
 
@@ -346,6 +370,11 @@ describe ProviderForemanController do
       controller.instance_variable_set(:@_params, :id => ems_id)
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
+      gtl_init_data = controller.init_report_data('reportDataController')
+      expect(gtl_init_data[:data][:modelName]).to eq("manageiq/providers/configuration_managers")
+      expect(gtl_init_data[:data][:activeTree]).to eq("configuration_manager_providers_tree")
+      expect(gtl_init_data[:data][:currId]).to eq(ems_id)
+      expect(gtl_init_data[:data][:isExplorer]).to eq(true)
       expect(view.table.data[0].data).to include('description' => "testprofile")
       expect(view.table.data[2]).to include('description' => _("Unassigned Profiles Group"),
                                             'name'        => _("Unassigned Profiles Group"))

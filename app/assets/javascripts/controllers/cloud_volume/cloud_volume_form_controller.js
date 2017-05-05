@@ -1,75 +1,46 @@
-ManageIQ.angular.app.controller('cloudVolumeFormController', ['$scope', 'miqService', 'API', 'cloudVolumeFormId', 'storageManagerId', function($scope, miqService, API, cloudVolumeFormId, storageManagerId) {
+ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API', 'cloudVolumeFormId', 'storageManagerId', function(miqService, API, cloudVolumeFormId, storageManagerId) {
+  var vm = this;
+
   var init = function() {
-    $scope.cloudVolumeModel = {
+    vm.afterGet = false;
+
+    vm.cloudVolumeModel = {
+      name: '',
       aws_encryption: false,
+      incremental: false,
+      storage_manager_id: storageManagerId,
     };
-    $scope.formId = cloudVolumeFormId;
-    $scope.afterGet = false;
-    $scope.modelCopy = angular.copy( $scope.cloudVolumeModel );
-    $scope.model = "cloudVolumeModel";
 
-    // This ia a fixed list of available cloud volume types for AWS.
-    $scope.awsVolumeTypes = [
-      { type: "gp2", name: "General Purpose SSD (GP2)" },
-      { type: "io1", name: "Provisioned IOPS SSD (IO1)" },
-      { type: "st1", name: "Throughput Optimized HDD (ST1)" },
-      { type: "sc1", name: "Cold HDD (SC1)" },
-      { type: "standard", name: "Magnetic" },
-    ];
+    vm.formId = cloudVolumeFormId;
+    vm.model = "cloudVolumeModel";
 
-    ManageIQ.angular.scope = $scope;
+    ManageIQ.angular.scope = vm;
+    vm.saveable = miqService.saveable;
 
-    if (cloudVolumeFormId == 'new') {
-      $scope.cloudVolumeModel.name = "";
-    } else {
-      miqService.sparkleOn();
-      API.get('/api/cloud_volumes/' + cloudVolumeFormId + '?attributes=ext_management_system.type')
-        .then(getCloudVolumeFormDataComplete)
-        .catch(miqService.handleFailure);
-    }
+    vm.newRecord = cloudVolumeFormId === 'new';
 
-    if (storageManagerId) {
-      $scope.cloudVolumeModel.storage_manager_id = storageManagerId;
-      $scope.storageManagerChanged(storageManagerId);
-    }
-  };
-
-  function getCloudVolumeFormDataComplete(data) {
-    $scope.afterGet = true;
-    $scope.cloudVolumeModel.emstype = data.ext_management_system.type;
-    $scope.cloudVolumeModel.name = data.name;
-    // We have to display size in GB.
-    $scope.cloudVolumeModel.size = data.size / 1073741824;
-    // Currently, this is only relevant for AWS volumes so we are prefixing the
-    // model attribute with AWS.
-    $scope.cloudVolumeModel.aws_volume_type = data.volume_type;
-
-    $scope.modelCopy = angular.copy( $scope.cloudVolumeModel );
-    miqService.sparkleOff();
-  }
-
-  $scope.storageManagerChanged = function(id) {
     miqService.sparkleOn();
-    API.get('/api/providers/' + id + '?attributes=type,parent_manager.availability_zones,parent_manager.cloud_tenants')
-      .then(getStorageManagerFormDataComplete)
+    API.get("/api/providers?expand=resources&attributes=id,name&filter[]=supports_block_storage?=true")
+      .then(getStorageManagers)
       .catch(miqService.handleFailure);
+
+    if (cloudVolumeFormId !== 'new') {
+      // Fetch cloud volume data before showing the form.
+      API.get('/api/cloud_volumes/' + cloudVolumeFormId + '?attributes=ext_management_system.type,availability_zone.ems_ref')
+        .then(getCloudVolumeFormData)
+        .catch(miqService.handleFailure);
+    } else {
+      // Initialise the form immediately when creating a new volume.
+      setForm();
+    }
   };
 
-  function getStorageManagerFormDataComplete(data) {
-    $scope.afterGet = true;
-    $scope.cloudVolumeModel.emstype = data.type;
-    $scope.cloudTenantChoices = data.parent_manager.cloud_tenants;
-    $scope.availabilityZoneChoices = data.parent_manager.availability_zones;
-
-    miqService.sparkleOff();
-  }
-
-  $scope.addClicked = function() {
+  vm.addClicked = function() {
     var url = 'create/new' + '?button=add';
-    miqService.miqAjaxButton(url, $scope.cloudVolumeModel, { complete: false });
+    miqService.miqAjaxButton(url, vm.cloudVolumeModel, { complete: false });
   };
 
-  $scope.cancelClicked = function() {
+  vm.cancelClicked = function() {
     if (cloudVolumeFormId == 'new') {
       var url = '/cloud_volume/create/new' + '?button=cancel';
     } else {
@@ -78,82 +49,89 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['$scope', 'miqServ
     miqService.miqAjaxButton(url);
   };
 
-  $scope.saveClicked = function() {
+  vm.saveClicked = function() {
     var url = '/cloud_volume/update/' + cloudVolumeFormId + '?button=save';
-    miqService.miqAjaxButton(url, $scope.cloudVolumeModel, { complete: false });
+    miqService.miqAjaxButton(url, vm.cloudVolumeModel, { complete: false });
   };
 
-  $scope.attachClicked = function() {
+  vm.attachClicked = function() {
     var url = '/cloud_volume/attach_volume/' + cloudVolumeFormId + '?button=attach';
-    miqService.miqAjaxButton(url, $scope.cloudVolumeModel, { complete: false });
+    miqService.miqAjaxButton(url, vm.cloudVolumeModel, { complete: false });
   };
 
-  $scope.detachClicked = function() {
+  vm.detachClicked = function() {
     var url = '/cloud_volume/detach_volume/' + cloudVolumeFormId + '?button=detach';
-    miqService.miqAjaxButton(url, $scope.cloudVolumeModel, { complete: false });
+    miqService.miqAjaxButton(url, vm.cloudVolumeModel, { complete: false });
   };
 
-  $scope.cancelAttachClicked = function() {
+  vm.cancelAttachClicked = function() {
     miqService.sparkleOn();
     var url = '/cloud_volume/attach_volume/' + cloudVolumeFormId + '?button=cancel';
     miqService.miqAjaxButton(url);
   };
 
-  $scope.cancelDetachClicked = function() {
+  vm.cancelDetachClicked = function() {
     var url = '/cloud_volume/detach_volume/' + cloudVolumeFormId + '?button=cancel';
     miqService.miqAjaxButton(url);
   };
 
-  $scope.backupCreateClicked = function() {
+  vm.backupCreateClicked = function() {
     var url = '/cloud_volume/backup_create/' + cloudVolumeFormId + '?button=create';
-    miqService.miqAjaxButton(url, $scope.cloudVolumeModel, { complete: false });
+    miqService.miqAjaxButton(url, vm.cloudVolumeModel, { complete: false });
   };
 
-  $scope.cancelBackupCreateClicked = function() {
+  vm.cancelBackupCreateClicked = function() {
     var url = '/cloud_volume/backup_create/' + cloudVolumeFormId + '?button=cancel';
     miqService.miqAjaxButton(url);
   };
 
-  $scope.backupRestoreClicked = function() {
+  vm.backupRestoreClicked = function() {
     var url = '/cloud_volume/backup_restore/' + cloudVolumeFormId + '?button=restore';
-    miqService.miqAjaxButton(url, $scope.cloudVolumeModel, { complete: false });
+    miqService.miqAjaxButton(url, vm.cloudVolumeModel, { complete: false });
   };
 
-  $scope.cancelBackupRestoreClicked = function() {
+  vm.cancelBackupRestoreClicked = function() {
     var url = '/cloud_volume/backup_restore/' + cloudVolumeFormId + '?button=cancel';
     miqService.miqAjaxButton(url);
   };
 
-  $scope.snapshotCreateClicked = function() {
+  vm.snapshotCreateClicked = function() {
     var url = '/cloud_volume/snapshot_create/' + cloudVolumeFormId + '?button=create';
-    miqService.miqAjaxButton(url, $scope.cloudVolumeModel, { complete: false });
+    miqService.miqAjaxButton(url, vm.cloudVolumeModel, { complete: false });
   };
 
-  $scope.cancelSnapshotCreateClicked = function() {
+  vm.cancelSnapshotCreateClicked = function() {
     var url = '/cloud_volume/snapshot_create/' + cloudVolumeFormId + '?button=cancel';
     miqService.miqAjaxButton(url);
   };
 
-  $scope.resetClicked = function() {
-    $scope.cloudVolumeModel = angular.copy( $scope.modelCopy );
-    $scope.angularForm.$setPristine(true);
+  vm.resetClicked = function(angularForm) {
+    vm.cloudVolumeModel = angular.copy(vm.modelCopy);
+    angularForm.$setPristine(true);
     miqService.miqFlash("warn", "All changes have been reset");
   };
 
-  $scope.sizeChanged = function(size) {
+  vm.storageManagerChanged = function(id) {
+    miqService.sparkleOn();
+    API.get('/api/providers/' + id + '?attributes=type,parent_manager.availability_zones,parent_manager.cloud_tenants')
+      .then(getStorageManagerFormData)
+      .catch(miqService.handleFailure);
+  };
+
+  vm.sizeChanged = function(size) {
     // Dynamically update the AWS IOPS only if GP2 volume type is selected.
-    if ($scope.cloudVolumeModel.aws_volume_type === 'gp2') {
+    if (vm.cloudVolumeModel.aws_volume_type === 'gp2') {
       var volumeSize = parseInt(size, 10);
 
       if (isNaN(volumeSize)) {
-        $scope.cloudVolumeModel.aws_iops = null;
+        vm.cloudVolumeModel.aws_iops = null;
       } else {
-        $scope.cloudVolumeModel.aws_iops = Math.max(100, Math.min(volumeSize * 3, 10000));
+        vm.cloudVolumeModel.aws_iops = Math.max(100, Math.min(volumeSize * 3, 10000));
       }
     }
   };
 
-  $scope.awsVolumeTypeChanged = function(voltype) {
+  vm.awsVolumeTypeChanged = function(voltype) {
     // The requested number of I/O operations per second that the volume can
     // support. For Provisioned IOPS (SSD) volumes, you can provision up to 50
     // IOPS per GiB. For General Purpose (SSD) volumes, baseline performance is
@@ -163,21 +141,91 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['$scope', 'miqServ
     switch (voltype) {
       case "gp2":
       case "io1":
-        var volumeSize = parseInt($scope.cloudVolumeModel.size, 10);
+        var volumeSize = parseInt(vm.cloudVolumeModel.size, 10);
         if (isNaN(volumeSize)) {
-          $scope.cloudVolumeModel.aws_iops = '';
+          vm.cloudVolumeModel.aws_iops = '';
         } else if (voltype === 'gp2') {
-          $scope.cloudVolumeModel.aws_iops = Math.max(100, Math.min(volumeSize * 3, 10000));
+          vm.cloudVolumeModel.aws_iops = Math.max(100, Math.min(volumeSize * 3, 10000));
         } else {
           // Default ratio is 50 IOPS per 1 GiB. 20000 IOPS is the max.
-          $scope.cloudVolumeModel.aws_iops = Math.min(volumeSize * 50, 20000);
+          vm.cloudVolumeModel.aws_iops = Math.min(volumeSize * 50, 20000);
         }
         break;
 
       default:
-        $scope.cloudVolumeModel.aws_iops = 'Not Applicable';
+        vm.cloudVolumeModel.aws_iops = 'Not Applicable';
         break;
     }
+  };
+
+  vm.canModifyVolumeSize = function() {
+    // Volume size can be modified when adding a new cloud volume or when
+    // editin Amazon EBS volume whose type is not magnetic (all other volume types
+    // can be resized on the fly).
+    return vm.newRecord ||
+      (vm.cloudVolumeModel.emstype === 'ManageIQ::Providers::Amazon::StorageManager::Ebs' &&
+        vm.cloudVolumeModel.aws_volume_type !== 'standard');
+  };
+
+  function setForm() {
+    loadEBSVolumeTypes();
+
+    vm.modelCopy = angular.copy(vm.cloudVolumeModel);
+    vm.afterGet = true;
+    miqService.sparkleOff();
+  }
+
+  var loadEBSVolumeTypes = function() {
+    // This ia a fixed list of available cloud volume types for Amazon EBS.
+    vm.awsVolumeTypes = [
+      { type: "gp2", name: "General Purpose SSD (GP2)" },
+      { type: "io1", name: "Provisioned IOPS SSD (IO1)" },
+      { type: "st1", name: "Throughput Optimized HDD (ST1)" },
+      { type: "sc1", name: "Cold HDD (SC1)" },
+    ];
+
+    // Standard volume type is available only when creating new volume or editing
+    // an existing standard volume. In the latter case, it is only available so
+    // that the "Magnetic (standard)" option can be picked in the select that is
+    // otherwise disabled.
+    if (vm.newRecord || vm.cloudVolumeModel.aws_volume_type === 'standard') {
+      vm.awsVolumeTypes.push({ type: "standard", name: "Magnetic" });
+    }
+  };
+
+  var getStorageManagers = function(data) {
+    vm.storageManagers = data.resources;
+
+    // If storage manager ID was provided, we need to refresh the form and show
+    // corresponding form fields.
+    if (storageManagerId) {
+      vm.storageManagerChanged(vm.cloudVolumeModel.storage_manager_id);
+    }
+  };
+
+  var getCloudVolumeFormData = function(data) {
+    vm.cloudVolumeModel.emstype = data.ext_management_system.type;
+    vm.cloudVolumeModel.name = data.name;
+    // We have to display size in GB.
+    vm.cloudVolumeModel.size = data.size / 1073741824;
+    vm.cloudVolumeModel.cloud_tenant_id = data.cloud_tenant_id;
+    // Currently, this is only relevant for AWS volumes so we are prefixing the
+    // model attribute with AWS.
+    vm.cloudVolumeModel.aws_volume_type = data.volume_type;
+    vm.cloudVolumeModel.aws_availability_zone_id = data.availability_zone.ems_ref;
+
+    // Update the IOPS based on the current volume size.
+    vm.sizeChanged(vm.cloudVolumeModel.size);
+
+    setForm();
+  };
+
+  var getStorageManagerFormData = function(data) {
+    vm.cloudVolumeModel.emstype = data.type;
+    vm.cloudTenantChoices = data.parent_manager.cloud_tenants;
+    vm.availabilityZoneChoices = data.parent_manager.availability_zones;
+
+    miqService.sparkleOff();
   };
 
   init();

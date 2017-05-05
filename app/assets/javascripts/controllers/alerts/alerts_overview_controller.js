@@ -161,7 +161,7 @@ angular.module('alertsCenter').controller('alertsOverviewController',
 
     vm.showGroupAlerts = function(item, status) {
       var locationRef = "/alerts_list/show?name=" + item.name;
-      if (angular.isDefined(status)) {
+      if (status !== undefined) {
         locationRef += "&severity=" + status;
       }
       $window.location.href = locationRef;
@@ -210,7 +210,7 @@ angular.module('alertsCenter').controller('alertsOverviewController',
       var foundGroup;
       var groupCategory = category;
 
-      if (angular.isUndefined(category)) {
+      if (category === undefined) {
         foundGroup = vm.unGroupedGroup;
       } else {
         angular.forEach(vm.groups, function(nextGroup) {

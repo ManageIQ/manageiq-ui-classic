@@ -3,9 +3,9 @@ module TreeNode
     set_attributes(:title, :image, :klass) do
       title = ViewHelper.content_tag(:strong) do
         if @options[:tree] == :servers_by_role_tree
-          "#{_('Server')}: #{ERB::Util.html_escape(@object.name)} [#{@object.id}]"
+          "#{_('Server')}: #{@object.name} [#{@object.id}]"
         else
-          "Role: #{ERB::Util.html_escape(@object.server_role.description)}"
+          "Role: #{@object.server_role.description}"
         end
       end
 

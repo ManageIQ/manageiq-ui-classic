@@ -42,14 +42,8 @@ module ApplicationHelper
                 _(": Analysis Profiles")
               when "miq_policy_rsop"
                 _(": Policy Simulation")
-              when "all_ui_tasks"
-                _(": All UI Tasks")
-              when "my_ui_tasks"
-                _(": My UI Tasks")
               when "rss"
                 _(": RSS")
-              when "storage_manager"
-                _(": Storage - Storage Managers")
               when "ops"
                 _(": Configuration")
               when "provider_foreman"
@@ -76,6 +70,8 @@ module ApplicationHelper
                 _(": Requests")
               when "manageiq/providers/ansible_tower/automation_manager/playbook"
                 _(": Playbooks (Ansible Tower)")
+              when "manageiq/providers/embedded_ansible/automation_manager/playbook"
+                _(": Playbooks")
               when "manageiq/providers/embedded_automation_manager/authentication"
                 _(": Credentials")
               when "manageiq/providers/embedded_automation_manager/configuration_script_source"

@@ -82,3 +82,59 @@ ManageIQ.qe.inFlight = function() {
     spinner:    ManageIQ.qe.spinnerPresent(),
   };
 };
+
+ManageIQ.qe.gtl = {
+  actionsToFunction: function() {
+    var startEnd = function(pageNumber) {
+      var start = (pageNumber - 1) * this.settings.perpage;
+      var end = start + this.settings.perPage;
+      return {
+        start: start,
+        end: end,
+      };
+    }.bind(this);
+    var goToPage = function(pageNumber) {
+      var pageItems = startEnd(pageNumber);
+      this.onLoadNext(pageItems.start, pageItems.end);
+    }.bind(this);
+    if (this.constructor.name === 'ReportDataController') {
+      return {
+        'select_item': function(id, isSelected) {
+          var item = this.gtlData.rows.filter(function(currItem) {
+            return currItem.id === id;
+          });
+          this.onItemSelect(item[0], isSelected);
+          this.$scope.$digest();
+        },
+        'click_item': function(id) {
+          var item = this.gtlData.rows.filter(function(currItem) {
+            return currItem.id === id;
+          });
+          this.onItemClicked(item[0], document.createEvent('Event'));
+        },
+        'select_all': function(isSelected) {
+          this.gtlData.rows.forEach(function(item) {
+            this.onItemSelect(item, isSelected);
+          }.bind(this));
+          this.$scope.$digest();
+        },
+        'go_to_page': function(pageNumber) {
+          goToPage(pageNumber);
+        },
+        'last_page': function() {
+          goToPage(this.settings.total);
+        },
+        'first_page': function() {
+          goToPage(1);
+        },
+        'perevious_page': function() {
+          goToPage(this.settings.current - 1);
+        },
+        'next_page': function() {
+          goToPage(this.settings.current + 1);
+        },
+      };
+    }
+    return {};
+  },
+};

@@ -4,7 +4,6 @@ class SecurityGroupController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
-  include Mixins::CheckedIdMixin
   include Mixins::GenericButtonMixin
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
@@ -48,16 +47,6 @@ class SecurityGroupController < ApplicationController
                         :id        => @security_group.id,
                         :display   => session[:security_group_display],
                         :flash_msg => message
-  end
-
-  def security_group_form_fields
-    assert_privileges("security_group_edit")
-    security_group = find_record_with_rbac(SecurityGroup, params[:id])
-    render :json => {
-      :name              => security_group.name,
-      :description       => security_group.description,
-      :cloud_tenant_name => security_group.cloud_tenant.try(:name),
-    }
   end
 
   def create
@@ -115,9 +104,9 @@ class SecurityGroupController < ApplicationController
     assert_privileges("security_group_delete")
 
     security_groups = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "security_group")
-                        find_checked_items
+                        find_checked_records_with_rbac(SecurityGroup)
                       else
-                        [params[:id]]
+                        [find_record_with_rbac(SecurityGroup, params[:id])]
                       end
 
     if security_groups.empty?
@@ -125,8 +114,7 @@ class SecurityGroupController < ApplicationController
     end
 
     security_groups_to_delete = []
-    security_groups.each do |s|
-      security_group = SecurityGroup.find(s)
+    security_groups.each do |security_group|
       if security_group.nil?
         add_flash(_("Security Group no longer exists."), :error)
       elsif security_group.supports_delete?

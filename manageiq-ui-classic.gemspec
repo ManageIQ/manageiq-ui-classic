@@ -24,11 +24,15 @@ Gem::Specification.new do |s|
   s.add_dependency "coffee-rails"
   s.add_dependency "jquery-hotkeys-rails"
   s.add_dependency "lodash-rails", "~>3.10.0"
-  s.add_dependency "patternfly-sass", "~> 3.23.0"
+  s.add_dependency "patternfly-sass", "~> 3.23.1"
   s.add_dependency "sass-rails"
   s.add_dependency "high_voltage", "~> 3.0.0"
 
   s.add_development_dependency "codeclimate-test-reporter", "~> 1.0.0"
   s.add_development_dependency "guard-rspec", '~> 4.7.3'
   s.add_development_dependency "simplecov"
+
+  # core because jasmine has < 3.0, not < 2.6
+  s.add_development_dependency "jasmine",  "~> 2.5.2"
+  s.add_development_dependency "jasmine-core",  "~> 2.5.2"
 end

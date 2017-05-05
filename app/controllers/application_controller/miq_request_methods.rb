@@ -484,7 +484,6 @@ module ApplicationController::MiqRequestMethods
         else
           build_vc_grid(@edit[:wf].get_field(:sysprep_custom_spec, :customize)[:values], @edit[:vc_sortdir], @edit[:vc_sortcol])
         end
-        build_ous_tree(@edit[:wf], @edit[:new][:ldap_ous])
         @sb[:vm_os] = VmOrTemplate.find_by_id(@edit.fetch_path(:new, :src_vm_id, 0)).platform if @edit.fetch_path(:new, :src_vm_id, 0)
       elsif @edit[:new][:current_tab_key] == :purpose
         build_tags_tree(@edit[:wf], @edit[:new][:vm_tags], true)
@@ -532,6 +531,7 @@ module ApplicationController::MiqRequestMethods
     case tab_name
     when "ae"                then "miq_request_ae"
     when "host"              then "miq_request_host"
+    when "service"           then "miq_request_service"
     else                          "miq_request_vm"  # Includes "vm"
     end
   end
@@ -793,9 +793,7 @@ module ApplicationController::MiqRequestMethods
           end
         end
         @options[tag_symbol_for_workflow] ||= []  # Initialize if came back nil from record
-        build_tags_tree(options[:wf], @options[tag_symbol_for_workflow], false) if @miq_request.resource_type != "VmMigrateRequest"
         unless ["MiqHostProvisionRequest", "VmMigrateRequest"].include?(@miq_request.resource_type)
-          build_ous_tree(options[:wf], @options[:ldap_ous])
           svm = VmOrTemplate.where(:id => @options[:src_vm_id][0]).first if @options[:src_vm_id] && @options[:src_vm_id][0]
           @sb[:vm_os] = svm.platform if svm
         end
@@ -872,8 +870,6 @@ module ApplicationController::MiqRequestMethods
           @edit[:template_sortdir] ||= "ASC"
           @edit[:template_sortcol] ||= "name"
           build_vm_grid(@edit[:wf].send("allowed_templates"), @edit[:vm_sortdir], @edit[:vm_sortcol], build_template_filter)
-          build_tags_tree(@edit[:wf], @edit[:new][:vm_tags], true)
-          build_ous_tree(@edit[:wf], @edit[:new][:ldap_ous])
           if @edit[:wf].supports_pxe?
             build_pxe_img_grid(@edit[:wf].send("allowed_images"), @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
             build_host_grid(@edit[:wf].send("allowed_hosts"), @edit[:host_sortdir], @edit[:host_sortcol])
@@ -887,7 +883,6 @@ module ApplicationController::MiqRequestMethods
         else
           @edit[:template_sortdir] ||= "ASC"
           @edit[:template_sortcol] ||= "name"
-          build_tags_tree(@edit[:wf], @edit[:new][:tag_ids], true)
           build_pxe_img_grid(@edit[:wf].send("allowed_images"), @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
           build_iso_img_grid(@edit[:wf].send("allowed_iso_images"), @edit[:iso_img_sortdir], @edit[:iso_img_sortcol])
           build_host_grid(@edit[:wf].send("allowed_hosts"), @edit[:host_sortdir], @edit[:host_sortcol])
@@ -972,86 +967,6 @@ module ApplicationController::MiqRequestMethods
     @no_wf_msg = _("Cannot create Request Info, error: %{error_message}") % {:error_message => bang.message}
     _log.log_backtrace(bang)
     nil
-  end
-
-  def build_ous_tree(wf, ldap_ous)
-    dcs = wf.send("allowed_ous_tree")
-    @curr_dc = nil
-    # Build the default filters tree for the search views
-    all_dcs = []                        # Array to hold all CIs
-    dcs.each_with_index do |dc, i| # Go thru all of the Searches
-      @curr_tag = dc[0]
-      @ci_node = {
-        :key         => dc[0],
-        :title       => dc[0],
-        :tooltip     => dc[0],
-        :icon        => 'pficon-folder-close',
-        :cfmeNoClick => true,
-        :addClass    => "cfme-bold-node",
-        :expand      => true
-      }
-      @ci_kids = []
-      dc[1].each_with_index do |ou, _j|
-        id = ou[1][:ou].join(",")
-        id.gsub!(/,/, "_-_")         # Workaround for save/load openstates, replacing commas in ou array
-        temp = {
-          :key     => id,
-          :tooltip => ou[0],
-          :title   => ou[0],
-          :icon    => 'product product-group'
-        }
-        if ldap_ous == ou[1][:ou]
-          # expand selected nodes parents when editing existing record
-          @expand_parent_nodes = id
-          temp[:highlighted] = true
-        end
-        @ou_kids = []
-        ou[1].each do |lvl1|
-          if lvl1.kind_of?(Array) && lvl1[0] != :ou && lvl1[0] != :path
-            kids = get_ou_kids(lvl1, ldap_ous)
-            @ou_kids.push(kids) unless @ou_kids.include?(kids)
-          end
-        end
-        temp[:children] = @ou_kids unless @ou_kids.blank?
-        @ci_kids.push(temp) unless @ci_kids.include?(temp)
-      end
-      if i == dcs.length - 1            # Adding last node
-        @ci_node[:children] = @ci_kids unless @ci_kids.blank?
-        all_dcs.push(@ci_node)
-      end
-    end
-    unless all_dcs.blank?
-      @ldap_ous_tree = TreeBuilder.convert_bs_tree(all_dcs).to_json # Add ci node array to root of tree
-    else
-      @ldap_ous_tree = nil
-    end
-    session[:tree_name] = "ldap_ous_tree"
-  end
-
-  def get_ou_kids(node, ldap_ous)
-    id = node[1][:ou].join(",")
-    id.gsub!(/,/, "_-_")       # Workaround for save/load openstates, replacing commas in ou array
-    kids = {
-      :key     => id,
-      :title   => node[0],
-      :tooltip => node[0],
-      :icon    => 'product product-group'
-    }
-
-    if ldap_ous == node[1][:ou]
-      temp[:highlighted] = true
-      @expand_parent_nodes = id
-    end
-
-    ou_kids = []
-    node[1].each do |k|
-      if k.kind_of?(Array) && k[0] != :ou && k[0] != :path
-        ou = get_ou_kids(k, ldap_ous)
-        ou_kids.push(ou) unless ou_kids.include?(ou)
-      end
-      kids[:children] = ou_kids unless ou_kids.blank?
-    end
-    kids
   end
 
   def build_tags_tree(wf, vm_tags, edit_mode)

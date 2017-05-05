@@ -33,9 +33,6 @@ module UiConstants
   TOP_TABLES_BY_WASTED_SPACE_COUNT = 5
   GIGABYTE = 1024 * 1024 * 1024
 
-  # VMware MKS version choices
-  MKS_VERSIONS = ["2.0.1.0", "2.0.2.0", "2.1.0.0"]
-
   # PDF page sizes
   PDF_PAGE_SIZES = {
     "a0"            => N_("A0 - 841mm x 1189mm"),
@@ -407,13 +404,12 @@ module UiConstants
     5 => N_("5 Days Ago"),
     6 => N_("6 Days Ago")
   }
-  SP_STATES = [[N_("Initializing"), "initializing"], [N_("Waiting to Start"), "waiting_to_start"],
-               [N_("Cancelling"), "cancelling"], [N_("Aborting"), "aborting"], [N_("Finished"), "finished"],
-               [N_("Snapshot Create"), "snapshot_create"], [N_("Scanning"), "scanning"],
-               [N_("Snapshot Delete"), "snapshot_delete"], [N_("Synchronizing"), "synchronizing"],
-               [N_("Deploy Smartproxy"), "deploy_smartproxy"]].freeze
-  UI_STATES = [[N_("Initialized"), "Initialized"], [N_("Queued"), "Queued"], [N_("Active"), "Active"],
-               [N_("Finished"), "Finished"]].freeze
+  TASK_STATES = [[N_("Initializing"), "initializing"], [N_("Waiting to Start"), "Waiting_to_start"],
+                 [N_("Cancelling"), "Cancelling"], [N_("Aborting"), "Aborting"], [N_("Finished"), "Finished"],
+                 [N_("Snapshot Create"), "Snapshot_create"], [N_("Scanning"), "Scanning"],
+                 [N_("Snapshot Delete"), "Snapshot_delete"], [N_("Synchronizing"), "Synchronizing"],
+                 [N_("Deploy Smartproxy"), "Deploy_smartproxy"],
+                 [N_("Initialized"), "Initialized"], [N_("Queued"), "Queued"], [N_("Active"), "Active"]].freeze
 
   PROV_STATES = {
     "pending_approval" => N_("Pending Approval"),

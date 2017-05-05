@@ -27,8 +27,8 @@ function MwAddDatasourceService($http, $q) {
       driverName: 'sybase', driverModuleName: 'com.sybase', driverClass: 'com.sybase.jdbc.SybDriver',
       connectionUrl: ':Tds:localhost:5000/mydatabase?JCONNECT_VERSION=6'},
     {id: 'MARIADB', label: 'MariaDB', name: 'MariaDBDS', jndiName: 'java:jboss/datasources/MariaDBDS',
-       driverName: 'mariadb', driverModuleName: 'org.mariadb', driverClass: 'org.mariadb.jdbc.Driver',
-       connectionUrl: '://localhost:3306/db_name'},
+      driverName: 'mariadb', driverModuleName: 'org.mariadb', driverClass: 'org.mariadb.jdbc.Driver',
+      connectionUrl: '://localhost:3306/db_name'},
     {id: 'MYSQL', label: 'MySql', name: 'MySqlDS', jndiName: 'java:jboss/datasources/MySqlDS',
       driverName: 'mysql', driverModuleName: 'com.mysql', driverClass: 'com.mysql.jdbc.Driver',
       connectionUrl: '://localhost:3306/db_name'},
@@ -119,6 +119,7 @@ function MwAddDatasourceService($http, $q) {
         .map(function(driver) {
           return {'id': driver.properties['Driver Name'].toUpperCase(),
                   'label': driver.properties['Driver Name'],
+                  'moduleName': driver.properties['Module Name'],
                   'xaDsClass': driver.properties['XA DS Class'],
                   'driverClass': driver.properties['Driver Class']};
       })
@@ -131,12 +132,9 @@ function MwAddDatasourceService($http, $q) {
     return deferred.promise;
   };
 
-  self.getDatasources = function() {
-    return Object.freeze(datasources);
-  };
-
-  self.getXaDatasources = function() {
-    return Object.freeze(xaDatasources);
+  self.getDatasources = function(xa) {
+    var selectedDatasources = xa ? xaDatasources : datasources;
+    return Object.freeze(selectedDatasources);
   };
 
   self.isXaDriver = function(driver) {

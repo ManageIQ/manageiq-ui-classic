@@ -8,7 +8,6 @@ class CloudNetworkController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
-  include Mixins::CheckedIdMixin
   include Mixins::GenericFormMixin
 
   PROVIDERS_NETWORK_TYPES = {
@@ -46,23 +45,6 @@ class CloudNetworkController < ApplicationController
         render_flash
       end
     end
-  end
-
-  def cloud_network_form_fields
-    assert_privileges("cloud_network_edit")
-    network = find_record_with_rbac(CloudNetwork, params[:id])
-    render :json => {
-      :name                  => network.name,
-      :cloud_tenant_name     => network.cloud_tenant.try(:name),
-      :enabled               => network.enabled,
-      :external_facing       => network.external_facing,
-      # TODO: uncomment once form contains this field
-      #:port_security_enabled => network.port_security_enabled,
-      :provider_network_type => network.provider_network_type,
-      :qos_policy_id         => network.qos_policy_id,
-      :shared                => network.shared,
-      :vlan_transparent      => network.vlan_transparent
-    }
   end
 
   def create
@@ -117,9 +99,9 @@ class CloudNetworkController < ApplicationController
     assert_privileges("cloud_network_delete")
 
     networks = if @lastaction == "show_list" || (@lastaction == "show" && @layout != "cloud_network") || @lastaction.nil?
-                 find_checked_items
+                 find_checked_ids_with_rbac(CloudNetwork)
                else
-                 [params[:id]]
+                 [find_id_with_rbac(CloudNetwork, params[:id])]
                end
     if networks.empty?
       add_flash(_("No Cloud Network were selected for deletion."), :error)

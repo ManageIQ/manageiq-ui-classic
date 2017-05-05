@@ -289,7 +289,7 @@ module Mixins
                        :bearer_token_exists        => @ems.authentication_token(:bearer).nil? ? false : true,
                        :ems_controller             => controller_name,
                        :default_auth_status        => default_auth_status,
-                       :hawkular_auth_status       => hawkular_auth_status.nil? ? true : hawkular_auth_status,
+                       :hawkular_auth_status       => hawkular_auth_status,
       } if controller_name == "ems_container"
 
       if controller_name == "ems_middleware"
@@ -475,7 +475,7 @@ module Mixins
       client = ems.class.raw_connect(endpoint.hostname, endpoint.port,
                                      :service => :openshift, :bearer => token, :ssl_options => ssl_options)
       client.get_route('hawkular-metrics', 'openshift-infra').try(:spec).try(:host)
-    rescue KubeException => e
+    rescue StandardError => e
       $log.warn("MIQ(#{controller_name}_controller-#{action_name}): get_hostname_from_routes error: #{e}")
       nil
     end

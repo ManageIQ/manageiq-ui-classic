@@ -182,6 +182,10 @@ class TreeBuilder
     end
   end
 
+  def group_id
+    (@group.present? && @group.id.present?) ? @group.id : 'new'
+  end
+
   def set_locals_for_render
     {
       :tree_id    => "#{@name}box",
@@ -257,9 +261,16 @@ class TreeBuilder
     node = x_build_single_node(object, pid, options)
 
     # Process the node's children
+    load_children = if object.kind_of?(Struct)
+                      # Load children for Sections, don't for other Menu Structs.
+                      object.kind_of?(Menu::Section)
+                    else
+                      object[:load_children]
+                    end
+
     node[:expand] = Array(@tree_state.x_tree(@name)[:open_nodes]).include?(node[:key]) || !!options[:open_all] || node[:expand]
     if ancestry_kids ||
-       object[:load_children] ||
+       load_children ||
        node[:expand] ||
        @options[:lazy] == false
 

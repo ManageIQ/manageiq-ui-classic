@@ -35,7 +35,8 @@
                        options_for_select({"Amazon CloudFormation" => "OrchestrationTemplateCfn",
                                            "OpenStack Heat" => "OrchestrationTemplateHot",
                                            "Microsoft Azure" => "OrchestrationTemplateAzure",
-                                           "VNF" => "OrchestrationTemplateVnfd",},
+                                           "VNF" => "OrchestrationTemplateVnfd",
+                                           "VMWare vApp" => "ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate"},
                                           @edit[:new][:type]),
                        :class => "selectpicker")
           :javascript

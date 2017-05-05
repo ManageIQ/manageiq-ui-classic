@@ -44,8 +44,8 @@ class ApplicationHelper::ToolbarChooser
     elsif %w(ems_container ems_infra).include?(@layout) && %w(main dashboard topology).include?(@display)
       'dashboard_summary_toggle_view_tb'
     elsif %w(container_project).include?(@layout)
-      "#{@layout}_view_tb"
-    elsif !%w(all_tasks all_ui_tasks timeline diagnostics my_tasks my_ui_tasks miq_server usage).include?(@layout) &&
+      'container_project_view_tb'
+    elsif !%w(all_tasks timeline diagnostics my_tasks miq_server usage).include?(@layout) &&
           (!@layout.starts_with?("miq_request")) && !@treesize_buttons &&
           @display == "main" && @showtype == "main" && !@in_a_form
       controller_restful? ? "summary_view_restful_tb" : "summary_view_tb"
@@ -528,7 +528,6 @@ class ApplicationHelper::ToolbarChooser
               orchestration_stack
               physical_infra_topology
               resource_pool
-              storage_manager
               container_template
               ems_block_storage
               ems_object_storage
@@ -551,7 +550,7 @@ class ApplicationHelper::ToolbarChooser
           else
             return "miq_request_center_tb"
           end
-        elsif ["my_tasks", "my_ui_tasks", "all_tasks", "all_ui_tasks"].include?(@layout)
+        elsif %w(my_tasks all_tasks).include?(@layout)
           return "tasks_center_tb"
         end
       end
@@ -618,10 +617,10 @@ class ApplicationHelper::ToolbarChooser
 
   def automation_manager_providers_tree_center_tb(nodes)
     case nodes.first
-    when "root" then  "automation_manager_providers_center_tb"
-    when "at"   then  "automation_manager_provider_center_tb"
-    when "f"    then  inventory_group_center_tb
-    when "xx"   then  "configured_systems_ansible_center_tb"
+    when "root"    then "automation_manager_providers_center_tb"
+    when "at", "e" then "automation_manager_provider_center_tb"
+    when "f"       then  inventory_group_center_tb
+    when "xx"      then  "configured_systems_ansible_center_tb"
     end
   end
 

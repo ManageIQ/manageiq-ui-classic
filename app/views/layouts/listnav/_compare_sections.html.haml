@@ -1,6 +1,6 @@
 - if @explorer
   - style = "width:auto"
-#accordion.panel-group{:style => style}
+.panel-group{:style => style}
   - if @lastaction == "drift"
     = miq_accordion_panel(h(@drift_obj.name), true, "icon") do
       - if @sb[:compare_db] != "EmsCluster"

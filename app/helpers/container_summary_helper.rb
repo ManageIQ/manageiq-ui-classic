@@ -84,7 +84,7 @@ module ContainerSummaryHelper
   end
 
   def textual_group_container_selectors
-    TextualGroup.new(_("Node Selector"), textual_key_value_group(@record.selector_parts.to_a))
+    TextualGroup.new(_("Selector"), textual_key_value_group(@record.selector_parts.to_a))
   end
 
   def textual_group_container_node_selectors

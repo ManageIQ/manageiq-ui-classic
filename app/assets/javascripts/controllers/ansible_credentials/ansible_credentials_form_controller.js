@@ -1,5 +1,9 @@
-ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 'credentialId', 'miqService', 'API', function($window, credentialId,  miqService, API) {
+/* global miqFlashLater */
+
+ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', '$q', 'credentialId', 'miqService', 'API', function($window, $q, credentialId,  miqService, API) {
   var vm = this;
+
+  var optionsPromise = null;
 
   var init = function() {
     vm.credentialModel = {
@@ -20,19 +24,16 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     miqService.sparkleOn();
 
     // get credential specific options for all supported credential types
-    API.options('/api/authentications')
+    optionsPromise = API.options('/api/authentications')
       .then(getCredentialOptions)
       .catch(miqService.handleFailure);
 
     if (credentialId !== 'new') {
-      API.get('/api/authentications/' + credentialId)
+      var dataPromise = API.get('/api/authentications/' + credentialId)
         .then(getCredentialFormData)
         .catch(miqService.handleFailure);
     } else {
       vm.select_options.push({'label':__('<Choose>'), 'value': ''});
-      // FIXME: this should go away once https://github.com/ManageIQ/manageiq/pull/14483 is merged
-      vm.credentialModel.organization = 1; // work-around, organization id needs to be filled in automatically by the backend
-
       // credential creation requires manager_resource
       API.get('/api/providers?collection_class=ManageIQ::Providers::EmbeddedAutomationManager')
         .then(setManagerResource)
@@ -41,6 +42,9 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
       vm.modelCopy = angular.copy( vm.credentialModel );
       miqService.sparkleOff();
     }
+
+    $q.all([optionsPromise, dataPromise])
+      .then(retrievedCredentialDetails);
   };
 
   vm.cancelClicked = function(angularForm) {
@@ -59,16 +63,20 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
 
   vm.saveClicked = function(angularForm) {
     API.put('/api/authentications/' + credentialId, vm.credentialModel)
-       .then(getBack(sprintf(__("Modification of Credential \"%s\" has been successfully queued."), vm.credentialModel.name), false))
+       .then(getBack.bind(vm, sprintf(__("Modification of Credential \"%s\" has been successfully queued."), vm.credentialModel.name), false, false))
        .catch(miqService.handleFailure);
   };
 
   vm.addClicked = function(angularForm) {
-    addCredentialKind();
     API.post('/api/authentications/', vm.credentialModel)
-       .then(getBack(sprintf(__("Add of Credential \"%s\" has been successfully queued."), vm.credentialModel.name)))
+       .then(getBack.bind(vm, sprintf(__("Add of Credential \"%s\" has been successfully queued."), vm.credentialModel.name), false, false))
        .catch(miqService.handleFailure);
   };
+
+  function retrievedCredentialDetails() {
+    vm.afterGet = true;
+    miqService.sparkleOff();
+  }
 
   function getCredentialOptions(response) {
     Object.assign(vm.credential_options, response.data.credential_types.embedded_ansible_credential_types);
@@ -76,7 +84,6 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     for (var opt in vm.credential_options) {
       vm.select_options.push({'value': opt, 'label': vm.credential_options[opt].label});
     }
-    vm.afterGet = true;
   }
 
   function getCredentialFormData(response) {
@@ -84,43 +91,40 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     vm.credentialModel.name = response.name;
     vm.credentialModel.type = response.type;
 
-    // we need to merge options and vm.credentialModel
-    for (var opt in response.options) {
-      var item = vm.credential_options[vm.credentialModel.type]['attributes'][opt];
+    // we need to wait for vm.credential_options here
+    optionsPromise.then(function() {
+      // we need to merge options and vm.credentialModel
+      for (var opt in response.options) {
+        var item = vm.credential_options[vm.credentialModel.type]['attributes'][opt];
 
-      // void the password fields first
-      if (item.hasOwnProperty('type') && item['type'] === 'password') {
-        vm.credentialModel[opt] = '';
-      } else {
-        vm.credentialModel[opt] = response.options[opt];
+        // void the password fields first
+        if (item.hasOwnProperty('type') && item['type'] === 'password') {
+          vm.credentialModel[opt] = '';
+        } else {
+          vm.credentialModel[opt] = response.options[opt];
+        }
       }
-    }
 
-    vm.modelCopy = angular.copy( vm.credentialModel );
-    vm.afterGet = true;
-    miqService.sparkleOff();
+      vm.modelCopy = angular.copy( vm.credentialModel );
+    });
   }
 
   function getBack(message, warning, error) {
-    var url = '/ansible_credential/show_list' + '?flash_msg=' + message + '&escape=true';
+    var url = '/ansible_credential/show_list';
+    var flash = { message: message };
 
     if (warning) {
-      url += '&flash_warning=true&flash_error=false';
+      flash.level = 'warning';
     } else if (error) {
-      url += '&flash_warning=false&flash_error=true';
+      flash.level = 'error';
     }
 
+    miqFlashLater(flash);
     $window.location.href = url;
   }
 
   function setManagerResource(response) {
     vm.credentialModel.manager_resource = { "href": response.resources[0].href };
-  }
-
-  // FIXME: this should go away once https://github.com/ManageIQ/manageiq/pull/14483 is merged
-  // For creation, we need to send json like: {"kind": "scm", "type": "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ScmCredential"}
-  function addCredentialKind() {
-    vm.credentialModel.kind = vm.credential_options[vm.credentialModel.type].type;
   }
 
   init();

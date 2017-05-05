@@ -1,5 +1,15 @@
 module Menu
   Item = Struct.new(:id, :name, :feature, :rbac_feature, :href, :type) do
+    extend ActiveModel::Naming
+
+    def self.base_class
+      Menu::Item
+    end
+
+    def self.base_model
+      model_name
+    end
+
     def initialize(an_id, a_name, features, rbac_feature, href, type = :default)
       super
       @parent = nil

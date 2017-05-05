@@ -1,48 +1,49 @@
 = render :partial => "layouts/flash_msg"
 - case @display
 - when "devices"
-  - unless @devices.empty?
+  - devices = devices_details
+  - if devices.present?
     %table.table.table-bordered.table-striped.table-summary-screen
       %thead
         %tr
           %th{:colspan => "2"}= _('Devices')
       %tbody
-        - @devices.each do |item|
+        - devices.each do |item|
           %tr
             %td.label
-              = h(item[:device])
+              = h(item[:name])
             %td
-              %img{:src => image_path("100/hardware-#{item[:icon].downcase}.png")}
+              %img{:src => image_path("100/hardware-#{item[:icon]}.png")}
               = h(item[:description])
 - when "os_info"
-  - if @osinfo
+  - os_info = os_info_details
+  - if os_info
     %table.table.table-bordered.table-striped.table-summary-screen
       %thead
         %tr
           %th{:colspan => "2"}= _('Basic Information')
       %tbody
-        - @osinfo.each do |item|
+        - os_info.each do |item|
           %tr
             %td.label
               = h(item[:osinfo])
             %td
               %img{:src => image_path("svg/os-#{h(@record.os_image_name.downcase)}.svg")}
               = h(item[:description])
+  - unless @record.os_image_name =~ /linux/
+    - account_policy = account_policy_details
     %hr
-  - regexosname = Regexp.new(/linux/)
-  - linuxos = regexosname.match(@record.os_image_name.downcase)
-  - unless linuxos
     %table.table.table-bordered.table-striped
       %thead
         %tr
           %th{:colspan => "2"}= _('Account Policies')
       %tbody
-        - if @account_policy.nil? || @account_policy.empty?
+        - if account_policy.blank?
           %tr
             %td
               %strong= _('Not Available')
         - else
-          - @account_policy.each_slice(2) do |items|
+          - account_policy.each_slice(2) do |items|
             %tr
               - items.each do |item|
                 %td
@@ -51,13 +52,15 @@
                     = h(item[:description])
 
 - when "hv_info"
-  - if @vmminfo
+  - vmminfo = vmm_info_details
+  - devices = devices_details
+  - if vmminfo
     %table.table.table-bordered.table-striped.table-summary-screen
       %thead
         %tr
           %th{:colspan => "2"}= _('Basic Information')
       %tbody
-        - @vmminfo.each do |item|
+        - vmminfo.each do |item|
           %tr
             %td.label
               = h(item[:vmminfo])
@@ -65,23 +68,19 @@
               = h(item[:description])
 
     %hr
-    %table.table.table-bordered.table-striped.table-summary-screen
-      %thead
-        %tr
-          %th{:colspan => "2"}= _('Devices')
-      %tbody
-        - @devices.each do |item|
+    - if devices.present?
+      %table.table.table-bordered.table-striped.table-summary-screen
+        %thead
           %tr
-            %td.label
-              = h(item[:device])
-            %td
-              %img{:src => image_path("100/hardware-#{item[:icon].downcase}.png")}
-              = h(item[:description])
-          - unless item[:mode].nil?
+            %th{:colspan => "2"}= _('Devices')
+        %tbody
+          - devices.each do |item|
             %tr
-              %th= _('Network Type')
+              %td.label
+                = h(item[:name])
               %td
-                = h(item[:mode])
+                %img{:src => image_path("100/hardware-#{item[:icon]}.png")}
+                = h(item[:description])
 
 - when "snapshot_info"
   = render :partial => "vm_common/snapshots_desc"
@@ -91,7 +90,8 @@
   = render :partial => "vm_common/vmtree"
 
 - when "networks"
-  - if @vmminfo
+  - vmminfo = vmm_info_details
+  - if vmminfo
     - @record.hardware.networks.each do |adapter|
       %table.table.table-bordered.table-striped.table-summary-screen
         %thead
