@@ -7,10 +7,7 @@
 - selected_records = selected_records.map(&:to_i) if !selected_records.nil? && selected_records.first.kind_of?(String)
 - selected_records = selected_records.map(&:id) if !selected_records.nil? && !selected_records.first.kind_of?(Integer)
 #miq-gtl-view{"ng-controller" => "reportDataController as dataCtrl"}
-  #flash_msg_div
-  .msg-info{"ng-show" => "dataCtrl.showMessage && dataCtrl.showMessage !== ''"}
-    = render(:partial => "layouts/info_msg",
-               :locals => {:message => "{{dataCtrl.showMessage}}"})
+  = render(:partial => "layouts/flash_msg")
   %miq-tile-view{"ng-if"            => "dataCtrl.gtlType === 'grid' || dataCtrl.gtlType === 'tile'",
                  "ng-class"         => "{'no-action': dataCtrl.initObject.showUrl === ''}",
                  "settings"         => "dataCtrl.settings",
