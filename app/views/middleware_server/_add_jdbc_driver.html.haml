@@ -29,24 +29,15 @@
               = render :partial => "shared/file_chooser",
                        :locals => {:object_name => "jdbc_driver", :method => "file", :custom_options => {"ng-required" => "true", "ng-model" => "jdbcDriverModel.filePath", "require-file" => "handle"}}
 
-          .form-group
-            %label.col-md-4.control-label{:for => "xa_driver_ds_cb"}
-              = _("XA Datasource:")
-            .col-md-8
-              %input#xa_driver_ds_cb{:type      => "checkbox",
-                              "bs-switch"       => "",
-                              "switch-on-text"  => _("Yes"),
-                              "switch-off-text" => _("No"),
-                              "switch-change"   => "onDriverXaChange()",
-                              "ng-model"        => "jdbcDriverModel.xaDatasource"}
+
 
           .form-group
             %label.col-md-4.control-label{:for => "choose_datasource_input"}
-              = _("Datasource:")
+              = _("Database Template:")
             .col-md-8
-              %select.form-control#chooose_driver_ds{"name"        => "choose_driver_ds_input",
-                                                     "ng-model"    => "jdbcDriverModel.selectedDatasource",
-                                                     "ng-options"  => "c.label for c in jdbcDriverModel.datasources track by c.id",
+              %select.form-control#chooose_driver_db{"name"        => "choose_driver_db_input",
+                                                     "ng-model"    => "jdbcDriverModel.selectedDatabase",
+                                                     "ng-options"  => "c.label for c in jdbcDriverModel.databases track by c.id",
                                                      "ng-required" => "false"}
 
           .form-group
@@ -90,11 +81,21 @@
                                                           "ng-required"  => "true",
                                                           "placeholder"  => _("Enter JDBC Driver Class"),
                                                           "ng-model"     => "jdbcDriverModel.driverClass"}
-
             .col-sm-2
             .col-sm-10
               %p.ng-error-messages{"ng-show" => "jdbcAddForm.jdbc_driver_class_input.$dirty && jdbcAddForm.jdbc_driver_class_input.$error.required"}
                 = _("Required")
+
+          .form-group
+            %label.col-md-4.control-label{:for => "jdbc_xa_driver_class_input"}
+              = _(" Driver XA Datasource Class")
+            .col-md-8
+              %input.form-control#driver_xa_datasource_class_name_input{:type       => "text",
+                                                          "name"         => "driver_xa_datasource_class_name_input",
+                                                          "ng-disabled"  => "!jdbcDriverModel.filePath",
+                                                          "placeholder"  => _("Enter Driver XA Driver Class"),
+                                                          "ng-model"     => "jdbcDriverModel.xaDriverClass"}
+
 
           .form-group
             %label.col-md-4.control-label{:for => "major_version_input"}
@@ -115,6 +116,16 @@
                                                       "ng-disabled" => "!jdbcDriverModel.filePath",
                                                       "placeholder" => _("Enter Minor Version"),
                                                       "ng-model"    => "jdbcDriverModel.minorVersion"}
+
+          .form-group
+            %label.col-md-4.control-label{:for => "jdbc_compliant_cb"}
+              = _("JDBC Compliant :")
+            .col-md-8
+              %input#jdbc_compliant_cb{:type    => "checkbox",
+                              "bs-switch"       => "",
+                              "switch-on-text"  => _("Yes"),
+                              "switch-off-text" => _("No"),
+                              "ng-model"        => "jdbcDriverModel.jdbcCompliant"}
 
         .modal-footer
           %button.btn.btn-default.dialog-cancel-button{:type => "button",
