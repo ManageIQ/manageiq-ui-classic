@@ -2533,13 +2533,17 @@ class MiqAeClassController < ApplicationController
     end
   end
 
-  def get_session_data
-    @title      = _("Datastore")
-    @edit       = session[:edit]
+  def title
+    @title = _("Datastore")
+  end
+
+  def session_key_prefix
+    @layout = "miq_ae_class"
   end
 
   def set_session_data
-    session[:edit]               = @edit
+    super
+    session[:edit] = @edit
   end
 
   def flash_validation_errors(am_obj)
