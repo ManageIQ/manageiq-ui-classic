@@ -86,7 +86,6 @@ module OpsController::Diagnostics
       @in_a_form = false
       @edit = session[:edit] = nil
       add_flash(_("Edit Log Depot settings was cancelled by the user"))
-      @record = nil
       diagnostics_set_form_vars
       replace_right_cell(:nodetype => x_node)
     when "save"
@@ -120,7 +119,6 @@ module OpsController::Diagnostics
       else
         add_flash(_("Log Depot Settings were saved"))
         @edit = nil
-        @record = nil
         diagnostics_set_form_vars
         replace_right_cell(:nodetype => x_node)
       end
@@ -266,23 +264,6 @@ module OpsController::Diagnostics
       # disable button
       page << javascript_for_miq_button_visibility(false)
     end
-  end
-
-  def replication_reset
-    begin
-      MiqReplicationWorker.reset_replication
-    rescue => bang
-      add_flash(_("Error during 'Reset/synchronization process': %{message}") % {:message => bang.message}, :error)
-    else
-      add_flash(_("Reset/synchronization process successfully initiated"))
-    end
-    javascript_flash
-  end
-
-  def replication_reload
-    @selected_server = MiqRegion.my_region
-    @refresh_div = "diagnostics_replication"
-    @refresh_partial = "diagnostics_replication_tab"
   end
 
   def db_backup_form_field_changed

@@ -529,7 +529,6 @@ class ApplicationHelper::ToolbarChooser
               physical_infra_topology
               physical_server
               resource_pool
-              storage_manager
               container_template
               ems_block_storage
               ems_object_storage

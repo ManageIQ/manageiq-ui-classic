@@ -22,6 +22,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       provisioning_key: '',
       provisioning_value: '',
       provisioning_variables: {},
+      provisioning_become_enabled: false,
       provisioning_editMode: false,
       retirement_repository_id: '',
       retirement_playbook_id: '',
@@ -33,6 +34,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       retirement_value: '',
       retirement_variables: {},
       retirement_editMode: false,
+      retirement_become_enabled: false,
     };
     getRemoveResourcesTypes();
     vm.provisioning_cloud_type = '';
@@ -112,6 +114,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.catalogItemModel.provisioning_dialog_name = configData.provision.new_dialog_name;
     vm.catalogItemModel.provisioning_key = '';
     vm.catalogItemModel.provisioning_value = '';
+    vm.catalogItemModel.provisioning_become_enabled = configData.provision.become_enabled
     setExtraVars('provisioning_variables', configData.provision.extra_vars);
 
     if (typeof configData.retirement.repository_id !== 'undefined') {
@@ -121,6 +124,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       vm.catalogItemModel.retirement_remove_resources = configData.retirement.remove_resources;
       vm.catalogItemModel.retirement_machine_credential_id = configData.retirement.credential_id;
     }
+    vm.catalogItemModel.retirement_become_enabled = configData.retirement.become_enabled
     vm.catalogItemModel.retirement_network_credential_id = configData.retirement.network_credential_id;
     vm.catalogItemModel.retirement_cloud_credential_id = setIfDefined(configData.retirement.cloud_credential_id);
     vm.catalogItemModel.retirement_inventory = configData.retirement.hosts;
@@ -205,7 +209,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
         }
       }
     }
-
+    catalog_item['config_info']['provision']['become_enabled'] = configData.provisioning_become_enabled;
     if (configData.provisioning_network_credential_id !== '')
       catalog_item['config_info']['provision']['network_credential_id'] = configData.provisioning_network_credential_id;
 
@@ -222,12 +226,15 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     }
 
     var retirement = catalog_item['config_info']['retirement'];
-    retirement['hosts'] = configData.retirement_inventory;
-    retirement['extra_vars'] = formatExtraVars(configData.retirement_variables);
     if (vm.catalogItemModel.retirement_repository_id !== undefined && configData.retirement_repository_id !== '') {
       retirement['repository_id'] = configData.retirement_repository_id;
       retirement['playbook_id'] = configData.retirement_playbook_id;
       retirement['credential_id'] = configData.retirement_machine_credential_id;
+    }
+    if (vm.catalogItemModel.retirement_playbook_id !== undefined && configData.retirement_playbook_id !== '') {
+      retirement['hosts'] = configData.retirement_inventory;
+      retirement['extra_vars'] = formatExtraVars(configData.retirement_variables);
+      catalog_item['config_info']['retirement']['become_enabled'] = configData.retirement_become_enabled;
     }
     if (configData.retirement_network_credential_id !== '')
       catalog_item['config_info']['retirement']['network_credential_id'] = configData.retirement_network_credential_id;
@@ -425,6 +432,12 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     return vm.catalogItemModel.retirement_repository_id !== '';
   }
 
+  vm.retirement_playbook_selected = function(prefix) {
+    if (prefix === "provisioning")
+      return true;
+    return vm.catalogItemModel.retirement_playbook_id !== '';
+  }
+
   vm.removeKeyValue = function(prefix, key) {
     delete vm.catalogItemModel[prefix + "_variables"][key];
     $scope.checkFormPristine();
@@ -513,6 +526,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.catalogItemModel.retirement_key = '';
     vm.catalogItemModel.retirement_value = '';
     vm.catalogItemModel.retirement_variables = angular.copy(vm.catalogItemModel.provisioning_variables);
+    getRemoveResourcesTypes();
     $scope.checkFormPristine();
   }
 

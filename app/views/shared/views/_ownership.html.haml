@@ -15,7 +15,7 @@
         = _('Select an Owner:')
       .col-md-8
         - if @ownershipitems.length > 1
-          - opts = [["<#{_("Don't change")}>", ApplicationController::CiProcessing::DONT_CHANGE_OWNER], ["<#{_('No Owner')}>", '']]
+          - opts = [["<#{_("Don't change")}>", 'dont-change'], ["<#{_('No Owner')}>", '']]
         - else
           - opts =  [["<#{_('No Owner')}>", '']]
         - opts += ownership_user_options.sort
@@ -31,7 +31,7 @@
         = _('Select a Group:')
       .col-md-8
         - if @ownershipitems.length > 1
-          - opts = [["<#{_("Don't change")}>", ApplicationController::CiProcessing::DONT_CHANGE_OWNER]] + @groups.sort
+          - opts = [["<#{_("Don't change")}>", 'dont-change']] + @groups.sort
         - else
           - opts = @groups.sort
         = select_tag("group",
@@ -47,19 +47,19 @@
   - if @origin_ownership_items.count != @ownershipitems.count
     %strong
       = _('Note: Some items might be hidden due to the possibility of an ownership change')
-  - if @ownershipitems
-    - @embedded = true
-    - @quadicon_no_url = true
-    - @gtl_type = settings(:views, :tagging)
-    = render :partial => "layouts/gtl"
 
-    %div_for_paging{'ng-controller'                  => "pagingDivButtonGroupController",
-                  'paging_div_buttons_state_enabled' => true,
-                  'paging_div_buttons_id'            => "angular_paging_div_buttons",
-                  'paging_div_buttons_type'          => "Save"}
+  %div_for_paging{'ng-controller'                  => "pagingDivButtonGroupController",
+                'paging_div_buttons_state_enabled' => true,
+                'paging_div_buttons_id'            => "angular_paging_div_buttons",
+                'paging_div_buttons_type'          => "Save"}
   - unless @explorer
     = render :partial => "layouts/angular/x_edit_buttons_angular"
 
+- if @ownershipitems
+  - @embedded = true
+  - @quadicon_no_url = true
+  - @gtl_type = settings(:views, :tagging)
+  = render :partial => "layouts/gtl"
 :javascript
   ManageIQ.angular.app.value('ownershipFormId', '#{"ownership"}');
   ManageIQ.angular.app.value('objectIds', #{ @ownershipitems.collect(&:id) });

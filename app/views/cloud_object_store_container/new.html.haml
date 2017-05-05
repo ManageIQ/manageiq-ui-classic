@@ -13,7 +13,7 @@
       .col-md-8
         %select{"name"        => "storage_manager_id",
                 "ng-model"    => "vm.cloudContainerModel.storage_manager_id",
-                "ng-options"  => "mgr.id|number as mgr.name for mgr in vm.storageManagers",
+                "ng-options"  => "mgr.id as mgr.name for mgr in vm.storageManagers",
                 "ng-change"   => "vm.storageManagerChanged(vm.cloudContainerModel.storage_manager_id)",
                 "required"    => "",
                 "disabled"    => !@storage_manager.nil?,

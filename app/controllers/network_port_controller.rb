@@ -15,7 +15,7 @@ class NetworkPortController < ApplicationController
   helper_method :textual_group_list
 
   def self.display_methods
-    %w(cloud_subnets floating_ips)
+    %w(cloud_subnets floating_ips security_groups)
   end
 
   menu_section :net

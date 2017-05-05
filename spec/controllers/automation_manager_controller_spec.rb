@@ -60,7 +60,11 @@ describe AutomationManagerController do
 
     get :explorer, :params => {:sortby => '2'}
     expect(response.status).to eq(200)
-    expect(response.body).to match('https://a_url/api/v1(.|\n)*https://z_url/api/v1')
+    expect(response.body).to include("modelName: 'manageiq/providers/automation_managers'")
+    expect(response.body).to include("activeTree: 'automation_manager_providers_tree'")
+    expect(response.body).to include("gtlType: 'list'")
+    expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
+    expect(response.body).to include("showUrl: '/automation_manager/x_show/'")
   end
 
   context "renders the explorer based on RBAC" do
@@ -337,7 +341,9 @@ describe AutomationManagerController do
       search_text = controller.instance_variable_get(:@search_text)
       expect(search_text).to eq("manager")
       view = controller.instance_variable_get(:@view)
+      show_adv_search = controller.instance_variable_get(:@show_adv_search)
       expect(view.table.data.size).to eq(2)
+      expect(show_adv_search).to eq(true)
     end
 
     it "renders tree_select for ansible tower job templates tree node" do
@@ -347,6 +353,11 @@ describe AutomationManagerController do
       controller.instance_variable_set(:@_params, :id => "at-" + ApplicationRecord.compress_id(@automation_manager1.id))
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
+      show_adv_search = controller.instance_variable_get(:@show_adv_search)
+      expect(show_adv_search).to eq(true)
+      expect(view.table.data.size).to eq(2)
+      expect(show_adv_search).to eq(true)
+
       expect(view.table.data[0].name).to eq("ConfigScript1")
       expect(view.table.data[1].name).to eq("ConfigScript3")
     end
@@ -446,7 +457,8 @@ describe AutomationManagerController do
 
       seed_session_trees('automation_manager', :automation_manager_cs_filter, "cs-#{tree_node_id}")
       get :explorer
-
+      show_adv_search = controller.instance_variable_get(:@show_adv_search)
+      expect(show_adv_search).to be_falsey
       expect(response.status).to eq(200)
       expect(response).to render_template(:partial => 'layouts/_textual_groups_generic')
     end
@@ -472,6 +484,8 @@ describe AutomationManagerController do
       allow(controller).to receive(:x_active_accord).and_return(:configuration_scripts)
       allow(controller).to receive(:x_node).and_return(tree_node_id)
       get :explorer
+      show_adv_search = controller.instance_variable_get(:@show_adv_search)
+      expect(show_adv_search).to eq(false)
       expect(response.status).to eq(200)
       expect(response.body).to include("Question Name")
       expect(response.body).to include("Question Description")

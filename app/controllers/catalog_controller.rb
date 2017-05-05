@@ -1674,7 +1674,8 @@ class CatalogController < ApplicationController
   end
 
   # Get all info for the node about to be displayed
-  def get_node_info(treenodeid)
+  def get_node_info(treenodeid, _show_list = true)
+    @explorer ||= true
     @nodetype, id = parse_nodetype_and_id(valid_active_node(treenodeid))
     # saving this so it can be used while adding buttons/groups in buttons editor
     @sb[:applies_to_id] = from_cid(id)
@@ -1787,6 +1788,7 @@ class CatalogController < ApplicationController
       end
     end
     x_history_add_item(:id => treenodeid, :text => @right_cell_text)
+    {:view => @view, :pages => @pages}
   end
 
   def fetch_playbook_details
@@ -1799,6 +1801,7 @@ class CatalogController < ApplicationController
     playbook_details[:provisioning][:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, provision[:network_credential_id]) if provision[:network_credential_id]
     playbook_details[:provisioning][:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, provision[:cloud_credential_id]) if provision[:cloud_credential_id]
     fetch_dialog(playbook_details, provision[:dialog_id], :provisioning)
+    playbook_details[:provisioning][:become_enabled] = provision[:become_enabled] == true ? _('Yes') : _('No')
 
     if @record.config_info[:retirement]
       retirement = @record.config_info[:retirement]
@@ -1811,6 +1814,7 @@ class CatalogController < ApplicationController
         playbook_details[:retirement][:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, retirement[:network_credential_id]) if retirement[:network_credential_id]
         playbook_details[:retirement][:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, retirement[:cloud_credential_id]) if retirement[:cloud_credential_id]
       end
+      playbook_details[:retirement][:become_enabled] = retirement[:become_enabled] == true ? _('Yes') : _('No')
     end
     playbook_details
   end

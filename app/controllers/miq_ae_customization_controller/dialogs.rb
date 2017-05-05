@@ -90,7 +90,7 @@ module MiqAeCustomizationController::Dialogs
     session[:dialog_sortcol] = @sortcol
     session[:dialog_sortdir] = @sortdir
 
-    update_gtl_div('dialog_list') if pagination_or_gtl_request?
+    update_gtl_div('dialog_list') if pagination_or_gtl_request? && @show_list
   end
 
   # Add new dialog
@@ -1411,6 +1411,7 @@ module MiqAeCustomizationController::Dialogs
         @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "Dialog"), :name => @record.label}
       end
     end
+    {:pages => @pages, :view => @view}
   end
 
   def dynamic_field?(field)

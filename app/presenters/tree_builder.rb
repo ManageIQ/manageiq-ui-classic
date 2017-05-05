@@ -233,10 +233,8 @@ class TreeBuilder
   #   [Object, {Object1 => {}, Object2 => {Object2a => {}}}]
   #
   def object_from_ancestry(object)
-    if object.kind_of?(Array) && object.size == 2 && object[1].kind_of?(Hash)
-      obj = object.first
-      children = object.last
-      [obj, children]
+    if object.kind_of?(Array) && object.size == 2 && (object[1].kind_of?(Hash) || object[1].kind_of?(Array))
+      object
     else
       [object, nil]
     end
@@ -261,9 +259,16 @@ class TreeBuilder
     node = x_build_single_node(object, pid, options)
 
     # Process the node's children
+    load_children = if object.kind_of?(Struct)
+                      # Load children for Sections, don't for other Menu Structs.
+                      object.kind_of?(Menu::Section)
+                    else
+                      object[:load_children]
+                    end
+
     node[:expand] = Array(@tree_state.x_tree(@name)[:open_nodes]).include?(node[:key]) || !!options[:open_all] || node[:expand]
     if ancestry_kids ||
-       object[:load_children] ||
+       load_children ||
        node[:expand] ||
        @options[:lazy] == false
 

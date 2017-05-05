@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   # rubocop:disable AlignHash
+  # rubocop:disable MultilineOperationIndentation
+  # default routes for each controller
+  default_routes = %w(
+    report_data
+  )
+
   # grouped routes
   adv_search_post = %w(
     adv_search_button
@@ -1269,6 +1275,23 @@ Rails.application.routes.draw do
                save_post
     },
 
+    :physical_server    =>  {
+      :get  =>  %w(
+        download_data
+        perf_top_chart
+        protect
+        show_list
+        show
+      ) + compare_get,
+
+      :post   =>  %w(
+        button
+        show_list
+        create
+        update
+      )
+    },
+
     :ems_physical_infra_dashboard      => {
       :get => %w(
         show
@@ -1734,7 +1757,6 @@ Rails.application.routes.draw do
 
     :cloud_network             => {
       :get  => %w(
-        cloud_network_form_fields
         download_data
         download_summary_pdf
         edit
@@ -2895,29 +2917,6 @@ Rails.application.routes.draw do
                x_post
     },
 
-    :storage_manager          => {
-      :get  => %w(
-        download_data
-        download_summary_pdf
-        edit
-        index
-        new
-        show
-        show_list
-      ),
-      :post => %w(
-        button
-        create
-        form_field_changed
-        quick_search
-        show
-        show_list
-        update
-      ) +
-               adv_search_post +
-               exp_post
-    },
-
     :support                  => {
       :get  => %w(index)
     },
@@ -3284,6 +3283,12 @@ Rails.application.routes.draw do
       :ems_cloud, :ems_infra, :ems_physical_infra, :ems_container, :ems_middleware, :ems_datawarehouse, :ems_network
     ].include?(controller_name)
       match controller_name.to_s, :controller => controller_name, :action => :index, :via => :get
+    end
+
+    default_routes.each do |action_name|
+      get "#{controller_name}/#{action_name}(/:id)",
+          :action     => action_name,
+          :controller => controller_name
     end
 
     # One-by-one get/post routes for defined controllers

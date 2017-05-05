@@ -33,12 +33,11 @@ describe('catalogItemFormController', function() {
             'var1': {'default': 'default_val1'},
             'var2': {'default': 'default_val2'}
           },
+          become_enabled: undefined,
           network_credential_id: undefined
         },
         retirement: {
           remove_resources: 'yes_without_playbook',
-          hosts: 'localhost',
-          extra_vars: Object({  })
         }
       }
     };

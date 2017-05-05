@@ -44,8 +44,6 @@ module ApplicationHelper
                 _(": Policy Simulation")
               when "rss"
                 _(": RSS")
-              when "storage_manager"
-                _(": Storage - Storage Managers")
               when "ops"
                 _(": Configuration")
               when "provider_foreman"

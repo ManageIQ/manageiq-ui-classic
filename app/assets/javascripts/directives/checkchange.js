@@ -2,7 +2,7 @@ ManageIQ.angular.app.directive('checkchange', ['miqService', function(miqService
   return {
     require: 'ngModel',
     link: function (scope, elem, attr, ctrl) {
-      scope['formchange_' + ctrl.$name] = elem[0].name
+      scope['formchange_' + ctrl.$name] = elem[0].name;
       scope['elemType_' + ctrl.$name] = attr.type;
 
       var model = function() {

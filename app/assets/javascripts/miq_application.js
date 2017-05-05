@@ -351,24 +351,6 @@ function miqValidateButtons(h_or_s, prefix) {
   }
 }
 
-// Convert Button image to hyperlink
-function toggleConvertButtonToLink(button, url, toggle) {
-  if (toggle) {
-    button.removeClass('dimmed');
-    if (!button.parent().is('a[href]')) {
-      button
-        .wrap($('<a/>')
-          .attr('href', url)
-          .attr('title', button.attr('alt')));
-    }
-  } else {
-    button.addClass('dimmed');
-    if (button.parent().is('a[href]')) {
-      button.unwrap();
-    }
-  }
-}
-
 // update all checkboxes on a form when the masterToggle checkbox is changed
 // parms: button_div=<id of div with buttons to update>
 function miqUpdateAllCheckboxes(button_div) {
@@ -1734,3 +1716,13 @@ function miqFormatNotification(text, bindings) {
   });
   return str;
 }
+
+var fontIconChar = _.memoize(function (klass) {
+  var tmp = document.createElement('i');
+  tmp.className = 'hidden ' + klass;
+  document.body.appendChild(tmp);
+  var char = window.getComputedStyle(tmp, ':before').content.replace(/'|"/g, '');
+  var font = window.getComputedStyle(tmp).fontFamily;
+  tmp.remove();
+  return {font: font, char: char};
+});

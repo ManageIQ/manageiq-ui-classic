@@ -1,3 +1,3 @@
-module StorageManagerHelper
+module PhysicalServerHelper
   include_concern 'TextualSummary'
 end

@@ -316,25 +316,6 @@ describe QuadiconHelper do
       end
     end
 
-    context "when item is a StorageManager" do
-      before do
-        allow(controller).to receive(:controller_name).and_return("storage_manager")
-      end
-
-      let(:stor) do
-        FactoryGirl.create(:storage_manager, :name => "Store Man")
-      end
-
-      subject { helper.render_quadicon_text(stor, row) }
-
-      it "renders a link to storage_manager" do
-        @id = stor.id
-
-        expect(subject).to have_selector('a')
-        expect(subject).to include("/storage_manager/show/#{@id}")
-      end
-    end
-
     context "when item is a FloatingIP" do
       before do
         allow(controller).to receive(:controller_name).and_return("floating_ip")
@@ -349,10 +330,10 @@ describe QuadiconHelper do
       subject { helper.render_quadicon_text(item, row) }
 
       it "renders a label based on the address" do
-        @id = item.id
+        @id = ApplicationRecord.compress_id(item.id)
 
         expect(subject).to have_link(item.address)
-        expect(subject).to include("/floating_ip/show/#{item.id}")
+        expect(subject).to include("/floating_ip/show/#{@id}")
       end
     end
 
@@ -372,8 +353,9 @@ describe QuadiconHelper do
       subject { helper.render_quadicon_text(item, row) }
 
       it 'renders a link with auth_key_pair_cloud path' do
+        cid = ApplicationRecord.compress_id(item.id)
         expect(subject).to have_link("Auth")
-        expect(subject).to include('href="/auth_key_pair_cloud/show"')
+        expect(subject).to include("href=\"/auth_key_pair_cloud/show/#{cid}\"")
       end
     end
 
@@ -488,9 +470,9 @@ describe QuadiconHelper do
         )
 
         subject = helper.render_quadicon_text(item, row)
-
+        cid = ApplicationRecord.compress_id(item.id)
         expect(subject).to include("evm")
-        expect(subject).to include("/vm/show/#{item.id}")
+        expect(subject).to include("/vm_infra/show/#{cid}")
       end
 
       it 'renders a link with the row key if set' do
@@ -506,9 +488,10 @@ describe QuadiconHelper do
         row = Ruport::Data::Record.new(:id => rand(9999), "name" => "name")
 
         subject = helper.render_quadicon_text(item, row)
+        cid = ApplicationRecord.compress_id(item.id)
 
         expect(subject).to include("name")
-        expect(subject).to include("/vm/show/#{item.id}")
+        expect(subject).to include("/vm_infra/show/#{cid}")
       end
     end
   end

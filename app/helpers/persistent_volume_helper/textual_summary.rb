@@ -23,13 +23,11 @@ module PersistentVolumeHelper::TextualSummary
   end
 
   def textual_group_relationships
-    TextualGroup.new(_("Relationships"), %i(parent))
+    TextualGroup.new(_("Relationships"), %i(parent pods_using_persistent_volume))
   end
 
   def textual_group_smart_management
-    items = %w(tags)
-    i = items.collect { |m| send("textual_#{m}") }.flatten.compact
-    TextualTags.new(_("Smart Management"), i)
+    TextualTags.new(_("Smart Management"), %i(tags))
   end
 
   def textual_group_capacity
@@ -40,6 +38,11 @@ module PersistentVolumeHelper::TextualSummary
   #
   # Items
   #
+  def textual_pods_using_persistent_volume
+    link = url_for_only_path(:id => @record.id, :action => "show", :display => "container_groups")
+    textual_link(@record.container_groups, :as => ContainerGroup, :link => link)
+  end
+
   def textual_resource_version
     @record.resource_version
   end

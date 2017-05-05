@@ -174,16 +174,75 @@ module ApplicationHelper
     record.class.base_model.name.underscore
   end
 
+  def type_has_quadicon(type)
+    !%w(
+      ManageIQ::Providers::Foreman::ConfigurationManager::ConfigurationProfile
+      Account
+      GuestApplication
+      SystemService
+      Filesystem
+      ChargebackRate
+      ServiceTemplateProvisionRequest
+      MiqProvisionRequest
+      MiqProvisionRequestTemplate
+      MiqWebServiceWorker
+      CustomizationTemplateSysprep
+      CustomizationTemplateCloudInit
+      CustomizationTemplateKickstart
+      PxeImageType
+      IsoDatastore
+      MiqTask
+    ).include? type
+  end
+
+  CONTROLLER_TO_MODEL = {
+    "ManageIQ::Providers::CloudManager::Template" => VmOrTemplate,
+    "ManageIQ::Providers::CloudManager::Vm"       => VmOrTemplate,
+    "ManageIQ::Providers::InfraManager::Template" => VmOrTemplate,
+    "ManageIQ::Providers::InfraManager::Vm"       => VmOrTemplate,
+    "ManageIQ::Providers::AutomationManager"      => ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript
+  }.freeze
+
   def controller_to_model
-    case self.class.model.to_s
-    when "ManageIQ::Providers::CloudManager::Template",
-         "ManageIQ::Providers::CloudManager::Vm",
-         "ManageIQ::Providers::InfraManager::Template",
-         "ManageIQ::Providers::InfraManager::Vm"
-      VmOrTemplate
-    else
-      self.class.model
+    CONTROLLER_TO_MODEL[self.class.model.to_s] || self.class.model
+  end
+
+  MODEL_STRING = {
+    "all_vms"           => VmOrTemplate,
+    "all_miq_templates" => MiqTemplate,
+    "instances"         => Vm,
+    "images"            => MiqTemplate,
+    "groups"            => Account,
+    "users"             => Account,
+    "host_services"     => SystemService,
+    "chargebacks"       => ChargebackRate
+  }.freeze
+
+  HAS_ASSOCATION = %w(
+    groups
+    users
+  ).freeze
+
+  def model_to_report_data
+    current_model = if !@display.nil? && @display != "main"
+                      @display
+                    elsif params[:db]
+                      params[:db]
+                    elsif params[:display]
+                      params[:display]
+                    elsif defined? controller.class.model
+                      controller.class.model.to_s.tableize
+                    end
+
+    # Hosts do not store correct @display in nested attributes (Relationship, Security and Attributes) so use action
+    if @display == "main" && @use_action && !params.nil? && !params[:action].nil? && params[:action] != 'show'
+      current_model = params[:action]
     end
+    current_model
+  end
+
+  def model_string_to_constant(model_string)
+    MODEL_STRING[model_string] || model_string.singularize.classify.constantize
   end
 
   def restful_routed?(record_or_model)
@@ -246,6 +305,12 @@ module ApplicationHelper
     end
   end
 
+  TREE_WITH_TAB = {
+    "diagnostics_server_list" => "svr",
+    "db_details"              => "tb",
+    "report_info"             => "msc"
+  }.freeze
+
   # Create a url to show a record from the passed in view
   def view_to_url(view, parent = nil)
     association = view_to_association(view, parent)
@@ -272,6 +337,11 @@ module ApplicationHelper
       if controller == "ems_network" && action == "show"
         return ems_networks_path
       end
+      # If we do not want to use redirect or any kind of click action
+      if %w(Job VmdbDatabaseSetting VmdbDatabaseConnection VmdbIndex MiqTask).include?(view.db) &&
+         %w(miq_task ops miq_task).include?(params[:controller])
+        return false
+      end
       if @explorer
         # showing a list view of another CI inside vmx
         if %w(SecurityGroup
@@ -295,6 +365,33 @@ module ApplicationHelper
           return url_for_only_path(:action => action, :id => nil) + "/"
         elsif %w(ConfiguredSystem).include?(view.db) && (request.parameters[:controller] == "provider_foreman" || request.parameters[:controller] == "automation_manager")
           return url_for_only_path(:action => action, :id => nil) + "/"
+        elsif %w(MiqWidget
+                 ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript
+                 MiqReportResult).include?(view.db) &&
+              %w(report automation_manager).include?(request.parameters[:controller])
+          suffix = ""
+          if params[:tab_id] == "saved_reports"
+            suffix = x_node
+          end
+          return "/" + request.parameters[:controller] + "/tree_select/?id=" + suffix
+        elsif %w(User MiqGroup MiqUserRole Tenant).include?(view.db) &&
+              %w(ops).include?(request.parameters[:controller])
+          return "/" + request.parameters[:controller] + "/tree_select/?id=" + x_node.split("-")[1]
+        elsif %w(VmdbTableEvm MiqServer).include?(view.db) &&
+              %w(ops report).include?(request.parameters[:controller])
+          return "/" + request.parameters[:controller] + "/tree_select/?id=" + TREE_WITH_TAB[active_tab]
+        elsif %w(MiqAction
+                 MiqAlert
+                 ScanItemSet
+                 MiqSchedule
+                 PxeServer
+                 PxeImageType
+                 IsoDatastore
+                 CustomizationTemplate).include?(view.db) &&
+              %w(miq_policy ops pxe report).include?(params[:controller])
+          return "/#{params[:controller]}/tree_select/?id=#{TreeBuilder.get_prefix_for_model(view.db)}"
+        elsif %w(MiqPolicy).include?(view.db) && %w(miq_policy).include?(params[:controller])
+          return "/#{params[:controller]}/tree_select/?id=#{x_node}"
         else
           return url_for_only_path(:action => action) + "/" # In explorer, don't jump to other controllers
         end
@@ -396,6 +493,8 @@ module ApplicationHelper
       controller = "ems_#{$1.underscore}"
     when /^ManageIQ::Providers::(\w+)Manager::(\w+)$/
       controller = "#{$2.underscore}_#{$1.underscore}"
+    when "EmsAutomation"
+      controller = "automation_manager"
     else
       controller = db.underscore
     end
@@ -792,7 +891,6 @@ module ApplicationHelper
        security_group
        service
        storage
-       storage_manager
        templates
        vm
       ).include?(@layout)
@@ -939,7 +1037,7 @@ module ApplicationHelper
       link_params[:controller] = args[:controller] if args.key?(:controller)
 
       tag_attrs = {:title => title}
-      check_changes = args[:check_changes] || args[:check_changes].nil?
+      check_changes ||= args[:check_changes]
       tag_attrs[:onclick] = 'return miqCheckForChanges()' if check_changes
       content_tag(:li) do
         link_args = {:display => args[:display], :vat => args[:vat]}.compact
@@ -1221,6 +1319,7 @@ module ApplicationHelper
                         offline
                         orchestration_stack
                         physical_infra_topology
+                        physical_server
                         persistent_volume
                         policy
                         policy_group
@@ -1231,7 +1330,6 @@ module ApplicationHelper
                         security_group
                         service
                         storage
-                        storage_manager
                         templates
                       )
 
@@ -1386,7 +1484,6 @@ module ApplicationHelper
              scan_profile
              security_group
              service
-             storage_manager
              timeline).include?(@layout)
       @layout
     end
@@ -1444,7 +1541,6 @@ module ApplicationHelper
       retired
       security_group
       service
-      storage_manager
       templates
       vm
     )
@@ -1525,101 +1621,37 @@ module ApplicationHelper
     x_tree && ((tree_with_advanced_search? && !@record) || @show_adv_search)
   end
 
-  def fileicon_tag(db, row)
-    icon = nil
-    if %w(Job MiqTask).include?(db)
-      if row["state"].downcase == "finished" && row["status"]
-        title = _("Status = %{row}") % {:row => row["status"].capitalize}
-        cancel_msg = row["message"].include?('cancel')
-        if row["status"].downcase == "ok" && !cancel_msg
-          icon = "pficon pficon-ok"
-        elsif row["status"].downcase == "error" || cancel_msg
-          icon = "pficon pficon-error-circle-o"
-        elsif row["status"].downcase == "warn" || cancel_msg
-          icon = "pficon pficon-warning-triangle-o"
-        end
-      elsif %w(queued waiting_to_start).include?(row["state"].downcase)
-        icon = "fa fa-step-forward"
-        title = _("Status = Queued")
-      elsif !%w(finished queued waiting_to_start).include?(row["state"].downcase)
-        icon = "pficon pficon-running"
-        title = _("Status = Running")
-      end
-    elsif %w(Vm VmOrTemplate).include?(db)
-      vm = @targets_hash[from_cid(@id)]
-      vendor = vm ? vm.vendor : "unknown"
-      image = "svg/vendor-#{vendor}.svg"
-    elsif db == "Host"
-      host = @targets_hash[@id] if @targets_hash
-      vendor = host ? host.vmm_vendor_display.downcase : "unknown"
-      image = "svg/vendor-#{vendor}.svg"
-    elsif db == "MiqAction"
-      action = @targets_hash[row['id']]
-      icon = action ? action.decorate.fonticon : 'product product-action'
-    elsif db == "MiqProvision"
-      image = "100/miq_request.png"
-    elsif db == "MiqWorker"
-      worker = @targets_hash[from_cid(@id)]
-      image = "100/processmanager-#{worker.normalized_type}.png"
-    elsif db == "ExtManagementSystem"
-      ems = @targets_hash[from_cid(@id)]
-      image = "svg/vendor-#{ems.image_name}.svg"
-    elsif db == "Tenant"
-      icon = row['divisible'] ? "pficon pficon-tenant" : "pficon pficon-project"
-    else
-      image = "100/#{db.underscore}.png"
-    end
+  def listicon_glyphicon(item)
+    [item.decorate.try(:fonticon), item.decorate.try(:secondary_icon), item.decorate.try(:fileicon)] if item
+  end
+  private :listicon_glyphicon
 
+  CONTENT_TYPE_ID = {
+    "report" => "r",
+    "menu"   => "m",
+    "rss"    => "rf",
+    "chart"  => "c"
+  }.freeze
+
+  LIST_ICON_FOR = %w(
+    MiqReportResult
+    MiqSchedule
+    MiqUserRole
+    MiqWidget
+  ).freeze
+
+  def fileicon_tag(item)
+    icon, _icon2, image = listicon_glyphicon(item)
     if icon
-      content_tag(:i, nil, :class => icon, :title => title)
+      content_tag(:i, nil, :class => icon)
     else
-      image_tag(ActionController::Base.helpers.image_path(image), :title => title, :alt => nil)
+      image_tag(ActionController::Base.helpers.image_path(image), :alt => nil)
     end
   end
 
-  def listicon_glyphicon_tag_for_widget(widget)
-    case widget.status.downcase
-    when 'complete' then 'pficon pficon-ok'
-    when 'queued'   then 'fa fa-pause'
-    when 'running'  then 'pficon pficon-running'
-    when 'error'    then 'pficon pficon-warning-triangle-o'
-    end
-  end
-
-  def listicon_glyphicon_tag(db, row)
-    glyphicon2 = nil
-    case db
-    when "MiqSchedule"
-      glyphicon = "fa fa-clock-o"
-    when "MiqReportResult"
-      case row['status'].downcase
-      when "error"
-        glyphicon = "pficon pficon-warning-triangle-o"
-      when "finished"
-        glyphicon = "pficon pficon-ok"
-      when "running"
-        glyphicon = "pficon pficon-running"
-      when "queued"
-        glyphicon = "fa fa-pause"
-      else
-        glyphicon = "fa fa-arrow-right"
-      end
-    when "MiqUserRole"
-      glyphicon = "product product-role"
-    when "MiqWidget"
-      case row['content_type'].downcase
-      when "chart"
-        glyphicon = "fa fa-pie-chart"
-      when "menu"
-        glyphicon = "fa fa-share-square-o"
-      when "report"
-        glyphicon = "fa fa-file-text-o"
-      when "rss"
-        glyphicon = "fa fa-rss"
-      end
-      # for second icon to show status in widget list
-      glyphicon2 = listicon_glyphicon_tag_for_widget(row)
-    end
+  def listicon_glyphicon_tag(item)
+    item = db.constantize.find(row["id"])
+    glyphicon, glyphicon2 = listicon_glyphicon(item)
 
     content_tag(:i, nil, :class => glyphicon) do
       content_tag(:i, nil, :class => glyphicon2) if glyphicon2
@@ -1627,10 +1659,11 @@ module ApplicationHelper
   end
 
   def listicon_tag(db, row)
+    item = db.constantize.find(row["id"])
     if %w(MiqReportResult MiqSchedule MiqUserRole MiqWidget).include?(db)
-      listicon_glyphicon_tag(db, row)
+      listicon_glyphicon_tag(item)
     else
-      fileicon_tag(db, row)
+      fileicon_tag(item)
     end
   end
 

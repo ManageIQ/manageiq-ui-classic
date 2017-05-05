@@ -1,6 +1,4 @@
 class MiddlewareTopologyService < TopologyService
-  include UiServiceMixin
-
   @provider_class = ManageIQ::Providers::MiddlewareManager
 
   @included_relations = [
@@ -15,7 +13,7 @@ class MiddlewareTopologyService < TopologyService
     ]
   ]
 
-  @kinds = %i(MiddlewareDeployment MiddlewareDatasource MiddlewareDomain MiddlewareManager Vm MiddlewareServer MiddlewareServerGroup MiddlewareMessaging)
+  @kinds = %i(MiddlewareDeployment MiddlewareDatasource MiddlewareDomain MiddlewareManager Vm Container MiddlewareServer MiddlewareServerGroup MiddlewareMessaging)
 
   def build_topology
     topology = super
@@ -67,7 +65,7 @@ class MiddlewareTopologyService < TopologyService
   end
 
   def glyph?(entity)
-    [MiddlewareDatasource, MiddlewareDeployment, Vm, MiddlewareDomain, MiddlewareServerGroup, MiddlewareMessaging]
+    [MiddlewareDatasource, MiddlewareDeployment, Vm, Container, MiddlewareDomain, MiddlewareServerGroup, MiddlewareMessaging]
       .any? { |klass| entity.kind_of? klass }
   end
 end

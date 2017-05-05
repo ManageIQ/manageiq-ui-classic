@@ -203,12 +203,6 @@ module Menu
                           ])
       end
 
-      def netapp_storage_menu_section
-        Menu::Section.new(:nap, N_("NetApp"), 'fa fa-plus', [
-          Menu::Item.new('storage_manager',      N_('Storage Managers'), 'storage_manager',      {:feature => 'storage_manager_show_list'},      '/storage_manager')
-        ])
-      end
-
       def control_menu_section
         Menu::Section.new(:con, N_("Control"), 'fa fa-shield', [
           Menu::Item.new('miq_policy',        N_('Explorer'),        'control_explorer',     {:feature => 'control_explorer_view'}, '/miq_policy/explorer'),

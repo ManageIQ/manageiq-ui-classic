@@ -98,17 +98,6 @@ function miqTreeForceActivateNode(tree, key) {
   miqTreeObject(tree).options.onNodeSelected(0, miqTreeFindNodeByKey(tree, key));
 }
 
-// OnClick handler for catgories Tree
-function miqOnClickProvLdapOus(id) {
-  var node = miqTreeFindNodeByKey('ldap_ous_tree', id);
-  miqTreeObject('ldap_ous_tree').expandNode(node);
-
-  if (id.split('_-_').length > 1) {
-    miqJqueryRequest(ManageIQ.tree.clickUrl + '?ou_id=' + id);
-    return true;
-  }
-}
-
 // expand all parent nodes of selected node on initial load
 function miqExpandParentNodes(treename, selected_node) {
   var node = miqTreeFindNodeByKey(treename, selected_node);
@@ -292,6 +281,25 @@ function miqTreeExpandNode(treename, key) {
   miqTreeObject(treename).expandNode(node);
 }
 
+function miqTreeExpandRecursive(treeId, fullNodeId) {
+  var currId = '';
+  var indexOfBox = treeId.indexOf('box');
+  var splitNodeId = fullNodeId.split('_');
+  if (indexOfBox !== -1 && treeId.length - 3 === indexOfBox) {
+    treeId = treeId.substring(0, indexOfBox);
+  }
+  splitNodeId.forEach(function(item, key) {
+    if (key + 1 !== splitNodeId.length) {
+      if (key !== 0) {
+        currId += '_' + item;
+      } else {
+        currId = item;
+      }
+      miqTreeExpandNode(treeId, currId);
+    }
+  });
+}
+
 // OnClick handler for Server Roles Tree
 function miqOnClickServerRoles(id) {
   var typ = id.split('-')[0]; // Break apart the node ids
@@ -436,7 +444,6 @@ function miqTreeEventSafeEval(func) {
     'miqOnCheckUserFilters',
     'miqOnClickGenealogyTree',
     'miqOnClickHostNet',
-    'miqOnClickProvLdapOus',
     'miqOnClickSelectAETreeNode',
     'miqOnClickSelectDlgEditTreeNode',
     'miqOnClickSelectOptimizeTreeNode',

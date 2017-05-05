@@ -1,6 +1,4 @@
 class NetworkTopologyService < TopologyService
-  include UiServiceMixin
-
   @provider_class = ManageIQ::Providers::NetworkManager
 
   @included_relations = [
@@ -8,10 +6,14 @@ class NetworkTopologyService < TopologyService
     :availability_zones => [
       :vms => [
         :tags,
-        :load_balancers  => :tags,
         :floating_ips    => :tags,
         :cloud_tenant    => :tags,
-        :security_groups => :tags
+        :security_groups => :tags,
+        :load_balancers  => [
+          :tags,
+          :floating_ips,
+          :security_groups,
+        ]
       ]
     ],
     :cloud_subnets      => [
@@ -68,7 +70,7 @@ class NetworkTopologyService < TopologyService
   def entity_status(entity)
     case entity
     when Vm
-      entity.power_state.capitalize
+      entity.power_state.nil? ? "Unknown" : entity.power_state.capitalize
     when ManageIQ::Providers::NetworkManager
       entity.authentications.blank? ? 'Unknown' : entity.authentications.first.status.try(:capitalize)
     when NetworkRouter, CloudSubnet, CloudNetwork, FloatingIp

@@ -20,9 +20,8 @@ describe OrchestrationStackController do
         get :show, :params => {:id => record.id, :display => "instances"}
       end
 
-      it 'does not render compliance check and comparison buttons' do
+      it 'does not render compliance check button' do
         expect(response.body).not_to include('instance_check_compliance')
-        expect(response.body).not_to include('instance_compare')
       end
 
       it "renders the listnav" do
@@ -95,9 +94,9 @@ describe OrchestrationStackController do
       end
 
       it "hides ansible jobs" do
-        expect(response.body).to include(@os_cloud.name)
-        expect(response.body).to include(@os_infra.name)
-        expect(response.body).not_to include(@tower_job.name)
+        expect(response.body).to include("modelName: 'orchestration_stacks'")
+        expect(response.body).to include("gtlType: 'list'")
+        expect(response.body).not_to include("modelName: 'configuration_managers'")
       end
     end
   end

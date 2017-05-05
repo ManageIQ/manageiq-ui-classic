@@ -22,7 +22,7 @@ module ServiceHelper::TextualSummary
 
   def textual_group_provisioning_credentials
     return nil unless provisioning_get_job
-    TextualGroup.new(_("Credentials"), %i(machine_credential network_credential cloud_credential))
+    TextualGroup.new(_("Credentials"), %i(machine_credential network_credential cloud_credential vmware_credential))
   end
 
   def textual_group_provisioning_plays
@@ -232,6 +232,15 @@ module ServiceHelper::TextualSummary
     credential = @job.authentications.find_by(:type => 'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential')
     return nil unless credential
     credential(credential, _("Cloud"))
+  end
+
+  def textual_vmware_credential
+    credential = @job.authentications.find_by(:type => 'ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VmwareCredential')
+    return nil unless credential
+    {:label => _('VMware'),
+     :value => credential.name,
+     :title => _('VMware Credential'),
+     :link  => url_for_only_path(:action => 'show', :id => credential.id, :controller => 'ansible_credential')}
   end
 
   def credential(credential, label)

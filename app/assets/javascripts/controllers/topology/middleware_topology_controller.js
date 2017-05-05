@@ -10,6 +10,8 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
   $scope.d3 = d3;
   var icons;
 
+  topologyService.mixinContextMenu(this, $scope);
+
   $scope.refresh = function() {
     var id;
     if ($location.absUrl().match('show/$') || $location.absUrl().match('show$')) {
@@ -24,24 +26,11 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
   };
 
   $scope.checkboxModel = {
-    value: false
+    value: false,
   };
   $scope.legendTooltip = 'Click here to show/hide entities of this type';
 
-  $scope.show_hide_names = function() {
-    $scope.checkboxModel.value = $('input#box_display_names')[0].checked;
-    var vertices = $scope.vs;
-
-    if ($scope.checkboxModel.value) {
-      vertices.selectAll("text.attached-label")
-        .classed("visible", true);
-    } else {
-      vertices.selectAll("text.attached-label")
-        .classed("visible", false);
-    }
-  };
-
-  $('input#box_display_names').click($scope.show_hide_names)
+  $('input#box_display_names').click(topologyService.showHideNames($scope));
   $scope.refresh();
   var promise = $interval($scope.refresh, 1000 * 60 * 3);
 
@@ -64,15 +53,19 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
       })
       .attr('class', function(d) {
         return topologyService.getItemStatusClass(d);
+      })
+      .on('contextmenu', function(d) {
+        self.contextMenu(this, d);
       });
     added.append('title');
     added.on('dblclick', function(d) {
       return self.dblclick(d);
     });
+
     added.append('image')
       .attr('xlink:href', function(d) {
         var iconInfo = self.getIcon(d);
-        return (iconInfo.type == 'glyph' ? "" : iconInfo.icon);
+        return (iconInfo.type == 'glyph' ? null : iconInfo.icon);
       })
       .attr('y', function(d) {
         return self.getCircleDimensions(d).y;
@@ -85,6 +78,9 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
       })
       .attr('width', function(d) {
         return self.getCircleDimensions(d).width;
+      })
+      .on('contextmenu', function(d) {
+        self.contextMenu(this, d);
       });
 
     // attached labels
@@ -103,13 +99,25 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
         if (iconInfo.type != 'glyph') {
           return;
         }
-        $(this).text(iconInfo.icon)
+        /* global fontIconChar */
+        var fonticon = fontIconChar(iconInfo.class);
+        var fontFamily = 'font-family:' + fonticon.font + ';';
+        $(this).text(fonticon.char)
           .attr('class', 'glyph')
-          .attr('style', 'font-family:' + iconInfo.fontfamily + ';')
+          .attr('style', fontFamily)
           .attr('x', 0)
           .attr('y', 8);
-      })
 
+        // override some properties for container glyph, because it looks too small and alignment is wrong
+        if (d.item.kind === 'Container') {
+          $(this).text(fonticon.char)
+            .attr('style', 'font-size: 20px;' + fontFamily)
+            .attr('y', 7);
+        }
+      })
+      .on('contextmenu', function(d) {
+        self.contextMenu(this, d);
+      });
 
     added.selectAll('title').text(function(d) {
       return topologyService.tooltip(d).join('\n');
@@ -131,10 +139,6 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     return icons[d.item.display_kind];
   };
 
-  this.dblclick = function dblclick(d) {
-    window.location.assign(topologyService.geturl(d));
-  };
-
   self.getCircleDimensions = function getCircleDimensions(d) {
     var defaultDimensions = topologyService.defaultElementDimensions();
     switch (d.item.kind) {
@@ -144,7 +148,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
           y: -20,
           height: 40,
           width: 40,
-          r: 28
+          r: 28,
         };
       case 'MiddlewareServer':
         return {
@@ -152,15 +156,15 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
           y: -12,
           height: 23,
           width: 23,
-          r: 19
+          r: 19,
         };
-      case "Vm":
+      case 'Vm':
         return {
           x: defaultDimensions.x,
           y: defaultDimensions.y,
           height: 40,
           width: 40,
-          r: 21
+          r: 21,
         };
       default:
         return {
@@ -168,10 +172,10 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
           y: -9,
           height: 18,
           width: 18,
-          r: defaultDimensions.r
+          r: defaultDimensions.r,
         };
     }
-  }
+  };
 
   $scope.searchNode = function() {
     var svg = topologyService.getSVG($scope.d3);
@@ -184,7 +188,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     topologyService.resetSearch($scope.d3);
 
     // Reset the search term in search input
-    $('input#search_topology')[0].value = "";
+    $('input#search_topology')[0].value = '';
   };
 
   function getMiddlewareTopologyData(response) {

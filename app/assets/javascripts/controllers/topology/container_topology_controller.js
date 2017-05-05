@@ -11,6 +11,8 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
   var d3 = window.d3;
   $scope.d3 = d3;
 
+  topologyService.mixinContextMenu(this, $scope);
+
   $scope.refresh = function() {
     var id, type;
     var pathname = $window.location.pathname.replace(/\/$/, '');
@@ -45,84 +47,13 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
 
   $scope.legendTooltip = __("Click here to show/hide entities of this type");
 
-  $scope.show_hide_names = function() {
-    $scope.checkboxModel.value = $('input#box_display_names')[0].checked
-    var vertices = $scope.vs;
-
-    if ($scope.checkboxModel.value) {
-      vertices.selectAll("text.attached-label")
-        .classed("visible", true);
-    } else {
-      vertices.selectAll("text.attached-label")
-        .classed("visible", false);
-    }
-  };
-
-  $('input#box_display_names').click($scope.show_hide_names)
+  $('input#box_display_names').click(topologyService.showHideNames($scope));
   $scope.refresh();
   var promise = $interval($scope.refresh, 1000 * 60 * 3);
 
   $scope.$on('$destroy', function() {
     $interval.cancel(promise);
   });
-
-  var contextMenuShowing = false;
-
-  d3.select("body").on('click', function() {
-    if(contextMenuShowing) {
-      removeContextMenu();
-    }
-  });
-
-  var removeContextMenu = function() {
-      d3.event.preventDefault();
-      d3.select(".popup").remove();
-      contextMenuShowing = false;
-  };
-
-  self.contextMenu = function contextMenu(_that, data) {
-    if (contextMenuShowing) {
-      removeContextMenu();
-    } else {
-      d3.event.preventDefault();
-
-      var canvas = d3.select("kubernetes-topology-graph");
-      var mousePosition = d3.mouse(canvas.node());
-
-      var popup = canvas.append("div")
-          .attr("class", "popup")
-          .style("left", mousePosition[0] + "px")
-          .style("top", mousePosition[1] + "px");
-      popup.append("h5").text("Actions on " + data.item.display_kind);
-
-      buildContextMenuOptions(popup, data);
-
-      var canvasSize = [
-        canvas.node().offsetWidth,
-        canvas.node().offsetHeight
-      ];
-
-      var popupSize = [
-        popup.node().offsetWidth,
-        popup.node().offsetHeight
-      ];
-
-      if (popupSize[0] + mousePosition[0] > canvasSize[0]) {
-        popup.style("left", "auto");
-        popup.style("right", 0);
-      }
-
-      if (popupSize[1] + mousePosition[1] > canvasSize[1]) {
-        popup.style("top", "auto");
-        popup.style("bottom", 0);
-      }
-      contextMenuShowing = !contextMenuShowing;
-    }
-  };
-
-  var buildContextMenuOptions = function(popup, data) {
-    topologyService.addContextMenuOption(popup, "Go to summary page", data, self.dblclick);
-  };
 
   $scope.$on("render", function(ev, vertices, added) {
     /*
@@ -202,9 +133,11 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
         if (iconInfo.type != 'glyph')
           return;
 
-        $(this).text(iconInfo.icon)
+        /* global fontIconChar */
+        var fonticon = fontIconChar(iconInfo.class);
+        $(this).text(fonticon.char)
           .attr("class", "glyph")
-          .attr('font-family', iconInfo.fontfamily);
+          .attr('font-family', fonticon.font);
       })
 
       .attr("y", function(d) {
@@ -242,10 +175,6 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
     /* Don't do default rendering */
     ev.preventDefault();
   });
-
-  this.dblclick = function dblclick(d) {
-    window.location.assign(topologyService.geturl(d));
-  };
 
   this.getIcon = function getIcon(d) {
     switch(d.item.kind) {

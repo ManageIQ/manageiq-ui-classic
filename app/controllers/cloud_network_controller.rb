@@ -47,23 +47,6 @@ class CloudNetworkController < ApplicationController
     end
   end
 
-  def cloud_network_form_fields
-    assert_privileges("cloud_network_edit")
-    network = find_record_with_rbac(CloudNetwork, params[:id])
-    render :json => {
-      :name                  => network.name,
-      :cloud_tenant_name     => network.cloud_tenant.try(:name),
-      :enabled               => network.enabled,
-      :external_facing       => network.external_facing,
-      # TODO: uncomment once form contains this field
-      #:port_security_enabled => network.port_security_enabled,
-      :provider_network_type => network.provider_network_type,
-      :qos_policy_id         => network.qos_policy_id,
-      :shared                => network.shared,
-      :vlan_transparent      => network.vlan_transparent
-    }
-  end
-
   def create
     assert_privileges("cloud_network_new")
     case params[:button]

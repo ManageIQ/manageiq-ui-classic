@@ -584,7 +584,7 @@ describe CatalogController do
     it "Renders list of orchestration templates using correct GTL type" do
       %w(root xx-otcfn xx-othot xx-otazu).each do |id|
         post :tree_select, :params => { :id => id, :format => :js }
-        expect(response).to render_template('layouts/gtl/_grid')
+        expect(response).to render_template('layouts/angular/_gtl')
       end
     end
 
@@ -787,13 +787,15 @@ describe CatalogController do
           :playbook           => playbook.name,
           :machine_credential => auth.name,
           :dialog             => "Some Label",
-          :dialog_id          => dialog.id
+          :dialog_id          => dialog.id,
+          :become_enabled     => "No"
         },
         :retirement   => {
           :remove_resources   => nil,
           :repository         => repository.name,
           :playbook           => playbook.name,
-          :machine_credential => auth.name
+          :machine_credential => auth.name,
+          :become_enabled     => "No"
         }
       }
       expect(playbook_details).to eq(st_details)
@@ -829,13 +831,15 @@ describe CatalogController do
         :provisioning => {
           :repository         => nil,
           :playbook           => playbook.name,
-          :machine_credential => auth.name
+          :machine_credential => auth.name,
+          :become_enabled     => "No"
         },
         :retirement   => {
           :remove_resources   => nil,
           :repository         => repository.name,
           :playbook           => nil,
-          :machine_credential => auth.name
+          :machine_credential => auth.name,
+          :become_enabled     => "No"
         }
       }
       expect(playbook_details).to eq(st_details)

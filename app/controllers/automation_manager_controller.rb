@@ -46,6 +46,7 @@ class AutomationManagerController < ApplicationController
 
 
   def tagging
+    @explorer ||= true
     case x_active_accord
     when :automation_manager_providers
       assert_privileges("automation_manager_provider_configured_system_tag")
@@ -217,7 +218,7 @@ class AutomationManagerController < ApplicationController
     tree
   end
 
-  def get_node_info(treenodeid)
+  def get_node_info(treenodeid, _show_list = true)
     @sb[:action] = nil
     @nodetype, id = parse_nodetype_and_id(valid_active_node(treenodeid))
 
@@ -250,6 +251,7 @@ class AutomationManagerController < ApplicationController
     else
       x_history_add_item(:id => treenodeid, :text => @right_cell_text) # Add to history pulldown array
     end
+    {:view => @view, :pages => @pages}
   end
 
   def provider_node(id, model)
@@ -260,6 +262,7 @@ class AutomationManagerController < ApplicationController
     elsif x_active_tree == :configuration_scripts_tree
       cs_provider_node(provider)
     else
+      @show_adv_search = true
       @no_checkboxes = true
       options = {:model                 => "ManageIQ::Providers::AutomationManager::InventoryRootGroup",
                  :match_via_descendants => ConfiguredSystem,
@@ -277,6 +280,7 @@ class AutomationManagerController < ApplicationController
                :match_via_descendants => ConfigurationScript,
                :where_clause          => ["manager_id IN (?)", provider.id],
                :gtl_dbname            => "automation_manager_configuration_scripts"}
+    @show_adv_search = true
     process_show_list(options)
     @right_cell_text = _("%{model} \"%{name}\"") % {:name  => provider.name,
                                                     :model => "#{ui_lookup(:tables => "job_templates")} under "}
@@ -289,6 +293,7 @@ class AutomationManagerController < ApplicationController
       self.x_node = "root"
       get_node_info("root")
     else
+      @show_adv_search = true
       options = {:model                 => "ConfiguredSystem",
                  :match_via_descendants => ConfiguredSystem,
                  :where_clause          => ["inventory_root_group_id IN (?)", from_cid(@inventory_group_record.id)],
@@ -306,6 +311,7 @@ class AutomationManagerController < ApplicationController
 
   def configuration_scripts_list(id, model)
     return configuration_script_node(id) if id
+    @show_adv_search = true
     @listicon = "configuration_script"
     if x_active_tree == :configuration_scripts_tree
       options = {:model      => model.to_s,
@@ -317,11 +323,13 @@ class AutomationManagerController < ApplicationController
 
   def configuration_script_node(id)
     @record = @configuration_script_record = find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript, id)
+    @show_adv_search = false
     display_node(id, nil)
   end
 
   def default_node
     return unless x_node == "root"
+    @show_adv_search = true
     if x_active_tree == :automation_manager_providers_tree
       options = {:model      => "ManageIQ::Providers::AnsibleTower::AutomationManager",
                  :gtl_dbname => "automation_manager_providers"}

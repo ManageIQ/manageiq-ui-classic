@@ -1,4 +1,5 @@
 class TreeBuilderReportReports < TreeBuilderReportReportsClass
+  REPORTS_IN_TREE = true
   private
 
   def initialize(name, type, sandbox, build = true)
@@ -26,43 +27,39 @@ class TreeBuilderReportReports < TreeBuilderReportReportsClass
     }
   end
 
-  # Get root nodes count/array for explorer tree
+  # Get root node and all children report folders. (will call get_tree_custom_kids to get report details)
   def x_get_tree_roots(count_only, options)
-    objects = []
-    @rpt_menu.each_with_index do |r, i|
-      objects.push(
-        :id    => i.to_s,
-        :text  => r[0],
-        :icon  => "pficon #{@grp_title == r[0] ? 'pficon-folder-close-blue' : 'pficon-folder-close'}",
-        :tip   => r[0]
-      )
+    return @rpt_menu.size if count_only
+    @rpt_menu.each_with_index.each_with_object({}) do |(r, node_id), a|
       # load next level of folders when building the tree
-      @tree_state.x_tree(options[:tree])[:open_nodes].push("xx-#{i}")
+      @tree_state.x_tree(options[:tree])[:open_nodes].push("xx-#{node_id}")
+
+      root_node = folder_hash(node_id.to_s, r[0], @grp_title == r[0])
+      child_nodes = @rpt_menu[node_id][1].each_with_index.each.map do |child_r, child_id|
+        folder_hash("#{node_id}-#{child_id}", child_r[0], @grp_title == @rpt_menu[node_id][0])
+      end
+      # returning a child hash says "there are no children"
+      child_nodes = child_nodes.each_with_object({}) { |c, cn| cn[c] = {} } unless REPORTS_IN_TREE
+
+      a[root_node] = child_nodes
     end
-    count_only_or_objects(count_only, objects)
   end
 
   def x_get_tree_custom_kids(object, count_only, _options)
-    objects = []
     nodes = object[:full_id] ? object[:full_id].split('-') : object[:id].to_s.split('-')
-    if nodes.length == 1 && @rpt_menu[nodes.last.to_i][1].kind_of?(Array)
-      @rpt_menu[nodes.last.to_i][1].each_with_index do |r, i|
-        objects.push(
-          :id    => "#{nodes.last.split('-').last}-#{i}",
-          :text  => r[0],
-          :icon  => "pficon #{@grp_title == @rpt_menu[nodes.last.to_i][0] ? 'pficon-folder-close-blue' : 'pficon-folder-close'}",
-          :tip   => r[0]
-        )
-      end
-    elsif nodes.length >= 2 # || (object[:full_id] && object[:full_id].split('_').length == 2)
-      el1 = nodes.length == 2 ? nodes[0].split('_').first.to_i : nodes[1].split('_').first.to_i
-      @rpt_menu[el1][1][nodes.last.to_i][1].each_with_index do |r|
-        objects.push(MiqReport.find_by_name(r))
-        # break after adding 1 report for a count_only,
-        # don't need to go thru them all to determine if node has children
-        break if count_only
-      end
-    end
-    count_only_or_objects(count_only, objects)
+    parent_id = nodes[-2].split('_').first.to_i
+    node_id = nodes.last.to_i
+
+    child_names = @rpt_menu[parent_id][1][node_id][1]
+    count_only ? child_names.size : MiqReport.where(:name => child_names)
+  end
+
+  def folder_hash(id, text, blue)
+    {
+      :id   => id,
+      :text => text,
+      :icon => "pficon #{blue ? 'pficon-folder-close-blue' : 'pficon-folder-close'}",
+      :tip  => text
+    }
   end
 end
