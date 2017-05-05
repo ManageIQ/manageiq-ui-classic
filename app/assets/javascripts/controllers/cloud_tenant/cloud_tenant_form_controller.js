@@ -6,6 +6,7 @@ ManageIQ.angular.app.controller('cloudTenantFormController', ['$http', '$scope',
   vm.afterGet = false;
   vm.modelCopy = angular.copy( vm.cloudTenantModel );
   vm.model = "cloudTenantModel";
+  vm.saveable = miqService.saveable;
 
   ManageIQ.angular.scope = $scope;
 
