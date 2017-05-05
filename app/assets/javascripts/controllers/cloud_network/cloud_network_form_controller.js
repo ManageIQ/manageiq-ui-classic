@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('cloudNetworkFormController', ['$http', '$scope', 'cloudNetworkFormId', 'miqService', function($http, $scope, cloudNetworkFormId, miqService) {
+ManageIQ.angular.app.controller('cloudNetworkFormController', ['$scope', 'cloudNetworkFormId', 'miqService', 'API', function($scope, cloudNetworkFormId, miqService, API) {
   var vm = this;
   vm.cloudNetworkModel = { name: '', ems_id: '', cloud_tenant_id: '', provider_network_type: ''  };
   vm.formId = cloudNetworkFormId;
@@ -18,7 +18,7 @@ ManageIQ.angular.app.controller('cloudNetworkFormController', ['$http', '$scope'
   } else {
     miqService.sparkleOn();
 
-    $http.get('/cloud_network/cloud_network_form_fields/' + cloudNetworkFormId)
+  API.get("/api/cloud_networks/" + cloudNetworkFormId + "?attributes=cloud_tenant")
       .then(getCloudNetworkFormDataComplete)
       .catch(miqService.handleFailure);
   }
