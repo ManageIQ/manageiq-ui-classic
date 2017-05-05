@@ -30,12 +30,6 @@ module Mixins
           end
           if selected_items.blank?
             session[:retire_items] = [params[:id]]
-          elsif selected_items.empty?
-              add_flash(_("At least one %{model} must be selected for tagging") %
-                {:model => ui_lookup(:model => "Vm")}, :error)
-              @refresh_div = "flash_msg_div"
-              @refresh_partial = "layouts/flash_msg"
-              return
           else
             session[:retire_items] = selected_items # Set the array of retire items
           end
@@ -149,4 +143,3 @@ module Mixins
     end
   end
 end
-
