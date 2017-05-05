@@ -202,9 +202,11 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
         if (iconInfo.type != 'glyph')
           return;
 
-        $(this).text(iconInfo.icon)
+        /* global fontIconChar */
+        var fonticon = fontIconChar(iconInfo.class);
+        $(this).text(fonticon.char)
           .attr("class", "glyph")
-          .attr('font-family', iconInfo.fontfamily);
+          .attr('font-family', fonticon.font);
       })
 
       .attr("y", function(d) {

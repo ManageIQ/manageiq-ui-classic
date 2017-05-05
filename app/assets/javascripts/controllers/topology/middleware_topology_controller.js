@@ -103,8 +103,10 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
         if (iconInfo.type != 'glyph') {
           return;
         }
-        var fontFamily = 'font-family:' + iconInfo.fontfamily + ';';
-        $(this).text(iconInfo.icon)
+        /* global fontIconChar */
+        var fonticon = fontIconChar(iconInfo.class);
+        var fontFamily = 'font-family:' + fonticon.font + ';';
+        $(this).text(fonticon.char)
           .attr('class', 'glyph')
           .attr('style', fontFamily)
           .attr('x', 0)
@@ -112,7 +114,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
 
         // override some properties for container glyph, because it looks too small and alignment is wrong
         if (d.item.kind === 'Container') {
-          $(this).text(iconInfo.icon)
+          $(this).text(fonticon.char)
             .attr('style', 'font-size: 20px;' + fontFamily)
             .attr('y', 7);
         }
