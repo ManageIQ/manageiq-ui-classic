@@ -2,7 +2,8 @@
                'ng-controller'  => "cloudTenantFormController as vm",
                'miq-form'       => true,
                'model'          => 'vm.cloudTenantModel',
-               'model-copy'     => 'vm.modelCopy'}
+               'model-copy'     => 'vm.modelCopy',
+               'form-changed' => true}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Edit Cloud Tenant')
@@ -15,8 +16,7 @@
                             :name          => "name",
                             'ng-model'     => "vm.cloudTenantModel.name",
                             'ng-maxlength' => 128,
-                            :miqrequired   => false,
-                            :checkchange   => true}
+                            :miqrequired   => false}
 
   = render :partial => "layouts/angular/generic_form_buttons"
 
