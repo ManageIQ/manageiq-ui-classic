@@ -76,7 +76,6 @@ module Mixins
                   Vm
                 end
           # Check RBAC for all items in session[:retire_items]
-          binding.pry
           @retireitems = find_records_with_rbac(kls, session[:retire_items]).sort_by(&:name)
           if params[:button]
             flash = handle_form_buttons(kls)
@@ -99,10 +98,8 @@ module Mixins
           if @retireitems.length == 1 && !@retireitems[0].retires_on.nil?
             t = @retireitems[0].retires_on                                         # Single VM, set to current time
             w = @retireitems[0].retirement_warn if @retireitems[0].retirement_warn # Single VM, get retirement warn
-          else
-            t = nil
           end
-          session[:retire_date] = t.nil? ? nil : "#{t.month}/#{t.day}/#{t.year}"
+          session[:retire_date] = "#{t.month}/#{t.day}/#{t.year}" unless t.nil?
           session[:retire_warn] = w
           @in_a_form = true
           @edit ||= {}
