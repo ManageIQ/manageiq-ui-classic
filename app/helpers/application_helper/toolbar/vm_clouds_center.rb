@@ -34,8 +34,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
           N_('Compare Selected items'),
           :url_parms => "main_div",
           :enabled   => false,
-          :onwhen    => "2+",
-          :klass     => ApplicationHelper::Button::InstanceCheckCompare),
+          :onwhen    => "2+"),
         separator,
         button(
           :instance_edit,

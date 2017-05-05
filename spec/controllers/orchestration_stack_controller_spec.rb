@@ -20,9 +20,8 @@ describe OrchestrationStackController do
         get :show, :params => {:id => record.id, :display => "instances"}
       end
 
-      it 'does not render compliance check and comparison buttons' do
+      it 'does not render compliance check button' do
         expect(response.body).not_to include('instance_check_compliance')
-        expect(response.body).not_to include('instance_compare')
       end
 
       it "renders the listnav" do
