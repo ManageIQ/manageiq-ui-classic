@@ -1,24 +1,22 @@
 describe('cloudTenantFormController', function() {
-  var scope, vm, $controller, $httpBackend, miqService;
+  var $scope, vm, $controller, $httpBackend, miqService;
 
   beforeEach(module('ManageIQ'));
 
   beforeEach(inject(function(_$httpBackend_, $rootScope, _$controller_, _miqService_) {
     miqService = _miqService_;
 
-    spyOn(miqService, 'showButtons');
-    spyOn(miqService, 'hideButtons');
     spyOn(miqService, 'miqAjaxButton');
     spyOn(miqService, 'miqFlash');
 
-    scope = $rootScope.$new();
+    $scope = $rootScope.$new();
 
     var mock_data = { name: 'test', ems_id: 1 };
 
     $httpBackend = _$httpBackend_;
     $httpBackend.when('GET','/cloud_tenant/show_list').respond(mock_data);
     $controller = _$controller_('cloudTenantFormController as vm',{
-      $scope: scope,
+      $scope: $scope,
       miqService: miqService,
       cloudTenantFormId: 'new'});
   }));
