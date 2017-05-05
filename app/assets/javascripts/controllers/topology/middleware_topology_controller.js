@@ -10,6 +10,8 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
   $scope.d3 = d3;
   var icons;
 
+  topologyService.mixinContextMenu(this, $scope);
+
   $scope.refresh = function() {
     var id;
     if ($location.absUrl().match('show/$') || $location.absUrl().match('show$')) {
@@ -51,6 +53,9 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
       })
       .attr('class', function(d) {
         return topologyService.getItemStatusClass(d);
+      })
+      .on('contextmenu', function(d) {
+        self.contextMenu(this, d);
       });
     added.append('title');
     added.on('dblclick', function(d) {
@@ -72,6 +77,9 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
       })
       .attr('width', function(d) {
         return self.getCircleDimensions(d).width;
+      })
+      .on('contextmenu', function(d) {
+        self.contextMenu(this, d);
       });
 
     // attached labels
@@ -105,6 +113,9 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
             .attr('style', 'font-size: 20px;' + fontFamily)
             .attr('y', 7);
         }
+      })
+      .on('contextmenu', function(d) {
+        self.contextMenu(this, d);
       });
 
     added.selectAll('title').text(function(d) {
@@ -125,10 +136,6 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     }
 
     return icons[d.item.display_kind];
-  };
-
-  self.dblclick = function dblclick(d) {
-    window.location.assign(topologyService.geturl(d));
   };
 
   self.getCircleDimensions = function getCircleDimensions(d) {
