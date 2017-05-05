@@ -11,6 +11,7 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
         vm.modelCopy = angular.copy( vm.keyPairModel );
         vm.model = 'keyPairModel';
         vm.ems_choices = [];
+        vm.saveable = miqService.saveable;
         ManageIQ.angular.scope = $scope;
 
         miqService.sparkleOn();
