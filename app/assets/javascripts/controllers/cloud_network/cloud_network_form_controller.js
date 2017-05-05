@@ -18,7 +18,7 @@ ManageIQ.angular.app.controller('cloudNetworkFormController', ['$scope', 'cloudN
   } else {
     miqService.sparkleOn();
 
-  API.get("/api/cloud_networks/" + cloudNetworkFormId + "?attributes=cloud_tenant")
+    API.get("/api/cloud_networks/" + cloudNetworkFormId + "?attributes=cloud_tenant")
       .then(getCloudNetworkFormDataComplete)
       .catch(miqService.handleFailure);
   }
