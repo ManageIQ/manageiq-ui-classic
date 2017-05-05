@@ -36,4 +36,7 @@ class PhysicalServerController < ApplicationController
     []
   end
   helper_method :textual_group_list
+
+  def button
+  end
 end
