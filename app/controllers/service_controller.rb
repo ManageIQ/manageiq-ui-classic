@@ -137,7 +137,7 @@ class ServiceController < ApplicationController
 
   def textual_group_list
     if @record.type == "ServiceAnsiblePlaybook"
-      [%i(properties), %i(lifecycle)]
+      [%i(properties), %i(lifecycle tags)]
     else
       [%i(properties lifecycle relationships miq_custom_attributes), %i(vm_totals tags)]
     end
