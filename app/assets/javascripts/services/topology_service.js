@@ -28,9 +28,73 @@ ManageIQ.angular.app.service('topologyService', function() {
     }
   };
 
-  this.addContextMenuOption = function(popup, text, data, callback) {
-    popup.append("p").text(text)
-      .on('click', function() { callback(data); });
+  this.mixinContextMenu = function(self, $scope) {
+    var topologyService = this;
+    var d3 = $scope.d3;
+    $scope.contextMenuShowing = false;
+
+    var removeContextMenu = function() {
+      d3.event.preventDefault();
+      d3.select(".popup").remove();
+      $scope.contextMenuShowing = false;
+    };
+
+    self.contextMenu = function(_that, data) {
+      if ($scope.contextMenuShowing) {
+        removeContextMenu();
+      } else {
+        d3.event.preventDefault();
+
+        var canvas = d3.select("kubernetes-topology-graph");
+        var mousePosition = d3.mouse(canvas.node());
+
+        var popup = canvas.append("div")
+            .attr("class", "popup")
+            .style("left", mousePosition[0] + "px")
+            .style("top", mousePosition[1] + "px");
+        popup.append("h5").text("Actions on " + data.item.display_kind);
+
+        if (data.item.kind != "Tag") {
+          popup.append("p").text(__('Go to summary page')).on('click', function() {
+            self.dblclick(data);
+          });
+        }
+
+        var canvasSize = [
+          canvas.node().offsetWidth,
+          canvas.node().offsetHeight
+        ];
+
+        var popupSize = [
+          popup.node().offsetWidth,
+          popup.node().offsetHeight
+        ];
+
+        if (popupSize[0] + mousePosition[0] > canvasSize[0]) {
+          popup.style("left", "auto");
+          popup.style("right", 0);
+        }
+
+        if (popupSize[1] + mousePosition[1] > canvasSize[1]) {
+          popup.style("top", "auto");
+          popup.style("bottom", 0);
+        }
+        $scope.contextMenuShowing = ! $scope.contextMenuShowing;
+      }
+    }
+
+    self.dblclick = function dblclick(d) {
+      if (d.item.kind == "Tag") {
+        return false;
+      }
+      window.location.assign(topologyService.geturl(d));
+    };
+
+    d3.select("body").on('click', function() {
+      if ($scope.contextMenuShowing) {
+        removeContextMenu();
+      }
+    });
   };
 
   this.searchNode = function(svg, query) {
