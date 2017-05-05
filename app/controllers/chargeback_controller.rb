@@ -87,7 +87,7 @@ class ChargebackController < ApplicationController
     session[:rates_sortcol] = @sortcol
     session[:rates_sortdir] = @sortdir
 
-    update_gtl_div('cb_rates_list') if pagination_or_gtl_request?
+    update_gtl_div('cb_rates_list') if pagination_or_gtl_request? && @show_list
   end
 
   def cb_rate_edit
@@ -381,7 +381,8 @@ class ChargebackController < ApplicationController
     end
   end
 
-  def get_node_info(node, _show_list = true)
+  def get_node_info(node, show_list = true)
+    @show_list = show_list
     node = valid_active_node(node)
     if x_active_tree == :cb_rates_tree
       if node == "root"
