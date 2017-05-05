@@ -13,6 +13,21 @@ ManageIQ.angular.app.service('topologyService', function() {
     return status;
   };
 
+  this.showHideNames = function($scope) {
+    return function () {
+      $scope.checkboxModel.value = $('input#box_display_names')[0].checked;
+      var vertices = $scope.vs;
+
+      if ($scope.checkboxModel.value) {
+        vertices.selectAll("text.attached-label")
+          .classed("visible", true);
+      } else {
+        vertices.selectAll("text.attached-label")
+          .classed("visible", false);
+      }
+    }
+  };
+
   this.addContextMenuOption = function(popup, text, data, callback) {
     popup.append("p").text(text)
       .on('click', function() { callback(data); });
