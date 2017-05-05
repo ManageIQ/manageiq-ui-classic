@@ -36,4 +36,70 @@ class PhysicalServerController < ApplicationController
     []
   end
   helper_method :textual_group_list
+
+  # Handles buttons pressed on the toolbar
+  def button
+    if params[:pressed] == "physical_server_power_on"
+      physical_server_power_on
+    elsif params[:pressed] == "physical_server_power_off"
+      physical_server_power_off
+    elsif params[:pressed] == "physical_server_restart"
+      physical_server_restart
+    elsif params[:pressed] == "physical_server_blink_loc_led"
+      physical_server_blink_loc_led
+    elsif params[:pressed] == "physical_server_turn_on_loc_led"
+      physical_server_turn_on_loc_led
+    elsif params[:pressed] == "physical_server_turn_off_loc_led"
+      physical_server_turn_off_loc_led
+  end
+
+  private
+
+  def physical_server_power_on
+    assert_privileges('physical_server_power_on')
+    servers = find_records_with_rbac(PhysicalServer, checked_or_params)
+    servers.each do |server|
+      # Trigger power on action on the server
+    end
+  end
+
+  def physical_server_power_off
+    assert_privileges('physical_server_power_off')
+    servers = find_records_with_rbac(PhysicalServer, checked_or_params)
+    servers.each do |server|
+      # Trigger power on action on the server
+    end
+  end
+
+  def physical_server_restart
+    assert_privileges('physical_server_restart')
+    servers = find_records_with_rbac(PhysicalServer, checked_or_params)
+    servers.each do |server|
+      # Trigger power on action on the server
+    end
+  end
+
+  def physical_server_blink_loc_led
+    assert_privileges('physical_server_blink_loc_led')
+    servers = find_records_with_rbac(PhysicalServer, checked_or_params)
+    servers.each do |server|
+      # Trigger power on action on the server
+    end
+  end
+
+  def physical_server_turn_on_loc_led
+    assert_privileges('physical_server_turn_on_loc_led')
+    servers = find_records_with_rbac(PhysicalServer, checked_or_params)
+    servers.each do |server|
+      # Trigger power on action on the server
+    end
+  end
+
+  def physical_server_turn_off_loc_led
+    assert_privileges('physical_server_turn_off_loc_led')
+    servers = find_records_with_rbac(PhysicalServer, checked_or_params)
+    servers.each do |server|
+      # Trigger power on action on the servergit sta
+    end
+  end
 end
