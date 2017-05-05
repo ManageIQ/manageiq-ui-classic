@@ -33,7 +33,9 @@ class PhysicalServerController < ApplicationController
   end
 
   def textual_group_list
-    []
+    [
+      %i(properties relationships),
+    ]
   end
   helper_method :textual_group_list
 end
