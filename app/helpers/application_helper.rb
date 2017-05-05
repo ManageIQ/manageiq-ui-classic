@@ -894,6 +894,7 @@ module ApplicationHelper
        offline
        orchestration_stack
        persistent_volume
+       physical_server
        provider_foreman
        resource_pool
        retired
@@ -1421,6 +1422,7 @@ module ApplicationHelper
           network_router
           offline
           orchestration_stack
+          physical_server
           persistent_volume
           physical_server
           resource_pool
@@ -1551,6 +1553,7 @@ module ApplicationHelper
       offline
       orchestration_stack
       persistent_volume
+      physical_server
       provider_foreman
       resource_pool
       retired
