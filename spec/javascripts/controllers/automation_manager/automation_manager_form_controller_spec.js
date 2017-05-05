@@ -111,7 +111,8 @@ describe('automationManagerFormController', function() {
       $scope.angularForm = {
         $setPristine: function (value){},
         $setUntouched: function (value){},
-      };vm.resetClicked();
+      };
+      vm.resetClicked();
     });
 
     it('does not turn the spinner on', function() {
@@ -144,7 +145,8 @@ describe('automationManagerFormController', function() {
     beforeEach(function() {
       $scope.angularForm = {
         $setPristine: function (value){}
-      };vm.addClicked();
+      };
+      vm.addClicked();
     });
 
     it('turns the spinner on via the miqService', function() {
@@ -179,13 +181,13 @@ describe('automationManagerFormController', function() {
     }));
 
     it('returns true if all the Validation fields are filled in', function() {
-      expect($scope.canValidateBasicInfo()).toBe(true);
+      expect(vm.canValidateBasicInfo()).toBe(true);
     });
   });
 
   describe('Checks for validateClicked in the scope', function() {
     it('contains validateClicked in the scope', function() {
-      expect($scope.validateClicked).toBeDefined();
+      expect(vm.validateClicked).toBeDefined();
     });
   });
 });

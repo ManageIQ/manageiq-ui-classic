@@ -11,12 +11,12 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
   };
   vm.formId = automationManagerFormId;
   vm.afterGet = false;
-  $scope.validateClicked = miqService.validateWithAjax;
+  vm.validateClicked = miqService.validateWithAjax;
   vm.saveable = miqService.saveable;
   vm.modelCopy = angular.copy(vm.automationManagerModel);
   vm.model = 'automationManagerModel';
 
-  ManageIQ.angular.scope = $scope;
+  ManageIQ.angular.scope = vm;
 
   if (automationManagerFormId === 'new') {
     vm.newRecord  = true;
@@ -62,7 +62,7 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     }
     vm.modelCopy = angular.copy(vm.automationManagerModel);
   }
-  $scope.canValidateBasicInfo = function() {
+  vm.canValidateBasicInfo = function() {
     return vm.isBasicInfoValid();
   };
   vm.isBasicInfoValid = function() {
