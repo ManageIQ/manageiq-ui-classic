@@ -16,8 +16,7 @@ module Mixins
             rec_cls = "orchestration_stack"
             bc_msg = _("Retire Orchestration Stack")
           end
-          klass = rec_cls ? rec_cls.camelize.constantize : get_class_from_controller_param(params[:controller])
-          selected_items = find_checked_ids_with_rbac(klass)
+          selected_items = checked_or_params
           @edit ||= {}
           @edit[:object_ids] = selected_items
           session[:edit] = @edit
@@ -28,11 +27,7 @@ module Mixins
             javascript_flash(:scroll_top => true)
             return
           end
-          if selected_items.blank?
-            session[:retire_items] = [params[:id]]
-          else
-            session[:retire_items] = selected_items # Set the array of retire items
-          end
+          session[:retire_items] = selected_items # Set the array of retire items
           session[:assigned_filters] = assigned_filters
           if @explorer
             retire
@@ -80,6 +75,8 @@ module Mixins
                 when "vm_infra", "vm_cloud", "vm", "vm_or_template"
                   Vm
                 end
+
+          @retireitems = find_records_with_rbac(kls, session[:retire_items]).sort_by(&:name)
           if params[:button]
             if params[:button] == "cancel"
               flash = _("Set/remove retirement date was cancelled by the user")
@@ -121,7 +118,6 @@ module Mixins
           drop_breadcrumb(:name => _("Retire %{name}") % {:name => ui_lookup(:models => kls.to_s)},
                           :url  => "/#{session[:controller]}/retire")
           session[:cat] = nil                 # Clear current category
-          @retireitems = kls.find(session[:retire_items]).sort_by(&:name) # Get the db records
           build_targets_hash(@retireitems)
           @view = get_db_view(kls)              # Instantiate the MIQ Report view object
           @view.table = MiqFilter.records2table(@retireitems, @view.cols + ['id'])
