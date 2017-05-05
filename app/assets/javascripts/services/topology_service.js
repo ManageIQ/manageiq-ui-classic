@@ -6,7 +6,7 @@ ManageIQ.angular.app.service('topologyService', function() {
       __("Status: ") + d.item.status
     ];
 
-    if (d.item.kind == 'Host' || d.item.kind == 'Vm') {
+    if (d.item.kind === 'Host' || d.item.kind === 'Vm') {
       status.push(__("Provider: ") + d.item.provider);
     }
 
@@ -105,14 +105,14 @@ ManageIQ.angular.app.service('topologyService', function() {
 
     if (query != "") {
       var selected = nodes.filter(function (d) {
-        return d.item.name.indexOf(query) == -1;
+        return d.item.name.indexOf(query) === -1;
       });
       selected.style("opacity", "0.2");
 
       var links = svg.selectAll("line");
       links.style("opacity", "0.2");
 
-      if (nodes.length == selected.length) {
+      if (nodes.length === selected.length) {
         found = false;
       }
     }
