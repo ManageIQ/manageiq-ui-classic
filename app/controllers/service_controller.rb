@@ -26,7 +26,7 @@ class ServiceController < ApplicationController
   end
 
   def title
-    _("Services")
+    _("My Services")
   end
 
   # Service show selected, redirect to proper controller
@@ -408,7 +408,6 @@ class ServiceController < ApplicationController
   def get_session_data
     super
     @layout     = "services"
-    @title      = title
     @options    = session[:prov_options]
   end
 
