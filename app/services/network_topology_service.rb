@@ -20,10 +20,14 @@ class NetworkTopologyService < TopologyService
       :availability_zones => [
         :vms => [
           :tags,
-          :load_balancers  => :tags,
           :floating_ips    => :tags,
           :cloud_tenant    => :tags,
-          :security_groups => :tags
+          :security_groups => :tags,
+          :load_balancers  => [
+            :tags,
+            :floating_ips,
+            :security_groups,
+          ]
         ]
       ],
       :cloud_subnets      => [
