@@ -27,10 +27,10 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
 
   vm.cancelClicked = function() {
     if (floatingIpFormId == 'new') {
-        var url = '/floating_ip/create/new' + '?button=cancel';
-      } else {
-        var url = '/floating_ip/update/' + floatingIpFormId + '?button=cancel';
-      }
+      var url = '/floating_ip/create/new' + '?button=cancel';
+    } else {
+      var url = '/floating_ip/update/' + floatingIpFormId + '?button=cancel';
+    }
     miqService.miqAjaxButton(url);
   };
 
