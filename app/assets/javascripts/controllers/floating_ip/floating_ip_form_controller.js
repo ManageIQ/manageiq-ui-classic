@@ -21,36 +21,36 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
   }
 
   vm.addClicked = function() {
-      var url = 'create/new' + '?button=add';
-      miqService.miqAjaxButton(url, vm.floatingIpModel, { complete: false });
-    };
+    var url = 'create/new' + '?button=add';
+    miqService.miqAjaxButton(url, vm.floatingIpModel, { complete: false });
+  };
 
   vm.cancelClicked = function() {
-      if (floatingIpFormId == 'new') {
-      var url = '/floating_ip/create/new' + '?button=cancel';
-    } else {
-      var url = '/floating_ip/update/' + floatingIpFormId + '?button=cancel';
-    }
-      miqService.miqAjaxButton(url);
+    if (floatingIpFormId == 'new') {
+        var url = '/floating_ip/create/new' + '?button=cancel';
+      } else {
+        var url = '/floating_ip/update/' + floatingIpFormId + '?button=cancel';
+      }
+    miqService.miqAjaxButton(url);
   };
 
   vm.saveClicked = function() {
-      var url = '/floating_ip/update/' + floatingIpFormId + '?button=save';
-      miqService.miqAjaxButton(url, vm.floatingIpModel, { complete: false });
-    };
+    var url = '/floating_ip/update/' + floatingIpFormId + '?button=save';
+    miqService.miqAjaxButton(url, vm.floatingIpModel, { complete: false });
+  };
 
   vm.resetClicked = function() {
-      vm.floatingIpModel = angular.copy( vm.modelCopy );
-      $scope.angularForm.$setPristine(true);
-      miqService.miqFlash("warn", "All changes have been reset");
-    };
+    vm.floatingIpModel = angular.copy( vm.modelCopy );
+    $scope.angularForm.$setPristine(true);
+    miqService.miqFlash("warn", "All changes have been reset");
+  };
 
   vm.filterNetworkManagerChanged = function(id) {
-      miqService.sparkleOn();
-      $http.get('/floating_ip/networks_by_ems/' + id)
+    miqService.sparkleOn();
+    $http.get('/floating_ip/networks_by_ems/' + id)
       .then(getNetworkByEmsFormData)
       .catch(miqService.handleFailure);
-    };
+  };
 
   function getFloatingIpFormData(response) {
     var data = response.data;

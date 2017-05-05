@@ -1,12 +1,10 @@
-/**
- * Created by swi2 on 31/03/2017.
- */
 describe('floatingIpFormController', function() {
   var $http,$scope, $controller, floatingIpFormId,miqService,vm;
 
   beforeEach(module('ManageIQ'));
 
-  beforeEach(inject(function($rootScope,$http, _$controller_, miqService, ) {
+  beforeEach(inject(function($rootScope,$http, _$controller_, _miqService_ ) {
+    miqService = _miqService_;
     spyOn(miqService, 'miqAjaxButton');
     spyOn(miqService, 'miqFlash');
     spyOn(miqService, 'sparkleOn');
@@ -18,8 +16,9 @@ describe('floatingIpFormController', function() {
       description:                  'floatingIpDescription'
     };
 
-    $controller = _$controller_('floatingIpFormController', {
+    vm = _$controller_('floatingIpFormController as vm', {
       $scope: $scope,
+      miqService: miqService ,
       floatingIpFormId: 1000000000001
     });
 
@@ -27,7 +26,7 @@ describe('floatingIpFormController', function() {
 
   describe('#saveClicked', function() {
     beforeEach(function() {
-      setTimeout($scope.saveClicked);
+      setTimeout(vm.saveClicked);
     });
 
     it('delegates to saveRecord', function(done) {
@@ -42,25 +41,20 @@ describe('floatingIpFormController', function() {
     });
   });
 
-  describe('#resetClicked', function() {
+
+  describe('#cancelClicked', function() {
     beforeEach(function() {
-      $scope.vm.floatingIpModel.name = 'floatingIpName';
       $scope.angularForm = {
-        $setPristine: function (value){},
-        $setUntouched: function (value){},
+        $setPristine: function (value){}
       };
-      setTimeout($scope.resetClicked);
+      setTimeout(vm.cancelClicked);
     });
 
-    it('warn, All changes have been reset', function(done) {
-      setTimeout(function() {
-        expect($scope.vm.floatingIpModel.name).toEqual('floatingIpName');
+    it('delegates to cancelOperation', function(done) {
+      setTimeout(function () {
+        expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/floating_ip/update/1000000000001?button=cancel');
         done();
       });
     });
   });
-
-
-
-
 });
