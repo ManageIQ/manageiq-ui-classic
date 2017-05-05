@@ -66,7 +66,7 @@ class NetworkTopologyService < TopologyService
   def entity_status(entity)
     case entity
     when Vm
-      entity.power_state.capitalize
+      entity.power_state.nil? ? "Unknown" : entity.power_state.capitalize
     when ManageIQ::Providers::NetworkManager
       entity.authentications.blank? ? 'Unknown' : entity.authentications.first.status.try(:capitalize)
     when NetworkRouter, CloudSubnet, CloudNetwork, FloatingIp
