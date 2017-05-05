@@ -56,10 +56,11 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     added.on('dblclick', function(d) {
       return self.dblclick(d);
     });
+
     added.append('image')
       .attr('xlink:href', function(d) {
         var iconInfo = self.getIcon(d);
-        return (iconInfo.type == 'glyph' ? '' : iconInfo.icon);
+        return (iconInfo.type == 'glyph' ? null : iconInfo.icon);
       })
       .attr('y', function(d) {
         return self.getCircleDimensions(d).y;
