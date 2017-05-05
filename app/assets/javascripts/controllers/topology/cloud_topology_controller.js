@@ -47,20 +47,7 @@ function CloudTopologyCtrl($scope, $http, $interval, $location, topologyService,
 
   $scope.legendTooltip = __("Click here to show/hide entities of this type");
 
-  $scope.show_hide_names = function() {
-    $scope.checkboxModel.value = $('input#box_display_names')[0].checked;
-    var vertices = $scope.vs;
-
-    if ($scope.checkboxModel.value) {
-      vertices.selectAll("text.attached-label")
-        .classed("visible", true);
-    } else {
-      vertices.selectAll("text.attached-label")
-        .classed("visible", false);
-    }
-  };
-
-  $('input#box_display_names').click($scope.show_hide_names)
+  $('input#box_display_names').click(topologyService.showHideNames($scope));
   $scope.refresh();
   var promise = $interval($scope.refresh, 1000 * 60 * 3);
 
