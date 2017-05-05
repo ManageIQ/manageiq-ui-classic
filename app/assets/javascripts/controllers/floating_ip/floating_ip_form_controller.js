@@ -20,12 +20,12 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
       .catch(miqService.handleFailure);
   }
 
-  $scope.addClicked = function() {
+  vm.addClicked = function() {
       var url = 'create/new' + '?button=add';
       miqService.miqAjaxButton(url, vm.floatingIpModel, { complete: false });
     };
 
-  $scope.cancelClicked = function() {
+  vm.cancelClicked = function() {
       if (floatingIpFormId == 'new') {
       var url = '/floating_ip/create/new' + '?button=cancel';
     } else {
@@ -34,12 +34,12 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
       miqService.miqAjaxButton(url);
   };
 
-  $scope.saveClicked = function() {
+  vm.saveClicked = function() {
       var url = '/floating_ip/update/' + floatingIpFormId + '?button=save';
       miqService.miqAjaxButton(url, vm.floatingIpModel, { complete: false });
     };
 
-  $scope.resetClicked = function() {
+  vm.resetClicked = function() {
       vm.floatingIpModel = angular.copy( vm.modelCopy );
       $scope.angularForm.$setPristine(true);
       miqService.miqFlash("warn", "All changes have been reset");
