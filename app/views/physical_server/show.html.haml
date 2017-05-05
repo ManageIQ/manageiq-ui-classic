@@ -1,6 +1,5 @@
 #main_div
-    - arr = %w(physical_server physical_servers)
-    - if arr.include?(@display) && @showtype != "compare"
-        = render(:partial => "layouts/gtl", :locals => {:action_url => "show/#{@ph_server.id}"})
-    - else
-        = render(:partial => @showtype)
+  - if %w(physical_servers).include?(@display)
+    = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
+  - else
+    = render :partial => 'layouts/textual_groups_generic'
