@@ -261,15 +261,8 @@ class PxeController < ApplicationController
   end
   private :replace_right_cell
 
-
-  def get_session_data
-    super
-  end
   private :get_session_data
 
-  def set_session_data
-    super
-  end
   private :set_session_data
 
   menu_section :inf
