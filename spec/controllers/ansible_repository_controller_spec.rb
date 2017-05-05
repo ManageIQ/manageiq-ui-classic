@@ -14,6 +14,7 @@ describe AnsibleRepositoryController do
     it "return correct http response code" do
       is_expected.to have_http_status 200
     end
+
     it "render view for specific repostitory" do
       is_expected.to render_template(:partial => "layouts/_textual_groups_generic")
     end
@@ -27,6 +28,7 @@ describe AnsibleRepositoryController do
     it "return correct http response code" do
       is_expected.to have_http_status 200
     end
+
     it "render view for list of repositories" do
       is_expected.to render_template(:partial => "layouts/_gtl")
     end
