@@ -29,7 +29,7 @@ describe AnsiblePlaybookController do
     end
 
     it "renders correct template" do
-      is_expected.to render_template(:layout => "layouts/application")
+      is_expected.to render_template(:partial => "layouts/_gtl")
     end
   end
 end
