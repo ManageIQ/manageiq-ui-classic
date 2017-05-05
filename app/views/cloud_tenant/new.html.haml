@@ -25,7 +25,7 @@
                             'ng-maxlength' => 128,
                             :required      => ''}
 
-  = render :partial => "layouts/angular/x_edit_buttons_angular"
+  = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript
   ManageIQ.angular.app.value('cloudTenantFormId', '#{@tenant.id || "new"}');
