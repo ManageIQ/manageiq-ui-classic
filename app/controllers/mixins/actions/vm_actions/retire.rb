@@ -75,36 +75,11 @@ module Mixins
                 when "vm_infra", "vm_cloud", "vm", "vm_or_template"
                   Vm
                 end
-
+          # Check RBAC for all items in session[:retire_items]
+          binding.pry
           @retireitems = find_records_with_rbac(kls, session[:retire_items]).sort_by(&:name)
           if params[:button]
-            if params[:button] == "cancel"
-              flash = _("Set/remove retirement date was cancelled by the user")
-              @sb[:action] = nil
-            elsif params[:button] == "save"
-              if params[:retire_date].blank?
-                t = nil
-                w = nil
-
-                if session[:retire_items].length == 1
-                  flash = _("Retirement date removed")
-                else
-                  flash = _("Retirement dates removed")
-                end
-              else
-                t = params[:retire_date].in_time_zone
-                w = params[:retire_warn].to_i
-
-                ts = t.strftime("%x %R %Z")
-                if session[:retire_items].length == 1
-                  flash = _("Retirement date set to %{date}") % {:date => ts}
-                else
-                  flash = _("Retirement dates set to %{date}") % {:date => ts}
-                end
-              end
-              kls.retire(session[:retire_items], :date => t, :warn => w) # Call the model to retire the VM(s)
-              @sb[:action] = nil
-            end
+            flash = handle_form_buttons(kls)
             add_flash(flash)
             if @sb[:explorer]
               replace_right_cell
@@ -134,6 +109,35 @@ module Mixins
           @edit[:object_ids] = @retireitems
           session[:edit] = @edit
           @refresh_partial = "shared/views/retire" if @explorer || @layout == "orchestration_stack"
+        end
+
+      private
+        def handle_form_buttons(kls)
+          if params[:button] == "cancel"
+            flash = _("Set/remove retirement date was cancelled by the user")
+            @sb[:action] = nil
+          elsif params[:button] == "save"
+            if params[:retire_date].blank?
+              if session[:retire_items].length == 1
+                flash = _("Retirement date removed")
+              else
+                flash = _("Retirement dates removed")
+              end
+            else
+              t = params[:retire_date].in_time_zone
+              w = params[:retire_warn].to_i
+
+              ts = t.strftime("%x %R %Z")
+              if session[:retire_items].length == 1
+                flash = _("Retirement date set to %{date}") % {:date => ts}
+              else
+                flash = _("Retirement dates set to %{date}") % {:date => ts}
+              end
+            end
+            kls.retire(session[:retire_items], :date => t, :warn => w) # Call the model to retire the VM(s)
+            @sb[:action] = nil
+          end
+          flash
         end
       end
     end
