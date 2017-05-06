@@ -16,11 +16,6 @@ class OpsController
       name.sub(/_accords$/, '')
     end
 
-    def all_checked(kids)
-      return false if kids.empty? # empty list is considered not checked
-      kids.length == kids.collect { |k| k if k[:select] }.compact.length
-    end
-
     def build_section(section, parent_checked)
       kids = []
       node = {
@@ -41,22 +36,16 @@ class OpsController
           next if item.feature.nil?
           feature_name = remove_accords_suffix(item.feature)
           next unless MiqProductFeature.feature_exists?(feature_name) # FIXME: feature name? or :feature for items
-          feature = rbac_features_tree_add_node(feature_name, node[:key], parent_checked)
+          feature = rbac_features_tree_add_node(
+            feature_name,
+            (parent_checked || @role_features.include?(MiqProductFeature.feature_parent(feature)))
+          )
           kids.push(feature) unless feature.nil?
         end
       end
 
-      node[:select] = parent_checked || all_checked(kids)
       node[:children] = kids
-
-      checked = kids.count { |kid| kid[:select] }
-      if checked == kids.length
-        node[:select] = true
-      elsif checked == 0
-        node[:select] = false
-      else
-        node[:select] = 'undefined'
-      end
+      node[:select] = parent_checked || select_by_kids_selected(kids)
 
       node
     end
@@ -86,7 +75,8 @@ class OpsController
         :select      => root_node[:select],
         :checkable   => @edit
       }
-      rbac_features_tree_add_node("all_vm_rules", root_node[:key], @all_vm_node[:select])
+      rbac_features_tree_add_node("all_vm_rules", @all_vm_node[:select])
+      @all_vm_node[:select] = select_by_kids_selected(@all_vm_node[:children])
 
       Menu::Manager.each do |section|
         next if section.id == :cons && !Settings.product.consumption
@@ -96,20 +86,12 @@ class OpsController
       end
       top_nodes << @all_vm_node
 
-      checked = top_nodes.count { |kid| kid[:select] }
-      if checked == top_nodes.length
-        root_node[:select] = true
-      elsif checked == 0
-        root_node[:select] = false
-      else
-        root_node[:select] = 'undefined'
-      end
-
       root_node[:children] = top_nodes
+      root_node[:select] = select_by_kids_selected(top_nodes)
       root_node
     end
 
-    def rbac_features_tree_add_node(feature, _pid, parent_checked = false)
+    def rbac_features_tree_add_node(feature, parent_checked = nil)
       details = MiqProductFeature.feature_details(feature)
       return if details[:hidden]
 
@@ -125,9 +107,7 @@ class OpsController
       node[:hideCheckbox] = true if details[:protected]
 
       MiqProductFeature.feature_children(feature).each do |f|
-        feat = rbac_features_tree_add_node(f,
-                                           node[:key],
-                                           parent_checked || @role_features.include?(feature)) if f
+        feat = rbac_features_tree_add_node(f, (parent_checked || @role_features.include?(feature))) if f
         next unless feat
 
         # exceptional handling for named features
@@ -139,8 +119,16 @@ class OpsController
       end
 
       node[:children] = kids
-      node[:select] = parent_checked || @role_features.include?(feature) || all_checked(kids)
+      node[:select] = parent_checked || @role_features.include?(feature) || select_by_kids_selected(kids)
       node
+    end
+
+    private
+
+    def select_by_kids_selected(kids)
+      return false       if kids.empty?
+      return true        if kids.all? { |k| k[:select] == true }
+      return 'undefined' if kids.any? { |k| k[:select] }
     end
   end
 end
