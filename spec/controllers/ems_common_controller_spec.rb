@@ -167,12 +167,6 @@ end
 describe EmsContainerController do
   let(:myhawkularroute) { double(:spec => double(:host => "myhawkularroute.com")) }
 
-  def expect_get_route(&block)
-    mock_client = double('kubeclient')
-    allow(Kubeclient::Client).to receive(:new).and_return(mock_client)
-    expect(mock_client).to receive(:get_route).with('hawkular-metrics', 'openshift-infra', &block)
-  end
-
   context "::EmsCommon" do
     context "adding new provider without hawkular endpoint" do
       def test_creating(emstype)
@@ -196,20 +190,7 @@ describe EmsContainerController do
         expect(@ems.connection_configurations.hawkular).to eq(nil)
       end
 
-      it "fetches hawkular-metrics route" do
-        expect_get_route { myhawkularroute }
-        test_creating('openshift')
-        expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('myhawkularroute.com')
-      end
-
-      it "tolerates missing hawkular-metrics route" do
-        expect_get_route { nil }
-        test_creating('openshift')
-        expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq(nil)
-      end
-
-      it "tolerates errors fetching hawkular-metrics route" do
-        expect_get_route { raise KubeException.new(418, "I'm a Teapot", double('response')) }
+      it "doesn't probe openshift for kubernetes" do
         test_creating('openshift')
         expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq(nil)
       end
@@ -267,7 +248,6 @@ describe EmsContainerController do
           @ems  = ManageIQ::Providers::Kubernetes::ContainerManager.new
           test_setting_many_fields
 
-          # kubernetes should not probe hawkular-metrics route
           test_setting_few_fields
           expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq(nil)
         end
@@ -276,9 +256,9 @@ describe EmsContainerController do
           @type = 'openshift'
           @ems  = ManageIQ::Providers::Openshift::ContainerManager.new
           test_setting_many_fields
-          expect_get_route { myhawkularroute }
+
           test_setting_few_fields
-          expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('myhawkularroute.com')
+          expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq(nil)
         end
       end
     end

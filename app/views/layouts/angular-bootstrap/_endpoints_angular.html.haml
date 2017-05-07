@@ -3,6 +3,7 @@
 - ng_reqd_hostname ||= true
 - ng_reqd_api_port ||= true
 - ng_reqd_db_name ||= false
+- detection ||= false
 
 %div{"ng-if" => defined?(security_protocol_hide) ? false : true}
   .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_security_protocol.$invalid}",
@@ -82,6 +83,17 @@
         = _("Required")
       %span.help-block{"ng-show" => "angularForm.#{prefix}_hostname.$error.detectedSpaces"}
         = _("Spaces are prohibited")
+
+    - detect = "detectClicked({target: '.detect_button'})"
+    %span
+      %miq-button.detect_button{"ng-if" => detection ? 'true' : 'false',
+                  :name            => _("Detect"),
+                  "on-click"       => detect,
+                  :enabled         => "isDetectionEnabled()",
+                  "disabled-title" => _("Required information missing"),
+                  "enabled-title"  => _("Detect Endpoint"),
+                  :xs              => 'true',
+                  :primary         => 'true'}
 
 %div{"ng-if" => defined?(apiport_hide) ? false : true}
   .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_api_port.$invalid}",
