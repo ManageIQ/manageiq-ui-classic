@@ -14,12 +14,15 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
 
     vm.credential_options = {};
     vm.select_options = [];
+    vm.deleteFromModel = [];
 
     vm.newRecord = credentialId === 'new';
     vm.afterGet = false;
     vm.model = 'credentialModel';
     ManageIQ.angular.scope = vm;
     vm.saveable = miqService.saveable;
+
+    vm.storedPasswordPlaceholder = miqService.storedPasswordPlaceholder;
 
     miqService.sparkleOn();
 
@@ -58,11 +61,12 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
   vm.resetClicked = function(angularForm) {
     vm.credentialModel = angular.copy( vm.modelCopy );
     angularForm.$setPristine(true);
+    toggleResetFlag();
     miqService.miqFlash("warn", __("All changes have been reset"));
   };
 
   vm.saveClicked = function(angularForm) {
-    API.put('/api/authentications/' + credentialId, vm.credentialModel)
+    API.put('/api/authentications/' + credentialId, purgeModel())
        .then(getBack.bind(vm, sprintf(__("Modification of Credential \"%s\" has been successfully queued."), vm.credentialModel.name), false, false))
        .catch(miqService.handleFailure);
   };
@@ -72,6 +76,18 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
        .then(getBack.bind(vm, sprintf(__("Add of Credential \"%s\" has been successfully queued."), vm.credentialModel.name), false, false))
        .catch(miqService.handleFailure);
   };
+
+  function purgeModel() {
+    return _.omit(vm.credentialModel, vm.deleteFromModel);
+  }
+
+  function toggleResetFlag() {
+    if (vm.reset) {
+      vm.reset = ! vm.reset;
+    } else {
+      vm.reset = true;
+    }
+  }
 
   function retrievedCredentialDetails() {
     vm.afterGet = true;
@@ -94,16 +110,21 @@ ManageIQ.angular.app.controller('ansibleCredentialsFormController', ['$window', 
     // we need to wait for vm.credential_options here
     optionsPromise.then(function() {
       // we need to merge options and vm.credentialModel
-      for (var opt in response.options) {
-        var item = vm.credential_options[vm.credentialModel.type]['attributes'][opt];
+      Object.keys(vm.credential_options[vm.credentialModel.type].attributes).forEach(function(key) {
+        var item = vm.credential_options[vm.credentialModel.type].attributes[key];
 
-        // void the password fields first
-        if (item.hasOwnProperty('type') && item['type'] === 'password') {
-          vm.credentialModel[opt] = '';
+        if (item.hasOwnProperty('type') && item.type === 'password') {
+          // Password fields do not get stored in the model
         } else {
-          vm.credentialModel[opt] = response.options[opt];
+          vm.credentialModel[key] = '';
+
+          if (response.options[key]) {
+            vm.credentialModel[key] = response.options[key];
+          } else if (response[key]) {
+            vm.credentialModel[key] = response[key];
+          }
         }
-      }
+      });
 
       vm.modelCopy = angular.copy( vm.credentialModel );
     });
