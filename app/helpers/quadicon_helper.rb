@@ -393,7 +393,7 @@ module QuadiconHelper
   end
 
   def quadicon_named_for_base_model?(item)
-    %w(VmOrTempalte PhysicalServer).include?(item.class.base_model.name)
+    %w(VmOrTemplate PhysicalServer).include?(item.class.base_model.name)
   end
 
   def quadicon_builder_name_from(item)

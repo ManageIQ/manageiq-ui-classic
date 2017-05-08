@@ -1,4 +1,12 @@
 class PhysicalServerDecorator < MiqDecorator
+  def fileicon
+    "svg/vendor-#{vendor.downcase}.svg"
+  end
+
+  def fonticon
+    'pficon pficon-server'
+  end
+
   def img_for_physical_vendor
     "svg/vendor-#{label_for_vendor.downcase}.svg"
   end
