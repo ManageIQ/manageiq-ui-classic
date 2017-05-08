@@ -61,5 +61,5 @@
   = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript
-  ManageIQ.angular.app.value('storageManagerId', '#{@storage_manager.try(:id)}');
+  ManageIQ.angular.app.value('storageManagerId', #{@storage_manager.try(:id) || "undefined"});
   miq_bootstrap('#form_div');
