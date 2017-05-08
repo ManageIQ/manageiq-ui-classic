@@ -78,7 +78,7 @@ class CloudTenantController < ApplicationController
     case params[:button]
     when "cancel"
       javascript_redirect :action    => 'show_list',
-                          :flash_msg => _("Add of new Cloud Tenenat was cancelled by the user")
+                          :flash_msg => _("Add of Cloud Tenant was cancelled by the user")
     when "add"
       @tenant = CloudTenant.new
       options = form_params
