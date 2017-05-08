@@ -1268,7 +1268,7 @@ module MiqAeCustomizationController::Dialogs
 
     dialog.transaction do
       dialog.buttons = temp_buttons.join(',')
-      dialog.remove_all_resources if dialog.id
+      dialog.remove_all_resources
 
       if @edit[:new][:tabs]
         @edit[:new][:tabs].each_with_index do |tab, i|

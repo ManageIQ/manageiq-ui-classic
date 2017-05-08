@@ -368,5 +368,83 @@ describe MiqAeCustomizationController do
         expect(@dialog.dialog_tabs[0].errors.messages[:base]).to include("Tab Tab 1 must have at least one Box")
       end
     end
+
+    context "#dialog_add_element" do
+      before do
+        login_as FactoryGirl.create(:user, :features => %w(dialog_add_tab dialog_add_box dialog_add_element))
+        @dialog = FactoryGirl.build(:dialog,
+                                    :label       => "Test Label",
+                                    :description => "Test Description")
+        @tree_hash = {
+          :node_typ    => 'box',
+          :active_tree => :dialog_edit_tree,
+          :trees       => {
+            :dialog_edit_tree => {
+              :active_node => "root_-0_-1"
+            }
+          }
+        }
+        controller.instance_variable_set(:@sb, @tree_hash)
+        @new_hash = {
+          :label       => "Dialog 1",
+          :description => "Dialog 1",
+          :buttons     => ["submit"],
+          :tabs        => [
+            {
+              :label       => "Tab 1",
+              :description => "Tab 1",
+              :groups      => [
+                {
+                  :label       => "Box 1",
+                  :description => "Box 1"
+                }
+              ]
+            }
+          ]
+        }
+        edit = {
+          :dialog         => @dialog,
+          :group_label    => 'B1',
+          :key            => "dialog_edit__new",
+          :new            => @new_hash,
+          :dialog_buttons => ['submit, cancel']
+        }
+
+        controller.instance_variable_set(:@edit, edit)
+        session[:edit] = edit
+      end
+
+      it "try adding new box to tab without adding elements to first verify error message, then try adding multiple fields to first box" do
+        assigns(:edit)[:new] = @new_hash
+        controller.instance_variable_set(:@_params, :id => '', :typ => "box", :pressed => "dialog_add_box")
+        allow(controller).to receive(:render)
+        controller.send(:x_button)
+        # verify error message after user tries to add a new box to a tab that already has a box with no children in progress
+        expect(@dialog.dialog_tabs[0].dialog_groups[0].errors.messages[:base]).to include("Box Box 1 must have at least one Element")
+
+        # now try to add element to a box with an existing element and verify that previous error message is cleared
+        @tree_hash[:node_typ] = 'element'
+        @tree_hash[:trees][:dialog_edit_tree][:active_node] = "root_-0_-0"
+        controller.instance_variable_set(:@sb, @tree_hash)
+
+        @new_hash[:tabs][0][:groups][0][:fields] = [
+          {
+            :label       => "Field 1",
+            :name        => "Field1",
+            :description => "field 1",
+            :typ         => "DialogFieldTextBox"
+          }
+        ]
+        assigns(:edit)[:new] = @new_hash
+        controller.instance_variable_set(:@edit, assigns(:edit))
+        session[:edit] = assigns(:edit)
+        controller.instance_variable_set(:@_params, :id => '', :typ => "element", :pressed => "dialog_add_element")
+        allow(controller).to receive(:render)
+        controller.send(:x_button)
+
+        expect(@dialog.dialog_tabs[0].dialog_groups[0].errors.messages[:base]).to eq([])
+        expect(@dialog.dialog_tabs[0].dialog_groups[0].dialog_fields.length).to eq(1)
+      end
+    end
   end
 end
