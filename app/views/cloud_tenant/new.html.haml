@@ -1,6 +1,9 @@
-%form#form_div{:name           => "angularForm",
-               'ng-controller' => "cloudTenantFormController as vm",
-               'form-changed'  => true}
+%form#form_div{:name            => "angularForm",
+               'ng-controller'  => "cloudTenantFormController as vm",
+               'miq-form'       => true,
+               'model'          => 'vm.cloudTenantModel',
+               'model-copy'     => 'vm.modelCopy',
+               'form-changed'   => true}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Basic Information')
