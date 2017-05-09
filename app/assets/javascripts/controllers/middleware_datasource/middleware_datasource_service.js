@@ -32,6 +32,9 @@ function MwAddDatasourceService($http, $q) {
     {id: 'MYSQL', label: 'MySql', name: 'MySqlDS', jndiName: 'java:jboss/datasources/MySqlDS',
       driverName: 'mysql', driverModuleName: 'com.mysql', driverClass: 'com.mysql.jdbc.Driver',
       connectionUrl: '://localhost:3306/db_name'},
+    {id: 'OTHER', label: __('Other...'), name: '', jndiName: '',
+      driverName: '', driverModuleName: '', driverClass: '',
+      connectionUrl: ''},
   ];
   var xaDatasources = [
     {id: 'H2', label: 'H2 XA', name: 'H2XADS', jndiName: 'java:/H2XADS',
@@ -107,6 +110,14 @@ function MwAddDatasourceService($http, $q) {
         ServerName: 'localhost',
       },
       connectionUrl: '://localhost:4100/db_name'},
+    {id: 'OTHER', label: __('Other XA...'), name: '',
+      jndiName: '',
+      driverName: '', driverModuleName: '',
+      driverClass: '',
+      properties: {
+        DatabaseName: '',
+      },
+      connectionUrl: ''},
   ];
 
   self.getExistingJdbcDrivers = function(serverId) {
