@@ -1,4 +1,9 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "cloudTenantFormController", 'form-changed' => true}
+%form#form_div{:name            => "angularForm",
+               'ng-controller'  => "cloudTenantFormController as vm",
+               'miq-form'       => true,
+               'model'          => 'vm.cloudTenantModel',
+               'model-copy'     => 'vm.modelCopy',
+               'form-changed'   => true}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Edit Cloud Tenant')
@@ -9,11 +14,11 @@
       .col-md-8
         %input.form-control{:type          => "text",
                             :name          => "name",
-                            'ng-model'     => "cloudTenantModel.name",
+                            'ng-model'     => "vm.cloudTenantModel.name",
                             'ng-maxlength' => 128,
                             :miqrequired   => false}
 
-  = render :partial => "layouts/angular/x_edit_buttons_angular"
+  = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript
   ManageIQ.angular.app.value('cloudTenantFormId', '#{@tenant.id}');
