@@ -9,11 +9,11 @@ describe ApplicationHelper::Button::MiqAeDomainLock do
   describe '#visible?' do
     context 'when domain locked by user' do
       let(:record) { FactoryGirl.create(:miq_ae_domain_user_locked) }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', false
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
     context 'when domain lockable but edit not possible' do
       let(:record) { FactoryGirl.create(:miq_ae_domain) }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', true
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
   end
 end

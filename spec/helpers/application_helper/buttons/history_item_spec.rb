@@ -15,12 +15,12 @@ describe ApplicationHelper::Button::HistoryItem do
     %w(1 2 3 4).each do |n|
       context "when with existing history_#{n}" do
         let(:id) { "history_#{n}".to_sym }
-        include_examples 'ApplicationHelper::Button::Basic#visible?', true
+        include_examples 'ApplicationHelper::Button::Basic visible'
       end
     end
     context 'when not history_1 and the tree history not exist' do
       let(:id) { :history_10 }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', false
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
   end
 

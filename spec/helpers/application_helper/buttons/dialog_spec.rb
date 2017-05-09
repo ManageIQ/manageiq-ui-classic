@@ -8,10 +8,10 @@ describe ApplicationHelper::Button::Dialog do
 
   context 'when edit is false' do
     let(:edit) { false }
-    include_examples 'ApplicationHelper::Button::Basic#visible?', false
+    include_examples 'ApplicationHelper::Button::Basic hidden'
   end
   context 'when edit does not evaluate as false' do
     let(:edit) { true }
-    include_examples 'ApplicationHelper::Button::Basic#visible?', true
+    include_examples 'ApplicationHelper::Button::Basic visible'
   end
 end

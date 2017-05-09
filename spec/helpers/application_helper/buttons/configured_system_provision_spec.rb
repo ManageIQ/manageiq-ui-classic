@@ -10,20 +10,20 @@ describe ApplicationHelper::Button::ConfiguredSystemProvision do
     context 'when record is present' do
       context 'and record cannot be provisionable' do
         let(:record) { FactoryGirl.create(:configuration_profile_foreman) }
-        include_examples 'ApplicationHelper::Button::Basic#visible?', true
+        include_examples 'ApplicationHelper::Button::Basic visible'
       end
       context 'and record is provisionable' do
         let(:record) { FactoryGirl.create(:configured_system_foreman) }
-        include_examples 'ApplicationHelper::Button::Basic#visible?', true
+        include_examples 'ApplicationHelper::Button::Basic visible'
       end
       context 'and record is not provisionable' do
         let(:record) { FactoryGirl.create(:configured_system_ansible_tower) }
-        include_examples 'ApplicationHelper::Button::Basic#visible?', false
+        include_examples 'ApplicationHelper::Button::Basic hidden'
       end
     end
     context 'when record is not present' do
       let(:record) { nil }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', true
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
   end
 end

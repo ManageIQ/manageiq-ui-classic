@@ -18,10 +18,10 @@ describe ApplicationHelper::Button::WidgetGenerateContent do
   describe '#visible?' do
     context 'when it is a menu widget' do
       let(:wtype) { 'm' }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', false
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
     context 'when it is not a menu widget' do
-      include_examples 'ApplicationHelper::Button::Basic#visible?', true
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
   end
 

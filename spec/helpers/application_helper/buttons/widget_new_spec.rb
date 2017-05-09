@@ -9,10 +9,10 @@ describe ApplicationHelper::Button::WidgetNew do
 
     context 'when x_node is root' do
       let(:x_node) { 'root' }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', false
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
     context 'when x_node is not root' do
-      include_examples 'ApplicationHelper::Button::Basic#visible?', true
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
   end
 end

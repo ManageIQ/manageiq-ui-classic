@@ -14,15 +14,15 @@ describe ApplicationHelper::Button::HostIntrospectProvide do
     context 'when record.class is ManageIQ::Providers::Openstack::InfraManager::Host' do
       context 'and hardware.provision_state is manageable' do
         let(:provision_state) { 'manageable' }
-        include_examples 'ApplicationHelper::Button::Basic#visible?', true
+        include_examples 'ApplicationHelper::Button::Basic visible'
       end
       context 'and hardware.provision_state is not manageable' do
-        include_examples 'ApplicationHelper::Button::Basic#visible?', false
+        include_examples 'ApplicationHelper::Button::Basic hidden'
       end
     end
     context 'when record type is not host_openstack_infra, nor ems_openstack_infra' do
       let(:record) { FactoryGirl.create(:host_vmware) }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', false
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
   end
 end

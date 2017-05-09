@@ -10,12 +10,12 @@ describe ApplicationHelper::Button::HostFeatureButton do
       %w(start stop).each do |feature|
         context "and feature is #{feature}" do
           let(:feature) { feature }
-          include_examples 'ApplicationHelper::Button::Basic#visible?', true
+          include_examples 'ApplicationHelper::Button::Basic visible'
         end
       end
       context 'and feature is other than start or stop' do
         let(:feature) { :stand_by }
-        include_examples 'ApplicationHelper::Button::Basic#visible?', false
+        include_examples 'ApplicationHelper::Button::Basic hidden'
       end
     end
     context 'when record.kind_of?(ManageIQ::Providers::Openstack::InfraManager::Host)' do
@@ -24,21 +24,21 @@ describe ApplicationHelper::Button::HostFeatureButton do
       context 'and feature is available' do
         let(:feature) { :stop }
         let(:available) { true }
-        include_examples 'ApplicationHelper::Button::Basic#visible?', true
+        include_examples 'ApplicationHelper::Button::Basic visible'
       end
       context 'and feature is unavailable' do
         let(:feature) { :shutdown }
         let(:available) { false }
-        include_examples 'ApplicationHelper::Button::Basic#visible?', false
+        include_examples 'ApplicationHelper::Button::Basic hidden'
       end
     end
     context 'when there is no record' do
       let(:record) { nil }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', true
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
     context 'when feature is nil' do
       let(:feature) { nil }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', true
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
   end
 end

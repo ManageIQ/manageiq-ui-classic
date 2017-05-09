@@ -4,9 +4,15 @@ shared_context 'ApplicationHelper::Button::Basic' do
   subject { button }
 end
 
-shared_examples 'ApplicationHelper::Button::Basic#visible?' do |visible|
-  it "is #{visible ? '' : 'not '}visible" do
-    expect(subject.visible?).to visible ? be_truthy : be_falsey
+shared_examples 'ApplicationHelper::Button::Basic visible' do
+  it 'is visible' do
+    expect(subject.visible?).to be_truthy
+  end
+end
+
+shared_examples 'ApplicationHelper::Button::Basic hidden' do
+  it 'is not visible' do
+    expect(subject.visible?).to be_falsey
   end
 end
 

@@ -8,10 +8,10 @@ describe ApplicationHelper::Button::TenantAdd do
   describe '#visible?' do
     context 'when record is a project' do
       let(:record) { FactoryGirl.create(:tenant_project) }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', false
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
     context 'when record is not a project' do
-      include_examples 'ApplicationHelper::Button::Basic#visible?', true
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
   end
 end

@@ -10,7 +10,11 @@ describe ApplicationHelper::Button::ShowSummary do
     [true, false].each do |explorer|
       context "when explorer evals as #{explorer}" do
         let(:explorer) { explorer }
-        include_examples 'ApplicationHelper::Button::Basic#visible?', !explorer
+        if explorer
+          include_examples 'ApplicationHelper::Button::Basic hidden'
+        else
+          include_examples 'ApplicationHelper::Button::Basic visible'
+        end
       end
     end
   end

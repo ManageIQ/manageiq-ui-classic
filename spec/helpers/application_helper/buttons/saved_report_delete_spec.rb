@@ -12,16 +12,16 @@ describe ApplicationHelper::Button::SavedReportDelete do
       let(:tree) { :reports_tree }
       context 'and active_tab is saved_reports' do
         let(:tab) { 'saved_reports' }
-        include_examples 'ApplicationHelper::Button::Basic#visible?', true
+        include_examples 'ApplicationHelper::Button::Basic visible'
       end
       context 'and active_tab is not saved_reports' do
         let(:tab) { 'not_saved_reports' }
-        include_examples 'ApplicationHelper::Button::Basic#visible?', false
+        include_examples 'ApplicationHelper::Button::Basic hidden'
       end
     end
     context 'when active_tree is not reports_tree' do
       let(:tree) { :savedreports_tree }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', true
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
   end
 end

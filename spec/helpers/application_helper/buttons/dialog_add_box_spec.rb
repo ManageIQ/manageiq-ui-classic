@@ -12,25 +12,25 @@ describe ApplicationHelper::Button::DialogAddBox do
     let(:edit) { true }
     context 'and x_node.length < 2' do
       let(:x_node) { 'xx' }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', false
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
     context 'and x_node.length is 2' do
       let(:x_node) { 'xx_12' }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', true
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
     context 'and x_node.length is 3' do
       let(:x_node) { 'xx_aa_12' }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', true
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
     context 'and x_node.length > 3' do
       let(:x_node) { 'xx_aa_12_34' }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', false
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
   end
 
   context 'when edit is nil' do
     let(:edit) { nil }
     let(:x_node) { 'does_not_matter' }
-    include_examples 'ApplicationHelper::Button::Basic#visible?', false
+    include_examples 'ApplicationHelper::Button::Basic hidden'
   end
 end

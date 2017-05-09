@@ -17,16 +17,16 @@ describe ApplicationHelper::Button::VmInstanceTemplateScan do
     context 'when record supports smartstate analysis' do
       let(:supports_feature?) { true }
       context 'when record has proxy' do
-        include_examples 'ApplicationHelper::Button::Basic#visible?', true
+        include_examples 'ApplicationHelper::Button::Basic visible'
       end
       context 'when record does not have proxy' do
         let(:has_proxy?) { false }
-        include_examples 'ApplicationHelper::Button::Basic#visible?', false
+        include_examples 'ApplicationHelper::Button::Basic hidden'
       end
     end
     context 'when record does not support smartstate analysis' do
       let(:supports_feature?) { false }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', false
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
   end
 

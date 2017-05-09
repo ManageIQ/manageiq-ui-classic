@@ -13,17 +13,17 @@ describe ApplicationHelper::Button::DialogResourceRemove do
     context 'when edit_typ is add' do
       let(:edit_typ) { 'add' }
       let(:x_node) { 'does_not_matter' }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', false
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
     context 'when edit_typ is not add' do
       let(:edit_typ) { 'not_add' }
       context 'and x_node is root' do
         let(:x_node) { 'root' }
-        include_examples 'ApplicationHelper::Button::Basic#visible?', false
+        include_examples 'ApplicationHelper::Button::Basic hidden'
       end
       context 'and x_node is not root' do
         let(:x_node) { 'not_root' }
-        include_examples 'ApplicationHelper::Button::Basic#visible?', true
+        include_examples 'ApplicationHelper::Button::Basic visible'
       end
     end
   end
@@ -32,6 +32,6 @@ describe ApplicationHelper::Button::DialogResourceRemove do
     let(:edit) { nil }
     let(:edit_typ) { 'does not matter' }
     let(:x_node) { 'does_not_matter' }
-    include_examples 'ApplicationHelper::Button::Basic#visible?', false
+    include_examples 'ApplicationHelper::Button::Basic hidden'
   end
 end

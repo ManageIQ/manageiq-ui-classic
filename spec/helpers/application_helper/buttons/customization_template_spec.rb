@@ -11,15 +11,15 @@ describe ApplicationHelper::Button::CustomizationTemplate do
   describe '#visible?' do
     context 'when root node is active' do
       let(:x_node) { 'root' }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', false
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
     context 'when system node is active' do
       let(:x_node) { 'xx-xx-system' }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', false
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
     context 'when other node is active' do
       let(:x_node) { 'xx-xx-10r3' }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', true
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
   end
 end

@@ -10,16 +10,16 @@ describe ApplicationHelper::Button::DialogAction do
     let(:edit) { {:current => current} }
     context 'and edit[:current]' do
       let(:current) { 'something' }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', false
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
     context 'and edit[:current] is nil' do
       let(:current) { nil }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', true
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
   end
 
   context 'when edit is nil' do
     let(:edit) { nil }
-    include_examples 'ApplicationHelper::Button::Basic#visible?', true
+    include_examples 'ApplicationHelper::Button::Basic visible'
   end
 end

@@ -9,11 +9,11 @@ describe ApplicationHelper::Button::MiqReportAction do
   describe '#visible?' do
     context 'when active_tab is saved_reports' do
       let(:tab) { 'saved_reports' }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', false
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
     context 'when active_tab is not saved_reports' do
       let(:tab) { 'does_not_matter' }
-      include_examples 'ApplicationHelper::Button::Basic#visible?', true
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
   end
 end
