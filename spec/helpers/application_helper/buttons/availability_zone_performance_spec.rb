@@ -19,7 +19,7 @@ describe ApplicationHelper::Button::AvailabilityZonePerformance do
     context 'and record has not events' do
       let(:has_perf_data) { false }
       include_examples 'ApplicationHelper::Button::Basic disabled',
-                      'No Capacity & Utilization data has been collected for this Availability Zone'
+                       :error_message => 'No Capacity & Utilization data has been collected for this Availability Zone'
     end
   end
 end

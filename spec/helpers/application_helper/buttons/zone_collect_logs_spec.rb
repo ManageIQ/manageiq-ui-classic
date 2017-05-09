@@ -42,7 +42,7 @@ describe ApplicationHelper::Button::ZoneCollectLogs do
         context 'and log collection is currently in progress' do
           let(:log_state) { 'collecting' }
           include_examples 'ApplicationHelper::Button::Basic disabled',
-                          'Log collection is already in progress for one or more Servers in this Zone'
+                           :error_message => 'Log collection is already in progress for one or more Servers in this Zone'
 
           context 'and has an unfinished task' do
             let(:setup_tasks) do
@@ -50,20 +50,20 @@ describe ApplicationHelper::Button::ZoneCollectLogs do
               task.save
             end
             include_examples 'ApplicationHelper::Button::Basic disabled',
-                            'Log collection is already in progress for one or more Servers in this Zone'
+                             :error_message => 'Log collection is already in progress for one or more Servers in this Zone'
           end
         end
       end
       context 'and Log Depot settings is not configured' do
         let(:file_depot) { nil }
         include_examples 'ApplicationHelper::Button::Basic disabled',
-                        'This Zone do not have Log Depot settings configured, collection not allowed'
+                         :error_message => 'This Zone do not have Log Depot settings configured, collection not allowed'
       end
     end
     context 'when there is no miq_server started' do
       let(:server_status) { 'not_responding' }
       include_examples 'ApplicationHelper::Button::Basic disabled',
-                       'Cannot collect current logs unless there are started Servers in the Zone'
+                       :error_message => 'Cannot collect current logs unless there are started Servers in the Zone'
     end
   end
 end

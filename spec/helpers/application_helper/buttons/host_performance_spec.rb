@@ -19,7 +19,7 @@ describe ApplicationHelper::Button::HostPerformance do
     context 'and record has not performance data' do
       let(:has_perf_data) { false }
       include_examples 'ApplicationHelper::Button::Basic disabled',
-                       'No Capacity & Utilization data has been collected for this Host'
+                       :error_message => 'No Capacity & Utilization data has been collected for this Host'
     end
   end
 end

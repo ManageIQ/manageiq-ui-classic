@@ -8,6 +8,6 @@ describe ApplicationHelper::Button::MiqTemplateTimeline do
   let(:record) { FactoryGirl.create(:template_redhat) }
 
   describe '#calculate_properties' do
-    include_context 'ApplicationHelper::Button::Timeline#calculate_properties', 'Template'
+    include_context 'ApplicationHelper::Button::Timeline#calculate_properties', :entity => 'Template'
   end
 end

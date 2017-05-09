@@ -29,17 +29,20 @@ describe ApplicationHelper::Button::ReportOnly do
           end
           context 'and report has no result details' do
             let(:setup_report_result_details) {}
-            include_examples 'ApplicationHelper::Button::Basic disabled', 'No records found for this report'
+            include_examples 'ApplicationHelper::Button::Basic disabled',
+                             :error_message => 'No records found for this report'
           end
         end
         context 'and record does not have report_result_id' do
           let(:report_result_id) { nil }
-          include_examples 'ApplicationHelper::Button::Basic disabled', 'No records found for this report'
+          include_examples 'ApplicationHelper::Button::Basic disabled',
+                           :error_message => 'No records found for this report'
         end
       end
       context 'and record does not have report' do
         let(:report) { nil }
-        include_examples 'ApplicationHelper::Button::Basic disabled', 'No records found for this report'
+        include_examples 'ApplicationHelper::Button::Basic disabled',
+                         :error_message => 'No records found for this report'
       end
     end
   end

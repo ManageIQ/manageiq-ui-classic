@@ -25,7 +25,7 @@ describe ApplicationHelper::Button::StorageScan do
         context 'but none has valid credentials for the Datastore' do
           let(:authenticated_hosts) { [] }
           include_examples 'ApplicationHelper::Button::Basic disabled',
-                           'There are no running Hosts with valid credentials for this Datastore'
+                           :error_message => 'There are no running Hosts with valid credentials for this Datastore'
         end
         context 'with valid credentials for this Datastore' do
           include_examples 'ApplicationHelper::Button::Basic enabled'
@@ -34,7 +34,7 @@ describe ApplicationHelper::Button::StorageScan do
       context 'and there are no active hosts' do
         let(:host) { FactoryGirl.create(:host, :state => 'off') }
         include_examples 'ApplicationHelper::Button::Basic disabled',
-                         'SmartState Analysis cannot be performed when there is no active Host'
+                         :error_message => 'SmartState Analysis cannot be performed when there is no active Host'
       end
     end
   end

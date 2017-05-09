@@ -18,7 +18,8 @@ describe ApplicationHelper::Button::HostTimeline do
 
     context 'and record has not events' do
       let(:has_events) { false }
-      include_examples 'ApplicationHelper::Button::Basic disabled', 'No Timeline data has been collected for this Host'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       :error_message => 'No Timeline data has been collected for this Host'
     end
   end
 end

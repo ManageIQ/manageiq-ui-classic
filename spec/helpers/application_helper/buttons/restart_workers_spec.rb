@@ -10,7 +10,7 @@ describe ApplicationHelper::Button::RestartWorkers do
     before { subject.calculate_properties }
     context 'when worker is not selected' do
       let(:worker_id) { nil }
-      include_examples 'ApplicationHelper::Button::Basic disabled', 'Select a worker to restart'
+      include_examples 'ApplicationHelper::Button::Basic disabled', :error_message => 'Select a worker to restart'
     end
     context 'when worker is selected' do
       let(:worker_id) { 'not_nil' }

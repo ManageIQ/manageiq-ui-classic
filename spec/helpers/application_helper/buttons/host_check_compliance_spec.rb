@@ -18,7 +18,8 @@ describe ApplicationHelper::Button::HostCheckCompliance do
 
     context 'and record has not compliance policies' do
       let(:has_compliance_policies) { false }
-      include_examples 'ApplicationHelper::Button::Basic disabled', 'No Compliance Policies assigned to this Host'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       :error_message => 'No Compliance Policies assigned to this Host'
     end
   end
 end

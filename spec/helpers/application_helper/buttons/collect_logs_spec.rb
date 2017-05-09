@@ -39,13 +39,13 @@ describe ApplicationHelper::Button::CollectLogs do
         context 'and Log Depot settings is not configured' do
           let(:file_depot) { nil }
           include_examples 'ApplicationHelper::Button::Basic disabled',
-                           'Log collection requires the Log Depot settings to be configured'
+                           :error_message => 'Log collection requires the Log Depot settings to be configured'
         end
       end
       context 'and log collection is currently in progress' do
         let(:log_state) { 'collecting' }
         include_examples 'ApplicationHelper::Button::Basic disabled',
-                         'Log collection is already in progress for this Server'
+                         :error_message => 'Log collection is already in progress for this Server'
 
         context 'and has an unfinished task' do
           let(:setup_tasks) do
@@ -53,14 +53,14 @@ describe ApplicationHelper::Button::CollectLogs do
             task.save
           end
           include_examples 'ApplicationHelper::Button::Basic disabled',
-                           'Log collection is already in progress for this Server'
+                           :error_message => 'Log collection is already in progress for this Server'
         end
       end
     end
     context 'when server is not started' do
       let(:server_status) { 'not_responding' }
       include_examples 'ApplicationHelper::Button::Basic disabled',
-                       'Cannot collect current logs unless the Server is started'
+                       :error_message => 'Cannot collect current logs unless the Server is started'
     end
   end
 end

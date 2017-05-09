@@ -19,7 +19,7 @@ describe ApplicationHelper::Button::EmsClusterTimeline do
     context 'and record has not events' do
       let(:has_events) { false }
       include_examples 'ApplicationHelper::Button::Basic disabled',
-                       'No Timeline data has been collected for this Cluster'
+                       :error_message => 'No Timeline data has been collected for this Cluster'
     end
   end
 end

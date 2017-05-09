@@ -16,7 +16,8 @@ describe ApplicationHelper::Button::RbacRoleEdit do
     end
     context 'when role is read-only' do
       let(:read_only) { true }
-      include_examples 'ApplicationHelper::Button::Basic disabled', 'This Role is Read Only and can not be edited'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       :error_message => 'This Role is Read Only and can not be edited'
     end
   end
 end

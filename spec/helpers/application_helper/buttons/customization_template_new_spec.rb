@@ -29,7 +29,7 @@ describe ApplicationHelper::Button::CustomizationTemplateNew do
     context 'when there are no System Image Types available' do
       let(:count) { 0 }
       include_examples 'ApplicationHelper::Button::Basic disabled',
-                       'No System Image Types available, Customization Template cannot be added'
+                       :error_message => 'No System Image Types available, Customization Template cannot be added'
     end
 
     context 'when there are System Image Types available' do

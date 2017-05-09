@@ -8,6 +8,6 @@ describe ApplicationHelper::Button::ContainerTimeline do
   let(:record) { FactoryGirl.create(:container) }
 
   describe '#calculate_properties' do
-    include_context 'ApplicationHelper::Button::Timeline#calculate_properties', 'Container'
+    include_context 'ApplicationHelper::Button::Timeline#calculate_properties', :entity => 'Container'
   end
 end

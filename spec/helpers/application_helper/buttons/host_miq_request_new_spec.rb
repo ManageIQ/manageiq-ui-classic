@@ -22,14 +22,14 @@ describe ApplicationHelper::Button::HostMiqRequestNew do
       let(:mac_address) { false }
       let(:serverAll) { ['FancyServer'] }
       include_examples 'ApplicationHelper::Button::Basic disabled',
-                      'This Host can not be provisioned because the MAC address is not known'
+                       :error_message => 'This Host can not be provisioned because the MAC address is not known'
     end
 
     context 'and record has mac address but no servers' do
       let(:mac_address) { "00:0D:93:13:51:1A" }
       let(:serverAll) { [] }
       include_examples 'ApplicationHelper::Button::Basic disabled',
-                       'No PXE Servers are available for Host provisioning'
+                       :error_message => 'No PXE Servers are available for Host provisioning'
     end
   end
 end

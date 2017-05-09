@@ -38,7 +38,7 @@ describe ApplicationHelper::Button::VmSnapshotRevert do
     end
     context 'when reverting to a snapshot is not available' do
       let(:record) { FactoryGirl.create(:vm_amazon) }
-      include_examples 'ApplicationHelper::Button::Basic disabled', 'Operation not supported'
+      include_examples 'ApplicationHelper::Button::Basic disabled', :error_message => 'Operation not supported'
     end
   end
 end

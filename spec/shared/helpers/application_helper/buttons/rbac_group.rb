@@ -11,7 +11,7 @@ shared_examples 'ApplicationHelper::Button::RbacGroup read-only record with rest
   context 'when record is read-only' do
     let(:record) { FactoryGirl.create(:miq_group, :system_type) }
     include_examples 'ApplicationHelper::Button::Basic disabled',
-                     "This Group is Read Only and can not be #{restriction}"
+                     :error_message => "This Group is Read Only and can not be #{restriction}"
   end
 end
 

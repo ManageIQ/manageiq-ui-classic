@@ -11,7 +11,8 @@ describe ApplicationHelper::Button::RbacUserDelete do
 
     context 'when user is the root administrator' do
       let(:record) { FactoryGirl.create(:user_admin, :userid => 'admin') }
-      include_examples 'ApplicationHelper::Button::Basic disabled', 'Default Administrator can not be deleted'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       :error_message => 'Default Administrator can not be deleted'
     end
     context 'when user is a common administrator' do
       let(:record) { FactoryGirl.create(:user) }

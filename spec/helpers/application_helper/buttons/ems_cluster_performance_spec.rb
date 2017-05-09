@@ -19,7 +19,7 @@ describe ApplicationHelper::Button::EmsClusterPerformance do
     context 'and record has not events' do
       let(:has_perf_data) { false }
       include_examples 'ApplicationHelper::Button::Basic disabled',
-                      'No Capacity & Utilization data has been collected for this Cluster'
+                       :error_message => 'No Capacity & Utilization data has been collected for this Cluster'
     end
   end
 end

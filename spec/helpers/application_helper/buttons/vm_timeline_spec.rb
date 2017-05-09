@@ -8,6 +8,6 @@ describe ApplicationHelper::Button::VmTimeline do
   let(:record) { FactoryGirl.create(:vm) }
 
   describe '#calculate_properties' do
-    include_context 'ApplicationHelper::Button::Timeline#calculate_properties', 'VM'
+    include_context 'ApplicationHelper::Button::Timeline#calculate_properties', :entity => 'VM'
   end
 end

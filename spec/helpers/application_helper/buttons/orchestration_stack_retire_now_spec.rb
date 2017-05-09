@@ -12,7 +12,8 @@ describe ApplicationHelper::Button::OrchestrationStackRetireNow do
 
     context 'when Orchestration Stack is retired' do
       let(:retired) { true }
-      include_examples 'ApplicationHelper::Button::Basic disabled', 'Orchestration Stack is already retired'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       :error_message => 'Orchestration Stack is already retired'
     end
     context 'when OrchestrationStack is not retired' do
       let(:retired) { false }

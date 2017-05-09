@@ -17,9 +17,9 @@ shared_examples 'ApplicationHelper::Button::Basic enabled' do
   end
 end
 
-shared_examples 'ApplicationHelper::Button::Basic disabled' do |err_message|
+shared_examples 'ApplicationHelper::Button::Basic disabled' do |option|
   it 'is disabled' do
     expect(subject[:enabled]).to be_falsey
-    expect(subject[:title]).to eq(err_message)
+    expect(subject[:title]).to eq(option[:error_message])
   end
 end

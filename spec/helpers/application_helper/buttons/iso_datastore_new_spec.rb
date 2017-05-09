@@ -29,7 +29,7 @@ describe ApplicationHelper::Button::IsoDatastoreNew do
         FactoryGirl.create(:iso_datastore, :ems_id => ems.id)
       end
       include_examples 'ApplicationHelper::Button::Basic disabled',
-                       'No Providers are available to create an ISO Datastore on'
+                       :error_message => 'No Providers are available to create an ISO Datastore on'
     end
   end
 end

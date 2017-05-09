@@ -51,7 +51,8 @@ describe ApplicationHelper::Button::VmInstanceTemplateScan do
       end
       context 'when record does not have active proxy' do
         let(:has_active_proxy?) { false }
-        include_examples 'ApplicationHelper::Button::Basic disabled', 'No active SmartProxies found to analyze this VM'
+        include_examples 'ApplicationHelper::Button::Basic disabled',
+                         :error_message => 'No active SmartProxies found to analyze this VM'
       end
     end
   end

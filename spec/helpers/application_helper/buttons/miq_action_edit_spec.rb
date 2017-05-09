@@ -19,7 +19,8 @@ describe ApplicationHelper::Button::MiqActionEdit do
 
     context 'and record has default action type' do
       let(:action_type) { "default" }
-      include_examples 'ApplicationHelper::Button::Basic disabled', 'Default actions can not be changed.'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       :error_message => 'Default actions can not be changed.'
     end
   end
 end

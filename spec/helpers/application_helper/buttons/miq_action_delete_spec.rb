@@ -21,13 +21,15 @@ describe ApplicationHelper::Button::MiqActionDelete do
     context 'and record has assigned policy' do
       let(:miq_policies) { ['policy'] }
       let(:action_type) { "Non-default" }
-      include_examples 'ApplicationHelper::Button::Basic disabled', 'Actions assigned to Policies can not be deleted'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       :error_message => 'Actions assigned to Policies can not be deleted'
     end
 
     context 'and record has default action type' do
       let(:miq_policies) { [] }
       let(:action_type) { "default" }
-      include_examples 'ApplicationHelper::Button::Basic disabled', 'Default actions can not be deleted.'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       :error_message => 'Default actions can not be deleted.'
     end
   end
 end

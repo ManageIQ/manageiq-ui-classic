@@ -22,13 +22,14 @@ describe ApplicationHelper::Button::MiqAlertDelete do
       let(:owning_miq_actions) { [] }
       let(:memberof) { ['group'] }
       include_examples 'ApplicationHelper::Button::Basic disabled',
-                       'Alerts that belong to Alert Profiles can not be deleted'
+                       :error_message => 'Alerts that belong to Alert Profiles can not be deleted'
     end
 
     context 'and record owns action' do
       let(:owning_miq_actions) { ['action'] }
       let(:memberof) { [] }
-      include_examples 'ApplicationHelper::Button::Basic disabled', 'Alerts referenced by Actions can not be deleted'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       :error_message => 'Alerts referenced by Actions can not be deleted'
     end
   end
 end

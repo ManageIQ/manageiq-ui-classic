@@ -8,6 +8,6 @@ describe ApplicationHelper::Button::EmsStorageTimeline do
   let(:record) { FactoryGirl.create(:ext_management_system) }
 
   describe '#calculate_properties' do
-    include_context 'ApplicationHelper::Button::Timeline#calculate_properties', 'Storage Manager'
+    include_context 'ApplicationHelper::Button::Timeline#calculate_properties', :entity => 'Storage Manager'
   end
 end

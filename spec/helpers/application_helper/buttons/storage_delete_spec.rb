@@ -15,12 +15,12 @@ describe ApplicationHelper::Button::StorageDelete do
     context 'when with VMs' do
       let(:vms) { [FactoryGirl.create(:vm_or_template)] }
       include_examples 'ApplicationHelper::Button::Basic disabled',
-                       'Only Datastore without VMs and Hosts can be removed'
+                       :error_message => 'Only Datastore without VMs and Hosts can be removed'
     end
     context 'when with Hosts' do
       let(:hosts) { [FactoryGirl.create(:host)] }
       include_examples 'ApplicationHelper::Button::Basic disabled',
-                       'Only Datastore without VMs and Hosts can be removed'
+                       :error_message => 'Only Datastore without VMs and Hosts can be removed'
     end
     context 'when without VMs and Hosts' do
       include_examples 'ApplicationHelper::Button::Basic enabled'

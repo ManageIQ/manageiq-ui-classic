@@ -16,7 +16,8 @@ describe ApplicationHelper::Button::RbacTenantDelete do
     end
     context 'when record is the default tenant' do
       let(:tenant_parent) { nil }
-      include_examples 'ApplicationHelper::Button::Basic disabled', 'Default Tenant can not be deleted'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       :error_message => 'Default Tenant can not be deleted'
     end
   end
 end

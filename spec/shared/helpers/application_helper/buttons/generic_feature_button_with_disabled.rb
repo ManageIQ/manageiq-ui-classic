@@ -17,14 +17,14 @@ shared_context 'ApplicationHelper::Button::GenericFeatureButtonWithDisabled#calc
     end
     context 'and feature is not supported' do
       let(:support) { false }
-      include_examples 'ApplicationHelper::Button::Basic disabled', 'Feature not available/supported'
+      include_examples 'ApplicationHelper::Button::Basic disabled', :error_message => 'Feature not available/supported'
     end
   end
   context 'when feature is unknown' do
     let(:feature) { :non_existent_feature }
     context 'and feature is not available' do
       let(:available) { false }
-      include_examples 'ApplicationHelper::Button::Basic disabled', 'unavailable'
+      include_examples 'ApplicationHelper::Button::Basic disabled', :error_message => 'unavailable'
     end
     context 'but feature is available' do
       include_examples 'ApplicationHelper::Button::Basic enabled'

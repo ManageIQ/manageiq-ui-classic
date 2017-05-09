@@ -30,7 +30,7 @@ describe ApplicationHelper::Button::VmVmrcConsole do
           .and_raise(MiqException::RemoteConsoleNotSupportedError, err_msg)
       end
       include_examples 'ApplicationHelper::Button::Basic disabled',
-                       'VM VMRC Console error: Remote console is not supported'
+                       :error_message => 'VM VMRC Console error: Remote console is not supported'
     end
   end
 end

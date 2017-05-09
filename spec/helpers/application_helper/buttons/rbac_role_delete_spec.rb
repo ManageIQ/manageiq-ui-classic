@@ -27,12 +27,13 @@ describe ApplicationHelper::Button::RbacRoleDelete do
       context 'when role is in use by one or more Groups' do
         let(:setup_miq_groups) { FactoryGirl.create(:miq_group, :miq_user_role => record) }
         include_examples 'ApplicationHelper::Button::Basic disabled',
-                         'This Role is in use by one or more Groups and can not be deleted'
+                         :error_message => 'This Role is in use by one or more Groups and can not be deleted'
       end
     end
     context 'when role is read-only' do
       let(:read_only) { true }
-      include_examples 'ApplicationHelper::Button::Basic disabled', 'This Role is Read Only and can not be deleted'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       :error_message => 'This Role is Read Only and can not be deleted'
     end
   end
 end

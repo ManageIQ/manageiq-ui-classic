@@ -35,7 +35,7 @@ describe ApplicationHelper::Button::VmVncConsole do
       context 'and vendor api is not supported' do
         let(:api_version) { 6.5 }
         include_examples 'ApplicationHelper::Button::Basic disabled',
-                         'VNC consoles are unsupported on VMware ESXi 6.5 and later.'
+                         :error_message => 'VNC consoles are unsupported on VMware ESXi 6.5 and later.'
       end
       context 'and vendor api is supported' do
         let(:api_version) { 6.4 }

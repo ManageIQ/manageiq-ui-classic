@@ -16,7 +16,7 @@ describe ApplicationHelper::Button::AeCopySimulate do
     context 'when object attribute is not specified' do
       let(:button_class) { nil }
       include_examples 'ApplicationHelper::Button::Basic disabled',
-                       'Object attribute must be specified to copy object details for use in a Button'
+                       :error_message => 'Object attribute must be specified to copy object details for use in a Button'
     end
   end
 end

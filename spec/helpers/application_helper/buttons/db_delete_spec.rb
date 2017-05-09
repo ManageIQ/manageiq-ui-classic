@@ -12,7 +12,8 @@ describe ApplicationHelper::Button::DbDelete do
 
     context 'when dashboard is read-only' do
       let(:read_only) { true }
-      include_examples 'ApplicationHelper::Button::Basic disabled', 'Default Dashboard cannot be deleted'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       :error_message => 'Default Dashboard cannot be deleted'
     end
     context 'when dashboard is writable' do
       let(:read_only) { false }

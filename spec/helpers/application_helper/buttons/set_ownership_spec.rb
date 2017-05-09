@@ -15,7 +15,8 @@ describe ApplicationHelper::Button::SetOwnership do
 
     context 'when provider has tenant mapping enabled' do
       let(:tenant_mapping_enabled) { true }
-      include_examples 'ApplicationHelper::Button::Basic disabled', 'Ownership is controlled by tenant mapping'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       :error_message => 'Ownership is controlled by tenant mapping'
     end
 
     context 'when provider has tenant mapping disabled' do

@@ -13,7 +13,7 @@ shared_examples 'ApplicationHelper::Button::Ap read-only with restriction' do |r
   context 'when Analysis Profile is read-only' do
     let(:read_only) { true }
     include_examples 'ApplicationHelper::Button::Basic disabled',
-                     "Sample Analysis Profile cannot be #{restriction}"
+                     :error_message => "Sample Analysis Profile cannot be #{restriction}"
   end
 end
 

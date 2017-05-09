@@ -17,7 +17,7 @@ describe ApplicationHelper::Button::DbSeqEdit do
     context 'when there is not enough dashboards to edit sequence' do
       let(:dashboard_count) { 1 }
       include_examples 'ApplicationHelper::Button::Basic disabled',
-                       'There should be at least 2 Dashboards to Edit Sequence'
+                       :error_message => 'There should be at least 2 Dashboards to Edit Sequence'
     end
   end
 end

@@ -19,7 +19,7 @@ describe ApplicationHelper::Button::AvailabilityZoneTimeline do
     context 'and record has not events' do
       let(:has_events) { false }
       include_examples 'ApplicationHelper::Button::Basic disabled',
-                      'No Timeline data has been collected for this Availability Zone'
+                       :error_message => 'No Timeline data has been collected for this Availability Zone'
     end
   end
 end
