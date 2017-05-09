@@ -102,12 +102,7 @@ class ContainerController < ApplicationController
   helper_method :textual_group_list
 
   def features
-    [{:role     => "container_accord",
-      :role_any => true,
-      :name     => :containers,
-      :title    => _("Containers")},
-
-     {:role     => "container_filter_accord",
+    [{:role     => "container_filter_accord",
       :role_any => true,
       :name     => :containers_filter,
       :title    => _("Filters")},
@@ -199,17 +194,13 @@ class ContainerController < ApplicationController
 
   # Replace the right cell of the explorer
   def replace_right_cell(options = {})
-    action, replace_trees = options.values_at(:action, :replace_trees)
+    action, _replace_trees = options.values_at(:action, :replace_trees)
     @explorer = true
     # Set partial name, action and cell header
     partial, action_url, @right_cell_text = set_right_cell_vars(action) if action
     get_node_info(x_node) if !@in_a_form && !params[:display]
-    replace_trees = @replace_trees if @replace_trees  # get_node_info might set this
     type, = parse_nodetype_and_id(x_node)
     trees = {}
-    if replace_trees
-      trees[:containers] = build_containers_tree if replace_trees.include?(:containers)
-    end
     record_showing = type && ["Container"].include?(TreeBuilder.get_model_for_prefix(type))
     if !@in_a_form && !@sb[:action]
       v_tb = build_toolbar("x_gtl_view_tb") unless record_showing
@@ -284,11 +275,6 @@ class ContainerController < ApplicationController
     presenter.lock_tree(x_active_tree, @in_a_form && @edit)
 
     render :json => presenter.for_render
-  end
-
-  # Build a Containers explorer tree
-  def build_containers_tree
-    TreeBuilderContainers.new("containers_tree", "containers", @sb)
   end
 
   def show_record(id = nil)

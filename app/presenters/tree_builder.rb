@@ -409,7 +409,6 @@ class TreeBuilder
     :widgets                         => "TreeBuilderReportWidgets",
 
     # containers explorer tree
-    :containers                      => "TreeBuilderContainers",
     :containers_filter               => "TreeBuilderContainersFilter",
 
     # automate explorer tree
