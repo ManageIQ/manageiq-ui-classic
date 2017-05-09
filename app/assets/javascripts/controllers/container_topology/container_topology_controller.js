@@ -279,20 +279,6 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
     }
   };
 
-  $scope.searchNode = function() {
-    var svg = topologyService.getSVG(d3);
-    var query = $scope.search.query;
-
-    topologyService.searchNode(svg, query);
-  };
-
-  $scope.resetSearch = function() {
-    topologyService.resetSearch(d3);
-
-    // Reset the search term in search input
-    $scope.search.query = "";
-  };
-
   function getContainerTopologyData(response) {
     var data = response.data;
 
@@ -319,4 +305,6 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
       $scope.kinds = topologyService.reduce_kinds($scope.items, $scope.kinds, size_limit, remove_hierarchy);
     }
   }
+
+  topologyService.mixinSearch($scope);
 }

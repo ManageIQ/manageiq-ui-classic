@@ -269,17 +269,5 @@ function CloudTopologyCtrl($scope, $http, $interval, $location, topologyService,
     }
   };
 
-  $scope.searchNode = function() {
-    var svg = topologyService.getSVG(d3);
-    var query = $scope.search.query;
-
-   topologyService.searchNode(svg, query);
-  };
-
-  $scope.resetSearch = function() {
-    topologyService.resetSearch(d3);
-
-    // Reset the search term in search input
-    $scope.search.query = "";
-  };
+  topologyService.mixinSearch($scope);
 }

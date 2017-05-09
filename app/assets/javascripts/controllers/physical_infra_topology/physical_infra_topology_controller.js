@@ -253,20 +253,6 @@ function physicalInfraTopologyCtrl($scope, $http, $interval, $location, topology
     }
   };
 
-  $scope.searchNode = function() {
-    var svg = topologyService.getSVG(d3);
-    var query = $scope.search.query;
-
-    topologyService.searchNode(svg, query);
-  };
-
-  $scope.resetSearch = function() {
-    topologyService.resetSearch(d3);
-
-    // Reset the search term in search input
-    $scope.search.query = "";
-  };
-
   function getPhysicalInfraTopologyData(response) {
     var data = response.data;
 
@@ -281,4 +267,6 @@ function physicalInfraTopologyCtrl($scope, $http, $interval, $location, topology
       $scope.kinds = currentSelectedKinds;
     }
   }
+
+  topologyService.mixinSearch($scope);
 }
