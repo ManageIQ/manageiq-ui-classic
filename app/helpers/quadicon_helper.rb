@@ -226,12 +226,12 @@ module QuadiconHelper
 
       output << flobj_p_simple("a72", (item.host ? 1 : 0))
       output << flobj_img_simple("svg/currentstate-#{h(item.power_state.downcase)}.svg", "b72")
-      output << flobj_img_simple(item.decorate.fileicon, "c72")
+      output << flobj_img_simple(item.ext_management_system.decorate.fileicon, "c72")
       output << flobj_img_simple(img_for_health_state(item), "d72")
       output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
     else
       output << flobj_img_simple(size)
-      output << flobj_img_simple(width * 1.8, item.decorate.fileicon, "e72")
+      output << flobj_img_simple(width * 1.8, item.ext_management_system.decorate.fileicon, "e72")
     end
 
     if options[:typ] == :listnav
