@@ -112,7 +112,7 @@ ManageIQ.angular.app.service('topologyService', function() {
       var links = svg.selectAll("line");
       links.style("opacity", "0.2");
 
-      if (nodes.length === selected.length) {
+      if (nodes.size() === selected.size()) {
         found = false;
       }
     }
