@@ -6,7 +6,7 @@ ManageIQ.angular.app.service('topologyService', function() {
       __("Status: ") + d.item.status
     ];
 
-    if (d.item.kind == 'Host' || d.item.kind == 'Vm') {
+    if (d.item.kind === 'Host' || d.item.kind === 'Vm') {
       status.push(__("Provider: ") + d.item.provider);
     }
 
@@ -100,14 +100,24 @@ ManageIQ.angular.app.service('topologyService', function() {
   this.searchNode = function(svg, query) {
     var nodes = svg.selectAll("g");
     nodes.style("opacity", "1");
+
+    var found = true;
+
     if (query != "") {
       var selected = nodes.filter(function (d) {
-        return d.item.name.indexOf(query) == -1;
+        return d.item.name.indexOf(query) === -1;
       });
       selected.style("opacity", "0.2");
+
       var links = svg.selectAll("line");
       links.style("opacity", "0.2");
+
+      if (nodes.size() === selected.size()) {
+        found = false;
+      }
     }
+
+    return found;
   };
 
   this.resetSearch = function(d3) {
@@ -195,5 +205,31 @@ ManageIQ.angular.app.service('topologyService', function() {
       delete kinds[kind_to_hide]
     }
     return kinds
+  };
+
+  // this injects some common code in the controller - temporary pending a proper merge
+  this.mixinSearch = function($scope) {
+    var topologyService = this;
+
+    $scope.searching = false;
+    $scope.notFound = false;
+
+    $scope.searchNode = function() {
+      var svg = topologyService.getSVG($scope.d3);
+      var query = $('input#search_topology')[0].value;
+
+      $scope.searching = true;
+      $scope.notFound = ! topologyService.searchNode(svg, query);
+    };
+
+    $scope.resetSearch = function() {
+      topologyService.resetSearch($scope.d3);
+
+      // Reset the search term in search input
+      $('input#search_topology')[0].value = "";
+
+      $scope.searching = false;
+      $scope.notFound = false;
+    };
   };
 });
