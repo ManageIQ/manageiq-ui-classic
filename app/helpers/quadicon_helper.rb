@@ -226,12 +226,12 @@ module QuadiconHelper
 
       output << flobj_p_simple("a72", (item.host ? 1 : 0))
       output << flobj_img_simple("svg/currentstate-#{h(item.power_state.downcase)}.svg", "b72")
-      output << flobj_img_simple(item.decorate.img_for_physical_vendor, "c72")
-      output << flobj_img_simple(item.decorate.img_for_health_state, "d72")
+      output << flobj_img_simple(item.decorate.fileicon, "c72")
+      output << flobj_img_simple(img_for_health_state(item), "d72")
       output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
     else
       output << flobj_img_simple(size)
-      output << flobj_img_simple(width * 1.8, img_for_physical_vendor(item), "e72")
+      output << flobj_img_simple(width * 1.8, item.decorate.fileicon, "e72")
     end
 
     if options[:typ] == :listnav
@@ -697,6 +697,15 @@ module QuadiconHelper
               end
 
     output.collect(&:html_safe).join('').html_safe
+  end
+
+  def img_for_health_state(item)
+    case item.health_state
+    when "Valid"    then "svg/healthstate-normal.svg"
+    when "Critical" then "svg/healthstate-critical.svg"
+    when "None"     then "svg/healthstate-unknown.svg"
+    when "Warning"  then "100/warning.png"
+    end
   end
 
   # Renders a storage quadicon
