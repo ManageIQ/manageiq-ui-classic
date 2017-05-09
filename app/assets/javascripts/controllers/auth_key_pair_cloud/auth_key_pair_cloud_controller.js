@@ -12,7 +12,7 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
         vm.model = 'keyPairModel';
         vm.ems_choices = [];
         vm.saveable = miqService.saveable;
-        ManageIQ.angular.scope = $scope;
+        ManageIQ.angular.scope = vm;
 
         miqService.sparkleOn();
         $http.get('/auth_key_pair_cloud/ems_form_choices')
@@ -31,7 +31,7 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
 
         var url = '/auth_key_pair_cloud/create/' + keyPairFormId + '?button=' + buttonName;
         vm.keyPairModel.ems_id = vm.keyPairModel.ems.id;
-        if(serializeFields) {
+        if (serializeFields) {
             miqService.miqAjaxButton(url, miqService.serializeModel(vm.keyPairModel));
         } else {
             miqService.miqAjaxButton(url, false);
@@ -63,7 +63,7 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope'
       var data = response.data;
 
       vm.ems_choices = data.ems_choices;
-      if(vm.ems_choices.length > 0) {
+      if (vm.ems_choices.length > 0) {
         vm.keyPairModel.ems = vm.ems_choices[0];
       }
       vm.afterGet = true;
