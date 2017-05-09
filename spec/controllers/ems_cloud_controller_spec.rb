@@ -428,7 +428,6 @@ describe EmsCloudController do
 
   describe "Ceilometer/AMQP Events" do
     before do
-      @openstack = FactoryGirl.create(:ems_openstack)
       allow(controller).to receive(:check_privileges).and_return(true)
       allow(controller).to receive(:assert_privileges).and_return(true)
     end
