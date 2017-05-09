@@ -2,7 +2,7 @@ module PhysicalServerHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(name model product_name manufacturer machine_type serial_number ems_ref memory cores)
+      %i(name model product_name manufacturer machine_type serial_number ems_ref memory cores loc_led_state)
     )
   end
 
@@ -85,5 +85,9 @@ module PhysicalServerHelper::TextualSummary
 
   def textual_ipv6
     {:label =>  _("IPV6 Address"), :value => @record.hardware.guest_devices.collect { |device| device.network.ipv6address }.join(", ") }
+  end
+
+  def textual_loc_led_state
+    {:label => _("Identify LED State"), :value => @record.location_led_state}
   end
 end
