@@ -1,5 +1,5 @@
 describe('cloudTenantFormController', function() {
-  var $scope, vm, $controller, $httpBackend, miqService;
+  var $scope, vm, $httpBackend, miqService;
 
   beforeEach(module('ManageIQ'));
 
@@ -14,24 +14,27 @@ describe('cloudTenantFormController', function() {
     var mock_data = { name: 'test', ems_id: 1 };
 
     $httpBackend = _$httpBackend_;
-    $httpBackend.when('GET','/cloud_tenant/show_list').respond(mock_data);
-    $controller = _$controller_('cloudTenantFormController as vm',{
+    $httpBackend.when('GET', '/cloud_tenant/show_list').respond(mock_data);
+    
+    vm = _$controller_('cloudTenantFormController as vm', {
       $scope: $scope,
       miqService: miqService,
-      cloudTenantFormId: 'new'});
+      cloudTenantFormId: 'new',
+    });
   }));
 
   describe('#cancelClicked', function() {
     beforeEach(function() {
       $scope.angularForm = {
-        $setPristine: function (value){}
+        $setPristine: function(value) {},
       };
-      setTimeout($controller.cancelClicked);
+      
+      setTimeout(vm.cancelClicked);
     });
 
     it('delegates to miqService.miqAjaxButton', function(done) {
-      setTimeout(function () {
-        var redirectUrl = '/cloud_tenant/create/new' + '?button=cancel';
+      setTimeout(function() {
+        var redirectUrl = '/cloud_tenant/create/new?button=cancel';
         expect(miqService.miqAjaxButton).toHaveBeenCalledWith(redirectUrl);
         done();
       });
@@ -41,33 +44,34 @@ describe('cloudTenantFormController', function() {
   describe('#saveClicked', function() {
     beforeEach(function() {
       $scope.angularForm = {
-          $setPristine: function (value){}
+        $setPristine: function(value) {},
       };
-      setTimeout($controller.saveClicked);
+      
+      setTimeout(vm.saveClicked);
     });
 
     it('delegates to miqService.miqAjaxButton', function(done) {
-      setTimeout(function () {
-          var redirectUrl = 'create/new' + '?button=add';
-          expect(miqService.miqAjaxButton).toHaveBeenCalledWith(redirectUrl, $controller.cloudTenantModel, { complete: false });
-          done();
+      setTimeout(function() {
+        var redirectUrl = '/cloud_tenant/create/new?button=add';
+        expect(miqService.miqAjaxButton).toHaveBeenCalledWith(redirectUrl, vm.cloudTenantModel, { complete: false });
+        done();
       });
     });
   });
 
-
   describe('#resetClicked', function() {
     beforeEach(function() {
       $scope.angularForm = {
-          $setPristine: function (value){}
+        $setPristine: function(value) {},
       };
-      setTimeout($controller.resetClicked);
+      
+      setTimeout(vm.resetClicked);
     });
 
     it('warns the user with flash', function(done) {
-      setTimeout(function () {
-          expect(miqService.miqFlash).toHaveBeenCalled();
-          done();
+      setTimeout(function() {
+        expect(miqService.miqFlash).toHaveBeenCalled();
+        done();
       });
     });
   });
