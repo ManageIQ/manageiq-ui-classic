@@ -44,7 +44,7 @@ ManageIQ.angular.app.controller('cloudTenantFormController', ['$http', '$scope',
     var url = '/cloud_tenant/create/new?button=add';
     miqService.miqAjaxButton(url, vm.cloudTenantModel, { complete: false });
   };
-  
+
   vm.saveClicked = function() {
     var url = '/cloud_tenant/update/' + cloudTenantFormId + '?button=save';
     miqService.miqAjaxButton(url, vm.cloudTenantModel, { complete: false });
