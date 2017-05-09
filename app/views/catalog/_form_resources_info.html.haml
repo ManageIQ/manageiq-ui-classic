@@ -16,6 +16,8 @@
                          options_for_select(([["<#{_('Choose')}>", nil]]) + array, nil),
                          "data-miq_sparkle_on" => true,
                          :class                => "selectpicker")
+            .note
+              %b= _("Note: Ansible Playbook based resources can not be added to a Catalog Bundle")
             :javascript
               miqInitSelectPicker();
               miqSelectPickerEvent('resource_id', '#{url}')
