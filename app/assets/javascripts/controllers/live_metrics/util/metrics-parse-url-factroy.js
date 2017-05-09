@@ -33,6 +33,7 @@ angular.module('miq.util').factory('metricsParseUrlFactory', function() {
     dash.params = parseParams($window.location.search);
     dash.providerId = '/' + (/^\/[^\/]+\/([r\d]+)$/.exec(pathname)[1]);
 
+    dash.db = dash.params.db || 'live';
     dash.tenantList = [];
     dash.minBucketDurationInSecondes = parseInt(dash.params.bucket, 10) || 20 * 60;
     dash.max_metrics = parseInt(dash.params.max_metrics, 10) || 10000;
