@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope', 'keyPairFormId', 'miqService', function($http, $scope, keyPairFormId, miqService) {
+ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', 'keyPairFormId', 'miqService', function($http, keyPairFormId, miqService) {
     var vm = this;
     var init = function() {
         vm.keyPairModel = {
