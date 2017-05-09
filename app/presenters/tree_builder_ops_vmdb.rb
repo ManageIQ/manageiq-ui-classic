@@ -46,7 +46,7 @@ class TreeBuilderOpsVmdb < TreeBuilderOps
 
   def x_get_tree_vmdb_table_kids(object, count_only)
     if count_only
-      object.vmdb_indexes.count
+      1 # each table has any index
     else
       # load this node expanded on autoload
       @tree_state.x_tree(@name)[:open_nodes].push("xx-#{to_cid(object.id.to_s)}") unless @tree_state.x_tree(@name)[:open_nodes].include?("xx-#{to_cid(object.id.to_s)}")
