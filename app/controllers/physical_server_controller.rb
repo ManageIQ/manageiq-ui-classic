@@ -34,7 +34,7 @@ class PhysicalServerController < ApplicationController
 
   def textual_group_list
     [
-      %i(properties networks relationships power_management),
+      %i(properties networks relationships power_management assets),
     ]
   end
   helper_method :textual_group_list
