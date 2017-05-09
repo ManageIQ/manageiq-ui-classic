@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', 'keyPairFormId', 'miqService', function($http, keyPairFormId, miqService) {
+ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', '$scope', 'keyPairFormId', 'miqService', function($http, $scope, keyPairFormId, miqService) {
     var vm = this;
     var init = function() {
         vm.keyPairModel = {
@@ -41,18 +41,18 @@ ManageIQ.angular.app.controller('keyPairCloudFormController', ['$http', 'keyPair
 
     vm.cancelClicked = function() {
         keyPairEditButtonClicked('cancel', false);
-        vm.angularForm.$setPristine(true);
+        $scope.angularForm.$setPristine(true);
     };
 
     vm.resetClicked = function() {
         vm.keyPairModel = angular.copy( vm.modelCopy );
-        vm.angularForm.$setPristine(true);
+        $scope.angularForm.$setPristine(true);
         miqService.miqFlash("warn", __("All changes have been reset"));
     };
 
     vm.saveClicked = function() {
         keyPairEditButtonClicked('save', true);
-        vm.angularForm.$setPristine(true);
+        $scope.angularForm.$setPristine(true);
     };
 
     vm.addClicked = function() {
