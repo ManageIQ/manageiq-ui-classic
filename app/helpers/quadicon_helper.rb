@@ -330,7 +330,7 @@ module QuadiconHelper
   def quadicon_reflection_img(options = {})
     path = options.delete(:path) || "layout/reflection.png"
     options = { :border => 0, :size => 72 }.merge(options)
-    quadicon_img_tag(path, options)
+    encodable_image_tag(path, options)
   end
 
   CLASSLY_NAMED_ITEMS = %w(
@@ -391,42 +391,11 @@ module QuadiconHelper
     value.first(trunc_to / 2) + "..." + value.last(trunc_to / 2)
   end
 
-  def quadicon_img_tag(path = nil, options = {})
-    # if quadicon_encode_images? && path.present?
-    #   quadicon_encoded_img(path, options)
-    # else
-    #   image_tag(image_path(path), options)
-    # end
-    image_tag(quadicon_img_path(path), options)
-  end
-
-  def quadicon_img_path(path = nil)
-    if quadicon_encode_images? && path.present?
-      quadicon_encoded_uri(path)
-    else
-      image_path(path)
-    end
-  end
-
-  def quadicon_encoded_uri(path)
-    asset = Rails.application.assets[path]
-
-    if asset.content_type == 'image/svg+xml'
-      encoding = 'charset=utf-8'
-      data = CGI.escape(asset.source).gsub('+', '%20')
-    else
-      encoding = 'base64'
-      data = Base64.encode64(asset.source)
-    end
-
-    "data:#{asset.content_type};#{encoding},#{data}"
-  end
-
   def flobj_img_simple(image = nil, cls = '', size = 72)
     image ||= "layout/base-single.png"
 
     content_tag(:div, :class => "flobj #{cls}") do
-      quadicon_img_tag(image, :size => size)
+      encodable_image_tag(image, :size => size)
     end
   end
 
@@ -485,7 +454,7 @@ module QuadiconHelper
   def currentstate_icon(state)
     path = "svg/currentstate-#{h(state)}.svg"
     content_tag(:div, :class => "flobj b72") do
-      content_tag(:div, '', :class => "stretch", :style => "background-image: url('#{quadicon_img_path(path)}')")
+      content_tag(:div, '', :class => "stretch", :style => "background-image: url('#{encodable_image_source(path)}')")
     end
   end
 

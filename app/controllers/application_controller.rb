@@ -36,6 +36,7 @@ class ApplicationController < ActionController::Base
   helper ToolbarHelper
   helper JsHelper
   helper QuadiconHelper
+  helper ImageEncodeHelper
 
   helper CloudResourceQuotaHelper
 
@@ -155,6 +156,9 @@ class ApplicationController < ActionController::Base
     # do not build quadicon links
     @embedded = true
     @showlinks = false
+
+    # encode images and embed in HTML that is sent to Prince
+    @base64_encode_images = true
 
     @record = identify_record(params[:id])
     yield if block_given?
