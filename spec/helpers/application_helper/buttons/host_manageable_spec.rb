@@ -11,12 +11,12 @@ describe ApplicationHelper::Button::HostManageable do
   before { allow(record.hardware).to receive(:provision_state).and_return(provision_state) }
 
   describe '#visible?' do
-    context 'when record.class == ManageIQ::Providers::Openstack::InfraManager::Host' do
-      context 'and hardware.provision_state == manageable' do
+    context 'when record.class is ManageIQ::Providers::Openstack::InfraManager::Host' do
+      context 'and hardware.provision_state is manageable' do
         let(:provision_state) { String.new 'manageable' }
         include_examples 'ApplicationHelper::Button::Basic#visible?', false
       end
-      context 'and hardware.provision_state != manageable' do
+      context 'and hardware.provision_state is not manageable' do
         include_examples 'ApplicationHelper::Button::Basic#visible?', true
       end
     end

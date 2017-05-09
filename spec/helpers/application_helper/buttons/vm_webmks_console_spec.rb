@@ -9,11 +9,11 @@ describe ApplicationHelper::Button::VmWebmksConsole do
 
   describe '#visible?' do
     subject { button.visible? }
-    context 'when record.vendor == vmware' do
+    context 'when record.vendor is vmware' do
       let(:record) { FactoryGirl.create(:vm_vmware) }
       it_behaves_like 'vm_console_visible?', 'WebMKS', :vm_vmware => true
     end
-    context 'when record.vendor != vmware' do
+    context 'when record.vendor is not vmware' do
       context 'and WebMKS is not a supported console' do
         it_behaves_like 'vm_console_record_types', :vm_openstack => nil, :vm_redhat => nil
       end
@@ -24,7 +24,7 @@ describe ApplicationHelper::Button::VmWebmksConsole do
     before { allow(record).to receive(:current_state).and_return(power_state) }
     before(:each) { subject.calculate_properties }
 
-    context 'when record.vendor == vmware' do
+    context 'when record.vendor is vmware' do
       let(:power_state) { 'on' }
       let(:ems) { FactoryGirl.create(:ems_vmware) }
       let(:record) { FactoryGirl.create(:vm_vmware, :ems_id => ems.id) }

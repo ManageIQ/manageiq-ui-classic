@@ -14,11 +14,11 @@ describe ApplicationHelper::Button::SummaryReload do
   let(:lastaction) { nil }
 
   shared_examples 'lastaction_examples' do
-    context 'when lastaction == show_list' do
+    context 'when lastaction is show_list' do
       let(:lastaction) { 'show_list' }
       include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
-    context 'when lastaction != show_list' do
+    context 'when lastaction is not show_list' do
       let(:lastaction) { 'not_show_list' }
       include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
@@ -27,7 +27,7 @@ describe ApplicationHelper::Button::SummaryReload do
   describe '#visible?' do
     context 'when in explorer' do
       context 'when record set' do
-        context 'when layout != miq_policy_rsop' do
+        context 'when layout is not miq_policy_rsop' do
           context 'when showtype not in %w(details item)' do
             include_examples 'ApplicationHelper::Button::Basic#visible?', true
           end
@@ -38,7 +38,7 @@ describe ApplicationHelper::Button::SummaryReload do
             end
           end
         end
-        context 'when layout == miq_policy_rsop' do
+        context 'when layout is miq_policy_rsop' do
           let(:layout) { 'miq_policy_rsop' }
           include_examples 'lastaction_examples'
         end

@@ -12,13 +12,13 @@ describe ApplicationHelper::Button::DialogAction do
       let(:current) { 'something' }
       include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
-    context 'and edit[:current] == nil' do
+    context 'and edit[:current] is nil' do
       let(:current) { nil }
       include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
   end
 
-  context 'when edit == nil' do
+  context 'when edit is nil' do
     let(:edit) { nil }
     include_examples 'ApplicationHelper::Button::Basic#visible?', true
   end

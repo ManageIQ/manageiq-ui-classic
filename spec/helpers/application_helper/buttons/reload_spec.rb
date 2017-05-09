@@ -12,29 +12,29 @@ describe ApplicationHelper::Button::Reload do
   before { allow(view_context).to receive(:x_node).and_return(x_node) }
 
   describe '#visible?' do
-    context 'when active_tree == reports_tree' do
+    context 'when active_tree is reports_tree' do
       let(:tree) { :reports_tree }
-      context 'and active_tab == saved_reports' do
+      context 'and active_tab is saved_reports' do
         let(:tab) { 'saved_reports' }
         include_examples 'ApplicationHelper::Button::Basic#visible?', true
       end
-      context 'and active_tab != saved_reports' do
+      context 'and active_tab is not saved_reports' do
         let(:tab) { 'not_saved_reports' }
         include_examples 'ApplicationHelper::Button::Basic#visible?', false
       end
     end
-    context 'when active_tree == savedreports_tree' do
+    context 'when active_tree is savedreports_tree' do
       let(:tree) { :savedreports_tree }
-      context 'and x_node == root' do
+      context 'and x_node is root' do
         let(:x_node) { 'root' }
         include_examples 'ApplicationHelper::Button::Basic#visible?', true
       end
-      context 'and x_node != root' do
+      context 'and x_node is not root' do
         let(:x_node) { 'not_root' }
         include_examples 'ApplicationHelper::Button::Basic#visible?', false
       end
     end
-    context 'when active_tree != reports_tree && active_tree != savedreports_tree' do
+    context 'when active_tree != reports_tree && active_tree is not savedreports_tree' do
       let(:tree) { :not_any_of_reports_trees }
       include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end

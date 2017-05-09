@@ -25,7 +25,7 @@ describe ApplicationHelper::Button::HistoryItem do
   end
 
   describe '#disabled?' do
-    context 'when history_item_id == 1' do
+    context 'when history_item_id is 1' do
       let(:id) { :history_1 }
       (0...2).each do |n|
         context "when x_tree_history.length == #{n}" do
@@ -40,7 +40,7 @@ describe ApplicationHelper::Button::HistoryItem do
         end
       end
     end
-    context 'when history_item_id != 1' do
+    context 'when history_item_id is not 1' do
       let(:id) { :history_2 }
       let(:testing_history) { [nil] }
       it { expect(subject.disabled?).to be_falsey }

@@ -14,11 +14,11 @@ describe ApplicationHelper::Button::DialogAddElement do
       let(:x_node) { 'xx_11' }
       include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
-    context 'and nodes.length == 3' do
+    context 'and nodes.length is 3' do
       let(:x_node) { 'xx_aa_11' }
       include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
-    context 'and nodes.length == 4' do
+    context 'and nodes.length is 4' do
       let(:x_node) { 'xx_aa_11_22' }
       include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
@@ -28,7 +28,7 @@ describe ApplicationHelper::Button::DialogAddElement do
     end
   end
 
-  context 'when edit == nil' do
+  context 'when edit is nil' do
     let(:edit) { nil }
     let(:x_node) { 'does_not_matter' }
     include_examples 'ApplicationHelper::Button::Basic#visible?', false

@@ -9,11 +9,11 @@ describe ApplicationHelper::Button::ViewSummary do
   describe '#calculate_properties' do
     before { subject.calculate_properties }
 
-    context 'when showtype == dashboard' do
+    context 'when showtype is dashboard' do
       let(:showtype) { 'dashboard' }
       include_examples 'ApplicationHelper::Button::Basic enabled'
     end
-    context 'when showtype != dashboard' do
+    context 'when showtype is not dashboard' do
       let(:showtype) { 'not_dashboard' }
       it_behaves_like 'a disabled button'
     end

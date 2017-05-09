@@ -9,11 +9,11 @@ describe ApplicationHelper::Button::VmVncConsole do
 
   describe '#visible?' do
     subject { button.visible? }
-    context 'when record.vendor == vmware' do
+    context 'when record.vendor is vmware' do
       let(:record) { FactoryGirl.create(:vm_vmware) }
       it_behaves_like 'vm_console_visible?', 'VNC', :vm_vmware => true
     end
-    context 'when record.vendor != vmware' do
+    context 'when record.vendor is not vmware' do
       context 'and VNC is a supported console' do
         it_behaves_like 'vm_console_record_types', :vm_openstack => true, :vm_redhat => true
       end
@@ -27,7 +27,7 @@ describe ApplicationHelper::Button::VmVncConsole do
     before { allow(record).to receive(:current_state).and_return(power_state) }
     before(:each) { subject.calculate_properties }
 
-    context 'when record.vendor == vmware' do
+    context 'when record.vendor is vmware' do
       let(:power_state) { 'on' }
       let(:ems) { FactoryGirl.create(:ems_vmware, :api_version => api_version) }
       let(:record) { FactoryGirl.create(:vm_vmware, :ems_id => ems.id) }

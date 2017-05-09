@@ -7,11 +7,11 @@ describe ApplicationHelper::Button::MiqReportAction do
   let(:props) { Hash.new }
 
   describe '#visible?' do
-    context 'when active_tab == saved_reports' do
+    context 'when active_tab is saved_reports' do
       let(:tab) { 'saved_reports' }
       include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
-    context 'when active_tab != saved_reports' do
+    context 'when active_tab is not saved_reports' do
       let(:tab) { 'does_not_matter' }
       include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end

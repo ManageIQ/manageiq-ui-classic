@@ -10,25 +10,25 @@ describe ApplicationHelper::Button::MiqReportEdit do
   let(:record) { nil }
 
   describe '#visible?' do
-    context 'when active_tree == reports_tree' do
+    context 'when active_tree is reports_tree' do
       let(:tree) { :reports_tree }
-      context 'and active_tab == report_info' do
+      context 'and active_tab is report_info' do
         let(:tab) { 'report_info' }
-        context 'and record.rpt_type == Custom' do
+        context 'and record.rpt_type is Custom' do
           let(:record) { FactoryGirl.create(:miq_report, :rpt_type => 'Custom') }
           include_examples 'ApplicationHelper::Button::Basic#visible?', true
         end
-        context 'and record.rpt_type != Custom' do
+        context 'and record.rpt_type is not Custom' do
           let(:record) { FactoryGirl.create(:miq_report) }
           include_examples 'ApplicationHelper::Button::Basic#visible?', false
         end
       end
-      context 'and active_tab != report_info' do
+      context 'and active_tab is not report_info' do
         let(:tab) { 'not_report_info' }
         include_examples 'ApplicationHelper::Button::Basic#visible?', false
       end
     end
-    context 'when active_tree != reports_tree' do
+    context 'when active_tree is not reports_tree' do
       let(:tree) { :not_reports_tree }
       include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end

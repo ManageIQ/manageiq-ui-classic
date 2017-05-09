@@ -7,11 +7,11 @@ describe ApplicationHelper::Button::WidgetNew do
   describe '#visible?' do
     include_context 'ApplicationHelper::Button::New#visible?'
 
-    context 'when x_node == root' do
+    context 'when x_node is root' do
       let(:x_node) { 'root' }
       include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
-    context 'when x_node != root' do
+    context 'when x_node is not root' do
       include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
   end

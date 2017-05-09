@@ -14,7 +14,7 @@ describe ApplicationHelper::Button::DialogAddTab do
       let(:x_node) { 'xx' }
       include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
-    context 'and node.length == 2' do
+    context 'and node.length is 2' do
       let(:x_node) { 'xx_11' }
       include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
@@ -24,7 +24,7 @@ describe ApplicationHelper::Button::DialogAddTab do
     end
   end
 
-  context 'when edit == nil' do
+  context 'when edit is nil' do
     let(:edit) { nil }
     let(:x_node) { 'does_not_matter' }
     include_examples 'ApplicationHelper::Button::Basic#visible?', false

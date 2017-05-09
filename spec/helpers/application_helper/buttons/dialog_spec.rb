@@ -6,7 +6,7 @@ describe ApplicationHelper::Button::Dialog do
   let(:instance_data) { {'edit' => edit} }
   let(:props) { Hash.new }
 
-  context 'when edit == false' do
+  context 'when edit is false' do
     let(:edit) { false }
     include_examples 'ApplicationHelper::Button::Basic#visible?', false
   end

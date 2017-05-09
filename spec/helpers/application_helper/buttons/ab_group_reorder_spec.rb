@@ -7,7 +7,7 @@ describe ApplicationHelper::Button::AbGroupReorder do
   let(:props) { {:options => {:action => 'edited'}} }
 
   describe '#disabled?' do
-    context 'when :active_tree == :ab_tree' do
+    context 'when :active_tree is :ab_tree' do
       let(:tree) { :ab_tree }
 
       before do
@@ -29,7 +29,7 @@ describe ApplicationHelper::Button::AbGroupReorder do
       end
     end
 
-    context 'when :active_tree != :ab_tree' do
+    context 'when :active_tree is not :ab_tree' do
       let(:tree) { :not_ab_tree }
       let(:cb_class) { 'ServiceTemplate' }
       let(:service_template) { FactoryGirl.create(:service_template, :custom_button_sets => custom_button_sets) }

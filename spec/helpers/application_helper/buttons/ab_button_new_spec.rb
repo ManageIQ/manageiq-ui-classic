@@ -9,10 +9,10 @@ describe ApplicationHelper::Button::AbButtonNew do
   describe '#visible?' do
     include_context 'ApplicationHelper::Button::New#visible?'
 
-    context 'when x_active_tree != :ab_tree' do
+    context 'when x_active_tree is not :ab_tree' do
       include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
-    context 'when x_active_tree == :ab_tree' do
+    context 'when x_active_tree is :ab_tree' do
       let(:tree) { :ab_tree }
       context ' and x_node cannot be split into 2 parts' do
         let(:x_node) { 'xx-ab' }

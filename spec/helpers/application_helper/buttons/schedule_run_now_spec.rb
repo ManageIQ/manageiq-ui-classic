@@ -7,11 +7,11 @@ describe ApplicationHelper::Button::ScheduleRunNow do
   let(:props) { Hash.new }
 
   describe '#visible?' do
-    context 'when active_tree != settings_tree' do
+    context 'when active_tree is not settings_tree' do
       let(:tree) { :not_settings_tree }
       include_examples 'ApplicationHelper::Button::Basic#visible?', false
     end
-    context 'when active_tree == settings_tree' do
+    context 'when active_tree is settings_tree' do
       let(:tree) { :settings_tree }
       include_examples 'ApplicationHelper::Button::Basic#visible?', true
     end
