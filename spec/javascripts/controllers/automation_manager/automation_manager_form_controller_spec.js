@@ -5,11 +5,13 @@ describe('automationManagerFormController', function() {
 
   beforeEach(inject(function(_$httpBackend_, $rootScope, _$controller_, _miqService_) {
     miqService = _miqService_;
+
     spyOn(miqService, 'showButtons');
     spyOn(miqService, 'hideButtons');
     spyOn(miqService, 'miqAjaxButton');
     spyOn(miqService, 'sparkleOn');
     spyOn(miqService, 'sparkleOff');
+
     $scope = $rootScope.$new();
 
     var automationManagerFormResponse = {
@@ -17,17 +19,18 @@ describe('automationManagerFormController', function() {
       url: '',
       zone: 'foo_zone',
       verify_ssl: 0,
-      log_userid: ''
+      log_userid: '',
     };
 
     $httpBackend = _$httpBackend_;
     $httpBackend.whenGET('/automation_manager/form_fields/new').respond(automationManagerFormResponse);
-    vm = _$controller_('automationManagerFormController as vm', {
 
+    vm = _$controller_('automationManagerFormController as vm', {
       $scope: $scope,
       automationManagerFormId: 'new',
-      miqService: miqService
+      miqService: miqService,
     });
+
     $httpBackend.flush();
   }));
 
@@ -38,25 +41,31 @@ describe('automationManagerFormController', function() {
 
   describe('initialization', function() {
     describe('when the automationManagerFormId is new', function() {
-      it('sets the name to blank', function () {
+      it('sets the name to blank', function() {
         expect(vm.automationManagerModel.name).toEqual('');
       });
-      it('sets the zone to blank', function () {
+
+      it('sets the zone to blank', function() {
         expect(vm.automationManagerModel.zone).toEqual('foo_zone');
       });
-      it('sets the url to blank', function () {
+
+      it('sets the url to blank', function() {
         expect(vm.automationManagerModel.url).toEqual('');
       });
-      it('sets the verify_ssl to blank', function () {
+
+      it('sets the verify_ssl to blank', function() {
         expect(vm.automationManagerModel.verify_ssl).toBeFalsy();
       });
-      it('sets the log_userid to blank', function () {
+
+      it('sets the log_userid to blank', function() {
         expect(vm.automationManagerModel.log_userid).toEqual('');
       });
-      it('sets the log_password to blank', function () {
+
+      it('sets the log_password to blank', function() {
         expect(vm.automationManagerModel.log_password).toEqual('');
       });
-      it('sets the log_verify to blank', function () {
+
+      it('sets the log_verify to blank', function() {
         expect(vm.automationManagerModel.log_verify).toEqual('');
       });
     });
@@ -67,40 +76,46 @@ describe('automationManagerFormController', function() {
         url: '10.10.10.10',
         zone: 'My Test Zone',
         verify_ssl: 1,
-        log_userid: 'admin'
+        log_userid: 'admin',
       };
 
       beforeEach(inject(function(_$controller_) {
         $httpBackend.whenGET('/automation_manager/form_fields/12345').respond(automationManagerFormResponse);
-        vm = _$controller_('automationManagerFormController as vm',
 
-          {
-            $scope: $scope,
-            automationManagerFormId: '12345',
-            miqService: miqService
-          });
+        vm = _$controller_('automationManagerFormController as vm', {
+          $scope: $scope,
+          automationManagerFormId: '12345',
+          miqService: miqService,
+        });
+
         $httpBackend.flush();
       }));
 
-      it('sets the name to the value returned from http request', function () {
+      it('sets the name to the value returned from http request', function() {
         expect(vm.automationManagerModel.name).toEqual('Ansible');
       });
-      it('sets the zone to the value returned from the http request', function () {
+
+      it('sets the zone to the value returned from the http request', function() {
         expect(vm.automationManagerModel.zone).toEqual('My Test Zone');
       });
-      it('sets the url to the value returned from http request', function () {
+
+      it('sets the url to the value returned from http request', function() {
         expect(vm.automationManagerModel.url).toEqual('10.10.10.10');
       });
-      it('sets the verify_ssl to the value returned from http request', function () {
+
+      it('sets the verify_ssl to the value returned from http request', function() {
         expect(vm.automationManagerModel.verify_ssl).toBeTruthy();
       });
-      it('sets the log_userid to the value returned from http request', function () {
+
+      it('sets the log_userid to the value returned from http request', function() {
         expect(vm.automationManagerModel.log_userid).toEqual('admin');
       });
-      it('sets the log_password to the value returned from http request', function () {
+
+      it('sets the log_password to the value returned from http request', function() {
         expect(vm.automationManagerModel.log_password).toEqual(miqService.storedPasswordPlaceholder);
       });
-      it('sets the log_verify to the value returned from http request', function () {
+
+      it('sets the log_verify to the value returned from http request', function() {
         expect(vm.automationManagerModel.log_verify).toEqual(miqService.storedPasswordPlaceholder);
       });
     });
@@ -109,9 +124,10 @@ describe('automationManagerFormController', function() {
   describe('#resetClicked', function() {
     beforeEach(function() {
       $scope.angularForm = {
-        $setPristine: function (value){},
-        $setUntouched: function (value){},
+        $setPristine: function(value) {},
+        $setUntouched: function(value) {},
       };
+
       vm.resetClicked();
     });
 
@@ -123,8 +139,9 @@ describe('automationManagerFormController', function() {
   describe('#saveClicked', function() {
     beforeEach(function() {
       $scope.angularForm = {
-        $setPristine: function (value){}
+        $setPristine: function(value) {},
       };
+
       vm.saveClicked();
     });
 
@@ -144,8 +161,9 @@ describe('automationManagerFormController', function() {
   describe('#addClicked', function() {
     beforeEach(function() {
       $scope.angularForm = {
-        $setPristine: function (value){}
+        $setPristine: function(value) {},
       };
+
       vm.addClicked();
     });
 
@@ -163,10 +181,10 @@ describe('automationManagerFormController', function() {
       var angularForm;
       var element = angular.element(
         '<form name="angularForm">' +
-        '<input ng-model="automationManagerModel.url" name="url" required text />' +
-        '<input ng-model="automationManagerModel.log_userid" name="log_userid" required text />' +
-        '<input ng-model="automationManagerModel.log_password" name="log_password" required text />' +
-        '<input ng-model="automationManagerModel.log_verify" name="log_verify" required text />' +
+        '<input ng-model="automationManagerModel.url" name="url" required />' +
+        '<input ng-model="automationManagerModel.log_userid" name="log_userid" required />' +
+        '<input ng-model="automationManagerModel.log_password" name="log_password" required />' +
+        '<input ng-model="automationManagerModel.log_verify" name="log_verify" required />' +
         '</form>'
       );
 
