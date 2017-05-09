@@ -74,5 +74,17 @@ describe ServiceController do
     end
   end
 
+  context "#show" do
+    render_views
+
+    it 'contains the associated tags for the ansible service template' do
+      EvmSpecHelper.local_miq_server
+      record = FactoryGirl.create(:service_ansible_playbook)
+      get :explorer, :params => { :id => "s-#{record.id}" }
+      expect(response.status).to eq(200)
+      expect(response.body).to include('Smart Management')
+    end
+  end
+
   it_behaves_like "explorer controller with custom buttons"
 end
