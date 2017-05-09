@@ -12,7 +12,6 @@
                  'miq-form'      => true,
                  'model'         => 'vm.keyPairModel',
                  'model-copy'    => 'vm.modelCopy',
-
                  :novalidate     => true}
     = render :partial => 'layouts/flash_msg'
     .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
