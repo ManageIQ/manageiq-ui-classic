@@ -2,7 +2,7 @@ module PhysicalServerHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(name model product_name manufacturer machine_type serial_number ems_ref)
+      %i(name model product_name manufacturer machine_type serial_number ems_ref memory cores)
     )
   end
 
@@ -46,5 +46,13 @@ module PhysicalServerHelper::TextualSummary
 
   def textual_model
     {:label => _("Model"), :value => @record.model}
+  end
+
+  def textual_memory
+    {:label => _("Total memory (mb)"), :value => @record.hardware.memory_mb }
+  end
+
+  def textual_cores
+    {:label => _("CPU total cores"), :value => @record.hardware.cpu_total_cores }
   end
 end
