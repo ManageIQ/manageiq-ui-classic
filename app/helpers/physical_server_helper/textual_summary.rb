@@ -2,7 +2,7 @@ module PhysicalServerHelper::TextualSummary
   def textual_group_properties
     TextualGroup.new(
       _("Properties"),
-      %i(name model product_name manufacturer machine_type serial_number ems_ref memory cores loc_led_state)
+      %i(name model product_name manufacturer machine_type serial_number ems_ref memory cores health_state loc_led_state)
     )
   end
 
@@ -120,5 +120,9 @@ module PhysicalServerHelper::TextualSummary
 
   def textual_lowest_rack_unit
     {:label => _("Lowest rack name"), :value => @record.asset_details['lowest_rack_unit']}
+  end
+
+  def textual_health_state
+    {:label => _("Health State"), :value => @record.health_state}
   end
 end
