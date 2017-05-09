@@ -1,9 +1,9 @@
 describe('cloudTenantFormController', function() {
-  var $scope, vm, $httpBackend, miqService;
+  var $scope, vm, miqService;
 
   beforeEach(module('ManageIQ'));
 
-  beforeEach(inject(function(_$httpBackend_, $rootScope, _$controller_, _miqService_) {
+  beforeEach(inject(function($rootScope, _$controller_, _miqService_) {
     miqService = _miqService_;
 
     spyOn(miqService, 'miqAjaxButton');
@@ -11,11 +11,6 @@ describe('cloudTenantFormController', function() {
 
     $scope = $rootScope.$new();
 
-    var mock_data = { name: 'test', ems_id: 1 };
-
-    $httpBackend = _$httpBackend_;
-    $httpBackend.when('GET', '/cloud_tenant/show_list').respond(mock_data);
-    
     vm = _$controller_('cloudTenantFormController as vm', {
       $scope: $scope,
       miqService: miqService,
@@ -41,13 +36,13 @@ describe('cloudTenantFormController', function() {
     });
   });
 
-  describe('#saveClicked', function() {
+  describe('#addClicked', function() {
     beforeEach(function() {
       $scope.angularForm = {
         $setPristine: function(value) {},
       };
       
-      setTimeout(vm.saveClicked);
+      setTimeout(vm.addClicked);
     });
 
     it('delegates to miqService.miqAjaxButton', function(done) {
