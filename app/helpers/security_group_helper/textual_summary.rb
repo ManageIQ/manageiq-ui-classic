@@ -25,8 +25,8 @@ module SecurityGroupHelper::TextualSummary
         rule.network_protocol,
         rule.host_protocol,
         rule.direction,
-        rule.port,
-        rule.end_port,
+        rule.port.to_i,
+        rule.end_port.to_i,
         (rule.source_ip_range || rule.source_security_group.try(:name) || "<None>")
       ]
     end.sort
