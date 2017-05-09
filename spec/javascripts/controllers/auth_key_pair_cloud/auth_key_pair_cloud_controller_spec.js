@@ -36,8 +36,8 @@ describe('keyPairCloudFormController', function() {
     describe('initialization', function() {
         beforeEach(function() {
             $httpBackend.flush();
-            vm.angularForm = {
-                $setPristine: function (value){}
+            $scope.angularForm = {
+                $setPristine: function(value) {}
             };
         });
         describe('when the keyPairFormId is new', function() {
@@ -53,8 +53,8 @@ describe('keyPairCloudFormController', function() {
     describe('#saveClicked', function() {
         beforeEach(function() {
             $httpBackend.flush();
-            vm.angularForm = {
-                $setPristine: function (value){}
+            $scope.angularForm = {
+                $setPristine: function(value) {},
             };
             vm.saveClicked();
         });
@@ -75,8 +75,8 @@ describe('keyPairCloudFormController', function() {
     describe('#cancelClicked', function() {
         beforeEach(function() {
             $httpBackend.flush();
-            vm.angularForm = {
-                $setPristine: function (value){}
+            $scope.angularForm = {
+                $setPristine: function(value) {},
             };
             vm.cancelClicked();
         });
