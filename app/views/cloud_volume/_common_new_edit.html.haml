@@ -112,6 +112,20 @@
 
 .form-group{"ng-if" => "vm.cloudVolumeModel.emstype == 'ManageIQ::Providers::Amazon::StorageManager::Ebs'"}
   %label.col-md-2.control-label
+    = _('Base Snapshot')
+  .col-md-8
+    %select{"name"             => "aws_base_snapshot_id",
+            "ng-model"         => "vm.cloudVolumeModel.aws_base_snapshot_id",
+            "ng-options"       => "vs.ems_ref as vs.name for vs in vm.baseSnapshotChoices",
+            "ng-disabled"      => "!vm.newRecord",
+            :checkchange       => true,
+            "data-live-search" => "true",
+            "pf-select"        => true}
+      %option{"value" => "", "enabled" => ""}
+        = _('No snapshot')
+
+.form-group{"ng-if" => "vm.cloudVolumeModel.emstype == 'ManageIQ::Providers::Amazon::StorageManager::Ebs'"}
+  %label.col-md-2.control-label
     = _('Encryption')
   .col-md-8
     %input.form-control{"bs-switch"       => "",

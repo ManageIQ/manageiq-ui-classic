@@ -26,7 +26,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
 
     if (cloudVolumeFormId !== 'new') {
       // Fetch cloud volume data before showing the form.
-      API.get('/api/cloud_volumes/' + cloudVolumeFormId + '?attributes=ext_management_system.type,availability_zone.ems_ref')
+      API.get('/api/cloud_volumes/' + cloudVolumeFormId + '?attributes=ext_management_system.type,availability_zone.ems_ref,base_snapshot.ems_ref')
         .then(getCloudVolumeFormData)
         .catch(miqService.handleFailure);
     } else {
@@ -113,7 +113,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
 
   vm.storageManagerChanged = function(id) {
     miqService.sparkleOn();
-    API.get('/api/providers/' + id + '?attributes=type,parent_manager.availability_zones,parent_manager.cloud_tenants')
+    API.get('/api/providers/' + id + '?attributes=type,parent_manager.availability_zones,parent_manager.cloud_tenants,parent_manager.cloud_volume_snapshots')
       .then(getStorageManagerFormData)
       .catch(miqService.handleFailure);
   };
@@ -214,6 +214,11 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     vm.cloudVolumeModel.aws_volume_type = data.volume_type;
     vm.cloudVolumeModel.aws_availability_zone_id = data.availability_zone.ems_ref;
 
+    // If volume was created from snapshot and this snapshot still exists
+    if (data.base_snapshot) {
+      vm.cloudVolumeModel.aws_base_snapshot_id = data.base_snapshot.ems_ref;
+    }
+
     // Update the IOPS based on the current volume size.
     vm.sizeChanged(vm.cloudVolumeModel.size);
 
@@ -224,6 +229,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     vm.cloudVolumeModel.emstype = data.type;
     vm.cloudTenantChoices = data.parent_manager.cloud_tenants;
     vm.availabilityZoneChoices = data.parent_manager.availability_zones;
+    vm.baseSnapshotChoices = data.parent_manager.cloud_volume_snapshots;
 
     miqService.sparkleOff();
   };

@@ -684,21 +684,34 @@ class CloudVolumeController < ApplicationController
     # Depending on the storage manager type, collect required form params.
     case params[:emstype]
     when "ManageIQ::Providers::StorageManager::CinderManager"
-      cloud_tenant_id = params[:cloud_tenant_id] if params[:cloud_tenant_id]
-      cloud_tenant = find_record_with_rbac(CloudTenant, cloud_tenant_id)
-      options[:cloud_tenant] = cloud_tenant
-      options[:ems] = cloud_tenant.ext_management_system
+      options.merge!(cinder_manager_options)
     when "ManageIQ::Providers::Amazon::StorageManager::Ebs"
-      options[:volume_type] = params[:aws_volume_type] if params[:aws_volume_type]
-      # Only set IOPS if io1 (provisioned IOPS) and IOPS available
-      options[:iops] = params[:aws_iops] if options[:volume_type] == 'io1' && params[:aws_iops]
-      options[:availability_zone] = params[:aws_availability_zone_id] if params[:aws_availability_zone_id]
-      options[:encrypted] = params[:aws_encryption]
-
-      # Get the storage manager.
-      storage_manager_id = params[:storage_manager_id] if params[:storage_manager_id]
-      options[:ems] = find_record_with_rbac(ExtManagementSystem, storage_manager_id)
+      options.merge!(aws_ebs_options)
     end
+    options
+  end
+
+  def cinder_manager_options
+    options = {}
+    cloud_tenant_id = params[:cloud_tenant_id] if params[:cloud_tenant_id]
+    cloud_tenant = find_record_with_rbac(CloudTenant, cloud_tenant_id)
+    options[:cloud_tenant] = cloud_tenant
+    options[:ems] = cloud_tenant.ext_management_system
+    options
+  end
+
+  def aws_ebs_options
+    options = {}
+    options[:volume_type] = params[:aws_volume_type] if params[:aws_volume_type]
+    # Only set IOPS if io1 (provisioned IOPS) and IOPS available
+    options[:iops] = params[:aws_iops] if options[:volume_type] == 'io1' && params[:aws_iops]
+    options[:availability_zone] = params[:aws_availability_zone_id] if params[:aws_availability_zone_id]
+    options[:snapshot_id] = params[:aws_base_snapshot_id] if params[:aws_base_snapshot_id]
+    options[:encrypted] = params[:aws_encryption]
+
+    # Get the storage manager.
+    storage_manager_id = params[:storage_manager_id] if params[:storage_manager_id]
+    options[:ems] = find_record_with_rbac(ExtManagementSystem, storage_manager_id)
     options
   end
 
