@@ -108,28 +108,21 @@ module Mixins
           @refresh_partial = "shared/views/retire" if @explorer || @layout == "orchestration_stack"
         end
 
-      private
+        private
+
         def handle_form_buttons(kls)
           if params[:button] == "cancel"
             flash = _("Set/remove retirement date was cancelled by the user")
             @sb[:action] = nil
           elsif params[:button] == "save"
             if params[:retire_date].blank?
-              if session[:retire_items].length == 1
-                flash = _("Retirement date removed")
-              else
-                flash = _("Retirement dates removed")
-              end
+              flash = session[:retire_items].length == 1 ? flash = _("Retirement date removed") : _("Retirement dates removed")
             else
               t = params[:retire_date].in_time_zone
               w = params[:retire_warn].to_i
 
               ts = t.strftime("%x %R %Z")
-              if session[:retire_items].length == 1
-                flash = _("Retirement date set to %{date}") % {:date => ts}
-              else
-                flash = _("Retirement dates set to %{date}") % {:date => ts}
-              end
+              flash = session[:retire_items].length == 1 ? _("Retirement date set to %{date}") % {:date => ts} : _("Retirement dates set to %{date}") % {:date => ts}
             end
             kls.retire(session[:retire_items], :date => t, :warn => w) # Call the model to retire the VM(s)
             @sb[:action] = nil
