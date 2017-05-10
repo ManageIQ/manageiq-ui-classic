@@ -90,6 +90,10 @@ describe GenericObjectController do
       )
     end
 
+    it "sets the GenericObjectDefinition toolbar" do
+      expect(described_class.toolbar_singular).to eq(:generic_object_definition)
+    end
+
     it "sets up the trees variable" do
       expect(assigns[:trees]).to eq("nodes")
     end
