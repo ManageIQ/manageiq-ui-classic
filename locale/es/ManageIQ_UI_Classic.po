@@ -5,13 +5,14 @@
 # Milan Zázrivec <mzazrivec@redhat.com>, 2017. #zanata
 # Reviwer <ed.rh02@oceantranslations.com>, 2017. #zanata
 # Translator <tr.rh02@oceantranslations.com>, 2017. #zanata
+# sreedevisamudrala <sreedevi.samudrala@welocalize.com>, 2017. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: ManageIQ_UI_Classic 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-17 10:38+0100\n"
-"PO-Revision-Date: 2017-04-12 10:14-0400\n"
-"Last-Translator: Milan Zázrivec <mzazrivec@redhat.com>\n"
+"PO-Revision-Date: 2017-05-10 06:11-0400\n"
+"Last-Translator: Copied by Zanata <copied-by-zanata@zanata.org>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -60,7 +61,8 @@ msgstr " (%{priority} disponible, PID=%{number})"
 msgid " (%{priority}unavailable)"
 msgstr " (%{priority} no disponible)"
 
-#: ../app/controllers/ems_common.rb:53 ../app/controllers/ems_common.rb:446
+#: ../app/controllers/ems_common.rb:53
+#: ../app/controllers/ems_common.rb:446
 msgid " (Ad hoc Metrics)"
 msgstr " (Métricas ad hoc)"
 
@@ -80,7 +82,8 @@ msgstr "(Todas las MV - Vista de árbol)"
 msgid " (All VMs)"
 msgstr "(Todas las MV)"
 
-#: ../app/controllers/vm_common.rb:876 ../app/controllers/vm_common.rb:878
+#: ../app/controllers/vm_common.rb:876
+#: ../app/controllers/vm_common.rb:878
 msgid " (Analysis History)"
 msgstr "(Histórico de análisis)"
 
@@ -260,7 +263,7 @@ msgstr "Opciones del procesador"
 
 #: ../app/presenters/widget_presenter.rb:52
 msgid " Remove Widget"
-msgstr " Remover asistente"
+msgstr " Remover widget"
 
 #: ../app/controllers/ems_infra_controller.rb:112
 msgid " Scaling down to %{a} compute nodes"
@@ -335,7 +338,8 @@ msgstr "\"%{name}\": Global %{model} no puede ser eliminado"
 #: ../app/controllers/configuration_controller.rb:312
 msgid "\"%{name}\": In use by %{rep_count} Report, cannot be deleted"
 msgid_plural "\"%{name}\": In use by %{rep_count} Reports, cannot be deleted"
-msgstr[0] "\"%{name}\": en uso por el informe %{rep_count}, no se puede eliminar"
+msgstr[0] ""
+"\"%{name}\": en uso por el informe %{rep_count}, no se puede eliminar"
 msgstr[1] ""
 "\"%{name}\": en uso por los informes %{rep_count}, no se puede eliminar"
 
@@ -416,8 +420,8 @@ msgid ""
 "\"A route named '#{route_name}' is configured to connect to the \"external "
 "logging server but it doesn't exist"
 msgstr ""
-"Una ruta denominada  '#{route_name}' está configurada para conectarse con el"
-" \"servidor de inicio de sesión externo, pero no existe."
+"Una ruta denominada  '#{route_name}' está configurada para conectarse con el "
+"\"servidor de inicio de sesión externo, pero no existe."
 
 #: ../app/helpers/application_helper/button/smart_state_scan.rb:8
 msgid "\"There is no server with the #{role} role enabled\""
@@ -721,11 +725,11 @@ msgstr "%{model} \"%{name}\" ya existe"
 
 #: ../app/controllers/cloud_volume_controller.rb:453
 msgid ""
-"%{model} \"%{name}\" cannot be removed because it is attached to one or more"
-" %{instances}"
+"%{model} \"%{name}\" cannot be removed because it is attached to one or more "
+"%{instances}"
 msgstr ""
-"%{model} \"%{name}\" no puede ser eliminado porque está asociado a una o más"
-" %{instances}"
+"%{model} \"%{name}\" no puede ser eliminado porque está asociado a una o más "
+"%{instances}"
 
 #: ../app/controllers/network_router_controller.rb:109
 #: ../app/controllers/host_aggregate_controller.rb:206
@@ -777,7 +781,8 @@ msgstr "%{model} \"%{name}\" ha sido actualizado"
 msgid "%{model} \"%{name}\" was added"
 msgstr "%{model} \"%{name}\" ha sido agregado"
 
-#: ../app/controllers/ems_common.rb:136 ../app/controllers/ems_common.rb:253
+#: ../app/controllers/ems_common.rb:136
+#: ../app/controllers/ems_common.rb:253
 #: ../app/controllers/vm_common.rb:812
 #: ../app/controllers/miq_ae_class_controller.rb:599
 #: ../app/controllers/miq_ae_class_controller.rb:990
@@ -1135,7 +1140,8 @@ msgstr "%{name} (Información de seguimiento de MV)"
 msgid "%{name} (no longer exists)"
 msgstr "%{name} (ya no existe)"
 
-#: ../app/controllers/ems_common.rb:437 ../app/controllers/vm_common.rb:256
+#: ../app/controllers/ems_common.rb:437
+#: ../app/controllers/vm_common.rb:256
 #: ../app/controllers/storage_controller.rb:88
 #: ../app/controllers/application_controller/performance.rb:135
 #: ../app/controllers/mixins/more_show_actions.rb:17
@@ -1167,7 +1173,7 @@ msgstr "%{name} Fuentes RSS"
 #: ../app/helpers/textual_summary_helper.rb:52
 #: ../app/helpers/catalog_helper/textual_summary.rb:19
 msgid "%{name} Tags"
-msgstr "%{name} Etiquetas"
+msgstr "Etiquetas de %{name}"
 
 #: ../app/controllers/dashboard_controller.rb:690
 msgid "%{name} dashboard for user %{id} in group id %{current_group_id}"
@@ -1333,7 +1339,8 @@ msgstr "%{record_name} ya no existe en la base de datos"
 msgid "%{record} - \"%{button_text}\""
 msgstr "%{record} - \"%{button_text}\""
 
-#: ../app/controllers/ems_common.rb:954 ../app/controllers/ems_common.rb:989
+#: ../app/controllers/ems_common.rb:954
+#: ../app/controllers/ems_common.rb:989
 #: ../app/controllers/ems_common.rb:1030
 #: ../app/controllers/miq_policy_controller.rb:239
 #: ../app/controllers/chargeback_controller.rb:215
@@ -1441,8 +1448,8 @@ msgid ""
 msgid_plural ""
 "%{task} initiated for %{count} Storage Managers from the %{product} Database"
 msgstr[0] ""
-"%{task} iniciada para %{count} administrador de almacenamiento desde la base"
-" de datos de %{product}"
+"%{task} iniciada para %{count} administrador de almacenamiento desde la base "
+"de datos de %{product}"
 msgstr[1] ""
 "%{task} iniciada para %{count} administradores de almacenamiento desde la "
 "base de datos de %{product}"
@@ -1553,8 +1560,8 @@ msgstr ""
 
 #: ../app/controllers/application_controller/miq_request_methods.rb:622
 msgid ""
-"%{typ} Request was re-submitted, you will be notified when your %{title} are"
-" ready"
+"%{typ} Request was re-submitted, you will be notified when your %{title} are "
+"ready"
 msgstr ""
 "La petición %{typ} fue reenviada, será notificado cuando su %{title} esté "
 "listo"
@@ -1576,7 +1583,8 @@ msgstr "%{val} perdido para el campo %{field}"
 msgid "%{vm_or_template} Policy Assignment"
 msgstr "%{vm_or_template} Asignación de Política"
 
-#: ../app/controllers/vm_common.rb:1579 ../app/controllers/vm_common.rb:1583
+#: ../app/controllers/vm_common.rb:1579
+#: ../app/controllers/vm_common.rb:1583
 msgid "%{vm_or_template} Policy Simulation"
 msgstr "%{vm_or_template} Simulación de Política"
 
@@ -1634,11 +1642,11 @@ msgstr "(Todo)"
 #: ../app/views/vm_common/_vmtree.html.haml:9
 #: ../app/views/layouts/_pagingcontrols.html.haml:15
 msgid "(Check All)"
-msgstr "(Comprobar todo)"
+msgstr "(Marcar todo)"
 
 #: ../app/views/configuration/_ui_3.html.haml:13
 msgid "(Checked default filters will be visible.)"
-msgstr "(Los filtros predeterminados comprobados serán visibles.)"
+msgstr "(Los filtros predeterminados marcados serán visibles.)"
 
 #: ../app/views/layouts/_edit_to_email.html.haml:16
 msgid "(Click to remove)"
@@ -1670,7 +1678,7 @@ msgstr "(actual)"
 #: ../app/views/miq_policy/_action_options.html.haml:22
 #: ../app/views/layouts/_edit_email.html.haml:39
 msgid "(leave blank for default)"
-msgstr "(dejar en blanco predeterminados)"
+msgstr "(dejar en blanco para predeterminado)"
 
 #: ../app/controllers/application_controller/compare.rb:1787
 #: ../app/controllers/application_controller/compare.rb:1790
@@ -1694,7 +1702,7 @@ msgstr ""
 
 #: ../app/views/report/_form_columns.html.haml:16
 msgid "* Base the report on"
-msgstr "* Base el informe en"
+msgstr "* Basar el informe en"
 
 #: ../app/views/miq_policy/_alert_details.html.haml:87
 msgid "* Cannot be changed while this Alert belongs to an Alert Profile."
@@ -1711,7 +1719,7 @@ msgstr ""
 
 #: ../app/views/chargeback/_cb_rate_edit.html.haml:67
 msgid "* Caution: The value Range end will not be included in the tier."
-msgstr "* Atención: El valor del rango final no sera incluido en el nivel."
+msgstr "* Atención: El valor del rango final no será incluido en el nivel."
 
 #: ../app/views/ops/_schedule_form_timer.html.haml:57
 #: ../app/views/report/_schedule_form_timer.html.haml:103
@@ -1851,8 +1859,8 @@ msgid ""
 "* Recommendations are subject to minimum of CPU: %{cpu} and Memory: "
 "%{memory}."
 msgstr ""
-"* Las recomendaciones están sujetas a un mínimo de CPU: %{cpu} y de memoria:"
-" %{memory}."
+"* Las recomendaciones están sujetas a un mínimo de CPU: %{cpu} y de memoria: "
+"%{memory}."
 
 #: ../app/views/report/_menu_form2.html.haml:193
 msgid "* Report is not owned by your group so it cannot be removed"
@@ -1913,7 +1921,7 @@ msgstr ""
 #: ../app/views/report/_form_styling.html.haml:137
 msgid "* Style \"If\" conditions are evaluated top to bottom for each column"
 msgstr ""
-"* El estilo de las condiciones \"If\" son evaluadas de arriba a abajo para "
+"* El estilo de las condiciones \"Si\" son evaluadas de arriba a abajo para "
 "cada columna"
 
 #: ../app/controllers/application_controller.rb:1189
@@ -2100,7 +2108,8 @@ msgstr ""
 msgid "2 Days"
 msgstr "2 días"
 
-#: ../app/helpers/ui_constants.rb:404 ../app/helpers/ui_constants.rb:548
+#: ../app/helpers/ui_constants.rb:404
+#: ../app/helpers/ui_constants.rb:548
 msgid "2 Days Ago"
 msgstr "Hace 2 días"
 
@@ -2134,7 +2143,8 @@ msgstr "Hace 2 meses"
 msgid "2 Quarters Ago"
 msgstr "Hace 2 trimestres"
 
-#: ../app/helpers/ui_constants.rb:305 ../app/helpers/ui_constants.rb:336
+#: ../app/helpers/ui_constants.rb:305
+#: ../app/helpers/ui_constants.rb:336
 msgid "2 Weeks"
 msgstr "2 semanas"
 
@@ -2192,7 +2202,8 @@ msgstr ""
 msgid "3 Days"
 msgstr "3 días"
 
-#: ../app/helpers/ui_constants.rb:405 ../app/helpers/ui_constants.rb:549
+#: ../app/helpers/ui_constants.rb:405
+#: ../app/helpers/ui_constants.rb:549
 msgid "3 Days Ago"
 msgstr "Hace 3 días"
 
@@ -2225,7 +2236,8 @@ msgstr "Hace 3 meses"
 msgid "3 Quarters Ago"
 msgstr "Hace 3 trimestres"
 
-#: ../app/helpers/ui_constants.rb:306 ../app/helpers/ui_constants.rb:337
+#: ../app/helpers/ui_constants.rb:306
+#: ../app/helpers/ui_constants.rb:337
 msgid "3 Weeks"
 msgstr "3 semanas"
 
@@ -2267,7 +2279,8 @@ msgstr ""
 msgid "4 Days"
 msgstr "4 días"
 
-#: ../app/helpers/ui_constants.rb:406 ../app/helpers/ui_constants.rb:550
+#: ../app/helpers/ui_constants.rb:406
+#: ../app/helpers/ui_constants.rb:550
 msgid "4 Days Ago"
 msgstr "Hace 4 dias"
 
@@ -2300,7 +2313,8 @@ msgstr "Hace 4 meses"
 msgid "4 Quarters Ago"
 msgstr "Hace 4 trimestres"
 
-#: ../app/helpers/ui_constants.rb:307 ../app/helpers/ui_constants.rb:338
+#: ../app/helpers/ui_constants.rb:307
+#: ../app/helpers/ui_constants.rb:338
 msgid "4 Weeks"
 msgstr "4 semanas"
 
@@ -2328,7 +2342,8 @@ msgstr "5 - Presione el botón Enviar."
 msgid "5 Days"
 msgstr "5 dias"
 
-#: ../app/helpers/ui_constants.rb:407 ../app/helpers/ui_constants.rb:551
+#: ../app/helpers/ui_constants.rb:407
+#: ../app/helpers/ui_constants.rb:551
 msgid "5 Days Ago"
 msgstr "Hace 5 dias"
 
@@ -2366,7 +2381,8 @@ msgstr "500 elementos"
 msgid "6 Days"
 msgstr "6 dias"
 
-#: ../app/helpers/ui_constants.rb:408 ../app/helpers/ui_constants.rb:552
+#: ../app/helpers/ui_constants.rb:408
+#: ../app/helpers/ui_constants.rb:552
 msgid "6 Days Ago"
 msgstr "Hace 6 dias"
 
@@ -2753,7 +2769,7 @@ msgstr "Una única Plantilla"
 
 #: ../app/controllers/ops_controller/settings/schedules.rb:642
 msgid "A single VM"
-msgstr "Una única MV"
+msgstr "Una única máquina virtual"
 
 #: ../app/controllers/report_controller/reports/editor.rb:1630
 msgid "A specific %{chargeback} or all must be selected"
@@ -2876,11 +2892,11 @@ msgstr "Control de acceso"
 #: ../app/controllers/ops_controller/ops_rbac.rb:879
 #: ../app/controllers/ops_controller/ops_rbac.rb:882
 msgid "Access Control %{model}"
-msgstr "Control de Acceso %{model}"
+msgstr "Control de Acceso de %{model}"
 
 #: ../app/controllers/ops_controller/ops_rbac.rb:900
 msgid "Access Control %{model} \"%{name}\""
-msgstr "Control de Acceso %{model} \"%{name}\""
+msgstr "Control de Acceso de %{model} \"%{name}\""
 
 #: ../app/controllers/ops_controller.rb:487
 msgid "Access Control %{text}"
@@ -3006,8 +3022,8 @@ msgstr "Las acciones para el evento Políticas \"%{events}\" han sido guardadas"
 
 #: ../app/helpers/application_helper/button/role_suspend.rb:8
 msgid ""
-"Activate the %{server_role_description} Role on another Server to suspend it"
-" on %{server_name} [%{server_id}]"
+"Activate the %{server_role_description} Role on another Server to suspend it "
+"on %{server_name} [%{server_id}]"
 msgstr ""
 "Active el rol %{server_role_description} en otro servidor para suspenderlo "
 "en %{server_name} [%{server_id}]"
@@ -3203,7 +3219,8 @@ msgstr "Añadir un nuevo %{model}"
 msgid "Add New %{tables}"
 msgstr "Añadir nuevas %{tables}"
 
-#: ../app/controllers/ems_common.rb:111 ../app/controllers/ems_common.rb:145
+#: ../app/controllers/ems_common.rb:111
+#: ../app/controllers/ems_common.rb:145
 msgid "Add New %{table}"
 msgstr "Añadir nueva %{table}"
 
@@ -3272,7 +3289,7 @@ msgstr "Añadir MV \"%{name}\" al Servicio fue cancelado por el usuario"
 
 #: ../app/helpers/application_helper/toolbar/scan_profiles_center.rb:18
 msgid "Add VM Analysis Profile"
-msgstr "Añadir Perfil de Análisis de la MV"
+msgstr "Añadir perfil de análisis de la máquina virtual"
 
 #: ../app/controllers/vm_common.rb:690
 msgid "Add VM to a Service"
@@ -3478,7 +3495,7 @@ msgstr "Añadir una nueva IP flotante"
 
 #: ../app/helpers/application_helper/toolbar/miq_groups_center.rb:12
 msgid "Add a new Group"
-msgstr "Añadir un nuevo Grupo"
+msgstr "Añadir un nuevo grupo"
 
 #: ../app/helpers/application_helper/toolbar/scan_profiles_center.rb:12
 msgid "Add a new Host Analysis Profile"
@@ -3517,11 +3534,11 @@ msgstr "Añadir un nuevo proveedor"
 #: ../app/helpers/application_helper/toolbar/miq_report_center.rb:20
 #: ../app/helpers/application_helper/toolbar/miq_reports_center.rb:12
 msgid "Add a new Report"
-msgstr "Añadir un nuevo reporte"
+msgstr "Añadir un nuevo informe"
 
 #: ../app/helpers/application_helper/toolbar/user_roles_center.rb:12
 msgid "Add a new Role"
-msgstr "Añadir un nuevo Rol"
+msgstr "Añadir un nuevo rol"
 
 #: ../app/helpers/application_helper/toolbar/network_routers_center.rb:14
 msgid "Add a new Router"
@@ -3547,11 +3564,11 @@ msgstr "Añadir una nueva Pestaña a este cuadro de diálogo"
 
 #: ../app/helpers/application_helper/toolbar/time_profiles_center.rb:12
 msgid "Add a new Time Profile"
-msgstr "Añadir un nuevo Perfil de Tiempo"
+msgstr "Añadir un nuevo perfil de tiempo"
 
 #: ../app/helpers/application_helper/toolbar/users_center.rb:12
 msgid "Add a new User"
-msgstr "Añadir un nuevo Usuario"
+msgstr "Añadir un nuevo usuario"
 
 #: ../app/helpers/application_helper/toolbar/scan_profiles_center.rb:17
 msgid "Add a new VM Analysis Profile"
@@ -3701,8 +3718,8 @@ msgstr "Añadir un directorio al directorio seleccionado"
 #: ../app/views/static/deploy_containers_provider/deploy-provider-details-existing-vms.html.haml:42
 #: ../app/views/static/deploy_containers_provider/deploy-provider-details-no-provider.html.haml:42
 msgid ""
-"Add tags individually for each VM or select multiple rows and edit tags as a"
-" group."
+"Add tags individually for each VM or select multiple rows and edit tags as a "
+"group."
 msgstr ""
 "Agregar etiquetas individualmente para cada MV o seleccionar varias filas y "
 "modificar etiquetas como un grupo."
@@ -3904,7 +3921,7 @@ msgstr "Objetos afectados"
 #: ../app/views/vm_common/_reconfigure.html.haml:387
 #: ../app/views/miq_request/_reconfigure_show.html.haml:111
 msgid "Affected VMs"
-msgstr "MV afectadas"
+msgstr "Máquinas virtuales afectadas"
 
 #: ../app/views/shared/views/_alerts_list.html.haml:80
 msgid "Age"
@@ -4193,7 +4210,7 @@ msgstr ""
 #: ../app/presenters/tree_builder_report_dashboards.rb:20
 #: ../app/controllers/report_controller/dashboards.rb:212
 msgid "All Dashboards"
-msgstr "Todos los escritorios"
+msgstr "Todos los paneles"
 
 #: ../app/presenters/tree_builder_storage_pod.rb:15
 #: ../app/controllers/storage_controller/storage_pod.rb:39
@@ -4329,7 +4346,7 @@ msgstr "Todos los informes guardados"
 
 #: ../app/presenters/tree_builder_report_schedules.rb:18
 msgid "All Schedules"
-msgstr "Todos los horarios"
+msgstr "Todas las programaciones"
 
 #: ../app/controllers/application_controller/compare.rb:889
 msgid "All Sections"
@@ -4379,7 +4396,7 @@ msgstr "Todos los usuarios"
 
 #: ../app/controllers/miq_task_controller.rb:40
 msgid "All VM and Container Analysis Tasks"
-msgstr "Todas las tareas de análisis de MV y Contenedor"
+msgstr "Todas las tareas de análisis de máquina virtual y contenedor"
 
 #: ../app/controllers/ops_controller/db.rb:112
 msgid "All VMDB Indexes"
@@ -4392,40 +4409,41 @@ msgstr "Todos los índices de la VMDB"
 #: ../app/views/layouts/listnav/_resource_pool.html.haml:50
 #: ../app/views/layouts/listnav/_ems_cluster.html.haml:58
 msgid "All VMs"
-msgstr "Todas las MV"
+msgstr "Todas las máquinas virtuales"
 
 #: ../app/presenters/tree_builder_vms_instances_filter.rb:15
 msgid "All VMs & Instances"
-msgstr "Todas las MV e instancias"
+msgstr "Todas las máquinas virtuales e instancias"
 
 #: ../app/presenters/tree_builder_vandt.rb:16
-#: ../app/controllers/vm_common.rb:1104 ../app/controllers/vm_common.rb:1134
+#: ../app/controllers/vm_common.rb:1104
+#: ../app/controllers/vm_common.rb:1134
 msgid "All VMs & Templates"
-msgstr "Todas las MV y plantillas"
+msgstr "Todas las máquinas virtuales y plantillas"
 
 #: ../app/presenters/tree_builder_vandt.rb:17
 msgid "All VMs & Templates that I can see"
-msgstr "Todas las MV y plantillas que puedo ver"
+msgstr "Todas las máquinas virtuales y plantillas que puedo ver"
 
 #: ../app/helpers/resource_pool_helper/textual_summary.rb:124
 #: ../app/helpers/ems_cluster_helper/textual_summary.rb:182
 #: ../app/views/layouts/listnav/_resource_pool.html.haml:58
 #: ../app/views/layouts/listnav/_ems_cluster.html.haml:72
 msgid "All VMs (Tree View)"
-msgstr "Todas las MV (Vista de Árbol)"
+msgstr "Todas las máquinas virtuales (Vista de Árbol)"
 
 #: ../app/controllers/ops_controller/settings/schedules.rb:639
 #: ../app/controllers/ops_controller/settings/schedules.rb:640
 msgid "All VMs for %{table}"
-msgstr "Todas las MV para %{table}"
+msgstr "Todas las máquinas virtuales para %{table}"
 
 #: ../app/controllers/ops_controller/settings/schedules.rb:641
 msgid "All VMs for Host"
-msgstr "Todas las MV para el Host"
+msgstr "Todas las máquinas virtuales para el Host"
 
 #: ../app/views/miq_capacity/_planning_options.html.haml:16
 msgid "All VMs/Instances"
-msgstr "Todas las MV e instancias"
+msgstr "Todas las máquinas virtuales e instancias"
 
 #: ../app/presenters/tree_builder_report_widgets.rb:14
 #: ../app/controllers/report_controller/widgets.rb:240
@@ -4441,8 +4459,10 @@ msgstr "Todas las Zonas"
 msgid "All attributes"
 msgstr "Todos los atributos"
 
-#: ../app/controllers/ems_common.rb:283 ../app/controllers/vm_common.rb:637
-#: ../app/controllers/vm_common.rb:640 ../app/controllers/vm_common.rb:828
+#: ../app/controllers/ems_common.rb:283
+#: ../app/controllers/vm_common.rb:637
+#: ../app/controllers/vm_common.rb:640
+#: ../app/controllers/vm_common.rb:828
 #: ../app/controllers/miq_ae_class_controller.rb:605
 #: ../app/controllers/miq_ae_class_controller.rb:1000
 #: ../app/controllers/miq_ae_class_controller.rb:1043
@@ -4554,11 +4574,11 @@ msgstr "Todas las plantillas que puedo ver"
 
 #: ../app/presenters/tree_builder_vms_instances_filter.rb:16
 msgid "All of the VMs & Instances that I can see"
-msgstr "Todas las VM e instancias que puedo ver"
+msgstr "Todas las máquinas virtuales e instancias que puedo ver"
 
 #: ../app/presenters/tree_builder_vms_filter.rb:17
 msgid "All of the VMs that I can see"
-msgstr "Todas las VM que puedo ver"
+msgstr "Todas las máquinas virtuales que puedo ver"
 
 #: ../app/controllers/application_controller.rb:1421
 msgid "All selected %{labels} are not in the current region"
@@ -4659,7 +4679,8 @@ msgstr "Perfil de análisis es requerido"
 msgid "Analysis Profiles"
 msgstr "Perfiles de análisis"
 
-#: ../app/controllers/ems_common.rb:979 ../app/controllers/ems_common.rb:994
+#: ../app/controllers/ems_common.rb:979
+#: ../app/controllers/ems_common.rb:994
 msgid "Analysis initiated for %{count} %{model} from the %{product} Database"
 msgid_plural ""
 "Analysis initiated for %{count} %{models} from the %{product} Database"
@@ -4799,7 +4820,8 @@ msgstr "Aplicar el filtro actual (Enter)"
 #: ../app/controllers/ops_controller.rb:396
 msgid "Apply the good VM custom variable value records"
 msgstr ""
-"Aplicar los registros válidos de valor variable personalizados para la MV "
+"Aplicar los registros válidos de valor variable personalizados para la "
+"máquina virtual "
 
 #: ../app/controllers/ops_controller.rb:398
 msgid "Apply the good import records"
@@ -4882,8 +4904,8 @@ msgstr "¿Está seguro de que desea copiar esta alerta?"
 
 #: ../app/helpers/application_helper/toolbar/miq_policy_center.rb:29
 msgid ""
-"Are you sure you want to create Policy [%{new_policy_description}] from this"
-" Policy?"
+"Are you sure you want to create Policy [%{new_policy_description}] from this "
+"Policy?"
 msgstr ""
 "¿Está seguro de que desea crear una política [%{new_policy_description}] de "
 "esta política?"
@@ -5299,7 +5321,7 @@ msgstr "Se debe seleccionar al menos una hora."
 #: ../app/controllers/ops_controller/settings/analysis_profiles.rb:235
 msgid "At least one item must be entered to create Analysis Profile"
 msgstr ""
-"Al menos un ítem debe ser introducido para crear un perfil de análisis"
+"Al menos un elemento debe ser introducido para crear un perfil de análisis"
 
 #: ../app/controllers/miq_policy_controller/alerts.rb:608
 msgid ""
@@ -5502,7 +5524,7 @@ msgstr "¿Seleccionar host automáticamente?"
 
 #: ../app/presenters/menu/default_menu.rb:249
 msgid "Automate"
-msgstr "Automatizar"
+msgstr "Automatización"
 
 #: ../app/views/ops/_schedule_show.html.haml:44
 msgid "Automate Task"
@@ -5692,7 +5714,8 @@ msgstr "Copia de seguridad para %{model} \"%{name}\" creada"
 
 #: ../app/controllers/cloud_volume_controller.rb:514
 msgid "Backup of %{model} \"%{name}\" was cancelled by the user"
-msgstr "Copia de seguridad para %{model} \"%{name}\" fue cancelada por el usuario"
+msgstr ""
+"Copia de seguridad para %{model} \"%{name}\" fue cancelada por el usuario"
 
 #: ../app/views/ops/_ldap_region_show.html.haml:73
 #: ../app/views/ops/_ldap_domain_show.html.haml:193
@@ -5718,7 +5741,8 @@ msgstr "Línea de tiempo de base en"
 msgid "Based On"
 msgstr "Basado en"
 
-#: ../app/controllers/ems_common.rb:714 ../app/controllers/ems_common.rb:797
+#: ../app/controllers/ems_common.rb:714
+#: ../app/controllers/ems_common.rb:797
 msgid "Basic (SSL)"
 msgstr "Básico (SSL)"
 
@@ -5798,7 +5822,7 @@ msgstr "Opciones básicas"
 
 #: ../app/views/report/_form.html.haml:14
 msgid "Basic Report Info"
-msgstr "Información de reportes básica"
+msgstr "Información de informes básica"
 
 #: ../app/views/miq_policy/_alert_details.html.haml:493
 msgid "Belongs to Alert Profiles"
@@ -6018,7 +6042,8 @@ msgstr "Se requiere texto del botón"
 #: ../app/helpers/application_helper.rb:650
 #: ../app/controllers/availability_zone_controller.rb:100
 #: ../app/controllers/miq_policy_controller.rb:84
-#: ../app/controllers/vm_common.rb:39 ../app/controllers/vm_common.rb:681
+#: ../app/controllers/vm_common.rb:39
+#: ../app/controllers/vm_common.rb:681
 #: ../app/controllers/host_aggregate_controller.rb:146
 #: ../app/controllers/miq_request_controller.rb:23
 #: ../app/controllers/ems_cluster_controller.rb:151
@@ -6236,7 +6261,7 @@ msgstr "Velocidad de la CPU"
 #: ../app/views/ops/_server_desc.html.haml:73
 #: ../app/views/ops/_selected_by_servers.html.haml:115
 msgid "CPU Time"
-msgstr "Tiempo de la CPU"
+msgstr "Tiempo de CPU"
 
 #: ../app/controllers/application_controller.rb:1164
 msgid "CPU Type"
@@ -6540,7 +6565,8 @@ msgstr "Capacidad y uso de datos para %{vm_or_template} \"%{name}\""
 
 #: ../app/controllers/container_controller.rb:188
 msgid "Capacity & Utilization data for Container \"%{container_name}\""
-msgstr "Datos de capacidad y utilización para el contenedor \"%{container_name}\""
+msgstr ""
+"Datos de capacidad y utilización para el contenedor \"%{container_name}\""
 
 #: ../app/helpers/ops_helper/textual_summary.rb:30
 msgid "Capacity Data"
@@ -6583,14 +6609,14 @@ msgstr "Se guardó el elemento de catálogo %s"
 
 #: ../app/views/catalog/_st_form.html.haml:13
 msgid "Catalog Item Type"
-msgstr "Tipo de ítem de catálogo"
+msgstr "Tipo de elemento del catálogo"
 
 #: ../app/controllers/catalog_controller.rb:840
 #: ../app/controllers/catalog_controller.rb:2074
 #: ../app/views/configuration/_ui_2.html.haml:50
 #: ../app/views/catalog/_stcat_tree_show.html.haml:49
 msgid "Catalog Items"
-msgstr "Ítemes de catálogo"
+msgstr "Elementos de catálogo"
 
 #: ../app/presenters/menu/default_menu.rb:41
 #: ../app/controllers/catalog_controller.rb:850
@@ -6774,7 +6800,7 @@ msgstr "Configuración del diagrama"
 
 #: ../app/views/configuration/_ui_1.html.haml:173
 msgid "Chart Theme"
-msgstr "Tema gráficos"
+msgstr "Tema de gráficos"
 
 #: ../app/controllers/application_controller/performance.rb:449
 msgid "Chart menu selection not yet implemented"
@@ -6988,8 +7014,8 @@ msgstr ""
 #: ../app/helpers/application_helper/toolbar/x_vm_center.rb:96
 msgid "Check Compliance of the last known configuration for this VM"
 msgstr ""
-"Verificar cumplimiento de la última configuración conocida para esta máquina"
-" virtual"
+"Verificar cumplimiento de la última configuración conocida para esta máquina "
+"virtual"
 
 #: ../app/helpers/application_helper/toolbar/host_center.rb:89
 #: ../app/helpers/application_helper/toolbar/container_image_center.rb:40
@@ -7143,7 +7169,8 @@ msgstr "Opciones"
 #: ../app/views/ems_datawarehouse/_form.html.haml:45
 #: ../app/views/provider_foreman/_form.html.haml:52
 #: ../app/views/provider_foreman/_form.html.haml:52
-#: ../app/views/host/_form.html.haml:79 ../app/views/host/_form.html.haml:79
+#: ../app/views/host/_form.html.haml:79
+#: ../app/views/host/_form.html.haml:79
 #: ../app/views/miq_ae_customization/_dialog_field_form.html.haml:74
 #: ../app/views/miq_ae_customization/_old_dialogs_form.html.haml:56
 #: ../app/views/miq_ae_customization/_dialog_field_form_non_dynamic_options.html.haml:289
@@ -7343,8 +7370,8 @@ msgid ""
 "Click on the legend to show/hide entities, and double click on the entities "
 "in the graph to navigate to their summary pages."
 msgstr ""
-"Haga clic en la leyenda para mostrar u ocultar entidades. Haga doble clic en"
-" las entidades del gráfico para navegar a sus páginas de resumen."
+"Haga clic en la leyenda para mostrar u ocultar entidades. Haga doble clic en "
+"las entidades del gráfico para navegar a sus páginas de resumen."
 
 #: ../app/views/cloud_topology/show.html.haml:108
 #: ../app/views/container_topology/show.html.haml:176
@@ -7807,8 +7834,8 @@ msgid ""
 "Cloud Tenant \"%{name}\" cannot be removed because it is attached to one or "
 "more %{instances}"
 msgstr ""
-"No se puede eliminar el inquilino de nube \"%{name}\" porque está asociado a"
-" una o más %{instances}"
+"No se puede eliminar el inquilino de nube \"%{name}\" porque está asociado a "
+"una o más %{instances}"
 
 #: ../app/controllers/cloud_tenant_controller.rb:107
 msgid "Cloud Tenant \"%{name}\" created"
@@ -7893,8 +7920,8 @@ msgstr ""
 #: ../app/controllers/cloud_volume_controller.rb:654
 msgid "Cloud volume snapshot creation failed: Task start failed: ID [%{id}]"
 msgstr ""
-"Error al crear la instantánea de volumen de nube: El inicio de tarea, falló:"
-" ID [%{id}]"
+"Error al crear la instantánea de volumen de nube: El inicio de tarea, falló: "
+"ID [%{id}]"
 
 #: ../app/presenters/tree_builder_orchestration_templates.rb:25
 #: ../app/presenters/tree_builder_orchestration_templates.rb:27
@@ -8117,7 +8144,7 @@ msgstr "Nombre de la empresa"
 
 #: ../app/views/configuration/_ui_2.html.haml:22
 msgid "Compare"
-msgstr "Comparar"
+msgstr "Comparación"
 
 #: ../app/controllers/application_controller/compare.rb:43
 #: ../app/controllers/application_controller/compare.rb:87
@@ -8245,8 +8272,8 @@ msgstr "Selección de condiciones"
 msgid ""
 "Condition record ID %{param_id} was removed from Policy ID %{policy_id}"
 msgstr ""
-"El ID del registro de condiciones %{param_id} se quitó del ID de la política"
-" %{policy_id}"
+"El ID del registro de condiciones %{param_id} se quitó del ID de la política "
+"%{policy_id}"
 
 #: ../app/helpers/container_group_helper/textual_summary.rb:33
 #: ../app/helpers/container_node_helper/textual_summary.rb:29
@@ -8583,7 +8610,8 @@ msgstr "URL de conexión"
 msgid "Connection failed."
 msgstr "Error en la conexión"
 
-#: ../app/controllers/vm_remote.rb:87 ../app/controllers/vm_remote.rb:110
+#: ../app/controllers/vm_remote.rb:87
+#: ../app/controllers/vm_remote.rb:110
 msgid "Console access failed: %{message}"
 msgstr "Error en el acceso a la consola: %{message}"
 
@@ -8606,8 +8634,8 @@ msgstr "Consolidación"
 msgid ""
 "Consolidation tab is not available until at least 1 field has been selected"
 msgstr ""
-"La ficha Consolidación no está disponible hasta que se haya seleccionado al "
-"menos un campo."
+"La ficha consolidación no estará disponible hasta que se haya seleccionado "
+"al menos un campo"
 
 #: ../app/presenters/menu/default_menu.rb:33
 msgid "Consumption"
@@ -8794,7 +8822,8 @@ msgstr "Copia de solicitud %{typ}"
 
 #: ../app/controllers/catalog_controller.rb:1033
 msgid "Copy of Orchestration Template \"%{name}\" was cancelled by the user"
-msgstr "El usuario canceló la copia de la plantilla de orquestación \"%{name}\"."
+msgstr ""
+"El usuario canceló la copia de la plantilla de orquestación \"%{name}\"."
 
 #: ../app/controllers/orchestration_stack_controller.rb:229
 msgid "Copy of Orchestration Template was cancelled by the user"
@@ -8835,7 +8864,8 @@ msgstr "Copiar los perfiles de análisis seleccionados"
 #: ../app/helpers/application_helper/toolbar/chargebacks_center.rb:27
 msgid "Copy the selected Chargeback Rate to a new Chargeback Rate"
 msgstr ""
-"Copiar la tarifa de anulación seleccionada en una nueva tarifa de anulación"
+"Copiar la tarifa de Chargeback seleccionada en una nueva tarifa de "
+"Chargeback"
 
 #: ../app/helpers/application_helper/toolbar/miq_dialogs_center.rb:27
 #: ../app/helpers/application_helper/toolbar/dialogs_center.rb:27
@@ -8861,7 +8891,7 @@ msgstr "Copiar esta alerta"
 
 #: ../app/helpers/application_helper/toolbar/chargeback_center.rb:60
 msgid "Copy this Chargeback Rate"
-msgstr "Copiar esta tarifa de anulación"
+msgstr "Copiar esta tarifa de Chargeback"
 
 #: ../app/helpers/application_helper/toolbar/miq_ae_fields_center.rb:18
 #: ../app/helpers/application_helper/toolbar/miq_ae_instances_center.rb:18
@@ -9289,8 +9319,8 @@ msgstr "Texto del panel de inicio de sesión personalizado ("
 #: ../app/views/ops/_settings_custom_logos_tab.html.haml:5
 msgid "Custom Logo Image (Shown on top right of all screens)"
 msgstr ""
-"Imagen del logotipo personalizada (se muestra en el extremo superior derecho"
-" de todas las pantallas)"
+"Imagen del logotipo personalizada (se muestra en el extremo superior derecho "
+"de todas las pantallas)"
 
 #: ../app/controllers/ops_controller/settings/upload.rb:29
 msgid "Custom Logo file \"%{name}\" uploaded"
@@ -9411,7 +9441,7 @@ msgstr "Diariamente"
 #: ../app/presenters/menu/default_menu.rb:22
 #: ../app/presenters/menu/default_menu.rb:34
 msgid "Dashboard"
-msgstr "Escritorio"
+msgstr "Panel"
 
 #: ../app/controllers/report_controller/dashboards.rb:255
 msgid "Dashboard \"%{name}\""
@@ -9433,7 +9463,7 @@ msgstr "Vista de panel"
 
 #: ../app/controllers/report_controller.rb:291
 msgid "Dashboard Widgets"
-msgstr "asistentes del panel"
+msgstr "Asistentes del panel"
 
 #: ../app/controllers/report_controller.rb:287
 msgid "Dashboards"
@@ -9493,7 +9523,8 @@ msgstr "Fecha validada con éxito"
 msgid "Data:"
 msgstr "Dato:"
 
-#: ../app/helpers/ops_helper.rb:38 ../app/controllers/ops_controller.rb:245
+#: ../app/helpers/ops_helper.rb:38
+#: ../app/controllers/ops_controller.rb:245
 #: ../app/views/ops/_settings_replication_tab.html.haml:64
 #: ../app/views/ops/_all_tabs.html.haml:236
 #: ../app/views/ops/_settings_authentication_tab.html.haml:55
@@ -9725,7 +9756,8 @@ msgstr "Autenticación predeterminada"
 
 #: ../app/controllers/chargeback_controller.rb:168
 msgid "Default Chargeback Rate \"%{name}\" cannot be edited."
-msgstr "No se puede modificar la tarifa de anulación \"%{name}\" predeterminada."
+msgstr ""
+"No se puede modificar la tarifa de anulación \"%{name}\" predeterminada."
 
 #: ../app/helpers/application_helper/button/chargeback_rate_edit.rb:5
 msgid "Default Chargeback Rate cannot be edited."
@@ -9767,7 +9799,7 @@ msgstr ""
 
 #: ../app/views/configuration/_ui_1.html.haml:110
 msgid "Default Items Per Page"
-msgstr "ítemes por página"
+msgstr "Elementos predeterminados por página"
 
 #: ../app/helpers/container_project_helper/textual_summary.rb:51
 msgid "Default Limit"
@@ -9800,8 +9832,8 @@ msgstr "No se puede eliminar el inquilino predeterminado."
 
 #: ../app/controllers/host_controller.rb:575
 msgid ""
-"Default User ID must be entered if a Remote Login or Web Services User ID is"
-" entered"
+"Default User ID must be entered if a Remote Login or Web Services User ID is "
+"entered"
 msgstr ""
 "Se debe ingresar el ID de usuario predeterminado si se ingresa un ID de "
 "usuario de inicio de sesión remoto o de servicios web."
@@ -9949,8 +9981,8 @@ msgstr[0] ""
 "Eliminar todas las tareas antiguas iniciadas para %{count} tarea de la base "
 "de datos de %{product}"
 msgstr[1] ""
-"Eliminar todas las tareas antiguas iniciadas para %{count} tareas de la base"
-" de datos de %{product}"
+"Eliminar todas las tareas antiguas iniciadas para %{count} tareas de la base "
+"de datos de %{product}"
 
 #: ../app/helpers/application_helper/toolbar/miq_groups_center.rb:29
 msgid "Delete all selected Groups?"
@@ -9981,7 +10013,8 @@ msgstr "Eliminar si es anterior a"
 msgid "Delete if older than"
 msgstr "Eliminar si es anterior a"
 
-#: ../app/controllers/ems_common.rb:907 ../app/controllers/ems_common.rb:946
+#: ../app/controllers/ems_common.rb:907
+#: ../app/controllers/ems_common.rb:946
 #: ../app/controllers/application_controller/ci_processing.rb:2770
 msgid "Delete initiated for %{count} %{model} from the %{product} Database"
 msgid_plural ""
@@ -10304,11 +10337,11 @@ msgstr "Eliminado"
 
 #: ../app/views/ops/_classification_entry.html.haml:100
 msgid ""
-"Deleting the '%{entry_name}' entry will also unassign it from all items, are"
-" you sure?"
+"Deleting the '%{entry_name}' entry will also unassign it from all items, are "
+"you sure?"
 msgstr ""
-"La eliminación de la entrada '%{entry_name}' también cancelará su asignación"
-" a todos los ítemes, ¿está seguro?"
+"La eliminación de la entrada '%{entry_name}' también cancelará su asignación "
+"a todos los ítemes, ¿está seguro?"
 
 #: ../app/views/ops/_ldap_server_entry.html.haml:111
 msgid "Deleting the '%{hostname}' LDAP Server, are you sure?"
@@ -10325,8 +10358,8 @@ msgid ""
 "Demote Server %{server_name} [%{server_id}] to secondary for the "
 "%{server_role_description} Role"
 msgstr ""
-"Disminuir nivel del servidor %{server_name} [%{server_id}] a secundario para"
-" el rol %{server_role_description}"
+"Disminuir nivel del servidor %{server_name} [%{server_id}] a secundario para "
+"el rol %{server_role_description}"
 
 #: ../app/helpers/ui_constants.rb:421
 msgid "Denied"
@@ -10661,7 +10694,7 @@ msgstr "Diagnósticos"
 #: ../app/controllers/ops_controller/diagnostics.rb:846
 #: ../app/controllers/ops_controller/diagnostics.rb:914
 msgid "Diagnostics %{model} \"%{name}\""
-msgstr "Diagnóstico %{model} \"%{name}\""
+msgstr "Diagnóstico de %{model} \"%{name}\""
 
 #: ../app/controllers/ops_controller/diagnostics.rb:816
 #: ../app/controllers/ops_controller/diagnostics.rb:910
@@ -10774,8 +10807,8 @@ msgstr "Desasociando IP flotante de %{model} \"%{name}\""
 
 #: ../app/controllers/application_controller/ci_processing.rb:843
 msgid ""
-"Disassociation of Floating IP from Instance \"%{name}\" was cancelled by the"
-" user"
+"Disassociation of Floating IP from Instance \"%{name}\" was cancelled by the "
+"user"
 msgstr ""
 "El usuario canceló la desasociación de la IP flotante de la instancia "
 "\"%{name}\"."
@@ -11011,11 +11044,11 @@ msgstr ""
 
 #: ../app/helpers/application_helper/toolbar/middleware_datasource_center.rb:48
 msgid ""
-"Do you want to remove this Datasource? Some Applications could be using this"
-" Datasource and may malfunction if it is deleted."
+"Do you want to remove this Datasource? Some Applications could be using this "
+"Datasource and may malfunction if it is deleted."
 msgstr ""
-"¿Desea eliminar esta fuente de datos? Es posible que algunas aplicaciones la"
-" estén usando y no funcionen correctamente si se elimina."
+"¿Desea eliminar esta fuente de datos? Es posible que algunas aplicaciones la "
+"estén usando y no funcionen correctamente si se elimina."
 
 #: ../app/helpers/application_helper/toolbar/middleware_deployments_center.rb:40
 msgid "Do you want to restart these deployments ?"
@@ -11145,7 +11178,7 @@ msgstr "Haga doble clic en 'Nuevo campo' para Modificar"
 #: ../app/views/ops/_rbac_role_details.html.haml:117
 msgid "Double click a feature to open/close all children."
 msgstr ""
-"Haga doble clic en una función para abrir o cerrar todos los ítemes "
+"Haga doble clic en una función para abrir o cerrar todos los elementos "
 "secundarios."
 
 #: ../app/views/cloud_network/_common_new_edit.html.haml:55
@@ -11386,7 +11419,7 @@ msgstr "Dirección de correo electrónico"
 
 #: ../app/views/report/_schedule_email_options.html.haml:7
 msgid "E-mail Options"
-msgstr "Opciones de correos electrónicos"
+msgstr "Opciones de correo electrónico"
 
 #: ../app/views/miq_policy/_action_options.html.haml:9
 #: ../app/views/miq_policy/_action_details.html.haml:187
@@ -11685,7 +11718,8 @@ msgstr "Modificar secuencia de grupos de usuarios para búsqueda de LDAP"
 #: ../app/controllers/ops_controller/ops_rbac.rb:393
 msgid "Edit Sequence of User Groups was cancelled by the user"
 msgstr ""
-"La orden editada para el grupo de usuarios fue eliminada por el usuario"
+"La edición de secuencia para el grupo de usuarios fue eliminada por el "
+"usuario"
 
 #: ../app/controllers/storage_manager_controller.rb:124
 #: ../app/controllers/storage_manager_controller.rb:175
@@ -12265,7 +12299,8 @@ msgstr ""
 "La adición de %{model} \"%{name}\" falló: No se pudo iniciar tarea: ID "
 "[%{id}]"
 
-#: ../app/controllers/ems_common.rb:231 ../app/controllers/vm_common.rb:773
+#: ../app/controllers/ems_common.rb:231
+#: ../app/controllers/vm_common.rb:773
 #: ../app/controllers/vm_common.rb:777
 #: ../app/controllers/miq_ae_class_controller.rb:571
 #: ../app/controllers/miq_ae_class_controller.rb:974
@@ -12525,7 +12560,7 @@ msgstr "Modificar los perfiles de análisis seleccionados"
 
 #: ../app/helpers/application_helper/toolbar/chargebacks_center.rb:18
 msgid "Edit the selected Chargeback Rate"
-msgstr "Modificar la tarifa de anulación seleccionada"
+msgstr "Modificar la tarifa de Chargeback seleccionada"
 
 #: ../app/helpers/application_helper/toolbar/miq_dialogs_center.rb:18
 #: ../app/helpers/application_helper/toolbar/dialogs_center.rb:18
@@ -12559,7 +12594,7 @@ msgstr "Modificar el usuario seleccionado"
 
 #: ../app/helpers/application_helper/toolbar/tenants_center.rb:13
 msgid "Edit the selected item"
-msgstr "Modificar el ítem seleccionado"
+msgstr "Modificar el elemento seleccionado"
 
 #: ../app/helpers/application_helper/toolbar/miq_action_center.rb:12
 msgid "Edit this Action"
@@ -12589,7 +12624,7 @@ msgstr "Modificar este grupo de botones"
 
 #: ../app/helpers/application_helper/toolbar/chargeback_center.rb:53
 msgid "Edit this Chargeback Rate"
-msgstr "Modificar esta tarifa de anulación"
+msgstr "Modificar esta tarifa de Chargeback"
 
 #: ../app/helpers/application_helper/toolbar/miq_ae_fields_center.rb:12
 #: ../app/helpers/application_helper/toolbar/miq_ae_instances_center.rb:12
@@ -12859,7 +12894,7 @@ msgstr "Editando %{model} condición \"%{name}\""
 
 #: ../app/controllers/catalog_controller.rb:2111
 msgid "Editing %{model} Tags for \"%{name}\""
-msgstr "Editando %{model} etiquetas para \"%{name}\""
+msgstr "Editando etiquetas %{model} para \"%{name}\""
 
 #: ../app/controllers/ops_controller/ops_rbac.rb:608
 msgid "Editing %{model} for \"%{name}\""
@@ -12997,12 +13032,12 @@ msgstr "Habilitar autenticación única (SSO)"
 
 #: ../app/views/layouts/angular/_multi_auth_credentials.html.haml:351
 msgid ""
-"Enable event monitoring. Used to automatically resync state when changes are"
-" performed on VMware vCloud Director directly."
+"Enable event monitoring. Used to automatically resync state when changes are "
+"performed on VMware vCloud Director directly."
 msgstr ""
 "Habilitar monitorización de eventos. Utilizado para resincronizar el estado "
-"automáticamente cuando los cambios se realizan directamente en VMware vCloud"
-" Director."
+"automáticamente cuando los cambios se realizan directamente en VMware vCloud "
+"Director."
 
 #: ../app/controllers/middleware_deployment_controller.rb:32
 msgid "Enable initiated for selected deployment(s)"
@@ -13055,7 +13090,7 @@ msgstr "Puntos de acceso"
 #: ../app/helpers/container_project_helper/textual_summary.rb:29
 #: ../app/views/ops/_tenant_quota_form.html.haml:22
 msgid "Enforced"
-msgstr "Aplicado"
+msgstr "Exigido"
 
 #: ../app/views/miq_ae_tools/_results_uri.html.haml:53
 #: ../app/views/miq_ae_tools/_results_xml.html.haml:10
@@ -13292,7 +13327,8 @@ msgstr ""
 
 #: ../app/controllers/catalog_controller.rb:1011
 msgid "Error during 'Orchestration Template Edit': %{error_message}"
-msgstr "Error durante \"Edición de plantilla de orquestación\": %{error_message}"
+msgstr ""
+"Error durante \"Edición de plantilla de orquestación\": %{error_message}"
 
 #: ../app/controllers/catalog_controller.rb:1110
 msgid "Error during 'Orchestration Template creation': %{error_message}"
@@ -13321,7 +13357,8 @@ msgstr "Error durante \"Quitar máquina virtual del servicio\": %{message}"
 
 #: ../app/controllers/ops_controller/diagnostics.rb:275
 msgid "Error during 'Reset/synchronization process': %{message}"
-msgstr "Error durante \"Proceso de restablecimiento/sincronización\": %{message}"
+msgstr ""
+"Error durante \"Proceso de restablecimiento/sincronización\": %{message}"
 
 #: ../app/controllers/catalog_controller.rb:1285
 msgid "Error during 'Resource Add': %{error_message}"
@@ -13401,8 +13438,8 @@ msgstr "Error durante el guardado de afinidad de análisis: %{message}"
 
 #: ../app/controllers/catalog_controller.rb:1097
 msgid ""
-"Error during Orchestration Template creation: new template content cannot be"
-" empty"
+"Error during Orchestration Template creation: new template content cannot be "
+"empty"
 msgstr ""
 "Error durante la creación de una plantilla de orquestación: el contenido de "
 "la nueva plantilla no puede ser nulo"
@@ -13469,8 +13506,8 @@ msgid ""
 "Error during upload: incorrect Dialog format, only service dialogs can be "
 "imported"
 msgstr ""
-"Error durante la subida: formato incorrecto de Dialog, sólo los servicios de"
-" Dialog pueden ser importados"
+"Error durante la subida: formato incorrecto de Dialog, sólo los servicios de "
+"Dialog pueden ser importados"
 
 #: ../app/controllers/miq_ae_customization_controller.rb:56
 msgid "Error during upload: one of the DialogField types is not supported"
@@ -13564,7 +13601,7 @@ msgstr "Error: ImportFileUpload"
 
 #: ../app/services/user_validation_service.rb:133
 msgid "Error: Name is required"
-msgstr "Error: el nombre es obligatorio"
+msgstr "Error: el nombre de usuario es obligatorio"
 
 #: ../app/services/user_validation_service.rb:135
 msgid "Error: New password and verify password must be the same"
@@ -13670,7 +13707,8 @@ msgstr "Grupo de eventos"
 msgid "Event Groups"
 msgstr "Grupos de eventos"
 
-#: ../app/controllers/vm_common.rb:1430 ../app/views/ops/_ap_form.html.haml:76
+#: ../app/controllers/vm_common.rb:1430
+#: ../app/views/ops/_ap_form.html.haml:76
 #: ../app/views/ops/_ap_form.html.haml:89
 msgid "Event Log"
 msgid_plural "Event Logs"
@@ -14005,7 +14043,7 @@ msgstr "Se requiere entrada del archivo"
 
 #: ../app/views/ops/_ap_show.html.haml:86
 msgid "File Items"
-msgstr "ítemes del archivo"
+msgstr "Elementos del archivo"
 
 #: ../app/helpers/vm_cloud_helper/textual_summary.rb:208
 #: ../app/helpers/vm_helper/textual_summary.rb:592
@@ -14059,7 +14097,7 @@ msgstr "Filtrar por"
 
 #: ../app/views/ops/_ap_form_nteventlog.html.haml:14
 msgid "Filter Message"
-msgstr "Filtrar mensaje"
+msgstr "Mensaje de filtro"
 
 #: ../app/assets/javascripts/controllers/live_metrics/util/metrics-utils-factory.js:31
 msgid "Filter by %s..."
@@ -14110,8 +14148,8 @@ msgstr "Se debe seleccionar un filtro."
 msgid ""
 "Filter tab is not available until Trending Target Limit has been configured"
 msgstr ""
-"La ficha de filtro estará disponible solo después de que se haya configurado"
-" el límite meta de tendencia"
+"La ficha de filtro estará disponible solo después de que se haya configurado "
+"el límite meta de tendencia"
 
 #: ../app/controllers/report_controller/reports/editor.rb:1725
 msgid "Filter tab is not available until Trending for field has been selected"
@@ -14122,8 +14160,8 @@ msgstr ""
 #: ../app/controllers/report_controller/reports/editor.rb:1734
 msgid "Filter tab is not available until at least 1 field has been selected"
 msgstr ""
-"La ficha de filtro no está disponible hasta que se haya seleccionado, al "
-"menos, un campo."
+"La ficha de filtro no estará disponible hasta que se haya seleccionado al "
+"menos un campo"
 
 #: ../app/controllers/ops_controller/settings/schedules.rb:446
 msgid "Filter value must be selected"
@@ -14151,9 +14189,10 @@ msgstr "Error de valor de búsqueda: %{msg}"
 #: ../app/views/chargeback/_cb_rate_edit_table.html.haml:27
 #: ../app/views/middleware_server/_add_datasource_step3.html.haml:193
 msgid "Finish"
-msgstr "Finalizar"
+msgstr "Finalización"
 
-#: ../app/helpers/ui_constants.rb:411 ../app/helpers/ui_constants.rb:416
+#: ../app/helpers/ui_constants.rb:411
+#: ../app/helpers/ui_constants.rb:416
 #: ../app/helpers/service_helper/textual_summary.rb:194
 #: ../app/helpers/service_helper/textual_summary.rb:267
 msgid "Finished"
@@ -14188,7 +14227,7 @@ msgstr "Primero"
 
 #: ../app/views/report/_form_sort.html.haml:184
 msgid "First %{number}"
-msgstr "Primero %{number}"
+msgstr "Primeros %{number}"
 
 #: ../app/helpers/chargeback_helper.rb:6
 #: ../app/views/chargeback/_cb_rate_show.html.haml:55
@@ -14802,7 +14841,7 @@ msgstr "Historial"
 #: ../app/views/host/_form.html.haml:166
 msgid "Host"
 msgid_plural "Hosts"
-msgstr[0] "Equipo"
+msgstr[0] "Host"
 msgstr[1] "Hosts"
 
 #: ../app/controllers/host_aggregate_controller.rb:433
@@ -14928,7 +14967,7 @@ msgstr "Dominio alojado:"
 #: ../app/views/host/_config.html.haml:47
 msgid "Hostname"
 msgid_plural "Hostnames"
-msgstr[0] "Nombre de equipo"
+msgstr[0] "Nombre de host"
 msgstr[1] "Nombres de hosts"
 
 #: ../app/views/layouts/angular-bootstrap/_endpoints_angular.html.haml:12
@@ -14969,13 +15008,13 @@ msgstr "Nombre de equipo o dirección IPv4/IPv6"
 #: ../app/assets/javascripts/controllers/ems_infra_dashboard/util/infra-dashboard-utils-factory.js:19
 #: ../app/assets/javascripts/controllers/ems_infra_dashboard/util/infra-charts-mixin.js:56
 msgid "Hosts"
-msgstr "Equipos"
+msgstr "Hosts"
 
 #: ../app/presenters/menu/default_menu.rb:62
 #: ../app/helpers/application_helper/title.rb:101
 #: ../app/controllers/application_controller/ci_processing.rb:1436
 msgid "Hosts / Nodes"
-msgstr "Equipos / Nodos"
+msgstr "Hosts / Nodos"
 
 #: ../app/controllers/ems_cluster_controller.rb:197
 #: ../app/controllers/infra_networking_controller.rb:250
@@ -15091,11 +15130,11 @@ msgstr "Dirección II IPMI"
 
 #: ../app/views/layouts/angular/_multi_auth_credentials.html.haml:498
 msgid ""
-"IPMI IP Address, Username and matching password fields are needed to perform"
-" verification of credentials"
+"IPMI IP Address, Username and matching password fields are needed to perform "
+"verification of credentials"
 msgstr ""
-"Se necesitan los campos de dirección IP IMPI, nombre de usuario y contraseña"
-" para realizar la verificación de credenciales"
+"Se necesitan los campos de dirección IP IMPI, nombre de usuario y contraseña "
+"para realizar la verificación de credenciales"
 
 #: ../app/controllers/host_controller.rb:590
 msgid "IPMI Password and Verify Password fields do not match"
@@ -15153,13 +15192,13 @@ msgid ""
 "If this widget is new or has just been added to your dashboard, the data is "
 "being generated and should be available soon."
 msgstr ""
-"Si este asistente es nuevo o acaba de ser añadido a su escritorio, los datos"
-" están siendo genereados y deberían estar disponibles pronto"
+"Si este asistente es nuevo o acaba de ser añadido a su escritorio, los datos "
+"están siendo generados y deberían estar disponibles pronto."
 
 #: ../app/views/static/deploy_containers_provider/deploy-provider-review-progress.html.haml:22
 msgid ""
-"If you choose to close this wizard, deployment status can be monitored under"
-" requests."
+"If you choose to close this wizard, deployment status can be monitored under "
+"requests."
 msgstr ""
 "Si cierra el asistente, podrá controlar el estado de la implementación "
 "mediante solicitudes."
@@ -15649,7 +15688,7 @@ msgstr "Pila no válida"
 
 #: ../app/views/dashboard/_widget_chart.html.haml:27
 msgid "Invalid chart data. Try regenerating the widgets."
-msgstr "Datos de grafico invalidos. Intente regenerar los asistentes."
+msgstr "Datos de gráfico inválidos. Intente regenerar los asistentes."
 
 #: ../lib/report_formatter/chart_common.rb:534
 msgid "Invalid chart definition"
@@ -15973,7 +16012,8 @@ msgstr ""
 "%{zone_name}"
 
 #: ../app/controllers/miq_ae_tools_controller.rb:48
-#: ../app/views/show.html.haml:7 ../app/views/miq_ae_tools/show.html.haml:3
+#: ../app/views/show.html.haml:7
+#: ../app/views/miq_ae_tools/show.html.haml:3
 msgid "Last 1000 lines from the Automation log"
 msgstr "Últimas 1000 líneas del registro de automatización"
 
@@ -16120,8 +16160,8 @@ msgstr "La última instantánea seleccionada ya no existe"
 
 #: ../app/views/report/_form_consolidate.html.haml:152
 msgid ""
-"Leave all options unchecked to show the original column value from the first"
-" record in the group."
+"Leave all options unchecked to show the original column value from the first "
+"record in the group."
 msgstr ""
 "Dejar todas las opciones sin marcar para mostrar el valor original de la "
 "columna desde el primer registro en el grupo."
@@ -16369,7 +16409,7 @@ msgstr "Inicio de sesión"
 #: ../app/views/dashboard/login.html.haml:151
 #: ../app/views/dashboard/login.html.haml:151
 msgid "Login"
-msgstr "Entrar"
+msgstr "Inicio de sesión"
 
 #: ../app/views/static/deploy_containers_provider/deploy-provider-config-auth-settings.html.haml:138
 msgid "Login URL"
@@ -16384,8 +16424,8 @@ msgid ""
 "Login not allowed, User's %{feature} is missing. Please contact the "
 "administrator"
 msgstr ""
-"No se permite el inicio de sesión. Falta %{feature} del usuario. Comuníquese"
-" con el administrador."
+"No se permite el inicio de sesión. Falta %{feature} del usuario. Comuníquese "
+"con el administrador."
 
 #: ../app/views/dashboard/login.html.haml:53
 #: ../app/views/dashboard/login.html.haml:53
@@ -16576,8 +16616,8 @@ msgstr "Gestionar políticas"
 #: ../app/helpers/application_helper/toolbar/ems_block_storages_center.rb:43
 msgid "Manage Policies for the selected Block Storage Managers"
 msgstr ""
-"Administrar políticas para los administradores de almacenamiento por bloques"
-" seleccionados"
+"Administrar políticas para los administradores de almacenamiento por bloques "
+"seleccionados"
 
 #: ../app/helpers/application_helper/toolbar/ems_clouds_center.rb:66
 msgid "Manage Policies for the selected Cloud Providers"
@@ -16595,8 +16635,8 @@ msgstr "Gestionar políticas para los proveedores de red seleccionados"
 #: ../app/helpers/application_helper/toolbar/ems_object_storages_center.rb:43
 msgid "Manage Policies for the selected Object Storage Managers"
 msgstr ""
-"Administrar políticas para los administradores de almacenamiento por objetos"
-" seleccionados"
+"Administrar políticas para los administradores de almacenamiento por objetos "
+"seleccionados"
 
 #: ../app/helpers/application_helper/toolbar/ems_physical_infras_center.rb:64
 msgid "Manage Policies for the selected Physical Infrastructure Providers"
@@ -16717,7 +16757,7 @@ msgstr "Gestionar cuotas"
 
 #: ../app/helpers/application_helper/toolbar/tenants_center.rb:30
 msgid "Manage Quotas for the Selected Item"
-msgstr "Gestionar cuotas para el ítem seleccionado"
+msgstr "Gestionar cuotas para el elemento seleccionado"
 
 #: ../app/views/report/_menu_form2.html.haml:8
 msgid "Manage Reports"
@@ -17441,27 +17481,27 @@ msgstr "Mover carpeta seleccionada hacia arriba"
 
 #: ../app/views/report/_menu_form2.html.haml:117
 msgid "Move selected reports down"
-msgstr "Mover reportes seleccionados hacia abajo"
+msgstr "Mover informes seleccionados hacia abajo"
 
 #: ../app/views/report/_menu_form2.html.haml:69
 msgid "Move selected reports left"
-msgstr "Mover reportes seleccionados a la izquierda"
+msgstr "Mover informes seleccionados a la izquierda"
 
 #: ../app/views/report/_menu_form2.html.haml:53
 msgid "Move selected reports right"
-msgstr "Mover reportes seleccionados a la derecha"
+msgstr "Mover informes seleccionados a la derecha"
 
 #: ../app/views/report/_menu_form2.html.haml:133
 msgid "Move selected reports to bottom"
-msgstr "Mover reportes seleccionados hacia la parte inferior"
+msgstr "Mover informes seleccionados hacia la parte inferior"
 
 #: ../app/views/report/_menu_form2.html.haml:85
 msgid "Move selected reports to top"
-msgstr "Mover reportes seleccionados hacia la parte superior"
+msgstr "Mover informes seleccionados hacia la parte superior"
 
 #: ../app/views/report/_menu_form2.html.haml:101
 msgid "Move selected reports up"
-msgstr "Mover reportes seleccionados hacia arriba"
+msgstr "Mover informes seleccionados hacia arriba"
 
 #: ../app/views/miq_ae_customization/_dialog_field_form.html.haml:149
 msgid "Multiselect"
@@ -18002,7 +18042,7 @@ msgstr "Siguiente >"
 #: ../app/views/report/_widget_show.html.haml:296
 #: ../app/views/report/_report_info.html.haml:149
 msgid "Next Run Time"
-msgstr "Tiempo de ejecución siguiente"
+msgstr "Hora de ejecución siguiente"
 
 #: ../app/helpers/vm_cloud_helper/textual_summary.rb:95
 #: ../app/views/miq_policy/_alert_details.html.haml:57
@@ -18181,8 +18221,8 @@ msgstr "Ningún %{model} fue seleccionado para ser marcado como %{action}"
 msgid ""
 "No %{mode} Policy Profiles are defined that match the entered search string."
 msgstr ""
-"No hay perfiles de política %{mode} definidos que coincidan con la cadena de"
-" búsqueda ingresada."
+"No hay perfiles de política %{mode} definidos que coincidan con la cadena de "
+"búsqueda ingresada."
 
 #: ../app/views/miq_policy/_profile_list.html.haml:7
 msgid "No %{mode} Policy Profiles are defined."
@@ -18604,8 +18644,8 @@ msgstr "No hay datos de línea de tiempo disponibles."
 #: ../app/views/layouts/listnav/_ems_storage.html.haml:16
 msgid "No Timeline data has been collected for Policy or Management Events"
 msgstr ""
-"No se han recopilado datos de línea de tiempo para los eventos de política o"
-" administración"
+"No se han recopilado datos de línea de tiempo para los eventos de política o "
+"administración"
 
 #: ../app/helpers/application_helper/button/container_timeline.rb:15
 msgid "No Timeline data has been collected for this %{entity}"
@@ -18726,8 +18766,8 @@ msgstr "Ningún proveedor de nube admite la creación de volúmenes de nube."
 #: ../app/helpers/application_helper/button/auth_key_pair_cloud_create.rb:10
 msgid "No cloud providers support key pair import or creation."
 msgstr ""
-"Ningún proveedor de nube admite la importación o creación de pares de "
-"claves."
+"Ningún proveedor de nube admite la importación o creación de pares de claves."
+""
 
 #: ../app/controllers/provider_foreman_controller.rb:111
 msgid ""
@@ -18774,8 +18814,8 @@ msgstr "No se han encontrado datos."
 
 #: ../app/views/layouts/_drift_history.html.haml:13
 msgid ""
-"No drift history found, an Analysis or Virtual Black Box Synchronization for"
-" this VM may need to be run."
+"No drift history found, an Analysis or Virtual Black Box Synchronization for "
+"this VM may need to be run."
 msgstr ""
 "No se encontró un historial de desplazamiento; es posible que deba "
 "realizarse un análisis o una sincronización de caja negra virtual para esta "
@@ -18802,8 +18842,8 @@ msgstr "No hay eventos disponibles para esta línea de tiempo."
 #: ../app/views/miq_policy/_form_expression.html.haml:21
 msgid "No expression defined, a condition must contain a valid expression."
 msgstr ""
-"No hay ninguna expresión definida; una condición debe contener una expresión"
-" válida."
+"No hay ninguna expresión definida; una condición debe contener una expresión "
+"válida."
 
 #: ../app/controllers/report_controller/reports/editor.rb:834
 msgid "No fields were moved up"
@@ -18968,8 +19008,8 @@ msgstr "No se seleccionaron servidores"
 #: ../app/views/dashboard/_widget_menu.html.haml:26
 msgid "No shortcuts are authorized for this user, contact your Administrator"
 msgstr ""
-"Los accesos directos no están autorizados para este usuario, contacte con su"
-" administrador"
+"Los accesos directos no están autorizados para este usuario, contacte con su "
+"administrador"
 
 #: ../app/controllers/network_router_controller.rb:234
 msgid "No subnets available to add interfaces to Router \"%{name}\""
@@ -19065,7 +19105,8 @@ msgstr "Los nodos han sido agregados correctamente. Actualice la cola."
 msgid "Non-Compliant as of %{time} Ago"
 msgstr "En incumplimiento desde hace %{time}"
 
-#: ../app/controllers/ems_common.rb:749 ../app/controllers/ems_common.rb:762
+#: ../app/controllers/ems_common.rb:749
+#: ../app/controllers/ems_common.rb:762
 msgid "Non-SSL"
 msgstr "Sin SSL"
 
@@ -19121,7 +19162,8 @@ msgstr "Hosts sin clústeres"
 #: ../app/helpers/vm_helper/textual_summary.rb:388
 #: ../app/helpers/vm_helper/textual_summary.rb:486
 #: ../app/helpers/vm_helper/textual_summary.rb:828
-#: ../app/helpers/vm_helper.rb:24 ../app/helpers/vm_helper.rb:29
+#: ../app/helpers/vm_helper.rb:24
+#: ../app/helpers/vm_helper.rb:29
 #: ../app/helpers/cloud_volume_backup_helper/textual_summary.rb:37
 #: ../app/views/miq_policy/_action_options.html.haml:469
 #: ../app/views/miq_policy/_action_options.html.haml:481
@@ -19390,7 +19432,7 @@ msgstr "Número de discos"
 
 #: ../app/views/ems_infra/scaling.html.haml:27
 msgid "Number of Hosts"
-msgstr "Número de equipos"
+msgstr "Número de hosts"
 
 #: ../app/views/shared/views/_prov_dialog.html.haml:64
 msgid "Number of Instances"
@@ -19655,8 +19697,8 @@ msgid ""
 "Open a new browser window with Cockpit for this VM.  This requires that "
 "Cockpit is pre-configured on the VM."
 msgstr ""
-"Abrir una nueva ventana del navegador con Cockpit para esta máquina virtual."
-" Esta acción requiere que Cockpit se configure previamente en la máquina "
+"Abrir una nueva ventana del navegador con Cockpit para esta máquina virtual. "
+"Esta acción requiere que Cockpit se configure previamente en la máquina "
 "virtual."
 
 #: ../app/helpers/application_helper/toolbar/ems_container_center.rb:70
@@ -19665,18 +19707,18 @@ msgid ""
 "Open a new browser window with the External Logging Presentation UI. This "
 "requires the External Logging to be deployed on this Proider."
 msgstr ""
-"Abrir una nueva ventana del navegador con la IU de presentación de inicio de"
-" sesión externo. Esta acción requiere la implementación del inicio de sesión"
-" externo en este proveedor."
+"Abrir una nueva ventana del navegador con la IU de presentación de inicio de "
+"sesión externo. Esta acción requiere la implementación del inicio de sesión "
+"externo en este proveedor."
 
 #: ../app/helpers/application_helper/toolbar/x_vm_center.rb:267
 msgid ""
 "Open a web-based VMRC console for this VM.  This requires that VMRC is pre-"
 "configured to work in your browser."
 msgstr ""
-"Abrir una consola VMRC basada en la Web para máquinas virtuales. Esta acción"
-" requiere que VMRC se configure previamente para que funcione en su "
-"navegador."
+"Abrir una consola VMRC basada en la Web para máquinas virtuales. Esta acción "
+"requiere que VMRC se configure previamente para que funcione en su navegador."
+""
 
 #: ../app/helpers/application_helper/toolbar/cloud/instance_operations_button_group_mixin.rb:113
 #: ../app/helpers/application_helper/toolbar/x_vm_center.rb:260
@@ -19733,15 +19775,15 @@ msgid ""
 "Opening a VM web-based VMRC console requires that VMRC is pre-configured to "
 "work in your browser.  Are you sure?"
 msgstr ""
-"Abrir una consola VMRC basada en la Web para máquinas virtuales requiere que"
-" VMRC se configure previamente para que funcione en su navegador. ¿Está "
+"Abrir una consola VMRC basada en la Web para máquinas virtuales requiere que "
+"VMRC se configure previamente para que funcione en su navegador. ¿Está "
 "seguro?"
 
 #: ../app/helpers/application_helper/toolbar/x_vm_center.rb:255
 msgid ""
-"Opening a VM web-based console can take a while and requires that the VMware"
-" MKS plugin version configured for Management Engine already be installed "
-"and working.  Are you sure?"
+"Opening a VM web-based console can take a while and requires that the VMware "
+"MKS plugin version configured for Management Engine already be installed and "
+"working.  Are you sure?"
 msgstr ""
 "Abrir una consola basada en la Web para máquinas virtuales puede tomar unos "
 "minutos y requiere que la versión del complemento VMware MKS configurada "
@@ -19788,7 +19830,7 @@ msgstr "Operaciones"
 
 #: ../app/presenters/menu/default_menu.rb:261
 msgid "Optimize"
-msgstr "Optimizar"
+msgstr "Optimización"
 
 #: ../app/views/miq_ae_customization/_dialog_sample.html.haml:88
 msgid "Option 1"
@@ -20108,7 +20150,7 @@ msgstr "Paravirtualización"
 
 #: ../app/views/ops/_rbac_tenant_details.html.haml:45
 msgid "Parent"
-msgstr "Ítemes principal"
+msgstr "Principal"
 
 #: ../app/helpers/resource_pool_helper/textual_summary.rb:92
 msgid "Parent %{title}"
@@ -21436,8 +21478,8 @@ msgstr "El proveedor ya no existe; esta alerta debe ser reconfigurada"
 msgid ""
 "Provider stack is not ready to be updated, another operation is in progress."
 msgstr ""
-"La pila del proveedor no está lista para ser actualizada; hay otra operación"
-" en curso."
+"La pila del proveedor no está lista para ser actualizada; hay otra operación "
+"en curso."
 
 #: ../app/views/static/deploy_containers_provider/deploy-provider-details-general.html.haml:37
 msgid "Provider to provision on"
@@ -21477,7 +21519,8 @@ msgstr "Aprovisionar"
 msgid "Provision %{type} Request was cancelled by the user"
 msgstr "El usuario canceló la solicitud de aprovisionamiento %{type}"
 
-#: ../app/controllers/vm_common.rb:1557 ../app/controllers/vm_common.rb:1561
+#: ../app/controllers/vm_common.rb:1557
+#: ../app/controllers/vm_common.rb:1561
 msgid "Provision %{vms_or_templates}"
 msgstr "Aprovisionar %{vms_or_templates}"
 
@@ -21768,7 +21811,7 @@ msgstr "Nombre del usuario Rados"
 #: ../app/views/chargeback/_cb_rate_edit_table.html.haml:16
 #: ../app/views/layouts/_perf_options.html.haml:72
 msgid "Range"
-msgstr "ango"
+msgstr "Rango"
 
 #: ../app/views/miq_capacity/_planning_summary.html.haml:47
 msgid "Rank"
@@ -21952,7 +21995,8 @@ msgstr "Sólo lectura"
 msgid "Realm"
 msgstr "Ámbito"
 
-#: ../app/controllers/ems_common.rb:126 ../app/controllers/ems_common.rb:577
+#: ../app/controllers/ems_common.rb:126
+#: ../app/controllers/ems_common.rb:577
 msgid "Realm is required"
 msgstr "El dominio es obligatorio"
 
@@ -22091,7 +22135,8 @@ msgid "Reconfigure this VM"
 msgstr "Reconfigurar esta máquina virtual"
 
 #: ../app/controllers/application_controller/ci_processing.rb:414
-msgid "Reconfiguring %{instance} \"%{name}\" from %{old_flavor} to %{new_flavor}"
+msgid ""
+"Reconfiguring %{instance} \"%{name}\" from %{old_flavor} to %{new_flavor}"
 msgstr ""
 "Reconfiguración de %{instance} \"%{name}\" de %{old_flavor} a %{new_flavor} "
 "en curso"
@@ -22176,8 +22221,8 @@ msgstr "Actualizar inventario"
 msgid ""
 "Refresh Inventory for all Storage CIs known to the selected Storage Managers"
 msgstr ""
-"Actualizar inventario de todos los ítemes de configuración de almacenamiento"
-" conocidos por los administradores de almacenamiento seleccionados"
+"Actualizar inventario de todos los ítemes de configuración de almacenamiento "
+"conocidos por los administradores de almacenamiento seleccionados"
 
 #: ../app/helpers/application_helper/toolbar/storage_managers_center.rb:15
 msgid ""
@@ -22191,8 +22236,8 @@ msgstr ""
 #: ../app/helpers/application_helper/toolbar/storage_manager_center.rb:12
 msgid "Refresh Inventory for all Storage CIs known to this Storage Manager"
 msgstr ""
-"Actualizar inventario de todos los ítemes de configuración de almacenamiento"
-" conocidos por este administrador de almacenamiento"
+"Actualizar inventario de todos los ítemes de configuración de almacenamiento "
+"conocidos por este administrador de almacenamiento"
 
 #: ../app/helpers/application_helper/toolbar/storage_manager_center.rb:14
 msgid "Refresh Inventory for all Storage CIs known to this Storage Manager?"
@@ -22356,7 +22401,8 @@ msgstr ""
 "¿Desea actualizar el estado de todos los ítemes de configuración de "
 "almacenamiento conocidos por este administrador de almacenamiento?"
 
-#: ../app/controllers/ems_common.rb:1020 ../app/controllers/ems_common.rb:1035
+#: ../app/controllers/ems_common.rb:1020
+#: ../app/controllers/ems_common.rb:1035
 msgid "Refresh initiated for %{count} %{model} from the %{product} Database"
 msgid_plural ""
 "Refresh initiated for %{count} %{models} from the %{product} Database"
@@ -22415,8 +22461,8 @@ msgstr "La actualización de los datos recientes de C&U ha sido iniciada"
 
 #: ../app/helpers/application_helper/toolbar/ems_block_storages_center.rb:12
 msgid ""
-"Refresh relationships and power states for all items related to the selected"
-" Block Storage Managers"
+"Refresh relationships and power states for all items related to the selected "
+"Block Storage Managers"
 msgstr ""
 "Actualizar relaciones y estados de energía para todos los elementos "
 "relacionados con los administradores de almacenamiento por bloques "
@@ -22424,8 +22470,8 @@ msgstr ""
 
 #: ../app/helpers/application_helper/toolbar/ems_block_storages_center.rb:15
 msgid ""
-"Refresh relationships and power states for all items related to the selected"
-" Block Storage Managers?"
+"Refresh relationships and power states for all items related to the selected "
+"Block Storage Managers?"
 msgstr ""
 "¿Desea actualizar relaciones y estados de energía para todos los elementos "
 "relacionados con los administradores de almacenamiento por bloques "
@@ -22433,16 +22479,16 @@ msgstr ""
 
 #: ../app/helpers/application_helper/toolbar/ems_clouds_center.rb:12
 msgid ""
-"Refresh relationships and power states for all items related to the selected"
-" Cloud Providers"
+"Refresh relationships and power states for all items related to the selected "
+"Cloud Providers"
 msgstr ""
 "Actualizar relaciones y estados de energía para todos los ítemes "
 "relacionados con los proveedores de nube seleccionados"
 
 #: ../app/helpers/application_helper/toolbar/ems_clouds_center.rb:15
 msgid ""
-"Refresh relationships and power states for all items related to the selected"
-" Cloud Providers?"
+"Refresh relationships and power states for all items related to the selected "
+"Cloud Providers?"
 msgstr ""
 "¿Desea actualizar relaciones y estados de energía para todos los ítemes "
 "relacionados con los proveedores de nube seleccionados?"
@@ -22450,8 +22496,8 @@ msgstr ""
 #: ../app/helpers/application_helper/toolbar/ems_physical_infras_center.rb:12
 #: ../app/helpers/application_helper/toolbar/ems_infras_center.rb:12
 msgid ""
-"Refresh relationships and power states for all items related to the selected"
-" Infrastructure Providers"
+"Refresh relationships and power states for all items related to the selected "
+"Infrastructure Providers"
 msgstr ""
 "Actualizar relaciones y estados de energía para todos los ítemes "
 "relacionados con los proveedores de infraestructura seleccionados"
@@ -22459,32 +22505,32 @@ msgstr ""
 #: ../app/helpers/application_helper/toolbar/ems_physical_infras_center.rb:15
 #: ../app/helpers/application_helper/toolbar/ems_infras_center.rb:15
 msgid ""
-"Refresh relationships and power states for all items related to the selected"
-" Infrastructure Providers?"
+"Refresh relationships and power states for all items related to the selected "
+"Infrastructure Providers?"
 msgstr ""
 "¿Desea actualizar relaciones y estados de energía para todos los ítemes "
 "relacionados con los proveedores de infraestructura seleccionados?"
 
 #: ../app/helpers/application_helper/toolbar/ems_networks_center.rb:12
 msgid ""
-"Refresh relationships and power states for all items related to the selected"
-" Network Providers"
+"Refresh relationships and power states for all items related to the selected "
+"Network Providers"
 msgstr ""
 "Actualizar relaciones y estados de energía para todos los ítemes "
 "relacionados con los proveedores de red seleccionados"
 
 #: ../app/helpers/application_helper/toolbar/ems_networks_center.rb:15
 msgid ""
-"Refresh relationships and power states for all items related to the selected"
-" Network Providers?"
+"Refresh relationships and power states for all items related to the selected "
+"Network Providers?"
 msgstr ""
 "¿Desea actualizar relaciones y estados de energía para todos los ítemes "
 "relacionados con los proveedores de red seleccionados?"
 
 #: ../app/helpers/application_helper/toolbar/ems_object_storages_center.rb:12
 msgid ""
-"Refresh relationships and power states for all items related to the selected"
-" Object Storage Managers"
+"Refresh relationships and power states for all items related to the selected "
+"Object Storage Managers"
 msgstr ""
 "Actualizar relaciones y estados de energía para todos los elementos "
 "relacionados con los administradores de almacenamiento por objetos "
@@ -22492,8 +22538,8 @@ msgstr ""
 
 #: ../app/helpers/application_helper/toolbar/ems_object_storages_center.rb:15
 msgid ""
-"Refresh relationships and power states for all items related to the selected"
-" Object Storage Managers?"
+"Refresh relationships and power states for all items related to the selected "
+"Object Storage Managers?"
 msgstr ""
 "¿Desea actualizar relaciones y estados de energía para todos los elementos "
 "relacionados con los administradores de almacenamiento por objetos "
@@ -22501,16 +22547,16 @@ msgstr ""
 
 #: ../app/helpers/application_helper/toolbar/ems_storages_center.rb:12
 msgid ""
-"Refresh relationships and power states for all items related to the selected"
-" Storage Managers"
+"Refresh relationships and power states for all items related to the selected "
+"Storage Managers"
 msgstr ""
 "Actualizar relaciones y estados de energía para todos los elementos "
 "relacionados con los administradores de almacenamiento seleccionados"
 
 #: ../app/helpers/application_helper/toolbar/ems_storages_center.rb:15
 msgid ""
-"Refresh relationships and power states for all items related to the selected"
-" Storage Managers?"
+"Refresh relationships and power states for all items related to the selected "
+"Storage Managers?"
 msgstr ""
 "¿Desea actualizar relaciones y estados de energía para todos los elementos "
 "relacionados con los administradores de almacenamiento seleccionados?"
@@ -22518,8 +22564,8 @@ msgstr ""
 #: ../app/helpers/application_helper/toolbar/miq_templates_center.rb:14
 #: ../app/helpers/application_helper/toolbar/template_infras_center.rb:14
 msgid ""
-"Refresh relationships and power states for all items related to the selected"
-" Templates"
+"Refresh relationships and power states for all items related to the selected "
+"Templates"
 msgstr ""
 "Actualizar relaciones y estados de energía para todos los ítemes "
 "relacionados con las plantillas seleccionadas"
@@ -22527,8 +22573,8 @@ msgstr ""
 #: ../app/helpers/application_helper/toolbar/miq_templates_center.rb:17
 #: ../app/helpers/application_helper/toolbar/template_infras_center.rb:17
 msgid ""
-"Refresh relationships and power states for all items related to the selected"
-" Templates?"
+"Refresh relationships and power states for all items related to the selected "
+"Templates?"
 msgstr ""
 "¿Desea actualizar relaciones y estados de energía para todos los ítemes "
 "relacionados con las plantillas seleccionadas?"
@@ -22539,8 +22585,8 @@ msgstr ""
 #: ../app/helpers/application_helper/toolbar/vms_center.rb:14
 #: ../app/helpers/application_helper/toolbar/hosts_center.rb:12
 msgid ""
-"Refresh relationships and power states for all items related to the selected"
-" items"
+"Refresh relationships and power states for all items related to the selected "
+"items"
 msgstr ""
 "Actualizar relaciones y estados de energía para todos los ítemes "
 "relacionados con los ítemes seleccionados"
@@ -22551,8 +22597,8 @@ msgstr ""
 #: ../app/helpers/application_helper/toolbar/vms_center.rb:17
 #: ../app/helpers/application_helper/toolbar/hosts_center.rb:15
 msgid ""
-"Refresh relationships and power states for all items related to the selected"
-" items?"
+"Refresh relationships and power states for all items related to the selected "
+"items?"
 msgstr ""
 "¿Desea actualizar relaciones y estados de energía para todos los ítemes "
 "relacionados con los ítemes seleccionados?"
@@ -22625,32 +22671,32 @@ msgstr ""
 
 #: ../app/helpers/application_helper/toolbar/ems_network_center.rb:17
 msgid ""
-"Refresh relationships and power states for all items related to this Network"
-" Provider"
+"Refresh relationships and power states for all items related to this Network "
+"Provider"
 msgstr ""
 "Actualizar relaciones y estados de energía para todos los ítemes "
 "relacionados con este proveedor de red"
 
 #: ../app/helpers/application_helper/toolbar/ems_network_center.rb:19
 msgid ""
-"Refresh relationships and power states for all items related to this Network"
-" Provider?"
+"Refresh relationships and power states for all items related to this Network "
+"Provider?"
 msgstr ""
 "¿Desea actualizar relaciones y estados de energía para todos los ítemes "
 "relacionados con este proveedor de red?"
 
 #: ../app/helpers/application_helper/toolbar/ems_storage_center.rb:17
 msgid ""
-"Refresh relationships and power states for all items related to this Storage"
-" Manager"
+"Refresh relationships and power states for all items related to this Storage "
+"Manager"
 msgstr ""
 "Actualizar relaciones y estados de energía para todos los elementos "
 "relacionados con este administrador de almacenamiento"
 
 #: ../app/helpers/application_helper/toolbar/ems_storage_center.rb:19
 msgid ""
-"Refresh relationships and power states for all items related to this Storage"
-" Manager?"
+"Refresh relationships and power states for all items related to this Storage "
+"Manager?"
 msgstr ""
 "¿Desea actualizar relaciones y estados de energía para todos los elementos "
 "relacionados con este administrador de almacenamiento?"
@@ -22796,7 +22842,8 @@ msgstr "Registro"
 msgid "Registries"
 msgstr "Registros"
 
-#: ../app/helpers/ui_constants.rb:504 ../app/views/ops/_ap_form.html.haml:86
+#: ../app/helpers/ui_constants.rb:504
+#: ../app/views/ops/_ap_form.html.haml:86
 #: ../app/views/static/deploy_containers_provider/deploy-provider-config-settings.html.haml:42
 #: ../app/views/static/deploy_containers_provider/deploy-provider-config-settings.html.haml:154
 msgid "Registry"
@@ -23159,10 +23206,11 @@ msgid "Remove Host not supported by %{model} \"%{name}\""
 msgstr "Borrar el host que no recibe soporte de %{model} \"%{name}\""
 
 #: ../app/controllers/host_aggregate_controller.rb:502
-msgid "Remove Host to %{model} \"%{name}\" failed: Task start failed: ID [%{id}]"
+msgid ""
+"Remove Host to %{model} \"%{name}\" failed: Task start failed: ID [%{id}]"
 msgstr ""
-"No se pudo borrar el host de %{model} \"%{name}\": El inicio de tarea falló:"
-" ID [%{id}]"
+"No se pudo borrar el host de %{model} \"%{name}\": El inicio de tarea falló: "
+"ID [%{id}]"
 
 #: ../app/helpers/application_helper/toolbar/iso_datastores_center.rb:19
 msgid "Remove ISO Datastores"
@@ -23208,11 +23256,11 @@ msgstr "El enrutador \"%{name}\" no admite la acción de quitar la interfaz"
 
 #: ../app/controllers/network_router_controller.rb:365
 msgid ""
-"Remove Interface on Subnet from Router \"%{name}\" failed: Task start "
-"failed: ID [%{id}]"
+"Remove Interface on Subnet from Router \"%{name}\" failed: Task start failed:"
+" ID [%{id}]"
 msgstr ""
-"Error al quitar la interfaz en la subred del enrutador \"%{name}\": error en"
-" el inicio de tarea: ID [%{id}]"
+"Error al quitar la interfaz en la subred del enrutador \"%{name}\": error en "
+"el inicio de tarea: ID [%{id}]"
 
 #: ../app/controllers/network_router_controller.rb:353
 msgid ""
@@ -23294,7 +23342,7 @@ msgstr "Eliminar roles"
 
 #: ../app/helpers/application_helper/toolbar/hosts_center.rb:96
 msgid "Remove Selected items"
-msgstr "Eliminar ítemes seleccionados"
+msgstr "Eliminar elementos seleccionados"
 
 #: ../app/helpers/application_helper/toolbar/service_center.rb:19
 msgid "Remove Service"
@@ -23413,7 +23461,7 @@ msgstr "Borrar catálogos seleccionados"
 #: ../app/helpers/application_helper/toolbar/chargebacks_center.rb:36
 msgid "Remove selected Chargeback Rates from the VMDB"
 msgstr ""
-"Eliminar las tasas de anulación seleccionadas de la base de datos de la "
+"Eliminar las tasas de Chargeback seleccionadas de la base de datos de la "
 "máquina virtual"
 
 #: ../app/helpers/application_helper/toolbar/ems_clouds_center.rb:45
@@ -23597,7 +23645,7 @@ msgstr "Eliminar este ítem de catálogo"
 #: ../app/helpers/application_helper/toolbar/chargeback_center.rb:67
 msgid "Remove this Chargeback Rate from the VMDB"
 msgstr ""
-"Eliminar esta tasa de anulación de la base de datos de la máquina virtual"
+"Eliminar esta tasa de Chargeback de la base de datos de la máquina virtual"
 
 #: ../app/helpers/application_helper/toolbar/miq_ae_fields_center.rb:24
 #: ../app/helpers/application_helper/toolbar/miq_ae_instances_center.rb:24
@@ -23892,7 +23940,7 @@ msgstr ""
 
 #: ../app/views/report/_report_info.html.haml:232
 msgid "Report doesn't belong to Widgets."
-msgstr "El informe no pertenece a los asistentes."
+msgstr "El informe no pertenece a los widgets."
 
 #: ../app/controllers/application_controller/report_downloads.rb:64
 msgid "Report generation returned: Status [%{status}] Message [%{message}]"
@@ -24136,8 +24184,10 @@ msgstr "Peticiones"
 #: ../app/views/provider_foreman/_form.html.haml:37
 #: ../app/views/provider_foreman/_form.html.haml:128
 #: ../app/views/auth_key_pair_cloud/_form.html.haml:41
-#: ../app/views/host/_form.html.haml:41 ../app/views/host/_form.html.haml:65
-#: ../app/views/host/_form.html.haml:88 ../app/views/host/_form.html.haml:130
+#: ../app/views/host/_form.html.haml:41
+#: ../app/views/host/_form.html.haml:65
+#: ../app/views/host/_form.html.haml:88
+#: ../app/views/host/_form.html.haml:130
 #: ../app/views/miq_ae_customization/_dialog_field_form_non_dynamic_options.html.haml:105
 #: ../app/views/miq_ae_customization/_dialog_field_form_non_dynamic_options.html.haml:183
 #: ../app/views/miq_ae_customization/_dialog_field_form_non_dynamic_options.html.haml:381
@@ -24857,8 +24907,8 @@ msgstr "Script de Ruby"
 #: ../app/controllers/miq_policy_controller/conditions.rb:23
 #: ../app/controllers/miq_policy_controller/conditions.rb:249
 msgid ""
-"Ruby scripts are no longer supported in expressions, please change or remove"
-" them."
+"Ruby scripts are no longer supported in expressions, please change or remove "
+"them."
 msgstr ""
 "Los scripts de Ruby no están soportados en expresiones, por favor cambie o "
 "modifiquelas. "
@@ -25000,7 +25050,8 @@ msgstr "Par de claves SSH"
 msgid "SSH Root"
 msgstr "Raíz SSH"
 
-#: ../app/controllers/ems_common.rb:749 ../app/controllers/ems_common.rb:766
+#: ../app/controllers/ems_common.rb:749
+#: ../app/controllers/ems_common.rb:766
 msgid "SSL"
 msgstr "SSL"
 
@@ -25012,7 +25063,8 @@ msgstr "Modo de verificación de SSL"
 msgid "SSL trusting custom CA"
 msgstr "CA personalizado de confianza SSL"
 
-#: ../app/controllers/ems_common.rb:749 ../app/controllers/ems_common.rb:768
+#: ../app/controllers/ems_common.rb:749
+#: ../app/controllers/ems_common.rb:768
 msgid "SSL without validation"
 msgstr "SSL sin validación"
 
@@ -25254,7 +25306,7 @@ msgstr "El esquema para %{model} \"%{name}\" fue guardado"
 #: ../app/views/miq_policy/_condition_details.html.haml:45
 #: ../app/views/configuration/_timeprofile_form.html.haml:53
 msgid "Scope"
-msgstr "Rango"
+msgstr "Alcance"
 
 #: ../app/views/miq_policy/_policy_details.html.haml:107
 msgid "Scope (Choose an element of the Policy scope to edit)"
@@ -25316,8 +25368,8 @@ msgstr "Filtro secundario (visualización)"
 msgid ""
 "Secondary (Display) Filter - Filters the rows based on child table fields"
 msgstr ""
-"Filtro secundario (visualización): filtra las filas en función de los campos"
-" de tabla secundaria"
+"Filtro secundario (visualización): filtra las filas en función de los campos "
+"de tabla secundaria"
 
 #: ../app/views/layouts/angular/_multi_auth_credentials.html.haml:72
 #: ../app/views/layouts/_multi_auth_credentials.html.haml:44
@@ -25491,7 +25543,7 @@ msgstr ""
 
 #: ../app/views/layouts/_tag_edit.html.haml:19
 msgid "Select a customer tag to assign:"
-msgstr "Seleccione un cliene de etiquetas para asignar:"
+msgstr "Seleccione un cliente de etiquetas para asignar:"
 
 #: ../app/views/layouts/listnav/_show_list.html.haml:75
 msgid "Select a filter to set it as my default"
@@ -25522,8 +25574,8 @@ msgstr "Seleccionar un nodo en la izquierda para ver informe de utilización."
 msgid ""
 "Select a reference VM or Manual Input source to Submit the Planning Options"
 msgstr ""
-"Seleccionar una máquina virtual de referencia o una fuente de entrada manual"
-" para enviar las opciones de planificación"
+"Seleccionar una máquina virtual de referencia o una fuente de entrada manual "
+"para enviar las opciones de planificación"
 
 #: ../app/helpers/application_helper/toolbar/arbitration_profiles_center.rb:18
 msgid "Select a single Arbitration Profile to edit"
@@ -25838,7 +25890,8 @@ msgstr "El %{model_name} seleccionado ya no existe"
 msgid "Selected Chargeback Report no longer exists"
 msgstr "El informe de anulación seleccionado ya no existe"
 
-#: ../app/helpers/ui_constants.rb:451 ../app/helpers/ui_constants.rb:487
+#: ../app/helpers/ui_constants.rb:451
+#: ../app/helpers/ui_constants.rb:487
 msgid "Selected Cluster / Deployment Roles"
 msgstr "Clúster/Roles de implementación seleccionados"
 
@@ -25882,7 +25935,8 @@ msgstr "Ítemes seleccionado"
 msgid "Selected Middleware Servers"
 msgstr "Servidores de Middleware seleccionados"
 
-#: ../app/helpers/ui_constants.rb:447 ../app/helpers/ui_constants.rb:486
+#: ../app/helpers/ui_constants.rb:447
+#: ../app/helpers/ui_constants.rb:486
 msgid "Selected Providers"
 msgstr "Proveedores seleccionados"
 
@@ -25977,12 +26031,12 @@ msgstr "Enviar correo electrónico de prueba"
 #: ../app/views/static/deploy_containers_provider/deploy-provider-config-settings.html.haml:53
 #: ../app/views/static/deploy_containers_provider/deploy-provider-config-settings.html.haml:98
 msgid "Server"
-msgstr "Servidor:"
+msgstr "Servidor"
 
 #: ../app/helpers/application_helper/button/delete_server.rb:6
 msgid ""
-"Server %{server_name} [%{server_id}] can only be deleted if it is stopped or"
-" has not responded for a while"
+"Server %{server_name} [%{server_id}] can only be deleted if it is stopped or "
+"has not responded for a while"
 msgstr ""
 "El servidor %{server_name} [%{server_id}] se puede borrar únicamente si se "
 "ha detenido o si no ha respondido durante unos instantes"
@@ -26354,8 +26408,8 @@ msgstr "La prioridad de opciones no está permitida para el ítem seleccionado"
 #: ../app/views/miq_policy/_alert_builtin_exp.html.haml:210
 msgid "Setting tracing to true may cause excessive log lines to be written"
 msgstr ""
-"Establecer el seguimiento en verdadero puede hacer que se escriban líneas de"
-" registro excesivas"
+"Establecer el seguimiento en verdadero puede hacer que se escriban líneas de "
+"registro excesivas"
 
 #: ../app/presenters/menu/default_menu.rb:283
 #: ../app/controllers/ops_controller.rb:232
@@ -27204,7 +27258,7 @@ msgstr "Mostrar todos los recursos"
 
 #: ../app/views/configuration/_ui_1.html.haml:85
 msgid "Show at Login"
-msgstr "Mostrar en el registro"
+msgstr "Mostrar al inicio de sesión"
 
 #: ../app/views/layouts/listnav/_ems_cluster.html.haml:19
 msgid "Show configuration"
@@ -27354,8 +27408,8 @@ msgstr[0] ""
 "Mostrar el controlador del sistema de archivos instalado en esta máquina "
 "virtual"
 msgstr[1] ""
-"Mostrar los controladores del sistema de archivos instalados en esta máquina"
-" virtual"
+"Mostrar los controladores del sistema de archivos instalados en esta máquina "
+"virtual"
 
 #: ../app/helpers/host_helper/textual_summary.rb:424
 msgid "Show the File installed on this %{title}"
@@ -27979,12 +28033,12 @@ msgstr ""
 
 #: ../app/assets/javascripts/controllers/live_metrics/util/metrics-utils-factory.js:3
 msgid "Something is wrong, try reloading the page"
-msgstr "\tSe ha producido un error; intente volver a cargar la página"
+msgstr "	Se ha producido un error; intente volver a cargar la página"
 
 #: ../app/services/user_validation_service.rb:105
 msgid "Sorry, the username or password you entered is incorrect."
 msgstr ""
-"Lo sentimos, el nombre de usuario o contraseña que ingresó no es correcto."
+"Lo sentimos, el nombre de usuario o contraseña que ingresó no son correctos."
 
 #: ../app/views/report/_report_list.html.haml:127
 #: ../app/views/report/_report_info.html.haml:45
@@ -28096,7 +28150,7 @@ msgstr "Servidor NFS sellado"
 #: ../app/views/catalog/_sandt_tree_show.html.haml:282
 #: ../app/views/catalog/_sandt_tree_show.html.haml:282
 msgid "Start"
-msgstr "Empezar"
+msgstr "Inicio"
 
 #: ../app/views/ops/_diagnostics_cu_repair_tab.html.haml:43
 msgid "Start Date"
@@ -28954,7 +29008,7 @@ msgstr "La edición de etiquetas fue cancelada por el usuario"
 
 #: ../app/controllers/application_controller/tags.rb:238
 msgid "Tag edits were successfully saved"
-msgstr "Las pestañas editadas se han almacenado correctamente"
+msgstr "Las etiquetas editadas se han almacenado correctamente"
 
 #: ../app/views/ems_container/ad_hoc/_list_view.html.haml:63
 msgid "Tag list"
@@ -28992,7 +29046,8 @@ msgstr "Proveedores etiquetados"
 msgid "Tagged Resource Pools"
 msgstr "Agrupaciones de recursos etiquetadas"
 
-#: ../app/helpers/ui_constants.rb:462 ../app/helpers/ui_constants.rb:489
+#: ../app/helpers/ui_constants.rb:462
+#: ../app/helpers/ui_constants.rb:489
 msgid "Tagged VMs and Instances"
 msgstr "Máquinas virtuales e instancias etiquetadas"
 
@@ -29144,7 +29199,8 @@ msgstr "El inquilino ya no existe"
 
 #: ../app/presenters/tree_builder_ops_rbac.rb:44
 #: ../app/presenters/menu/default_menu.rb:52
-#: ../app/helpers/ui_constants.rb:468 ../app/helpers/ui_constants.rb:492
+#: ../app/helpers/ui_constants.rb:468
+#: ../app/helpers/ui_constants.rb:492
 #: ../app/controllers/ops_controller.rb:714
 #: ../app/controllers/ops_controller.rb:729
 #: ../app/views/configuration/_ui_2.html.haml:176
@@ -29192,8 +29248,10 @@ msgstr ""
 "El servidor %{product} aún sigue iniciando. Si este mensaje persiste, "
 "comuníquese con el administrador del %{product}."
 
-#: ../app/helpers/ui_constants.rb:446 ../app/helpers/ui_constants.rb:465
-#: ../app/helpers/ui_constants.rb:474 ../app/helpers/ui_constants.rb:478
+#: ../app/helpers/ui_constants.rb:446
+#: ../app/helpers/ui_constants.rb:465
+#: ../app/helpers/ui_constants.rb:474
+#: ../app/helpers/ui_constants.rb:478
 #: ../app/helpers/ui_constants.rb:485
 #: ../app/views/miq_policy/_alert_profile_details.html.haml:194
 msgid "The Enterprise"
@@ -29216,7 +29274,7 @@ msgid ""
 "The Subscription Management Service you register with will provide your "
 "systems with updates and allow additional management."
 msgstr ""
-"El servicio de administración de suscripción con la que se registra le "
+"El servicio de administración de suscripción con la que se registre le "
 "suministrará a sus sistemas actualizaciones y le permitirá una "
 "administración adicional."
 
@@ -29225,8 +29283,8 @@ msgid ""
 "The VM has been suspended, powered off or the connection to the server has "
 "been lost. \\nThis console window will now close."
 msgstr ""
-"La máquina virtual se ha suspendido o apagado, o la conexión con el servidor"
-" se ha perdido. \\nLa ventana de esta consola se cerrará."
+"La máquina virtual se ha suspendido o apagado, o la conexión con el servidor "
+"se ha perdido. \\nLa ventana de esta consola se cerrará."
 
 #: ../app/controllers/application_controller/filter.rb:851
 msgid ""
@@ -29408,8 +29466,8 @@ msgstr ""
 msgid ""
 "The web-based VNC console is not available because the VM is not powered on"
 msgstr ""
-"La consola VNC basada en la red no está disponible porque la máquina virtual"
-" no está conectada"
+"La consola VNC basada en la red no está disponible porque la máquina virtual "
+"no está conectada"
 
 #: ../app/helpers/application_helper/button/vm_console.rb:17
 msgid ""
@@ -29420,8 +29478,8 @@ msgstr ""
 
 #: ../app/helpers/application_helper/button/vm_console.rb:10
 msgid ""
-"The web-based console is only available on IE, Firefox or Chrome "
-"(Windows/Linux)"
+"The web-based console is only available on IE, Firefox or Chrome (Windows/"
+"Linux)"
 msgstr ""
 "La consola basada en la red está disponible únicamente en IE, Firefox o "
 "Chrome (Windows/Linux)"
@@ -29449,8 +29507,8 @@ msgid ""
 "There is an error in the selected expression element, perhaps it was "
 "imported or edited manually."
 msgstr ""
-"Hay un error en la expresión seleccionada, quizás fue importada o modificada"
-" manualmente"
+"Hay un error en la expresión seleccionada, quizás fue importada o modificada "
+"manualmente"
 
 #: ../app/helpers/application_helper/button/db_seq_edit.rb:5
 msgid "There should be at least 2 Dashboards to Edit Sequence"
@@ -29584,8 +29642,8 @@ msgstr ""
 
 #: ../app/helpers/application_helper/toolbar/x_vm_center.rb:321
 msgid ""
-"This VM will revert to selected snapshot. Are you sure you want to revert to"
-" the selected snapshot?"
+"This VM will revert to selected snapshot. Are you sure you want to revert to "
+"the selected snapshot?"
 msgstr ""
 "Esta máquina virtual se revertirá a la instantánea seleccionada. ¿Está "
 "seguro de que desea revertirla a la instantánea seleccionada?"
@@ -29601,8 +29659,8 @@ msgstr "Esta semana (parcial)"
 #: ../app/helpers/application_helper/button/widget_generate_content.rb:14
 msgid "This Widget content generation is already running or queued up"
 msgstr ""
-"La generación de contenido de este asistente ya se está ejecutando o ya está"
-" en cola"
+"La generación de contenido de este asistente ya se está ejecutando o ya está "
+"en cola"
 
 #: ../app/helpers/ui_constants.rb:579
 msgid "This Year"
@@ -29612,8 +29670,8 @@ msgstr "Este año"
 msgid ""
 "This Zone do not have Log Depot settings configured, collection not allowed"
 msgstr ""
-"Esta zona no tiene establecida la configuración del depósito de registro, la"
-" recolección no está permitida"
+"Esta zona no tiene establecida la configuración del depósito de registro, la "
+"recolección no está permitida"
 
 #: ../app/helpers/application_helper/dialogs.rb:177
 #: ../app/assets/javascripts/dialog_field_refresh.js:195
@@ -29658,7 +29716,7 @@ msgstr "Este rol solo puede ser administrado por el nivel de región"
 #: ../app/views/ops/rbac_group/_customer_tags.html.haml:3
 msgid "This user is limited to items with the selected tags."
 msgstr ""
-"Este usuario está limitado a los ítemes con las etiquetas seleccionadas."
+"Este usuario está limitado a los elementos con las etiquetas seleccionadas."
 
 #: ../app/views/ops/rbac_group/_vms_templates.html.haml:3
 msgid "This user is limited to the selected folders and their children."
@@ -29669,7 +29727,7 @@ msgstr ""
 #: ../app/views/ops/rbac_group/_hosts_clusters.html.haml:3
 msgid "This user is limited to the selected items and their children."
 msgstr ""
-"Este usuario está limitado a los ítemes seleccionados y a sus ítemes "
+"Este usuario está limitado a los elementos  seleccionados y a sus elementos "
 "secundarios."
 
 #: ../app/presenters/widget_presenter.rb:26
@@ -29684,8 +29742,8 @@ msgstr ""
 #: ../app/helpers/application_helper/toolbar/chargeback_center.rb:41
 #: ../app/helpers/application_helper/toolbar/saved_report_center.rb:16
 msgid ""
-"This will show the entire report (all rows) in your browser.  Do you want to"
-" proceed?"
+"This will show the entire report (all rows) in your browser.  Do you want to "
+"proceed?"
 msgstr ""
 "Esto mostrará el informe completo (todas las filas) en su navegador. ¿Desea "
 "proceder?"
@@ -29710,7 +29768,7 @@ msgstr "Jueves"
 #: ../app/helpers/configuration_helper/configuration_view_helper.rb:97
 #: ../app/views/configuration/_ui_1.html.haml:113
 msgid "Tile View"
-msgstr "Vista de títulos"
+msgstr "Vista de mosaico"
 
 #: ../app/views/shared/views/_alerts_list.html.haml:164
 #: ../app/assets/javascripts/services/alerts_center_service.js:247
@@ -29767,7 +29825,7 @@ msgstr "Vista previa de la cronología (hasta 50 filas)"
 
 #: ../app/views/report/_form_tl_settings.html.haml:6
 msgid "Timeline Settings"
-msgstr "Parámetros de cronología"
+msgstr "Parámetros de línea de tiempo"
 
 #: ../app/views/layouts/_tl_detail.html.haml:20
 msgid "Timeline View"
@@ -29777,13 +29835,13 @@ msgstr "Vista de cronología"
 msgid ""
 "Timeline tab is not available unless at least 1 time field has been selected"
 msgstr ""
-"La ficha de  cronología no se encuentra disponible, por lo  menos 1 campo de"
-" hora debe ser seleccionado"
+"La ficha de  línea de tiempo no se encuentra disponible, por lo  menos 1 "
+"campo de hora debe ser seleccionado"
 
 #: ../app/controllers/report_controller/reports/editor.rb:1749
 msgid "Timeline tab is not available until at least 1 field has been selected"
 msgstr ""
-"La ficha de cronología no se encuentra disponible hasta que al menos  1 "
+"La ficha de línea de tiempo no se encuentra disponible hasta que al menos  1 "
 "campo haya sido seleccionado"
 
 #: ../app/presenters/menu/default_menu.rb:27
@@ -29807,7 +29865,8 @@ msgstr ""
 #: ../app/helpers/application_helper/toolbar/container_group_center.rb:13
 #: ../app/helpers/application_helper/toolbar/container_center.rb:13
 #: ../app/helpers/application_helper/toolbar/ems_infra_center.rb:94
-#: ../app/controllers/ems_common.rb:429 ../app/controllers/vm_common.rb:96
+#: ../app/controllers/ems_common.rb:429
+#: ../app/controllers/vm_common.rb:96
 #: ../app/controllers/dashboard_controller.rb:502
 #: ../app/controllers/dashboard_controller.rb:521
 #: ../app/controllers/mixins/more_show_actions.rb:9
@@ -29926,7 +29985,8 @@ msgstr ""
 "Para configurar el rango de puertos VNC por defecto para el equipo, son "
 "requeridos tanto el puerto inicial como el final"
 
-#: ../app/helpers/ui_constants.rb:402 ../app/helpers/ui_constants.rb:546
+#: ../app/helpers/ui_constants.rb:402
+#: ../app/helpers/ui_constants.rb:546
 msgid "Today"
 msgstr "Hoy"
 
@@ -30097,7 +30157,7 @@ msgstr "Total de procesadores"
 
 #: ../app/helpers/ops_helper/textual_summary.rb:149
 msgid "Total Quota"
-msgstr "Total de cuotas"
+msgstr "Cuota total"
 
 #: ../app/helpers/storage_helper/textual_summary.rb:54
 #: ../app/controllers/application_controller/miq_request_methods.rb:360
@@ -30356,7 +30416,7 @@ msgstr "URL"
 
 #: ../app/views/ops/_settings_server_tab.html.haml:625
 msgid "URL (i.e. www.mypage.com)"
-msgstr "URL (es decir, www.mypage.com)"
+msgstr "URL (por ejemplo, www.mypage.com)"
 
 #: ../app/views/static/deploy_containers_provider/deploy-provider-auth-settings-review.html.haml:115
 msgid "URL:"
@@ -30413,11 +30473,13 @@ msgstr ""
 #: ../app/controllers/application_controller/ci_processing.rb:712
 #: ../app/controllers/application_controller/ci_processing.rb:766
 msgid "Unable to associate Floating IP with Instance \"%{name}\": %{details}"
-msgstr "No se puede asociar IP flotante con la instancia \"%{name}\": %{details}"
+msgstr ""
+"No se puede asociar IP flotante con la instancia \"%{name}\": %{details}"
 
 #: ../app/controllers/cloud_volume_controller.rb:205
 #: ../app/controllers/vm_cloud_controller.rb:103
-msgid "Unable to attach Cloud Volume \"%{volume_name}\" to %{vm_name}: %{details}"
+msgid ""
+"Unable to attach Cloud Volume \"%{volume_name}\" to %{vm_name}: %{details}"
 msgstr ""
 "No se puede conectar el volumen de nube \"%{volume_name}\" a %{vm_name}: "
 "%{details}"
@@ -30492,8 +30554,8 @@ msgstr "No se puede implementar %s en este servidor %s\""
 msgid ""
 "Unable to detach Cloud Volume \"%{volume_name}\" from %{vm_name}: %{details}"
 msgstr ""
-"No se puede desconectar el volumen de nube \"%{volume_name}\" de %{vm_name}:"
-" %{details}"
+"No se puede desconectar el volumen de nube \"%{volume_name}\" de %{vm_name}: "
+"%{details}"
 
 #: ../app/controllers/application_controller/ci_processing.rb:854
 msgid ""
@@ -30506,7 +30568,8 @@ msgstr ""
 #: ../app/controllers/application_controller/ci_processing.rb:804
 #: ../app/controllers/application_controller/ci_processing.rb:860
 msgid "Unable to disassociate Floating IP from Instance \"%{name}\": %{details}"
-msgstr "No se puede disociar IP flotante de la instancia \"%{name}\": %{details}"
+msgstr ""
+"No se puede disociar IP flotante de la instancia \"%{name}\": %{details}"
 
 #: ../app/controllers/application_controller/ci_processing.rb:611
 #: ../app/controllers/application_controller/ci_processing.rb:648
@@ -30806,7 +30869,7 @@ msgstr "Cargar"
 #: ../app/views/ops/_settings_import_tags_tab.html.haml:15
 msgid "Upload %{customer_name} Tag Assignments for VMs"
 msgstr ""
-"Cargar %{customer_name} Asignaciones de etiquetas para máquinas virtuales"
+"Cargar asignaciones de etiquetas de %{customer_name} para máquinas virtuales"
 
 #: ../app/views/ops/_settings_import_tab.html.haml:9
 msgid "Upload Custom Variable Values"
@@ -30900,7 +30963,7 @@ msgstr "Usar el botón de Elegir archivo para ubicar un archivo de imagen .png"
 #: ../app/controllers/ops_controller/settings.rb:31
 #: ../app/controllers/ops_controller/settings/upload.rb:96
 msgid "Use the Choose file button to locate CSV file"
-msgstr "Usar el botón de Elegir archivo para ubicar un archivo CSV"
+msgstr "Use el botón de Elegir un archivo para ubicar un archivo CSV"
 
 #: ../app/controllers/catalog_controller.rb:415
 msgid "Use the Choose file button to locate a .png or .jpg image file"
@@ -30976,8 +31039,8 @@ msgid ""
 "Used to authenticate with OpenStack AMQP Messaging Bus for event handling. "
 "Configure AMQP if eventing is not enabled on Ceilometer."
 msgstr ""
-"Utilizado para autenticar con OpenStack AMQP Messaging Bus para manipulación"
-" de eventos. Configurar AMQP si el creador de eventos no está habilitado en "
+"Utilizado para autenticar con OpenStack AMQP Messaging Bus para manipulación "
+"de eventos. Configurar AMQP si el creador de eventos no está habilitado en "
 "el ceilómetro."
 
 #: ../app/views/layouts/angular/_multi_tab_ansible_form_options.html.haml:35
@@ -31354,7 +31417,7 @@ msgstr "Error de consola VMRC de máquina virtual: %{error}"
 
 #: ../app/views/configuration/_ui_2.html.haml:109
 msgid "VM Visibility"
-msgstr "Visibilidad de MV"
+msgstr "Visiblidad de máquinas virtuales"
 
 #: ../app/presenters/tree_builder_condition.rb:24
 msgid "VM and Instance Conditions"
@@ -31363,12 +31426,12 @@ msgstr "Condiciones de máquina virtual e instancia"
 #: ../app/views/ops/_settings_cu_collection_tab.html.haml:69
 msgid ""
 "VM data will be collected for VMs under selected %{hosts} only. Data is "
-"collected for a %{cluster} and all of its %{hosts} when at least one %{host}"
-" is selected."
+"collected for a %{cluster} and all of its %{hosts} when at least one %{host} "
+"is selected."
 msgstr ""
 "Se recopilarán datos de máquina virtual para las máquinas virtuales en los "
-"%{hosts} seleccionados únicamente. Los datos se recopilan para un %{cluster}"
-" y todos sus %{hosts} cuando se selecciona al menos un %{host}."
+"%{hosts} seleccionados únicamente. Los datos se recopilan para un %{cluster} "
+"y todos sus %{hosts} cuando se selecciona al menos un %{host}."
 
 #: ../app/controllers/vm_common.rb:231
 msgid "VM has too many parents."
@@ -31447,10 +31510,11 @@ msgstr "VM"
 #: ../app/controllers/vm_or_template_controller.rb:18
 #: ../app/views/configuration/_ui_2.html.haml:50
 msgid "VMs & Instances"
-msgstr "VM e instancias"
+msgstr "Máquinas virtuales e instancias"
 
 #: ../app/helpers/ems_infra_helper/textual_summary.rb:95
-#: ../app/controllers/vm_common.rb:1065 ../app/controllers/vm_common.rb:1145
+#: ../app/controllers/vm_common.rb:1065
+#: ../app/controllers/vm_common.rb:1145
 #: ../app/controllers/vm_infra_controller.rb:23
 #: ../app/views/configuration/_ui_2.html.haml:211
 #: ../app/views/ops/_rbac_group_details.html.haml:280
@@ -31477,7 +31541,7 @@ msgstr "Complemento VMware MKS"
 
 #: ../app/views/ops/_settings_server_tab.html.haml:272
 msgid "VMware MKS Plugin Version"
-msgstr "Complemento VMware MKS versión"
+msgstr "Versión del complemento VMware MKS"
 
 #: ../app/helpers/application_helper/discover.rb:15
 msgid "VMware Server"
@@ -31498,8 +31562,8 @@ msgstr "VNC"
 #: ../app/helpers/application_helper/button/vm_vnc_console.rb:11
 msgid "VNC consoles are unsupported on VMware ESXi 6.5 and later."
 msgstr ""
-"Las consolas de VNC no se admiten en VMware ESXi 6.5 y versiones "
-"posteriores."
+"Las consolas de VNC no se admiten en VMware ESXi 6.5 y versiones posteriores."
+""
 
 #: ../app/presenters/tree_builder_orchestration_templates.rb:40
 #: ../app/presenters/tree_builder_orchestration_templates.rb:42
@@ -31965,7 +32029,8 @@ msgstr "Máquina virtual"
 #: ../app/presenters/menu/default_menu.rb:69
 #: ../app/helpers/ems_infra_helper/textual_summary.rb:144
 #: ../app/helpers/ems_physical_infra_helper/textual_summary.rb:80
-#: ../app/controllers/vm_common.rb:191 ../app/controllers/vm_controller.rb:23
+#: ../app/controllers/vm_common.rb:191
+#: ../app/controllers/vm_controller.rb:23
 #: ../app/controllers/application_controller/compare.rb:765
 msgid "Virtual Machines"
 msgstr "Máquinas virtuales "
@@ -32060,7 +32125,7 @@ msgstr "Esperando para iniciar"
 
 #: ../app/views/miq_task/_tasks_options.html.haml:140
 msgid "Warn"
-msgstr "Advertir"
+msgstr "Advertencia"
 
 #: ../app/assets/javascripts/services/alerts_center_service.js:46
 msgid "Warning"
@@ -32081,8 +32146,8 @@ msgstr ""
 #: ../app/helpers/application_helper/toolbar/tasks_center.rb:42
 msgid "Warning: Finished tasks will be permanently removed from the database!"
 msgstr ""
-"Advertencia: Las tareas finalizadas se eliminarán de manera permanente de la"
-" base de datos."
+"Advertencia: Las tareas finalizadas se eliminarán de manera permanente de la "
+"base de datos."
 
 #: ../app/helpers/application_helper/toolbar/diagnostics_server_center.rb:106
 msgid "Warning: Selected node will be restarted, do you want to continue?"
@@ -32094,11 +32159,11 @@ msgstr "Advertencia: El servidor se reiniciará, ¿desea continuar?"
 
 #: ../app/helpers/application_helper/toolbar/tasks_center.rb:33
 msgid ""
-"Warning: Tasks that are older than selected task will be permanently removed"
-" from the database!"
+"Warning: Tasks that are older than selected task will be permanently removed "
+"from the database!"
 msgstr ""
-"Advertencia: Las tareas más antiguas que la tarea seleccionada se eliminarán"
-" de manera permanente de la base de datos."
+"Advertencia: Las tareas más antiguas que la tarea seleccionada se eliminarán "
+"de manera permanente de la base de datos."
 
 #: ../app/helpers/application_helper/toolbar/scan_profiles_center.rb:41
 msgid ""
@@ -32113,8 +32178,8 @@ msgid ""
 "Warning: The selected Block Storage Managers and ALL of their components "
 "will be permanently removed!"
 msgstr ""
-"Advertencia: Los administradores de almacenamiento por bloques seleccionados"
-" y TODOS sus componentes se quitarán de manera permanente."
+"Advertencia: Los administradores de almacenamiento por bloques seleccionados "
+"y TODOS sus componentes se quitarán de manera permanente."
 
 #: ../app/helpers/application_helper/toolbar/catalogitem_buttons_center.rb:29
 #: ../app/helpers/application_helper/toolbar/custom_buttons_center.rb:28
@@ -32126,8 +32191,8 @@ msgstr ""
 #: ../app/helpers/application_helper/toolbar/servicetemplatecatalogs_center.rb:29
 msgid "Warning: The selected Catalogs will be permanently removed!"
 msgstr ""
-"Advertencia: Los catálogos seleccionados será eliminados de forma "
-"permanente."
+"Advertencia: Los catálogos seleccionados será eliminados de forma permanente."
+""
 
 #: ../app/helpers/application_helper/toolbar/chargebacks_center.rb:39
 msgid "Warning: The selected Chargeback Rate will be permanently removed!"
@@ -32188,8 +32253,8 @@ msgid ""
 "Warning: The selected Datastores and ALL of their components will be "
 "permanently removed!"
 msgstr ""
-"Advertencia: Los almacenes de datos seleccionados y TODOS sus componentes se"
-" eliminarán de manera permanente."
+"Advertencia: Los almacenes de datos seleccionados y TODOS sus componentes se "
+"eliminarán de manera permanente."
 
 #: ../app/helpers/application_helper/toolbar/ems_datawarehouses_center.rb:40
 msgid ""
@@ -32217,8 +32282,8 @@ msgstr ""
 #: ../app/helpers/application_helper/toolbar/host_aggregates_center.rb:46
 msgid "Warning: The selected Host Aggregates will be permanently deleted!"
 msgstr ""
-"Advertencia: Los agregados de hosts seleccionados serán  eliminados de forma"
-" permanente."
+"Advertencia: Los agregados de hosts seleccionados serán  eliminados de forma "
+"permanente."
 
 #: ../app/helpers/application_helper/toolbar/iso_datastores_center.rb:21
 msgid ""
@@ -32255,8 +32320,8 @@ msgstr ""
 
 #: ../app/helpers/application_helper/toolbar/auth_key_pair_cloud_center.rb:15
 msgid ""
-"Warning: The selected Key Pair and ALL of its components will be permanently"
-" removed!"
+"Warning: The selected Key Pair and ALL of its components will be permanently "
+"removed!"
 msgstr ""
 "Advertencia: Los pares de claves seleccionados y TODOS sus componentes se "
 "eliminarán de manera permanente."
@@ -32282,8 +32347,8 @@ msgid ""
 "Warning: The selected Network Providers and ALL of their components will be "
 "permanently removed!"
 msgstr ""
-"Advertencia: Los proveedores de red seleccionados y TODOS sus componentes se"
-" eliminarán de manera permanente."
+"Advertencia: Los proveedores de red seleccionados y TODOS sus componentes se "
+"eliminarán de manera permanente."
 
 #: ../app/helpers/application_helper/toolbar/cloud_object_store_container_center.rb:17
 msgid ""
@@ -32295,8 +32360,8 @@ msgstr ""
 
 #: ../app/helpers/application_helper/toolbar/cloud_object_store_containers_center.rb:19
 msgid ""
-"Warning: The selected Object Storage Containers and ALL related Objects will"
-" be permanently removed!"
+"Warning: The selected Object Storage Containers and ALL related Objects will "
+"be permanently removed!"
 msgstr ""
 "Advertencia: Los contenedores de almacenamiento por objetos seleccionados y "
 "TODOS los objetos relacionados se quitarán de manera permanente."
@@ -32306,24 +32371,24 @@ msgid ""
 "Warning: The selected Object Storage Managers and ALL of their components "
 "will be permanently removed!"
 msgstr ""
-"Advertencia: Los administradores de almacenamiento por objetos seleccionados"
-" y TODOS sus componentes se quitarán de manera permanente."
+"Advertencia: Los administradores de almacenamiento por objetos seleccionados "
+"y TODOS sus componentes se quitarán de manera permanente."
 
 #: ../app/helpers/application_helper/toolbar/cloud_object_store_objects_center.rb:19
 #: ../app/helpers/application_helper/toolbar/cloud_object_store_object_center.rb:17
 msgid ""
 "Warning: The selected Object Storage Object will be permanently removed!"
 msgstr ""
-"Advertencia: El objeto de almacenamiento por objetos seleccionado se quitará"
-" de manera permanente."
+"Advertencia: El objeto de almacenamiento por objetos seleccionado se quitará "
+"de manera permanente."
 
 #: ../app/helpers/application_helper/toolbar/orchestration_stacks_center.rb:15
 msgid ""
 "Warning: The selected Orchestration Stacks and ALL of their components will "
 "be permanently removed!"
 msgstr ""
-"Advertencia: Las pilas de orquestación seleccionadas y TODOS sus componentes"
-" se eliminarán de manera permanente."
+"Advertencia: Las pilas de orquestación seleccionadas y TODOS sus componentes "
+"se eliminarán de manera permanente."
 
 #: ../app/helpers/application_helper/toolbar/pxe_servers_center.rb:29
 msgid ""
@@ -32340,8 +32405,8 @@ msgid ""
 "Warning: The selected Provider and ALL of their components will be "
 "permanently removed!"
 msgstr ""
-"Advertencia: El proveedor seleccionado y TODOS sus componentes se eliminarán"
-" de manera permanente."
+"Advertencia: El proveedor seleccionado y TODOS sus componentes se eliminarán "
+"de manera permanente."
 
 #: ../app/helpers/application_helper/toolbar/miq_report_center.rb:51
 msgid ""
@@ -32397,8 +32462,8 @@ msgid ""
 "Warning: The selected Storage Managers and ALL of their components will be "
 "permanently removed!"
 msgstr ""
-"Advertencia: Los administradores de almacenamiento seleccionados y TODOS sus"
-" componentes se eliminarán de manera permanente."
+"Advertencia: Los administradores de almacenamiento seleccionados y TODOS sus "
+"componentes se eliminarán de manera permanente."
 
 #: ../app/helpers/application_helper/toolbar/pxe_image_types_center.rb:29
 msgid "Warning: The selected System Image Types will be permanently removed!"
@@ -32477,8 +32542,8 @@ msgstr ""
 
 #: ../app/helpers/application_helper/toolbar/scan_profile_center.rb:27
 msgid ""
-"Warning: This Analysis Profile and ALL of its components will be permanently"
-" removed!"
+"Warning: This Analysis Profile and ALL of its components will be permanently "
+"removed!"
 msgstr ""
 "Advertencia: El perfil de análisis y TODOS sus componentes se eliminarán de "
 "manera permanente."
@@ -32486,8 +32551,8 @@ msgstr ""
 #: ../app/helpers/application_helper/toolbar/catalogitem_button_center.rb:23
 #: ../app/helpers/application_helper/toolbar/custom_button_center.rb:21
 msgid ""
-"Warning: This Button will be permanently removed from the Virtual Management"
-" Database!"
+"Warning: This Button will be permanently removed from the Virtual Management "
+"Database!"
 msgstr ""
 "Advertencia: Este botón se eliminará de manera permanente de la base de "
 "datos de administración virtual."
@@ -32497,8 +32562,8 @@ msgid ""
 "Warning: This Catalog Items and ALL of their components will be permanently "
 "removed!"
 msgstr ""
-"Advertencia: Este ítem del catálogo y TODOS sus componentes se eliminarán de"
-" manera permanente."
+"Advertencia: Este ítem del catálogo y TODOS sus componentes se eliminarán de "
+"manera permanente."
 
 #: ../app/helpers/application_helper/toolbar/servicetemplatecatalog_center.rb:22
 msgid "Warning: This Catalog will be permanently removed!"
@@ -32507,7 +32572,7 @@ msgstr "Advertencia: Este catálogo se eliminará de manera permanente."
 #: ../app/helpers/application_helper/toolbar/chargeback_center.rb:70
 msgid "Warning: This Chargeback Rate will be permanently removed!"
 msgstr ""
-"Advertencia: Esta tasa de anulación se eliminará de manera permanente."
+"Advertencia: Esta tasa de Chargeback se eliminará de manera permanente."
 
 #: ../app/helpers/application_helper/toolbar/cloud_network_center.rb:23
 msgid "Warning: This Cloud Network and ALL of its components will be removed!"
@@ -32519,8 +32584,8 @@ msgid ""
 "Warning: This Cloud Provider and ALL of its components will be permanently "
 "removed!"
 msgstr ""
-"Advertencia: Este proveedor de la nube y TODOS sus componentes se eliminarán"
-" de manera permanente."
+"Advertencia: Este proveedor de la nube y TODOS sus componentes se eliminarán "
+"de manera permanente."
 
 #: ../app/helpers/application_helper/toolbar/cloud_subnet_center.rb:24
 msgid "Warning: This Cloud Subnet and ALL of its components will be removed!"
@@ -32572,8 +32637,8 @@ msgstr ""
 
 #: ../app/helpers/application_helper/toolbar/miq_dialog_center.rb:27
 msgid ""
-"Warning: This Dialog will be permanently removed from the Virtual Management"
-" Database!"
+"Warning: This Dialog will be permanently removed from the Virtual Management "
+"Database!"
 msgstr ""
 "Advertencia: Este cuadro de diálogo será eliminado de manera permanente de "
 "la base de datos de administración virtual."
@@ -32592,8 +32657,8 @@ msgid ""
 "Warning: This ISO Datastore and ALL of its components will be permanently "
 "removed!"
 msgstr ""
-"Advertencia: Este almacén de datos ISO y TODOS sus componentes se eliminarán"
-" de manera permanente."
+"Advertencia: Este almacén de datos ISO y TODOS sus componentes se eliminarán "
+"de manera permanente."
 
 #: ../app/helpers/application_helper/toolbar/x_template_cloud_center.rb:41
 msgid ""
@@ -32637,8 +32702,8 @@ msgstr ""
 
 #: ../app/helpers/application_helper/toolbar/ems_network_center.rb:33
 msgid ""
-"Warning: This Network Provider and ALL of its components will be permanently"
-" removed!"
+"Warning: This Network Provider and ALL of its components will be permanently "
+"removed!"
 msgstr ""
 "Advertencia: Este proveedor de red y TODOS sus componentes se eliminarán de "
 "manera permanente."
@@ -32648,8 +32713,8 @@ msgid ""
 "Warning: This Orchestration Stack and ALL of its components will be "
 "permanently removed!"
 msgstr ""
-"Advertencia: Esta pila de orquestación y TODOS sus componentes se eliminarán"
-" de manera permanente."
+"Advertencia: Esta pila de orquestación y TODOS sus componentes se eliminarán "
+"de manera permanente."
 
 #: ../app/helpers/application_helper/toolbar/pxe_server_center.rb:20
 msgid ""
@@ -32709,8 +32774,8 @@ msgid ""
 "Warning: This Storage Manager and ALL of its components will be permanently "
 "removed!"
 msgstr ""
-"Advertencia: Este administrador de almacenamiento y TODOS sus componentes se"
-" eliminarán de manera permanente."
+"Advertencia: Este administrador de almacenamiento y TODOS sus componentes se "
+"eliminarán de manera permanente."
 
 #: ../app/helpers/application_helper/toolbar/pxe_image_type_center.rb:20
 msgid "Warning: This System Image Type will be permanently removed!"
@@ -32886,7 +32951,7 @@ msgstr "Opciones de Windows"
 
 #: ../app/views/report/_form_sort.html.haml:141
 msgid "Within Above Field, Sort By"
-msgstr "Dentro de campo anterior, Ordenar por"
+msgstr "Dentro de campo anterior, ordenar por"
 
 #: ../app/controllers/ops_controller/diagnostics.rb:57
 msgid "Worker on Server '%{name}' restarted"
@@ -33451,3 +33516,4 @@ msgstr "CPU virtuales por núcleo"
 #: ../app/views/miq_request/_prov_dialog_cloud_quota.html.haml:11
 msgid "vcpus"
 msgstr "Cpu virtuales"
+
