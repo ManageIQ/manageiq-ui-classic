@@ -241,6 +241,7 @@ describe VmInfraController do
   end
 
   it 'can set retirement date' do
+    allow_any_instance_of(Vm).to receive(:supports_retire?).and_return(true)
     get :show, :params => { :id => vm_vmware.id }
     expect(response).to redirect_to(:action => 'explorer')
 
