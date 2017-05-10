@@ -1,4 +1,5 @@
 # override defaults which use Rails.root
+require 'webpacker'
 
 class Webpacker::Configuration
   class << self
@@ -18,10 +19,14 @@ class Webpacker::Configuration
       ManageIQ::UI::Classic::Engine.root.join(output_path, "manifest.json")
     end
 
+    def packs_path
+      ManageIQ::UI::Classic::Engine.root.join(output_path, paths.fetch(:entry, "packs"))
+    end
+
     # output_path does go to manageiq/
 
     def source_path
-      ManageIQ::UI::Classic::Engine.root.join(paths.fetch(:source, "app/javascript"))
+      ManageIQ::UI::Classic::Engine.root.join(source)
     end
   end
 end
