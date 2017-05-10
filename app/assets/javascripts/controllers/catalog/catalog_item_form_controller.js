@@ -523,6 +523,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm._retirement_cloud_type = vm.provisioning_cloud_type;
     vm.catalogItemModel.retirement_cloud_credential_id = vm.catalogItemModel.provisioning_cloud_credential_id;
     vm.catalogItemModel.retirement_inventory = vm.catalogItemModel.provisioning_inventory;
+    vm.catalogItemModel.retirement_become_enabled = vm.catalogItemModel.provisioning_become_enabled;
     vm.catalogItemModel.retirement_key = '';
     vm.catalogItemModel.retirement_value = '';
     vm.catalogItemModel.retirement_variables = angular.copy(vm.catalogItemModel.provisioning_variables);
