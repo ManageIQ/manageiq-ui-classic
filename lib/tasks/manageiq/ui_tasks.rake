@@ -27,3 +27,17 @@ load 'tasks/webpacker/clobber.rake'
 load 'tasks/webpacker/verify_install.rake'  # needed by compile
 load 'tasks/webpacker/check_node.rake'  # needed by verify_install
 load 'tasks/webpacker/check_yarn.rake'  # needed by verify_install
+
+namespace :webpack do
+  task :server do
+    Dir.chdir ManageIQ::UI::Classic::Engine.root do
+      system("bin/webpack-dev-server") || abort("\n== webpack-dev-server failed ==")
+    end
+  end
+
+  task :watcher do
+    Dir.chdir ManageIQ::UI::Classic::Engine.root do
+      system("bin/webpack-watcher") || abort("\n== webpack-watcher failed ==")
+    end
+  end
+end
