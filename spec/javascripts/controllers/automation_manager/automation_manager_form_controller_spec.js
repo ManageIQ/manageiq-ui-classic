@@ -132,7 +132,7 @@ describe('automationManagerFormController', function() {
     });
 
     it('does not turn the spinner on', function() {
-      expect(miqService.sparkleOn.calls.count()).toBe(0);
+      expect(miqService.sparkleOn.calls.count()).toBe(1); // init
     });
   });
 
@@ -145,12 +145,8 @@ describe('automationManagerFormController', function() {
       vm.saveClicked();
     });
 
-    it('turns the spinner on via the miqService', function() {
-      expect(miqService.sparkleOn).toHaveBeenCalled();
-    });
-
     it('turns the spinner on once', function() {
-      expect(miqService.sparkleOn.calls.count()).toBe(1);
+      expect(miqService.sparkleOn.calls.count()).toBe(2); // init and save
     });
 
     it('delegates to miqService.miqAjaxButton', function() {
@@ -168,7 +164,7 @@ describe('automationManagerFormController', function() {
     });
 
     it('turns the spinner on via the miqService', function() {
-      expect(miqService.sparkleOn).toHaveBeenCalled();
+      expect(miqService.sparkleOn.calls.count()).toBe(2); // init and add
     });
 
     it('delegates to miqService.miqAjaxButton', function() {
