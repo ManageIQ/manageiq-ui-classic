@@ -266,7 +266,6 @@ class ApplicationHelper::ToolbarChooser
       when :policy_profile_tree then  "miq_policy_profiles_center_tb"
       when :action_tree then          "miq_actions_center_tb"
       when :alert_tree then           "miq_alerts_center_tb"
-      else nil
       end
     when "pp" then  "miq_policy_profile_center_tb"
     when "p" then   "miq_policy_center_tb"
@@ -275,7 +274,6 @@ class ApplicationHelper::ToolbarChooser
     when "a" then   "miq_action_center_tb"
     when "al" then  "miq_alert_center_tb"
     when "ap" then  "miq_alert_profile_center_tb"
-    else nil
     end
   end
 
