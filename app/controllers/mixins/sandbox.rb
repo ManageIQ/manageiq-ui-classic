@@ -121,8 +121,6 @@ module Sandbox
     cb_reports
     configuration_scripts
     condition
-    containers
-    containers_filter
     configuration_manager_cs_filter
     configuration_manager_providers
     customization_templates

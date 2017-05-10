@@ -485,6 +485,7 @@ class ApplicationHelper::ToolbarChooser
               cloud_volume_backup
               cloud_volume_snapshot
               configuration_job
+              container
               container_group
               container_node
               container_service

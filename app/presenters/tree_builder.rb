@@ -408,10 +408,6 @@ class TreeBuilder
     :schedules                       => "TreeBuilderReportSchedules",
     :widgets                         => "TreeBuilderReportWidgets",
 
-    # containers explorer tree
-    :containers                      => "TreeBuilderContainers",
-    :containers_filter               => "TreeBuilderContainersFilter",
-
     # automate explorer tree
     :ae                              => "TreeBuilderAeClass",
 
