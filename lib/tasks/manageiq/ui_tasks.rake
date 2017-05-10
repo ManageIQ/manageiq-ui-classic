@@ -13,3 +13,13 @@ namespace :update do
 
   task :ui => ['update:bower', 'update:yarn']
 end
+
+# yarn:install is a rails 5.1 task, webpacker:compile needs it
+namespace :yarn do
+  task :install => ["update:yarn"]
+end
+
+require 'webpacker'
+load 'tasks/webpacker.rake'
+load 'tasks/webpacker/compile.rake'
+load 'tasks/webpacker/verify_install.rake'  # needed by compile
