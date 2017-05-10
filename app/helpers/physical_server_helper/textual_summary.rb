@@ -13,6 +13,13 @@ module PhysicalServerHelper::TextualSummary
     )
   end
 
+  def textual_group_power_management
+    TextualGroup.new(
+      _("Power Management"),
+      %i(power_state)
+    )
+  end
+
   def textual_group_compliance
   end
 
@@ -54,5 +61,9 @@ module PhysicalServerHelper::TextualSummary
 
   def textual_cores
     {:label => _("CPU total cores"), :value => @record.hardware.cpu_total_cores }
+  end
+
+  def textual_power_state
+    {:label => _("Power State"), :value => @record.power_state}
   end
 end
