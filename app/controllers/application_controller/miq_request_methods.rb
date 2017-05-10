@@ -486,6 +486,8 @@ module ApplicationController::MiqRequestMethods
         end
         @sb[:vm_os] = VmOrTemplate.find_by_id(@edit.fetch_path(:new, :src_vm_id, 0)).platform if @edit.fetch_path(:new, :src_vm_id, 0)
       elsif @edit[:new][:current_tab_key] == :purpose
+        # TODO replace
+        set_cat(@edit[:wf], @edit[:new][:vm_tags])
         build_tags_tree(@edit[:wf], @edit[:new][:vm_tags], true)
       end
     when VmMigrateWorkflow
@@ -499,6 +501,8 @@ module ApplicationController::MiqRequestMethods
         build_pxe_img_grid(@edit[:wf].get_field(:pxe_image_id, :service)[:values], @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
         build_iso_img_grid(@edit[:wf].get_field(:iso_image_id, :service)[:values], @edit[:iso_img_sortdir], @edit[:iso_img_sortcol]) if @edit[:wf].supports_iso?
       elsif @edit[:new][:current_tab_key] == :purpose
+        # TODO replace
+        set_cat(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow))
         build_tags_tree(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow), true)
       elsif @edit[:new][:current_tab_key] == :environment
         build_ds_grid(@edit[:wf].get_field(:attached_ds, :environment)[:values], @edit[:ds_sortdir], @edit[:ds_sortcol])
@@ -510,8 +514,10 @@ module ApplicationController::MiqRequestMethods
 
   def build_dialog_page_miq_provision_configured_system_workflow
     case @edit[:new][:current_tab_key]
-    when :purpose
-      build_tags_tree(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow), true)
+      when :purpose
+        # TODO replace
+        set_cat(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow))
+        build_tags_tree(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow), true)
     when :service
       build_configured_system_grid(@edit[:wf].get_field(:src_configured_system_ids, :service)[:values], @edit[:configured_system_sortdir], @edit[:configured_system_sortcol])
     end
@@ -967,6 +973,11 @@ module ApplicationController::MiqRequestMethods
     @no_wf_msg = _("Cannot create Request Info, error: %{error_message}") % {:error_message => bang.message}
     _log.log_backtrace(bang)
     nil
+  end
+
+  def set_cat(wf, vm_tags)
+    @categories = wf.send("allowed_tags")
+    @edit[:cat] = vm_tags
   end
 
   def build_tags_tree(wf, vm_tags, edit_mode)
