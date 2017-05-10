@@ -1,6 +1,6 @@
 ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', function($http, $scope, automationManagerFormId, miqService) {
   var vm = this;
-  
+
   vm.automationManagerModel = {
     name: '',
     url: '',
@@ -43,7 +43,7 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
 
   function getAutomationManagerNewFormDataComplete(response) {
     var data = response.data;
-    
+
     vm.automationManagerModel.zone = data.zone;
 
     vm.modelCopy = angular.copy(vm.automationManagerModel);
