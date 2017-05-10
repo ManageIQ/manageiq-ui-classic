@@ -676,9 +676,8 @@ describe ApplicationHelper do
     end
   end
 
-  context "#javascript_pf_toolbar_reload" do
-    let(:test_tab) { "some_center_tb" }
-    subject { helper.javascript_pf_toolbar_reload(test_tab, 'foobar') }
+  context "#javascript_reload_toolbars" do
+    subject { helper.javascript_reload_toolbars }
 
     it "returns javascript to reload toolbar" do
       expect(helper).to receive(:toolbar_from_hash).and_return('foobar')

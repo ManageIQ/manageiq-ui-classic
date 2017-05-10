@@ -542,7 +542,7 @@ class ApplicationHelper::ToolbarChooser
           return "diagnostics_center_tb"
         elsif @layout == "miq_policy_logs" || @layout == "miq_ae_logs"
           return "logs_center_tb"
-        elsif @layout.starts_with?("miq_request_")
+        elsif @layout.to_s.starts_with?("miq_request_")
           if ["show_list"].include?(@lastaction)
             return "miq_requests_center_tb"
           else
