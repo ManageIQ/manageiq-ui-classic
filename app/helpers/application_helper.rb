@@ -819,7 +819,12 @@ module ApplicationHelper
       toolbars['summary_center_tb'] = controller.restful? ? "summary_center_restful_tb" : "summary_center_tb"
     end
 
-    toolbars['center_tb'] = center_toolbar_filename
+    # FIXME: singular vs plural for controller.class.toolbar_singular
+    toolbars['center_tb'] = if controller.class.toolbar_singular.present?
+                              "#{controller.class.toolbar_singular}_center_tb"
+                            else
+                              center_toolbar_filename
+                            end
     toolbars['custom_tb'] = controller.custom_toolbar
 
     toolbars['view_tb'] = inner_layout_present? ? x_view_toolbar_filename : view_toolbar_filename
