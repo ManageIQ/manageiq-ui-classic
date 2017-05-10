@@ -28,12 +28,21 @@
                                    "data-miq_sparkle_off" => true,
                                    "data-miq_observe"     => {:url => url}.to_json)
                     - else
-                      = text_field_tag("value_#{token}", nil,
-                                       :maxlength         => 500,
-                                       :onkeyup           => "miqQsEnterEscape(event);",
-                                       "data-miq_observe" => {:interval => '.5',
-                                                              :url      => url}.to_json,
-                                       :placeholder => ("true/false" if @edit[:qs_tokens][token][:value_type] == :boolean))
+                      - if @edit[:qs_tokens][token][:value_type] == :boolean
+                        = select_tag("value_#{token}",
+                                     options_for_select([["<Choose>", nil],[_('False'),false], [_('True'), true]], nil),
+                                     :multiple              => false,
+                                     :class                 => "widthed",
+                                     "data-miq_sparkle_on"  => true,
+                                     "data-miq_sparkle_off" => true,
+                                     "data-miq_observe"     => {:url => url}.to_json)
+                      - else
+                        = text_field_tag("value_#{token}", nil,
+                                         :maxlength         => 500,
+                                         :onkeyup           => "miqQsEnterEscape(event);",
+                                         "data-miq_observe" => {:interval => '.5',
+                                                                :url      => url}.to_json,
+                                         :placeholder => ("true/false" if @edit[:qs_tokens][token][:value_type] == :boolean))
                       - if @edit[:qs_tokens][token][:value_type] == :percent
                         = "%"
                       - elsif @edit[:qs_tokens][token][:value_type] == :megabytes
