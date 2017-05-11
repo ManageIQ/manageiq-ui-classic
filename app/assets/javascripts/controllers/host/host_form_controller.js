@@ -16,7 +16,6 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
       ws_password: '',
       ipmi_userid: '',
       ipmi_password: '',
-      ipmi_verify: '',
       validate_id: '',
     };
 
@@ -47,7 +46,6 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
       $scope.hostModel.ws_password = "";
       $scope.hostModel.ipmi_userid = "";
       $scope.hostModel.ipmi_password = "";
-      $scope.hostModel.ipmi_verify = "";
       $scope.hostModel.validate_id = "";
       $scope.afterGet = true;
     } else if (hostFormId.split(",").length == 1) {
@@ -121,8 +119,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
     } else if(($scope.currentTab == "ipmi") &&
       ($scope.hostModel.ipmi_address) &&
       ($scope.hostModel.ipmi_userid != '' && $scope.angularForm.ipmi_userid.$valid &&
-      $scope.angularForm.ipmi_password.$valid &&
-      $scope.angularForm.ipmi_verify.$valid)) {
+      $scope.angularForm.ipmi_password.$valid)) {
       return true;
     } else
       return false;
@@ -161,8 +158,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
     } else if(($scope.currentTab == "ipmi") &&
       ($scope.angularForm.ipmi_address.$dirty &&
       $scope.angularForm.ipmi_userid.$dirty &&
-      $scope.angularForm.ipmi_password.$dirty &&
-      $scope.angularForm.ipmi_verify.$dirty)) {
+      $scope.angularForm.ipmi_password.$dirty)) {
       return true;
     } else
       return false;
@@ -194,7 +190,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
       $scope.hostModel.ws_password = miqService.storedPasswordPlaceholder;
     }
     if ($scope.hostModel.ipmi_userid !== '') {
-      $scope.hostModel.ipmi_password = $scope.hostModel.ipmi_verify = miqService.storedPasswordPlaceholder;
+      $scope.hostModel.ipmi_password = miqService.storedPasswordPlaceholder;
     }
 
     $scope.afterGet = true;
