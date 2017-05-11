@@ -41,3 +41,10 @@ namespace :webpack do
     end
   end
 end
+
+# needed by config/webpack/configuration.js
+namespace :webpacker do
+  task :output do
+    puts Rails.root
+  end
+end
