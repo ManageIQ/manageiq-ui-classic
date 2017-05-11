@@ -492,6 +492,7 @@ Rails.application.routes.draw do
         backup_select
         snapshot_new
         edit
+        delete_volumes
         cloud_volume_tenants
         index
         new

@@ -476,6 +476,10 @@ module EmsCommon
       javascript_redirect :controller => "cloud_volume",
                           :action     => "edit",
                           :id         => find_checked_ids_with_rbac(CloudVolume).first
+    elsif params[:pressed] == "cloud_volume_delete"
+      javascript_redirect :controller      => "cloud_volume",
+                          :action          => "delete_volumes",
+                          :miq_grid_checks => params[:miq_grid_checks]
     elsif params[:pressed] == "network_router_edit"
       javascript_redirect :controller => "network_router",
                           :action     => "edit",
