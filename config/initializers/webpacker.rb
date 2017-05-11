@@ -15,15 +15,9 @@ class Webpacker::Configuration
       ManageIQ::UI::Classic::Engine.root.join("config", "webpack", "paths.yml")
     end
 
-    def manifest_path
-      ManageIQ::UI::Classic::Engine.root.join(output_path, "manifest.json")
-    end
-
-    def packs_path
-      ManageIQ::UI::Classic::Engine.root.join(output_path, paths.fetch(:entry, "packs"))
-    end
-
-    # output_path does go to manageiq/
+    # manifest_path goes to manageiq/public/manifest.json
+    # packs_path goes to manageiq/public/packs/
+    # output_path goes to manageiq/public/
 
     def source_path
       ManageIQ::UI::Classic::Engine.root.join(source)
