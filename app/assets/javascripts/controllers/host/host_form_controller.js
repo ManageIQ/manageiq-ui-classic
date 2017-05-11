@@ -10,7 +10,6 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
       mac_address: '',
       default_userid: '',
       default_password: '',
-      default_verify: '',
       remote_userid: '',
       remote_password: '',
       remote_verify: '',
@@ -44,7 +43,6 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
       $scope.hostModel.mac_address = "";
       $scope.hostModel.default_userid = "";
       $scope.hostModel.default_password = "";
-      $scope.hostModel.default_verify = "";
       $scope.hostModel.remote_userid = "";
       $scope.hostModel.remote_password = "";
       $scope.hostModel.remote_verify = "";
@@ -112,8 +110,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
     if(($scope.currentTab == "default") &&
       ($scope.hostModel.hostname || $scope.hostModel.validate_id) &&
       ($scope.hostModel.default_userid != '' && $scope.angularForm.default_userid.$valid &&
-      $scope.angularForm.default_password.$valid &&
-      $scope.angularForm.default_verify.$valid)) {
+      $scope.angularForm.default_password.$valid)) {
       return true;
     } else if(($scope.currentTab == "remote") &&
       ($scope.hostModel.hostname || $scope.hostModel.validate_id) &&
@@ -155,8 +152,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
     if(($scope.currentTab == "default") &&
       (($scope.angularForm.hostname.$dirty || $scope.angularForm.validate_id.$dirty) &&
       $scope.angularForm.default_userid.$dirty &&
-      $scope.angularForm.default_password.$dirty &&
-      $scope.angularForm.default_verify.$dirty)) {
+      $scope.angularForm.default_password.$dirty)) {
       return true;
     } else if(($scope.currentTab == "remote") &&
       (($scope.angularForm.hostname.$dirty || $scope.angularForm.validate_id.$dirty) &&
@@ -197,7 +193,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
     $scope.hostModel.validate_id = data.validate_id;
 
     if ($scope.hostModel.default_userid !== '') {
-      $scope.hostModel.default_password = $scope.hostModel.default_verify = miqService.storedPasswordPlaceholder;
+      $scope.hostModel.default_password = miqService.storedPasswordPlaceholder;
     }
     if ($scope.hostModel.remote_userid !== '') {
       $scope.hostModel.remote_password = $scope.hostModel.remote_verify = miqService.storedPasswordPlaceholder;
