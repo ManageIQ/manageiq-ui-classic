@@ -126,7 +126,6 @@ class OpsController < ApplicationController
     @ldap_group = @edit[:ldap_group] if params[:cls_id] && params[:cls_id].split('_')[0] == "lg"
     @x_edit_buttons_locals = set_form_locals if @in_a_form
     @collapse_c_cell = @in_a_form || @pages ? false : true
-    @sb[:center_tb_filename] = center_toolbar_filename
     edit_changed? if @edit && !%w(settings_import settings_import_tags).include?(@sb[:active_tab])
     render :layout => "application"
   end
@@ -747,13 +746,8 @@ class OpsController < ApplicationController
   end
 
   def rebuild_toolbars(presenter)
-    unless @in_a_form
-      @sb[:center_tb_filename] = center_toolbar_filename
-      c_tb = build_toolbar(@sb[:center_tb_filename])
-    end
-    # Rebuild the toolbars
+    c_tb = build_toolbar(center_toolbar_filename) unless @in_a_form
     presenter.reload_toolbars(:center => c_tb)
-    presenter.set_visibility(c_tb.present? && @sb[:center_tb_filename] != "blank_view_tb", :toolbar)
     presenter[:record_id] = determine_record_id_for_presenter
   end
 

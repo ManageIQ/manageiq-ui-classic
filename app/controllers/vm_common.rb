@@ -298,11 +298,10 @@ module VmCommon
     @active = @snap_selected.current? if @snap_selected
     @button_group = "snapshot"
     @explorer = true
-    c_tb = build_toolbar("x_vm_center_tb")
     render :update do |page|
       page << javascript_prologue
       page << "$('#toolbar').show();" if c_tb.present?
-      page << javascript_pf_toolbar_reload('center_tb', c_tb)
+      page << javascript_reload_toolbars
 
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
       page.replace("desc_content", :partial => "/vm_common/snapshots_desc",

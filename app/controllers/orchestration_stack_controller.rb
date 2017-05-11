@@ -166,8 +166,7 @@ class OrchestrationStackController < ApplicationController
         render :update do |page|
           page << javascript_prologue
           page.replace(:form_div, :partial => "stack_orchestration_template")
-          page << javascript_pf_toolbar_reload('center_tb', build_toolbar(center_toolbar_filename))
-          page << javascript_show_if_exists(:toolbar)
+          page << javascript_reload_toolbars
         end
       end
     end
@@ -194,7 +193,6 @@ class OrchestrationStackController < ApplicationController
     render :update do |page|
       page << javascript_prologue
       page.replace(:form_div, :partial => "stack_orchestration_template")
-      page << javascript_show_if_exists(:toolbar)
     end
   end
 

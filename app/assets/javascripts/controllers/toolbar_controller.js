@@ -159,11 +159,36 @@
   };
 
   ToolbarController.prototype.updateToolbar = function(toolbarObject) {
-    toolbarItems = this.MiQToolbarSettingsService.generateToolbarObject(toolbarObject);
+    var toolbarItems = this.MiQToolbarSettingsService.generateToolbarObject(toolbarObject);
     this.toolbarItems = toolbarItems.items;
     this.dataViews = toolbarItems.dataViews;
     this.defaultViewUrl();
     this.setClickHandler();
+    this.showOrHide();
+  };
+
+  ToolbarController.prototype.anyToolbarVisible = function() {
+    if (! this.toolbarItems || ! this.toolbarItems.length)
+      return false;
+
+    var nonEmpty = this.toolbarItems.filter(function(ary) {
+      if (! ary || ! ary.length)
+        return false;
+
+      return _.some(ary, function(item) {
+        return ! item.hidden;
+      });
+    });
+
+    return !! nonEmpty.length;
+  };
+
+  ToolbarController.prototype.showOrHide = function() {
+    if (this.anyToolbarVisible()) {
+      $('#toolbar').show();
+    } else {
+      $('#toolbar').hide();
+    }
   };
 
   ToolbarController.$inject = ['MiQToolbarSettingsService', 'MiQEndpointsService', '$scope', '$location'];
