@@ -8,7 +8,6 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     verify_ssl: '',
     log_userid: '',
     log_password: '',
-    log_verify: '',
   };
   vm.formId = automationManagerFormId;
   vm.afterGet = false;
@@ -28,7 +27,6 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     vm.automationManagerModel.verify_ssl = false;
     vm.automationManagerModel.log_userid = '';
     vm.automationManagerModel.log_password = '';
-    vm.automationManagerModel.log_verify = '';
 
     $http.get('/automation_manager/form_fields/' + automationManagerFormId)
       .then(getAutomationManagerNewFormDataComplete)
@@ -61,7 +59,7 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     vm.automationManagerModel.log_userid = data.log_userid;
 
     if (vm.automationManagerModel.log_userid != '') {
-      vm.automationManagerModel.log_password = vm.automationManagerModel.log_verify = miqService.storedPasswordPlaceholder;
+      vm.automationManagerModel.log_password = miqService.storedPasswordPlaceholder;
     }
 
     vm.modelCopy = angular.copy(vm.automationManagerModel);
@@ -76,8 +74,7 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
   vm.isBasicInfoValid = function() {
     return $scope.angularForm.url.$valid &&
       $scope.angularForm.log_userid.$valid &&
-      $scope.angularForm.log_password.$valid &&
-      $scope.angularForm.log_verify.$valid;
+      $scope.angularForm.log_password.$valid;
   };
 
   var automationManagerEditButtonClicked = function(buttonName, serializeFields) {
