@@ -9,7 +9,6 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
       log_protocol: '',
       log_userid: '',
       log_password: '',
-      log_verify: ''
     };
     $scope.afterGet = true;
     $scope.modelCopy = angular.copy( $scope.diagnosticsDatabaseModel );
@@ -28,7 +27,6 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
       $scope.diagnosticsDatabaseModel.uri_prefix = '';
       $scope.diagnosticsDatabaseModel.log_userid = '';
       $scope.diagnosticsDatabaseModel.log_password = '';
-      $scope.diagnosticsDatabaseModel.log_verify = '';
       $scope.diagnosticsDatabaseModel.log_protocol = '';
       return;
     }
@@ -49,8 +47,7 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
     if($scope.angularForm.depot_name.$valid &&
       $scope.angularForm.uri.$valid &&
       $scope.angularForm.log_userid.$valid &&
-      $scope.angularForm.log_password.$valid &&
-      $scope.angularForm.log_verify.$valid)
+      $scope.angularForm.log_password.$valid)
       return true;
     else
       return false;
@@ -111,7 +108,7 @@ ManageIQ.angular.app.controller('diagnosticsDatabaseFormController', ['$http', '
     $scope.diagnosticsDatabaseModel.action_typ = 'db_backup';
 
     if ($scope.diagnosticsDatabaseModel.log_userid !== '') {
-      $scope.diagnosticsDatabaseModel.log_password = $scope.diagnosticsDatabaseModel.log_verify = miqService.storedPasswordPlaceholder;
+      $scope.diagnosticsDatabaseModel.log_password = miqService.storedPasswordPlaceholder;
     }
 
     $scope.$broadcast('setNewRecord', { newRecord: false });

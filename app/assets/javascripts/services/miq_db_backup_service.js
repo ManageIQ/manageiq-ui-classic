@@ -56,7 +56,6 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
   this.resetAll = function(model) {
     model.log_userid = null;
     model.log_password = null;
-    model.log_verify = null;
     model.uri_prefix = null;
     model.depot_name = null;
     model.uri = null;

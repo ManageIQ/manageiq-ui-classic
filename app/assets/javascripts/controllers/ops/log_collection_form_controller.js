@@ -7,7 +7,6 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
       log_protocol: '',
       log_userid: '',
       log_password: '',
-      log_verify: ''
     };
     $scope.afterGet = true;
     $scope.modelCopy = angular.copy( $scope.logCollectionModel );
@@ -26,7 +25,6 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
       $scope.logCollectionModel.uri_prefix = '';
       $scope.logCollectionModel.log_userid = '';
       $scope.logCollectionModel.log_password = '';
-      $scope.logCollectionModel.log_verify = '';
       $scope.logCollectionModel.log_protocol = '';
       $scope.modelCopy = angular.copy( $scope.logCollectionModel );
     } else {
@@ -59,8 +57,7 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
     if($scope.angularForm.depot_name.$valid &&
       $scope.angularForm.uri.$valid &&
       $scope.angularForm.log_userid.$valid &&
-      $scope.angularForm.log_password.$valid &&
-      $scope.angularForm.log_verify.$valid)
+      $scope.angularForm.log_password.$valid)
       return true;
     else
       return false;
@@ -108,7 +105,7 @@ ManageIQ.angular.app.controller('logCollectionFormController', ['$http', '$scope
     $scope.logCollectionModel.log_userid = data.log_userid;
 
     if ($scope.logCollectionModel.log_userid !== '') {
-      $scope.logCollectionModel.log_password = $scope.logCollectionModel.log_verify = miqService.storedPasswordPlaceholder;
+      $scope.logCollectionModel.log_password = miqService.storedPasswordPlaceholder;
     }
 
     $scope.afterGet = true;
