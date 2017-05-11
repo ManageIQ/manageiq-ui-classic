@@ -34,7 +34,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       metrics_userid: '',
       metrics_password: '',
       metrics_database_name: '',
-      metrics_verify: '',
       ssh_keypair_userid: '',
       ssh_keypair_password: '',
       service_account: '',
@@ -156,7 +155,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         $scope.emsCommonModel.amqp_password = miqService.storedPasswordPlaceholder;
       }
       if ($scope.emsCommonModel.metrics_userid !== '') {
-        $scope.emsCommonModel.metrics_password = $scope.emsCommonModel.metrics_verify = miqService.storedPasswordPlaceholder;
+        $scope.emsCommonModel.metrics_password = miqService.storedPasswordPlaceholder;
       }
       if ($scope.emsCommonModel.ssh_keypair_userid !== '') {
         $scope.emsCommonModel.ssh_keypair_password = miqService.storedPasswordPlaceholder;
@@ -246,8 +245,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.metrics_database_name &&
       ($scope.emsCommonModel.metrics_hostname != '' && $scope.angularForm.metrics_hostname.$valid) &&
       ($scope.emsCommonModel.metrics_userid != '' && $scope.angularForm.metrics_userid.$valid &&
-      $scope.emsCommonModel.metrics_password != '' && $scope.angularForm.metrics_password.$valid &&
-      $scope.emsCommonModel.metrics_verify != '' && $scope.angularForm.metrics_verify.$valid)) {
+      $scope.emsCommonModel.metrics_password != '' && $scope.angularForm.metrics_password.$valid)) {
       return true;
     } else if($scope.currentTab == "default" &&
         ["ems_container", "ems_middleware", "ems_datawarehouse", "ems_physical_infra"].indexOf($scope.emsCommonModel.ems_controller) >= 0 &&
@@ -480,17 +478,14 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     } else if (prefix === "metrics") {
       if ($scope.newRecord) {
         var metrics_password = $scope.emsCommonModel.metrics_password;
-        var metrics_verify = $scope.emsCommonModel.metrics_verify;
       } else {
         var metrics_password = $scope.emsCommonModel.metrics_password === "" ? "" : miqService.storedPasswordPlaceholder;
-        var metrics_verify = $scope.emsCommonModel.metrics_verify === "" ? "" : miqService.storedPasswordPlaceholder;
       }
       var metricsValidationModel = {
         metrics_hostname:          $scope.emsCommonModel.metrics_hostname,
         metrics_api_port:          $scope.emsCommonModel.metrics_api_port,
         metrics_userid:            $scope.emsCommonModel.metrics_userid,
         metrics_password:          metrics_password,
-        metrics_verify:            metrics_verify,
       };
       $scope.postValidationModel['metrics'] = metricsValidationModel;
     } else if (prefix === "ssh_keypair") {
