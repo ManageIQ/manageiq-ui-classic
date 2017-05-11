@@ -9,7 +9,7 @@ module PhysicalServerHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(host)
+      %i(host ext_management_system)
     )
   end
 
@@ -25,6 +25,10 @@ module PhysicalServerHelper::TextualSummary
 
   def textual_host
     {:label => _("Host"), :value => @record.host.try(:name), :icon => "pficon pficon-virtual-machine", :link => url_for(:controller => 'host', :action => 'show', :id => @record.host.try(:id))}
+  end
+
+  def textual_ext_management_system
+    textual_link(ExtManagementSystem.find(@record.ems_id))
   end
 
   def textual_name
