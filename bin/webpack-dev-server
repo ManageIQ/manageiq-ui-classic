@@ -11,7 +11,7 @@ ENV["NODE_ENV"] ||= RAILS_ENV
 NODE_ENV = ENV["NODE_ENV"]
 
 APP_PATH    = File.expand_path("../", __dir__)
-CONFIG_PATH = File.join(APP_PATH, "config/webpack/paths.yml")
+CONFIG_PATH = File.join(APP_PATH, "config/webpack/paths.yml")[NODE_ENV]
 
 begin
   paths = YAML.load(File.read(CONFIG_PATH))
@@ -29,5 +29,5 @@ end
 
 Dir.chdir(APP_PATH) do
   exec "NODE_PATH=#{NODE_MODULES_PATH} #{WEBPACK_BIN} --progress --color " \
-    "--config #{DEV_SERVER_CONFIG}"
+    "--config #{DEV_SERVER_CONFIG} #{ARGV.join(" ")}"
 end

@@ -34,12 +34,6 @@ namespace :webpack do
       system("bin/webpack-dev-server") || abort("\n== webpack-dev-server failed ==")
     end
   end
-
-  task :watcher do
-    Dir.chdir ManageIQ::UI::Classic::Engine.root do
-      system("bin/webpack-watcher") || abort("\n== webpack-watcher failed ==")
-    end
-  end
 end
 
 # needed by config/webpack/configuration.js
