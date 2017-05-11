@@ -1,4 +1,4 @@
-require 'shared/helpers/application_helper/buttons/basic'
+require 'shared/helpers/application_helper/buttons/vm_console'
 
 describe ApplicationHelper::Button::VmVmrcConsole do
   include_context 'ApplicationHelper::Button::Basic'
@@ -8,7 +8,9 @@ describe ApplicationHelper::Button::VmVmrcConsole do
   let(:record) { FactoryGirl.create(:vm_vmware) }
 
   describe '#visible?' do
-    it_behaves_like 'vm_console_visible?', 'VMRC'
+    include_context 'ApplicationHelper::Button::VmConsole#visible?',
+                    :console_type       => 'VMRC',
+                    :support_of_records => {:vm_openstack => false, :vm_redhat => false, :vm_vmware => true}
   end
 
   describe '#calculate_properties' do
