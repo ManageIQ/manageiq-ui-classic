@@ -486,9 +486,7 @@ module ApplicationController::MiqRequestMethods
         end
         @sb[:vm_os] = VmOrTemplate.find_by_id(@edit.fetch_path(:new, :src_vm_id, 0)).platform if @edit.fetch_path(:new, :src_vm_id, 0)
       elsif @edit[:new][:current_tab_key] == :purpose
-        # TODO replace
         set_cat(@edit[:wf], @edit[:new][:vm_tags])
-        build_tags_tree(@edit[:wf], @edit[:new][:vm_tags], true)
       end
     when VmMigrateWorkflow
       if @edit[:new][:current_tab_key] == :environment
@@ -501,9 +499,7 @@ module ApplicationController::MiqRequestMethods
         build_pxe_img_grid(@edit[:wf].get_field(:pxe_image_id, :service)[:values], @edit[:pxe_img_sortdir], @edit[:pxe_img_sortcol])
         build_iso_img_grid(@edit[:wf].get_field(:iso_image_id, :service)[:values], @edit[:iso_img_sortdir], @edit[:iso_img_sortcol]) if @edit[:wf].supports_iso?
       elsif @edit[:new][:current_tab_key] == :purpose
-        # TODO replace
         set_cat(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow))
-        build_tags_tree(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow), true)
       elsif @edit[:new][:current_tab_key] == :environment
         build_ds_grid(@edit[:wf].get_field(:attached_ds, :environment)[:values], @edit[:ds_sortdir], @edit[:ds_sortcol])
       elsif @edit[:new][:current_tab_key] == :customize
@@ -515,9 +511,7 @@ module ApplicationController::MiqRequestMethods
   def build_dialog_page_miq_provision_configured_system_workflow
     case @edit[:new][:current_tab_key]
       when :purpose
-        # TODO replace
         set_cat(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow))
-        build_tags_tree(@edit[:wf], @edit.fetch_path(:new, tag_symbol_for_workflow), true)
     when :service
       build_configured_system_grid(@edit[:wf].get_field(:src_configured_system_ids, :service)[:values], @edit[:configured_system_sortdir], @edit[:configured_system_sortcol])
     end
@@ -978,74 +972,6 @@ module ApplicationController::MiqRequestMethods
   def set_cat(wf, vm_tags)
     @categories = wf.send("allowed_tags")
     @edit[:cat] = vm_tags
-  end
-
-  def build_tags_tree(wf, vm_tags, edit_mode)
-    tags = wf.send("allowed_tags")
-    @curr_tag = nil
-    # Build the default filters tree for the search views
-    all_tags = []                          # Array to hold all CIs
-    kids_checked = false
-    tags.each_with_index do |t, i| # Go thru all of the Searches
-      if @curr_tag.blank? || @curr_tag != t[:name]
-        if @curr_tag != t[:name] && @ci_node
-          @ci_node[:expand] = true if kids_checked
-          kids_checked = false
-          @ci_node[:children] = @ci_kids unless @ci_kids.blank?
-          all_tags.push(@ci_node) unless @ci_kids.blank?
-        end
-        @curr_tag = t[:name]
-        @ci_node = {}                       # Build the ci node
-        @ci_node[:key] = t[:id].to_s
-        @ci_node[:title] = t[:description]
-        @ci_node[:title] += " *" if t[:single_value]
-        @ci_node[:tooltip] = t[:description]
-        @ci_node[:addClass] = "cfme-no-cursor-node"      # No cursor pointer
-        @ci_node[:icon] = 'pficon pficon-folder-close'
-        @ci_node[:hideCheckbox] = @ci_node[:cfmeNoClick] = true
-        @ci_node[:addClass] = "cfme-bold-node"  # Show node as different
-        @ci_kids = []
-      end
-      if !@curr_tag.blank? && @curr_tag == t[:name]
-        t[:children].each do |c|
-          temp = {}
-          temp[:key] = c[0].to_s
-          # only add cfme_parent_key for single value tags, need to use in JS onclick handler
-          temp[:selectable] = false
-          temp[:title] = temp[:tooltip] = c[1][:description]
-          temp[:addClass] = "cfme-no-cursor-node"
-          temp[:icon] = 'fa fa-tag'
-          if edit_mode              # Don't show checkboxes/radio buttons in non-edit mode
-            if vm_tags && vm_tags.include?(c[0].to_i)
-              temp[:select] = true
-              kids_checked = true
-            else
-              temp[:select] = false
-            end
-            if @edit && @edit[:current][tag_symbol_for_workflow] != @edit[:new][tag_symbol_for_workflow]
-              # checking to see if id is in current but not in new, change them to blue OR if id is in current but deleted from new
-              if (!@edit[:current][tag_symbol_for_workflow].include?(c[0].to_i) && @edit[:new][tag_symbol_for_workflow].include?(c[0].to_i)) ||
-                 (!@edit[:new][tag_symbol_for_workflow].include?(c[0].to_i) && @edit[:current][tag_symbol_for_workflow].include?(c[0].to_i))
-                temp[:addClass] = "cfme-blue-bold-node"
-              end
-            end
-            @ci_kids.push(temp) unless @ci_kids.include?(temp)
-          else
-            temp[:hideCheckbox] = true
-            @ci_kids.push(temp) unless @ci_kids.include?(temp) || !vm_tags.include?(c[0].to_i)
-          end
-        end
-      end
-      if i == tags.length - 1           # Adding last node
-        @ci_node[:expand] = true if kids_checked
-        kids_checked = false
-        @ci_node[:children] = @ci_kids unless @ci_kids.blank?
-        all_tags.push(@ci_node) unless @ci_kids.blank?
-      end
-    end
-    @all_tags_tree = TreeBuilder.convert_bs_tree(all_tags).to_json # Add ci node array to root of tree
-    session[:tree] = "all_tags"
-    session[:tree_name] = "all_tags_tree"
   end
 
   def build_template_filter
