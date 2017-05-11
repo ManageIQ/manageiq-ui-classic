@@ -55,9 +55,6 @@ describe('providerForemanFormController', function() {
       it('sets the log_password to blank', function () {
         expect(vm.providerForemanModel.log_password).toEqual('');
       });
-      it('sets the log_verify to blank', function () {
-        expect(vm.providerForemanModel.log_verify).toEqual('');
-      });
     });
 
     describe('when the providerForemanFormId is an Id', function() {
@@ -97,9 +94,6 @@ describe('providerForemanFormController', function() {
       });
       it('sets the log_password to the value returned from http request', function () {
         expect(vm.providerForemanModel.log_password).toEqual(miqService.storedPasswordPlaceholder);
-      });
-      it('sets the log_verify to the value returned from http request', function () {
-        expect(vm.providerForemanModel.log_verify).toEqual(miqService.storedPasswordPlaceholder);
       });
     });
   });
@@ -165,7 +159,6 @@ describe('providerForemanFormController', function() {
         '<input ng-model="vm.providerForemanModel.url" name="url" required text />' +
         '<input ng-model="vm.providerForemanModel.log_userid" name="log_userid" required text />' +
         '<input ng-model="vm.providerForemanModel.log_password" name="log_password" required text />' +
-        '<input ng-model="vm.providerForemanModel.log_verify" name="log_verify" required text />' +
         '</form>'
       );
 
@@ -175,7 +168,6 @@ describe('providerForemanFormController', function() {
       $scope.angularForm.url.$setViewValue('foreman-url');
       $scope.angularForm.log_userid.$setViewValue('admin');
       $scope.angularForm.log_password.$setViewValue('password');
-      $scope.angularForm.log_verify.$setViewValue('password');
     }));
 
     it('returns true if all the Validation fields are filled in', function() {

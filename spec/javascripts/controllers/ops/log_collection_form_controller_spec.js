@@ -16,7 +16,6 @@ describe('logCollectionFormController', function() {
                                 uri_prefix:   '',
                                 log_userid:   '',
                                 log_password: '',
-                                log_verify:   '',
                                 log_protocol: ''
                               };
 
@@ -68,10 +67,6 @@ describe('logCollectionFormController', function() {
 
     it('sets the log_password to the value returned from the http request', function () {
       expect($scope.logCollectionModel.log_password).toEqual(miqService.storedPasswordPlaceholder);
-    });
-
-    it('sets the log_verify to the value returned from the http request', function () {
-      expect($scope.logCollectionModel.log_verify).toEqual(miqService.storedPasswordPlaceholder);
     });
 
     it('sets the log_protocol to the value returned from the http request', function () {

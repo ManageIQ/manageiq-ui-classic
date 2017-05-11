@@ -64,10 +64,6 @@ describe('automationManagerFormController', function() {
       it('sets the log_password to blank', function() {
         expect(vm.automationManagerModel.log_password).toEqual('');
       });
-
-      it('sets the log_verify to blank', function() {
-        expect(vm.automationManagerModel.log_verify).toEqual('');
-      });
     });
 
     describe('when the automationManagerFormId is an Id', function() {
@@ -113,10 +109,6 @@ describe('automationManagerFormController', function() {
 
       it('sets the log_password to the value returned from http request', function() {
         expect(vm.automationManagerModel.log_password).toEqual(miqService.storedPasswordPlaceholder);
-      });
-
-      it('sets the log_verify to the value returned from http request', function() {
-        expect(vm.automationManagerModel.log_verify).toEqual(miqService.storedPasswordPlaceholder);
       });
     });
   });
@@ -180,7 +172,6 @@ describe('automationManagerFormController', function() {
         '<input ng-model="automationManagerModel.url" name="url" required />' +
         '<input ng-model="automationManagerModel.log_userid" name="log_userid" required />' +
         '<input ng-model="automationManagerModel.log_password" name="log_password" required />' +
-        '<input ng-model="automationManagerModel.log_verify" name="log_verify" required />' +
         '</form>'
       );
 
@@ -191,7 +182,6 @@ describe('automationManagerFormController', function() {
       $scope.angularForm.url.$setViewValue('automation-manager-url');
       $scope.angularForm.log_userid.$setViewValue('admin');
       $scope.angularForm.log_password.$setViewValue('password');
-      $scope.angularForm.log_verify.$setViewValue('password');
     }));
 
     it('returns true if all the Validation fields are filled in', function() {
