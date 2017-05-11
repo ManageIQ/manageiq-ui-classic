@@ -12,7 +12,6 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
       default_password: '',
       remote_userid: '',
       remote_password: '',
-      remote_verify: '',
       ws_userid: '',
       ws_password: '',
       ws_verify: '',
@@ -45,7 +44,6 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
       $scope.hostModel.default_password = "";
       $scope.hostModel.remote_userid = "";
       $scope.hostModel.remote_password = "";
-      $scope.hostModel.remote_verify = "";
       $scope.hostModel.ws_userid = "";
       $scope.hostModel.ws_password = "";
       $scope.hostModel.ws_verify = "";
@@ -115,8 +113,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
     } else if(($scope.currentTab == "remote") &&
       ($scope.hostModel.hostname || $scope.hostModel.validate_id) &&
       ($scope.hostModel.remote_userid != '' && $scope.angularForm.remote_userid.$valid &&
-      $scope.angularForm.remote_password.$valid &&
-      $scope.angularForm.remote_verify.$valid)) {
+      $scope.angularForm.remote_password.$valid)) {
       return true;
     } else if(($scope.currentTab == "ws") &&
       ($scope.hostModel.hostname || $scope.hostModel.validate_id) &&
@@ -157,8 +154,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
     } else if(($scope.currentTab == "remote") &&
       (($scope.angularForm.hostname.$dirty || $scope.angularForm.validate_id.$dirty) &&
       $scope.angularForm.remote_userid.$dirty &&
-      $scope.angularForm.remote_password.$dirty &&
-      $scope.angularForm.remote_verify.$dirty)) {
+      $scope.angularForm.remote_password.$dirty)) {
       return true;
     } else if(($scope.currentTab == "ws") &&
       (($scope.angularForm.hostname.$dirty || $scope.angularForm.validate_id.$dirty) &&
@@ -196,7 +192,7 @@ ManageIQ.angular.app.controller('hostFormController', ['$http', '$scope', '$attr
       $scope.hostModel.default_password = miqService.storedPasswordPlaceholder;
     }
     if ($scope.hostModel.remote_userid !== '') {
-      $scope.hostModel.remote_password = $scope.hostModel.remote_verify = miqService.storedPasswordPlaceholder;
+      $scope.hostModel.remote_password = miqService.storedPasswordPlaceholder;
     }
     if ($scope.hostModel.ws_userid !== '') {
       $scope.hostModel.ws_password = $scope.hostModel.ws_verify = miqService.storedPasswordPlaceholder;
