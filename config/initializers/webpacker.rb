@@ -24,3 +24,14 @@ class Webpacker::Configuration
     end
   end
 end
+
+class Webpacker::Env < Webpacker::FileLoader
+  class << self
+    def file_path
+      ManageIQ::UI::Classic::Engine.root.join("config", "webpack", "paths.yml")
+    end
+  end
+end
+
+# needed when run from manageiq/
+Webpacker.bootstrap if !Webpacker::Env.instance && Rails.root
