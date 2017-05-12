@@ -92,6 +92,7 @@ module Mixins
       # FIXME: use JSON (ExplorerPresenter) for this intead of RJS
       render :update do |page|
         page << javascript_prologue
+        page << "document.title = '#{j_str(page_title)}';"
         page.replace_html(:center_div, options_for_render)
       end
     end
