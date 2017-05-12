@@ -23,6 +23,10 @@ module PhysicalServerHelper::TextualSummary
   def textual_group_compliance
   end
 
+  def textual_group_networks
+    TextualGroup.new(_("Networks"), %i(mac ipv4 ipv6))
+  end
+
   def textual_host
     {:label => _("Host"), :value => @record.host.try(:name), :icon => "pficon pficon-virtual-machine", :link => url_for(:controller => 'host', :action => 'show', :id => @record.host.try(:id))}
   end
@@ -69,5 +73,17 @@ module PhysicalServerHelper::TextualSummary
 
   def textual_power_state
     {:label => _("Power State"), :value => @record.power_state}
+  end
+
+  def textual_mac
+    {:label =>  _("Mac Address"), :value => @record.hardware.guest_devices.collect { |device| device[:address] }.join(", ") }
+  end
+
+  def textual_ipv4
+    {:label =>  _("IPV4 Address"), :value => @record.hardware.guest_devices.collect { |device| device.network.ipaddress }.join(", ") }
+  end
+
+  def textual_ipv6
+    {:label =>  _("IPV6 Address"), :value => @record.hardware.guest_devices.collect { |device| device.network.ipv6address }.join(", ") }
   end
 end
