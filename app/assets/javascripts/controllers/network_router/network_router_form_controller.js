@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope', 'networkRouterFormId', 'miqService', function($http, $scope, networkRouterFormId, miqService) {
+ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope', 'networkRouterFormId', 'miqService', 'API', function($http, $scope, networkRouterFormId, miqService, API) {
   $scope.networkRouterModel = {
     name: '',
     cloud_subnet_id: '',
@@ -104,5 +104,19 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
 
     $scope.available_subnets = data.available_subnets;
     miqService.sparkleOff();
+  }
+
+  $scope.filterNetworkManagerChanged = function(id) {
+    miqService.sparkleOn();
+
+    API.get("/api/providers/" + id + "/cloud_tenants?expand=resources&attributes=id,name")
+      .then(getCloudTenantsByEms)
+      .catch(miqService.handleFailure);
+
+    miqService.sparkleOff();
+  };
+
+  function getCloudTenantsByEms(data) {
+    $scope.available_tenants = data.resources;
   }
 }]);
