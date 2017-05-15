@@ -185,7 +185,7 @@ describe CloudSubnetController do
       let(:queue_options) do
         {
           :class_name  => @cloud_subnet.class.name,
-          :method_name => 'raw_delete_cloud_subnet',
+          :method_name => 'delete_cloud_subnet',
           :instance_id => @cloud_subnet.id,
           :priority    => MiqQueue::HIGH_PRIORITY,
           :role        => 'ems_operations',
