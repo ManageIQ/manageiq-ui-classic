@@ -1,4 +1,6 @@
 class ServiceController < ApplicationController
+  include Mixins::GenericSessionMixin
+
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
@@ -21,6 +23,10 @@ class ServiceController < ApplicationController
 
   def x_button
     generic_x_button(SERVICE_X_BUTTON_ALLOWED_ACTIONS)
+  end
+
+  def title
+    _("My Services")
   end
 
   # Service show selected, redirect to proper controller
@@ -408,14 +414,13 @@ class ServiceController < ApplicationController
   end
 
   def get_session_data
-    @title      = _("My Services")
+    super
     @layout     = "services"
-    @lastaction = session[:svc_lastaction]
     @options    = session[:prov_options]
   end
 
   def set_session_data
-    session[:svc_lastaction] = @lastaction
+    super
     session[:prov_options]   = @options if @options
   end
 
