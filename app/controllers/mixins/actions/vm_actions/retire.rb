@@ -111,22 +111,29 @@ module Mixins
         private
 
         def handle_form_buttons(kls)
-          if params[:button] == "cancel"
-            flash = _("Set/remove retirement date was cancelled by the user")
-            @sb[:action] = nil
-          elsif params[:button] == "save"
-            if params[:retire_date].blank?
-              flash = n_("Retirement date removed", "Retirement dates removed", session[:retire_items].length)
-            else
-              t = params[:retire_date].in_time_zone
-              w = params[:retire_warn].to_i
-
-              ts = t.strftime("%x %R %Z")
-              flash = n_("Retirement date set to #{ts}", "Retirement dates set to #{ts}", session[:retire_items].length)
-            end
-            kls.retire(session[:retire_items], :date => t, :warn => w) # Call the model to retire the VM(s)
-            @sb[:action] = nil
+          case params[:button]
+          when "cancel" then handle_cancel_button
+          when "save"   then handle_save_button(kls)
           end
+        end
+
+        def handle_cancel_button
+          @sb[:action] = nil
+          _("Set/remove retirement date was cancelled by the user")
+        end
+
+        def handle_save_button(kls)
+          if params[:retire_date].blank?
+            flash = n_("Retirement date removed", "Retirement dates removed", session[:retire_items].length)
+          else
+            t = params[:retire_date].in_time_zone
+            w = params[:retire_warn].to_i
+
+            ts = t.strftime("%x %R %Z")
+            flash = n_("Retirement date set to #{ts}", "Retirement dates set to #{ts}", session[:retire_items].length)
+          end
+          kls.retire(session[:retire_items], :date => t, :warn => w) # Call the model to retire the VM(s)
+          @sb[:action] = nil
           flash
         end
       end
