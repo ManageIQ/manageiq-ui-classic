@@ -6,15 +6,12 @@
 
   - if field.dynamic
     - if field.auto_refresh
-      :javascript
-        dialogFieldRefresh.listenForAutoRefreshMessages(JSON.parse('#{j(auto_refresh_options.to_json)}'), function(initializingIndex) {
-          dialogFieldRefresh.refreshTextBox("#{field.name}", "#{field.id}", function() {
-            var jsonOptions = JSON.parse('#{j(auto_refresh_listening_options(auto_refresh_options, true).to_json)}');
-            jsonOptions.initializingIndex = initializingIndex;
+      - javascript_locals = {:auto_refresh_options     => auto_refresh_options,
+                             :refresh_field_parameters => {:type => field.type,
+                                                           :name => field.name,
+                                                           :id   => field.id}}
 
-            dialogFieldRefresh.triggerAutoRefresh(jsonOptions);
-          });
-        });
+      = render(:partial => "shared/dialogs/auto_refresh_javascript", :locals => javascript_locals)
 
     - if field.show_refresh_button?
       = button_tag(_('Refresh'), :id => "refresh-dynamic-text-field-#{field.id}", :class => "btn btn-default")

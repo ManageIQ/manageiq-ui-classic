@@ -144,6 +144,119 @@ describe('dialogFieldRefresh', function() {
     });
   });
 
+  describe('#refreshField', function() {
+    var options = {name: 'name', id: '123'};
+    var callback = function() { return 'the callback'; };
+
+    context('when the field type is DialogFieldCheckBox', function() {
+      beforeEach(function() {
+        options.type = 'DialogFieldCheckBox';
+        spyOn(dialogFieldRefresh, 'refreshCheckbox');
+      });
+
+      it('calls refreshCheckbox', function() {
+        dialogFieldRefresh.refreshField(options, callback);
+        expect(dialogFieldRefresh.refreshCheckbox).toHaveBeenCalledWith('name', '123', callback);
+      });
+    });
+
+    context('when the field type is DialogFieldTextBox', function() {
+      beforeEach(function() {
+        options.type = 'DialogFieldTextBox';
+        spyOn(dialogFieldRefresh, 'refreshTextBox');
+      });
+
+      it('calls refreshTextBox', function() {
+        dialogFieldRefresh.refreshField(options, callback);
+        expect(dialogFieldRefresh.refreshTextBox).toHaveBeenCalledWith('name', '123', callback);
+      });
+    });
+
+    context('when the field type is DialogFieldTextAreaBox', function() {
+      beforeEach(function() {
+        options.type = 'DialogFieldTextAreaBox';
+        spyOn(dialogFieldRefresh, 'refreshTextAreaBox');
+      });
+
+      it('calls refreshTextAreaBox', function() {
+        dialogFieldRefresh.refreshField(options, callback);
+        expect(dialogFieldRefresh.refreshTextAreaBox).toHaveBeenCalledWith('name', '123', callback);
+      });
+    });
+
+    context('when the field type is DialogFieldDropDownList', function() {
+      beforeEach(function() {
+        var html = '';
+        html += '<select name="name"><option selected="selected" value="1">One</option></select>';
+        setFixtures(html);
+
+        options.type = 'DialogFieldDropDownList';
+        spyOn(dialogFieldRefresh, 'refreshDropDownList');
+      });
+
+      it('calls refreshDropDownList', function() {
+        dialogFieldRefresh.refreshField(options, callback);
+        expect(dialogFieldRefresh.refreshDropDownList).toHaveBeenCalledWith('name', '123', '1', callback);
+      });
+    });
+
+    context('when the field type is DialogFieldRadioButton', function() {
+      beforeEach(function() {
+        var html = '';
+        html += '<input type="radio" name="name" value="1" checked /><input type="radio" name="name" value="2" />';
+        setFixtures(html);
+
+        options.type = 'DialogFieldRadioButton';
+        options.url = 'url';
+        options.auto_refresh_options = 'auto_refresh_options';
+        spyOn(dialogFieldRefresh, 'refreshRadioList');
+      });
+
+      it('calls refreshRadioList', function() {
+        dialogFieldRefresh.refreshField(options, callback);
+        expect(dialogFieldRefresh.refreshRadioList).toHaveBeenCalledWith(
+          'name', '123', '1', 'url', 'auto_refresh_options', callback
+        );
+      });
+    });
+
+    context('when the field type is DialogFieldDateControl', function() {
+      beforeEach(function() {
+        options.type = 'DialogFieldDateControl';
+        spyOn(dialogFieldRefresh, 'refreshDateTime');
+      });
+
+      it('calls refreshDateControl', function() {
+        dialogFieldRefresh.refreshField(options, callback);
+        expect(dialogFieldRefresh.refreshDateTime).toHaveBeenCalledWith('name', '123', callback);
+      });
+    });
+
+    context('when the field type is DialogFieldDateTimeControl', function() {
+      beforeEach(function() {
+        options.type = 'DialogFieldDateTimeControl';
+        spyOn(dialogFieldRefresh, 'refreshDateTime');
+      });
+
+      it('calls refreshDateTimeControl', function() {
+        dialogFieldRefresh.refreshField(options, callback);
+        expect(dialogFieldRefresh.refreshDateTime).toHaveBeenCalledWith('name', '123', callback);
+      });
+    });
+
+    context('when the field type is not supported', function() {
+      beforeEach(function() {
+        options.type = 'wrong';
+        spyOn(window, 'add_flash');
+      });
+
+      it('adds a flash message', function() {
+        dialogFieldRefresh.refreshField(options, callback);
+        expect(window.add_flash).toHaveBeenCalledWith(__("Field type is not a supported type!"), 'error');
+      });
+    });
+  });
+
   describe('#refreshCheckbox', function() {
     var loadedDoneFunction;
     var refreshCallback;

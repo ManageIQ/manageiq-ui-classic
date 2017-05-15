@@ -51,6 +51,29 @@ var dialogFieldRefresh = {
     });
   },
 
+  refreshField: function(options, callback) {
+    var fieldType = options.type;
+
+    if (fieldType === "DialogFieldCheckBox") {
+      dialogFieldRefresh.refreshCheckbox(options.name, options.id, callback);
+    } else if (fieldType === "DialogFieldTextBox") {
+      dialogFieldRefresh.refreshTextBox(options.name, options.id, callback);
+    } else if (fieldType === "DialogFieldTextAreaBox") {
+      dialogFieldRefresh.refreshTextAreaBox(options.name, options.id, callback);
+    } else if (fieldType === "DialogFieldDropDownList") {
+      var selectedValue = $('select[name="' + options.name + '"]').val();
+      dialogFieldRefresh.refreshDropDownList(options.name, options.id, selectedValue, callback);
+    } else if (fieldType === "DialogFieldRadioButton") {
+      var checkedValue = $('input:radio[name="' + options.name + '"]:checked').val();
+
+      dialogFieldRefresh.refreshRadioList(options.name, options.id, checkedValue, options.url, options.auto_refresh_options, callback);
+    } else if (fieldType === "DialogFieldDateControl" || fieldType === "DialogFieldDateTimeControl") {
+      dialogFieldRefresh.refreshDateTime(options.name, options.id, callback);
+    } else {
+      add_flash(__("Field type is not a supported type!"), 'error');
+    }
+  },
+
   refreshCheckbox: function(fieldName, fieldId, callback) {
     miqSparkleOn();
 
