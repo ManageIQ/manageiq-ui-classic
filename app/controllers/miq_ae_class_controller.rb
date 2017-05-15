@@ -2542,6 +2542,7 @@ class MiqAeClassController < ApplicationController
   end
 
   def get_session_data
+    super
     @edit = session[:edit]
   end
 
