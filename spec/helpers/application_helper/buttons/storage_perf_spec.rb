@@ -1,4 +1,4 @@
-require 'shared/helpers/application_helper/buttons/basic'
+require 'shared/helpers/application_helper/buttons/perf'
 
 describe ApplicationHelper::Button::StoragePerf do
   include_context 'ApplicationHelper::Button::Basic'
@@ -7,5 +7,7 @@ describe ApplicationHelper::Button::StoragePerf do
   let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:storage) }
 
-  it_behaves_like 'a performance button', 'Datastore'
+  describe '#calculate_properties' do
+    include_context 'ApplicationHelper::Button::Perf#calculate_properties', :entity => 'Datastore'
+  end
 end

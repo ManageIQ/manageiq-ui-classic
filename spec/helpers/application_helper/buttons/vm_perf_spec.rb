@@ -1,4 +1,4 @@
-require 'shared/helpers/application_helper/buttons/basic'
+require 'shared/helpers/application_helper/buttons/perf'
 
 describe ApplicationHelper::Button::VmPerf do
   include_context 'ApplicationHelper::Button::Basic'
@@ -7,5 +7,7 @@ describe ApplicationHelper::Button::VmPerf do
   let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:vm_or_template) }
 
-  it_behaves_like 'a performance button', 'VM'
+  describe '#calculate_properties' do
+    include_context 'ApplicationHelper::Button::Perf#calculate_properties', :entity => 'VM'
+  end
 end
