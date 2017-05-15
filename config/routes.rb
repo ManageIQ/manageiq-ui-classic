@@ -2321,6 +2321,7 @@ Rails.application.routes.draw do
         edit
         show
         ownership
+        ownership_form_fields
       ),
       :post => %w(
         edit
