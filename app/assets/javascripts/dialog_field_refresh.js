@@ -15,7 +15,7 @@ var dialogFieldRefresh = {
 
     $(document).on('dialog::autoRefresh', function(_event, data) {
       if (thisIsTheFieldToUpdate(data)) {
-        callbackFunction.call();
+        callbackFunction.call(null, data.initializingIndex);
       }
     });
   },
@@ -27,6 +27,7 @@ var dialogFieldRefresh = {
     }
 
     miqSelectPickerEvent(fieldName, url, {callback: function() {
+      autoRefreshOptions.initial_trigger = true;
       dialogFieldRefresh.triggerAutoRefresh(autoRefreshOptions);
       return true;
     }});
@@ -176,10 +177,18 @@ var dialogFieldRefresh = {
   triggerAutoRefresh: function(autoRefreshOptions) {
     if (Boolean(autoRefreshOptions.trigger) === true) {
       var autoRefreshableIndicies = autoRefreshOptions.auto_refreshable_field_indicies;
-      var currentIndex = autoRefreshOptions.current_index;
+      var currentIndex, initializingIndex;
+
+      if (autoRefreshOptions.initial_trigger === true) {
+        currentIndex = 0;
+        initializingIndex = autoRefreshOptions.current_index;
+      } else {
+        currentIndex = autoRefreshOptions.current_index;
+        initializingIndex = autoRefreshOptions.initializingIndex;
+      }
 
       var nextAvailable = $.grep(autoRefreshableIndicies, function(potential, potentialsIndex) {
-        return (potential.auto_refresh === true && potentialsIndex > currentIndex);
+        return (potential.auto_refresh === true && potentialsIndex > currentIndex && potentialsIndex !== initializingIndex);
       });
 
       nextAvailable = nextAvailable[0];
@@ -189,6 +198,7 @@ var dialogFieldRefresh = {
           tabIndex: nextAvailable.tab_index,
           groupIndex: nextAvailable.group_index,
           fieldIndex: nextAvailable.field_index,
+          initializingIndex: initializingIndex
         });
       }
     }

@@ -3,11 +3,12 @@
 - if field.dynamic
   - if field.auto_refresh
     :javascript
-      dialogFieldRefresh.listenForAutoRefreshMessages(JSON.parse("#{j(auto_refresh_options.to_json)}"), function() {
+      dialogFieldRefresh.listenForAutoRefreshMessages(JSON.parse("#{j(auto_refresh_options.to_json)}"), function(initializingIndex) {
         dialogFieldRefresh.refreshCheckbox("#{field.name}", "#{field.id}", function() {
-          dialogFieldRefresh.triggerAutoRefresh(
-            JSON.parse('#{j(auto_refresh_listening_options(auto_refresh_options, true).to_json)}')
-          );
+          var jsonOptions = JSON.parse('#{j(auto_refresh_listening_options(auto_refresh_options, true).to_json)}');
+          jsonOptions.initializingIndex = initializingIndex;
+
+          dialogFieldRefresh.triggerAutoRefresh(jsonOptions);
         });
       });
 
@@ -17,6 +18,9 @@
   :javascript
     $('#refresh-dynamic-checkbox-#{field.id}').click(function() {
       dialogFieldRefresh.refreshCheckbox("#{field.name}", "#{field.id}", function() {
-        dialogFieldRefresh.triggerAutoRefresh(JSON.parse('#{j(auto_refresh_options.to_json)}'));
+        var jsonOptions = JSON.parse('#{j(auto_refresh_options.to_json)}');
+        jsonOptions.initialTrigger = true;
+
+        dialogFieldRefresh.triggerAutoRefresh(jsonOptions);
       });
     });

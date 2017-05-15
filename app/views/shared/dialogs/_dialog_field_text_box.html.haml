@@ -1,17 +1,18 @@
 - if edit
   - if field.protected?
-    = password_field_tag(field.name + "__protected", field.value, textbox_tag_options(field, url, auto_refresh_options))
+    = password_field_tag(field.name + "__protected", field.value, textbox_tag_options(field, url, auto_refresh_options.merge(:initial_trigger => true)))
   - else
-    = text_field_tag(field.name, field.value, textbox_tag_options(field, url, auto_refresh_options))
+    = text_field_tag(field.name, field.value, textbox_tag_options(field, url, auto_refresh_options.merge(:initial_trigger => true)))
 
   - if field.dynamic
     - if field.auto_refresh
       :javascript
-        dialogFieldRefresh.listenForAutoRefreshMessages(JSON.parse('#{j(auto_refresh_options.to_json)}'), function() {
+        dialogFieldRefresh.listenForAutoRefreshMessages(JSON.parse('#{j(auto_refresh_options.to_json)}'), function(initializingIndex) {
           dialogFieldRefresh.refreshTextBox("#{field.name}", "#{field.id}", function() {
-            dialogFieldRefresh.triggerAutoRefresh(
-              JSON.parse('#{j(auto_refresh_listening_options(auto_refresh_options, true).to_json)}')
-            );
+            var jsonOptions = JSON.parse('#{j(auto_refresh_listening_options(auto_refresh_options, true).to_json)}');
+            jsonOptions.initializingIndex = initializingIndex;
+
+            dialogFieldRefresh.triggerAutoRefresh(jsonOptions);
           });
         });
 
@@ -21,7 +22,10 @@
       :javascript
         $('#refresh-dynamic-text-field-#{field.id}').click(function() {
           dialogFieldRefresh.refreshTextBox("#{field.name}", "#{field.id}", function() {
-            dialogFieldRefresh.triggerAutoRefresh(JSON.parse('#{j(auto_refresh_options.to_json)}'));
+            var jsonOptions = JSON.parse('#{j(auto_refresh_options.to_json)}');
+            jsonOptions.initialTrigger = true;
+
+            dialogFieldRefresh.triggerAutoRefresh(jsonOptions);
           });
         });
 
