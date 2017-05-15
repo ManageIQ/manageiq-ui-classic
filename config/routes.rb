@@ -2348,6 +2348,7 @@ Rails.application.routes.draw do
         edit
         edit_vm
         form_field_changed
+        ownership_form_fields
         show
       ) +
                ownership_post
