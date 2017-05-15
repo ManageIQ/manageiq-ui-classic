@@ -1,4 +1,4 @@
-require 'shared/helpers/application_helper/buttons/basic'
+require 'shared/helpers/application_helper/buttons/scan'
 
 describe ApplicationHelper::Button::VmInstanceTemplateScan do
   include_context 'ApplicationHelper::Button::Basic'
@@ -35,15 +35,16 @@ describe ApplicationHelper::Button::VmInstanceTemplateScan do
     before do
       MiqServer.seed
       allow(record).to receive(:has_active_proxy?).and_return(has_active_proxy?)
+      setup_server
+      subject.calculate_properties
     end
 
-    it_behaves_like 'a smart state scan button'
+    include_context 'ApplicationHelper::Button::Scan#calculate_properties'
 
     context 'when smart_roles are enabled' do
-      before do
+      let(:setup_server) do
         roles = %w(smartproxy smartstate).collect { |role| FactoryGirl.create(:server_role, :name => role) }
         FactoryGirl.create(:miq_server, :zone => MiqServer.my_server.zone, :active_roles => roles)
-        subject.calculate_properties
       end
 
       context 'when record has active proxy' do

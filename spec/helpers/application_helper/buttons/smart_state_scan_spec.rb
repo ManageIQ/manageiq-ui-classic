@@ -1,4 +1,4 @@
-require 'shared/helpers/application_helper/buttons/basic'
+require 'shared/helpers/application_helper/buttons/scan'
 
 describe ApplicationHelper::Button::SmartStateScan do
   include_context 'ApplicationHelper::Button::Basic'
@@ -6,5 +6,13 @@ describe ApplicationHelper::Button::SmartStateScan do
   let(:instance_data) { Hash.new }
   let(:props) { Hash.new }
 
-  it_behaves_like 'a smart state scan button'
+  describe '#calculate_properties' do
+    before do
+      MiqServer.seed
+      setup_server
+      subject.calculate_properties
+    end
+
+    include_context 'ApplicationHelper::Button::Scan#calculate_properties'
+  end
 end
