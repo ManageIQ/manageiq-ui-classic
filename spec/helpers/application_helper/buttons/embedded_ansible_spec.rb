@@ -1,22 +1,38 @@
 describe ApplicationHelper::Button::EmbeddedAnsible do
+  before(:each) do
+    MiqRegion.seed
+    EvmSpecHelper.create_guid_miq_server_zone
+  end
+
   let(:view_context) { setup_view_context_with_sandbox({}) }
   subject { described_class.new(view_context, {}, {}, {}) }
 
-  context 'Embedded Ansible provider is present' do
+  context 'Embedded Ansible role is turned on and provider is present' do
     before do
+      server_role = FactoryGirl.create(
+        :server_role,
+        :name              => "embedded_ansible",
+        :description       => "Embedded Ansible",
+        :max_concurrent    => 1,
+        :external_failover => false,
+        :role_scope        => "zone"
+      )
+      FactoryGirl.create(
+        :assigned_server_role,
+        :miq_server_id  => MiqServer.first.id,
+        :server_role_id => server_role.id,
+        :active         => true,
+        :priority       => 1
+      )
       # Add embedded Ansible provider if there is none
       FactoryGirl.create(:provider_embedded_ansible) if ManageIQ::Providers::EmbeddedAnsible::Provider.count == 0
-      allow_any_instance_of(ManageIQ::Providers::EmbeddedAnsible::AutomationManager).to receive(:last_refresh_status).and_return("success")
     end
     it '#disabled? returns false' do
       expect(subject.disabled?).to be false
     end
   end
-  context 'Embedded Ansible provider is missing' do
-    before do
-      # no embedded provider
-      allow(ManageIQ::Providers::EmbeddedAnsible::Provider).to receive(:count).and_return(0)
-    end
+
+  context 'Embedded Ansible provider is missing & Role is not enabled' do
     it '#disabled? returns true' do
       expect(subject.disabled?).to be true
     end
