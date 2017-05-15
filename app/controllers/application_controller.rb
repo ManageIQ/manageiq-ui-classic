@@ -2103,6 +2103,11 @@ class ApplicationController < ActionController::Base
       @view ||= session[:view]                              #   Remember the previous @view
     end
 
+    if controller_name == "ems_cloud" && @lastaction == "show"
+      @view ||= session[:view]
+    else
+      @view = session[:view]
+    end
     # Save @edit key for the expression editor to use
     session[:expkey] = @expkey
     @edit[@expkey].drop_cache if @edit && @edit[@expkey]
