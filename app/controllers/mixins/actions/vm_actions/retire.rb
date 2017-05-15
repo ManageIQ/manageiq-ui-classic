@@ -116,13 +116,13 @@ module Mixins
             @sb[:action] = nil
           elsif params[:button] == "save"
             if params[:retire_date].blank?
-              flash = session[:retire_items].length == 1 ? flash = _("Retirement date removed") : _("Retirement dates removed")
+              flash = n_("Retirement date removed", "Retirement dates removed", session[:retire_items].length)
             else
               t = params[:retire_date].in_time_zone
               w = params[:retire_warn].to_i
 
               ts = t.strftime("%x %R %Z")
-              flash = session[:retire_items].length == 1 ? _("Retirement date set to %{date}") % {:date => ts} : _("Retirement dates set to %{date}") % {:date => ts}
+              flash = n_("Retirement date set to #{ts}", "Retirement dates set to #{ts}", session[:retire_items].length)
             end
             kls.retire(session[:retire_items], :date => t, :warn => w) # Call the model to retire the VM(s)
             @sb[:action] = nil
