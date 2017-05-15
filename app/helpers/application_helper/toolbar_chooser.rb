@@ -667,6 +667,7 @@ class ApplicationHelper::ToolbarChooser
   end
 
   NO_GTL_VIEW_BUTTONS = %w(chargeback
+                           generic_object
                            generic_object_definition
                            miq_ae_class
                            miq_ae_customization

@@ -75,4 +75,5 @@ class GenericObjectController < ApplicationController
   end
 
   menu_section :automate
+  toolbar :generic_object_definition
 end
