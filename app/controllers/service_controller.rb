@@ -241,10 +241,10 @@ class ServiceController < ApplicationController
       @view, @pages = get_view(Vm, :parent => @record, :parent_method => :all_vms, :all_pages => true)  # Get the records (into a view) and the paginator
     when "Hash"
       if id == "asrv"
-        process_show_list(:where_clause => "retired is false and ancestry is null")
+        process_show_list(:where_clause => "retired is false and services.display is true")
         @right_cell_text = _("Active Services")
       else
-        process_show_list(:where_clause => "retired is true and ancestry is null")
+        process_show_list(:where_clause => "retired is true and services.display is true")
         @right_cell_text = _("Retired Services")
       end
     else      # Get list of child Catalog Items/Services of this node
