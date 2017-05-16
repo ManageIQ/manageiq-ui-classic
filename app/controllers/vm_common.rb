@@ -13,7 +13,7 @@ module VmCommon
   included do
     private :textual_group_list
     helper_method :textual_group_list
-    helper_method :parent_choices
+    helper_method :parent_choices_with_no_parent_choice
   end
 
   # handle buttons pressed on the button bar
@@ -979,16 +979,19 @@ module VmCommon
     replace_right_cell
   end
 
-  def parent_choices
+  def parent_choices(ids)
     @parent_choices = {}
-    @parent_choices[@record.id] ||= begin
-      parent_item_scope = Rbac.filtered(VmOrTemplate.where.not(:id => @record.id).order(:name))
-      choices = parent_item_scope.pluck(:name, :location, :id).each_with_object({}) do |vm, memo|
+    @parent_choices[Digest::MD5.hexdigest(ids.inspect)] ||= begin
+      parent_item_scope = Rbac.filtered(VmOrTemplate.where.not(:id => ids).order(:name))
+
+      parent_item_scope.pluck(:name, :location, :id).each_with_object({}) do |vm, memo|
         memo[vm[0] + " -- #{vm[1]}"] = vm[2]
       end
-      # Add "no parent" entry as 1 entry in hash
-      {'"no parent"' => -1}.merge(choices)
     end
+  end
+
+  def parent_choices_with_no_parent_choice
+    {'"no parent"' => -1}.merge(parent_choices(@record.id))
   end
 
   private
@@ -1425,16 +1428,7 @@ module VmCommon
                                    .pluck(:resource_id)
 
     # Build a hash for the VMs to choose from, only if they have no parent
-    available_item_scope = VmOrTemplate.where.not(:id => ids_with_parents)
-    @edit[:choices] = Rbac.filtered(available_item_scope)
-                          .pluck(:name, :location, :id)
-                          .each_with_object({}) do |vm, memo|
-                            memo[vm[0] + " -- #{vm[1]}"] = vm[2]
-                          end
-
-    @edit[:new][:kids].each_key { |key| @edit[:choices].delete(key) }   # Remove any VMs that are in the kids list box from the choices
-
-    @edit[:choices].delete(@record.name + " -- #{@record.location}")                                    # Remove the current VM from the choices list
+    @edit[:choices] = parent_choices(ids_with_parents + [@record.id] + vms.pluck(:id))
 
     @edit[:current][:parent] = @edit[:new][:parent]
     @edit[:current][:kids] = @edit[:new][:kids].dup
@@ -1747,7 +1741,7 @@ module VmCommon
           # if @edit[:new][k].is_a?(Hash)
           msg = msg + k.to_s + ":[" + @edit[:current][k].keys.join(",") + "] to [" + @edit[:new][k].keys.join(",") + "]"
         elsif k == :parent
-          parent_choices_invert = parent_choices.invert
+          parent_choices_invert = parent_choices_with_no_parent_choice.invert
           current_parent_choice = parent_choices_invert[@edit[:current][k]]
           new_parent_choice     = parent_choices_invert[@edit[:new][k]]
           msg = "#{msg}#{k}:[#{current_parent_choice}] to [#{new_parent_choice}]"
