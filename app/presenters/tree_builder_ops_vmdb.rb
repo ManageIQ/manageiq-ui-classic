@@ -36,12 +36,9 @@ class TreeBuilderOpsVmdb < TreeBuilderOps
 
   # Handle custom tree nodes (object is a Hash)
   def x_get_tree_custom_kids(object, count_only, _options)
-    rec = VmdbTableEvm.find_by_id(from_cid(object[:id].split("|").last.split('-').last))
-    indexes = []
-    rec.vmdb_indexes.each do |ind|
-      indexes.push(ind) if ind.vmdb_table.type == "VmdbTableEvm"
-    end
-    count_only_or_objects(count_only, indexes, "name")
+    vmdb_table_id = from_cid(object[:id].split("|").last.split('-').last)
+    vmdb_indexes  = VmdbIndex.includes(:vmdb_table).where(:vmdb_tables => {:type => 'VmdbTableEvm', :id => vmdb_table_id})
+    count_only_or_objects(count_only, vmdb_indexes, "name")
   end
 
   def x_get_tree_vmdb_table_kids(object, count_only)
