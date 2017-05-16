@@ -57,8 +57,6 @@ class HostAggregateController < ApplicationController
       @record = find_record_with_rbac(HostAggregate, session[:tl_record_id])
       show_timeline
     end
-
-    replace_gtl_main_div if pagination_request?
   end
 
   def host_aggregate_form_fields

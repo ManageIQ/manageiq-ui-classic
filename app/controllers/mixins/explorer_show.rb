@@ -234,9 +234,7 @@ module Mixins
         @refresh_partial = "vm_common/#{@showtype}"
         replace_right_cell
       else
-        if pagination_request?
-          replace_gtl_main_div
-        elsif request.xml_http_request?
+        if request.xml_http_request?
           # reload toolbars - AJAX request
           render :update do |page|
             page << javascript_prologue

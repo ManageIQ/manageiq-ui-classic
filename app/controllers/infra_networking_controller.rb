@@ -612,8 +612,6 @@ class InfraNetworkingController < ApplicationController
     if @explorer # In explorer?
       @refresh_partial = @showtype.to_s
       replace_right_cell
-    elsif pagination_request?
-      replace_gtl_main_div
     elsif request.xml_http_request?
       render :update do |page|
         page << javascript_prologue

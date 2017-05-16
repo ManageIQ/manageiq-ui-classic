@@ -263,8 +263,6 @@ module VmCommon
     get_host_for_vm(@record)
     session[:tl_record_id] = @record.id
 
-    replace_gtl_main_div if pagination_request?
-
     if @explorer
       @refresh_partial = "layouts/performance"
       replace_right_cell unless params[:display] == "performance"
@@ -874,20 +872,12 @@ module VmCommon
                       :url  => "/vm/scan_history/#{@scan_history.vm_or_template_id}")
     end
 
-    if pagination_request?
-      render :update do |page|
-        page << javascript_prologue
-        page.replace_html("gtl_div", :partial => "layouts/gtl")
-        page << "miqSparkle(false);"  # Need to turn off sparkle in case original ajax element gets replaced
-      end
+    if @explorer || request.xml_http_request? # Is this an Ajax request?
+      @sb[:action] = params[:action]
+      @refresh_partial = "layouts/#{@showtype}"
+      replace_right_cell
     else
-      if @explorer || request.xml_http_request? # Is this an Ajax request?
-        @sb[:action] = params[:action]
-        @refresh_partial = "layouts/#{@showtype}"
-        replace_right_cell
-      else
-        render :action => 'show'
-      end
+      render :action => 'show'
     end
   end
 
