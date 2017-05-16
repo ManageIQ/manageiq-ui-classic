@@ -1,7 +1,5 @@
-require 'recursive-open-struct'
-
 describe ContainerDashboardService do
-  let(:controller) { RecursiveOpenStruct.new(:current_user => {:get_timezone => "UTC"}) }
+  let(:controller) { double(:current_user => double(:get_timezone => "UTC", :id => 123)) }
   let(:time_profile) { FactoryGirl.create(:time_profile_utc) }
 
   before(:each) do

@@ -165,7 +165,7 @@ describe EmsCloudController do
 end
 
 describe EmsContainerController do
-  let(:myhawkularroute) { RecursiveOpenStruct.new(:spec => {:host => "myhawkularroute.com"}) }
+  let(:myhawkularroute) { double(:spec => double(:host => "myhawkularroute.com")) }
 
   def expect_get_route(&block)
     mock_client = double('kubeclient')
