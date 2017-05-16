@@ -470,6 +470,13 @@ module EmsCommon
       javascript_redirect :controller => "cloud_volume",
                           :action     => "edit",
                           :id         => find_checked_ids_with_rbac(CloudVolume).first
+    elsif params[:pressed] == "cloud_volume_delete"
+      # Clear CloudVolumeController's lastaction, since we are calling the delete_volumes from
+      # an external controller. This will ensure that the final redirect is properly handled.
+      session["#{CloudVolumeController.session_key_prefix}_lastaction".to_sym] = nil
+      javascript_redirect :controller      => "cloud_volume",
+                          :action          => "delete_volumes",
+                          :miq_grid_checks => params[:miq_grid_checks]
     elsif params[:pressed] == "network_router_edit"
       javascript_redirect :controller => "network_router",
                           :action     => "edit",
