@@ -7,6 +7,11 @@ class CloudVolumeController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericFormMixin
   include Mixins::GenericSessionMixin
+  include Mixins::GenericShowMixin
+
+  def self.display_methods
+    %w(cloud_volume_snapshots cloud_volume_backups instances)
+  end
 
   # handle buttons pressed on the button bar
   def button
@@ -63,61 +68,6 @@ class CloudVolumeController < ApplicationController
     else
       render_flash
     end
-  end
-
-  def show
-    @display = params[:display] || "main" unless pagination_or_gtl_request?
-    @showtype = @display
-    @lastaction = "show"
-
-    @volume = @record = identify_record(params[:id])
-    return if record_no_longer_exists?(@volume)
-
-    @gtl_url = "/show"
-    drop_breadcrumb({
-                      :name => _("Cloud Volumes"),
-                      :url  => "/cloud_volume/show_list?page=#{@current_page}&refresh=y"},
-                    true)
-
-    case @display
-    when "main", "summary_only"
-      get_tagdata(@volume)
-      drop_breadcrumb(
-        :name => _("%{name} (Summary)") % {:name => @volume.name.to_s},
-        :url  => "/cloud_volume/show/#{@volume.id}"
-      )
-      @showtype = "main"
-      set_summary_pdf_data if @display == 'summary_only'
-    when "cloud_volume_snapshots"
-      title = ui_lookup(:tables => 'cloud_volume_snapshots')
-      kls   = CloudVolumeSnapshot
-      drop_breadcrumb(
-        :name => _("%{name} (All %{children})") % {:name => @volume.name, :children => title},
-        :url  => "/cloud_volume/show/#{@volume.id}?display=cloud_volume_snapshots"
-      )
-      @view, @pages = get_view(kls, :parent => @volume, :association => :cloud_volume_snapshots)
-      @showtype = @display
-    when "cloud_volume_backups"
-      title = ui_lookup(:tables => 'cloud_volume_backups')
-      kls   = CloudVolumeBackup
-      drop_breadcrumb(
-        :name => _("%{name} (All %{children})") % {:name => @volume.name, :children => title},
-        :url  => "/cloud_volume/show/#{@volume.id}?display=cloud_volume_backups"
-      )
-      @view, @pages = get_view(kls, :parent => @volume, :association => :cloud_volume_backups)
-      @showtype = @display
-    when "instances"
-      title = ui_lookup(:tables => "vm_cloud")
-      kls   = ManageIQ::Providers::CloudManager::Vm
-      drop_breadcrumb(
-        :name => _("%{name} (All %{title})") % {:name => @volume.name, :title => title},
-        :url  => "/cloud_volume/show/#{@volume.id}?display=#{@display}"
-      )
-      @view, @pages = get_view(kls, :parent => @volume) # Get the records (into a view) and the paginator
-      @showtype = @display
-    end
-
-    replace_gtl_main_div if pagination_request?
   end
 
   def attach
