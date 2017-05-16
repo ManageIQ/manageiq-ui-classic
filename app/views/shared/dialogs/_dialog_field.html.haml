@@ -47,7 +47,7 @@
       = button_tag(_("Save"), :class => edit ? 'btn btn-primary' : 'btn btn-primary disabled')
 
     - when 'DialogFieldTagControl'
-      - if edit         
+      - if edit
         = select_tag(field.name,
                      options_for_select(dialog_dropdown_select_values(field), wf.value(field.name)),
                      drop_down_options(field, url))
@@ -55,9 +55,9 @@
           dialogFieldRefresh.initializeDialogSelectPicker('#{field.name}', undefined, '#{url}', JSON.parse('#{j(auto_refresh_options.to_json)}'));
 
       - else
-        - value = wf.value(field.name) || ''
-        - classification_ids = value.split(',')
-        = h(Classification.where(:id => classification_ids).collect(&:description).join(', '))
+        - value = wf.value(field.name) || '' # it returns in format for example Clasification::id
+        - _, classification_id = value.split('::')
+        = h(Classification.find(classification_id).description)
 
     :javascript
       dialogFieldRefresh.setVisible($('#field_#{field.id}_tr'), #{field.visible});
