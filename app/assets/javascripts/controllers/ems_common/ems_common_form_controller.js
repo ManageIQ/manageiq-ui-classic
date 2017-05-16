@@ -176,6 +176,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     function getNewEmsFormDataComplete(response) {
       var data = response.data;
 
+      $scope.emsCommonModel.emstype                         = '';
       $scope.emsCommonModel.zone                            = data.zone;
       $scope.emsCommonModel.tenant_mapping_enabled          = data.tenant_mapping_enabled;
       $scope.emsCommonModel.emstype_vm                      = data.emstype_vm;
