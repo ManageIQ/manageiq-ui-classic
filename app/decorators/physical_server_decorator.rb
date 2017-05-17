@@ -1,6 +1,6 @@
 class PhysicalServerDecorator < MiqDecorator
   def fileicon
-    "svg/vendor-#{vendor.downcase}.svg"
+    "svg/vendor-#{label_for_vendor.downcase}.svg"
   end
 
   def self.fonticon
