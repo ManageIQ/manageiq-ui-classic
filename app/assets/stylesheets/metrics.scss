@@ -23,13 +23,14 @@
     margin-left: 15px;
   }
   .toolbar-pf {
-    .toolbar-pf-actions {
-      .form-group {
-        padding-right: 0;
-        margin-bottom: 0;
-        border: 0;
-      }
-    }
+    border: 0;
+  }
+  .graph-view .toolbar-pf .toolbar-pf-actions .form-group {
+    padding-right: 0;
+  }
+  .list-view .toolbar-pf .toolbar-pf-actions .form-group {
+    padding-right: 0;
+    margin-bottom: 0 !important;
   }
 
   .ad-hoc-tenant {
@@ -65,8 +66,12 @@
   .pagination-div {
     display: flex;
     float: right;
-    margin: 0;
-    margin-bottom: 0;
+    position: absolute;
+    top: 46px;
+    right: 5px;
+    margin-right: 5px;
+    padding-right: 0;
+    border: 0;
     .page-input {
       width: 40px;
       margin-left: 10px;
@@ -92,12 +97,10 @@
   }
 
   .list-view-container {
-    min-height: calc(100vh - 353px);
     padding-top: 10px;
     margin-bottom: 0;
   }
   .line-chart {
-    min-height: calc(100vh - 347px);
     margin-top: 36px;
     margin-left: 30px;
     margin-right: 50px;
@@ -105,7 +108,6 @@
   }
 
   .blank-slate-pf {
-    min-height: calc(100vh - 353px);
     margin-bottom: 0;
   }
 
@@ -135,13 +137,16 @@
       border-bottom: 1px solid #39a5dc;
     }
 
+    .list-group.list-view-pf.list-view-pf-view {
+      margin-top: 5px;
+    }
+
     .list-group-item-container {
       margin-top: 10px;
       padding: 15px;
       border: 0;
     }
     .form-group.toolbar-actions.ng-scope {
-      width: calc(100% - 435px);
       border: 0;
     }
     .dropdown-kebab-pf {
