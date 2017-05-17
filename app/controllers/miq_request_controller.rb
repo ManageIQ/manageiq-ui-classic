@@ -66,8 +66,7 @@ class MiqRequestController < ApplicationController
         show_list
         render :update do |page|
           page << javascript_prologue
-          page.replace("prov_options_div", :partial => "prov_options")
-          page.replace("gtl_div", :partial => "layouts/gtl")
+          page.replace("main_div", :template => "miq_request/show_list")
         end
       end
     else
