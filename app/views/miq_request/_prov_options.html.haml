@@ -1,6 +1,6 @@
-= render :partial => "layouts/flash_msg"
 - url = url_for_only_path(:action => 'prov_change_options')
 #prov_options_div
+  = render :partial => "layouts/flash_msg"
   %h3
     = _("Filter By")
   .form-horizontal
@@ -66,7 +66,6 @@
           = link_to(_("Default"),
             {:action => "prov_button", :button => "default"},
             :class                 => "btn btn-default",
-            :id                    => "apply",
             :alt                   => (t = _("Set filters to default")),
             "data-miq_sparkle_on"  => true,
             "data-miq_sparkle_off" => true,
