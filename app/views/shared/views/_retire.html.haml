@@ -54,17 +54,19 @@
 
   %table{:width => "100%"}
     %tr
-      %td#buttons_on{:align => "right"}
-        = button_tag(_("Save"),
-                     :class        => "btn btn-primary",
-                     :alt          => _("Save"),
-                     "ng-click"    => "vm.saveClicked()",
-                     "ng-disabled" => "angularForm.$pristine || angularForm.$invalid",
-                     "ng-class"    => "{ disabled: angularForm.$pristine || angularForm.$invalid}")
-        = button_tag(_("Cancel"),
-                     :class     => "btn btn-default",
-                     :alt          => _("Cancel"),
-                     "ng-click" => "vm.cancelClicked()")
+      %td{:align => "right"}
+        %miq-button{:name      => t = _("Save"),
+                    :title     => t,
+                    :alt       => t,
+                    :enabled   => "!angularForm.$pristine && !angularForm.$invalid",
+                    'on-click' => "vm.saveClicked()",
+                    :primary   => 'true'}
+        %miq-button{:name      => t = _("Cancel"),
+                    :title     => t,
+                    :alt       => t,
+                    :enabled   => "true",
+                    'on-click' => "vm.cancelClicked()"}
+
 - if @retireitems
   - @embedded = true
   - @quadicon_no_url = true
