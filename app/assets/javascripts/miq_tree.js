@@ -5,10 +5,15 @@ function miqTreeObject(tree) {
 }
 
 function miqTreeFindNodeByKey(tree, key) {
-  return miqTreeObject(tree).getNodes().find(function (node) {
-    if (node.key == key) {
-      return node;
-    }
+  var tree = miqTreeObject(tree);
+
+  if (!tree) {
+    console.error("miqTreeFindNodeByKey: tree '" + tree + "' does not exist.");
+    return;
+  };
+
+  return tree.getNodes().find(function (node) {
+    return (node.key == key);
   });
 }
 
