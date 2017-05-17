@@ -4,7 +4,8 @@
                                "ng-controller" => "retirementFormController as vm",
                                "miq-form"      => true,
                                "model"         => "vm.retirementInfo",
-                               "model-copy"    => "vm.modelCopy" }
+                               "model-copy"    => "vm.modelCopy",
+                               "form-changed"  => true}
   %h3
     = _('Set/Remove Retirement Date')
   %tbody
@@ -17,8 +18,7 @@
                                 :class               => "css1",
                                 "ng-model"           => "vm.retirementInfo.retirementDate",
                                 "miq-calendar"       => true,
-                                "miq-cal-date-from"  => "vm.datepickerStartDate",
-                                "checkchange"        => true)
+                                "miq-cal-date-from"  => "vm.datepickerStartDate")
         %a{'href'              => '#',
            'ng-click'          => 'vm.retirementInfo.retirementDate = null; vm.retirementInfo.retirementWarning = ""',
            'ng-hide'           => '!vm.retirementInfo.retirementDate'}
@@ -36,7 +36,6 @@
                      "ng-options"  => "item.value as item.label for item in #{select_options.to_json.gsub('"', '\'')}",
                      "ng-model"    => "vm.retirementInfo.retirementWarning",
                      "ng-disabled" => "!vm.retirementInfo.retirementDate",
-                     "checkchange" => true,
                      "pf-select"   => true)
         :javascript
           miqInitSelectPicker();
