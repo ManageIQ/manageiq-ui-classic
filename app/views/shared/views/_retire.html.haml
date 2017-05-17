@@ -16,11 +16,11 @@
         = datepicker_input_tag("retirementDate", nil,
                                 :id                  => "retirement_date",
                                 :class               => "css1",
-                                "ng-model"           => "vm.retirementInfo.retirementDate",
+                                "ng-model"           => "vm.retirementInfo.date",
                                 "miq-calendar"       => true,
                                 "miq-cal-date-from"  => "vm.datepickerStartDate")
         %a{'href'              => '#',
-           'ng-click'          => 'vm.retirementInfo.retirementDate = null; vm.retirementInfo.retirementWarning = ""',
+           'ng-click'          => 'vm.retirementInfo.date = null; vm.retirementInfo.warning = ""',
            'ng-hide'           => '!vm.retirementInfo.retirementDate'}
           = image_tag(image_path('16/clear.png'), :border => "0", :alt => _("Set to blank"))
     .form-group
@@ -34,8 +34,8 @@
         = select_tag("retirementWarning",
                      "",
                      "ng-options"  => "item.value as item.label for item in #{select_options.to_json.gsub('"', '\'')}",
-                     "ng-model"    => "vm.retirementInfo.retirementWarning",
-                     "ng-disabled" => "!vm.retirementInfo.retirementDate",
+                     "ng-model"    => "vm.retirementInfo.warning",
+                     "ng-disabled" => "!vm.retirementInfo.date",
                      "pf-select"   => true)
         :javascript
           miqInitSelectPicker();

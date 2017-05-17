@@ -61,8 +61,8 @@ module Mixins
           obj = find_records_with_rbac(kls, [params[:id]]).first
 
           render :json => {
-            :retirement_date    => obj.retires_on.try(:strftime, '%m/%d/%Y'),
-            :retirement_warning => obj.retirement_warn
+            :date    => obj.retires_on.try(:strftime, '%m/%d/%Y'),
+            :warning => obj.retirement_warn,
           }
         end
 
@@ -125,15 +125,17 @@ module Mixins
         end
 
         def handle_save_button(kls)
-          if params[:retire_date].blank?
+          if params[:date].blank? # most likely 0
             flash = n_("Retirement date removed", "Retirement dates removed", session[:retire_items].length)
+            t = w = nil
           else
-            t = params[:retire_date].in_time_zone
-            w = params[:retire_warn].to_i
+            t = params[:date].in_time_zone
+            w = params[:warning].to_i
 
             ts = t.strftime("%x %R %Z")
             flash = n_("Retirement date set to #{ts}", "Retirement dates set to #{ts}", session[:retire_items].length)
           end
+
           kls.retire(session[:retire_items], :date => t, :warn => w) # Call the model to retire the VM(s)
           @sb[:action] = nil
           flash

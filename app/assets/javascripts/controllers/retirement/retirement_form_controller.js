@@ -2,8 +2,8 @@ ManageIQ.angular.app.controller('retirementFormController', ['$http', 'objectIds
   var vm = this;
   vm.objectIds = objectIds;
   vm.retirementInfo = {
-    retirementDate: null,
-    retirementWarning: ''
+    date: null,
+    warning: ''
   };
   vm.datepickerStartDate = new Date();
   vm.modelCopy = _.extend({}, vm.retirementInfo);
@@ -22,9 +22,7 @@ ManageIQ.angular.app.controller('retirementFormController', ['$http', 'objectIds
 
   vm.saveClicked = function() {
     miqService.sparkleOn();
-    miqService.miqAjaxButton('retire?button=save',
-                             {'retire_date': vm.retirementInfo.retirementDate,
-                              'retire_warn': vm.retirementInfo.retirementWarning});
+    miqService.miqAjaxButton('retire?button=save', vm.retirementInfo);
   };
 
   function getRetirementInfoFormData(response) {
