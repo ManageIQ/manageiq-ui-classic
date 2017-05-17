@@ -1,13 +1,16 @@
 ManageIQ.angular.app.controller('retirementFormController', ['$http', 'objectIds', 'miqService', function($http, objectIds, miqService) {
   var vm = this;
-  vm.objectIds = objectIds;
-  vm.retirementInfo = {
+
+  var defaults = {
     date: null,
-    warning: ''
+    warning: 0,
   };
-  vm.datepickerStartDate = new Date();
-  vm.modelCopy = _.extend({}, vm.retirementInfo);
+
+  vm.retirementInfo = angular.copy(defaults);
   vm.model = 'retirementInfo';
+  vm.modelCopy = angular.copy(vm.retirementInfo);
+
+  vm.datepickerStartDate = new Date();
 
   if (objectIds.length == 1) {
     $http.get('retirement_info/' + objectIds[0])
@@ -26,8 +29,7 @@ ManageIQ.angular.app.controller('retirementFormController', ['$http', 'objectIds
   };
 
   vm.clearDate = function() {
-    vm.retirementInfo.date = null;
-    vm.retirementInfo.warning = "";
+    angular.extend(vm.retirementInfo, defaults);
   };
 
   function getRetirementInfoFormData(response) {
