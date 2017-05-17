@@ -61,7 +61,7 @@ module Mixins
           obj = find_records_with_rbac(kls, [params[:id]]).first
 
           render :json => {
-            :date    => obj.retires_on.try(:strftime, '%m/%d/%Y'),
+            :date    => obj.retires_on.try(:iso8601),
             :warning => obj.retirement_warn,
           }
         end
