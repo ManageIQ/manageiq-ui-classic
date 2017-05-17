@@ -36,6 +36,8 @@ ManageIQ.angular.app.directive('formChanged', function() {
         // TODO in lodash 4 it's _.isEqualWith
         if (_.isEqual(model(), modelCopy(), compare)) {
           ctrl.$setPristine();
+        } else {
+          ctrl.$setDirty();
         }
       });
     },

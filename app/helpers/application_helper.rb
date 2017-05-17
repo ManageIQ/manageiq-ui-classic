@@ -634,7 +634,8 @@ module ApplicationHelper
     javascript_for_miq_button_visibility(changed)
   end
 
-  def javascript_pf_toolbar_reload(div_id, toolbar)
+  # reload all toolbars
+  def javascript_reload_toolbars
     "sendDataWithRx({redrawToolbar: #{toolbar_from_hash.to_json}});"
   end
 
@@ -819,7 +820,12 @@ module ApplicationHelper
       toolbars['summary_center_tb'] = controller.restful? ? "summary_center_restful_tb" : "summary_center_tb"
     end
 
-    toolbars['center_tb'] = center_toolbar_filename
+    # FIXME: singular vs plural for controller.class.toolbar_singular
+    toolbars['center_tb'] = if controller.class.toolbar_singular.present?
+                              "#{controller.class.toolbar_singular}_center_tb"
+                            else
+                              center_toolbar_filename
+                            end
     toolbars['custom_tb'] = controller.custom_toolbar
 
     toolbars['view_tb'] = inner_layout_present? ? x_view_toolbar_filename : view_toolbar_filename
@@ -851,6 +857,7 @@ module ApplicationHelper
        cloud_tenant
        cloud_volume
        configuration_job
+       container
        container_build
        container_group
        container_image
@@ -1271,6 +1278,7 @@ module ApplicationHelper
                         condition
                         configuration_job
                         configuration_script_source
+                        container
                         container_build
                         container_dashboard
                         container_group
@@ -1376,6 +1384,7 @@ module ApplicationHelper
           cloud_volume_backup
           cloud_volume_snapshot
           configuration_job
+          container
           container_build
           container_group
           container_image
@@ -1411,6 +1420,7 @@ module ApplicationHelper
           offline
           orchestration_stack
           persistent_volume
+          physical_server
           resource_pool
           retired
           security_group
@@ -1443,6 +1453,7 @@ module ApplicationHelper
              cloud_volume_snapshot
              condition
              configuration_job
+             container
              container_build
              container_group
              container_image
@@ -1479,6 +1490,7 @@ module ApplicationHelper
              network_router
              orchestration_stack
              persistent_volume
+             physical_server
              policy
              resource_pool
              scan_profile
@@ -1502,6 +1514,7 @@ module ApplicationHelper
       cloud_volume_backup
       cloud_volume_snapshot
       configuration_job
+      container
       container_build
       container_group
       container_image
@@ -1598,8 +1611,6 @@ module ApplicationHelper
   def tree_with_advanced_search?
     %i(automation_manager_providers
        automation_manager_cs_filter
-       containers
-       containers_filter
        configuration_manager_cs_filter
        configuration_scripts
        configuration_manager_providers

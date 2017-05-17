@@ -72,52 +72,6 @@ module ApplicationController::CiProcessing
     @redirect_id = obj[0]
   end
 
-  # Build the vm detail gtl view
-  def show_details(db, options = {})  # Pass in the db, parent vm is in @vm
-    association = options[:association]
-    conditions  = options[:conditions]
-    # generate the grid/tile/list url to come back here when gtl buttons are pressed
-    @gtl_url       = "/#{@db}/#{@listicon.pluralize}/#{@record.id}?"
-    @showtype      = "details"
-    @display       = "main"
-    @no_checkboxes = @no_checkboxes.nil? || @no_checkboxes
-    @showlinks     = true
-
-    @view, @pages = get_view(db,
-                             :parent      => @record,
-                             :association => association,
-                             :conditions  => conditions,
-                             :dbname      => "#{@db}item")  # Get the records into a view & paginator
-
-    if @explorer # In explorer?
-      @refresh_partial = "vm_common/#{@showtype}"
-      replace_right_cell
-    else
-      if pagination_request?
-        replace_gtl_main_div
-      elsif request.xml_http_request?
-        # reload toolbars - AJAX request
-        c_tb = build_toolbar(center_toolbar_filename)
-        render :update do |page|
-          page << javascript_prologue
-          page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-          page.replace_html("main_div", :partial => "shared/views/ems_common/show") # Replace main div area contents
-          page << javascript_pf_toolbar_reload('center_tb', c_tb)
-          page.replace_html("paging_div",
-                            :partial => 'layouts/pagingcontrols',
-                            :locals  => {:pages      => @pages,
-                                         :action_url => @lastaction,
-                                         :db         => @view.db,
-                                         :headers    => @view.headers})
-        end
-      elsif controller_name == "ems_cloud"
-        render :template => "shared/views/ems_common/show"
-      else
-        render :action => "show"
-      end
-    end
-  end
-
   def get_record(db)
     if db == "host"
       @host = @record = identify_record(params[:id], Host)
@@ -246,7 +200,7 @@ module ApplicationController::CiProcessing
       bc_name = breadcrumb_name(model)
       bc_name += " - " + session["#{self.class.session_key_prefix}_type".to_sym].titleize if session["#{self.class.session_key_prefix}_type".to_sym]
       bc_name += " (filtered)" if @filters && (!@filters[:tags].blank? || !@filters[:cats].blank?)
-      action = %w(container service vm_cloud vm_infra vm_or_template storage).include?(self.class.table_name) ? "explorer" : "show_list"
+      action = %w(service vm_cloud vm_infra vm_or_template storage).include?(self.class.table_name) ? "explorer" : "show_list"
       @breadcrumbs.clear
       drop_breadcrumb(:name => bc_name, :url => "/#{controller_name}/#{action}")
     end

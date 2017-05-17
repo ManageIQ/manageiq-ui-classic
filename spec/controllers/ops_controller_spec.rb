@@ -302,21 +302,21 @@ describe OpsController do
     it "does not render toolbar buttons when edit is clicked" do
       post :x_button, :params => { :id => @miq_server.id, :pressed => 'log_depot_edit', :format => :js }
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)['setVisibility']['toolbar']).to be false
+      expect(JSON.parse(response.body)['reloadToolbars']).to match([nil])
     end
 
     it "renders toolbar buttons when cancel is clicked" do
       allow(controller).to receive(:diagnostics_set_form_vars)
       post :x_button, :params => { :id => @miq_server.id, :pressed => 'log_depot_edit', :button => "cancel", :format => :js }
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)['setVisibility']['toolbar']).to be
+      expect(JSON.parse(response.body)['reloadToolbars'].length).to eq(1)
     end
 
     it "renders toolbar buttons when save is clicked" do
       allow(controller).to receive(:diagnostics_set_form_vars)
       post :x_button, :params => { :id => @miq_server.id, :pressed => 'log_depot_edit', :button => "save", :format => :js }
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)['setVisibility']['toolbar']).to be
+      expect(JSON.parse(response.body)['reloadToolbars'].length).to eq(1)
     end
   end
 

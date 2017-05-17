@@ -1,15 +1,18 @@
 ManageIQ.angular.app.controller('cloudTenantFormController', ['$http', '$scope', 'cloudTenantFormId', 'miqService', function($http, $scope, cloudTenantFormId, miqService) {
-  $scope.cloudTenantModel = { name: '', ems_id: '' };
-  $scope.formId = cloudTenantFormId;
-  $scope.afterGet = false;
-  $scope.modelCopy = angular.copy( $scope.cloudTenantModel );
-  $scope.model = "cloudTenantModel";
+  var vm = this;
+
+  vm.cloudTenantModel = { name: '', ems_id: '' };
+  vm.formId = cloudTenantFormId;
+  vm.afterGet = false;
+  vm.modelCopy = angular.copy( vm.cloudTenantModel );
+  vm.model = "cloudTenantModel";
+  vm.saveable = miqService.saveable;
+  vm.newRecord = cloudTenantFormId == 'new';
 
   ManageIQ.angular.scope = $scope;
 
   if (cloudTenantFormId == 'new') {
-    $scope.cloudTenantModel.name = "";
-    $scope.newRecord = true;
+    vm.cloudTenantModel.name = "";
   } else {
     miqService.sparkleOn();
 
@@ -21,34 +24,34 @@ ManageIQ.angular.app.controller('cloudTenantFormController', ['$http', '$scope',
   function getCloudTenantFormDataComplete(response) {
     var data = response.data;
 
-    $scope.afterGet = true;
-    $scope.cloudTenantModel.name = data.name;
+    vm.afterGet = true;
+    vm.cloudTenantModel.name = data.name;
 
-    $scope.modelCopy = angular.copy( $scope.cloudTenantModel );
+    vm.modelCopy = angular.copy( vm.cloudTenantModel );
     miqService.sparkleOff();
   }
 
-  $scope.cancelClicked = function() {
+  vm.cancelClicked = function() {
     if (cloudTenantFormId == 'new') {
-      var url = '/cloud_tenant/create/new' + '?button=cancel';
+      var url = '/cloud_tenant/create/new?button=cancel';
     } else {
       var url = '/cloud_tenant/update/' + cloudTenantFormId + '?button=cancel';
     }
     miqService.miqAjaxButton(url);
   };
 
-  $scope.addClicked = function() {
-    var url = 'create/new' + '?button=add';
-    miqService.miqAjaxButton(url, $scope.cloudTenantModel, { complete: false });
+  vm.addClicked = function() {
+    var url = '/cloud_tenant/create/new?button=add';
+    miqService.miqAjaxButton(url, vm.cloudTenantModel, { complete: false });
   };
 
-  $scope.saveClicked = function() {
+  vm.saveClicked = function() {
     var url = '/cloud_tenant/update/' + cloudTenantFormId + '?button=save';
-    miqService.miqAjaxButton(url, $scope.cloudTenantModel, { complete: false });
+    miqService.miqAjaxButton(url, vm.cloudTenantModel, { complete: false });
   };
 
-  $scope.resetClicked = function() {
-    $scope.cloudTenantModel = angular.copy( $scope.modelCopy );
+  vm.resetClicked = function() {
+    vm.cloudTenantModel = angular.copy( vm.modelCopy );
     $scope.angularForm.$setPristine(true);
     miqService.miqFlash("warn", "All changes have been reset");
   };

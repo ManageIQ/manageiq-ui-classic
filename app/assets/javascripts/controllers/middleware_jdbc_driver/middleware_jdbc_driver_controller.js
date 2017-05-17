@@ -17,6 +17,8 @@ function MwAddJdbcDriverController($scope, $http, miqService) {
     fd.append('driverName', data.driverName);
     fd.append('moduleName', data.moduleName);
     fd.append('driverClass', data.driverClass);
+    fd.append('driverXaDatasourceClassName', data.driverXaDatasourceClassName);
+    fd.append('jdbcCompliant', data.jdbcCompliant);
     if (data.majorVersion) {
       fd.append('majorVersion', data.majorVersion);
     }

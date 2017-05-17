@@ -33,7 +33,9 @@ class PhysicalServerController < ApplicationController
   end
 
   def textual_group_list
-    []
+    [
+      %i(properties networks relationships power_management assets),
+    ]
   end
   helper_method :textual_group_list
 
@@ -51,6 +53,7 @@ class PhysicalServerController < ApplicationController
       physical_server_turn_on_loc_led
     elsif params[:pressed] == "physical_server_turn_off_loc_led"
       physical_server_turn_off_loc_led
+    end
   end
 
   private

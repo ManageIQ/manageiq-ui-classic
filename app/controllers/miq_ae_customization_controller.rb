@@ -335,7 +335,7 @@ class MiqAeCustomizationController < ApplicationController
 
   def rebuild_toolbars(presenter)
     if !@in_a_form
-      c_tb = build_toolbar(center_toolbar_filename)
+      c_tb = build_toolbar(center_toolbar_filename) if center_toolbar_filename
       h_tb = build_toolbar("x_history_tb") if x_active_tree != :dialogs_tree
     else
       if x_active_tree == :dialog_edit_tree && @in_a_form

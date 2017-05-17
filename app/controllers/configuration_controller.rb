@@ -49,12 +49,11 @@ class ConfigurationController < ApplicationController
     if params[:pressed].ends_with?("_edit", "_copy")
       javascript_redirect :action => @refresh_partial, :id => @redirect_id
     else
-      c_tb = build_toolbar(center_toolbar_filename)
       render :update do |page|
         page << javascript_prologue
         page.replace("flash_msg_div", :partial => "layouts/flash_msg")
         page.replace_html("main_div", :partial => "ui_4") # Replace the main div area contents
-        page << javascript_pf_toolbar_reload('center_tb', c_tb)
+        page << javascript_reload_toolbars
       end
     end
   end

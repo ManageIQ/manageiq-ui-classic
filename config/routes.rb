@@ -492,6 +492,7 @@ Rails.application.routes.draw do
         backup_select
         snapshot_new
         edit
+        delete_volumes
         cloud_volume_tenants
         index
         new
@@ -600,7 +601,6 @@ Rails.application.routes.draw do
       :get  => %w(
         download_data
         download_summary_pdf
-        explorer
         perf_top_chart
         show
         tl_chooser
@@ -613,15 +613,17 @@ Rails.application.routes.draw do
         accordion_select
         button
         container_form_field_changed
-        explorer
+        show
+        show_list
         tl_chooser
         wait_for_task
         quick_search
         reload
         tree_autoload
         tree_select
-        container_tag
+        tagging_edit
         tag_edit_form_field_changed
+        listnav_search_selected
       ) +
                adv_search_post +
                exp_post +
@@ -2347,6 +2349,7 @@ Rails.application.routes.draw do
         edit
         edit_vm
         form_field_changed
+        ownership_form_fields
         show
       ) +
                ownership_post

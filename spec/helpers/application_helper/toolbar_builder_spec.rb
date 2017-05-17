@@ -479,7 +479,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     end
 
     context "when the toolbar to be built is a generic object toolbar" do
-      let(:toolbar_to_build) { 'generic_object_definition_tb' }
+      let(:toolbar_to_build) { 'generic_object_definition_center_tb' }
 
       before do
         allow(Rbac).to receive(:role_allows?).and_return(true)
@@ -549,7 +549,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     end
 
     context "when the toolbar to be built is a generic object toolbar" do
-      let(:toolbar_to_build) { ApplicationHelper::Toolbar::GenericObjectDefinition }
+      let(:toolbar_to_build) { ApplicationHelper::Toolbar::GenericObjectDefinitionCenter }
 
       before do
         allow(Rbac).to receive(:role_allows?).and_return(true)

@@ -1,4 +1,4 @@
-class ApplicationHelper::Toolbar::GenericObjectDefinition < ApplicationHelper::Toolbar::Basic
+class ApplicationHelper::Toolbar::GenericObjectDefinitionCenter < ApplicationHelper::Toolbar::Basic
   button_group('generic_object_definition', [
     select(
       :generic_object_definition_choice,

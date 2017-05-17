@@ -19,16 +19,21 @@
                       "required"                    => true,
                       :checkchange                  => true,
                       "selectpicker-for-select-tag" => "")
-    .form-group
+    .form-group{"ng-class" => "{'has-error': angularForm.device_path.$invalid}"}
       %label.col-md-2.control-label
-        = _('Device Mountpoint (optional)')
+        - if @volume.ext_management_system.type == 'ManageIQ::Providers::Amazon::StorageManager::Ebs'
+          = _('Device Mountpoint')
+        - else
+          = _('Device Mountpoint (optional)')
       .col-md-8
         %input.form-control{:type          => "text",
                             :name          => "device_path",
                             'ng-model'     => "vm.cloudVolumeModel.device_path",
                             'ng-maxlength' => 128,
-                            :miqrequired   => false,
+                            "ng-required"  => "vm.cloudVolumeModel.emstype == 'ManageIQ::Providers::Amazon::StorageManager::Ebs'",
                             :checkchange   => true}
+        %span.help-block{"ng-show" => "angularForm.device_path.$error.required"}
+          = _("Required")
 
   .clearfix
   .pull-right.button-group.edit_buttons
@@ -51,5 +56,5 @@
 
 :javascript
   ManageIQ.angular.app.value('cloudVolumeFormId', '#{@volume.id}');
-  ManageIQ.angular.app.value('storageManagerId', '#{@volume.ext_management_system.id}');
+  ManageIQ.angular.app.value('storageManagerId', #{@volume.ext_management_system.id});
   miq_bootstrap('#form_div');

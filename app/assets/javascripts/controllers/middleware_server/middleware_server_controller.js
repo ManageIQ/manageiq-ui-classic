@@ -127,25 +127,21 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
   $scope.resetJdbcDriverForm = function() {
     $scope.jdbcDriverModel = {};
     $scope.jdbcDriverModel.serverId = angular.element('#server_id').val();
-    $scope.jdbcDriverModel.xaDatasource = true;
-    $scope.jdbcDriverModel.datasources = mwAddDatasourceService.getXaDatasources();
-    $scope.jdbcDriverModel.selectedDatasource = undefined;
+    $scope.jdbcDriverModel.jdbcCompliant = true;
+    $scope.jdbcDriverModel.driverXaDatasourceClassName = '';
+    $scope.jdbcDriverModel.databases = mwAddDatasourceService.getDatasources();
+    $scope.jdbcDriverModel.selectedDatabase = undefined;
     angular.element('#jdbc_add_div :file#jdbc_driver_file').val('');
     angular.element('#jdbc_add_div input[type="text"]:disabled').val('');
     $scope.$broadcast('mwAddJdbcDriverReset');
   };
 
-  $scope.onDriverXaChange = function() {
-    if ($scope.jdbcDriverModel) {
-      $scope.jdbcDriverModel.datasources = mwAddDatasourceService.getDatasources($scope.jdbcDriverModel.xaDatasource);
-    }
-  };
-
-  $scope.$watch('jdbcDriverModel.selectedDatasource', function(newValue) {
+  $scope.$watch('jdbcDriverModel.selectedDatabase', function(newValue) {
     if (newValue) {
       $scope.jdbcDriverModel.driverName = newValue.driverName;
       $scope.jdbcDriverModel.moduleName = newValue.driverModuleName;
       $scope.jdbcDriverModel.driverClass = newValue.driverClass;
+      $scope.jdbcDriverModel.driverXaDatasourceClassName = '';
     }
   });
 

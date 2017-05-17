@@ -79,7 +79,7 @@ describe ApplicationHelper, "ToolbarChooser" do
 
       it "should return blank_view toolbar on root node" do
         x_node_set('root', :storage_pod_tree)
-        expect(_toolbar_chooser.send(:center_toolbar_filename_storage)).to eq("blank_view_tb")
+        expect(_toolbar_chooser.send(:center_toolbar_filename_storage)).to be_nil
       end
 
       it "should return storages_center toolbar on a datastore cluster node" do

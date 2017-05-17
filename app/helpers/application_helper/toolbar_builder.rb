@@ -12,8 +12,9 @@ class ApplicationHelper::ToolbarBuilder
   # Returns built toolbar loaded in instance variable `@toolbar`, or `nil`, if
   # no buttons should be in the toolbar.
   def build_toolbar(toolbar_name)
-    build_toolbar_setup
+    return nil if toolbar_name.nil?
 
+    build_toolbar_setup
     toolbar_class = toolbar_class(toolbar_name)
     build_toolbar_from_class(toolbar_class)
   end

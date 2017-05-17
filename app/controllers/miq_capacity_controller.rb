@@ -126,27 +126,15 @@ class MiqCapacityController < ApplicationController
 
   def change_tab
     @sb[:active_tab] = params[:tab_id]
-    if x_active_tree == :bottlenecks_tree && @sb[:active_tab] == "summary"
-      # build timeline data when coming back to Summary tab for bottlenecks
-      bottleneck_get_node_info(x_node)
-    end
-    if x_active_tree != :bottlenecks_tree
-      v_tb = build_toolbar("miq_capacity_view_tb")
-    end
+
+    # build timeline data when coming back to Summary tab for bottlenecks
+    displaying_timeline = (x_active_tree == :bottlenecks_tree && @sb[:active_tab] == "summary")
+    bottleneck_get_node_info(x_node) if displaying_timeline
+
     render :update do |page|
       page << javascript_prologue
-      page << javascript_pf_toolbar_reload('view_tb', v_tb)
-      if @sb[:active_tab] == 'report' && v_tb.present?
-        page << "$('#toolbar').show();"
-      else
-        page << "$('#toolbar').hide();"
-      end
-
-      if x_active_tree == :bottlenecks_tree && @sb[:active_tab] == "summary"
-        # need to replace timeline div incase it wasn't there earlier
-        page.replace("tl_div", :partial => "bottlenecks_tl_detail")
-      end
-      # FIXME: we don't need the reload here for the flash charts
+      page << javascript_reload_toolbars
+      page.replace("tl_div", :partial => "bottlenecks_tl_detail") if displaying_timeline
       page << Charting.js_load_statement
       page << "miqSparkle(false);"
     end
@@ -557,11 +545,11 @@ class MiqCapacityController < ApplicationController
     if params[:button] == "reset"
       session[:changed] = false
       add_flash(_("Planning options have been reset by the user"))
-      v_tb = build_toolbar("miq_capacity_view_tb")
+
       render :update do |page|
         page << javascript_prologue
         page << "$('#toolbar').show();"
-        page << javascript_pf_toolbar_reload('view_tb', v_tb) if v_tb.present?
+        page << javascript_reload_toolbars
         page << javascript_for_miq_button_visibility(session[:changed])
         page.replace("planning_options_div", :partial => "planning_options")
         page.replace_html("main_div", :partial => "planning_tabs")

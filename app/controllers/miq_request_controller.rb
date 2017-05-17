@@ -49,11 +49,10 @@ class MiqRequestController < ApplicationController
     elsif params[:pressed] == "miq_request_reload"
       if @display == "main" && params[:id].present?
         show
-        c_tb = build_toolbar(center_toolbar_filename)
         render :update do |page|
           page << javascript_prologue
           page.replace("request_div", :partial => "miq_request/request")
-          page << javascript_pf_toolbar_reload('center_tb', c_tb)
+          page << javascript_reload_toolbars
         end
       elsif @display == "miq_provisions"
         show
@@ -482,10 +481,10 @@ class MiqRequestController < ApplicationController
     opts[:reason_text] = nil
     opts[:types] = request_types_for_dropdown
 
-    opts[:users] = MiqRequest.where(
+    opts[:users] = Rbac::Filterer.filtered(MiqRequest.where(
       :type       => request_types_for_model.keys,
       :created_on => (30.days.ago.utc)..(Time.now.utc)
-    ).each_with_object({}) do |r, h|
+    )).each_with_object({}) do |r, h|
       h[r.requester_id] =  if r.requester.nil?
                              (_("%{name} (no longer exists)") % {:name => r.requester_name})
                            else
