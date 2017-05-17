@@ -38,8 +38,7 @@
                      "ng-model"    => "vm.retirementInfo.warning",
                      "ng-disabled" => "!vm.retirementInfo.date",
                      "pf-select"   => true)
-        :javascript
-          miqInitSelectPicker();
+
   = _('* Saving a blank date will remove all retirement dates')
 
   %hr
@@ -47,8 +46,7 @@
     - if request.parameters[:controller] == "service"
       = n_("New setting will affect Service", "New setting will affect Services", @retireitems.length)
     - elsif request.parameters[:controller] == "orchestration_stack"
-      = n_("New setting will affect Orchestration Stack", "New setting will affect Orchestration Stacks",
-           @retireitems.length)
+      = n_("New setting will affect Orchestration Stack", "New setting will affect Orchestration Stacks", @retireitems.length)
     - elsif %w(vm_cloud vm_infra).include?(request.parameters[:controller])
       = n_("New setting will affect VM", "New setting will affect VMs", @retireitems.length)
 
