@@ -16,6 +16,8 @@ ManageIQ.angular.app.controller('retirementFormController', ['$http', 'objectIds
     $http.get('retirement_info/' + objectIds[0])
       .then(getRetirementInfoFormData)
       .catch(miqService.handleFailure);
+
+    vm.showReset = true;
   }
 
   vm.cancelClicked = function() {
@@ -26,6 +28,11 @@ ManageIQ.angular.app.controller('retirementFormController', ['$http', 'objectIds
   vm.saveClicked = function() {
     miqService.sparkleOn();
     miqService.miqAjaxButton('retire?button=save', vm.retirementInfo);
+  };
+
+  vm.resetClicked = function() {
+    angular.extend(vm.retirementInfo, vm.modelCopy);
+    miqService.miqFlash('info', __("All changes have been reset"));
   };
 
   vm.clearDate = function() {

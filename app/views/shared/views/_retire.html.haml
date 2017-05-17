@@ -59,6 +59,12 @@
                     :enabled   => "!angularForm.$pristine && !angularForm.$invalid",
                     'on-click' => "vm.saveClicked()",
                     :primary   => 'true'}
+        %miq-button{:name      => t = _("Reset"),
+                    :title     => t,
+                    :alt       => t,
+                    'ng-show'  => 'vm.showReset',
+                    :enabled   => "!angularForm.$pristine",
+                    'on-click' => "vm.resetClicked()"}
         %miq-button{:name      => t = _("Cancel"),
                     :title     => t,
                     :alt       => t,
