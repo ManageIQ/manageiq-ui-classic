@@ -1,5 +1,5 @@
 describe('catalogItemFormController', function() {
-  var $scope, $controller, postService;
+  var $scope, $controller, currentRegion, postService;
 
   beforeEach(module('ManageIQ'));
 
@@ -46,6 +46,7 @@ describe('catalogItemFormController', function() {
 
     $controller = _$controller_('catalogItemFormController', {
       $scope: $scope,
+      currentRegion: currentRegion,
       catalogItemFormId: 1000000000001
     });
   }));
