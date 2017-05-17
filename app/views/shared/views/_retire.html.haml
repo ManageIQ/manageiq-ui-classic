@@ -20,9 +20,10 @@
                                 "miq-calendar"       => true,
                                 "miq-cal-date-from"  => "vm.datepickerStartDate")
         %a{'href'              => '#',
-           'ng-click'          => 'vm.retirementInfo.date = null; vm.retirementInfo.warning = ""',
-           'ng-hide'           => '!vm.retirementInfo.retirementDate'}
-          = image_tag(image_path('16/clear.png'), :border => "0", :alt => _("Set to blank"))
+           'ng-click'          => 'vm.clearDate()',
+           'ng-show'           => 'vm.retirementInfo.date',
+           'title'             => _("Set to blank")}
+          %i.glyphicon.glyphicon-remove
     .form-group
       %label.col-md-2.control-label
         = _('Retirement Warning')

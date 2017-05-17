@@ -25,6 +25,11 @@ ManageIQ.angular.app.controller('retirementFormController', ['$http', 'objectIds
     miqService.miqAjaxButton('retire?button=save', vm.retirementInfo);
   };
 
+  vm.clearDate = function() {
+    vm.retirementInfo.date = null;
+    vm.retirementInfo.warning = "";
+  };
+
   function getRetirementInfoFormData(response) {
     var data = response.data;
 
