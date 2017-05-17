@@ -1,7 +1,10 @@
 = render :partial => "layouts/flash_msg"
 
 %form#form_div.form-horizontal{"name"          => "angularForm",
-                               "ng-controller" => "retirementFormController"}
+                               "ng-controller" => "retirementFormController as vm",
+                               "miq-form"      => true,
+                               "model"         => "vm.retirementInfo",
+                               "model-copy"    => "vm.modelCopy" }
   %h3
     = _('Set/Remove Retirement Date')
   %tbody
@@ -12,13 +15,13 @@
         = datepicker_input_tag("retirementDate", nil,
                                 :id                  => "retirement_date",
                                 :class               => "css1",
-                                "ng-model"           => "retirementInfo.retirementDate",
+                                "ng-model"           => "vm.retirementInfo.retirementDate",
                                 "miq-calendar"       => true,
-                                "miq-cal-date-from"  => "datepickerStartDate",
+                                "miq-cal-date-from"  => "vm.datepickerStartDate",
                                 "checkchange"        => true)
         %a{'href'              => '#',
-           'ng-click'          => 'retirementInfo.retirementDate = null; retirementInfo.retirementWarning = ""',
-           'ng-hide'           => '!retirementInfo.retirementDate'}
+           'ng-click'          => 'vm.retirementInfo.retirementDate = null; vm.retirementInfo.retirementWarning = ""',
+           'ng-hide'           => '!vm.retirementInfo.retirementDate'}
           = image_tag(image_path('16/clear.png'), :border => "0", :alt => _("Set to blank"))
     .form-group
       %label.col-md-2.control-label
@@ -31,8 +34,8 @@
         = select_tag("retirementWarning",
                      "",
                      "ng-options"  => "item.value as item.label for item in #{select_options.to_json.gsub('"', '\'')}",
-                     "ng-model"    => "retirementInfo.retirementWarning",
-                     "ng-disabled" => "!retirementInfo.retirementDate",
+                     "ng-model"    => "vm.retirementInfo.retirementWarning",
+                     "ng-disabled" => "!vm.retirementInfo.retirementDate",
                      "checkchange" => true,
                      "pf-select"   => true)
         :javascript
@@ -55,17 +58,18 @@
         = button_tag(_("Save"),
                      :class        => "btn btn-primary",
                      :alt          => _("Save"),
-                     "ng-click"    => "saveClicked()",
+                     "ng-click"    => "vm.saveClicked()",
                      "ng-disabled" => "angularForm.$pristine || angularForm.$invalid",
                      "ng-class"    => "{ disabled: angularForm.$pristine || angularForm.$invalid}")
         = button_tag(_("Cancel"),
                      :class     => "btn btn-default",
                      :alt          => _("Cancel"),
-                     "ng-click" => "cancelClicked()")
+                     "ng-click" => "vm.cancelClicked()")
 - if @retireitems
   - @embedded = true
   - @quadicon_no_url = true
   = render :partial => "layouts/gtl"
+
 :javascript
   ManageIQ.angular.app.value('objectIds', #{ @retireitems.collect(&:id) });
   miq_bootstrap('#form_div');
