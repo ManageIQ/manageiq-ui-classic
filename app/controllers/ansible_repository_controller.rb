@@ -33,6 +33,28 @@ class AnsibleRepositoryController < ApplicationController
       javascript_redirect :action => 'new'
     elsif params[:pressed] == "embedded_configuration_script_source_delete"
       delete_repositories
+    elsif params[:pressed] == 'ansible_repositories_reload'
+      show_list
+      render :update do |page|
+        page << javascript_prologue
+        page.replace("gtl_div", :partial => "layouts/gtl")
+      end
+    elsif params[:pressed] == 'ansible_repository_reload'
+      @display = 'summary_only'
+      show
+      render :update do |page|
+        page << javascript_prologue
+        page.replace("main_div", :template => "ansible_repository/show")
+      end
+    end
+  end
+
+  def check_button_rbac
+    # Allow reload to skip RBAC check
+    if %w(ansible_repository_reload ansible_repositories_reload).include?(params[:pressed])
+      true
+    else
+      super
     end
   end
 
