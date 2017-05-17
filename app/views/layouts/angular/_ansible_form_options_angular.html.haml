@@ -228,6 +228,7 @@
         .col-md-6{"ng-class" => "{'has-error': angularForm.#{prefix}_dialog_name.$invalid}", "ng-if" => "#{ng_model}.#{prefix}_dialog_existing == 'create'"}
           %input.form-control{:type         => "text",
                               'ng-model'    => "#{ng_model}.#{prefix}_dialog_name",
+                              'ng-change'   => "dialogNameValidation()",
                               :name         => "vm.#{prefix}_dialog_name",
                               :maxlength    => 50,
                               "ng-required" => "vm.fieldsRequired('#{prefix}') && #{ng_model}.#{prefix}_dialog_existing == 'create'",
