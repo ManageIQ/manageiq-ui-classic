@@ -1,6 +1,20 @@
 angular.module('miq.util').factory('metricsUtilsFactory', function() {
-  return function (dash) {
+  return function (dash, $timeout) {
     var UNKNOWN_ERROR_STR = __('Something is wrong, try reloading the page');
+
+    function calcDataDifferentials(data) {
+      var outData = [];
+
+      data.forEach(function(value, i) {
+        if ((value !== null) && (data[i + 1] !== null) && (typeof data[i + 1] !== 'undefined')) {
+          outData[i] = data[i + 1] - value;
+        } else {
+          outData[i] = null;
+        }
+      });
+
+      return outData;
+    }
 
     var checkResponse = function(response) {
       if (response.error || response.data.error || typeof response.data === 'string') {
@@ -50,29 +64,7 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
       }
     }
 
-    var getMetricTagsData = function(response) {
-      'use strict';
-      dash.tagsLoaded = true;
-
-      if (checkResponse(response) === false) {
-        return;
-      }
-
-      var data = response.data;
-
-      dash.filterConfig.fields = [];
-      if (data && _.isArray(data.metric_tags)) {
-        data.metric_tags.sort();
-
-        // remember the metric tags
-        dash.metricTags = data.metric_tags;
-
-        // apply dash.metricTags to the filter form
-        setFilterOptions();
-      }
-    }
-
-    var getContainerParamsData = function(metricId, currentItem, response) {
+    var getContainerParamsData = function(currentItem, response) {
       'use strict';
       dash.loadCount++;
       if (dash.loadCount >= dash.selectedItems.length) {
@@ -83,15 +75,32 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
         return;
       }
 
-      var data  = response.data.data;
-      var xData = data.map(function(d) { return d.start; });
-      var yData = data.map(function(d) { return d.avg || null; });
+      currentItem.responseData  = response.data.data.slice();
+      drawOneGraph(currentItem);
+    }
+
+    function redrawGraph() {
+      $timeout(function () {
+        angular.forEach(dash.selectedItems, drawOneGraph);
+      }, 10);
+    }
+
+    function drawOneGraph(currentItem) {
+      var switchObj = angular.element('#rate-switch');
+      var showRate = switchObj.bootstrapSwitch('state');
+      var xData = currentItem.responseData.map(function(d) { return d.start; });
+      var yData = currentItem.responseData.map(function(d) { return d.avg || null; });
+
+      // if diff checkbox is on, do diff
+      if (showRate) {
+        yData = calcDataDifferentials(yData);
+      }
 
       xData.unshift('time');
-      yData.unshift(metricId);
+      yData.unshift(currentItem.id);
 
       dash.chartData.xData = xData;
-      dash.chartData['yData'+ currentItem] = yData;
+      dash.chartData['yData'+ currentItem.index] = yData;
 
       dash.chartDataInit = true;
     }
@@ -178,11 +187,12 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
     }
 
     return {
-      getMetricTagsData: getMetricTagsData,
       getContainerParamsData: getContainerParamsData,
       getContainerDashboardData: getContainerDashboardData,
       checkResponse: checkResponse,
       setFilterOptions: setFilterOptions,
+      calcDataDifferentials: calcDataDifferentials,
+      redrawGraph: redrawGraph,
       metricPrefix: metricPrefix
     }
   }

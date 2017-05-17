@@ -26,6 +26,12 @@
   .toolbar-pf {
     border: 0;
   }
+  .toolbar-pf-include-actions {
+    margin-left: 8px !important;
+  }
+  .form-group.toolbar-actions {
+    border: 0;
+  }
   .graph-view {
     .toolbar-pf {
       .toolbar-pf-actions {
@@ -36,6 +42,9 @@
     }
     overflow-x: hidden;
     overflow-y: hidden;
+    .rate-switch {
+      margin-left: 5px;
+    }
     .bootstrap-select.btn-group {
       .dropdown-menu {
         margin-left: 5px;

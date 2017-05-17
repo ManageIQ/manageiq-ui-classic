@@ -24,8 +24,8 @@ describe('adHocMetricsController', function() {
   }));
 
   afterEach(function() {
-      $httpBackend.verifyNoOutstandingExpectation();
-      $httpBackend.verifyNoOutstandingRequest();
+    $httpBackend.verifyNoOutstandingExpectation();
+    $httpBackend.verifyNoOutstandingRequest();
   });
 
   describe('loading page data', function() {
@@ -59,15 +59,29 @@ describe('adHocMetricsController', function() {
 
       m = $controller.metricPrefix(10000, 'ms');
       expect(m.multiplier).toBe(Math.pow(10, -3));
-      expect(m.unitLable).toBe('s');
+      expect(m.unitLabel).toBe('s');
 
       m = $controller.metricPrefix(10000, 'ns');
       expect(m.multiplier).toBe(Math.pow(10, -9));
-      expect(m.unitLable).toBe('s');
+      expect(m.unitLabel).toBe('s');
 
       m = $controller.metricPrefix(10000, 's');
       expect(m.multiplier).toBe(Math.pow(10, -3));
-      expect(m.unitLable).toBe('Ks');
+      expect(m.unitLabel).toBe('Ks');
+    });
+
+    it('should calculate differentials currectly', function() {
+      var data = [1, 2, 3, 4, 5, 6];
+
+      data = $controller.calcDataDifferentials(data);
+      expect(data).toEqual([1, 1, 1, 1, 1, null]);
+    });
+
+    it('differentials should not fail on missing data', function() {
+      var data = [1, 2, null, 4, 5, 6];
+
+      data = $controller.calcDataDifferentials(data);
+      expect(data).toEqual([1, null, null, 1, 1, null]);
     });
   });
 });
