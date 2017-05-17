@@ -28,8 +28,7 @@
             .form-horizontal.static
               .form-group
                 .col-md-9
-                  - htm = @job.raw_stdout('html').gsub('"', '\"').gsub("'", "\\\\'")
-                  %div{'ng-bind-html'=>"vm.sanitizeRenderHtml('#{htm}')"}
+                  %div{'ng-bind-html'=>"vm.sanitizeRenderHtml('#{sanitize_output(@job.raw_stdout('html'))}')"}
         - if job
           = miq_tab_content("retirement", 'default', :class => 'cm-tab') do
             = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_retirement_group_list}
@@ -38,8 +37,7 @@
             .form-horizontal.static
               .form-group
                 .col-md-9
-                  - htm = job.raw_stdout('html').gsub('"', '\"').gsub("'", "\\\\'")
-                  %div{'ng-bind-html'=>"vm.sanitizeRenderHtml('#{htm}')"}
+                  %div{'ng-bind-html'=>"vm.sanitizeRenderHtml('#{sanitize_output(job.raw_stdout('html'))}')"}
 :javascript
   miq_tabs_init('#services_tab');
   miq_bootstrap('#service_details', 'sanitizeRender');

@@ -135,6 +135,19 @@ class ServiceController < ApplicationController
 
   private
 
+  def sanitize_output(stdout)
+    htm = stdout.gsub('"', '\"')
+
+    regex_map = {
+      /'/  => "\\\\'",
+      /{{/ => '\{\{',
+      /}}/ => '\}\}'
+    }
+    regex_map.each_pair { |f, t| htm.gsub!(f, t) }
+    htm
+  end
+  helper_method :sanitize_output
+
   def textual_group_list
     if @record.type == "ServiceAnsiblePlaybook"
       [%i(properties), %i(lifecycle)]
