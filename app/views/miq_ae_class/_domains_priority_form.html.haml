@@ -1,25 +1,31 @@
 = render :partial => "layouts/flash_msg"
 #domains_list
-  %table#formtest.form{:width => '50%'}
-    %tr
-      %td.widthed{:align => "left"}= _("Domains:")
-      %td
-    %tr
-      %td{:align => "left", :valign => "top"}
-        = select_tag('seq_fields[]',
-          options_for_select(@edit[:new][:domain_order], @selected),
-          :multiple => true, :style => "width: 450px", :size => 20, :id => "seq_fields")
-      %td{:width => "30", :align => "left", :valign => "middle"}
-        = link_image_if(:cond => (@edit[:new][:domain_order].length < 2),
-          :image              => image_path('toolbars/up.png'),
-          :opts_true          => {:class  => "dimmed small"},
-          :opts_false         => {:class  => "rollover small", :alt => t = _("Move selected fields up")},
-          :link               => {:action => 'priority_form_field_changed', :button => 'up', :id => "priority__edit"},
-          :opts_link          => {:remote => true, 'data-method' => :post, "data-submit" => "domains_list", :title => t})
-        = link_image_if(:cond => (@edit[:new][:domain_order].length < 2),
-          :image              => image_path('toolbars/down.png'),
-          :opts_true          => {:class => "dimmed small"},
-          :opts_false         => {:class => "rollover small", :alt => (t = _("Move selected fields down"))},
-          :link               => {:action => 'priority_form_field_changed', :button => 'down', :id => "priority__edit"},
-          :opts_link          => {:remote => true, 'data-method' => :post, "data-submit" => "domains_list", :title => t})
-  #div.note= _('* Select one or more consecutive groups to move up or down.')
+  .row
+    .col-md-7.col-sm-10.col-xs-10
+      = _("Domains:")
+      = select_tag('seq_fields[]',
+        options_for_select(@edit[:new][:domain_order], @selected),
+        :multiple => true, :class  => "form-control", :style => "overflow-x: scroll;", :size => 20, :id => "seq_fields")
+      %small= _('* Select one or more consecutive groups to move up or down.')
+
+    .col-md-1.col-sm-2.col-xs-2{:style => "padding: 10px"}
+      .spacer
+      .spacer
+        - if @edit[:new][:domain_order].length < 2
+          %button.btn.disabled.btn-block
+            %i.fa.fa-lg.fa-angle-up
+          %button.btn.disabled.btn-block
+            %i.fa.fa-lg.fa-angle-down
+        - else
+          - [[_("Move selected fields up"),   'domains_list', 'up',    'fa-angle-up'],
+             [_("Move selected fields down"), 'domains_list', 'down',  'fa-angle-down']].each do |title, chosen_div, action, arrow_style|
+            %button.btn.btn-default.btn-block{:title                 => title,
+                                              :remote                => true,
+                                              "data-submit"          => chosen_div,
+                                              "data-method"          => :post,
+                                              "data-miq_sparkle_on"  => true,
+                                              "data-miq_sparkle_off" => true,
+                                              "data-click_url"       => {:url => url_for_only_path(:action => 'priority_form_field_changed',
+                                                                                                   :button => action,
+                                                                                                   :id     => 'priority__edit')}.to_json}
+              %i.fa.fa-lg{:class => arrow_style}
