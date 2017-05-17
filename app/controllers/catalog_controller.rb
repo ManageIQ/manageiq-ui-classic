@@ -825,7 +825,9 @@ class CatalogController < ApplicationController
 
   def ansible_playbook?
     prov_type = params[:st_prov_type] ? params[:st_prov_type] : @record.prov_type
-    prov_type == "generic_ansible_playbook"
+    ansible_playbook = prov_type == "generic_ansible_playbook"
+    @current_region = MiqRegion.my_region.region if ansible_playbook
+    ansible_playbook
   end
   helper_method :ansible_playbook?
 

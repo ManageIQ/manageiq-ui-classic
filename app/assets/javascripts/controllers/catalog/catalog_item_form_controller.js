@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalogItemFormId', 'miqService', 'postService', 'API', 'catalogItemDataFactory', function($scope, catalogItemFormId, miqService, postService, API, catalogItemDataFactory) {
+ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalogItemFormId', 'currentRegion', 'miqService', 'postService', 'API', 'catalogItemDataFactory', function($scope, catalogItemFormId, currentRegion, miqService, postService, API, catalogItemDataFactory) {
   var vm = this;
   var sort_options = "&sort_by=name&sort_order=ascending"
   var init = function() {
@@ -39,6 +39,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     getRemoveResourcesTypes();
     vm.provisioning_cloud_type = '';
     vm.retirement_cloud_type = '';
+    vm.currentRegion = currentRegion;
     vm.formId = catalogItemFormId;
     vm.afterGet = false;
     vm.model = "catalogItemModel";
@@ -268,7 +269,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     })
 
     // list of repositories
-    API.get("/api/configuration_script_sources?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource&expand=resources&attributes=id,name" + sort_options).then(function(data) {
+    API.get("/api/configuration_script_sources?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource&expand=resources&attributes=id,name&filter[]=region_number=" + vm.currentRegion + sort_options).then(function(data) {
       vm.repositories = data.resources;
       vm._retirement_repository = _.find(vm.repositories, {id: vm.catalogItemModel.retirement_repository_id});
       vm._provisioning_repository = _.find(vm.repositories, {id: vm.catalogItemModel.provisioning_repository_id});
@@ -334,8 +335,8 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
 
   // get playbooks for selected repository
   vm.repositoryChanged = function(prefix, id) {
-    API.get("/api/configuration_script_sources/" + id + "?attributes=configuration_script_payloads" + sort_options).then(function (data) {
-      vm[prefix + '_playbooks'] = data.configuration_script_payloads;
+    API.get("/api/configuration_script_sources/" + id + "/configuration_script_payloads?expand=resources&filter[]=region_number=" + vm.currentRegion + sort_options).then(function (data) {
+      vm[prefix + '_playbooks'] = data.resources;
       // if repository has changed
       if (id !== vm.catalogItemModel[prefix + '_repository_id']) {
         vm.catalogItemModel[prefix + '_playbook_id'] = '';
