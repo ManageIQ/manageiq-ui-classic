@@ -21,13 +21,12 @@ class TreeBuilderCatalogItems < TreeBuilderCatalogsClass
   end
 
   def x_get_tree_stc_kids(object, count_only)
-    # TODO: may want to order in rbac and not in sql
     templates = if object.id.nil?
-                  ServiceTemplate.where(:service_template_catalog_id => nil).order("lower(name)")
+                  ServiceTemplate.where(:service_template_catalog_id => nil)
                 else
                   object.service_templates
                 end
-    count_only_or_objects(count_only, Rbac.filtered(templates), 'name')
+    count_only_or_objects_filtered(count_only, templates, 'name')
   end
 
   # Handle custom tree nodes (object is a Hash)

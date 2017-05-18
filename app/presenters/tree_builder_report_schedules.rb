@@ -29,6 +29,6 @@ class TreeBuilderReportSchedules < TreeBuilder
               else
                 MiqSchedule.where(:towhat => 'MiqReport', :userid => User.current_user.userid)
               end
-    count_only_or_objects(count_only, objects.sort_by { |o| o.name.downcase }, 'name')
+    count_only_or_objects(count_only, objects, 'name')
   end
 end
