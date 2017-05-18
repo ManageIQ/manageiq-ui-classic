@@ -78,6 +78,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
             N_('Turn on the Idenfity LED'),
             N_('Turn On LED'),
             :image     => "blank_button",
+            :data      => {'function'      => 'sendDataWithRx',
+                           'function-data' => '{"type": "turn_on_loc_led"}'},
             :url_parms => "main_div",
             :confirm   => N_("Turn on the Identify LED?"),
             :enabled   => false,
