@@ -19,13 +19,13 @@ ManageIQ.angular.app.controller('physicalServerToolbarController', ['miqService'
 
     if (event.rowSelect && event.rowSelect.checked) {
       vm.physicalServerToolbarModel.servers = _.union(vm.physicalServerToolbarModel.servers, [event.rowSelect.long_id]);
-    } else if (event.rowSelect && !event.rowSelect.checked) {
-      _.remove(vm.physicalServerToolbarModel.servers, function (serverId) {
+    } else if (event.rowSelect && ! event.rowSelect.checked) {
+      _.remove(vm.physicalServerToolbarModel.servers, function(serverId) {
         return serverId === event.rowSelect.long_id;
       });
     }
 
-    if (_.indexOf(vm.supportedActions, action) != -1) {
+    if (_.indexOf(vm.supportedActions, action) !== -1) {
       if (physicalServerId) {
         vm.physicalServerToolbarModel.servers = _.union(vm.physicalServerToolbarModel.servers, [physicalServerId]);
       }
