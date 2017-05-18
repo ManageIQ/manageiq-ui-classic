@@ -552,6 +552,7 @@ class MiqCapacityController < ApplicationController
         page << javascript_reload_toolbars
         page << javascript_for_miq_button_visibility(session[:changed])
         page.replace("planning_options_div", :partial => "planning_options")
+        @flash_array = nil       # Make sure to reset flash message after initial display
         page.replace_html("main_div", :partial => "planning_tabs")
       end
     end
