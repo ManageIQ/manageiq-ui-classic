@@ -275,6 +275,8 @@ module Mixins
                        :provider_id                => @ems.provider_id ? @ems.provider_id : "",
                        :hostname                   => @ems.hostname,
                        :default_hostname           => @ems.connection_configurations.default.endpoint.hostname,
+                       :metrics_selection          => retrieve_metrics_selection,
+                       :metrics_selection_default  => @ems.emstype == 'kubernetes' ? 'disabled' : 'enabled',
                        :hawkular_hostname          => hawkular_hostname,
                        :default_api_port           => @ems.connection_configurations.default.endpoint.port,
                        :hawkular_api_port          => hawkular_api_port,
@@ -428,13 +430,14 @@ module Mixins
         params[:cred_type] = ems.default_authentication_type if params[:cred_type] == "default"
         default_endpoint = {:role => :default, :hostname => hostname, :port => port}
         default_endpoint.merge!(endpoint_security_options(ems.security_protocol, default_tls_ca_certs))
-
-        if hawkular_hostname.blank?
-          default_key = params[:default_password] || ems.authentication_key
-          hawkular_hostname = get_hostname_from_routes(ems, default_endpoint, default_key)
+        if params[:metrics_selection] == 'hawkular_enabled'
+          if hawkular_hostname.blank?
+            default_key = params[:default_password] || ems.authentication_key
+            hawkular_hostname = get_hostname_from_routes(ems, default_endpoint, default_key)
+          end
+          hawkular_endpoint = {:role => :hawkular, :hostname => hawkular_hostname, :port => hawkular_api_port}
+          hawkular_endpoint.merge!(endpoint_security_options(hawkular_security_protocol, hawkular_tls_ca_certs))
         end
-        hawkular_endpoint = {:role => :hawkular, :hostname => hawkular_hostname, :port => hawkular_api_port}
-        hawkular_endpoint.merge!(endpoint_security_options(hawkular_security_protocol, hawkular_tls_ca_certs))
       end
 
       if ems.kind_of?(ManageIQ::Providers::MiddlewareManager)

@@ -48,6 +48,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       host_default_vnc_port_start: '',
       host_default_vnc_port_end: '',
       event_stream_selection: '',
+      metrics_selection: '',
       bearer_token_exists: false,
       ems_controller: '',
       default_auth_status: '',
@@ -137,6 +138,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.host_default_vnc_port_end       = data.host_default_vnc_port_end;
 
       $scope.emsCommonModel.event_stream_selection          = data.event_stream_selection;
+      $scope.emsCommonModel.metrics_selection               = data.metrics_selection;
+      $scope.emsCommonModel.metrics_selection_default       = data.metrics_selection_default;
 
       $scope.emsCommonModel.bearer_token_exists             = data.bearer_token_exists;
 
@@ -183,6 +186,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.openstack_infra_providers_exist = data.openstack_infra_providers_exist;
       $scope.emsCommonModel.default_api_port                = '';
       $scope.emsCommonModel.amqp_api_port                   = '5672';
+      $scope.emsCommonModel.metrics_selection               = data.metrics_selection;
       $scope.emsCommonModel.hawkular_api_port               = '443';
       $scope.emsCommonModel.api_version                     = 'v2';
       $scope.emsCommonModel.ems_controller                  = data.ems_controller;
@@ -304,6 +308,10 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.$broadcast('clearErrorOnTab', {tab: "amqp"});
     }
 
+    if ($scope.emsCommonModel.metrics_selection === "hawkular_disabled") {
+      $scope.$broadcast('clearErrorOnTab', {tab: "hawkular"});
+    }
+
     var authStatus = $scope.currentTab + "_auth_status";
     if ($scope.emsCommonModel[authStatus] === true) {
       $scope.postValidationModelRegistry($scope.currentTab);
@@ -333,6 +341,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   $scope.providerTypeChanged = function() {
     if ($scope.emsCommonModel.ems_controller === 'ems_container') {
       $scope.emsCommonModel.default_api_port = "8443"; // TODO: correct per-type port
+      $scope.emsCommonModel.metrics_selection = "hawkular_".concat($scope.emsCommonModel.metrics_selection_default);
       // Container types are nearly identical, no point resetting most fields on type change.
       return;
     }
@@ -535,6 +544,12 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         $scope.emsCommonModel.amqp_verify = $scope.postValidationModel.amqp.amqp_verify;
       }
       $scope.$broadcast('clearErrorOnTab', {tab: "amqp"});
+    }
+  };
+
+  $scope.containerMetricsChanged = function() {
+    if ($scope.emsCommonModel.metrics_selection === "hawkular_disabled") {
+      $scope.$broadcast('clearErrorOnTab', {tab: "hawkular"});
     }
   };
 
