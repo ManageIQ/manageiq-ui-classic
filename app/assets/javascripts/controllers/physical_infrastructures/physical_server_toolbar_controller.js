@@ -13,7 +13,7 @@ ManageIQ.angular.app.controller('physicalServerToolbarController', ['miqService'
     var action = event.type;
 
     if (event.rowSelect && event.rowSelect.checked) {
-      vm.physicalServerToolbarModel.servers.push(event.rowSelect.long_id)
+      vm.physicalServerToolbarModel.servers = _.union(vm.physicalServerToolbarModel.servers, [event.rowSelect.long_id]);
     } else if (event.rowSelect && !event.rowSelect.checked) {
       _.remove(vm.physicalServerToolbarModel.servers, function (serverId) {
         return serverId === event.rowSelect.long_id;
@@ -22,7 +22,7 @@ ManageIQ.angular.app.controller('physicalServerToolbarController', ['miqService'
 
     if (_.indexOf(vm.supportedActions, action) != -1) {
       if (physicalServerId) {
-        vm.physicalServerToolbarModel.servers.push(physicalServerId);
+        vm.physicalServerToolbarModel.servers = _.union(vm.physicalServerToolbarModel.servers, [physicalServerId]);
       }
       postPhysicalServerAction(action);
     }
