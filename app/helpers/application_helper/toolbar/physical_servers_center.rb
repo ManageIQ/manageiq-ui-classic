@@ -64,6 +64,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
             N_('Blink the Identify LED'),
             N_('Blink LED'),
             :image     => "blank_button",
+            :data      => {'function'      => 'sendDataWithRx',
+                           'function-data' => '{"type": "blink_loc_led"}'},
             :url_parms => "main_div",
             :confirm   => N_("Blink the Identify LED?"),
             :enabled   => false,

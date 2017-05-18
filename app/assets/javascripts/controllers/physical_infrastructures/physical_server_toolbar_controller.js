@@ -9,6 +9,7 @@ ManageIQ.angular.app.controller('physicalServerToolbarController', ['miqService'
     'power_on',
     'power_off',
     'restart',
+    'blink_loc_led',
   ];
 
   ManageIQ.angular.rxSubject.subscribe(function(event) {
