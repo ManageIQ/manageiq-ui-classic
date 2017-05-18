@@ -23,10 +23,10 @@ module ReportController::SavedReports
     @right_cell_text ||= _("Saved Report \"%{name}\"") %
                          {:name => "#{rr.name} - #{format_timezone(rr.created_on, Time.zone, "gt")}"}
     if admin_user? || current_user.miq_group_ids.include?(rr.miq_group_id)
+      @report_result = rr
       @report_result_id = session[:report_result_id] = rr.id
       session[:report_result_runtime] = rr.last_run_on
-      task = MiqTask.find_by_id(rr.miq_task_id)
-      if rr.status.downcase == "complete"
+      if report_finished?(rr)
         @report = rr.report_results
         session[:rpt_task_id] = nil
         if @report.blank?
@@ -77,8 +77,6 @@ module ReportController::SavedReports
             add_flash(_("No records found for this report"), :warning)
           end
         end
-      else      # report is queued/running/error
-        @report_result = rr
       end
     else
       add_flash(_("Report is not authorized for the logged in user"), :error)
@@ -138,6 +136,14 @@ module ReportController::SavedReports
   end
 
   private
+
+  def report_finished?(report_result)
+    if MiqTask.exists?(report_result.miq_task_id)
+      report_result.status.downcase == "complete"
+    else
+      !report_result.last_run_on.blank?
+    end
+  end
 
   # Build the main Saved Reports tree
   def build_savedreports_tree
