@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('physicalServerToolbarController', ['miqService', 'API', function(miqService, API) {
+ManageIQ.angular.app.controller('physicalServerToolbarController', ['miqService', 'API', 'physicalServerId', function(miqService, API, physicalServerId) {
   var vm = this;
 
   vm.physicalServerToolbarModel = {
@@ -21,6 +21,9 @@ ManageIQ.angular.app.controller('physicalServerToolbarController', ['miqService'
     }
 
     if (_.indexOf(vm.supportedActions, action) != -1) {
+      if (physicalServerId) {
+        vm.physicalServerToolbarModel.servers.push(physicalServerId);
+      }
       postPhysicalServerAction(action);
     }
   });

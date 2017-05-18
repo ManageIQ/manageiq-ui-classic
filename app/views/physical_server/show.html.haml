@@ -1,5 +1,15 @@
+- @angular_form = true
+
 #main_div
   - if %w(physical_servers).include?(@display)
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
   - else
     = render :partial => 'layouts/textual_groups_generic'
+
+  %form#form{"name"          => "angularForm",
+             "ng-controller" => "physicalServerToolbarController",
+             "novalidate"    => "true"}
+
+:javascript
+  ManageIQ.angular.app.value('physicalServerId', #{@record.id});
+  miq_bootstrap('#form');

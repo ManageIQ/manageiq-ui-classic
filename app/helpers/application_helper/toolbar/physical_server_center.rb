@@ -14,6 +14,8 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             N_('Power on the server'),
             N_('Power On'),
             :image     => "power_on",
+            :data      => {'function'      => 'sendDataWithRx',
+                           'function-data' => '{"type": "power_on"}'},
             :url_parms => "main_div",
             :confirm   => N_("Power on the server?"),
             :options   => {:feature => :power_on}
