@@ -152,10 +152,10 @@ module MiqPolicyController::AlertProfiles
     end
     if params.key?(:id)
       if params[:check] == "1"
-        @assign[:new][:objects].push(from_cid(params[:id].split("-").last).to_i)
+        @assign[:new][:objects].push(from_cid(params[:id].split("-").last))
         @assign[:new][:objects].sort!
       else
-        @assign[:new][:objects].delete(from_cid(params[:id].split("-").last).to_i)
+        @assign[:new][:objects].delete(from_cid(params[:id].split("-").last))
       end
     end
 
@@ -202,9 +202,9 @@ module MiqPolicyController::AlertProfiles
                                             :object,
                                             @sb,
                                             true,
-                                            :assign_to => @assign[:new][:assign_to],
-                                            :cat       => @assign[:new][:cat],
-                                            :objects   => @assign[:new][:objects])
+                                            :assign_to  => @assign[:new][:assign_to],
+                                            :cat        => @assign[:new][:cat],
+                                            :selected   => @assign[:new][:objects])
     end
     tree
   end
