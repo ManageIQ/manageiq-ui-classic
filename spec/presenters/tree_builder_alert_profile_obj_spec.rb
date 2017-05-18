@@ -25,7 +25,7 @@ describe TreeBuilderAlertProfileObj do
                           true,
                           :assign_to => 'storage-tags',
                           :cat       => folder1a.id,
-                          :objects   => [tag1a.id, tag2a.id])
+                          :selected  => [tag1a.id, tag2a.id])
     end
 
     describe '#tree_init_options' do
@@ -91,7 +91,7 @@ describe TreeBuilderAlertProfileObj do
                           true,
                           :assign_to => 'tenant',
                           :cat       => nil,
-                          :objects   => [tag1b.id])
+                          :selected  => [tag1b.id])
     end
 
     describe '#x_get_tree_roots' do
