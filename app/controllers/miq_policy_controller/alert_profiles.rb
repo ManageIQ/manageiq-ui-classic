@@ -209,14 +209,6 @@ module MiqPolicyController::AlertProfiles
     tree
   end
 
-  def choose_node_identifier(o)
-    identifier = (o.name.presence || o.description)
-    if o.kind_of?(MiddlewareServer)
-      identifier += "-" + o.hostname
-    end
-    identifier
-  end
-
   def alert_profile_build_edit_screen
     @edit = {}
     @edit[:new] = {}
