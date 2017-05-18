@@ -82,6 +82,8 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             N_('Turn off the Identify LED'),
             N_('Turn Off LED'),
             :image     => "blank_button",
+            :data      => {'function'      => 'sendDataWithRx',
+                           'function-data' => '{"type": "turn_off_loc_led"}'},
             :url_parms => "main_div",
             :confirm   => N_("Turn off the Identify LED?"),
             :options   => {:feature => :turn_off_loc_led}
