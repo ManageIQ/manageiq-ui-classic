@@ -479,6 +479,7 @@ module ApplicationController::Buttons
     assert_privileges("ab_button_new")
     @resolve = session[:resolve]
     name = @edit[:new][:instance_name].blank? ? @edit[:new][:other_name] : @edit[:new][:instance_name]
+
     if !button_valid?
       @breadcrumbs = []
       drop_breadcrumb(:name => _("Edit of Button"), :url => "/miq_ae_customization/button_edit")
@@ -486,57 +487,57 @@ module ApplicationController::Buttons
       @layout = "miq_ae_automate_button"
       javascript_flash
       return
-    else
-      attrs = {}
-      @edit[:new][:attrs].each do |a|
-        attrs[a[0].to_sym] = a[1] unless a[0].blank?
+    end
+
+    attrs = {}
+    @edit[:new][:attrs].each do |a|
+      attrs[a[0].to_sym] = a[1] unless a[0].blank?
+    end
+    @edit[:uri] = MiqAeEngine.create_automation_object(name, attrs, :fqclass => @edit[:new][:starting_object], :message => @edit[:new][:object_message])
+    @edit[:new][:description] = @edit[:new][:description].strip == "" ? nil : @edit[:new][:description] unless @edit[:new][:description].nil?
+    button_set_record_vars(@custom_button)
+    nodes = x_node.split('_')
+    if nodes[0].split('-')[1] != "ub" && nodes.length >= 3
+      # if group is not unassigned group, add uri as a last member  of the group
+      if x_active_tree == :ab_tree || nodes.length > 3
+        # find custombutton set in ab_tree or when adding button under a group
+        group_id = x_active_tree == :ab_tree ? nodes[2].split('-').last : nodes[3].split('-').last
+        @aset = CustomButtonSet.find_by_id(from_cid(group_id))
+        mems = @aset.members
       end
-      @edit[:uri] = MiqAeEngine.create_automation_object(name, attrs, :fqclass => @edit[:new][:starting_object], :message => @edit[:new][:object_message])
-      @edit[:new][:description] = @edit[:new][:description].strip == "" ? nil : @edit[:new][:description] unless @edit[:new][:description].nil?
-      button_set_record_vars(@custom_button)
-      nodes = x_node.split('_')
-      if nodes[0].split('-')[1] != "ub" && nodes.length >= 3
+    end
+
+    if @custom_button.save
+      add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "CustomButton"), :name => @edit[:new][:description]})
+      @edit = session[:edit] = nil  # clean out the saved info
+      au = CustomButton.find_by_id(@custom_button.id)
+      if @aset && nodes[0].split('-')[1] != "ub" && nodes.length >= 3
         # if group is not unassigned group, add uri as a last member  of the group
-        if x_active_tree == :ab_tree || nodes.length > 3
-          # find custombutton set in ab_tree or when adding button under a group
-          group_id = x_active_tree == :ab_tree ? nodes[2].split('-').last : nodes[3].split('-').last
-          @aset = CustomButtonSet.find_by_id(from_cid(group_id))
-          mems = @aset.members
-        end
+        mems.push(au)
+        @aset.replace_children(mems)
+        @aset.set_data[:button_order] ||= []
+        @aset.set_data[:button_order].push(au.id)
+        @aset.save!
+      end
+      if x_active_tree == :sandt_tree
+        # push new button at the end of button_order array
+        st = ServiceTemplate.find_by_id(@sb[:applies_to_id])
+        st.custom_buttons.push(au) if nodes.length >= 3 && nodes[2].split('-').first != "cbg"
+        st.options[:button_order] ||= []
+        st.options[:button_order].push("cb-#{au.id}")
+        st.save
       end
 
-      if @custom_button.save
-        add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "CustomButton"), :name => @edit[:new][:description]})
-        @edit = session[:edit] = nil  # clean out the saved info
-        au = CustomButton.find_by_id(@custom_button.id)
-        if @aset && nodes[0].split('-')[1] != "ub" && nodes.length >= 3
-          # if group is not unassigned group, add uri as a last member  of the group
-          mems.push(au)
-          @aset.replace_children(mems)
-          @aset.set_data[:button_order] ||= []
-          @aset.set_data[:button_order].push(au.id)
-          @aset.save!
-        end
-        if x_active_tree == :sandt_tree
-          # push new button at the end of button_order array
-          st = ServiceTemplate.find_by_id(@sb[:applies_to_id])
-          st.custom_buttons.push(au) if nodes.length >= 3 && nodes[2].split('-').first != "cbg"
-          st.options[:button_order] ||= []
-          st.options[:button_order].push("cb-#{au.id}")
-          st.save
-        end
-
-        ab_get_node_info(x_node) if x_active_tree == :ab_tree
-        replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
-      else
-        @custom_button.errors.each do |field, msg|
-          add_flash(_("Error during 'add': %{error_message}") %
-            {:error_message => @custom_button.errors.full_message(field, msg)}, :error)
-        end
-        @lastaction = "automate_button"
-        @layout = "miq_ae_automate_button"
-        javascript_flash
+      ab_get_node_info(x_node) if x_active_tree == :ab_tree
+      replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
+    else
+      @custom_button.errors.each do |field, msg|
+        add_flash(_("Error during 'add': %{error_message}") %
+          {:error_message => @custom_button.errors.full_message(field, msg)}, :error)
       end
+      @lastaction = "automate_button"
+      @layout = "miq_ae_automate_button"
+      javascript_flash
     end
   end
 
@@ -551,6 +552,7 @@ module ApplicationController::Buttons
     @edit[:uri] = MiqAeEngine.create_automation_object(name, attrs, :fqclass => @edit[:new][:starting_object], :message => @edit[:new][:object_message])
     @edit[:new][:description] = @edit[:new][:description].strip == "" ? nil : @edit[:new][:description] unless @edit[:new][:description].nil?
     button_set_record_vars(@custom_button)
+
     if !button_valid?
       @breadcrumbs = []
       drop_breadcrumb(:name => _("Edit of Button"), :url => "/miq_ae_customization/button_edit")
@@ -558,23 +560,23 @@ module ApplicationController::Buttons
       @layout = "miq_ae_automate_button"
       javascript_flash
       return
+    end
+
+    if @custom_button.save
+      add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "CustomButton"), :name => @edit[:new][:description]})
+      @edit = session[:edit] = nil  # clean out the saved info
+      ab_get_node_info(x_node) if x_active_tree == :ab_tree
+      replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
     else
-      if @custom_button.save
-        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "CustomButton"), :name => @edit[:new][:description]})
-        @edit = session[:edit] = nil  # clean out the saved info
-        ab_get_node_info(x_node) if x_active_tree == :ab_tree
-        replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
-      else
-        @custom_button.errors.each do |field, msg|
-          add_flash(_("Error during 'edit': %{field_name} %{error_message}") %
-            {:field_name => field.to_s.capitalize, :error_message => msg}, :error)
-        end
-        @breadcrumbs = []
-        drop_breadcrumb(:name => "Edit of Button", :url => "/miq_ae_customization/button_edit")
-        @lastaction = "automate_button"
-        @layout = "miq_ae_automate_button"
-        javascript_flash
+      @custom_button.errors.each do |field, msg|
+        add_flash(_("Error during 'edit': %{field_name} %{error_message}") %
+          {:field_name => field.to_s.capitalize, :error_message => msg}, :error)
       end
+      @breadcrumbs = []
+      drop_breadcrumb(:name => "Edit of Button", :url => "/miq_ae_customization/button_edit")
+      @lastaction = "automate_button"
+      @layout = "miq_ae_automate_button"
+      javascript_flash
     end
   end
 
