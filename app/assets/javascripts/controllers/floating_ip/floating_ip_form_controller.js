@@ -52,9 +52,9 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
       .then(getNetworkByEmsFormData)
       .catch(miqService.handleFailure);
 
-    API.get("/api/providers/" + id + "/cloud_tenants?expand=resources&attributes=id,name")
-      .then(getCloudTenantsByEms)
-      .catch(miqService.handleFailure);
+    miqService.getProviderTenants(function(data) {
+      $scope.available_tenants = data.resources;
+    })(id);
   };
 
   function getFloatingIpFormData(response) {
@@ -70,11 +70,6 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
     var data = response.data;
 
     vm.available_networks = data.available_networks;
-    miqService.sparkleOff();
-  }
-
-  function getCloudTenantsByEms(data) {
-    $scope.available_tenants = data.resources;
     miqService.sparkleOff();
   }
 }]);

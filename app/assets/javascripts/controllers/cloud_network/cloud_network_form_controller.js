@@ -57,16 +57,7 @@ ManageIQ.angular.app.controller('cloudNetworkFormController', ['$scope', 'cloudN
     miqService.miqFlash("warn", "All changes have been reset");
   };
 
-  $scope.filterNetworkManagerChanged = function(id) {
-    miqService.sparkleOn();
-
-    API.get("/api/providers/" + id + "/cloud_tenants?expand=resources&attributes=id,name")
-      .then(getCloudTenantsByEms)
-      .catch(miqService.handleFailure);
-  };
-
-  function getCloudTenantsByEms(data) {
+  $scope.filterNetworkManagerChanged = miqService.getProviderTenants(function(data) {
     $scope.available_tenants = data.resources;
-    miqService.sparkleOff();
-  }
+  });
 }]);
