@@ -42,6 +42,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
             N_('Restart the selected servers'),
             N_('Restart'),
             :image     => "power_reset",
+            :data      => {'function'      => 'sendDataWithRx',
+                           'function-data' => '{"type": "restart"}'},
             :url_parms => "main_div",
             :confirm   => N_("Restart the selected servers?"),
             :enabled   => false,

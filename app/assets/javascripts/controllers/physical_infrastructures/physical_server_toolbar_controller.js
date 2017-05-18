@@ -8,6 +8,7 @@ ManageIQ.angular.app.controller('physicalServerToolbarController', ['miqService'
   vm.supportedActions = [
     'power_on',
     'power_off',
+    'restart',
   ];
 
   ManageIQ.angular.rxSubject.subscribe(function(event) {

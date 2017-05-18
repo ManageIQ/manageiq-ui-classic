@@ -38,6 +38,8 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             N_('Restart the server'),
             N_('Restart'),
             :image     => "power_reset",
+            :data      => {'function'      => 'sendDataWithRx',
+                           'function-data' => '{"type": "restart"}'},
             :url_parms => "main_div",
             :confirm   => N_("Restart the server?"),
             :options   => {:feature => :restart}
