@@ -2145,6 +2145,7 @@ Rails.application.routes.draw do
       :get  => %w(
         dialog_accordion_json
         explorer
+        editor
         export_service_dialogs
         show
       ),

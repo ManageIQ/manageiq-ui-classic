@@ -135,6 +135,9 @@ class MiqAeCustomizationController < ApplicationController
     render :layout => "application" unless request.xml_http_request?
   end
 
+  def editor
+  end
+
   def tree_select
     valid = true
     if x_active_tree == :dialog_edit_tree
