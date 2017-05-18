@@ -136,6 +136,11 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def editor
+    if params[:id].present?
+      @record = Dialog.find(params[:id])
+    else
+      @record = Dialog.new
+    end
   end
 
   def tree_select
