@@ -152,10 +152,10 @@ module MiqPolicyController::AlertProfiles
     end
     if params.key?(:id)
       if params[:check] == "1"
-        @assign[:new][:objects].push(params[:id].split("-").last.to_i)
+        @assign[:new][:objects].push(from_cid(params[:id].split("-").last).to_i)
         @assign[:new][:objects].sort!
       else
-        @assign[:new][:objects].delete(params[:id].split("-").last.to_i)
+        @assign[:new][:objects].delete(from_cid(params[:id].split("-").last).to_i)
       end
     end
 
