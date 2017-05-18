@@ -544,12 +544,11 @@ module ApplicationController::Buttons
   def ab_button_save
     assert_privileges("ab_button_edit")
     @resolve = session[:resolve]
-    name = @edit[:new][:instance_name].blank? ? @edit[:new][:other_name] : @edit[:new][:instance_name]
     attrs = {}
     @edit[:new][:attrs].each do |a|
       attrs[a[0].to_sym] = a[1] unless a[0].blank?
     end
-    @edit[:uri] = MiqAeEngine.create_automation_object(name, attrs, :fqclass => @edit[:new][:starting_object], :message => @edit[:new][:object_message])
+    @edit[:uri] = MiqAeEngine.create_automation_object(ab_button_name, attrs, :fqclass => @edit[:new][:starting_object], :message => @edit[:new][:object_message])
     @edit[:new][:description] = @edit[:new][:description].strip == "" ? nil : @edit[:new][:description] unless @edit[:new][:description].nil?
     button_set_record_vars(@custom_button)
 
@@ -773,21 +772,29 @@ module ApplicationController::Buttons
     @selected = params[:selected_fields]
   end
 
+  def ab_button_name
+    @edit[:new][:instance_name].blank? ? @edit[:new][:other_name] : @edit[:new][:instance_name]
+  end
+
   def button_valid?
-    name = @edit[:new][:instance_name].blank? ? @edit[:new][:other_name] : @edit[:new][:instance_name]
     if @edit[:new][:name].blank? || @edit[:new][:name].strip == ""
       add_flash(_("Button Text is required"), :error)
     end
+
     if @edit[:new][:button_image].blank? || @edit[:new][:button_image] == 0
       add_flash(_("Button Image must be selected"), :error)
     end
+
     add_flash(_("Button Hover Text is required"), :error) if @edit[:new][:description].blank?
-    #   add_flash("Object Attribute Name must be entered", :error) if @edit[:new][:target_attr_name].blank?
-    add_flash(_("Starting Process is required"), :error) if name.blank?
+
+    add_flash(_("Starting Process is required"), :error) if ab_button_name.blank?
+
     add_flash(_("Request is required"), :error) if @edit[:new][:object_request].blank?
+
     if @edit[:new][:visibility_typ] == "role" && @edit[:new][:roles].blank?
       add_flash(_("At least one Role must be selected"), :error)
     end
+
     !flash_errors?
   end
 
