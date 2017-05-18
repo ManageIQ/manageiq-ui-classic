@@ -821,7 +821,9 @@ module ApplicationHelper
     end
 
     # FIXME: singular vs plural for controller.class.toolbar_singular
-    toolbars['center_tb'] = if controller.class.toolbar_singular.present?
+    toolbars['center_tb'] = if controller.class.toolbar_plural.present? && params[:action] == 'show_list'
+                              "#{controller.class.toolbar_plural}_center_tb"
+                            elsif controller.class.toolbar_singular.present?
                               "#{controller.class.toolbar_singular}_center_tb"
                             else
                               center_toolbar_filename
