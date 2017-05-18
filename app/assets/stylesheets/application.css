@@ -18,7 +18,6 @@
  *= require kubernetes-topology-graph/dist/topology-graph
  *= require container_providers_dashboard
  *= require wizard
- *= require template
  *= require timeline
  *= require topology
  *= require container_topology
