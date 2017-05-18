@@ -14,6 +14,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
             N_('Power on the selected servers'),
             N_('Power On'),
             :image     => "power_on",
+            :data      => {'function'      => 'sendDataWithRx',
+                           'function-data' => '{"type": "power_on"}'},
             :url_parms => "main_div",
             :confirm   => N_("Power on the selected servers?"),
             :enabled   => false,

@@ -1,2 +1,11 @@
+- @angular_form = true
+
 #main_div
   = render :partial => 'layouts/gtl'
+
+  %form#form{"name"          => "angularForm",
+             "ng-controller" => "physicalServerToolbarController",
+             "novalidate"    => "true"}
+
+:javascript
+  miq_bootstrap('#form');
