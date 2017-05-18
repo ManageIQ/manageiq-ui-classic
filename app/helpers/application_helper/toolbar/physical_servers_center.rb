@@ -28,6 +28,8 @@ class ApplicationHelper::Toolbar::PhysicalServersCenter < ApplicationHelper::Too
             N_('Power off the selected servers'),
             N_('Power Off'),
             :image     => "power_off",
+            :data      => {'function'      => 'sendDataWithRx',
+                           'function-data' => '{"type": "power_off"}'},
             :url_parms => "main_div",
             :confirm   => N_("Power off the selected servers?"),
             :enabled   => false,

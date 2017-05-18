@@ -26,6 +26,8 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             N_('Power off the server'),
             N_('Power Off'),
             :image     => "power_off",
+            :data      => {'function'      => 'sendDataWithRx',
+                           'function-data' => '{"type": "power_off"}'},
             :url_parms => "main_div",
             :confirm   => N_("Power off the server?"),
             :options   => {:feature => :power_off}
