@@ -54,11 +54,10 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['$scope', 'secur
     API.get("/api/providers/" + id + "/cloud_tenants?expand=resources&attributes=id,name")
       .then(getCloudTenantsByEms)
       .catch(miqService.handleFailure);
-
-    miqService.sparkleOff();
   };
 
   function getCloudTenantsByEms(data) {
     $scope.available_tenants = data.resources;
+    miqService.sparkleOff();
   }
 }]);

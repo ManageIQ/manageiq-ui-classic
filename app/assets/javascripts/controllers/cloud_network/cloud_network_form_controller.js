@@ -63,11 +63,10 @@ ManageIQ.angular.app.controller('cloudNetworkFormController', ['$scope', 'cloudN
     API.get("/api/providers/" + id + "/cloud_tenants?expand=resources&attributes=id,name")
       .then(getCloudTenantsByEms)
       .catch(miqService.handleFailure);
-
-    miqService.sparkleOff();
   };
 
   function getCloudTenantsByEms(data) {
     $scope.available_tenants = data.resources;
+    miqService.sparkleOff();
   }
 }]);

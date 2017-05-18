@@ -22,8 +22,7 @@
   %h3
     = _('Placement')
   .form-horizontal
-    .form-group{"ng-if" => "networkRouterModel.ems_id"}
-    .form-group{"ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}"}
+    .form-group{"ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}", "ng-if" => "networkRouterModel.ems_id"}
       %label.col-md-2.control-label
         = _('Cloud Tenant')
       .col-md-8

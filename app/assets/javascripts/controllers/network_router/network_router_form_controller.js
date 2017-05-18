@@ -66,6 +66,10 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
     $http.get('/network_router/network_router_networks_by_ems/' + id)
       .then(getNetworkRouterFormByEmsData)
       .catch(miqService.handleFailure);
+
+    API.get("/api/providers/" + id + "/cloud_tenants?expand=resources&attributes=id,name")
+      .then(getCloudTenantsByEms)
+      .catch(miqService.handleFailure);
   };
 
   $scope.filterCloudNetworkChanged = function(id) {
@@ -106,17 +110,8 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
     miqService.sparkleOff();
   }
 
-  $scope.filterNetworkManagerChanged = function(id) {
-    miqService.sparkleOn();
-
-    API.get("/api/providers/" + id + "/cloud_tenants?expand=resources&attributes=id,name")
-      .then(getCloudTenantsByEms)
-      .catch(miqService.handleFailure);
-
-    miqService.sparkleOff();
-  };
-
   function getCloudTenantsByEms(data) {
     $scope.available_tenants = data.resources;
+    miqService.sparkleOff();
   }
 }]);
