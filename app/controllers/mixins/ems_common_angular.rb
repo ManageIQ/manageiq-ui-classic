@@ -431,7 +431,7 @@ module Mixins
 
         if hawkular_hostname.blank?
           default_key = params[:default_password] || ems.authentication_key
-          hawkular_hostname = get_hostname_from_routes(ems, default_endpoint, default_key)
+          hawkular_hostname = get_hostname_from_routes(ems, default_endpoint, default_key) || hostname
         end
         hawkular_endpoint = {:role => :hawkular, :hostname => hawkular_hostname, :port => hawkular_api_port}
         hawkular_endpoint.merge!(endpoint_security_options(hawkular_security_protocol, hawkular_tls_ca_certs))
