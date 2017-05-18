@@ -66,7 +66,6 @@ module OpsController::Settings::RHN
     MiqServer.in_my_region.order(:name).collect do |server|
       status = server.rh_registered ? 'Unsubscribed' : 'Not registered'
       status = 'Subscribed' if server.rh_subscribed
-      status = 'Subscribed via Proxy' if server.rhn_mirror
 
       MiqHashStruct.new(
         :id                => server.id,
