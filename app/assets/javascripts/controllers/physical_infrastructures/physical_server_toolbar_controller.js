@@ -42,7 +42,7 @@ ManageIQ.angular.app.controller('physicalServerToolbarController', ['miqService'
   }
 
   function postAction(response) {
-    miqFlashLater({ message: response.message });
-    miqFlashSaved();
+    miqService.miqFlashLater({ message: response.message });
+    miqService.miqFlashSaved();
   }
 }]);
