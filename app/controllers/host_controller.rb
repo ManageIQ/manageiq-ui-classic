@@ -152,7 +152,7 @@ class HostController < ApplicationController
       old_host_attributes = @host.attributes.clone
       set_record_vars(@host, :validate)                        # Set the record variables, but don't save
       @host.vmm_vendor = "unknown"
-      if valid_record?(@host) && @host.save
+      if valid_record? && @host.save
         set_record_vars(@host)                                 # Save the authentication records for this host
         AuditEvent.success(build_saved_audit_hash_angular(old_host_attributes, @host, params[:button] == "add"))
         message = _("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "Host"), :name => @host.name}
@@ -236,7 +236,7 @@ class HostController < ApplicationController
         old_host_attributes = @host.attributes.clone
         valid_host = find_record_with_rbac(Host, params[:id])
         set_record_vars(valid_host, :validate)                      # Set the record variables, but don't save
-        if valid_record?(valid_host) && set_record_vars(@host) && @host.save
+        if valid_record? && set_record_vars(@host) && @host.save
           add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "Host"), :name => @host.name})
           @breadcrumbs.pop if @breadcrumbs
           AuditEvent.success(build_saved_audit_hash_angular(old_host_attributes, @host, false))
@@ -258,7 +258,7 @@ class HostController < ApplicationController
                                                session[:host_items].first.to_i)
         # Set the record variables, but don't save
         creds = set_credentials(valid_host, :validate)
-        if valid_record?(valid_host)
+        if valid_record?
           @error = Host.batch_update_authentication(session[:host_items], creds)
         end
         if @error || @error.blank?
@@ -493,34 +493,9 @@ class HostController < ApplicationController
   end
 
   # Validate the host record fields
-  def valid_record?(host)
+  def valid_record?
     valid = true
     @errors = []
-    if !host.authentication_userid.blank? && params[:password] != params[:verify]
-      @errors.push(_("Default Password and Verify Password fields do not match"))
-      valid = false
-      @tabnum = "1"
-    end
-    if host.authentication_userid.blank? && (!host.authentication_userid(:remote).blank? || !host.authentication_userid(:ws).blank?)
-      @errors.push(_("Default User ID must be entered if a Remote Login or Web Services User ID is entered"))
-      valid = false
-      @tabnum = "1"
-    end
-    if !host.authentication_userid(:remote).blank? && params[:remote_password] != params[:remote_verify]
-      @errors.push(_("Remote Login Password and Verify Password fields do not match"))
-      valid = false
-      @tabnum ||= "2"
-    end
-    if !host.authentication_userid(:ws).blank? && params[:ws_password] != params[:ws_verify]
-      @errors.push(_("Web Services Password and Verify Password fields do not match"))
-      valid = false
-      @tabnum ||= "3"
-    end
-    if !host.authentication_userid(:ipmi).blank? && params[:ipmi_password] != params[:ipmi_verify]
-      @errors.push(_("IPMI Password and Verify Password fields do not match"))
-      valid = false
-      @tabnum ||= "4"
-    end
     if params[:ws_port] && !(params[:ws_port] =~ /^\d+$/)
       @errors.push(_("Web Services Listen Port must be numeric"))
       valid = false
