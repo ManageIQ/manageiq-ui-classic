@@ -189,43 +189,6 @@ module ApplicationController::Tags
     end
   end
 
-  # Build the classification assignment screen
-  def classify_build_screen
-    cats = Classification.categories.select(&:show).sort_by(&:name) # Get the categories, sort by name
-    @categories = {}    # Classifications array for first chooser
-    cats.delete_if { |c| c.read_only? || c.entries.length == 0 }  # Remove categories that are read only or have no entries
-    cats.each do |c|
-      if c.single_value?
-        @categories[c.description + " *"] = c.name
-      else
-        @categories[c.description] = c.name
-      end
-    end
-    cats.each do |cat_key|
-      if session[:assigned_filters].include?(cat_key.name.downcase)
-        cats.delete(cat_key)
-      end
-    end
-    session[:cat] ||= cats.first                                    # Set to first category, if not already set
-
-    @tagitems = session[:tag_db].find(session[:tag_items]).sort_by(&:name)  # Get the db records that are being tagged
-
-    @view = get_db_view(session[:tag_db])       # Instantiate the MIQ Report view object
-    @view.table = MiqFilter.records2table(@tagitems, @view.cols + ['id'])
-
-    session[:assignments] = Classification.find_assigned_entries(@tagitems[0])    # Start with the first items assignments
-    @tagitems.each do |item|
-      itemassign = Classification.find_assigned_entries(item)             # Get each items assignments
-      session[:assignments].delete_if { |a| !itemassign.include?(a) } # Remove any assignments that are not in the new items assignments
-      break if session[:assignments].length == 0                          # Stop looking if no assignments are left
-    end
-    if session[:assignments].length > 0                                             # if any assignments left
-      session[:assignments].delete_if { |a| a.parent.read_only? }    # remove the ones from read only categories
-    end
-    classify_build_entries_pulldown
-    build_targets_hash(@tagitems)
-  end
-
   # Build the second pulldown containing the entries for the selected category
   def classify_build_entries_pulldown
     @entries = {}                   # Create new entries hash (2nd pulldown)
