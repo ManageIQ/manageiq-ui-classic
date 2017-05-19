@@ -226,22 +226,6 @@ module ApplicationController::Tags
     add_flash(_("Tag edits were successfully saved"))
   end
 
-  # Build the tagging assignment screen
-  def tagging_build_screen
-    @tagitems = session[:tag_db].find(session[:tag_items]).sort_by(&:name)  # Get the db records that are being tagged
-    @view = get_db_view(session[:tag_db])       # Instantiate the MIQ Report view object
-    @view.table = MiqFilter.records2table(@tagitems, @view.cols + ['id'])
-
-    session[:mytags] = @tagitems[0].tagged_with(:cat => session[:userid])   # Start with the first items tags
-    @tagitems.each do |item|
-      itemassign = item.tagged_with(:cat => session[:userid])               # Get each items tags
-      session[:mytags].delete_if { |t| !itemassign.include?(t) }           # Remove any tags that are not in the new items tags
-      break if session[:mytags].length == 0                               # Stop looking if no tags are left
-    end
-    tagging_build_tags_pulldown
-    build_targets_hash(@tagitems)
-  end
-
   # Build the pulldown containing the tags
   def tagging_build_tags_pulldown
     @mytags = Tag.all_tags(:cat => session[:userid]).sort     # Get all of the users tags
