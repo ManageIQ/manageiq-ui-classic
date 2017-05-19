@@ -795,6 +795,14 @@ module ApplicationController::Buttons
       add_flash(_("At least one Role must be selected"), :error)
     end
 
+    if @edit[:new][:open_url] == true && @edit[:new][:display_for] != 'single'
+      add_flash(_('URL can be opened only by buttons for a single entity'))
+    end
+
+    if @edit[:new][:dialog_id].empty? && @edit[:new][:display_for] != 'single'
+      add_flash(_('Dialog can be opened only by buttons for a single entity'))
+    end
+
     !flash_errors?
   end
 
