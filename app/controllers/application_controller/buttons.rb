@@ -777,9 +777,7 @@ module ApplicationController::Buttons
   end
 
   def button_valid?(button_hash = @edit[:new])
-    if button_hash[:name].blank? || button_hash[:name].strip == ""
-      add_flash(_("Button Text is required"), :error)
-    end
+    add_flash(_("Button Text is required"), :error) if button_hash[:name].strip.blank?
 
     if button_hash[:button_image].blank? || button_hash[:button_image] == 0
       add_flash(_("Button Image must be selected"), :error)
