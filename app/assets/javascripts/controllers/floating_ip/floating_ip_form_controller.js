@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 'floatingIpFormId', 'miqService', 'API', function($http, $scope, floatingIpFormId, miqService, API) {
+ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 'floatingIpFormId', 'miqService', function($http, $scope, floatingIpFormId, miqService) {
   var vm = this;
   vm.floatingIpModel = { name: '' };
   vm.formId = floatingIpFormId;
