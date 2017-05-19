@@ -364,6 +364,8 @@
       var pagination = this.$document.getElementsByClassName('miq-pagination');
       var pagingDiv = this.$document.querySelector('#paging_div .col-md-12');
       if (pagination && pagination.length > 0 && pagingDiv) {
+        var oldPagination = pagingDiv.querySelector('div');
+        oldPagination ? oldPagination.remove() : null;
         pagingDiv.appendChild(pagination[0]);
       }
     }.bind(this));
