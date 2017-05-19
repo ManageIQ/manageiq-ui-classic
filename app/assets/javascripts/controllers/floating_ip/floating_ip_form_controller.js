@@ -53,7 +53,7 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
       .catch(miqService.handleFailure);
 
     miqService.getProviderTenants(function(data) {
-      $scope.available_tenants = data.resources;
+      vm.available_tenants = data.resources;
     })(id);
   };
 

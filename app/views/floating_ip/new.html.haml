@@ -68,7 +68,7 @@
   %h3
     = _('Placement')
   .form-horizontal
-    .form-group{"ng-if" => "floatingIpModel.ems_id"}
+    .form-group{"ng-if" => "vm.floatingIpModel.ems_id"}
       %label.col-md-2.control-label
         = _('Cloud Tenant')
       .col-md-8
@@ -77,7 +77,7 @@
                 "required"                    => "",
                 :miqrequired                  => true,
                 :checkchange                  => true,
-                'ng-options'                  => 'tenant.id as tenant.name for tenant in available_tenants',
+                'ng-options'                  => 'tenant.id as tenant.name for tenant in vm.available_tenants',
                 'pf-select'                   => true,
                 "selectpicker-for-select-tag" => ""}
           %option{"value" => ""}
