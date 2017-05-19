@@ -88,13 +88,6 @@ module ApplicationController::Tags
     end
   end
 
-  def filters
-    @in_a_form = true
-    session[:filter_object] = Host.find(1)
-    session[:cat] = nil
-    classify_build_screen
-  end
-
   private ############################
 
   def get_tag_items
