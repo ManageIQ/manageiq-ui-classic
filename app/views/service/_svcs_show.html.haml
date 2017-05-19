@@ -1,4 +1,4 @@
-#service_details{'ng-controller'=>"SanitizeAndRenderController as vm"}
+#service_details
   #services_tab
     %ul.nav.nav-tabs
       = miq_tab_header("details") do
@@ -34,6 +34,7 @@
             - if @view
               = render :partial => "layouts/gtl", :locals => {:view => @view}
       - if @record.type == "ServiceAnsiblePlaybook"
+        #service_detail_ansible_playbook{'ng-controller'=>"SanitizeAndRenderController as vm"}
         = miq_tab_content("provisioning", 'default', :class => 'cm-tab') do
           = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_provisioning_group_list}
           - if (@job && @job.try(:raw_stdout) rescue false)
@@ -44,6 +45,7 @@
                 .col-md-9
                   %div{'ng-bind-html'=>"vm.sanitizeRenderHtml('#{sanitize_output(@job.raw_stdout('html'))}')"}
         - if job
+          #service_detail_job{'ng-controller'=>"SanitizeAndRenderController as vm"}
           = miq_tab_content("retirement", 'default', :class => 'cm-tab') do
             = render :partial => "layouts/textual_groups_tabs", :locals => {:textual_group_list => textual_retirement_group_list}
             %h3
@@ -54,4 +56,5 @@
                   %div{'ng-bind-html'=>"vm.sanitizeRenderHtml('#{sanitize_output(job.raw_stdout('html'))}')"}
 :javascript
   miq_tabs_init('#services_tab');
-  miq_bootstrap('#service_details', 'sanitizeRender');
+  miq_bootstrap('#service_detail_ansible_playbook', 'sanitizeRender');
+  miq_bootstrap('#service_detail_job', 'sanitizeRender');
