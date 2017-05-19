@@ -2,6 +2,7 @@
 - prefix ||= "default"
 - ng_reqd_hostname ||= true
 - ng_reqd_api_port ||= true
+- ng_reqd_db_name ||= false
 
 %div{"ng-if" => defined?(security_protocol_hide) ? false : true}
   .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_security_protocol.$invalid}",
@@ -127,7 +128,7 @@
                           "name"          => "#{prefix}_database_name",
                           "ng-model"      => "#{ng_model}.#{prefix}_database_name",
                           "maxlength"     => 40,
-                          "required"      => defined?(database_name_required) ? true : false,
+                          "ng-required"   => ng_reqd_db_name.to_s,
                           "checkchange"   => "",
                           "ng-trim"       => false,
                           "detect-spaces" => ""}
