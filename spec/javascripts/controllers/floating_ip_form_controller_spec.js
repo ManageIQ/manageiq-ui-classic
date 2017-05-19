@@ -1,27 +1,28 @@
 describe('floatingIpFormController', function() {
-  var $http,$scope, $controller, floatingIpFormId,miqService,vm;
+  var $http, $scope, $controller, floatingIpFormId, miqService, vm;
 
   beforeEach(module('ManageIQ'));
 
-  beforeEach(inject(function($rootScope,$http, _$controller_, _miqService_ ) {
+  beforeEach(inject(function($rootScope, $http, _$controller_, _miqService_) {
     miqService = _miqService_;
+
     spyOn(miqService, 'miqAjaxButton');
     spyOn(miqService, 'miqFlash');
     spyOn(miqService, 'sparkleOn');
     spyOn(miqService, 'sparkleOff');
+
     $scope = $rootScope.$new();
     $scope.vm = {};
     $scope.vm.floatingIpModel = {
-      name:                         'floatingIpName',
-      description:                  'floatingIpDescription'
+      name: 'floatingIpName',
+      description: 'floatingIpDescription',
     };
 
     vm = _$controller_('floatingIpFormController as vm', {
       $scope: $scope,
-      miqService: miqService ,
-      floatingIpFormId: 1000000000001
+      miqService: miqService,
+      floatingIpFormId: 1000000000001,
     });
-
   }));
 
   describe('#saveClicked', function() {
@@ -41,17 +42,16 @@ describe('floatingIpFormController', function() {
     });
   });
 
-
   describe('#cancelClicked', function() {
     beforeEach(function() {
       $scope.angularForm = {
-        $setPristine: function (value){}
+        $setPristine: function(value) {},
       };
       setTimeout(vm.cancelClicked);
     });
 
     it('delegates to cancelOperation', function(done) {
-      setTimeout(function () {
+      setTimeout(function() {
         expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/floating_ip/update/1000000000001?button=cancel');
         done();
       });
