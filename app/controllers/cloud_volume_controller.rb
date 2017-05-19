@@ -443,7 +443,7 @@ class CloudVolumeController < ApplicationController
     when "create"
       options = {}
       options[:name] = params[:backup_name] if params[:backup_name]
-      options[:incremental] = true if params[:incremental]
+      options[:incremental] = true if params[:incremental] == "true"
 
       task_id = @volume.backup_create_queue(session[:userid], options)
 
