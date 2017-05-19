@@ -456,14 +456,14 @@ module ApplicationController::Buttons
     @changed = (@edit[:new] != @edit[:current])
 
     case params[:button]
-    when 'cancel' then ab_button_cancel
+    when 'cancel' then ab_button_cancel(typ)
     when 'add'    then ab_button_add
     when 'save'   then ab_button_save
     when 'reset'  then ab_button_reset
     end
   end
 
-  def ab_button_cancel
+  def ab_button_cancel(typ)
     if typ == "update"
       add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "CustomButton"), :name => @edit[:current][:name]})
     else
