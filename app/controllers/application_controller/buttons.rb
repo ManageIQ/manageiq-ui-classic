@@ -470,7 +470,7 @@ module ApplicationController::Buttons
       add_flash(_("Add of new %{model_name} was cancelled by the user") %
         {:model_name => ui_lookup(:model => "CustomButton")})
     end
-    @edit = session[:edit] = nil  # clean out the saved info
+    @edit = session[:edit] = nil
     ab_get_node_info(x_node) if x_active_tree == :ab_tree
     replace_right_cell(:nodetype => x_node)
   end
@@ -480,7 +480,7 @@ module ApplicationController::Buttons
     @resolve = session[:resolve]
     name = @edit[:new][:instance_name].blank? ? @edit[:new][:other_name] : @edit[:new][:instance_name]
 
-    if !button_valid?
+    unless button_valid?
       @breadcrumbs = []
       drop_breadcrumb(:name => _("Edit of Button"), :url => "/miq_ae_customization/button_edit")
       @lastaction = "automate_button"
@@ -502,15 +502,15 @@ module ApplicationController::Buttons
       if x_active_tree == :ab_tree || nodes.length > 3
         # find custombutton set in ab_tree or when adding button under a group
         group_id = x_active_tree == :ab_tree ? nodes[2].split('-').last : nodes[3].split('-').last
-        @aset = CustomButtonSet.find_by_id(from_cid(group_id))
+        @aset = CustomButtonSet.find(from_cid(group_id))
         mems = @aset.members
       end
     end
 
     if @custom_button.save
       add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "CustomButton"), :name => @edit[:new][:description]})
-      @edit = session[:edit] = nil  # clean out the saved info
-      au = CustomButton.find_by_id(@custom_button.id)
+      @edit = session[:edit] = nil
+      au = CustomButton.find(@custom_button.id)
       if @aset && nodes[0].split('-')[1] != "ub" && nodes.length >= 3
         # if group is not unassigned group, add uri as a last member  of the group
         mems.push(au)
@@ -521,7 +521,7 @@ module ApplicationController::Buttons
       end
       if x_active_tree == :sandt_tree
         # push new button at the end of button_order array
-        st = ServiceTemplate.find_by_id(@sb[:applies_to_id])
+        st = ServiceTemplate.find(@sb[:applies_to_id])
         st.custom_buttons.push(au) if nodes.length >= 3 && nodes[2].split('-').first != "cbg"
         st.options[:button_order] ||= []
         st.options[:button_order].push("cb-#{au.id}")
@@ -552,7 +552,7 @@ module ApplicationController::Buttons
     @edit[:new][:description] = @edit[:new][:description].strip == "" ? nil : @edit[:new][:description] unless @edit[:new][:description].nil?
     button_set_record_vars(@custom_button)
 
-    if !button_valid?
+    unless button_valid?
       @breadcrumbs = []
       drop_breadcrumb(:name => _("Edit of Button"), :url => "/miq_ae_customization/button_edit")
       @lastaction = "automate_button"
@@ -563,7 +563,7 @@ module ApplicationController::Buttons
 
     if @custom_button.save
       add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "CustomButton"), :name => @edit[:new][:description]})
-      @edit = session[:edit] = nil  # clean out the saved info
+      @edit = session[:edit] = nil
       ab_get_node_info(x_node) if x_active_tree == :ab_tree
       replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
     else
@@ -779,7 +779,7 @@ module ApplicationController::Buttons
   def button_valid?(button_hash = @edit[:new])
     add_flash(_("Button Text is required"), :error) if button_hash[:name].strip.blank?
 
-    if button_hash[:button_image].blank? || button_hash[:button_image] == 0
+    if button_hash[:button_image].blank? || button_hash[:button_image].zero?
       add_flash(_("Button Image must be selected"), :error)
     end
 
