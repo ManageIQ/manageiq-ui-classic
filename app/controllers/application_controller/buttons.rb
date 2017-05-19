@@ -772,34 +772,34 @@ module ApplicationController::Buttons
     @selected = params[:selected_fields]
   end
 
-  def ab_button_name
-    @edit[:new][:instance_name].blank? ? @edit[:new][:other_name] : @edit[:new][:instance_name]
+  def ab_button_name(button_hash = @edit[:new])
+    button_hash[:instance_name].blank? ? button_hash[:other_name] : button_hash[:instance_name]
   end
 
-  def button_valid?
-    if @edit[:new][:name].blank? || @edit[:new][:name].strip == ""
+  def button_valid?(button_hash = @edit[:new])
+    if button_hash[:name].blank? || button_hash[:name].strip == ""
       add_flash(_("Button Text is required"), :error)
     end
 
-    if @edit[:new][:button_image].blank? || @edit[:new][:button_image] == 0
+    if button_hash[:button_image].blank? || button_hash[:button_image] == 0
       add_flash(_("Button Image must be selected"), :error)
     end
 
-    add_flash(_("Button Hover Text is required"), :error) if @edit[:new][:description].blank?
+    add_flash(_("Button Hover Text is required"), :error) if button_hash[:description].blank?
 
-    add_flash(_("Starting Process is required"), :error) if ab_button_name.blank?
+    add_flash(_("Starting Process is required"), :error) if ab_button_name(button_hash).blank?
 
-    add_flash(_("Request is required"), :error) if @edit[:new][:object_request].blank?
+    add_flash(_("Request is required"), :error) if button_hash[:object_request].blank?
 
-    if @edit[:new][:visibility_typ] == "role" && @edit[:new][:roles].blank?
+    if button_hash[:visibility_typ] == "role" && button_hash[:roles].blank?
       add_flash(_("At least one Role must be selected"), :error)
     end
 
-    if @edit[:new][:open_url] == true && @edit[:new][:display_for] != 'single'
+    if button_hash[:open_url] == true && button_hash[:display_for] != 'single'
       add_flash(_('URL can be opened only by buttons for a single entity'))
     end
 
-    if @edit[:new][:dialog_id].empty? && @edit[:new][:display_for] != 'single'
+    if button_hash[:dialog_id].empty? && button_hash[:display_for] != 'single'
       add_flash(_('Dialog can be opened only by buttons for a single entity'))
     end
 
