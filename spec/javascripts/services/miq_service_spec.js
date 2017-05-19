@@ -126,7 +126,6 @@ describe('miqService', function() {
           uri_prefix:   'nfs',
           log_userid:   null,
           log_password: null,
-          log_verify:   null,
           log_protocol: 'NFS'
           };
         });
