@@ -32,17 +32,6 @@ module ApplicationController::Tags
   alias_method :storage_tag, :tagging_edit
   alias_method :infra_networking_tag, :tagging_edit
 
-  # New classification category chosen on the classify screen
-  def classify_new_cat
-    session[:cat] = Classification.find_by_name(params["classification"]["name"])
-    classify_build_entries_pulldown
-
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("value_div", :partial => "layouts/classify_value")
-    end
-  end
-
   # Handle tag edit field changes
   def tag_edit_form_field_changed
     id = params[:id]
