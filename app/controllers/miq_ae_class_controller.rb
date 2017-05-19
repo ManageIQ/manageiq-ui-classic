@@ -2,6 +2,7 @@ require "rexml/document"
 class MiqAeClassController < ApplicationController
   include MiqAeClassHelper
   include AutomateTreeHelper
+  include Mixins::GenericSessionMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -2531,16 +2532,17 @@ class MiqAeClassController < ApplicationController
     end
   end
 
-  def get_session_data
-    @layout     = "miq_ae_class"
-    @title      = _("Datastore")
-    @lastaction = session[:aeclass_lastaction]
-    @edit       = session[:edit]
+  def title
+    _("Datastore")
   end
 
-  def set_session_data
-    session[:aeclass_lastaction] = @lastaction
-    session[:edit]               = @edit
+  def session_key_prefix
+    "miq_ae_class"
+  end
+
+  def get_session_data
+    super
+    @edit = session[:edit]
   end
 
   def flash_validation_errors(am_obj)
