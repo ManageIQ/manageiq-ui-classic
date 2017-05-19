@@ -1,16 +1,18 @@
 ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 'floatingIpFormId', 'miqService', function($http, $scope, floatingIpFormId, miqService) {
-  $scope.floatingIpModel = { name: '' };
-  $scope.formId = floatingIpFormId;
-  $scope.afterGet = false;
-  $scope.modelCopy = angular.copy( $scope.floatingIpModel );
-  $scope.model = "floatingIpModel";
+  var vm = this;
+  vm.floatingIpModel = { name: '' };
+  vm.formId = floatingIpFormId;
+  vm.afterGet = false;
+  vm.modelCopy = angular.copy( vm.floatingIpModel );
+  vm.model = "floatingIpModel";
 
-  ManageIQ.angular.scope = $scope;
+  ManageIQ.angular.scope = vm;
+  vm.saveable = miqService.saveable;
 
   if (floatingIpFormId == 'new') {
-    $scope.floatingIpModel.name = "";
-    $scope.floatingIpModel.description = "";
-    $scope.newRecord = true;
+    vm.floatingIpModel.name = "";
+    vm.floatingIpModel.description = "";
+    vm.newRecord = true;
   } else {
     miqService.sparkleOn();
 
@@ -19,12 +21,12 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
       .catch(miqService.handleFailure);
   }
 
-  $scope.addClicked = function() {
+  vm.addClicked = function() {
     var url = 'create/new' + '?button=add';
-    miqService.miqAjaxButton(url, $scope.floatingIpModel, { complete: false });
+    miqService.miqAjaxButton(url, vm.floatingIpModel, { complete: false });
   };
 
-  $scope.cancelClicked = function() {
+  vm.cancelClicked = function() {
     if (floatingIpFormId == 'new') {
       var url = '/floating_ip/create/new' + '?button=cancel';
     } else {
@@ -33,18 +35,18 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
     miqService.miqAjaxButton(url);
   };
 
-  $scope.saveClicked = function() {
+  vm.saveClicked = function() {
     var url = '/floating_ip/update/' + floatingIpFormId + '?button=save';
-    miqService.miqAjaxButton(url, $scope.floatingIpModel, { complete: false });
+    miqService.miqAjaxButton(url, vm.floatingIpModel, { complete: false });
   };
 
-  $scope.resetClicked = function() {
-    $scope.floatingIpModel = angular.copy( $scope.modelCopy );
+  vm.resetClicked = function() {
+    vm.floatingIpModel = angular.copy( vm.modelCopy );
     $scope.angularForm.$setPristine(true);
     miqService.miqFlash("warn", "All changes have been reset");
   };
 
-  $scope.filterNetworkManagerChanged = function(id) {
+  vm.filterNetworkManagerChanged = function(id) {
     miqService.sparkleOn();
     $http.get('/floating_ip/networks_by_ems/' + id)
       .then(getNetworkByEmsFormData)
@@ -54,16 +56,16 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
   function getFloatingIpFormData(response) {
     var data = response.data;
 
-    $scope.afterGet = true;
-    $scope.floatingIpModel.network_port_ems_ref = data.network_port_ems_ref;
-    $scope.modelCopy = angular.copy( $scope.floatingIpModel );
+    vm.afterGet = true;
+    vm.floatingIpModel.network_port_ems_ref = data.network_port_ems_ref;
+    vm.modelCopy = angular.copy( vm.floatingIpModel );
     miqService.sparkleOff();
   }
 
   function getNetworkByEmsFormData(response) {
     var data = response.data;
 
-    $scope.available_networks = data.available_networks;
+    vm.available_networks = data.available_networks;
     miqService.sparkleOff();
   }
 }]);
