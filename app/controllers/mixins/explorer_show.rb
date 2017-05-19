@@ -43,7 +43,7 @@ module Mixins
       end
     end
 
-    def guest_applications
+    def init_show_variables
       @use_action = true
       @explorer = true if request.xml_http_request? # Ajax request means in explorer
       @db = params[:db] ? params[:db] : request.parameters[:controller]
@@ -51,6 +51,10 @@ module Mixins
       @db = session[:db] unless session[:db].nil?
       get_record(@db)
       @sb[:action] = params[:action]
+    end
+
+    def guest_applications
+      init_show_variables
       return if record_no_longer_exists?(@record)
 
       @lastaction = "guest_applications"
@@ -82,13 +86,7 @@ module Mixins
     end
 
     def patches
-      @use_action = true
-      @explorer = true if request.xml_http_request? # Ajax request means in explorer
-      @db = params[:db] ? params[:db] : request.parameters[:controller]
-      session[:db] = @db unless @db.nil?
-      @db = session[:db] unless session[:db].nil?
-      get_record(@db)
-      @sb[:action] = params[:action]
+      init_show_variables
       return if record_no_longer_exists?(@record)
 
       @lastaction = "patches"
@@ -109,13 +107,7 @@ module Mixins
     end
 
     def groups
-      @use_action = true
-      @explorer = true if request.xml_http_request? && explorer_controller? # Ajax request means in explorer
-      @db = params[:db] ? params[:db] : request.parameters[:controller]
-      session[:db] = @db unless @db.nil?
-      @db = session[:db] unless session[:db].nil?
-      get_record(@db)
-      @sb[:action] = params[:action]
+      init_show_variables
       return if record_no_longer_exists?(@record)
 
       @lastaction = "groups"
@@ -137,13 +129,7 @@ module Mixins
     end
 
     def users
-      @use_action = true
-      @explorer = true if request.xml_http_request? && explorer_controller? # Ajax request means in explorer
-      @db = params[:db] ? params[:db] : request.parameters[:controller]
-      session[:db] = @db unless @db.nil?
-      @db = session[:db] unless session[:db].nil?
-      get_record(@db)
-      @sb[:action] = params[:action]
+      init_show_variables
       return if record_no_longer_exists?(@record)
 
       @lastaction = "users"
@@ -168,7 +154,7 @@ module Mixins
       @use_action = true
       @explorer = true if request.xml_http_request? && explorer_controller? # Ajax request means in explorer
       @db = params[:db] ? params[:db] : request.parameters[:controller]
-      @db = 'switch' if @db == 'infra_networking'
+      @db = 'switch' if @db == 'infra_networking' # FIXME: this line is an exception form groups, patches,...
       session[:db] = @db unless @db.nil?
       @db = session[:db] unless session[:db].nil?
       get_record(@db)
