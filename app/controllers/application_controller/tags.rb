@@ -74,20 +74,6 @@ module ApplicationController::Tags
     end
   end
 
-  # Remove a classification entry from a set of objects
-  def classify_remove
-    entry = Classification.find_by_id(params["id"])
-    session[:tag_items].each do |item|
-      entry.remove_entry_from(session[:tag_db].find(item))
-    end
-    classify_build_screen
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("value_div", :partial => "layouts/classify_value")
-      page.replace("table_div", :partial => "layouts/classify_table")
-    end
-  end
-
   private ############################
 
   def get_tag_items
