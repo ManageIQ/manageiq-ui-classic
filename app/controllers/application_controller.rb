@@ -164,19 +164,11 @@ class ApplicationController < ActionController::Base
     set_summary_pdf_data
   end
 
-  def build_targets_hash(items, typ = true)
+  def build_targets_hash(items)
     @targets_hash ||= {}
-    if typ
-      # if array of objects came in
-      items.each do |item|
-        @targets_hash[item.id.to_i] = item
-      end
-    else
-      # if only array of id's came in look up for a record, following code is not being used right now.
-      klass = session[:view].db.constantize
-      items.each do |item|
-        @targets_hash[item.to_i] = klass.find(item)
-      end
+    # if array of objects came in
+    items.each do |item|
+      @targets_hash[item.id.to_i] = item
     end
   end
 
