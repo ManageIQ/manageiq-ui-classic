@@ -64,9 +64,9 @@ module Mixins
       @lastaction = "guest_applications"
 
       breadcrumb_name = if Regexp.new(/linux/).match(@record.os_image_name.downcase)
-                          _("%{name} (Packages)")
+                          _("Packages")
                         else
-                          _("%{name} (Applications)")
+                          _("Applications")
                         end
 
       id = params[:show] || params[:x_show]
@@ -84,8 +84,8 @@ module Mixins
       end
     end
 
-    def item_breadcrumbs(name_text, entity_path)
-      drop_breadcrumb(:name => name_text % {:name => @record.name},
+    def item_breadcrumbs(display_name, entity_path)
+      drop_breadcrumb(:name => "#{@record.name} (#{display_name})",
                       :url  => "/#{request.parameters[:controller]}/#{entity_path}/#{@record.id}?page=#{@current_page}")
       drop_breadcrumb(:name => @item.name, :url => "/#{request.parameters[:controller]}/show/#{@record.id}?show=#{@item.id}")
     end
@@ -97,7 +97,7 @@ module Mixins
       id = params[:show] || params[:x_show]
       if id.present?
         @item = @record.patches.find(from_cid(id))
-        item_breadcrumbs(_("%{name} (Patches)"), 'patches')
+        item_breadcrumbs(_("Patches"), 'patches')
         @view = get_db_view(Patch)
         show_item
       else
@@ -115,7 +115,7 @@ module Mixins
       id = params[:show] || params[:x_show]
       if id.present?
         @item = @record.groups.find(from_cid(id))
-        item_breadcrumbs(_("%{name} (Groups)"), 'groups')
+        item_breadcrumbs(_("Groups"), 'groups')
         @user_names = @item.users
         @view = get_db_view(Account, :association => "groups")
         show_item
@@ -134,7 +134,7 @@ module Mixins
       id = params[:show] || params[:x_show]
       if id.present?
         @item = @record.users.find(from_cid(id))
-        item_breadcrumbs(_("%{name} (Users)"), 'users')
+        item_breadcrumbs(_("Users"), 'users')
         @group_names = @item.groups
         @view = get_db_view(Account, :association => "users")
         show_item
@@ -155,7 +155,7 @@ module Mixins
       id = params[:show] || params[:x_show]
       if id.present?
         @item = @record.hosts.find(from_cid(id))
-        item_breadcrumbs(_("%{name} (Hosts)"), 'hosts')
+        item_breadcrumbs(_("Hosts"), 'hosts')
         @view = get_db_view(Host)
         show_item
       else
