@@ -43,12 +43,15 @@ module Mixins
       end
     end
 
-    def init_show_variables
+    def init_show_variables(db = nil)
       @use_action = true
       @explorer = true if request.xml_http_request? # Ajax request means in explorer
-      @db = params[:db] ? params[:db] : request.parameters[:controller]
+
+      @db = db || params[:db] || request.parameters[:controller]
+
       session[:db] = @db unless @db.nil?
       @db = session[:db] unless session[:db].nil?
+
       @record = get_record(@db)
       @sb[:action] = params[:action]
 
@@ -149,15 +152,9 @@ module Mixins
     end
 
     def hosts
-      @use_action = true
-      @explorer = true if request.xml_http_request? && explorer_controller? # Ajax request means in explorer
-      @db = params[:db] ? params[:db] : request.parameters[:controller]
-      @db = 'switch' if @db == 'infra_networking' # FIXME: this line is an exception form groups, patches,...
-      session[:db] = @db unless @db.nil?
-      @db = session[:db] unless session[:db].nil?
-      get_record(@db)
-      @sb[:action] = params[:action]
-      return if record_no_longer_exists?(@record)
+      db = params[:db] || request.parameters[:controller]
+      db = 'switch' if db == 'infra_networking'
+      return unless init_show_variables(db)
 
       @lastaction = "hosts"
       if !params[:show].nil? || !params[:x_show].nil?
