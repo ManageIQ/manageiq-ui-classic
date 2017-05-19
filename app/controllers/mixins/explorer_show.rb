@@ -62,31 +62,32 @@ module Mixins
       return unless init_show_variables
 
       @lastaction = "guest_applications"
+
+      breadcrumb_name = if Regexp.new(/linux/).match(@record.os_image_name.downcase)
+                          _("%{name} (Packages)")
+                        else
+                          _("%{name} (Applications)")
+                        end
+
       id = params[:show] || params[:x_show]
       if id.present?
         @item = @record.guest_applications.find(from_cid(id))
-        if Regexp.new(/linux/).match(@record.os_image_name.downcase)
-          drop_breadcrumb(:name => _("%{name} (Packages)") % {:name => @record.name},
-                          :url  => "/#{@db}/guest_applications/#{@record.id}?page=#{@current_page}")
-        else
-          drop_breadcrumb(:name => _("%{name} (Applications)") % {:name => @record.name},
-                          :url  => "/#{@db}/guest_applications/#{@record.id}?page=#{@current_page}")
-        end
-        drop_breadcrumb(:name => @item.name, :url => "/#{@db}/show/#{@record.id}?show=#{@item.id}")
-        @view = get_db_view(GuestApplication)         # Instantiate the MIQ Report view object
+        item_breadcrumbs(breadcrumb_name, 'guest_applications')
+        @view = get_db_view(GuestApplication)
         show_item
       else
         drop_breadcrumb({:name => @record.name, :url => "/#{@db}/show/#{@record.id}"}, true)
-        if Regexp.new(/linux/).match(@record.os_image_name.downcase)
-          drop_breadcrumb(:name => _("%{name} (Packages)") % {:name => @record.name},
-                          :url  => "/#{@db}/guest_applications/#{@record.id}")
-        else
-          drop_breadcrumb(:name => _("%{name} (Applications)") % {:name => @record.name},
-                          :url  => "/#{@db}/guest_applications/#{@record.id}")
-        end
+        drop_breadcrumb(:name => breadcrumb_name % {:name => @record.name},
+                        :url  => "/#{@db}/guest_applications/#{@record.id}")
         @listicon = "guest_application"
         show_details(GuestApplication)
       end
+    end
+
+    def item_breadcrumbs(name_text, entity_path)
+      drop_breadcrumb(:name => name_text % {:name => @record.name},
+                      :url  => "/#{request.parameters[:controller]}/#{entity_path}/#{@record.id}?page=#{@current_page}")
+      drop_breadcrumb(:name => @item.name, :url => "/#{request.parameters[:controller]}/show/#{@record.id}?show=#{@item.id}")
     end
 
     def patches
@@ -96,9 +97,7 @@ module Mixins
       id = params[:show] || params[:x_show]
       if id.present?
         @item = @record.patches.find(from_cid(id))
-        drop_breadcrumb(:name => _("%{name} (Patches)") % {:name => @record.name},
-                        :url  => "/#{@db}/patches/#{@record.id}?page=#{@current_page}")
-        drop_breadcrumb(:name => @item.name, :url => "/#{@db}/patches/#{@record.id}?show=#{@item.id}")
+        item_breadcrumbs(_("%{name} (Patches)"), 'patches')
         @view = get_db_view(Patch)
         show_item
       else
@@ -116,9 +115,7 @@ module Mixins
       id = params[:show] || params[:x_show]
       if id.present?
         @item = @record.groups.find(from_cid(id))
-        drop_breadcrumb(:name => _("%{name} (Groups)") % {:name => @record.name},
-                        :url  => "/#{@db}/groups/#{@record.id}?page=#{@current_page}")
-        drop_breadcrumb({:name => @item.name, :url => "/#{@db}/groups/#{@record.id}?show=#{@item.id}"})
+        item_breadcrumbs(_("%{name} (Groups)"), 'groups')
         @user_names = @item.users
         @view = get_db_view(Account, :association => "groups")
         show_item
@@ -137,9 +134,7 @@ module Mixins
       id = params[:show] || params[:x_show]
       if id.present?
         @item = @record.users.find(from_cid(id))
-        drop_breadcrumb(:name => _("%{name} (Users)") % {:name => @record.name},
-                        :url  => "/#{@db}/users/#{@record.id}?page=#{@current_page}")
-        drop_breadcrumb(:name => @item.name, :url => "/#{@db}/show/#{@record.id}?show=#{@item.id}")
+        item_breadcrumbs(_("%{name} (Users)"), 'users')
         @group_names = @item.groups
         @view = get_db_view(Account, :association => "users")
         show_item
@@ -160,9 +155,7 @@ module Mixins
       id = params[:show] || params[:x_show]
       if id.present?
         @item = @record.hosts.find(from_cid(id))
-        drop_breadcrumb(:name => _("%{name} (Hosts)") % {:name => @record.name},
-                        :url  => "/#{request.parameters[:controller]}/hosts/#{@record.id}?page=#{@current_page}")
-        drop_breadcrumb(:name => @item.name, :url => "/#{request.parameters[:controller]}/show/#{@record.id}?show=#{@item.id}")
+        item_breadcrumbs(_("%{name} (Hosts)"), 'hosts')
         @view = get_db_view(Host)
         show_item
       else
