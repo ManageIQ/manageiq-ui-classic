@@ -47,7 +47,7 @@ module Mixins
       @use_action = true
       @explorer = true if request.xml_http_request? # Ajax request means in explorer
 
-      @db = db || params[:db] || request.parameters[:controller]
+      @db = db || params[:db] || controller_name
 
       session[:db] = @db unless @db.nil?
       @db = session[:db] unless session[:db].nil?
@@ -86,8 +86,8 @@ module Mixins
 
     def item_breadcrumbs(display_name, entity_path)
       drop_breadcrumb(:name => "#{@record.name} (#{display_name})",
-                      :url  => "/#{request.parameters[:controller]}/#{entity_path}/#{@record.id}?page=#{@current_page}")
-      drop_breadcrumb(:name => @item.name, :url => "/#{request.parameters[:controller]}/show/#{@record.id}?show=#{@item.id}")
+                      :url  => "/#{controller_name}/#{entity_path}/#{@record.id}?page=#{@current_page}")
+      drop_breadcrumb(:name => @item.name, :url => "/#{controller_name}/show/#{@record.id}?show=#{@item.id}")
     end
 
     def patches
@@ -147,7 +147,7 @@ module Mixins
     end
 
     def hosts
-      db = params[:db] || request.parameters[:controller]
+      db = params[:db] || controller_name
       db = 'switch' if db == 'infra_networking'
       return unless init_show_variables(db)
 
@@ -160,7 +160,7 @@ module Mixins
         show_item
       else
         drop_breadcrumb(:name => _("%{name} (Hosts)") % {:name => @record.name},
-                        :url  => "/#{request.parameters[:controller]}/hosts/#{@record.id}")
+                        :url  => "/#{controller_name}/hosts/#{@record.id}")
         @listicon = "host"
         show_details(Host, :association => "hosts")
       end
