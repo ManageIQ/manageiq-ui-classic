@@ -155,12 +155,9 @@ class SecurityGroupController < ApplicationController
     assert_privileges("security_group_new")
     @security_group = SecurityGroup.new
     @in_a_form = true
-
     @ems_choices = {}
-    ExtManagementSystem.where(:type => "ManageIQ::Providers::Openstack::CloudManager").find_each do |ems|
-      if ems.respond_to?(:network_manager) && ems.network_manager
-        @ems_choices[ems.network_manager.name] = ems.network_manager.id
-      end
+    network_managers.each do |network_manager|
+      @ems_choices[network_manager.name] = network_manager.id
     end
 
     drop_breadcrumb(:name => _("Add New Security Group"), :url => "/security_group/new")

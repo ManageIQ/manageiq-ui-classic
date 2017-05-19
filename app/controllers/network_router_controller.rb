@@ -94,10 +94,8 @@ class NetworkRouterController < ApplicationController
     assert_privileges("network_router_new")
     @in_a_form = true
     @network_provider_choices = {}
-    ExtManagementSystem.where(:type => "ManageIQ::Providers::Openstack::CloudManager").find_each do |ems|
-      if ems.respond_to?(:network_manager) && ems.network_manager
-        @network_provider_choices[ems.network_manager.name] = ems.network_manager.id
-      end
+    network_managers.each do |network_manager|
+      @network_provider_choices[network_manager.name] = network_manager.id
     end
     drop_breadcrumb(
       :name => _("Add New Router") % {:model => ui_lookup(:table => 'network_router')},
