@@ -74,21 +74,6 @@ module ApplicationController::Tags
     end
   end
 
-  # Assign a classification entry to a set of objects
-  def classify_assign
-    entry = Classification.find_by_id(params["entry"]["id"])
-    session[:tag_items].each do |item|
-      entry.assign_entry_to(session[:tag_db].find(item))
-    end
-    classify_build_screen
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("value_div", :partial => "layouts/classify_value")
-      page.replace("table_div", :partial => "layouts/classify_table")
-      page << jquery_pulsate_element("#{entry.id}_tr")
-    end
-  end
-
   # Remove a classification entry from a set of objects
   def classify_remove
     entry = Classification.find_by_id(params["id"])
