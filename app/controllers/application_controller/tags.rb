@@ -189,20 +189,6 @@ module ApplicationController::Tags
     end
   end
 
-  # Build the second pulldown containing the entries for the selected category
-  def classify_build_entries_pulldown
-    @entries = {}                   # Create new entries hash (2nd pulldown)
-    session[:cat].entries.each do |e|     # Get all of the entries for the current category
-      @entries[e.description] = e.id        # Add it to the hash
-    end
-
-    session[:assignments].each do |a|                           # Look thru the assignments
-      if a.parent.description == session[:cat].description      # If they match the category
-        @entries.delete(a.description)                          # Remove them from the selection list
-      end
-    end
-  end
-
   # Build the @edit elements for the tag edit screen
   def tag_edit_build_screen
     cats = Classification.categories.select(&:show).sort_by(&:name) # Get the categories, sort by name
