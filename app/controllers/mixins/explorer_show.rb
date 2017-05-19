@@ -62,8 +62,8 @@ module Mixins
       return unless init_show_variables
 
       @lastaction = "guest_applications"
-      if !params[:show].nil? || !params[:x_show].nil?
-        id = params[:show] ? params[:show] : params[:x_show]
+      id = params[:show] || params[:x_show]
+      if id.present?
         @item = @record.guest_applications.find(from_cid(id))
         if Regexp.new(/linux/).match(@record.os_image_name.downcase)
           drop_breadcrumb(:name => _("%{name} (Packages)") % {:name => @record.name},
@@ -93,8 +93,8 @@ module Mixins
       return unless init_show_variables
 
       @lastaction = "patches"
-      if !params[:show].nil? || !params[:x_show].nil?
-        id = params[:show] ? params[:show] : params[:x_show]
+      id = params[:show] || params[:x_show]
+      if id.present?
         @item = @record.patches.find(from_cid(id))
         drop_breadcrumb(:name => _("%{name} (Patches)") % {:name => @record.name},
                         :url  => "/#{@db}/patches/#{@record.id}?page=#{@current_page}")
@@ -113,8 +113,8 @@ module Mixins
       return unless init_show_variables
 
       @lastaction = "groups"
-      if !params[:show].nil? || !params[:x_show].nil?
-        id = params[:show] ? params[:show] : params[:x_show]
+      id = params[:show] || params[:x_show]
+      if id.present?
         @item = @record.groups.find(from_cid(id))
         drop_breadcrumb(:name => _("%{name} (Groups)") % {:name => @record.name},
                         :url  => "/#{@db}/groups/#{@record.id}?page=#{@current_page}")
@@ -134,8 +134,8 @@ module Mixins
       return unless init_show_variables
 
       @lastaction = "users"
-      if !params[:show].nil? || !params[:x_show].nil?
-        id = params[:show] ? params[:show] : params[:x_show]
+      id = params[:show] || params[:x_show]
+      if id.present?
         @item = @record.users.find(from_cid(id))
         drop_breadcrumb(:name => _("%{name} (Users)") % {:name => @record.name},
                         :url  => "/#{@db}/users/#{@record.id}?page=#{@current_page}")
@@ -157,8 +157,8 @@ module Mixins
       return unless init_show_variables(db)
 
       @lastaction = "hosts"
-      if !params[:show].nil? || !params[:x_show].nil?
-        id = params[:show] ? params[:show] : params[:x_show]
+      id = params[:show] || params[:x_show]
+      if id.present?
         @item = @record.hosts.find(from_cid(id))
         drop_breadcrumb(:name => _("%{name} (Hosts)") % {:name => @record.name},
                         :url  => "/#{request.parameters[:controller]}/hosts/#{@record.id}?page=#{@current_page}")
