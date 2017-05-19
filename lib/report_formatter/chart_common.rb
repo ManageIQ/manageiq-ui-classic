@@ -60,8 +60,7 @@ module ReportFormatter
         categories = []                      # Store categories and series counts in an array of arrays
         series = series_class.new
         mri.table.data.each_with_index do |r, d_idx|
-          # Use timestamp or statistic_time (metrics vs ontap)
-          rec_time = (r["timestamp"] || r["statistic_time"]).in_time_zone(tz)
+          rec_time = r["timestamp"].in_time_zone(tz)
 
           if mri.db.include?("Daily") || (mri.where_clause && mri.where_clause.include?("daily"))
             categories.push(rec_time.month.to_s + "/" + rec_time.day.to_s)

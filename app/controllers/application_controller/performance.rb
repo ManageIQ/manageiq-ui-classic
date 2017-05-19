@@ -178,8 +178,7 @@ module ApplicationController::Performance
     report = @sb[:chart_reports].kind_of?(Array) ? @sb[:chart_reports][chart_click_data.chart_index] : @sb[:chart_reports]
     data_row = report.table.data[chart_click_data.data_index]
 
-    # Use timestamp or statistic_time (metrics vs ontap)
-    ts = (data_row["timestamp"] || data_row["statistic_time"]).in_time_zone(@perf_options[:tz])                 # Grab the timestamp from the row in selected tz
+    ts = data_row["timestamp"].in_time_zone(@perf_options[:tz]) # Grab the timestamp from the row in selected tz
 
     request_displayed, unavailability_reason = case chart_click_data.cmd
     when "Display"
