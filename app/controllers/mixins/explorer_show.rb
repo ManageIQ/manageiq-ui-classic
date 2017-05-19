@@ -49,13 +49,14 @@ module Mixins
       @db = params[:db] ? params[:db] : request.parameters[:controller]
       session[:db] = @db unless @db.nil?
       @db = session[:db] unless session[:db].nil?
-      get_record(@db)
+      @record = get_record(@db)
       @sb[:action] = params[:action]
+
+      !record_no_longer_exists?(@record)
     end
 
     def guest_applications
-      init_show_variables
-      return if record_no_longer_exists?(@record)
+      return unless init_show_variables
 
       @lastaction = "guest_applications"
       if !params[:show].nil? || !params[:x_show].nil?
@@ -86,8 +87,7 @@ module Mixins
     end
 
     def patches
-      init_show_variables
-      return if record_no_longer_exists?(@record)
+      return unless init_show_variables
 
       @lastaction = "patches"
       if !params[:show].nil? || !params[:x_show].nil?
@@ -107,8 +107,7 @@ module Mixins
     end
 
     def groups
-      init_show_variables
-      return if record_no_longer_exists?(@record)
+      return unless init_show_variables
 
       @lastaction = "groups"
       if !params[:show].nil? || !params[:x_show].nil?
@@ -129,8 +128,7 @@ module Mixins
     end
 
     def users
-      init_show_variables
-      return if record_no_longer_exists?(@record)
+      return unless init_show_variables
 
       @lastaction = "users"
       if !params[:show].nil? || !params[:x_show].nil?
