@@ -7,6 +7,7 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
   vm.model = "floatingIpModel";
 
   ManageIQ.angular.scope = vm;
+  vm.saveable = miqService.saveable;
 
   if (floatingIpFormId == 'new') {
     vm.floatingIpModel.name = "";
