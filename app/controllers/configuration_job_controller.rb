@@ -6,6 +6,7 @@ class ConfigurationJobController < ApplicationController
 
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
+  include Mixins::GenericShowMixin
 
   def self.model
     ManageIQ::Providers::AnsibleTower::AutomationManager::Job
@@ -17,29 +18,6 @@ class ConfigurationJobController < ApplicationController
 
   def ems_path(*args)
     ems_configprovider_path(*args)
-  end
-
-  def show
-    return if perfmenu_click?
-    @display = params[:display] || "main" unless pagination_or_gtl_request?
-
-    @lastaction = "show"
-    @configuration_job = @record = identify_record(params[:id])
-    return if record_no_longer_exists?(@configuration_job)
-
-    @gtl_url = "/show"
-    drop_breadcrumb({:name => _("Configuration_Jobs"),
-                     :url  => "/configuration_job/show_list?page=#{@current_page}&refresh=y"}, true)
-    case @display
-    when "main", "summary_only"
-      get_tagdata(@configuration_job)
-      drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @configuration_job.name},
-                      :url  => "/configuration_job/show/#{@configuration_job.id}")
-      @showtype = "main"
-      set_summary_pdf_data if @display == 'summary_only'
-    end
-
-    replace_gtl_main_div if pagination_request?
   end
 
   def parameters
