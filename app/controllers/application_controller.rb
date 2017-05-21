@@ -1389,7 +1389,7 @@ class ApplicationController < ActionController::Base
       @search_text = params[:search_text].blank? ? nil : params[:search_text].strip
     end
 
-    # Build sub_filter where clause from search text"OntapLogicalDisk
+    # Build sub_filter where clause from search text
     if @search_text && (
         (!@parent && @lastaction == "show_list" && !session[:menu_click]) ||
         (@explorer && !session[:menu_click]) ||

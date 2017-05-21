@@ -134,7 +134,7 @@ module PxeController::PxeServers
       else
         pxes.push(params[:id])
         process_pxes(pxes, method, display_name)  unless pxes.empty?
-        # TODO: tells callers to go back to show_list because this SMIS Agent may be gone
+        # TODO: tells callers to go back to show_list because this record may be gone
         # Should be refactored into calling show_list right here
         if method == 'destroy'
           self.x_node = "root"

@@ -222,7 +222,7 @@ module PxeController::PxeCustomizationTemplates
         templates.push(params[:id])
         ct = CustomizationTemplate.find_by_id(from_cid(params[:id]))  if method == 'destroy'        # need to set this for destroy method so active node can be set to image_type folder node after record is deleted
         process_templates(templates, method)  unless templates.empty?
-        # TODO: tells callers to go back to show_list because this SMIS Agent may be gone
+        # TODO: tells callers to go back to show_list because this record may be gone
         # Should be refactored into calling show_list right here
         if method == 'destroy'
           self.x_node = "xx-xx-#{to_cid(ct.pxe_image_type_id)}"

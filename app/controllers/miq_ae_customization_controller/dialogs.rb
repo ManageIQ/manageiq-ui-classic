@@ -1384,7 +1384,7 @@ module MiqAeCustomizationController::Dialogs
       else
         dialogs.push(params[:id])
         process_dialogs(dialogs, method)  unless dialogs.empty?
-        # TODO: tells callers to go back to show_list because this SMIS Agent may be gone
+        # TODO: tells callers to go back to show_list because this record may be gone
         # Should be refactored into calling show_list right here
         if method == 'destroy'
           self.x_node = "root"

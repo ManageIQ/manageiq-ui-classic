@@ -104,7 +104,7 @@ module PxeController::PxeImageTypes
     else
       pxes.push(find_id_with_rbac(PxeImageType, params[:id]))
       process_pxe_image_type(pxes, method)  unless pxes.empty?
-      # TODO: tells callers to go back to show_list because this SMIS Agent may be gone
+      # TODO: tells callers to go back to show_list because this record may be gone
       # Should be refactored into calling show_list right here
       if method == 'destroy'
         self.x_node = "root"
