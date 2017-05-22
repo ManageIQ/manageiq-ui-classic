@@ -15,6 +15,15 @@ class ApplicationHelper::Toolbar::CloudVolumesCenter < ApplicationHelper::Toolba
                      ),
                      separator,
                      button(
+                       :cloud_volume_snapshot_create,
+                       'pficon pficon-volume fa-lg',
+                       t = N_('Create a Snapshot of selected Cloud Volume'),
+                       t,
+                       :url_parms => 'main_div',
+                       :enabled   => false,
+                       :onwhen    => '1'
+                     ),
+                     button(
                        :cloud_volume_attach,
                        'pficon pficon-volume fa-lg',
                        t = N_('Attach selected Cloud Volume to an Instance'),

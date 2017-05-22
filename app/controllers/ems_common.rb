@@ -466,6 +466,10 @@ module EmsCommon
       javascript_redirect :controller         => "cloud_volume",
                           :action             => "new",
                           :storage_manager_id => params[:id]
+    elsif params[:pressed] == "cloud_volume_snapshot_create"
+      javascript_redirect :controller => "cloud_volume",
+                          :action     => "snapshot_new",
+                          :id         => find_checked_ids_with_rbac(CloudVolume).first
     elsif params[:pressed] == "cloud_volume_edit"
       javascript_redirect :controller => "cloud_volume",
                           :action     => "edit",
