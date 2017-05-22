@@ -16,7 +16,7 @@ class InfraTopologyService < TopologyService
     ],
   ]
 
-  @kinds = %i(InfraManager EmsCluster Host Vm)
+  @kinds = %i(InfraManager EmsCluster Host Vm Tag)
 
   def entity_type(entity)
     if entity.kind_of?(Host)
