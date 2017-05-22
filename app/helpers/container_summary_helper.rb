@@ -187,10 +187,4 @@ module ContainerSummaryHelper
       ]
     end
   end
-
-  private
-
-  def textual_key_value_group(items)
-    items.collect { |item| {:label => item.name.to_s, :value => item.value.to_s} }
-  end
 end
