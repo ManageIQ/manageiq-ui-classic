@@ -1,41 +1,23 @@
 ManageIQ.angular.app.controller('physicalServerToolbarController', ['miqService', 'API', 'physicalServerId', function(miqService, API, physicalServerId) {
   var vm = this;
 
-  vm.physicalServerToolbarModel = {
-    servers: [],
-  };
-
-  vm.supportedActions = [
-    'power_on',
-    'power_off',
-    'restart',
-    'blink_loc_led',
-    'turn_on_loc_led',
-    'turn_off_loc_led',
-  ];
-
   ManageIQ.angular.rxSubject.subscribe(function(event) {
-    var action = event.type;
+    vm.action = event.type;
 
-    if (event.rowSelect && event.rowSelect.checked) {
-      vm.physicalServerToolbarModel.servers = _.union(vm.physicalServerToolbarModel.servers, [event.rowSelect.long_id]);
-    } else if (event.rowSelect && ! event.rowSelect.checked) {
-      _.remove(vm.physicalServerToolbarModel.servers, function(serverId) {
-        return serverId === event.rowSelect.long_id;
-      });
-    }
-
-    if (_.indexOf(vm.supportedActions, action) !== -1) {
+    if (vm.action) {
+      vm.servers = [];
       if (physicalServerId) {
-        vm.physicalServerToolbarModel.servers = _.union(vm.physicalServerToolbarModel.servers, [physicalServerId]);
+        vm.servers = _.union(vm.servers, [physicalServerId]);
+      } else {
+        vm.servers = ManageIQ.gridChecks;
       }
-      postPhysicalServerAction(action);
+      postPhysicalServerAction();
     }
   });
 
-  function postPhysicalServerAction(action) {
-    _.forEach(vm.physicalServerToolbarModel.servers, function(serverId) {
-      API.post('/api/physical_servers/' + serverId, { action: action })
+  function postPhysicalServerAction() {
+    _.forEach(vm.servers, function(serverId) {
+      API.post('/api/physical_servers/' + serverId, { action: vm.action })
         .then(postAction)
         .catch(miqService.handleFailure);
     });
@@ -44,5 +26,12 @@ ManageIQ.angular.app.controller('physicalServerToolbarController', ['miqService'
   function postAction(response) {
     miqService.miqFlashLater({ message: response.message });
     miqService.miqFlashSaved();
+
+    // To be used later when testing with real Physical servers is complete
+    // if (vm.servers.length > 1) {
+    //   miqService.miqFlash('success', sprintf(__("Requested Server state %s for the selected servers"), vm.action));
+    // } else {
+    //   miqService.miqFlash('success', sprintf(__("Requested Server state %s for the selected server"), vm.action));
+    // }
   }
 }]);
