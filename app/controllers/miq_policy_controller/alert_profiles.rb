@@ -144,18 +144,18 @@ module MiqPolicyController::AlertProfiles
       @assign[:new][:assign_to] = params[:chosen_assign_to].blank? ? nil : params[:chosen_assign_to]
       @assign[:new][:cat] = nil                                 # Clear chosen tag category
     end
+
     @assign[:new][:cat] = params[:chosen_cat].blank? ? nil : params[:chosen_cat].to_i if params.key?(:chosen_cat)
     if params.key?(:chosen_assign_to) || params.key?(:chosen_cat)
       @assign[:new][:objects] = []                       # Clear selected objects
-      @objects = alert_profile_get_assign_to_objects   # Get the assigned objects
       @assign[:obj_tree] = alert_profile_build_obj_tree         # Build the selection tree
     end
     if params.key?(:id)
       if params[:check] == "1"
-        @assign[:new][:objects].push(params[:id].split("_").last.to_i)
+        @assign[:new][:objects].push(from_cid(params[:id].split("-").last))
         @assign[:new][:objects].sort!
       else
-        @assign[:new][:objects].delete(params[:id].split("_").last.to_i)
+        @assign[:new][:objects].delete(from_cid(params[:id].split("-").last))
       end
     end
 
@@ -168,90 +168,45 @@ module MiqPolicyController::AlertProfiles
     process_elements(alert_profiles, MiqAlertSet, task)
   end
 
-  # Gather up the object ids based on the assignment selections
-  def alert_profile_get_assign_to_objects
-    objs = []
-    unless @assign[:new][:assign_to] == "enterprise"          # No further selection needed for enterprise
-      if @assign[:new][:assign_to]                            # Assign to selected
-        if @assign[:new][:assign_to].ends_with?("-tags")
-          if @assign[:new][:cat]                              # Tag category selected
-            objs = Classification.find(@assign[:new][:cat]).entries
-          end
-        else                                                  # Model selected
-          objs = @assign[:new][:assign_to].camelize.constantize.all
-        end
-      end
-    end
-    objs
+  def alert_profile_get_assign_to_objects_empty?
+    return true if @assign[:new][:assign_to].blank?
+    return true if @assign[:new][:assign_to] == "enterprise"
+    return true if @assign[:new][:assign_to].ends_with?("-tags") && @assign[:new][:cat].blank?
+    false
   end
 
   # Build the assign objects selection tree
   def alert_profile_build_obj_tree
     tree = nil
-    unless @objects.empty?               # Build object tree
-      if @assign[:new][:assign_to] == "ems_folder"
-        tree = TreeBuilderBelongsToHac.new(:vat_tree,
-                                           :vat,
-                                           @sb,
-                                           true,
-                                           :edit     => @edit,
-                                           :filters  => @filters,
-                                           :group    => @group,
-                                           :selected => @assign[:new][:objects].collect { |f| "EmsFolder_#{f}" })
-      elsif @assign[:new][:assign_to] == "resource_pool"
-        tree = TreeBuilderBelongsToHac.new(:hac_tree,
-                                           :hac,
-                                           @sb,
-                                           true,
-                                           :edit     => @edit,
-                                           :filters  => @filters,
-                                           :group    => @group,
-                                           :selected => @assign[:new][:objects].collect { |f| "ResourcePool_#{f}" })
-      else
-        root_node = TreeNodeBuilder.generic_tree_node(
-          "OBJROOT",
-          @assign[:new][:assign_to].ends_with?("-tags") ? "Tags" : ui_lookup(:tables => @assign[:new][:assign_to]),
-          "100/folder_open.png",
-          "",
-          :cfme_no_click => true,
-          :expand        => true,
-          :hideCheckbox  => true
-        )
-        root_node[:children] = []
-        @objects.sort_by { |o| (o.name.presence || o.description).downcase }.each do |o|
-          if @assign[:new][:assign_to].ends_with?("-tags")
-            icon = "100/tag.png"
-          else
-            if @assign[:new][:assign_to] == "ext_management_system"
-              icon = "svg/vendor-#{o.image_name}.svg"
-            elsif @assign[:new][:assign_to] == "resource_pool"
-              icon = o.vapp ? "100/vapp.png" : "100/resource_pool.png"
-            else
-              icon = "100/#{@assign[:new][:assign_to]}.png"
-            end
-          end
-          node = TreeNodeBuilder.generic_tree_node(
-            o.id,
-            choose_node_identifier(o),
-            icon,
-            "",
-            :cfme_no_click => true,
-            :select        => @assign[:new][:objects].include?(o.id) # Check if tag is assigned
-          )
-          root_node[:children].push(node)
-        end
-        tree = TreeBuilder.convert_bs_tree(root_node).to_json
-      end
+    return nil if alert_profile_get_assign_to_objects_empty?
+    if @assign[:new][:assign_to] == "ems_folder"
+      tree = TreeBuilderBelongsToHac.new(:vat_tree,
+                                         :vat,
+                                         @sb,
+                                         true,
+                                         :edit     => @edit,
+                                         :filters  => @filters,
+                                         :group    => @group,
+                                         :selected => @assign[:new][:objects].collect { |f| "EmsFolder_#{f}" })
+    elsif @assign[:new][:assign_to] == "resource_pool"
+      tree = TreeBuilderBelongsToHac.new(:hac_tree,
+                                         :hac,
+                                         @sb,
+                                         true,
+                                         :edit     => @edit,
+                                         :filters  => @filters,
+                                         :group    => @group,
+                                         :selected => @assign[:new][:objects].collect { |f| "ResourcePool_#{f}" })
+    else
+      tree = TreeBuilderAlertProfileObj.new(:object_tree,
+                                            :object,
+                                            @sb,
+                                            true,
+                                            :assign_to => @assign[:new][:assign_to],
+                                            :cat       => @assign[:new][:cat],
+                                            :selected  => @assign[:new][:objects])
     end
     tree
-  end
-
-  def choose_node_identifier(o)
-    identifier = (o.name.presence || o.description)
-    if o.kind_of?(MiddlewareServer)
-      identifier += "-" + o.hostname
-    end
-    identifier
   end
 
   def alert_profile_build_edit_screen
@@ -320,7 +275,6 @@ module MiqPolicyController::AlertProfiles
       @assign[:new][:cat] = aa[:tags].first.first.parent_id
       @assign[:new][:objects] = aa[:tags].collect { |o| o.first.id }
     end
-    @objects = alert_profile_get_assign_to_objects   # Get the assigned objects
     @assign[:obj_tree] = alert_profile_build_obj_tree         # Build the selection tree
 
     @assign[:current] = copy_hash(@assign[:new])
