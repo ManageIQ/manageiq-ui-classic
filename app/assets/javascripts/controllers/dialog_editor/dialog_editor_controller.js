@@ -3,11 +3,11 @@ ManageIQ.angular.app.controller('dialogEditorController', ['API', 'DialogEditor'
 
   if (dialogId === 'new') {
     var dialog = {
-      "content": [{
-        "dialog_tabs": [{
-          "label": "New tab",
-          "position": 0,
-          "dialog_groups": [
+      'content': [{
+        'dialog_tabs': [{
+          'label': 'New tab',
+          'position': 0,
+          'dialog_groups': [
           ],
         }],
       }],
