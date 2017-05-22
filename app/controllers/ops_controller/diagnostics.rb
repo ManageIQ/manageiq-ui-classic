@@ -352,7 +352,6 @@ module OpsController::Diagnostics
                       :uri_prefix   => '',
                       :log_userid   => '',
                       :log_password => '',
-                      :log_verify   => '',
                       :log_protocol => ''
     }
     log_depot_json
@@ -436,61 +435,6 @@ module OpsController::Diagnostics
   end
 
   private ############################
-
-  def log_depot_reset_form_vars
-    @edit[:protocol]           = nil
-    @edit[:new][:depot_name]   = nil
-    @edit[:new][:uri]          = nil
-    @edit[:new][:log_userid]   = nil
-    @edit[:new][:log_password] = nil
-    @edit[:new][:log_verify]   = nil
-  end
-
-  def file_depot_reset_form_vars
-    if @edit[:protocol].present?
-      klass = Object.const_get(@edit[:protocols_hash].key(@edit[:protocol]))
-      depot = @record.log_file_depot.instance_of?(klass) ? @record.log_file_depot : klass.new
-      @edit[:new][:requires_credentials] = klass.try(:requires_credentials?)
-      @edit[:new][:uri_prefix]           = klass.try(:uri_prefix)
-      @edit[:new][:depot_name]           = depot.name
-      @edit[:new][:uri]                  = depot.uri.to_s.split('://').last
-      @edit[:new][:log_userid]           = depot.authentication_userid
-      @edit[:new][:log_password]         = depot.authentication_password
-      @edit[:new][:log_verify]           = depot.authentication_password
-    else
-      log_depot_reset_form_vars
-    end
-  end
-
-  def log_depot_get_form_vars
-    unless @schedule || (@sb["active_tree"] == :diagnostics_tree && @sb["active_tab"] == "diagnostics_database")
-      @record = @sb[:selected_typ].classify.constantize.find_by_id(@sb[:selected_server_id])
-    end
-    @prev_uri_prefix = @edit[:new][:uri_prefix]
-    @prev_protocol   = @edit[:protocol]
-    # @edit[:protocol] holds the current value of the selector so that it is not reset
-    # when _field_changed is called
-    @edit[:protocol] = params[:log_protocol].presence if params[:log_protocol]
-    if @sb[:active_tab] == "diagnostics_collect_logs"
-      file_depot_reset_form_vars if @prev_protocol != @edit[:protocol]
-    else
-      @edit[:new][:uri_prefix] = @edit[:protocols_hash].invert[params[:log_protocol]] if params[:log_protocol]
-      @edit[:new][:requires_credentials] = @edit[:new][:uri_prefix] != "nfs"
-    end
-
-    @edit[:new][:depot_name] = params[:depot_name] if params[:depot_name]
-    if @edit[:new][:uri_prefix].in?([nil, "nfs"]) || params[:backup_schedule] == ""
-      @edit[:new][:uri]          = params[:uri] if params[:uri]
-      @edit[:new][:log_userid]   = nil
-      @edit[:new][:log_password] = nil
-      @edit[:new][:log_verify]   = nil
-    else
-      @edit[:new][:uri]          = params[:uri] if params[:uri]
-      @edit[:new][:log_userid]   = params[:log_userid].blank? ? nil : params[:log_userid] if params[:log_userid]
-      @edit[:new][:log_password] = params[:log_password].blank? ? nil : params[:log_password] if params[:log_password]
-      @edit[:new][:log_verify]   = params[:log_verify].blank? ? nil : params[:log_verify] if params[:log_verify]
-    end
-  end
 
   # Build the Utilization screen for a server
   def diagnostics_build_perf
