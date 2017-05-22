@@ -27,7 +27,9 @@ class MiqRequestController < ApplicationController
       @refresh_partial = "layouts/flash_msg"
       @refresh_div = "flash_msg_div"
     end
+
     return if params[:pressed] == "miq_request_edit" && @refresh_partial == "reconfigure"
+
     if !@flash_array.nil? && params[:pressed] == "miq_request_delete"
       javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
     elsif ["miq_request_copy", "miq_request_edit"].include?(params[:pressed])
@@ -40,7 +42,7 @@ class MiqRequestController < ApplicationController
                           :prov_id        => @prov_id
     elsif params[:pressed].ends_with?("_edit")
       if @refresh_partial == "show_list"
-        javascript_redirect :action      => @refresh_partial,
+        javascript_redirect :action      => 'show_list',
                             :flash_msg   => _("Default Requests can not be edited"),
                             :flash_error => true
       else
@@ -66,21 +68,19 @@ class MiqRequestController < ApplicationController
         show_list
         render :update do |page|
           page << javascript_prologue
-          page.replace("prov_options_div", :partial => "prov_options")
-          page.replace("gtl_div", :partial => "layouts/gtl")
+          page.replace("main_div", :template => "miq_request/show_list")
         end
       end
     else
-      render :update do |page|
-        page << javascript_prologue
-        unless @refresh_partial.nil?
-          if @refresh_div == "flash_msg_div"
-            page.replace(@refresh_div, :partial => @refresh_partial)
-          else
-            page.replace_html(@refresh_div, :partial => @refresh_partial)
-          end
+      if @refresh_partial.nil?
+        render :nothing
+      elseif @refresh_div == "flash_msg_div"
+        javascript_flash
+      else
+        render :update do |page|
+          page << javascript_prologue
+          page.replace_html(@refresh_div, :partial => @refresh_partial)
         end
-        page.replace_html(@refresh_div, :action => @render_action) unless @render_action.nil?
       end
     end
   end

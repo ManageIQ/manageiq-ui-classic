@@ -1,4 +1,5 @@
 - current_model = model_to_report_data
+- no_flash_div ||= false
 - gtl_type_string = j_str(@gtl_type)
 - active_tree = x_active_tree unless params[:display] || @use_action
 - selected_records = @edit[:object_ids] unless @edit.nil? || @edit[:object_ids].nil?
@@ -7,7 +8,8 @@
 - selected_records = selected_records.map(&:to_i) if !selected_records.nil? && selected_records.first.kind_of?(String)
 - selected_records = selected_records.map(&:id) if !selected_records.nil? && !selected_records.first.kind_of?(Integer)
 #miq-gtl-view{"ng-controller" => "reportDataController as dataCtrl"}
-  = render(:partial => "layouts/flash_msg")
+  - unless no_flash_div
+    = render :partial => "layouts/flash_msg"
   %miq-tile-view{"ng-if"            => "dataCtrl.gtlType === 'grid' || dataCtrl.gtlType === 'tile'",
                  "ng-class"         => "{'no-action': dataCtrl.initObject.showUrl === ''}",
                  "settings"         => "dataCtrl.settings",
