@@ -22,7 +22,7 @@ module ImageEncodeHelper
 
     if asset.content_type == 'image/svg+xml'
       encoding = 'charset=utf-8'
-      data = CGI.escape(asset.source).gsub('+', '%20')
+      data = ERB::Util.url_encode(asset.source).gsub('+', '%20')
     else
       encoding = 'base64'
       data = Base64.encode64(asset.source)
