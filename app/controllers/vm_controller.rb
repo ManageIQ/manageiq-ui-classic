@@ -5,7 +5,6 @@ class VmController < ApplicationController
   after_action :set_session_data
   include VmCommon # common methods for vm controllers
   include VmRemote # methods for VM remote access
-
   include Mixins::GenericSessionMixin
 
   def index
@@ -22,15 +21,17 @@ class VmController < ApplicationController
   def title
     _("Virtual Machines")
   end
-
-  private ####
+  
+  private
 
   def get_session_data
+    super
     @polArr         = session[:polArr] || ""           # current tags in effect
     @policy_options = session[:policy_options] || ""
   end
 
   def set_session_data
+    super
     session[:polArr]          = @polArr unless @polArr.nil?
     session[:policy_options]  = @policy_options unless @policy_options.nil?
   end
