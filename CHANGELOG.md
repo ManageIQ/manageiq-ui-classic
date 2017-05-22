@@ -2,6 +2,62 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased - as of Sprint 61 end 2017-05-22
+
+### Added
+- Angular Dialogs
+  - Add new fields to middleware Add JDBC Driver Dialog for XA JDBC Driver [(#1300)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1300)
+  - Add the ability to customize JDBC Driver/Datasource defaults if not using standard options [(#1092)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1092)
+- Compute
+  - Containers: Allow to explicitly disable hawkular in containers [(#1205)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1205)
+   - Physical Infrastructure
+    - Add network data in physical server details table [(#1276)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1276)
+    - Add parent relationship for physical server textual summary [(#1322)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1322)
+    - Add support for displaying location LED state [(#1247)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1247)
+    - Add support for displaying power state [(#1249)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1249)
+    - Add support for displaying server health state [(#1250)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1250)
+    - Display assets detail [(#1224)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1224)
+    - Displayed Physical Server Hardware info [(#1272)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1272)
+    - Add listnav for physical_server to host [(#1195)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1195)
+    - Add groups for PhysicalServer#show page [(#1294)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1294)
+    - Add feature buttons for physical server toolbar  [(#1299)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1299)
+
+### Fixed
+- Automation-Ansible: Changed if condition to rely on back-end method. [(#1351)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1351)
+- Compute
+  - Cloud: Make device path mandatory for EBS attachments [(#1321)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1321)
+  - Containers
+    - Fixed alphabetical order in Labels table  [(#1053)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1053)
+    - Fix oVirt metrics DB name validation [(#1379)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1379)
+    - Make containers view navlist [(#1204)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1204)
+  - Infrastructure
+    - Fix ems cluster multilink [(#1374)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1374)
+    - Fix HTML5 Console in IE11 [(#1337)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1337)
+    - Fix Default tab error indicator for OpenStack Infra [(#1341)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1341)
+- Dashboard: Add flash message partial to ems_container/\_show_dashboard [(#1312)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1312)
+- Formatting-Styling: Fix missing stylesheet extension [(#1332)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1332)
+- Networks: Added to_i to port & end_port attributes [(#1318)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1318)
+- Optimize: Delete duplicate flash message display in Optimize Planning page [(#1342)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1342)
+- RBAC
+  - Add missing ownership routes for MiqTemplate [(#1352)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1352)
+  - Add RBAC for requesters in MiqRequest [(#1214)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1214)
+- Services
+  - Added a note [(#1319)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1319)
+  - Fixed to also copy 'Escalate Privilege' when Copying provisioning tab [(#1327)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1327)
+  - Need to gsub occurrences of {{ }} in the output [(#1369)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1369)
+  - Display all services with 'display' = true in the Active and Retired Services trees [(#1340)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1340)
+  - Add Tag Information for Catalog Items [(#1357)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1357)
+  - Fix displaying tag from DialogFieldTagControl [(#1316)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1316)
+  - Changed API call to pass in region number get list of repos/playbooks [(#1354)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1354)
+  - Display summary tags for the ansible playbook services [(#1297)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1297)
+  - New dialog name validation added. [(#1361)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1361)
+  - Save new dialog value & other UI issues fixed [(#1330)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1330)
+- Storage
+  - Add Create a snapshot of this volume to volume list [(#1388)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1388)
+  - Redirect delete action to cloud volume controller [(#1331)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1331)
+- Topology: indicate no results when searching [(#1277)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1277)
+- Trees: Only Host under Cluster have no checkbox [(#1338)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1338)
+
 ## Unreleased - as of Sprint 60 end 2017-05-08
 
 ### Added
