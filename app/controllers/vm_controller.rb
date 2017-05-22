@@ -21,7 +21,7 @@ class VmController < ApplicationController
   def title
     _("Virtual Machines")
   end
-  
+
   private
 
   def get_session_data
