@@ -37,8 +37,6 @@ module Mixins
         end
       end
 
-      replace_gtl_main_div if pagination_request?
-
       if params[:action] == 'show' && !performed? && self.class.respond_to?(:default_show_template)
         render :template => self.class.default_show_template
       end
