@@ -1,5 +1,3 @@
-require 'wbem'
-
 RSpec.shared_examples :quadicon_with_link do
   it 'renders a quadicon with a link by default' do
     expect(subject).to have_selector('div.quadicon')
