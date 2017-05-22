@@ -105,7 +105,7 @@ module VmHelper::TextualSummary
   end
 
   def textual_group_labels
-    TextualGroup.new(_("Labels"), textual_labels)
+    TextualGroup.new(_("Labels"), textual_key_value_group(@record.custom_attributes))
   end
 
   def textual_group_power_management
@@ -756,12 +756,6 @@ module VmHelper::TextualSummary
 
   def textual_ems_custom_attributes
     attrs = @record.ems_custom_attributes
-    return nil if attrs.blank?
-    attrs.sort_by(&:name).collect { |a| {:label => a.name, :value => a.value} }
-  end
-
-  def textual_labels
-    attrs = @record.custom_attributes
     return nil if attrs.blank?
     attrs.sort_by(&:name).collect { |a| {:label => a.name, :value => a.value} }
   end
