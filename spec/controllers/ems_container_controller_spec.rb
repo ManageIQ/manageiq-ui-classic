@@ -129,7 +129,6 @@ describe EmsContainerController do
         "default_api_port"          => "5000",
         "default_userid"            => "",
         "default_password"          => "",
-        "default_verify"            => "",
         "provider_region"           => "",
         "metrics_selection"         => "hawkular_disabled"
       }
@@ -150,7 +149,6 @@ describe EmsContainerController do
         "default_api_port"           => "5000",
         "default_userid"             => "",
         "default_password"           => "",
-        "default_verify"             => "",
         "provider_region"            => "",
         "metrics_selection"          => "hawkular_enabled",
         "hawkular_security_protocol" => "ssl-without-validation",

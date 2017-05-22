@@ -34,13 +34,10 @@ describe EmsCloudController do
           "zone"                 => zone.name,
           "default_userid"       => "foo",
           "default_password"     => "[FILTERED]",
-          "default_verify"       => "[FILTERED]",
           "metrics_userid"       => "",
           "metrics_password"     => "[FILTERED]",
-          "metrics_verify"       => "[FILTERED]",
           "amqp_userid"          => "",
           "amqp_password"        => "[FILTERED]",
-          "amqp_verify"          => "[FILTERED]",
           "ssh_keypair_userid"   => "",
           "ssh_keypair_password" => "[FILTERED]"
         }
@@ -59,7 +56,6 @@ describe EmsCloudController do
           "zone"             => zone.name,
           "default_userid"   => "foo",
           "default_password" => "[FILTERED]",
-          "default_verify"   => "[FILTERED]"
         }
       end.to change { Authentication.count }.by(1)
 
@@ -78,7 +74,6 @@ describe EmsCloudController do
           "default_port"     => "5000",
           "default_userid"   => "bar",
           "default_password" => "[FILTERED]",
-          "default_verify"   => "[FILTERED]"
         }
       end.not_to change { Authentication.count }
 
@@ -100,7 +95,6 @@ describe EmsCloudController do
         "zone"             => "default",
         "default_userid"   => "foo",
         "default_password" => "[FILTERED]",
-        "default_verify"   => "[FILTERED]"
       }
 
       expect(response.status).to eq(200)
@@ -116,7 +110,6 @@ describe EmsCloudController do
         "zone"             => "default",
         "default_userid"   => "foo",
         "default_password" => "[FILTERED]",
-        "default_verify"   => "[FILTERED]"
       }
 
       expect(response.status).to eq(200)
@@ -131,7 +124,6 @@ describe EmsCloudController do
         "zone"             => zone.name,
         "default_userid"   => "foo",
         "default_password" => "[FILTERED]",
-        "default_verify"   => "[FILTERED]"
       }
 
       expect(response.status).to eq(200)
@@ -158,7 +150,6 @@ describe EmsCloudController do
         "zone"             => zone.name,
         "default_userid"   => "foo",
         "default_password" => "[FILTERED]",
-        "default_verify"   => "[FILTERED]"
       }
 
       expect(response.status).to eq(200)
@@ -169,17 +160,18 @@ describe EmsCloudController do
     end
 
     let(:openstack_form_params) do
-      {"button"                 => "add",
-       "default_hostname"       => "host_openstack",
-       "name"                   => "foo_openstack",
-       "emstype"                => "openstack",
-       "tenant_mapping_enabled" => "on",
-       "provider_region"        => "",
-       "default_port"           => "5000",
-       "zone"                   => zone.name,
-       "default_userid"         => "foo",
-       "default_password"       => "[FILTERED]",
-       "default_verify"         => "[FILTERED]"}
+      {
+        "button"                 => "add",
+        "default_hostname"       => "host_openstack",
+        "name"                   => "foo_openstack",
+        "emstype"                => "openstack",
+        "tenant_mapping_enabled" => "on",
+        "provider_region"        => "",
+        "default_port"           => "5000",
+        "zone"                   => zone.name,
+        "default_userid"         => "foo",
+        "default_password"       => "[FILTERED]",
+      }
     end
 
     it "creates openstack cloud manager with attributes from form" do
@@ -218,7 +210,6 @@ describe EmsCloudController do
         "zone"             => zone.name,
         "default_userid"   => "foo",
         "default_password" => "[FILTERED]",
-        "default_verify"   => "[FILTERED]"
       }
 
       expect(response.status).to eq(200)
@@ -248,7 +239,6 @@ describe EmsCloudController do
         "zone"             => zone.name,
         "default_userid"   => "foo",
         "default_password" => "[FILTERED]",
-        "default_verify"   => "[FILTERED]"
       }
 
       expect(response.status).to eq(200)

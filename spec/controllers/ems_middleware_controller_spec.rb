@@ -54,7 +54,6 @@ describe EmsMiddlewareController do
           "default_hostname" => "foo.com",
           "default_userid"   => "foo",
           "default_password" => "[FILTERED]",
-          "default_verify"   => "[FILTERED]"
         }
       end.to change { ManageIQ::Providers::Hawkular::MiddlewareManager.count }.by(1)
     end
@@ -70,7 +69,6 @@ describe EmsMiddlewareController do
           "default_hostname" => "foo.com",
           "default_userid"   => "foo",
           "default_password" => "[FILTERED]",
-          "default_verify"   => "[FILTERED]"
         }
       end.to change { Authentication.count }.by(1)
 
@@ -87,7 +85,6 @@ describe EmsMiddlewareController do
           "emstype"          => "hawkular",
           "default_userid"   => "bar",
           "default_password" => "[FILTERED]",
-          "default_verify"   => "[FILTERED]"
         }
       end.not_to change { Authentication.count }
 

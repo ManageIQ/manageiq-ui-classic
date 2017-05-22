@@ -54,7 +54,6 @@ describe EmsDatawarehouseController do
           "default_api_port" => "443",
           "default_userid"   => "",
           "default_password" => "VERY_SECRET",
-          "default_verify"   => "VERY_SECRET",
         }
       end.to change { ManageIQ::Providers::Hawkular::DatawarehouseManager.count }.by(1)
     end
@@ -70,7 +69,6 @@ describe EmsDatawarehouseController do
           "default_hostname" => "lotsofdata.com",
           "default_userid"   => "",
           "default_password" => "VERY_SECRET",
-          "default_verify"   => "VERY_SECRET"
         }
       end.to change { Authentication.count }.by(1)
 
@@ -88,7 +86,6 @@ describe EmsDatawarehouseController do
           "default_hostname" => "host_hawkular_updated",
           "default_userid"   => "",
           "default_password" => "MUCH_WOW",
-          "default_verify"   => "MUCH_WOW"
         }
       end.not_to change { Authentication.count }
 
