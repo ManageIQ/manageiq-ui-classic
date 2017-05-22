@@ -114,7 +114,8 @@ describe ApplicationHelper::Dialogs do
         :field_index                     => "300",
         :auto_refreshable_field_indicies => [1, 2, 3],
         :current_index                   => 123,
-        :trigger                         => "true"
+        :trigger                         => "true",
+        :initial_trigger                 => true
       }
     end
 
@@ -161,7 +162,8 @@ describe ApplicationHelper::Dialogs do
               :field_index                     => "300",
               :auto_refreshable_field_indicies => [1, 2, 3],
               :current_index                   => 123,
-              :trigger                         => "true"
+              :trigger                         => "true",
+              :initial_trigger                 => true
             }.to_json
           )
         end
@@ -212,7 +214,8 @@ describe ApplicationHelper::Dialogs do
               :field_index                     => "300",
               :auto_refreshable_field_indicies => [1, 2, 3],
               :current_index                   => 123,
-              :trigger                         => "true"
+              :trigger                         => "true",
+              :initial_trigger                 => nil
             }.to_json
           )
         end
@@ -240,7 +243,8 @@ describe ApplicationHelper::Dialogs do
         :field_index                     => "300",
         :auto_refreshable_field_indicies => [1, 2, 3],
         :current_index                   => 123,
-        :trigger                         => "true"
+        :trigger                         => "true",
+        :initial_trigger                 => false
       }
     end
 
@@ -275,7 +279,8 @@ describe ApplicationHelper::Dialogs do
               :field_index                     => "300",
               :auto_refreshable_field_indicies => [1, 2, 3],
               :current_index                   => 123,
-              :trigger                         => "true"
+              :trigger                         => "true",
+              :initial_trigger                 => false
             }.to_json
           )
         end
@@ -339,7 +344,8 @@ describe ApplicationHelper::Dialogs do
               :field_index                     => "300",
               :auto_refreshable_field_indicies => [1, 2, 3],
               :current_index                   => 123,
-              :trigger                         => "true"
+              :trigger                         => "true",
+              :initial_trigger                 => nil
             }.to_json
           )
         end
@@ -400,7 +406,8 @@ describe ApplicationHelper::Dialogs do
               :field_index                     => "300",
               :auto_refreshable_field_indicies => [1, 2, 3],
               :current_index                   => 123,
-              :trigger                         => "true"
+              :trigger                         => "true",
+              :initial_trigger                 => nil
             }.to_json
           )
         end
