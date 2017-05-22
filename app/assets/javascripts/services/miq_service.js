@@ -129,7 +129,7 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
     return function(id) {
       if (! id) {
         callback([]);
-	return;
+        return;
       }
       miqService.sparkleOn();
 
