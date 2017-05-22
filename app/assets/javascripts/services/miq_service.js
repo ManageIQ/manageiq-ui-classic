@@ -127,6 +127,10 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
 
   this.getProviderTenants = function(callback) {
     return function(id) {
+      if (! id) {
+        callback([]);
+	return;
+      }
       miqService.sparkleOn();
 
       API.get("/api/providers/" + id + "/cloud_tenants?expand=resources&attributes=id,name")
