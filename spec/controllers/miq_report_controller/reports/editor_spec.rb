@@ -5,7 +5,7 @@ describe ReportController do
     end
 
     let(:has_many_field_col) do
-      ['Vm.Storage.Storage Volumes.Disks : Storage Volume Class Hier', 'Vm.storage_volumes-class_hier']
+      ['Vm.Service.User.Miq Templates : Last Analysis Time', 'Vm.service.user.miq_templates-last_scan_attempt_on']
     end
 
     let(:cols) do
