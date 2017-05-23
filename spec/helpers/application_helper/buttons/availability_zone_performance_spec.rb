@@ -9,7 +9,7 @@ describe ApplicationHelper::Button::AvailabilityZonePerformance do
 
   describe '#disabled?' do
     before { allow(record).to receive(:has_perf_data?).and_return(has_perf_data) }
-    before(:each) { button.calculate_properties }
+    before(:each) { subject.calculate_properties }
 
     context 'and record has events' do
       let(:has_perf_data) { true }

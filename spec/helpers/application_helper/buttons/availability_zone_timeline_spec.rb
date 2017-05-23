@@ -9,7 +9,7 @@ describe ApplicationHelper::Button::AvailabilityZoneTimeline do
 
   describe '#disabled?' do
     before { allow(record).to receive(:has_events?).and_return(has_events) }
-    before(:each) { button.calculate_properties }
+    before(:each) { subject.calculate_properties }
 
     context 'and record has events' do
       let(:has_events) { true }

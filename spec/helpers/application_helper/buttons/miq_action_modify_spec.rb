@@ -40,7 +40,7 @@ describe ApplicationHelper::Button::MiqActionModify do
     let(:policy) { FactoryGirl.create(:miq_policy_read_only) }
 
     before { allow(view_context).to receive(:x_node).and_return("p-#{policy.id}_#{type}-1") }
-    before(:each) { button.calculate_properties }
+    before(:each) { subject.calculate_properties }
 
     %w(a ev u).each_with_index do |type, i|
       context "when #{type} is active" do
