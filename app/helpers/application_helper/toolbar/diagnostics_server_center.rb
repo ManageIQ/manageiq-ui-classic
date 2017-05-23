@@ -84,7 +84,7 @@ class ApplicationHelper::Toolbar::DiagnosticsServerCenter < ApplicationHelper::T
       'pficon pficon-edit fa-lg',
       N_('Edit the Log Depot settings for the selected Server'),
       N_('Edit'),
-      :klass => ApplicationHelper::Button::DiagnosticsLogs),
+      :klass => ApplicationHelper::Button::LogDepotEdit),
     select(
       :restart_vmdb_choice,
       'fa fa-cog fa-lg',
