@@ -43,61 +43,61 @@ module Mixins
       end
     end
 
-    def guest_applications
+    def init_show_variables(db = nil)
       @use_action = true
       @explorer = true if request.xml_http_request? # Ajax request means in explorer
-      @db = params[:db] ? params[:db] : request.parameters[:controller]
+
+      @db = db || params[:db] || controller_name
+
       session[:db] = @db unless @db.nil?
       @db = session[:db] unless session[:db].nil?
-      get_record(@db)
+
+      @record = get_record(@db)
       @sb[:action] = params[:action]
-      return if record_no_longer_exists?(@record)
+
+      !record_no_longer_exists?(@record)
+    end
+
+    def guest_applications
+      return unless init_show_variables
 
       @lastaction = "guest_applications"
-      if !params[:show].nil? || !params[:x_show].nil?
-        id = params[:show] ? params[:show] : params[:x_show]
+
+      breadcrumb_name = if Regexp.new(/linux/).match(@record.os_image_name.downcase)
+                          _("Packages")
+                        else
+                          _("Applications")
+                        end
+
+      id = params[:show] || params[:x_show]
+      if id.present?
         @item = @record.guest_applications.find(from_cid(id))
-        if Regexp.new(/linux/).match(@record.os_image_name.downcase)
-          drop_breadcrumb(:name => _("%{name} (Packages)") % {:name => @record.name},
-                          :url  => "/#{@db}/guest_applications/#{@record.id}?page=#{@current_page}")
-        else
-          drop_breadcrumb(:name => _("%{name} (Applications)") % {:name => @record.name},
-                          :url  => "/#{@db}/guest_applications/#{@record.id}?page=#{@current_page}")
-        end
-        drop_breadcrumb(:name => @item.name, :url => "/#{@db}/show/#{@record.id}?show=#{@item.id}")
-        @view = get_db_view(GuestApplication)         # Instantiate the MIQ Report view object
+        item_breadcrumbs(breadcrumb_name, 'guest_applications')
+        @view = get_db_view(GuestApplication)
         show_item
       else
         drop_breadcrumb({:name => @record.name, :url => "/#{@db}/show/#{@record.id}"}, true)
-        if Regexp.new(/linux/).match(@record.os_image_name.downcase)
-          drop_breadcrumb(:name => _("%{name} (Packages)") % {:name => @record.name},
-                          :url  => "/#{@db}/guest_applications/#{@record.id}")
-        else
-          drop_breadcrumb(:name => _("%{name} (Applications)") % {:name => @record.name},
-                          :url  => "/#{@db}/guest_applications/#{@record.id}")
-        end
+        drop_breadcrumb(:name => breadcrumb_name % {:name => @record.name},
+                        :url  => "/#{@db}/guest_applications/#{@record.id}")
         @listicon = "guest_application"
         show_details(GuestApplication)
       end
     end
 
+    def item_breadcrumbs(display_name, entity_path)
+      drop_breadcrumb(:name => "#{@record.name} (#{display_name})",
+                      :url  => "/#{controller_name}/#{entity_path}/#{@record.id}?page=#{@current_page}")
+      drop_breadcrumb(:name => @item.name, :url => "/#{controller_name}/show/#{@record.id}?show=#{@item.id}")
+    end
+
     def patches
-      @use_action = true
-      @explorer = true if request.xml_http_request? # Ajax request means in explorer
-      @db = params[:db] ? params[:db] : request.parameters[:controller]
-      session[:db] = @db unless @db.nil?
-      @db = session[:db] unless session[:db].nil?
-      get_record(@db)
-      @sb[:action] = params[:action]
-      return if record_no_longer_exists?(@record)
+      return unless init_show_variables
 
       @lastaction = "patches"
-      if !params[:show].nil? || !params[:x_show].nil?
-        id = params[:show] ? params[:show] : params[:x_show]
+      id = params[:show] || params[:x_show]
+      if id.present?
         @item = @record.patches.find(from_cid(id))
-        drop_breadcrumb(:name => _("%{name} (Patches)") % {:name => @record.name},
-                        :url  => "/#{@db}/patches/#{@record.id}?page=#{@current_page}")
-        drop_breadcrumb(:name => @item.name, :url => "/#{@db}/patches/#{@record.id}?show=#{@item.id}")
+        item_breadcrumbs(_("Patches"), 'patches')
         @view = get_db_view(Patch)
         show_item
       else
@@ -109,22 +109,13 @@ module Mixins
     end
 
     def groups
-      @use_action = true
-      @explorer = true if request.xml_http_request? && explorer_controller? # Ajax request means in explorer
-      @db = params[:db] ? params[:db] : request.parameters[:controller]
-      session[:db] = @db unless @db.nil?
-      @db = session[:db] unless session[:db].nil?
-      get_record(@db)
-      @sb[:action] = params[:action]
-      return if record_no_longer_exists?(@record)
+      return unless init_show_variables
 
       @lastaction = "groups"
-      if !params[:show].nil? || !params[:x_show].nil?
-        id = params[:show] ? params[:show] : params[:x_show]
+      id = params[:show] || params[:x_show]
+      if id.present?
         @item = @record.groups.find(from_cid(id))
-        drop_breadcrumb(:name => _("%{name} (Groups)") % {:name => @record.name},
-                        :url  => "/#{@db}/groups/#{@record.id}?page=#{@current_page}")
-        drop_breadcrumb({:name => @item.name, :url => "/#{@db}/groups/#{@record.id}?show=#{@item.id}"})
+        item_breadcrumbs(_("Groups"), 'groups')
         @user_names = @item.users
         @view = get_db_view(Account, :association => "groups")
         show_item
@@ -137,22 +128,13 @@ module Mixins
     end
 
     def users
-      @use_action = true
-      @explorer = true if request.xml_http_request? && explorer_controller? # Ajax request means in explorer
-      @db = params[:db] ? params[:db] : request.parameters[:controller]
-      session[:db] = @db unless @db.nil?
-      @db = session[:db] unless session[:db].nil?
-      get_record(@db)
-      @sb[:action] = params[:action]
-      return if record_no_longer_exists?(@record)
+      return unless init_show_variables
 
       @lastaction = "users"
-      if !params[:show].nil? || !params[:x_show].nil?
-        id = params[:show] ? params[:show] : params[:x_show]
+      id = params[:show] || params[:x_show]
+      if id.present?
         @item = @record.users.find(from_cid(id))
-        drop_breadcrumb(:name => _("%{name} (Users)") % {:name => @record.name},
-                        :url  => "/#{@db}/users/#{@record.id}?page=#{@current_page}")
-        drop_breadcrumb(:name => @item.name, :url => "/#{@db}/show/#{@record.id}?show=#{@item.id}")
+        item_breadcrumbs(_("Users"), 'users')
         @group_names = @item.groups
         @view = get_db_view(Account, :association => "users")
         show_item
@@ -165,28 +147,20 @@ module Mixins
     end
 
     def hosts
-      @use_action = true
-      @explorer = true if request.xml_http_request? && explorer_controller? # Ajax request means in explorer
-      @db = params[:db] ? params[:db] : request.parameters[:controller]
-      @db = 'switch' if @db == 'infra_networking'
-      session[:db] = @db unless @db.nil?
-      @db = session[:db] unless session[:db].nil?
-      get_record(@db)
-      @sb[:action] = params[:action]
-      return if record_no_longer_exists?(@record)
+      db = params[:db] || controller_name
+      db = 'switch' if db == 'infra_networking'
+      return unless init_show_variables(db)
 
       @lastaction = "hosts"
-      if !params[:show].nil? || !params[:x_show].nil?
-        id = params[:show] ? params[:show] : params[:x_show]
+      id = params[:show] || params[:x_show]
+      if id.present?
         @item = @record.hosts.find(from_cid(id))
-        drop_breadcrumb(:name => _("%{name} (Hosts)") % {:name => @record.name},
-                        :url  => "/#{request.parameters[:controller]}/hosts/#{@record.id}?page=#{@current_page}")
-        drop_breadcrumb(:name => @item.name, :url => "/#{request.parameters[:controller]}/show/#{@record.id}?show=#{@item.id}")
+        item_breadcrumbs(_("Hosts"), 'hosts')
         @view = get_db_view(Host)
         show_item
       else
         drop_breadcrumb(:name => _("%{name} (Hosts)") % {:name => @record.name},
-                        :url  => "/#{request.parameters[:controller]}/hosts/#{@record.id}")
+                        :url  => "/#{controller_name}/hosts/#{@record.id}")
         @listicon = "host"
         show_details(Host, :association => "hosts")
       end
