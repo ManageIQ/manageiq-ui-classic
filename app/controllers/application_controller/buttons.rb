@@ -465,10 +465,9 @@ module ApplicationController::Buttons
 
   def ab_button_cancel(typ)
     if typ == "update"
-      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "CustomButton"), :name => @edit[:current][:name]})
+      add_flash(_("Edit of Custom Button \"%{name}\" was cancelled by the user") % {:name => @edit[:current][:name]})
     else
-      add_flash(_("Add of new %{model_name} was cancelled by the user") %
-        {:model_name => ui_lookup(:model => "CustomButton")})
+      add_flash(_("Add of new Custom Button was cancelled by the user"))
     end
     @edit = session[:edit] = nil
     ab_get_node_info(x_node) if x_active_tree == :ab_tree
@@ -508,7 +507,7 @@ module ApplicationController::Buttons
     end
 
     if @custom_button.save
-      add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "CustomButton"), :name => @edit[:new][:description]})
+      add_flash(_("Custom Button \"%{name}\" was added") % {:name => @edit[:new][:description]})
       @edit = session[:edit] = nil
       au = CustomButton.find(@custom_button.id)
       if @aset && nodes[0].split('-')[1] != "ub" && nodes.length >= 3
@@ -562,7 +561,7 @@ module ApplicationController::Buttons
     end
 
     if @custom_button.save
-      add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "CustomButton"), :name => @edit[:new][:description]})
+      add_flash(_("Custom Button \"%{name}\" was saved") % {:name => @edit[:new][:description]})
       @edit = session[:edit] = nil
       ab_get_node_info(x_node) if x_active_tree == :ab_tree
       replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
