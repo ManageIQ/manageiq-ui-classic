@@ -1970,7 +1970,6 @@ class CatalogController < ApplicationController
       elsif @sb[:buttons_node]
         r[:partial => "shared/buttons/ab_list"]
       else
-        presenter.update(:paging_div, r[:partial => "layouts/x_pagingcontrols"])
         r[:partial => "layouts/x_gtl"]
       end
     )

@@ -298,8 +298,6 @@ class MiqAeCustomizationController < ApplicationController
   def handle_bottom_cell(presenter)
     if @pages || @in_a_form
       if @pages
-        @ajax_paging_buttons = true # FIXME: this should not be done this way
-        presenter.update(:paging_div, render_proc[:partial => 'layouts/x_pagingcontrols'])
         presenter.hide(:form_buttons_div).show(:pc_div_1)
       elsif @in_a_form && @sb[:action]
         action_url = case x_active_tree

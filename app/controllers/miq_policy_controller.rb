@@ -365,7 +365,6 @@ class MiqPolicyController < ApplicationController
     @lastaction          = "#{what}_get_all"
     @force_no_grid_xml   = true
     @gtl_type            = "list"
-    @ajax_paging_buttons = true
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value
       @settings.store_path(:perpage, @gtl_type.to_sym, @items_per_page) # Set the per page setting for this gtl type

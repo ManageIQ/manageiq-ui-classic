@@ -756,7 +756,6 @@ class OpsController < ApplicationController
     if @pages || @in_a_form
       if @pages
         presenter.hide(:form_buttons_div).show(:pc_div_1)
-        presenter.update(:paging_div, r[:partial => "layouts/x_pagingcontrols"])
       elsif @in_a_form
         if nodetype == "log_depot_edit"
           presenter.update(:form_buttons_div, r[:partial => "layouts/angular/paging_div_buttons"])

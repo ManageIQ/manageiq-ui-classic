@@ -861,8 +861,6 @@ class ReportController < ApplicationController
     # Handle bottom cell
     if ((@in_a_form || @pages) || (@sb[:pages] && @html)) && params[:id] != 'xx-exportwidgets'
       if @pages
-        @ajax_paging_buttons = true # FIXME: this should not be done this way
-        presenter.update(:paging_div, r[:partial => 'layouts/x_pagingcontrols'])
         presenter.hide(:form_buttons_div, :rpb_div_1).show(:pc_div_1)
       elsif @in_a_form
         presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])

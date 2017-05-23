@@ -159,7 +159,6 @@ class PxeController < ApplicationController
                         end
     when :customization_templates_tree
       presenter.update(:main_div, r[:partial => "template_list"])
-      presenter.update(:paging_div, r[:partial => "layouts/x_pagingcontrols"])
       if @in_a_form
         right_cell_text =
           if @ct.id.blank?

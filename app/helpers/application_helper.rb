@@ -1164,7 +1164,6 @@ module ApplicationHelper
       page.replace("gtl_div",
                    :partial => "layouts/x_gtl",
                    :locals  => {:action_url => action_url, :button_div => button_div})
-      page.replace_html("paging_div", :partial => "layouts/x_pagingcontrols")
       page << "miqSparkle(false)"
     end
   end

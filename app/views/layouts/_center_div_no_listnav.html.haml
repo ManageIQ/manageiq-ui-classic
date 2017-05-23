@@ -17,9 +17,3 @@
       - if layout_uses_paging? && !@in_a_form
         .col-md-12.no-padding
           .row.toolbar-pf#paging_div
-            = render(:partial => 'layouts/pagingcontrols',
-                     :locals  => {:pages      => @pages,
-                                  :action_url => action_url_for_views,
-                                  :db         => @view.try(:db),
-                                  :headers    => @view.try(:headers),
-                                  :button_div => 'center_tb'})
