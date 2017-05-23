@@ -1,4 +1,4 @@
-require 'shared/helpers/application_helper/buttons/basic'
+require 'shared/helpers/application_helper/buttons/render_report'
 
 describe ApplicationHelper::Button::ReportOnly do
   include_context 'ApplicationHelper::Button::Basic'
@@ -19,7 +19,7 @@ describe ApplicationHelper::Button::ReportOnly do
 
     context 'when record not present' do
       let(:record) { nil }
-      it_behaves_like 'a render_report button'
+      include_examples 'ApplicationHelper::Button::RenderReport#calculate_properties'
     end
     context 'when record is present' do
       context 'and record has report' do
