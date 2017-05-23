@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "codeclimate-test-reporter", "~> 1.0.0"
   s.add_development_dependency "guard-rspec", '~> 4.7.3'
   s.add_development_dependency "simplecov"
+  s.add_development_dependency "rubywbem"
 
   # core because jasmine has < 3.0, not < 2.6
   s.add_development_dependency "jasmine",  "~> 2.5.2"
