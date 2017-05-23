@@ -6,7 +6,12 @@ describe ApplicationHelper::Button::DiagnosticsSummary do
   let(:instance_data) { Hash.new }
   let(:props) { Hash.new }
 
-  it_behaves_like 'a button with correct active context', :diagnostics_tree, 'diagnostics_summary'
-  it_behaves_like 'a button with incorrect active context', :not_diagnostics_tree, 'diagnostics_summary'
-  it_behaves_like 'a button with incorrect active context', :diagnostics_tree, 'not_diagnostics_summary'
+  describe '#visible?' do
+    include_examples 'ApplicationHelper::Button::Basic with correct active context',
+                     :tree => :diagnostics_tree, :tab => 'diagnostics_summary'
+    include_examples 'ApplicationHelper::Button::Basic with incorrect active context',
+                     :tree => :not_diagnostics_tree, :tab => 'diagnostics_summary'
+    include_examples 'ApplicationHelper::Button::Basic with incorrect active context',
+                     :tree => :diagnostics_tree, :tab => 'not_diagnostics_summary'
+  end
 end

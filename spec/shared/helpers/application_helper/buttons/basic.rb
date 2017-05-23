@@ -29,3 +29,19 @@ shared_examples 'ApplicationHelper::Button::Basic disabled' do |option|
     expect(subject[:title]).to eq(option[:error_message])
   end
 end
+
+shared_examples 'ApplicationHelper::Button::Basic with correct active context' do |option|
+  context "when active_tree == #{option[:tree]} and active_tab == #{option[:tab]}" do
+    let(:tree) { option[:tree] }
+    let(:tab) { option[:tab] }
+    it { expect(subject.visible?).to be_truthy }
+  end
+end
+
+shared_examples 'ApplicationHelper::Button::Basic with incorrect active context' do |option|
+  context "when active_tree == #{option[:tree]} and active_tab == #{option[:tab]}" do
+    let(:tree) { option[:tree] }
+    let(:tab) { option[:tab] }
+    it { expect(subject.visible?).to be_falsey }
+  end
+end
