@@ -32,17 +32,6 @@ module ApplicationController::Tags
   alias_method :storage_tag, :tagging_edit
   alias_method :infra_networking_tag, :tagging_edit
 
-  # New classification category chosen on the classify screen
-  def classify_new_cat
-    session[:cat] = Classification.find_by_name(params["classification"]["name"])
-    classify_build_entries_pulldown
-
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("value_div", :partial => "layouts/classify_value")
-    end
-  end
-
   # Handle tag edit field changes
   def tag_edit_form_field_changed
     id = params[:id]
@@ -83,42 +72,6 @@ module ApplicationController::Tags
         page << jquery_pulsate_element("#{j_str(params[:tag_add])}_tr")
       end
     end
-  end
-
-  # Assign a classification entry to a set of objects
-  def classify_assign
-    entry = Classification.find_by_id(params["entry"]["id"])
-    session[:tag_items].each do |item|
-      entry.assign_entry_to(session[:tag_db].find(item))
-    end
-    classify_build_screen
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("value_div", :partial => "layouts/classify_value")
-      page.replace("table_div", :partial => "layouts/classify_table")
-      page << jquery_pulsate_element("#{entry.id}_tr")
-    end
-  end
-
-  # Remove a classification entry from a set of objects
-  def classify_remove
-    entry = Classification.find_by_id(params["id"])
-    session[:tag_items].each do |item|
-      entry.remove_entry_from(session[:tag_db].find(item))
-    end
-    classify_build_screen
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("value_div", :partial => "layouts/classify_value")
-      page.replace("table_div", :partial => "layouts/classify_table")
-    end
-  end
-
-  def filters
-    @in_a_form = true
-    session[:filter_object] = Host.find(1)
-    session[:cat] = nil
-    classify_build_screen
   end
 
   private ############################
@@ -226,79 +179,12 @@ module ApplicationController::Tags
     add_flash(_("Tag edits were successfully saved"))
   end
 
-  # Build the tagging assignment screen
-  def tagging_build_screen
-    @tagitems = session[:tag_db].find(session[:tag_items]).sort_by(&:name)  # Get the db records that are being tagged
-    @view = get_db_view(session[:tag_db])       # Instantiate the MIQ Report view object
-    @view.table = MiqFilter.records2table(@tagitems, @view.cols + ['id'])
-
-    session[:mytags] = @tagitems[0].tagged_with(:cat => session[:userid])   # Start with the first items tags
-    @tagitems.each do |item|
-      itemassign = item.tagged_with(:cat => session[:userid])               # Get each items tags
-      session[:mytags].delete_if { |t| !itemassign.include?(t) }           # Remove any tags that are not in the new items tags
-      break if session[:mytags].length == 0                               # Stop looking if no tags are left
-    end
-    tagging_build_tags_pulldown
-    build_targets_hash(@tagitems)
-  end
-
   # Build the pulldown containing the tags
   def tagging_build_tags_pulldown
     @mytags = Tag.all_tags(:cat => session[:userid]).sort     # Get all of the users tags
     unless session[:mytags].blank?
       session[:mytags].each do |t|                                    # Look thru the common tags
         @mytags.delete(t.name.split("/")[-1])                     # Remove any tags from the pulldown that are in the common tags
-      end
-    end
-  end
-
-  # Build the classification assignment screen
-  def classify_build_screen
-    cats = Classification.categories.select(&:show).sort_by(&:name) # Get the categories, sort by name
-    @categories = {}    # Classifications array for first chooser
-    cats.delete_if { |c| c.read_only? || c.entries.length == 0 }  # Remove categories that are read only or have no entries
-    cats.each do |c|
-      if c.single_value?
-        @categories[c.description + " *"] = c.name
-      else
-        @categories[c.description] = c.name
-      end
-    end
-    cats.each do |cat_key|
-      if session[:assigned_filters].include?(cat_key.name.downcase)
-        cats.delete(cat_key)
-      end
-    end
-    session[:cat] ||= cats.first                                    # Set to first category, if not already set
-
-    @tagitems = session[:tag_db].find(session[:tag_items]).sort_by(&:name)  # Get the db records that are being tagged
-
-    @view = get_db_view(session[:tag_db])       # Instantiate the MIQ Report view object
-    @view.table = MiqFilter.records2table(@tagitems, @view.cols + ['id'])
-
-    session[:assignments] = Classification.find_assigned_entries(@tagitems[0])    # Start with the first items assignments
-    @tagitems.each do |item|
-      itemassign = Classification.find_assigned_entries(item)             # Get each items assignments
-      session[:assignments].delete_if { |a| !itemassign.include?(a) } # Remove any assignments that are not in the new items assignments
-      break if session[:assignments].length == 0                          # Stop looking if no assignments are left
-    end
-    if session[:assignments].length > 0                                             # if any assignments left
-      session[:assignments].delete_if { |a| a.parent.read_only? }    # remove the ones from read only categories
-    end
-    classify_build_entries_pulldown
-    build_targets_hash(@tagitems)
-  end
-
-  # Build the second pulldown containing the entries for the selected category
-  def classify_build_entries_pulldown
-    @entries = {}                   # Create new entries hash (2nd pulldown)
-    session[:cat].entries.each do |e|     # Get all of the entries for the current category
-      @entries[e.description] = e.id        # Add it to the hash
-    end
-
-    session[:assignments].each do |a|                           # Look thru the assignments
-      if a.parent.description == session[:cat].description      # If they match the category
-        @entries.delete(a.description)                          # Remove them from the selection list
       end
     end
   end
