@@ -17,6 +17,7 @@ else
   require 'font_awesome/sass/rails/engine'
 
   require 'patternfly-sass/engine'
+  require 'uglifier'
 end
 
 require 'lodash-rails'
@@ -28,6 +29,13 @@ module ManageIQ
       class Engine < ::Rails::Engine
         config.autoload_paths << File.expand_path(File.join(root, 'app', 'controllers', 'mixins'), __FILE__)
         config.autoload_paths << File.expand_path(File.join(root, 'lib'), __FILE__)
+        config.assets.js_compressor = Uglifier.new(
+          :compress => {
+            :unused      => false,
+            :keep_fargs  => true,
+            :keep_fnames => true
+          }
+        ) if Rails.env.production?
 
         def vmdb_plugin?
           true
