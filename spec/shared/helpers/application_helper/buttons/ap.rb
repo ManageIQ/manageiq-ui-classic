@@ -19,5 +19,5 @@ end
 
 shared_examples 'ApplicationHelper::Button::Ap writable' do
   let(:read_only) { false }
-  it_behaves_like 'an enabled button'
+  include_examples 'ApplicationHelper::Button::Basic enabled'
 end

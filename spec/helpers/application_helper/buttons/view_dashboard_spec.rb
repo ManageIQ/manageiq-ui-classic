@@ -10,7 +10,7 @@ describe ApplicationHelper::Button::ViewDashboard do
     before { subject.calculate_properties }
     context 'when showtype is dashboard' do
       let(:showtype) { 'dashboard' }
-      it_behaves_like 'a disabled button'
+      include_examples 'ApplicationHelper::Button::Basic disabled', :error_message => nil
     end
     context 'when showtype is not dashboard' do
       let(:showtype) { 'not_dashboard' }
