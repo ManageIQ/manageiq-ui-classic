@@ -1,9 +1,13 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::ZoneCollectLogs do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:file_depot) { FactoryGirl.create(:file_depot) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:zone, :log_file_depot => file_depot) }
+  let(:file_depot) { FactoryGirl.create(:file_depot) }
   let(:miq_server) { FactoryGirl.create(:miq_server, :status => server_status) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   def tear_down
     LogFile.delete_all
@@ -19,7 +23,7 @@ describe ApplicationHelper::Button::ZoneCollectLogs do
       setup_log_files
       setup_tasks
       record.miq_servers << miq_server
-      button.calculate_properties
+      subject.calculate_properties
     end
     after(:each) { tear_down }
 
@@ -33,32 +37,33 @@ describe ApplicationHelper::Button::ZoneCollectLogs do
 
       context 'and Log Depot settings is configured' do
         context 'and log collection is not yet in progress' do
-          it_behaves_like 'an enabled button'
+          include_examples 'ApplicationHelper::Button::Basic enabled'
         end
         context 'and log collection is currently in progress' do
           let(:log_state) { 'collecting' }
-          it_behaves_like 'a disabled button',
-                          'Log collection is already in progress for one or more Servers in this Zone'
+          include_examples 'ApplicationHelper::Button::Basic disabled',
+                           :error_message => 'Log collection is already in progress for one or more Servers in this Zone'
 
           context 'and has an unfinished task' do
             let(:setup_tasks) do
               task = FactoryGirl.create(:miq_task, :name => 'Zipped log retrieval for XXX', :miq_server_id => record.id)
               task.save
             end
-            it_behaves_like 'a disabled button',
-                            'Log collection is already in progress for one or more Servers in this Zone'
+            include_examples 'ApplicationHelper::Button::Basic disabled',
+                             :error_message => 'Log collection is already in progress for one or more Servers in this Zone'
           end
         end
       end
       context 'and Log Depot settings is not configured' do
         let(:file_depot) { nil }
-        it_behaves_like 'a disabled button',
-                        'This Zone do not have Log Depot settings configured, collection not allowed'
+        include_examples 'ApplicationHelper::Button::Basic disabled',
+                         :error_message => 'This Zone do not have Log Depot settings configured, collection not allowed'
       end
     end
     context 'when there is no miq_server started' do
       let(:server_status) { 'not_responding' }
-      it_behaves_like 'a disabled button', 'Cannot collect current logs unless there are started Servers in the Zone'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       :error_message => 'Cannot collect current logs unless there are started Servers in the Zone'
     end
   end
 end

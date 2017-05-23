@@ -1,21 +1,25 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::InstanceCheckCompare do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record, 'display' => display} }
+  let(:props) { Hash.new }
   let(:display) { nil }
   let(:record) { FactoryGirl.create(:vm) }
-  subject { described_class.new(view_context, {}, {'record' => record, 'display' => display}, {}) }
 
   describe '#visible?' do
-    context 'when record is not kind of OrchestrationStack && display != instances' do
-      it { expect(subject.visible?).to be_truthy }
+    context 'when record is not kind of OrchestrationStack && display is not instances' do
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
-    context 'when record is kind of OrchestrationStack && display != instances' do
+    context 'when record is kind of OrchestrationStack && display is not instances' do
       let(:record) { FactoryGirl.create(:orchestration_stack) }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
-    context 'when record is an OrchestrationStack && display == instances' do
+    context 'when record is an OrchestrationStack && display is instances' do
       let(:record) { FactoryGirl.create(:orchestration_stack) }
       let(:display) { 'instances' }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
   end
 

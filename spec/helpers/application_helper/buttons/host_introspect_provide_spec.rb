@@ -1,25 +1,28 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::HostIntrospectProvide do
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:provision_state) { 'not_manageable' }
   let(:record) { FactoryGirl.create(:host_openstack_infra) }
-  let(:button) { described_class.new(setup_view_context_with_sandbox({}), {}, {'record' => record}, {}) }
 
   before { allow(record).to receive_message_chain(:hardware, :provision_state).and_return(provision_state) }
 
   describe '#visible?' do
-    subject { button.visible? }
-
-    context 'when record.class == ManageIQ::Providers::Openstack::InfraManager::Host' do
-      context 'and hardware.provision_state == manageable' do
+    context 'when record.class is ManageIQ::Providers::Openstack::InfraManager::Host' do
+      context 'and hardware.provision_state is manageable' do
         let(:provision_state) { 'manageable' }
-        it { expect(subject).to be_truthy }
+        include_examples 'ApplicationHelper::Button::Basic visible'
       end
-      context 'and hardware.provision_state != manageable' do
-        it { expect(subject).to be_falsey }
+      context 'and hardware.provision_state is not manageable' do
+        include_examples 'ApplicationHelper::Button::Basic hidden'
       end
     end
     context 'when record type is not host_openstack_infra, nor ems_openstack_infra' do
       let(:record) { FactoryGirl.create(:host_vmware) }
-      it { expect(subject).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
   end
 end

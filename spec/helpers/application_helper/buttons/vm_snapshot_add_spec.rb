@@ -1,18 +1,22 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::VmSnapshotAdd do
-  let(:controller) { 'vm_infra' }
-  let(:session) { {} }
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:zone) { EvmSpecHelper.local_miq_server(:is_master => true).zone }
-  let(:ems) { FactoryGirl.create(:ems_vmware, :zone => zone, :name => 'Test EMS') }
-  let(:host) { FactoryGirl.create(:host) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record, 'active' => active} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:vm_vmware, :ems_id => ems.id, :host_id => host.id) }
   let(:active) { true }
-  let(:button) { described_class.new(view_context, {}, {'record' => record, 'active' => active}, {}) }
+  let(:ems) { FactoryGirl.create(:ems_vmware, :zone => zone, :name => 'Test EMS') }
+  let(:host) { FactoryGirl.create(:host) }
+  let(:zone) { EvmSpecHelper.local_miq_server(:is_master => true).zone }
+  let(:controller) { 'vm_infra' }
+  let(:session) { {} }
 
   describe '#calculate_properties' do
     before :each do
       stub_user(:features => :all)
-      button.calculate_properties
+      subject.calculate_properties
     end
     context 'when creating snapshots is available' do
       let(:current) { 1 }
@@ -28,29 +32,31 @@ describe ApplicationHelper::Button::VmSnapshotAdd do
       end
       context 'and the selected snapshot may be active but the vm is not connected to a host' do
         let(:record) { FactoryGirl.create(:vm_vmware) }
-        it_behaves_like 'a disabled button', 'The VM is not connected to a Host'
+        include_examples 'ApplicationHelper::Button::Basic disabled',
+                         :error_message => 'The VM is not connected to a Host'
       end
       context 'and the selected snapshot is active and current' do
         context 'and current' do
-          it_behaves_like 'an enabled button'
+          include_examples 'ApplicationHelper::Button::Basic enabled'
         end
       end
     end
     context 'when creating snapshots is not available' do
       let(:record) { FactoryGirl.create(:vm_amazon) }
-      it_behaves_like 'a disabled button', 'Operation not supported'
+      include_examples 'ApplicationHelper::Button::Basic disabled', :error_message => 'Operation not supported'
     end
     context 'when user has permissions to create snapsnots' do
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
   end
   describe 'user lacks permissions to create snapshots' do
     before do
       stub_user(:features => :none)
-      button.calculate_properties
+      subject.calculate_properties
     end
     context 'when user lacks permissions to create snapsnots' do
-      it_behaves_like 'a disabled button', 'Current user lacks permissions to create a new snapshot for this VM'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       :error_message => 'Current user lacks permissions to create a new snapshot for this VM'
     end
   end
 end

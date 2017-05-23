@@ -1,7 +1,13 @@
-describe ApplicationHelper::Button::MiqTemplatePerf do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:template_redhat) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
+require 'shared/helpers/application_helper/buttons/perf'
 
-  it_behaves_like 'a performance button', 'Template'
+describe ApplicationHelper::Button::MiqTemplatePerf do
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
+  let(:record) { FactoryGirl.create(:template_redhat) }
+
+  describe '#calculate_properties' do
+    include_context 'ApplicationHelper::Button::Perf#calculate_properties', :entity => 'Template'
+  end
 end

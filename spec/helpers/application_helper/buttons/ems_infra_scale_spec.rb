@@ -1,22 +1,25 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::EmsInfraScale do
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:ems_openstack_infra) }
-  let(:button) { described_class.new(setup_view_context_with_sandbox({}), {}, {'record' => record}, {}) }
 
   describe '#visible?' do
-    subject { button.visible? }
-
     context 'when record is OpenStack Provider' do
       context 'and orchestration stack is empty' do
-        it { expect(subject).to be_falsey }
+        include_examples 'ApplicationHelper::Button::Basic hidden'
       end
       context 'and orchestration stack is not empty' do
         let(:record) { FactoryGirl.create(:ems_openstack_infra_with_stack) }
-        it { expect(subject).to be_truthy }
+        include_examples 'ApplicationHelper::Button::Basic visible'
       end
     end
     context 'when record is not an OpenStack provider' do
       let(:record) { :ems_redhat }
-      it { expect(subject).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
   end
 end

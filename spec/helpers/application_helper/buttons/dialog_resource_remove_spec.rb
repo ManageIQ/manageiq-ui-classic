@@ -1,33 +1,37 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::DialogResourceRemove do
-  let(:view_context) { setup_view_context_with_sandbox(:edit_typ => edit_typ) }
-  subject { described_class.new(view_context, {}, {'edit' => edit}, {}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { {:edit_typ => edit_typ} }
+  let(:instance_data) { {'edit' => edit} }
+  let(:props) { Hash.new }
 
   before { allow(view_context).to receive(:x_node).and_return(x_node) }
 
   context 'when edit' do
     let(:edit) { true }
-    context 'when edit_typ == add' do
+    context 'when edit_typ is add' do
       let(:edit_typ) { 'add' }
       let(:x_node) { 'does_not_matter' }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
-    context 'when edit_typ != add' do
+    context 'when edit_typ is not add' do
       let(:edit_typ) { 'not_add' }
-      context 'and x_node == root' do
+      context 'and x_node is root' do
         let(:x_node) { 'root' }
-        it { expect(subject.visible?).to be_falsey }
+        include_examples 'ApplicationHelper::Button::Basic hidden'
       end
-      context 'and x_node != root' do
+      context 'and x_node is not root' do
         let(:x_node) { 'not_root' }
-        it { expect(subject.visible?).to be_truthy }
+        include_examples 'ApplicationHelper::Button::Basic visible'
       end
     end
   end
 
-  context 'when edit == nil' do
+  context 'when edit is nil' do
     let(:edit) { nil }
     let(:edit_typ) { 'does not matter' }
     let(:x_node) { 'does_not_matter' }
-    it { expect(subject.visible?).to be_falsey }
+    include_examples 'ApplicationHelper::Button::Basic hidden'
   end
 end

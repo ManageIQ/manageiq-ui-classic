@@ -1,9 +1,13 @@
-describe ApplicationHelper::Button::ContainerTimeline do
-  let(:record) { FactoryGirl.create(:container) }
-  let(:button) do
-    described_class.new(setup_view_context_with_sandbox({}), {}, {'record' => record},
-                        {:options => {:entity => 'Container'}})
-  end
+require 'shared/helpers/application_helper/buttons/timeline'
 
-  it_behaves_like 'a timeline button', :entity => 'Container'
+describe ApplicationHelper::Button::ContainerTimeline do
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { {:options => {:entity => 'Container'}} }
+  let(:record) { FactoryGirl.create(:container) }
+
+  describe '#calculate_properties' do
+    include_context 'ApplicationHelper::Button::Timeline#calculate_properties', :entity => 'Container'
+  end
 end

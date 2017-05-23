@@ -1,42 +1,51 @@
+require 'shared/helpers/application_helper/buttons/vm_console'
+
 describe ApplicationHelper::Button::VmVncConsole do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:vm) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#visible?' do
-    subject { button.visible? }
-    context 'when record.vendor == vmware' do
+    context 'when record.vendor is vmware' do
       let(:record) { FactoryGirl.create(:vm_vmware) }
-      it_behaves_like 'vm_console_visible?', 'VNC', :vm_vmware => true
+      include_context 'ApplicationHelper::Button::VmConsole#visible?',
+                      :console_type       => 'VNC',
+                      :support_of_records => {:vm_vmware => true}
     end
-    context 'when record.vendor != vmware' do
+    context 'when record.vendor is not vmware' do
       context 'and VNC is a supported console' do
-        it_behaves_like 'vm_console_record_types', :vm_openstack => true, :vm_redhat => true
+        include_context 'ApplicationHelper::Button::VmConsole#visible?',
+                        :console_type       => 'VNC',
+                        :support_of_records => {:vm_openstack => true, :vm_redhat => true}
       end
       context 'and VNC is not a supported console' do
-        it_behaves_like 'vm_console_record_types', :vm_amazon => false
+        include_context 'ApplicationHelper::Button::VmConsole#visible?',
+                        :console_type       => nil,
+                        :support_of_records => {:vm_amazon => false}
       end
     end
   end
 
   describe '#calculate_properties?' do
     before { allow(record).to receive(:current_state).and_return(power_state) }
-    before(:each) { button.calculate_properties }
+    before(:each) { subject.calculate_properties }
 
-    context 'when record.vendor == vmware' do
+    context 'when record.vendor is vmware' do
       let(:power_state) { 'on' }
       let(:ems) { FactoryGirl.create(:ems_vmware, :api_version => api_version) }
       let(:record) { FactoryGirl.create(:vm_vmware, :ems_id => ems.id) }
 
       context 'and vendor api is not supported' do
         let(:api_version) { 6.5 }
-        it_behaves_like 'a disabled button', 'VNC consoles are unsupported on VMware ESXi 6.5 and later.'
+        include_examples 'ApplicationHelper::Button::Basic disabled',
+                         :error_message => 'VNC consoles are unsupported on VMware ESXi 6.5 and later.'
       end
       context 'and vendor api is supported' do
         let(:api_version) { 6.4 }
-
-        it_behaves_like 'vm_console_with_power_state_on_off', "The web-based VNC console is not available because \
-the VM is not powered on"
+        include_examples 'ApplicationHelper::Button::VmConsole power state',
+                         :error_message => 'The web-based VNC console is not available because the VM is not powered on'
       end
     end
   end

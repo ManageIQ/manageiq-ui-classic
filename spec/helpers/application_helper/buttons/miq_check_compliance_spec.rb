@@ -1,7 +1,18 @@
-describe ApplicationHelper::Button::MiqCheckCompliance do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:record) { FactoryGirl.create(:template_redhat) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
+require 'shared/helpers/application_helper/buttons/check_compliance'
 
-  it_behaves_like 'a check_compliance button', 'Template'
+describe ApplicationHelper::Button::MiqCheckCompliance do
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
+  let(:record) { FactoryGirl.create(:template_redhat) }
+
+  describe '#calculate_properties' do
+    before do
+      stub_compliance_policies
+      subject.calculate_properties
+    end
+
+    include_context 'ApplicationHelper::Button::CheckCompliance#calculate_properties', :entity => 'Template'
+  end
 end

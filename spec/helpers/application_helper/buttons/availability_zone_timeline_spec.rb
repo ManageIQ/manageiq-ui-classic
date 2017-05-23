@@ -1,22 +1,25 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::AvailabilityZoneTimeline do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:vm) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#disabled?' do
-    subject { button[:title] }
     before { allow(record).to receive(:has_events?).and_return(has_events) }
-    before(:each) { button.calculate_properties }
+    before(:each) { subject.calculate_properties }
 
     context 'and record has events' do
       let(:has_events) { true }
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
 
     context 'and record has not events' do
       let(:has_events) { false }
-      it_behaves_like 'a disabled button',
-                      'No Timeline data has been collected for this Availability Zone'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       :error_message => 'No Timeline data has been collected for this Availability Zone'
     end
   end
 end

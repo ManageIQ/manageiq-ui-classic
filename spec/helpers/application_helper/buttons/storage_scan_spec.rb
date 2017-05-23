@@ -1,40 +1,40 @@
+require 'shared/helpers/application_helper/buttons/generic_feature_button_with_disabled'
+
 describe ApplicationHelper::Button::StorageScan do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:host) { FactoryGirl.create(:host, :state => 'on') }
-  let(:hosts) { [host] }
-  let(:authenticated_hosts) { hosts }
+  include_context 'ApplicationHelper::Button::GenericFeatureButton'
   let(:record) { FactoryGirl.create(:storage, :hosts => hosts) }
+  let(:hosts) { [host] }
+  let(:host) { FactoryGirl.create(:host, :state => 'on') }
   let(:feature) { :smartstate_analysis }
-  let(:props) { {:options => {:feature => feature}} }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, props) }
+  let(:authenticated_hosts) { hosts }
 
   before { allow(record).to receive(:active_hosts_with_authentication_status_ok).and_return(authenticated_hosts) }
 
-  it_behaves_like 'a generic feature button after initialization'
+  describe '#calculate_properties' do
+    context 'when feature is not supported' do
+      include_context 'ApplicationHelper::Button::GenericFeatureButtonWithDisabled#calculate_properties'
+    end
 
-  context 'when feature is not supported' do
-    it_behaves_like 'GenericFeatureButtonWithDisabled#calculate_properties'
-  end
-
-  context 'when feature is supported' do
-    describe '#calculate_properties' do
+    context 'when feature is supported' do
       before do
         allow(record).to receive(:supports?).and_return(true)
-        button.calculate_properties
+        subject.calculate_properties
       end
 
       context 'and there are active hosts' do
         context 'but none has valid credentials for the Datastore' do
           let(:authenticated_hosts) { [] }
-          it_behaves_like 'a disabled button', 'There are no running Hosts with valid credentials for this Datastore'
+          include_examples 'ApplicationHelper::Button::Basic disabled',
+                           :error_message => 'There are no running Hosts with valid credentials for this Datastore'
         end
         context 'with valid credentials for this Datastore' do
-          it_behaves_like 'an enabled button'
+          include_examples 'ApplicationHelper::Button::Basic enabled'
         end
       end
       context 'and there are no active hosts' do
         let(:host) { FactoryGirl.create(:host, :state => 'off') }
-        it_behaves_like 'a disabled button', 'SmartState Analysis cannot be performed when there is no active Host'
+        include_examples 'ApplicationHelper::Button::Basic disabled',
+                         :error_message => 'SmartState Analysis cannot be performed when there is no active Host'
       end
     end
   end

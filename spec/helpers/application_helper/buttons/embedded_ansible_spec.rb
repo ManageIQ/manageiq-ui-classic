@@ -1,11 +1,15 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::EmbeddedAnsible do
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { Hash.new }
+  let(:props) { Hash.new }
+
   before(:each) do
     MiqRegion.seed
     EvmSpecHelper.create_guid_miq_server_zone
   end
-
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  subject { described_class.new(view_context, {}, {}, {}) }
 
   context 'Embedded Ansible role is turned on and provider is present' do
     before do

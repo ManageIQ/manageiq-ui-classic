@@ -1,32 +1,29 @@
+require 'shared/helpers/application_helper/buttons/new'
+
 describe ApplicationHelper::Button::AbButtonNew do
-  let(:view_context) { setup_view_context_with_sandbox(:active_tree => tree) }
+  include_context 'ApplicationHelper::Button::New'
+  let(:sandbox) { {:active_tree => tree} }
   let(:tree) { :not_ab_tree }
-  let(:lastaction) { '' }
-  let(:display) { '' }
   let(:x_node) { 'xx-ab_12345' }
-  let(:button) { described_class.new(view_context, {}, {'lastaction' => lastaction, 'display' => display}, {}) }
-
-  before { allow(view_context).to receive(:x_node).and_return(x_node) }
-
-  it_behaves_like 'a _new or _discover button'
 
   describe '#visible?' do
-    subject { button.visible? }
-    context 'when x_active_tree != :ab_tree' do
-      it { expect(subject).to be_truthy }
+    include_context 'ApplicationHelper::Button::New#visible?'
+
+    context 'when x_active_tree is not :ab_tree' do
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
-    context 'when x_active_tree == :ab_tree' do
+    context 'when x_active_tree is :ab_tree' do
       let(:tree) { :ab_tree }
       context ' and x_node cannot be split into 2 parts' do
         let(:x_node) { 'xx-ab' }
-        it { expect(subject).to be_truthy }
+        include_examples 'ApplicationHelper::Button::Basic visible'
       end
       context 'and x_node does not start with xx-ab' do
         let(:x_node) { 'ab_11784' }
-        it { expect(subject).to be_truthy }
+        include_examples 'ApplicationHelper::Button::Basic visible'
       end
       context 'and x_node looks like xx-ab_12345' do
-        it { expect(subject).to be_falsey }
+        include_examples 'ApplicationHelper::Button::Basic hidden'
       end
     end
   end

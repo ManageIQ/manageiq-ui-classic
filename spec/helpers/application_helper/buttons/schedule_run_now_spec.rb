@@ -1,16 +1,19 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::ScheduleRunNow do
-  let(:view_context) { setup_view_context_with_sandbox(:active_tree => tree) }
-  let(:button) { described_class.new(view_context, {}, {}, {}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { {:active_tree => tree} }
+  let(:instance_data) { Hash.new }
+  let(:props) { Hash.new }
 
   describe '#visible?' do
-    subject { button.visible? }
-    context 'when active_tree != settings_tree' do
+    context 'when active_tree is not settings_tree' do
       let(:tree) { :not_settings_tree }
-      it { expect(subject).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
-    context 'when active_tree == settings_tree' do
+    context 'when active_tree is settings_tree' do
       let(:tree) { :settings_tree }
-      it { expect(subject).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
   end
 end

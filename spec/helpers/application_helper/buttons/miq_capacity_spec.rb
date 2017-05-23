@@ -1,16 +1,19 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::MiqCapacity do
-  let(:view_context) { setup_view_context_with_sandbox(:active_tab => tab) }
-  let(:button) { described_class.new(view_context, {}, {}, {}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { {:active_tab => tab} }
+  let(:instance_data) { Hash.new }
+  let(:props) { Hash.new }
 
   describe '#visible?' do
-    subject { button.visible? }
-    context 'when active_tab == report' do
+    context 'when active_tab is report' do
       let(:tab) { 'report' }
-      it { is_expected.to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
-    context 'when active_tab != report' do
+    context 'when active_tab is not report' do
       let(:tab) { 'not_report' }
-      it { is_expected.to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
   end
 end

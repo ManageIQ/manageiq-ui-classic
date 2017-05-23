@@ -1,15 +1,14 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::ViewGHT do
-  let(:view_context) { setup_view_context_with_sandbox(:active_tree => tree) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { {:active_tree => tree} }
+  let(:instance_data) { {'ght_type' => ght_type, 'report' => report, 'zgraph' => zgraph} }
+  let(:props) { Hash.new }
   let(:ght_type) { 'tabular' }
   let(:report) { FactoryGirl.create(:miq_report) }
   let(:zgraph) { nil }
   let(:graph) { nil }
-  subject do
-    described_class.new(view_context, {},
-                        { 'ght_type' => ght_type,
-                          'report'   => report,
-                          'zgraph'   => zgraph }, {})
-  end
 
   before { allow(report).to receive(:graph).and_return(graph) }
 
@@ -17,26 +16,26 @@ describe ApplicationHelper::Button::ViewGHT do
     %w(reports_tree savedreports_tree).each do |tree|
       context "when x_active_tree == #{tree}" do
         let(:tree) { tree.to_sym }
-        context 'when ght_type != tabular' do
+        context 'when ght_type is not tabular' do
           let(:ght_type) { 'hybrid' }
-          it { expect(subject.visible?).to be_truthy }
+          include_examples 'ApplicationHelper::Button::Basic visible'
         end
         context 'when report has graph' do
           let(:graph) { true }
-          it { expect(subject.visible?).to be_truthy }
+          include_examples 'ApplicationHelper::Button::Basic visible'
         end
         context 'when zgraph is available' do
           let(:zgraph) { true }
-          it { expect(subject.visible?).to be_truthy }
+          include_examples 'ApplicationHelper::Button::Basic visible'
         end
-        context 'when ght_type == tabular && report does not have graph && not a zgraph' do
-          it { expect(subject.visible?).to be_falsey }
+        context 'when ght_type is tabular && report does not have graph && not a zgraph' do
+          include_examples 'ApplicationHelper::Button::Basic hidden'
         end
       end
     end
     context 'when !%w(reports_tree savedreports_tree).include?(x_active_tree)' do
       let(:tree) { :not_any_of_reports_trees }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
   end
 end

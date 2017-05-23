@@ -1,22 +1,18 @@
+require 'shared/helpers/application_helper/buttons/new'
+
 describe ApplicationHelper::Button::WidgetNew do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:lastaction) { '' }
-  let(:display) { '' }
+  include_context 'ApplicationHelper::Button::New'
   let(:x_node) { 'not_root' }
-  let(:button) { described_class.new(view_context, {}, {'lastaction' => lastaction, 'display' => display}, {}) }
-
-  before { allow(view_context).to receive(:x_node).and_return(x_node) }
-
-  it_behaves_like 'a _new or _discover button'
 
   describe '#visible?' do
-    subject { button.visible? }
-    context 'when x_node == root' do
+    include_context 'ApplicationHelper::Button::New#visible?'
+
+    context 'when x_node is root' do
       let(:x_node) { 'root' }
-      it { expect(subject).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
-    context 'when x_node != root' do
-      it { expect(subject).to be_truthy }
+    context 'when x_node is not root' do
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
   end
 end

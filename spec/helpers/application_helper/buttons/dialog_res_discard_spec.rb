@@ -1,22 +1,26 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::DialogResDiscard do
-  let(:view_context) { setup_view_context_with_sandbox(:edit_typ => edit_typ) }
-  subject { described_class.new(view_context, {}, {'edit' => edit}, {}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { {:edit_typ => edit_typ} }
+  let(:instance_data) { {'edit' => edit} }
+  let(:props) { Hash.new }
 
   context 'when edit' do
     let(:edit) { true }
-    context 'and @sb[:edit_typ] == add' do
+    context 'and @sb[:edit_typ] is add' do
       let(:edit_typ) { 'add' }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
-    context 'and @sb[:edit_typ] != add' do
+    context 'and @sb[:edit_typ] is not add' do
       let(:edit_typ) { 'not_add' }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
   end
 
-  context 'when edit == nil' do
+  context 'when edit is nil' do
     let(:edit) { nil }
     let(:edit_typ) { 'does not matter' }
-    it { expect(subject.visible?).to be_falsey }
+    include_examples 'ApplicationHelper::Button::Basic hidden'
   end
 end

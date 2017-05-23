@@ -1,21 +1,25 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::DialogAction do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  subject { described_class.new(view_context, {}, {'edit' => edit}, {}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'edit' => edit} }
+  let(:props) { Hash.new }
 
   context 'when edit' do
     let(:edit) { {:current => current} }
     context 'and edit[:current]' do
       let(:current) { 'something' }
-      it { expect(subject.visible?).to be_falsey }
+      include_examples 'ApplicationHelper::Button::Basic hidden'
     end
-    context 'and edit[:current] == nil' do
+    context 'and edit[:current] is nil' do
       let(:current) { nil }
-      it { expect(subject.visible?).to be_truthy }
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
   end
 
-  context 'when edit == nil' do
+  context 'when edit is nil' do
     let(:edit) { nil }
-    it { expect(subject.visible?).to be_truthy }
+    include_examples 'ApplicationHelper::Button::Basic visible'
   end
 end

@@ -1,9 +1,13 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::MiqAeInstanceCopy do
-  let(:session) { Hash.new }
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { {:child_id => child_id} }
   let(:record) { FactoryGirl.create(:miq_ae_class, :of_domain, :domain => domain) }
   let(:domain) { FactoryGirl.create(:miq_ae_domain_disabled) }
-  subject { described_class.new(view_context, {}, {'record' => record}, {:child_id => child_id}) }
+  let(:session) { Hash.new }
 
   before { login_as FactoryGirl.create(:user, :with_miq_edit_features) }
 
@@ -13,10 +17,10 @@ describe ApplicationHelper::Button::MiqAeInstanceCopy do
         let(:child_id) { 'miq_ae_instance_copy' }
         context 'with record as domain' do
           let(:record) { domain }
-          it { expect(subject.visible?).to be_truthy }
+          include_examples 'ApplicationHelper::Button::Basic visible'
         end
         context 'with record as class of locked domain' do
-          it { expect(subject.visible?).to be_truthy }
+          include_examples 'ApplicationHelper::Button::Basic visible'
         end
       end
       context 'and button is miq_ae_method_copy with method record' do
@@ -26,7 +30,7 @@ describe ApplicationHelper::Button::MiqAeInstanceCopy do
           FactoryGirl.create(:miq_ae_method, :scope => 'class', :language => 'ruby',
                                           :location => 'builtin', :ae_class => klass)
         end
-        it { expect(subject.visible?).to be_truthy }
+        include_examples 'ApplicationHelper::Button::Basic visible'
       end
     end
   end
@@ -40,7 +44,7 @@ describe ApplicationHelper::Button::MiqAeInstanceCopy do
       end
       context 'and button is miq_ae_method_copy' do
         let(:child_id) { 'miq_ae_method_copy' }
-        it { expect(subject.visible?).to be_truthy }
+        include_examples 'ApplicationHelper::Button::Basic visible'
       end
     end
   end

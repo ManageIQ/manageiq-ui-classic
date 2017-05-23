@@ -1,6 +1,18 @@
-describe ApplicationHelper::Button::SmartStateScan do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:button) { described_class.new(view_context, {}, {}, {}) }
+require 'shared/helpers/application_helper/buttons/scan'
 
-  it_behaves_like 'a smart state scan button'
+describe ApplicationHelper::Button::SmartStateScan do
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { Hash.new }
+  let(:props) { Hash.new }
+
+  describe '#calculate_properties' do
+    before do
+      MiqServer.seed
+      setup_server
+      subject.calculate_properties
+    end
+
+    include_context 'ApplicationHelper::Button::Scan#calculate_properties'
+  end
 end

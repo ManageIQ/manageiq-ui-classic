@@ -1,17 +1,22 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::RbacUserCopy do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
 
   describe '#calculate_properties' do
-    before { button.calculate_properties }
+    before { subject.calculate_properties }
 
     context 'when user is an administrator' do
       let(:record) { FactoryGirl.create(:user_admin) }
-      it_behaves_like 'a disabled button', 'Super Administrator can not be copied'
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       :error_message => 'Super Administrator can not be copied'
     end
     context 'when user is not an administrator' do
       let(:record) { FactoryGirl.create(:user) }
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
   end
 end

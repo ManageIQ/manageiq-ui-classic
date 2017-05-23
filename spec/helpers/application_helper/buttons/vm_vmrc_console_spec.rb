@@ -1,23 +1,29 @@
+require 'shared/helpers/application_helper/buttons/vm_console'
+
 describe ApplicationHelper::Button::VmVmrcConsole do
-  let(:view_context) { setup_view_context_with_sandbox({}) }
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:vm_vmware) }
-  let(:button) { described_class.new(view_context, {}, {'record' => record}, {}) }
 
   describe '#visible?' do
-    it_behaves_like 'vm_console_visible?', 'VMRC'
+    include_context 'ApplicationHelper::Button::VmConsole#visible?',
+                    :console_type       => 'VMRC',
+                    :support_of_records => {:vm_openstack => false, :vm_redhat => false, :vm_vmware => true}
   end
 
   describe '#calculate_properties' do
     before do
       remote_console_validation
-      button.calculate_properties
+      subject.calculate_properties
     end
 
     context 'and remote control is supported' do
       let(:remote_console_validation) do
         allow(record).to receive(:validate_remote_console_vmrc_support).and_return(true)
       end
-      it_behaves_like 'an enabled button'
+      include_examples 'ApplicationHelper::Button::Basic enabled'
     end
     context 'and remote control is not supported' do
       let(:err_msg) { 'Remote console is not supported' }
@@ -25,7 +31,8 @@ describe ApplicationHelper::Button::VmVmrcConsole do
         allow(record).to receive(:validate_remote_console_vmrc_support)
           .and_raise(MiqException::RemoteConsoleNotSupportedError, err_msg)
       end
-      it_behaves_like 'a disabled button', "VM VMRC Console error: Remote console is not supported"
+      include_examples 'ApplicationHelper::Button::Basic disabled',
+                       :error_message => 'VM VMRC Console error: Remote console is not supported'
     end
   end
 end

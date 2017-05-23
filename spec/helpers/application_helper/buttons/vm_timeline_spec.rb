@@ -1,6 +1,13 @@
-describe ApplicationHelper::Button::VmTimeline do
-  let(:record) { FactoryGirl.create(:vm) }
-  let(:button) { described_class.new(setup_view_context_with_sandbox({}), {}, {'record' => record}, {}) }
+require 'shared/helpers/application_helper/buttons/timeline'
 
-  it_behaves_like 'a timeline button', :entity => 'VM'
+describe ApplicationHelper::Button::VmTimeline do
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
+  let(:record) { FactoryGirl.create(:vm) }
+
+  describe '#calculate_properties' do
+    include_context 'ApplicationHelper::Button::Timeline#calculate_properties', :entity => 'VM'
+  end
 end

@@ -1,14 +1,17 @@
+require 'shared/helpers/application_helper/buttons/basic'
+
 describe ApplicationHelper::Button::HostRegisterNodes do
+  include_context 'ApplicationHelper::Button::Basic'
+  let(:sandbox) { Hash.new }
+  let(:instance_data) { {'record' => record} }
+  let(:props) { Hash.new }
   let(:record) { FactoryGirl.create(:ems_openstack_infra) }
-  let(:button) { described_class.new(setup_view_context_with_sandbox({}), {}, {'record' => record}, {}) }
 
   describe '#visible?' do
-    subject { button.visible? }
-
-    context 'when record.class == ManageIQ::Providers::Openstack::InfraManager' do
-      it { expect(subject).to be_truthy }
+    context 'when record.class is ManageIQ::Providers::Openstack::InfraManager' do
+      include_examples 'ApplicationHelper::Button::Basic visible'
     end
-    context 'when recor.class != ManageIQ::Providers::Openstack::InfraManager' do
+    context 'when recor.class is not ManageIQ::Providers::Openstack::InfraManager' do
       let(:record) { FactoryGirl.create(:host_openstack_infra) }
     end
   end
