@@ -19,53 +19,6 @@ class InfraNetworkingController < ApplicationController
     redirect_to :action => 'explorer', :flash_msg => @flash_array ? @flash_array[0][:message] : nil
   end
 
-  def show(id = nil)
-    @explorer = true
-    @display = params[:display] || "main" unless pagination_or_gtl_request?
-    @record = @switch = find_record(Switch, id || params[:id])
-    return if record_no_longer_exists?(@switch)
-
-    if !@explorer && @display == "main"
-      tree_node_id = TreeBuilder.build_node_id(@record)
-      session[:exp_parms] = {:display => @display, :refresh => params[:refresh], :id => tree_node_id}
-
-      # redirect user back to where they came from if they dont have access to any of vm explorers
-      # or redirect them to the one they have access to
-      redirect_controller = role_allows?(:feature => "infra_networking") ? "infra_networking" : nil
-
-      if redirect_controller
-        action = "explorer"
-      else
-        url = request.env['HTTP_REFERER'].split('/')
-        add_flash(_("User '%{username}' is not authorized to access '%{controller_name}'") %
-                    {:username => current_userid, :controller_name => ui_lookup(:table => controller_name)}, :warning)
-        session[:flash_msgs] = @flash_array.dup
-        redirect_controller  = url[3]
-        action               = url[4]
-      end
-
-      redirect_to :controller => redirect_controller,
-                  :action     => action
-      return
-    end
-
-    @gtl_url = "/show"
-
-    case @display
-    when "hosts"
-      @view, @pages = get_view(Host, :parent => @record) # Get the records (into a view) and the paginator
-      drop_breadcrumb(:name => _("%{name} (All Registered Hosts)") % {:name => @record.name},
-                      :url  => "/infra_networking/x_show/#{@record.id}?display=hosts")
-      @showtype = "hosts"
-    when "main"
-      get_tagdata(@configuration_job)
-      drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @record..name},
-                      :url  => "/infra_networking/show/#{@record.id}")
-      @showtype = "main"
-    end
-    @lastaction = "show"
-  end
-
   def tagging_explorer_controller?
     @explorer
   end
