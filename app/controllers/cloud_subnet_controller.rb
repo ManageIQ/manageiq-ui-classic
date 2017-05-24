@@ -68,7 +68,7 @@ class CloudSubnetController < ApplicationController
     network_manager = ExtManagementSystem.find(params[:id])
     tenants = []
     CloudTenant.where(:ems_id => network_manager.parent_ems_id).find_each do |tenant|
-      tenants << { 'name' => tenant.name, 'id' => tenant.id }
+      tenants << { 'name' => tenant.name, 'id' => tenant.id.to_s }
     end
     render :json => {
       :available_tenants => tenants
