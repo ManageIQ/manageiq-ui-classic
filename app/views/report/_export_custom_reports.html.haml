@@ -49,8 +49,8 @@
           $('#choices_chosen').on("change",
             function() {
               if ($(this).val()) {
-                $('#export_button').prop('disabled', false);
+                $('#export_button').removeClass('disabled');
               } else {
-                $('#export_button').prop('disabled', true);
+                $('#export_button').addClass('disabled');
               }
             });

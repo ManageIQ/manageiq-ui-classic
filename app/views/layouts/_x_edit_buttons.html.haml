@@ -172,12 +172,13 @@
         :onclick => "miqAjaxButton('#{url_for_only_path(:action => "x_history", :item   => 0)}');")
     - else
       -# export_button
-      = button_tag(_("Export"),
-        :class    => "btn btn-primary",
+      = link_to(_("Export"),
+        {:action => action_url},
+        :class    => "btn btn-primary disabled",
         :type     => "application/txt",
-        :id       => "export_button",
-        :alt      => _("Download Report to YAML"),
-        :disabled => true)
+        :alt      => t = _("Download Report to YAML"),
+        :title    => t,
+        :id       => "export_button")
 
 - elsif ["compare"].include?(@sb[:action])
   #buttons
