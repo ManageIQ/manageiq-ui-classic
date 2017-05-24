@@ -1,6 +1,4 @@
 # override defaults which use Rails.root
-require 'webpacker'
-
 class Webpacker::Configuration
   class << self
     def config_path
@@ -32,6 +30,3 @@ class Webpacker::Env < Webpacker::FileLoader
     end
   end
 end
-
-# needed when run from manageiq/
-Webpacker.bootstrap if !Webpacker::Env.instance && Rails.root

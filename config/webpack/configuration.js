@@ -18,7 +18,7 @@ const publicUrl = ifHasCDN ? `${env.ASSET_HOST}/${paths.entry}/` : `/${paths.ent
 const publicPath = env.NODE_ENV !== 'production' ? devServerUrl : publicUrl
 
 // override paths.output to use Rails.root
-const outputPrefix = execSync('rake webpacker:output', { encoding: 'utf8' }).trim();
+const outputPrefix = execSync('rake webpack:output', { encoding: 'utf8' }).trim();
 paths.output = join(outputPrefix, paths.output)
 
 module.exports = {
