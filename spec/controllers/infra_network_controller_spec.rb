@@ -36,18 +36,6 @@ describe InfraNetworkingController do
         expect(response.body).to include("isExplorer: 'true' === 'true' ? true : false")
         expect(response.body).to include("showUrl: '/infra_networking/x_show/'")
       end
-
-      it 'can render the second page of switches' do
-        7.times do |i|
-          FactoryGirl.create(:switch, :name => 'test_switch' % i, :shared => true)
-        end
-        session[:sb] = {:active_accord => :infra_networking_accord}
-        seed_session_trees('switch', :infra_networking_tree, 'root')
-        allow(controller).to receive(:current_page).and_return(2)
-        get :explorer, :params => {:page => '2'}
-        expect(response.status).to eq(200)
-        expect(response.body).to include("<li>\n<span>\n6-7 of 7\n<input name='limitstart' type='hidden' value='0'>\n</span>\n</li>")
-      end
     end
 
     context "#tree_select" do
