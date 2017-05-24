@@ -79,7 +79,7 @@ class InfraTopologyService < TopologyService
   end
 
   def build_kinds
-    kinds = [:InfraManager, :EmsCluster, :Host, :Vm]
+    kinds = [:InfraManager, :EmsCluster, :Host, :Vm, :Tag]
     build_legend_kinds(kinds)
   end
 end
