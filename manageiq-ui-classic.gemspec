@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
   s.add_dependency "sass-rails"
   s.add_dependency "high_voltage", "~> 3.0.0"
   s.add_dependency "novnc-rails",  "~>0.2"
+  s.add_dependency "uglifier",     "~>3.0.0"
 
   s.add_development_dependency "codeclimate-test-reporter", "~> 1.0.0"
   s.add_development_dependency "guard-rspec", '~> 4.7.3'
