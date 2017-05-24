@@ -105,11 +105,27 @@ class MiqRequestController < ApplicationController
     request_settings_for_edit_or_copy(provision_request)
   end
 
+  def page_display_options
+    resource_type = get_request_tab_type
+    time_period = 7
+    if is_approver && (!@sb[:prov_options] || (@sb[:prov_options] && !@sb[:prov_options].key?(resource_type.to_sym)))
+      gv_options = {:filter => prov_condition(:resource_type => resource_type, :time_period => time_period)}
+    elsif @sb[:prov_options] && @sb[:prov_options].key?(resource_type.to_sym) # added this here so grid can be drawn when page redraws, when there were no records on initial load.
+      prov_set_default_options if @sb[:def_prov_options][:applied_states].blank? && !params[:button] == "apply" # no filter statuses selected, setting to default
+      gv_options = {:filter => prov_condition(@sb[:def_prov_options][resource_type.to_sym])}
+    else
+      gv_options = {:filter => prov_condition(:resource_type => resource_type,
+                                              :time_period   => time_period,
+                                              :requester_id  => current_user.try(:id))}
+    end
+    gv_options
+  end
+
   # Show the main Requests list view
   def show_list
     @breadcrumbs = []
     bc_name = _("Requests")
-    @request_tab = params[:typ] if params[:typ]                       # set this to be used to identify which Requests subtab was clicked
+    @request_tab = params[:typ] if params[:typ] # set this to be used to identify which Requests subtab was clicked
     @layout = layout_from_tab_name(@request_tab)
 
     drop_breadcrumb(:name => bc_name, :url => "/miq_request/show_list?typ=#{@request_tab}")
@@ -127,21 +143,9 @@ class MiqRequestController < ApplicationController
     @sortdir = session[:request_sortdir].nil? ? "ASC" : session[:request_sortdir]
     @listicon = "miq_request"
     @no_checkboxes = true   # Don't show checkboxes, read_only
-    #   @showlinks = true
-    time_period = 7
     resource_type = get_request_tab_type        # storing resource type in local variable so dont have to call method everytime
     kls = @layout == "miq_request_ae" ? AutomationRequest : MiqRequest
-    gv_options = nil
-    if is_approver && (!@sb[:prov_options] || (@sb[:prov_options] && !@sb[:prov_options].key?(resource_type.to_sym)))
-      gv_options = {:filter => prov_condition(:resource_type => resource_type, :time_period => time_period)}
-    elsif @sb[:prov_options] && @sb[:prov_options].key?(resource_type.to_sym) # added this here so grid can be drawn when page redraws, when there were no records on initial load.
-      prov_set_default_options if @sb[:def_prov_options][:applied_states].blank? && !params[:button] == "apply" # no filter statuses selected, setting to default
-      gv_options = {:filter => prov_condition(@sb[:def_prov_options][resource_type.to_sym])}
-    else
-      gv_options = {:filter => prov_condition(:resource_type => resource_type,
-                                              :time_period   => time_period,
-                                              :requester_id  => current_user.try(:id))}
-    end
+    gv_options = page_display_options
     @view, @pages = get_view(kls, gv_options)
     @sb[:prov_options] ||= {}
     @sb[:def_prov_options] ||= {}
@@ -154,6 +158,15 @@ class MiqRequestController < ApplicationController
     session[:request_sortdir] = @sortdir
 
     replace_gtl_main_div if pagination_request?
+    {:view => @view, :pages => @pages}
+  end
+
+  def page_params
+    @request_tab = params[:typ] if params[:typ] # set this to be used to identify which Requests subtab was clicked
+    @layout = layout_from_tab_name(@request_tab)
+    kls = @layout == "miq_request_ae" ? AutomationRequest : MiqRequest
+    gv_options = page_display_options
+    @view, @pages = get_view(kls, gv_options)
     {:view => @view, :pages => @pages}
   end
 

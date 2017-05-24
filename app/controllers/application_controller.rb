@@ -287,7 +287,7 @@ class ApplicationController < ActionController::Base
       options.merge!(node_info) if node_info.kind_of?(Hash)
     end
     if params[:model] && %w(miq_requests).include?(params[:model])
-      options = show_list
+      options = page_params
     end
     if params[:model] && %w(miq_tasks).include?(params[:model])
       options = jobs_info
