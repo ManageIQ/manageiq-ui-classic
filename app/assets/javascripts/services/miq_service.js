@@ -1,6 +1,6 @@
 /* global miqAjaxButton miqBuildCalendar miqButtons miqJqueryRequest miqRESTAjaxButton miqSparkleOff miqSparkleOn add_flash */
 
-ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', function($timeout, $document, $q) {
+ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API', function($timeout, $document, $q, API) {
   var miqService = this;
 
   this.storedPasswordPlaceholder = "●●●●●●●●";
@@ -123,5 +123,24 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', funct
     }
 
     return $q.reject(e);
+  };
+
+  this.getProviderTenants = function(callback) {
+    return function(id) {
+      if (! id) {
+        callback([]);
+        return;
+      }
+      miqService.sparkleOn();
+
+      API.get("/api/providers/" + id + "/cloud_tenants?expand=resources&attributes=id,name")
+        .then(getCloudTenantsByEms)
+        .catch(miqService.handleFailure);
+    };
+
+    function getCloudTenantsByEms(data) {
+      callback(data);
+      miqService.sparkleOff();
+    }
   };
 }]);

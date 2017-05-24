@@ -51,6 +51,10 @@ ManageIQ.angular.app.controller('floatingIpFormController', ['$http', '$scope', 
     $http.get('/floating_ip/networks_by_ems/' + id)
       .then(getNetworkByEmsFormData)
       .catch(miqService.handleFailure);
+
+    miqService.getProviderTenants(function(data) {
+      vm.available_tenants = data.resources;
+    })(id);
   };
 
   function getFloatingIpFormData(response) {
