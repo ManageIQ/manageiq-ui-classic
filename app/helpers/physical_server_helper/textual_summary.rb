@@ -13,13 +13,6 @@ module PhysicalServerHelper::TextualSummary
     )
   end
 
-  def textual_group_power_management
-    TextualGroup.new(
-      _("Power Management"),
-      %i(power_state)
-    )
-  end
-
   def textual_group_compliance
   end
 
@@ -31,6 +24,21 @@ module PhysicalServerHelper::TextualSummary
     TextualGroup.new(
       _("Assets"),
       %i(support_contact description location room_id rack_name lowest_rack_unit)
+    )
+  end
+
+  def textual_group_power_management
+    TextualGroup.new(
+      _("Power Management"),
+      %i(power_state)
+    )
+  end
+
+  def textual_group_firmware_details
+    TextualCustom.new(
+      _("Firmware"),
+      "textual_firmware_table",
+      %i(fw_details)
     )
   end
 
@@ -124,5 +132,14 @@ module PhysicalServerHelper::TextualSummary
 
   def textual_health_state
     {:label => _("Health State"), :value => @record.health_state}
+  end
+
+  def textual_fw_details
+    fw_details = []
+    @record.hardware.firmwares.each do |fw|
+      fw_details.push(:label => fw.name, :value => fw.version)
+    end
+
+    {:value => fw_details}
   end
 end
