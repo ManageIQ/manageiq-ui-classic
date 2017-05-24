@@ -54,4 +54,8 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['$http', '$scope
     $scope.modelCopy = angular.copy( $scope.securityGroupModel );
     miqService.sparkleOff();
   }
+
+  $scope.filterNetworkManagerChanged = miqService.getProviderTenants(function(data) {
+    $scope.available_tenants = data.resources;
+  });
 }]);

@@ -66,6 +66,10 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
     $http.get('/network_router/network_router_networks_by_ems/' + id)
       .then(getNetworkRouterFormByEmsData)
       .catch(miqService.handleFailure);
+
+    miqService.getProviderTenants(function(data) {
+      $scope.available_tenants = data.resources;
+    })(id);
   };
 
   $scope.filterCloudNetworkChanged = function(id) {

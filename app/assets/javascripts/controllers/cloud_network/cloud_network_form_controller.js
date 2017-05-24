@@ -63,4 +63,8 @@ ManageIQ.angular.app.controller('cloudNetworkFormController', ['$http', '$scope'
     $scope.angularForm.$setPristine(true);
     miqService.miqFlash("warn", "All changes have been reset");
   };
+
+  $scope.filterNetworkManagerChanged = miqService.getProviderTenants(function(data) {
+    $scope.available_tenants = data.resources;
+  });
 }]);
