@@ -20,8 +20,10 @@ else
   require 'uglifier'
 end
 
+require 'high_voltage'
 require 'lodash-rails'
 require 'jquery-hotkeys-rails'
+require "novnc-rails"
 
 module ManageIQ
   module UI
