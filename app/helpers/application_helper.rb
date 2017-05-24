@@ -192,7 +192,9 @@ module ApplicationHelper
       PxeImageType
       IsoDatastore
       MiqTask
+      MiqRequest
       PxeServer
+      Switch
     ).include? type
   end
 
