@@ -454,126 +454,141 @@ module ApplicationController::Buttons
     @edit = session[:edit]
     @custom_button = @edit[:custom_button]
     @changed = (@edit[:new] != @edit[:current])
-    if params[:button] == "cancel"
-      if typ == "update"
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "CustomButton"), :name => @edit[:current][:name]})
-      else
-        add_flash(_("Add of new %{model_name} was cancelled by the user") %
-          {:model_name => ui_lookup(:model => "CustomButton")})
-      end
-      @edit = session[:edit] = nil  # clean out the saved info
-      ab_get_node_info(x_node) if x_active_tree == :ab_tree
-      replace_right_cell(:nodetype => x_node)
-    elsif params[:button] == "add"
-      assert_privileges("ab_button_new")
-      @resolve = session[:resolve]
-      name = @edit[:new][:instance_name].blank? ? @edit[:new][:other_name] : @edit[:new][:instance_name]
-      if !button_valid?
-        @breadcrumbs = []
-        drop_breadcrumb(:name => _("Edit of Button"), :url => "/miq_ae_customization/button_edit")
-        @lastaction = "automate_button"
-        @layout = "miq_ae_automate_button"
-        javascript_flash
-        return
-      else
-        attrs = {}
-        @edit[:new][:attrs].each do |a|
-          attrs[a[0].to_sym] = a[1] unless a[0].blank?
-        end
-        @edit[:uri] = MiqAeEngine.create_automation_object(name, attrs, :fqclass => @edit[:new][:starting_object], :message => @edit[:new][:object_message])
-        @edit[:new][:description] = @edit[:new][:description].strip == "" ? nil : @edit[:new][:description] unless @edit[:new][:description].nil?
-        button_set_record_vars(@custom_button)
-        nodes = x_node.split('_')
-        if nodes[0].split('-')[1] != "ub" && nodes.length >= 3
-          # if group is not unassigned group, add uri as a last member  of the group
-          if x_active_tree == :ab_tree || nodes.length > 3
-            # find custombutton set in ab_tree or when adding button under a group
-            group_id = x_active_tree == :ab_tree ? nodes[2].split('-').last : nodes[3].split('-').last
-            @aset = CustomButtonSet.find_by_id(from_cid(group_id))
-            mems = @aset.members
-          end
-        end
 
-        if @custom_button.save
-          add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => "CustomButton"), :name => @edit[:new][:description]})
-          @edit = session[:edit] = nil  # clean out the saved info
-          au = CustomButton.find_by_id(@custom_button.id)
-          if @aset && nodes[0].split('-')[1] != "ub" && nodes.length >= 3
-            # if group is not unassigned group, add uri as a last member  of the group
-            mems.push(au)
-            @aset.replace_children(mems)
-            @aset.set_data[:button_order] ||= []
-            @aset.set_data[:button_order].push(au.id)
-            @aset.save!
-          end
-          if x_active_tree == :sandt_tree
-            # push new button at the end of button_order array
-            st = ServiceTemplate.find_by_id(@sb[:applies_to_id])
-            st.custom_buttons.push(au) if nodes.length >= 3 && nodes[2].split('-').first != "cbg"
-            st.options[:button_order] ||= []
-            st.options[:button_order].push("cb-#{au.id}")
-            st.save
-          end
+    case params[:button]
+    when 'cancel' then ab_button_cancel(typ)
+    when 'add'    then ab_button_add
+    when 'save'   then ab_button_save
+    when 'reset'  then ab_button_reset
+    end
+  end
 
-          ab_get_node_info(x_node) if x_active_tree == :ab_tree
-          replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
-        else
-          @custom_button.errors.each do |field, msg|
-            add_flash(_("Error during 'add': %{error_message}") %
-              {:error_message => @custom_button.errors.full_message(field, msg)}, :error)
-          end
-          @lastaction = "automate_button"
-          @layout = "miq_ae_automate_button"
-          javascript_flash
-        end
-      end
-    elsif params[:button] == "save"
-      assert_privileges("ab_button_edit")
-      @resolve = session[:resolve]
-      name = @edit[:new][:instance_name].blank? ? @edit[:new][:other_name] : @edit[:new][:instance_name]
-      attrs = {}
-      @edit[:new][:attrs].each do |a|
-        attrs[a[0].to_sym] = a[1] unless a[0].blank?
-      end
-      @edit[:uri] = MiqAeEngine.create_automation_object(name, attrs, :fqclass => @edit[:new][:starting_object], :message => @edit[:new][:object_message])
-      @edit[:new][:description] = @edit[:new][:description].strip == "" ? nil : @edit[:new][:description] unless @edit[:new][:description].nil?
-      button_set_record_vars(@custom_button)
-      if !button_valid?
-        @breadcrumbs = []
-        drop_breadcrumb(:name => _("Edit of Button"), :url => "/miq_ae_customization/button_edit")
-        @lastaction = "automate_button"
-        @layout = "miq_ae_automate_button"
-        javascript_flash
-        return
-      else
-        if @custom_button.save
-          add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "CustomButton"), :name => @edit[:new][:description]})
-          @edit = session[:edit] = nil  # clean out the saved info
-          ab_get_node_info(x_node) if x_active_tree == :ab_tree
-          replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
-        else
-          @custom_button.errors.each do |field, msg|
-            add_flash(_("Error during 'edit': %{field_name} %{error_message}") %
-              {:field_name => field.to_s.capitalize, :error_message => msg}, :error)
-          end
-          @breadcrumbs = []
-          drop_breadcrumb(:name => "Edit of Button", :url => "/miq_ae_customization/button_edit")
-          @lastaction = "automate_button"
-          @layout = "miq_ae_automate_button"
-          javascript_flash
-        end
-      end
-    elsif params[:button] == "reset"
-      button_set_form_vars
-      @changed = session[:changed] = false
-      add_flash(_("All changes have been reset"), :warning)
-      @in_a_form = true
+  def ab_button_cancel(typ)
+    if typ == "update"
+      add_flash(_("Edit of Custom Button \"%{name}\" was cancelled by the user") % {:name => @edit[:current][:name]})
+    else
+      add_flash(_("Add of new Custom Button was cancelled by the user"))
+    end
+    @edit = session[:edit] = nil
+    ab_get_node_info(x_node) if x_active_tree == :ab_tree
+    replace_right_cell(:nodetype => x_node)
+  end
+
+  def ab_button_add
+    assert_privileges("ab_button_new")
+    @resolve = session[:resolve]
+    name = @edit[:new][:instance_name].blank? ? @edit[:new][:other_name] : @edit[:new][:instance_name]
+
+    unless button_valid?
       @breadcrumbs = []
       drop_breadcrumb(:name => _("Edit of Button"), :url => "/miq_ae_customization/button_edit")
       @lastaction = "automate_button"
       @layout = "miq_ae_automate_button"
-      replace_right_cell(:nodetype => "button_edit")
+      javascript_flash
+      return
     end
+
+    attrs = {}
+    @edit[:new][:attrs].each do |a|
+      attrs[a[0].to_sym] = a[1] unless a[0].blank?
+    end
+    @edit[:uri] = MiqAeEngine.create_automation_object(name, attrs, :fqclass => @edit[:new][:starting_object], :message => @edit[:new][:object_message])
+    @edit[:new][:description] = @edit[:new][:description].strip == "" ? nil : @edit[:new][:description] unless @edit[:new][:description].nil?
+    button_set_record_vars(@custom_button)
+    nodes = x_node.split('_')
+    if nodes[0].split('-')[1] != "ub" && nodes.length >= 3
+      # if group is not unassigned group, add uri as a last member  of the group
+      if x_active_tree == :ab_tree || nodes.length > 3
+        # find custombutton set in ab_tree or when adding button under a group
+        group_id = x_active_tree == :ab_tree ? nodes[2].split('-').last : nodes[3].split('-').last
+        @aset = CustomButtonSet.find(from_cid(group_id))
+        mems = @aset.members
+      end
+    end
+
+    if @custom_button.save
+      add_flash(_("Custom Button \"%{name}\" was added") % {:name => @edit[:new][:description]})
+      @edit = session[:edit] = nil
+      au = CustomButton.find(@custom_button.id)
+      if @aset && nodes[0].split('-')[1] != "ub" && nodes.length >= 3
+        # if group is not unassigned group, add uri as a last member  of the group
+        mems.push(au)
+        @aset.replace_children(mems)
+        @aset.set_data[:button_order] ||= []
+        @aset.set_data[:button_order].push(au.id)
+        @aset.save!
+      end
+      if x_active_tree == :sandt_tree
+        # push new button at the end of button_order array
+        st = ServiceTemplate.find(@sb[:applies_to_id])
+        st.custom_buttons.push(au) if nodes.length >= 3 && nodes[2].split('-').first != "cbg"
+        st.options[:button_order] ||= []
+        st.options[:button_order].push("cb-#{au.id}")
+        st.save
+      end
+
+      ab_get_node_info(x_node) if x_active_tree == :ab_tree
+      replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
+    else
+      @custom_button.errors.each do |field, msg|
+        add_flash(_("Error during 'add': %{error_message}") %
+          {:error_message => @custom_button.errors.full_message(field, msg)}, :error)
+      end
+      @lastaction = "automate_button"
+      @layout = "miq_ae_automate_button"
+      javascript_flash
+    end
+  end
+
+  def ab_button_save
+    assert_privileges("ab_button_edit")
+    @resolve = session[:resolve]
+    attrs = {}
+    @edit[:new][:attrs].each do |a|
+      attrs[a[0].to_sym] = a[1] unless a[0].blank?
+    end
+    @edit[:uri] = MiqAeEngine.create_automation_object(ab_button_name, attrs, :fqclass => @edit[:new][:starting_object], :message => @edit[:new][:object_message])
+    @edit[:new][:description] = @edit[:new][:description].strip == "" ? nil : @edit[:new][:description] unless @edit[:new][:description].nil?
+    button_set_record_vars(@custom_button)
+
+    unless button_valid?
+      @breadcrumbs = []
+      drop_breadcrumb(:name => _("Edit of Button"), :url => "/miq_ae_customization/button_edit")
+      @lastaction = "automate_button"
+      @layout = "miq_ae_automate_button"
+      javascript_flash
+      return
+    end
+
+    if @custom_button.save
+      add_flash(_("Custom Button \"%{name}\" was saved") % {:name => @edit[:new][:description]})
+      @edit = session[:edit] = nil
+      ab_get_node_info(x_node) if x_active_tree == :ab_tree
+      replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
+    else
+      @custom_button.errors.each do |field, msg|
+        add_flash(_("Error during 'edit': %{field_name} %{error_message}") %
+          {:field_name => field.to_s.capitalize, :error_message => msg}, :error)
+      end
+      @breadcrumbs = []
+      drop_breadcrumb(:name => "Edit of Button", :url => "/miq_ae_customization/button_edit")
+      @lastaction = "automate_button"
+      @layout = "miq_ae_automate_button"
+      javascript_flash
+    end
+  end
+
+  def ab_button_reset
+    ab_button_reset
+    button_set_form_vars
+    @changed = session[:changed] = false
+    add_flash(_("All changes have been reset"), :warning)
+    @in_a_form = true
+    @breadcrumbs = []
+    drop_breadcrumb(:name => _("Edit of Button"), :url => "/miq_ae_customization/button_edit")
+    @lastaction = "automate_button"
+    @layout = "miq_ae_automate_button"
+    replace_right_cell(:nodetype => "button_edit")
   end
 
   # Set form variables for button add/edit
@@ -756,21 +771,35 @@ module ApplicationController::Buttons
     @selected = params[:selected_fields]
   end
 
-  def button_valid?
-    name = @edit[:new][:instance_name].blank? ? @edit[:new][:other_name] : @edit[:new][:instance_name]
-    if @edit[:new][:name].blank? || @edit[:new][:name].strip == ""
-      add_flash(_("Button Text is required"), :error)
-    end
-    if @edit[:new][:button_image].blank? || @edit[:new][:button_image] == 0
+  def ab_button_name(button_hash = @edit[:new])
+    button_hash[:instance_name].blank? ? button_hash[:other_name] : button_hash[:instance_name]
+  end
+
+  def button_valid?(button_hash = @edit[:new])
+    add_flash(_("Button Text is required"), :error) if button_hash[:name].strip.blank?
+
+    if button_hash[:button_image].blank? || button_hash[:button_image].zero?
       add_flash(_("Button Image must be selected"), :error)
     end
-    add_flash(_("Button Hover Text is required"), :error) if @edit[:new][:description].blank?
-    #   add_flash("Object Attribute Name must be entered", :error) if @edit[:new][:target_attr_name].blank?
-    add_flash(_("Starting Process is required"), :error) if name.blank?
-    add_flash(_("Request is required"), :error) if @edit[:new][:object_request].blank?
-    if @edit[:new][:visibility_typ] == "role" && @edit[:new][:roles].blank?
+
+    add_flash(_("Button Hover Text is required"), :error) if button_hash[:description].blank?
+
+    add_flash(_("Starting Process is required"), :error) if ab_button_name(button_hash).blank?
+
+    add_flash(_("Request is required"), :error) if button_hash[:object_request].blank?
+
+    if button_hash[:visibility_typ] == "role" && button_hash[:roles].blank?
       add_flash(_("At least one Role must be selected"), :error)
     end
+
+    if button_hash[:open_url] == true && button_hash[:display_for] != 'single'
+      add_flash(_('URL can be opened only by buttons for a single entity'), :error)
+    end
+
+    if !button_hash[:dialog_id].empty? && button_hash[:display_for] != 'single'
+      add_flash(_('Dialog can be opened only by buttons for a single entity'), :error)
+    end
+
     !flash_errors?
   end
 
