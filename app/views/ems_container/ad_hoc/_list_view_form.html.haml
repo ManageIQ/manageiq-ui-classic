@@ -45,29 +45,29 @@
               .col
                 %span.pficon{"ng-class" => "{true: 'pficon-ok'}[dash.filterType===range.value]"}
 
-  .form-group.pagination-div
-    %ul.pagination.pagination-pf-back
-      %li
-        %a{"href"  => "#",
-           "ng-click" => "dash.setPage(1)",
-           "title" => _("First Page")}
-          %span.i.fa.fa-angle-double-left
-      %li
-        %a{"href"  => "#",
-           "ng-click" => "dash.setPage(dash.page - 1)",
-           "title" => _("Previous Page")}
-          %span.i.fa.fa-angle-left
+.form-group.pagination-div
+  %ul.pagination.pagination-pf-back
+    %li
+      %a{"href"  => "#",
+         "ng-click" => "dash.setPage(1)",
+         "title" => _("First Page")}
+        %span.i.fa.fa-angle-double-left
+    %li
+      %a{"href"  => "#",
+         "ng-click" => "dash.setPage(dash.page - 1)",
+         "title" => _("Previous Page")}
+        %span.i.fa.fa-angle-left
 
-    #pagination-title {{dash.pagesTitle}}
+  #pagination-title {{dash.pagesTitle}}
 
-    %ul.pagination.pagination-pf-forward
-      %li
-        %a{"href"  => "#",
-           "ng-click" => "dash.setPage(dash.page + 1)",
-           "title" => _("Next Page")}
-          %span.i.fa.fa-angle-right
-      %li
-        %a{"href"  => "#",
-           "ng-click" => "dash.setPage(dash.pages)",
-           "title" => _("Last Page")}
-          %span.i.fa.fa-angle-double-right
+  %ul.pagination.pagination-pf-forward
+    %li
+      %a{"href"  => "#",
+         "ng-click" => "dash.setPage(dash.page + 1)",
+         "title" => _("Next Page")}
+        %span.i.fa.fa-angle-right
+    %li
+      %a{"href"  => "#",
+         "ng-click" => "dash.setPage(dash.pages)",
+         "title" => _("Last Page")}
+        %span.i.fa.fa-angle-double-right
