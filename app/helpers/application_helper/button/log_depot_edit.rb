@@ -1,4 +1,4 @@
-class ApplicationHelper::Button::DiagnosticsLogs < ApplicationHelper::Button::Logs
+class ApplicationHelper::Button::LogDepotEdit < ApplicationHelper::Button::Basic
   include ApplicationHelper::Button::Mixins::ActiveContextMixin
 
   def visible?
