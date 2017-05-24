@@ -194,6 +194,7 @@ module ApplicationHelper
       MiqTask
       MiqRequest
       PxeServer
+      Switch
     ).include? type
   end
 
