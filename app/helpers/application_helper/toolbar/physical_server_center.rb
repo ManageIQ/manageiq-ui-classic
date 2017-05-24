@@ -15,7 +15,7 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             N_('Power On'),
             :image   => "power_on",
             :data    => {'function'      => 'sendDataWithRx',
-                         'function-data' => '{"type": "power_on"}'},
+                         'function-data' => '{"type": "power_on", "controller": "physicalServerToolbarController"}'},
             :confirm => N_("Power on the server?"),
             :options => {:feature => :power_on}
           ),
@@ -26,7 +26,7 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             N_('Power Off'),
             :image   => "power_off",
             :data    => {'function'      => 'sendDataWithRx',
-                         'function-data' => '{"type": "power_off"}'},
+                         'function-data' => '{"type": "power_off", "controller": "physicalServerToolbarController"}'},
             :confirm => N_("Power off the server?"),
             :options => {:feature => :power_off}
           ),
@@ -37,7 +37,7 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             N_('Restart'),
             :image   => "power_reset",
             :data    => {'function'      => 'sendDataWithRx',
-                         'function-data' => '{"type": "restart"}'},
+                         'function-data' => '{"type": "restart", "controller": "physicalServerToolbarController"}'},
             :confirm => N_("Restart the server?"),
             :options => {:feature => :restart}
           ),
@@ -56,7 +56,7 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             N_('Blink LED'),
             :image   => "blank_button",
             :data    => {'function'      => 'sendDataWithRx',
-                         'function-data' => '{"type": "blink_loc_led"}'},
+                         'function-data' => '{"type": "blink_loc_led", "controller": "physicalServerToolbarController"}'},
             :confirm => N_("Blink the Identify LED?"),
             :options => {:feature => :blink_loc_led}
           ),
@@ -67,7 +67,7 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             N_('Turn On LED'),
             :image   => "blank_button",
             :data    => {'function'      => 'sendDataWithRx',
-                         'function-data' => '{"type": "turn_on_loc_led"}'},
+                         'function-data' => '{"type": "turn_on_loc_led", "controller": "physicalServerToolbarController"}'},
             :confirm => N_("Turn on the Identify LED?"),
             :options => {:feature => :turn_on_loc_led}
           ),
@@ -78,7 +78,7 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             N_('Turn Off LED'),
             :image   => "blank_button",
             :data    => {'function'      => 'sendDataWithRx',
-                         'function-data' => '{"type": "turn_off_loc_led"}'},
+                         'function-data' => '{"type": "turn_off_loc_led", "controller": "physicalServerToolbarController"}'},
             :confirm => N_("Turn off the Identify LED?"),
             :options => {:feature => :turn_off_loc_led}
           ),
