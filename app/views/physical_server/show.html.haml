@@ -6,10 +6,7 @@
   - else
     = render :partial => 'layouts/textual_groups_generic'
 
-  %form#physical_server_show_form{"name"          => "angularForm",
-                                  "ng-controller" => "physicalServerToolbarController",
-                                  "novalidate"    => "true"}
+  %physical-server-toolbar#physical_server_show_form{'physical-server-id' => @record.id}
 
 :javascript
-  ManageIQ.angular.app.value('physicalServerId', #{@record.id});
   miq_bootstrap('#physical_server_show_form');

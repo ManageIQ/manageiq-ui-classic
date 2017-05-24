@@ -1,4 +1,14 @@
-ManageIQ.angular.app.controller('physicalServerToolbarController', ['miqService', 'API', 'physicalServerId', function(miqService, API, physicalServerId) {
+ManageIQ.angular.app.component('physicalServerToolbar', {
+  bindings: {
+    physicalServerId: '=?',
+  },
+  controllerAs: 'vm',
+  controller: physicalServerToolbarController,
+});
+
+physicalServerToolbarController.$inject = ['API', 'miqService'];
+
+function physicalServerToolbarController(API, miqService) {
   var vm = this;
 
   ManageIQ.angular.rxSubject.subscribe(function(event) {
@@ -6,8 +16,8 @@ ManageIQ.angular.app.controller('physicalServerToolbarController', ['miqService'
 
     if (vm.action) {
       vm.servers = [];
-      if (physicalServerId) {
-        vm.servers = _.union(vm.servers, [physicalServerId]);
+      if (vm.physicalServerId) {
+        vm.servers = _.union(vm.servers, [vm.physicalServerId]);
       } else {
         vm.servers = ManageIQ.gridChecks;
       }
@@ -15,6 +25,7 @@ ManageIQ.angular.app.controller('physicalServerToolbarController', ['miqService'
     }
   });
 
+  // private functions
   function postPhysicalServerAction() {
     _.forEach(vm.servers, function(serverId) {
       API.post('/api/physical_servers/' + serverId, { action: vm.action })
@@ -34,4 +45,4 @@ ManageIQ.angular.app.controller('physicalServerToolbarController', ['miqService'
     //   miqService.miqFlash('success', sprintf(__("Requested Server state %s for the selected server"), vm.action));
     // }
   }
-}]);
+}

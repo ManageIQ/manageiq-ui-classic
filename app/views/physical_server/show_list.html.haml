@@ -3,10 +3,7 @@
 #main_div
   = render :partial => 'layouts/gtl'
 
-  %form#physical_server_show_list_form{"name"          => "angularForm",
-                                       "ng-controller" => "physicalServerToolbarController",
-                                       "novalidate"    => "true"}
+  %physical-server-toolbar#physical_server_show_list_form
 
 :javascript
-  ManageIQ.angular.app.value('physicalServerId', undefined);
   miq_bootstrap('#physical_server_show_list_form');
