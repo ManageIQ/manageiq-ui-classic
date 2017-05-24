@@ -126,6 +126,6 @@ class ApplicationHelper::Toolbar::DiagnosticsZoneCenter < ApplicationHelper::Too
       'pficon pficon-edit fa-lg',
       N_('Edit the Log Depot settings for the selected Zone'),
       N_('Edit'),
-      :klass => ApplicationHelper::Button::ZoneLogDepotEdit),
+      :klass => ApplicationHelper::Button::LogDepotEdit),
   ])
 end

@@ -1,4 +1,5 @@
-class ApplicationHelper::Button::ZoneCollectLogs < ApplicationHelper::Button::ZoneLogDepotEdit
+class ApplicationHelper::Button::ZoneCollectLogs < ApplicationHelper::Button::LogDepotEdit
+  include ApplicationHelper::Button::Mixins::ButtonPromptMixin
   needs :@record
 
   def disabled?
