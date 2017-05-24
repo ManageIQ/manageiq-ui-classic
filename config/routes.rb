@@ -1290,8 +1290,17 @@ Rails.application.routes.draw do
         button
         show_list
         create
+        create_del
+        exp_button
+        exp_changed
+        exp_token_pressed
+        listnav_search_selected
         update
-      )
+        update_del
+        quick_search
+      ) +
+          adv_search_post +
+          save_post
     },
 
     :ems_physical_infra_dashboard      => {
