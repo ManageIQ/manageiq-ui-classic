@@ -63,7 +63,7 @@ module ApplicationHelper::PageLayouts
       miq_request_service
       miq_request_vm
       my_tasks
-    ).include? @layout
+    ).include?(@layout) && params[:action] != 'show'
   end
 
   def layout_uses_tabs?
