@@ -805,7 +805,8 @@ module ReportController::Reports::Editor
   end
 
   def cashed_reporting_available_fields
-    MiqExpression.reporting_available_fields(@edit[:new][:model], @edit[:new][:perf_interval])
+    @reporting_available_fields ||= {}
+    @reporting_available_fields[@edit[:new][:model]] ||= MiqExpression.reporting_available_fields(@edit[:new][:model], @edit[:new][:perf_interval])
   end
 
   def move_cols_right
