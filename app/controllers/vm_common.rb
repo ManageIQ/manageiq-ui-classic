@@ -298,7 +298,6 @@ module VmCommon
     @explorer = true
     render :update do |page|
       page << javascript_prologue
-      page << "$('#toolbar').show();" if c_tb.present?
       page << javascript_reload_toolbars
 
       page.replace("flash_msg_div", :partial => "layouts/flash_msg")
