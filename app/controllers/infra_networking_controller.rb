@@ -23,35 +23,6 @@ class InfraNetworkingController < ApplicationController
     @explorer
   end
 
-  def button
-    @edit = session[:edit] # Restore @edit for adv search box
-    params[:page] = @current_page if @current_page.nil? # Save current page for list refresh
-
-    params[:page] = @current_page if @current_page.nil? # Save current page for list refresh
-    @refresh_div = "main_div" # Default div for button.rjs to refresh
-    case params[:pressed]
-    when "infra_networking_tag"
-      tag(Switch)
-    end
-    return if %w(infra_networking_tag).include?(params[:pressed]) && @flash_array.nil? # Tag screen showing, so return
-
-    if @flash_array.nil? && !@refresh_partial # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    elsif @flash_array && @lastaction == "show"
-      @configuration_job = @record = identify_record(params[:id])
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    end
-
-    if @refresh_div == "main_div" && @lastaction == "show_list"
-      replace_gtl_main_div
-    else
-      render_flash
-    end
-  end
-
   def tree_select
     @lastaction = "explorer"
     @sb[:action] = nil
