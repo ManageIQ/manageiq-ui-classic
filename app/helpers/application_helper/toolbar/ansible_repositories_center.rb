@@ -20,7 +20,7 @@ class ApplicationHelper::Toolbar::AnsibleRepositoriesCenter < ApplicationHelper:
         separator,
         button(
           :embedded_configuration_script_source_add,
-          'pficon pficon-edit fa-lg',
+          'pficon pficon-add-circle-o fa-lg',
           t = N_('Add New Repository'),
           t,
           :klass => ApplicationHelper::Button::EmbeddedAnsible,
