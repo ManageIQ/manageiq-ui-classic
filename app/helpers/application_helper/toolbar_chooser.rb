@@ -29,6 +29,8 @@ class ApplicationHelper::ToolbarChooser
       @report ? "report_view_tb" : "blank_view_tb"
     elsif @layout == 'provider_foreman'
       @showtype == 'main' ? "x_summary_view_tb" : "x_gtl_view_tb"
+    elsif @layout == 'automation_manager'
+      @record.try(:kind_of?, ManageIQ::Providers::AutomationManager::InventoryRootGroup) && @sb[:active_tab] == 'summary' ? "x_summary_view_tb" : "x_gtl_view_tb"
     else
       'blank_view_tb'
     end

@@ -153,4 +153,24 @@ describe ApplicationHelper, "ToolbarChooser" do
       it { is_expected.to be_falsey }
     end
   end
+
+  describe '#x_view_toolbar_filename' do
+    before do
+      @record = FactoryGirl.create(:inventory_root_group)
+    end
+
+    context 'when the active tab is summary' do
+      it "displays summary toolbar" do
+        @sb = {:active_tab => 'summary'}
+        expect(ApplicationHelper::ToolbarChooser.new(nil, nil, :record => @record, :explorer => true, :layout => 'automation_manager', :sb => @sb).send(:x_view_toolbar_filename)).to eq("x_summary_view_tb")
+      end
+    end
+
+    context ' when the active tab is configured_systems' do
+      it "displays summary toolbar" do
+        @sb = {:active_tab => 'configured_systems'}
+        expect(ApplicationHelper::ToolbarChooser.new(nil, nil, :record => @record, :explorer => true, :layout => 'automation_manager', :sb => @sb).send(:x_view_toolbar_filename)).to eq("x_gtl_view_tb")
+      end
+    end
+  end
 end
