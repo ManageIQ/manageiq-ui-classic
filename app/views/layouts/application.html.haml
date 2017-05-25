@@ -31,6 +31,7 @@
         = stylesheet_link_tag 'miq_debug'
       = csrf_meta_tag
       = render :partial => 'layouts/i18n_js'
+      = javascript_pack_tag 'application'
 
       :javascript
         ManageIQ.charts.provider = "#{Charting.backend}";
