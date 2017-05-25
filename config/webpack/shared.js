@@ -4,16 +4,24 @@
 /* eslint import/no-dynamic-require: 0 */
 
 const webpack = require('webpack')
+const merge = require('webpack-merge')
 const { basename, dirname, join, relative, resolve } = require('path')
 const { sync } = require('glob')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const extname = require('path-complete-extname')
-const { env, settings, output, loadersDir } = require('./configuration.js')
+const { env, settings, output, loadersDir, engines } = require('./configuration.js')
 
-const extensionGlob = `**/*{${settings.extensions.join(',')}}*`
+const extensionGlob = `**/*{${settings.extensions.join(',')}}*` // */
 const entryPath = join(settings.source_path, settings.source_entry_path)
-const packPaths = sync(join(entryPath, extensionGlob))
+let packPaths = []
+
+Object.keys(engines).forEach(function(k) {
+  let root = engines[k]
+  let glob = join(root, entryPath, extensionGlob)
+  let paths = sync(glob)
+  packPaths.push(...paths)
+})
 
 module.exports = {
   entry: packPaths.reduce(
