@@ -17,7 +17,9 @@ end
 namespace :webpack do
   task :server do
     Dir.chdir ManageIQ::UI::Classic::Engine.root do
-      system("bin/webpack-dev-server") || abort("\n== webpack-dev-server failed ==")
+      Bundler.with_clean_env do
+        system("bundle exec bin/webpack-dev-server") || abort("\n== webpack-dev-server failed ==")
+      end
     end
   end
 
