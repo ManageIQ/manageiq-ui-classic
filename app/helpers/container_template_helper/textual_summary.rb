@@ -16,7 +16,7 @@ module ContainerTemplateHelper::TextualSummary
   end
 
   def textual_group_objects
-    labels = [_("Kind"), _("Name")]
+    labels = [_("Kind"), _("Name*")]
     values = @record.objects.collect { |obj| [obj[:kind], obj[:metadata][:name] || obj[:metadata][:generateName]] }
     TextualMultilabel.new(_("Objects"), :labels => labels, :values => values)
   end
