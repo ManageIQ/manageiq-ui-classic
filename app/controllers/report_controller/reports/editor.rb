@@ -1,6 +1,10 @@
 module ReportController::Reports::Editor
   extend ActiveSupport::Concern
 
+  included do
+    helper_method :cashed_reporting_available_fields, :cashed_reporting_available_fields
+  end
+
   CHARGEBACK_ALLOWED_FIELD_SUFFIXES = %w(
     _cost
     -owner_name
@@ -798,6 +802,10 @@ module ReportController::Reports::Editor
       @tl_changed = true
       @edit[:new][:tl_position] = params[:chosen_position]
     end
+  end
+
+  def cashed_reporting_available_fields
+    MiqExpression.reporting_available_fields(@edit[:new][:model], @edit[:new][:perf_interval])
   end
 
   def move_cols_right
