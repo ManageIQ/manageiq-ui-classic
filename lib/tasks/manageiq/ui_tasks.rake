@@ -31,3 +31,15 @@ namespace :webpack do
     end
   end
 end
+
+# compile and clobber when running assets:* tasks
+if Rake::Task.task_defined?("assets:precompile")
+  Rake::Task["assets:precompile"].enhance do
+    Rake::Task["webpack:compile"].invoke
+  end
+end
+if Rake::Task.task_defined?("assets:clobber")
+  Rake::Task["assets:clobber"].enhance do
+    Rake::Task["webpack:clobber"].invoke
+  end
+end
