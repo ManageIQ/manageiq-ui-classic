@@ -12,7 +12,9 @@
   "exclude": [
     "**/*.spec.ts",
     "node_modules",
-    "public"
+    "vendor",
+    "public",
+    "spec/manageiq"
   ],
   "compileOnSave": false
 }
