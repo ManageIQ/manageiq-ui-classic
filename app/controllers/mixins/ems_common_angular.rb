@@ -272,7 +272,6 @@ module Mixins
       render :json => {:name                       => @ems.name,
                        :emstype                    => @ems.emstype,
                        :zone                       => zone,
-                       :provider_id                => @ems.provider_id ? @ems.provider_id : "",
                        :hostname                   => @ems.hostname,
                        :default_hostname           => @ems.connection_configurations.default.endpoint.hostname,
                        :metrics_selection          => retrieve_metrics_selection,
