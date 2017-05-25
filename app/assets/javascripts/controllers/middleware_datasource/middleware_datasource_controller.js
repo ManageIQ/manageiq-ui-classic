@@ -132,7 +132,10 @@ function MwAddDatasourceCtrl($scope, $rootScope, miqService, mwAddDatasourceServ
     mwAddDatasourceService.getExistingJdbcDrivers(serverId).then(function(drivers) {
       vm.step2DsModel.existingJdbcDrivers = vm.filterXa(vm.chooseDsModel.xaDatasource, drivers);
     }).catch(function(errorMsg) {
-      miqService.miqFlash(errorMsg.data.status, errorMsg.data.msg);
+      var status = errorMsg.data.status || 'error';
+      miqService.miqFlash(status, errorMsg.data.msg);
+      angular.element('#modal_ds_div').modal('hide');
+      miqService.sparkleOff();
     });
   };
 
