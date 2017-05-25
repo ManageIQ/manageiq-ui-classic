@@ -1,5 +1,6 @@
 if File.exist? 'manageiq-ui-classic.gemspec'
-  # all of these tasks are only internal ui-classic, used by webpack:server, webpack:compile or webpack:clobber
+  # all of these tasks are only internal ui-classic, used by webpack:server, webpack:compile or webpack:clobberr
+  # mostly because they fail when run from manageiq/
 
   # yarn:install is a rails 5.1 task, webpacker:compile needs it
   namespace :yarn do
@@ -14,6 +15,7 @@ if File.exist? 'manageiq-ui-classic.gemspec'
   load 'tasks/webpacker/verify_install.rake'  # needed by compile
   load 'tasks/webpacker/check_node.rake'  # needed by verify_install
   load 'tasks/webpacker/check_yarn.rake'  # needed by verify_install
+  load 'tasks/webpacker/check_webpack_binstubs.rake'  # needed by verify_install
 
   namespace :webpack do
     # needed by config/webpack/configuration.js

@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
   s.add_dependency "patternfly-sass", "~> 3.23.1"
   s.add_dependency "sass-rails"
   s.add_dependency "uglifier", "~>3.0.0"
-  s.add_dependency "webpacker", "~>1.2.0"
+  s.add_dependency "webpacker", "~>2.0.0"
 
   s.add_development_dependency "codeclimate-test-reporter", "~> 1.0.0"
   s.add_development_dependency "guard-rspec", '~> 4.7.3'
