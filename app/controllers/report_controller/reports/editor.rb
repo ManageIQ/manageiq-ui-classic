@@ -809,6 +809,10 @@ module ReportController::Reports::Editor
     @reporting_available_fields[@edit[:new][:model]] ||= MiqExpression.reporting_available_fields(@edit[:new][:model], @edit[:new][:perf_interval])
   end
 
+  def reporting_available_fields_clear_cash
+    @reporting_available_fields = nil
+  end
+
   def move_cols_right
     if !params[:available_fields] || params[:available_fields].length == 0 || params[:available_fields][0] == ""
       add_flash(_("No fields were selected to move down"), :error)
@@ -816,7 +820,8 @@ module ReportController::Reports::Editor
       add_flash(_("Fields not added: Adding the selected %{count} fields will exceed the maximum of %{max} fields") % {:count => params[:available_fields].length + @edit[:new][:fields].length, :max => MAX_REPORT_COLUMNS},
                 :error)
     else
-      MiqExpression.reporting_available_fields(@edit[:new][:model], @edit[:new][:perf_interval]).each do |af| # Go thru all available columns
+      reporting_available_fields_clear_cash
+      cashed_reporting_available_fields.each do |af| # Go thru all available columns
         if params[:available_fields].include?(af[1])        # See if this column was selected to move
           unless @edit[:new][:fields].include?(af)          # Only move if it's not there already
             @edit[:new][:fields].push(af)                     # Add it to the new fields list
