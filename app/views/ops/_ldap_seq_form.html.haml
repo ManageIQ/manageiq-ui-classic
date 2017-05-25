@@ -12,24 +12,11 @@
                  :id       => "seq_fields")
 
     %small= _("* Select one or more consecutive groups to move up or down.")
-  .col-md-1.col-sm-2.col-xs-2{:style => "padding: 10px"}
-    .spacer
-    .spacer
-    - if @edit[:new][:ldap_groups].length < 2
-      %button.btn.btn-block.disabled
-        %i.fa.fa-angle-up.fa-lg
-      %button.btn.btn-block.disabled
-        %i.fa.fa-angle-down.fa-lg
-    - else
-      - [[_("Move selected fields up"),   'column_lists', 'up',    'fa-angle-up'],
-         [_("Move selected fields down"), 'column_lists', 'down',  'fa-angle-down']].each do |title, chosen_div, action, arrow_style|
-        %button.btn.btn-default.btn-block{:title                 => title,
-                                          :remote                => true,
-                                          "data-submit"          => chosen_div,
-                                          "data-method"          => :post,
-                                          "data-miq_sparkle_on"  => true,
-                                          "data-miq_sparkle_off" => true,
-                                          "data-click_url"       => {:url => url_for_only_path(:action => 'rbac_group_field_changed',
-                                                                                               :button => action,
-                                                                                               :id     => 'seq')}.to_json}
-          %i.fa.fa-lg{:class => arrow_style}
+
+  - button_params = @edit[:new][:ldap_groups].length >= 2 ? [[_("Move selected fields up"),   'column_lists', 'up',    'fa-angle-up'],
+                                                             [_("Move selected fields down"), 'column_lists', 'down',  'fa-angle-down']] : []
+  = render :partial => "shared/views/seq_selector_buttons",
+           :locals  => {:fields_count  => @edit[:new][:ldap_groups].length,
+                        :button_params => button_params,
+                        :button_action => 'rbac_group_field_changed',
+                        :id            => 'seq'}
