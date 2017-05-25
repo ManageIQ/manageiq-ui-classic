@@ -2,6 +2,6 @@ module ApplicationController::Network
   extend ActiveSupport::Concern
 
   def network_managers
-    ManageIQ::Providers::Openstack::NetworkManager.all
+    Rbac::Filterer.filtered(ManageIQ::Providers::Openstack::NetworkManager).all
   end
 end
