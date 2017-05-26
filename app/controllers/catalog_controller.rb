@@ -1922,7 +1922,6 @@ class CatalogController < ApplicationController
       :active_tree => x_active_tree,
       :add_nodes   => add_nodes
     )
-    r = proc { |opts| render_to_string(opts) }
     replace_trees_by_presenter(presenter, trees)
 
     if @sb[:buttons_node]

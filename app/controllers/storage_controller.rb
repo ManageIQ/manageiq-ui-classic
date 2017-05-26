@@ -424,10 +424,10 @@ class StorageController < ApplicationController
       trees[:storage]     = storage_build_tree     if replace_trees.include?(:storage)
       trees[:storage_pod] = storage_pod_build_tree if replace_trees.include?(:storage_pod)
     end
-    presenter, r = rendering_objects
-    update_partials(record_showing, presenter, r)
-    replace_search_box(presenter, r)
-    handle_bottom_cell(presenter, r)
+    presenter = rendering_objects
+    update_partials(record_showing, presenter)
+    replace_search_box(presenter)
+    handle_bottom_cell(presenter)
     replace_trees_by_presenter(presenter, trees)
     rebuild_toolbars(record_showing, presenter)
     case x_active_tree
@@ -465,7 +465,7 @@ class StorageController < ApplicationController
     @sb[:storage_search_text][:current_node] = x_node
   end
 
-  def update_partials(record_showing, presenter, r)
+  def update_partials(record_showing, presenter)
     if record_showing
       get_tagdata(@record)
       presenter.hide(:form_buttons_div)
@@ -479,7 +479,7 @@ class StorageController < ApplicationController
     end
   end
 
-  def replace_search_box(presenter, r)
+  def replace_search_box(presenter)
     # Replace the searchbox
     presenter.replace(:adv_searchbox_div,
                       r[:partial => 'layouts/x_adv_searchbox',
@@ -489,7 +489,7 @@ class StorageController < ApplicationController
   end
 
 
-  def handle_bottom_cell(presenter, r)
+  def handle_bottom_cell(presenter)
     # Handle bottom cell
     if @pages || @in_a_form
       if @pages && !@in_a_form
@@ -504,12 +504,10 @@ class StorageController < ApplicationController
   end
 
   def rendering_objects
-    presenter = ExplorerPresenter.new(
+    ExplorerPresenter.new(
       :active_tree => x_active_tree,
       :delete_node => @delete_node,
     )
-    r = proc { |opts| render_to_string(opts) }
-    return presenter, r
   end
 
   def render_tagging_form
@@ -517,11 +515,11 @@ class StorageController < ApplicationController
     @in_a_form = true
     @right_cell_text = _("Edit Tags for Datastore")
     clear_flash_msg
-    presenter, r = rendering_objects
-    update_tagging_partials(presenter, r)
+    presenter = rendering_objects
+    update_tagging_partials(presenter)
     # update_title(presenter)
     rebuild_toolbars(false, presenter)
-    handle_bottom_cell(presenter, r)
+    handle_bottom_cell(presenter)
 
     render :json => presenter.for_render
   end
@@ -529,12 +527,12 @@ class StorageController < ApplicationController
   def update_tree_and_render_list(replace_trees)
     @explorer = true
     get_node_info(x_node)
-    presenter, r = rendering_objects
-    replace_explorer_trees(replace_trees, presenter, r)
+    presenter = rendering_objects
+    replace_explorer_trees(replace_trees, presenter)
 
     presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     rebuild_toolbars(false, presenter)
-    handle_bottom_cell(presenter, r)
+    handle_bottom_cell(presenter)
 
     render :json => presenter.for_render
   end

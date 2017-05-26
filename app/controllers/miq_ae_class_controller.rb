@@ -279,7 +279,6 @@ class MiqAeClassController < ApplicationController
       :remove_nodes    => add_nodes, # remove any existing nodes before adding child nodes to avoid duplication
       :add_nodes       => add_nodes,
     )
-    r = proc { |opts| render_to_string(opts) }
 
     replace_trees_by_presenter(presenter, :ae => build_ae_tree) unless replace_trees.blank?
 
@@ -2452,7 +2451,6 @@ class MiqAeClassController < ApplicationController
       :remove_nodes    => nil,
       :add_nodes       => nil,
     )
-    r = proc { |opts| render_to_string(opts) }
 
     update_partial_div = :main_div
     update_partial = "git_domain_refresh"

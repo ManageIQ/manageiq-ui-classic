@@ -324,7 +324,6 @@ class ServiceController < ApplicationController
       :active_tree     => x_active_tree,
       :right_cell_text => @right_cell_text
     )
-    r = proc { |opts| render_to_string(opts) }
 
     if Array(replace_trees).include?(:svcs)
       replace_trees_by_presenter(presenter, :svcs => build_svcs_tree)

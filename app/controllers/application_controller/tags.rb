@@ -282,7 +282,7 @@ module ApplicationController::Tags
     }
   end
 
-  def update_tagging_partials(presenter, r)
+  def update_tagging_partials(presenter)
     presenter.update(:main_div, r[:partial => 'layouts/tagging',
                                   :locals  => locals_for_tagging])
     presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons',

@@ -240,7 +240,6 @@ class MiqAeCustomizationController < ApplicationController
     @explorer = true
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
 
-    r = proc { |opts| render_to_string(opts) }
     replace_trees_by_presenter(presenter, trees)
     presenter[:osf_node] = x_node unless @in_a_form
 

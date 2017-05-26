@@ -1232,8 +1232,6 @@ module VmCommon
 
     presenter.show(:default_left_cell).hide(:custom_left_cell)
 
-    r = proc { |opts| render_to_string(opts) }
-
     add_ajax = false
     if record_showing
       presenter.hide(:form_buttons_div)
