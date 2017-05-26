@@ -175,7 +175,6 @@ class CloudNetworkController < ApplicationController
       @network_ems_provider_choices[ems.name] = ems.id
     end
     @network_provider_network_type_choices = PROVIDERS_NETWORK_TYPES
-
     drop_breadcrumb(:name => _("Add New Cloud Network"), :url => "/cloud_network/new")
   end
 
