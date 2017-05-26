@@ -6,7 +6,7 @@
       %td
     %tr
       %td{:align => "right", :valign => "top"}
-        - af = @edit[:new][:model] ? MiqExpression.reporting_available_fields(@edit[:new][:model], @edit[:new][:perf_interval]) - @edit[:new][:fields] : []
+        - af = @edit[:new][:model] ? cashed_reporting_available_fields - @edit[:new][:fields] : []
         = select_tag('available_fields[]',
           options_for_select(af),
           :multiple => true,
@@ -16,8 +16,7 @@
       %td
     %tr
       %td.text-center{:style => "padding-top: 15px;"}
-        - cond_down = @edit[:new][:model].nil? || MiqExpression.reporting_available_fields(@edit[:new][:model],
-                                                                                           @edit[:new][:perf_interval]).length == 0
+        - cond_down = @edit[:new][:model].nil? || cashed_reporting_available_fields.empty?
         - cond_up = @edit[:new][:fields].length == 0
         - [['fa-angle-down', 'right', _("down"), cond_down],
            ['fa-angle-up',   'left',  _("up"),   cond_up]].each do |icon, button, text, condition|
