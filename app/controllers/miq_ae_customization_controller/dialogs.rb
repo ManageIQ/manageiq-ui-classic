@@ -1354,6 +1354,7 @@ module MiqAeCustomizationController::Dialogs
         end
       end
       validate ? dialog.validate! : dialog.save!
+      raise ActiveRecord::Rollback if validate
     end
   end
 
