@@ -21,6 +21,13 @@ module Mixins
           %w(host_shutdown host_reboot host_standby host_enter_maint_mode
              host_exit_maint_mode host_start host_stop host_reset).include?(button_code)
         end
+
+        def handle_host_power_button(button_code)
+          match = button_code.match(/^host_/)
+          return unless match
+
+          powerbutton_hosts(match.post_match)
+        end
       end
     end
   end

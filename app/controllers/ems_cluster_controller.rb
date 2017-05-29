@@ -43,7 +43,7 @@ class EmsClusterController < ApplicationController
       pfx = pfx_for_vm_button_pressed(params[:pressed])
       # Handle Host power buttons
       if host_power_button?(params[:pressed])
-        powerbutton_hosts(params[:pressed].split("_")[1..-1].join("_")) # Handle specific power button
+        handle_host_power_button(params[:pressed])
       else
         process_vm_buttons(pfx)
         return if ["host_tag", "#{pfx}_policy_sim", "host_scan", "host_refresh", "host_protect",
