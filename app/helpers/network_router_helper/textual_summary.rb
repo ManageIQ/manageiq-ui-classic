@@ -21,7 +21,7 @@ module NetworkRouterHelper::TextualSummary
   # Items
   #
   def textual_type
-    ui_lookup(:model => @record.type)
+    {:label => _('Type'), :value => ui_lookup(:model => @record.type)}
   end
 
   def textual_status
@@ -29,7 +29,7 @@ module NetworkRouterHelper::TextualSummary
   end
 
   def textual_parent_ems_cloud
-    @record.ext_management_system.try(:parent_manager)
+    textual_link(@record.ext_management_system.try(:parent_manager), :label => _('Cloud Provider'))
   end
 
   def textual_instances
@@ -44,14 +44,14 @@ module NetworkRouterHelper::TextualSummary
   end
 
   def textual_cloud_tenant
-    @record.cloud_tenant
+    textual_link(@record.cloud_tenant, :label => _('Cloud Tenant'))
   end
 
   def textual_cloud_subnets
-    @record.cloud_subnets
+    textual_link(@record.cloud_subnets, :label => _('Cloud Subnets'))
   end
 
   def textual_external_gateway
-    @record.cloud_network
+    textual_link(@record.cloud_network, :label => _('Cloud Network'))
   end
 end
