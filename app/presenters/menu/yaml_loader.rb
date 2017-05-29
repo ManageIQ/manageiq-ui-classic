@@ -1,5 +1,5 @@
 module Menu
-  class CustomLoader
+  class YamlLoader
     include Singleton
 
     def self.load

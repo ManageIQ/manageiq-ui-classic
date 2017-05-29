@@ -85,7 +85,7 @@ module Menu
     end
 
     def load_custom_items
-      sections, items = Menu::CustomLoader.load
+      sections, items = Menu::YamlLoader.load
       merge_sections(sections)
       preprocess_sections
       merge_items(items)
