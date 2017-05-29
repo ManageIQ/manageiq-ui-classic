@@ -16,6 +16,11 @@ module Mixins
           assert_privileges(params[:pressed])
           host_button_operation(method, POWER_BUTTON_NAMES[method] || method.titleize)
         end
+
+        def host_power_button?(button_code)
+          %w(host_shutdown host_reboot host_standby host_enter_maint_mode
+             host_exit_maint_mode host_start host_stop host_reset).include?(button_code)
+        end
       end
     end
   end
