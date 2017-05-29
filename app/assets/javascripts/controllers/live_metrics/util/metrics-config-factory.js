@@ -1,12 +1,13 @@
 angular.module('miq.util').factory('metricsConfigFactory', function() {
   return function (dash) {
-    function selectionChange() {
-      dash.itemSelected = false;
-      for (var i = 0; i < dash.items.length && !dash.itemSelected; i++) {
-        if (dash.items[i].selected) {
-          dash.itemSelected = true;
-        }
+    function selectionChange(item) {
+      if (item.selected) {
+        dash.selectedItems.push(item);
+      } else {
+        dash.selectedItems = dash.selectedItems.filter(function( obj ) { return obj.id !== item.id; });
       }
+
+      dash.itemSelected = dash.selectedItems.length > 0;
     };
 
     dash.DEFAULT_TENANT = "_system";
