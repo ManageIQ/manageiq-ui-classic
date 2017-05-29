@@ -10,7 +10,7 @@ module Mixins
           "enter_maint_mode" => _("Enter Maintenance Mode"),
           "exit_maint_mode"  => _("Exit Maintenance Mode"),
           "standby"          => _("Shutdown to Standby Mode")
-        }
+        }.freeze
 
         def powerbutton_hosts(method)
           assert_privileges(params[:pressed])
@@ -32,4 +32,3 @@ module Mixins
     end
   end
 end
-
