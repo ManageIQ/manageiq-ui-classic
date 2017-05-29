@@ -288,7 +288,7 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
     $scope.relations = data.data.relations;
     $scope.kinds = data.data.kinds;
     icons = data.data.icons;
-    var size_limit = data.data.settings.containers_max_objects;
+    var size_limit = data.data.settings.containers_max_items;
 
     if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys($scope.kinds).length)) {
       $scope.kinds = currentSelectedKinds;

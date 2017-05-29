@@ -350,6 +350,6 @@
       "Kubernetes":{"type":"image","icon":"...kubernetes..."},
       "Openshift":{"type":"image","icon":"...openshift..."}
     },
-    "settings": { "containers_max_objects":100}
+    "settings": { "containers_max_items":100}
   }
 }
