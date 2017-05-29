@@ -26,7 +26,7 @@ This way you will have you 'manageiq' and 'manageiq-ui-classic' side by side.
 
 At this point you are ready and can start doing PRs against any of the 2 repos.
 
-Or you can get more detailed instructions in [ManageIQ/guides](https://github.com/ManageIQ/guides/blob/master/developer_setup/classic_ui_split.md).
+Or you can get more detailed instructions in [ManageIQ/guides](https://github.com/ManageIQ/guides/blob/master/developer_setup/plugins.md).
 
 ## License
 
