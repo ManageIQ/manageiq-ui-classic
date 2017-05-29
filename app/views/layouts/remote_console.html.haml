@@ -2,7 +2,7 @@
 %html{:lang => I18n.locale.to_s.sub('-', '_')}
   %head
     %title
-      = _('ManageIQ HTML5 Remote Console')
+      = _('%{product_name} HTML5 Remote Console') % {:product_name => I18n.t('product.name')}
     = favicon_link_tag
     = stylesheet_link_tag 'application'
     -# Load the required JS based on the console type
