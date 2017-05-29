@@ -2,7 +2,7 @@
 %html{:lang => I18n.locale.to_s.sub('-', '_')}
   %head
     %title
-      = _('ManageIQ WebMKS Remote Console')
+      = _('%{product_name} WebMKS Remote Console') % {:product_name => I18n.t('product.name')}
     = favicon_link_tag
     = stylesheet_link_tag 'webmks'
     = javascript_include_tag 'jquery', 'jquery-ui', 'webmks'
