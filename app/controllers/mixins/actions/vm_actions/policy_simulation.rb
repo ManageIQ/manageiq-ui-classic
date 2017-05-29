@@ -2,7 +2,9 @@ module Mixins
   module Actions
     module VmActions
       module PolicySimulation
-        # Policy simulation for selected VMs
+        # Policy simulation for selected entities
+        # Entities supported:
+        #  %w(vm miq_template instance image)
 
         # Most of policy simulation related stuff is in:
         # app/controllers/application_controller/policy_support.rb
