@@ -1,4 +1,11 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "securityGroupFormController"}
+%form#form_div{:name           => "angularForm",
+   "ng-controller" => "securityGroupFormController as vm",
+   "miq-form"      => true,
+   "model"         => "vm.securityGroupModel",
+   "model-copy"    => "vm.modelCopy",
+   "ng-cloak"      => "",
+   "ng-show"       => "vm.afterGet"}
+
   = render :partial => "layouts/flash_msg"
   = render :partial => "common_new_edit"
 
@@ -11,13 +18,11 @@
       .col-md-8
         %input.form-control{:type          => "text",
                             :name          => "cloud_tenant_name",
-                            'ng-model'     => "securityGroupModel.cloud_tenant_name",
-                            'ng-maxlength' => 128,
-                            :miqrequired   => true,
-                            :checkchange   => true,
-                            "readonly"     => true}
+                            "ng-model"     => "vm.securityGroupModel.cloud_tenant_name",
+                            "ng-maxlength" => 128,
+                            :readonly      => "true"}
 
-  = render :partial => "layouts/angular/x_edit_buttons_angular"
+  = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript
   ManageIQ.angular.app.value('securityGroupFormId', '#{@security_group.id}');
