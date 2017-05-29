@@ -1,4 +1,13 @@
 class ApplicationHelper::Toolbar::AnsibleRepositoriesCenter < ApplicationHelper::Toolbar::Basic
+  button_group('ansible_repositories_reloading', [
+    button(
+      :ansible_repositories_reload,
+      'fa fa-repeat fa-lg',
+      N_('Reload the current display'),
+      N_('Reload'),
+      :url_parms => "main_div",
+      :klass => ApplicationHelper::Button::ButtonWithoutRbacCheck),
+  ])
   button_group('ansible_repositories', [
     select(
       :ansible_repositories_configuration,
