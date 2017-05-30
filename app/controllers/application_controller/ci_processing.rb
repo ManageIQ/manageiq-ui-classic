@@ -13,7 +13,9 @@ module ApplicationController::CiProcessing
     include Mixins::Actions::VmActions::Reconfigure
     helper_method :supports_reconfigure_disks?
     include Mixins::Actions::VmActions::PolicySimulation
+
     include Mixins::Actions::HostActions::Discover
+    include Mixins::Actions::HostActions::Power
 
     include Mixins::ExplorerShow
   end
@@ -931,20 +933,6 @@ module ApplicationController::CiProcessing
   def providehosts
     assert_privileges("host_provide")
     host_button_operation('provide', _('Provide'))
-  end
-
-  # Handle the Host power buttons
-  POWER_BUTTON_NAMES = {
-    "reboot"           => _("Restart"),
-    "start"            => _("Power On"),
-    "stop"             => _("Power Off"),
-    "enter_maint_mode" => _("Enter Maintenance Mode"),
-    "exit_maint_mode"  => _("Exit Maintenance Mode"),
-    "standby"          => _("Shutdown to Standby Mode")
-  }
-  def powerbutton_hosts(method)
-    assert_privileges(params[:pressed])
-    host_button_operation(method, POWER_BUTTON_NAMES[method] || method.titleize)
   end
 
   def host_button_operation(method, display_name)
