@@ -63,8 +63,8 @@ module EmsPhysicalInfraHelper::TextualSummary
   end
 
   def textual_hosts
-    count_of_host_relationships = (@record.physical_servers.select{|server| server.host != nil}).length
-    h = {:label =>  _("Hosts"), :icon  =>  "pficon pficon-screen", :value => count_of_host_relationships}
+    count_of_host_relationships = (@record.physical_servers.select { |server| !server.host.nil? }).length
+    {:label => _("Hosts"), :icon => "pficon pficon-screen", :value => count_of_host_relationships}
   end
 
   def textual_guid
