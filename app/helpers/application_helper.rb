@@ -742,6 +742,7 @@ module ApplicationHelper
        automation_manager
        cloud_network
        cloud_object_store_container
+       cloud_object_store_object
        cloud_subnet
        cloud_tenant
        cloud_volume
@@ -1397,6 +1398,7 @@ module ApplicationHelper
       automation_manager
       cloud_network
       cloud_object_store_container
+      cloud_object_store_object
       cloud_subnet
       cloud_tenant
       cloud_volume
