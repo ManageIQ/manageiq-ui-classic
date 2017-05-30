@@ -222,12 +222,12 @@ module ApplicationController::CiProcessing
     # Either a list or coming from a different controller (eg from host screen, go to its selected_items)
     if @lastaction == "show_list" ||
        !%w(orchestration_stack service vm_cloud vm_infra vm miq_template vm_or_template).include?(
-         request.parameters["controller"]) # showing a list
+         controller_name) # showing a list
 
       # FIXME retrieving vms from DB two times
       selected_items = find_checked_ids_with_rbac(klass)
       if method == 'retire_now' &&
-         !%w(orchestration_stack service).include?(request.parameters["controller"]) &&
+         !%w(orchestration_stack service).include?(controller_name) &&
          VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_retire? }
         add_flash(_("Retire does not apply to selected %{model}") %
           {:model => ui_lookup(:table => "miq_template")}, :error)
@@ -241,7 +241,7 @@ module ApplicationController::CiProcessing
       end
 
       if selected_items.empty?
-        add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => request.parameters["controller"]), :task => display_name}, :error)
+        add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => controller_name), :task => display_name}, :error)
       else
         process_objects(selected_items, method)
       end
@@ -253,8 +253,7 @@ module ApplicationController::CiProcessing
 
     else # showing 1 item
       if params[:id].nil? || klass.find_by_id(params[:id]).nil?
-        add_flash(_("%{record} no longer exists") %
-          {:record => ui_lookup(:table => request.parameters["controller"])}, :error)
+        add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => controller_name)}, :error)
         show_list unless @explorer
         @refresh_partial = "layouts/gtl"
       else
