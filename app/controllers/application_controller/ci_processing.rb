@@ -219,13 +219,15 @@ module ApplicationController::CiProcessing
   def vm_button_operation(method, display_name, partial_after_single_selection = nil)
     selected_items = []
     klass = get_rec_cls
-    # Either a list or coming from a different controller (eg from host screen, go to its selected_items)
+
+    # Either a list or coming from a different controller (eg from host screen, go to its vms)
     if @lastaction == "show_list" ||
        !%w(orchestration_stack service vm_cloud vm_infra vm miq_template vm_or_template).include?(
          controller_name) # showing a list
 
       # FIXME retrieving vms from DB two times
       selected_items = find_checked_ids_with_rbac(klass)
+
       if method == 'retire_now' &&
          !%w(orchestration_stack service).include?(controller_name) &&
          VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_retire? }
@@ -242,9 +244,10 @@ module ApplicationController::CiProcessing
 
       if selected_items.empty?
         add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => controller_name), :task => display_name}, :error)
-      else
-        process_objects(selected_items, method)
+        return
       end
+
+      process_objects(selected_items, method)
 
       if @lastaction == "show_list" # In the controller, refresh show_list, else let the other controller handle it
         show_list unless @explorer
