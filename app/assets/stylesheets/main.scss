@@ -28,6 +28,7 @@ $login-container-bg-color:                  #000000;
 $login-container-bg-color-rgba:             rgba(0, 0, 0, 0.2);
 $login-container-details-border-color-rgba: rgba(0, 0, 0, 0.5);
 
+@import "font-fabulous-rails";
 @import "patternfly-sprockets";
 @import "patternfly";
 @import "patternfly_overrides";
