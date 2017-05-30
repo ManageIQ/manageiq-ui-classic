@@ -217,7 +217,6 @@ module ApplicationController::CiProcessing
 
   # Common item button handler routines
   def vm_button_operation(method, display_name, partial_after_single_selection = nil)
-    selected_items = []
     klass = get_rec_cls
 
     # Either a list or coming from a different controller (eg from host screen, go to its vms)
@@ -277,7 +276,6 @@ module ApplicationController::CiProcessing
         end
       end
     end
-    selected_items.count
   end
 
   def process_cloud_object_storage_buttons(pressed)
