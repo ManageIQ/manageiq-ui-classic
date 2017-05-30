@@ -2,11 +2,16 @@ class StorageController < ApplicationController
   include_concern 'StorageD'
   include_concern 'StoragePod'
   include Mixins::GenericSessionMixin
+  include Mixins::GenericShowMixin
 
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
   after_action :set_session_data
+
+  def self.display_methods
+    %w(all_miq_templates hosts)
+  end
 
   def show_list
     redirect_to :action => 'explorer', :flash_msg => @flash_array ? @flash_array[0][:message] : nil
@@ -25,6 +30,36 @@ class StorageController < ApplicationController
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
 
     @gtl_url = "/show"
+  end
+
+  def init_show
+    return unless super
+    if !@explorer && @display == "main"
+      tree_node_id = TreeBuilder.build_node_id(@record)
+      session[:exp_parms] = {:display => @display, :refresh => params[:refresh], :id => tree_node_id}
+
+      # redirect user back to where they came from if they dont have access to any of vm explorers
+      # or redirect them to the one they have access to
+      redirect_controller = role_allows?(:feature => "storage") ? "storage" : nil
+
+      if redirect_controller
+        action = "explorer"
+      else
+        url = request.env['HTTP_REFERER'].split('/')
+        add_flash(_("User '%{username}' is not authorized to access '%{controller_name}'") %
+                    {:username => current_userid, :controller_name => ui_lookup(:table => controller_name)}, :warning)
+        session[:flash_msgs] = @flash_array.dup
+        redirect_controller  = url[3]
+        action               = url[4]
+      end
+
+      redirect_to :controller => redirect_controller,
+                  :action     => action
+      return
+    end
+
+    @gtl_url = "/show"
+    true
   end
 
   def show(record = nil)
