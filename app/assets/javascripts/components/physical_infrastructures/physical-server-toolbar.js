@@ -2,24 +2,23 @@ ManageIQ.angular.app.component('physicalServerToolbar', {
   bindings: {
     physicalServerId: '=?',
   },
-  controllerAs: 'vm',
+  controllerAs: 'toolbar',
   controller: physicalServerToolbarController,
 });
 
 physicalServerToolbarController.$inject = ['API', 'miqService'];
 
 function physicalServerToolbarController(API, miqService) {
-  var vm = this;
+  var toolbar = this;
 
   ManageIQ.angular.rxSubject.subscribe(function(event) {
-    vm.action = event.type;
+    toolbar.action = event.type;
 
-    if (vm.action) {
-      vm.servers = [];
-      if (vm.physicalServerId) {
-        vm.servers = _.union(vm.servers, [vm.physicalServerId]);
+    if (toolbar.action) {
+      if (toolbar.physicalServerId) {
+        toolbar.servers = _.union(toolbar.servers, [toolbar.physicalServerId]);
       } else {
-        vm.servers = ManageIQ.gridChecks;
+        toolbar.servers = ManageIQ.gridChecks;
       }
       postPhysicalServerAction();
     }
@@ -27,8 +26,8 @@ function physicalServerToolbarController(API, miqService) {
 
   // private functions
   function postPhysicalServerAction() {
-    _.forEach(vm.servers, function(serverId) {
-      API.post('/api/physical_servers/' + serverId, { action: vm.action })
+    _.forEach(toolbar.servers, function(serverId) {
+      API.post('/api/physical_servers/' + serverId, { action: toolbar.action })
         .then(postAction)
         .catch(miqService.handleFailure);
     });
