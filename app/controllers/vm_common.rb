@@ -1321,19 +1321,6 @@ module VmCommon
     # Handle bottom cell
     if @pages || @in_a_form
       if @pages && !@in_a_form
-        @ajax_paging_buttons = true # FIXME: this should not be done this way
-        if @sb[:action] && @record  # Came in from an action link
-          presenter.update(:paging_div, r[
-            :partial => 'layouts/x_pagingcontrols',
-            :locals  => {
-              :action_url    => @sb[:action],
-              :action_method => @sb[:action], # FIXME: action method and url the same?!
-              :action_id     => @record.id
-            }
-          ])
-        else
-          presenter.update(:paging_div, r[:partial => 'layouts/x_pagingcontrols'])
-        end
         presenter.hide(:form_buttons_div).show(:pc_div_1)
       elsif @in_a_form
         if @sb[:action] == 'dialog_provision'

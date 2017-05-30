@@ -38,7 +38,6 @@ module OpsController::Db
 
     @view, @pages = get_view(model, :filter => exp ? exp : nil) # Get the records (into a view) and the paginator
 
-    @ajax_paging_buttons = true
     @no_checkboxes = true
     @showlinks = true # Need to set @showlinks if @no_checkboxes is set to true
     @current_page = @pages[:current] unless @pages.nil? # save the current page number

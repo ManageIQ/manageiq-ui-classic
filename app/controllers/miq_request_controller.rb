@@ -404,13 +404,7 @@ class MiqRequestController < ApplicationController
       page.replace_html("list_grid", :partial => "layouts/list_grid",
                                      :locals => {:options    => grid_options,
                                                  :js_options => js_options})
-      page << "miqGridOnCheck();"           # Reset the center buttons
-
-      page.replace_html("paging_div", :partial => 'layouts/pagingcontrols',
-                                      :locals  => {:pages      => @pages,
-                                                   :action_url => "show_list",
-                                                   :db         => @view.db,
-                                                   :headers    => @view.headers})
+      page << "miqGridOnCheck();" # Reset the center buttons
       page << "miqSparkle(false);"
     end
   end

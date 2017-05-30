@@ -436,7 +436,6 @@ module OpsController::Settings::AnalysisProfiles
     @lastaction = "aps_list"
     @force_no_grid_xml = true
     @view, @pages = get_view(ScanItemSet) # Get the records (into a view) and the paginator
-    @ajax_paging_buttons = true
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
   end
 

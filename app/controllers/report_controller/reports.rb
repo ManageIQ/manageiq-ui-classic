@@ -158,7 +158,6 @@ module ReportController::Reports
     if @sb[:active_tab] == "saved_reports" || x_active_tree == :savedreports_tree
       @force_no_grid_xml   = true
       @gtl_type            = "list"
-      @ajax_paging_buttons = true
       @no_checkboxes = !role_allows?(:feature => "miq_report_saved_reports_admin", :any => true)
 
       if params[:ppsetting]                                             # User selected new per page value

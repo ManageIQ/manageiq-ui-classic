@@ -72,7 +72,6 @@ module MiqAeCustomizationController::Dialogs
     @lastaction = "dialog_list"
     # @force_no_grid_xml   = true
     @gtl_type            = "list"
-    @ajax_paging_buttons = true
     @explorer            = true
 
     if params[:ppsetting]                                             # User selected new per page value

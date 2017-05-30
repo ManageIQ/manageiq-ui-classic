@@ -72,7 +72,6 @@ class ChargebackController < ApplicationController
   def cb_rates_list
     @listicon = "chargeback_rates"
     @gtl_type = "list"
-    @ajax_paging_buttons = true
     @explorer = true
     if params[:ppsetting]                                              # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                        # Set the new per page value
@@ -854,7 +853,6 @@ class ChargebackController < ApplicationController
       end
       presenter.set_visibility(c_tb.present?, :toolbar)
       presenter.update(:main_div, r[:partial => 'rates_tabs'])
-      presenter.update(:paging_div, r[:partial => 'layouts/x_pagingcontrols'])
     when :cb_assignments_tree
       # Assignments accordion
       presenter.update(:main_div, r[:partial => "assignments_tabs"])

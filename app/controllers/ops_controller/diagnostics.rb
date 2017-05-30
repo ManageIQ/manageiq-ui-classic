@@ -608,7 +608,6 @@ module OpsController::Diagnostics
     @force_no_grid_xml = true
     @no_checkboxes = true
     @gtl_type = "list"
-    @ajax_paging_buttons = true
     @embedded = @pages = false
     @showlinks = true
     status = ["started", "ready", "working"]

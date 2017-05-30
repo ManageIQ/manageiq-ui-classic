@@ -339,7 +339,6 @@ class ServiceController < ApplicationController
       elsif record_showing
         r[:partial => "service/svcs_show", :locals => {:controller => "service"}]
       else
-        presenter.update(:paging_div, r[:partial => "layouts/x_pagingcontrols"])
         r[:partial => "layouts/x_gtl"]
       end
     )

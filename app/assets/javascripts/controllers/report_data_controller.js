@@ -362,12 +362,18 @@
     this.$timeout(function() {
       $('table td.narrow').addClass('table-view-pf-select').removeClass('narrow');
       var pagination = this.$document.getElementsByClassName('miq-pagination');
-      var pagingDiv = this.$document.querySelector('#paging_div .col-md-12');
+      var pagingDiv = this.$document.querySelector('#paging_div');
       if (pagination && pagination.length > 0 && pagingDiv) {
         var oldPagination = pagingDiv.querySelector('div');
         oldPagination ? oldPagination.remove() : null;
-        pagingDiv.appendChild(pagination[0]);
+
+        var col = $('<div class="col-md-12"></div>');
+        $(pagingDiv).append(col);
+        col[0].appendChild(pagination[0]);
       }
+      // calculates the height of main content from toolbar and footer, needed
+      // to make sure the paginator is not off the screen
+      miqInitMainContent();
     }.bind(this));
   };
 

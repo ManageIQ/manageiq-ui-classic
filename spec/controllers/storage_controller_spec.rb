@@ -135,18 +135,6 @@ describe StorageController do
         expect(response.body).to include('test_storage_cluster1')
       end
 
-      it 'can render the second page of datastores' do
-        7.times do |i|
-          FactoryGirl.create(:storage, :name => 'test_storage' % i)
-        end
-        session[:sb] = {:active_accord => :storage_accord}
-        seed_session_trees('storage', :storage_tree, 'root')
-        allow(controller).to receive(:current_page).and_return(2)
-        get :explorer, :params => {:page => '2'}
-        expect(response.status).to eq(200)
-        expect(response.body).to include("<li>\n<span>\n6-7 of 7\n<input name='limitstart' type='hidden' value='0'>\n</span>\n</li>")
-      end
-
       it "it handles x_button tagging" do
         ems = FactoryGirl.create(:ems_vmware)
         datastore = FactoryGirl.create(:storage, :name => 'storage_name')

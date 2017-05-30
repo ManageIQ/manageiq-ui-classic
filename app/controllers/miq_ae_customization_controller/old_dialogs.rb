@@ -145,7 +145,6 @@ module MiqAeCustomizationController::OldDialogs
     @lastaction = "old_dialogs_list"
     @force_no_grid_xml   = true
     @gtl_type            = "list"
-    @ajax_paging_buttons = true
     @dialog = nil
     if params[:ppsetting]                                             # User selected new per page value
       @items_per_page = params[:ppsetting].to_i                       # Set the new per page value

@@ -514,15 +514,6 @@ class StorageController < ApplicationController
     # Handle bottom cell
     if @pages || @in_a_form
       if @pages && !@in_a_form
-        @ajax_paging_buttons = true
-        if @sb[:action] && @record # Came in from an action link
-          presenter.update(:paging_div, r[:partial => 'layouts/x_pagingcontrols',
-                                          :locals  => {:action_url    => @sb[:action],
-                                                       :action_method => @sb[:action],
-                                                       :action_id     => @record.id}])
-        else
-          presenter.update(:paging_div, r[:partial => 'layouts/x_pagingcontrols'])
-        end
         presenter.hide(:form_buttons_div).show(:pc_div_1)
       elsif @in_a_form
         presenter.hide(:pc_div_1).show(:form_buttons_div)
