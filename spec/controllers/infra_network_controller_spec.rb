@@ -87,7 +87,7 @@ describe InfraNetworkingController do
     end
 
     it "builds tagging screen" do
-      post :button, :params => { :pressed => "infra_networking_tag", :format => :js, :id => @ds.id }
+      post :x_button, :params => { :pressed => "infra_networking_tag", :format => :js, :id => @ds.id }
       expect(assigns(:flash_array)).to be_nil
     end
 
