@@ -525,6 +525,7 @@ Rails.application.routes.draw do
     :cloud_volume_snapshot    => {
       :get  => %w(
         download_data
+        download_summary_pdf
         index
         show
         show_list
