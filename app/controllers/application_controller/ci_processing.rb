@@ -269,22 +269,19 @@ module ApplicationController::CiProcessing
         add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => controller_name)}, :error)
         show_list unless @explorer
         @refresh_partial = "layouts/gtl"
-      else
+        return
+      end
 
-        selected_items.push(find_id_with_rbac(klass, params[:id]))
-        process_objects(selected_items, method) unless selected_items.empty?
+      selected_items.push(find_id_with_rbac(klass, params[:id]))
+      process_objects(selected_items, method) unless selected_items.empty?
 
-        # TODO: tells callers to go back to show_list because this VM may be gone
-        # Should be refactored into calling show_list right here
-        if method == 'destroy'
-          @single_delete = true unless flash_errors?
-        end
+      # Tells callers to go back to show_list because this item may be gone.
+      @single_delete = method == 'destroy' && !flash_errors?
 
-        # For Snapshot Trees
-        if partial_after_single_selection && !@explorer
-          show
-          @refresh_partial = partial_after_single_selection
-        end
+      # For Snapshot Trees
+      if partial_after_single_selection && !@explorer
+        show
+        @refresh_partial = partial_after_single_selection
       end
     end
   end
