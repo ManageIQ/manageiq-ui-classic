@@ -2,7 +2,7 @@ describe Menu::Manager do
   include Spec::Support::MenuHelper
 
   before :each do
-    Singleton.__init__(Menu::CustomLoader)
+    Singleton.__init__(Menu::YamlLoader)
     Singleton.__init__(Menu::Manager)
   end
 
@@ -14,7 +14,7 @@ describe Menu::Manager do
     end
 
     it "loads custom menu items" do
-      expect(Menu::CustomLoader).to receive(:load).and_call_original
+      expect(Menu::YamlLoader).to receive(:load).and_call_original
       Menu::Manager.menu {}
     end
   end
