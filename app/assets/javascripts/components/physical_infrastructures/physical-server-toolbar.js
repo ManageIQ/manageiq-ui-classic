@@ -33,15 +33,15 @@ function physicalServerToolbarController(API, miqService) {
     });
   }
 
-  function postAction(response) {
-    miqService.miqFlashLater({ message: response.message });
-    miqService.miqFlashSaved();
+  function postAction(_response) {
+    // Use this to display messages individually
+    // miqService.miqFlashLater({ message: response.message });
+    // miqService.miqFlashSaved();
 
-    // To be used later when testing with real Physical servers is complete
-    // if (vm.servers.length > 1) {
-    //   miqService.miqFlash('success', sprintf(__("Requested Server state %s for the selected servers"), vm.action));
-    // } else {
-    //   miqService.miqFlash('success', sprintf(__("Requested Server state %s for the selected server"), vm.action));
-    // }
+    if (toolbar.servers.length > 1) {
+      miqService.miqFlash('success', sprintf(__('Requested Server state %s for the selected servers'), toolbar.action));
+    } else {
+      miqService.miqFlash('success', sprintf(__('Requested Server state %s for the selected server'), toolbar.action));
+    }
   }
 }
