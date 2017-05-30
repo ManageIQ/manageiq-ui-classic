@@ -215,6 +215,27 @@ module ApplicationController::CiProcessing
     ui_lookup(:models => self.class.model.name)
   end
 
+  def check_retire_requirements(selected_items)
+    # FIXME: should check model, not controller
+    return true if %w(orchestration_stack service).include?(controller_name)
+
+    if VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_retire? }
+      add_flash(_("Retire does not apply to selected %{model}") %
+        {:model => ui_lookup(:table => "miq_template")}, :error)
+      javascript_flash(:scroll_top => true)
+      return false
+    end
+    true
+  end
+
+  def check_scan_requirements(selected_items)
+    if !VmOrTemplate.batch_operation_supported?('smartstate_analysis', selected_items)
+      render_flash_not_applicable_to_model('Smartstate Analysis', ui_lookup(:tables => "vm_or_template"))
+      return false
+    end
+    true
+  end
+
   # Common item button handler routines
   def vm_button_operation(method, display_name, partial_after_single_selection = nil)
     klass = get_rec_cls
@@ -227,19 +248,8 @@ module ApplicationController::CiProcessing
       # FIXME retrieving vms from DB two times
       selected_items = find_checked_ids_with_rbac(klass)
 
-      if method == 'retire_now' &&
-         !%w(orchestration_stack service).include?(controller_name) &&
-         VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_retire? }
-        add_flash(_("Retire does not apply to selected %{model}") %
-          {:model => ui_lookup(:table => "miq_template")}, :error)
-        javascript_flash(:scroll_top => true)
-        return
-      end
-
-      if method == 'scan' && !VmOrTemplate.batch_operation_supported?('smartstate_analysis', selected_items)
-        render_flash_not_applicable_to_model('Smartstate Analysis', ui_lookup(:tables => "vm_or_template"))
-        return
-      end
+      return if method == 'retire_now' && !check_retire_requirements(selected_items)
+      return if method == 'scan' && !check_scan_requirements(selected_items)
 
       if selected_items.empty?
         add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => controller_name), :task => display_name}, :error)
@@ -248,7 +258,8 @@ module ApplicationController::CiProcessing
 
       process_objects(selected_items, method)
 
-      if @lastaction == "show_list" # In the controller, refresh show_list, else let the other controller handle it
+      # In non-explorer case, render the list (filling in @view).
+      if @lastaction == "show_list"
         show_list unless @explorer
         @refresh_partial = "layouts/gtl"
       end
