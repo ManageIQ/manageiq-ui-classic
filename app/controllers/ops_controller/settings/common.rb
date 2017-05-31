@@ -1116,7 +1116,7 @@ module OpsController::Settings::Common
         @edit[:key] = "#{@sb[:active_tab]}_edit__#{@sb[:selected_server_id]}"
         @edit[:new][:upload_type] = nil
         @sb[:good] = nil unless @sb[:show_button]
-        add_flash(_("Choose the type of custom variables to be imported"))
+        add_flash(_("Choose the type of custom variables to be imported"), :info)
         @in_a_form = true
       when "settings_label_tag_mapping"
         label_tag_mapping_get_all
