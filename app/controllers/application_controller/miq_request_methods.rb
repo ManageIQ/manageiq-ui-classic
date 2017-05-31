@@ -82,9 +82,7 @@ module ApplicationController::MiqRequestMethods
         if @breadcrumbs && (@breadcrumbs.empty? || @breadcrumbs.last[:url] == "/vm/show_list")
           javascript_redirect :action => "show_list", :controller => "vm"
         else
-          # had to get id from breadcrumbs url, because there is no params[:id] when cancel is pressed on copy Request screen.
-          url = @breadcrumbs.last[:url].split('/')
-          javascript_redirect :controller => url[1], :action => url[2], :id => url[3]
+          javascript_redirect @breadcrumbs.last[:url]
         end
       end
     elsif params[:button] == "continue"       # Template chosen, start vm provisioning
