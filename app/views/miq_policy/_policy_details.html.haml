@@ -74,46 +74,50 @@
       - if @edit
         - if @edit[:typ] == "conditions"
           %h3= _("Condition Selection")
-          %table#formtest.form{:width => "100%"}
-            %tr
-              %td{:align => "left"}= _("Available %{model} Conditions:") % {:model => ui_lookup(:model => @edit[:new][:towhat])}
-              %td
-              %td.widthed{:align => "left"}= _("Policy Conditions:")
-            %tr
-              %td.widthed{:align => "left", :valign => "top"}
-                %span#choices_chosen_div
-                  = select_tag('choices_chosen[]',
-                    options_for_select(@edit[:choices].sort),
-                    :multiple => true,
-                    :class    => "widthed",
-                    :size     => 8,
-                    :id       => "choices_chosen")
-                %p
-              %td{:width => "20", :valign => "middle"}
-                .btn-group-vertical
-                  - [[_("Move selected Conditions into this Policy"),   'choices_chosen_div', 'move_right',   'fa-angle-right'],
-                     [_("Remove all Conditions from this Policy"),      nil,                  'move_allleft', 'fa-angle-double-left'],
-                     [_("Remove selected Conditions from this Policy"), 'members_chosen_div', 'move_left',    'fa-angle-left']].each do |title, chosen_div, action, arrow_style|
-                    %button.btn.btn-default{:title => title,
-                                            :remote => true,
-                                            "data-submit" => chosen_div,
-                                            "data-method" => :post,
-                                            "data-miq_sparkle_on"  => true,
-                                            "data-miq_sparkle_off" => true,
-                                            "data-click_url" => {:url => url_for_only_path(:action => 'policy_edit',
-                                                                                 :button => action,
-                                                                                 :id => @policy)}.to_json}
-                      %i.fa{:class => arrow_style}
-              %td{:align => "right", :valign => "top"}
-                %span#members_chosen_div
-                  = select_tag('members_chosen[]',
-                    options_for_select(@edit[:new][:conditions].sort),
-                    :multiple => true,
-                    :class    => "widthed",
-                    :size     => 8,
-                    :id       => "members_chosen")
-          %strong
-            = _("* If all Conditions are removed from a Policy, it will be unconditional and always evaluate to true.")
+          .col-md-5
+            = _("Available %{model} Conditions:") % {:model => ui_lookup(:model => @edit[:new][:towhat])}
+            %span#choices_chosen_div
+              = select_tag('choices_chosen[]',
+                options_for_select(@edit[:choices].sort),
+                :multiple => true,
+                :size     => 15,
+                :class    => "form-control",
+                :style    => "overflow-x: scroll;",
+                :id       => "choices_chosen")
+            %small
+              = _("* If all Conditions are removed from a Policy, it will be unconditional and always evaluate to true.")
+
+          .col-md-1{:style => "padding: 10px"}
+            .spacer
+            .spacer
+            - [[_("Move selected Conditions into this Policy"),   'choices_chosen_div', 'move_right',   'fa-angle-right'],
+               [_("Remove all Conditions from this Policy"),      nil,                  'move_allleft', 'fa-angle-double-left'],
+               [_("Remove selected Conditions from this Policy"), 'members_chosen_div', 'move_left',    'fa-angle-left']].each do |title, chosen_div, action, arrow_style|
+              %button.btn.btn-default.btn-block{:title => title,
+                                      :remote => true,
+                                      "data-submit" => chosen_div,
+                                      "data-method" => :post,
+                                      "data-miq_sparkle_on"  => true,
+                                      "data-miq_sparkle_off" => true,
+                                      "data-click_url" => {:url => url_for_only_path(:action => 'policy_edit',
+                                                                           :button => action,
+                                                                           :id => @policy)}.to_json}           
+                %i.fa.fa-lg.hidden-xs.hidden-sm{:class => arrow_style}
+                %i.fa.fa-lg.fa-rotate-90.hidden-md.hidden-lg{:class => arrow_style}
+            .spacer
+
+          .col-md-5
+            = _("Policy Conditions:")
+            %br
+            %span#members_chosen_div
+              = select_tag('members_chosen[]',
+                options_for_select(@edit[:new][:conditions].sort),
+                :multiple => true,
+                :size     => 15,
+                :class    => "form-control",
+                :style    => "overflow-x: scroll;",
+                :id       => "members_chosen")
+
       - else
         %h3= _("Conditions")
         - if @policy_conditions.empty?
