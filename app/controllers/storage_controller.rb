@@ -3,6 +3,7 @@ class StorageController < ApplicationController
   include_concern 'StoragePod'
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
+  include Mixins::MoreShowActions
 
   before_action :check_privileges
   before_action :get_session_data
@@ -10,11 +11,15 @@ class StorageController < ApplicationController
   after_action :set_session_data
 
   def self.display_methods
-    %w(hosts)
+    %w(all_vms hosts)
+  end
+
+  def self.custom_display_method
+    %w(all_miq_templates)
   end
 
   def display_all_miq_templates
-    nested_list("miq_templates", MiqTemplate, :association => "all_miq_templates")
+    nested_list("miq_templates", MiqTemplate, :parent => @record, :association => "all_miq_templates")
   end
 
   def show_list
