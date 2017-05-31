@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## Fine-2
+
+### Fixed
+- Middleware: Add new fields to middleware Add JDBC Driver Dialog for XA JDBC Driver [(#1300)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1300)
+- Ansible: Make device path mandatory for EBS attachments [(#1321)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1321)
+- Compute
+  - Cloud: Fix HTML5 Console in IE11 [(#1337)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1337)
+  - Infrastructure
+    - Changed if condition to rely on back-end method. [(#1351)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1351)
+    - Add missing ownership routes for MiqTemplate [(#1352)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1352)
+- RBAC: Need to gsub occurrences of {{ }} in the output [(#1369)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1369)
+- Services: Fix ems cluster multilink [(#1374)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1374)
+
 ## Fine-1
 
 ### Added
