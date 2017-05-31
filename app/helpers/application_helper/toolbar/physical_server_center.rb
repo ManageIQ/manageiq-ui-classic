@@ -13,30 +13,33 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             nil,
             N_('Power on the server'),
             N_('Power On'),
-            :image     => "power_on",
-            :url_parms => "main_div",
-            :confirm   => N_("Power on the server?"),
-            :options   => {:feature => :power_on}
+            :image   => "power_on",
+            :data    => {'function'      => 'sendDataWithRx',
+                         'function-data' => '{"type": "power_on", "controller": "physicalServerToolbarController"}'},
+            :confirm => N_("Power on the server?"),
+            :options => {:feature => :power_on}
           ),
           button(
             :physical_server_power_off,
             nil,
             N_('Power off the server'),
             N_('Power Off'),
-            :image     => "power_off",
-            :url_parms => "main_div",
-            :confirm   => N_("Power off the server?"),
-            :options   => {:feature => :power_off}
+            :image   => "power_off",
+            :data    => {'function'      => 'sendDataWithRx',
+                         'function-data' => '{"type": "power_off", "controller": "physicalServerToolbarController"}'},
+            :confirm => N_("Power off the server?"),
+            :options => {:feature => :power_off}
           ),
           button(
             :physical_server_restart,
             nil,
             N_('Restart the server'),
             N_('Restart'),
-            :image     => "power_reset",
-            :url_parms => "main_div",
-            :confirm   => N_("Restart the server?"),
-            :options   => {:feature => :restart}
+            :image   => "power_reset",
+            :data    => {'function'      => 'sendDataWithRx',
+                         'function-data' => '{"type": "restart", "controller": "physicalServerToolbarController"}'},
+            :confirm => N_("Restart the server?"),
+            :options => {:feature => :restart}
           ),
         ]
       ),
@@ -51,30 +54,33 @@ class ApplicationHelper::Toolbar::PhysicalServerCenter < ApplicationHelper::Tool
             nil,
             N_('Blink the Identify LED'),
             N_('Blink LED'),
-            :image     => "blank_button",
-            :url_parms => "main_div",
-            :confirm   => N_("Blink the Identify LED?"),
-            :options   => {:feature => :blink_loc_led}
+            :image   => "blank_button",
+            :data    => {'function'      => 'sendDataWithRx',
+                         'function-data' => '{"type": "blink_loc_led", "controller": "physicalServerToolbarController"}'},
+            :confirm => N_("Blink the Identify LED?"),
+            :options => {:feature => :blink_loc_led}
           ),
           button(
             :physical_server_turn_on_loc_led,
             nil,
             N_('Turn on the Idenfity LED'),
             N_('Turn On LED'),
-            :image     => "blank_button",
-            :url_parms => "main_div",
-            :confirm   => N_("Turn on the Identify LED?"),
-            :options   => {:feature => :turn_on_loc_led}
+            :image   => "blank_button",
+            :data    => {'function'      => 'sendDataWithRx',
+                         'function-data' => '{"type": "turn_on_loc_led", "controller": "physicalServerToolbarController"}'},
+            :confirm => N_("Turn on the Identify LED?"),
+            :options => {:feature => :turn_on_loc_led}
           ),
           button(
             :physical_server_turn_off_loc_led,
             nil,
             N_('Turn off the Identify LED'),
             N_('Turn Off LED'),
-            :image     => "blank_button",
-            :url_parms => "main_div",
-            :confirm   => N_("Turn off the Identify LED?"),
-            :options   => {:feature => :turn_off_loc_led}
+            :image   => "blank_button",
+            :data    => {'function'      => 'sendDataWithRx',
+                         'function-data' => '{"type": "turn_off_loc_led", "controller": "physicalServerToolbarController"}'},
+            :confirm => N_("Turn off the Identify LED?"),
+            :options => {:feature => :turn_off_loc_led}
           ),
         ]
       ),

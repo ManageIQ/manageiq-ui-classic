@@ -1,4 +1,5 @@
-/* global miqAjaxButton miqBuildCalendar miqButtons miqJqueryRequest miqRESTAjaxButton miqSparkleOff miqSparkleOn add_flash */
+/* global miqAjaxButton miqBuildCalendar miqButtons miqJqueryRequest miqRESTAjaxButton miqSparkleOff miqSparkleOn
+add_flash miqFlashLater miqFlashSaved */
 
 ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API', function($timeout, $document, $q, API) {
   var miqService = this;
@@ -51,6 +52,14 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
   // FIXME: usually we just hide it, merge the logic
   this.miqFlashClear = function() {
     $('#flash_msg_div').text("");
+  };
+
+  this.miqFlashLater = function(msgObj) {
+    miqFlashLater(msgObj);
+  };
+
+  this.miqFlashSaved = function() {
+    miqFlashSaved();
   };
 
   this.saveable = function(form) {

@@ -3,3 +3,8 @@
     = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
   - else
     = render :partial => 'layouts/textual_groups_generic'
+
+  %physical-server-toolbar#physical_server_show_form{'physical-server-id' => @record.id}
+
+:javascript
+  miq_bootstrap('#physical_server_show_form');
