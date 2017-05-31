@@ -47,12 +47,11 @@
               .col-md-12
                 = yield
         .col-md-12.no-padding
+          = render :partial => 'layouts/x_form_buttons'
           .row.toolbar-pf#paging_div
             - if saved_report_paging?
               = render(:partial => 'layouts/saved_report_paging_bar',
                        :locals  => {:pages => @sb[:pages]})
-            - else
-              = render :partial => 'layouts/x_form_buttons'
 
         - unless simulate
           .resizer.hidden-xs
