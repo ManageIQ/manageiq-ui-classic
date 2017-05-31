@@ -419,11 +419,7 @@ module ApplicationController::Filter
     end
 
     if ["delete", "saveit"].include?(params[:button])
-      if x_active_tree.to_s == "configuration_manager_cs_filter_tree"
-        build_configuration_manager_tree(:configuration_manager_cs_filter, x_active_tree)
-        build_accordions_and_trees
-        load_or_clear_adv_search
-      elsif @edit[:in_explorer] || %w(storage_tree configuration_scripts_tree).include?(x_active_tree.to_s)
+      if @edit[:in_explorer] || x_active_tree == :storage_tree
         tree_type = x_active_tree.to_s.sub(/_tree/, '').to_sym
         builder = TreeBuilder.class_for_type(tree_type)
         tree = builder.new(x_active_tree, tree_type, @sb)
@@ -448,7 +444,7 @@ module ApplicationController::Filter
       end
 
       if ["delete", "saveit"].include?(params[:button])
-        if @edit[:in_explorer] || %w(storage_tree configuration_scripts_tree).include?(x_active_tree.to_s)
+        if @edit[:in_explorer] || x_active_tree == :storage_tree
           tree_name = x_active_tree.to_s
           page.replace("#{tree_name}_div", :partial => "shared/tree", :locals => {
             :tree => tree,
@@ -506,11 +502,7 @@ module ApplicationController::Filter
         if x_active_tree.to_s =~ /_filter_tree$/ &&
            !["Vm", "MiqTemplate"].include?(TreeBuilder.get_model_for_prefix(@nodetype))
           search_id = 0
-          if x_active_tree == :configuration_manager_cs_filter_tree || x_active_tree == :automation_manager_cs_filter_tree
-            adv_search_build("ConfiguredSystem")
-          else
-            adv_search_build(vm_model_from_active_tree(x_active_tree))
-          end
+          adv_search_build(model_from_active_tree(x_active_tree))
           session[:edit] = @edit              # Set because next method will restore @edit from session
         end
         listnav_search_selected(search_id)  # Clear or set the adv search filter
