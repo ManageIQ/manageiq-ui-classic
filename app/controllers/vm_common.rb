@@ -1339,6 +1339,12 @@ module VmCommon
         elsif action != "retire" && action != "reconfigure_update"
           presenter.update(:form_buttons_div, r[:partial => 'layouts/x_edit_buttons', :locals => locals])
         end
+
+        # Make sure the form_buttons_div is empty.
+        # it would remain on the screen if prior to retire some action that uses the form_buttons_div was used
+        # such as "edit tags" or "manage policies".
+        presenter.update(:form_buttons_div, '') if action == "retire"
+
         presenter.hide(:pc_div_1).show(:form_buttons_div)
       end
       presenter.show(:paging_div)
