@@ -1,16 +1,17 @@
 ManageIQ.angular.app.controller('tenantQuotaFormController', ['$http', '$scope', 'tenantQuotaFormId', 'tenantType', 'miqService', function($http, $scope, tenantQuotaFormId, tenantType, miqService) {
+  var vm = this;
   var init = function() {
-    $scope.tenantQuotaModel = {
+    vm.tenantQuotaModel = {
       name: '',
       quotas: {},
     };
-    $scope.formId = tenantQuotaFormId;
-    $scope.afterGet = false;
-    $scope.modelCopy = angular.copy( $scope.tenantQuotaModel );
-    $scope.model = "tenantQuotaModel";
+    vm.formId = tenantQuotaFormId;
+    vm.afterGet = false;
+    vm.modelCopy = angular.copy( vm.tenantQuotaModel );
+    vm.model = "tenantQuotaModel";
 
-    ManageIQ.angular.scope = $scope;
-    $scope.newRecord = false;
+    ManageIQ.angular.scope = vm;
+    vm.newRecord = false;
     miqService.sparkleOn();
     $http.get('/ops/tenant_quotas_form_fields/' + tenantQuotaFormId)
       .then(getTenantQuotaData)
@@ -33,7 +34,7 @@ ManageIQ.angular.app.controller('tenantQuotaFormController', ['$http', '$scope',
   };
 
   $scope.resetClicked = function() {
-    $scope.tenantQuotaModel = angular.copy( $scope.modelCopy );
+    vm.tenantQuotaModel = angular.copy( vm.modelCopy );
     $scope.angularForm.$setUntouched(true);
     $scope.angularForm.$setPristine(true);
     miqService.miqFlash("warn", __("All changes have been reset"));
@@ -42,9 +43,9 @@ ManageIQ.angular.app.controller('tenantQuotaFormController', ['$http', '$scope',
   $scope.saveClicked = function() {
     var data = {};
     var GIGABYTE = 1024 * 1024 * 1024;
-    for (var key in $scope.tenantQuotaModel.quotas) {
-      if ($scope.tenantQuotaModel.quotas.hasOwnProperty(key)) {
-        var quota =  $scope.tenantQuotaModel.quotas[key];
+    for (var key in vm.tenantQuotaModel.quotas) {
+      if (vm.tenantQuotaModel.quotas.hasOwnProperty(key)) {
+        var quota =  vm.tenantQuotaModel.quotas[key];
         if (quota['value']) {
           var q = {};
           if (quota['unit'] === "bytes")
@@ -59,48 +60,48 @@ ManageIQ.angular.app.controller('tenantQuotaFormController', ['$http', '$scope',
     $scope.angularForm.$setPristine(true);
   };
 
-  $scope.check_quotas_changed = function() {
-    for (var key in $scope.tenantQuotaModel.quotas) {
-      if ($scope.tenantQuotaModel.quotas.hasOwnProperty(key)) {
-        if ($scope.tenantQuotaModel.quotas[key]['value'] != $scope.modelCopy.quotas[key]['value'])
+  vm.check_quotas_changed = function() {
+    for (var key in vm.tenantQuotaModel.quotas) {
+      if (vm.tenantQuotaModel.quotas.hasOwnProperty(key)) {
+        if (vm.tenantQuotaModel.quotas[key]['value'] != vm.modelCopy.quotas[key]['value'])
           return true;
       }
     }
     return false;
   };
 
-  $scope.enforcedChanged = function(name) {
+  vm.enforcedChanged = function(name) {
     miqService.miqFlashClear();
-    for ( var key in $scope.tenantQuotaModel.quotas ) {
-      if ($scope.tenantQuotaModel.quotas.hasOwnProperty(key) && (key == name)) {
-        if (!$scope.tenantQuotaModel.quotas[key]['enforced'])
-          $scope.tenantQuotaModel.quotas[key]['value'] = null;
+    for ( var key in vm.tenantQuotaModel.quotas ) {
+      if (vm.tenantQuotaModel.quotas.hasOwnProperty(key) && (key == name)) {
+        if (!vm.tenantQuotaModel.quotas[key]['enforced'])
+          vm.tenantQuotaModel.quotas[key]['value'] = null;
         else
-          if($scope.modelCopy.quotas[key]['value'])
-            $scope.tenantQuotaModel.quotas[key]['value'] = $scope.modelCopy.quotas[key]['value'];
+          if(vm.modelCopy.quotas[key]['value'])
+            vm.tenantQuotaModel.quotas[key]['value'] = vm.modelCopy.quotas[key]['value'];
           else
-            $scope.tenantQuotaModel.quotas[key]['value'] = 0;
-        if (!$scope.check_quotas_changed())
+            vm.tenantQuotaModel.quotas[key]['value'] = 0;
+        if (!vm.check_quotas_changed())
           $scope.angularForm.$setPristine(true);
       }
     }
   };
 
-  $scope.valueChanged = function() {
+  vm.valueChanged = function() {
     miqService.miqFlashClear();
-    if (!$scope.check_quotas_changed())
+    if (!vm.check_quotas_changed())
       $scope.angularForm.$setPristine(true);
   };
 
   function getTenantQuotaData(response) {
     var data = response.data;
 
-    $scope.tenantQuotaModel.name = data.name;
-    $scope.tenantQuotaModel.quotas = angular.copy(data.quotas);
+    vm.tenantQuotaModel.name = data.name;
+    vm.tenantQuotaModel.quotas = angular.copy(data.quotas);
     var GIGABYTE = 1024 * 1024 * 1024;
-    for (var key in $scope.tenantQuotaModel.quotas) {
-      if ($scope.tenantQuotaModel.quotas.hasOwnProperty(key)) {
-        var quota =  $scope.tenantQuotaModel.quotas[key];
+    for (var key in vm.tenantQuotaModel.quotas) {
+      if (vm.tenantQuotaModel.quotas.hasOwnProperty(key)) {
+        var quota =  vm.tenantQuotaModel.quotas[key];
         if (quota.value) {
           if (quota.unit === 'bytes') {
             quota.value = quota.value / GIGABYTE;
@@ -117,8 +118,8 @@ ManageIQ.angular.app.controller('tenantQuotaFormController', ['$http', '$scope',
         }
       }
     }
-    $scope.afterGet = true;
-    $scope.modelCopy = angular.copy( $scope.tenantQuotaModel );
+    vm.afterGet = true;
+    vm.modelCopy = angular.copy( vm.tenantQuotaModel );
     miqService.sparkleOff();
   }
 
