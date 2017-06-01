@@ -75,18 +75,7 @@ module ApplicationController::MiqRequestMethods
       session[:flash_msgs] = @flash_array.dup unless session[:edit][:explorer]  # Put msg in session for next transaction to display
       @explorer = session[:edit][:explorer] ? session[:edit][:explorer] : false
       @edit = session[:edit] =  nil                                               # Clear out session[:edit]
-      if @explorer
-        @sb[:action] = nil
-        replace_right_cell
-      else
-        if @breadcrumbs && (@breadcrumbs.empty? || @breadcrumbs.last[:url] == "/vm/show_list")
-          javascript_redirect :action => "show_list", :controller => "vm"
-        else
-          # had to get id from breadcrumbs url, because there is no params[:id] when cancel is pressed on copy Request screen.
-          url = @breadcrumbs.last[:url].split('/')
-          javascript_redirect :controller => url[1], :action => url[2], :id => url[3]
-        end
-      end
+      prov_request_cancel_submit_response
     elsif params[:button] == "continue"       # Template chosen, start vm provisioning
       params[:button] = nil                   # Clear the incoming button
       @edit = session[:edit]                  # Grab what we need from @edit
