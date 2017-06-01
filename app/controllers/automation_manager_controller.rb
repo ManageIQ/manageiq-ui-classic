@@ -7,6 +7,7 @@ class AutomationManagerController < ApplicationController
 
   include Mixins::GenericSessionMixin
   include Mixins::ManagerControllerMixin
+  include Mixins::ExplorerPresenterMixin
 
   menu_section :automation_manager
 

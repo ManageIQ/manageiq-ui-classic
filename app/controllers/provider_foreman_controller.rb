@@ -7,6 +7,7 @@ class ProviderForemanController < ApplicationController
 
   include Mixins::GenericSessionMixin
   include Mixins::ManagerControllerMixin
+  include Mixins::ExplorerPresenterMixin
 
   def self.model
     ManageIQ::Providers::ConfigurationManager
