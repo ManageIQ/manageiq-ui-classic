@@ -355,13 +355,6 @@ module Mixins
       @right_cell_text = _("All Configured Systems")
     end
 
-    def rendering_objects
-      ExplorerPresenter.new(
-        :active_tree => x_active_tree,
-        :delete_node => @delete_node,
-      )
-    end
-
     def render_form
       presenter = rendering_objects
       @in_a_form = true

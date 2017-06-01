@@ -6,6 +6,7 @@ class InfraNetworkingController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericSessionMixin
+  include Mixins::ExplorerPresenterMixin
 
   def self.model
     Switch
@@ -334,13 +335,6 @@ class InfraNetworkingController < ApplicationController
     process_show_list(options) if @show_list
     @right_cell_text = _("All Switches")
     options
-  end
-
-  def rendering_objects
-    ExplorerPresenter.new(
-      :active_tree => x_active_tree,
-      :delete_node => @delete_node,
-    )
   end
 
   def render_form

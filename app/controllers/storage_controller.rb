@@ -504,13 +504,6 @@ class StorageController < ApplicationController
     end
   end
 
-  def rendering_objects
-    ExplorerPresenter.new(
-      :active_tree => x_active_tree,
-      :delete_node => @delete_node,
-    )
-  end
-
   def render_tagging_form
     return if %w(cancel save).include?(params[:button])
     @in_a_form = true
