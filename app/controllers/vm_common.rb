@@ -554,85 +554,12 @@ module VmCommon
 
   def evm_relationship
     @record = find_record_with_rbac(VmOrTemplate, params[:id])  # Set the VM object
-    @edit = {}
-    @edit[:vm_id] = @record.id
-    @edit[:key] = "evm_relationship_edit__new"
-    @edit[:current] = {}
-    @edit[:new] = {}
-    evm_relationship_build_screen
-    @edit[:current] = copy_hash(@edit[:new])
-    session[:changed] = false
-
-    @in_a_form = true
-    if @explorer
-      @refresh_partial = "vm_common/evm_relationship"
-      @edit[:explorer] = true
-    end
+    @refresh_partial = "vm_common/evm_relationship"
   end
   alias_method :image_evm_relationship, :evm_relationship
   alias_method :instance_evm_relationship, :evm_relationship
   alias_method :vm_evm_relationship, :evm_relationship
   alias_method :miq_template_evm_relationship, :evm_relationship
-
-  # Build the evm_relationship assignment screen
-  def evm_relationship_build_screen
-    @servers = {}   # Users array for first chooser
-    MiqServer.all.each { |s| @servers["#{s.name} (#{s.id})"] = s.id.to_s }
-    @edit[:new][:server] = @record.miq_server ? @record.miq_server.id.to_s : nil            # Set to first category, if not already set
-  end
-
-  def evm_relationship_field_changed
-    return unless load_edit("evm_relationship_edit__new")
-    evm_relationship_get_form_vars
-    changed = (@edit[:new] != @edit[:current])
-    render :update do |page|
-      page << javascript_prologue
-      page << javascript_for_miq_button_visibility(changed)
-    end
-  end
-
-  def evm_relationship_get_form_vars
-    @record = VmOrTemplate.find_by_id(@edit[:vm_id])
-    @edit[:new][:server] = params[:server_id] == "" ? nil : params[:server_id] if params[:server_id]
-  end
-
-  def evm_relationship_update
-    return unless load_edit("evm_relationship_edit__new")
-    evm_relationship_get_form_vars
-    case params[:button]
-    when "cancel"
-      msg = _("Edit Management Engine Relationship was cancelled by the user")
-      if @edit[:explorer]
-        add_flash(msg)
-        @sb[:action] = nil
-        replace_right_cell
-      else
-        javascript_redirect :action => 'show', :id => @record.id, :flash_msg => msg
-      end
-    when "save"
-      svr = @edit[:new][:server] && @edit[:new][:server] != "" ? MiqServer.find(@edit[:new][:server]) : nil
-      @record.miq_server = svr
-      @record.save
-      msg = _("Management Engine Relationship saved")
-      if @edit[:explorer]
-        add_flash(msg)
-        @sb[:action] = nil
-        replace_right_cell
-      else
-        javascript_redirect :action => 'show', :id => @record.id, :flash_msg => msg
-      end
-    when "reset"
-      @in_a_form = true
-      if @edit[:explorer]
-        @explorer = true
-        evm_relationship
-        add_flash(_("All changes have been reset"), :warning)
-        replace_right_cell
-      else
-        javascript_redirect :action => 'evm_relationship', :id => @record.id, :flash_msg => _("All changes have been reset"), :flash_warning => true, :escape => true
-      end
-    end
-  end
 
   def delete
     @lastaction = "delete"
