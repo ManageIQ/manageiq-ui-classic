@@ -75,16 +75,7 @@ module ApplicationController::MiqRequestMethods
       session[:flash_msgs] = @flash_array.dup unless session[:edit][:explorer]  # Put msg in session for next transaction to display
       @explorer = session[:edit][:explorer] ? session[:edit][:explorer] : false
       @edit = session[:edit] =  nil                                               # Clear out session[:edit]
-      if @explorer
-        @sb[:action] = nil
-        replace_right_cell
-      else
-        if @breadcrumbs && (@breadcrumbs.empty? || @breadcrumbs.last[:url] == "/vm/show_list")
-          javascript_redirect :action => "show_list", :controller => "vm"
-        else
-          javascript_redirect @breadcrumbs.last[:url]
-        end
-      end
+      prov_request_cancel_submit_response
     elsif params[:button] == "continue"       # Template chosen, start vm provisioning
       params[:button] = nil                   # Clear the incoming button
       @edit = session[:edit]                  # Grab what we need from @edit
