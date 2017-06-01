@@ -62,13 +62,13 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfraCenter < ApplicationHelper::To
   button_group('ems_physical_infra_monitoring', [
     select(
       :ems_physical_infra_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :ems_physical_infra_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this Physical Infrastructure Provider'),
           N_('Timelines'),
           :klass     => ApplicationHelper::Button::EmsTimeline,

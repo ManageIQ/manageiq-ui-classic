@@ -11,7 +11,7 @@ module TreeNode
       when @object.git_enabled?
         image = 'svg/ae_git_domain.svg'
       when @object.name == MiqAeDatastore::MANAGEIQ_DOMAIN
-        icon = 'product product-product'
+        icon = 'ff ff-manageiq'
       when !@object.top_level_namespace
         icon = 'fa fa-globe'
       else

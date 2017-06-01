@@ -105,20 +105,20 @@ class ApplicationHelper::Toolbar::XVmCloudCenter < ApplicationHelper::Toolbar::B
   button_group('instance_monitoring', [
     select(
       :instance_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :instance_perf,
-          'product product-monitoring fa-lg',
+          'ff ff-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this Instance'),
           N_('Utilization'),
           :url_parms => "?display=performance",
           :klass     => ApplicationHelper::Button::VmPerf),
         button(
           :instance_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this Instance'),
           N_('Timelines'),
           :klass     => ApplicationHelper::Button::GenericFeatureButton,

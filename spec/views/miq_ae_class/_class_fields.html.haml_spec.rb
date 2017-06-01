@@ -45,8 +45,8 @@ describe "miq_ae_class/_class_fields.html.haml" do
                :aetypes   => [],
                :fields    => [@ae_class.ae_fields.first]
              })
-      @combo_xml = [["Assertion", "assertion", {"data-icon"=>"product product-assertion"}]]
-      @dtype_combo_xml = [["String", "string", {"data-icon"=>"product product-string"}]]
+      @combo_xml = [["Assertion", "assertion", {"data-icon"=>"fa fa-comment-o"}]]
+      @dtype_combo_xml = [["String", "string", {"data-icon"=>"ff ff-string"}]]
     end
 
     it "Check instance", :js => true do

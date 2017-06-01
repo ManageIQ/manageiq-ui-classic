@@ -48,7 +48,7 @@ class AutomateImportJsonSerializerService
       {
         :text       => class_name.split("/").last,
         :key        => class_name.split("/")[1..-1].join("/"),
-        :icon       => 'product product-ae_class',
+        :icon       => 'ff ff-class',
         :selectable => false
       }
     end

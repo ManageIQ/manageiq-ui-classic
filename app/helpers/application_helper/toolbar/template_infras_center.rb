@@ -28,7 +28,7 @@ class ApplicationHelper::Toolbar::TemplateInfrasCenter < ApplicationHelper::Tool
           :onwhen    => "1+"),
         button(
           :miq_template_compare,
-          'product product-compare fa-lg',
+          'ff ff-compare-same fa-lg',
           N_('Select two or more Templates to compare'),
           N_('Compare Selected Templates'),
           :url_parms => "main_div",
@@ -126,7 +126,7 @@ class ApplicationHelper::Toolbar::TemplateInfrasCenter < ApplicationHelper::Tool
           :klass     => ApplicationHelper::Button::ButtonNewDiscover),
         button(
           :miq_template_clone,
-          'product product-clone fa-lg',
+          'ff ff-clone fa-lg',
           N_('Clone this Template'),
           N_('Clone selected Template'),
           :url_parms => "main_div",

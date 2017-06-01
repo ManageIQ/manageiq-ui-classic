@@ -44,13 +44,13 @@ class ApplicationHelper::Toolbar::StorageCenter < ApplicationHelper::Toolbar::Ba
   button_group('storage_monitoring', [
     select(
       :storage_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :storage_perf,
-          'product product-monitoring fa-lg',
+          'ff ff-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this Datastore'),
           N_('Utilization'),
           :url       => "/show",

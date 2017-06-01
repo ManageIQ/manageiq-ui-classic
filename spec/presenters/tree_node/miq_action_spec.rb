@@ -6,5 +6,5 @@ describe TreeNode::MiqAction do
 
   include_examples 'TreeNode::Node#key prefix', 'a-'
   include_examples 'TreeNode::Node#title description'
-  include_examples 'TreeNode::Node#icon', 'product product-action'
+  include_examples 'TreeNode::Node#icon', 'ff ff-action'
 end

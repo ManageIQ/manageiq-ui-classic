@@ -47,7 +47,7 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
       {
         :text    => el.attributes["name"],
         :tooltip => el.attributes["name"],
-        :icon    => 'product product-attribute'
+        :icon    => 'ff ff-attribute'
       }
     elsif el.name.starts_with?('MiqAeService')
       key = el.name.sub(/^MiqAeService/, '').gsub('_', '::')
@@ -86,7 +86,7 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
       parent[:attributes].each_with_index do |k, idx|
         object = {
           :id          => "a_#{idx}",
-          :icon        => "product product-attribute",
+          :icon        => "ff ff-attribute",
           :cfmeNoClick => true,
           :text        => "#{k.first} = #{k.last}"
         }
@@ -108,7 +108,7 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
     when ContainerVolume
       'pficon pficon-volume'
     when GuestApplication
-      'product product-application'
+      'ff ff-software-package'
     when HostAggregate
       'pficon pficon-screen'
     when MiqRequest

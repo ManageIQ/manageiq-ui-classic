@@ -83,7 +83,7 @@ module CloudTenantHelper::TextualSummary
   def textual_cloud_object_store_containers
     label = ui_lookup(:tables => "cloud_object_store_container")
     num   = @record.number_of(:cloud_object_store_containers)
-    h     = {:label => label, :icon => "product product-cloud_object_store", :value => num}
+    h     = {:label => label, :icon => "ff ff-cloud-object-store", :value => num}
     if num > 0 && role_allows?(:feature => "cloud_object_store_container_show_list")
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'cloud_object_store_containers')
       h[:title] = _("Show all %{models}") % {:models => label}

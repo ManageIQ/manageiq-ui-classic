@@ -5,5 +5,5 @@ describe TreeNode::IsoImage do
   let(:object) { FactoryGirl.create(:iso_image) }
 
   include_examples 'TreeNode::Node#key prefix', 'isi-'
-  include_examples 'TreeNode::Node#icon', 'product product-network_card'
+  include_examples 'TreeNode::Node#icon', 'ff ff-network-card'
 end

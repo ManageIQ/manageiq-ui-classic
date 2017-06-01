@@ -1725,7 +1725,7 @@ var fontIconChar = _.memoize(function (klass) {
   tmp.className = 'hidden ' + klass;
   document.body.appendChild(tmp);
   var char = window.getComputedStyle(tmp, ':before').content.replace(/'|"/g, '');
-  var font = window.getComputedStyle(tmp).fontFamily;
+  var font = window.getComputedStyle(tmp, ':before').fontFamily;
   tmp.remove();
   return {font: font, char: char};
 });

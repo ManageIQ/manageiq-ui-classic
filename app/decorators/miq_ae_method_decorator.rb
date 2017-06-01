@@ -1,5 +1,5 @@
 class MiqAeMethodDecorator < MiqDecorator
   def self.fonticon
-    'product product-method'
+    'ff ff-method'
   end
 end

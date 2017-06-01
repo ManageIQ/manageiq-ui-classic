@@ -51,7 +51,7 @@
               - rec_type = "Group"
             %tr{:title => _("Click to view details"), :onclick => "miqTreeActivateNode('#{tree_box}', '#{tree_id}_#{typ}-#{to_cid(obj[:id])}')"}
               %td.table-view-pf-select
-                %i{:class => "product product-custom-#{img}"}
+                %i{:class => "miq-custom-button-#{img}"}
               %td
                 = obj[:name].split("|").first
               - if x_active_tree == :sandt_tree
@@ -90,7 +90,7 @@
         %label.control-label.col-md-2
           = _('Image')
         .col-md-8
-          %span{:class => "product product-custom-#{@record.set_data[:button_image]}"}
+          %span{:class => "miq-custom-button-#{@record.set_data[:button_image]}"}
   - if @sb[:buttons].blank?
     %hr
     = render :partial => 'layouts/info_msg', :locals => {:message => _("No Buttons found.")}
@@ -109,7 +109,7 @@
           - id = @nodetype[0].split('-')[1] == "ub" ? "#{@nodetype[0]}_cb-#{to_cid(obj[:id])}" : "#{x_node}_cb-#{to_cid(obj[:id])}"
           %tr{:title => _("Click to view details"), :onclick => "miqTreeActivateNode('#{tree_box}', '#{id}')"}
             %td.table-view-pf-select
-              %i{:class => "product product-custom-#{obj[:button_image]}"}
+              %i{:class => "miq-custom-button-#{obj[:button_image]}"}
             %td
               = obj[:name]
             %td

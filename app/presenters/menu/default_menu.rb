@@ -117,7 +117,7 @@ module Menu
 
       def datawarehouse_menu_section
         if ::Settings.product.datawarehouse_manager
-          Menu::Section.new(:dwh, N_("Datawarehouse"), 'fa product-datawarehouse', [
+          Menu::Section.new(:dwh, N_("Datawarehouse"), 'pficon pficon-enterprise', [
             Menu::Item.new('ems_datawarehouse', N_('Providers'), 'ems_datawarehouse',
                            {:feature => 'ems_datawarehouse_show_list'}, '/ems_datawarehouse')
             ])

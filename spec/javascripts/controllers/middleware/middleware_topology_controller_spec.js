@@ -175,7 +175,7 @@ describe('middlewareTopologyController', function () {
     it('in graph elements', function () {
       expect($controller.getIcon(mw_manager).icon).toContain("vendor-hawkular");
       expect($controller.getIcon(mw_server).icon).toContain("vendor-wildfly");
-      expect($controller.getIcon(mw_deployment).fontfamily).toEqual("icomoon");
+      expect($controller.getIcon(mw_deployment).fontfamily).toEqual("font-fabulous");
       expect($controller.getIcon(mw_datasource).fontfamily).toEqual("FontAwesome");
       expect($controller.getIcon(vm).fontfamily).toEqual("PatternFlyIcons-webfont");
       expect($controller.getIcon(mw_domain).fontfamily).toEqual("FontAwesome");

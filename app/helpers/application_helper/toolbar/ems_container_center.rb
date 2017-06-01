@@ -36,13 +36,13 @@ class ApplicationHelper::Toolbar::EmsContainerCenter < ApplicationHelper::Toolba
   button_group('ems_container_monitoring', [
     select(
       :ems_container_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :ems_container_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this Containers Provider'),
           N_('Timelines'),
           :klass     => ApplicationHelper::Button::GenericFeatureButton,
@@ -50,7 +50,7 @@ class ApplicationHelper::Toolbar::EmsContainerCenter < ApplicationHelper::Toolba
           :url_parms => "?display=timeline"),
         button(
           :ems_container_perf,
-          'product product-monitoring fa-lg',
+          'ff ff-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this Provider'),
           N_('Utilization'),
           :klass     => ApplicationHelper::Button::GenericFeatureButton,
@@ -66,7 +66,7 @@ class ApplicationHelper::Toolbar::EmsContainerCenter < ApplicationHelper::Toolba
           :url_parms => "?display=ad_hoc_metrics"),
         button(
           :ems_container_launch_external_logging,
-          'product product-monitoring fa-lg',
+          'ff ff-monitoring fa-lg',
           N_('Open a new browser window with the External Logging Presentation UI. ' \
              'This requires the External Logging to be deployed on this Proider.'),
           N_('External Logging'),

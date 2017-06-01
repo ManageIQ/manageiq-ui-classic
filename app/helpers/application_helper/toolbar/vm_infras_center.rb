@@ -38,7 +38,7 @@ class ApplicationHelper::Toolbar::VmInfrasCenter < ApplicationHelper::Toolbar::B
           :onwhen    => "1+"),
         button(
           :vm_compare,
-          'product product-compare fa-lg',
+          'ff ff-compare-same fa-lg',
           N_('Select two or more items to compare'),
           N_('Compare Selected items'),
           :url_parms => "main_div",
@@ -73,7 +73,7 @@ class ApplicationHelper::Toolbar::VmInfrasCenter < ApplicationHelper::Toolbar::B
         separator,
         button(
           :vm_right_size,
-          'product product-custom-6 fa-lg',
+          'ff ff-database-squeezed fa-lg',
           N_('CPU/Memory Recommendations of selected item'),
           N_('Right-Size Recommendations'),
           :url_parms => "main_div",
@@ -152,7 +152,7 @@ class ApplicationHelper::Toolbar::VmInfrasCenter < ApplicationHelper::Toolbar::B
           :klass     => ApplicationHelper::Button::VmMiqRequestNew),
         button(
           :vm_clone,
-          'product product-clone fa-lg',
+          'ff ff-clone fa-lg',
           N_('Clone this item'),
           N_('Clone selected item'),
           :url_parms => "main_div",
@@ -170,7 +170,7 @@ class ApplicationHelper::Toolbar::VmInfrasCenter < ApplicationHelper::Toolbar::B
           :klass     => ApplicationHelper::Button::BasicImage),
         button(
           :vm_migrate,
-          'product product-migrate fa-lg',
+          'fa fa-reply fa-rotate-90 fa-lg',
           N_('Migrate selected items to another Host/Datastore'),
           N_('Migrate selected items'),
           :url_parms => "main_div",

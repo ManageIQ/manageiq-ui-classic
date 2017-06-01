@@ -1,5 +1,5 @@
 class GuestDeviceDecorator < MiqDecorator
   def self.fonticon
-    'product product-network_card'
+    'ff ff-network-card'
   end
 end

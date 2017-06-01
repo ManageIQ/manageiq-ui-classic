@@ -24,7 +24,7 @@ class MiqActionDecorator < MiqDecorator
     when 'script'
       'fa fa-file-text-o'
     when 'set_custom_attribute'
-      'product product-attribute'
+      'ff ff-attribute'
     when 'snmp_trap'
       'fa fa fa-envelope-o'
     when 'tag'
@@ -34,7 +34,7 @@ class MiqActionDecorator < MiqDecorator
     when 'run_ansible_playbook'
       'fa fa-file-text-o'
     when 'default'
-      'product product-action'
+      'ff ff-action'
     end
   end
 end

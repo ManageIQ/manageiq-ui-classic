@@ -2,7 +2,7 @@ module UiServiceMixin
   def icons
     {
       :AvailabilityZone        => {:type => "glyph", :class => 'pficon pficon-zone'},
-      :CloudNetwork            => {:type => "glyph", :class => 'product product-cloud_network'},
+      :CloudNetwork            => {:type => "glyph", :class => 'ff ff-cloud-network'},
       :CloudSubnet             => {:type => "glyph", :class => 'pficon pficon-network'},
       :CloudTenant             => {:type => "glyph", :class => 'pficon pficon-cloud-tenant'},
       :Container               => {:type => "glyph", :class => 'fa fa-cube'},
@@ -15,11 +15,11 @@ module UiServiceMixin
       :EmsCluster              => {:type => "glyph", :class => 'pficon pficon-cluster'},
       :FloatingIp              => {:type => "glyph", :class => 'fa fa-map-marker'},
       :Host                    => {:type => "glyph", :class => 'pficon pficon-screen'},
-      :LoadBalancer            => {:type => "glyph", :class => 'product product-load_balancer'},
+      :LoadBalancer            => {:type => "glyph", :class => 'ff ff-load-balancer'},
       :MiddlewareDatasource    => {:type => "glyph", :class => 'fa fa-database'},
       :MiddlewareDeployment    => {:type => "glyph", :class => 'fa fa-file-text-o'},
-      :MiddlewareDeploymentEar => {:type => "glyph", :class => 'product product-file-ear-o'},
-      :MiddlewareDeploymentWar => {:type => "glyph", :class => 'product product-file-war-o'},
+      :MiddlewareDeploymentEar => {:type => "glyph", :class => 'ff ff-file-ear-o'},
+      :MiddlewareDeploymentWar => {:type => "glyph", :class => 'ff ff-file-war-o'},
       :MiddlewareDomain        => {:type => "glyph", :class => 'pficon pficon-domain'},
       :MiddlewareMessaging     => {:type => "glyph", :class => 'fa fa-exchange (placeholder)'},
       :MiddlewareServerGroup   => {:type => "glyph", :class => 'pficon pficon-server-group'},

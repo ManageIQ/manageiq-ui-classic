@@ -32,13 +32,13 @@ class ApplicationHelper::Toolbar::EmsDatawarehouseCenter < ApplicationHelper::To
   button_group('ems_datawarehouse_monitoring', [
     select(
       :ems_datawarehouser_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :ems_datawarehouse_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this Datawarehouse Provider'),
           N_('Timelines'),
           :url_parms => "?display=timeline"),

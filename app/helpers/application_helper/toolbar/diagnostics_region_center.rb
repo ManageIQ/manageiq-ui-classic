@@ -77,7 +77,7 @@ class ApplicationHelper::Toolbar::DiagnosticsRegionCenter < ApplicationHelper::T
           :klass => ApplicationHelper::Button::ServerDemote),
         button(
           :promote_server,
-          'product product-migrate fa-lg',
+          'fa fa-reply fa-rotate-90 fa-lg',
           proc do
             _('Promote Server %{server_name} [%{server_id}] to primary for the %{server_role_description} Role') % {
               :server_role_description => @record.server_role.description,

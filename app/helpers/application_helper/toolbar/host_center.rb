@@ -119,13 +119,13 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
   button_group('host_monitoring', [
     select(
       :host_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :host_perf,
-          'product product-monitoring fa-lg',
+          'ff ff-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this item'),
           N_('Utilization'),
           :url       => "/show",
@@ -133,7 +133,7 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
           :klass   => ApplicationHelper::Button::HostPerformance),
         button(
           :host_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this item'),
           N_('Timelines'),
           :url       => "/show",

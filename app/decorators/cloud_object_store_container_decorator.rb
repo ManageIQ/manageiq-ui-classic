@@ -1,6 +1,6 @@
 class CloudObjectStoreContainerDecorator < MiqDecorator
   def self.fonticon
-    'product product-cloud_object_store'
+    'ff ff-cloud-object-store'
   end
 
   def self.fileicon

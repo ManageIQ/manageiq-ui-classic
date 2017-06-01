@@ -42,7 +42,7 @@ class ApplicationHelper::Toolbar::XTemplateCloudCenter < ApplicationHelper::Tool
                      separator,
                      button(
                        :image_right_size,
-                       'product product-custom-6 fa-lg',
+                       'ff ff-database-squeezed fa-lg',
                        N_('CPU/Memory Recommendations of this Image'),
                        N_('Right-Size Recommendations')),
                      button(

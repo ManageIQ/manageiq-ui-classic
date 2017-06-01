@@ -31,13 +31,13 @@ class ApplicationHelper::Toolbar::EmsMiddlewareCenter < ApplicationHelper::Toolb
   button_group('ems_middleware_monitoring', [
     select(
       :ems_middlewarer_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :ems_middleware_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this Middleware Provider'),
           N_('Timelines'),
           :url_parms => "?display=timeline"),

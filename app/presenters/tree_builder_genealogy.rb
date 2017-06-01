@@ -36,7 +36,7 @@ class TreeBuilderGenealogy < TreeBuilder
 
   def vm_icon_image(vm)
     if vm.template?
-      {:icon => "product product-template"}
+      {:icon => "ff ff-template"}
     elsif vm.retired
       {:image => 'svg/currentstate-retired.svg'}
     else

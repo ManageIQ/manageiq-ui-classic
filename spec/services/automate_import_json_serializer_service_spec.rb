@@ -35,7 +35,7 @@ describe AutomateImportJsonSerializerService do
                     }, {
                       'text'       => 'Profile.class',
                       'key'        => 'EVMApplications/Operations/Profile.class',
-                      'icon'       => 'product product-ae_class',
+                      'icon'       => 'ff ff-class',
                       'selectable' => false
                     }
                   ]

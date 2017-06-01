@@ -5,7 +5,7 @@ describe TreeNode::DialogField do
   let(:object) { FactoryGirl.create(:dialog_field) }
 
   include_examples 'TreeNode::Node#key prefix', '-'
-  include_examples 'TreeNode::Node#icon', 'product product-field'
+  include_examples 'TreeNode::Node#icon', 'ff ff-field'
 
   describe '#title' do
     it 'returns with the label' do

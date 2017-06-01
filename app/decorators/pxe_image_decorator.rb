@@ -1,5 +1,5 @@
 class PxeImageDecorator < MiqDecorator
   def fonticon
-    default_for_windows ? 'fa fa-cog' : 'product product-network_card'
+    default_for_windows ? 'fa fa-cog' : 'ff ff-network-card'
   end
 end

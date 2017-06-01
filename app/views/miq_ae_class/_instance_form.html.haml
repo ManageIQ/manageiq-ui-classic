@@ -52,11 +52,11 @@
       %tr
         - glyphicon = @edit[:new][:ae_fields][i]["substitute"] ? "pficon pficon-ok" : "pficon pficon-close"
         %td.text-nowrap
-          %i.fa-lg{:class => "product product-ae_#{@edit[:new][:ae_fields][i]["aetype"]}",
+          %i.fa-lg{:class => ae_field_fonticon(@edit[:new][:ae_fields][i]["aetype"]),
                 :alt => (t = "#{_('Type:')} #{@edit[:new][:ae_fields][i]["aetype"]}"),
                 :title => t}
           - if !@edit[:new][:ae_fields][i]["datatype"].blank? && @edit[:new][:ae_fields][i]["datatype"] != "string"
-            %i.fa-lg{:class => "product product-#{@edit[:new][:ae_fields][i]["datatype"]}",
+            %i.fa-lg{:class => ae_field_fonticon(@edit[:new][:ae_fields][i]["datatype"]),
                 :alt => (t = "#{_('Data Type:')} #{@edit[:new][:ae_fields][i]["datatype"]}"),
                 :title => t}
 

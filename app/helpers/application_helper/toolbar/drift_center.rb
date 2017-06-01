@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::DriftCenter < ApplicationHelper::Toolbar::Basi
   button_group('drift_tasks', [
     twostate(
       :drift_all,
-      'product product-compare_all fa-lg',
+      'ff ff-compare-all fa-lg',
       N_('All attributes'),
       nil,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
@@ -10,7 +10,7 @@ class ApplicationHelper::Toolbar::DriftCenter < ApplicationHelper::Toolbar::Basi
       :url_parms => "?id=\#{$vms_comp}&compare_task=all&db=\#{@compare_db}&id=\#{@drift_obj.id}"),
     twostate(
       :drift_diff,
-      'product product-compare_diff fa-lg',
+      'ff ff-compare-different fa-lg',
       N_('Attributes with different values'),
       nil,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
@@ -18,7 +18,7 @@ class ApplicationHelper::Toolbar::DriftCenter < ApplicationHelper::Toolbar::Basi
       :url_parms => "?id=\#{$vms_comp}&compare_task=different&db=\#{@compare_db}&id=\#{@drift_obj.id}"),
     twostate(
       :drift_same,
-      'product product-compare_same fa-lg',
+      'ff ff-compare-same fa-lg',
       N_('Attributes with same values'),
       nil,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
@@ -35,7 +35,7 @@ class ApplicationHelper::Toolbar::DriftCenter < ApplicationHelper::Toolbar::Basi
       :url => "drift_mode"),
     twostate(
       :driftmode_exists,
-      'product product-exists fa-lg',
+      'ff ff-exists fa-lg',
       N_('Exists Mode'),
       nil,
       :klass => ApplicationHelper::Button::ButtonWithoutRbacCheck,

@@ -45,13 +45,13 @@ class ApplicationHelper::Toolbar::EmsClusterCenter < ApplicationHelper::Toolbar:
   button_group('ems_cluster_monitoring', [
     select(
       :ems_cluster_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :ems_cluster_perf,
-          'product product-monitoring fa-lg',
+          'ff ff-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this item'),
           N_('Utilization'),
           :url       => "/show",
@@ -59,7 +59,7 @@ class ApplicationHelper::Toolbar::EmsClusterCenter < ApplicationHelper::Toolbar:
           :klass     => ApplicationHelper::Button::EmsClusterPerformance),
         button(
           :ems_cluster_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this item'),
           N_('Timelines'),
           :url       => "/show",

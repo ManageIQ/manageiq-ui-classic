@@ -171,17 +171,17 @@
       "MiddlewareDeployment": {
         "type": "glyph",
         "icon": "",
-        "fontfamily": "icomoon"
+        "fontfamily": "font-fabulous"
       },
       "MiddlewareDeploymentEar": {
         "type": "glyph",
         "icon": "",
-        "fontfamily": "icomoon"
+        "fontfamily": "font-fabulous"
       },
       "MiddlewareDeploymentWar": {
         "type": "glyph",
         "icon": "",
-        "fontfamily": "icomoon"
+        "fontfamily": "font-fabulous"
       },
       "MiddlewareDomain": {
         "type": "glyph",
