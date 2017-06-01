@@ -25,7 +25,7 @@ module ImageEncodeHelper
       data = ERB::Util.url_encode(asset.source).gsub('+', '%20')
     else
       encoding = 'base64'
-      data = Base64.encode64(asset.source)
+      data = Base64.strict_encode64(asset.source)
     end
 
     "data:#{asset.content_type};#{encoding},#{data}"
