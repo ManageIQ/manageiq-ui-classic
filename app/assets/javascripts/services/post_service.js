@@ -2,11 +2,13 @@
 
 ManageIQ.angular.app.service('postService', ['miqService', '$timeout', '$window', 'API', function(miqService, $timeout, $window, API) {
 
-  this.saveRecord = function(apiURL, redirectURL, updateObject, successMsg) {
+  this.saveRecord = function(apiURL, redirectURL, updateObject, successMsg, action) {
+    if (action === undefined)
+      action = 'edit';
     miqService.sparkleOn();
     return API.post(apiURL,
       angular.toJson({
-        action: "edit",
+        action: action,
         resource: updateObject
       })).then(handleSuccess)
          .catch(miqService.handleFailure);
