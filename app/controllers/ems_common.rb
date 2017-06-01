@@ -120,6 +120,7 @@ module EmsCommon
         object_storage_managers
         orchestration_stacks
         persistent_volumes
+        physical_servers
         security_groups
         storage_managers
         storages
