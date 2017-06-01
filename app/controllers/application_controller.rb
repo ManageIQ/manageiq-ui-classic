@@ -297,6 +297,10 @@ class ApplicationController < ActionController::Base
     if params[:model] && %w(miq_tasks).include?(params[:model])
       options = jobs_info
     end
+    if params[:model] && %w(cloud_networks).include?(params[:model])
+      options = rbac_params
+    end
+
     if params[:model_id] && !params[:active_tree]
       curr_model_id = from_cid(params[:model_id])
       unless curr_model_id.nil?
