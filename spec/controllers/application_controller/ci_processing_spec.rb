@@ -870,14 +870,16 @@ describe VmOrTemplateController do
     end
 
     it "should render flash message when trying to retire a template" do
-      vm = FactoryGirl.create(:vm_vmware,
-                              :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
-                              :storage               => FactoryGirl.create(:storage)
-                             )
-      template = FactoryGirl.create(:template,
-                                    :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
-                                    :storage               => FactoryGirl.create(:storage)
-                                   )
+      vm = FactoryGirl.create(
+        :vm_vmware,
+        :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
+        :storage               => FactoryGirl.create(:storage)
+      )
+      template = FactoryGirl.create(
+        :template,
+        :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
+        :storage               => FactoryGirl.create(:storage)
+      )
       controller.instance_variable_set(:@_params, :miq_grid_checks => "#{vm.id}, #{template.id}")
       expect(controller).to receive(:javascript_flash)
       controller.send(:vm_button_operation, 'retire_now', "Retirement")
@@ -885,10 +887,11 @@ describe VmOrTemplateController do
     end
 
     it "should continue to retire a vm" do
-      vm = FactoryGirl.create(:vm_vmware,
-                              :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
-                              :storage               => FactoryGirl.create(:storage)
-                             )
+      vm = FactoryGirl.create(
+        :vm_vmware,
+        :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
+        :storage               => FactoryGirl.create(:storage)
+      )
 
       controller.instance_variable_set(:@_params, :miq_grid_checks => vm.id.to_s)
       expect(controller).to receive(:show_list)

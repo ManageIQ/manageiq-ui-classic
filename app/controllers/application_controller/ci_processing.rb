@@ -229,7 +229,7 @@ module ApplicationController::CiProcessing
   end
 
   def check_scan_requirements(selected_items)
-    if !VmOrTemplate.batch_operation_supported?('smartstate_analysis', selected_items)
+    unless VmOrTemplate.batch_operation_supported?('smartstate_analysis', selected_items)
       render_flash_not_applicable_to_model('Smartstate Analysis', ui_lookup(:tables => "vm_or_template"))
       return false
     end
@@ -240,12 +240,11 @@ module ApplicationController::CiProcessing
   def vm_button_operation(method, display_name, partial_after_single_selection = nil)
     klass = get_rec_cls
 
-    # Either a list or coming from a different controller (eg from host screen, go to its vms)
+    # Either a list or coming from a different controller (e.g. from host screen, go to its vms)
     if @lastaction == "show_list" ||
-       !%w(orchestration_stack service vm_cloud vm_infra vm miq_template vm_or_template).include?(
-         controller_name) # showing a list
+       !%w(orchestration_stack service vm_cloud vm_infra vm miq_template vm_or_template).include?(controller_name)
 
-      # FIXME retrieving vms from DB two times
+      # FIXME: retrieving vms from DB two times
       selected_items = find_checked_ids_with_rbac(klass)
 
       return if method == 'retire_now' && !check_retire_requirements(selected_items)
