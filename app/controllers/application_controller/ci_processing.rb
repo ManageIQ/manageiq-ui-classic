@@ -272,7 +272,7 @@ module ApplicationController::CiProcessing
         return
       end
 
-      selected_items.push(find_id_with_rbac(klass, params[:id]))
+      selected_items = [find_id_with_rbac(klass, params[:id])]
       process_objects(selected_items, method) unless selected_items.empty?
 
       # Tells callers to go back to show_list because this item may be gone.
