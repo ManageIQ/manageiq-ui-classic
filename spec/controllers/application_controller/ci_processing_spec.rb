@@ -817,39 +817,7 @@ describe ServiceController do
       controller.instance_variable_set(:@lastaction, "show_list")
     end
 
-    it "should render flash message when trying to retire a template" do
-      controller.request.parameters["controller"] = "vm_or_template"
-      vm = FactoryGirl.create(:vm_vmware,
-                              :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
-                              :storage               => FactoryGirl.create(:storage)
-                             )
-      template = FactoryGirl.create(:template,
-                                    :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
-                                    :storage               => FactoryGirl.create(:storage)
-                                   )
-      controller.instance_variable_set(:@_params, :miq_grid_checks => "#{vm.id}, #{template.id}")
-      expect(controller).to receive(:javascript_flash)
-      controller.send(:vm_button_operation, 'retire_now', "Retirement")
-      expect(response.status).to eq(200)
-    end
-
-    it "should continue to retire a vm" do
-      controller.request.parameters["controller"] = "vm_or_template"
-      vm = FactoryGirl.create(:vm_vmware,
-                              :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
-                              :storage               => FactoryGirl.create(:storage)
-                             )
-
-      controller.instance_variable_set(:@_params, :miq_grid_checks => vm.id.to_s)
-      expect(controller).to receive(:show_list)
-      controller.send(:vm_button_operation, 'retire_now', "Retirement")
-      expect(response.status).to eq(200)
-      expect(assigns(:flash_array).first[:message]).to \
-        include("Retirement initiated for 1 VM and Instance from the %{product} Database" % {:product => I18n.t('product.name')})
-    end
-
     it "should continue to retire a service and does not render flash message 'xxx does not apply xxx' " do
-      controller.request.parameters["controller"] = "service"
       service = FactoryGirl.create(:service)
       template = FactoryGirl.create(:template,
                                     :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
@@ -865,31 +833,69 @@ describe ServiceController do
         include("Retirement initiated for 1 Service from the %{product} Database" % {:product => I18n.t('product.name')})
     end
   end
+end
 
-  describe MiqTemplateController do
-    context "#vm_button_operation" do
-      before do
-        _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
-        allow(MiqServer).to receive(:my_zone).and_return("default")
-        controller.instance_variable_set(:@lastaction, "show_list")
-      end
+describe MiqTemplateController do
+  context "#vm_button_operation" do
+    before do
+      _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
+      allow(MiqServer).to receive(:my_zone).and_return("default")
+      controller.instance_variable_set(:@lastaction, "show_list")
+    end
 
-      it "should continue to set ownership for a template" do
-        controller.request.parameters["controller"] = "miq_template"
-        allow(controller).to receive(:role_allows?).and_return(true)
-        allow(controller).to receive(:drop_breadcrumb)
-        template = FactoryGirl.create(:template,
-                                      :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
-                                      :storage               => FactoryGirl.create(:storage))
-        controller.instance_variable_set(:@_params,
-                                         :miq_grid_checks => template.id.to_s,
-                                         :pressed         => 'miq_template_set_ownership')
-        expect(controller).to receive(:javascript_redirect).with(:controller => "miq_template",
-                                                                 :action     => 'ownership',
-                                                                 :rec_ids    => [template.id],
-                                                                 :escape     => false)
-        controller.send('set_ownership')
-      end
+    it "should continue to set ownership for a template" do
+      allow(controller).to receive(:role_allows?).and_return(true)
+      allow(controller).to receive(:drop_breadcrumb)
+      template = FactoryGirl.create(:template,
+                                    :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
+                                    :storage               => FactoryGirl.create(:storage))
+      controller.instance_variable_set(:@_params,
+                                       :miq_grid_checks => template.id.to_s,
+                                       :pressed         => 'miq_template_set_ownership')
+      expect(controller).to receive(:javascript_redirect).with(:controller => "miq_template",
+                                                               :action     => 'ownership',
+                                                               :rec_ids    => [template.id],
+                                                               :escape     => false)
+      controller.send('set_ownership')
+    end
+  end
+end
+
+describe VmOrTemplateController do
+  context "#vm_button_operation" do
+    before do
+      _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
+      allow(MiqServer).to receive(:my_zone).and_return("default")
+      controller.instance_variable_set(:@lastaction, "show_list")
+    end
+
+    it "should render flash message when trying to retire a template" do
+      vm = FactoryGirl.create(:vm_vmware,
+                              :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
+                              :storage               => FactoryGirl.create(:storage)
+                             )
+      template = FactoryGirl.create(:template,
+                                    :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
+                                    :storage               => FactoryGirl.create(:storage)
+                                   )
+      controller.instance_variable_set(:@_params, :miq_grid_checks => "#{vm.id}, #{template.id}")
+      expect(controller).to receive(:javascript_flash)
+      controller.send(:vm_button_operation, 'retire_now', "Retirement")
+      expect(response.status).to eq(200)
+    end
+
+    it "should continue to retire a vm" do
+      vm = FactoryGirl.create(:vm_vmware,
+                              :ext_management_system => FactoryGirl.create(:ems_openstack_infra),
+                              :storage               => FactoryGirl.create(:storage)
+                             )
+
+      controller.instance_variable_set(:@_params, :miq_grid_checks => vm.id.to_s)
+      expect(controller).to receive(:show_list)
+      controller.send(:vm_button_operation, 'retire_now', "Retirement")
+      expect(response.status).to eq(200)
+      expect(assigns(:flash_array).first[:message]).to \
+        include("Retirement initiated for 1 VM and Instance from the %{product} Database" % {:product => I18n.t('product.name')})
     end
   end
 end

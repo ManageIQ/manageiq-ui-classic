@@ -337,7 +337,9 @@ module ApplicationController::CiProcessing
   end
 
   def get_rec_cls
-    case request.parameters["controller"]
+    # FIXME: the specs for ci_processing rely on setting (and testing) request.parameters['controller'].
+    # That is wrong and needs to be fixed.
+    case request.parameters["controller"] || controller_name
     when "miq_template"
       MiqTemplate
     when "orchestration_stack"
