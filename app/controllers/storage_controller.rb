@@ -2,11 +2,25 @@ class StorageController < ApplicationController
   include_concern 'StorageD'
   include_concern 'StoragePod'
   include Mixins::GenericSessionMixin
+  include Mixins::GenericShowMixin
+  include Mixins::MoreShowActions
 
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
   after_action :set_session_data
+
+  def self.display_methods
+    %w(all_vms hosts)
+  end
+
+  def self.custom_display_method
+    %w(all_miq_templates)
+  end
+
+  def display_all_miq_templates
+    nested_list("miq_templates", MiqTemplate, :parent => @record, :association => "all_miq_templates")
+  end
 
   def show_list
     redirect_to :action => 'explorer', :flash_msg => @flash_array ? @flash_array[0][:message] : nil
@@ -27,12 +41,8 @@ class StorageController < ApplicationController
     @gtl_url = "/show"
   end
 
-  def show(record = nil)
-    return if perfmenu_click?
-    @display = params[:display] || "main" unless pagination_or_gtl_request?
-    @record = @storage = find_record(Storage, record || params[:id])
-    return if record_no_longer_exists?(@storage)
-
+  def init_show
+    return unless super
     if !@explorer && @display == "main"
       tree_node_id = TreeBuilder.build_node_id(@record)
       session[:exp_parms] = {:display => @display, :refresh => params[:refresh], :id => tree_node_id}
@@ -58,38 +68,7 @@ class StorageController < ApplicationController
     end
 
     @gtl_url = "/show"
-
-    case @display
-    when "all_miq_templates", "all_vms"
-      title, kls = (@display == "all_vms" ? ["VMs", Vm] : ["Templates", MiqTemplate])
-      drop_breadcrumb(:name => _("%{name} (All Registered %{title})") % {:name => @storage.name, :title => title},
-                      :url  => "/storage/x_show/#{@storage.id}?display=#{@display}")
-      @view, @pages = get_view(kls, :parent => @storage, :association => @display)  # Get the records (into a view) and the paginator
-      @showtype = @display
-
-    when "hosts"
-      @view, @pages = get_view(Host, :parent => @storage) # Get the records (into a view) and the paginator
-      drop_breadcrumb(:name => _("%{name} (All Registered Hosts)") % {:name => @storage.name},
-                      :url  => "/storage/x_show/#{@storage.id}?display=hosts")
-      @showtype = "hosts"
-
-    when "main", "summary_only"
-      get_tagdata(@storage)
-      session[:vm_summary_cool] = (settings(:views, :vm_summary_cool) == "summary")
-      @summary_view = session[:vm_summary_cool]
-      drop_breadcrumb({:name => ui_lookup(:tables => "storages"), :url => "/storage/show_list?page=#{@current_page}&refresh=y"}, true)
-      drop_breadcrumb(:name => "%{name} (Summary)" % {:name => @storage.name},
-                      :url  => "/storage/x_show/#{@storage.id}?display=main")
-      @showtype = "main"
-      set_summary_pdf_data if @display == "summary_only"
-
-    when "performance"
-      @showtype = "performance"
-      drop_breadcrumb(:name => _("%{name} Capacity & Utilization") % {:name => @storage.name},
-                      :url  => "/storage/x_show/#{@storage.id}?display=#{@display}&refresh=n")
-      perf_gen_init_options               # Intialize perf chart options, charts will be generated async
-    end
-    @lastaction = "show"
+    true
   end
 
 
