@@ -835,7 +835,6 @@ class ChargebackController < ApplicationController
     presenter = ExplorerPresenter.new(
       :active_tree => x_active_tree,
     )
-    r = proc { |opts| render_to_string(opts) }
     replace_trees_by_presenter(presenter, :cb_rates => cb_rates_build_tree) if replace_trees.include?(:cb_rates)
 
     # FIXME

@@ -672,7 +672,6 @@ class ReportController < ApplicationController
        params[:action] == 'x_show'
       presenter[:add_nodes] = open_parent_nodes      # Open the parent nodes of selected record, if not open
     end
-    r = proc { |opts| render_to_string(opts) }
     presenter[:open_accord] = params[:accord] if params[:accord] # Open new accordion
 
     locals = set_form_locals if @in_a_form

@@ -7,6 +7,7 @@ class AutomationManagerController < ApplicationController
 
   include Mixins::GenericSessionMixin
   include Mixins::ManagerControllerMixin
+  include Mixins::ExplorerPresenterMixin
 
   menu_section :automation_manager
 
@@ -396,7 +397,7 @@ class AutomationManagerController < ApplicationController
     node
   end
 
-  def update_partials(record_showing, presenter, r)
+  def update_partials(record_showing, presenter)
     if record_showing && valid_configured_system_record?(@configured_system_record)
       get_tagdata(@record)
       presenter.hide(:form_buttons_div)
@@ -434,7 +435,7 @@ class AutomationManagerController < ApplicationController
      :record_id  => @sb[:rec_id] || @edit[:object_ids] && @edit[:object_ids][0]}
   end
 
-  def update_service_dialog_partials(presenter, r)
+  def update_service_dialog_partials(presenter)
     presenter.update(:main_div, r[:partial => 'configscript_service_dialog',
                                   :locals  => locals_for_service_dialog])
     locals = {:record_id  => @edit[:rec_id],

@@ -502,8 +502,6 @@ class MiqPolicyController < ApplicationController
       :open_accord => params[:accord]
     )
 
-    r = proc { |opts| render_to_string(opts) }
-
     # Simply replace the tree partials to reload the trees
     replace_trees.each do |name|
       case name

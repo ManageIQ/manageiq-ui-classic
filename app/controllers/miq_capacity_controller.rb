@@ -479,7 +479,6 @@ class MiqCapacityController < ApplicationController
 
     v_tb = build_toolbar("miq_capacity_view_tb")
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
-    r = proc { |opts| render_to_string(opts) }
 
     presenter.load_chart(@sb[:util][:chart_data])
 
@@ -590,7 +589,6 @@ class MiqCapacityController < ApplicationController
   def planning_replace_right_cell
     v_tb = build_toolbar("miq_capacity_view_tb")
     presenter = ExplorerPresenter.new(:active_tree => @sb[:active_tree])
-    r = proc { |opts| render_to_string(opts) }
 
     presenter.load_chart(@sb[:planning][:chart_data])
 
@@ -609,7 +607,6 @@ class MiqCapacityController < ApplicationController
 
   def bottleneck_replace_right_cell
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
-    r = proc { |opts| render_to_string(opts) }
 
     presenter[:osf_node] = x_node
     if params.keys.any? { |param| param.include?('tl_report') }

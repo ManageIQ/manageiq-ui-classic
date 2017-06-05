@@ -209,8 +209,6 @@ class OpsController < ApplicationController
     # needed to make tooolbar Configuration > Edit still work after lazy-loading a tab
     presenter[:record_id] = group_id
 
-    r = proc { |opts| render_to_string(opts) }
-
     rendered = case tab_id
                when 'rbac_customer_tags'
                  r[:partial => 'ops/rbac_group/customer_tags']
@@ -527,12 +525,10 @@ class OpsController < ApplicationController
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
     presenter[:add_nodes] = add_nodes if add_nodes
 
-    r = proc { |opts| render_to_string(opts) }
-
     replace_explorer_trees(replace_trees, presenter)
     rebuild_toolbars(presenter)
-    handle_bottom_cell(nodetype, presenter, r, locals)
-    x_active_tree_replace_cell(nodetype, presenter, r)
+    handle_bottom_cell(nodetype, presenter, locals)
+    x_active_tree_replace_cell(nodetype, presenter)
     extra_js_commands(presenter)
 
     presenter.replace(:flash_msg_div, r[:partial => "layouts/flash_msg"]) if @flash_array
@@ -540,21 +536,21 @@ class OpsController < ApplicationController
     render :json => presenter.for_render
   end
 
-  def x_active_tree_replace_cell(nodetype, presenter, r)
+  def x_active_tree_replace_cell(nodetype, presenter)
     case x_active_tree
     when :rbac_tree
-      rbac_replace_right_cell(nodetype, presenter, r)
+      rbac_replace_right_cell(nodetype, presenter)
     when :settings_tree
-      settings_replace_right_cell(nodetype, presenter, r)
+      settings_replace_right_cell(nodetype, presenter)
     when :diagnostics_tree
-      diagnostics_replace_right_cell(nodetype, presenter, r)
+      diagnostics_replace_right_cell(nodetype, presenter)
     when :vmdb_tree # "root","tb", "ti","xx" # Check if vmdb root or table is selected
       # Need to replace all_tabs to show table name as tab label
       presenter.replace(:ops_tabs, r[:partial => "all_tabs"])
     end
   end
 
-  def diagnostics_replace_right_cell(nodetype, presenter, r)
+  def diagnostics_replace_right_cell(nodetype, presenter)
     # need to refresh all_tabs for server by roles and roles by servers screen
     # to show correct buttons on screen when tree node is selected
     if %w(accordion_select change_tab explorer tree_select).include?(params[:action]) ||
@@ -570,7 +566,7 @@ class OpsController < ApplicationController
     presenter[:build_calendar] = {} if x_node.split("-").first == "z"
   end
 
-  def settings_replace_right_cell(nodetype, presenter, r)
+  def settings_replace_right_cell(nodetype, presenter)
     case nodetype
     when "ze"     # zone edit
       # when editing zone in settings tree
@@ -670,7 +666,7 @@ class OpsController < ApplicationController
     end
   end
 
-  def rbac_replace_right_cell(nodetype, presenter, r)
+  def rbac_replace_right_cell(nodetype, presenter)
     @sb[:tab_label] = @tagging ? _("Tagging") : rbac_set_tab_label
     if %w(accordion_select change_tab tree_select).include?(params[:action])
       presenter.replace(:ops_tabs, r[:partial => "all_tabs"])
@@ -751,7 +747,7 @@ class OpsController < ApplicationController
     presenter[:record_id] = determine_record_id_for_presenter
   end
 
-  def handle_bottom_cell(nodetype, presenter, r, locals)
+  def handle_bottom_cell(nodetype, presenter, locals)
     # Handle bottom cell
     if @pages || @in_a_form
       if @pages

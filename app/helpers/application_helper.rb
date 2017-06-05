@@ -1750,4 +1750,8 @@ module ApplicationHelper
   def parse_nodetype_and_id(x_node)
     x_node.split('_').last.split('-')
   end
+
+  def r
+    @r ||= proc { |opts| render_to_string(opts) }
+  end
 end

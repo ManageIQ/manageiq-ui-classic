@@ -113,7 +113,6 @@ class PxeController < ApplicationController
     presenter = ExplorerPresenter.new(
       :active_tree => x_active_tree,
     )
-    r = proc { |opts| render_to_string(opts) }
 
     c_tb = build_toolbar(center_toolbar_filename) unless @in_a_form
     h_tb = build_toolbar('x_history_tb')

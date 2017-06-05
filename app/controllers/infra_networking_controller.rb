@@ -6,6 +6,7 @@ class InfraNetworkingController < ApplicationController
   after_action :set_session_data
 
   include Mixins::GenericSessionMixin
+  include Mixins::ExplorerPresenterMixin
 
   def self.model
     Switch
@@ -336,35 +337,13 @@ class InfraNetworkingController < ApplicationController
     options
   end
 
-  def rendering_objects
-    presenter = ExplorerPresenter.new(
-      :active_tree => x_active_tree,
-      :delete_node => @delete_node,
-    )
-    r = proc { |opts| render_to_string(opts) }
-    return presenter, r
-  end
-
   def render_form
-    presenter, r = rendering_objects
+    presenter = rendering_objects
     @in_a_form = true
     presenter.update(:main_div, r[:partial => 'form', :locals => {:controller => 'infra_networking'}])
     update_title(presenter)
     rebuild_toolbars(false, presenter)
-    handle_bottom_cell(presenter, r)
-
-    render :json => presenter.for_render
-  end
-
-  def update_tree_and_render_list(replace_trees)
-    @explorer = true
-    get_node_info(x_node)
-    presenter, r = rendering_objects
-    replace_explorer_trees(replace_trees, presenter, r)
-
-    presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
-    rebuild_toolbars(false, presenter)
-    handle_bottom_cell(presenter, r)
+    handle_bottom_cell(presenter)
 
     render :json => presenter.for_render
   end
@@ -401,8 +380,6 @@ class InfraNetworkingController < ApplicationController
       :delete_node => @delete_node, # Remove a new node from the tree
     )
 
-    r = proc { |opts| render_to_string(opts) }
-
     if record_showing
       presenter.hide(:form_buttons_div)
       presenter.update(:main_div, r[:partial => "layouts/textual_groups_generic"])
@@ -418,8 +395,8 @@ class InfraNetworkingController < ApplicationController
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     end
 
-    replace_search_box(presenter, r)
-    handle_bottom_cell(presenter, r)
+    replace_search_box(presenter)
+    handle_bottom_cell(presenter)
     rebuild_toolbars(record_showing, presenter)
     presenter[:right_cell_text] = @right_cell_text
     presenter[:osf_node] = x_node # Open, select, and focus on this node
@@ -497,7 +474,7 @@ class InfraNetworkingController < ApplicationController
     @sb[:infra_networking_search_text][:current_node] = x_node
   end
 
-  def update_partials(record_showing, presenter, r)
+  def update_partials(record_showing, presenter)
     if record_showing && valid_switch_record?(@record)
       get_tagdata(@record)
       presenter.hide(:form_buttons_div)
@@ -566,7 +543,7 @@ class InfraNetworkingController < ApplicationController
     end
   end
 
-  def replace_search_box(presenter, r)
+  def replace_search_box(presenter)
     # Replace the searchbox
     presenter.replace(:adv_searchbox_div,
                       r[:partial => 'layouts/x_adv_searchbox',
@@ -575,7 +552,7 @@ class InfraNetworkingController < ApplicationController
     presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
   end
 
-  def handle_bottom_cell(presenter, r)
+  def handle_bottom_cell(presenter)
     # Handle bottom cell
     if @pages || @in_a_form
       if @pages && !@in_a_form
@@ -651,11 +628,11 @@ class InfraNetworkingController < ApplicationController
     @in_a_form = true
     @right_cell_text = _("Edit Tags")
     clear_flash_msg
-    presenter, r = rendering_objects
-    update_tagging_partials(presenter, r)
+    presenter = rendering_objects
+    update_tagging_partials(presenter)
     presenter[:right_cell_text] = @right_cell_text
     rebuild_toolbars(false, presenter)
-    handle_bottom_cell(presenter, r)
+    handle_bottom_cell(presenter)
 
     render :json => presenter.for_render
   end

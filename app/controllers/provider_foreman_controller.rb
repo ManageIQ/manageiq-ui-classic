@@ -7,6 +7,7 @@ class ProviderForemanController < ApplicationController
 
   include Mixins::GenericSessionMixin
   include Mixins::ManagerControllerMixin
+  include Mixins::ExplorerPresenterMixin
 
   def self.model
     ManageIQ::Providers::ConfigurationManager
@@ -364,7 +365,7 @@ class ProviderForemanController < ApplicationController
     node
   end
 
-  def update_partials(record_showing, presenter, r)
+  def update_partials(record_showing, presenter)
     if record_showing && valid_configured_system_record?(@configured_system_record)
       get_tagdata(@record)
       presenter.hide(:form_buttons_div)

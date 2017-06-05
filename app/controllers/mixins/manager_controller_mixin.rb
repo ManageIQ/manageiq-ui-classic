@@ -294,10 +294,10 @@ module Mixins
       trees = rebuild_trees(replace_trees)
 
       record_showing = leaf_record
-      presenter, r = rendering_objects
-      update_partials(record_showing, presenter, r)
-      replace_search_box(presenter, r)
-      handle_bottom_cell(presenter, r)
+      presenter = rendering_objects
+      update_partials(record_showing, presenter)
+      replace_search_box(presenter)
+      handle_bottom_cell(presenter)
       replace_trees_by_presenter(presenter, trees)
       rebuild_toolbars(record_showing, presenter)
       presenter[:right_cell_text] = @right_cell_text
@@ -355,22 +355,13 @@ module Mixins
       @right_cell_text = _("All Configured Systems")
     end
 
-    def rendering_objects
-      presenter = ExplorerPresenter.new(
-        :active_tree => x_active_tree,
-        :delete_node => @delete_node,
-      )
-      r = proc { |opts| render_to_string(opts) }
-      return presenter, r
-    end
-
     def render_form
-      presenter, r = rendering_objects
+      presenter = rendering_objects
       @in_a_form = true
       presenter.update(:main_div, r[:partial => 'form', :locals => {:controller => controller_name}])
       update_title(presenter)
       rebuild_toolbars(false, presenter)
-      handle_bottom_cell(presenter, r)
+      handle_bottom_cell(presenter)
 
       render :json => presenter.for_render
     end
@@ -380,11 +371,11 @@ module Mixins
       @in_a_form = true
       @right_cell_text = _("Edit Tags")
       clear_flash_msg
-      presenter, r = rendering_objects
-      update_tagging_partials(presenter, r)
+      presenter = rendering_objects
+      update_tagging_partials(presenter)
       update_title(presenter)
       rebuild_toolbars(false, presenter)
-      handle_bottom_cell(presenter, r)
+      handle_bottom_cell(presenter)
 
       render :json => presenter.for_render
     end
@@ -393,24 +384,11 @@ module Mixins
       return if %w(cancel save).include?(params[:button])
       @in_a_form = true
       clear_flash_msg
-      presenter, r = rendering_objects
-      update_service_dialog_partials(presenter, r)
+      presenter = rendering_objects
+      update_service_dialog_partials(presenter)
       rebuild_toolbars(false, presenter)
-      handle_bottom_cell(presenter, r)
+      handle_bottom_cell(presenter)
       presenter[:right_cell_text] = @right_cell_text
-
-      render :json => presenter.for_render
-    end
-
-    def update_tree_and_render_list(replace_trees)
-      @explorer = true
-      get_node_info(x_node)
-      presenter, r = rendering_objects
-      replace_explorer_trees(replace_trees, presenter, r)
-
-      presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
-      rebuild_toolbars(false, presenter)
-      handle_bottom_cell(presenter, r)
 
       render :json => presenter.for_render
     end
@@ -441,7 +419,7 @@ module Mixins
       @sb["#{controller_name.underscore}_search_text".to_sym][:current_node] = x_node
     end
 
-    def replace_search_box(presenter, r)
+    def replace_search_box(presenter)
       # Replace the searchbox
       presenter.replace(:adv_searchbox_div,
                         r[:partial => 'layouts/x_adv_searchbox'])
@@ -449,7 +427,7 @@ module Mixins
       presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
     end
 
-    def handle_bottom_cell(presenter, r)
+    def handle_bottom_cell(presenter)
       # Handle bottom cell
       if @pages || @in_a_form
         if @pages && !@in_a_form
