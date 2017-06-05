@@ -26,7 +26,7 @@ module ReportController::SavedReports
       @report_result_id = session[:report_result_id] = rr.id
       session[:report_result_runtime] = rr.last_run_on
       task = MiqTask.find_by_id(rr.miq_task_id)
-      if rr.status.downcase == "complete"
+      if task && MiqTask.status_ok?(task.status)
         @report = rr.report_results
         session[:rpt_task_id] = nil
         if @report.blank?
