@@ -7,7 +7,7 @@ class ContainerProjectController < ApplicationController
   after_action :set_session_data
 
   def show_list
-    process_show_list(:where_clause => 'container_projects.deleted_on IS NULL')
+    process_show_list(:named_scope => :active)
   end
 
   private
