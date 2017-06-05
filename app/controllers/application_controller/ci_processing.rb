@@ -220,9 +220,7 @@ module ApplicationController::CiProcessing
     return true if %w(orchestration_stack service).include?(controller_name)
 
     if VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_retire? }
-      add_flash(_("Retire does not apply to selected %{model}") %
-        {:model => ui_lookup(:table => "miq_template")}, :error)
-      javascript_flash(:scroll_top => true)
+      javascript_flash(:text => _("Retire does not apply to selected item"), :severity => :error, :scroll_top => true)
       return false
     end
     true
