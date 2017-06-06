@@ -102,17 +102,43 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
         data[0].value.toFixed(2) + '</div>';
     };
 
-    var metricPrefix = function(maxValue) {
-      var exp = parseInt(Math.log10(maxValue) / 3, 10) * 3;
-      var metricPrefixes = {
-        3: {prefix: 'k', divisor: Math.pow(10, 3)},
-        6: {prefix: 'M', divisor: Math.pow(10, 6)},
-        9: {prefix: 'G', divisor: Math.pow(10, 9)},
-        12: {prefix: 'T', divisor: Math.pow(10, 12)},
-        15: {prefix: 'P', divisor: Math.pow(10, 15)}
+    var metricPrefix = function(maxValue, units) {
+      var metricPrefixes;
+      var baseUnit;
+      var baseUnitMultiplier;
+      var baseUnitMaxValue;
+      var exp;
+
+      // get base unit for special case units
+      switch (units) {
+        case 'millisecond':
+        case 'ms':
+          baseUnitMultiplier = Math.pow(10, -3);
+          baseUnit = 's';
+          break;
+        case 'ns':
+          baseUnitMultiplier = Math.pow(10, -9);
+          baseUnit = 's';
+          break;
+        default:
+          baseUnitMultiplier = 1;
+          baseUnit = units;
+      }
+
+      // adjust to base units and calc exponent
+      baseUnitMaxValue = maxValue * baseUnitMultiplier;
+      exp = ~~(Math.log10(baseUnitMaxValue) / 3) * 3;
+
+      // calc output unit label and multiplier
+      metricPrefixes = {
+        3: {unitLabel: 'K' + baseUnit, multiplier: baseUnitMultiplier * Math.pow(10, -3)},
+        6: {unitLabel: 'M' + baseUnit, multiplier: baseUnitMultiplier * Math.pow(10, -6)},
+        9: {unitLabel: 'G' + baseUnit, multiplier: baseUnitMultiplier * Math.pow(10, -9)},
+        12: {unitLabel: 'T' + baseUnit, multiplier: baseUnitMultiplier * Math.pow(10, -12)},
+        15: {unitLabel: 'P' + baseUnit, multiplier: baseUnitMultiplier * Math.pow(10, -15)}
       };
 
-      return metricPrefixes[exp] || {prefix: '', divisor: 1};
+      return metricPrefixes[exp] || {unitLabel: baseUnit, multiplier: baseUnitMultiplier};
     };
 
     var getContainerDashboardData = function(item) {
@@ -124,11 +150,11 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
 
       item.data = item.data.sort(function(a, b) { return a.timestamp > b.timestamp; });
       var maxValue = Math.max.apply(Math, item.data.map(function(o) { return o.value; }))
-      var m = metricPrefix(maxValue);
+      var m = metricPrefix(maxValue, item.tags.units || '');
 
       var id = _.uniqueId('ChartId_');
       var label = item.tags.descriptor_name || item.id;
-      var units = m.prefix + (item.tags.units || '');
+      var units = m.unitLabel;
 
       item.lastValues = {
         total: '100',
@@ -137,7 +163,7 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
       };
       angular.forEach(item.data, function(d) {
         item.lastValues.xData.push(new Date(d.timestamp));
-        item.lastValues.yData.push((d.value / m.divisor).toFixed(2));
+        item.lastValues.yData.push((d.value * m.multiplier).toFixed(2));
       });
       item.lastValue = '' + item.lastValues.yData[item.data.length] + ' ' + units
 
@@ -156,7 +182,8 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
       getContainerParamsData: getContainerParamsData,
       getContainerDashboardData: getContainerDashboardData,
       checkResponse: checkResponse,
-      setFilterOptions: setFilterOptions
+      setFilterOptions: setFilterOptions,
+      metricPrefix: metricPrefix
     }
   }
 });
