@@ -87,15 +87,15 @@ ManageIQ.angular.app.controller('reconfigureFormController', ['$http', '$scope',
       cpuUnchanged = true;
 
     if (vm.cb_memory && vm.cb_cpu && memUnchanged && cpuUnchanged) {
-      miqService.miqFlash("warn", "Change Memory and Processor value to submit reconfigure request");
+      miqService.miqFlash("warn", __("Change Memory and Processor value to submit reconfigure request"));
       $scope.angularForm.$setValidity("unchanged", false);
     } else {
       if (vm.cb_memory && memUnchanged) {
-        miqService.miqFlash("warn", "Change Memory value to submit reconfigure request");
+        miqService.miqFlash("warn", __("Change Memory value to submit reconfigure request"));
         $scope.angularForm.$setValidity("unchanged", false);
       }
       if (vm.cb_cpu && cpuUnchanged) {
-        miqService.miqFlash("warn", "Change Processor Sockets or Cores Per Socket value to submit reconfigure request");
+        miqService.miqFlash("warn", __("Change Processor Sockets or Cores Per Socket value to submit reconfigure request"));
         $scope.angularForm.$setValidity("unchanged", false);
       }
     }
