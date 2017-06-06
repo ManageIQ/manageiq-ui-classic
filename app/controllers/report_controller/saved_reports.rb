@@ -24,8 +24,8 @@ module ReportController::SavedReports
                          {:name => "#{rr.name} - #{format_timezone(rr.created_on, Time.zone, "gt")}"}
     if admin_user? || current_user.miq_group_ids.include?(rr.miq_group_id)
       @report_result_id = session[:report_result_id] = rr.id
+      @report_result = rr
       session[:report_result_runtime] = rr.last_run_on
-      task = MiqTask.find_by_id(rr.miq_task_id)
       if rr.status.downcase == "complete"
         @report = rr.report_results
         session[:rpt_task_id] = nil
@@ -77,8 +77,6 @@ module ReportController::SavedReports
             add_flash(_("No records found for this report"), :warning)
           end
         end
-      else      # report is queued/running/error
-        @report_result = rr
       end
     else
       add_flash(_("Report is not authorized for the logged in user"), :error)
