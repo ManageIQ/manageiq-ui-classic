@@ -21,6 +21,8 @@ module OpsController::OpsRbac
                   'MiqGroup'
                 elsif nodes.first == "u" || nodes.last == "u"
                   'User'
+                elsif nodes.first == "tn" || nodes.last == "tn"
+                  'Tenant'
                 else
                   params[:tagging]
                 end

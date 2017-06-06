@@ -366,6 +366,13 @@ describe OpsController do
         expect(assigns(:edit)).to be_nil
       end
 
+      it "resets tags edit" do
+        controller.instance_variable_set(:@_params, :button => "reset", :id => @tenant.id)
+        controller.send(:rbac_tenant_tags_edit)
+        expect(assigns(:flash_array).first[:message]).to include("All changes have been reset")
+        expect(assigns(:entries)).not_to be_nil
+      end
+
       it "save tags" do
         controller.instance_variable_set(:@_params, :button => "save", :id => @tenant.id)
         controller.send(:rbac_tenant_tags_edit)
