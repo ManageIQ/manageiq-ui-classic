@@ -2,22 +2,20 @@ module Mixins
   module Actions
     module VmActions
       module Reconfigure
-        def reconfigure
+        def reconfigure(reconfigure_ids = [])
           @sb[:explorer] = true if @explorer
           @request_id = nil
           @in_a_form = @reconfigure = true
           drop_breadcrumb(:name => _("Reconfigure"), :url => "/vm_common/reconfigure")
-          if params[:rec_ids]
-            @reconfigure_items = params[:rec_ids]
-          end
-          if params[:req_id]
-            @request_id = params[:req_id]
-          end
-          @reconfigitems = Vm.find(@reconfigure_items).sort_by(&:name) # Get the db records
+
+          reconfigure_ids = params[:rec_ids] if params[:rec_ids]
+          @request_id = params[:req_id] if params[:req_id]
+
+          @reconfigitems = find_records_with_rbac(Vm, reconfigure_ids)
           build_targets_hash(@reconfigitems)
           @force_no_grid_xml   = true
-          @view, @pages = get_view(Vm, :view_suffix => "VmReconfigureRequest", :where_clause => ["vms.id IN (?)", @reconfigure_items])  # Get the records (into a view) and the paginator
-          get_reconfig_limits
+          @view, @pages = get_view(Vm, :view_suffix => "VmReconfigureRequest", :where_clause => ["vms.id IN (?)", reconfigure_ids])  # Get the records (into a view) and the paginator
+          get_reconfig_limits(reconfigure_ids)
           unless @explorer
             render :action => "show"
           end
@@ -101,13 +99,14 @@ module Mixins
         def reconfigure_form_fields
           request_data = ''
           @request_id, request_data = params[:id].split(/\s*,\s*/, 2)
-          @reconfigure_items = request_data.split(/\s*,\s*/)
-          request_hash = build_reconfigure_hash
+          reconfigure_ids = request_data.split(/\s*,\s*/)
+          request_hash = build_reconfigure_hash(reconfigure_ids)
           render :json => request_hash
         end
 
         # Reconfigure selected VMs
         def reconfigurevms
+          binding.pry
           assert_privileges(params[:pressed])
           # check to see if coming from show_list or drilled into vms from another CI
           rec_cls = "vm"
@@ -135,15 +134,15 @@ module Mixins
               javascript_flash(:scroll_top => true)
               return
             end
-            reconfigure_items = recs.collect(&:to_i)
+            reconfigure_ids = recs.collect(&:to_i)
           end
           if @explorer
-            reconfigure
+            reconfigure(reconfigure_ids)
             session[:changed] = true  # need to enable submit button when screen loads
             @refresh_partial = "vm_common/reconfigure"
           else
             if role_allows?(:feature => "vm_reconfigure")
-              javascript_redirect :controller => rec_cls.to_s, :action => 'reconfigure', :req_id => request_id, :rec_ids => reconfigure_items, :escape => false # redirect to build the ownership screen
+              javascript_redirect :controller => rec_cls.to_s, :action => 'reconfigure', :req_id => request_id, :rec_ids => reconfigure_ids, :escape => false # redirect to build the ownership screen
             else
               head :ok
             end
@@ -155,8 +154,8 @@ module Mixins
         alias_method :vm_reconfigure, :reconfigurevms
         alias_method :miq_template_reconfigure, :reconfigurevms
 
-        def get_reconfig_limits
-          @reconfig_limits = VmReconfigureRequest.request_limits(:src_ids => @reconfigure_items)
+        def get_reconfig_limits(reconfigure_ids)
+          @reconfig_limits = VmReconfigureRequest.request_limits(:src_ids => reconfigure_ids)
           mem1, fmt1 = reconfigure_calculations(@reconfig_limits[:min__vm_memory])
           mem2, fmt2 = reconfigure_calculations(@reconfig_limits[:max__vm_memory])
           @reconfig_memory_note = "Between #{mem1}#{fmt1} and #{mem2}#{fmt2}"
@@ -175,11 +174,11 @@ module Mixins
         end
 
         # Build the reconfigure data hash
-        def build_reconfigure_hash
+        def build_reconfigure_hash(reconfigure_ids)
           @req = nil
           @reconfig_values = {}
           if @request_id == 'new'
-            @reconfig_values = get_reconfig_info
+            @reconfig_values = get_reconfig_info(reconfigure_ids)
           else
             @req = MiqRequest.find_by_id(@request_id)
             @reconfig_values[:src_ids] = @req.options[:src_ids]
@@ -205,7 +204,7 @@ module Mixins
               end
             end
 
-            reconfig_item = Vm.find(@reconfigure_items)
+            reconfig_item = Vm.find(reconfigure_ids)
             if reconfig_item
               reconfig_item.first.hardware.disks.each do |disk|
                 next if disk.device_type != 'disk'
@@ -248,8 +247,8 @@ module Mixins
           return humansize.to_s, fmt
         end
 
-        def get_reconfig_info
-          @reconfigureitems = Vm.find(@reconfigure_items).sort_by(&:name)
+        def get_reconfig_info(reconfigure_ids)
+          @reconfigureitems = Vm.find(reconfigure_ids).sort_by(&:name)
           # set memory to nil if multiple items were selected with different mem_cpu values
           memory = @reconfigureitems.first.mem_cpu
           memory = nil unless @reconfigureitems.all? { |vm| vm.mem_cpu == memory }
@@ -275,7 +274,7 @@ module Mixins
                         :cb_bootable => disk.bootable}
           end
 
-          {:objectIds              => @reconfigure_items,
+          {:objectIds              => reconfigure_ids,
            :memory                 => memory,
            :memory_type            => memory_type,
            :socket_count           => socket_count.to_s,
