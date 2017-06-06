@@ -419,14 +419,14 @@ module ApplicationController::Filter
     end
 
     if ["delete", "saveit"].include?(params[:button])
-      if @edit[:in_explorer] || x_active_tree == :storage_tree
-        if "configuration_manager_cs_filter_tree" == x_active_tree.to_s
-          build_configuration_manager_tree(:configuration_manager_cs_filter, x_active_tree)
-        else
-          tree_type = x_active_tree.to_s.sub(/_tree/, '').to_sym
-          builder = TreeBuilder.class_for_type(tree_type)
-          tree = builder.new(x_active_tree, tree_type, @sb)
-        end
+      if x_active_tree.to_s == "configuration_manager_cs_filter_tree"
+        build_configuration_manager_tree(:configuration_manager_cs_filter, x_active_tree)
+        build_accordions_and_trees
+        load_or_clear_adv_search
+      elsif @edit[:in_explorer] || x_active_tree == :storage_tree
+        tree_type = x_active_tree.to_s.sub(/_tree/, '').to_sym
+        builder = TreeBuilder.class_for_type(tree_type)
+        tree = builder.new(x_active_tree, tree_type, @sb)
       elsif %w(ems_cloud ems_infra).include?(@layout)
         build_listnav_search_list(@view.db)
       else
@@ -947,7 +947,7 @@ module ApplicationController::Filter
     # Restore @edit hash if it's saved in @settings
     @expkey = :expression                                               # Reset to use default expression key
     if session[:adv_search] && session[:adv_search][model.to_s]
-      @edit = copy_hash(session[:adv_search][model.to_s])
+      @edit = copy_hash(session[:edit])
       # default search doesnt exist or if it is marked as hidden
       if @edit && @edit[:expression] && !@edit[:expression][:selected].blank? &&
          !MiqSearch.exists?(@edit[:expression][:selected][:id])
