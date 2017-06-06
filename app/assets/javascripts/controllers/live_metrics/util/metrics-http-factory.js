@@ -13,6 +13,9 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
       }
 
       dash.items = data.metric_definitions.filter(function(item) {
+        var findSelectedItem = dash.selectedItems.find(function( obj ) { return obj.id === item.id; });
+        item.selected = typeof findSelectedItem !== 'undefined';
+
         return item.id && item.type;
       });
 
@@ -85,7 +88,6 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
     }
 
     var refreshList = function() {
-      dash.itemSelected = false;
       dash.loadingMetrics = true;
       var _tags = dash.tags !== {} ? '&tags=' + JSON.stringify(dash.tags) : '';
       var pagination = '&page=' + dash.page + '&items_per_page=' + dash.items_per_page;
@@ -99,7 +101,6 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
       dash.loadCount = 0;
       dash.loadingData = true;
       dash.chartData = {};
-      dash.selectedItems = dash.items.filter(function(item) { return item.selected });
 
       for (var i = 0; i < dash.selectedItems.length; i++) {
         var metric_id = dash.selectedItems[i].id;
