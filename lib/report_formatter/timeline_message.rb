@@ -107,7 +107,7 @@ module ReportFormatter
         elsif ems_container
           "<a href=/ems_container/#{to_cid(provider_id)}>#{text}</a>"
         elsif ems_mw
-          "<a href=/ems_middleware/show/#{to_cid(provider_id)}>#{text}</a>"
+          "<a href=/ems_middleware/#{to_cid(provider_id)}>#{text}</a>"
         else
           "<a href=/ems_infra/#{to_cid(provider_id)}>#{text}</a>"
         end
