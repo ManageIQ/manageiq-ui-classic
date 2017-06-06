@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased - as of Sprint 62 end 2017-06-5
+
+### Added
+- Formatting-Styling: Make textarea based item selector responsive [(#1376)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1376)
+- Compute: Physical Infrastructure
+  - Add quick search and Advanced search to Physical Servers [(#1416)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1416)
+  - Add support for displaying firmware details [(#1251)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1251)
+  - Implement Physical Server Toolbar actions with API [(#1380)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1380)
+- Core: Introducing the font-fabulous gem [(#1463)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1463)
+- Storage: Support base snapshot for EBS cloud volume provisioning [(#1324)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1324)
+- Toolbars: Introducing pluggable menus [(#1454)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1454)
+
+### Fixed
+- Automation-Ansible
+  - Add reload button to Ansible Repositories [(#1366)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1366)
+  - Changed icon for the button for consistency [(#1437)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1437)
+  - Set gtl buttons toolbar for automation manager when refreshed from hash [(#1410)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1410)
+- Cloud-Intel-Reporting
+  - Fix spec to use correct status of miq_task (CI failure) [(#1481)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1481)
+  - Use for fetching report result status of MiqTask [(#1482)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1482)
+  - Custom Reports export - add missing action to the button [(#1427)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1427)
+- Compute
+  - Cloud
+    - Rename 'Web Console' to 'Cockpit Console' [(#1429)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1429)
+    - Ensure cloud tenant ID is read as string for cloud subnets [(#1406)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1406)
+    - Add cloud tenant filtering for various network object forms [(#1343)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1343)
+    - Key Pair (angular) - don't sparkleOff when waiting for task [(#1178)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1178)
+    - Redirect appropriately after cancel is pressed while provisioning instances [(#1472)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1472)
+  - Containers
+    - Tweak ad hoc page layout [(#1364)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1364)
+    - Fix filter menu dropdown cutoff [(#1433)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1433)
+    - Rename column header in Container Template screen [(#1147)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1147)
+    - Fix topology max items feature [(#1453)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1453)
+  - Infrastructure
+    - Remove association for template only [(#1290)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1290)
+    - Display product.name instead of ManageIQ in remote console titles [(#1450)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1450)
+    - Fix Providers text and Cluster info in host listnav [(#1471)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1471)
+    - Added missing Tag class to fix display of tags on Infra Topology. [(#1404)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1404)
+- Settings
+  - miq_tabs_init - use observe queue for tab switching too [(#1179)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1179)
+  - Fixed prompt for log collection by reorganizing button inheritance [(#1413)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1413)
+  - Fixed condition in disabled? method [(#1428)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1428)
+- Storage
+  - Display Adv search in Object Store Objects page [(#1455)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1455)
+  - Enable to download AWS volumes snapshot summary [(#1457)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1457)
+
 ## Unreleased - as of Sprint 61 end 2017-05-22
 
 ### Added
