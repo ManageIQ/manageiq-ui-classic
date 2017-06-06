@@ -39,4 +39,3 @@ module Mixins
     end
   end
 end
-

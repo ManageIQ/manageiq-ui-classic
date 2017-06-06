@@ -109,20 +109,14 @@ module Mixins
         # Reconfigure selected VMs
         def reconfigurevms
           assert_privileges(params[:pressed])
-          @request_id = nil
           # check to see if coming from show_list or drilled into vms from another CI
           rec_cls = "vm"
-          recs = []
           # if coming in to edit from miq_request list view
+          recs = checked_or_params
           if !session[:checked_items].nil? && (@lastaction == "set_checked_items" || params[:pressed] == "miq_request_edit")
-            @request_id = params[:id]
-            recs = session[:checked_items]
-          elsif !params[:id] || params[:pressed] == 'vm_reconfigure'
-            recs = find_checked_ids_with_rbac(VmOrTemplate)
+            request_id = params[:id]
           end
-          if recs.blank?
-            recs = [find_id_with_rbac(VmOrTemplate, params[:id]).to_i]
-          end
+
           if recs.length < 1
             add_flash(_("One or more %{model} must be selected to Reconfigure") %
               {:model => Dictionary.gettext(db.to_s, :type => :model, :notfound => :titleize, :plural => true)}, :error)
@@ -141,7 +135,7 @@ module Mixins
               javascript_flash(:scroll_top => true)
               return
             end
-            @reconfigure_items = recs.collect(&:to_i)
+            reconfigure_items = recs.collect(&:to_i)
           end
           if @explorer
             reconfigure
@@ -149,7 +143,7 @@ module Mixins
             @refresh_partial = "vm_common/reconfigure"
           else
             if role_allows?(:feature => "vm_reconfigure")
-              javascript_redirect :controller => rec_cls.to_s, :action => 'reconfigure', :req_id => @request_id, :rec_ids => @reconfigure_items, :escape => false # redirect to build the ownership screen
+              javascript_redirect :controller => rec_cls.to_s, :action => 'reconfigure', :req_id => request_id, :rec_ids => reconfigure_items, :escape => false # redirect to build the ownership screen
             else
               head :ok
             end
@@ -293,6 +287,85 @@ module Mixins
           @reconfigitems && @reconfigitems.size == 1 && @reconfigitems.first.supports_reconfigure_disks?
         end
 
+        private
+
+        # 'true' => true
+        # 'false' => false
+        # 'rootofevil' => 'rootofevil'
+        # Example:
+        #
+        # {"a" => "true", "b" => "false", "c" => "42"}.transform_values! { |v| eval_if_bool_string(v) }
+        # => {"a" => true, "b" => false, "c" => "42"}
+        def eval_if_bool_string(s)
+          case s
+          when 'true'
+            true
+          when 'false'
+            false
+          else
+            s
+          end
+        end
+
+        def handle_cancel_button
+          add_flash(_("VM Reconfigure Request was cancelled by the user"))
+          if @sb[:explorer]
+            @sb[:action] = nil
+            replace_right_cell
+          else
+            session[:flash_msgs] = @flash_array
+            javascript_redirect previous_breadcrumb_url
+          end
+        end
+
+        def handle_submit_button
+          options = {:src_ids => params[:objectIds]}
+          if params[:cb_memory] == 'true'
+            options[:vm_memory] = params[:memory_type] == "MB" ? params[:memory] : params[:memory].to_i * 1024
+          end
+
+          if params[:cb_cpu] == 'true'
+            options[:cores_per_socket]  = params[:cores_per_socket_count].nil? ? 1 : params[:cores_per_socket_count].to_i
+            options[:number_of_sockets] = params[:socket_count].nil? ? 1 : params[:socket_count].to_i
+            vccores = params[:cores_per_socket_count].zero? ? 1 : params[:cores_per_socket_count].to_i
+            vsockets = params[:socket_count].zero? ? 1 : params[:socket_count].to_i
+            options[:number_of_cpus] = vccores * vsockets
+          end
+
+          # set the disk_add and disk_remove options
+          if params[:vmAddDisks]
+            params[:vmAddDisks].values.each do |p|
+              p.transform_values! { |v| eval_if_bool_string(v) }
+            end
+            options[:disk_add] = params[:vmAddDisks].values
+          end
+
+          if params[:vmRemoveDisks]
+            params[:vmRemoveDisks].values.each do |p|
+              p.transform_values! { |v| eval_if_bool_string(v) }
+            end
+            options[:disk_remove] = params[:vmRemoveDisks].values
+          end
+
+          if params[:id] && params[:id] != 'new'
+            @request_id = params[:id]
+          end
+
+          VmReconfigureRequest.make_request(@request_id, options, current_user)
+          flash = _("VM Reconfigure Request was saved")
+
+          if role_allows?(:feature => "miq_request_show_list", :any => true)
+            javascript_redirect :controller => 'miq_request', :action => 'show_list', :flash_msg => flash
+          else
+            url = previous_breadcrumb_url.split('/')
+            javascript_redirect :controller => url[1], :action => url[2], :flash_msg => flash
+          end
+
+          if @flash_array
+            javascript_flash
+            return
+          end
+        end
       end
     end
   end
