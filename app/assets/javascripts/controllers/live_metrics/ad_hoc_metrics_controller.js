@@ -26,6 +26,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
       dash.tenantChanged = false;
       dash.filterChanged = true;
       dash.itemSelected = false;
+      dash.selectedItems = [];
       dash.tagsLoaded = false;
       dash.applied = false;
       dash.showGraph = false;
@@ -72,6 +73,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
       if (dash.filterConfig.appliedFilters.length === 0) {
         dash.applied = false;
         dash.itemSelected = false;
+        dash.selectedItems = [];
         dash.tagsLoaded = true;
         dash.items = [];
         dash.page = 1;
@@ -91,6 +93,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
       // when change filter we automatically apply changes
       if (!addOnly) {
         dash.itemSelected = false;
+        dash.selectedItems = [];
         dash.items = [];
         dash.page = 1;
         dash.pages = 1;
