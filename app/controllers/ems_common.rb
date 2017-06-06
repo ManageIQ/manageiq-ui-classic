@@ -80,14 +80,51 @@ module EmsCommon
   class_methods do
     def display_methods
       %w(
-        availability_zones block_storage_managers cloud_networks cloud_object_store_containers cloud_subnets
-        cloud_tenants cloud_volumes cloud_volume_snapshots configuration_jobs container_builds container_groups
-        container_image_registries container_images container_nodes container_projects container_replicators
-        container_routes containers container_services container_templates ems_clusters flavors floating_ips
-        host_aggregates hosts images instances load_balancers middleware_datasources middleware_deployments
-        middleware_domains middleware_messagings middleware_server_groups middleware_servers miq_templates
-        network_ports network_routers object_storage_managers orchestration_stacks persistent_volumes
-        security_groups storage_managers storages vms
+        availability_zones
+        block_storage_managers
+        cloud_networks
+        cloud_object_store_containers
+        cloud_subnets
+        cloud_tenants
+        cloud_volumes
+        cloud_volume_snapshots
+        configuration_jobs
+        container_builds
+        container_groups
+        container_image_registries
+        container_images
+        container_nodes
+        container_projects
+        container_replicators
+        container_routes
+        containers
+        container_services
+        container_templates
+        ems_clusters
+        flavors
+        floating_ips
+        host_aggregates
+        hosts
+        images
+        instances
+        load_balancers
+        middleware_datasources
+        middleware_deployments
+        middleware_domains
+        middleware_messagings
+        middleware_server_groups
+        middleware_servers
+        miq_templates
+        network_ports
+        network_routers
+        object_storage_managers
+        orchestration_stacks
+        persistent_volumes
+        physical_servers
+        security_groups
+        storage_managers
+        storages
+        vms
       )
     end
 

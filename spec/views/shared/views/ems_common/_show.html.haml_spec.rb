@@ -11,6 +11,7 @@ describe "shared/views/ems_common/show" do
     before do
       view.extend setup.helper
       allow(MiqServer).to receive(:my_zone).and_return("default")
+      allow(controller).to receive(:controller_name).and_return("ems_cloud")
       creds = {}
       creds[:amqp] = {:userid => "amqp_user", :password => "amqp_password"}
       ems.update_authentication(creds, :save => true)
