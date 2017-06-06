@@ -241,7 +241,11 @@ class HostController < ApplicationController
           @breadcrumbs.pop if @breadcrumbs
           AuditEvent.success(build_saved_audit_hash_angular(old_host_attributes, @host, false))
           session[:flash_msgs] = @flash_array.dup                 # Put msgs in session for next transaction
-          javascript_redirect :action => "show", :id => @host.id.to_s
+          if @lastaction == 'show_list'
+            javascript_redirect :action => "show_list"
+          else
+            javascript_redirect :action => "show", :id => @host.id.to_s
+          end
           return
         else
           @errors.each { |msg| add_flash(msg, :error) }
