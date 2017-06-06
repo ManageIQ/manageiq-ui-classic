@@ -845,6 +845,20 @@ class CatalogController < ApplicationController
   end
   helper_method :remove_resources_display
 
+  def verbosity_display(verbosity)
+    verbosity ||= "0"
+    verbosity_hsh = {
+      "0" => "0 (Normal)",
+      "1" => "1 (Verbose)",
+      "2" => "2 (More Verbose)",
+      "3" => "3 (Debug)",
+      "4" => "4 (Connection Debug)",
+      "5" => "5 (WinRM Debug)"
+    }
+    verbosity_hsh[verbosity.to_s]
+  end
+  helper_method :verbosity_display
+
   def features
     [{:role     => "svc_catalog_accord",
       :role_any => true,
@@ -1803,6 +1817,7 @@ class CatalogController < ApplicationController
     playbook_details[:provisioning][:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, provision[:network_credential_id]) if provision[:network_credential_id]
     playbook_details[:provisioning][:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, provision[:cloud_credential_id]) if provision[:cloud_credential_id]
     fetch_dialog(playbook_details, provision[:dialog_id], :provisioning)
+    playbook_details[:provisioning][:verbosity] = provision[:verbosity]
     playbook_details[:provisioning][:become_enabled] = provision[:become_enabled] == true ? _('Yes') : _('No')
 
     if @record.config_info[:retirement]
@@ -1816,6 +1831,7 @@ class CatalogController < ApplicationController
         playbook_details[:retirement][:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, retirement[:network_credential_id]) if retirement[:network_credential_id]
         playbook_details[:retirement][:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, retirement[:cloud_credential_id]) if retirement[:cloud_credential_id]
       end
+      playbook_details[:retirement][:verbosity] = retirement[:verbosity]
       playbook_details[:retirement][:become_enabled] = retirement[:become_enabled] == true ? _('Yes') : _('No')
     end
     playbook_details

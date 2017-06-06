@@ -29,6 +29,7 @@ describe('catalogItemFormController', function() {
           playbook_id:          10000000000493,
           credential_id:        10000000000090,
           hosts:                'localhost',
+          verbosity:            '0',
           extra_vars:           {
             'var1': {'default': 'default_val1'},
             'var2': {'default': 'default_val2'}
@@ -38,6 +39,7 @@ describe('catalogItemFormController', function() {
         },
         retirement: {
           remove_resources: 'yes_without_playbook',
+          verbosity: '0',
         }
       }
     };
