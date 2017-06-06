@@ -244,6 +244,69 @@ describe ContainerDashboardService do
       expect(heatmaps_all_providers).to eq(:nodeCpuUsage => nil, :nodeMemoryUsage => nil)
       expect(heatmaps_single_provider).to eq(:nodeCpuUsage => nil, :nodeMemoryUsage => nil)
     end
+
+    # BZ: https://bugzilla.redhat.com/show_bug.cgi?id=1439671
+    it "returns one metric per node in realtime case" do
+      ems = FactoryGirl.create(:ems_kubernetes, :name => 'kubernetes', :zone => @zone)
+
+      @node1 = FactoryGirl.create(:container_node, :name => 'node1')
+      @node2 = FactoryGirl.create(:container_node, :name => 'node2')
+
+      ems.container_nodes << @node1 << @node2
+
+      ems.container_nodes.each do |node|
+        (1..10).each do |min|
+          node.metrics << FactoryGirl.create(
+            :metric_container_node_rt,
+            :timestamp                  => min.minute.ago.utc,
+            :capture_interval           => 20,
+            :cpu_usage_rate_average     => 10 * min,
+            :mem_usage_absolute_average => 10 * min,
+            :derived_vm_numvcpus        => 4,
+            :net_usage_rate_average     => 90,
+            :derived_memory_available   => 8192,
+            :derived_memory_used        => 4096
+          )
+        end
+      end
+
+      heatmaps = described_class.new(nil, controller).heatmaps
+
+      expect(heatmaps).to eq(
+        :nodeCpuUsage    => [
+          {
+            :id       => @node1.id,
+            :node     => "node1",
+            :provider => "kubernetes",
+            :total    => 4,
+            :percent  => 0.1
+          },
+          {
+            :id       => @node2.id,
+            :node     => "node2",
+            :provider => "kubernetes",
+            :total    => 4,
+            :percent  => 0.1
+          }
+        ],
+        :nodeMemoryUsage => [
+          {
+            :id       => @node1.id,
+            :node     => "node1",
+            :provider => "kubernetes",
+            :total    => 8192,
+            :percent  => 0.1
+          },
+          {
+            :id       => @node2.id,
+            :node     => "node2",
+            :provider => "kubernetes",
+            :total    => 8192,
+            :percent  => 0.1
+          }
+        ]
+      )
+    end
   end
 
   context "network trends" do

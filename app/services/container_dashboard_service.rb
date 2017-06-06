@@ -1,6 +1,7 @@
 class ContainerDashboardService
   include UiServiceMixin
   CPU_USAGE_PRECISION = 2 # 2 decimal points
+  REALTIME_TIME_RANGE = 10 # 10 minutes
 
   def initialize(provider_id, controller)
     @provider_id = provider_id
@@ -112,7 +113,11 @@ class ContainerDashboardService
   end
 
   def realtime_heatmaps
-    heatmaps_data(realtime_provider_metrics)
+    node_ids = @ems.container_nodes if @ems.present?
+    metrics = Metric::Helper.latest_metrics(ContainerNode.name, REALTIME_TIME_RANGE.minutes.ago.utc, node_ids)
+    metrics = metrics.includes(:resource)
+    metrics = metrics.includes(:resource => [:ext_management_system]) unless @ems.present?
+    heatmaps_data(metrics)
   end
 
   def hourly_heatmaps
@@ -392,7 +397,7 @@ class ContainerDashboardService
     tp = TimeProfile.profile_for_user_tz(current_user.id, current_user.get_timezone) || TimeProfile.default_time_profile
     Metric::Helper.find_for_interval_name('realtime', tp)
                   .where(:resource => (@ems.try(:container_nodes) || ContainerNode.all))
-                  .where('timestamp > ?', 10.minutes.ago.utc).order('timestamp')
+                  .where('timestamp > ?', REALTIME_TIME_RANGE.minutes.ago.utc).order('timestamp')
   end
 
   def hourly_provider_metrics
