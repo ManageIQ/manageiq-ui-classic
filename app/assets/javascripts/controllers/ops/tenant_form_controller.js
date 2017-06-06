@@ -1,30 +1,31 @@
 ManageIQ.angular.app.controller('tenantFormController', ['$http', '$scope', 'tenantFormId', 'tenantType', 'miqService', function($http, $scope, tenantFormId, tenantType, miqService) {
+    var vm = this;
     var init = function() {
-      $scope.tenantModel = {
+      vm.tenantModel = {
         name: '',
         description: '',
         divisible: true,
         use_config_for_attributes: false
       };
-      $scope.formId = tenantFormId;
-      $scope.afterGet = false;
-      $scope.modelCopy = angular.copy( $scope.tenantModel );
-      $scope.model = "tenantModel";
-
-      ManageIQ.angular.scope = $scope;
+      vm.formId = tenantFormId;
+      vm.afterGet = false;
+      vm.validateClicked = miqService.validateWithAjax;
+      vm.model = "tenantModel";
+      vm.saveable = miqService.saveable;
+      ManageIQ.angular.scope = vm;
 
       if (tenantFormId == 'new') {
-        $scope.newRecord                             = true;
-        $scope.tenantModel.name                      = '';
-        $scope.tenantModel.description               = '';
-        $scope.tenantModel.default                   = false;
-        $scope.tenantModel.divisible                 = tenantType;
-        $scope.tenantModel.use_config_for_attributes = false;
+        vm.newRecord                             = true;
+        vm.tenantModel.name                      = '';
+        vm.tenantModel.description               = '';
+        vm.tenantModel.default                   = false;
+        vm.tenantModel.divisible                 = tenantType;
+        vm.tenantModel.use_config_for_attributes = false;
 
-        $scope.afterGet  = true;
-        $scope.modelCopy = angular.copy( $scope.tenantModel );
+        vm.afterGet  = true;
+        vm.modelCopy = angular.copy( vm.tenantModel );
       } else {
-        $scope.newRecord = false;
+        vm.newRecord = false;
         miqService.sparkleOn();
         $http.get('/ops/tenant_form_fields/' + tenantFormId)
           .then(getTenantFormData)
@@ -42,38 +43,38 @@ ManageIQ.angular.app.controller('tenantFormController', ['$http', '$scope', 'ten
       }
     };
 
-    $scope.cancelClicked = function() {
+    vm.cancelClicked = function() {
       tenantEditButtonClicked('cancel');
       $scope.angularForm.$setPristine(true);
     };
 
-    $scope.resetClicked = function() {
-      $scope.tenantModel = angular.copy( $scope.modelCopy );
+    vm.resetClicked = function() {
+      vm.tenantModel = angular.copy( vm.modelCopy );
       $scope.angularForm.$setUntouched(true);
       $scope.angularForm.$setPristine(true);
       miqService.miqFlash("warn", __("All changes have been reset"));
     };
 
-    $scope.saveClicked = function() {
+    vm.saveClicked = function() {
       tenantEditButtonClicked('save', true);
       $scope.angularForm.$setPristine(true);
     };
 
-    $scope.addClicked = function() {
-      $scope.saveClicked();
+    vm.addClicked = function() {
+      vm.saveClicked();
     };
 
     function getTenantFormData(response) {
       var data = response.data;
 
-      $scope.tenantModel.name                      = data.name;
-      $scope.tenantModel.description               = data.description;
-      $scope.tenantModel.default                   = data.default;
-      $scope.tenantModel.divisible                 = data.divisible;
-      $scope.tenantModel.use_config_for_attributes = data.use_config_for_attributes;
+      vm.tenantModel.name                      = data.name;
+      vm.tenantModel.description               = data.description;
+      vm.tenantModel.default                   = data.default;
+      vm.tenantModel.divisible                 = data.divisible;
+      vm.tenantModel.use_config_for_attributes = data.use_config_for_attributes;
 
-      $scope.afterGet = true;
-      $scope.modelCopy = angular.copy( $scope.tenantModel );
+      vm.afterGet = true;
+      vm.modelCopy = angular.copy( vm.tenantModel );
 
       miqService.sparkleOff();
     }
