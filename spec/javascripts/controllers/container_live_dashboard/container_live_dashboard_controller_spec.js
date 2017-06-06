@@ -52,4 +52,22 @@ describe('adHocMetricsController', function() {
       expect($controller.timeFilter.range_count).toBe(9);
     });
   });
+
+  describe('utility functions', function() {
+    it('should calculate units correctly', function() {
+      var m;
+
+      m = $controller.metricPrefix(10000, 'ms');
+      expect(m.multiplier).toBe(Math.pow(10, -3));
+      expect(m.unitLable).toBe('s');
+
+      m = $controller.metricPrefix(10000, 'ns');
+      expect(m.multiplier).toBe(Math.pow(10, -9));
+      expect(m.unitLable).toBe('s');
+
+      m = $controller.metricPrefix(10000, 's');
+      expect(m.multiplier).toBe(Math.pow(10, -3));
+      expect(m.unitLable).toBe('Ks');
+    });
+  });
 });
