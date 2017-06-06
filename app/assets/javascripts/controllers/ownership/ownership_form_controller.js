@@ -50,9 +50,7 @@ ManageIQ.angular.app.controller('ownershipFormController', ['$http', '$scope', '
   };
 
   $scope.resetClicked = function() {
-    vm.ownershipModel = angular.copy( vm.modelCopy );
-    $scope.angularForm.$setPristine(true);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.resetData(vm, 'ownershipModel', $scope);
   };
 
   $scope.saveClicked = function() {

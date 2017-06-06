@@ -158,4 +158,10 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
       miqService.sparkleOff();
     }
   };
+
+  this.resetData = function(vm, hshName, scope) {
+    vm[hshName] = angular.copy( vm.modelCopy );
+    scope.angularForm.$setPristine(true);
+    miqService.miqFlash('warn', __('All changes have been reset'));
+  };
 }]);

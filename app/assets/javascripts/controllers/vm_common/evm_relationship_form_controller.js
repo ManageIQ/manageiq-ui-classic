@@ -59,9 +59,7 @@ ManageIQ.angular.app.controller('evmRelationshipFormController', ['$q', '$scope'
   };
 
   vm.resetClicked = function() {
-    vm.evmRelationshipModel = angular.copy( vm.modelCopy );
-    $scope.angularForm.$setPristine(true);
-    miqService.miqFlash('warn', __('All changes have been reset'));
+    miqService.resetData(vm, 'evmRelationshipModel', $scope);
   };
 
   vm.saveClicked = function() {

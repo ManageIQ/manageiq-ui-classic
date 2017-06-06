@@ -175,9 +175,7 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', '$scope',
   };
 
   $scope.resetClicked = function() {
-    vm.timeProfileModel = angular.copy( vm.modelCopy );
-    $scope.angularForm.$setPristine(true);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.resetData(vm, 'timeProfileModel', $scope);
   };
 
   $scope.saveClicked = function() {

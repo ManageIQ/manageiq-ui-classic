@@ -53,9 +53,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
   };
 
   $scope.resetClicked = function() {
-    vm.repositoryModel = angular.copy( vm.modelCopy );
-    $scope.angularForm.$setPristine(true);
-    miqService.miqFlash('warn', __('All changes have been reset'));
+    miqService.resetData(vm, 'repositoryModel', $scope);
   };
 
   $scope.saveClicked = function() {
