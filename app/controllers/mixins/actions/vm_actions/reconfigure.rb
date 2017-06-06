@@ -44,33 +44,18 @@ module Mixins
               vsockets = params[:socket_count] == 0 ? 1 : params[:socket_count]
               options[:number_of_cpus] = vccores.to_i * vsockets.to_i
             end
+
             # set the disk_add and disk_remove options
             if params[:vmAddDisks]
               params[:vmAddDisks].values.each do |p|
-                p.transform_values!{ |v|
-                  case v
-                    when 'true'
-                      true
-                    when 'false'
-                      false
-                    else
-                      v
-                  end }
+                p.transform_values!{ |v| eval_if_bool_string(v) }
               end
               options[:disk_add] = params[:vmAddDisks].values
             end
 
             if params[:vmRemoveDisks]
               params[:vmRemoveDisks].values.each do |p|
-                p.transform_values!{ |v|
-                  case v
-                  when 'true'
-                    true
-                  when 'false'
-                    false
-                  else
-                    v
-                  end }
+                p.transform_values!{ |v| eval_if_bool_string(v) }
               end
               options[:disk_remove] = params[:vmRemoveDisks].values
             end
@@ -106,7 +91,6 @@ module Mixins
 
         # Reconfigure selected VMs
         def reconfigurevms
-          binding.pry
           assert_privileges(params[:pressed])
           # check to see if coming from show_list or drilled into vms from another CI
           rec_cls = "vm"
