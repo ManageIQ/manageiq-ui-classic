@@ -1,10 +1,7 @@
 /* global miqFlashLater */
 
 ManageIQ.angular.app.service('postService', ['miqService', '$timeout', '$window', 'API', function(miqService, $timeout, $window, API) {
-
   this.saveRecord = function(apiURL, redirectURL, updateObject, successMsg, action) {
-    if (action === undefined)
-      action = 'edit';
     miqService.sparkleOn();
     return API.post(apiURL,
       angular.toJson({
@@ -14,16 +11,7 @@ ManageIQ.angular.app.service('postService', ['miqService', '$timeout', '$window'
          .catch(miqService.handleFailure);
 
     function handleSuccess(response) {
-      $timeout(function () {
-        if (response.error) {
-          var msg = __(response.error.klass + ': ' + response.error.message);
-          miqService.miqFlash('error', msg);
-          miqService.sparkleOff();
-        } else {
-          miqFlashLater({ message: successMsg });
-          $window.location.href = redirectURL;
-        }
-      });
+      postSuccess(response, successMsg, redirectURL);
     }
   };
 
@@ -37,16 +25,7 @@ ManageIQ.angular.app.service('postService', ['miqService', '$timeout', '$window'
          .catch(miqService.handleFailure);
 
     function handleSuccess(response) {
-      $timeout(function () {
-        if (response.error) {
-          var msg = __(response.error.klass + ': ' + response.error.message);
-          miqService.miqFlash('error', msg);
-          miqService.sparkleOff();
-        } else {
-          miqFlashLater({ message: successMsg });
-          $window.location.href = redirectURL;
-        }
-      });
+      postSuccess(response, successMsg, redirectURL);
     }
   };
 
@@ -56,5 +35,18 @@ ManageIQ.angular.app.service('postService', ['miqService', '$timeout', '$window'
       $window.location.href = redirectURL;
     });
   };
+
+  function postSuccess(response, successMsg, redirectURL) {
+    $timeout(function () {
+      if (response.error) {
+        var msg = __(response.error.klass + ': ' + response.error.message);
+        miqService.miqFlash('error', msg);
+        miqService.sparkleOff();
+      } else {
+        miqFlashLater({ message: successMsg });
+        $window.location.href = redirectURL;
+      }
+    });
+  }
 }]);
 

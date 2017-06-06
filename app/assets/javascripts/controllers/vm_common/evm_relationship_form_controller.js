@@ -41,7 +41,7 @@ ManageIQ.angular.app.controller('evmRelationshipFormController', ['$q', '$scope'
   }
 
   function getEvmRelationshipFormData(response) {
-    if (response.miq_server !== undefined)
+    if (typeof response.miq_server !== 'undefined')
       vm.evmRelationshipModel.miq_server = response.miq_server.id;
     vm.modelCopy = angular.copy( vm.evmRelationshipModel );
   }
