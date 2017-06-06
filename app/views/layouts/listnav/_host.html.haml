@@ -122,6 +122,16 @@
             :record_id     => @record.id,
             :title         => _("Show %{host} drift history") % {:host => host_title})
 
+        - if role_allows?(:feature => "physical_server_show") && !@record.physical_server.nil?
+          %li
+            - physical_server_show = {:controller => "physical_server", :action => 'show', :id => @record.physical_server.id}
+            = link_to("#{ui_lookup(:model => "PhysicalServer")}: #{@record.physical_server.name}",
+              physical_server_show,
+              :title => _("Show Physical Server"))
+
+        - if role_allows?(:feature => "physical_server_show") && @record.physical_server.nil?
+          = li_link(:if => false, :text => "#{ui_lookup(:model => "PhysicalServer")}: #{_('None')}")
+
     = miq_accordion_panel(_("Security"), false, "host_sec") do
       %ul.nav.nav-pills.nav-stacked
         = li_link(:count => @record.number_of(:users),

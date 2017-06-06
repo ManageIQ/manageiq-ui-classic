@@ -22,7 +22,7 @@ module HostHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(ems cluster availability_zone used_tenants storages resource_pools vms templates drift_history)
+      %i(ems cluster availability_zone used_tenants storages resource_pools vms templates drift_history physical_server)
     )
   end
 
@@ -233,6 +233,14 @@ module HostHelper::TextualSummary
       h[:link]  = url_for_only_path(:controller => 'ems_cluster', :action => 'show', :id => cluster)
     end
     h
+  end
+
+  def textual_physical_server
+    if @record.physical_server_id.nil?
+      {:label => _("Physical Server"), :value => _("None"), :icon => "pficon pficon-server"}
+    else
+      {:label => _("Physical Server"), :value => @record.physical_server.try(:name), :icon => "pficon pficon-server", :link => url_for(:controller => 'physical_server', :action => 'show', :id => @record.physical_server_id)}
+    end
   end
 
   def textual_storages
