@@ -1,6 +1,6 @@
 describe "layouts/listnav/_host_aggregate.html.haml" do
-  helper(ImageEncodeHelper)
-  helper(QuadiconHelper)
+  helper ImageEncodeHelper
+  helper QuadiconHelper
 
   before :each do
     set_controller_for_view("host_aggregate")

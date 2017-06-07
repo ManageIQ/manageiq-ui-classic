@@ -98,7 +98,7 @@ end
 # FIXME: complex describe blocks mirror the existing complex control flow
 
 describe QuadiconHelper do
-  helper(ImageEncodeHelper)
+  helper ImageEncodeHelper
 
   describe "#render_quadicon" do
     context "when vm_or_template" do

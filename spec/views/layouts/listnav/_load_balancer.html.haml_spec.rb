@@ -1,6 +1,6 @@
 describe "layouts/listnav/_load_balancer.html.haml" do
-  helper(ImageEncodeHelper)
-  helper(QuadiconHelper)
+  helper ImageEncodeHelper
+  helper QuadiconHelper
 
   before :each do
     set_controller_for_view("load_balancer")

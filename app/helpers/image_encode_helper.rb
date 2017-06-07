@@ -2,7 +2,6 @@ module ImageEncodeHelper
   def encodable_image_tag(source, options = {})
     image_tag(encodable_image_source(source), options)
   end
-  alias eimage_tag encodable_image_tag
 
   def encodable_image_source(source)
     if base64_encode_images? && source.present?
@@ -11,7 +10,6 @@ module ImageEncodeHelper
       path_to_image(source)
     end
   end
-  alias eimage_source encodable_image_source
 
   def base64_encode_images?
     @base64_encode_images
