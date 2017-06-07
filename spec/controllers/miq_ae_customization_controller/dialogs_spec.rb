@@ -82,10 +82,11 @@ describe MiqAeCustomizationController do
           :buttons     => "submit,reset,cancel"
         )
       end
-      it "loads record from not the session" do
+
+      before do
         field = {
           :id                => 9463,
-          :name              => "foo",
+          :name              => "foo_field",
           :label             => "first_drop_down",
           :description       => "first_drop_down",
           :typ               => "DialogFieldDropDownList",
@@ -100,7 +101,7 @@ describe MiqAeCustomizationController do
           :default_value     => 1,
           :force_multi_value => nil
         }
-        new_hash = {
+        @new_hash = {
           :label       => "Dialog 1",
           :description => "Dialog 1",
           :buttons     => ["submit"],
@@ -118,11 +119,27 @@ describe MiqAeCustomizationController do
             }
           ]
         }
-        controller.instance_variable_set(:@edit, :new => new_hash, :dialog_buttons => [])
+      end
 
+      it "loads record from not the session" do
+        controller.instance_variable_set(:@edit, :new => @new_hash, :dialog_buttons => [])
         controller.send(:dialog_set_record_vars, dialog, "foo")
-
         expect(dialog.dialog_tabs.first.dialog_groups.first.dialog_fields.first.options[:force_multi_value]).to be nil
+      end
+
+      it "Rollback values of dialog when validating dialog elements" do
+        controller.instance_variable_set(:@edit, :new => @new_hash, :dialog_buttons => [])
+        controller.send(:dialog_set_record_vars, dialog, true)
+        dialog.reload
+        expect(dialog.dialog_tabs).to be_kind_of(ActiveRecord::Associations::CollectionProxy)
+        expect(dialog.dialog_tabs.length).to eq(0)
+      end
+
+      it "saves values of dialog elements in a dialog when validate is false" do
+        controller.instance_variable_set(:@edit, :new => @new_hash, :dialog_buttons => [])
+        controller.send(:dialog_set_record_vars, dialog, false)
+        dialog.reload
+        expect(dialog.dialog_tabs.first.dialog_groups.first.dialog_fields.first.name).to eq('foo_field')
       end
     end
 
