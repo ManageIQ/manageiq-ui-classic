@@ -430,10 +430,6 @@ module Mixins
         default_endpoint = {:role => :default, :hostname => hostname, :port => port}
         default_endpoint.merge!(endpoint_security_options(ems.security_protocol, default_tls_ca_certs))
         if params[:metrics_selection] == 'hawkular_enabled'
-          if hawkular_hostname.blank?
-            default_key = params[:default_password] || ems.authentication_key
-            hawkular_hostname = get_hostname_from_routes(ems, default_endpoint, default_key)
-          end
           hawkular_endpoint = {:role => :hawkular, :hostname => hawkular_hostname, :port => hawkular_api_port}
           hawkular_endpoint.merge!(endpoint_security_options(hawkular_security_protocol, hawkular_tls_ca_certs))
         end
@@ -465,21 +461,6 @@ module Mixins
                    :hawkular    => hawkular_endpoint}
 
       build_connection(ems, endpoints, mode)
-    end
-
-    def get_hostname_from_routes(ems, endpoint_hash, token)
-      return nil unless ems.class.respond_to?(:openshift_connect)
-      endpoint = Endpoint.new(endpoint_hash)
-      ssl_options = {
-        :verify_ssl => ems.verify_ssl_mode(endpoint),
-        :cert_store => ems.ssl_cert_store(endpoint)
-      }
-      client = ems.class.raw_connect(endpoint.hostname, endpoint.port,
-                                     :service => :openshift, :bearer => token, :ssl_options => ssl_options)
-      client.get_route('hawkular-metrics', 'openshift-infra').try(:spec).try(:host)
-    rescue StandardError => e
-      $log.warn("MIQ(#{controller_name}_controller-#{action_name}): get_hostname_from_routes error: #{e}")
-      nil
     end
 
     def endpoint_security_options(security_protocol, certificate_authority)

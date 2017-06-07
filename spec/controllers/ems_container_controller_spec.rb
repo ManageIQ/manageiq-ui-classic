@@ -53,6 +53,61 @@ describe EmsContainerController do
     end
   end
 
+  describe ".update_ems_button_detect" do
+    let(:kubernetes_manager) { FactoryGirl.create(:ems_kubernetes) }
+    let(:openshift_manager) { FactoryGirl.create(:ems_openshift) }
+    let(:hawkular_route) { RecursiveOpenStruct.new(:spec => {:host => "myhawkularroute.com"}) }
+    let(:mock_client) { double('kubeclient') }
+
+    before(:each) do
+      EvmSpecHelper.create_guid_miq_server_zone
+    end
+
+    it "errors on kubernetes detection" do
+      controller.instance_variable_set(:@_params, :id => kubernetes_manager.id)
+      controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
+
+      controller.send(:update_ems_button_detect)
+
+      expect(controller.send(:flash_errors?)).to be_truthy
+      expect(assigns(:flash_array).first[:message]).to eq(
+        'Hawkular Route Detection: failure [Route detection not applicable for provider type]'
+      )
+    end
+
+    it "detects route for openshift" do
+      controller.instance_variable_set(:@_params, :id => openshift_manager.id)
+      controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
+
+      # set kubeclient to return a mock route.
+      allow(Kubeclient::Client).to receive(:new).and_return(mock_client)
+      expect(mock_client).to receive(:get_route).with('hawkular-metrics', 'openshift-infra')
+        .and_return(hawkular_route)
+
+      controller.send(:update_ems_button_detect)
+
+      expect(controller.send(:flash_errors?)).to be_falsey
+      expect(assigns(:flash_array).first[:message]).to eq('Hawkular Route Detection: success')
+    end
+
+    it "tolerates detection exceptions" do
+      controller.instance_variable_set(:@_params, :id => openshift_manager.id)
+      controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
+
+      # set kubeclient to return a mock route.
+      allow(Kubeclient::Client).to receive(:new).and_return(mock_client)
+      expect(mock_client).to receive(:get_route).with('hawkular-metrics', 'openshift-infra')
+        .and_raise(StandardError, "message")
+
+      controller.send(:update_ems_button_detect)
+
+      expect(controller.send(:flash_errors?)).to be_truthy
+      expect(assigns(:flash_array).first[:message]).to include(
+        'Hawkular Route Detection: failure [message]'
+      )
+    end
+  end
+
   describe "Hawkular Disabled/Enabled" do
     let(:zone) { FactoryGirl.build(:zone) }
     let!(:server) { EvmSpecHelper.local_miq_server(:zone => zone) }

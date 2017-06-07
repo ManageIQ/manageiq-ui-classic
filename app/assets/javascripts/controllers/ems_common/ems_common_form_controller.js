@@ -276,6 +276,14 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     }
   };
 
+  $scope.isDetectionEnabled = function() {
+    return ($scope.currentTab == "hawkular" && $scope.emsCommonModel.ems_controller == "ems_container") &&
+      ($scope.emsCommonModel.emstype == "openshift") &&
+      ($scope.emsCommonModel.default_hostname && $scope.emsCommonModel.default_api_port) &&
+      ($scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid) &&
+      ($scope.emsCommonModel.default_verify != '' && $scope.angularForm.default_verify.$valid);
+  };
+
   var emsCommonEditButtonClicked = function(buttonName, _serializeFields, $event) {
     miqService.sparkleOn();
     var url = $scope.updateUrl + '?button=' + buttonName;
@@ -316,6 +324,16 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     if ($scope.emsCommonModel[authStatus] === true) {
       $scope.postValidationModelRegistry($scope.currentTab);
     }
+  };
+
+  $scope.detectClicked = function($event) {
+    miqService.sparkleOn();
+    miqService.detectWithRest($event, $scope.actionUrl)
+      .then(function success(data) {
+        $scope.updateHawkularHostname(data.hostname);
+        miqService.miqFlash(data.level, data.message);
+        miqSparkleOff();
+      });
   };
 
   $scope.saveClicked = function($event, formSubmit) {
@@ -530,6 +548,10 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
   $scope.updateAuthStatus = function(updatedValue) {
     $scope.angularForm[$scope.authType + '_auth_status'].$setViewValue(updatedValue);
+  };
+
+  $scope.updateHawkularHostname = function(value) {
+    $scope.emsCommonModel.hawkular_hostname = value;
   };
 
   $scope.radioSelectionChanged = function() {
