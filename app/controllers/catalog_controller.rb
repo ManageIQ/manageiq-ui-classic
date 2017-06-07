@@ -2122,7 +2122,7 @@ class CatalogController < ApplicationController
       session[:tag_db] = @tagging = params[:tagging] if params[:tagging]
     end
 
-    @gtl_type = 'list' # No quad icons for user/group list views
+    @gtl_type = 'grid'
     session[:assigned_filters] = assigned_filters
     x_tags_set_form_vars
     @in_a_form = true
