@@ -136,6 +136,10 @@ module Mixins
       hawkular_api_port = ""
       hawkular_security_protocol = security_protocol_default
       hawkular_tls_ca_certs = ""
+      prometheus_hostname = ""
+      prometheus_api_port = ""
+      prometheus_security_protocol = security_protocol_default
+      prometheus_tls_ca_certs = ""
 
       if @ems.connection_configurations.amqp.try(:endpoint)
         amqp_hostname = @ems.connection_configurations.amqp.endpoint.hostname
@@ -274,11 +278,13 @@ module Mixins
                        :zone                       => zone,
                        :hostname                   => @ems.hostname,
                        :default_hostname           => @ems.connection_configurations.default.endpoint.hostname,
-                       :metrics_selection          => retrieve_metrics_selection,
+                       :monitoring_selection       => retrieve_monitoring_selection,
                        :metrics_selection_default  => @ems.emstype == 'kubernetes' ? 'disabled' : 'enabled',
                        :hawkular_hostname          => hawkular_hostname,
                        :default_api_port           => @ems.connection_configurations.default.endpoint.port,
                        :hawkular_api_port          => hawkular_api_port,
+                       :prometheus_hostname        => prometheus_hostname,
+                       :prometheus_api_port        => prometheus_api_port,
                        :api_version                => @ems.api_version ? @ems.api_version : "v2",
                        :default_security_protocol  => default_security_protocol,
                        :hawkular_security_protocol => hawkular_security_protocol,
@@ -360,16 +366,21 @@ module Mixins
       metrics_port = params[:metrics_api_port].strip if params[:metrics_api_port]
       metrics_database_name = params[:metrics_database_name].strip if params[:metrics_database_name]
       hawkular_hostname = params[:hawkular_hostname].strip if params[:hawkular_hostname]
+      prometheus_hostname = params[:prometheus_hostname].strip if params[:prometheus_hostname]
+      prometheus_api_port = params[:prometheus_api_port].strip if params[:prometheus_api_port]
+      prometheus_security_protocol = params[:prometheus_security_protocol].strip if params[:prometheus_security_protocol]
       hawkular_api_port = params[:hawkular_api_port].strip if params[:hawkular_api_port]
       hawkular_security_protocol = params[:hawkular_security_protocol].strip if params[:hawkular_security_protocol]
       default_tls_ca_certs  = params[:default_tls_ca_certs].strip if params[:default_tls_ca_certs]
       hawkular_tls_ca_certs = params[:hawkular_tls_ca_certs].strip if params[:hawkular_tls_ca_certs]
+      prometheus_tls_ca_certs = params[:hawkular_tls_ca_certs].strip if params[:hawkular_tls_ca_certs]
       default_endpoint = {}
       amqp_endpoint = {}
       ceilometer_endpoint = {}
       ssh_keypair_endpoint = {}
       metrics_endpoint = {}
       hawkular_endpoint = {}
+      prometheus_endpoint = {}
 
       if ems.kind_of?(ManageIQ::Providers::Openstack::CloudManager) || ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
         default_endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
@@ -429,9 +440,17 @@ module Mixins
         params[:cred_type] = ems.default_authentication_type if params[:cred_type] == "default"
         default_endpoint = {:role => :default, :hostname => hostname, :port => port}
         default_endpoint.merge!(endpoint_security_options(ems.security_protocol, default_tls_ca_certs))
-        if params[:metrics_selection] == 'hawkular_enabled'
+        if params[:monitoring_selection] == 'hawkular'
+          if hawkular_hostname.blank?
+            default_key = params[:default_password] || ems.authentication_key
+            hawkular_hostname = get_hostname_from_routes(ems, default_endpoint, default_key)
+          end
           hawkular_endpoint = {:role => :hawkular, :hostname => hawkular_hostname, :port => hawkular_api_port}
           hawkular_endpoint.merge!(endpoint_security_options(hawkular_security_protocol, hawkular_tls_ca_certs))
+        end
+        if params[:monitoring_selection] == 'prometheus'
+          prometheus_endpoint = {:role => :prometheus, :hostname => prometheus_hostname, :port => prometheus_api_port}
+          prometheus_endpoint.merge!(endpoint_security_options(prometheus_security_protocol, prometheus_tls_ca_certs))
         end
       end
 
@@ -458,7 +477,8 @@ module Mixins
                    :amqp        => amqp_endpoint,
                    :ssh_keypair => ssh_keypair_endpoint,
                    :metrics     => metrics_endpoint,
-                   :hawkular    => hawkular_endpoint}
+                   :hawkular    => hawkular_endpoint,
+                   :prometheus  => prometheus_endpoint}
 
       build_connection(ems, endpoints, mode)
     end
@@ -475,7 +495,7 @@ module Mixins
       authentications = build_credentials(ems, mode)
       configurations = []
 
-      [:default, :ceilometer, :amqp, :ssh_keypair, :metrics, :hawkular].each do |role|
+      [:default, :ceilometer, :amqp, :ssh_keypair, :metrics, :hawkular, :prometheus].each do |role|
         configurations << build_configuration(ems, authentications, endpoints, role)
       end
 
