@@ -188,6 +188,7 @@ module ApplicationController::CiProcessing
     @gtl_url = "/show_list"
 
     model = options.delete(:model) # Get passed in model override
+    options[:where_clause] = (model || self.class.model).where('1=0')
     @view, @pages = get_view(model || self.class.model, options)  # Get the records (into a view) and the paginator
     if session[:bc] && session[:menu_click]               # See if we came from a perf chart menu click
       drop_breadcrumb(:name => session[:bc],
