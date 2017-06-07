@@ -4,7 +4,7 @@ class CloudTopologyService < TopologyService
   @included_relations = [
     :tags,
     :availability_zones => [:tags, :vms => :tags],
-    :cloud_tenants      => [:tags, :vms => :tags],
+    :cloud_tenants      => [:tags, :active_vms => :tags],
   ]
 
   @kinds = %i(CloudManager AvailabilityZone CloudTenant Vm Tag)
