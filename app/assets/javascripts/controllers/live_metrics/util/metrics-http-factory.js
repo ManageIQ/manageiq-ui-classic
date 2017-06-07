@@ -3,6 +3,28 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
     var NUMBER_OF_MILLISEC_IN_HOUR = 60 * 60 * 1000;
     var NUMBER_OF_MILLISEC_IN_SEC = 1000;
 
+    function getMetricTagsData(response) {
+      'use strict';
+      dash.tagsLoaded = true;
+
+      if (utils.checkResponse(response) === false) {
+        return;
+      }
+
+      var data = response.data;
+
+      dash.filterConfig.fields = [];
+      if (data && _.isArray(data.metric_tags)) {
+        data.metric_tags.sort();
+
+        // remember the metric tags
+        dash.metricTags = data.metric_tags;
+
+        // apply dash.metricTags to the filter form
+        utils.setFilterOptions();
+      }
+    }
+
     function getMetricDefinitionsData(response) {
       'use strict';
       var data = response.data;
@@ -26,7 +48,7 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
       dash.filterConfig.resultsCount = data.items;
     }
 
-    function refreshOneGraph(metricId, metricType, currentItem) {
+    function refreshOneGraph(currentItem) {
       var numberOfBucketsInChart = 300;
 
       var ends = dash.timeFilter.date.valueOf(); // javascript time is in milisec
@@ -40,12 +62,12 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
       }
 
       // hawkular time is in milisec (hawkular bucket_duration is in seconds)
-      var params = '&query=get_data&type=' + metricType + '&metric_id=' + metricId + '&ends=' + ends +
+      var params = '&query=get_data&type=' + currentItem.type + '&metric_id=' + currentItem.id + '&ends=' + ends +
                    '&starts=' + starts + '&bucket_duration=' + bucket_duration + 's';
 
       $http.get(dash.url + params)
         .then(function(response) {
-          utils.getContainerParamsData(metricId, currentItem, response); })
+          utils.getContainerParamsData(currentItem, response); })
         .catch(function(error) {
           dash.loadCount++;
           if (dash.loadCount >= dash.selectedItems.length) {
@@ -56,7 +78,7 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
 
     var getMetricTags = function() {
       $http.get(dash.url + '&query=metric_tags&limit=250')
-        .then(utils.getMetricTagsData)
+        .then(getMetricTagsData)
         .catch(function(error) {
           dash.tagsLoaded = true;
           dash.tenantChanged = false;
@@ -102,11 +124,10 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
       dash.loadingData = true;
       dash.chartData = {};
 
-      for (var i = 0; i < dash.selectedItems.length; i++) {
-        var metric_id = dash.selectedItems[i].id;
-        var metric_type = dash.selectedItems[i].type;
-        refreshOneGraph(metric_id, metric_type, i);
-      }
+      angular.forEach(dash.selectedItems, function(item, index) {
+        item.index = index;
+        refreshOneGraph(item);
+      });
     };
 
     var setPage = function(page) {
