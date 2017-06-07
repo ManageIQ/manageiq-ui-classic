@@ -1531,9 +1531,12 @@ function miqInitAccordions() {
 function miqInitMainContent() {
   var toolbar = $('#toolbar');
   var footer = $('#paging_div');
+  var buttons = $('#form_buttons_div');
   var height = 0;
   if (footer.find('*:visible').length > 0) {
     height += footer.outerHeight();
+  } else if (buttons.find("*:visible").length > 0) {
+    height += buttons.outerHeight() + 5; // TODO: the styling of #form_buttons_div should be revisited
   }
   if (toolbar.find("*:visible").length > 0) {
     height += toolbar.outerHeight();
