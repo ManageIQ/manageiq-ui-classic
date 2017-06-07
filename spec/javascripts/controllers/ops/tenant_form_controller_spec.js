@@ -1,5 +1,5 @@
 describe('tenantFormController', function() {
-  var $scope, $controller, $httpBackend, tenantType, miqService;
+  var $scope, vm, $httpBackend, tenantType, miqService;
 
   beforeEach(module('ManageIQ'));
 
@@ -13,12 +13,17 @@ describe('tenantFormController', function() {
     $scope = $rootScope.$new();
     $httpBackend = _$httpBackend_;
 
-    $httpBackend.whenGET('/ops/tenant_form_fields/new').respond();
-    $controller = _$controller_('tenantFormController', {
+    var tenantFormResponse = {
+      tenant_name: '',
+      tenant_description: ''
+    };
+
+    $httpBackend.whenGET('/ops/tenant_form_fields/new').respond(tenantFormResponse);
+    vm = _$controller_('tenantFormController', {
       $scope: $scope,
       tenantFormId: 'new',
       tenantType: tenantType,
-      miqService: miqService,
+      miqService: miqService
     });
   }));
 
@@ -28,21 +33,15 @@ describe('tenantFormController', function() {
   });
 
   describe('initialization', function() {
-    describe('when the tenantFormId is new', function() {
-      it('sets newRecord to true', function() {
-        expect($scope.newRecord).toBe(true);
+    describe('when the tenantFormId is new', function () {
+      it('sets newRecord to true', function () {
+        expect(vm.newRecord).toBe(true);
       });
 
-      it('sets afterGet', function() {
-        expect($scope.afterGet).toBe(true);
+      it('sets afterGet', function () {
+        expect(vm.afterGet).toBe(true);
       });
     });
-
-    describe('when the tenantFormId is an id', function() {
-      var tenantFormResponse = {
-        tenant_name: 'tenantName',
-        tenant_description: 'tenantDescription'
-      };
   });
 
   describe('#cancelClicked', function() {
@@ -50,7 +49,7 @@ describe('tenantFormController', function() {
       $scope.angularForm = {
         $setPristine: function (value){}
       };
-      $scope.cancelClicked();
+      vm.cancelClicked();
     });
 
     it('turns the spinner on via the miqService', function() {
@@ -76,7 +75,7 @@ describe('tenantFormController', function() {
           $setViewValue: function (value){}
         }
       };
-      $scope.resetClicked();
+      vm.resetClicked();
     });
 
     it('does not turn the spinner on', function() {
@@ -89,7 +88,7 @@ describe('tenantFormController', function() {
       $scope.angularForm = {
         $setPristine: function (value){}
       };
-      $scope.saveClicked();
+      vm.saveClicked();
     });
 
     it('turns the spinner on via the miqService', function() {
@@ -110,7 +109,7 @@ describe('tenantFormController', function() {
       $scope.angularForm = {
         $setPristine: function (value){}
       };
-      $scope.addClicked();
+      vm.addClicked();
     });
 
     it('turns the spinner on via the miqService', function() {
@@ -121,4 +120,4 @@ describe('tenantFormController', function() {
       expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/ops/rbac_tenant_edit/new?button=save&divisible='+ tenantType, true);
     });
   });
-});})
+});
