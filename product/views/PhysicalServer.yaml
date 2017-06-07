@@ -27,6 +27,10 @@ col_order:
 - name
 - type
 
+col_formats:
+-
+- :model_name
+
 headers:
 - Name
 - Type
