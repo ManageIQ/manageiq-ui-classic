@@ -409,7 +409,7 @@ function alertsCenterService(API, $q, $timeout, $document, $modal, $http) {
 
   _this.getAlertsData = function(limit, offset, filters, sortField, sortAscending) {
     var deferred = $q.defer();
-    var resourceOptions = '?expand=resources,alert_actions&attributes=assignee,resource&filter[]=resolved=false';
+    var resourceOptions = '?expand=resources,alert_actions&attributes=assignee,resource&filter[]=resolved=false&filter[]=or+resolved=nil';
     var limitOptions = '';
     var offsetOptions = '';
     var sortOptions = '';
