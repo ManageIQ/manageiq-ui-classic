@@ -6,57 +6,11 @@ class HostAggregateController < ApplicationController
 
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
+  include Mixins::GenericShowMixin
+  include Mixins::MoreShowActions
 
-  def show
-    return if perfmenu_click?
-    @display = params[:display] || "main" unless pagination_or_gtl_request?
-
-    @lastaction = "show"
-    @showtype = "config"
-    @host_aggregate = @record = identify_record(params[:id])
-    return if record_no_longer_exists?(@host_aggregate)
-
-    @gtl_url = "/show"
-    drop_breadcrumb({:name => _("Host Aggregates"),
-                     :url  => "/host_aggregate/show_list?page=#{@current_page}&refresh=y"}, true)
-    case @display
-    when "main", "summary_only"
-      get_tagdata(@host_aggregate)
-      drop_breadcrumb(:name => _("%{name} (Summary)") % {:name => @host_aggregate.name},
-                      :url  => "/availability_zone/show/#{@host_aggregate.id}")
-      @showtype = "main"
-      set_summary_pdf_data if @display == 'summary_only'
-
-    when "performance"
-      show_performance
-
-    when "ems_cloud"
-      drop_breadcrumb(:name => _("%{name} (%{table}(s))") % {:name  => @host_aggregate.name,
-                                                             :table => ui_lookup(:table => "ems_cloud")},
-                      :url  => "/host_aggregate/show/#{@host_aggregate.id}?display=ems_cloud")
-      # Get the records (into a view) and the paginator
-      @view, @pages = get_view(ManageIQ::Providers::CloudManager, :parent => @host_aggregate)
-      @showtype = "ems_cloud"
-
-    when "instances"
-      title = ui_lookup(:tables => "vm_cloud")
-      drop_breadcrumb(:name => _("%{name} (All %{title})") % {:name => @host_aggregate.name, :title => title},
-                      :url  => "/host_aggregate/show/#{@host_aggregate.id}?display=#{@display}")
-      # Get the records (into a view) and the paginator
-      @view, @pages = get_view(ManageIQ::Providers::CloudManager::Vm, :parent => @host_aggregate)
-      @showtype = @display
-
-    when "hosts"
-      title = ui_lookup(:tables => "host")
-      drop_breadcrumb(:name => _("%{name} (All %{title})") % {:name => @host_aggregate.name, :title => title},
-                      :url  => "/host_aggregate/show/#{@host_aggregate.id}?display=#{@display}")
-      @view, @pages = get_view(Host, :parent => @host_aggregate) # Get the records (into a view) and the paginator
-      @showtype = @display
-
-    when "timeline"
-      @record = find_record_with_rbac(HostAggregate, session[:tl_record_id])
-      show_timeline
-    end
+  def self.display_methods
+    %w(instances hosts)
   end
 
   def host_aggregate_form_fields

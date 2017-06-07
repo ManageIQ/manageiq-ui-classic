@@ -3,7 +3,7 @@
     = render :partial => "layouts/performance_async"
   - else
     - if %w(instances hosts).include?(@display)
-      = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@host_aggregate.id}"}
+      = render :partial => "layouts/gtl", :locals => {:action_url => "show/#{@record.id}"}
     - elsif @showtype == "item"
       = render :partial => "layouts/item"
     - elsif @showtype == "main"
