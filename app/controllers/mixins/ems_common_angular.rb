@@ -53,16 +53,26 @@ module Mixins
 
     def update_ems_button_validate(verify_ems = nil)
       verify_ems ||= find_record_with_rbac(model, params[:id])
-      set_ems_record_vars(verify_ems, :validate)
       @in_a_form = true
-      result, details = verify_ems.authentication_check(params[:cred_type],
-                                                        :save     => false,
-                                                        :database => params[:metrics_database_name])
-
-      if result
-        add_flash(_("Credential validation was successful"))
-      else
-        add_flash(_("Credential validation was not successful: %{details}") % {:details => details}, :error)
+      begin
+        set_ems_record_vars(verify_ems, :validate)
+        unless verify_ems.valid?
+          add_flash(_("Errors: %{details}") % {:details => verify_ems.errors.full_messages.join(', ')}, :error)
+        else
+          result, details = verify_ems.authentication_check(params[:cred_type],
+                                                            :save     => false,
+                                                            :database => params[:metrics_database_name])
+          if result
+            add_flash(_("Credential validation was successful"))
+          else
+            add_flash(_("Credential validation was not successful: %{details}") % {:details => details}, :error)
+          end
+        end
+      rescue => err
+        $log.warn("MIQ(#{controller_name}_controller-#{action_name}): #{err.class.name}: #{err}")
+        add_flash(_("Credential validation error: %{error_class}: %{error}") %
+                  {:error_class => err.class.name, :error => err.to_s},
+                  :error)
       end
 
       render :json => {:message => @flash_array.last(1)[0][:message], :level => @flash_array.last(1)[0][:level]}
