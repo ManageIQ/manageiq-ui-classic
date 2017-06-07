@@ -163,6 +163,7 @@ module QuadiconHelper
     when 'single_quad'           then render_single_quad_quadicon(item, options)
     when 'storage'               then render_storage_quadicon(item, options)
     when 'vm_or_template'        then render_vm_or_template_quadicon(item, options)
+    when 'physical_server'       then render_physical_server_quadicon(item, options)
     else
       raise "unknown quadicon kind - #{quadicon_builder_name_from(item)}"
     end
@@ -214,6 +215,48 @@ module QuadiconHelper
       url = quadicon_build_label_url(item, row)
       quadicon_link_to(url, **opts) { content }
     end
+  end
+
+  # Renders a quadicon for PhysicalServer
+  #
+  def render_physical_server_quadicon(item, options)
+    output = []
+    if settings(:quadicons, :physical_server)
+      output << flobj_img_simple("layout/base.png")
+
+      output << flobj_p_simple("a72", (item.host ? 1 : 0))
+      output << flobj_img_simple("svg/currentstate-#{h(item.power_state.try(:downcase))}.svg", "b72")
+      output << flobj_img_simple(item.ext_management_system.decorate.fileicon, "c72")
+      output << flobj_img_simple(img_for_health_state(item), "d72")
+      output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
+    else
+      output << flobj_img_simple
+      output << flobj_img_simple(item.ext_management_system.decorate.fileicon, "e72")
+    end
+
+    if options[:typ] == :listnav
+      # Listnav, no href needed
+      output << content_tag(:div, :class => 'flobj') do
+        tag(:img, :src => ActionController::Base.helpers.image_path("layout/reflection.png"), :border => 0)
+      end
+    else
+      href = if quadicon_show_links?
+               if quadicon_edit_key?(:hostitems)
+                 "/physical_server/edit/?selected_physical_server=#{item.id}"
+               else
+                 url_for_record(item)
+               end
+             end
+
+      output << content_tag(:div, :class => 'flobj') do
+        title = _("Name: %{name} ") % {:name => h(item.name)}
+
+        link_to(href, :title => title) do
+          quadicon_reflection_img
+        end
+      end
+    end
+    safe_join(output)
   end
 
   # FIXME: Even better would be to ask the object what name to use
@@ -334,6 +377,7 @@ module QuadiconHelper
   end
 
   CLASSLY_NAMED_ITEMS = %w(
+    PhysicalServer
     EmsCluster
     ResourcePool
     Repository
@@ -345,13 +389,17 @@ module QuadiconHelper
   ).freeze
 
   def quadicon_named_for_base_class?(item)
-    %w(ExtManagementSystem Host).include?(item.class.base_class.name)
+    %w(ExtManagementSystem Host PhysicalServer).include?(item.class.base_class.name)
+  end
+
+  def quadicon_named_for_base_model?(item)
+    %w(VmOrTemplate PhysicalServer).include?(item.class.base_model.name)
   end
 
   def quadicon_builder_name_from(item)
     builder_name = if CLASSLY_NAMED_ITEMS.include?(item.class.name)
                      item.class.name.underscore
-                   elsif item.kind_of?(VmOrTemplate)
+                   elsif quadicon_named_for_base_model?(item)
                      item.class.base_model.to_s.underscore
                    elsif item.kind_of?(ManageIQ::Providers::ConfigurationManager)
                      "single_quad"
@@ -508,7 +556,13 @@ module QuadiconHelper
 
     if settings(:quadicons, db_for_quadicon)
       output << flobj_img_simple("layout/base.png")
-      output << flobj_p_simple("a72", item.kind_of?(EmsCloud) ? item.total_vms : item.hosts.size)
+      item_count = case item
+                   when EmsPhysicalInfra then item.physical_servers.size
+                   when EmsCloud         then item.total_vms
+                   else
+                     item.hosts.size
+                   end
+      output << flobj_p_simple("a72", item_count)
       output << flobj_p_simple("b72", item.total_miq_templates) if item.kind_of?(EmsCloud)
       output << flobj_img_simple("svg/vendor-#{h(item.image_name)}.svg", "c72")
       output << flobj_img_simple(img_for_auth_status(item), "d72")
@@ -643,6 +697,15 @@ module QuadiconHelper
               end
 
     output.collect(&:html_safe).join('').html_safe
+  end
+
+  def img_for_health_state(item)
+    case item.health_state
+    when "Valid"    then "svg/healthstate-normal.svg"
+    when "Critical" then "svg/healthstate-critical.svg"
+    when "Warning"  then "100/warning.png"
+    else "svg/healthstate-unknown.svg"
+    end
   end
 
   # Renders a storage quadicon
