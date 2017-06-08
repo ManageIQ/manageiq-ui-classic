@@ -12,6 +12,12 @@ db: PhysicalServer
 cols:
 - name
 - type
+- health_state
+- power_state
+- location_led_state
+- hostname
+- product_name
+- manufacturer
 
 
 include:
@@ -26,6 +32,12 @@ include_for_find:
 col_order:
 - name
 - type
+- health_state
+- power_state
+- location_led_state
+- hostname
+- product_name
+- manufacturer
 
 col_formats:
 -
@@ -34,6 +46,12 @@ col_formats:
 headers:
 - Name
 - Type
+- Health State
+- Power State
+- LED State
+- Hostname
+- Product Name
+- Manufacturer
 
 
 conditions:
