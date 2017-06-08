@@ -767,14 +767,16 @@ describe CatalogController do
             :credential_id   => auth.id,
             :repository_id   => repository.id,
             :playbook_id     => playbook.id,
-            :dialog_id       => dialog.id
+            :dialog_id       => dialog.id,
+            :verbosity       => 4
           },
           :retirement => {
             :new_dialog_name => 'test_dialog',
             :hosts           => 'many',
             :credential_id   => auth.id,
             :repository_id   => repository.id,
-            :playbook_id     => playbook.id
+            :playbook_id     => playbook.id,
+            :verbosity       => 0
           }
         }
       }
@@ -788,14 +790,16 @@ describe CatalogController do
           :machine_credential => auth.name,
           :dialog             => "Some Label",
           :dialog_id          => dialog.id,
-          :become_enabled     => "No"
+          :become_enabled     => "No",
+          :verbosity          => 4
         },
         :retirement   => {
           :remove_resources   => nil,
           :repository         => repository.name,
           :playbook           => playbook.name,
           :machine_credential => auth.name,
-          :become_enabled     => "No"
+          :become_enabled     => "No",
+          :verbosity          => 0
         }
       }
       expect(playbook_details).to eq(st_details)
@@ -813,14 +817,16 @@ describe CatalogController do
             :credential_id   => auth.id,
             :repository_id   => 1,
             :playbook_id     => playbook.id,
-            :dialog_id       => 2
+            :dialog_id       => 2,
+            :verbosity       => 4
           },
           :retirement => {
             :new_dialog_name => 'test_dialog',
             :hosts           => 'many',
             :credential_id   => auth.id,
             :repository_id   => repository.id,
-            :playbook_id     => 2
+            :playbook_id     => 2,
+            :verbosity       => 0
           }
         }
       }
@@ -832,17 +838,31 @@ describe CatalogController do
           :repository         => nil,
           :playbook           => playbook.name,
           :machine_credential => auth.name,
-          :become_enabled     => "No"
+          :become_enabled     => "No",
+          :verbosity          => 4
         },
         :retirement   => {
           :remove_resources   => nil,
           :repository         => repository.name,
           :playbook           => nil,
           :machine_credential => auth.name,
-          :become_enabled     => "No"
+          :become_enabled     => "No",
+          :verbosity          => 0
         }
       }
       expect(playbook_details).to eq(st_details)
+    end
+  end
+
+  context "#verbosity_display" do
+    it "returns readable display text for Verbosity field" do
+      verbosity = controller.send(:verbosity_display, '2')
+      expect(verbosity).to eq('2 (More Verbose)')
+    end
+
+    it "returns readable display text for Verbosity field" do
+      verbosity = controller.send(:verbosity_display, nil)
+      expect(verbosity).to eq('0 (Normal)')
     end
   end
 end
