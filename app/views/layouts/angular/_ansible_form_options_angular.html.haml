@@ -119,6 +119,16 @@
                                 "switch-on-text"  => _("Yes"),
                                 "switch-off-text" => _("No"),
                                 "checkchange"     => ""}
+
+    .form-group
+      %label.col-md-3.control-label
+        = _('Verbosity')
+      .col-md-9
+        %select{"ng-model"    => "vm.catalogItemModel.#{prefix}_verbosity",
+                "name"        => "#{prefix}_verbosity",
+                'ng-options'  => 'v as k for (v, k) in vm.verbosity_types',
+                'pf-select'   => true}
+
     - if prefix == "retirement"
       .form-group
         %label.col-md-3.control-label{"for" => "catalog_id"}

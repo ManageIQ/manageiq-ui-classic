@@ -23,6 +23,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       provisioning_value: '',
       provisioning_variables: {},
       provisioning_become_enabled: false,
+      provisioning_verbosity: '0',
       provisioning_editMode: false,
       retirement_repository_id: '',
       retirement_playbook_id: '',
@@ -35,7 +36,9 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       retirement_variables: {},
       retirement_editMode: false,
       retirement_become_enabled: false,
+      retirement_verbosity: '0',
     };
+    getVerbosityTypes();
     getRemoveResourcesTypes();
     vm.provisioning_cloud_type = '';
     vm.retirement_cloud_type = '';
@@ -69,6 +72,17 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       });
     }
   };
+
+  var getVerbosityTypes = function() {
+    vm['verbosity_types'] = {
+      "0": "0 (Normal)",
+      "1": "1 (Verbose)",
+      "2": "2 (More Verbose)",
+      "3": "3 (Debug)",
+      "4": "4 (Connection Debug)",
+      "5": "5 (WinRM Debug)"
+    };
+  }
 
   var getRemoveResourcesTypes = function () {
     if (angular.isUndefined(vm.catalogItemModel.retirement_repository_id) || vm.catalogItemModel.retirement_repository_id === '') {
@@ -120,6 +134,13 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     } else {
       vm.catalogItemModel.provisioning_become_enabled = configData.provision.become_enabled;
     }
+
+    if (configData.provision.verbosity === undefined) {
+      vm.catalogItemModel.provisioning_verbosity = '0';
+    } else {
+      vm.catalogItemModel.provisioning_verbosity = configData.provision.verbosity;
+    }
+
     setExtraVars('provisioning_variables', configData.provision.extra_vars);
 
     if (typeof configData.retirement.repository_id !== 'undefined') {
@@ -134,6 +155,13 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     } else {
       vm.catalogItemModel.retirement_become_enabled = configData.retirement.become_enabled;
     }
+
+    if (configData.retirement.verbosity === undefined) {
+      vm.catalogItemModel.retirement_verbosity = '0';
+    } else {
+      vm.catalogItemModel.retirement_verbosity = configData.retirement.verbosity;
+    }
+
     vm.catalogItemModel.retirement_network_credential_id = configData.retirement.network_credential_id;
     vm.catalogItemModel.retirement_cloud_credential_id = setIfDefined(configData.retirement.cloud_credential_id);
     vm.catalogItemModel.retirement_inventory = configData.retirement.hosts;
@@ -214,6 +242,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
           playbook_id: configData.provisioning_playbook_id,
           credential_id: configData.provisioning_machine_credential_id,
           hosts: configData.provisioning_inventory,
+          verbosity: configData.provisioning_verbosity,
           extra_vars: formatExtraVars(configData.provisioning_variables)
         }
       }
@@ -231,7 +260,8 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       catalog_item['config_info']['provision']['new_dialog_name'] = configData.provisioning_dialog_name;
 
     catalog_item['config_info']['retirement'] = {
-      remove_resources: configData.retirement_remove_resources
+      remove_resources: configData.retirement_remove_resources,
+      verbosity: configData.retirement_verbosity
     }
 
     var retirement = catalog_item['config_info']['retirement'];
@@ -541,6 +571,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.catalogItemModel.retirement_cloud_credential_id = vm.catalogItemModel.provisioning_cloud_credential_id;
     vm.catalogItemModel.retirement_inventory = vm.catalogItemModel.provisioning_inventory;
     vm.catalogItemModel.retirement_become_enabled = vm.catalogItemModel.provisioning_become_enabled;
+    vm.catalogItemModel.retirement_verbosity = vm.catalogItemModel.provisioning_verbosity;
     vm.catalogItemModel.retirement_key = '';
     vm.catalogItemModel.retirement_value = '';
     vm.catalogItemModel.retirement_variables = angular.copy(vm.catalogItemModel.provisioning_variables);
