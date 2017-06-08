@@ -11,6 +11,14 @@
             %text{:y => "9"} &#xe91a;
         %label
           = _("Physical Servers")
+      %kubernetes-topology-icon{tooltipOptions, :kind => "Host"}
+        %svg.kube-topology
+          %g.EntityLegend.PhysicalInfra
+            %circle{:r => "17"}
+            -# pficon-screen
+            %text{:y => "9"} &#xE600;
+        %label
+          = _("Hosts")
 
   .alert.alert-info.alert-dismissable
     %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"}
