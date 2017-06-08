@@ -126,4 +126,12 @@ module ApplicationHelper::PageLayouts
     @inner_layout_present
   end
 
+  def simulate?
+    @simulate ||= (
+      rsop = controller.controller_name == 'miq_policy' && controller.action_name == 'rsop'
+      resolve = controller.controller_name == 'miq_ae_tools' && controller.action_name == 'resolve'
+      planning = controller.controller_name == 'miq_capacity' && controller.action_name == 'planning'
+      rsop || resolve || planning
+    )
+  end
 end
