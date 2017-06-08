@@ -271,8 +271,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     return ($scope.currentTab == "hawkular" && $scope.emsCommonModel.ems_controller == "ems_container") &&
       ($scope.emsCommonModel.emstype == "openshift") &&
       ($scope.emsCommonModel.default_hostname && $scope.emsCommonModel.default_api_port) &&
-      ($scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid) &&
-      ($scope.emsCommonModel.default_verify != '' && $scope.angularForm.default_verify.$valid);
+      ($scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid);
   };
 
   var emsCommonEditButtonClicked = function(buttonName, _serializeFields, $event) {
