@@ -4,6 +4,8 @@
                                "ng-controller" => "tenantFormController as vm",
                                "miq-form"      => "true",
                                "model-copy"    => 'vm.modelCopy',
+                               "model"         => 'vm.tenantModel',
+                               'form-changed'  => true,
                                "ng-show"       => "vm.afterGet"}
   = render :partial => "layouts/flash_msg"
   %div
@@ -18,8 +20,7 @@
                               "ng-model"    => "vm.tenantModel.name",
                               "ng-disabled" => "vm.tenantModel.default && vm.tenantModel.use_config_for_attributes",
                               "maxlength"   => "#{MAX_NAME_LEN}",
-                              "miqrequired" => "",
-                              "checkchange" => ""}
+                              "miqrequired" => ""}
           %span.help-block{"ng-show" => "angularForm.name.$error.miqrequired"}
             = _("Required")
       .form-group{"ng-class" => "{'has-error': angularForm.description.$invalid}"}
@@ -31,8 +32,7 @@
                               "name"        => "description",
                               "ng-model"    => "vm.tenantModel.description",
                               "maxlength"   => "#{MAX_DESC_LEN}",
-                              "miqrequired" => "",
-                              "checkchange" => ""}
+                              "miqrequired" => ""}
             %span.help-block{"ng-show" => "angularForm.description.$error.miqrequired"}
               = _("Required")
       .form-group{"ng-show" => "vm.tenantModel.default"}
@@ -44,8 +44,7 @@
                             "name"            => "use_config_for_attributes",
                             "ng-model"        => "vm.tenantModel.use_config_for_attributes",
                             "switch-on-text"  => "Yes",
-                            "switch-off-text" => "No",
-                            "checkchange" => ""}
+                            "switch-off-text" => "No"}
       %input{"type" => "hidden", "name" => "divisible", "value" => "{{vm.tenantModel.divisible}}"}
   = render :partial => "layouts/angular/generic_form_buttons"
 
