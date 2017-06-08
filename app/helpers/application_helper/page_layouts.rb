@@ -101,4 +101,14 @@ module ApplicationHelper::PageLayouts
       show
     ).include?(controller.action_name)
   end
+
+  def center_div_partial
+    if layout_uses_listnav?
+      "layouts/center_div_with_listnav"
+    elsif dashboard_no_listnav?
+      "layouts/center_div_dashboard_no_listnav"
+    else
+      "layouts/center_div_no_listnav"
+    end
+  end
 end

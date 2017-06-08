@@ -70,12 +70,7 @@
         #custom_left_cell
 - else
   #center_div{:style => "height: 100%;"}
-    - if layout_uses_listnav?
-      = render :partial => "layouts/center_div_with_listnav"
-    - elsif dashboard_no_listnav?
-      = render :partial => "layouts/center_div_dashboard_no_listnav"
-    - else
-      = render :partial => "layouts/center_div_no_listnav"
+    = render :partial => center_div_partial
 
 - if show_advanced_search?
   :javascript
