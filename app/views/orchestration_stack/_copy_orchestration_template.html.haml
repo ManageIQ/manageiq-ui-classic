@@ -1,4 +1,7 @@
-%form#form_div.form-horizontal{:name => 'angularForm', 'ng-controller' => 'orchestrationTemplateCopyController'}
+%form#form_div.form-horizontal{:name => 'angularForm',
+                                'ng-controller' => 'orchestrationTemplateCopyController as vm',
+                                "miq-form" => 'true',
+                                'model-copy' => 'vm.modelCopy'}
   = render :partial => 'layouts/flash_msg'
   %h3
     = _('New Orchestration Template Information')
@@ -9,7 +12,7 @@
       .col-md-8
         %input.form-control{:type          => 'text',
                             :name          => 'ot_name',
-                            'ng-model'     => 'templateInfo.templateName',
+                            'ng-model'     => 'vm.templateInfo.templateName',
                             'ng-maxlength' => 255,
                             :miqrequired   => true,
                             :checkchange   => true}
@@ -19,7 +22,7 @@
       .col-md-8
         %textarea.form-control{:name         => 'ot_description',
                                :rows         => 8,
-                               'ng-model'    => 'templateInfo.templateDescription',
+                               'ng-model'    => 'vm.templateInfo.templateDescription',
                                'miqrequired' => true,
                                :checkchange  => true}
     .form-group
@@ -28,11 +31,11 @@
       .col-md-10
         %input{:type         => 'checkbox',
                :name         => 'ot_draft',
-               'ng-model'    => 'templateInfo.templateDraft'}
+               'ng-model'    => 'vm.templateInfo.templateDraft'}
 
   %hr
 
-  = text_area_tag("template_content", '', 'ng-model' => 'templateInfo.templateContent', :style => "display:none;")
+  = text_area_tag("template_content", '', 'ng-model' => 'vm.templateInfo.templateContent', :style => "display:none;")
   = render :partial => "/layouts/my_code_mirror",
   :locals       => {:text_area_id => "template_content",
     :mode         => "yaml",
@@ -40,7 +43,7 @@
     :read_only    => false,
     :angular      => true}
 
-  = render :partial => "layouts/angular/x_edit_buttons_angular"
+  = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript
   ManageIQ.editor.refresh();
