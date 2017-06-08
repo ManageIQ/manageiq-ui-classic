@@ -113,17 +113,13 @@ module ApplicationHelper::PageLayouts
   end
 
   def inner_layout_present?
-    if @inner_layout_present.nil?
-      @inner_layout_present = false
-      if @explorer || params[:action] == "explorer" ||
-         (params[:controller] == "chargeback" && params[:action] == "chargeback") ||
-         (params[:controller] == "miq_ae_tools" && (params[:action] == "resolve" || params[:action] == "show")) ||
-         (params[:controller] == "miq_policy" && params[:action] == "rsop") ||
-         (params[:controller] == "miq_capacity")
-        @inner_layout_present = true
-      end
-    end
-    @inner_layout_present
+    @inner_layout_present ||= (
+      @explorer || params[:action] == "explorer" ||
+      (params[:controller] == "chargeback" && params[:action] == "chargeback") ||
+      (params[:controller] == "miq_ae_tools" && (params[:action] == "resolve" || params[:action] == "show")) ||
+      (params[:controller] == "miq_policy" && params[:action] == "rsop") ||
+      (params[:controller] == "miq_capacity")
+    )
   end
 
   def simulate?
