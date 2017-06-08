@@ -140,4 +140,67 @@ module ApplicationHelper::PageLayouts
   def show_advanced_search?
     x_tree && ((tree_with_advanced_search? && !@record) || @show_adv_search)
   end
+
+  def show_adv_search?
+    show_search = %w(
+      auth_key_pair_cloud
+      availability_zone
+      automation_manager
+      cloud_network
+      cloud_object_store_container
+      cloud_object_store_object
+      cloud_subnet
+      cloud_tenant
+      cloud_volume
+      cloud_volume_backup
+      cloud_volume_snapshot
+      configuration_job
+      container
+      container_build
+      container_group
+      container_image
+      container_image_registry
+      container_node
+      container_project
+      container_replicator
+      container_route
+      container_service
+      container_template
+      ems_cloud
+      ems_cluster
+      ems_container
+      ems_infra
+      ems_middleware
+      ems_network
+      ems_physical_infra
+      ems_storage
+      flavor
+      floating_ip
+      host
+      host_aggregate
+      load_balancer
+      middleware_datasource
+      middleware_deployment
+      middleware_domain
+      middleware_messaging
+      middleware_server
+      miq_template
+      network_port
+      network_router
+      offline
+      orchestration_stack
+      persistent_volume
+      physical_server
+      provider_foreman
+      resource_pool
+      retired
+      security_group
+      service
+      templates
+      vm
+    )
+
+    (@lastaction == "show_list" && !session[:menu_click] && show_search.include?(@layout) && !@in_a_form) ||
+      (@explorer && x_tree && tree_with_advanced_search? && !@record)
+  end
 end
