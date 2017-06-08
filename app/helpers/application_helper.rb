@@ -921,12 +921,6 @@ module ApplicationHelper
     @edit[:adv_search_open]  # Only allow field aliases for advanced searches
   end
 
-  def saved_report_paging?
-    # saved report doesn't use miq_report object,
-    # need to use a different paging view to page thru a saved report
-    @sb[:pages] && @html && [:reports_tree, :savedreports_tree, :cb_reports_tree].include?(x_active_tree)
-  end
-
   def pressed2model_action(pressed)
     pressed =~ /^(ems_cluster|miq_template|infra_networking)_(.*)$/ ? [$1, $2] : pressed.split('_', 2)
   end
@@ -1621,10 +1615,6 @@ module ApplicationHelper
        vms_filter
        vms_instances_filter
       ).include?(x_tree[:type])
-  end
-
-  def show_advanced_search?
-    x_tree && ((tree_with_advanced_search? && !@record) || @show_adv_search)
   end
 
   def listicon_glyphicon(item)
