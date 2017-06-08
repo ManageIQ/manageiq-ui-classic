@@ -39,42 +39,6 @@ class CloudSubnetController < ApplicationController
     end
   end
 
-  def cloud_subnet_form_fields
-    assert_privileges("cloud_subnet_edit")
-    subnet = find_record_with_rbac(CloudSubnet, params[:id])
-    render :json => {
-      :name             => subnet.name,
-      :cidr             => subnet.cidr,
-      :dhcp_enabled     => subnet.dhcp_enabled,
-      :gateway          => subnet.gateway,
-      :network_protocol => subnet.network_protocol
-    }
-  end
-
-  def cloud_subnet_networks_by_ems
-    assert_privileges("cloud_subnet_new")
-    networks = []
-    available_networks = CloudNetwork.where(:ems_id => params[:id]).find_each
-    available_networks.each do |network|
-      networks << { 'name' => network.name, 'id' => network.ems_ref }
-    end
-    render :json => {
-      :available_networks => networks
-    }
-  end
-
-  def cloud_tenants_by_ems
-    assert_privileges("cloud_subnet_new")
-    network_manager = ExtManagementSystem.find(params[:id])
-    tenants = []
-    CloudTenant.where(:ems_id => network_manager.parent_ems_id).find_each do |tenant|
-      tenants << { 'name' => tenant.name, 'id' => tenant.id.to_s }
-    end
-    render :json => {
-      :available_tenants => tenants
-    }
-  end
-
   def new
     assert_privileges("cloud_subnet_new")
     @subnet = CloudSubnet.new

@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('cloudSubnetFormController', ['$http', '$scope', 'cloudSubnetFormId', 'miqService', function($http, $scope, cloudSubnetFormId, miqService) {
+ManageIQ.angular.app.controller('cloudSubnetFormController', ['$scope', 'cloudSubnetFormId', 'miqService', 'API', function($scope, cloudSubnetFormId, miqService, API) {
   $scope.cloudSubnetModel = { name: '', ems_id: '', cloud_tenant_id: '', network_id: '' };
   $scope.formId = cloudSubnetFormId;
   $scope.afterGet = false;
@@ -14,24 +14,16 @@ ManageIQ.angular.app.controller('cloudSubnetFormController', ['$http', '$scope',
     $scope.newRecord = true;
   } else {
     miqService.sparkleOn();
-
-    $http.get('/cloud_subnet/cloud_subnet_form_fields/' + cloudSubnetFormId)
-      .then(getCloudSubnetFormDataComplete)
-      .catch(miqService.handleFailure);
-  }
-
-  function getCloudSubnetFormDataComplete(response) {
-    var data = response.data;
-
-    $scope.afterGet = true;
-    $scope.cloudSubnetModel.name = data.name;
-    $scope.cloudSubnetModel.dhcp_enabled = data.dhcp_enabled;
-    $scope.cloudSubnetModel.cidr = data.cidr;
-    $scope.cloudSubnetModel.gateway = data.gateway;
-    $scope.cloudSubnetModel.network_protocol = data.network_protocol;
-
-    $scope.modelCopy = angular.copy( $scope.cloudSubnetModel );
-    miqService.sparkleOff();
+    API.get("/api/cloud_subnets/" + cloudSubnetFormId + "?expand=resources").then(function(data) {
+      $scope.afterGet = true;
+      $scope.cloudSubnetModel.name = data.name;
+      $scope.cloudSubnetModel.dhcp_enabled = data.dhcp_enabled;
+      $scope.cloudSubnetModel.cidr = data.cidr;
+      $scope.cloudSubnetModel.gateway = data.gateway;
+      $scope.cloudSubnetModel.network_protocol = data.network_protocol;
+      $scope.modelCopy = angular.copy( $scope.cloudSubnetModel );
+      miqService.sparkleOff();
+    }).catch(miqService.handleFailure);
   }
 
   $scope.addClicked = function() {
@@ -61,27 +53,15 @@ ManageIQ.angular.app.controller('cloudSubnetFormController', ['$http', '$scope',
 
   $scope.filterNetworkManagerChanged = function(id) {
     miqService.sparkleOn();
+    if (id) {
+      API.get("/api/cloud_networks?expand=resources&attributes=name,ems_ref&filter[]=ems_id=" + id).then(function(data) {
+        $scope.available_networks = data.resources;
+      }).catch(miqService.handleFailure);
 
-    $http.get('/cloud_subnet/cloud_subnet_networks_by_ems/' + id)
-      .then(getCloudSubnetNetworksByEmsComplete)
-      .catch(miqService.handleFailure);
-
-    $http.get('/cloud_subnet/cloud_tenants_by_ems/' + id)
-      .then(getCloudTenantsByEmsComplete)
-      .catch(miqService.handleFailure);
-
+      miqService.getProviderTenants(function(data) {
+        $scope.available_tenants = data.resources;
+      })(id);
+    }
     miqService.sparkleOff();
   };
-
-  function getCloudSubnetNetworksByEmsComplete(response) {
-    var data = response.data;
-
-    $scope.available_networks = data.available_networks;
-  }
-
-  function getCloudTenantsByEmsComplete(response) {
-    var data = response.data;
-
-    $scope.available_tenants = data.available_tenants;
-  }
 }]);
