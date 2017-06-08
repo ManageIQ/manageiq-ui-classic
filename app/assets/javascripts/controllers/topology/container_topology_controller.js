@@ -218,20 +218,20 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
     $scope.relations = data.data.relations;
     $scope.kinds = data.data.kinds;
     icons = data.data.icons;
-    var size_limit = data.data.settings.containers_max_items;
 
     if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys($scope.kinds).length)) {
       $scope.kinds = currentSelectedKinds;
-    } else if (size_limit > 0) {
+    } else if (data.data.settings && data.data.settings.containers_max_items) {
+      var size_limit = data.data.settings.containers_max_items;
       var remove_hierarchy = ['Container',
-        'ContainerGroup',
-        'ContainerReplicator',
-        'ContainerService',
-        'ContainerRoute',
-        'Host',
-        'Vm',
-        'ContainerNode',
-        'ContainerManager'];
+                              'ContainerGroup',
+                              'ContainerReplicator',
+                              'ContainerService',
+                              'ContainerRoute',
+                              'Host',
+                              'Vm',
+                              'ContainerNode',
+                              'ContainerManager'];
       $scope.kinds = topologyService.reduce_kinds($scope.items, $scope.kinds, size_limit, remove_hierarchy);
     }
   }
