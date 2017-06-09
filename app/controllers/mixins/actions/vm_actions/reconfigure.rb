@@ -24,60 +24,9 @@ module Mixins
         def reconfigure_update
           case params[:button]
           when "cancel"
-            add_flash(_("VM Reconfigure Request was cancelled by the user"))
-            if @sb[:explorer]
-              @sb[:action] = nil
-              replace_right_cell
-            else
-              session[:flash_msgs] = @flash_array
-              javascript_redirect previous_breadcrumb_url
-            end
+            handle_cancel_button
           when "submit"
-            options = {:src_ids => params[:objectIds]}
-            if params[:cb_memory] == 'true'
-              options[:vm_memory] = params[:memory_type] == "MB" ? params[:memory] : (params[:memory].to_i.zero? ? params[:memory] : params[:memory].to_i * 1024)
-            end
-            if params[:cb_cpu] == 'true'
-              options[:cores_per_socket]  = params[:cores_per_socket_count].nil? ? 1 : params[:cores_per_socket_count].to_i
-              options[:number_of_sockets] = params[:socket_count].nil? ? 1 : params[:socket_count].to_i
-              vccores = params[:cores_per_socket_count] == 0 ? 1 : params[:cores_per_socket_count]
-              vsockets = params[:socket_count] == 0 ? 1 : params[:socket_count]
-              options[:number_of_cpus] = vccores.to_i * vsockets.to_i
-            end
-
-            # set the disk_add and disk_remove options
-            if params[:vmAddDisks]
-              params[:vmAddDisks].values.each do |p|
-                p.transform_values!{ |v| eval_if_bool_string(v) }
-              end
-              options[:disk_add] = params[:vmAddDisks].values
-            end
-
-            if params[:vmRemoveDisks]
-              params[:vmRemoveDisks].values.each do |p|
-                p.transform_values!{ |v| eval_if_bool_string(v) }
-              end
-              options[:disk_remove] = params[:vmRemoveDisks].values
-            end
-
-            if(params[:id] && params[:id] != 'new')
-              @request_id = params[:id]
-            end
-
-            VmReconfigureRequest.make_request(@request_id, options, current_user)
-            flash = _("VM Reconfigure Request was saved")
-
-            if role_allows?(:feature => "miq_request_show_list", :any => true)
-              javascript_redirect :controller => 'miq_request', :action => 'show_list', :flash_msg => flash
-            else
-              url = previous_breadcrumb_url.split('/')
-              javascript_redirect :controller => url[1], :action => url[2], :flash_msg => flash
-            end
-
-            if @flash_array
-              javascript_flash
-              return
-            end
+            handle_submit_button
           end
         end
 
