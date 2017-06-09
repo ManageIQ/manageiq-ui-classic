@@ -1,4 +1,4 @@
 - if item[:icon]
   %i{:class => item[:icon], :title => item[:title]}
 - elsif item[:image]
-  = image_tag(image_path(item[:image]), :alt => item[:title], :title => item[:title])
+  = encodable_image_tag(item[:image], :alt => item[:title], :title => item[:title])
