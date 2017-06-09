@@ -323,14 +323,8 @@ module QuadiconHelper
   #
   def quadicon_reflection_img(options = {})
     path = options.delete(:path) || "layout/reflection.png"
-
-    options = {
-      :border => 0,
-      :width  => 72,
-      :height => 72,
-    }.merge(options)
-
-    image_tag(image_path(path), options)
+    options = { :border => 0, :size => 72 }.merge(options)
+    encodable_image_tag(path, options)
   end
 
   CLASSLY_NAMED_ITEMS = %w(
@@ -395,7 +389,7 @@ module QuadiconHelper
     image ||= "layout/base-single.png"
 
     content_tag(:div, :class => "flobj #{cls}") do
-      image_tag(image, :size => size)
+      encodable_image_tag(image, :size => size)
     end
   end
 
@@ -425,7 +419,7 @@ module QuadiconHelper
 
     output << content_tag(:div, :class => "flobj e72") do
       quadicon_link_to(url, **link_opts) do
-        quadicon_reflection_img(:path => item.decorate.fileicon)
+        quadicon_reflection_img(options.merge!(:path => item.decorate.fileicon))
       end
     end
 
@@ -458,7 +452,7 @@ module QuadiconHelper
   def currentstate_icon(state)
     path = "svg/currentstate-#{h(state)}.svg"
     content_tag(:div, :class => "flobj b72") do
-      content_tag(:div, '', :class => "stretch", :style => "background-image: url('#{image_path(path)}')")
+      content_tag(:div, '', :class => "stretch", :style => "background-image: url('#{encodable_image_source(path)}')")
     end
   end
 
