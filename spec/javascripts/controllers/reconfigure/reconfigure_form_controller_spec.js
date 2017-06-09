@@ -1,5 +1,5 @@
 describe('reconfigureFormController', function() {
-  var $scope, $controller, $httpBackend, miqService;
+  var $scope, vm, $httpBackend, miqService;
 
   beforeEach(module('ManageIQ'));
 
@@ -10,14 +10,17 @@ describe('reconfigureFormController', function() {
     spyOn(miqService, 'sparkleOn');
     spyOn(miqService, 'sparkleOff');
     $scope = $rootScope.$new();
-    $scope.reconfigureModel = {memory:                 '0',
-                               memory_type:            '',
-                               socket_count:           '1',
-                               socket_options:         [],
-                               cores_per_socket_count: '1',
-                               total_cpus:             '1'};
+    var reconfigureFormResponse = {cb_memory:              'on',
+      memory:                 '4196',
+      memory_type:            'MB',
+      cb_cpu:                 'on',
+      socket_count:           '2',
+      cores_per_socket_count: '3',
+      disks:                 [{hdFilename: "test_disk.vmdk", hdType: "thick", hdMode: "persistent", hdSize: "0", hdUnit: "MB", add_remove: ""}]};
+
     $httpBackend = _$httpBackend_;
-    $controller = _$controller_('reconfigureFormController', {
+    $httpBackend.whenGET('reconfigure_form_fields/1000000000003,1000000000001,1000000000002').respond(reconfigureFormResponse);
+    vm = _$controller_('reconfigureFormController', {
       $scope: $scope,
       reconfigureFormId: '1000000000003',
       cb_memory:              false,
@@ -25,17 +28,6 @@ describe('reconfigureFormController', function() {
       objectIds: [1000000000001,1000000000002],
       miqService: miqService
     });
-  }));
-
-  beforeEach(inject(function(_$controller_) {
-    var reconfigureFormResponse = {cb_memory:              'on',
-                                   memory:                 '4196',
-                                   memory_type:            'MB',
-                                   cb_cpu:                 'on',
-                                   socket_count:           '2',
-                                   cores_per_socket_count: '3',
-                                   disks:                 [{hdFilename: "test_disk.vmdk", hdType: "thick", hdMode: "persistent", hdSize: "0", hdUnit: "MB", add_remove: ""}]};
-    $httpBackend.whenGET('reconfigure_form_fields/1000000000003,1000000000001,1000000000002').respond(reconfigureFormResponse);
     $httpBackend.flush();
   }));
 
@@ -46,23 +38,23 @@ describe('reconfigureFormController', function() {
 
   describe('initialization', function() {
     it('sets the reconfigure memory value to the value returned with http request', function() {
-      expect($scope.reconfigureModel.memory).toEqual('4196');
+      expect(vm.reconfigureModel.memory).toEqual('4196');
     });
 
     it('sets the reconfigure socket count to the value returned with http request', function() {
-      expect($scope.reconfigureModel.socket_count).toEqual('2');
+      expect(vm.reconfigureModel.socket_count).toEqual('2');
     });
 
     it('sets the reconfigure cores per socket count to the value returned with http request', function() {
-      expect($scope.reconfigureModel.cores_per_socket_count).toEqual('3');
+      expect(vm.reconfigureModel.cores_per_socket_count).toEqual('3');
     });
 
     it('sets the total socket count to the value calculated from the http request data', function() {
-      expect($scope.reconfigureModel.total_cpus).toEqual('6');
+      expect(vm.reconfigureModel.total_cpus).toEqual('6');
     });
 
     it('initializes the delete_backing flag to false if not retrived', function() {
-      expect($scope.reconfigureModel.vmdisks).toEqual([{hdFilename: "test_disk.vmdk", hdType: "thick", hdMode: "persistent", hdSize: "0", hdUnit: "MB", add_remove: "", delete_backing: false}]);
+      expect(vm.reconfigureModel.vmdisks).toEqual([{hdFilename: "test_disk.vmdk", hdType: "thick", hdMode: "persistent", hdSize: "0", hdUnit: "MB", add_remove: "", delete_backing: false}]);
     });
   });
 
@@ -71,7 +63,7 @@ describe('reconfigureFormController', function() {
       $scope.angularForm = {
         $setPristine: function(value) {}
       };
-      $scope.cancelClicked();
+      vm.cancelClicked();
     });
 
     it('turns the spinner on via the miqService', function() {
@@ -88,7 +80,7 @@ describe('reconfigureFormController', function() {
       $scope.angularForm = {
         $setPristine: function (value){}
       };
-      $scope.submitClicked();
+      vm.submitClicked();
     });
 
     it('turns the spinner on via the miqService', function() {
@@ -96,13 +88,13 @@ describe('reconfigureFormController', function() {
     });
 
     it('delegates to miqService.miqAjaxButton', function() {
-      var submitContent = {objectIds:              $scope.objectIds,
-                           cb_memory:              $scope.cb_memory,
-                           cb_cpu:                 $scope.cb_cpu,
-                           memory:                 $scope.reconfigureModel.memory,
-                           memory_type:            $scope.reconfigureModel.memory_type,
-                           socket_count:           $scope.reconfigureModel.socket_count,
-                           cores_per_socket_count: $scope.reconfigureModel.cores_per_socket_count,
+      var submitContent = {objectIds:              vm.objectIds,
+                           cb_memory:              vm.cb_memory,
+                           cb_cpu:                 vm.cb_cpu,
+                           memory:                 vm.reconfigureModel.memory,
+                           memory_type:            vm.reconfigureModel.memory_type,
+                           socket_count:           vm.reconfigureModel.socket_count,
+                           cores_per_socket_count: vm.reconfigureModel.cores_per_socket_count,
                            vmAddDisks: [  ], vmRemoveDisks: [  ] };
 
       expect(miqService.miqAjaxButton).toHaveBeenCalledWith('reconfigure_update/1000000000003?button=submit', submitContent);
