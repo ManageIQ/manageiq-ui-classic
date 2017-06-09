@@ -23,7 +23,7 @@ module EmsContainerHelper::TextualSummary
   def textual_group_status
     TextualGroup.new(
       _("Status"),
-      textual_authentications_status + %i(authentications_status metrics_status refresh_status)
+      textual_authentications_status + %i(authentications_status metrics_status refresh_status refresh_date)
     )
   end
 

@@ -9,7 +9,7 @@ module EmsDatawarehouseHelper::TextualSummary
   end
 
   def textual_group_status
-    TextualGroup.new(_("Status"), %i(refresh_status))
+    TextualGroup.new(_("Status"), %i(refresh_status refresh_date))
   end
 
   def textual_group_smart_management
