@@ -23,7 +23,7 @@ module VmHelper::TextualSummary
     TextualGroup.new(
       _("Properties"),
       %i(
-        name region server description hostname ipaddress custom_1 container host_platform
+        name region server description hostname ipaddress mac_address custom_1 container host_platform
         tools_status load_balancer_health_check_state osinfo devices cpu_affinity snapshots
         advanced_settings resources guid storage_profile
       )
@@ -146,6 +146,11 @@ module VmHelper::TextualSummary
       h[:link] = url_for_only_path(:action => 'show', :id => @record, :display => 'networks')
     end
     h
+  end
+
+  def textual_mac_address
+    macs = @record.mac_addresses
+    {:label => n_("MAC Address", "MAC Addresses", macs.size), :value => macs.join(", ")}
   end
 
   def textual_load_balancer_health_check_state
