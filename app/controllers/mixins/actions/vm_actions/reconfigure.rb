@@ -14,7 +14,7 @@ module Mixins
           @reconfigitems = find_records_with_rbac(Vm, reconfigure_ids)
           build_targets_hash(@reconfigitems)
           @force_no_grid_xml   = true
-          @view, @pages = get_view(Vm, :view_suffix => "VmReconfigureRequest", :where_clause => ["vms.id IN (?)", reconfigure_ids])  # Get the records (into a view) and the paginator
+          @view, @pages = get_view(Vm, :view_suffix => "VmReconfigureRequest", :where_clause => ["vms.id IN (?)", reconfigure_ids]) # Get the records (into a view) and the paginator
           get_reconfig_limits(reconfigure_ids)
           unless @explorer
             render :action => "show"
