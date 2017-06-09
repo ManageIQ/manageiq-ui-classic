@@ -1,5 +1,5 @@
 describe('orchestrationTemplateCopyController', function() {
-  var $scope, $controller, $httpBackend, miqService;
+  var $scope, vm, $httpBackend, miqService;
 
   beforeEach(module('ManageIQ'));
 
@@ -10,26 +10,12 @@ describe('orchestrationTemplateCopyController', function() {
     spyOn(miqService, 'sparkleOn');
     spyOn(miqService, 'sparkleOff');
     $scope = $rootScope.$new();
-    $scope.templateInfo = {
-      templateId: null,
-      templateName: null,
-      templateDescription: null,
-      templateDraft: null,
-      templateContent: null
-    };
-    $httpBackend = _$httpBackend_;
 
     setFixtures('<html><head></head><body></body></html>');
     ManageIQ.editor = CodeMirror(document.body);
 
-    $controller = _$controller_('orchestrationTemplateCopyController', {
-      $scope: $scope,
-      stackId: 1000000000001,
-      miqService: miqService
-    });
-  }));
+    $httpBackend = _$httpBackend_;
 
-  beforeEach(inject(function(_$controller_) {
     var retirementFormResponse = {
       template_id: 1000000000001,
       template_name: 'template_name',
@@ -38,6 +24,11 @@ describe('orchestrationTemplateCopyController', function() {
       template_content: 'template_content',
     };
     $httpBackend.whenGET('/orchestration_stack/stacks_ot_info/1000000000001').respond(retirementFormResponse);
+    vm = _$controller_('orchestrationTemplateCopyController', {
+      $scope: $scope,
+      stackId: 1000000000001,
+      miqService: miqService
+    });
     $httpBackend.flush();
   }));
 
@@ -48,11 +39,11 @@ describe('orchestrationTemplateCopyController', function() {
 
   describe('initialization', function() {
     it('sets the templateInfo to the values returned with http request', function() {
-      expect($scope.templateInfo.templateId).toEqual(1000000000001);
-      expect($scope.templateInfo.templateName).toEqual('Copy of template_name');
-      expect($scope.templateInfo.templateDescription).toEqual('template_description');
-      expect($scope.templateInfo.templateDraft).toEqual('true');
-      expect($scope.templateInfo.templateContent).toEqual('template_content');
+      expect(vm.templateInfo.templateId).toEqual(1000000000001);
+      expect(vm.templateInfo.templateName).toEqual('Copy of template_name');
+      expect(vm.templateInfo.templateDescription).toEqual('template_description');
+      expect(vm.templateInfo.templateDraft).toEqual('true');
+      expect(vm.templateInfo.templateContent).toEqual('template_content');
     });
   });
 
@@ -61,7 +52,7 @@ describe('orchestrationTemplateCopyController', function() {
       $scope.angularForm = {
         $setPristine: function(value) {}
       };
-      $scope.cancelClicked();
+      vm.cancelClicked();
     });
 
     it('turns the spinner on via the miqService', function() {
@@ -73,7 +64,7 @@ describe('orchestrationTemplateCopyController', function() {
     });
 
     it('delegates to miqService.miqAjaxButton', function() {
-      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/orchestration_stack/stacks_ot_copy?button=cancel&id=' + $scope.stackId);
+      expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/orchestration_stack/stacks_ot_copy?button=cancel&id=' + vm.stackId);
     });
   });
 
@@ -82,7 +73,7 @@ describe('orchestrationTemplateCopyController', function() {
       $scope.angularForm = {
         $setPristine: function (value){}
       };
-      $scope.addClicked();
+      vm.addClicked();
     });
 
     it('turns the spinner on via the miqService', function() {
@@ -95,11 +86,11 @@ describe('orchestrationTemplateCopyController', function() {
 
     it('delegates to miqService.miqAjaxButton', function() {
       var addContent = {
-        templateId: $scope.templateInfo.templateId,
-        templateName: $scope.templateInfo.templateName,
-        templateDescription: $scope.templateInfo.templateDescription,
-        templateDraft: $scope.templateInfo.templateDraft,
-        templateContent: $scope.templateInfo.templateContent
+        templateId: vm.templateInfo.templateId,
+        templateName: vm.templateInfo.templateName,
+        templateDescription: vm.templateInfo.templateDescription,
+        templateDraft: vm.templateInfo.templateDraft,
+        templateContent: vm.templateInfo.templateContent
       };
       expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/orchestration_stack/stacks_ot_copy?button=add', addContent);
     });
