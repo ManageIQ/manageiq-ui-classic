@@ -1,4 +1,10 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "cloudNetworkFormController"}
+%form#form_div{:name           => "angularForm",
+   "ng-controller" => "cloudNetworkFormController as vm",
+   "miq-form"      => true,
+   "model"         => "vm.cloudNetworkModel",
+   "model-copy"    => "vm.modelCopy",
+   "ng-cloak"      => ""}
+
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Network Management Provider')
@@ -9,11 +15,10 @@
       .col-md-8
         = select_tag("ems_id",
           options_for_select([["<#{_('Choose')}>", nil]] + @network_ems_provider_choices.sort),
-                      "ng-model"                    => "cloudNetworkModel.ems_id",
+                      "ng-model"                    => "vm.cloudNetworkModel.ems_id",
                       "required"                    => "",
-                      :miqrequired                  => true,
                       :checkchange                  => true,
-                      "ng-change"                   => "filterNetworkManagerChanged(cloudNetworkModel.ems_id)",
+                      "ng-change"                   => "vm.filterNetworkManagerChanged(vm.cloudNetworkModel.ems_id)",
                       "selectpicker-for-select-tag" => "")
   = render :partial => "common_new_edit"
   %h3
@@ -25,27 +30,27 @@
       .col-md-8
         = select_tag("provider_network_type",
           options_for_select([["<#{_('Choose')}>", nil]] + @network_provider_network_type_choices.sort),
-                      "ng-model"                    => "cloudNetworkModel.provider_network_type",
+                      "ng-model"                    => "vm.cloudNetworkModel.provider_network_type",
                       :checkchange                  => true,
                       "selectpicker-for-select-tag" => "")
   %h3
     = _('Placement')
   .form-horizontal
-    .form-group{"ng-if" => "cloudNetworkModel.ems_id"}
+    .form-group{"ng-if" => "vm.cloudNetworkModel.ems_id"}
       %label.col-md-2.control-label
         = _('Cloud Tenant')
       .col-md-8
         %select{"name"                        => "cloud_tenant_id",
-                "ng-model"                    => "cloudNetworkModel.cloud_tenant_id",
+                "ng-model"                    => "vm.cloudNetworkModel.cloud_tenant_id",
                 "required"                    => "",
-                :miqrequired                  => true,
                 :checkchange                  => true,
-                'ng-options'                  => 'tenant.id as tenant.name for tenant in available_tenants',
+                'ng-options'                  => 'tenant.id as tenant.name for tenant in vm.available_tenants',
                 'pf-select'                   => true,
                 "selectpicker-for-select-tag" => ""}
           %option{"value" => ""}
             = "<#{_('Choose')}>"
-  = render :partial => "layouts/angular/x_edit_buttons_angular"
+  = render :partial => "layouts/angular/generic_form_buttons"
+
 
 :javascript
   ManageIQ.angular.app.value('cloudNetworkFormId', '#{@network.id || "new"}');
