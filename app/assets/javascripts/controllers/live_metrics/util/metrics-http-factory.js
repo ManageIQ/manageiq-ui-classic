@@ -64,13 +64,11 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
       // hawkular time is in milisec (hawkular bucket_duration is in seconds)
       var params = '&query=get_data&ends=' + ends + '&starts=' + starts + '&bucket_duration=' + bucketDuration + 's';
 
-      if (dash.db === 'prometheus') {
-        // uniqe metric id for prometheus is the sum of all _tags_
-        params += '&tags=' + JSON.stringify(currentItem.tags);
-      } else {
-        // uniqe metric id for hawkular is the _type_ and _id_ of the metric
-        params += '&type=' + currentItem.type + '&metric_id=' + currentItem.id;
-      }
+      // uniqe metric id for prometheus is the sum of all _tags_
+      params += '&tags=' + JSON.stringify(currentItem.tags);
+
+      // uniqe metric id for hawkular is the _type_ and _id_ of the metric
+      params += '&type=' + currentItem.type + '&metric_id=' + currentItem.id;
 
       $http.get(dash.url + params)
         .then(function(response) {
