@@ -119,7 +119,7 @@
                           "ng-trim"                     => false,
                           "detect-spaces"               => "",
                           "prefix"                      => prefix.to_s,
-                          "reset-validation-depends-on" => %w(hawkular metrics).include?(prefix) ? "#{prefix}_hostname" : "",
+                          "reset-validation-depends-on" => %w(hawkular metrics prometheus).include?(prefix) ? "#{prefix}_hostname" : "",
                           "reset-validation-status"     => "#{prefix}_auth_status",
                           "pattern"                     => "^[1-9]\\d*$"}
       %span.help-block{"ng-show" => "angularForm.#{prefix}_api_port.$error.pattern"}
