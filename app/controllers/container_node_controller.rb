@@ -7,6 +7,10 @@ class ContainerNodeController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  def show_list
+    process_show_list(:named_scope => :active)
+  end
+
   def textual_group_list
     [
       %i(properties container_labels compliance miq_custom_attributes),
