@@ -1,9 +1,9 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "networkRouterFormController"}
+%form#form_div{:name => "angularForm", 'ng-controller' => "networkRouterFormController as vm"}
   = render :partial => "layouts/flash_msg"
 
   = render :partial => "common_new_edit"
 
-  = render :partial => "layouts/angular/x_edit_buttons_angular"
+  = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript
   ManageIQ.angular.app.value('networkRouterFormId', '#{@router.id}');
