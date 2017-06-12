@@ -7,7 +7,7 @@ module CloudNetworkHelper::TextualSummary
   #
 
   def textual_group_properties
-    TextualGroup.new(_("Properties"), %i(name type status))
+    TextualGroup.new(_("Properties"), %i(name type status ems_ref))
   end
 
   def textual_group_relationships
@@ -26,6 +26,11 @@ module CloudNetworkHelper::TextualSummary
 
   def textual_status
     @record.status
+  end
+
+  def textual_ems_ref
+    return nil if @record.ems_ref.blank?
+    {:label => _("ID within Provider"), :value => @record.ems_ref}
   end
 
   def textual_parent_ems_cloud
