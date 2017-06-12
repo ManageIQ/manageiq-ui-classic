@@ -218,7 +218,9 @@ module ApplicationHelper
     "groups"            => Account,
     "users"             => Account,
     "host_services"     => SystemService,
-    "chargebacks"       => ChargebackRate
+    "chargebacks"       => ChargebackRate,
+    "playbooks"         => ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook
+
   }.freeze
 
   HAS_ASSOCATION = %w(
