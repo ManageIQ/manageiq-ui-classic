@@ -26,7 +26,8 @@ class TreeBuilderCondition < TreeBuilder
                  :ContainerGroup      => _("Pod Conditions"),
                  :ContainerNode       => _("Container Node Conditions"),
                  :ContainerImage      => _("Container Image Conditions"),
-                 :ExtManagementSystem => _("Provider Conditions")}
+                 :ExtManagementSystem => _("Provider Conditions"),
+                 :PhysicalServer      => _("Physical Infrastructure Conditions")}
 
     objects = MiqPolicyController::UI_FOLDERS.collect do |model|
       text = text_i18n[model.name.to_sym]
@@ -45,6 +46,8 @@ class TreeBuilderCondition < TreeBuilder
                'pficon pficon-image'
              when 'ExtManagementSystem'
                'pficon pficon-server'
+             when 'PhysicalServer'
+               'pficon pficon-enterprise'
              end
       {
         :id   => model.name.camelize(:lower),

@@ -33,7 +33,9 @@ module MiqPolicyController::Policies
 
     case params[:button]
     when "save", "add"
+      $log.info("===> Checking privileges...")
       assert_privileges("policy_#{@policy.id ? "edit" : "new"}")
+      $log.info("===> Privileges checked")
       policy = @policy.id.blank? ? MiqPolicy.new : MiqPolicy.find(@policy.id) # Get new or existing record
       policy.mode = @edit[:new][:mode]
       policy.towhat = @edit[:new][:towhat] if @policy.id.blank?               # Set model if new record

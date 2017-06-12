@@ -21,14 +21,16 @@ class TreeBuilderPolicy < TreeBuilder
                                  :ContainerGroup      => _("Pod Compliance Policies"),
                                  :ContainerNode       => _("Container Node Compliance Policies"),
                                  :ContainerImage      => _("Container Image Compliance Policies"),
-                                 :ExtManagementSystem => _("Provider Compliance Policies")},
+                                 :ExtManagementSystem => _("Provider Compliance Policies"),
+                                 :PhysicalServer      => _("Physical Infrastructure Compliance Policies")},
                  :control    => {:Host                => _("Host Control Policies"),
                                  :Vm                  => _("Vm Control Policies"),
                                  :ContainerReplicator => _("Replicator Control Policies"),
                                  :ContainerGroup      => _("Pod Control Policies"),
                                  :ContainerNode       => _("Container Node Control Policies"),
                                  :ContainerImage      => _("Container Image Control Policies"),
-                                 :ExtManagementSystem => _("Provider Control Policies")}}
+                                 :ExtManagementSystem => _("Provider Control Policies"),
+                                 :PhysicalServer      => _("Physical Infrastructure Control Policies")}}
 
     MiqPolicyController::UI_FOLDERS.collect do |model|
       text = text_i18n[mode.to_sym][model.name.to_sym]
@@ -47,6 +49,8 @@ class TreeBuilderPolicy < TreeBuilder
                'pficon pficon-image'
              when 'ExtManagementSystem'
                'pficon pficon-server'
+             when 'PhysicalServer'
+               'pficon pficon-enterprise'
              end
       {
         :id   => "#{mode}-#{model.name.camelize(:lower)}",
