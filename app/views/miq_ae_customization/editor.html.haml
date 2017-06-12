@@ -19,6 +19,7 @@
   .pull-right
     %button.btn.btn-default{"ng-click" => "vm.dismissChanges()", :type => "button"}= _("Cancel")
     %button.btn.btn-primary{"ng-click" => "vm.saveDialogDetails()", "ng-disabled" => "vm.dialogUnchanged()", :type => "button"}= _("Save")
+  = render :partial => "layouts/x_edit_buttons"
 
 :javascript
   ManageIQ.angular.app.value('dialogId', '#{ @record.id || "new" }');

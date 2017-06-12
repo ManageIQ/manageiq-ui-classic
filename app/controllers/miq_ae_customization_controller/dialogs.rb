@@ -92,14 +92,20 @@ module MiqAeCustomizationController::Dialogs
     update_gtl_div('dialog_list') if pagination_or_gtl_request? && @show_list
   end
 
-  # Add new dialog
-  def dialog_new
+  # Add new dialog using the Dialog Editor
+  def dialog_new_editor
     assert_privileges("dialog_new")
     @record = Dialog.new
-    dialog_set_form_vars
-    @in_a_form = true
-    @sb[:node_typ] = nil
-    replace_right_cell(:nodetype => x_node)
+    javascript_redirect :controller => 'miq_ae_customization', :action => 'editor', :id => @record.id
+  end
+
+  # Add new dialog
+  def dialog_new
+   assert_privileges("dialog_new")
+   dialog_set_form_vars
+   @in_a_form = true
+   @sb[:node_typ] = nil
+   replace_right_cell(:nodetype => x_node)
   end
 
   # Add new dialog
@@ -137,7 +143,6 @@ module MiqAeCustomizationController::Dialogs
     if valid
       @sb[:node_typ] = params[:typ]
       @sb[:edit_typ] = "add"
-      # dialog_edit_build_tree(:dialog_edit,:dialog_edit_tree)
       nodes = x_node.split('_')
 
       case params[:typ]
@@ -171,6 +176,17 @@ module MiqAeCustomizationController::Dialogs
     else
       javascript_flash(:spinner_off => true)
     end
+  end
+
+  # Edit dialog using the Dialog Editor
+  def dialog_edit_editor
+    assert_privileges("dialog_edit")
+    if params[:id].present?
+      @record = Dialog.find(ApplicationRecord.uncompress_id(params[:id]))
+    else
+      @record = Dialog.find(ApplicationRecord.uncompress_id(params["miq_grid_checks"]))
+    end
+    javascript_redirect :controller => 'miq_ae_customization', :action => 'editor', :id => @record.id
   end
 
   # edit dialog
