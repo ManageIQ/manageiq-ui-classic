@@ -4,68 +4,36 @@
     %label#selected
     %div{'ng-if' => "kinds"}
       %kubernetes-topology-icon{tooltip_options, :kind => "ContainerReplicator"}
-        %svg.kube-topology
-          %g.EntityLegend.Containers
-            %circle{:r => "17"}
-            -# pficon-replicator
-            %text{:y => "8"} &#xE624;
         %label
+          %i.pficon.pficon-replicator
           = _("Replicators")
       %kubernetes-topology-icon{tooltip_options, :kind => "ContainerGroup"}
-        %svg.kube-topology
-          %g.EntityLegend.Containers.Pod
-            %circle{:r => "17"}
-            -# fa-cubes
-            %text{:x => "1", :y => "6"} &#xF1B3;
         %label
+          %i.fa.fa-cubes
           = _("Pods")
       %kubernetes-topology-icon{tooltip_options, :kind => "Container"}
-        %svg.kube-topology
-          %g.EntityLegend.Containers.Container
-            %circle{:r => "17"}
-            -# fa-cube
-            %text{:y => "7"} &#xF1B2;
         %label
+          %i.fa.fa-cube
           = _("Containers")
       %kubernetes-topology-icon{tooltip_options, :kind => "ContainerService"}
-        %svg.kube-topology
-          %g.EntityLegend.Containers
-            %circle{:r => "17"}
-            -# pficon-service
-            %text{:x => "-2", :y => "10"} &#xE61E;
         %label
+          %i.pficon.pficon-service
           = _("Services")
       %kubernetes-topology-icon{tooltip_options, :kind => "ContainerRoute"}
-        %svg.kube-topology
-          %g.EntityLegend.Containers
-            %circle{:r => "17"}
-            -# pficon-route
-            %text{:y => "8"} &#xE625;
         %label
+          %i.pficon.pficon-route
           = _("Routes")
       %kubernetes-topology-icon{tooltip_options, :kind => "ContainerNode"}
-        %svg.kube-topology
-          %g.EntityLegend.Containers
-            %circle{:r => "17"}
-            -# pficon-container-node
-            %text{:y => "9"} &#xE621;
         %label
+          %i.pficon.pficon-container-node
           = _("Nodes")
       %kubernetes-topology-icon{tooltip_options, :kind => "Vm"}
-        %svg.kube-topology
-          %g.EntityLegend.Infra
-            %circle{:r => "17"}
-            -# pficon-virtual-machine
-            %text{:y => "9"} &#xE90f;
         %label
+          %i.pficon.pficon-virtual-machine
           = _("VMs")
       %kubernetes-topology-icon{tooltip_options, :kind => "Host"}
-        %svg.kube-topology
-          %g.EntityLegend.Infra
-            %circle{:r => "17"}
-            -# pficon-screen
-            %text{:y => "9"} &#xE600;
         %label
+          %i.pficon.pficon-screen
           = _("Hosts")
 
   .alert.alert-info.alert-dismissable

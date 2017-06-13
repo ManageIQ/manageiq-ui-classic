@@ -4,36 +4,20 @@
     %label#selected
     %div{'ng-if' => "kinds"}
       %kubernetes-topology-icon{tooltipOptions, :kind => "Host"}
-        %svg.kube-topology
-          %g.EntityLegend.Infra.Host
-            %circle{:r => "17"}
-            -# pficon-host
-            %text{:y => "8"} &#xE600;
         %label
+          %i.pficon.pficon-screen
           = _("Nodes")
       %kubernetes-topology-icon{tooltipOptions, :kind => "Vm"}
-        %svg.kube-topology
-          %g.EntityLegend.Infra
-            %circle{:r => "17"}
-            -# pficon-virtual-machine
-            %text{:y => "9"} &#xE90f;
         %label
+          %i.pficon.pficon-virtual-machine
           = _("VMs")
       %kubernetes-topology-icon{tooltipOptions, :kind => "EmsCluster"}
-        %svg.kube-topology
-          %g.EntityLegend.Infra
-            %circle{:r => "17"}
-            -# pficon-cluster
-            %text{:y => "9"} &#xE620;
         %label
+          %i.pficon.pficon-cluster
           = _("Clusters")
       %kubernetes-topology-icon{tooltipOptions, :kind => "Tag"}
-        %svg.kube-topology
-          %g.EntityLegend.Network.FloatingIp
-            %circle{:r => "17"}
-            -# pficon-cloud-tenant
-            %text{:y => "9"} &#xF02b;
         %label
+          %i.fa.fa-tag
           = _("Tags")
 
   .alert.alert-info.alert-dismissable

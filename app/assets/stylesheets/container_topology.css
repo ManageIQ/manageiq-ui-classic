@@ -8,31 +8,6 @@
   margin-left: 40px;
 }
 
-.topology g.EntityLegend {
-    transform: translate(21px,21px);
-}
-
-.kube-topology g.EntityLegend.Infra text {
-    fill: #636363;
-}
-
-.kube-topology g.EntityLegend.Containers text {
-    fill: #1186C1;
-    font-size: 22px;
-}
-
-.kube-topology g.EntityLegend.Containers.Pod text,
-.kube-topology g.EntityLegend.Network.FloatingIp text,
-.kube-topology g.EntityLegend.Containers.Container text {
-    font-family: FontAwesome;
-    font-size: 19px;
-}
-
-.kube-topology g.EntityLegend.Network.CloudNetwork text {
-    font-family: IcoMoon;
-    font-size: 19px;
-}
-
 .kube-topology g text.glyph {
     font-size: 20px;
     fill: #1186C1;
