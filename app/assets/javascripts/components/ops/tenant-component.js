@@ -2,6 +2,7 @@ ManageIQ.angular.app.component('tenantComponent', {
   bindings: {
     id: '=?',
     parent: '=?',
+    angularForm: '=',
   },
   controllerAs: 'vm',
   controller: tenantFormController,

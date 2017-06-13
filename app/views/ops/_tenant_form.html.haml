@@ -6,8 +6,9 @@
                                "miq-form"   => true,
                                }
   = render :partial => "layouts/flash_msg"
-  %tenant-component{:id     => @tenant.id,
-                    :parent => @tenant_parent}
+  %tenant-component{:id            => @tenant.id,
+                    :parent        => @tenant_parent,
+                    'angular-form' => "angularForm"}
 
 :javascript
   miq_bootstrap('#form_div');
