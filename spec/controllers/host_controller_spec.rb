@@ -115,7 +115,6 @@ describe HostController do
                                        :hostname         => '127.0.0.1',
                                        :default_userid   => "abc",
                                        :default_password => "def",
-                                       :default_verify   => "def",
                                        :user_assigned_os => "linux_generic"
                                       )
       expect(controller).to receive(:render)

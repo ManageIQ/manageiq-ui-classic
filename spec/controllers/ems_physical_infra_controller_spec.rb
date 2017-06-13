@@ -150,7 +150,6 @@ describe EmsPhysicalInfraController do
           "default_hostname"          => "foo.com",
           "default_userid"            => "foo",
           "default_password"          => "[FILTERED]",
-          "default_verify"            => "[FILTERED]"
         }
       end.to change { ManageIQ::Providers::PhysicalInfraManager.count }.by(1)
     end
@@ -166,7 +165,6 @@ describe EmsPhysicalInfraController do
           "default_hostname"          => "foo.com",
           "default_userid"            => "foo",
           "default_password"          => "[FILTERED]",
-          "default_verify"            => "[FILTERED]"
         }
       end.to change { Authentication.count }.by(1)
 
@@ -183,7 +181,6 @@ describe EmsPhysicalInfraController do
           "emstype"          => "lenovo_ph_infra",
           "default_userid"   => "bar",
           "default_password" => "[FILTERED]",
-          "default_verify"   => "[FILTERED]"
         }
       end.not_to change { Authentication.count }
 
@@ -200,7 +197,6 @@ describe EmsPhysicalInfraController do
         "zone"             => zone.name,
         "default_userid"   => "foo",
         "default_password" => "[FILTERED]",
-        "default_verify"   => "[FILTERED]"
       }
 
       expect(response.status).to eq(200)
@@ -215,7 +211,6 @@ describe EmsPhysicalInfraController do
         "zone"             => zone.name,
         "default_userid"   => "foo",
         "default_password" => "[FILTERED]",
-        "default_verify"   => "[FILTERED]"
       }
 
       expect(response.status).to eq(200)

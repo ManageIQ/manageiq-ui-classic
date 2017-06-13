@@ -105,7 +105,6 @@
                :locals  => {:record                 => @ems,
                             :ng_model               => "emsCommonModel",
                             :ng_reqd_password       => "emsCommonModel.default_userid != ''",
-                            :ng_reqd_verify         => "emsCommonModel.default_userid != ''",
                             :prefix                 => "default",
                             :validate_url           => @ems.id ? "update" : "create",
                             :id                     => @ems.id || "new",

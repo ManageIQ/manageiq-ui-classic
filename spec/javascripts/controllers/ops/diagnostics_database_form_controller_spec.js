@@ -16,7 +16,6 @@ describe('diagnosticsDatabaseFormController', function() {
                                       uri_prefix:   '',
                                       log_userid:   '',
                                       log_password: '',
-                                      log_verify:   ''
                                     };
 
   $httpBackend = _$httpBackend_;
@@ -51,11 +50,7 @@ describe('diagnosticsDatabaseFormController', function() {
     });
 
     it('sets the log_password to blank', function () {
-      expect($scope.diagnosticsDatabaseModel.log_verify).toEqual('');
-    });
-
-    it('sets the log_password to blank', function () {
-      expect($scope.diagnosticsDatabaseModel.log_verify).toEqual('');
+      expect($scope.diagnosticsDatabaseModel.log_password).toEqual('');
     });
   });
 
@@ -66,7 +61,6 @@ describe('diagnosticsDatabaseFormController', function() {
       uri_prefix:   'nfs',
       log_userid:   '',
       log_password: '',
-      log_verify:   ''
     };
 
     beforeEach(inject(function() {
@@ -94,10 +88,6 @@ describe('diagnosticsDatabaseFormController', function() {
 
     it('sets the log_password to the value returned from the http request', function () {
       expect($scope.diagnosticsDatabaseModel.log_password).toEqual('');
-    });
-
-    it('sets the log_verify to the value returned from the http request', function () {
-      expect($scope.diagnosticsDatabaseModel.log_verify).toEqual('');
     });
   });
 
@@ -135,10 +125,6 @@ describe('diagnosticsDatabaseFormController', function() {
 
     it('sets the log_password to the value returned from the http request', function () {
       expect($scope.diagnosticsDatabaseModel.log_password).toEqual(miqService.storedPasswordPlaceholder);
-    });
-
-    it('sets the log_verify to the value returned from the http request', function () {
-      expect($scope.diagnosticsDatabaseModel.log_verify).toEqual(miqService.storedPasswordPlaceholder);
     });
   });
 });

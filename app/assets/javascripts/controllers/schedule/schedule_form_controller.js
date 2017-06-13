@@ -101,9 +101,9 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
         $scope.scheduleModel.filter_typ = 'all';
       }
 
-      $scope.scheduleModel.log_password = $scope.scheduleModel.log_verify = '';
+      $scope.scheduleModel.log_password = '';
       if ($scope.scheduleModel.log_userid !== '') {
-        $scope.scheduleModel.log_password = $scope.scheduleModel.log_verify = miqService.storedPasswordPlaceholder;
+        $scope.scheduleModel.log_password = miqService.storedPasswordPlaceholder;
       }
 
       $scope.afterGet = true;
@@ -288,7 +288,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
       $scope.scheduleModel.uri_prefix = "nfs";
       $scope.$broadcast('resetClicked');
       $scope.scheduleModel.log_userid = $scope.modelCopy.log_userid;
-      $scope.scheduleModel.log_password = $scope.scheduleModel.log_verify = $scope.modelCopy.log_password;
+      $scope.scheduleModel.log_password = $scope.modelCopy.log_password;
     }
   };
 
@@ -369,8 +369,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     return ($scope.angularForm.depot_name.$valid &&
       $scope.angularForm.uri.$valid &&
       $scope.angularForm.log_userid.$valid &&
-      $scope.angularForm.log_password.$valid &&
-      $scope.angularForm.log_verify.$valid);
+      $scope.angularForm.log_password.$valid);
   };
 
   $scope.setTimerType = function() {
@@ -397,8 +396,7 @@ ManageIQ.angular.app.controller('scheduleFormController', ['$http', '$scope', 's
     return ($scope.angularForm.depot_name.$dirty ||
         $scope.angularForm.uri.$dirty ||
         $scope.angularForm.log_userid.$dirty ||
-        $scope.angularForm.log_password.$dirty ||
-        $scope.angularForm.log_verify.$dirty);
+        $scope.angularForm.log_password.$dirty);
   };
 
   init();

@@ -142,10 +142,6 @@ describe('emsCommonFormController', function() {
     it('sets the default_password', function() {
       expect($scope.emsCommonModel.default_password).toEqual(miqService.storedPasswordPlaceholder);
     });
-
-    it('sets the default_verify', function() {
-      expect($scope.emsCommonModel.default_verify).toEqual(miqService.storedPasswordPlaceholder);
-    });
   });
 
   describe('when the emsCommonFormId is an Openstack Id', function() {
@@ -211,10 +207,6 @@ describe('emsCommonFormController', function() {
     it('sets the default_password', function() {
       expect($scope.emsCommonModel.default_password).toEqual(miqService.storedPasswordPlaceholder);
     });
-
-    it('sets the default_verify', function() {
-      expect($scope.emsCommonModel.default_verify).toEqual(miqService.storedPasswordPlaceholder);
-    });
   });
 
   describe('when the emsCommonFormId is an Azure Id', function() {
@@ -279,10 +271,6 @@ describe('emsCommonFormController', function() {
 
     it('sets the default_password', function() {
       expect($scope.emsCommonModel.default_password).toEqual(miqService.storedPasswordPlaceholder);
-    });
-
-    it('sets the default_verify', function() {
-      expect($scope.emsCommonModel.default_verify).toEqual(miqService.storedPasswordPlaceholder);
     });
   });
 
@@ -368,7 +356,6 @@ describe('emsCommonFormController', function() {
         '<input ng-model="emsCommonModel.hostname" name="hostname" required text />' +
         '<input ng-model="emsCommonModel.default_userid" name="default_userid" required text />' +
         '<input ng-model="emsCommonModel.default_password" name="default_password" required text />' +
-        '<input ng-model="emsCommonModel.default_verify" name="default_verify" required text />' +
         '</form>'
       );
 
@@ -379,7 +366,6 @@ describe('emsCommonFormController', function() {
       $scope.angularForm.hostname.$setViewValue('abchost');
       $scope.angularForm.default_userid.$setViewValue('abcuser');
       $scope.angularForm.default_password.$setViewValue('abcpassword');
-      $scope.angularForm.default_verify.$setViewValue('abcpassword');
       $scope.currentTab = "default";
       $scope.emsCommonModel.emstype = "ec2";
     });
@@ -509,10 +495,6 @@ describe('emsCommonFormController in the context of ems infra provider', functio
     it('sets the default_password', function () {
       expect($scope.emsCommonModel.default_password).toEqual(miqService.storedPasswordPlaceholder);
     });
-
-    it('sets the default_verify', function () {
-      expect($scope.emsCommonModel.default_verify).toEqual(miqService.storedPasswordPlaceholder);
-    });
   });
 
   describe('when the emsCommonFormId is an Openstack Id', function () {
@@ -571,20 +553,12 @@ describe('emsCommonFormController in the context of ems infra provider', functio
       expect($scope.emsCommonModel.default_password).toEqual(miqService.storedPasswordPlaceholder);
     });
 
-    it('sets the default_verify', function () {
-      expect($scope.emsCommonModel.default_verify).toEqual(miqService.storedPasswordPlaceholder);
-    });
-
     it('sets the amqp_userid', function () {
       expect($scope.emsCommonModel.amqp_userid).toEqual("amqp_user");
     });
 
     it('sets the amqp_password', function () {
       expect($scope.emsCommonModel.amqp_password).toEqual(miqService.storedPasswordPlaceholder);
-    });
-
-    it('sets the amqp_verify', function () {
-      expect($scope.emsCommonModel.amqp_verify).toEqual(miqService.storedPasswordPlaceholder);
     });
 
     it('sets the ssh_keypair_userid', function () {
@@ -763,10 +737,6 @@ describe('emsCommonFormController in the context of ems middleware provider', fu
 
     it('sets the default_password', function () {
       expect($scope.emsCommonModel.default_password).toEqual(miqService.storedPasswordPlaceholder);
-    });
-
-    it('sets the default_verify', function () {
-      expect($scope.emsCommonModel.default_verify).toEqual(miqService.storedPasswordPlaceholder);
     });
   });
 });

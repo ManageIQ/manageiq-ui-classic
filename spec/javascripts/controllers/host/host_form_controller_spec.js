@@ -195,7 +195,6 @@ describe('hostFormController', function() {
         '<input ng-model="hostModel.hostname" name="hostname" required text />' +
         '<input ng-model="hostModel.default_userid" name="default_userid" required text />' +
         '<input ng-model="hostModel.default_password" name="default_password" text />' +
-        '<input ng-model="hostModel.default_verify" name="default_verify" text />' +
         '</form>'
       );
 
@@ -206,24 +205,20 @@ describe('hostFormController', function() {
       $scope.angularForm.hostname.$setViewValue('abchost');
       $scope.angularForm.default_userid.$setViewValue('abcuser');
       $scope.angularForm.default_password.$setViewValue(miqService.storedPasswordPlaceholder);
-      $scope.angularForm.default_verify.$setViewValue(miqService.storedPasswordPlaceholder);
     }));
 
     it('returns true if all the Validation fields are filled in', function() {
       $scope.angularForm.default_password.$setViewValue('abcpassword');
-      $scope.angularForm.default_verify.$setViewValue('abcpassword');
       expect($scope.canValidateBasicInfo()).toBe(true);
     });
 
     it('returns true if password fields are left blank', function() {
       $scope.angularForm.default_password.$setViewValue('');
-      $scope.angularForm.default_verify.$setViewValue('');
       expect($scope.canValidateBasicInfo()).toBe(true);
     });
 
     it('returns true if all the Validation fields are filled in and dirty', function() {
       $scope.angularForm.default_password.$setViewValue('');
-      $scope.angularForm.default_verify.$setViewValue('');
       expect($scope.canValidate()).toBe(true);
     });
   });

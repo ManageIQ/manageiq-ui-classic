@@ -61,13 +61,13 @@ describe('CredentialsController', function() {
 
   it('shows Verify Password field when record is new', function() {
     vm.newRecord = true;
-    $scope.$parent.hostModel = {'default_userid': '', 'default_password': '', 'default_verify': ''};
+    $scope.$parent.hostModel = {'default_userid': '', 'default_password': ''};
     $scope.$parent.modelCopy = angular.copy( $scope.$parent.hostModel );
     expect(vm.showVerify('default_userid')).toBeTruthy();
   });
 
   it('shows Verify Password field only after Change Stored Password is clicked', function() {
-    $scope.$parent.hostModel = {'default_userid': 'abc', 'default_password': '********', 'default_verify': '********'};
+    $scope.$parent.hostModel = {'default_userid': 'abc', 'default_password': '********'};
     $scope.$parent.modelCopy = angular.copy( $scope.$parent.hostModel );
     expect(vm.showVerify('default_userid')).toBeFalsy();
     vm.changeStoredPassword();
@@ -76,28 +76,28 @@ describe('CredentialsController', function() {
 
   it('shows Verify Password field when record is not new, userid does not exist', function() {
     vm.newRecord = false;
-    $scope.$parent.hostModel = {'default_userid': '', 'default_password': '', 'default_verify': ''};
+    $scope.$parent.hostModel = {'default_userid': '', 'default_password': ''};
     $scope.$parent.modelCopy = angular.copy( $scope.$parent.hostModel );
     expect(vm.showVerify('default_userid')).toBeTruthy();
   });
 
   it('shows password change links when record is not new and userid exists', function() {
     vm.newRecord = false;
-    $scope.$parent.hostModel = {'default_userid': 'abc', 'default_password': '********', 'default_verify': '********'};
+    $scope.$parent.hostModel = {'default_userid': 'abc', 'default_password': '********'};
     $scope.$parent.modelCopy = angular.copy( $scope.$parent.hostModel );
     expect(vm.showChangePasswordLinks('default_userid')).toBeTruthy();
   });
 
   it('does not show password change links when record is not new and userid does not exist', function() {
     vm.newRecord = false;
-    $scope.$parent.hostModel = {'default_userid': '', 'default_password': '', 'default_verify': ''};
+    $scope.$parent.hostModel = {'default_userid': '', 'default_password': ''};
     $scope.$parent.modelCopy = angular.copy( $scope.$parent.hostModel );
     expect(vm.showChangePasswordLinks('default_userid')).toBeFalsy();
   });
 
   it('does not show password change links when record is not new, userid did not exist before but is now filled in by the user', function() {
     vm.newRecord = false;
-    $scope.$parent.hostModel = {'default_userid': '', 'default_password': '', 'default_verify': ''};
+    $scope.$parent.hostModel = {'default_userid': '', 'default_password': ''};
     $scope.$parent.modelCopy = angular.copy( $scope.$parent.hostModel );
     $scope.$parent.hostModel.default_userid = 'xyz';
     expect(vm.showChangePasswordLinks('default_userid')).toBeFalsy();

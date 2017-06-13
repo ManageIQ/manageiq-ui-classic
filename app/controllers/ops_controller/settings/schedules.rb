@@ -96,7 +96,6 @@ module OpsController::Settings::Schedules
       @protocol         = DatabaseBackup.supported_depots[@uri_prefix]
       @log_userid       = depot.try(:authentication_userid)
       @log_password     = depot.try(:authentication_password)
-      @log_verify       = depot.try(:authentication_password)
 
       # This is a hack to trick the controller into thinking we loaded an edit variable
       session[:edit] = {:key => "schedule_edit__#{@schedule.id || 'new'}"}

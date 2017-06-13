@@ -2,38 +2,6 @@ require 'kubeclient'
 
 describe EmsCloudController do
   context "::EmsCommon" do
-    context "#get_form_vars" do
-      it "check if the default port for openstack/openstack_infra/rhevm is set" do
-        controller.instance_variable_set(:@edit, :new => {})
-        controller.instance_variable_set(:@_params, :server_emstype => "openstack")
-        controller.send(:get_form_vars)
-        expect(assigns(:edit)[:new][:port]).to eq(5000)
-
-        controller.instance_variable_set(:@_params, :server_emstype => "openstack_infra")
-        controller.send(:get_form_vars)
-        expect(assigns(:edit)[:new][:port]).to eq(5000)
-
-        controller.instance_variable_set(:@_params, :server_emstype => "ec2")
-        controller.send(:get_form_vars)
-        expect(assigns(:edit)[:new][:port]).to be_nil
-      end
-    end
-
-    context "#get_form_vars" do
-      it "check if provider_region gets reset when provider type is changed on add screen" do
-        controller.instance_variable_set(:@edit, :new => {})
-        controller.instance_variable_set(:@_params, :server_emstype => "ec2")
-        controller.instance_variable_set(:@_params, :provider_region => "some_region")
-
-        controller.send(:get_form_vars)
-        expect(assigns(:edit)[:new][:provider_region]).to eq("some_region")
-
-        controller.instance_variable_set(:@_params, :server_emstype => "openstack")
-        controller.send(:get_form_vars)
-        expect(assigns(:edit)[:new][:provider_region]).to be_nil
-      end
-    end
-
     context "#new" do
       before do
         stub_user(:features => :all)
@@ -50,60 +18,6 @@ describe EmsCloudController do
           end
         }
         expect(assigns(:provider_regions)).to include(regions)
-      end
-    end
-
-    context "#set_record_vars" do
-      context "strip leading/trailing whitespace from hostname/ipaddress" do
-        after :each do
-          stub_user(:features => :all)
-          controller.instance_variable_set(:@edit, :new => {:name     => 'EMS 1',
-                                                            :emstype  => @type,
-                                                            :hostname => '  10.10.10.10  ',
-                                                            :port     => '5000'},
-                                                   :key => 'ems_edit__new')
-          session[:edit] = assigns(:edit)
-          controller.send(:set_record_vars, @ems)
-          expect(@ems.hostname).to eq('10.10.10.10')
-        end
-
-        it "when adding cloud EMS" do
-          @type = 'openstack'
-          @ems  = ManageIQ::Providers::Openstack::CloudManager.new
-        end
-
-        it "when adding infra EMS" do
-          @type = 'rhevm'
-          @ems  = ManageIQ::Providers::Redhat::InfraManager.new
-        end
-      end
-    end
-
-    context "#update_button_validate" do
-      context "when authentication_check" do
-        let(:mocked_ems_cloud) { double(EmsCloud) }
-        before(:each) do
-          controller.instance_variable_set(:@_params, :id => "42", :type => "amqp")
-          expect(controller).to receive(:find_record_with_rbac).with(EmsCloud, "42").and_return(mocked_ems_cloud)
-          expect(controller).to receive(:set_record_vars).with(mocked_ems_cloud, :validate).and_return(mocked_ems_cloud)
-        end
-
-        it "successful flash message (unchanged)" do
-          allow(controller).to receive_messages(:edit_changed? => false)
-          expect(mocked_ems_cloud).to receive(:authentication_check).with("amqp", :save => true).and_return([true, ""])
-          expect(controller).to receive(:add_flash).with(_("Credential validation was successful"))
-          expect(controller).to receive(:render_flash)
-          controller.send(:update_button_validate)
-        end
-
-        it "unsuccessful flash message (changed)" do
-          allow(controller).to receive_messages(:edit_changed? => true)
-          expect(mocked_ems_cloud).to receive(:authentication_check)
-            .with("amqp", :save => false).and_return([false, "Invalid"])
-          expect(controller).to receive(:add_flash).with(_("Credential validation was not successful: Invalid"), :error)
-          expect(controller).to receive(:render_flash)
-          controller.send(:update_button_validate)
-        end
       end
     end
 
@@ -325,22 +239,6 @@ describe EmsInfraController do
       controller.instance_variable_set(:@table_name, "ems_infra")
       link = controller.send(:show_link, ems, :display => "vms")
       expect(link).to eq("/ems_infra/#{ems.id}?display=vms")
-    end
-
-    context "#restore_password" do
-      it "populates the password from the ems record if params[:restore_password] exists" do
-        infra_ems = EmsInfra.new
-        allow(infra_ems).to receive(:authentication_password).and_return("default_password")
-        edit = {:ems_id => infra_ems.id, :new => {}}
-        controller.instance_variable_set(:@edit, edit)
-        controller.instance_variable_set(:@ems, infra_ems)
-        controller.instance_variable_set(:@_params,
-                                         :restore_password => true,
-                                         :default_password => "[FILTERED]",
-                                         :default_verify   => "[FILTERED]")
-        controller.send(:restore_password)
-        expect(assigns(:edit)[:new][:default_password]).to eq(infra_ems.authentication_password)
-      end
     end
   end
   include_examples '#download_summary_pdf', :ems_openstack_infra
