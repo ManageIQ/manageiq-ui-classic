@@ -37,7 +37,11 @@ module Mixins
         AuditEvent.success(build_saved_audit(update_ems, @edit))
         update_ems.authentication_check_types_queue(update_ems.authentication_for_summary.pluck(:authtype),
                                                     :save => true)
-        ems_path = ems_path(update_ems, :flash_msg => flash)
+        ems_path = if @lastaction == 'show_list'
+                     ems_path('show_list', :flash_msg => flash)
+                   else
+                     ems_path(update_ems, :flash_msg => flash)
+                   end
         javascript_redirect ems_path
       else
         update_ems.errors.each do |field, msg|
