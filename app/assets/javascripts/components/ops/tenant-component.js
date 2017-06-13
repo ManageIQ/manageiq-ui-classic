@@ -8,10 +8,10 @@ ManageIQ.angular.app.component('tenantComponent', {
   templateUrl: '/static/ops/tenant/tenant.html.haml',
 });
 
-tenantFormController.$inject = ['$http', 'miqService'];
+tenantFormController.$inject = ['API', 'miqService'];
 
 /** @ngInject */
-function tenantFormController($http, miqService) {
+function tenantFormController(API, miqService) {
   var vm = this;
 
   vm.$onInit = function() {
@@ -28,7 +28,7 @@ function tenantFormController($http, miqService) {
     if (angular.isDefined(vm.id)) {
       vm.newRecord = false;
       miqService.sparkleOn();
-      $http.get('/ops/tenant_form_fields/' + vm.id)
+      API.get('/api/tenants/' + vm.id)
         .then(getTenantFormData)
         .catch(miqService.handleFailure);
     } else {
@@ -61,13 +61,11 @@ function tenantFormController($http, miqService) {
 
   // private functions
   function getTenantFormData(response) {
-    var data = response.data;
-
-    vm.tenantModel.name                      = data.name;
-    vm.tenantModel.description               = data.description;
-    vm.tenantModel.default                   = data.default;
-    vm.tenantModel.divisible                 = data.divisible;
-    vm.tenantModel.use_config_for_attributes = data.use_config_for_attributes;
+    vm.tenantModel.name                      = response.name;
+    vm.tenantModel.description               = response.description;
+    vm.tenantModel.default                   = !angular.isDefined(response.ancestry);
+    vm.tenantModel.use_config_for_attributes = response.use_config_for_attributes;
+    vm.tenantModel.parent                    = response.ancestry;
 
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.tenantModel );
