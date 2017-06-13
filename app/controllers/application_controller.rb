@@ -367,22 +367,22 @@ class ApplicationController < ActionController::Base
     if options.nil? || options[:view].nil?
       model_view = process_params_model_view(params, options)
       @edit = session[:edit]
-      current_view, settings = get_view(model_view, options)
+      @view, settings = get_view(model_view, options)
     else
-      current_view = options[:view]
+      @view = options[:view]
       settings = options[:pages]
     end
-    settings = set_variables_report_data(settings, current_view)
+    settings = set_variables_report_data(settings, @view)
 
     # Foreman has some unassigned rows which needs to be added after view is fetched
     if options && options[:unassigned_profile_row] && options[:unassigned_configuration_profile]
       options[:unassigned_profile_row][:id] ||= options[:unassigned_profile_row]['manager_id']
-      current_view.table.data.push(options[:unassigned_profile_row])
+      @view.table.data.push(options[:unassigned_profile_row])
       @targets_hash[options[:unassigned_profile_row]['id']] = options[:unassigned_configuration_profile]
     end
     render :json => {
       :settings => settings,
-      :data     => view_to_hash(current_view),
+      :data     => view_to_hash(@view),
       :messages => @flash_array
     }
   end
