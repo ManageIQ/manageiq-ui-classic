@@ -1,7 +1,8 @@
 ManageIQ.angular.app.component('genericButtonComponent', {
   bindings: {
-    // id: '=?',
-    // parent: '=?',
+    angularForm: '=',
+    modelCopy: '=',
+    model: '=',
   },
   controllerAs: 'vm',
   controller: genericButtonController,
@@ -16,27 +17,24 @@ function genericButtonController(miqService) {
 
   vm.$onInit = function() {
     vm.saveable = miqService.saveable;
-    vm.angularForm = miqService.angularForm;
 
-    vm.resetClicked = function(angularForm) {
-      vm.tenantModel = angular.copy(vm.modelCopy );
-      angularForm.$setUntouched(true);
-      angularForm.$setPristine(true);
+    vm.resetClicked = function() {
+      vm.model = angular.copy(vm.modelCopy );
+      vm.angularForm.$setUntouched(true);
+      vm.angularForm.$setPristine(true);
       miqService.miqFlash("warn", __("All changes have been reset"));
     };
 
-    vm.cancelClicked = function(angularForm) {
-      tenantEditButtonClicked('cancel');
-      angularForm.$setPristine(true);
+    vm.cancelClicked = function() {
+
     };
 
-    vm.saveClicked = function(angularForm) {
-      tenantEditButtonClicked('save', true);
-      angularForm.$setPristine(true);
+    vm.saveClicked = function() {
+
     };
 
-    vm.addClicked = function(angularForm) {
-      vm.saveClicked(angularForm);
+    vm.addClicked = function() {
+
     };
   };
 }

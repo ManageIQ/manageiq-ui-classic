@@ -29,6 +29,8 @@
                       "name"            => "use_config_for_attributes",
                       "ng-model"        => "vm.tenantModel.use_config_for_attributes",
                       "switch-on-text"  => "Yes",
-                      "switch-off-text" => "No",
-                      "checkchange"     => ""}
-= render :partial => "layouts/angular/generic_form_buttons"
+                      "switch-off-text" => "No"}
+
+%generic-button-component{"angular-form" => "vm.angularForm",
+                          "model-copy"   => "vm.modelCopy",
+                          "model"        => "vm.tenantModel"}
