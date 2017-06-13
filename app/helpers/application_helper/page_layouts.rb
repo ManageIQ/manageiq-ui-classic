@@ -113,22 +113,24 @@ module ApplicationHelper::PageLayouts
   end
 
   def inner_layout_present?
-    @inner_layout_present ||= (
-      @explorer || params[:action] == "explorer" ||
-      (params[:controller] == "chargeback" && params[:action] == "chargeback") ||
-      (params[:controller] == "miq_ae_tools" && (params[:action] == "resolve" || params[:action] == "show")) ||
-      (params[:controller] == "miq_policy" && params[:action] == "rsop") ||
-      (params[:controller] == "miq_capacity")
-    )
+    @inner_layout_present ||=
+      begin
+        @explorer || params[:action] == "explorer" ||
+          (params[:controller] == "chargeback" && params[:action] == "chargeback") ||
+          (params[:controller] == "miq_ae_tools" && (params[:action] == "resolve" || params[:action] == "show")) ||
+          (params[:controller] == "miq_policy" && params[:action] == "rsop") ||
+          (params[:controller] == "miq_capacity")
+      end
   end
 
   def simulate?
-    @simulate ||= (
-      rsop = controller.controller_name == 'miq_policy' && controller.action_name == 'rsop'
-      resolve = controller.controller_name == 'miq_ae_tools' && controller.action_name == 'resolve'
-      planning = controller.controller_name == 'miq_capacity' && controller.action_name == 'planning'
-      rsop || resolve || planning
-    )
+    @simulate ||=
+      begin
+        rsop = controller.controller_name == 'miq_policy' && controller.action_name == 'rsop'
+        resolve = controller.controller_name == 'miq_ae_tools' && controller.action_name == 'resolve'
+        planning = controller.controller_name == 'miq_capacity' && controller.action_name == 'planning'
+        rsop || resolve || planning
+      end
   end
 
   def saved_report_paging?
