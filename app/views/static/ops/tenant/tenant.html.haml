@@ -9,8 +9,7 @@
                         "ng-disabled" => "vm.tenantModel.default && vm.tenantModel.use_config_for_attributes",
                         "maxlength"   => "#{MAX_NAME_LEN}",
                         "required"    => "",
-                        "auto-focus"  => "",
-                        "checkchange" => ""}
+                        "auto-focus"  => ""}
 .form-group
   %label.col-md-2.control-label{"for" => "tenant_description"}
     = _("Description")
@@ -20,8 +19,7 @@
                         "name"        => "description",
                         "ng-model"    => "vm.tenantModel.description",
                         "maxlength"   => "#{ViewHelper::MAX_DESC_LEN}",
-                        "required"    => "",
-                        "checkchange" => ""}
+                        "required"    => ""}
 .form-group{"ng-show" => "vm.tenantModel.default"}
   %label.col-md-2.control-label
     = _("Use Configuration Settings")
