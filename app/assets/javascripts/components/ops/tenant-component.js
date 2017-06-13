@@ -3,6 +3,7 @@ ManageIQ.angular.app.component('tenantComponent', {
     id: '=?',
     parent: '=?',
     angularForm: '=',
+    redirectUrl: '@',
   },
   controllerAs: 'vm',
   controller: tenantFormController,
