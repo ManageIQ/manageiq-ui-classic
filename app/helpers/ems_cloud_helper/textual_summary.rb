@@ -22,7 +22,7 @@ module EmsCloudHelper::TextualSummary
   end
 
   def textual_group_status
-    TextualGroup.new(_("Status"), textual_authentications(@record.authentication_for_summary) + %i(refresh_status))
+    TextualGroup.new(_("Status"), textual_authentications(@record.authentication_for_summary) + %i(refresh_status refresh_date))
   end
 
   def textual_group_smart_management

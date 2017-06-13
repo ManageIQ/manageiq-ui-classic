@@ -21,7 +21,7 @@ module EmsInfraHelper::TextualSummary
   def textual_group_status
     TextualGroup.new(
       _("Status"),
-      textual_authentications(@record.authentication_userid_passwords) + %i(refresh_status orchestration_stacks_status)
+      textual_authentications(@record.authentication_userid_passwords) + %i(refresh_status refresh_date orchestration_stacks_status)
     )
   end
 

@@ -12,4 +12,9 @@ module TextualMixins::TextualRefreshStatus
       :title => @record.last_refresh_error
     }
   end
+
+  def textual_refresh_date
+    last_refresh_date = @record.last_refresh_date ? @record.last_refresh_date.in_time_zone(Time.zone) : nil
+    {:label => _("Last Refresh Date"), :value => last_refresh_date}
+  end
 end
