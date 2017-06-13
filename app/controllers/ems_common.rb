@@ -963,13 +963,13 @@ module EmsCommon
           ems.send(task.to_sym) if ems.respond_to?(task)    # Run the task
         rescue => bang
           add_flash(_("%{model} \"%{name}\": Error during '%{task}': %{error_message}") %
-            {:model => model.to_s, :name => ems_name, :task => task, :error_message => bang.message}, :error)
+            {:model => ui_lookup(:table => @table_name), :name => ems_name, :task => _(task.titleize), :error_message => bang.message}, :error)
           AuditEvent.failure(:userid => session[:userid], :event => "#{@table_name}_#{task}",
             :message      => _("%{name}: Error during '%{task}': %{message}") %
                           {:name => ems_name, :task => task, :message => bang.message},
             :target_class => model.to_s, :target_id => id)
         else
-          add_flash(_("%{model} \"%{name}\": %{task} successfully initiated") % {:model => model.to_s, :name => ems_name, :task => task})
+          add_flash(_("%{model} \"%{name}\": %{task} successfully initiated") % {:model => ui_lookup(:table => @table_name), :name => ems_name, :task => _(task.titleize)})
           AuditEvent.success(:userid => session[:userid], :event => "#{@table_name}_#{task}",
                              :message      => _("%{name}: '%{task}' successfully initiated") % {:name => ems_name, :task => task},
                              :target_class => model.to_s, :target_id => id)
