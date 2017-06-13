@@ -1,5 +1,5 @@
 describe('middlewareTopologyController', function () {
-  var scope, $controller, $httpBackend;
+  var scope, $controller, $httpBackend, topologyService;
   var mock_data = getJSONFixture('middleware_topology_response.json');
 
   var mw_manager = {
@@ -18,9 +18,33 @@ describe('middlewareTopologyController', function () {
       "name": "Local",
       "kind": "MiddlewareServer",
       "miq_id": 1,
-      "status": "Unknown",
+      "status": "Running",
       "display_kind": "MiddlewareServer",
       "icon": "vendor-wildfly"
+    }
+  };
+
+  var mw_server_starting = {
+    id: "MiddlewareServer1", item: {
+      "status": "Starting"
+    }
+  };
+
+  var mw_server_reload = {
+    id: "MiddlewareServer1", item: {
+      "status": "Reload required"
+    }
+  };
+
+  var mw_server_down = {
+    id: "MiddlewareServer1", item: {
+      "status": "Down"
+    }
+  };
+
+  var mw_server_unknown = {
+    id: "MiddlewareServer1", item: {
+      "status": "Unknown"
     }
   };
 
@@ -30,8 +54,22 @@ describe('middlewareTopologyController', function () {
       "name": "hawkular-command-gateway-war.war",
       "kind": "MiddlewareDeployment",
       "miq_id": 1,
-      "status": "Unknown",
+      "status": "Enabled",
       "display_kind": "MiddlewareDeploymentWar"
+    }
+  };
+
+  var mw_deployment_disabled = {
+    id: "MiddlewareDeployment1",
+    item: {
+      "status": "Disabled",
+    }
+  };
+
+  var mw_deployment_unknown = {
+    id: "MiddlewareDeployment1",
+    item: {
+      "status": "Unknown",
     }
   };
 
@@ -92,14 +130,15 @@ describe('middlewareTopologyController', function () {
 
   beforeEach(module('ManageIQ'));
 
-  beforeEach(inject(function (_$httpBackend_, $rootScope, _$controller_, $location) {
+  beforeEach(inject(function (_$httpBackend_, $rootScope, _$controller_, $location, _topologyService_) {
     spyOn($location, 'absUrl').and.returnValue('/middleware_topology/show');
     scope = $rootScope.$new();
+    topologyService = _topologyService_;
 
     $httpBackend = _$httpBackend_;
     $httpBackend.when('GET', '/middleware_topology/data').respond(mock_data);
     $controller = _$controller_('middlewareTopologyController',
-      {$scope: scope});
+      {$scope: scope, topologyService: _topologyService_});
     $httpBackend.flush();
   }));
 
@@ -171,4 +210,18 @@ describe('middlewareTopologyController', function () {
     });
   });
 
+  describe('topologyService renders right colors', function () {
+    it('for deployments', function() {
+      expect(topologyService.getItemStatusClass(mw_deployment)).toEqual('success');
+      expect(topologyService.getItemStatusClass(mw_deployment_disabled)).toEqual('warning');
+      expect(topologyService.getItemStatusClass(mw_deployment_unknown)).toEqual('unknown');
+    });
+    it('for servers', function() {
+      expect(topologyService.getItemStatusClass(mw_server)).toEqual('success');
+      expect(topologyService.getItemStatusClass(mw_server_down)).toEqual('error');
+      expect(topologyService.getItemStatusClass(mw_server_starting)).toEqual('information');
+      expect(topologyService.getItemStatusClass(mw_server_reload)).toEqual('warning');
+      expect(topologyService.getItemStatusClass(mw_server_unknown)).toEqual('unknown');
+    });
+  });
 });

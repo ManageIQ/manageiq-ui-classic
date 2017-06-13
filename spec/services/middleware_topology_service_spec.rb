@@ -13,29 +13,34 @@ describe MiddlewareTopologyService do
     subject { middleware_topology_service.build_topology }
 
     let(:ems_hawkular) { FactoryGirl.create(:ems_hawkular) }
-    let(:mw_server) do
+    let!(:mw_server) do
       FactoryGirl.create(:hawkular_middleware_server,
                          :name                  => 'Local',
                          :feed                  => '70c798a0-6985-4f8a-a525-012d8d28e8a3',
                          :ems_ref               => long_id_0,
                          :nativeid              => 'Local~~',
-                         :ext_management_system => ems_hawkular)
+                         :ext_management_system => ems_hawkular,
+                         :properties            => { 'Calculated Server State' => 'running' })
+    end
+
+    before do
+      allow(middleware_topology_service).to receive(:retrieve_providers).and_return([ems_hawkular])
     end
 
     it "topology contains the expected structure and content" do
-      allow(middleware_topology_service).to receive(:retrieve_providers).and_return([ems_hawkular])
-
       mw_deployment1 = MiddlewareDeployment.create(:ext_management_system => ems_hawkular,
                                                    :middleware_server     => mw_server,
                                                    :ems_ref               => long_id_2,
                                                    :name                  => "hawkular-wildfly-agent-download.war",
-                                                   :nativeid              => long_id_4)
+                                                   :nativeid              => long_id_4,
+                                                   :status                => 'Enabled')
 
       mw_deployment2 = MiddlewareDeployment.create(:ext_management_system => ems_hawkular,
                                                    :middleware_server     => mw_server,
                                                    :ems_ref               => long_id_1,
                                                    :name                  => "hawkular-command-gateway-war.war",
-                                                   :nativeid              => long_id_5)
+                                                   :nativeid              => long_id_5,
+                                                   :status                => 'Disabled')
 
       mw_datasource = MiddlewareDatasource.create(:ext_management_system => ems_hawkular,
                                                   :middleware_server     => mw_server,
@@ -60,7 +65,7 @@ describe MiddlewareTopologyService do
 
       expect(subject[:items]).to include(
         "MiddlewareServer" + mw_server.compressed_id.to_s          => {:name         => mw_server.name,
-                                                                       :status       => "Unknown",
+                                                                       :status       => "Running",
                                                                        :kind         => "MiddlewareServer",
                                                                        :display_kind => "MiddlewareServer",
                                                                        :miq_id       => mw_server.id,
@@ -69,7 +74,7 @@ describe MiddlewareTopologyService do
 
       expect(subject[:items]).to include(
         "MiddlewareDeployment" + mw_deployment1.compressed_id.to_s => {:name         => mw_deployment1.name,
-                                                                       :status       => "Unknown",
+                                                                       :status       => "Enabled",
                                                                        :kind         => "MiddlewareDeployment",
                                                                        :display_kind => "MiddlewareDeploymentWar",
                                                                        :miq_id       => mw_deployment1.id}
@@ -77,7 +82,7 @@ describe MiddlewareTopologyService do
 
       expect(subject[:items]).to include(
         "MiddlewareDeployment" + mw_deployment2.compressed_id.to_s => {:name         => mw_deployment2.name,
-                                                                       :status       => "Unknown",
+                                                                       :status       => "Disabled",
                                                                        :kind         => "MiddlewareDeployment",
                                                                        :display_kind => "MiddlewareDeploymentWar",
                                                                        :miq_id       => mw_deployment2.id}
@@ -111,6 +116,20 @@ describe MiddlewareTopologyService do
          :target => "MiddlewareDatasource" + mw_datasource.compressed_id.to_s},
         {:source => "MiddlewareServer" + mw_server.compressed_id.to_s,
          :target => "MiddlewareMessaging" + mw_messaging.compressed_id.to_s}
+      )
+    end
+
+    it "topology renders unknown status if server state is not set" do
+      mw_server.properties = nil
+      mw_server.save!
+
+      expect(subject[:items]).to include(
+        "MiddlewareServer" + mw_server.compressed_id.to_s => {:name         => mw_server.name,
+                                                              :status       => "Unknown",
+                                                              :kind         => "MiddlewareServer",
+                                                              :display_kind => "MiddlewareServer",
+                                                              :miq_id       => mw_server.id,
+                                                              :icon         => match(/vendor-wildfly/)}
       )
     end
   end

@@ -56,7 +56,12 @@ class MiddlewareTopologyService < TopologyService
       data[:icon] = ActionController::Base.helpers.image_path(entity.decorate.try(:fileicon))
     end
 
-    if entity.kind_of?(Vm)
+    case entity
+    when MiddlewareServer
+      data[:status] = entity.properties['Calculated Server State'].underscore.humanize if entity.properties['Calculated Server State']
+    when MiddlewareDeployment
+      data[:status] = entity.status.capitalize if entity.status
+    when Vm
       data[:status] = entity.power_state.capitalize
       data[:provider] = entity.ext_management_system.name
     end
