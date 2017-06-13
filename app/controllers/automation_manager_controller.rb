@@ -21,6 +21,7 @@ class AutomationManagerController < ApplicationController
 
   CM_X_BUTTON_ALLOWED_ACTIONS = {
     'configscript_service_dialog' => :configscript_service_dialog,
+    'automation_manager_tag' => :automation_manager_tag
   }.freeze
 
   def self.model_to_name(provmodel)

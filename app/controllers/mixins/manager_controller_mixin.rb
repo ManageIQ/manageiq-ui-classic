@@ -286,6 +286,11 @@ module Mixins
     private
 
     def replace_right_cell(options = {})
+      if @in_a_form && @refresh_partial
+        presenter = ExplorerPresenter.new()
+        presenter.update(:main_div, r[:partial => @refresh_partial])
+        render :json => presenter.for_render
+      end
       replace_trees = options[:replace_trees]
       return if @in_a_form
       @explorer = true

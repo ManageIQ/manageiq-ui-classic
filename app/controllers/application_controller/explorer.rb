@@ -54,7 +54,7 @@ module ApplicationController::Explorer
     'live_migrate' => :s2, 'attach'           => :s2, 'detach'          => :s2,
     'evacuate'     => :s2, 'service_dialog'   => :s2, 'transform'       => :s2,
     'associate_floating_ip'    => :s2,
-    'disassociate_floating_ip' => :s2,
+    'disassociate_floating_ip' => :s2,"manager_provider_configured_system_tag" => :s2,
 
     # specials
     'perf'         => :show,
@@ -66,7 +66,7 @@ module ApplicationController::Explorer
   def x_button
     model, action = pressed2model_action(params[:pressed])
 
-    allowed_models = %w(common image instance vm miq_template provider storage configscript infra_networking)
+    allowed_models = %w(common image instance vm miq_template provider storage configscript infra_networking automation_manager_provider)
     raise ActionController::RoutingError.new('invalid button action') unless
       allowed_models.include?(model)
 
@@ -94,6 +94,8 @@ module ApplicationController::Explorer
           send(method, Storage)
         when 'infra_networking'
           send(method, Switch)
+        when 'automation_manager_provider'
+          send(method)
         else
           send(method, VmOrTemplate)
         end

@@ -169,6 +169,7 @@ Rails.application.routes.draw do
         form_fields
         show
         x_show
+        x_button
         show_list
         tagging_edit
       ),

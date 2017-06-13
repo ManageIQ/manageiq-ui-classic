@@ -25,6 +25,10 @@ module ApplicationController::Tags
     tagging_edit('Container')
   end
 
+  def automation_manager_provider_tag
+    tagging_edit('ManageIQ::Providers::AnsibleTower::AutomationManager')
+  end
+
   alias_method :image_tag, :tagging_edit
   alias_method :instance_tag, :tagging_edit
   alias_method :vm_tag, :tagging_edit
