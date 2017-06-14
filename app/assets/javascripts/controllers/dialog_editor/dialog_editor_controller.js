@@ -65,9 +65,8 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
     // save the dialog
     API.post(
       '/api/service_dialogs/'
-      + DialogEditor.getDialogId()
-      + '?attributes='
-      + angular.toJson({action: action, resource: dialogData})
+      + DialogEditor.getDialogId(),
+      {action: action, resource: dialogData}
     ).then(saveSuccess, saveFailure);
   }
 
