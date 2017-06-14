@@ -186,7 +186,7 @@ class SecurityGroupController < ApplicationController
         end
 
         params["firewall_rules"].values.each do |rule|
-          if rule["id"].empty?
+          if rule["id"] && rule["id"].empty?
             create_rule(rule)
           elsif rule["deleted"]
             delete_rule(rule["ems_ref"])

@@ -23,7 +23,7 @@
       %tr{"ng-repeat" => "fw_rule in vm.securityGroupModel.firewall_rules",
           "ng-form"   => "rowForm",
           "ng-if"     => "!fw_rule.deleted"}
-        %td.table-view-pf-select
+        %td.table-view-pf-select{"ng-class" => "{'has-error': angularForm.rowForm.direction.$error.required && vm.securityGroupModel.firewall_rules[$index].direction === ''}"}
           %select{"name"                        => "direction",
             "data-width"                  => "auto",
             "ng-model"                    => "vm.securityGroupModel.firewall_rules[$index].direction",
