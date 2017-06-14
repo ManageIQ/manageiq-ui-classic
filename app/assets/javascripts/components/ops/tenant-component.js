@@ -38,27 +38,6 @@ function tenantFormController(API, miqService) {
       vm.afterGet = true;
       vm.modelCopy = angular.copy( vm.tenantModel );
     }
-
-    vm.resetClicked = function(angularForm) {
-      vm.tenantModel = angular.copy(vm.modelCopy );
-      angularForm.$setUntouched(true);
-      angularForm.$setPristine(true);
-      miqService.miqFlash("warn", __("All changes have been reset"));
-    };
-
-    vm.cancelClicked = function(angularForm) {
-      tenantEditButtonClicked('cancel');
-      angularForm.$setPristine(true);
-    };
-
-    vm.saveClicked = function(angularForm) {
-      tenantEditButtonClicked('save', true);
-      angularForm.$setPristine(true);
-    };
-
-    vm.addClicked = function(angularForm) {
-      vm.saveClicked(angularForm);
-    };
   };
 
   // private functions
