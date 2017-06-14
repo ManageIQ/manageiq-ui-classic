@@ -14,7 +14,7 @@ ManageIQ.angular.app.controller('cloudNetworkFormController', ['cloudNetworkForm
       vm.cloudNetworkModel.external_facing = false;
       vm.cloudNetworkModel.shared = false;
       vm.cloudNetworkModel.vlan_transparent = false;
-      vm.afterGet = false;
+      vm.afterGet = true;
       vm.modelCopy = angular.copy( vm.cloudNetworkModel );
     } else {
       miqService.sparkleOn();

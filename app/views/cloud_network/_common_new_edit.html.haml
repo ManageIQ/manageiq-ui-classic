@@ -1,7 +1,7 @@
 %h3
   = _('Network Information')
 .form-horizontal
-  .form-group
+  .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
     %label.col-md-2.control-label
       = _('Network Name')
     .col-md-8
@@ -9,8 +9,10 @@
                           :name          => "name",
                           'ng-model'     => "vm.cloudNetworkModel.name",
                           'ng-maxlength' => 128,
-                          :required      => true,
-                          :checkchange   => true}
+                          "required"     => true}
+      %span.help-block{"ng-show" => "angularForm.name.$error.required"}
+        = _("Required")
+
   .form-group
     %label.control-label.col-md-2{"for" => "cloud_network_external_facing"}
       = _('External Router')
@@ -20,7 +22,6 @@
              "type"        => "checkbox",
              "id"          => "cloud_network_external_facing",
              "name"        => "external_facing",
-             "checkchange" => "true",
              "ng-model"    => "vm.cloudNetworkModel.external_facing"}
   .form-group
     %label.control-label.col-md-2{"for" => "cloud_network_enabled"}
@@ -31,7 +32,6 @@
              "type"        => "checkbox",
              "id"          => "cloud_network_enabled",
              "name"        => "enabled",
-             "checkchange" => "true",
              "ng-model"    => "vm.cloudNetworkModel.enabled"}
   .form-group
     %label.control-label.col-md-2{"for" => "cloud_network_shared"}
@@ -42,5 +42,4 @@
              "type"        => "checkbox",
              "id"          => "cloud_network_shared",
              "name"        => "shared",
-             "checkchange" => "true",
              "ng-model"    => "vm.cloudNetworkModel.shared"}

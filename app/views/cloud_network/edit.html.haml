@@ -1,9 +1,11 @@
-%form#form_div{:name => "angularForm",
-   "ng-controller" => "cloudNetworkFormController as vm",
+%form#form_div{:name           => "angularForm",
+   "form-changed"  => true,
    "miq-form"      => true,
-   "model"         => "vm.securityGroupModel",
+   "model"         => "vm.cloudNetworkModel",
    "model-copy"    => "vm.modelCopy",
-   "ng-cloak"      => ""}
+   "ng-cloak"      => "",
+   "ng-controller" => "cloudNetworkFormController as vm",
+   "ng-show"       => "vm.afterGet"}
 
   = render :partial => "layouts/flash_msg"
   = render :partial => "common_new_edit"
@@ -17,11 +19,9 @@
       .col-md-8
         %input.form-control{:type          => "text",
                             :name          => "provider_network_type",
-                            'ng-model'     => "vm.cloudNetworkModel.provider_network_type",
-                            'ng-maxlength' => 128,
-                            :miqrequired   => true,
-                            :checkchange   => true,
-                            'ng-readonly'  => "!newRecord"}
+                            "ng-model"     => "vm.cloudNetworkModel.provider_network_type",
+                            "ng-maxlength" => 128,
+                            "ng-readonly"  => "!newRecord"}
   %h3
     = _('Placement')
   .form-horizontal
@@ -31,11 +31,9 @@
       .col-md-8
         %input.form-control{:type          => "text",
                             :name          => "cloud_tenant_name",
-                            'ng-model'     => "vm.cloudNetworkModel.cloud_tenant_name",
-                            'ng-maxlength' => 128,
-                            :miqrequired   => true,
-                            :checkchange   => true,
-                            'ng-readonly'  => "!newRecord"}
+                            "ng-maxlength" => 128,
+                            "ng-model"     => "vm.cloudNetworkModel.cloud_tenant_name",
+                            "ng-readonly"  => "!newRecord"}
 
   = render :partial => "layouts/angular/generic_form_buttons"
 
