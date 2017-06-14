@@ -215,67 +215,72 @@ module ApplicationController::CiProcessing
     ui_lookup(:models => self.class.model.name)
   end
 
+  def check_retire_requirements(selected_items)
+    # FIXME: should check model, not controller
+    return true if %w(orchestration_stack service).include?(controller_name)
+
+    if VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_retire? }
+      javascript_flash(:text => _("Retire does not apply to selected item"), :severity => :error, :scroll_top => true)
+      return false
+    end
+    true
+  end
+
+  def check_scan_requirements(selected_items)
+    unless VmOrTemplate.batch_operation_supported?('smartstate_analysis', selected_items)
+      render_flash_not_applicable_to_model('Smartstate Analysis', ui_lookup(:tables => "vm_or_template"))
+      return false
+    end
+    true
+  end
+
   # Common item button handler routines
   def vm_button_operation(method, display_name, partial_after_single_selection = nil)
-    selected_items = []
     klass = get_rec_cls
-    # Either a list or coming from a different controller (eg from host screen, go to its selected_items)
+
+    # Either a list or coming from a different controller (e.g. from host screen, go to its vms)
     if @lastaction == "show_list" ||
-       !%w(orchestration_stack service vm_cloud vm_infra vm miq_template vm_or_template).include?(
-         request.parameters["controller"]) # showing a list
+       !%w(orchestration_stack service vm_cloud vm_infra vm miq_template vm_or_template).include?(controller_name)
 
-      # FIXME retrieving vms from DB two times
+      # FIXME: retrieving vms from DB two times
       selected_items = find_checked_ids_with_rbac(klass)
-      if method == 'retire_now' &&
-         !%w(orchestration_stack service).include?(request.parameters["controller"]) &&
-         VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_retire? }
-        add_flash(_("Retire does not apply to selected %{model}") %
-          {:model => ui_lookup(:table => "miq_template")}, :error)
-        javascript_flash(:scroll_top => true)
-        return
-      end
 
-      if method == 'scan' && !VmOrTemplate.batch_operation_supported?('smartstate_analysis', selected_items)
-        render_flash_not_applicable_to_model('Smartstate Analysis', ui_lookup(:tables => "vm_or_template"))
-        return
-      end
+      return if method == 'retire_now' && !check_retire_requirements(selected_items)
+      return if method == 'scan' && !check_scan_requirements(selected_items)
 
       if selected_items.empty?
-        add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => request.parameters["controller"]), :task => display_name}, :error)
-      else
-        process_objects(selected_items, method)
+        add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => controller_name), :task => display_name}, :error)
+        return
       end
 
-      if @lastaction == "show_list" # In the controller, refresh show_list, else let the other controller handle it
+      process_objects(selected_items, method)
+
+      # In non-explorer case, render the list (filling in @view).
+      if @lastaction == "show_list"
         show_list unless @explorer
         @refresh_partial = "layouts/gtl"
       end
 
     else # showing 1 item
       if params[:id].nil? || klass.find_by_id(params[:id]).nil?
-        add_flash(_("%{record} no longer exists") %
-          {:record => ui_lookup(:table => request.parameters["controller"])}, :error)
+        add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => controller_name)}, :error)
         show_list unless @explorer
         @refresh_partial = "layouts/gtl"
-      else
+        return
+      end
 
-        selected_items.push(find_id_with_rbac(klass, params[:id]))
-        process_objects(selected_items, method) unless selected_items.empty?
+      selected_items = [find_id_with_rbac(klass, params[:id])]
+      process_objects(selected_items, method) unless selected_items.empty?
 
-        # TODO: tells callers to go back to show_list because this VM may be gone
-        # Should be refactored into calling show_list right here
-        if method == 'destroy'
-          @single_delete = true unless flash_errors?
-        end
+      # Tells callers to go back to show_list because this item may be gone.
+      @single_delete = method == 'destroy' && !flash_errors?
 
-        # For Snapshot Trees
-        if partial_after_single_selection && !@explorer
-          show
-          @refresh_partial = partial_after_single_selection
-        end
+      # For Snapshot Trees
+      if partial_after_single_selection && !@explorer
+        show
+        @refresh_partial = partial_after_single_selection
       end
     end
-    selected_items.count
   end
 
   def process_cloud_object_storage_buttons(pressed)
@@ -329,7 +334,9 @@ module ApplicationController::CiProcessing
   end
 
   def get_rec_cls
-    case request.parameters["controller"]
+    # FIXME: the specs for ci_processing rely on setting (and testing) request.parameters['controller'].
+    # That is wrong and needs to be fixed.
+    case request.parameters["controller"] || controller_name
     when "miq_template"
       MiqTemplate
     when "orchestration_stack"
