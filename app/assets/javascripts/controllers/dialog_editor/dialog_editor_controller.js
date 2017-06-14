@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('dialogEditorController', ['API', 'DialogEditor', 'dialogId', function(API, DialogEditor, dialogId) {
+ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'miqService', 'DialogEditor', 'dialogId', function($window, API, miqService, DialogEditor, dialogId) {
   var vm = this;
 
   if (dialogId === 'new') {
@@ -30,6 +30,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['API', 'DialogEditor'
   vm.dismissChanges = dismissChanges;
 
   function dismissChanges() {
+    getBack(__("Dialog editing was canceled by the user."), true);
   }
 
   function saveDialogDetails() {
@@ -61,7 +62,6 @@ ManageIQ.angular.app.controller('dialogEditorController', ['API', 'DialogEditor'
         dialogData.content.dialog_tabs.push(tab);
       });
     }
-
     // save the dialog
     API.post(
       '/api/service_dialogs/'
@@ -72,8 +72,26 @@ ManageIQ.angular.app.controller('dialogEditorController', ['API', 'DialogEditor'
   }
 
   function saveSuccess() {
+    getBack(vm.dialog.content[0].label + __(' was saved'), false, false);
   }
 
   function saveFailure() {
+    miqService.miqFlash("error", __('There was an error editing this dialog.'));
   }
+
+  // FIXME: @himdel: method copied from other place -> maybe extract somewhere?
+  function getBack(message, warning, error) {
+    var url = '/miq_ae_customization/explorer';
+    var flash = { message: message };
+
+    if (warning) {
+      flash.level = 'warning';
+    } else if (error) {
+      flash.level = 'error';
+    }
+
+    miqFlashLater(flash);
+    $window.location.href = url;
+  }
+
 }]);
