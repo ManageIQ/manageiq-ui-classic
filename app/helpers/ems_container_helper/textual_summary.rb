@@ -103,21 +103,17 @@ module EmsContainerHelper::TextualSummary
   end
 
   def textual_group_endpoints
-    return unless @record.connection_configurations.hawkular
+    endpoints = @record.endpoints.where.not(:role => 'default')
+    return if endpoints.nil?
 
-    TextualGroup.new(
-      _("Endpoints"),
+    endpoint_groups = endpoints.map do |e|
       [
-        {
-          :label => _('Hawkular Host Name'),
-          :value => @record.connection_configurations.hawkular.endpoint.hostname
-        },
-        {
-          :label => _('Hawkular API Port'),
-          :value => @record.connection_configurations.hawkular.endpoint.port
-        }
+        {:label => _("%{role} Host Name") % {:role => e.role.capitalize}, :value => e.hostname},
+        {:label => _("%{role} API Port") % {:role => e.role.capitalize}, :value => e.port}
       ]
-    )
+    end
+
+    TextualGroup.new(_("Endpoints"), endpoint_groups.flatten)
   end
 
   def textual_group_miq_custom_attributes
