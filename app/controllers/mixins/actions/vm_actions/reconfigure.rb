@@ -23,10 +23,8 @@ module Mixins
 
         def reconfigure_update
           case params[:button]
-          when "cancel"
-            handle_cancel_button
-          when "submit"
-            handle_submit_button
+          when "cancel" then handle_cancel_button
+          when "submit" then handle_submit_button
           end
         end
 
@@ -230,12 +228,9 @@ module Mixins
         # => {"a" => true, "b" => false, "c" => "42"}
         def eval_if_bool_string(s)
           case s
-          when 'true'
-            true
-          when 'false'
-            false
-          else
-            s
+          when 'true'  then true
+          when 'false' then false
+          else              s
           end
         end
 
