@@ -11,11 +11,17 @@ describe MiddlewareServerGroupController do
   end
 
   describe '#show' do
-    let(:group) { FactoryGirl.create(:hawkular_middleware_server_group, :properties => {}, :middleware_domain => nil) }
+    let(:group) do
+      FactoryGirl.create(:hawkular_middleware_server_group, :properties        => {},
+                                                            :middleware_domain => nil)
+    end
+
     let(:server) do
       FactoryGirl.create(:hawkular_middleware_server, :properties              => {},
-                                                      :middleware_server_group => group)
+                                                      :middleware_server_group => group,
+                                                      :feed                    => '')
     end
+
     before do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryGirl.create(:user)
