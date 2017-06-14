@@ -1,10 +1,10 @@
 %form#form_div{:name           => "angularForm",
    "ng-controller" => "securityGroupFormController as vm",
    "miq-form"      => true,
+   "form-changed"  => true,
    "model"         => "vm.securityGroupModel",
    "model-copy"    => "vm.modelCopy",
-   "ng-cloak"      => "",
-   "ng-show"       => "vm.afterGet"}
+   "ng-cloak"      => ""}
 
   = render :partial => "layouts/flash_msg"
   = render :partial => "common_new_edit"
@@ -22,6 +22,7 @@
                             "ng-maxlength" => 128,
                             :readonly      => "true"}
 
+  = render :partial => 'fw_rules'
   = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript

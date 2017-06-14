@@ -1,10 +1,10 @@
 %form#form_div{:name           => "angularForm",
-   "ng-controller" => "securityGroupFormController as vm",
+   "form-changed"  => true,
    "miq-form"      => true,
    "model"         => "vm.securityGroupModel",
    "model-copy"    => "vm.modelCopy",
    "ng-cloak"      => "",
-   "ng-show"       => "vm.afterGet"}
+   "ng-controller" => "securityGroupFormController as vm"}
 
   = render :partial => "layouts/flash_msg"
 

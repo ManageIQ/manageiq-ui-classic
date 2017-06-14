@@ -9,8 +9,7 @@
                           :name          => "name",
                           "ng-model"     => "vm.securityGroupModel.name",
                           "ng-maxlength" => 128,
-                          :required      => true,
-                          :checkchange   => true}
+                          "required"     => true}
       %span.help-block{"ng-show" => "angularForm.name.$error.required"}
         = _("Required")
 
@@ -21,5 +20,4 @@
       %input.form-control{:type          => "text",
                           :name          => "description",
                           "ng-model"     => "vm.securityGroupModel.description",
-                          "ng-maxlength" => 128,
-                          :checkchange   => true}
+                          "ng-maxlength" => 128}
