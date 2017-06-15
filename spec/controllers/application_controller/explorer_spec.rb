@@ -38,13 +38,16 @@ describe VmInfraController do
       let!(:ems) { FactoryGirl.create(:ems_vmware, :ems_folders => [ems_folder]) }
       let(:user)       { FactoryGirl.create(:user_admin) }
 
-      it "properly calls RBAC" do
+      before do
         EvmSpecHelper.create_guid_miq_server_zone
-
+        
         user.current_group.entitlement = Entitlement.create!
         user.current_group.entitlement.set_managed_filters([["/managed/service_level/gold"]])
         user.current_group.save
         login_as user
+      end
+
+      it "properly calls RBAC" do
         expect(Rbac.filtered([ems_folder], :match_via_descendants => "VmOrTemplate")).to(
           eq([ems_folder]))
       end
