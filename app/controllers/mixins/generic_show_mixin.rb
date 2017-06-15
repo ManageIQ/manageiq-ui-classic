@@ -181,6 +181,7 @@ module Mixins
       view_options = {:parent => @record}
       view_options[:association] = options[:association] if options.key?(:association)
       view_options[:parent_method] = options[:parent_method] if options.key?(:parent_method)
+      view_options[:where_clause] = options[:where_clause] if options.key?(:where_clause)
 
       @view, @pages = get_view(model, view_options)
       @showtype = @display
