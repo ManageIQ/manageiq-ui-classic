@@ -101,7 +101,7 @@
                                       "data-miq_sparkle_off" => true,
                                       "data-click_url" => {:url => url_for_only_path(:action => 'policy_edit',
                                                                            :button => action,
-                                                                           :id => @policy)}.to_json}           
+                                                                           :id => @policy)}.to_json}
                 %i.fa.fa-lg.hidden-xs.hidden-sm{:class => arrow_style}
                 %i.fa.fa-lg.fa-rotate-90.hidden-md.hidden-lg{:class => arrow_style}
             .spacer
@@ -157,14 +157,20 @@
         - if @edit[:typ] == "events"
           %h3= _("Event Selection")
           - @edit[:allevents].keys.sort.each do |k|
-            %fieldset
-              %h3= h(k)
-              - @edit[:allevents][k].sort_by(&:first).each do |e|
-                %div{:style => "width: 300px; height: 18px; float:left; padding: 0px 5px 0px 0px;"}
-                  %label
-                    = check_box_tag("event_#{e.last}", "1", @edit[:new][:events].include?(e.last) ? true : false,
-                      "data-miq_observe_checkbox" => {:url => url}.to_json)
+            .form-horizontal
+              .form-group
+                %label.col-md-3.control-label
+                  = h(k)
+                .col-md-8
+                  - @edit[:allevents][k].sort_by(&:first).each do |e|
+                    - checked = @edit[:new][:events].include?(e.last) ? true : false
+                    = check_box_tag("event_#{e.last}", 'true', checked, 
+                                    :class => "bootstrap-switch-mini", 
+                                    :data => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'})
                     = h(e.first)
+                    :javascript
+                      miqInitBootstrapSwitch("event_#{e.last}", "#{url}")
+                    %br
       - else
         %h3= _("Events")
         - if @policy_events.empty?
