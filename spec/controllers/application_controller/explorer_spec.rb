@@ -34,12 +34,13 @@ describe VmInfraController do
     end
 
     context "#rbac_filtered_objects" do
+      let(:ems_folder) { FactoryGirl.create(:ems_folder) }
+      let!(:ems) { FactoryGirl.create(:ems_vmware, :ems_folders => [ems_folder]) }
+      let(:user)       { FactoryGirl.create(:user_admin) }
+
       it "properly calls RBAC" do
         EvmSpecHelper.create_guid_miq_server_zone
-        ems_folder = FactoryGirl.create(:ems_folder)
-        ems = FactoryGirl.create(:ems_vmware, :ems_folders => [ems_folder])
 
-        user = FactoryGirl.create(:user_admin)
         user.current_group.entitlement = Entitlement.create!
         user.current_group.entitlement.set_managed_filters([["/managed/service_level/gold"]])
         user.current_group.save
