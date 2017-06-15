@@ -1,4 +1,5 @@
-require 'rails/all'
+require 'rails/engine'
+require 'sprockets/railtie'
 
 # Since we serve our assets directly through apache on an appliance after they
 # are pre-compiled, there is no need to have sass/coffeescript loaded in the
