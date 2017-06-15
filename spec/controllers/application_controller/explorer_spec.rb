@@ -37,6 +37,7 @@ describe VmInfraController do
       let(:ems_folder) { FactoryGirl.create(:ems_folder) }
       let!(:ems) { FactoryGirl.create(:ems_vmware, :ems_folders => [ems_folder]) }
       let(:user)       { FactoryGirl.create(:user_admin) }
+      let(:vm)         { FactoryGirl.create(:vm_vmware, :ext_management_system => ems) }
 
       before do
         EvmSpecHelper.create_guid_miq_server_zone
@@ -44,9 +45,13 @@ describe VmInfraController do
         user.current_group.entitlement = Entitlement.create!
         user.current_group.entitlement.set_managed_filters([["/managed/service_level/gold"]])
         user.current_group.save
+        
+        ems_folder.add_child(vm)
       end
 
       it "properly calls RBAC" do
+        vm.tag_with('/managed/service_level/gold', :ns => '*')
+
         expect(Rbac.filtered(EmsFolder, :match_via_descendants => "VmOrTemplate", :user => user)).to eq([ems_folder])
       end
     end
