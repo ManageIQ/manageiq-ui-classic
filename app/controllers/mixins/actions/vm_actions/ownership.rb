@@ -130,6 +130,7 @@ module Mixins
           klass = get_class_from_controller_param(params[:controller])
           record = klass.find(ownership_items[0])
           user = record.evm_owner if ownership_items.length == 1
+          binding.pry
           @user = user ? user.id.to_s : ''
           @groups = {}
           group = record.miq_group if ownership_items.length == 1

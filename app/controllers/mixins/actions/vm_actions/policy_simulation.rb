@@ -12,24 +12,22 @@ module Mixins
         #
         def polsimvms
           assert_privileges(params[:pressed])
-          vms = find_checked_ids_with_rbac(VmOrTemplate)
-          if vms.blank?
-            vms = [find_id_with_rbac(VmOrTemplate, params[:id])]
-          end
-          if vms.length < 1
+          records = find_records_with_rbac(VmOrTemplate, checked_or_params)
+
+          if records.length < 1
             add_flash(_("At least 1 %{model} must be selected for Policy Simulation") %
               {:model => ui_lookup(:model => "Vm")}, :error)
             @refresh_div = "flash_msg_div"
             @refresh_partial = "layouts/flash_msg"
           else
-            session[:tag_items] = vms       # Set the array of tag items
+            session[:tag_items] = records       # Set the array of tag items
             session[:tag_db] = VmOrTemplate # Remember the DB
             if @explorer
               @edit ||= {}
               @edit[:explorer] = true       # Since no @edit, create @edit and save explorer to use while building url for vms in policy sim grid
-              @edit[:pol_items] = vms
+              @edit[:pol_items] = records
               session[:edit] = @edit
-              policy_sim
+              policy_sim(records)
               @refresh_partial = "layouts/policy_sim"
             else
               javascript_redirect :controller => 'vm', :action => 'policy_sim' # redirect to build the policy simulation screen

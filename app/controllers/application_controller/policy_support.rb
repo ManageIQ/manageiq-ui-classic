@@ -73,7 +73,7 @@ module ApplicationController::PolicySupport
   end
 
   # Perform policy simulation for a set of objects
-  def policy_sim
+  def policy_sim(records = [])
     if request.xml_http_request?  # Ajax request means in explorer
       @explorer = true
       @edit ||= {}
@@ -84,7 +84,7 @@ module ApplicationController::PolicySupport
     drop_breadcrumb(:name => _("Policy Simulation"),
                     :url  => "/#{request.parameters["controller"]}/policy_sim?continue=true")
     session[:policies] = {} unless params[:continue]  # Clear current policies, unless continuing previous simulation
-    policy_sim_build_screen
+    policy_sim_build_screen(records)
 
     if @explorer
       @record = @tagitems.first
@@ -246,9 +246,10 @@ module ApplicationController::PolicySupport
   end
 
   # Build the policy simulation screen
-  def policy_sim_build_screen
+  def policy_sim_build_screen(records = [])
     @edit ||= {}
-    @tagitems = session[:tag_db].find(session[:tag_items]).sort_by(&:name)  # Get the db records that are being tagged
+    @tagitems = records ? records : session[:tag_db].find(session[:tag_items]) # Get the db records that are being tagged
+    @tagitems = @tagitems.sort_by(&:name)
     @edit[:pol_items] = session[:tag_items]
     @catinfo = {}
     @lastaction = "policy_sim"
