@@ -47,7 +47,7 @@ describe VmInfraController do
       end
 
       it "properly calls RBAC" do
-        expect(Rbac.filtered([ems_folder], :match_via_descendants => "VmOrTemplate", :user => user)).to(
+        expect(Rbac.filtered(EmsFolder, :match_via_descendants => "VmOrTemplate", :user => user)).to(
           eq([ems_folder]))
       end
     end
