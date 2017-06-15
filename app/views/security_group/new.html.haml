@@ -1,40 +1,50 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "securityGroupFormController"}
+%form#form_div{:name           => "angularForm",
+   "ng-controller" => "securityGroupFormController as vm",
+   "miq-form"      => true,
+   "model"         => "vm.securityGroupModel",
+   "model-copy"    => "vm.modelCopy",
+   "ng-cloak"      => "",
+   "ng-show"       => "vm.afterGet"}
+
   = render :partial => "layouts/flash_msg"
+
   %h3
     = _('Network Management Provider')
   .form-horizontal
-    .form-group
+    .form-group{"ng-class" => "{'has-error': angularForm.ems_id.$invalid}"}
       %label.col-md-2.control-label
         = _('Network Manager')
       .col-md-8
         = select_tag("ems_id",
-                      options_for_select([["<#{_('Choose')}>", nil]] + @ems_choices.sort),
-                      "ng-model"                    => "securityGroupModel.ems_id",
-                      "required"                    => "",
-                      :miqrequired                  => true,
-                      :checkchange                  => true,
-                      "ng-change"                   => "filterNetworkManagerChanged(securityGroupModel.ems_id)",
-                      "selectpicker-for-select-tag" => "")
+                     options_for_select([["<#{_('Choose')}>", nil]] + @ems_choices.sort),
+                     "ng-model"   => "vm.securityGroupModel.ems_id",
+                     "ng-change"  => "vm.filterNetworkManagerChanged(vm.securityGroupModel.ems_id)",
+                     "required"   => "",
+                     "pf-select" => true)
+        %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
+          = _("Required")
+
   = render :partial => "common_new_edit"
-  %h3
-    = _('Placement')
+
   .form-horizontal
-    .form-group{"ng-if" => "securityGroupModel.ems_id"}
+    .form-group{"ng-if" => "vm.securityGroupModel.ems_id", "ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}"}
+      %h3
+        = _('Placement')
       %label.col-md-2.control-label
         = _('Cloud Tenant')
       .col-md-8
-        %select{"name"                        => "cloud_tenant_id",
-                "ng-model"                    => "securityGroupModel.cloud_tenant_id",
+        %select{:name                         => "cloud_tenant_id",
+                "ng-model"                    => "vm.securityGroupModel.cloud_tenant_id",
+                "ng-options"                  => "tenant.id as tenant.name for tenant in vm.available_tenants",
+                "pf-select"                   => true,
                 "required"                    => "",
-                :miqrequired                  => true,
-                :checkchange                  => true,
-                'ng-options'                  => 'tenant.id as tenant.name for tenant in available_tenants',
-                'pf-select'                   => true,
                 "selectpicker-for-select-tag" => ""}
           %option{"value" => ""}
             = "<#{_('Choose')}>"
+        %span.help-block{"ng-show" => "angularForm.cloud_tenant_id.$error.required"}
+          = _("Required")
 
-  = render :partial => "layouts/angular/x_edit_buttons_angular"
+  = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript
   ManageIQ.angular.app.value('securityGroupFormId', '#{@security_group.id || "new"}');

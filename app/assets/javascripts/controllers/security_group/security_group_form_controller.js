@@ -1,35 +1,42 @@
-ManageIQ.angular.app.controller('securityGroupFormController', ['$scope', 'securityGroupFormId', 'miqService', 'API', function($scope, securityGroupFormId, miqService, API) {
-  $scope.securityGroupModel = { name: '' };
-  $scope.formId = securityGroupFormId;
-  $scope.afterGet = false;
-  $scope.modelCopy = angular.copy( $scope.securityGroupModel );
-  $scope.model = "securityGroupModel";
+ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFormId', 'miqService', 'API', function(securityGroupFormId, miqService, API) {
+  var vm = this;
 
-  ManageIQ.angular.scope = $scope;
+  var init = function() {
+    vm.securityGroupModel = {
+      name: "",
+      description: "",
+      cloud_tenant_name: "",
+      firewall_rules: [],
+    };
+    vm.formId = securityGroupFormId;
+    vm.model = "securityGroupModel";
+    vm.newRecord = securityGroupFormId === "new";
+    vm.saveable = miqService.saveable;
 
-  if (securityGroupFormId == 'new') {
-    $scope.securityGroupModel.name = "";
-    $scope.securityGroupModel.description = "";
-    $scope.newRecord = true;
-  } else {
-    miqService.sparkleOn();
-    API.get("/api/security_groups/" + securityGroupFormId + "?attributes=cloud_tenant").then(function(data) {
-      $scope.afterGet = true;
-      $scope.securityGroupModel.name = data.name;
-      $scope.securityGroupModel.description = data.description;
-      $scope.securityGroupModel.cloud_tenant_name = data.cloud_tenant.name;
-      $scope.modelCopy = angular.copy( $scope.securityGroupModel );
+    if (vm.newRecord) {
+      vm.afterGet = true;
+      vm.modelCopy = angular.copy( vm.securityGroupModel );
+    } else {
+      miqService.sparkleOn();
+      API.get("/api/security_groups/" + securityGroupFormId + "?attributes=cloud_tenant,firewall_rules").then(function(data) {
+        vm.securityGroupModel.name = data.name;
+        vm.securityGroupModel.description = data.description;
+        vm.securityGroupModel.cloud_tenant_name = data.cloud_tenant.name;
+        vm.securityGroupModel.firewall_rules = data.firewall_rules;
+        vm.afterGet = true;
+        vm.modelCopy = angular.copy( vm.securityGroupModel );
+      }).catch(miqService.handleFailure);
       miqService.sparkleOff();
-    }).catch(miqService.handleFailure);
-  }
-
-  $scope.addClicked = function() {
-    var url = 'create/new' + '?button=add';
-    miqService.miqAjaxButton(url, $scope.securityGroupModel, { complete: false });
+    }
   };
 
-  $scope.cancelClicked = function() {
-    if (securityGroupFormId == 'new') {
+  vm.addClicked = function() {
+    var url = 'create/new' + '?button=add';
+    miqService.miqAjaxButton(url, vm.securityGroupModel, { complete: false });
+  };
+
+  vm.cancelClicked = function() {
+    if (vm.newRecord) {
       var url = '/security_group/create/new' + '?button=cancel';
     } else {
       var url = '/security_group/update/' + securityGroupFormId + '?button=cancel';
@@ -37,18 +44,20 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['$scope', 'secur
     miqService.miqAjaxButton(url);
   };
 
-  $scope.saveClicked = function() {
+  vm.saveClicked = function() {
     var url = '/security_group/update/' + securityGroupFormId + '?button=save';
-    miqService.miqAjaxButton(url, $scope.securityGroupModel, { complete: false });
+    miqService.miqAjaxButton(url, vm.securityGroupModel, { complete: false });
   };
 
-  $scope.resetClicked = function() {
-    $scope.securityGroupModel = angular.copy( $scope.modelCopy );
-    $scope.angularForm.$setPristine(true);
+  vm.resetClicked = function(angularForm) {
+    vm.securityGroupModel = angular.copy( vm.modelCopy );
+    angularForm.$setPristine(true);
     miqService.miqFlash("warn", "All changes have been reset");
   };
 
-  $scope.filterNetworkManagerChanged = miqService.getProviderTenants(function(data) {
-    $scope.available_tenants = data.resources;
+  vm.filterNetworkManagerChanged = miqService.getProviderTenants(function(data) {
+    vm.available_tenants = data.resources;
   });
+
+  init();
 }]);
