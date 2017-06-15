@@ -40,15 +40,14 @@ describe VmInfraController do
 
       before do
         EvmSpecHelper.create_guid_miq_server_zone
-        
+
         user.current_group.entitlement = Entitlement.create!
         user.current_group.entitlement.set_managed_filters([["/managed/service_level/gold"]])
         user.current_group.save
-        login_as user
       end
 
       it "properly calls RBAC" do
-        expect(Rbac.filtered([ems_folder], :match_via_descendants => "VmOrTemplate")).to(
+        expect(Rbac.filtered([ems_folder], :match_via_descendants => "VmOrTemplate", :user => user)).to(
           eq([ems_folder]))
       end
     end
