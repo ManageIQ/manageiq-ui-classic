@@ -101,4 +101,108 @@ module ApplicationHelper::PageLayouts
       show
     ).include?(controller.action_name)
   end
+
+  def center_div_partial
+    if layout_uses_listnav?
+      "layouts/center_div_with_listnav"
+    elsif dashboard_no_listnav?
+      "layouts/center_div_dashboard_no_listnav"
+    else
+      "layouts/center_div_no_listnav"
+    end
+  end
+
+  def inner_layout_present?
+    @inner_layout_present ||=
+      begin
+        @explorer || params[:action] == "explorer" ||
+          (params[:controller] == "chargeback" && params[:action] == "chargeback") ||
+          (params[:controller] == "miq_ae_tools" && (params[:action] == "resolve" || params[:action] == "show")) ||
+          (params[:controller] == "miq_policy" && params[:action] == "rsop") ||
+          (params[:controller] == "miq_capacity")
+      end
+  end
+
+  def simulate?
+    @simulate ||=
+      begin
+        rsop = controller.controller_name == 'miq_policy' && controller.action_name == 'rsop'
+        resolve = controller.controller_name == 'miq_ae_tools' && controller.action_name == 'resolve'
+        planning = controller.controller_name == 'miq_capacity' && controller.action_name == 'planning'
+        rsop || resolve || planning
+      end
+  end
+
+  def saved_report_paging?
+    # saved report doesn't use miq_report object,
+    # need to use a different paging view to page thru a saved report
+    @sb[:pages] && @html && [:reports_tree, :savedreports_tree, :cb_reports_tree].include?(x_active_tree)
+  end
+
+  def show_advanced_search?
+    x_tree && ((tree_with_advanced_search? && !@record) || @show_adv_search)
+  end
+
+  def show_adv_search?
+    show_search = %w(
+      auth_key_pair_cloud
+      availability_zone
+      automation_manager
+      cloud_network
+      cloud_object_store_container
+      cloud_object_store_object
+      cloud_subnet
+      cloud_tenant
+      cloud_volume
+      cloud_volume_backup
+      cloud_volume_snapshot
+      configuration_job
+      container
+      container_build
+      container_group
+      container_image
+      container_image_registry
+      container_node
+      container_project
+      container_replicator
+      container_route
+      container_service
+      container_template
+      ems_cloud
+      ems_cluster
+      ems_container
+      ems_infra
+      ems_middleware
+      ems_network
+      ems_physical_infra
+      ems_storage
+      flavor
+      floating_ip
+      host
+      host_aggregate
+      load_balancer
+      middleware_datasource
+      middleware_deployment
+      middleware_domain
+      middleware_messaging
+      middleware_server
+      miq_template
+      network_port
+      network_router
+      offline
+      orchestration_stack
+      persistent_volume
+      physical_server
+      provider_foreman
+      resource_pool
+      retired
+      security_group
+      service
+      templates
+      vm
+    )
+
+    (@lastaction == "show_list" && !session[:menu_click] && show_search.include?(@layout) && !@in_a_form) ||
+      (@explorer && x_tree && tree_with_advanced_search? && !@record)
+  end
 end

@@ -4,12 +4,8 @@
     .row.max-height
       = yield
 - elsif inner_layout_present?
-  - rsop = controller.controller_name == 'miq_policy' && controller.action_name == 'rsop'
-  - resolve = controller.controller_name == 'miq_ae_tools' && controller.action_name == 'resolve'
-  - planning = controller.controller_name == 'miq_capacity' && controller.action_name == 'planning'
-  - simulate =  rsop || resolve || planning
   - session[:sidebar] ||= {}
-  - sidewidth = simulate ? 5 : session[:sidebar][params[:controller]] ||= 3
+  - sidewidth = simulate? ? 5 : session[:sidebar][params[:controller]] ||= 3
   - maindiv = 12 - sidewidth
   - sidebar = sidewidth == 0 ? 'hidden-md hidden-lg col-md-0' : "col-md-#{sidewidth} col-md-pull-#{maindiv}"
 
@@ -53,7 +49,7 @@
               = render(:partial => 'layouts/saved_report_paging_bar',
                        :locals  => {:pages => @sb[:pages]})
 
-        - unless simulate
+        - unless simulate?
           .resizer.hidden-xs
             .resizer-box
               .btn-group
@@ -70,12 +66,7 @@
         #custom_left_cell
 - else
   #center_div{:style => "height: 100%;"}
-    - if layout_uses_listnav?
-      = render :partial => "layouts/center_div_with_listnav"
-    - elsif dashboard_no_listnav?
-      = render :partial => "layouts/center_div_dashboard_no_listnav"
-    - else
-      = render :partial => "layouts/center_div_no_listnav"
+    = render :partial => center_div_partial
 
 - if show_advanced_search?
   :javascript

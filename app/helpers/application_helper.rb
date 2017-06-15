@@ -733,20 +733,6 @@ module ApplicationHelper
     (@toolbars['history_tb'] != 'blank_view_tb' && @toolbars['history_tb'] != 'blank_view_tb' && @toolbars['view_tb'] != 'blank_view_tb')
   end
 
-  def inner_layout_present?
-    if @inner_layout_present.nil?
-      @inner_layout_present = false
-      if @explorer || params[:action] == "explorer" ||
-         (params[:controller] == "chargeback" && params[:action] == "chargeback") ||
-         (params[:controller] == "miq_ae_tools" && (params[:action] == "resolve" || params[:action] == "show")) ||
-         (params[:controller] == "miq_policy" && params[:action] == "rsop") ||
-         (params[:controller] == "miq_capacity")
-        @inner_layout_present = true
-      end
-    end
-    @inner_layout_present
-  end
-
   # Format a column in a report view for display on the screen
   def format_col_for_display(view, row, col, tz = nil)
     tz ||= ["miqschedule"].include?(view.db.downcase) ? MiqServer.my_server.server_timezone : Time.zone
@@ -933,12 +919,6 @@ module ApplicationHelper
   # Should we allow the field alias checkbox to be shown for an atom in the expression editor
   def adv_search_show_alias_checkbox?
     @edit[:adv_search_open]  # Only allow field aliases for advanced searches
-  end
-
-  def saved_report_paging?
-    # saved report doesn't use miq_report object,
-    # need to use a different paging view to page thru a saved report
-    @sb[:pages] && @html && [:reports_tree, :savedreports_tree, :cb_reports_tree].include?(x_active_tree)
   end
 
   def pressed2model_action(pressed)
@@ -1508,69 +1488,6 @@ module ApplicationHelper
     end
   end
 
-  def show_adv_search?
-    show_search = %w(
-      auth_key_pair_cloud
-      availability_zone
-      automation_manager
-      cloud_network
-      cloud_object_store_container
-      cloud_object_store_object
-      cloud_subnet
-      cloud_tenant
-      cloud_volume
-      cloud_volume_backup
-      cloud_volume_snapshot
-      configuration_job
-      container
-      container_build
-      container_group
-      container_image
-      container_image_registry
-      container_node
-      container_project
-      container_replicator
-      container_route
-      container_service
-      container_template
-      ems_cloud
-      ems_cluster
-      ems_container
-      ems_infra
-      ems_middleware
-      ems_network
-      ems_physical_infra
-      ems_storage
-      flavor
-      floating_ip
-      host
-      host_aggregate
-      load_balancer
-      middleware_datasource
-      middleware_deployment
-      middleware_domain
-      middleware_messaging
-      middleware_server
-      miq_template
-      network_port
-      network_router
-      offline
-      orchestration_stack
-      persistent_volume
-      physical_server
-      provider_foreman
-      resource_pool
-      retired
-      security_group
-      service
-      templates
-      vm
-    )
-
-    (@lastaction == "show_list" && !session[:menu_click] && show_search.include?(@layout) && !@in_a_form) ||
-      (@explorer && x_tree && tree_with_advanced_search? && !@record)
-  end
-
   def db_for_quadicon
     case @layout
     when "ems_infra"
@@ -1635,10 +1552,6 @@ module ApplicationHelper
        vms_filter
        vms_instances_filter
       ).include?(x_tree[:type])
-  end
-
-  def show_advanced_search?
-    x_tree && ((tree_with_advanced_search? && !@record) || @show_adv_search)
   end
 
   def listicon_glyphicon(item)
