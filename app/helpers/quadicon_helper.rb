@@ -386,14 +386,10 @@ module QuadiconHelper
     %w(ExtManagementSystem Host PhysicalServer).include?(item.class.base_class.name)
   end
 
-  def quadicon_named_for_base_model?(item)
-    %w(VmOrTemplate PhysicalServer).include?(item.class.base_model.name)
-  end
-
   def quadicon_builder_name_from(item)
     builder_name = if CLASSLY_NAMED_ITEMS.include?(item.class.name)
                      item.class.name.underscore
-                   elsif quadicon_named_for_base_model?(item)
+                   elsif item.kind_of?(VmOrTemplate) || item.kind_of?(PhysicalServer)
                      item.class.base_model.to_s.underscore
                    elsif item.kind_of?(ManageIQ::Providers::ConfigurationManager)
                      "single_quad"
