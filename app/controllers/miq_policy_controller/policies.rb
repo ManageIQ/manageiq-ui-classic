@@ -149,7 +149,7 @@ module MiqPolicyController::Policies
       params.keys.each do |field|
         if field.to_s.starts_with?("event_")
           event = field.to_s.split("_").last
-          if params[field] == "1"
+          if params[field] == "true"
             @edit[:new][:events].push(event)      # Add event to array
           else
             @edit[:new][:events].delete(event)    # Delete event from array
