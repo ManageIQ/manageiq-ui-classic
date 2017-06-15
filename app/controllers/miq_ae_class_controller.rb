@@ -346,18 +346,18 @@ class MiqAeClassController < ApplicationController
   end
 
   def build_type_options
-    MiqAeField.available_aetypes.collect { |t| [t.titleize, t, {"data-icon" => "product product-#{t}"}] }
+    MiqAeField.available_aetypes.collect { |t| [t.titleize, t, {"data-icon" => ae_field_fonticon(t)}] }
   end
 
   def build_dtype_options
-    MiqAeField.available_datatypes_for_ui.collect { |t| [t.titleize, t, {"data-icon" => "product product-#{t}"}] }
+    MiqAeField.available_datatypes_for_ui.collect { |t| [t.titleize, t, {"data-icon" => ae_field_fonticon(t)}] }
   end
 
   def set_cls(cls)
     case cls.to_s.split("::").last
     when "MiqAeClass"
       cls = "aec"
-      glyphicon = "product product-ae_class"
+      glyphicon = "ff ff-class"
     when "MiqAeNamespace"
       cls = "aen"
       glyphicon = "pficon pficon-folder-open"
@@ -366,10 +366,10 @@ class MiqAeClassController < ApplicationController
       glyphicon = "fa fa-file-text-o"
     when "MiqAeField"
       cls = "Field"
-      glyphicon = "product product-ae_field"
+      glyphicon = "ff ff-field"
     when "MiqAeMethod"
       cls = "aem"
-      glyphicon = "product product-method"
+      glyphicon = "ff ff-method"
     end
     return cls, glyphicon
   end

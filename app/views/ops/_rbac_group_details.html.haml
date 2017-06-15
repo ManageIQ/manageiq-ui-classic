@@ -40,7 +40,7 @@
                           :title   => _("View this Role")}
             - else
               - params = {}
-            %i.product.product-role{params}
+            %i.ff.ff-user-role{params}
             = link_to(@group.miq_user_role.name, "#", params)
         - else
           = select_tag('group_role',

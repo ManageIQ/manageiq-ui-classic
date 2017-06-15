@@ -140,7 +140,7 @@ module VmCloudHelper::TextualSummary
 
   def textual_groups
     num = @record.number_of(:groups)
-    h = {:label => _("Groups"), :icon => "product product-group", :value => num}
+    h = {:label => _("Groups"), :icon => "ff ff-group", :value => num}
     if num > 0
       h[:title] = n_("Show the Group defined on this VM", "Show the Groups defined on this VM", num)
       h[:explorer] = true
@@ -162,7 +162,7 @@ module VmCloudHelper::TextualSummary
     return nil if os == "unknown"
     num = @record.number_of(:guest_applications)
     label = (os =~ /linux/) ? n_("Package", "Packages", num) : n_("Application", "Applications", num)
-    h = {:label => label, :icon => "product product-application", :value => num}
+    h = {:label => label, :icon => "ff ff-software-package", :value => num}
     if num > 0
       h[:title] = ("Show the %{label} installed on this VM") % {:label => label}
       h[:explorer] = true

@@ -41,23 +41,23 @@ module ConfigurationHelper
     end
 
     def compare_or_drift_compressed(resource)
-      inactive_icon("product product-view_expanded", _('Expanded View'), resource, "expanded") +
+      inactive_icon("ff ff-view-expanded", _('Expanded View'), resource, "expanded") +
         active_icon("fa fa-bars fa-rotate-90", _('Compressed View'))
     end
 
     def compare_or_drift_expanded(resource)
-      active_icon("product product-view_expanded", _('Expanded View')) +
+      active_icon("ff ff-view-expanded", _('Expanded View')) +
         inactive_icon("fa fa-bars fa-rotate-90", _('Compressed View'), resource, "compressed")
     end
 
     def compare_or_drift_mode_exists(resource)
       inactive_icon("fa fa-bars fa-rotate-90", _('Details Mode'), resource, "details") +
-        active_icon("product product-exists", _('Exists Mode'))
+        active_icon("ff ff-exists", _('Exists Mode'))
     end
 
     def compare_or_drift_mode_details(resource)
       active_icon("fa fa-bars fa-rotate-90", _('Details Mode')) +
-        inactive_icon("product product-exists", _('Exists Mode'), resource, "exists")
+        inactive_icon("ff ff-exists", _('Exists Mode'), resource, "exists")
     end
 
     def summary_mode_textual(resource)

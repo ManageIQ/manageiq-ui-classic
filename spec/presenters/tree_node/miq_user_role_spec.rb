@@ -5,5 +5,5 @@ describe TreeNode::MiqUserRole do
   let(:object) { FactoryGirl.create(:miq_user_role) }
 
   include_examples 'TreeNode::Node#key prefix', 'ur-'
-  include_examples 'TreeNode::Node#icon', 'product product-role'
+  include_examples 'TreeNode::Node#icon', 'ff ff-user-role'
 end

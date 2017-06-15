@@ -83,13 +83,13 @@ class ApplicationHelper::Toolbar::EmsInfraCenter < ApplicationHelper::Toolbar::B
   button_group('ems_infra_monitoring', [
     select(
       :ems_infra_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :ems_infra_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this Infrastructure Provider'),
           N_('Timelines'),
           :klass     => ApplicationHelper::Button::EmsTimeline,

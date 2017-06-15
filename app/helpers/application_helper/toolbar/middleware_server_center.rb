@@ -3,13 +3,13 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
   button_group('middleware_server_monitoring', [
     select(
       :middleware_server_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :middleware_server_perf,
-          'product product-monitoring fa-lg',
+          'ff ff-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this Server'),
           N_('Utilization'),
           :url       => "/show",

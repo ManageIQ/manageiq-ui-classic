@@ -244,7 +244,7 @@ class ApplicationHelper::ToolbarBuilder
     button = {
       :id        => "custom__custom_#{button_id}",
       :type      => :button,
-      :icon      => "product product-custom-#{input[:image]} fa-lg",
+      :icon      => "miq-custom-button-#{input[:image]} fa-lg",
       :title     => input[:description].to_s,
       :enabled   => options[:enabled],
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
@@ -273,7 +273,7 @@ class ApplicationHelper::ToolbarBuilder
       props = {
         :id      => "custom_#{group[:id]}",
         :type    => :buttonSelect,
-        :icon    => "product product-custom-#{group[:image]} fa-lg",
+        :icon    => "miq-custom-button-#{group[:image]} fa-lg",
         :title   => group[:description],
         :enabled => true,
         :items   => group[:buttons].collect { |b| create_custom_button(b, model, record) }

@@ -1,6 +1,6 @@
 class LoadBalancerDecorator < MiqDecorator
   def self.fonticon
-    'product product-load_balancer'
+    'ff ff-load-balancer'
   end
 
   def self.fileicon

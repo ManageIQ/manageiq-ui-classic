@@ -91,7 +91,7 @@ class ApplicationHelper::Toolbar::XMiqTemplateCenter < ApplicationHelper::Toolba
           :options => {:feature => :provisioning}),
         button(
           :miq_template_clone,
-          'product product-clone fa-lg',
+          'ff ff-clone fa-lg',
           t = N_('Clone this Template'),
           t,
           :klass => ApplicationHelper::Button::GenericFeatureButton,
@@ -102,20 +102,20 @@ class ApplicationHelper::Toolbar::XMiqTemplateCenter < ApplicationHelper::Toolba
   button_group('miq_template_monitoring', [
     select(
       :miq_template_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :miq_template_perf,
-          'product product-monitoring fa-lg',
+          'ff ff-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this Template'),
           N_('Utilization'),
           :url_parms => "?display=performance",
           :klass     => ApplicationHelper::Button::MiqTemplatePerf),
         button(
           :miq_template_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this Template'),
           N_('Timelines'),
           :url_parms => "?display=timeline",
@@ -168,7 +168,7 @@ class ApplicationHelper::Toolbar::XMiqTemplateCenter < ApplicationHelper::Toolba
       nil),
     button(
       :miq_template_compare,
-      'product product-compare fa-lg',
+      'ff ff-compare-same fa-lg',
       N_('Compare selected Templates'),
       nil,
       :url_parms => "main_div",

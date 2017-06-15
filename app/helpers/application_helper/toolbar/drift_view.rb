@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::DriftView < ApplicationHelper::Toolbar::Basic
   button_group('compare_view', [
     twostate(
       :drift_expanded,
-      'product product-view_expanded fa-lg',
+      'ff ff-view-expanded fa-lg',
       N_('Expanded View'),
       nil,
       :url   => "drift_compress",

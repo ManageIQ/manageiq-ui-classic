@@ -23,7 +23,7 @@ class TreeBuilderReportRoles < TreeBuilder
     {
       :title   => title,
       :tooltip => title,
-      :icon    => 'product product-group'
+      :icon    => 'ff ff-group'
     }
   end
 

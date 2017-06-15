@@ -2,13 +2,13 @@ class ApplicationHelper::Toolbar::ContainerCenter < ApplicationHelper::Toolbar::
   button_group('container_monitoring', [
     select(
       :container_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :container_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this Container'),
           N_('Timelines'),
           :url_parms => "?display=timeline",
@@ -16,7 +16,7 @@ class ApplicationHelper::Toolbar::ContainerCenter < ApplicationHelper::Toolbar::
           :klass     => ApplicationHelper::Button::ContainerTimeline),
         button(
           :container_perf,
-          'product product-monitoring fa-lg',
+          'ff ff-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this Container'),
           N_('Utilization'),
           :url_parms => "?display=performance",

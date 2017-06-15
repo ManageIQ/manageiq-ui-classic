@@ -61,7 +61,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
         separator,
         button(
           :vm_right_size,
-          'product product-custom-6 fa-lg',
+          'ff ff-database-squeezed fa-lg',
           N_('CPU/Memory Recommendations of this VM'),
           N_('Right-Size Recommendations')),
         button(
@@ -116,7 +116,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
       :items => [
         button(
           :vm_clone,
-          'product product-clone fa-lg',
+          'ff ff-clone fa-lg',
           t = N_('Clone this VM'),
           t,
           :klass   => ApplicationHelper::Button::GenericFeatureButton,
@@ -130,7 +130,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           :options => {:feature => :publish}),
         button(
           :vm_migrate,
-          'product product-migrate fa-lg',
+          'fa fa-reply fa-rotate-90 fa-lg',
           N_('Migrate this VM to another Host/Datastore'),
           N_('Migrate this VM'),
           :klass => ApplicationHelper::Button::GenericFeatureButton,
@@ -154,20 +154,20 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
   button_group('vm_monitoring', [
     select(
       :vm_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :vm_perf,
-          'product product-monitoring fa-lg',
+          'ff ff-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this VM'),
           N_('Utilization'),
           :url_parms => "?display=performance",
           :klass     => ApplicationHelper::Button::VmPerf),
         button(
           :vm_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this VM'),
           N_('Timelines'),
           :url_parms => "?display=timeline",
@@ -339,7 +339,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
       nil),
     button(
       :vm_compare,
-      'product product-compare fa-lg',
+      'ff ff-compare-same fa-lg',
       N_('Compare selected VMs'),
       nil,
       :url_parms => "main_div",

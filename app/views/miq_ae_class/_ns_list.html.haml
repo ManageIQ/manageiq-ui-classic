@@ -22,7 +22,7 @@
               - if record.git_enabled?
                 %img{:src => image_path('svg/ae_git_domain.svg')}
               - elsif record.name == MiqAeDatastore::MANAGEIQ_DOMAIN
-                %i.product.product-product
+                %i.ff.ff-manageiq
               - elsif record.top_level_namespace
                 %img{:src => image_path("svg/vendor-#{record.top_level_namespace.downcase}.svg")}
               - else

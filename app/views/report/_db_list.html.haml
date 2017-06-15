@@ -29,7 +29,7 @@
           %tr{:onclick => remote_function(:loading => "miqSparkle(true);", :complete => "miqSparkle(false);",
               :url => {:action => 'tree_select', :id => "xx-g_g-#{to_cid(g.id)}"}), :title => _("Click to view %{group} ") % {:group => g.description}, :class => "icon"}
             %td.table-view-pf-select
-              %i.product.product-group
+              %i.ff.ff-group
             %td
               = h(g.description)
   - elsif @sb[:nodes].length == 3 && @sb[:nodes][1] == "g_g" && !@in_a_form

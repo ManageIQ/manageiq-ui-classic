@@ -35,10 +35,10 @@ class TreeBuilderOpsRbac < TreeBuilder
       objects.push(:id => "u", :text => _("Users"), :icon => "pficon pficon-user", :tip => _("Users"))
     end
     if ApplicationHelper.role_allows?(:feature => "rbac_group_view", :any => true)
-      objects.push(:id => "g", :text => _("Groups"), :icon => "product product-group", :tip => _("Groups"))
+      objects.push(:id => "g", :text => _("Groups"), :icon => "ff ff-group", :tip => _("Groups"))
     end
     if ApplicationHelper.role_allows?(:feature => "rbac_role_view", :any => true)
-      objects.push(:id => "ur", :text => _("Roles"), :icon => "product product-role", :tip => _("Roles"))
+      objects.push(:id => "ur", :text => _("Roles"), :icon => "ff ff-user-role", :tip => _("Roles"))
     end
     if ApplicationHelper.role_allows?(:feature => "rbac_tenant_view")
       objects.push(:id => "tn", :text => _("Tenants"), :icon => "pficon pficon-tenant", :tip => _("Tenants"))

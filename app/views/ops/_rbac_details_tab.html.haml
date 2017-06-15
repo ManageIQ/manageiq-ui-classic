@@ -30,13 +30,13 @@
         - if role_allows?(:feature => "rbac_group_view", :any => true)
           %tr
             %td.table-view-pf-select{:onclick => "miqTreeActivateNode('rbac_tree', 'xx-g');", :title => _("View Groups")}
-              %i.product.product-group
+              %i.ff.ff-group
             %td{:onclick => "miqTreeActivateNode('rbac_tree', 'xx-g');", :title => _("View Groups")}
               = _("Groups (%{groups_count})") % {:groups_count => @groups_count.to_s}
         - if role_allows?(:feature => "rbac_role_view", :any => true)
           %tr
             %td.table-view-pf-select{:onclick => "miqTreeActivateNode('rbac_tree', 'xx-ur');", :title => _("View Roles")}
-              %i.product.product-role
+              %i.ff.ff-user-role
             %td{:onclick => "miqTreeActivateNode('rbac_tree', 'xx-ur');", :title => _("View Roles")}
               = _("Roles (%{roles_count})") % {:roles_count => @roles_count.to_s}
         - if role_allows?(:feature => "rbac_tenant_view", :any => true)

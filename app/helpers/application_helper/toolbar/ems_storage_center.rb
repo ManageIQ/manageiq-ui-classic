@@ -51,13 +51,13 @@ class ApplicationHelper::Toolbar::EmsStorageCenter < ApplicationHelper::Toolbar:
   button_group('ems_storage_monitoring', [
                  select(
                    :ems_storage_monitoring_choice,
-                   'product product-monitoring fa-lg',
+                   'ff ff-monitoring fa-lg',
                    t = N_('Monitoring'),
                    t,
                    :items => [
                      button(
                        :ems_storage_timeline,
-                       'product product-timeline fa-lg',
+                       'ff ff-timeline fa-lg',
                        N_('Show Timelines for this Storage Manager'),
                        N_('Timelines'),
                        :options   => {:feature => :timeline},

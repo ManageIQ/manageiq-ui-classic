@@ -24,7 +24,11 @@
   content: "\e623";
 }
 
-.fa-inactive, .product-inactive, .pficon-inactive { // add styling to show inactive icon (policies, etc)//
+.ff-condition:before {
+  color: #39a5dc; //pf-blue-300
+}
+
+.fa-inactive, .ff-inactive, .pficon-inactive { // add styling to show inactive icon (policies, etc)//
 opacity:0.6;
 }
 
@@ -55,280 +59,68 @@ opacity:0.6;
   color: #ec7a08; //pf-orange-400
 }
 
-
 /*end icon class customizations*/
 
-/* custom font for this product */
+/* custom button customizations*/
 
-@font-face {
-  font-family: 'icomoon';
-  src: font-url('icomoon.eot?1i9inh');
-  src: font-url('icomoon.eot?1i9inh#iefix') format('embedded-opentype'),
-       font-url('icomoon.woff?1i9inh') format('woff'),
-       font-url('icomoon.ttf?1i9inh') format('truetype'),
-       font-url('icomoon.svg?1i9inh#icomoon') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-
-i[class^="product-"], i[class*=" product-"],
-span[class^="product-"], span[class*=" product-"], // i & span tags prevent conflicts with 'About' modal
- {
-    /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icomoon' !important;
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.product-role:before {
-  content: "\e600";
-}
-.product-product:before {
-  content: "\e601";
-}
-.product-group:before {
-  content: "\e602";
-}
-.product-custom-1:before {
-  content: "\e606";
-}
-.product-custom-2:before {
-  content: "\e607";
-}
-.product-custom-3:before {
-  content: "\e608";
-}
-.product-miq_condition:before {
-  content: "\e608";
-}
-.product-custom-4:before {
-  content: "\e609";
-}
-.product-custom-5:before {
-  content: "\e60a";
-}
-.product-custom-6:before {
-  content: "\e60b";
-}
-.product-custom-7:before {
-  content: "\e60c";
-}
-.product-custom-8:before {
-  content: "\e60d";
-}
-.product-custom-9:before {
-  content: "\e60e";
-}
-.product-custom-10:before {
-  content: "\e60f";
-}
-.product-custom-11:before {
-  content: "\e610";
-}
-.product-custom-12:before {
-  content: "\e611";
-}
-.product-custom-13:before {
-  content: "\e612";
-}
-.product-custom-14:before {
-  content: "\e613";
-}
-.product-custom-15:before {
-  content: "\e614";
-}
-.product-float:before {
-  content: "\e615";
-}
-.product-integer:before {
-  content: "\e616";
-}
-.product-string:before {
-  content: "\e617";
-}
-.product-symbol:before {
-  content: "\e618";
-}
-.product-assertion:before {
-  content: "\e619";
-}
-.product-ae_assertion:before {
-  content: "\e619";
-}
-.product-attribute:before {
-  content: "\e61a";
-}
-.product-ae_attribute:before {
-  content: "\e61a";
-}
-.product-relationship:before {
-  content: "\e61b";
-}
-.product-ae_relationship:before {
-  content: "\e61b";
-}
-.product-method:before {
-  content: "\e61c";
-}
-.product-ae_method:before {
-  content: "\e61c";
-}
-.product-state:before {
-  content: "\e61d";
-}
-.product-ae_state:before {
-  content: "\e61d";
-}
-.product-array:before {
-  content: "\e61e";
-}
-.product-boolean:before {
-  content: "\e61f";
-}
-.product-password:before {
-  content: "\e621";
-}
-.product-ae_class:before {
-  content: "\e622";
-}
-.product-action:before {
-  content: "\e625";
-}
-.product-file-ear-o:before {
-  content: "\e626";
-}
-.product-file-war-o:before {
-  content: "\e627";
-}
-.product-exists:before {
-  content: "\e62a";
-}
-.product-view_expanded:before {
-  content: "\e62b";
-}
-.product-cloud_network:before {
-  content: "\e62c";
-}
-.product-network_interface:before {
-  content: "\e62d";
-}
-.product-compare:before {
-  content: "\e62e";
-}
-.product-compare_same:before {
-  content: "\e62e";
-}
-.product-compare_diff:before {
-  content: "\e62f";
-}
-.product-compare_all:before {
-  content: "\e630";
-}
-.product-clone:before { //replace with fa-clone when font awesome v4.4 is available in Patternfly
-  content: "\e631";
-}
-.product-migrate:before {
-  content: "\e632";
-}
-.product-monitoring:before {
-  content: "\e633";
-}
-.product-timeline:before {
-  content: "\e634";
-}
-.product-drift:before {
-  content: "\e635";
-}
-.product-load_balancer:before {
-  content: "\e637";
-}
-.product-template:before {
-  content: "\e640";
-}
-.product-orchestration_stack:before {
-  content: "\e641";
-}
-.product-cloud_object_store:before {
-  content: "\e642";
-}
-.product-network_port:before {
-  content: "\e643";
-}
-.product-file_share:before {
-  content: "\e644";
-}
-.product-resource:before {
-  content: "\e645";
-}
-.product-configured_system:before {
-  content: "\e646";
-}
-.product-parameter:before {
-  content: "\e647";
-}
-.product-application:before {
-  content: "\e648";
-}
-.product-firewall:before {
-  content: "\e649";
-}
-.product-genealogy:before {
-  content: "\e650";
-}
-.product-output:before {
-  content: "\e651";
-}
-.product-tab:before {
-  content: "\e652";
-}
-.product-network_switch:before {
-  content: "\e653";
-}
-.product-network_card:before {
-  content: "\e654";
-}
-.product-field:before {
-  content: "\e655";
-}
-.product-element:before {
-  content: "\e656";
-}
-
-/* define  colors */
-
-.product-custom-1:before,
-.product-custom-4:before,
-.product-custom-14:before {
-  color: #2d7623; //pf-green-500
-}
-.product-custom-3:before {
-  color: #f5c12e; //pf-gold-300
-}
-.product-custom-8:before,
-.product-custom-15:before {
-  color: #cc0000; //pf-red-100
-}
-.product-custom-2:before,
-.product-custom-9:before,
-.product-custom-10:before,
-.product-custom-11:before,
-.product-custom-12:before,
-.product-custom-13:before {
+/* custom button icons */
+.miq-custom-button-1 {
+  @extend .ff, .ff-hexagon;
+  color: #2d7623; // pf-green-500
+}
+.miq-custom-button-2 {
+  @extend .ff, .ff-wavy-lines;
   color: #00659c; //pf-blue-500
 }
-.product-custom-5:before {
+.miq-custom-button-3 {
+  @extend .ff, .ff-diamond;
+  color: #f5c12e; //pf-gold-300
+}
+.miq-custom-button-4 {
+  @extend .fa, .fa-star;
+  color: #2d7623; //pf-green-500
+}
+.miq-custom-button-5 {
+  @extend .fa, .fa-circle;
   color: #ec7a08; //pf-orange-400
 }
-.product-miq_condition:before {
-  color: #39a5dc; //pf-blue-300
+.miq-custom-button-6 {
+  @extend .ff, .ff-database-squeezed;
+}
+.miq-custom-button-7 {
+  @extend .ff, .ff-broom;
+}
+.miq-custom-button-8 {
+  @extend .ff, .ff-triangle;
+  color: #cc0000; //pf-red-100
+}
+.miq-custom-button-9 {
+  @extend .fa, .fa-angle-double-down;
+  color: #00659c; //pf-blue-500
+}
+.miq-custom-button-10 {
+  @extend .fa, .fa-angle-double-up;
+  color: #00659c; //pf-blue-500
+}
+.miq-custom-button-11 {
+  @extend .fa, .fa-angle-double-left;
+  color: #00659c; //pf-blue-500
+}
+.miq-custom-button-12 {
+  @extend .fa, .fa-angle-double-right;
+  color: #00659c; //pf-blue-500
+}
+.miq-custom-button-13 {
+  @extend .ff, .ff-synchronize;
+  color: #00659c; //pf-blue-500
+}
+.miq-custom-button-14 {
+  @extend .fa, .fa-refresh;
+  color: #2d7623; //pf-green-500
+}
+.miq-custom-button-15 {
+  @extend .fa, .fa-power-off;
+  color: #cc0000; //pf-red-100
 }
 
-/*end icon customizations*/
+/* end custom button icons */

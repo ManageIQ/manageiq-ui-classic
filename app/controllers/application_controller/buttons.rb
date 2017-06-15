@@ -852,7 +852,7 @@ module ApplicationController::Buttons
   end
 
   def build_button_image_options
-    (1..15).collect { |i| ["Button Image #{i}", i, {"data-icon" => "product product-custom-#{i}"}] }
+    (1..15).collect { |i| ["Button Image #{i}", i, {"data-icon" => "miq-custom-button-#{i}"}] }
   end
 
   # Set form variables for button add/edit

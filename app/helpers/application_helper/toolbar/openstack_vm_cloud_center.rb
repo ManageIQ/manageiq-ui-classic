@@ -77,7 +77,7 @@ class ApplicationHelper::Toolbar::OpenstackVmCloudCenter < ApplicationHelper::To
           :options => {:feature => :resize}),
         button(
           :vm_right_size,
-          'product product-custom-6 fa-lg',
+          'ff ff-database-squeezed fa-lg',
           N_('CPU/Memory Recommendations of this VM'),
           N_('Right-Size Recommendations')),
       ]
@@ -136,7 +136,7 @@ class ApplicationHelper::Toolbar::OpenstackVmCloudCenter < ApplicationHelper::To
           :klass   => ApplicationHelper::Button::InstanceRetire),
         button(
           :instance_live_migrate,
-          'product product-migrate fa-lg',
+          'fa fa-reply fa-rotate-90 fa-lg',
           t = N_('Migrate Instance'),
           t,
           :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
@@ -144,7 +144,7 @@ class ApplicationHelper::Toolbar::OpenstackVmCloudCenter < ApplicationHelper::To
           :url_parms => 'main_div'),
         button(
           :instance_evacuate,
-          'product product-migrate fa-lg',
+          'fa fa-reply fa-rotate-90 fa-lg',
           t = N_('Evacuate Instance'),
           t,
           :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
@@ -156,20 +156,20 @@ class ApplicationHelper::Toolbar::OpenstackVmCloudCenter < ApplicationHelper::To
   button_group('instance_monitoring', [
     select(
       :instance_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :instance_perf,
-          'product product-monitoring fa-lg',
+          'ff ff-monitoring fa-lg',
           N_('Show Capacity & Utilization data for this Instance'),
           N_('Utilization'),
           :url_parms => "?display=performance",
           :klass     => ApplicationHelper::Button::VmPerf),
         button(
           :instance_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this Instance'),
           N_('Timelines'),
           :klass     => ApplicationHelper::Button::GenericFeatureButton,

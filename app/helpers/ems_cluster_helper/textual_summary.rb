@@ -198,7 +198,7 @@ module EmsClusterHelper::TextualSummary
   def textual_states_size
     return nil unless role_allows?(:feature => "ems_cluster_drift")
     num = @record.number_of(:drift_states)
-    h = {:label => _("Drift History"), :icon => "product product-drift", :value => (num == 0 ? _("None") : num)}
+    h = {:label => _("Drift History"), :icon => "ff ff-drift", :value => (num == 0 ? _("None") : num)}
     if num > 0
       h[:title] = _("Show %{title} drift history") % {:title => cluster_title}
       h[:link]  = url_for_only_path(:controller => 'ems_cluster', :action => 'drift_history', :id => @record)

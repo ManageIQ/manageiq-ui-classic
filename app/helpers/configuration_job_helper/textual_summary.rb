@@ -57,7 +57,7 @@ module ConfigurationJobHelper::TextualSummary
 
   def textual_parameters
     num   = @record.number_of(:parameters)
-    h     = {:label => _("Parameters"), :icon => "product product-parameter", :value => num}
+    h     = {:label => _("Parameters"), :icon => "ff ff-parameter", :value => num}
     if num > 0
       h[:link]  = url_for_only_path(:controller => controller.controller_name, :action => 'parameters', :id => @record)
       h[:title] = _("Show all parameters")

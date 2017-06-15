@@ -98,7 +98,7 @@
           - if @user.current_group
             - if role_allows?(:feature => "rbac_group_show")
               - params = {:class => "pointer", :onclick => "miqOnClickSelectRbacTreeNode('g-#{to_cid(@user.current_group.id)}');", :title => _("View this Group")}
-            %i.product.product-group{params}
+            %i.ff.ff-group{params}
             = link_to(@user.current_group.description, "#", params)
         - else
           - if disabled
@@ -122,7 +122,7 @@
               - params = {:class => "pointer", :onclick => "miqOnClickSelectRbacTreeNode('ur-#{to_cid(@user.current_group.miq_user_role.id)}');", :title => _("View this Role")}
             - else
               - params = {}
-            %i.product.product-role{params}
+            %i.ff.ff-user-role{params}
             = link_to(@user.miq_user_role_name, "#", params)
           - else
             %p.form-control-static

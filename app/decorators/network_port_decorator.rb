@@ -1,6 +1,6 @@
 class NetworkPortDecorator < MiqDecorator
   def self.fonticon
-    'fa product-network_port'
+    'ff ff-network-port'
   end
 
   def self.fileicon

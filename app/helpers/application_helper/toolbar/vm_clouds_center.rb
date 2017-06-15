@@ -29,7 +29,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
           :onwhen    => "1+"),
         button(
           :instance_compare,
-          'product product-compare fa-lg',
+          'ff ff-compare-same fa-lg',
           N_('Select two or more items to compare'),
           N_('Compare Selected items'),
           :url_parms => "main_div",
@@ -153,7 +153,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
           :onwhen    => "1+"),
         button(
           :instance_live_migrate,
-          'product product-migrate fa-lg',
+          'fa fa-reply fa-rotate-90 fa-lg',
           t = N_('Migrate selected Instances'),
           t,
           :url_parms => 'main_div',
@@ -161,7 +161,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
           :onwhen    => '1+'),
         button(
           :instance_evacuate,
-          'product product-migrate fa-lg',
+          'fa fa-reply fa-rotate-90 fa-lg',
           t = N_('Evacuate selected Instances'),
           t,
           :url_parms => 'main_div',

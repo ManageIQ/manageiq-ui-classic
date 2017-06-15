@@ -175,7 +175,7 @@ module HostHelper::TextualSummary
   def textual_storage_adapters
     return nil if @record.openstack_host?
     num = @record.hardware.nil? ? 0 : @record.hardware.number_of(:storage_adapters)
-    h = {:label => _("Storage Adapters"), :icon => "product product-network_card", :value => num}
+    h = {:label => _("Storage Adapters"), :icon => "ff ff-network-card", :value => num}
     if num > 0
       h[:title] = _("Show %{title} Storage Adapters") % {:title => host_title}
       h[:link]  = url_for_only_path(:action => 'show', :id => @record, :display => 'storage_adapters')
@@ -259,7 +259,7 @@ module HostHelper::TextualSummary
     return nil unless role_allows?(:feature => "host_drift")
     label = _("Drift History")
     num   = @record.number_of(:drift_states)
-    h     = {:label => label, :icon => "product product-drift", :value => num}
+    h     = {:label => label, :icon => "ff ff-drift", :value => num}
     if num > 0
       h[:title] = _("Show all %{label}") % {:label => label}
       h[:link]  = url_for_only_path(:action => 'drift_history', :id => @record)
@@ -322,7 +322,7 @@ module HostHelper::TextualSummary
   def textual_groups
     return nil if @record.is_vmware_esxi?
     num = @record.number_of(:groups)
-    h = {:label => _("Groups"), :icon => "product product-group", :value => num}
+    h = {:label => _("Groups"), :icon => "ff ff-group", :value => num}
     if num > 0
       h[:title] = n_("Show the Group defined on this %{title}", "Show the Groups defined on this %{title}", num) %
         {:title => host_title}
@@ -334,7 +334,7 @@ module HostHelper::TextualSummary
   def textual_firewall_rules
     return nil if @record.is_vmware_esxi?
     num = @record.number_of(:firewall_rules)
-    h = {:label => _("Firewall Rules"), :icon => "product product-firewall", :value => num}
+    h = {:label => _("Firewall Rules"), :icon => "ff ff-firewall", :value => num}
     if num > 0
       h[:title] = n_("Show the Firewall Rule defined on this %{title}",
                     "Show the Firewall Rules defined on this %{title}", num) % {:title => host_title}
@@ -362,7 +362,7 @@ module HostHelper::TextualSummary
 
   def textual_guest_applications
     num = @record.number_of(:guest_applications)
-    h = {:label => _("Packages"), :icon => "product product-application", :value => num}
+    h = {:label => _("Packages"), :icon => "ff ff-software-package", :value => num}
     if num > 0
       h[:title] = n_("Show the Package installed on this %{title}",
                      "Show the Packages installed on this %{title}", num) % {:title => host_title}

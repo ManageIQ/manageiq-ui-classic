@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::CompareView < ApplicationHelper::Toolbar::Basi
   button_group('compare_view', [
     twostate(
       :compare_expanded,
-      'product product-view_expanded fa-lg',
+      'ff ff-view-expanded fa-lg',
       N_('Expanded View'),
       nil,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,

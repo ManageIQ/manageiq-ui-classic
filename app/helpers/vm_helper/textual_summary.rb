@@ -353,7 +353,7 @@ module VmHelper::TextualSummary
   def textual_vm_template
     vm_template = @record.genealogy_parent
     label = ui_lookup(:table => "miq_template")
-    h = {:label => label, :icon => "product product-template", :value => (vm_template.nil? ? _("None") : vm_template.name)}
+    h = {:label => label, :icon => "ff ff-template", :value => (vm_template.nil? ? _("None") : vm_template.name)}
     if vm_template && role_allows?(:feature => "miq_template_show")
       h[:title] = _("Show this VM's %{label}") % {:label => label}
       h[:link]  = url_for_only_path(:controller => 'miq_template', :action => 'show', :id => vm_template)
@@ -380,7 +380,7 @@ module VmHelper::TextualSummary
   def textual_orchestration_stack
     stack = @record.orchestration_stack
     label = ui_lookup(:table => "orchestration_stack")
-    h = {:label => label, :icon => "product-orchestration_stack", :value => (stack.nil? ? _("None") : stack.name)}
+    h = {:label => label, :icon => "ff ff-stack", :value => (stack.nil? ? _("None") : stack.name)}
     if stack && role_allows?(:feature => "orchestration_stack_show")
       h[:title] = _("Show this VM's %{label} '%{name}'") % {:label => label, :name => stack.name}
       h[:link]  = url_for_only_path(:controller => 'orchestration_stack', :action => 'show', :id => stack)
@@ -452,7 +452,7 @@ module VmHelper::TextualSummary
   def textual_network_ports
     label = ui_lookup(:tables => "network_port")
     num   = @record.number_of(:network_ports)
-    h     = {:label => label, :icon => "product product-network_port", :value => num}
+    h     = {:label => label, :icon => "ff ff-network-port", :value => num}
     if num > 0 && role_allows?(:feature => "network_port_show_list")
       h[:title] = _("Show all %{label}") % {:label => label}
       h[:explorer] = true
@@ -466,7 +466,7 @@ module VmHelper::TextualSummary
 
     label = ui_lookup(:tables => "load_balancer")
     num   = @record.number_of(:load_balancers)
-    h     = {:label => label, :icon => "product product-load_balancer", :value => num}
+    h     = {:label => label, :icon => "ff ff-load-balancer", :value => num}
     if num > 0 && role_allows?(:feature => "load_balancer_show_list")
       h[:title] = _("Show all %{label}") % {:label => label}
       h[:explorer] = true
@@ -478,7 +478,7 @@ module VmHelper::TextualSummary
   def textual_cloud_networks
     label = ui_lookup(:tables => "cloud_network")
     num   = @record.number_of(:cloud_networks)
-    h     = {:label => label, :icon => "product product-cloud_network", :value => num}
+    h     = {:label => label, :icon => "ff ff-cloud-network", :value => num}
     if num > 0 && role_allows?(:feature => "cloud_network_show_list")
       h[:title] = _("Show all %{label}") % {:label => label}
       h[:explorer] = true
@@ -513,7 +513,7 @@ module VmHelper::TextualSummary
   def textual_genealogy
     {
       :label    => _("Genealogy"),
-      :icon     => "product product-genealogy",
+      :icon     => "ff ff-dna",
       :value    => _("Show parent and child VMs"),
       :title    => _("Show virtual machine genealogy"),
       :explorer => true,
@@ -540,7 +540,7 @@ module VmHelper::TextualSummary
 
   def textual_groups
     num = @record.number_of(:groups)
-    h = {:label => _("Groups"), :icon => "product product-group", :value => num}
+    h = {:label => _("Groups"), :icon => "ff ff-group", :value => num}
     if num > 0
       h[:title] = n_("Show the Group defined on this VM", "Show the Groups defined on this VM", num)
       h[:explorer] = true
@@ -555,7 +555,7 @@ module VmHelper::TextualSummary
     num = @record.number_of(:guest_applications)
     label = (os =~ /linux/) ? n_("Package", "Packages", num) : n_("Application", "Applications", num)
 
-    h = {:label => label, :icon => "product product-application", :value => num}
+    h = {:label => label, :icon => "ff ff-software-package", :value => num}
     if num > 0
       h[:title] = _("Show the %{label} installed on this VM") % {:label => label}
       h[:explorer] = true

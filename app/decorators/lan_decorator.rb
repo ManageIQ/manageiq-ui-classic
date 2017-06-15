@@ -1,6 +1,6 @@
 class LanDecorator < MiqDecorator
   def self.fonticon
-    'product product-network_switch'
+    'ff ff-network-switch'
   end
 
   def self.fileicon

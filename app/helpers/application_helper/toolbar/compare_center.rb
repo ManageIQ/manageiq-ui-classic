@@ -2,7 +2,7 @@ class ApplicationHelper::Toolbar::CompareCenter < ApplicationHelper::Toolbar::Ba
   button_group('comapre_tasks', [
     twostate(
       :compare_all,
-      'product product-compare_all fa-lg',
+      'ff ff-compare-all fa-lg',
       N_('All attributes'),
       nil,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
@@ -10,7 +10,7 @@ class ApplicationHelper::Toolbar::CompareCenter < ApplicationHelper::Toolbar::Ba
       :url_parms => "?id=\#{$vms_comp}&compare_task=all"),
     twostate(
       :compare_diff,
-      'product product-compare_diff fa-lg',
+      'ff ff-compare-different fa-lg',
       N_('Attributes with different values'),
       nil,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
@@ -18,7 +18,7 @@ class ApplicationHelper::Toolbar::CompareCenter < ApplicationHelper::Toolbar::Ba
       :url_parms => "?id=\#{$vms_comp}&compare_task=different"),
     twostate(
       :compare_same,
-      'product product-compare_same fa-lg',
+      'ff ff-compare-same fa-lg',
       N_('Attributes with same values'),
       nil,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
@@ -35,7 +35,7 @@ class ApplicationHelper::Toolbar::CompareCenter < ApplicationHelper::Toolbar::Ba
       :url => "compare_mode"),
     twostate(
       :comparemode_exists,
-      'product product-exists fa-lg',
+      'ff ff-exists fa-lg',
       N_('Exists Mode'),
       nil,
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,

@@ -19,7 +19,7 @@ class ApplicationHelper::Toolbar::MiqTemplatesCenter < ApplicationHelper::Toolba
           :onwhen    => "1+"),
         button(
           :miq_template_compare,
-          'product product-compare fa-lg',
+          'ff ff-compare-same fa-lg',
           N_('Select two or more Templates to compare'),
           N_('Compare Selected Templates'),
           :url_parms => "main_div",

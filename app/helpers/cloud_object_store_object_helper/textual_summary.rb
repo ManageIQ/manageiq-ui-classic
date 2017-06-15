@@ -49,7 +49,7 @@ module CloudObjectStoreObjectHelper::TextualSummary
     label = ui_lookup(:table => "cloud_object_store_container")
     h = {
       :label => label,
-      :icon  => "product product-cloud_object_store",
+      :icon  => "ff ff-cloud-object-store",
       :value => (object_store_container.nil? ? "None" : object_store_container.key)
     }
     if object_store_container && role_allows?(:feature => "cloud_object_store_container_show")

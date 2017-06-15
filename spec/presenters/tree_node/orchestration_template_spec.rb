@@ -14,7 +14,7 @@ describe TreeNode::OrchestrationTemplate do
       let(:object) { FactoryGirl.create(factory) }
 
       include_examples 'TreeNode::Node#key prefix', 'ot-'
-      include_examples 'TreeNode::Node#icon', "product product-template"
+      include_examples 'TreeNode::Node#icon', "ff ff-template"
     end
   end
 end

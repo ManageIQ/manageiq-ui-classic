@@ -119,7 +119,7 @@ module ServiceHelper::TextualSummary
 
   def textual_catalog_item
     st = @record.service_template
-    s = {:label => _("Parent Catalog Item"), :icon => "product product-template", :value => (st.nil? ? _("None") : st.name)}
+    s = {:label => _("Parent Catalog Item"), :icon => "ff ff-template", :value => (st.nil? ? _("None") : st.name)}
     if st && role_allows?(:feature => "catalog_items_accord")
       s[:title] = _("Show this Service's Parent Service Catalog")
       s[:link]  = url_for_only_path(:controller => 'catalog', :action => 'show', :id => st)
@@ -157,7 +157,7 @@ module ServiceHelper::TextualSummary
     job = @record.try(:job)
     {
       :label => _("Job"),
-      :icon  => "product product-orchestration_stack",
+      :icon  => "ff ff-stack",
       :value => job.name,
       :title => _("Show this Service's Job"),
       :link  => url_for_only_path(:controller => 'configuration_job', :action => 'show', :id => job.id)

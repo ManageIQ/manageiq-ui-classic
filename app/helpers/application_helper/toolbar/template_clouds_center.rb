@@ -28,7 +28,7 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
           :onwhen    => "1+"),
         button(
           :image_compare,
-          'product product-compare fa-lg',
+          'ff ff-compare-same fa-lg',
           N_('Select two or more items to compare'),
           N_('Compare Selected items'),
           :url_parms => "main_div",
@@ -63,7 +63,7 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
         separator,
         button(
           :image_right_size,
-          'product product-custom-6 fa-lg',
+          'ff ff-database-squeezed fa-lg',
           N_('CPU/Memory Recommendations of selected item'),
           N_('Right-Size Recommendations'),
           :url_parms => "main_div",
@@ -89,7 +89,7 @@ class ApplicationHelper::Toolbar::TemplateCloudsCenter < ApplicationHelper::Tool
       :items => [
         button(
           :image_miq_request_new,
-          'product product-clone fa-lg',
+          'ff ff-clone fa-lg',
           N_('Select a single Image to Provision Instances'),
           N_('Provision Instances using selected Image'),
           :url_parms => "main_div",

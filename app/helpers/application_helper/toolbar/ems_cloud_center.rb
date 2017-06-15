@@ -63,13 +63,13 @@ class ApplicationHelper::Toolbar::EmsCloudCenter < ApplicationHelper::Toolbar::B
   button_group('ems_cloud_monitoring', [
     select(
       :ems_cloud_monitoring_choice,
-      'product product-monitoring fa-lg',
+      'ff ff-monitoring fa-lg',
       t = N_('Monitoring'),
       t,
       :items => [
         button(
           :ems_cloud_timeline,
-          'product product-timeline fa-lg',
+          'ff ff-timeline fa-lg',
           N_('Show Timelines for this Cloud Provider'),
           N_('Timelines'),
           :klass     => ApplicationHelper::Button::EmsTimeline,

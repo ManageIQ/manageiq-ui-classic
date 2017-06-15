@@ -42,7 +42,7 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
     when 'CloudTenant'         then {:icon  => 'pficon-cloud-tenant'}
     when 'EmsCluster'          then {:icon  => 'pficon pficon-cluster'}
     when 'Host'                then {:icon  => 'pficon pficon-screen'}
-    when 'MiqTemplate'         then {:icon  => 'product product-template'}
+    when 'MiqTemplate'         then {:icon  => 'ff ff-template'}
     when 'Service'             then {:icon  => 'pficon pficon-service'}
     when 'Storage'             then {:icon  => 'fa fa-database'}
     when 'Vm'                  then {:icon  => 'pficon pficon-virtual-machine'}

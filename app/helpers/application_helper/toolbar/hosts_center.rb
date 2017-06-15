@@ -26,7 +26,7 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
           :onwhen    => "1+"),
         button(
           :host_compare,
-          'product product-compare fa-lg',
+          'ff-compare-same fa-lg',
           N_('Select two or more items to compare'),
           N_('Compare Selected items'),
           :url_parms => "main_div",
