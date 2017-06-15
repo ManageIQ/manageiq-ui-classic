@@ -18,6 +18,28 @@ class TreeBuilderCondition < TreeBuilder
     }
   end
 
+  # not using decorators for now because there are some inconsistencies
+  def self.folder_icon(klassname)
+    case klassname
+    when 'Host'
+      'pficon pficon-screen'
+    when 'Vm'
+      'pficon pficon-virtual-machine'
+    when 'ContainerReplicator'
+      'pficon pficon-replicator'
+    when 'ContainerGroup'
+      'fa fa-cubes'
+    when 'ContainerNode'
+      'pficon pficon-container-node'
+    when 'ContainerImage'
+      'pficon pficon-image'
+    when 'ExtManagementSystem'
+      'pficon pficon-server'
+    when 'PhysicalServer'
+      'pficon pficon-enterprise'
+    end
+  end
+
   # level 1 - host / vm
   def x_get_tree_roots(count_only, _options)
     text_i18n = {:Host                => _("Host Conditions"),
@@ -31,24 +53,8 @@ class TreeBuilderCondition < TreeBuilder
 
     objects = MiqPolicyController::UI_FOLDERS.collect do |model|
       text = text_i18n[model.name.to_sym]
-      icon = case model.to_s
-             when 'Host'
-               'pficon pficon-screen'
-             when 'Vm'
-               'pficon pficon-virtual-machine'
-             when 'ContainerReplicator'
-               'pficon pficon-replicator'
-             when 'ContainerGroup'
-               'fa fa-cubes'
-             when 'ContainerNode'
-               'pficon pficon-container-node'
-             when 'ContainerImage'
-               'pficon pficon-image'
-             when 'ExtManagementSystem'
-               'pficon pficon-server'
-             when 'PhysicalServer'
-               'pficon pficon-enterprise'
-             end
+      icon = self.class.folder_icon(model.to_s)
+
       {
         :id   => model.name.camelize(:lower),
         :icon => icon,
