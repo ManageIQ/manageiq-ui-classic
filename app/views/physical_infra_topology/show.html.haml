@@ -4,20 +4,12 @@
     %label#selected
     %div{'ng-if' => "kinds"}
       %kubernetes-topology-icon{tooltipOptions, :kind => "PhysicalServer"}
-        %svg.kube-topology
-          %g.EntityLegend.PhysicalInfra
-            %circle{:r => "17"}
-            -# pficon-server-group
-            %text{:y => "9"} &#xe91a;
         %label
+          %i.pficon.pficon-server-group
           = _("Physical Servers")
       %kubernetes-topology-icon{tooltipOptions, :kind => "Host"}
-        %svg.kube-topology
-          %g.EntityLegend.PhysicalInfra
-            %circle{:r => "17"}
-            -# pficon-screen
-            %text{:y => "9"} &#xE600;
         %label
+          %i.pficon.pficon-screen
           = _("Hosts")
 
   .alert.alert-info.alert-dismissable
