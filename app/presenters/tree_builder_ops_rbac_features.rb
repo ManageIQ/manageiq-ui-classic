@@ -6,7 +6,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
   def initialize(name, type, sandbox, build, role:, editable: false)
     @role     = role
     @editable = editable
-    @features = @role.miq_product_features.order(:identifier).pluck(:identifier)
+    @features = @role.miq_product_features.map(&:identifier)
 
     @root_counter = []
 
