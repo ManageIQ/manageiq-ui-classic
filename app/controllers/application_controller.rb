@@ -383,6 +383,7 @@ class ApplicationController < ActionController::Base
     if options.nil? || options[:view].nil?
       model_view = process_params_model_view(params, options)
       @edit = session[:edit]
+      options_from_session(options)
       @view, settings = get_view(model_view, options)
     else
       @view = options[:view]
@@ -401,6 +402,16 @@ class ApplicationController < ActionController::Base
       :data     => view_to_hash(@view),
       :messages => @flash_array
     }
+  end
+
+  def options_from_session(options)
+    options[:parent_method] = session[:paged_view_search_options][:parent_method]
+    options[:supported_features_filter] = session[:paged_view_search_options][:supported_features_filter]
+    options[:all_pages] = session[:paged_view_search_options][:page]
+    options[:where_clause] = session[:paged_view_search_options][:where_clause]
+    options[:named_scope] = session[:paged_view_search_options][:named_scope]
+    options[:display_filter_hash] = session[:paged_view_search_options][:display_filter_hash]
+    options[:match_via_descendants] = session[:paged_view_search_options][:match_via_descendants]
   end
 
   def event_logs
