@@ -21,24 +21,20 @@ class EmsInfraDashboardService
   end
 
   def status
-    {
+    status_hsh = {
       :ems_clusters  => {
+        :title        => openstack? ? _('Deplyoment Roles') : _('Cluster'),
         :count        => @ems.present? ? @ems.ems_clusters.count : EmsCluster.count,
         :errorCount   => 0,
         :warningCount => 0,
         :href         => get_url_to_entity(:ems_cluster)
       },
       :hosts         => {
+        :title        => openstack? ? _('Nodes') : _('Hosts'),
         :count        => @ems.present? ? @ems.hosts.count : Host.where.not(:ext_management_system => nil).count,
         :errorCount   => 0,
         :warningCount => 0,
         :href         => get_url_to_entity(:host)
-      },
-      :datastores    => {
-        :count        => @ems.present? ? @ems.storages.count : Storage.count,
-        :errorCount   => 0,
-        :warningCount => 0,
-        :href         => get_url_to_entity(:storage)
       },
       :vms           => {
         :count        => @ems.present? ? @ems.vms.count : VmInfra.where.not(:ext_management_system => nil).count,
@@ -54,6 +50,16 @@ class EmsInfraDashboardService
         :href         => get_url_to_entity(:miq_template)
       }
     }
+    unless openstack?
+      status_hsh[:datastores] = {
+        :count        => @ems.present? ? @ems.storages.count : Storage.count,
+        :errorCount   => 0,
+        :warningCount => 0,
+        :href         => get_url_to_entity(:storage)
+      }
+    end
+
+    status_hsh
   end
 
   def providers
@@ -124,40 +130,40 @@ class EmsInfraDashboardService
 
     {
       :clusterCpuUsage    => cluster_cpu_usage.presence,
-      :clusterMemoryUsage => cluster_memory_usage.presence
+      :clusterMemoryUsage => cluster_memory_usage.presence,
+      :title              => openstack? ? _('Deplyoment Roles Utilization') : _('Cluster Utilization')
     }
   end
 
   def recentHosts
     # Get recent hosts
-    all_hosts = Hash.new(0)
-    hosts = Host.where('created_on > ? and ems_id = ?', 30.days.ago.utc, @ems.id)
-    hosts = hosts.includes(:resource => [:ext_management_system]) unless @ems.present?
-    hosts.sort_by { |h| h.created_on }.uniq.each do |h|
-      date = h.created_on.strftime("%Y-%m-%d")
-      all_hosts[date] += Host.where('created_on = ?', h.created_on).count
-    end
-
-    {
+    all_hosts = recentRecords(Host)
+      {
       :xData => all_hosts.keys,
-      :yData => all_hosts.values.map
+      :yData => all_hosts.values.map,
+      :title => openstack? ? _('Recent Nodes') : _('Recent Hosts'),
+      :label => openstack? ? _('Nodes') : _('Hosts'),
     }
   end
 
   def recentVms
     # Get recent VMs
-    all_vms = Hash.new(0)
-    vms = VmOrTemplate.where('created_on > ? and ems_id = ?', 30.days.ago.utc, @ems.id)
-    vms = vms.includes(:resource => [:ext_management_system]) unless @ems.present?
-    vms.sort_by { |v| v.created_on }.uniq.each do |v|
-      date = v.created_on.strftime("%Y-%m-%d")
-      all_vms[date] += VmOrTemplate.where('created_on = ?', v.created_on).count
-    end
-
+    all_vms = recentRecords(VmOrTemplate)
     {
       :xData => all_vms.keys,
       :yData => all_vms.values.map
     }
+  end
+
+  def recentRecords(model)
+    all_records = Hash.new(0)
+    records = model.where('created_on > ? and ems_id = ?', 30.days.ago.utc, @ems.id)
+    records = records.includes(:resource => [:ext_management_system]) unless @ems.present?
+    records.sort_by { |r| r.created_on }.uniq.each do |r|
+      date = r.created_on.strftime("%Y-%m-%d")
+      all_records[date] += model.where('created_on = ?', r.created_on).count
+    end
+    all_records
   end
 
   def ems_utilization
@@ -204,5 +210,9 @@ class EmsInfraDashboardService
     @daily_metrics ||= Metric::Helper.find_for_interval_name('daily', tp)
                                      .where(:resource => (@ems || ManageIQ::Providers::InfraManager.all))
                                      .where('timestamp > ?', 30000.days.ago.utc).order('timestamp')
+  end
+
+  def openstack?
+    @ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
   end
 end

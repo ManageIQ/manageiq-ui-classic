@@ -47,6 +47,16 @@
         }
       ]
     },
+    "recentHosts": {
+      "title": "Recent Hosts",
+      "label": "hosts",
+      "xData": [
+        "2015-11-26"
+      ],
+      "yData": [
+        3
+      ]
+    },
     "providers": [
       {
         "count": 1,
