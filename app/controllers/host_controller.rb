@@ -417,8 +417,8 @@ class HostController < ApplicationController
       @host = @record = identify_record(params[:id])
     end
 
-    if !@flash_array.nil? && params[:pressed] == "host_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
+    if single_delete_test
+      single_delete_redirect
     elsif params[:pressed].ends_with?("_edit") || ["host_miq_request_new", "#{pfx}_miq_request_new",
                                                    "#{pfx}_clone", "#{pfx}_migrate",
                                                    "#{pfx}_publish"].include?(params[:pressed])

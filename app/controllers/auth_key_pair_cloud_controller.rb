@@ -36,8 +36,8 @@ class AuthKeyPairCloudController < ApplicationController
     delete_auth_key_pairs if params[:pressed] == 'auth_key_pair_cloud_delete'
     new if params[:pressed] == 'auth_key_pair_cloud_new'
 
-    if !@flash_array.nil? && params[:pressed] == "auth_key_pair_cloud_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
+    if single_delete_test
+      single_delete_redirect
     elsif params[:pressed] == "auth_key_pair_cloud_new"
       if @flash_array
         show_list

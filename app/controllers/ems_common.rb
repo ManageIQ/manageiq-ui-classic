@@ -344,10 +344,8 @@ module EmsCommon
       check_if_button_is_implemented
     end
 
-    if !@flash_array.nil? && params[:pressed] == "#{@table_name}_delete" && @single_delete
-      javascript_redirect :action      => 'show_list',
-                          :flash_msg   => @flash_array[0][:message],
-                          :flash_error => @flash_array[0][:level] == :error
+    if single_delete_test
+      single_delete_redirect
     elsif params[:pressed] == "host_aggregate_edit"
       javascript_redirect :controller => "host_aggregate",
                           :action     => "edit",

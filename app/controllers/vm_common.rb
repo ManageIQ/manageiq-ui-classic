@@ -54,8 +54,8 @@ module VmCommon
     end
     @vm = @record = identify_record(params[:id], VmOrTemplate) unless @lastaction == "show_list"
 
-    if !@flash_array.nil? && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message] # redirect to build the retire screen
+    if single_delete_test
+      single_delete_redirect
     elsif params[:pressed].ends_with?("_edit")
       if @redirect_controller
         javascript_redirect :controller => @redirect_controller, :action => @refresh_partial, :id => @redirect_id, :org_controller => @org_controller
