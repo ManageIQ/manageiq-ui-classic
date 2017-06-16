@@ -736,17 +736,163 @@ module ApplicationController::CiProcessing
   end
 
   def each_host(host_ids, task_name)
-    Host.where(:id => host_ids).order("lower(name)").each do |host|
+    Host.where(:id => host_ids).order('lower(name)').each do |host|
       begin
         yield host
       rescue => err
-        add_flash(_("%{model} \"%{name}\": Error during '%{task}': %{message}") %
-                  {
-                    :model   => ui_lookup(:model => "Host"),
-                    :name    => host.name,
-                    :task    => task_name,
-                    :message => err.message
-                  }, :error)
+        add_flash(
+          _("Host \"%{name}\": Error during '%{task}': %{message}") %
+          {
+            :name    => host.name,
+            :task    => task_name,
+            :message => err.message
+          },
+          :error
+        )
+      end
+    end
+  end
+
+  def process_hosts_refresh
+    Host.refresh_ems(hosts)
+    add_flash(n_("%{task} initiated for %{count} Host from the %{product} Database",
+                 "%{task} initiated for %{count} Hosts from the %{product} Database", hosts.length) % \
+      {:task    => (display_name || task_name(task)),
+       :product => I18n.t('product.name'),
+       :count   => hosts.length})
+    AuditEvent.success(:userid => session[:userid], :event => "host_#{task}",
+        :message => "'#{task_name}' successfully initiated for #{pluralize(hosts.length, "Host")}",
+        :target_class => "Host")
+  end
+
+  def process_hosts_destroy(hosts, display_name)
+    each_host(hosts, display_name) do |host|
+      validation = host.validate_destroy
+      if !validation[:available]
+        add_flash(validation[:message], :error)
+      else
+        audit = {:event        => "host_record_delete_initiated",
+                 :message      => "[#{host.name}] Record delete initiated",
+                 :target_id    => host.id,
+                 :target_class => "Host",
+                 :userid       => session[:userid]}
+        AuditEvent.success(audit)
+        host.destroy_queue
+      end
+    end
+  end
+
+  def process_hosts_scan(hosts, display_name)
+    each_host(hosts, display_name) do |host|
+      if host.respond_to?(:scan)
+        host.send(task.to_sym, session[:userid]) # Scan needs userid
+        add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => display_name})
+      else
+        add_flash(_("\"%{task}\": not supported for %{hostname}") % {:hostname => host.name, :task => display_name}, :error)
+      end
+    end
+  end
+
+  def process_hosts_maintenance(hosts, display_name)
+    each_host(hosts, display_name) do |host|
+      if host.maintenance
+        if host.respond_to?(:unset_node_maintenance)
+          host.send(:unset_node_maintenance_queue, session[:userid])
+          add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => display_name})
+        else
+          add_flash(_("\"%{task}\": not supported for %{hostname}") % {:hostname => host.name, :task => display_name}, :error)
+        end
+      elsif host.respond_to?(:set_node_maintenance)
+        host.send(:set_node_maintenance_queue, session[:userid])
+        add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => display_name})
+      else
+        add_flash(_("\"%{task}\": not supported for %{hostname}") % {:hostname => host.name, :task => display_name}, :error)
+      end
+    end
+  end
+
+  def process_host_service_scheduling(hosts, display_name)
+    each_host(hosts, display_name) do |host|
+      params[:miq_grid_checks].split(",").each do |cloud_service_id|
+        service = host.cloud_services.find(cloud_service_id)
+        if service.validate_enable_scheduling
+          resp = service.enable_scheduling
+          status = resp.body.fetch("service").fetch("status")
+          service.update(:scheduling_disabled => status == 'disabled')
+          add_flash(_("\"%{record}\": Scheduling is %{status} now.") % {:record => service.name, :status => status})
+        elsif service.validate_disable_scheduling
+          resp = service.disable_scheduling
+          status = resp.body.fetch("service").fetch("status")
+          service.update(:scheduling_disabled => status == 'disabled')
+          add_flash(_("\"%{record}\": Scheduling is %{status} now.") % {:record => service.name, :status => status})
+        else
+          add_flash(_("\"%{record}\": %{task} invalid") % {:record => service.name, :task => display_name}, :error)
+        end
+      end
+    end
+  end
+
+  def process_hosts_service_scheduling(hosts, display_name)
+    each_host(hosts, disply_name) do |host|
+      params[:miq_grid_checks].split(",").each do |cloud_service_id|
+        service = host.cloud_services.find(cloud_service_id)
+        if service.validate_enable_scheduling
+          resp = service.enable_scheduling
+          status = resp.body.fetch("service").fetch("status")
+          service.update(:scheduling_disabled => status == 'disabled')
+          add_flash(_("\"%{record}\": Scheduling is %{status} now.") % {:record => service.name, :status => status})
+        elsif service.validate_disable_scheduling
+          resp = service.disable_scheduling
+          status = resp.body.fetch("service").fetch("status")
+          service.update(:scheduling_disabled => status == 'disabled')
+          add_flash(_("\"%{record}\": Scheduling is %{status} now.") % {:record => service.name, :status => status})
+        else
+          add_flash(_("\"%{record}\": %{task} invalid") % {:record => service.name, :task => display_name}, :error)
+        end
+      end
+    end
+  end
+
+  def process_hosts_manageable(hosts, display_name)
+    each_host(hosts, display_name) do |host|
+      if %w(enroll available adoptfail inspectfail cleanfail).include?(host.hardware.provision_state)
+        host.manageable_queue(session[:userid])
+        add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => display_name})
+      else
+        add_flash(_("\"%{task}\": not available for %{hostname}. %{hostname}'s provision state must be in \"available\", \"adoptfail\", \"cleanfail\", \"enroll\", or \"inspectfail\"") % {:hostname => host.name, :task => (display_name || task)}, :error)
+      end
+    end
+  end
+
+  def process_hosts_introspect(hosts, display_name)
+    each_host(hosts, display_name) do |host|
+      if host.hardware.provision_state == "manageable"
+        host.introspect_queue(session[:userid])
+        add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => display_name})
+      else
+        add_flash(_("\"%{task}\": not available for %{hostname}. %{hostname}'s provision state needs to be in \"manageable\"") % {:hostname => host.name, :task => (display_name || task)}, :error)
+      end
+    end
+  end
+
+  def process_host_provide(hosts, display_name)
+    each_host(hosts, display_name) do |host|
+      if host.hardware.provision_state == "manageable"
+        host.provide_queue(session[:userid])
+        add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => display_name})
+      else
+        add_flash(_("\"%{task}\": not available for %{hostname}. %{hostname}'s provision state needs to be in \"manageable\"") % {:hostname => host.name, :task => (display_name || task)}, :error)
+      end
+    end
+  end
+
+  def process_hosts_generic(hosts, task, display_name)
+    each_host(hosts, display_name) do |host|
+      if host.respond_to?(task) && host.is_available?(task)
+        host.send(task.to_sym)
+        add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => (display_name || task)})
+      else
+        add_flash(_("\"%{task}\": not available for %{hostname}") % {:hostname => host.name, :task => (display_name || task)}, :error)
       end
     end
   end
@@ -755,119 +901,19 @@ module ApplicationController::CiProcessing
   def process_hosts(hosts, task, display_name = nil)
     hosts, _hosts_out_region = filter_ids_in_region(hosts, _("Host"))
     return if hosts.empty?
-    task_name = (display_name || task)
+
+    display_name ||= task
 
     case task
-    when "refresh_ems"
-      Host.refresh_ems(hosts)
-      add_flash(n_("%{task} initiated for %{count} Host from the %{product} Database",
-                   "%{task} initiated for %{count} Hosts from the %{product} Database", hosts.length) % \
-        {:task    => (display_name || task_name(task)),
-         :product => I18n.t('product.name'),
-         :count   => hosts.length})
-      AuditEvent.success(:userid => session[:userid], :event => "host_#{task}",
-          :message => "'#{task_name}' successfully initiated for #{pluralize(hosts.length, "Host")}",
-          :target_class => "Host")
-    when "destroy"
-      each_host(hosts, task_name) do |host|
-        validation = host.validate_destroy
-        if !validation[:available]
-          add_flash(validation[:message], :error)
-        else
-          audit = {:event        => "host_record_delete_initiated",
-                   :message      => "[#{host.name}] Record delete initiated",
-                   :target_id    => host.id,
-                   :target_class => "Host",
-                   :userid       => session[:userid]}
-          AuditEvent.success(audit)
-          host.destroy_queue
-        end
-      end
-    when "scan"
-      each_host(hosts, task_name) do |host|
-        if host.respond_to?(:scan)
-          host.send(task.to_sym, session[:userid]) # Scan needs userid
-          add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => (display_name || task)})
-        else
-          add_flash(_("\"%{task}\": not supported for %{hostname}") % {:hostname => host.name, :task => (task_name || task)}, :error)
-        end
-      end
-    when "maintenance"
-      each_host(hosts, task_name) do |host|
-        if host.maintenance
-          if host.respond_to?(:unset_node_maintenance)
-            host.send(:unset_node_maintenance_queue, session[:userid])
-            add_flash(_("\"%{record}\": %{task} successfully initiated") %
-                      {:record => host.name, :task => (display_name || task)})
-          else
-            add_flash(_("\"%{task}\": not supported for %{hostname}") %
-                      {:hostname => host.name, :task => (task_name || task)}, :error)
-          end
-        elsif host.respond_to?(:set_node_maintenance)
-          host.send(:set_node_maintenance_queue, session[:userid])
-          add_flash(_("\"%{record}\": %{task} successfully initiated") %
-                    {:record => host.name, :task => (display_name || task)})
-        else
-          add_flash(_("\"%{task}\": not supported for %{hostname}") %
-                    {:hostname => host.name, :task => (task_name || task)}, :error)
-        end
-      end
-    when "service_scheduling"
-      each_host(hosts, task_name) do |host|
-        params[:miq_grid_checks].split(",").each do |cloud_service_id|
-          service = host.cloud_services.find(cloud_service_id)
-          if service.validate_enable_scheduling
-            resp = service.enable_scheduling
-            status = resp.body.fetch("service").fetch("status")
-            service.update(:scheduling_disabled => status == 'disabled')
-            add_flash(_("\"%{record}\": Scheduling is %{status} now.") % {:record => service.name, :status => status})
-          elsif service.validate_disable_scheduling
-            resp = service.disable_scheduling
-            status = resp.body.fetch("service").fetch("status")
-            service.update(:scheduling_disabled => status == 'disabled')
-            add_flash(_("\"%{record}\": Scheduling is %{status} now.") % {:record => service.name, :status => status})
-          else
-            add_flash(_("\"%{record}\": %{task} invalid") % {:record => service.name, :task => (display_name || task)},
-                      :error)
-          end
-        end
-      end
-    when "manageable"
-      each_host(hosts, task_name) do |host|
-        if %w(enroll available adoptfail inspectfail cleanfail).include?(host.hardware.provision_state)
-          host.manageable_queue(session[:userid])
-          add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => (display_name || task)})
-        else
-          add_flash(_("\"%{task}\": not available for %{hostname}. %{hostname}'s provision state must be in \"available\", \"adoptfail\", \"cleanfail\", \"enroll\", or \"inspectfail\"") % {:hostname => host.name, :task => (display_name || task)}, :error)
-        end
-      end
-    when "introspect"
-      each_host(hosts, task_name) do |host|
-        if host.hardware.provision_state == "manageable"
-          host.introspect_queue(session[:userid])
-          add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => (display_name || task)})
-        else
-          add_flash(_("\"%{task}\": not available for %{hostname}. %{hostname}'s provision state needs to be in \"manageable\"") % {:hostname => host.name, :task => (display_name || task)}, :error)
-        end
-      end
-    when "provide"
-      each_host(hosts, task_name) do |host|
-        if host.hardware.provision_state == "manageable"
-          host.provide_queue(session[:userid])
-          add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => (display_name || task)})
-        else
-          add_flash(_("\"%{task}\": not available for %{hostname}. %{hostname}'s provision state needs to be in \"manageable\"") % {:hostname => host.name, :task => (display_name || task)}, :error)
-        end
-      end
-    else
-      each_host(hosts, task_name) do |host|
-        if host.respond_to?(task) && host.is_available?(task)
-          host.send(task.to_sym)
-          add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => (display_name || task)})
-        else
-          add_flash(_("\"%{task}\": not available for %{hostname}") % {:hostname => host.name, :task => (display_name || task)}, :error)
-        end
-      end
+    when 'refresh_ems'        then process_hosts_refresh(hosts, display_name)
+    when 'destroy'            then process_hosts_destroy(hosts, display_name)
+    when 'scan'               then process_hosts_scan(hosts, display_name)
+    when 'maintenance'        then process_hosts_maintenance(hosts, display_name)
+    when 'service_scheduling' then process_hosts_service_scheduling(hosts, display_name)
+    when 'manageable'         then process_hosts_manageable(hosts, display_name)
+    when 'introspect'         then process_hosts_introspect(hosts, display_name)
+    when 'provide'            then process_hosts_provide(hosts, display_name)
+    else                           process_hosts_generic(hosts, task, display_name)
     end
   end
 
@@ -985,7 +1031,7 @@ module ApplicationController::CiProcessing
         add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => "host")}, :error)
       else
         hosts.push(find_id_with_rbac(Host, params[:id]))
-        process_hosts(hosts, method, display_name)  unless hosts.empty?
+        process_hosts(hosts, method, display_name) unless hosts.empty?
       end
 
       params[:display] = @display
