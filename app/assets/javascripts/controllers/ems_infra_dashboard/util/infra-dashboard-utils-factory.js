@@ -49,8 +49,9 @@ angular.module('miq.util').factory('infraDashboardUtilsFactory', function() {
     statusObject.notification = {};
     if (data) {
       statusObject.count = data.count;
-      if (data.title)
+      if (data.title) {
         statusObject.title = data.title;
+      }
 
       if (data.errorCount > 0) {
         statusObject.notification = {

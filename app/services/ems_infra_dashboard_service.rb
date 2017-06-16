@@ -137,15 +137,8 @@ class EmsInfraDashboardService
 
   def recentHosts
     # Get recent hosts
-    all_hosts = Hash.new(0)
-    hosts = Host.where('created_on > ? and ems_id = ?', 30.days.ago.utc, @ems.id)
-    hosts = hosts.includes(:resource => [:ext_management_system]) unless @ems.present?
-    hosts.sort_by { |h| h.created_on }.uniq.each do |h|
-      date = h.created_on.strftime("%Y-%m-%d")
-      all_hosts[date] += Host.where('created_on = ?', h.created_on).count
-    end
-
-    {
+    all_hosts = recentRecords(Host)
+      {
       :xData => all_hosts.keys,
       :yData => all_hosts.values.map,
       :title => openstack? ? _('Recent Nodes') : _('Recent Hosts'),
@@ -155,18 +148,22 @@ class EmsInfraDashboardService
 
   def recentVms
     # Get recent VMs
-    all_vms = Hash.new(0)
-    vms = VmOrTemplate.where('created_on > ? and ems_id = ?', 30.days.ago.utc, @ems.id)
-    vms = vms.includes(:resource => [:ext_management_system]) unless @ems.present?
-    vms.sort_by { |v| v.created_on }.uniq.each do |v|
-      date = v.created_on.strftime("%Y-%m-%d")
-      all_vms[date] += VmOrTemplate.where('created_on = ?', v.created_on).count
-    end
-
+    all_vms = recentRecords(VmOrTemplate)
     {
       :xData => all_vms.keys,
       :yData => all_vms.values.map
     }
+  end
+
+  def recentRecords(model)
+    all_records = Hash.new(0)
+    records = model.where('created_on > ? and ems_id = ?', 30.days.ago.utc, @ems.id)
+    records = records.includes(:resource => [:ext_management_system]) unless @ems.present?
+    records.sort_by { |r| r.created_on }.uniq.each do |r|
+      date = r.created_on.strftime("%Y-%m-%d")
+      all_records[date] += model.where('created_on = ?', r.created_on).count
+    end
+    all_records
   end
 
   def ems_utilization
