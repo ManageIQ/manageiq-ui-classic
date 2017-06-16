@@ -376,6 +376,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.default_api_port = "443";
       $scope.emsCommonModel.event_stream_selection = "none";
       $scope.emsCommonModel.amqp_security_protocol = 'non-ssl';
+    } else if ($scope.emsCommonModel.emstype === 'lenovo_ph_infra') {
+      $scope.emsCommonModel.default_api_port = "443";
     }
   };
 
