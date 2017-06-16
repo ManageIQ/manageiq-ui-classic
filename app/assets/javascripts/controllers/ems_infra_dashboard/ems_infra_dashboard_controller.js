@@ -122,12 +122,15 @@
         $scope.clusterCpuUsage = infraChartsMixin.processHeatmapData($scope.clusterCpuUsage, data.heatmaps.clusterCpuUsage);
         $scope.clusterCpuUsage.loadingDone = true;
 
+        $scope.clusterChartTitle = data.heatmaps.title;
         $scope.clusterMemoryUsage =
           infraChartsMixin.processHeatmapData($scope.clusterMemoryUsage, data.heatmaps.clusterMemoryUsage);
         $scope.clusterMemoryUsage.loadingDone = true;
 
         // Recent Hosts
         $scope.recentHostsConfig = infraChartsMixin.chartConfig.recentHostsConfig;
+        $scope.recentHostsConfig.headTitle = data.recentHosts.title;
+        $scope.recentHostsConfig.label = data.recentHosts.label;
 
         // recent Hosts chart
         $scope.recentHostsData = infraChartsMixin.processRecentHostsData(data.recentHosts,
