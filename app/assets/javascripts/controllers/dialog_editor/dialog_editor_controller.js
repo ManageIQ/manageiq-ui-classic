@@ -33,6 +33,22 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
     getBack(__("Dialog editing was canceled by the user."), true);
   }
 
+  var beingCloned = null; // hack that solves recursion problem for cloneDeep
+  function customizer(value) {
+    if ((value !== beingCloned) && _.isObject(value) && (value.href || value.$$hashKey || "active" in value)) {
+      beingCloned = value;
+      var copy = _.cloneDeep(value, customizer);
+      beingCloned = null;
+      // remove unnecessary attributes
+      delete copy.href;
+      delete copy.active;
+      delete copy.$$hashKey;
+      return copy;
+    } else {
+      return undefined;
+    }
+  }
+
   function saveDialogDetails() {
     var action, dialogData;
 
@@ -44,10 +60,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
         label: DialogEditor.getDialogLabel(),
         dialog_tabs: [],
       };
-      _.cloneDeep(DialogEditor.getDialogTabs()).forEach(function(tab) {
-        delete tab.active;
-        dialogData.dialog_tabs.push(tab);
-      });
+      dialogData.dialog_tabs = _.cloneDeep(DialogEditor.getDialogTabs(), customizer);
     } else {
       action = 'edit';
       dialogData = {
@@ -57,10 +70,9 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
           dialog_tabs: [],
         },
       };
-      _.cloneDeep(DialogEditor.getDialogTabs()).forEach(function(tab) {
-        delete tab.active;
-        dialogData.content.dialog_tabs.push(tab);
-      });
+      // once we start using lodash 4.17.4, change to 'cloneDeepWith'
+      // https://lodash.com/docs/4.17.4#cloneDeepWith
+      dialogData.content.dialog_tabs = _.cloneDeep(DialogEditor.getDialogTabs(), customizer);
     }
     // save the dialog
     API.post(
@@ -92,5 +104,4 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
     miqFlashLater(flash);
     $window.location.href = url;
   }
-
 }]);
