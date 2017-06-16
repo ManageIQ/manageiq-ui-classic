@@ -8,7 +8,6 @@ angular.module('miq.util').factory('infraDashboardUtilsFactory', function() {
   };
   var createClustersStatus = function() {
     return {
-      title: __("Clusters"),
       iconClass: " pficon pficon-cluster",
       count: 0,
       notification: {}
@@ -16,7 +15,6 @@ angular.module('miq.util').factory('infraDashboardUtilsFactory', function() {
   };
   var createHostsStatus = function() {
     return {
-      title: __("Hosts"),
       iconClass: "pficon pficon-screen",
       count: 0,
       notification: {}
@@ -51,6 +49,9 @@ angular.module('miq.util').factory('infraDashboardUtilsFactory', function() {
     statusObject.notification = {};
     if (data) {
       statusObject.count = data.count;
+      if (data.title)
+        statusObject.title = data.title;
+
       if (data.errorCount > 0) {
         statusObject.notification = {
           iconClass: "pficon pficon-error-circle-o",

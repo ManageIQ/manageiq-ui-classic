@@ -20,12 +20,13 @@
                "show-top-border"          => "true",
                :status                    => "objectStatus.hosts",
                :url                       => "navigation"}
-        .col-xs-6.col-sm-6.col-md-3
-          %div{:layout                    => "mini",
-               "pf-aggregate-status-card" => "",
-               "show-top-border"          => "true",
-               :status                    => "objectStatus.datastores",
-               :url                       => "navigation"}
+        - unless @ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
+          .col-xs-6.col-sm-6.col-md-3
+            %div{:layout                    => "mini",
+                 "pf-aggregate-status-card" => "",
+                 "show-top-border"          => "true",
+                 :status                    => "objectStatus.datastores",
+                 :url                       => "navigation"}
         .col-xs-6.col-sm-6.col-md-3
           %div{:layout                    => "mini",
                "pf-aggregate-status-card" => "",
@@ -75,7 +76,7 @@
            :heatmaps                      => "heatmaps",
            "heatmaps-card"                => "",
            :hidetopborder                 => "true",
-           :title                         => _("Cluster Utilization")}
+           "title"                        => "{{clusterChartTitle}}"}
   .row.row-tile-pf.row-tile-pf-last
     .col-xs-12.col-sm-6.col-md-6
       %div{"head-title" => "{{recentHostsConfig.headTitle}}",
