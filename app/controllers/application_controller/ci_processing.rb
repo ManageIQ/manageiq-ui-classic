@@ -234,8 +234,25 @@ module ApplicationController::CiProcessing
     true
   end
 
+  def check_non_empty(items)
+    if items.empty?
+      add_flash(_("No items were selected for %{task}") % {:task => display_name}, :error)
+      return false
+    end
+    true
+  end
+
+  def vm_button_operation_internal(items, task, display_name)
+    return false if task == 'retire_now' && !check_retire_requirements(items)
+    return false if task == 'scan' && !check_scan_requirements(items)
+    return false if check_non_empty(items)
+
+    process_objects(items, task, display_name)
+    true
+  end
+
   # Common item button handler routines
-  def vm_button_operation(method, display_name, partial_after_single_selection = nil)
+  def vm_button_operation(task, display_name, partial_after_single_selection = nil)
     klass = get_rec_cls
 
     # Either a list or coming from a different controller (e.g. from host screen, go to its vms)
@@ -243,17 +260,9 @@ module ApplicationController::CiProcessing
        !%w(orchestration_stack service vm_cloud vm_infra vm miq_template vm_or_template).include?(controller_name)
 
       # FIXME: retrieving vms from DB two times
-      selected_items = find_checked_ids_with_rbac(klass)
+      items = find_checked_ids_with_rbac(klass, task)
 
-      return if method == 'retire_now' && !check_retire_requirements(selected_items)
-      return if method == 'scan' && !check_scan_requirements(selected_items)
-
-      if selected_items.empty?
-        add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => controller_name), :task => display_name}, :error)
-        return
-      end
-
-      process_objects(selected_items, method)
+      vm_button_operation_internal(items, task, display_name) || return
 
       # In non-explorer case, render the list (filling in @view).
       if @lastaction == "show_list"
@@ -262,18 +271,18 @@ module ApplicationController::CiProcessing
       end
 
     else # showing 1 item
-      if params[:id].nil? || klass.find_by_id(params[:id]).nil?
-        add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => controller_name)}, :error)
+      items = [find_id_with_rbac(klass, params[:id])]
+
+      unless check_non_empty(items)
         show_list unless @explorer
         @refresh_partial = "layouts/gtl"
         return
       end
 
-      selected_items = [find_id_with_rbac(klass, params[:id])]
-      process_objects(selected_items, method) unless selected_items.empty?
+      vm_button_operation_internal(items, task, display_name)
 
       # Tells callers to go back to show_list because this item may be gone.
-      @single_delete = method == 'destroy' && !flash_errors?
+      @single_delete = task == 'destroy' && !flash_errors?
 
       # For Snapshot Trees
       if partial_after_single_selection && !@explorer
