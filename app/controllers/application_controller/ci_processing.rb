@@ -303,14 +303,29 @@ module ApplicationController::CiProcessing
     cloud_object_store_button_operation(klass, task)
   end
 
+  def check_suports_task(items, task, display_name)
+    if klass.find(items).any? { |item| !item.supports?(task) }
+
+      message = if items.length == 1
+                  _("%{task} does not apply to at least one of the selected items")
+                else
+                  _("%{task} does not apply to this item")
+                end
+
+      add_flash(message % {:task => display_name}, :error)
+      return false
+    end
+    true
+  end
+
   def cloud_object_store_button_operation(klass, task)
-    # Map to instance method name
+    display_name = _(task.capitalize)
+
+    # Map task to instance method name
     case task
-    when "delete"
+    when 'delete'
       method = "#{task}_#{klass.name.underscore.to_sym}"
-      display_name = _(task.capitalize)
     else
-      display_name = _(task.capitalize)
       method = task = "#{klass.name.underscore.to_sym}_#{task}"
     end
 
@@ -319,25 +334,22 @@ module ApplicationController::CiProcessing
     if @lastaction == "show_list" || %w(cloud_object_store_containers cloud_object_store_objects).include?(@display)
       # FIXME retrieving vms from DB two times
       items = find_checked_ids_with_rbac(klass)
-      if items.empty?
-        add_flash(_("No %{model} were selected for %{task}") %
-                    {:model => ui_lookup(:models => klass.name), :task => display_name}, :error)
-      elsif klass.find(items).any? { |item| !item.supports?(task) }
-        add_flash(_("%{task} does not apply to at least one of the selected items") %
-                    {:task => display_name}, :error)
-      else
-        process_objects(items, method, display_name)
-      end
-    elsif params[:id].nil? || klass.find_by(:id => params[:id]).nil?
-      add_flash(_("%{record} no longer exists") %
-                  {:record => ui_lookup(:table => request.parameters["controller"])}, :error)
-      show_list unless @explorer
-      @refresh_partial = "layouts/gtl"
-    elsif !klass.find_by(:id => params[:id]).supports?(task)
-      add_flash(_("%{task} does not apply to this item") %
-                  {:task => display_name}, :error)
+
+      return unless check_non_empty(items)
+      return unless check_suports_task(items, task, display_name)
+
+      process_objects(items, method, display_name)
     else
-      items.push(find_id_with_rbac(klass, params[:id]))
+      items = [find_id_with_rbac(klass, params[:id])]
+
+      unless check_non_empty(items)
+        show_list unless @explorer
+        @refresh_partial = "layouts/gtl"
+        return
+      end
+
+      return unless check_suports_task(items, task, display_name)
+
       process_objects(items, method, display_name) unless items.empty?
     end
   end
