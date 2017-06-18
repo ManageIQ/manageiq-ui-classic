@@ -15,9 +15,9 @@ describe('adHocMetricsController', function() {
 
   beforeEach(inject(function(_$httpBackend_, $rootScope, _$controller_) {
     $httpBackend = _$httpBackend_;
-    $httpBackend.when('GET','/container_dashboard/data/42/?live=true&query=get_tenants').respond(mock_tenants_data);
-    $httpBackend.when('GET','/container_dashboard/data/42/?live=true&tenant=_system&query=metric_tags&limit=250').respond(mock_data);
-    $httpBackend.when('GET','/container_dashboard/data/42/?live=true&tenant=_system&limit=10000&query=metric_definitions&tags={}&page=1&items_per_page=8').respond(mock_metrics_data);
+    $httpBackend.when('GET','/container_dashboard/data/42/?live=live&query=get_tenants').respond(mock_tenants_data);
+    $httpBackend.when('GET','/container_dashboard/data/42/?live=live&tenant=_system&query=metric_tags&limit=250').respond(mock_data);
+    $httpBackend.when('GET','/container_dashboard/data/42/?live=live&tenant=_system&limit=10000&query=metric_definitions&tags={}&page=1&items_per_page=8').respond(mock_metrics_data);
     $controller = _$controller_('adHocMetricsController');
     $controller.refreshList();
     $httpBackend.flush();

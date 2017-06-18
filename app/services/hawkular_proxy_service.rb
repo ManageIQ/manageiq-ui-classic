@@ -11,11 +11,12 @@ class HawkularProxyService
   }.freeze
 
   def initialize(provider_id, controller)
+    @db_name = "Hawkular"
     @provider_id = provider_id
     @controller = controller
 
     @params = controller.params
-    @ems = ManageIQ::Providers::ContainerManager.find(@provider_id) unless @provider_id.blank?
+    @ems = ExtManagementSystem.find(@provider_id.to_i) unless @provider_id.blank?
     @tenant = @params['tenant'] || '_system'
 
     @cli = ManageIQ::Providers::Kubernetes::ContainerManager::MetricsCapture::HawkularClient.new(@ems, @tenant)
@@ -78,7 +79,7 @@ class HawkularProxyService
   rescue StandardError => e
     {
       :parameters => params,
-      :error      => ActionView::Base.full_sanitizer.sanitize(e.message) + " " + _("(Please check your Hawkular server)")
+      :error      => ActionView::Base.full_sanitizer.sanitize(e.message) + " " + _("(Please check your #{@db_name} server)")
     }
   end
 

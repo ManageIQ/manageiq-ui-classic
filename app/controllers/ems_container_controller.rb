@@ -91,8 +91,11 @@ class EmsContainerController < ApplicationController
     [nil, e.message]
   end
 
-  def retrieve_metrics_selection
-    @ems.endpoints.count == 1 ? 'hawkular_disabled' : 'hawkular_enabled'
+  def retrieve_monitoring_selection
+    endpoint_role = @ems.endpoints.where.not(:role => 'default').pluck(:role)
+    unless endpoint_role.nil?
+      endpoint_role.first
+    end
   end
 
   private
