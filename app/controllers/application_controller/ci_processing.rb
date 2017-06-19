@@ -840,7 +840,7 @@ module ApplicationController::CiProcessing
       end
 
     else # showing 1 storage
-      if params[:id].nil? || storage.find_by_id(params[:id]).nil?
+      if params[:id].nil? || Storage.find_by_id(params[:id]).nil?
         add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:tables => "storage")}, :error)
       else
         storages.push(find_id_with_rbac(Storage, params[:id]))
