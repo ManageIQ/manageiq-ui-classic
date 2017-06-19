@@ -181,11 +181,7 @@ module MiqAeCustomizationController::Dialogs
   # Edit dialog using the Dialog Editor
   def dialog_edit_editor
     assert_privileges("dialog_edit")
-    if params[:id].present?
-      @record = Dialog.find(ApplicationRecord.uncompress_id(params[:id]))
-    else
-      @record = Dialog.find(ApplicationRecord.uncompress_id(params["miq_grid_checks"]))
-    end
+    @record = find_records_with_rbac(Dialog, checked_or_params)
     javascript_redirect :controller => 'miq_ae_customization', :action => 'editor', :id => @record.id
   end
 
