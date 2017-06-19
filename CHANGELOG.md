@@ -2,6 +2,71 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased - as of Sprint 63 end 2017-06-19
+
+### Added
+- Automation-Ansible: Added Verbosity drop down on both Provisioning & Retirement tabs [(#1493)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1493)
+- Compute
+  - Cloud: Show last refresh time & date in provider summary screen [(#1518)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1518)
+  - Containers
+    - Hawkular hostname detection changes [(#1304)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1304)
+    - Add differential chart option to charts [(#1367)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1367)
+    - Support for Prometheus in Container Provider summary page [(#1525)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1525)
+  - Infrastructure: Show VM's MAC address in textual summary [(#1517)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1517)
+  - Middleware: Rendering status for servers and deployments in middleware topology [(#1461)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1461)
+  - Networks: Include ems ref on the Cloud Network summary page [(#1521)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1521)
+  - Physical Infrastructure
+    - Set default port for lenovo provider form to 443 [(#1531)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1531)
+    - Show hosts relationship in physical infra listnav [(#1495)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1495)
+    - Add more columns to display Physical Server details [(#1506)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1506)
+    - Display Host relationship in the Physical Infra Topology [(#1505)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1505)
+    - Displayed number of relationships between Hosts and Physical Server [(#1458)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1458)
+    - Support Physical Infrastructure policies in the UI [(#1504)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1504)
+    - Physical Server quadicon  [(#1173)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1173)
+    - Add Physical Server relationship for Host summary page [(#1440)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1440)
+- Formatting: Update Policy Event Assignment styling [(#1543)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1543)
+
+### Fixed
+- Angular: Remove "Confirm Password" input field previously required for Validation [(#1335)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1335)
+- Automation-Ansible
+  - Add git protocol to URL for Ansible repo [(#1557)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1557)
+  - Fixed parameters being passed in to rbac features check. [(#1567)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1567)  
+  - Add IDs to ansible credential form selects [(#1487)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1487)
+  - Change ng-show to ng-if in button group [(#1486)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1486)
+  - Rollback any changes to Dialog object when validating dialog elements. [(#1445)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1445)
+- Cloud-Intel-Reporting
+  - Parse the column/field name correctly in reports [(#1170)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1170)
+  - Allow to see saved reports after linked MiqTask deleted [(#1488)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1488)
+  - Fix 'Download TXT' for nested list resources [(#1529)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1529)
+- Compute
+  - Rename 'Cockpit Console' to 'Web Console' per cockpit product integration guidelines [(#1548)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1548)
+  - Cloud
+    - Disable Web Console button when VM's platform is Windows [(#1282)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1282)
+    - Fix flash messages on the Instance attach/detach cloud volume form [(#1514)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1514)
+  - Containers
+    - Containers Dashboard: Show one square per node in realtime heatmaps [(#608)](https://github.com/ManageIQ/manageiq-ui-classic/pull/608)
+    - Make selected items persistance [(#1451)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1451)
+    - Check for base unit when adjusting unit label [(#1447)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1447)
+  - Infrastructure
+    - Fixed titles and labels for Hosts & Clusters Openstack Providers [(#1560)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1560)
+    - Fix incorrect redirection after provider / host edit [(#1491)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1491)
+  - Physical Infrastructure
+    - Add format to physical server report [(#1480)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1480)
+    - Fix Physical Server link in Physical Infra Summary page [(#1479)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1479)
+- Configuration Management: Fix filters in config mgmt Configured systems [(#776)](https://github.com/ManageIQ/manageiq-ui-classic/pull/776)
+- Control
+  - All Conditions - use same folder icons as in tree [(#1551)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1551)
+  - Alerts with resolved=nil should be visible [(#1503)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1503)
+  - Clickable labels in policy's event assignment screen [(#1511)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1511)
+- Middleware: Fix middleware providers broken links in timeline events [(#1492)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1492)
+- Networks
+  - CloudSubnet: IP version not displayed [(#1515)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1515)
+  - Enable the cancel button on the custom form button partial [(#1520)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1520)
+- Settings
+  - Fix Features Tree for "everything under" features [(#1229)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1229)
+  - Fix reset button action for tenant tagging [(#1470)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1470)
+  - Fix the placement of form buttons on the ops screens [(#1500)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1500)
+
 ## Unreleased - as of Sprint 62 end 2017-06-5
 
 ### Added
