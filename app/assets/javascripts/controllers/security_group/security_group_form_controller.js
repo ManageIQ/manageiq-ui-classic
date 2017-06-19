@@ -2,6 +2,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
   var vm = this;
 
   var init = function() {
+    vm.afterGet = false;
     vm.securityGroupModel = {
       name: "",
       description: "",
@@ -20,12 +21,13 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
     vm.saveable = miqService.saveable;
 
     if (vm.newRecord) {
-      vm.afterGet = false;
+      vm.afterGet = true;
       vm.modelCopy = angular.copy( vm.securityGroupModel );
     } else {
       miqService.sparkleOn();
-      API.get("/api/security_groups/" + securityGroupFormId + "?attributes=name,description,cloud_tenant.name,firewall_rules").then(function(data) {
+      API.get("/api/security_groups/" + securityGroupFormId + "?attributes=name,ext_management_system.name,description,cloud_tenant.name,firewall_rules").then(function(data) {
         vm.securityGroupModel.name = data.name;
+        vm.securityGroupModel.ems_name = data.ext_management_system.name;
         vm.securityGroupModel.description = data.description;
         vm.securityGroupModel.cloud_tenant_name = angular.isDefined(data.cloud_tenant) ? data.cloud_tenant.name : undefined;
         vm.securityGroupModel.firewall_rules = data.firewall_rules;
@@ -54,7 +56,7 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
       id: null,
       resource_id: securityGroupFormId,
       resource_type: "SecurityGroup",
-      direction: null,
+      direction: "inbound",
       ems_ref: null,
       end_port: null,
       host_protocol: null,
@@ -76,7 +78,9 @@ ManageIQ.angular.app.controller('securityGroupFormController', ['securityGroupFo
 
   vm.deleteFirewallRuleClicked = function(index) {
     vm.securityGroupModel.firewall_rules[index].deleted = true;
-    vm.securityGroupModel.firewall_rules_delete = true;
+    if (vm.securityGroupModel.firewall_rules[index].id != null) {
+      vm.securityGroupModel.firewall_rules_delete = true;
+    }
   };
 
   vm.saveClicked = function() {
