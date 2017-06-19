@@ -304,13 +304,13 @@ module ApplicationController::CiProcessing
     cloud_object_store_button_operation(klass, task)
   end
 
-  def check_suports_task(items, task, display_name)
+  def check_suports_task(items, klass, task, display_name)
     if klass.find(items).any? { |item| !item.supports?(task) }
 
       message = if items.length == 1
-                  _("%{task} does not apply to at least one of the selected items")
-                else
                   _("%{task} does not apply to this item")
+                else
+                  _("%{task} does not apply to at least one of the selected items")
                 end
 
       add_flash(message % {:task => display_name}, :error)
@@ -337,7 +337,7 @@ module ApplicationController::CiProcessing
       items = find_checked_ids_with_rbac(klass)
 
       return unless check_non_empty(items)
-      return unless check_suports_task(items, task, display_name)
+      return unless check_suports_task(items, klass, task, display_name)
 
       process_objects(items, method, display_name)
     else
@@ -349,7 +349,7 @@ module ApplicationController::CiProcessing
         return
       end
 
-      return unless check_suports_task(items, task, display_name)
+      return unless check_suports_task(items, klass, task, display_name)
 
       process_objects(items, method, display_name) unless items.empty?
     end
