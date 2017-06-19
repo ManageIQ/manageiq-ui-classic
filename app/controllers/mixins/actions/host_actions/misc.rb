@@ -22,7 +22,7 @@ module Mixins
           end
         end
 
-        def process_hosts_refresh(host, task, display_name)
+        def process_hosts_refresh(hosts, task, display_name)
           Host.refresh_ems(hosts)
           add_flash(n_("%{task} initiated for %{count} Host from the %{product} Database",
                        "%{task} initiated for %{count} Hosts from the %{product} Database", hosts.length) % \
