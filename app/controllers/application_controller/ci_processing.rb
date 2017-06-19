@@ -235,8 +235,8 @@ module ApplicationController::CiProcessing
     true
   end
 
-  def check_non_empty(items)
-    if items.empty?
+  def check_non_empty(items, display_name)
+    if items.blank?
       add_flash(_("No items were selected for %{task}") % {:task => display_name}, :error)
       return false
     end
@@ -246,7 +246,7 @@ module ApplicationController::CiProcessing
   def vm_button_operation_internal(items, task, display_name)
     return false if task == 'retire_now' && !check_retire_requirements(items)
     return false if task == 'scan' && !check_scan_requirements(items)
-    return false if check_non_empty(items)
+    return false unless check_non_empty(items, display_name)
 
     process_objects(items, task, display_name)
     true
@@ -272,9 +272,9 @@ module ApplicationController::CiProcessing
       end
 
     else # showing 1 item
-      items = [find_id_with_rbac(klass, params[:id])]
+      items = [find_id_with_rbac(klass, params[:id])].compact
 
-      unless check_non_empty(items)
+      unless check_non_empty(items, display_name)
         show_list unless @explorer
         @refresh_partial = "layouts/gtl"
         return
@@ -336,14 +336,14 @@ module ApplicationController::CiProcessing
       # FIXME retrieving vms from DB two times
       items = find_checked_ids_with_rbac(klass)
 
-      return unless check_non_empty(items)
+      return unless check_non_empty(items, display_name)
       return unless check_suports_task(items, klass, task, display_name)
 
       process_objects(items, method, display_name)
     else
-      items = [find_id_with_rbac(klass, params[:id])]
+      items = [find_id_with_rbac(klass, params[:id])].compact
 
-      unless check_non_empty(items)
+      unless check_non_empty(items, display_name)
         show_list unless @explorer
         @refresh_partial = "layouts/gtl"
         return
