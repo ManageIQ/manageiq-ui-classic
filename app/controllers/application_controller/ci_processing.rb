@@ -272,7 +272,7 @@ module ApplicationController::CiProcessing
       end
 
     else # showing 1 item
-      items = [find_id_with_rbac(klass, params[:id])].compact
+      items = [find_id_with_rbac_no_exception(klass, params[:id])].compact
 
       unless check_non_empty(items, display_name)
         show_list unless @explorer
@@ -341,7 +341,7 @@ module ApplicationController::CiProcessing
 
       process_objects(items, method, display_name)
     else
-      items = [find_id_with_rbac(klass, params[:id])].compact
+      items = [find_id_with_rbac_no_exception(klass, params[:id])].compact
 
       unless check_non_empty(items, display_name)
         show_list unless @explorer
@@ -838,7 +838,7 @@ module ApplicationController::CiProcessing
       end
 
     else # showing 1 storage
-      if params[:id].nil? || Storage.find_by_id(params[:id]).nil?
+      if params[:id].nil? || storage.find_by_id(params[:id]).nil?
         add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:tables => "storage")}, :error)
       else
         storages.push(find_id_with_rbac(Storage, params[:id]))

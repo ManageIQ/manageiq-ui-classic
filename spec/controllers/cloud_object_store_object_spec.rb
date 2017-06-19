@@ -118,7 +118,7 @@ describe CloudObjectStoreObjectController do
       }
 
       expect(assigns(:flash_array).first[:message]).to include(
-        "Cloud Object Store Object no longer exists"
+        "No items were selected for Delete"
       )
       expect(response.status).to eq(200)
     end
