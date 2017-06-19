@@ -108,7 +108,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
       $scope.emsCommonModel.default_api_port                = angular.isDefined(data.default_api_port) && data.default_api_port !== '' ? data.default_api_port.toString() : $scope.getDefaultApiPort($scope.emsCommonModel.emstype);
       $scope.emsCommonModel.amqp_api_port                   = angular.isDefined(data.amqp_api_port) && data.amqp_api_port !== '' ? data.amqp_api_port.toString() : '5672';
-      $scope.emsCommonModel.hawkular_api_port               = angular.isDefined(data.hawkular_api_port) && data.hawkular_api_port !== '' ? data.hawkular_api_port.toString() : '443';
+      $scope.emsCommonModel.hawkular_api_port               = angular.isDefined(data.hawkular_api_port) && data.hawkular_api_port !== null && data.hawkular_api_port !== '' ? data.hawkular_api_port.toString() : '443';
       $scope.emsCommonModel.metrics_api_port                = angular.isDefined(data.metrics_api_port) && data.metrics_api_port !== '' ? data.metrics_api_port.toString() : '';
       $scope.emsCommonModel.metrics_database_name           = angular.isDefined(data.metrics_database_name) && data.metrics_database_name !== '' ? data.metrics_database_name : data.metrics_default_database_name;
       $scope.emsCommonModel.api_version                     = data.api_version;
