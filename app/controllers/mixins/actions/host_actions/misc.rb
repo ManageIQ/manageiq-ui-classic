@@ -250,11 +250,8 @@ module Mixins
             if method == 'destroy'
               @single_delete = true unless flash_errors?
             end
-            if @display == "vms"
-              @refresh_partial = "layouts/gtl"
-            else
-              @refresh_partial = "config"
-            end
+
+            @refresh_partial = @display == "vms" ? "layouts/gtl" : "config"
           end
 
           hosts.count
