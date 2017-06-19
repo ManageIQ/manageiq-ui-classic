@@ -1,8 +1,7 @@
 describe MiddlewareServerController do
   let(:server) do
     FactoryGirl.create(:hawkular_middleware_server, :properties              => {},
-                                                    :middleware_server_group => nil,
-                                                    :feed                    => '')
+                                                    :middleware_server_group => nil)
   end
 
   render_views
