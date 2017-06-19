@@ -2,7 +2,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
   var vm = this;
 
   if (dialogId === 'new') {
-    var dialog = {
+    var dialogInitContent = {
       'content': [{
         'dialog_tabs': [{
           'label': 'New tab',
@@ -12,7 +12,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
         }],
       }],
     };
-    init(dialog);
+    init(dialogInitContent);
   } else {
     API.get(
       '/api/service_dialogs/'
@@ -29,13 +29,9 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
   vm.saveDialogDetails = saveDialogDetails;
   vm.dismissChanges = dismissChanges;
 
-  function dismissChanges() {
-    getBack(__("Dialog editing was canceled by the user."), true);
-  }
-
   var beingCloned = null; // hack that solves recursion problem for cloneDeep
   function customizer(value) {
-    if ((value !== beingCloned) && _.isObject(value) && (value.href || value.$$hashKey || "active" in value)) {
+    if ((value !== beingCloned) && _.isObject(value) && (value.href || value.$$hashKey || 'active' in value)) {
       beingCloned = value;
       var copy = _.cloneDeep(value, customizer);
       beingCloned = null;
@@ -50,7 +46,8 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
   }
 
   function saveDialogDetails() {
-    var action, dialogData;
+    var action
+    var dialogData;
 
     // load dialog data
     if (angular.isUndefined(DialogEditor.getDialogId())) {
@@ -82,12 +79,16 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
     ).then(saveSuccess, saveFailure);
   }
 
+  function dismissChanges() {
+    getBack(__('Dialog editing was canceled by the user.'), true);
+  }
+
   function saveSuccess() {
     getBack(vm.dialog.content[0].label + __(' was saved'), false, false);
   }
 
   function saveFailure() {
-    miqService.miqFlash("error", __('There was an error editing this dialog.'));
+    miqService.miqFlash('error', __('There was an error editing this dialog.'));
   }
 
   // FIXME: @himdel: method copied from other place -> maybe extract somewhere?
@@ -101,7 +102,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
       flash.level = 'error';
     }
 
-    miqFlashLater(flash);
+    miqService.miqFlashLater(flash);
     $window.location.href = url;
   }
 }]);
