@@ -19,7 +19,11 @@ module Mixins
 
         def evacuatevms
           assert_privileges("instance_evacuate")
-          session[:evacuate_items] = checked_or_params
+          recs = checked_or_params
+          @edit = {}
+          @edit[:object_ids] = recs
+          session[:edit] = @edit
+          session[:evacuate_items] = recs
           if @explorer
             evacuate
             @refresh_partial = "vm_common/evacuate"

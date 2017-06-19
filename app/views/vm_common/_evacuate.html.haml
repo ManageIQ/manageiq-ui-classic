@@ -54,13 +54,6 @@
                   'paging_div_buttons_type'          => "Submit"}
 
   %hr
-  %div
-    %h3
-      = n_("1 Instance to be Evacuated", "%{amount} Instances to be Evacuated", @evacuate_items.length) % {:amount => @evacuate_items.length}
-    - if @evacuate_items
-      - @embedded = true
-      - @quadicon_no_url = true
-      = render :partial => "layouts/gtl"
 
 - unless @explorer
   %table{:width => '100%'}
@@ -81,3 +74,10 @@
 :javascript
   ManageIQ.angular.app.value('vmCloudEvacuateFormId', "#{@evacuate_items.length == 1 ? @evacuate_items[0].id : ''}");
   miq_bootstrap('#form_div');
+%div
+  %h3
+    = n_("1 Instance to be Evacuated", "%{amount} Instances to be Evacuated", @evacuate_items.length) % {:amount => @evacuate_items.length}
+  - if @evacuate_items
+    - @embedded = true
+    - @quadicon_no_url = true
+    = render :partial => "layouts/gtl"
