@@ -8,12 +8,12 @@ describe ApplicationController do
   context "Verify proper methods are called for snapshot" do
     it "Delete All" do
       expect(controller).to receive(:vm_button_operation)
-        .with('remove_all_snapshots', 'delete all snapshots', 'vm_common/config')
+        .with('remove_all_snapshots', 'Delete All Snapshots', 'vm_common/config')
       controller.send(:vm_snapshot_delete_all)
     end
 
     it "Delete Selected" do
-      expect(controller).to receive(:vm_button_operation).with('remove_snapshot', 'delete snapshot', 'vm_common/config')
+      expect(controller).to receive(:vm_button_operation).with('remove_snapshot', 'Delete Snapshot', 'vm_common/config')
       controller.send(:vm_snapshot_delete)
     end
   end
@@ -768,7 +768,7 @@ describe HostController do
       vm2 = FactoryGirl.create(:vm_vmware)
       vm3 = FactoryGirl.create(:vm_vmware)
       vms = [vm1.id, vm2.id, vm3.id]
-      controller.send(:process_objects, vms, 'refresh_ems')
+      controller.send(:process_objects, vms, 'refresh_ems', _('Refresh Provider'))
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include "Refresh Provider initiated for #{vms.length} VMs"
     end

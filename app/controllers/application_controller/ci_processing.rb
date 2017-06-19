@@ -382,6 +382,7 @@ module ApplicationController::CiProcessing
 
     assert_rbac(klass, objs)
 
+    display_name ||= task.titleize
     case klass_str
     when 'OrchestrationStack', 'Service', 'CloudObjectStoreContainer', 'CloudObjectStoreObject'
       objs, _objs_out_reg = filter_ids_in_region(objs, klass.to_s)
@@ -405,7 +406,8 @@ module ApplicationController::CiProcessing
         objs.length
       ) %
       {
-        :task    => display_name ? display_name.titleize : task_name(task),
+        # FIXME: Unify the dataflow: get rid of 'task_name (ApplicationHelper::Tasks)'.
+        :task    => display_name,
         :number  => objs.length,
         :product => I18n.t('product.name'),
         :model   => ui_lookup(:model => klass.to_s),
@@ -452,7 +454,7 @@ module ApplicationController::CiProcessing
   # Delete all selected or single displayed VM(s)
   def deletevms
     assert_privileges(params[:pressed])
-    vm_button_operation('destroy', 'deletion')
+    vm_button_operation('destroy', _('Delete'))
   end
   alias_method :image_delete, :deletevms
   alias_method :instance_delete, :deletevms
@@ -462,7 +464,7 @@ module ApplicationController::CiProcessing
   # Import info for all selected or single displayed vm(s)
   def syncvms
     assert_privileges(params[:pressed])
-    vm_button_operation('sync', 'for Virtual Black Box synchronization')
+    vm_button_operation('sync', _('for Virtual Black Box synchronization'))
   end
 
   DEFAULT_PRIVILEGE = Object.new # :nodoc:
@@ -476,7 +478,7 @@ module ApplicationController::CiProcessing
       privilege = params[:pressed]
     end
     assert_privileges(privilege)
-    vm_button_operation('refresh_ems', 'Refresh')
+    vm_button_operation('refresh_ems', _('Refresh Provider'))
   end
   alias_method :image_refresh, :refreshvms
   alias_method :instance_refresh, :refreshvms
@@ -486,7 +488,7 @@ module ApplicationController::CiProcessing
   # Import info for all selected or single displayed vm(s)
   def scanvms
     assert_privileges(params[:pressed])
-    vm_button_operation('scan', 'SmartState Analysis')
+    vm_button_operation('scan', _('Analysis'))
   end
   alias_method :image_scan, :scanvms
   alias_method :instance_scan, :scanvms
@@ -496,7 +498,7 @@ module ApplicationController::CiProcessing
   # Immediately retire items
   def retirevms_now
     assert_privileges(params[:pressed])
-    vm_button_operation('retire_now', 'retire')
+    vm_button_operation('retire_now', _('Retirement'))
   end
   alias_method :instance_retire_now, :retirevms_now
   alias_method :vm_retire_now, :retirevms_now
@@ -504,7 +506,7 @@ module ApplicationController::CiProcessing
 
   def check_compliance_vms
     assert_privileges(params[:pressed])
-    vm_button_operation('check_compliance_queue', 'check compliance')
+    vm_button_operation('check_compliance_queue', _('Check Compliance'))
   end
   alias_method :image_check_compliance, :check_compliance_vms
   alias_method :instance_check_compliance, :check_compliance_vms
@@ -514,7 +516,7 @@ module ApplicationController::CiProcessing
   # Collect running processes for all selected or single displayed vm(s)
   def getprocessesvms
     assert_privileges(params[:pressed])
-    vm_button_operation('collect_running_processes', 'Collect Running Processes')
+    vm_button_operation('collect_running_processes', _('Collect Running Processes'))
   end
   alias_method :instance_collect_running_processes, :getprocessesvms
   alias_method :vm_collect_running_processes, :getprocessesvms
@@ -522,7 +524,7 @@ module ApplicationController::CiProcessing
   # Start all selected or single displayed vm(s)
   def startvms
     assert_privileges(params[:pressed])
-    vm_button_operation('start', 'start')
+    vm_button_operation('start', _('Start'))
   end
   alias_method :instance_start, :startvms
   alias_method :vm_start, :startvms
@@ -530,7 +532,7 @@ module ApplicationController::CiProcessing
   # Suspend all selected or single displayed vm(s)
   def suspendvms
     assert_privileges(params[:pressed])
-    vm_button_operation('suspend', 'suspend')
+    vm_button_operation('suspend', _('Suspend'))
   end
   alias_method :instance_suspend, :suspendvms
   alias_method :vm_suspend, :suspendvms
@@ -538,7 +540,7 @@ module ApplicationController::CiProcessing
   # Pause all selected or single displayed vm(s)
   def pausevms
     assert_privileges(params[:pressed])
-    vm_button_operation('pause', 'pause')
+    vm_button_operation('pause', _('Pause'))
   end
   alias_method :instance_pause, :pausevms
   alias_method :vm_pause, :pausevms
@@ -546,14 +548,14 @@ module ApplicationController::CiProcessing
   # Terminate all selected or single displayed vm(s)
   def terminatevms
     assert_privileges(params[:pressed])
-    vm_button_operation('vm_destroy', 'terminate')
+    vm_button_operation('vm_destroy', _('Terminate'))
   end
   alias_method :instance_terminate, :terminatevms
 
   # Stop all selected or single displayed vm(s)
   def stopvms
     assert_privileges(params[:pressed])
-    vm_button_operation('stop', 'stop')
+    vm_button_operation('stop', _('Stop'))
   end
   alias_method :instance_stop, :stopvms
   alias_method :vm_stop, :stopvms
@@ -561,7 +563,7 @@ module ApplicationController::CiProcessing
   # Shelve all selected or single displayed vm(s)
   def shelvevms
     assert_privileges(params[:pressed])
-    vm_button_operation('shelve', 'shelve')
+    vm_button_operation('shelve', _('Shelve'))
   end
   alias_method :instance_shelve, :shelvevms
   alias_method :vm_shelve, :shelvevms
@@ -569,7 +571,7 @@ module ApplicationController::CiProcessing
   # Shelve all selected or single displayed vm(s)
   def shelveoffloadvms
     assert_privileges(params[:pressed])
-    vm_button_operation('shelve_offload', 'shelve_offload')
+    vm_button_operation('shelve_offload', _('Shelve Offload'))
   end
   alias_method :instance_shelve_offload, :shelveoffloadvms
   alias_method :vm_shelve_offload, :shelveoffloadvms
@@ -577,7 +579,7 @@ module ApplicationController::CiProcessing
   # Reset all selected or single displayed vm(s)
   def resetvms
     assert_privileges(params[:pressed])
-    vm_button_operation('reset', 'reset')
+    vm_button_operation('reset', _('Reset'))
   end
   alias_method :instance_reset, :resetvms
   alias_method :vm_reset, :resetvms
@@ -585,20 +587,20 @@ module ApplicationController::CiProcessing
   # Shutdown guests on all selected or single displayed vm(s)
   def guestshutdown
     assert_privileges(params[:pressed])
-    vm_button_operation('shutdown_guest', 'shutdown')
+    vm_button_operation('shutdown_guest', _('Shutdown Guest'))
   end
   alias_method :vm_guest_shutdown, :guestshutdown
 
   # Standby guests on all selected or single displayed vm(s)
   def gueststandby
     assert_privileges(params[:pressed])
-    vm_button_operation('standby_guest', 'standby')
+    vm_button_operation('standby_guest', _('Standby Guest'))
   end
 
   # Restart guests on all selected or single displayed vm(s)
   def guestreboot
     assert_privileges(params[:pressed])
-    vm_button_operation('reboot_guest', 'restart')
+    vm_button_operation('reboot_guest', _('Restart Guest'))
   end
   alias_method :instance_guest_restart, :guestreboot
   alias_method :vm_guest_restart, :guestreboot
@@ -606,21 +608,21 @@ module ApplicationController::CiProcessing
   # Delete all snapshots for vm(s)
   def deleteallsnapsvms
     assert_privileges(params[:pressed])
-    vm_button_operation('remove_all_snapshots', 'delete all snapshots', 'vm_common/config')
+    vm_button_operation('remove_all_snapshots', _('Delete All Snapshots'), 'vm_common/config')
   end
   alias_method :vm_snapshot_delete_all, :deleteallsnapsvms
 
   # Delete selected snapshot for vm
   def deletesnapsvms
     assert_privileges(params[:pressed])
-    vm_button_operation('remove_snapshot', 'delete snapshot', 'vm_common/config')
+    vm_button_operation('remove_snapshot', _('Delete Snapshot'), 'vm_common/config')
   end
   alias_method :vm_snapshot_delete, :deletesnapsvms
 
   # Delete selected snapshot for vm
   def revertsnapsvms
     assert_privileges(params[:pressed])
-    vm_button_operation('revert_to_snapshot', 'revert to a snapshot', 'vm_common/config')
+    vm_button_operation('revert_to_snapshot', _('Revert to a Snapshot'), 'vm_common/config')
   end
   alias_method :vm_snapshot_revert, :revertsnapsvms
 
