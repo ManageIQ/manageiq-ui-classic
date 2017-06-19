@@ -91,7 +91,7 @@ describe ApplicationController do
         controller.params[:miq_grid_checks] = ''
         controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
         expect(assigns(:flash_array).first[:message]).to include(
-          "No Cloud Object Store Containers were selected for Delete"
+          "No items were selected for Delete"
         )
       end
 
@@ -160,7 +160,7 @@ describe ApplicationController do
       it "flash - container no longer exists" do
         controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_delete")
         expect(assigns(:flash_array).first[:message]).to include(
-          "Cloud Object Store Container no longer exists"
+          "No items were selected for Delete"
         )
       end
 
@@ -248,7 +248,7 @@ describe ApplicationController do
         controller.params[:miq_grid_checks] = ""
         controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
         expect(assigns(:flash_array).first[:message]).to include(
-          "No Cloud Object Store Objects were selected for Delete"
+          "No items were selected for Delete"
         )
       end
 
@@ -319,7 +319,7 @@ describe ApplicationController do
         object.destroy
         controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_object_delete")
         expect(assigns(:flash_array).first[:message]).to include(
-          "Cloud Object Store Object no longer exists"
+          "No items were selected for Delete"
         )
       end
 
@@ -407,7 +407,7 @@ describe ApplicationController do
         controller.params[:miq_grid_checks] = ''
         controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
         expect(assigns(:flash_array).first[:message]).to include(
-          "No Cloud Object Store Containers were selected for Clear"
+          "No items were selected for Clear"
         )
       end
 
@@ -476,7 +476,7 @@ describe ApplicationController do
       it "flash - container no longer exists" do
         controller.send(:process_cloud_object_storage_buttons, "cloud_object_store_container_clear")
         expect(assigns(:flash_array).first[:message]).to include(
-          "Cloud Object Store Container no longer exists"
+          "No items were selected for Clear"
         )
       end
 
