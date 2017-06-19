@@ -2,6 +2,7 @@ ManageIQ.angular.app.controller('cloudNetworkFormController', ['cloudNetworkForm
   var vm = this;
 
   var init = function() {
+    vm.afterGet = false;
     vm.cloudNetworkModel = { name: '', ems_id: '', cloud_tenant_id: '' };
     vm.formId = cloudNetworkFormId;
     vm.model = "cloudNetworkModel";
@@ -18,8 +19,9 @@ ManageIQ.angular.app.controller('cloudNetworkFormController', ['cloudNetworkForm
       vm.modelCopy = angular.copy( vm.cloudNetworkModel );
     } else {
       miqService.sparkleOn();
-      API.get("/api/cloud_networks/" + cloudNetworkFormId + "?attributes=cloud_tenant").then(function(data) {
+      API.get("/api/cloud_networks/" + cloudNetworkFormId + "?attributes=cloud_tenant,ext_management_system.name").then(function(data) {
         vm.cloudNetworkModel.name = data.name;
+        vm.cloudNetworkModel.ems_name = data.ext_management_system.name;
         vm.cloudNetworkModel.cloud_tenant_name = data.cloud_tenant.name;
         vm.cloudNetworkModel.enabled = data.enabled;
         vm.cloudNetworkModel.external_facing = data.external_facing;

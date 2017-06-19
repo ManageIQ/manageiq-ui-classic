@@ -5,14 +5,13 @@
     %label.col-md-2.control-label
       = _('Network Name')
     .col-md-8
-      %input.form-control{:type          => "text",
-                          :name          => "name",
-                          'ng-model'     => "vm.cloudNetworkModel.name",
-                          'ng-maxlength' => 128,
-                          "required"     => true}
       %span.help-block{"ng-show" => "angularForm.name.$error.required"}
         = _("Required")
-
+      %input.form-control{"type"         => "text",
+                          "name"         => "name",
+                          'ng-model'     => "vm.cloudNetworkModel.name",
+                          'ng-maxlength' => 128,
+                          "required"     => ""}
   .form-group
     %label.control-label.col-md-2{"for" => "cloud_network_external_facing"}
       = _('External Router')

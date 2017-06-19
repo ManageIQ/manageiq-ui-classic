@@ -8,20 +8,19 @@
    "ng-show"       => "vm.afterGet"}
 
   = render :partial => "layouts/flash_msg"
-  = render :partial => "common_new_edit"
 
   %h3
-    = _('Network Provider Information')
+    = _('Network Management Provider')
   .form-horizontal
-    .form-group{'ng-readonly' => "editRecord"}
-      %label.col-md-2.control-label{'ng-readonly' => "newRecord"}
-        = _('Provider Network Type')
+    .form-group
+      %label.col-md-2.control-label
+        = _('Network Manager')
       .col-md-8
-        %input.form-control{:type          => "text",
-                            :name          => "provider_network_type",
-                            "ng-model"     => "vm.cloudNetworkModel.provider_network_type",
+        %input.form-control{"type"         => "text",
+                            "name"         => "ems_name",
                             "ng-maxlength" => 128,
-                            "ng-readonly"  => "!newRecord"}
+                            "ng-model"     => "vm.cloudNetworkModel.ems_name",
+                            "readonly"     => true}
   %h3
     = _('Placement')
   .form-horizontal
@@ -29,12 +28,25 @@
       %label.col-md-2.control-label
         = _('Cloud Tenant')
       .col-md-8
-        %input.form-control{:type          => "text",
-                            :name          => "cloud_tenant_name",
+        %input.form-control{"type"         => "text",
+                            "name"         => "cloud_tenant_name",
                             "ng-maxlength" => 128,
                             "ng-model"     => "vm.cloudNetworkModel.cloud_tenant_name",
-                            "ng-readonly"  => "!newRecord"}
+                            "ng-readonly"  => true}
+  %h3
+    = _('Network Provider Information')
+  .form-horizontal
+    .form-group{'ng-readonly' => "editRecord"}
+      %label.col-md-2.control-label{'ng-readonly' => "newRecord"}
+        = _('Provider Network Type')
+      .col-md-8
+        %input.form-control{"type"         => "text",
+                            "name"         => "provider_network_type",
+                            "ng-maxlength" => 128,
+                            "ng-model"     => "vm.cloudNetworkModel.provider_network_type",
+                            "readonly"     => true}
 
+  = render :partial => "common_new_edit"
   = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript
