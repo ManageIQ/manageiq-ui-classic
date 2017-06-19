@@ -18,8 +18,7 @@ describe MiddlewareServerGroupController do
 
     let(:server) do
       FactoryGirl.create(:hawkular_middleware_server, :properties              => {},
-                                                      :middleware_server_group => group,
-                                                      :feed                    => '')
+                                                      :middleware_server_group => group)
     end
 
     before do
