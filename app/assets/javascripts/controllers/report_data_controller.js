@@ -369,7 +369,12 @@
         var oldPagination = pagingDiv.querySelector('div');
         oldPagination ? oldPagination.remove() : null;
 
-        var col = $('<div class="col-md-12"></div>');
+        var cols = 12;
+        if ($('#form_buttons_div').css('display') !== 'none' && $('#form_buttons_div').children().length !== 0) {
+          cols = 10;
+        }
+
+        var col = $('<div class="col-md-' + cols + '"></div>');
         $(pagingDiv).append(col);
         col[0].appendChild(pagination[0]);
       }
