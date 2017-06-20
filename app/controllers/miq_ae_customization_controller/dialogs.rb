@@ -182,7 +182,9 @@ module MiqAeCustomizationController::Dialogs
   def dialog_edit_editor
     assert_privileges("dialog_edit")
     @record = find_records_with_rbac(Dialog, checked_or_params)
-    javascript_redirect :controller => 'miq_ae_customization', :action => 'editor', :id => @record.id
+    javascript_redirect :controller => 'miq_ae_customization',
+                        :action     => 'editor',
+                        :id         => Array.wrap(@record).first.id
   end
 
   # edit dialog
