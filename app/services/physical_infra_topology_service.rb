@@ -3,10 +3,16 @@ class PhysicalInfraTopologyService < TopologyService
 
   @included_relations = [
     :tags,
-    :physical_servers => [:tags, :host => :tags],
+    :physical_servers => [
+      :tags,
+      :host => [
+        :tags,
+        :vms => :tags
+      ]
+    ],
   ]
 
-  @kinds = %i(PhysicalInfraManager PhysicalServer Host Tag)
+  @kinds = %i(PhysicalInfraManager PhysicalServer Host Vm Tag)
 
   def entity_display_type(entity)
     if entity.kind_of?(ManageIQ::Providers::PhysicalInfraManager)
