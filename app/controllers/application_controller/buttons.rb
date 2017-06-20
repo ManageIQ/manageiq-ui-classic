@@ -267,9 +267,7 @@ module ApplicationController::Buttons
   def custom_buttons_invoke(button, objs)
     if objs.length > 1 &&
        (button.options && button.options.key?(:submit_how) && button.options[:submit_how].to_s == 'all')
-      # FIXME: wee need something like this from the core/automate:
-      # button.invoke(:object_id => objs.map(&:id), :object_type => objs[0].class.base_class.name)
-      raise "Not implemented."
+      button.invoke(objs)
     else
       objs.each { |obj| button.invoke(obj) }
     end
