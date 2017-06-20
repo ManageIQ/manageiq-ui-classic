@@ -21,33 +21,22 @@ module Mixins
                        end
           @edit ||= {}
           @edit[:controller] = controller
-          recs = []
-          if !session[:checked_items].nil? && @lastaction == "set_checked_items"
-            recs = session[:checked_items]
-          else
-            recs = find_checked_ids_with_rbac(get_class_from_controller_param(controller))
-          end
-          if recs.blank?
-            id = find_id_with_rbac(get_class_from_controller_param(params[:controller]), params[:id])
-            recs = [id.to_i]
-          end
+
+          recs = session[:checked_items]
+          recs = checked_or_params if recs.nil?
+
           @edit[:object_ids] = recs
-          if recs.length < 1
+          if recs.empty?
             add_flash(_("One or more %{model} must be selected to Set Ownership") % {
               :model => Dictionary.gettext(db.to_s, :type => :model, :notfound => :titleize, :plural => true)}, :error)
             @refresh_div = "flash_msg_div"
             @refresh_partial = "layouts/flash_msg"
             return
-          else
-            ownership_items = recs.collect(&:to_i)
           end
 
-          if filter_ownership_items(get_class_from_controller_param(controller), ownership_items).empty?
-            add_flash(_('None of the selected items allow ownership changes'), :error)
-            @refresh_div = "flash_msg_div"
-            @refresh_partial = "layouts/flash_msg"
-            return
-          end
+          ownership_items = recs.collect(&:to_i)
+          @origin_ownership_items = ownership_items
+          @ownership_items = find_records_with_rbac(get_class_from_controller_param(controller), ownership_items)
 
           if @explorer
             @sb[:explorer] = true
@@ -85,7 +74,7 @@ module Mixins
           @sb[:explorer] = true if @explorer
           @in_a_form = @ownershipedit = true
           drop_breadcrumb(:name => _("Set Ownership"), :url => "/vm_common/ownership")
-          ownership_items = params[:rec_ids] if params[:rec_ids]
+          ownership_items = find_records_with_rbac(get_class_from_controller_param(controller), params[:rec_ids]) if params[:rec_ids]
           build_ownership_info(ownership_items)
           return if @ownershipitems.empty?
           build_targets_hash(@ownershipitems)
@@ -93,15 +82,6 @@ module Mixins
             @refresh_partial = "shared/views/ownership"
           else
             render :action => "show"
-          end
-        end
-
-        def filter_ownership_items(klass, ownership_items)
-          @origin_ownership_items = ownership_items
-          @ownershipitems ||= begin
-            ownership_scope = klass.where(:id => ownership_items)
-            ownership_scope = ownership_scope.with_ownership if klass.respond_to?(:with_ownership)
-            Rbac.filtered(ownership_scope.order(:name))
           end
         end
 
@@ -119,7 +99,7 @@ module Mixins
           Rbac.filtered(MiqGroup.non_tenant_groups).each { |g| @groups[g.description] = g.id.to_s }
 
           @user = @group = 'dont-change' if ownership_items.length > 1
-          @edit[:object_ids] = filter_ownership_items(klass, ownership_items)
+          @edit[:object_ids] = ownership_items
           @view = get_db_view(klass == VmOrTemplate ? Vm : klass) # Instantiate the MIQ Report view object
           @view.table = MiqFilter.records2table(@ownershipitems, @view.cols + ['id'])
           session[:edit] = @edit
@@ -136,7 +116,7 @@ module Mixins
           @group = group ? group.id.to_s : nil
           Rbac.filtered(MiqGroup).each { |g| @groups[g.description] = g.id.to_s }
           @user = @group = 'dont-change' if ownership_items.length > 1
-          @ownershipitems = Rbac.filtered(klass.where(:id => ownership_items).order(:name), :class => klass)
+          @ownershipitems = find_records_with_rbac(klass, ownership_items).sort_by(&:name)
           raise _('Invalid items passed') unless @ownershipitems.pluck(:id).to_set == ownership_items.map(&:to_i).to_set
           {:user  => @user,
            :group => @group}
