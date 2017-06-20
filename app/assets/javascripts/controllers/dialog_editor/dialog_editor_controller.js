@@ -31,22 +31,31 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
 
   var beingCloned = null; // hack that solves recursion problem for cloneDeep
   function customizer(value) {
-    if ((value !== beingCloned) && _.isObject(value) && (value.href || value.$$hashKey || 'active' in value)) {
-      beingCloned = value;
-      var copy = _.cloneDeep(value, customizer);
-      beingCloned = null;
-      // remove unnecessary attributes
-      delete copy.href;
-      delete copy.active;
-      delete copy.$$hashKey;
-      return copy;
-    } else {
+    var keysToDelete = ['active', '$$hashKey', 'href'];
+    var useCustomizer =
+      (value !== beingCloned) &&
+      _.isObject(value) &&
+      keysToDelete.some(function(key) {
+        return key in value;
+      });
+
+    if (!useCustomizer) {
       return undefined;
     }
+
+    beingCloned = value;
+    var copy = _.cloneDeep(value, customizer);
+    beingCloned = null;
+
+    // remove unnecessary attributes
+    keysToDelete.forEach(function(key) {
+      delete copy[key];
+    });
+    return copy;
   }
 
   function saveDialogDetails() {
-    var action
+    var action;
     var dialogData;
 
     // load dialog data
