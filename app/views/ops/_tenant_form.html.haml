@@ -1,15 +1,12 @@
 - @angular_form = true
 
-%form.form-horizontal#form_div{"name"       => "angularForm",
-                               "model-copy" => "vm.modelCopy",
-                               "model"      => "vm.tenantModel",
-                               "miq-form"   => true,
-                               }
+#form_div
+
   = render :partial => "layouts/flash_msg"
-  %tenant-component{:id               => @tenant.id,
-                    :parent           => @tenant_parent,
-                    'angular-form'    => "angularForm",
-                    "redirect-url"    => "/#{controller_name}/explorer",}
+
+  %tenant-component{:id            => @tenant.id,
+                    :parent        => @tenant_parent,
+                    "redirect-url" => "/#{controller_name}/explorer",}
 
 :javascript
   miq_bootstrap('#form_div');
