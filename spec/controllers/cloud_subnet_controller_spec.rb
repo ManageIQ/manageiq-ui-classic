@@ -110,7 +110,7 @@ describe CloudSubnetController do
           :priority    => MiqQueue::HIGH_PRIORITY,
           :role        => 'ems_operations',
           :zone        => @ems.my_zone,
-          :args        => [{:name => "test", :ip_version => "4", :enable_dhcp => false}]
+          :args        => [{:name => "test", :ip_version => 4, :enable_dhcp => false}]
         }
       end
 

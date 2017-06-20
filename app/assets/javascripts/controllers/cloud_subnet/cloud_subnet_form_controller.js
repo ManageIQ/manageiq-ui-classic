@@ -1,37 +1,50 @@
-ManageIQ.angular.app.controller('cloudSubnetFormController', ['$scope', 'cloudSubnetFormId', 'miqService', 'API', function($scope, cloudSubnetFormId, miqService, API) {
-  $scope.cloudSubnetModel = { name: '', ems_id: '', cloud_tenant_id: '', network_id: '' };
-  $scope.formId = cloudSubnetFormId;
-  $scope.afterGet = false;
-  $scope.modelCopy = angular.copy( $scope.cloudSubnetModel );
-  $scope.model = "cloudSubnetModel";
+ManageIQ.angular.app.controller('cloudSubnetFormController', ['cloudSubnetFormId', 'miqService', 'API', function(cloudSubnetFormId, miqService, API) {
+  var vm = this;
 
-  ManageIQ.angular.scope = $scope;
+  var init = function() {
+    vm.afterGet = false;
+    vm.cloudSubnetModel = {
+      name: "",
+      ems_id: "",
+      cloud_tenant_id: "",
+      network_id: "",
+    };
 
-  if (cloudSubnetFormId == 'new') {
-    $scope.cloudSubnetModel.name = "";
-    $scope.cloudSubnetModel.dhcp_enabled = true;
-    $scope.cloudSubnetModel.network_protocol = '4';
-    $scope.newRecord = true;
-  } else {
-    miqService.sparkleOn();
-    API.get("/api/cloud_subnets/" + cloudSubnetFormId + "?expand=resources").then(function(data) {
-      $scope.afterGet = true;
-      $scope.cloudSubnetModel.name = data.name;
-      $scope.cloudSubnetModel.dhcp_enabled = data.dhcp_enabled;
-      $scope.cloudSubnetModel.cidr = data.cidr;
-      $scope.cloudSubnetModel.gateway = data.gateway;
-      $scope.cloudSubnetModel.network_protocol = data.network_protocol;
-      $scope.modelCopy = angular.copy( $scope.cloudSubnetModel );
+    vm.networkProtocols = ["ipv4", "ipv6"];
+    vm.formId = cloudSubnetFormId;
+    vm.model = "cloudSubnetModel";
+    vm.newRecord = cloudSubnetFormId === "new";
+    vm.saveable = miqService.saveable;
+
+    if (vm.newRecord) {
+      vm.cloudSubnetModel.dhcp_enabled = true;
+      vm.cloudSubnetModel.network_protocol = "ipv4";
+      vm.afterGet = true;
+      vm.modelCopy = angular.copy( vm.cloudSubnetModel );
+    } else {
+      miqService.sparkleOn();
+      API.get("/api/cloud_subnets/" + cloudSubnetFormId + "?expand=resources&attributes=ext_management_system.name,cloud_tenant.name,cloud_network.name").then(function(data) {
+        vm.cloudSubnetModel.name = data.name;
+        vm.cloudSubnetModel.ems_name = data.ext_management_system.name;
+        vm.cloudSubnetModel.tenant_name = angular.isDefined(data.cloud_tenant) ? data.cloud_tenant.name : undefined;
+        vm.cloudSubnetModel.network_name = data.cloud_network.name;
+        vm.cloudSubnetModel.dhcp_enabled = data.dhcp_enabled;
+        vm.cloudSubnetModel.cidr = data.cidr;
+        vm.cloudSubnetModel.gateway = data.gateway;
+        vm.cloudSubnetModel.network_protocol = data.network_protocol;
+        vm.afterGet = true;
+        vm.modelCopy = angular.copy( vm.cloudSubnetModel );
+      }).catch(miqService.handleFailure);
       miqService.sparkleOff();
-    }).catch(miqService.handleFailure);
-  }
-
-  $scope.addClicked = function() {
-    var url = 'create/new' + '?button=add';
-    miqService.miqAjaxButton(url, $scope.cloudSubnetModel, { complete: false });
+    }
   };
 
-  $scope.cancelClicked = function() {
+  vm.addClicked = function() {
+    var url = 'create/new' + '?button=add';
+    miqService.miqAjaxButton(url, vm.cloudSubnetModel, { complete: false });
+  };
+
+  vm.cancelClicked = function() {
     if (cloudSubnetFormId == 'new') {
       var url = '/cloud_subnet/create/new' + '?button=cancel';
     } else {
@@ -40,28 +53,30 @@ ManageIQ.angular.app.controller('cloudSubnetFormController', ['$scope', 'cloudSu
     miqService.miqAjaxButton(url);
   };
 
-  $scope.saveClicked = function() {
+  vm.saveClicked = function() {
     var url = '/cloud_subnet/update/' + cloudSubnetFormId + '?button=save';
-    miqService.miqAjaxButton(url, $scope.cloudSubnetModel, { complete: false });
+    miqService.miqAjaxButton(url, vm.cloudSubnetModel, { complete: false });
   };
 
-  $scope.resetClicked = function() {
-    $scope.cloudSubnetModel = angular.copy( $scope.modelCopy );
-    $scope.angularForm.$setPristine(true);
+  vm.resetClicked = function(angularForm) {
+    vm.cloudSubnetModel = angular.copy( vm.modelCopy );
+    angularForm.$setPristine(true);
     miqService.miqFlash("warn", "All changes have been reset");
   };
 
-  $scope.filterNetworkManagerChanged = function(id) {
+  vm.filterNetworkManagerChanged = function(id) {
     miqService.sparkleOn();
     if (id) {
       API.get("/api/cloud_networks?expand=resources&attributes=name,ems_ref&filter[]=ems_id=" + id).then(function(data) {
-        $scope.available_networks = data.resources;
+        vm.available_networks = data.resources;
       }).catch(miqService.handleFailure);
 
       miqService.getProviderTenants(function(data) {
-        $scope.available_tenants = data.resources;
+        vm.available_tenants = data.resources;
       })(id);
     }
     miqService.sparkleOff();
   };
+
+  init();
 }]);
