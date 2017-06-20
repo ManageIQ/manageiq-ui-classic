@@ -1,9 +1,10 @@
 %form#form_div{:name           => "angularForm",
-   "ng-controller" => "securityGroupFormController as vm",
+   "form-changed"  => true,
    "miq-form"      => true,
    "model"         => "vm.securityGroupModel",
    "model-copy"    => "vm.modelCopy",
    "ng-cloak"      => "",
+   "ng-controller" => "securityGroupFormController as vm",
    "ng-show"       => "vm.afterGet"}
 
   = render :partial => "layouts/flash_msg"
@@ -19,8 +20,8 @@
                      options_for_select([["<#{_('Choose')}>", nil]] + @ems_choices.sort),
                      "ng-model"   => "vm.securityGroupModel.ems_id",
                      "ng-change"  => "vm.filterNetworkManagerChanged(vm.securityGroupModel.ems_id)",
-                     "required"   => "",
-                     "pf-select" => true)
+                     "pf-select"  => true,
+                     "required"   => "")
         %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
           = _("Required")
 
@@ -42,7 +43,7 @@
           %option{"value" => ""}
             = "<#{_('Choose')}>"
         %span.help-block{"ng-show" => "angularForm.cloud_tenant_id.$error.required"}
-          = _("Required")
+        = _("Required")
 
   = render :partial => "layouts/angular/generic_form_buttons"
 

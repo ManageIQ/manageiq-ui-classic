@@ -1,12 +1,28 @@
 %form#form_div{:name           => "angularForm",
-   "ng-controller" => "securityGroupFormController as vm",
+   "form-changed"  => true,
    "miq-form"      => true,
    "model"         => "vm.securityGroupModel",
    "model-copy"    => "vm.modelCopy",
    "ng-cloak"      => "",
+   "ng-controller" => "securityGroupFormController as vm",
    "ng-show"       => "vm.afterGet"}
 
   = render :partial => "layouts/flash_msg"
+
+  %h3
+    = _('Network Management Provider')
+  .form-horizontal
+    .form-group
+      %label.col-md-2.control-label
+        = _('Network Manager')
+      .col-md-8
+        %input.form-control{:type          => "text",
+                            :name          => "ems_name",
+                            "data-width"   => "auto",
+                            "ng-model"     => "vm.securityGroupModel.ems_name",
+                            "ng-maxlength" => 128,
+                            "readonly"     => true}
+
   = render :partial => "common_new_edit"
 
   %h3
@@ -18,10 +34,12 @@
       .col-md-8
         %input.form-control{:type          => "text",
                             :name          => "cloud_tenant_name",
+                            "data-width"   => "auto",
                             "ng-model"     => "vm.securityGroupModel.cloud_tenant_name",
                             "ng-maxlength" => 128,
-                            :readonly      => "true"}
+                            "readonly"     => true}
 
+  = render :partial => 'fw_rules'
   = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript

@@ -166,7 +166,7 @@ class SecurityGroupController < ApplicationController
   def update
     assert_privileges("security_group_edit")
     @security_group = find_record_with_rbac(SecurityGroup, params[:id])
-    options = form_params
+
     case params[:button]
     when "cancel"
       cancel_action(_("Edit of Security Group \"%{name}\" was cancelled by the user") % {
@@ -175,14 +175,30 @@ class SecurityGroupController < ApplicationController
 
     when "save"
       if @security_group.supports_update?
-        task_id = @security_group.update_security_group_queue(session[:userid], options)
-        add_flash(_("Security Group update failed: Task start failed: ID [%{id}]") %
-                  {:id => task_id.to_s}, :error) unless task_id.kind_of?(Integer)
-        if @flash_array
-          javascript_flash(:spinner_off => true)
-        else
-          initiate_wait_for_task(:task_id => task_id, :action => "update_finished")
+        @tasks = []
+        sg_params = form_params
+
+        if sg_changed?(sg_params)
+          task_id = @security_group.update_security_group_queue(session[:userid], sg_params)
+          if task_started(task_id, "Security Group Update")
+            @tasks << {:id => task_id, :resource => "Security Group #{@security_group.name}", :action => :update}
+          end
         end
+
+        params["firewall_rules"].values.each do |rule|
+          if rule["id"] && rule["id"].empty?
+            create_rule(rule)
+          elsif rule["deleted"]
+            delete_rule(rule["ems_ref"])
+          elsif rule_changed?(rule)
+            delete_rule(rule["ems_ref"])
+            create_rule(rule)
+          end
+        end
+        task = @tasks.shift
+        session[:security_group] = {:tasks => @tasks}
+        session[:security_group][:task] = task
+        initiate_wait_for_task(:task_id => task[:id], :action => "update_finished")
       else
         add_flash(_("Couldn't initiate update of Security Group \"%{name}\": %{details}") % {
           :name    => @security_group.name,
@@ -193,27 +209,83 @@ class SecurityGroupController < ApplicationController
   end
 
   def update_finished
-    task_id = session[:async][:params][:task_id]
     security_group_id = session[:async][:params][:id]
-    security_group_name = session[:async][:params][:name]
-    task = MiqTask.find(task_id)
+
+    if session[:flash_msgs]
+      @flash_array = session[:flash_msgs].dup
+      session[:flash_msgs] = nil
+    end
+
+    td = session[:security_group][:task]
+    task = MiqTask.find(td[:id])
     if MiqTask.status_ok?(task.status)
-      add_flash(_("Security Group \"%{name}\" updated") % { :name => security_group_name })
+      add_flash(_("#{td[:resource]} #{td[:action]}d"))
     else
-      add_flash(_("Unable to update Security Group \"%{name}\": %{details}") % {
-        :name    => security_group_name,
+      add_flash(_("Unable to #{td[:action]} #{td[:resource]}: %{details}") % {
         :details => task.message
       }, :error)
     end
 
-    @breadcrumbs.pop if @breadcrumbs
-    session[:edit] = nil
     session[:flash_msgs] = @flash_array.dup if @flash_array
 
-    javascript_redirect :action => "show", :id => security_group_id
+    if !session[:security_group][:tasks].empty?
+      task = session[:security_group][:tasks].shift
+      session[:security_group][:task] = task
+      initiate_wait_for_task(:task_id => task[:id], :action => "update_finished")
+    else
+      @breadcrumbs.pop if @breadcrumbs
+      session[:edit] = nil
+      javascript_redirect :action => "show", :id => security_group_id
+    end
   end
 
   private
+
+  def create_rule(rule)
+    rule_data = @security_group.class.parse_security_group_rule(rule)
+    task_id = @security_group.create_security_group_rule_queue(session[:userid], @security_group.ems_ref,
+                                                               rule["direction"], rule_data)
+    if task_started(task_id, "Security Group Rule Create")
+      @tasks << {:id => task_id, :resource => "Security Group #{@security_group.name} Update: Rule", :action => :create}
+    end
+  end
+
+  def delete_rule(id)
+    task_id = @security_group.delete_security_group_rule_queue(session[:userid], id)
+    if task_started(task_id, "Security Group Rule Delete")
+      @tasks << {:id => task_id, :resource => "Security Group #{@security_group.name} Update: Rule", :action => :delete}
+    end
+  end
+
+  def rule_changed?(params)
+    sg_rule = @security_group.firewall_rules.find(params["id"])
+    return true if changed?(params["direction"], sg_rule.direction)
+    return true if changed?(params["end_port"], sg_rule.end_port)
+    return true if changed?(params["host_protocol"], sg_rule.host_protocol)
+    return true if changed?(params["network_protocol"], sg_rule.network_protocol)
+    return true if changed?(params["port"], sg_rule.port)
+    return true if changed?(params["source_ip_range"], sg_rule.source_ip_range)
+    return true if changed?(params["source_security_group_id"], sg_rule.source_security_group_id)
+  end
+
+  def changed?(param, field)
+    if param && !param.empty?
+      return true if field != param
+    end
+  end
+
+  def sg_changed?(params)
+    return true if params[:name] && @security_group.name != params[:name]
+    return true if params[:description] && @security_group.description != params[:description]
+  end
+
+  def task_started(task_id, message)
+    unless task_id.kind_of?(Integer)
+      add_flash(_("#{message}: Task start failed: ID [%{id}]") % {:id => task_id.to_s}, :error)
+      return nil
+    end
+    true
+  end
 
   def textual_group_list
     [%i(properties relationships), %i(firewall tags)]
