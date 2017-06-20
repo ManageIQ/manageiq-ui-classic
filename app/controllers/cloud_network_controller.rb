@@ -18,6 +18,10 @@ class CloudNetworkController < ApplicationController
     "VXLAN" => "vxlan",
   }.freeze
 
+  def rbac_params
+    {:match_via_descendants => ManageIQ::Providers::NetworkManager}
+  end
+
   def self.display_methods
     %w(instances cloud_networks network_routers cloud_subnets)
   end
