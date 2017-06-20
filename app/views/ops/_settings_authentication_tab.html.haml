@@ -164,7 +164,7 @@
           miqSelectPickerEvent('authentication_default_group_for_users', "#{url}")
     = hidden_div_if(!@edit[:new][:authentication][:ldap_role], :id => "ldap_role_details_div") do
       .form-horizontal
-        .form-group#get_roles_now{:style => @edit[:new][:authentication][:user_proxies].blank? ? "display: none" : ""}
+        .form-group#get_roles_now
           %label.col-md-2.control-label
             = _("Get Roles from Home Forest")
           .col-md-8
