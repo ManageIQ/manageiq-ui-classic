@@ -39,12 +39,14 @@
     %label.control-label.col-md-2
       = _('Display for')
     .col-md-8
-      = @custom_button.options[:display_for]
+      - display_how_map = {'single' => _('Single entity'), 'list' => _('List'), 'both' => _('Single and list')}
+      = display_how_map[@custom_button.options[:display_for]]
   .form-group
     %label.control-label.col-md-2
       = _('Submit')
     .col-md-8
-      = @custom_button.options[:submit_how]
+      - submit_how_map = { 'all' => _('Submit all'), 'one' => _('One by one') }
+      = submit_how_map[@custom_button.options[:submit_how]]
 %hr
 
 %h3
