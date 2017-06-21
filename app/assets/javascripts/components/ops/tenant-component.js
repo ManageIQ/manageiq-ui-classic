@@ -38,6 +38,13 @@ function tenantFormController(API, miqService) {
       vm.afterGet = true;
       vm.modelCopy = angular.copy( vm.tenantModel );
     }
+
+    vm.saveClicked = function() {
+      miqService.sparkleOn();
+      API.put('/api/tenants/' + vm.id, {name: vm.tenantModel.name, description: vm.tenantModel.description})
+        .then(miqService.redirectBack.bind(vm, sprintf(__("Tenant \"%s\" has been successfully saved."), vm.tenantModel.name), 'success', vm.redirectUrl))
+        .catch(miqService.handleFailure);
+    };
   };
 
   // private functions

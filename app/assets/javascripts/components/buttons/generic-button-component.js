@@ -7,6 +7,7 @@ ManageIQ.angular.app.component('genericButtonComponent', {
     newRecord: '<',
     entity: '@',
     entityName: '=?',
+    saveClicked: '&?',
   },
   controllerAs: 'vm',
   controller: genericButtonController,
@@ -35,14 +36,6 @@ function genericButtonController(miqService) {
       } else {
         miqService.redirectBack(sprintf(__("Edit of %s \"%s\" was canceled by the user."), vm.entity, vm.entityName), 'warning', vm.redirectUrl);
       }
-    };
-
-    vm.saveClicked = function() {
-
-    };
-
-    vm.addClicked = function() {
-
     };
   };
 }

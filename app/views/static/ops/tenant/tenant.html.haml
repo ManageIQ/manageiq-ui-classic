@@ -38,10 +38,13 @@
                         "switch-on-text"  => "Yes",
                         "switch-off-text" => "No"}
 
-  %generic-button-component{"angular-form" => "angularForm",
-                            "model-copy"   => "vm.modelCopy",
-                            "model"        => "vm.tenantModel",
-                            "redirect-url" => "vm.redirectUrl",
-                            "new-record"   => "vm.newRecord",
-                            "entity"       => "Tenant",
-                            "entity-name"  => "vm.tenantModel.name"}
+  %generic-button-component{"angular-form"    => "angularForm",
+                            "model-copy"      => "vm.modelCopy",
+                            "model"           => "vm.tenantModel",
+                            "redirect-url"    => "vm.redirectUrl",
+                            "new-record"      => "vm.newRecord",
+                            "save-clicked"    => "vm.saveClicked()",
+                            "entity"          => "Tenant",
+                            "save-clicked"    => "vm.saveClicked()",
+                            "on-add-clicked"  => "vm.onAddClicked()",
+                            "entity-name"     => "vm.tenantModel.name"}
