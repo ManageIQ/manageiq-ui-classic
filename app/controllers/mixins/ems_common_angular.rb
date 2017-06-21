@@ -59,14 +59,31 @@ module Mixins
       end
     end
 
-    def update_ems_button_validate(verify_ems = nil)
+    def update_ems_button_validate
+      result, details = realtime_authentication_check
+      render_validation_result(result, details)
+    end
+
+    def realtime_authentication_check(verify_ems = nil)
       verify_ems ||= find_record_with_rbac(model, params[:id])
       set_ems_record_vars(verify_ems, :validate)
       @in_a_form = true
-      result, details = verify_ems.authentication_check(params[:cred_type],
-                                                        :save     => false,
-                                                        :database => params[:metrics_database_name])
+      verify_ems.authentication_check(params[:cred_type], :save => false, :database => params[:metrics_database_name])
+    end
 
+    def create_ems_button_validate
+      @in_a_form = true
+      # TODO: queue authentication checks for all providers, not just cloud
+      result, details = if params[:controller] == "ems_cloud"
+                          queue_authentication_check
+                        else
+                          ems = model.model_from_emstype(params[:emstype]).new
+                          realtime_authentication_check(ems)
+                        end
+      render_validation_result(result, details)
+    end
+
+    def render_validation_result(result, details)
       if result
         msg = _("Credential validation was successful")
       else
@@ -84,6 +101,52 @@ module Mixins
       when "add" then create_ems_button_add
       when "validate" then create_ems_button_validate
       when "cancel" then create_ems_button_cancel
+      end
+    end
+
+    def queue_authentication_check
+      ems_type = model.model_from_emstype(params[:emstype])
+
+      task_opts = {
+        :action => "Validate EMS Provider Credentials",
+        :userid => session[:userid]
+      }
+
+      queue_opts = {
+        :args        => [*get_task_args(ems_type)],
+        :class_name  => ems_type,
+        :method_name => "raw_connect",
+        :queue_name  => "generic",
+        :role        => "ems_operations",
+        :zone        => params[:zone]
+      }
+
+      task_id = MiqTask.generic_action_with_callback(task_opts, queue_opts)
+      task = MiqTask.wait_for_taskid(task_id, :timeout => 30)
+
+      if task.nil?
+        error_message = "Task Error"
+      elsif MiqTask.status_error?(task.status) || MiqTask.status_timeout?(task.status)
+        error_message = task.message
+      end
+
+      [!error_message.present?, error_message]
+    end
+
+    def get_task_args(ems)
+      user, password = params[:default_userid], MiqPassword.encrypt(params[:default_password])
+      case ems.to_s
+      when 'ManageIQ::Providers::Openstack::CloudManager'
+        auth_url = ems.auth_url(params[:default_hostname], params[:default_api_port])
+        [user, password, auth_url]
+      when 'ManageIQ::Providers::Amazon::CloudManager'
+        [user, password, :EC2, params[:provider_region], nil, true]
+      when 'ManageIQ::Providers::Azure::CloudManager'
+        [user, password, params[:azure_tenant_id], params[:subscription], nil, params[:provider_region]]
+      when 'ManageIQ::Providers::Vmware::CloudManager'
+        [params[:default_hostname], params[:default_api_port], user, password, true]
+      when 'ManageIQ::Providers::Google::CloudManager'
+        [params[:project], params[:service_account], {:service => "compute"}]
       end
     end
 
@@ -107,11 +170,6 @@ module Mixins
                         :url  => new_ems_path)
         javascript_flash
       end
-    end
-
-    def create_ems_button_validate
-      ems = model.model_from_emstype(params[:emstype]).new
-      update_ems_button_validate(ems)
     end
 
     def create_ems_button_cancel

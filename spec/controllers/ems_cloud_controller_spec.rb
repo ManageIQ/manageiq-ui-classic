@@ -290,28 +290,44 @@ describe EmsCloudController do
 
   context "#update_ems_button_validate" do
     let(:mocked_ems) { double(ManageIQ::Providers::Openstack::CloudManager, :id => 1) }
-    it "calls authentication_check with save = false if validation is done for an existing record" do
-      allow(controller).to receive(:set_ems_record_vars)
-      allow(controller).to receive(:render)
-      controller.instance_variable_set(:@_params,
-                                       :button    => "validate",
-                                       :id        => mocked_ems.id,
-                                       :cred_type => "default")
-      expect(mocked_ems).to receive(:authentication_check).with("default", hash_including(:save => false))
-      controller.send(:update_ems_button_validate, mocked_ems)
-    end
 
-    it "calls authentication_check with save = false if validation is done for a new record" do
+    it "calls authentication_check with save = false" do
       allow(controller).to receive(:set_ems_record_vars)
       allow(controller).to receive(:render)
-      controller.instance_variable_set(:@_params,
-                                       :button           => "validate",
-                                       :default_password => "[FILTERED]",
-                                       :cred_type        => "default")
+      allow(controller).to receive(:find_record_with_rbac).and_return(mocked_ems)
+      controller.instance_variable_set(:@_params, :button => "validate", :id => mocked_ems.id, :cred_type => "default")
+
       expect(mocked_ems).to receive(:authentication_check).with("default", hash_including(:save => false))
-      controller.send(:update_ems_button_validate, mocked_ems)
+      controller.send(:update_ems_button_validate)
     end
   end
+
+  context "#create_ems_button_validate" do
+    let(:mocked_infra_class) { ManageIQ::Providers::Redhat::InfraManager }
+    let(:mocked_infra) { double(ManageIQ::Providers::Redhat::InfraManager) }
+
+    it "queues the authentication type if it is a cloud provider" do
+      allow(controller).to receive(:render)
+      allow(ExtManagementSystem).to receive(:model_from_emstype)
+      controller.instance_variable_set(:@_params, :controller => "ems_cloud")
+
+      expect(MiqTask).to receive(:generic_action_with_callback)
+      expect(MiqTask).to receive(:wait_for_taskid)
+      controller.send(:create_ems_button_validate)
+    end
+
+    it "does not queue the authentication check if it is not a cloud provider" do
+      allow(controller).to receive(:set_ems_record_vars)
+      allow(controller).to receive(:render)
+      allow(ExtManagementSystem).to receive(:model_from_emstype).and_return(mocked_infra_class)
+      allow(mocked_infra_class).to receive(:new).and_return(mocked_infra)
+      controller.instance_variable_set(:@_params, :controller => "ems_infra", :cred_type => "default")
+
+      expect(mocked_infra).to receive(:authentication_check).with("default", hash_including(:save => false))
+      controller.send(:create_ems_button_validate)
+    end
+  end
+
   describe "#test_toolbars" do
     before do
       allow(controller).to receive(:check_privileges).and_return(true)
