@@ -57,6 +57,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
   function saveDialogDetails() {
     var action;
     var dialogData;
+    var dialogId;
 
     // load dialog data
     if (angular.isUndefined(DialogEditor.getDialogId())) {
@@ -80,10 +81,17 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
       // https://lodash.com/docs/4.17.4#cloneDeepWith
       dialogData.content.dialog_tabs = _.cloneDeep(DialogEditor.getDialogTabs(), customizer);
     }
+
     // save the dialog
+    if (action == 'create') {
+      dialogId = '';
+    } else {
+      dialogId = '/' + DialogEditor.getDialogId();
+    }
+
     API.post(
-      '/api/service_dialogs/'
-      + DialogEditor.getDialogId(),
+      '/api/service_dialogs'
+      + dialogId,
       {action: action, resource: dialogData}
     ).then(saveSuccess, saveFailure);
   }
