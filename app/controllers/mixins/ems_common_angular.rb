@@ -48,8 +48,8 @@ module Mixins
           add_flash("#{field.to_s.capitalize} #{msg}", :error)
         end
         drop_breadcrumb(:name => _("Edit %{table} '%{name}'") %
-          {:table => ui_lookup(:table => @table_name), :name => update_ems.name},
-                        :url  => "/#{@table_name}/edit/#{update_ems.id}")
+          {:table => ui_lookup(:table => table_name), :name => update_ems.name},
+                        :url  => "/#{table_name}/edit/#{update_ems.id}")
         @in_a_form = true
         render_flash
       end
@@ -88,7 +88,7 @@ module Mixins
       if ems.valid? && ems.save
         construct_edit_for_audit(ems)
         AuditEvent.success(build_created_audit(ems, @edit))
-        flash_msg = _("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:tables => @table_name),
+        flash_msg = _("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:tables => table_name),
                                                            :name  => ems.name}
         javascript_redirect :action    => 'show_list',
                             :flash_msg => flash_msg

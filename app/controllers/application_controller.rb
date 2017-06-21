@@ -96,6 +96,10 @@ class ApplicationController < ActionController::Base
     @table_name ||= model.name.underscore
   end
 
+  def table_name
+    self.class.table_name
+  end
+
   def self.session_key_prefix
     table_name
   end

@@ -7,7 +7,6 @@ module Mixins
       prefix      = self.class.session_key_prefix
       @title      = respond_to?(:title) ? title : ui_lookup(:tables => self.class.table_name)
       @layout     = prefix
-      @table_name = request.parameters[:controller]
       @lastaction = session["#{prefix}_lastaction".to_sym]
       @display    = session["#{prefix}_display".to_sym]
       @filters    = session["#{prefix}_filters".to_sym]
