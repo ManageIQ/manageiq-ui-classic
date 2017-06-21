@@ -13,7 +13,7 @@ module UiServiceMixin
       :ContainerRoute          => {:type => "glyph", :class => 'pficon pficon-route'},
       :ContainerService        => {:type => "glyph", :class => 'pficon pficon-service'},
       :EmsCluster              => {:type => "glyph", :class => 'pficon pficon-cluster'},
-      :FloatingIp              => {:type => "glyph", :class => 'fa fa-map-marker'},
+      :FloatingIp              => {:type => "glyph", :class => 'ff ff-floating-ip'},
       :Host                    => {:type => "glyph", :class => 'pficon pficon-screen'},
       :LoadBalancer            => {:type => "glyph", :class => 'ff ff-load-balancer'},
       :MiddlewareDatasource    => {:type => "glyph", :class => 'fa fa-database'},

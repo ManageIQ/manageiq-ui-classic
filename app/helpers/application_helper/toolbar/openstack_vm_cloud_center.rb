@@ -58,13 +58,13 @@ class ApplicationHelper::Toolbar::OpenstackVmCloudCenter < ApplicationHelper::To
           :klass => ApplicationHelper::Button::InstanceDetach),
         button(
           :instance_associate_floating_ip,
-          'fa fa-map-marker fa-lg',
+          'ff ff-floating-ip fa-lg',
           t = N_('Associate a Floating IP with this Instance'),
           t,
           :klass => ApplicationHelper::Button::InstanceAssociateFloatingIp),
         button(
           :instance_disassociate_floating_ip,
-          'fa fa-map-marker fa-lg',
+          'ff ff-floating-ip fa-lg',
           t = N_('Disassociate a Floating IP from this Instance'),
           t,
           :klass => ApplicationHelper::Button::InstanceDisassociateFloatingIp),
