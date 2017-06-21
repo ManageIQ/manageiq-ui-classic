@@ -45,6 +45,18 @@ function tenantFormController(API, miqService) {
         .then(miqService.redirectBack.bind(vm, sprintf(__("Tenant \"%s\" has been successfully saved."), vm.tenantModel.name), 'success', vm.redirectUrl))
         .catch(miqService.handleFailure);
     };
+
+    vm.addClicked = function() {
+      miqService.sparkleOn();
+      API.post('/api/tenants/', {
+        name: vm.tenantModel.name,
+        description: vm.tenantModel.description,
+        divisible: vm.divisible,
+        parent: { id: vm.tenantModel.parent }}
+      )
+        .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl, true))
+        .catch(miqService.handleFailure);
+    };
   };
 
   // private functions

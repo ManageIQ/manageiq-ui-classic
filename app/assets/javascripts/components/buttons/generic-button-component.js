@@ -8,6 +8,7 @@ ManageIQ.angular.app.component('genericButtonComponent', {
     entity: '@',
     entityName: '=?',
     saveClicked: '&?',
+    addClicked: '&?',
   },
   controllerAs: 'vm',
   controller: genericButtonController,
