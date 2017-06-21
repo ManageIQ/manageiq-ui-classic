@@ -31,7 +31,7 @@ module Mixins
 
         def disassociate_floating_ip
           assert_privileges("instance_disassociate_floating_ip")
-          @record ||= VmCloud.find_by_id(params[:rec_id])
+          @record ||= VmCloud.find_by(:id => params[:rec_id])
           drop_breadcrumb(
             :name => _("Disssociate Floating IP from Instance '%{name}'") % {:name => @record.name},
             :url  => "/vm_cloud/disassociate_floating_ip"

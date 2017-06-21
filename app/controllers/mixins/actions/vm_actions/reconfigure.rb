@@ -111,7 +111,7 @@ module Mixins
           if @request_id == 'new'
             @reconfig_values = get_reconfig_info(reconfigure_ids)
           else
-            @req = MiqRequest.find_by_id(@request_id)
+            @req = MiqRequest.find_by(:id => @request_id)
             @reconfig_values[:src_ids] = @req.options[:src_ids]
             @reconfig_values[:memory], @reconfig_values[:memory_type] = @req.options[:vm_memory] ? reconfigure_calculations(@req.options[:vm_memory]) : ['','']
             @reconfig_values[:cores_per_socket_count] = @req.options[:cores_per_socket] ? @req.options[:cores_per_socket].to_s : ''

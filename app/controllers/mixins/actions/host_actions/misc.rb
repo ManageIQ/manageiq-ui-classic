@@ -235,7 +235,7 @@ module Mixins
             end
 
           else # showing 1 host
-            if params[:id].nil? || Host.find_by_id(params[:id]).nil?
+            if params[:id].nil? || Host.find_by(:id => params[:id]).nil?
               add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => "host")}, :error)
             else
               hosts.push(find_id_with_rbac(Host, params[:id]))
