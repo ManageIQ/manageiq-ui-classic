@@ -66,7 +66,7 @@ module EmsPhysicalInfraHelper::TextualSummary
     count_of_host_relationships = (@record.physical_servers.select { |server| !server.host.nil? }).length
     h = {:label => _("Physical Servers with Host"), :icon => "pficon pficon-server", :value => count_of_host_relationships}
     if count_of_host_relationships > 0
-      h[:link] = "/ems_physical_infra/#{@ems.id}?display=physical_servers&options=physical_servers_with_host"
+      h[:link] = "/ems_physical_infra/#{@ems.id}?display=physical_servers_with_host"
     end
     h
   end

@@ -22,7 +22,6 @@
 
           - hosts = (@record.physical_servers.select { |server| !server.host.nil? }).length
           = li_link(:count => hosts,
-            :text            => _('Physical Servers with Host'),
-            :record          => @record,
-            :display         => 'physical_servers',
-            :options         => 'physical_servers_with_host')
+            :text          => _('Physical Servers with Host'),
+            :record        => @record,
+            :display       => 'physical_servers_with_host')
