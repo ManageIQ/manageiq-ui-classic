@@ -5,7 +5,7 @@
                       "ng-cloak"     => "",
                       "form-changed" => true,
                       "miq-form"     => true}
-  .form-group
+  .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
     %label.col-md-2.control-label{"for" => "tenant_name"}
       = _("Name")
     .col-md-8
@@ -17,7 +17,9 @@
                           "maxlength"   => "#{MAX_NAME_LEN}",
                           "required"    => "",
                           "auto-focus"  => ""}
-  .form-group
+      %span.help-block{"ng-show" => "angularForm.name.$error.required"}
+        = _("Required")
+  .form-group{"ng-class" => "{'has-error': angularForm.description.$invalid}"}
     %label.col-md-2.control-label{"for" => "tenant_description"}
       = _("Description")
     .col-md-8
@@ -27,6 +29,8 @@
                           "ng-model"    => "vm.tenantModel.description",
                           "maxlength"   => "#{ViewHelper::MAX_DESC_LEN}",
                           "required"    => ""}
+      %span.help-block{"ng-show" => "angularForm.description.$error.required"}
+        = _("Required")
   .form-group{"ng-show" => "vm.tenantModel.default"}
     %label.col-md-2.control-label
       = _("Use Configuration Settings")
