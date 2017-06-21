@@ -46,12 +46,7 @@ module VmRemote
                   :api_version => @record.ext_management_system.api_version.to_s,
                   :os          => browser_info(:os),
                   :name        => @record.name,
-                  :vmrc_uri    => URI::Generic.build(:scheme   => "vmrc",
-                                                     :userinfo => "clone:#{params[:ticket]}",
-                                                     :host     => host,
-                                                     :port     => 443,
-                                                     :path     => "/",
-                                                     :query    => "moid=#{vmid}")
+                  :vmrc_uri    => build_vmrc_uri(host, vmid, params[:ticket])
                 }
               end
     render :template => "vm_common/console_#{console_type}",
@@ -128,5 +123,16 @@ module VmRemote
             end
       javascript_open_window(url)
     end
+  end
+
+  def build_vmrc_uri(host, vmid, ticket)
+    uri = URI::Generic.build(:scheme   => "vmrc",
+                             :userinfo => "clone:#{ticket}",
+                             :host     => host,
+                             :port     => 443,
+                             :path     => "/",
+                             :query    => "moid=#{vmid}").to_s
+    # VMRC doesn't like brackets around IPv6 addresses
+    uri.sub(/(.*)\[/, '\1').sub(/(.*)\]/, '\1')
   end
 end
