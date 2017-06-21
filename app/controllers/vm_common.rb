@@ -54,7 +54,7 @@ module VmCommon
     end
     @vm = @record = identify_record(params[:id], VmOrTemplate) unless @lastaction == "show_list"
 
-    if single_delete_test
+    if single_delete_test(true)
       single_delete_redirect
     elsif params[:pressed].ends_with?("_edit")
       if @redirect_controller

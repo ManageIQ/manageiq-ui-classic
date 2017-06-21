@@ -1668,9 +1668,10 @@ module ApplicationHelper
     @r ||= proc { |opts| render_to_string(opts) }
   end
 
-  # test if just succesfully deleted an entity that was being displayed
-  def single_delete_test
-    @flash_array.present? && params[:pressed] == "#{table_name}_delete" && @single_delete
+  # Test if just succesfully deleted an entity that was being displayed
+  def single_delete_test(any_button = false)
+    @flash_array.present? && @single_delete &&
+      (any_button || params[:pressed] == "#{table_name}_delete")
   end
 
   # redirect to show_list (after succesfully deleted the entity being displayed)
