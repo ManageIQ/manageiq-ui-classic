@@ -37,7 +37,7 @@ module VmRemote
                                                     :path   => "/ticket/#{params[:ticket]}")
                 }
               when "vmrc"
-                host = @record.ext_management_system.ipaddress || @record.ext_management_system.hostname
+                host = @record.ext_management_system.hostname || @record.ext_management_system.ipaddress
                 vmid = @record.ems_ref
                 {
                   :host        => host,
