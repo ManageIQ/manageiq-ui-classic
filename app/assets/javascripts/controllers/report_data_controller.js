@@ -344,11 +344,6 @@
         angular.element(mainContent).addClass('miq-list-content');
       }
     }
-
-    var pagination = this.$document.getElementsByClassName('miq-pagination');
-    if (pagination && pagination.length > 0 && ! viewType) {
-      pagination[0].parentNode.removeChild(pagination[0]);
-    }
   };
 
   ReportDataController.prototype.activateNodeSilently = function(itemId) {
@@ -363,11 +358,23 @@
       $('table td.narrow').addClass('table-view-pf-select').removeClass('narrow');
       var pagination = this.$document.getElementsByClassName('miq-pagination');
       var pagingDiv = this.$document.querySelector('#paging_div');
-      if (pagination && pagination.length > 0 && pagingDiv) {
+      // If more than one angular pagination is present remove some left overs.
+      if (pagination.length !== 1) {
+        $(pagination).each(function(index, item) {
+          // keep the first one
+          index !== 0 && item.remove();
+        });
+      }
+      if (pagination && pagination.length > 0 && pagingDiv && $(pagingDiv).find(pagination).length !== 1) {
         var oldPagination = pagingDiv.querySelector('div');
         oldPagination ? oldPagination.remove() : null;
 
-        var col = $('<div class="col-md-12"></div>');
+        var cols = 12;
+        if ($('#form_buttons_div').css('display') !== 'none' && $('#form_buttons_div').children().length !== 0) {
+          cols = 10;
+        }
+
+        var col = $('<div class="col-md-' + cols + '"></div>');
         $(pagingDiv).append(col);
         col[0].appendChild(pagination[0]);
       }
