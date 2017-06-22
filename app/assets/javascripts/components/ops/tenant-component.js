@@ -42,19 +42,21 @@ function tenantFormController(API, miqService) {
 
     vm.saveClicked = function() {
       miqService.sparkleOn();
-      API.put('/api/tenants/' + vm.id, {name: vm.tenantModel.name, description: vm.tenantModel.description})
-        .then(miqService.redirectBack.bind(vm, sprintf(__("Tenant \"%s\" has been successfully saved."), vm.tenantModel.name), 'success', vm.redirectUrl))
+      API.put('/api/tenants/' + vm.recordId, {name: vm.tenantModel.name, description: vm.tenantModel.description})
+        .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully saved.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl, true))
         .catch(miqService.handleFailure);
     };
 
     vm.addClicked = function() {
       var entity = vm.divisible ? _('Tenant') : _('Project');
       miqService.sparkleOn();
-      API.post('/api/tenants/', {name: vm.tenantModel.name,
-                                 description: vm.tenantModel.description,
-                                 divisible: vm.divisible,
-                                 parent: {id: vm.tenantModel.parent,}})
-        .then(miqService.redirectBack.bind(vm, sprintf(__("%s \"%s\" has been successfully added."), entity, vm.tenantModel.name), 'success', vm.redirectUrl))
+      API.post('/api/tenants/', {
+        name: vm.tenantModel.name,
+        description: vm.tenantModel.description,
+        divisible: vm.divisible,
+        parent: { id: vm.tenantModel.parent }}
+      )
+        .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl, true))
         .catch(miqService.handleFailure);
     };
   };
