@@ -17,7 +17,7 @@
                               "id"             => "name",
                               "name"           => "name",
                               "ng-model"       => "vm.catalogItemModel.name",
-                              "maxlength"      => "#{MAX_NAME_LEN}",
+                              "maxlength"      => 40,
                               "miqrequired"    => "",
                               "checkchange"    => "",
                               "auto-focus"     => ""}
@@ -31,7 +31,7 @@
                               "id"          => "description",
                               "name"        => "description",
                               "ng-model"    => "vm.catalogItemModel.description",
-                              "maxlength"   => "#{MAX_DESC_LEN}",
+                              "maxlength"   => 60,
                               "miqrequired" => "",
                               "checkchange" => ""}
           %span.help-block{"ng-show" => "angularForm.description.$error.miqrequired"}
