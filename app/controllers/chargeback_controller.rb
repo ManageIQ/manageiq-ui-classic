@@ -4,6 +4,8 @@ class ChargebackController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  include Mixins::SavedReportPaging
+
   CB_X_BUTTON_ALLOWED_ACTIONS = {
     'chargeback_rates_copy'   => :cb_rate_edit,
     'chargeback_rates_delete' => :cb_rates_delete,
