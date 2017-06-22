@@ -106,8 +106,8 @@ class OrchestrationStackController < ApplicationController
       @refresh_div = "flash_msg_div"
     end
 
-    if !@flash_array.nil? && params[:pressed] == "orchestration_stack_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
+    if single_delete_test
+      single_delete_redirect
     elsif params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new", "#{pfx}_clone",
                                                    "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
       render_or_redirect_partial(pfx)

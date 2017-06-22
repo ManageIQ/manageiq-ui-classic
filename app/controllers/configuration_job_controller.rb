@@ -50,8 +50,8 @@ class ConfigurationJobController < ApplicationController
       @refresh_div = "flash_msg_div"
     end
 
-    if !@flash_array.nil? && params[:pressed] == "configurations_job_delete" && @single_delete
-      javascript_redirect :action => 'show_list', :flash_msg => @flash_array[0][:message]
+    if single_delete_test
+      single_delete_redirect
     elsif @refresh_div == "main_div" && @lastaction == "show_list"
       replace_gtl_main_div
     else
