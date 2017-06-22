@@ -5,7 +5,7 @@ ManageIQ.angular.app.component('genericButtonComponent', {
     model: '=',
     redirectUrl: '=?',
     newRecord: '<',
-    entity: '@',
+    entity: '=?',
     entityName: '=?',
     saveClicked: '&?',
     addClicked: '&?',
