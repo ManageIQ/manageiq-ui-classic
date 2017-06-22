@@ -631,6 +631,11 @@ module ApplicationController::Buttons
       return
     end
     group_set_form_vars
+    @right_cell_text = if typ == "new"
+                         _("Adding a new Button Group")
+                       else
+                         _("Editing Button Group \"%{name}\"") % {:name => @custom_button_set.name.split('|').first}
+                       end
     @in_a_form = true
     @lastaction = "automate_button"
     @layout = "miq_ae_automate_button"
@@ -653,12 +658,12 @@ module ApplicationController::Buttons
     @in_a_form = true
     session[:changed] = false
     @breadcrumbs = []
-    title = if typ == "new"
-              _("Add Button")
-            else
-              _("Edit of '%{description}' Button") % {:description => @custom_button.description}
-            end
-    drop_breadcrumb(:name => title, :url => "/miq_ae_customization/button_new")
+    @right_cell_text = if typ == "new"
+                         _("Adding a new Button")
+                       else
+                         _("Editing Button \"%{name}\"") % {:name => @custom_button.name}
+                       end
+    drop_breadcrumb(:name => @right_cell_text, :url => "/miq_ae_customization/button_new")
     @lastaction = "automate_button"
     @layout = "miq_ae_automate_button"
     @sb[:buttons] = nil
