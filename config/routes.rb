@@ -970,6 +970,7 @@ Rails.application.routes.draw do
         download_data
         download_summary_pdf
         index
+        service_dialog_from_ct
         show
         show_list
         tagging_edit
@@ -977,11 +978,13 @@ Rails.application.routes.draw do
       ),
       :post => %w(
         button
+        ct_form_field_changed
         dynamic_checkbox_refresh
         form_field_changed
         listnav_search_selected
         quick_search
         sections_field_changed
+        service_dialog_from_ct_submit
         show
         show_list
         tagging_edit
