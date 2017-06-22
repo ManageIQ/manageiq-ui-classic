@@ -45,6 +45,8 @@ engines:
     checks:
       no-undefined:
         enabled: false
+      quotes:
+        enabled: false
   fixme:
     # let's enable later
     enabled: false
