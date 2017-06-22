@@ -416,7 +416,7 @@ module VmHelper::TextualSummary
   def textual_floating_ips
     label = ui_lookup(:tables => "floating_ip")
     num   = @record.number_of(:floating_ips)
-    h     = {:label => label, :icon => "fa fa-map-marker", :value => num}
+    h     = {:label => label, :icon => "ff ff-floating-ip", :value => num}
     if num > 0 && role_allows?(:feature => "floating_ip_show_list")
       h[:title] = _("Show all %{label}") % {:label => label}
       h[:explorer] = true

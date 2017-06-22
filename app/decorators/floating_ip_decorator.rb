@@ -1,6 +1,6 @@
 class FloatingIpDecorator < MiqDecorator
   def self.fonticon
-    'fa fa-map-marker'
+    'ff ff-floating-ip'
   end
 
   def self.fileicon
