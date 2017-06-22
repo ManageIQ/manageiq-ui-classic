@@ -13,7 +13,6 @@ ManageIQ.angular.app.component('tenantComponent', {
 
 tenantFormController.$inject = ['API', 'miqService'];
 
-/** @ngInject */
 function tenantFormController(API, miqService) {
   var vm = this;
 
@@ -26,7 +25,7 @@ function tenantFormController(API, miqService) {
       description: '',
       parent: vm.parent,
       use_config_for_attributes: '',
-      default: ''
+      default: '',
     };
 
     if (angular.isDefined(vm.id)) {
@@ -44,17 +43,19 @@ function tenantFormController(API, miqService) {
     vm.saveClicked = function() {
       miqService.sparkleOn();
       API.put('/api/tenants/' + vm.id, {name: vm.tenantModel.name, description: vm.tenantModel.description})
-        .then(miqService.redirectBack.bind(vm, sprintf(__("%s \"%s\" has been successfully saved."), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl, true))
+        .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully saved.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl, true))
         .catch(miqService.handleFailure);
     };
 
     vm.addClicked = function() {
       miqService.sparkleOn();
-      API.post('/api/tenants/', {name: vm.tenantModel.name,
-                                 description: vm.tenantModel.description,
-                                 divisible: vm.divisible,
-                                 parent: {id: vm.tenantModel.parent,}})
-        .then(miqService.redirectBack.bind(vm, sprintf(__("%s \"%s\" has been successfully added."), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl, true))
+      API.post('/api/tenants/', {
+        name: vm.tenantModel.name,
+        description: vm.tenantModel.description,
+        divisible: vm.divisible,
+        parent: { id: vm.tenantModel.parent }}
+      )
+        .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl, true))
         .catch(miqService.handleFailure);
     };
   };
@@ -63,7 +64,7 @@ function tenantFormController(API, miqService) {
   function getTenantFormData(response) {
     vm.tenantModel.name                      = response.name;
     vm.tenantModel.description               = response.description;
-    vm.tenantModel.default                   = !angular.isDefined(response.ancestry);
+    vm.tenantModel.default                   = ! angular.isDefined(response.ancestry);
     vm.tenantModel.use_config_for_attributes = response.use_config_for_attributes;
     vm.tenantModel.parent                    = response.ancestry;
     vm.tenantModel.divisible                 = response.divisible;

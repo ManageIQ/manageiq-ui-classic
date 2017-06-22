@@ -17,7 +17,6 @@ ManageIQ.angular.app.component('genericButtonComponent', {
 
 genericButtonController.$inject = ['miqService', '$window'];
 
-/** @ngInject */
 function genericButtonController(miqService) {
   var vm = this;
 
@@ -28,14 +27,14 @@ function genericButtonController(miqService) {
       vm.model = angular.copy(vm.modelCopy );
       vm.angularForm.$setUntouched(true);
       vm.angularForm.$setPristine(true);
-      miqService.miqFlash("warn", __("All changes have been reset"));
+      miqService.miqFlash('warn', __('All changes have been reset'));
     };
 
     vm.cancelClicked = function() {
       if (vm.newRecord) {
-        miqService.redirectBack(sprintf(__("Creation of new %s was canceled by the user."), vm.entity), 'warning', vm.redirectUrl);
+        miqService.redirectBack(sprintf(__('Creation of new %s was canceled by the user.'), vm.entity), 'warning', vm.redirectUrl);
       } else {
-        miqService.redirectBack(sprintf(__("Edit of %s \"%s\" was canceled by the user."), vm.entity, vm.entityName), 'warning', vm.redirectUrl);
+        miqService.redirectBack(sprintf(__('Edit of %s \"%s\" was canceled by the user.'), vm.entity, vm.entityName), 'warning', vm.redirectUrl);
       }
     };
   };
