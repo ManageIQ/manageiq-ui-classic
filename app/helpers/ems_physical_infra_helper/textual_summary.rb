@@ -64,7 +64,11 @@ module EmsPhysicalInfraHelper::TextualSummary
 
   def textual_hosts
     count_of_host_relationships = (@record.physical_servers.select { |server| !server.host.nil? }).length
-    {:label => _("Hosts"), :icon => "pficon pficon-screen", :value => count_of_host_relationships}
+    h = {:label => _("Hosts"), :icon => "pficon pficon-screen", :value => count_of_host_relationships}
+    if count_of_host_relationships > 0
+      h[:link] = "/ems_physical_infra/#{@ems.id}?display=hosts"
+    end
+    h
   end
 
   def textual_guid
