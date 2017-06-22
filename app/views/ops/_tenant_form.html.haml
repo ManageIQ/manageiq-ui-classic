@@ -6,6 +6,7 @@
 
   %tenant-component{:id            => @tenant.id,
                     :parent        => @tenant_parent,
+                    :divisible     => params[:tenant_type] == "tenant",
                     "redirect-url" => "/#{controller_name}/explorer",}
 
 :javascript

@@ -1,6 +1,7 @@
 ManageIQ.angular.app.component('tenantComponent', {
   bindings: {
     id: '=?',
+    divisible: '=',
     parent: '=?',
     angularForm: '=',
     redirectUrl: '@',
@@ -47,14 +48,13 @@ function tenantFormController(API, miqService) {
     };
 
     vm.addClicked = function() {
+      var entity = vm.divisible ? _('Tenant') : _('Project');
       miqService.sparkleOn();
-      API.post('/api/tenants/', {
-        name: vm.tenantModel.name,
-        description: vm.tenantModel.description,
-        divisible: vm.divisible,
-        parent: { id: vm.tenantModel.parent }}
-      )
-        .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl, true))
+      API.post('/api/tenants/', {name: vm.tenantModel.name,
+                                 description: vm.tenantModel.description,
+                                 divisible: vm.divisible,
+                                 parent: {id: vm.tenantModel.parent,}})
+        .then(miqService.redirectBack.bind(vm, sprintf(__("%s \"%s\" has been successfully added."), entity, vm.tenantModel.name), 'success', vm.redirectUrl))
         .catch(miqService.handleFailure);
     };
   };
