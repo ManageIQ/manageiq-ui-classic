@@ -146,6 +146,10 @@ module QuadiconHelper
       tag_options[:class] = ""
     end
 
+    if quadicon_policy_sim? || @quadicon_tag_edit
+      tag_options[:class] = "quadicon disabled"
+    end
+
     quadicon_tag(tag_options) do
       quadicon_builder_factory(item, options)
     end

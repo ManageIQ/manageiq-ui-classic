@@ -388,6 +388,10 @@ class ApplicationController < ActionController::Base
       @view.table.data.push(options[:unassigned_profile_row])
       @targets_hash[options[:unassigned_profile_row]['id']] = options[:unassigned_configuration_profile]
     end
+
+    # disable quadicon hover effects
+    @quadicon_tag_edit = /edit_tags/ =~ @edit[:key] if @edit
+
     render :json => {
       :settings => settings,
       :data     => view_to_hash(@view),
