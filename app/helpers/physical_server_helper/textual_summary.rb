@@ -91,15 +91,15 @@ module PhysicalServerHelper::TextualSummary
   end
 
   def textual_mac
-    {:label =>  _("Mac Address"), :value => @record.hardware.guest_devices.collect { |device| device[:address] }.join(", ") }
+    {:label =>  _("Mac Address"), :value => @record.hardware.guest_devices.reject { |device| device.network.nil? }.collect { |device| device[:address] }.join(", ") }
   end
 
   def textual_ipv4
-    {:label =>  _("IPV4 Address"), :value => @record.hardware.guest_devices.collect { |device| device.network.ipaddress }.join(", ") }
+    {:label =>  _("IPV4 Address"), :value => @record.hardware.guest_devices.reject { |device| device.network.nil? }.collect { |device| device.network.ipaddress }.join(", ") }
   end
 
   def textual_ipv6
-    {:label =>  _("IPV6 Address"), :value => @record.hardware.guest_devices.collect { |device| device.network.ipv6address }.join(", ") }
+    {:label =>  _("IPV6 Address"), :value => @record.hardware.guest_devices.reject { |device| device.network.nil? }.collect { |device| device.network.ipv6address }.join(", ") }
   end
 
   def textual_loc_led_state
