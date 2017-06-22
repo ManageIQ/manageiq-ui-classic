@@ -1,4 +1,8 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "floatingIpFormController"}
+%form#form_div{:name           => "angularForm",
+               'ng-controller' => "floatingIpFormController as vm",
+               "miq-form"      => true,
+               "model"         => "vm.floatingIpModel",
+               "model-copy"    => "vm.modelCopy"}
   = render :partial => "layouts/flash_msg"
 
   %h3
@@ -10,11 +14,11 @@
       .col-md-8
         %input.form-control{:type          => "text",
                             :name          => "Network Port",
-                            "ng-model"     => "floatingIpModel.network_port_ems_ref",
+                            "ng-model"     => "vm.floatingIpModel.network_port_ems_ref",
                             "ng-maxlength" => 40,
                             :checkchange   => true}
 
-  = render :partial => "layouts/angular/x_edit_buttons_angular"
+  = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript
   ManageIQ.angular.app.value('floatingIpFormId', '#{@floating_ip.id}');
