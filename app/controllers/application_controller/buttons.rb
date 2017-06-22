@@ -663,7 +663,6 @@ module ApplicationController::Buttons
                        else
                          _("Editing Button \"%{name}\"") % {:name => @custom_button.name}
                        end
-    drop_breadcrumb(:name => @right_cell_text, :url => "/miq_ae_customization/button_new")
     @lastaction = "automate_button"
     @layout = "miq_ae_automate_button"
     @sb[:buttons] = nil
