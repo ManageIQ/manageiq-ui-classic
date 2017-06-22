@@ -8,6 +8,7 @@ class FloatingIpController < ApplicationController
   include Mixins::GenericListMixin
   include Mixins::GenericSessionMixin
   include Mixins::GenericShowMixin
+  include Mixins::GenericFormMixin
 
   def self.display_methods
     %w()
@@ -40,15 +41,6 @@ class FloatingIpController < ApplicationController
     end
   end
 
-  def cancel_action(message)
-    session[:edit] = nil
-    @breadcrumbs.pop if @breadcrumbs
-    javascript_redirect :action    => @lastaction,
-                        :id        => @floating_ip.id,
-                        :display   => session[:floating_ip_display],
-                        :flash_msg => message
-  end
-
   def create
     assert_privileges("floating_ip_new")
     case params[:button]
@@ -59,16 +51,25 @@ class FloatingIpController < ApplicationController
       @floating_ip = FloatingIp.new
       options = form_params
       ems = ExtManagementSystem.find(options[:ems_id])
-      options.delete(:ems_id)
-      task_id = ems.create_floating_ip_queue(session[:userid], options)
+      if FloatingIp.class_by_ems(ems).supports_create?
+        options.delete(:ems_id)
+        task_id = ems.create_floating_ip_queue(session[:userid], options)
 
-      add_flash(_("Floating IP creation failed: Task start failed: ID [%{id}]") %
-                {:id => task_id.to_s}, :error) unless task_id.kind_of?(Integer)
+        unless task_id.kind_of?(Integer)
+          add_flash(_("Floating IP creation failed: Task start failed: ID [%{id}]") %
+            {:id => task_id.to_s}, :error)
+        end
 
-      if @flash_array
-        javascript_flash(:spinner_off => true)
+        if @flash_array
+          javascript_flash(:spinner_off => true)
+        else
+          initiate_wait_for_task(:task_id => task_id, :action => "create_finished")
+        end
       else
-        initiate_wait_for_task(:task_id => task_id, :action => "create_finished")
+        @in_a_form = true
+        add_flash(_(FloatingIp.unsupported_reason(:create)), :error)
+        drop_breadcrumb(:name => _("Add New Floating Ip "), :url => "/floating_ip/new")
+        javascript_flash
       end
     end
   end
@@ -102,9 +103,9 @@ class FloatingIpController < ApplicationController
 
     if floating_ips.empty?
       add_flash(_("No Floating IPs were selected for deletion."), :error)
+    else
+      process_floating_ips(floating_ips, "destroy")
     end
-
-    process_floating_ips(floating_ips, "destroy") unless floating_ips.empty?
 
     # refresh the list if applicable
     if @lastaction == "show_list"
@@ -183,17 +184,26 @@ class FloatingIpController < ApplicationController
       cancel_action(_("Edit of Floating IP \"%{name}\" was cancelled by the user") % { :name  => @floating_ip.name })
 
     when "save"
-      options = form_params
-      options.delete(:ems_id)
-      task_id = @floating_ip.update_floating_ip_queue(session[:userid], options)
+      if @floating_ip.supports_update?
+        options = form_params
+        options.delete(:ems_id)
+        task_id = @floating_ip.update_floating_ip_queue(session[:userid], options)
 
-      add_flash(_("Floating IP update failed: Task start failed: ID [%{id}]") %
-                {:id => task_id.to_s}, :error) unless task_id.kind_of?(Integer)
+        unless task_id.kind_of?(Integer)
+          add_flash(_("Floating IP update failed: Task start failed: ID [%{id}]") %
+            {:id => task_id.to_s}, :error)
+        end
 
-      if @flash_array
-        javascript_flash(:spinner_off => true)
+        if @flash_array
+          javascript_flash(:spinner_off => true)
+        else
+          initiate_wait_for_task(:task_id => task_id, :action => "update_finished")
+        end
       else
-        initiate_wait_for_task(:task_id => task_id, :action => "update_finished")
+        add_flash(_("Couldn't initiate update of Floating IP \"%{name}\": %{details}") % {
+          :name    => @floating_ip.name,
+          :details => @floating_ip.unsupported_reason(:update)
+        }, :error)
       end
     end
   end
