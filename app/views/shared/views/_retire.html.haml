@@ -4,7 +4,8 @@
                                "ng-controller" => "retirementFormController as vm",
                                "miq-form"      => true,
                                "model"         => "vm.retirementInfo",
-                               "model-copy"    => "vm.modelCopy" }
+                               "model-copy"    => "vm.modelCopy",
+                               "form-changed"  => true}
   %h3
     = _('Set/Remove Retirement Date')
   %tbody
@@ -15,31 +16,29 @@
         = datepicker_input_tag("retirementDate", nil,
                                 :id                  => "retirement_date",
                                 :class               => "css1",
-                                "ng-model"           => "vm.retirementInfo.retirementDate",
+                                "ng-model"           => "vm.retirementInfo.date",
                                 "miq-calendar"       => true,
-                                "miq-cal-date-from"  => "vm.datepickerStartDate",
-                                "checkchange"        => true)
+                                "miq-cal-date-from"  => "vm.datepickerStartDate")
         %a{'href'              => '#',
-           'ng-click'          => 'vm.retirementInfo.retirementDate = null; vm.retirementInfo.retirementWarning = ""',
-           'ng-hide'           => '!vm.retirementInfo.retirementDate'}
-          = image_tag(image_path('16/clear.png'), :border => "0", :alt => _("Set to blank"))
+           'ng-click'          => 'vm.clearDate()',
+           'ng-show'           => 'vm.retirementInfo.date',
+           'title'             => _("Set to blank")}
+          %i.glyphicon.glyphicon-remove
     .form-group
       %label.col-md-2.control-label
         = _('Retirement Warning')
       .col-md-8
-        - select_options = [{:value => "", :label => _("None")},
+        - select_options = [{:value => 0,  :label => _("None")},
                             {:value => 7,  :label => _("1 Week before retirement")},
                             {:value => 14, :label => _("2 Weeks before retirement")},
                             {:value => 30, :label => _("30 Days before retirement")}]
         = select_tag("retirementWarning",
                      "",
                      "ng-options"  => "item.value as item.label for item in #{select_options.to_json.gsub('"', '\'')}",
-                     "ng-model"    => "vm.retirementInfo.retirementWarning",
-                     "ng-disabled" => "!vm.retirementInfo.retirementDate",
-                     "checkchange" => true,
+                     "ng-model"    => "vm.retirementInfo.warning",
+                     "ng-disabled" => "!vm.retirementInfo.date",
                      "pf-select"   => true)
-        :javascript
-          miqInitSelectPicker();
+
   = _('* Saving a blank date will remove all retirement dates')
 
   %hr
@@ -47,24 +46,31 @@
     - if request.parameters[:controller] == "service"
       = n_("New setting will affect Service", "New setting will affect Services", @retireitems.length)
     - elsif request.parameters[:controller] == "orchestration_stack"
-      = n_("New setting will affect Orchestration Stack", "New setting will affect Orchestration Stacks",
-           @retireitems.length)
+      = n_("New setting will affect Orchestration Stack", "New setting will affect Orchestration Stacks", @retireitems.length)
     - elsif %w(vm_cloud vm_infra).include?(request.parameters[:controller])
       = n_("New setting will affect VM", "New setting will affect VMs", @retireitems.length)
 
   %table{:width => "100%"}
     %tr
-      %td#buttons_on{:align => "right"}
-        = button_tag(_("Save"),
-                     :class        => "btn btn-primary",
-                     :alt          => _("Save"),
-                     "ng-click"    => "vm.saveClicked()",
-                     "ng-disabled" => "angularForm.$pristine || angularForm.$invalid",
-                     "ng-class"    => "{ disabled: angularForm.$pristine || angularForm.$invalid}")
-        = button_tag(_("Cancel"),
-                     :class     => "btn btn-default",
-                     :alt          => _("Cancel"),
-                     "ng-click" => "vm.cancelClicked()")
+      %td{:align => "right"}
+        %miq-button{:name      => t = _("Save"),
+                    :title     => t,
+                    :alt       => t,
+                    :enabled   => "!angularForm.$pristine && !angularForm.$invalid",
+                    'on-click' => "vm.saveClicked()",
+                    :primary   => 'true'}
+        %miq-button{:name      => t = _("Reset"),
+                    :title     => t,
+                    :alt       => t,
+                    'ng-show'  => 'vm.showReset',
+                    :enabled   => "!angularForm.$pristine",
+                    'on-click' => "vm.resetClicked()"}
+        %miq-button{:name      => t = _("Cancel"),
+                    :title     => t,
+                    :alt       => t,
+                    :enabled   => "true",
+                    'on-click' => "vm.cancelClicked()"}
+
 - if @retireitems
   - @embedded = true
   - @quadicon_no_url = true
