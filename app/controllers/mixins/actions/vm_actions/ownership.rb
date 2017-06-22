@@ -135,67 +135,78 @@ module Mixins
 
         def ownership_update
           case params[:button]
-          when "cancel"
-            add_flash(_("Set Ownership was cancelled by the user"))
+          when "cancel" then ownership_handle_cancel_button
+          when "save" then ownership_handle_save_button
+          when "reset" then ownership_handle_reset_button
+          end
+        end
+
+        private
+
+        def ownership_handle_cancel_button
+          add_flash(_("Set Ownership was cancelled by the user"))
+          if @sb[:explorer]
+            @edit = @sb[:action] = nil
+            replace_right_cell
+          else
+            session[:flash_msgs] = @flash_array
+            javascript_redirect previous_breadcrumb_url
+          end
+        end
+
+        def ownership_handle_save_button
+          opts = {}
+          unless params[:user] == 'dont-change'
+            if params[:user].blank?     # to clear previously set user
+              opts[:owner] = nil
+            elsif params[:user] != @user
+              opts[:owner] = User.find(params[:user])
+            end
+          end
+
+          unless params[:group] == 'dont-change'
+            if params[:group].blank?    # to clear previously set group
+              opts[:group] = nil
+            elsif params[:group] != @group
+              opts[:group] = MiqGroup.find_by_id(params[:group])
+            end
+          end
+
+          klass = get_class_from_controller_param(request.parameters[:controller])
+          param_ids = params[:objectIds].map(&:to_i)
+          raise _('Invalid items selected.') unless valid_items_for(klass, param_ids)
+
+          result = klass.set_ownership(param_ids, opts)
+          unless result == true
+            result["missing_ids"].each { |msg| add_flash(msg, :error) } if result["missing_ids"]
+            result["error_updating"].each { |msg| add_flash(msg, :error) } if result["error_updating"]
+            javascript_flash
+          else
+            object_types = object_types_for_flash_message(klass, params[:objectIds])
+
+            flash = _("Ownership saved for selected %{object_types}") % {:object_types => object_types}
+            add_flash(flash)
             if @sb[:explorer]
-              @edit = @sb[:action] = nil
+              @sb[:action] = nil
               replace_right_cell
             else
               session[:flash_msgs] = @flash_array
               javascript_redirect previous_breadcrumb_url
             end
-          when "save"
-            opts = {}
-            unless params[:user] == 'dont-change'
-              if params[:user].blank?     # to clear previously set user
-                opts[:owner] = nil
-              elsif params[:user] != @user
-                opts[:owner] = User.find(params[:user])
-              end
-            end
+          end
+        end
 
-            unless params[:group] == 'dont-change'
-              if params[:group].blank?    # to clear previously set group
-                opts[:group] = nil
-              elsif params[:group] != @group
-                opts[:group] = MiqGroup.find_by_id(params[:group])
-              end
-            end
-
-            klass = get_class_from_controller_param(request.parameters[:controller])
-            param_ids = params[:objectIds].map(&:to_i)
-            raise _('Invalid items selected.') unless valid_items_for(klass, param_ids)
-
-            result = klass.set_ownership(param_ids, opts)
-            unless result == true
-              result["missing_ids"].each { |msg| add_flash(msg, :error) } if result["missing_ids"]
-              result["error_updating"].each { |msg| add_flash(msg, :error) } if result["error_updating"]
-              javascript_flash
-            else
-              object_types = object_types_for_flash_message(klass, params[:objectIds])
-
-              flash = _("Ownership saved for selected %{object_types}") % {:object_types => object_types}
-              add_flash(flash)
-              if @sb[:explorer]
-                @sb[:action] = nil
-                replace_right_cell
-              else
-                session[:flash_msgs] = @flash_array
-                javascript_redirect previous_breadcrumb_url
-              end
-            end
-          when "reset"
-            @in_a_form = true
-            if @edit[:explorer]
-              ownership
-              add_flash(_("All changes have been reset"), :warning)
-              request.parameters[:controller] == "service" ? replace_right_cell(:nodetype => "ownership") : replace_right_cell
-            else
-              javascript_redirect :action        => 'ownership',
-                                  :flash_msg     => _("All changes have been reset"),
-                                  :flash_warning => true,
-                                  :escape        => true
-            end
+        def ownership_handle_reset_button
+          @in_a_form = true
+          if @edit[:explorer]
+            ownership
+            add_flash(_("All changes have been reset"), :warning)
+            request.parameters[:controller] == "service" ? replace_right_cell(:nodetype => "ownership") : replace_right_cell
+          else
+            javascript_redirect :action        => 'ownership',
+                                :flash_msg     => _("All changes have been reset"),
+                                :flash_warning => true,
+                                :escape        => true
           end
         end
       end
