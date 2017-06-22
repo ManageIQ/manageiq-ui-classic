@@ -26,6 +26,13 @@
                                          "options"            => "dash.dateOptions",
                                          "date"               => "dash.timeFilter.date"}
 
+    .pull-left.rate-switch
+      %label
+        = _("Rate")
+        %input.bootstrap-switch.ad-hoc-refresh{"type" => "checkbox",
+                                               "name" => "rate-switch",
+                                               "id"   => "rate-switch"}
+
     %button.btn.btn-primary.pull-left{"type" => "button", "ng-click" => "dash.refreshGraph()"}
       = _("Refresh")
 

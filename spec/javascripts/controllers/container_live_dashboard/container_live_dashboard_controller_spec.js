@@ -52,4 +52,20 @@ describe('adHocMetricsController', function() {
       expect($controller.timeFilter.range_count).toBe(9);
     });
   });
+
+  describe('utility functions', function() {
+    it('should calculate differentials currectly', function() {
+      var data = [1, 2, 3, 4, 5, 6];
+
+      data = $controller.calcDataDifferentials(data);
+      expect(data).toEqual([1, 1, 1, 1, 1, null]);
+    });
+
+    it('differentials should not fail on missing data', function() {
+      var data = [1, 2, null, 4, 5, 6];
+
+      data = $controller.calcDataDifferentials(data);
+      expect(data).toEqual([1, null, null, 1, 1, null]);
+    });
+  });
 });
