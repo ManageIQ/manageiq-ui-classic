@@ -42,6 +42,9 @@ engines:
   eslint:
     enabled: true
     channel: "eslint-3"
+    checks:
+      no-undefined:
+        enabled: false
   fixme:
     # let's enable later
     enabled: false
