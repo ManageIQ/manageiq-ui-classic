@@ -464,7 +464,7 @@ module ApplicationController::CiProcessing
   # Import info for all selected or single displayed vm(s)
   def syncvms
     assert_privileges(params[:pressed])
-    vm_button_operation('sync', _('for Virtual Black Box synchronization'))
+    vm_button_operation('sync', _('Virtual Black Box synchronization'))
   end
 
   DEFAULT_PRIVILEGE = Object.new # :nodoc:
