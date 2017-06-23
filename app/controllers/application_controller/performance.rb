@@ -1353,11 +1353,10 @@ module ApplicationController::Performance
     report.graph[:columns] = options[:columns]
     report.graph[:legends] = options[:legends]
     report.graph[:max_col_size] = options[:max_value]
-    # FIXME: rename xml, xml2 to something like 'chart_data'
     report.to_chart(settings(:display, :reporttheme), false,
                     MiqReport.graph_options(options))
-    chart_xml = {
-      :xml      => report.chart,            # Save the graph xml
+    chart_data = {
+      :data     => report.chart,            # Save the graph data
       :main_col => options[:columns].first  # And the main (first) column of the chart
     }
     if options[:chart2]
@@ -1365,9 +1364,9 @@ module ApplicationController::Performance
       report.graph[:columns] = options[:chart2][:columns]
       report.to_chart(settings(:display, :reporttheme), false,
                       MiqReport.graph_options(options.merge(:composite => true)))
-      chart_xml[:xml2] = report.chart
+      chart_data[:data2] = report.chart
     end
-    chart_xml
+    chart_data
   end
 
   # Build the chart zoom url

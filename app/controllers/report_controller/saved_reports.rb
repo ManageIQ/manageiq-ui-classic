@@ -83,7 +83,7 @@ module ReportController::SavedReports
     @report.extras[:to_html] ||= @html
   end
 
-  # Delete all selected or single displayed host(s)
+  # Delete all selected or single displayed report(s)
   def saved_report_delete
     assert_privileges("saved_report_delete")
     savedreports = find_checked_items
