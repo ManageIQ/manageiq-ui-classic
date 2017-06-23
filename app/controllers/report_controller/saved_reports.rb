@@ -53,24 +53,18 @@ module ReportController::SavedReports
             @html = report_first_page(rr)
             if params[:type]
               @render_chart = false
-              @html = nil
-              if %w(tabular hybrid).include?(params[:type])
-                @html = report_build_html_table(@report,
-                                                rr.html_rows(:page     => @sb[:pages][:current],
-                                                             :per_page => @sb[:pages][:perpage]).join)
-              end
-              if %w(graph hybrid).include?(params[:type])
-                @render_chart = true
+
+              @html = if %w(tabular hybrid).include?(params[:type])
+                report_build_html_table(@report,
+                                        rr.html_rows(:page     => @sb[:pages][:current],
+                                                     :per_page => @sb[:pages][:perpage]).join)
               end
               @ght_type = params[:type]
             else
-              if @report.graph.blank?
-                @ght_type = "tabular"
-              else
-                @render_chart = true
-                @ght_type = "hybrid"
-              end
+              @ght_type = @report.graph.blank? ?  'tabular' : 'hybrid'
             end
+            @render_chart = %w(graph hybrid).include?(@ght_type)
+
             @report.extras ||= {}
             @report.extras[:to_html] ||= @html
           else
