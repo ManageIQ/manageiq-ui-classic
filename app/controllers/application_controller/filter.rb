@@ -423,7 +423,7 @@ module ApplicationController::Filter
         build_configuration_manager_tree(:configuration_manager_cs_filter, x_active_tree)
         build_accordions_and_trees
         load_or_clear_adv_search
-      elsif @edit[:in_explorer] || x_active_tree == :storage_tree
+      elsif @edit[:in_explorer] || %w(storage_tree configuration_scripts_tree).include?(x_active_tree.to_s)
         tree_type = x_active_tree.to_s.sub(/_tree/, '').to_sym
         builder = TreeBuilder.class_for_type(tree_type)
         tree = builder.new(x_active_tree, tree_type, @sb)
@@ -448,7 +448,7 @@ module ApplicationController::Filter
       end
 
       if ["delete", "saveit"].include?(params[:button])
-        if @edit[:in_explorer] || x_active_tree == :storage_tree
+        if @edit[:in_explorer] || %w(storage_tree configuration_scripts_tree).include?(x_active_tree.to_s)
           tree_name = x_active_tree.to_s
           if "configuration_manager_cs_filter_tree_tree" == tree_name
             page.replace_html("#{tree_name}_div", :partial => "provider_foreman/#{tree_name}")

@@ -891,6 +891,15 @@ module ApplicationHelper
     end
   end
 
+  def configuration_manager_scripts_tree(tree)
+    case tree
+    when :automation_manager_cs_filter_tree, :configuration_manager_cs_filter_tree
+      "ConfiguredSystem"
+    when :configuration_scripts_tree
+      "ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript"
+    end
+  end
+
   def object_types_for_flash_message(klass, record_ids)
     if klass == VmOrTemplate
       object_ary = klass.where(:id => record_ids).collect { |rec| ui_lookup(:model => model_for_vm(rec).to_s) }

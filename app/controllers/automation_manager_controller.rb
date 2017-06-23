@@ -61,7 +61,7 @@ class AutomationManagerController < ApplicationController
   end
 
   def load_or_clear_adv_search
-    adv_search_build("ConfiguredSystem")
+    adv_search_build(configuration_manager_scripts_tree(x_active_tree))
     session[:edit] = @edit
     @explorer = true
 
