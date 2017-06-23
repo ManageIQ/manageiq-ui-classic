@@ -50,29 +50,29 @@ module ReportController::SavedReports
           return
         else
           if @report.contains_records?
-            @html = report_first_page(rr)             # Get the first page of the results
+            @html = report_first_page(rr)
             if params[:type]
-              @zgraph = nil
-              @html   = nil
-              if ["tabular", "hybrid"].include?(params[:type])
+              @render_chart = false
+              @html = nil
+              if %w(tabular hybrid).include?(params[:type])
                 @html = report_build_html_table(@report,
                                                 rr.html_rows(:page     => @sb[:pages][:current],
                                                              :per_page => @sb[:pages][:perpage]).join)
               end
-              if ["graph", "hybrid"].include?(params[:type])
-                @zgraph = true      # Show the zgraph in the report
+              if %w(graph hybrid).include?(params[:type])
+                @render_chart = true
               end
               @ght_type = params[:type]
             else
-              unless @report.graph.blank?
-                @zgraph   = true
-                @ght_type = "hybrid"
-              else
+              if @report.graph.blank?
                 @ght_type = "tabular"
+              else
+                @render_chart = true
+                @ght_type = "hybrid"
               end
             end
-            @report.extras ||= {}     # Create extras hash
-            @report.extras[:to_html] ||= @html        # Save the html report
+            @report.extras ||= {}
+            @report.extras[:to_html] ||= @html
           else
             add_flash(_("No records found for this report"), :warning)
           end

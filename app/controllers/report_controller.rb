@@ -345,15 +345,15 @@ class ReportController < ApplicationController
   def switch_ght
     rr      = MiqReportResult.find(@sb[:pages][:rr_id])
     @report = rr.report_results # Grab the blobbed report, including table
-    @zgraph = nil
     @html   = nil
+    @render_chart = false
     if %w(tabular hybrid).include?(params[:type])
       @html = report_build_html_table(@report,
                                       rr.html_rows(:page     => @sb[:pages][:current],
                                                    :per_page => @sb[:pages][:perpage]).join)
     end
     if %w(graph hybrid).include?(params[:type])
-      @zgraph = true # Show the chart in the report
+      @render_chart = true
     end
     @ght_type = params[:type]
     @title = @report.title

@@ -1,12 +1,12 @@
 shared_examples_for 'a render_report button' do
   let(:view_context) { setup_view_context_with_sandbox({}) }
   let(:html) { false }
-  let(:zgraph) { false }
+  let(:render_chart) { false }
   let(:records_count) { 0 }
   let(:records_total) { {:count => records_count} }
   let(:grouping) { {:_total_ => records_total} }
   let(:report) { FactoryGirl.create(:miq_report, :extras => {:grouping => grouping}) }
-  let(:button) { described_class.new(view_context, {}, {'report' => report, 'html' => html, 'zgraph' => zgraph}, {}) }
+  let(:button) { described_class.new(view_context, {}, {'report' => report, 'html' => html, 'render_chart' => render_chart}, {}) }
 
   describe '#calculate_properties' do
     before { button.calculate_properties }
@@ -35,7 +35,7 @@ shared_examples_for 'a render_report button' do
       it_behaves_like 'a report with tabular or graph view available'
     end
     context "when report's graph view is available" do
-      let(:zgraph) { true }
+      let(:render_chart) { true }
       it_behaves_like 'a report with tabular or graph view available'
     end
   end

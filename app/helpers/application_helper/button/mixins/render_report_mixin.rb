@@ -11,7 +11,7 @@ module ApplicationHelper::Button::Mixins::RenderReportMixin
   end
 
   def report_info?
-    @html || @zgraph
+    @html || @render_chart
   end
 
   def records_data?
