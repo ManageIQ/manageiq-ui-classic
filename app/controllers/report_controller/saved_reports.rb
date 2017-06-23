@@ -38,6 +38,7 @@ module ReportController::SavedReports
 
     @report = rr.report_results
     session[:rpt_task_id] = nil
+
     if @report.blank?
       add_flash(_("Saved Report \"%{time}\" not found, Schedule may have failed") %
                 {:time => format_timezone(rr.created_on, Time.zone, "gtl")},
@@ -57,28 +58,28 @@ module ReportController::SavedReports
         end
       end
       return
-    else
-      if @report.contains_records?
-        @html = report_first_page(rr)
-        if params[:type]
-          @render_chart = false
+    end
 
-          @html = if %w(tabular hybrid).include?(params[:type])
-            report_build_html_table(@report,
-                                    rr.html_rows(:page     => @sb[:pages][:current],
-                                                 :per_page => @sb[:pages][:perpage]).join)
-          end
-          @ght_type = params[:type]
-        else
-          @ght_type = @report.graph.blank? ?  'tabular' : 'hybrid'
+    if @report.contains_records?
+      @html = report_first_page(rr)
+      if params[:type]
+        @render_chart = false
+
+        @html = if %w(tabular hybrid).include?(params[:type])
+          report_build_html_table(@report,
+                                  rr.html_rows(:page     => @sb[:pages][:current],
+                                               :per_page => @sb[:pages][:perpage]).join)
         end
-        @render_chart = %w(graph hybrid).include?(@ght_type)
-
-        @report.extras ||= {}
-        @report.extras[:to_html] ||= @html
+        @ght_type = params[:type]
       else
-        add_flash(_("No records found for this report"), :warning)
+        @ght_type = @report.graph.blank? ?  'tabular' : 'hybrid'
       end
+      @render_chart = %w(graph hybrid).include?(@ght_type)
+
+      @report.extras ||= {}
+      @report.extras[:to_html] ||= @html
+    else
+      add_flash(_("No records found for this report"), :warning)
     end
   end
 
