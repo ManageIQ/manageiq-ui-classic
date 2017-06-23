@@ -501,9 +501,9 @@ function doLoadChart(chart_id, chart_object) {
   var comp = id_splitted[3];
 
   if (typeof (comp) === 'undefined') {
-    chart_object.Update_XML(ManageIQ.charts.chartData[set][idx].xml, false);
+    chart_object.Update_XML(ManageIQ.charts.chartData[set][idx].data, false);
   } else {
-    chart_object.Update_XML(ManageIQ.charts.chartData[set][idx].xml2, false);
+    chart_object.Update_XML(ManageIQ.charts.chartData[set][idx].data2, false);
   }
 }
 
@@ -514,7 +514,7 @@ function miqLoadCharts() {
       var mcd = ManageIQ.charts.chartData[set];
       for (var i = 0; i < mcd.length; i++) {
         miqLoadChart("miq_" + set + "_" + i);
-        if (typeof mcd[i].xml2 != "undefined") {
+        if (typeof mcd[i].data2 != "undefined") {
           miqLoadChart("miq_" + set + "_" + i + "_2");
         }
       }
