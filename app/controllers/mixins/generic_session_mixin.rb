@@ -21,6 +21,8 @@ module Mixins
       session["#{prefix}_filters".to_sym]    = @filters
       session["#{prefix}_catinfo".to_sym]    = @catinfo
       session["#{prefix}_showtype".to_sym]   = @showtype
+      session[:miq_compressed]               = @compressed unless @compressed.nil?
+      session[:miq_exists_mode]              = @exists_mode unless @exists_mode.nil?
     end
   end
 end
