@@ -286,7 +286,7 @@ module Mixins
     private
 
     def tag_action
-      (params[:action] == 'x_button'&& ['automation_manager_provider_tag', 'configuration_manager_provider_tag'].include?(params[:pressed])) || (params[:action] == 'tagging'&& params[:pressed] == 'reset')
+      (params[:action] == 'x_button' && %w(automation_manager_provider_tag configuration_manager_provider_tag).include?(params[:pressed])) || (params[:action] == 'tagging' && params[:pressed] == 'reset')
     end
 
     def replace_right_cell(options = {})

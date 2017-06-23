@@ -54,7 +54,9 @@ class ApplicationHelper::Toolbar::ConfigurationManagerProvidersCenter < Applicat
       'fa fa-shield fa-lg',
       t = N_('Policy'),
       t,
-      :items => [
+      :enabled => false,
+      :onwhen  => "1+",
+      :items   => [
         button(
           :configuration_manager_provider_tag,
           'pficon pficon-edit fa-lg',
