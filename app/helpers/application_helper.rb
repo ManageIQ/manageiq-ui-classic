@@ -543,7 +543,7 @@ module ApplicationHelper
       :tabform               => @tabform,
       :widget_running        => @widget_running,
       :widgetsets            => @widgetsets,
-      :zgraph                => @zgraph,
+      :render_chart          => @render_chart,
     )
   end
 

@@ -6,4 +6,4 @@
       %h3
         = @report.name
       = render :partial => "layouts/flash_msg"
-      = render :partial => "shared/report_chart_and_html", :locals => {:html => @html, :chart => @zgraph, :report => @report}
+      = render :partial => "shared/report_chart_and_html", :locals => {:html => @html, :chart => @render_chart, :report => @report}

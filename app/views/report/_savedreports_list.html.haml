@@ -1,7 +1,7 @@
 - if @sb[:active_accord] == :savedreports
   - if @report
     = render :partial => 'layouts/flash_msg'
-    = render :partial => "shared/report_chart_and_html", :locals => {:html => @html, :chart => @zgraph, :report => @report}
+    = render :partial => "shared/report_chart_and_html", :locals => {:html => @html, :chart => @render_chart, :report => @report}
   - elsif x_node.split('-').length == 1 && @view
     -# setting it to nil so saved reports can be displayed, unless all saved
     -# reports were deleted

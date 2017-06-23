@@ -431,19 +431,14 @@ class ApplicationController < ActionController::Base
     search_id = params[:rr_id] ? params[:rr_id].to_i : @sb[:pages][:rr_id]
     rr = MiqReportResult.for_user(current_user).find(search_id)
 
-    session[:report_result_id] = rr.id  # Save report result id for render_zgraph
+    session[:report_result_id] = rr.id  # Save report result id for chart rendering
     session[:rpt_task_id]      = nil    # Clear out report task id, using a saved report
 
     @report   = rr.report
     @html     = report_build_html_table(rr.report_results, rr.html_rows.join)
     @ght_type = params[:type] || (@report.graph.blank? ? 'tabular' : 'hybrid')
     @title    = @report.title
-
-    @zgraph = case @ght_type
-              when 'tabular' then nil
-              when 'hybrid'  then true
-              end
-
+    @render_chart = (@ght_type == 'hybrid')
     render controller_name == 'report' ? 'show' : 'shared/show_report'
   end
 
