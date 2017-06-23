@@ -94,6 +94,11 @@ module Mixins
       id
     end
 
+    def find_id_with_rbac_no_exception(klass, id)
+      record = Rbac.filtered(klass.where(:id => id))
+      record.present? ? id : nil
+    end
+
     # !============================================!
     # PLEASE PREFER checked_or_params OVER THIS
     # !============================================!

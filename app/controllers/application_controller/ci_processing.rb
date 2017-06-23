@@ -16,6 +16,7 @@ module ApplicationController::CiProcessing
 
     include Mixins::Actions::HostActions::Discover
     include Mixins::Actions::HostActions::Power
+    include Mixins::Actions::HostActions::Misc
 
     include Mixins::ExplorerShow
   end
@@ -234,8 +235,25 @@ module ApplicationController::CiProcessing
     true
   end
 
+  def check_non_empty(items, display_name)
+    if items.blank?
+      add_flash(_("No items were selected for %{task}") % {:task => display_name}, :error)
+      return false
+    end
+    true
+  end
+
+  def vm_button_operation_internal(items, task, display_name)
+    return false if task == 'retire_now' && !check_retire_requirements(items)
+    return false if task == 'scan' && !check_scan_requirements(items)
+    return false unless check_non_empty(items, display_name)
+
+    process_objects(items, task, display_name)
+    true
+  end
+
   # Common item button handler routines
-  def vm_button_operation(method, display_name, partial_after_single_selection = nil)
+  def vm_button_operation(task, display_name, partial_after_single_selection = nil)
     klass = get_rec_cls
 
     # Either a list or coming from a different controller (e.g. from host screen, go to its vms)
@@ -243,17 +261,9 @@ module ApplicationController::CiProcessing
        !%w(orchestration_stack service vm_cloud vm_infra vm miq_template vm_or_template).include?(controller_name)
 
       # FIXME: retrieving vms from DB two times
-      selected_items = find_checked_ids_with_rbac(klass)
+      items = find_checked_ids_with_rbac(klass, task)
 
-      return if method == 'retire_now' && !check_retire_requirements(selected_items)
-      return if method == 'scan' && !check_scan_requirements(selected_items)
-
-      if selected_items.empty?
-        add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => controller_name), :task => display_name}, :error)
-        return
-      end
-
-      process_objects(selected_items, method)
+      vm_button_operation_internal(items, task, display_name) || return
 
       # In non-explorer case, render the list (filling in @view).
       if @lastaction == "show_list"
@@ -262,18 +272,18 @@ module ApplicationController::CiProcessing
       end
 
     else # showing 1 item
-      if params[:id].nil? || klass.find_by_id(params[:id]).nil?
-        add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => controller_name)}, :error)
+      items = [find_id_with_rbac_no_exception(klass, params[:id])].compact
+
+      unless check_non_empty(items, display_name)
         show_list unless @explorer
         @refresh_partial = "layouts/gtl"
         return
       end
 
-      selected_items = [find_id_with_rbac(klass, params[:id])]
-      process_objects(selected_items, method) unless selected_items.empty?
+      vm_button_operation_internal(items, task, display_name)
 
       # Tells callers to go back to show_list because this item may be gone.
-      @single_delete = method == 'destroy' && !flash_errors?
+      @single_delete = task == 'destroy' && !flash_errors?
 
       # For Snapshot Trees
       if partial_after_single_selection && !@explorer
@@ -294,14 +304,29 @@ module ApplicationController::CiProcessing
     cloud_object_store_button_operation(klass, task)
   end
 
+  def check_suports_task(items, klass, task, display_name)
+    if klass.find(items).any? { |item| !item.supports?(task) }
+
+      message = if items.length == 1
+                  _("%{task} does not apply to this item")
+                else
+                  _("%{task} does not apply to at least one of the selected items")
+                end
+
+      add_flash(message % {:task => display_name}, :error)
+      return false
+    end
+    true
+  end
+
   def cloud_object_store_button_operation(klass, task)
-    # Map to instance method name
+    display_name = _(task.capitalize)
+
+    # Map task to instance method name
     case task
-    when "delete"
+    when 'delete'
       method = "#{task}_#{klass.name.underscore.to_sym}"
-      display_name = _(task.capitalize)
     else
-      display_name = _(task.capitalize)
       method = task = "#{klass.name.underscore.to_sym}_#{task}"
     end
 
@@ -310,25 +335,22 @@ module ApplicationController::CiProcessing
     if @lastaction == "show_list" || %w(cloud_object_store_containers cloud_object_store_objects).include?(@display)
       # FIXME retrieving vms from DB two times
       items = find_checked_ids_with_rbac(klass)
-      if items.empty?
-        add_flash(_("No %{model} were selected for %{task}") %
-                    {:model => ui_lookup(:models => klass.name), :task => display_name}, :error)
-      elsif klass.find(items).any? { |item| !item.supports?(task) }
-        add_flash(_("%{task} does not apply to at least one of the selected items") %
-                    {:task => display_name}, :error)
-      else
-        process_objects(items, method, display_name)
-      end
-    elsif params[:id].nil? || klass.find_by(:id => params[:id]).nil?
-      add_flash(_("%{record} no longer exists") %
-                  {:record => ui_lookup(:table => request.parameters["controller"])}, :error)
-      show_list unless @explorer
-      @refresh_partial = "layouts/gtl"
-    elsif !klass.find_by(:id => params[:id]).supports?(task)
-      add_flash(_("%{task} does not apply to this item") %
-                  {:task => display_name}, :error)
+
+      return unless check_non_empty(items, display_name)
+      return unless check_suports_task(items, klass, task, display_name)
+
+      process_objects(items, method, display_name)
     else
-      items.push(find_id_with_rbac(klass, params[:id]))
+      items = [find_id_with_rbac_no_exception(klass, params[:id])].compact
+
+      unless check_non_empty(items, display_name)
+        show_list unless @explorer
+        @refresh_partial = "layouts/gtl"
+        return
+      end
+
+      return unless check_suports_task(items, klass, task, display_name)
+
       process_objects(items, method, display_name) unless items.empty?
     end
   end
@@ -360,6 +382,7 @@ module ApplicationController::CiProcessing
 
     assert_rbac(klass, objs)
 
+    display_name ||= task.titleize
     case klass_str
     when 'OrchestrationStack', 'Service', 'CloudObjectStoreContainer', 'CloudObjectStoreObject'
       objs, _objs_out_reg = filter_ids_in_region(objs, klass.to_s)
@@ -383,7 +406,8 @@ module ApplicationController::CiProcessing
         objs.length
       ) %
       {
-        :task    => display_name ? display_name.titleize : task_name(task),
+        # FIXME: Unify the dataflow: get rid of 'task_name (ApplicationHelper::Tasks)'.
+        :task    => display_name,
         :number  => objs.length,
         :product => I18n.t('product.name'),
         :model   => ui_lookup(:model => klass.to_s),
@@ -430,7 +454,7 @@ module ApplicationController::CiProcessing
   # Delete all selected or single displayed VM(s)
   def deletevms
     assert_privileges(params[:pressed])
-    vm_button_operation('destroy', 'deletion')
+    vm_button_operation('destroy', _('Delete'))
   end
   alias_method :image_delete, :deletevms
   alias_method :instance_delete, :deletevms
@@ -440,7 +464,7 @@ module ApplicationController::CiProcessing
   # Import info for all selected or single displayed vm(s)
   def syncvms
     assert_privileges(params[:pressed])
-    vm_button_operation('sync', 'for Virtual Black Box synchronization')
+    vm_button_operation('sync', _('Virtual Black Box synchronization'))
   end
 
   DEFAULT_PRIVILEGE = Object.new # :nodoc:
@@ -454,7 +478,7 @@ module ApplicationController::CiProcessing
       privilege = params[:pressed]
     end
     assert_privileges(privilege)
-    vm_button_operation('refresh_ems', 'Refresh')
+    vm_button_operation('refresh_ems', _('Refresh Provider'))
   end
   alias_method :image_refresh, :refreshvms
   alias_method :instance_refresh, :refreshvms
@@ -464,7 +488,7 @@ module ApplicationController::CiProcessing
   # Import info for all selected or single displayed vm(s)
   def scanvms
     assert_privileges(params[:pressed])
-    vm_button_operation('scan', 'SmartState Analysis')
+    vm_button_operation('scan', _('Analysis'))
   end
   alias_method :image_scan, :scanvms
   alias_method :instance_scan, :scanvms
@@ -474,7 +498,7 @@ module ApplicationController::CiProcessing
   # Immediately retire items
   def retirevms_now
     assert_privileges(params[:pressed])
-    vm_button_operation('retire_now', 'retire')
+    vm_button_operation('retire_now', _('Retirement'))
   end
   alias_method :instance_retire_now, :retirevms_now
   alias_method :vm_retire_now, :retirevms_now
@@ -482,7 +506,7 @@ module ApplicationController::CiProcessing
 
   def check_compliance_vms
     assert_privileges(params[:pressed])
-    vm_button_operation('check_compliance_queue', 'check compliance')
+    vm_button_operation('check_compliance_queue', _('Check Compliance'))
   end
   alias_method :image_check_compliance, :check_compliance_vms
   alias_method :instance_check_compliance, :check_compliance_vms
@@ -492,7 +516,7 @@ module ApplicationController::CiProcessing
   # Collect running processes for all selected or single displayed vm(s)
   def getprocessesvms
     assert_privileges(params[:pressed])
-    vm_button_operation('collect_running_processes', 'Collect Running Processes')
+    vm_button_operation('collect_running_processes', _('Collect Running Processes'))
   end
   alias_method :instance_collect_running_processes, :getprocessesvms
   alias_method :vm_collect_running_processes, :getprocessesvms
@@ -500,7 +524,7 @@ module ApplicationController::CiProcessing
   # Start all selected or single displayed vm(s)
   def startvms
     assert_privileges(params[:pressed])
-    vm_button_operation('start', 'start')
+    vm_button_operation('start', _('Start'))
   end
   alias_method :instance_start, :startvms
   alias_method :vm_start, :startvms
@@ -508,7 +532,7 @@ module ApplicationController::CiProcessing
   # Suspend all selected or single displayed vm(s)
   def suspendvms
     assert_privileges(params[:pressed])
-    vm_button_operation('suspend', 'suspend')
+    vm_button_operation('suspend', _('Suspend'))
   end
   alias_method :instance_suspend, :suspendvms
   alias_method :vm_suspend, :suspendvms
@@ -516,7 +540,7 @@ module ApplicationController::CiProcessing
   # Pause all selected or single displayed vm(s)
   def pausevms
     assert_privileges(params[:pressed])
-    vm_button_operation('pause', 'pause')
+    vm_button_operation('pause', _('Pause'))
   end
   alias_method :instance_pause, :pausevms
   alias_method :vm_pause, :pausevms
@@ -524,14 +548,14 @@ module ApplicationController::CiProcessing
   # Terminate all selected or single displayed vm(s)
   def terminatevms
     assert_privileges(params[:pressed])
-    vm_button_operation('vm_destroy', 'terminate')
+    vm_button_operation('vm_destroy', _('Terminate'))
   end
   alias_method :instance_terminate, :terminatevms
 
   # Stop all selected or single displayed vm(s)
   def stopvms
     assert_privileges(params[:pressed])
-    vm_button_operation('stop', 'stop')
+    vm_button_operation('stop', _('Stop'))
   end
   alias_method :instance_stop, :stopvms
   alias_method :vm_stop, :stopvms
@@ -539,7 +563,7 @@ module ApplicationController::CiProcessing
   # Shelve all selected or single displayed vm(s)
   def shelvevms
     assert_privileges(params[:pressed])
-    vm_button_operation('shelve', 'shelve')
+    vm_button_operation('shelve', _('Shelve'))
   end
   alias_method :instance_shelve, :shelvevms
   alias_method :vm_shelve, :shelvevms
@@ -547,7 +571,7 @@ module ApplicationController::CiProcessing
   # Shelve all selected or single displayed vm(s)
   def shelveoffloadvms
     assert_privileges(params[:pressed])
-    vm_button_operation('shelve_offload', 'shelve_offload')
+    vm_button_operation('shelve_offload', _('Shelve Offload'))
   end
   alias_method :instance_shelve_offload, :shelveoffloadvms
   alias_method :vm_shelve_offload, :shelveoffloadvms
@@ -555,7 +579,7 @@ module ApplicationController::CiProcessing
   # Reset all selected or single displayed vm(s)
   def resetvms
     assert_privileges(params[:pressed])
-    vm_button_operation('reset', 'reset')
+    vm_button_operation('reset', _('Reset'))
   end
   alias_method :instance_reset, :resetvms
   alias_method :vm_reset, :resetvms
@@ -563,20 +587,20 @@ module ApplicationController::CiProcessing
   # Shutdown guests on all selected or single displayed vm(s)
   def guestshutdown
     assert_privileges(params[:pressed])
-    vm_button_operation('shutdown_guest', 'shutdown')
+    vm_button_operation('shutdown_guest', _('Shutdown Guest'))
   end
   alias_method :vm_guest_shutdown, :guestshutdown
 
   # Standby guests on all selected or single displayed vm(s)
   def gueststandby
     assert_privileges(params[:pressed])
-    vm_button_operation('standby_guest', 'standby')
+    vm_button_operation('standby_guest', _('Standby Guest'))
   end
 
   # Restart guests on all selected or single displayed vm(s)
   def guestreboot
     assert_privileges(params[:pressed])
-    vm_button_operation('reboot_guest', 'restart')
+    vm_button_operation('reboot_guest', _('Restart Guest'))
   end
   alias_method :instance_guest_restart, :guestreboot
   alias_method :vm_guest_restart, :guestreboot
@@ -584,21 +608,21 @@ module ApplicationController::CiProcessing
   # Delete all snapshots for vm(s)
   def deleteallsnapsvms
     assert_privileges(params[:pressed])
-    vm_button_operation('remove_all_snapshots', 'delete all snapshots', 'vm_common/config')
+    vm_button_operation('remove_all_snapshots', _('Delete All Snapshots'), 'vm_common/config')
   end
   alias_method :vm_snapshot_delete_all, :deleteallsnapsvms
 
   # Delete selected snapshot for vm
   def deletesnapsvms
     assert_privileges(params[:pressed])
-    vm_button_operation('remove_snapshot', 'delete snapshot', 'vm_common/config')
+    vm_button_operation('remove_snapshot', _('Delete Snapshot'), 'vm_common/config')
   end
   alias_method :vm_snapshot_delete, :deletesnapsvms
 
   # Delete selected snapshot for vm
   def revertsnapsvms
     assert_privileges(params[:pressed])
-    vm_button_operation('revert_to_snapshot', 'revert to a snapshot', 'vm_common/config')
+    vm_button_operation('revert_to_snapshot', _('Revert to a Snapshot'), 'vm_common/config')
   end
   alias_method :vm_snapshot_revert, :revertsnapsvms
 
@@ -714,142 +738,6 @@ module ApplicationController::CiProcessing
     cluster_button_operation('scan', _('Analysis'))
   end
 
-  def each_host(host_ids, task_name)
-    Host.where(:id => host_ids).order("lower(name)").each do |host|
-      begin
-        yield host
-      rescue => err
-        add_flash(_("%{model} \"%{name}\": Error during '%{task}': %{message}") %
-                  {
-                    :model   => ui_lookup(:model => "Host"),
-                    :name    => host.name,
-                    :task    => task_name,
-                    :message => err.message
-                  }, :error)
-      end
-    end
-  end
-
-  # Common Host button handler routines
-  def process_hosts(hosts, task, display_name = nil)
-    hosts, _hosts_out_region = filter_ids_in_region(hosts, _("Host"))
-    return if hosts.empty?
-    task_name = (display_name || task)
-
-    case task
-    when "refresh_ems"
-      Host.refresh_ems(hosts)
-      add_flash(n_("%{task} initiated for %{count} Host from the %{product} Database",
-                   "%{task} initiated for %{count} Hosts from the %{product} Database", hosts.length) % \
-        {:task    => (display_name || task_name(task)),
-         :product => I18n.t('product.name'),
-         :count   => hosts.length})
-      AuditEvent.success(:userid => session[:userid], :event => "host_#{task}",
-          :message => "'#{task_name}' successfully initiated for #{pluralize(hosts.length, "Host")}",
-          :target_class => "Host")
-    when "destroy"
-      each_host(hosts, task_name) do |host|
-        validation = host.validate_destroy
-        if !validation[:available]
-          add_flash(validation[:message], :error)
-        else
-          audit = {:event        => "host_record_delete_initiated",
-                   :message      => "[#{host.name}] Record delete initiated",
-                   :target_id    => host.id,
-                   :target_class => "Host",
-                   :userid       => session[:userid]}
-          AuditEvent.success(audit)
-          host.destroy_queue
-        end
-      end
-    when "scan"
-      each_host(hosts, task_name) do |host|
-        if host.respond_to?(:scan)
-          host.send(task.to_sym, session[:userid]) # Scan needs userid
-          add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => (display_name || task)})
-        else
-          add_flash(_("\"%{task}\": not supported for %{hostname}") % {:hostname => host.name, :task => (task_name || task)}, :error)
-        end
-      end
-    when "maintenance"
-      each_host(hosts, task_name) do |host|
-        if host.maintenance
-          if host.respond_to?(:unset_node_maintenance)
-            host.send(:unset_node_maintenance_queue, session[:userid])
-            add_flash(_("\"%{record}\": %{task} successfully initiated") %
-                      {:record => host.name, :task => (display_name || task)})
-          else
-            add_flash(_("\"%{task}\": not supported for %{hostname}") %
-                      {:hostname => host.name, :task => (task_name || task)}, :error)
-          end
-        elsif host.respond_to?(:set_node_maintenance)
-          host.send(:set_node_maintenance_queue, session[:userid])
-          add_flash(_("\"%{record}\": %{task} successfully initiated") %
-                    {:record => host.name, :task => (display_name || task)})
-        else
-          add_flash(_("\"%{task}\": not supported for %{hostname}") %
-                    {:hostname => host.name, :task => (task_name || task)}, :error)
-        end
-      end
-    when "service_scheduling"
-      each_host(hosts, task_name) do |host|
-        params[:miq_grid_checks].split(",").each do |cloud_service_id|
-          service = host.cloud_services.find(cloud_service_id)
-          if service.validate_enable_scheduling
-            resp = service.enable_scheduling
-            status = resp.body.fetch("service").fetch("status")
-            service.update(:scheduling_disabled => status == 'disabled')
-            add_flash(_("\"%{record}\": Scheduling is %{status} now.") % {:record => service.name, :status => status})
-          elsif service.validate_disable_scheduling
-            resp = service.disable_scheduling
-            status = resp.body.fetch("service").fetch("status")
-            service.update(:scheduling_disabled => status == 'disabled')
-            add_flash(_("\"%{record}\": Scheduling is %{status} now.") % {:record => service.name, :status => status})
-          else
-            add_flash(_("\"%{record}\": %{task} invalid") % {:record => service.name, :task => (display_name || task)},
-                      :error)
-          end
-        end
-      end
-    when "manageable"
-      each_host(hosts, task_name) do |host|
-        if %w(enroll available adoptfail inspectfail cleanfail).include?(host.hardware.provision_state)
-          host.manageable_queue(session[:userid])
-          add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => (display_name || task)})
-        else
-          add_flash(_("\"%{task}\": not available for %{hostname}. %{hostname}'s provision state must be in \"available\", \"adoptfail\", \"cleanfail\", \"enroll\", or \"inspectfail\"") % {:hostname => host.name, :task => (display_name || task)}, :error)
-        end
-      end
-    when "introspect"
-      each_host(hosts, task_name) do |host|
-        if host.hardware.provision_state == "manageable"
-          host.introspect_queue(session[:userid])
-          add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => (display_name || task)})
-        else
-          add_flash(_("\"%{task}\": not available for %{hostname}. %{hostname}'s provision state needs to be in \"manageable\"") % {:hostname => host.name, :task => (display_name || task)}, :error)
-        end
-      end
-    when "provide"
-      each_host(hosts, task_name) do |host|
-        if host.hardware.provision_state == "manageable"
-          host.provide_queue(session[:userid])
-          add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => (display_name || task)})
-        else
-          add_flash(_("\"%{task}\": not available for %{hostname}. %{hostname}'s provision state needs to be in \"manageable\"") % {:hostname => host.name, :task => (display_name || task)}, :error)
-        end
-      end
-    else
-      each_host(hosts, task_name) do |host|
-        if host.respond_to?(task) && host.is_available?(task)
-          host.send(task.to_sym)
-          add_flash(_("\"%{record}\": %{task} successfully initiated") % {:record => host.name, :task => (display_name || task)})
-        else
-          add_flash(_("\"%{task}\": not available for %{hostname}") % {:hostname => host.name, :task => (display_name || task)}, :error)
-        end
-      end
-    end
-  end
-
   # Common Stacks button handler routines
   def process_orchestration_stacks(stacks, task, _ = nil)
     stacks, = filter_ids_in_region(stacks, "OrchestrationStack")
@@ -888,101 +776,6 @@ module ApplicationController::CiProcessing
       end
       ManageIQ::Providers::AnsibleTower::AutomationManager::Job.destroy_queue(stacks)
     end
-  end
-
-  # Refresh all selected or single displayed host(s)
-  def refreshhosts
-    assert_privileges("host_refresh")
-    host_button_operation('refresh_ems', _('Refresh'))
-  end
-
-  # Scan all selected or single displayed host(s)
-  def scanhosts
-    assert_privileges("host_scan")
-    host_button_operation('scan', _('Analysis'))
-  end
-
-  # Toggle maintenance mode on all selected or single displayed host(s)
-  def maintenancehosts
-    assert_privileges("host_toggle_maintenance")
-    host_button_operation('maintenance', _('Toggle Maintenance'))
-  end
-
-  # Toggle Scheduling on all selected or single displayed Cloud Service
-  def toggleservicescheduling
-    assert_privileges("host_cloud_service_scheduling_toggle")
-    host_button_operation('service_scheduling', _('Toggle Scheduling for Cloud Service'))
-  end
-
-  def check_compliance_hosts
-    assert_privileges("host_check_compliance")
-    host_button_operation('check_compliance_queue', _('Compliance Check'))
-  end
-
-  def analyze_check_compliance_hosts
-    assert_privileges("host_analyze_check_compliance")
-    host_button_operation('scan_and_check_compliance_queue', _('Analyze and Compliance Check'))
-  end
-
-  # Set host to manageable state
-  def sethoststomanageable
-    assert_privileges("host_manageable")
-    host_button_operation('manageable', _('Manageable'))
-  end
-
-  # Introspect host hardware
-  def introspecthosts
-    assert_privileges("host_introspect")
-    host_button_operation('introspect', _('Introspect'))
-  end
-
-  # Provide host hardware, moving them to available state
-  def providehosts
-    assert_privileges("host_provide")
-    host_button_operation('provide', _('Provide'))
-  end
-
-  def host_button_operation(method, display_name)
-    hosts = []
-
-    # Either a list or coming from a different controller (eg from ems screen, go to its hosts)
-    if @lastaction == "show_list" || @layout != "host"
-      hosts = find_checked_ids_with_rbac(Host)
-      if hosts.empty?
-        add_flash(_("No %{model} were selected for %{task}") % {:model => ui_lookup(:tables => "host"), :task => display_name}, :error)
-      else
-        process_hosts(hosts, method, display_name)
-      end
-
-      if @lastaction == "show_list" # In host controller, refresh show_list, else let the other controller handle it
-        show_list
-        @refresh_partial = "layouts/gtl"
-      end
-
-    else # showing 1 host
-      if params[:id].nil? || Host.find_by_id(params[:id]).nil?
-        add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => "host")}, :error)
-      else
-        hosts.push(find_id_with_rbac(Host, params[:id]))
-        process_hosts(hosts, method, display_name)  unless hosts.empty?
-      end
-
-      params[:display] = @display
-      show
-
-      # TODO: tells callers to go back to show_list because this Host may be gone
-      # Should be refactored into calling show_list right here
-      if method == 'destroy'
-        @single_delete = true unless flash_errors?
-      end
-      if @display == "vms"
-        @refresh_partial = "layouts/gtl"
-      else
-        @refresh_partial = "config"
-      end
-    end
-
-    hosts.count
   end
 
   def process_storage(storages, task)

@@ -57,7 +57,7 @@ module Mixins
             assert_privileges("vm_retire")
             kls = Vm
           end
-          obj = kls.find_by_id(params[:id])
+          obj = kls.find_by(:id => params[:id])
           render :json => {
             :retirement_date    => obj.retires_on.try(:strftime, '%m/%d/%Y'),
             :retirement_warning => obj.retirement_warn
