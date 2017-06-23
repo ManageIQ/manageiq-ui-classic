@@ -5,8 +5,7 @@
     - elsif @report && !@report_result
       = render :partial => "layouts/flash_msg"
 
-      = render :partial => 'shared/report_chart_and_html',
-        :locals => {:chart => @render_chart, :html => @html, :report => @report)
+      = render :partial => 'shared/report_chart_and_html', :locals => {:chart => @render_chart, :html => @html, :report => @report}
 
     - elsif x_active_tree == :reports_tree && x_node.split('-').length <= 4
       - nodes = x_node.split('-')

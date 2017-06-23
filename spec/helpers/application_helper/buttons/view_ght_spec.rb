@@ -6,9 +6,9 @@ describe ApplicationHelper::Button::ViewGHT do
   let(:graph) { nil }
   subject do
     described_class.new(view_context, {},
-                        { 'ght_type' => ght_type,
-                          'report'   => report,
-                          'render_chart'   => render_chart }, {})
+                        {'ght_type'     => ght_type,
+                         'report'       => report,
+                         'render_chart' => render_chart}, {})
   end
 
   before { allow(report).to receive(:graph).and_return(graph) }
