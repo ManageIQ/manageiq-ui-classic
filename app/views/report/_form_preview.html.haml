@@ -13,14 +13,7 @@
       %fieldset
         %h3
           = _('Chart Preview (up to 50 rows)')
-        - width, height = @html ? [350, 250] : [700, 500]
-        = chart_remote('report',
-          :action  => 'preview_chart',
-          :width   => width,
-          :height  => height,
-          :bgcolor => "#f2f2f2",
-          :id      => 'my_chart',
-          :zoomed  => false)
+        = chart_remote('report', :action  => 'preview_chart', :id => 'my_chart', :zoomed  => false)
     - if @html
       %fieldset
         %h3
