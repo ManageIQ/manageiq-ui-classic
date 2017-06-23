@@ -60,27 +60,28 @@ module ReportController::SavedReports
       return
     end
 
-    if @report.contains_records?
-      @html = report_first_page(rr)
-      if params[:type]
-        @render_chart = false
-
-        @html = if %w(tabular hybrid).include?(params[:type])
-          report_build_html_table(@report,
-                                  rr.html_rows(:page     => @sb[:pages][:current],
-                                               :per_page => @sb[:pages][:perpage]).join)
-        end
-        @ght_type = params[:type]
-      else
-        @ght_type = @report.graph.blank? ?  'tabular' : 'hybrid'
-      end
-      @render_chart = %w(graph hybrid).include?(@ght_type)
-
-      @report.extras ||= {}
-      @report.extras[:to_html] ||= @html
-    else
+    unless @report.contains_records?
       add_flash(_("No records found for this report"), :warning)
+      return
     end
+
+    @html = report_first_page(rr)
+    if params[:type]
+      @render_chart = false
+
+      @html = if %w(tabular hybrid).include?(params[:type])
+        report_build_html_table(@report,
+                                rr.html_rows(:page     => @sb[:pages][:current],
+                                             :per_page => @sb[:pages][:perpage]).join)
+      end
+      @ght_type = params[:type]
+    else
+      @ght_type = @report.graph.blank? ?  'tabular' : 'hybrid'
+    end
+    @render_chart = %w(graph hybrid).include?(@ght_type)
+
+    @report.extras ||= {}
+    @report.extras[:to_html] ||= @html
   end
 
   # Delete all selected or single displayed host(s)
