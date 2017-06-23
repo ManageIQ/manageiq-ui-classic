@@ -24,7 +24,7 @@ module ReportController::SavedReports
     @right_cell_text ||= _("Saved Report \"%{name}\"") %
                          {:name => "#{rr.name} - #{format_timezone(rr.created_on, Time.zone, "gt")}"}
 
-    if admin_user? || current_user.miq_group_ids.include?(rr.miq_group_id)
+    unless admin_user? || current_user.miq_group_ids.include?(rr.miq_group_id)
       add_flash(_("Report is not authorized for the logged in user"), :error)
       get_all_reps(@sb[:miq_report_id].to_s)
       return
