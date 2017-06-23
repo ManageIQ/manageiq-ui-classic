@@ -319,6 +319,11 @@ class ApplicationController < ActionController::Base
         options[:parent] = identify_record(curr_model_id, controller_to_model) if curr_model_id && options[:parent].nil?
       end
     end
+
+    if params[:model] == "physical_servers_with_host"
+      options[:where_clause] = "physical_servers.id in (select hosts.physical_server_id from hosts)"
+    end
+
     options[:parent] = options[:parent] || @parent
     options[:association] = params[:model] if HAS_ASSOCATION.include? params[:model]
     options[:selected_ids] = params[:records]
@@ -383,7 +388,6 @@ class ApplicationController < ActionController::Base
     if options.nil? || options[:view].nil?
       model_view = process_params_model_view(params, options)
       @edit = session[:edit]
-      options_from_session(options)
       @view, settings = get_view(model_view, options)
     else
       @view = options[:view]
@@ -402,16 +406,6 @@ class ApplicationController < ActionController::Base
       :data     => view_to_hash(@view),
       :messages => @flash_array
     }
-  end
-
-  def options_from_session(options)
-    options[:parent_method] = session[:paged_view_search_options][:parent_method]
-    options[:supported_features_filter] = session[:paged_view_search_options][:supported_features_filter]
-    options[:all_pages] = session[:paged_view_search_options][:page]
-    options[:where_clause] = session[:paged_view_search_options][:where_clause]
-    options[:named_scope] = session[:paged_view_search_options][:named_scope]
-    options[:display_filter_hash] = session[:paged_view_search_options][:display_filter_hash]
-    options[:match_via_descendants] = session[:paged_view_search_options][:match_via_descendants]
   end
 
   def event_logs
