@@ -1,4 +1,4 @@
-describe('generic-button-component', function() {
+describe('form-button-component', function() {
   var $scope, $componentController, vm, miqService, API;
 
   describe('Reset and Cancel specs', function () {
@@ -14,7 +14,7 @@ describe('generic-button-component', function() {
       $scope = $rootScope;
       var element = angular.element(
         '<form name="angularForm">' +
-        '<generic-button-component angular-form="angularForm"></generic-button-component>' +
+        '<form-button-component angular-form="angularForm"></form-button-component>' +
         '</form>'
       );
       $compile(element)($rootScope);
@@ -26,7 +26,7 @@ describe('generic-button-component', function() {
         redirectUrl: '/controller/go_back',
         entity: 'Project',
         entityName: 'xyz'};
-      vm = $componentController('genericButtonComponent', null, bindings);
+      vm = $componentController('formButtonComponent', null, bindings);
       vm.$onInit();
     }));
 
