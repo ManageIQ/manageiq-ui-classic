@@ -9,7 +9,7 @@
                  :locals  => {:tl_json       => @edit[:tl_xml],
                               :data_action   => "preview_timeline",
                               :position_time => @edit[:tl_position]})
-    - unless @edit[:zgraph_xml].nil?
+    - unless @edit[:chart_data].nil?
       %fieldset
         %h3
           = _('Chart Preview (up to 50 rows)')
