@@ -1,13 +1,11 @@
 - @angular_form = true
 
-#form_div
+= render :partial => "layouts/flash_msg"
 
-  = render :partial => "layouts/flash_msg"
-
-  %tenant-component{:id            => @tenant.id,
-                    :parent        => @tenant_parent,
-                    :divisible     => params[:tenant_type] == "tenant",
-                    "redirect-url" => "/#{controller_name}/explorer",}
+%tenant-component{:id            => @tenant.id,
+                  :parent        => @tenant_parent,
+                  :divisible     => params[:tenant_type] == "tenant",
+                  "redirect-url" => "/#{controller_name}/explorer",}
 
 :javascript
-  miq_bootstrap('#form_div');
+  miq_bootstrap('tenant-component');
