@@ -704,7 +704,6 @@ class ApplicationController < ActionController::Base
     total = @sb[:pages][:items] / @sb[:pages][:perpage]
     total += 1 if @sb[:pages][:items] % @sb[:pages][:perpage] != 0
     @sb[:pages][:total] = total
-    title = @report.name
     @title = @report.title
     if @report.extras[:total_html_rows] == 0
       add_flash(_("No records found for this report"), :warning)
