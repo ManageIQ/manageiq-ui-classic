@@ -19,11 +19,6 @@ class AutomationManagerController < ApplicationController
     @table_name ||= "automation_manager"
   end
 
-  CM_X_BUTTON_ALLOWED_ACTIONS = {
-    'configscript_service_dialog' => :configscript_service_dialog,
-    'automation_manager_tag' => :automation_manager_tag
-  }.freeze
-
   def self.model_to_name(provmodel)
     if provmodel.include?("ManageIQ::Providers::AnsibleTower")
       Dictionary.gettext('ansible_tower', :type => :ui_title, :translate => false)
