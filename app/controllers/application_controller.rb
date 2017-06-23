@@ -2237,6 +2237,8 @@ class ApplicationController < ActionController::Base
       "vm"
     when 'automation_manager'
       "automation_manager_provider"
+    when 'provider_foreman'
+      "configuration_manager_provider"
     else
       controller_name
     end

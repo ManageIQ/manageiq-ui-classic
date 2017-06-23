@@ -69,8 +69,8 @@ class ProviderForemanController < ApplicationController
     @explorer = true
     case x_active_accord
     when :configuration_manager_providers
-      assert_privileges("provider_foreman_configured_system_tag")
-      tagging_edit('ConfiguredSystem', false)
+      assert_privileges("configuration_manager_provider_tag")
+      tagging_edit('ManageIQ::Providers::ConfigurationManager', false)
     when :configuration_manager_cs_filter
       assert_privileges("configured_system_tag")
       tagging_edit('ConfiguredSystem', false)

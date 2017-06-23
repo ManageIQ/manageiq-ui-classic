@@ -31,4 +31,19 @@ class ApplicationHelper::Toolbar::ConfigurationManagerProviderCenter < Applicati
       ]
     ),
   ])
+  button_group('configuration_manager_policy', [
+    select(
+      :configuration_manager_policy_choice,
+      'fa fa-shield fa-lg',
+      t = N_('Policy'),
+      t,
+      :items => [
+        button(
+          :configuration_manager_provider_tag,
+          'pficon pficon-edit fa-lg',
+          N_('Edit Tags for this Ansible Tower Providers'),
+          N_('Edit Tags'))
+      ]
+    )
+  ])
 end

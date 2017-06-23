@@ -44,9 +44,8 @@ class ApplicationHelper::Toolbar::AutomationManagerProviderCenter < ApplicationH
         button(
           :automation_manager_provider_tag,
           'pficon pficon-edit fa-lg',
-          N_('Edit Tags for this Ansible Tower Provider'),
-          N_('Edit Tags'),
-        :klass => ApplicationHelper::Button::ButtonWithoutRbacCheck)
+          N_('Edit Tags for this Ansible Tower Providers'),
+          N_('Edit Tags'))
       ]
     )
   ])

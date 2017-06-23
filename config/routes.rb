@@ -2702,6 +2702,7 @@ Rails.application.routes.draw do
         cs_form_field_changed
         users
         wait_for_task
+        x_button
       ) +
                adv_search_post +
                x_post

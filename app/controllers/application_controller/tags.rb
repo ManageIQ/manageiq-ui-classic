@@ -29,6 +29,10 @@ module ApplicationController::Tags
     tagging_edit('ManageIQ::Providers::AnsibleTower::AutomationManager')
   end
 
+  def configuration_manager_provider_tag
+    tagging_edit('ManageIQ::Providers::ConfigurationManager')
+  end
+
   alias_method :image_tag, :tagging_edit
   alias_method :instance_tag, :tagging_edit
   alias_method :vm_tag, :tagging_edit
