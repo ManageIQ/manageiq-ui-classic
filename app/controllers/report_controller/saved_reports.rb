@@ -16,7 +16,7 @@ module ReportController::SavedReports
 
   def fetch_saved_report(id)
     rr = MiqReportResult.find_by_id(from_cid(id.split('-').last))
-    if rr.nil?  # Saved report no longer exists
+    if rr.nil? # Saved report no longer exists
       @report = nil
       return
     end
@@ -33,50 +33,51 @@ module ReportController::SavedReports
     @report_result_id = session[:report_result_id] = rr.id
     @report_result = rr
     session[:report_result_runtime] = rr.last_run_on
-    if rr.status.downcase == "complete"
-      @report = rr.report_results
-      session[:rpt_task_id] = nil
-      if @report.blank?
-        add_flash(_("Saved Report \"%{time}\" not found, Schedule may have failed") %
-                  {:time => format_timezone(rr.created_on, Time.zone, "gtl")},
-                  :error)
-        get_all_reps(rr.miq_report_id.to_s)
-        if x_active_tree == :savedreports_tree
-          self.x_node = "xx-#{to_cid(rr.miq_report_id)}"
-        else
-          @sb[:rpt_menu].each_with_index do |lvl1, i|
-            if lvl1[0] == @sb[:grp_title]
-              lvl1[1].each_with_index do |lvl2, k|
-                if lvl2[0].downcase == "custom"
-                  x_node_set("xx-#{i}_xx-#{i}-#{k}_rep-#{to_cid(rr.miq_report_id)}", :reports_tree)
-                end
+
+    return unless rr.status.downcase == "complete"
+
+    @report = rr.report_results
+    session[:rpt_task_id] = nil
+    if @report.blank?
+      add_flash(_("Saved Report \"%{time}\" not found, Schedule may have failed") %
+                {:time => format_timezone(rr.created_on, Time.zone, "gtl")},
+                :error)
+      get_all_reps(rr.miq_report_id.to_s)
+      if x_active_tree == :savedreports_tree
+        self.x_node = "xx-#{to_cid(rr.miq_report_id)}"
+      else
+        @sb[:rpt_menu].each_with_index do |lvl1, i|
+          if lvl1[0] == @sb[:grp_title]
+            lvl1[1].each_with_index do |lvl2, k|
+              if lvl2[0].downcase == "custom"
+                x_node_set("xx-#{i}_xx-#{i}-#{k}_rep-#{to_cid(rr.miq_report_id)}", :reports_tree)
               end
             end
           end
         end
-        return
-      else
-        if @report.contains_records?
-          @html = report_first_page(rr)
-          if params[:type]
-            @render_chart = false
+      end
+      return
+    else
+      if @report.contains_records?
+        @html = report_first_page(rr)
+        if params[:type]
+          @render_chart = false
 
-            @html = if %w(tabular hybrid).include?(params[:type])
-              report_build_html_table(@report,
-                                      rr.html_rows(:page     => @sb[:pages][:current],
-                                                   :per_page => @sb[:pages][:perpage]).join)
-            end
-            @ght_type = params[:type]
-          else
-            @ght_type = @report.graph.blank? ?  'tabular' : 'hybrid'
+          @html = if %w(tabular hybrid).include?(params[:type])
+            report_build_html_table(@report,
+                                    rr.html_rows(:page     => @sb[:pages][:current],
+                                                 :per_page => @sb[:pages][:perpage]).join)
           end
-          @render_chart = %w(graph hybrid).include?(@ght_type)
-
-          @report.extras ||= {}
-          @report.extras[:to_html] ||= @html
+          @ght_type = params[:type]
         else
-          add_flash(_("No records found for this report"), :warning)
+          @ght_type = @report.graph.blank? ?  'tabular' : 'hybrid'
         end
+        @render_chart = %w(graph hybrid).include?(@ght_type)
+
+        @report.extras ||= {}
+        @report.extras[:to_html] ||= @html
+      else
+        add_flash(_("No records found for this report"), :warning)
       end
     end
   end
