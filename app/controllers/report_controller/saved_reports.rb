@@ -48,12 +48,9 @@ module ReportController::SavedReports
         self.x_node = "xx-#{to_cid(rr.miq_report_id)}"
       else
         @sb[:rpt_menu].each_with_index do |lvl1, i|
-          if lvl1[0] == @sb[:grp_title]
-            lvl1[1].each_with_index do |lvl2, k|
-              if lvl2[0].downcase == "custom"
-                x_node_set("xx-#{i}_xx-#{i}-#{k}_rep-#{to_cid(rr.miq_report_id)}", :reports_tree)
-              end
-            end
+          next unless lvl1[0] == @sb[:grp_title]
+          lvl1[1].each_with_index do |lvl2, k|
+            x_node_set("xx-#{i}_xx-#{i}-#{k}_rep-#{to_cid(rr.miq_report_id)}", :reports_tree) if lvl2[0].downcase == "custom"
           end
         end
       end
@@ -70,10 +67,12 @@ module ReportController::SavedReports
       @render_chart = false
 
       @html = if %w(tabular hybrid).include?(params[:type])
-        report_build_html_table(@report,
-                                rr.html_rows(:page     => @sb[:pages][:current],
-                                             :per_page => @sb[:pages][:perpage]).join)
-      end
+                report_build_html_table(
+                  @report,
+                  rr.html_rows(:page     => @sb[:pages][:current],
+                               :per_page => @sb[:pages][:perpage]).join
+                )
+              end
       @ght_type = params[:type]
     else
       @ght_type = @report.graph.blank? ?  'tabular' : 'hybrid'
