@@ -1,9 +1,8 @@
 ManageIQ.angular.app.component('tenantComponent', {
   bindings: {
-    id: '=?',
+    recordId: '=?',
     divisible: '=',
     parent: '=?',
-    angularForm: '=',
     redirectUrl: '@',
   },
   controllerAs: 'vm',
@@ -28,10 +27,10 @@ function tenantFormController(API, miqService) {
       default: '',
     };
 
-    if (angular.isDefined(vm.id)) {
+    if (angular.isDefined(vm.recordId)) {
       vm.newRecord = false;
       miqService.sparkleOn();
-      API.get('/api/tenants/' + vm.id)
+      API.get('/api/tenants/' + vm.recordId)
         .then(getTenantFormData)
         .catch(miqService.handleFailure);
     } else {
@@ -42,7 +41,7 @@ function tenantFormController(API, miqService) {
 
     vm.saveClicked = function() {
       miqService.sparkleOn();
-      API.put('/api/tenants/' + vm.id, {name: vm.tenantModel.name, description: vm.tenantModel.description})
+      API.put('/api/tenants/' + vm.recordId, {name: vm.tenantModel.name, description: vm.tenantModel.description})
         .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully saved.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl, true))
         .catch(miqService.handleFailure);
     };
