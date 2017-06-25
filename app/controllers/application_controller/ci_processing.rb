@@ -978,16 +978,19 @@ module ApplicationController::CiProcessing
     delete_elements(ResourcePool, :process_resourcepools)
   end
 
-  def pfx_for_vm_button_pressed(_button_pressed)
-    if params[:pressed].starts_with?("image_")
+  # FIXME: need to unify pfx_for_vm_button_pressed and vm_style_button?
+  def pfx_for_vm_button_pressed(pressed)
+    if pressed.starts_with?("image_")
       return "image"
-    elsif params[:pressed].starts_with?("instance_")
+    elsif pressed.starts_with?("instance_")
       return "instance"
-    elsif params[:pressed].starts_with?("miq_template_")
+    elsif pressed.starts_with?("vm_")
+      return "vm"
+    elsif pressed.starts_with?("miq_template_")
       return "miq_template"
-    elsif params[:pressed].starts_with?("orchestration_stack_")
-      return "orchestration_stack"
-    else
+    elsif pressed.starts_with?("orchestration_stack_")
+      return "orchestration_stack" # orchestration_stack does not belong here, added in 060dfb36
+    else # need to get rid of the 'else' branch
       return "vm"
     end
   end
