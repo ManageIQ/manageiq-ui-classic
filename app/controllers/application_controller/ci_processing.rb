@@ -992,6 +992,25 @@ module ApplicationController::CiProcessing
     end
   end
 
+  # These VM-type buttons flash (in case of error) or redirect
+  def vm_button_redirected?(pfx, pressed)
+    return ["#{pfx}_policy_sim", "#{pfx}_compare", "#{pfx}_tag",
+            "#{pfx}_retire", "#{pfx}_protect", "#{pfx}_ownership",
+            "#{pfx}_refresh", "#{pfx}_right_size",
+            "#{pfx}_reconfigure",
+            "#{pfx}_resize", "#{pfx}_live_migrate", "#{pfx}_evacuate"
+             ].include?(pressed) &&
+             @flash_array.nil?
+  end
+
+  def vm_style_button?(pressed)
+    params[:pressed].starts_with?("image_",
+                                  "instance_",
+                                  "vm_",
+                                  "miq_template_",
+                                  "guest_") # guest_ seems to be a non-sense
+  end
+
   def process_vm_buttons(pfx)
     case params[:pressed]
     when "#{pfx}_policy_sim"                then polsimvms
