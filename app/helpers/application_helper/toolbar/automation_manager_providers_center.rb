@@ -48,9 +48,28 @@ class ApplicationHelper::Toolbar::AutomationManagerProvidersCenter < Application
           :enabled   => false,
           :onwhen    => "1+"
         ),
-        separator,
+      ]
+    )
+  ])
+  button_group('automation_manager_policy', [
+    select(
+      :automation_manager_policy_choice,
+      'fa fa-shield fa-lg',
+      t = N_('Policy'),
+      t,
+      :enabled => false,
+      :onwhen  => "1+",
+      :items   => [
+        button(
+          :automation_manager_provider_tag,
+          'pficon pficon-edit fa-lg',
+          N_('Edit Tags for the selected Ansible Tower Providers'),
+          N_('Edit Tags'),
+          :url_parms => "main_div",
+          :enabled   => false,
+          :klass => ApplicationHelper::Button::ButtonWithoutRbacCheck,
+          :onwhen    => "1+"),
       ]
     ),
-  ]
-  )
+  ])
 end

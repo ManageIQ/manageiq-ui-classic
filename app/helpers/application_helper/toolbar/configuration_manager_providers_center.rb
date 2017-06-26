@@ -48,4 +48,23 @@ class ApplicationHelper::Toolbar::ConfigurationManagerProvidersCenter < Applicat
       ]
     ),
   ])
+  button_group('configuration_manager_policy', [
+    select(
+      :configuration_manager_policy_choice,
+      'fa fa-shield fa-lg',
+      t = N_('Policy'),
+      t,
+      :enabled => false,
+      :onwhen  => "1+",
+      :items   => [
+        button(
+          :configuration_manager_provider_tag,
+          'pficon pficon-edit fa-lg',
+          N_('Edit Tags for this Foreman Provider'),
+          N_('Edit Tags'),
+          :url_parms => "main_div",
+          :onwhen    => "1+")
+      ]
+    )
+  ])
 end

@@ -285,7 +285,15 @@ module Mixins
 
     private
 
+    def tag_action
+      (params[:action] == 'x_button' && %w(automation_manager_provider_tag configuration_manager_provider_tag).include?(params[:pressed])) || (params[:action] == 'tagging' && params[:pressed] == 'reset')
+    end
+
     def replace_right_cell(options = {})
+      if tag_action
+        render_tagging_form
+        return
+      end
       replace_trees = options[:replace_trees]
       return if @in_a_form
       @explorer = true

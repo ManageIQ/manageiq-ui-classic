@@ -19,10 +19,6 @@ class AutomationManagerController < ApplicationController
     @table_name ||= "automation_manager"
   end
 
-  CM_X_BUTTON_ALLOWED_ACTIONS = {
-    'configscript_service_dialog' => :configscript_service_dialog,
-  }.freeze
-
   def self.model_to_name(provmodel)
     if provmodel.include?("ManageIQ::Providers::AnsibleTower")
       Dictionary.gettext('ansible_tower', :type => :ui_title, :translate => false)
@@ -50,8 +46,8 @@ class AutomationManagerController < ApplicationController
     @explorer ||= true
     case x_active_accord
     when :automation_manager_providers
-      assert_privileges("automation_manager_provider_configured_system_tag")
-      tagging_edit('ConfiguredSystem', false)
+      assert_privileges("automation_manager_provider_tag")
+      tagging_edit('ManageIQ::Providers::AnsibleTower::AutomationManager', false)
     when :automation_manager_cs_filter
       assert_privileges("automation_manager_configured_system_tag")
       tagging_edit('ConfiguredSystem', false)

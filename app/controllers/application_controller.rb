@@ -2210,6 +2210,10 @@ class ApplicationController < ActionController::Base
     case controller_name
     when "vm_infra", "vm_or_template", "vm_cloud"
       "vm"
+    when 'automation_manager'
+      "automation_manager_provider"
+    when 'provider_foreman'
+      "configuration_manager_provider"
     else
       controller_name
     end
