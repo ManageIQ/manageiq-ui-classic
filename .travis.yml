@@ -4,7 +4,7 @@ rvm:
 - '2.4.1'
 sudo: false
 cache:
-  bundler: true
+  bundler: false
   directories:
   - vendor/assets/bower_components
 addons:
