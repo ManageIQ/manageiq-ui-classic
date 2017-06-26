@@ -44,13 +44,6 @@ class MiqTaskController < ApplicationController
   # Show job list for the current user
   def jobs
     jobs_info
-    if pagination_request?
-      render :update do |page|
-        page << javascript_prologue
-        page.replace_html("gtl_div", :partial => "layouts/gtl", :locals => {:action_url => @lastaction})
-        page << "miqSparkle(false);"  # Need to turn off sparkle in case original ajax element gets replaced
-      end
-    end
   end
 
   def list_jobs
