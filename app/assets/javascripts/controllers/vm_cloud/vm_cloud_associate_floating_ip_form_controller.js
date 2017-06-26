@@ -22,13 +22,13 @@ ManageIQ.angular.app.controller('vmCloudAssociateFloatingIpFormController', ['$h
   vm.submitClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/associate_floating_ip_vm/' + vmCloudAssociateFloatingIpFormId + '?button=submit';
-    miqService.miqAjaxButton(url, true);
+    miqService.miqAjaxButton(url, vm.vmCloudModel);
   };
 
   function getAssociateFloatingIpFormData(response) {
     var data = response.data;
 
-    vm.floating_ips = data.floating_ips;
+    Object.assign(vm, data);
     vm.modelCopy = angular.copy( vm.vmCloudModel );
     miqService.sparkleOff();
   }

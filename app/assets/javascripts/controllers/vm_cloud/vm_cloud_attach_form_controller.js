@@ -6,12 +6,12 @@ ManageIQ.angular.app.controller('vmCloudAttachFormController', ['$scope', 'vmClo
   vm.afterGet = false;
   vm.modelCopy = angular.copy( vm.vmCloudModel );
 
-  ManageIQ.angular.scope = $scope;
+  ManageIQ.angular.scope = vm;
 
   vm.submitClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/attach_volume/' + vmCloudAttachFormId + '?button=attach';
-    miqService.miqAjaxButton(url, true);
+    miqService.miqAjaxButton(url, vm.vmCloudModel);
   };
 
   vm.cancelClicked = function() {
@@ -22,7 +22,6 @@ ManageIQ.angular.app.controller('vmCloudAttachFormController', ['$scope', 'vmClo
 
   vm.resetClicked = function() {
     vm.vmCloudModel = angular.copy( vm.modelCopy );
-    vm.angularForm.$setPristine(true);
     miqService.miqFlash("warn", "All changes have been reset");
   };
 }]);

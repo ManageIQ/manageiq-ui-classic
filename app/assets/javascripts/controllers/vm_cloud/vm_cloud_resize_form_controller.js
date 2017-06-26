@@ -8,7 +8,9 @@ ManageIQ.angular.app.controller('vmCloudResizeFormController', ['$http', '$scope
     vm.flavors = [];
     vm.formId = vmCloudResizeFormId;
     vm.modelCopy = angular.copy( vm.vmCloudModel );
+
     ManageIQ.angular.scope = vm;
+
     $http.get('/vm_cloud/resize_form_fields/' + vmCloudResizeFormId)
       .then(getResizeFormData)
       .catch(miqService.handleFailure);
@@ -28,7 +30,7 @@ ManageIQ.angular.app.controller('vmCloudResizeFormController', ['$http', '$scope
 
   function getResizeFormData(response) {
     var data = response.data;
-    vm.flavors = data.flavors;
+    Object.assign(vm, data);
     miqService.sparkleOff();
   };
 

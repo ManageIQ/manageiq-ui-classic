@@ -8,7 +8,7 @@ ManageIQ.angular.app.controller('vmCloudDisassociateFloatingIpFormController', [
   vm.formId = vmCloudDisassociateFloatingIpFormId;
   vm.modelCopy = angular.copy( vm.vmCloudModel );
 
-  ManageIQ.angular.scope = $scope;
+  ManageIQ.angular.scope = vm;
 
   $http.get('/vm_cloud/disassociate_floating_ip_form_fields/' + vmCloudDisassociateFloatingIpFormId)
     .then(getDisassociateFloatingIpFormData)
@@ -23,13 +23,12 @@ ManageIQ.angular.app.controller('vmCloudDisassociateFloatingIpFormController', [
   vm.submitClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/disassociate_floating_ip_vm/' + vmCloudDisassociateFloatingIpFormId + '?button=submit';
-    miqService.miqAjaxButton(url, true);
+    miqService.miqAjaxButton(url, vm.vmCloudModel);
   };
 
   function getDisassociateFloatingIpFormData(response) {
     var data = response.data;
-
-    vm.floating_ips = data.floating_ips;
+    Object.assign(vm, data);
     vm.modelCopy = angular.copy( vm.vmCloudModel );
     miqService.sparkleOff();
   }
