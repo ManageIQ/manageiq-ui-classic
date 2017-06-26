@@ -90,6 +90,11 @@ module ReportController::SavedReports
   def saved_report_delete
     assert_privileges("saved_report_delete")
     savedreports = find_checked_items
+    unless savedreports.present?
+      report_result = x_node.split('_').last
+      savedreport = report_result.split('-').last
+      savedreports = Array.wrap(from_cid(savedreport))
+    end
 
     if savedreports.empty? && params[:id].present? && !MiqReportResult.for_user(current_user).exists?(params[:id].to_i)
       # saved report is being viewed in report accordion

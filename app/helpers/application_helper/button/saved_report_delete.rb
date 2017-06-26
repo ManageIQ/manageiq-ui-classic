@@ -8,6 +8,6 @@ class ApplicationHelper::Button::SavedReportDelete < ApplicationHelper::Button::
   private
 
   def saved_report?
-    @view_context.active_tab == 'saved_reports'
+    %w(saved_reports report_info).include?(@view_context.active_tab)
   end
 end
