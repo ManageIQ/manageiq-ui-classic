@@ -13,6 +13,7 @@ env:
   matrix:
   - TEST_SUITE=spec
   - TEST_SUITE=spec:javascript
+bundler_args: --no-deployment
 before_install: source tools/ci/before_install.sh
 before_script: bundle exec rake $TEST_SUITE:setup
 script: bundle exec rake $TEST_SUITE
