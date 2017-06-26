@@ -93,7 +93,7 @@ describe AutomationManagerController do
 
   context "asserts correct privileges" do
     before do
-      login_as user_with_feature %w(automation_manager_provider_configured_system_tag)
+      login_as user_with_feature %w(automation_manager_provider_tag)
     end
 
     it "should raise an error for feature that user has no access to" do
