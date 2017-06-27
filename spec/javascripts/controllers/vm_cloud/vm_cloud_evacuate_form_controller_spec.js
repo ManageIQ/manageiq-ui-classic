@@ -26,14 +26,14 @@ describe('vmCloudEvacuateFormController', function() {
 
   describe('#submitClicked', function() {
     beforeEach(function() {
-      setTimeout(vm.submitClicked);
+      setTimeout($scope.submitClicked);
     });
 
     it('delegates to miqService.miqAjaxButton', function(done) {
       setTimeout(function() {
         expect(miqService.miqAjaxButton).toHaveBeenCalledWith(
           '/vm_cloud/evacuate_vm/1000000000001?button=submit',
-          true
+          $scope.vm.vmCloudModel
         );
         done();
       });
@@ -45,7 +45,7 @@ describe('vmCloudEvacuateFormController', function() {
       $scope.angularForm = {
         $setPristine: function(value) {},
       };
-      setTimeout(vm.cancelClicked);
+      setTimeout($scope.cancelClicked);
     });
 
     it('delegates to miqService.miqAjaxButton', function(done) {

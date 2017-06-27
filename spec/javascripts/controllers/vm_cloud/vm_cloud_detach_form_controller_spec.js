@@ -23,14 +23,14 @@ describe('vmCloudDetachFormController', function() {
 
   describe('#submitClicked', function() {
     beforeEach(function() {
-      setTimeout(vm.submitClicked);
+      setTimeout($scope.submitClicked);
     });
 
     it('delegates to miqService.miqAjaxButton', function(done) {
       setTimeout(function() {
         expect(miqService.miqAjaxButton).toHaveBeenCalledWith(
           '/vm_cloud/detach_volume/1000000000001?button=detach',
-          true
+          $scope.vm.vmCloudModel
         );
         done();
       });
@@ -42,7 +42,7 @@ describe('vmCloudDetachFormController', function() {
       $scope.angularForm = {
         $setPristine: function(value) {},
       };
-      setTimeout(vm.cancelClicked);
+      setTimeout($scope.cancelClicked);
     });
 
     it('delegates to miqService.miqAjaxButton', function(done) {
@@ -58,7 +58,7 @@ describe('vmCloudDetachFormController', function() {
       $scope.angularForm = {
         $setPristine: function(value) {},
       };
-      setTimeout(vm.resetClicked);
+      setTimeout($scope.resetClicked);
     });
 
     it('sets modelCopy to vmCloudModel', function(done) {

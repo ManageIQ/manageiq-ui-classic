@@ -1,6 +1,7 @@
 %form#form_div{:name           => "angularForm",
                'ng-controller' => "vmCloudEvacuateFormController as vm",
                "miq-form"      => true,
+               'form-changed'  => true,
                "model"         => "vm.vmCloudModel",
                "model-copy"    => 'vm.modelCopy'}
   = render :partial => "layouts/flash_msg"
@@ -14,8 +15,7 @@
         %input{:type         => "checkbox",
                :name         => "auto_select_host",
                'ng-model'    => "vm.vmCloudModel.auto_select_host",
-               :miqrequired  => true,
-               :checkchange  => true,
+               :required  => true,
                'ng-disabled' => "vm.hosts.length == 0"}
 
         %input{:type         => "hidden",
@@ -48,7 +48,10 @@
                   'ng-model'   => 'vm.vmCloudModel.host',
                   'ng-options' => 'host.name as host.name for host in vm.hosts track by host.id'}
 
-  = render :partial => "layouts/angular/paging_group_buttons.html.haml"
+  %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
+                  'paging_div_buttons_state_enabled' => true,
+                  'paging_div_buttons_id'            => "angular_paging_div_buttons",
+                  'paging_div_buttons_type'          => "Submit"}
 
   %hr
   %div

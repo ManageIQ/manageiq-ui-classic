@@ -49,6 +49,11 @@
                   'ng-model' => 'vm.mCloudModel.host',
                   'ng-options' => 'host.name as host.name for host in vm.hosts track by host.id'}
 
+  %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
+                  'paging_div_buttons_state_enabled' => true,
+                  'paging_div_buttons_id'            => "angular_paging_div_buttons",
+                  'paging_div_buttons_type'          => "Submit"}
+
   %hr
   %div
     %h3
@@ -57,8 +62,6 @@
       - @embedded = true
       - @quadicon_no_url = true
       = render :partial => "layouts/gtl"
-
-  = render :partial => "layouts/angular/paging_group_buttons.html.haml"
 
 - unless @explorer
   %table{:width => '100%'}

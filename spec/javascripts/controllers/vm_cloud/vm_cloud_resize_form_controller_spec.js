@@ -23,7 +23,7 @@ describe('vmCloudResizeFormController', function() {
 
   describe('#submitClicked', function() {
     beforeEach(function() {
-      setTimeout(vm.submitClicked);
+      setTimeout($scope.submitClicked);
     });
 
     it('delegates to miqService.miqAjaxButton', function(done) {
@@ -42,7 +42,7 @@ describe('vmCloudResizeFormController', function() {
       $scope.angularForm = {
         $setPristine: function(value) {},
       };
-      setTimeout(vm.cancelClicked);
+      setTimeout($scope.cancelClicked);
     });
 
     it('delegates to miqService.miqAjaxButton', function(done) {

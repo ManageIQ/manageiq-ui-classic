@@ -7,19 +7,19 @@ ManageIQ.angular.app.controller('vmCloudAssociateFloatingIpFormController', ['$h
   vm.formId = vmCloudAssociateFloatingIpFormId;
   vm.modelCopy = angular.copy( vm.vmCloudModel );
 
-  ManageIQ.angular.scope = $scope;
+  ManageIQ.angular.scope = vm;
 
   $http.get('/vm_cloud/associate_floating_ip_form_fields/' + vmCloudAssociateFloatingIpFormId)
     .then(getAssociateFloatingIpFormData)
     .catch(miqService.handleFailure);
 
-  vm.cancelClicked = function() {
+  $scope.cancelClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/associate_floating_ip_vm/' + vmCloudAssociateFloatingIpFormId + '?button=cancel';
     miqService.miqAjaxButton(url);
   };
 
-  vm.submitClicked = function() {
+  $scope.submitClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/associate_floating_ip_vm/' + vmCloudAssociateFloatingIpFormId + '?button=submit';
     miqService.miqAjaxButton(url, vm.vmCloudModel);

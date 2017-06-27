@@ -22,7 +22,7 @@ ManageIQ.angular.app.controller('vmCloudLiveMigrateFormController', ['$http', '$
       .catch(miqService.handleFailure);
   }
 
-  vm.cancelClicked = function() {
+  $scope.cancelClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/live_migrate_vm/?button=cancel';
     if (vmCloudLiveMigrateFormId) {
@@ -32,7 +32,7 @@ ManageIQ.angular.app.controller('vmCloudLiveMigrateFormController', ['$http', '$
     miqService.miqAjaxButton(url);
   };
 
-  vm.submitClicked = function() {
+  $scope.submitClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/live_migrate_vm?button=submit';
     if (vmCloudLiveMigrateFormId) {
