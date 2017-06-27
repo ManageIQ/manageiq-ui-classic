@@ -14,6 +14,14 @@ class PhysicalInfraTopologyService < TopologyService
 
   @kinds = %i(PhysicalInfraManager PhysicalServer Host Vm Tag)
 
+  def entity_type(entity)
+    if entity.kind_of?(Host)
+      entity.class.base_class.name.demodulize
+    else
+      super
+    end
+  end
+
   def entity_display_type(entity)
     if entity.kind_of?(ManageIQ::Providers::PhysicalInfraManager)
       entity.class.short_token
