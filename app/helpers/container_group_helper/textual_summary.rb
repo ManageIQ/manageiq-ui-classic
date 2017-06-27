@@ -16,7 +16,7 @@ module ContainerGroupHelper::TextualSummary
       _("Relationships"),
       %i(
         ems container_project container_services container_replicator containers container_node
-        lives_on container_images
+        lives_on container_images pod_to_persistent_volume_relationship
       )
     )
   end
