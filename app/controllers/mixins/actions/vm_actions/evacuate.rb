@@ -34,31 +34,12 @@ module Mixins
 
         def evacuate_vm
           assert_privileges("instance_evacuate")
+
           case params[:button]
-          when "cancel"
-            add_flash(_("Evacuation of Instances was cancelled by the user"))
-          when "submit"
-            @evacuate_items = find_records_with_rbac(VmOrTemplate, session[:evacuate_items]).sort_by(&:name)
-            @evacuate_items.each do |vm|
-              if vm.supports_evacuate?
-                options = {
-                  :hostname          => params['auto_select_host']  == 'on' ? nil : params['destination_host'],
-                  :on_shared_storage => params['on_shared_storage'] == 'on',
-                  :admin_password    => params['on_shared_storage'] == 'on' ? nil : params['admin_password']
-                }
-                task_id = vm.class.evacuate_queue(session[:userid], vm, options)
-                unless task_id.kind_of?(Integer)
-                  add_flash(_("Instance evacuation task failed."), :error)
-                end
-                add_flash(_("Queued evacuation of Instance \"%{name}\"") % {:name => vm.name})
-              else
-                add_flash(_("Unable to evacuate Instance \"%{name}\": %{details}") % {
-                  :name    => vm.name,
-                  :details => vm.unsupported_reason(:evacuate)
-                }, :error)
-              end
-            end
+          when "cancel" then add_flash(_("Evacuation of Instances was cancelled by the user"))
+          when "submit" then evacuate_handle_submit_button
           end
+
           @sb[:action] = nil
           if @sb[:explorer]
             replace_right_cell
@@ -88,6 +69,31 @@ module Mixins
           render :json => {
             :hosts => hosts
           }
+        end
+
+        private
+
+        def evacuate_handle_submit_button
+          @evacuate_items = find_records_with_rbac(VmOrTemplate, session[:evacuate_items]).sort_by(&:name)
+          @evacuate_items.each do |vm|
+            if vm.supports_evacuate?
+              options = {
+                :hostname          => params['auto_select_host']  == 'on' ? nil : params['destination_host'],
+                :on_shared_storage => params['on_shared_storage'] == 'on',
+                :admin_password    => params['on_shared_storage'] == 'on' ? nil : params['admin_password']
+              }
+              task_id = vm.class.evacuate_queue(session[:userid], vm, options)
+              unless task_id.kind_of?(Integer)
+                add_flash(_("Instance evacuation task failed."), :error)
+              end
+              add_flash(_("Queued evacuation of Instance \"%{name}\"") % {:name => vm.name})
+            else
+              add_flash(_("Unable to evacuate Instance \"%{name}\": %{details}") % {
+                :name    => vm.name,
+                :details => vm.unsupported_reason(:evacuate)
+              }, :error)
+            end
+          end
         end
       end
     end
