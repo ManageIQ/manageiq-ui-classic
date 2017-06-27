@@ -1,11 +1,11 @@
 %form#form_div{:name           => "angularForm",
-   "form-changed"  => true,
-   "miq-form"      => true,
-   "model"         => "vm.cloudNetworkModel",
-   "model-copy"    => "vm.modelCopy",
-   "ng-cloak"      => "",
-   "ng-controller" => "cloudNetworkFormController as vm",
-   "ng-show"       => "vm.afterGet"}
+  "form-changed"  => true,
+  "miq-form"      => true,
+  "model"         => "vm.cloudNetworkModel",
+  "model-copy"    => "vm.modelCopy",
+  "ng-cloak"      => "",
+  "ng-controller" => "cloudNetworkFormController as vm",
+  "ng-show"       => "vm.afterGet"}
 
   = render :partial => "layouts/flash_msg"
 
@@ -25,11 +25,10 @@
                       "selectpicker-for-select-tag" => "")
         %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
           = _("Required")
-  .form-horizontal
-    .form-group{"ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}",
-                "ng-if"    => "vm.cloudNetworkModel.ems_id"}
-      %h3
-        = _('Placement')
+  .form-horizontal{"ng-if" => "vm.cloudNetworkModel.ems_id"}
+    %h3
+      = _('Placement')
+    .form-group{"ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}"}
       %label.col-md-2.control-label
         = _('Cloud Tenant')
       .col-md-8
@@ -43,9 +42,9 @@
             = "<#{_('Choose')}>"
         %span.help-block{"ng-show" => "angularForm.cloud_tenant_id.$error.required"}
           = _("Required")
-  %h3
-    = _('Network Provider Information')
-  .form-horizontal
+  .form-horizontal{"ng-if" => "vm.cloudNetworkModel.cloud_tenant_id"}
+    %h3
+      = _('Network Provider Information')
     .form-group{"ng-class" => "{'has-error': angularForm.provider_network_type.$invalid}"}
       %label.col-md-2.control-label
         = _('Provider Network Type')
