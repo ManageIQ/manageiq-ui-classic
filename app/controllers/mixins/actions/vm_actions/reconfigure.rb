@@ -23,8 +23,8 @@ module Mixins
 
         def reconfigure_update
           case params[:button]
-          when "cancel" then handle_cancel_button
-          when "submit" then handle_submit_button
+          when "cancel" then reconfigure_handle_cancel_button
+          when "submit" then reconfigure_handle_submit_button
           end
         end
 
@@ -234,7 +234,7 @@ module Mixins
           end
         end
 
-        def handle_cancel_button
+        def reconfigure_handle_cancel_button
           add_flash(_("VM Reconfigure Request was cancelled by the user"))
           if @sb[:explorer]
             @sb[:action] = nil
@@ -245,7 +245,7 @@ module Mixins
           end
         end
 
-        def handle_submit_button
+        def reconfigure_handle_submit_button
           options = {:src_ids => params[:objectIds]}
           if params[:cb_memory] == 'true'
             options[:vm_memory] = params[:memory_type] == "MB" ? params[:memory] : params[:memory].to_i * 1024

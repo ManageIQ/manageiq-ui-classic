@@ -78,7 +78,7 @@ module Mixins
           # Check RBAC for all items in session[:retire_items]
           @retireitems = find_records_with_rbac(kls, session[:retire_items]).sort_by(&:name)
           if params[:button]
-            flash = handle_form_buttons(kls)
+            flash = retire_handle_form_buttons(kls)
             add_flash(flash)
             if @sb[:explorer]
               replace_right_cell
@@ -110,14 +110,14 @@ module Mixins
 
         private
 
-        def handle_form_buttons(kls)
+        def retire_handle_form_buttons(kls)
           case params[:button]
-          when "cancel" then handle_cancel_button
+          when "cancel" then retire_handle_cancel_button
           when "save"   then handle_save_button(kls)
           end
         end
 
-        def handle_cancel_button
+        def retire_handle_cancel_button
           @sb[:action] = nil
           _("Set/remove retirement date was cancelled by the user")
         end
