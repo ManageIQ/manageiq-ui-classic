@@ -4,13 +4,13 @@ module Mixins
       module Evacuate
         def evacuate
           assert_privileges("instance_evacuate")
-          @record ||= VmOrTemplate.find_by(:id => params[:rec_id])
+          @record ||= find_records_with_rbac(VmOrTemplate, params[:id]).first
           drop_breadcrumb(:name => _("Evacuate Instances"), :url  => "/vm_cloud/evacuate") unless @explorer
           @sb[:explorer] = @explorer
           @in_a_form = true
           @evacuate = true
 
-          @evacuate_items = VmOrTemplate.find(session[:evacuate_items]).sort_by(&:name)
+          @evacuate_items = find_records_with_rbac(VmOrTemplate, session[:evacuate_items]).sort_by(&:name)
           build_targets_hash(@evacuate_items)
           @view = get_db_view(VmOrTemplate)
           @view.table = MiqFilter.records2table(@evacuate_items, @view.cols + ['id'])
@@ -20,8 +20,7 @@ module Mixins
 
         def evacuatevms
           assert_privileges("instance_evacuate")
-          recs = find_checked_ids_with_rbac(VmOrTemplate)
-          recs = [params[:id].to_i] if recs.blank?
+          recs = checked_or_params
           session[:evacuate_items] = recs
           if @explorer
             evacuate
@@ -39,7 +38,7 @@ module Mixins
           when "cancel"
             add_flash(_("Evacuation of Instances was cancelled by the user"))
           when "submit"
-            @evacuate_items = VmOrTemplate.find(session[:evacuate_items]).sort_by(&:name)
+            @evacuate_items = find_records_with_rbac(VmOrTemplate, session[:evacuate_items]).sort_by(&:name)
             @evacuate_items.each do |vm|
               if vm.supports_evacuate?
                 options = {
@@ -94,4 +93,3 @@ module Mixins
     end
   end
 end
-
