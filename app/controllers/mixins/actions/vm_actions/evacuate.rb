@@ -83,9 +83,7 @@ module Mixins
                 :admin_password    => params['on_shared_storage'] == 'on' ? nil : params['admin_password']
               }
               task_id = vm.class.evacuate_queue(session[:userid], vm, options)
-              unless task_id.kind_of?(Integer)
-                add_flash(_("Instance evacuation task failed."), :error)
-              end
+              add_flash(_("Instance evacuation task failed."), :error) unless task_id.kind_of?(Integer)
               add_flash(_("Queued evacuation of Instance \"%{name}\"") % {:name => vm.name})
             else
               add_flash(_("Unable to evacuate Instance \"%{name}\": %{details}") % {
