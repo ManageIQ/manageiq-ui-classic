@@ -177,11 +177,7 @@ module Mixins
           raise _('Invalid items selected.') unless valid_items_for(klass, param_ids)
 
           result = klass.set_ownership(param_ids, opts)
-          unless result == true
-            result["missing_ids"].each { |msg| add_flash(msg, :error) } if result["missing_ids"]
-            result["error_updating"].each { |msg| add_flash(msg, :error) } if result["error_updating"]
-            javascript_flash
-          else
+          if result
             object_types = object_types_for_flash_message(klass, params[:objectIds])
 
             flash = _("Ownership saved for selected %{object_types}") % {:object_types => object_types}
@@ -193,6 +189,10 @@ module Mixins
               session[:flash_msgs] = @flash_array
               javascript_redirect previous_breadcrumb_url
             end
+          else
+            result["missing_ids"].each { |msg| add_flash(msg, :error) } if result["missing_ids"]
+            result["error_updating"].each { |msg| add_flash(msg, :error) } if result["error_updating"]
+            javascript_flash
           end
         end
 
