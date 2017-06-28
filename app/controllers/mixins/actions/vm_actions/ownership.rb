@@ -67,13 +67,13 @@ module Mixins
         end
 
         # Assign/unassign ownership to a set of objects
-        def ownership(ownership_items = [])
+        def ownership(ownership_ids = [])
           @sb[:explorer] = true if @explorer
           @in_a_form = @ownershipedit = true
           drop_breadcrumb(:name => _("Set Ownership"), :url => "/vm_common/ownership")
-          ownership_items = params[:rec_ids] if params[:rec_ids]
-          @origin_ownership_items = ownership_items
-          @ownershipitems = build_ownership_info(ownership_items)
+          ownership_ids = params[:rec_ids] if params[:rec_ids]
+          @origin_ownership_items = ownership_ids
+          @ownershipitems = build_ownership_info(ownership_ids)
           return if @ownershipitems.empty?
           build_targets_hash(@ownershipitems)
           if @sb[:explorer]
@@ -83,15 +83,16 @@ module Mixins
           end
         end
 
-        def build_ownership_info(ownership_items)
+        def build_ownership_info(ownership_ids)
           @edit ||= {}
           klass = get_class_from_controller_param(params[:controller])
-          ownershipitems = find_records_with_rbac(klass, ownership_items).sort_by(&:name)
-          record = ownershipitems.first
 
-          if ownership_items.length > 1
+          ownershipitems = find_records_with_rbac(klass, ownership_ids).sort_by(&:name)
+
+          if ownership_ids.length > 1
             @user = @group = 'dont-change'
           else
+            record = ownershipitems.first
             @user = record.evm_owner&.id&.to_s
             @group = record.miq_group&.id&.to_s
           end
@@ -99,7 +100,7 @@ module Mixins
           @groups = {} # Create new entries hash (2nd pulldown)
           Rbac.filtered(MiqGroup.non_tenant_groups).each { |g| @groups[g.description] = g.id.to_s }
 
-          @edit[:object_ids] = ownership_items
+          @edit[:object_ids] = ownership_ids
           @view = get_db_view(klass == VmOrTemplate ? Vm : klass) # Instantiate the MIQ Report view object
           @view.table = MiqFilter.records2table(ownershipitems, @view.cols + ['id'])
           session[:edit] = @edit
@@ -107,21 +108,21 @@ module Mixins
         end
 
         # Build the ownership assignment screen
-        def build_ownership_hash(ownership_items)
+        def build_ownership_hash(ownership_ids)
           klass = get_class_from_controller_param(params[:controller])
-          @ownershipitems ||= find_records_with_rbac(klass, ownership_items).sort_by(&:name)
-          record = @ownershipitems.first
+          @ownershipitems ||= find_records_with_rbac(klass, ownership_ids).sort_by(&:name)
 
-          if ownership_items.length > 1
+          if ownership_ids.length > 1
             @user = @group = 'dont-change'
           else
+            record = @ownershipitems.first
             @user = record.evm_owner&.id.to_s
             @group = record.miq_group&.id&.to_s
           end
 
           @groups = {}
           Rbac.filtered(MiqGroup).each { |g| @groups[g.description] = g.id.to_s }
-          raise _('Invalid items passed') unless @ownershipitems.pluck(:id).to_set == ownership_items.map(&:to_i).to_set
+          raise _('Invalid items passed') unless @ownershipitems.pluck(:id).to_set == ownership_ids.map(&:to_i).to_set
           {:user  => @user,
            :group => @group}
         end
