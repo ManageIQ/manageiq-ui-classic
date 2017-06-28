@@ -75,7 +75,7 @@ module ReportController::SavedReports
               end
       @ght_type = params[:type]
     else
-      @ght_type = @report.graph.blank? ?  'tabular' : 'hybrid'
+      @ght_type = @report.graph.blank? ? 'tabular' : 'hybrid'
     end
     @render_chart = %w(graph hybrid).include?(@ght_type)
 
