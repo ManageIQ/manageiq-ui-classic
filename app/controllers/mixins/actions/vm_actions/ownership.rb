@@ -86,19 +86,10 @@ module Mixins
         def build_ownership_info(ownership_ids)
           @edit ||= {}
           klass = get_class_from_controller_param(params[:controller])
-          @ownershipitems ||= find_records_with_rbac(klass, ownership_ids).sort_by(&:name)
-
-          if ownership_ids.length > 1
-            @user = @group = 'dont-change'
-          else
-            record = @ownershipitems.first
-            @user = record.evm_owner&.id&.to_s
-            @group = record.miq_group&.id&.to_s
-          end
+          load_user_group_items(ownership_ids, klass)
 
           @groups = {} # Create new entries hash (2nd pulldown)
           Rbac.filtered(MiqGroup.non_tenant_groups).each { |g| @groups[g.description] = g.id.to_s }
-
           @edit[:object_ids] = ownership_ids
           @view = get_db_view(klass == VmOrTemplate ? Vm : klass) # Instantiate the MIQ Report view object
           @view.table = MiqFilter.records2table(@ownershipitems, @view.cols + ['id'])
@@ -109,14 +100,7 @@ module Mixins
         def build_ownership_hash(ownership_ids)
           klass = get_class_from_controller_param(params[:controller])
           @ownershipitems ||= find_records_with_rbac(klass, ownership_ids).sort_by(&:name)
-
-          if ownership_ids.length > 1
-            @user = @group = 'dont-change'
-          else
-            record = @ownershipitems.first
-            @user = record.evm_owner&.id.to_s
-            @group = record.miq_group&.id&.to_s
-          end
+          load_user_group_items(ownership_ids, klass)
 
           @groups = {}
           Rbac.filtered(MiqGroup).each { |g| @groups[g.description] = g.id.to_s }
@@ -140,6 +124,17 @@ module Mixins
         end
 
         private
+
+        def load_user_group_items(ownership_ids, klass)
+          @ownershipitems ||= find_records_with_rbac(klass, ownership_ids).sort_by(&:name)
+          if ownership_ids.length > 1
+            @user = @group = 'dont-change'
+          else
+            record = @ownershipitems.first
+            @user = record.evm_owner&.id&.to_s
+            @group = record.miq_group&.id&.to_s
+          end
+        end
 
         def ownership_handle_cancel_button
           add_flash(_("Set Ownership was cancelled by the user"))
