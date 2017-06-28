@@ -74,6 +74,7 @@ module Mixins
           @in_a_form = @ownershipedit = true
           drop_breadcrumb(:name => _("Set Ownership"), :url => "/vm_common/ownership")
           ownership_items = params[:rec_ids] if params[:rec_ids]
+          @origin_ownership_items = ownership_items
           @ownershipitems = build_ownership_info(ownership_items)
           return if @ownershipitems.empty?
           build_targets_hash(@ownershipitems)
