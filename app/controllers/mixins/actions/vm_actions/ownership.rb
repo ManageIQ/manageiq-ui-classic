@@ -73,7 +73,7 @@ module Mixins
           drop_breadcrumb(:name => _("Set Ownership"), :url => "/vm_common/ownership")
           ownership_ids = params[:rec_ids] if params[:rec_ids]
           @origin_ownership_items = ownership_ids
-          @ownershipitems = build_ownership_info(ownership_ids)
+          build_ownership_info(ownership_ids)
           return if @ownershipitems.empty?
           build_targets_hash(@ownershipitems)
           if @sb[:explorer]
@@ -86,13 +86,12 @@ module Mixins
         def build_ownership_info(ownership_ids)
           @edit ||= {}
           klass = get_class_from_controller_param(params[:controller])
-
-          ownershipitems = find_records_with_rbac(klass, ownership_ids).sort_by(&:name)
+          @ownershipitems ||= find_records_with_rbac(klass, ownership_ids).sort_by(&:name)
 
           if ownership_ids.length > 1
             @user = @group = 'dont-change'
           else
-            record = ownershipitems.first
+            record = @ownershipitems.first
             @user = record.evm_owner&.id&.to_s
             @group = record.miq_group&.id&.to_s
           end
@@ -102,9 +101,8 @@ module Mixins
 
           @edit[:object_ids] = ownership_ids
           @view = get_db_view(klass == VmOrTemplate ? Vm : klass) # Instantiate the MIQ Report view object
-          @view.table = MiqFilter.records2table(ownershipitems, @view.cols + ['id'])
+          @view.table = MiqFilter.records2table(@ownershipitems, @view.cols + ['id'])
           session[:edit] = @edit
-          ownershipitems
         end
 
         # Build the ownership assignment screen
