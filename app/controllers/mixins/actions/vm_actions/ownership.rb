@@ -10,7 +10,6 @@ module Mixins
         # Set Ownership selected db records
         def set_ownership
           assert_privileges(params[:pressed])
-          ownership_items = []
           # check to see if coming from show_list or drilled into vms from another CI
           controller = if request.parameters[:controller] == "vm" || ["all_vms", "vms", "instances", "images"].include?(params[:display])
                          "vm"
@@ -34,16 +33,15 @@ module Mixins
             return
           end
 
-          ownership_items = recs.collect(&:to_i)
-          @origin_ownership_items = ownership_items
+          @origin_ownership_items = recs.collect(&:to_i)
 
           if @explorer
             @sb[:explorer] = true
-            ownership(ownership_items)
+            ownership(@origin_ownership_items)
           else
             if role_allows?(:feature => "vm_ownership")
               drop_breadcrumb(:name => _("Set Ownership"), :url => "/vm_common/ownership")
-              javascript_redirect :controller => controller, :action => 'ownership', :rec_ids => ownership_items, :escape => false # redirect to build the ownership screen
+              javascript_redirect :controller => controller, :action => 'ownership', :rec_ids => @origin_ownership_items, :escape => false # redirect to build the ownership screen
             else
               head :ok
             end
