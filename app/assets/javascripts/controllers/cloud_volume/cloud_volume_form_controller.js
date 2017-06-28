@@ -8,6 +8,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
       name: '',
       aws_encryption: false,
       incremental: false,
+      force: false,
       storage_manager_id: storageManagerId,
     };
 
