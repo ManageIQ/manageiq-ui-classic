@@ -31,12 +31,15 @@ describe ReportController do
                            :binary_blob_id => binary_blob.id)
       end
 
-      it 'renders show' do
+      before do
         login_as user
         controller.instance_variable_set(:@html, "<h1>Test</h1>")
         allow(controller).to receive(:report_first_page)
         allow(report).to receive(:contains_records?).and_return(true)
         allow_any_instance_of(MiqReportResult).to receive(:report_results).and_return(report)
+      end
+
+      it 'renders show' do
         post :tree_select, :params => { :id => "rr-#{report_result.id}", :format => :js, :accord => 'savedreports' }
         expect(response).to render_template('shared/_report_chart_and_html')
       end
