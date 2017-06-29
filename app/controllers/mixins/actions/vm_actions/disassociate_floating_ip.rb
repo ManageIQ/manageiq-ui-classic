@@ -4,8 +4,7 @@ module Mixins
       module DisassociateFloatingIp
         def disassociate_floating_ip_vms
           assert_privileges("instance_disassociate_floating_ip")
-          recs = find_checked_items
-          recs = [params[:id].to_i] if recs.blank?
+          recs = checked_or_params
           @record = find_record_with_rbac(VmCloud, recs.first)
           if @record.supports_disassociate_floating_ip? && @record.ext_management_system.present?
             if @explorer
@@ -31,7 +30,7 @@ module Mixins
 
         def disassociate_floating_ip
           assert_privileges("instance_disassociate_floating_ip")
-          @record ||= VmCloud.find_by(:id => params[:rec_id])
+          @record ||= find_record_with_rbac(VmCloud, params[:rec_id])
           drop_breadcrumb(
             :name => _("Disssociate Floating IP from Instance '%{name}'") % {:name => @record.name},
             :url  => "/vm_cloud/disassociate_floating_ip"
