@@ -1494,17 +1494,6 @@ module ApplicationHelper
     end
   end
 
-  def db_for_quadicon
-    case @layout
-    when "ems_infra"
-      :ems
-    when "ems_cloud"
-      :ems_cloud
-    else
-      :ems_container
-    end
-  end
-
   def title_for_host_record(record)
     record.openstack_host? ? _("Node") : _("Host")
   end
