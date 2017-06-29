@@ -223,6 +223,7 @@ class CatalogController < ApplicationController
     end
     template_locals = {:locals => {:controller => "catalog"}}
     template_locals[:locals].merge!(fetch_playbook_details) if need_ansible_locals?
+    template_locals[:locals].merge!(fetch_ct_details) if need_container_template_locals?
 
     render :layout => "application", :action => "explorer", :locals => template_locals
   end
@@ -939,21 +940,27 @@ class CatalogController < ApplicationController
       return
     end
     get_form_vars   # need to get long_description
-    st = @edit[:rec_id] ?
-      ServiceTemplate.find_by_id(@edit[:rec_id]) :
-      class_service_template(@edit[:new][:st_prov_type]).new
-    common_st_record_vars(st)
-    add_orchestration_template_vars(st) if st.kind_of?(ServiceTemplateOrchestration)
-    add_ansible_tower_job_template_vars(st) if st.kind_of?(ServiceTemplateAnsibleTower)
-    st.service_type = "atomic"
+    if @edit[:new][:st_prov_type] == "generic_container_template"
+      st = @edit[:rec_id] ?
+        ServiceTemplateContainerTemplate.find_by(:id => @edit[:rec_id]).update_catalog_item(add_container_template_vars) :
+        ServiceTemplateContainerTemplate.create_catalog_item(add_container_template_vars)
+    else
+      st = @edit[:rec_id] ?
+        ServiceTemplate.find_by(:id => @edit[:rec_id]) :
+        class_service_template(@edit[:new][:st_prov_type]).new
+      common_st_record_vars(st)
+      add_orchestration_template_vars(st) if st.kind_of?(ServiceTemplateOrchestration)
+      add_ansible_tower_job_template_vars(st) if st.kind_of?(ServiceTemplateAnsibleTower)
+      st.service_type = "atomic"
 
-    if request
-      st.remove_all_resources
-      st.add_resource(request) if need_prov_dialogs?(@edit[:new][:st_prov_type])
+      if request
+        st.remove_all_resources
+        st.add_resource(request) if need_prov_dialogs?(@edit[:new][:st_prov_type])
+      end
     end
 
     if st.save
-      set_resource_action(st)
+      set_resource_action(st) unless st.kind_of?(ServiceTemplateContainerTemplate)
       flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") : _("%{model} \"%{name}\" was added")
       add_flash(flash_key % {:model => ui_lookup(:model => "ServiceTemplate"), :name => @edit[:new][:name]})
       @changed = session[:changed] = false
@@ -1341,6 +1348,7 @@ class CatalogController < ApplicationController
     @edit[:new][:available_catalogs] = @edit[:new][:available_catalogs].sort
     available_orchestration_templates if @record.kind_of?(ServiceTemplateOrchestration)
     available_ansible_tower_managers if @record.kind_of?(ServiceTemplateAnsibleTower)
+    available_container_managers if @record.kind_of?(ServiceTemplateContainerTemplate)
 
     # initialize fqnames
     @edit[:new][:fqname] = @edit[:new][:reconfigure_fqname] = @edit[:new][:retire_fqname] = ""
@@ -1481,7 +1489,16 @@ class CatalogController < ApplicationController
     @edit[:new][:long_description] = @edit[:new][:long_description].to_s + "..." if params[:transOne]
 
     get_form_vars_orchestration if @edit[:new][:st_prov_type] == 'generic_orchestration'
-    get_form_vars_ansible_tower if @edit[:new][:st_prov_type] == 'generic_ansible_tower'
+    fetch_form_vars_ansible_or_ct if %w(generic_ansible_tower generic_container_template).include?(@edit[:new][:st_prov_type])
+  end
+
+  def available_container_managers
+    @edit[:new][:available_managers] =
+      ManageIQ::Providers::ContainerManager.all.collect { |t| [t.name, t.id] }.sort
+    ct = ContainerTemplate.find_by(:id => @record.config_info[:provision][:container_template_id]) if @record.config_info[:provision] && @record.config_info[:provision][:container_template_id]
+    @edit[:new][:template_id] = ct.try(:id)
+    @edit[:new][:manager_id] = ct.try(:ext_management_system).try(:id)
+    available_job_or_container_templates(@edit[:new][:manager_id]) if @edit[:new][:manager_id]
   end
 
   def get_form_vars_orchestration
@@ -1498,7 +1515,7 @@ class CatalogController < ApplicationController
     @edit[:new][:manager_id] = params[:manager_id] if params[:manager_id]
   end
 
-  def get_form_vars_ansible_tower
+  def fetch_form_vars_ansible_or_ct
     if params[:manager_id]
       if params[:manager_id] == ""
         @edit[:new][:available_templates] = []
@@ -1506,7 +1523,7 @@ class CatalogController < ApplicationController
         @edit[:new][:manager_id]          = nil
       else
         @edit[:new][:manager_id] = params[:manager_id]
-        available_ansible_tower_job_templates(params[:manager_id])
+        available_job_or_container_templates(params[:manager_id]) if %w(generic_ansible_tower generic_container_template).include?(@edit[:new][:st_prov_type])
       end
     end
     @edit[:new][:template_id] = params[:template_id] if params[:template_id]
@@ -1535,9 +1552,10 @@ class CatalogController < ApplicationController
     available_orchestration_managers(@record.orchestration_template.id) if @record.orchestration_template
   end
 
-  def available_ansible_tower_job_templates(manager_id)
+  def available_job_or_container_templates(manager_id)
+    method = @edit[:new][:st_prov_type] == 'generic_ansible_tower' ? 'configuration_scripts' : 'container_templates'
     @edit[:new][:available_templates] =
-      ExtManagementSystem.find_by(:id => manager_id).configuration_scripts.collect { |t| [t.name, t.id] }.sort
+      ExtManagementSystem.find_by(:id => manager_id).send(method).collect { |t| [t.name, t.id] }.sort
   end
 
   def available_ansible_tower_managers
@@ -1545,7 +1563,7 @@ class CatalogController < ApplicationController
       ManageIQ::Providers::AnsibleTower::AutomationManager.all.collect { |t| [t.name, t.id] }.sort
     @edit[:new][:template_id] = @record.job_template.try(:id)
     @edit[:new][:manager_id] = @record.job_template.try(:manager).try(:id)
-    available_ansible_tower_job_templates(@edit[:new][:manager_id]) if @edit[:new][:manager_id]
+    available_job_or_container_templates(@edit[:new][:manager_id]) if @edit[:new][:manager_id]
   end
 
   def add_orchestration_template_vars(st)
@@ -1558,6 +1576,28 @@ class CatalogController < ApplicationController
   def add_ansible_tower_job_template_vars(st)
     st.job_template = @edit[:new][:template_id].nil? ?
       nil : ConfigurationScript.find_by(:id => @edit[:new][:template_id])
+  end
+
+  def add_container_template_vars
+    st_options = {}
+    st_options[:name] = @edit[:new][:name]
+    st_options[:description] = @edit[:new][:description]
+    st_options[:long_description] = @edit[:new][:display] ? @edit[:new][:long_description] : nil
+    st_options[:provision_cost] = @edit[:new][:provision_cost]
+    st_options[:display] = @edit[:new][:display]
+
+    st_options[:service_template_catalog_id] = @edit[:new][:catalog_id].nil? ? nil : @edit[:new][:catalog_id]
+    st_options[:config_info] = {
+      :provision => {
+        :container_template_id => @edit[:new][:template_id],
+        :dialog_id => @edit[:new][:dialog_id]
+      }
+    }
+    provision = st_options[:config_info][:provision]
+    provision[:fqname] = @edit[:new][:fqname] if @edit[:new][:fqname]
+    provision[:reconfigure_fqname] = @edit[:new][:reconfigure_fqname] if @edit[:new][:reconfigure_fqname]
+    provision[:retire_fqname] = @edit[:new][:retire_fqname] if @edit[:new][:retire_fqname]
+    st_options
   end
 
   def st_get_form_vars
@@ -1807,6 +1847,16 @@ class CatalogController < ApplicationController
     {:view => @view, :pages => @pages}
   end
 
+  def fetch_ct_details
+    ct_details = {}
+    provision = @record.config_info[:provision]
+    ct_details[:provisioning] = {}
+    ct = ContainerTemplate.find_by(:id => provision[:container_template_id])
+    ct_details[:provisioning][:template_name] = ct.try(:name)
+    ct_details[:provisioning][:provider_name] = ct.try(:ext_management_system).try(:name)
+    ct_details
+  end
+
   def fetch_playbook_details
     playbook_details = {}
     provision = @record.config_info[:provision]
@@ -1980,6 +2030,8 @@ class CatalogController < ApplicationController
         else
           template_locals = {:controller => "catalog"}
           template_locals.merge!(fetch_playbook_details) if need_ansible_locals?
+          template_locals.merge!(fetch_ct_details) if need_container_template_locals?
+
           r[:partial => "catalog/#{x_active_tree}_show", :locals => template_locals]
         end
       elsif @sb[:buttons_node]
@@ -2076,6 +2128,12 @@ class CatalogController < ApplicationController
     x_active_tree == :sandt_tree &&
       TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplate" &&
       @record.prov_type == "generic_ansible_playbook"
+  end
+
+  def need_container_template_locals?
+    x_active_tree == :sandt_tree &&
+      TreeBuilder.get_model_for_prefix(@nodetype) == "ServiceTemplate" &&
+      @record.prov_type == "generic_container_template"
   end
 
   # Build a Catalog Items explorer tree
