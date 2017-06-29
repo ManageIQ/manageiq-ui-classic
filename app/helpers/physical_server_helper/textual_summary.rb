@@ -42,6 +42,14 @@ module PhysicalServerHelper::TextualSummary
     )
   end
 
+  def textual_group_network_adapters
+    TextualCustom.new(
+      _("Network Adapters"),
+      "textual_network_adapter_table",
+      %i(network_adapter)
+    )
+  end
+
   def textual_host
     {:label => _("Host"), :value => @record.host.try(:name), :icon => "pficon pficon-virtual-machine", :link => url_for(:controller => 'host', :action => 'show', :id => @record.host.try(:id))}
   end
@@ -150,5 +158,32 @@ module PhysicalServerHelper::TextualSummary
     end
 
     {:value => fw_details}
+  end
+
+  def textual_network_adapter
+    network_adapters = []
+
+    @record.hardware.nics.each do |nic|
+      port_names = []
+      mac_addresses = []
+
+      child_devices = nic.child_devices.sort_by(&:device_name)
+
+      child_devices.each do |child_device|
+        port_names.push(child_device.device_name)
+        mac_addresses.push(child_device.address)
+      end
+
+      unless nic.device_name.nil?
+        network_adapters.push(:bay_number    => nic.location,
+                              :adapter_name  => nic.device_name,
+                              :manufacturer  => nic.manufacturer,
+                              :fru           => nic.field_replaceable_unit,
+                              :port_names    => port_names,
+                              :mac_addresses => mac_addresses)
+      end
+    end
+
+    {:value => network_adapters}
   end
 end
