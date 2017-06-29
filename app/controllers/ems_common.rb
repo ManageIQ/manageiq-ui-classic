@@ -77,12 +77,6 @@ module EmsCommon
     nested_list('hosts', Host, :breadcrumb_title => _("Managed Hosts"))
   end
 
-  def display_physical_servers_with_host
-    nested_list('physical_servers', PhysicalServer,
-                :where_clause     => "physical_servers.id in (select hosts.physical_server_id from hosts)",
-                :breadcrumb_title => _("Physical Servers with Host"))
-  end
-
   class_methods do
     def display_methods
       %w(
