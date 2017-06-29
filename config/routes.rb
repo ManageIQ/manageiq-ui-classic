@@ -907,6 +907,7 @@ Rails.application.routes.draw do
     :persistent_volume        => {
       :get  => %w(
         download_data
+        download_summary_pdf
         edit
         index
         new
