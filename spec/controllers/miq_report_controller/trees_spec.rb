@@ -44,6 +44,12 @@ describe ReportController do
         expect(controller.instance_variable_get(:@report_result)).to be_nil
         expect(response).to render_template('shared/_report_chart_and_html')
       end
+
+      it 'renders show from CI -> Reports -> Reports -> Any Report' do
+        post :tree_select, :params => { :id => "xx-11_xx-11-0_rep-145_rr-#{report_result.id}", :format => :js, :accord => 'savedreports' }
+        expect(controller.instance_variable_get(:@report_result)).to be_nil
+        expect(response).to render_template('shared/_report_chart_and_html')
+      end
     end
 
     context "reports tree" do
