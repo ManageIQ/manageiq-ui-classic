@@ -39,7 +39,7 @@ describe ReportController do
         allow_any_instance_of(MiqReportResult).to receive(:report_results).and_return(report)
       end
 
-      it 'renders show' do
+      it 'renders show from CI -> Reports -> Saved Reports' do
         post :tree_select, :params => { :id => "rr-#{report_result.id}", :format => :js, :accord => 'savedreports' }
         expect(response).to render_template('shared/_report_chart_and_html')
       end
