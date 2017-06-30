@@ -17,6 +17,9 @@
                             'ng-maxlength' => 128,
                             :miqrequired   => true,
                             :checkchange   => true}
+  %h3
+    = _('Options')
+  .form-horizontal
     .form-group
       %label.col-md-2.control-label
         = _('Incremental?')
@@ -26,6 +29,16 @@
                             :type         => "checkbox",
                             :name         => "incremental",
                             'ng-model'    => "vm.cloudVolumeModel.incremental",
+                            :checkchange  => true}
+    .form-group
+      %label.col-md-2.control-label
+        = _('Force?')
+      .col-md-8
+        %input.form-control{"bs-switch"   => "",
+                            :data         => {:on_text => _('Yes'), :off_text => _('No'), :size => 'mini'},
+                            :type         => "checkbox",
+                            :name         => "force",
+                            'ng-model'    => "vm.cloudVolumeModel.force",
                             :checkchange  => true}
 
   .clearfix
