@@ -6,7 +6,7 @@ module Mixins
           assert_privileges(params[:pressed])
           # check to see if coming from show_list or drilled into vms from another CI
           rec_cls = "vm"
-          record = find_records_with_rbac(VmOrTemplate, checked_or_params).first
+          record = find_record_with_rbac(VmOrTemplate, checked_or_params)
           if record.nil?
             add_flash(_("One %{model} must be selected to Right-Size Recommendations") %
               {:model => ui_lookup(:table => request.parameters[:controller])}, :error)

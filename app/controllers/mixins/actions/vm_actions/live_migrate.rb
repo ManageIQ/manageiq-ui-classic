@@ -32,7 +32,7 @@ module Mixins
 
         def live_migrate_form_fields
           assert_privileges("instance_live_migrate")
-          @record = find_records_with_rbac(VmOrTemplate, [params[:id]]).first
+          @record = find_record_with_rbac(VmOrTemplate, params[:id])
           hosts = []
           unless @record.ext_management_system.nil?
             # wrap in a rescue block in the event the connection to the provider fails
