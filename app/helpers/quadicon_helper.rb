@@ -539,6 +539,15 @@ module QuadiconHelper
     output.collect(&:html_safe).join('').html_safe
   end
 
+  def db_for_quadicon
+    case @layout
+    when "ems_infra" then :ems
+    when "ems_cloud" then :ems_cloud
+    else                  :ems_container
+    end
+  end
+
+
   # Renders a quadicon for ext_management_systems
   #
   def render_ext_management_system_quadicon(item, options)
