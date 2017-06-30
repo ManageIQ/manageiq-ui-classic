@@ -8,6 +8,9 @@ def create_and_generate_report_for_user(report_name, user_id)
   @rpt = MiqReport.where(:name => report_name).last
   @rpt.generate_table(:userid => user_id)
   report_result = @rpt.build_create_results(:userid => user_id)
+  miq_task = FactoryGirl.create(:miq_task)
+  miq_report_result = @rpt.miq_report_results.first
+  miq_report_result.update_attributes!(:miq_task => miq_task)
   report_result.reload
   @rpt
 end
