@@ -768,6 +768,7 @@ module ApplicationController::Filter
     exp = exp_find_by_token(@edit[@expkey][:expression], token.to_i)
     case @edit[@expkey][:exp_typ]
     when "field"
+      @edit[@expkey][:exp_value] ||= ''
       if @edit[@expkey][:exp_field].nil?
         add_flash(_("A field must be chosen to commit this expression element"), :error)
       elsif @edit[@expkey][:exp_value] != :user_input &&
