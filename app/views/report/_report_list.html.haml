@@ -5,22 +5,8 @@
     - elsif @report && !@report_result
       = render :partial => "layouts/flash_msg"
 
-      - if @zgraph
-        - width, height = @html ? [350, 250] : [700, 500]
+      = render :partial => 'shared/report_chart_and_html', :locals => {:chart => @render_chart, :html => @html, :report => @report}
 
-        = chart_remote('report',
-          :width   => width,
-          :height  => height,
-          :bgcolor => "#f2f2f2",
-          :id      => 'my_chart',
-          :zoomed  => false)
-
-        - if !@html && @report.filter_summary
-          = @report.filter_summary
-        %p
-
-      - if @html
-        = render :partial => 'layouts/report_html'
     - elsif x_active_tree == :reports_tree && x_node.split('-').length <= 4
       - nodes = x_node.split('-')
       - if (nodes.length == 1 && @sb[:rpt_menu].blank?) || (nodes.length == 2 && @sb[:rpt_menu][nodes[1].to_i][1].blank?) || (nodes.length == 4 && @sb[:rpt_menu][nodes[1].to_i].present? && @sb[:rpt_menu][nodes[1].to_i][1][nodes[3].to_i][1].blank?)

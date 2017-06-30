@@ -6,12 +6,12 @@ function load_c3_charts() {
       var chart_id = "miq_chart_" + set + "_" + i.toString();
       var data = ManageIQ.charts.chartData[set][i];
       if (data != null) {
-        load_c3_chart(data.xml, chart_id);
+        load_c3_chart(data.data, chart_id);
 
         chart_id += "_2";
-        if (typeof (data.xml2) !== "undefined") {
-          data.xml2.miq.flat_chart = true;
-          load_c3_chart(data.xml2, chart_id, 100);
+        if (typeof (data.data2) !== "undefined") {
+          data.data2.miq.flat_chart = true;
+          load_c3_chart(data.data2, chart_id, 100);
         }
       }
     }
@@ -74,7 +74,7 @@ function recalculateChartYAxisLabels (id) {
     return;
   }
 
-  var format = ManageIQ.charts.chartData.candu[this.config.bindto.split('_').pop()].xml.miq.format;
+  var format = ManageIQ.charts.chartData.candu[this.config.bindto.split('_').pop()].data.miq.format;
   var tmpMin = getChartFormatedValueWithFormat(format, minMax[0]);
   var tmpMax = getChartFormatedValueWithFormat(format, minMax[1]);
   var minShowed = tmpMin[0];

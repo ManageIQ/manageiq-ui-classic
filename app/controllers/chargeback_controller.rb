@@ -367,7 +367,7 @@ class ChargebackController < ApplicationController
           if @report.contains_records?
             @html = report_first_page(rr) # Get the first page of the results
             unless @report.graph.blank?
-              @zgraph = true
+              @render_chart = true
               @ght_type = "hybrid"
             else
               @ght_type = "tabular"

@@ -431,19 +431,13 @@ class ApplicationController < ActionController::Base
     search_id = params[:rr_id] ? params[:rr_id].to_i : @sb[:pages][:rr_id]
     rr = MiqReportResult.find(search_id)
 
-    session[:report_result_id] = rr.id  # Save report result id for render_zgraph
+    session[:report_result_id] = rr.id  # Save report result id for chart rendering
     session[:rpt_task_id]      = nil    # Clear out report task id, using a saved report
 
     @report   = rr.report
     @html     = report_build_html_table(rr.report_results, rr.html_rows.join)
     @ght_type = params[:type] || (@report.graph.blank? ? 'tabular' : 'hybrid')
-    @title    = @report.title
-
-    @zgraph = case @ght_type
-              when 'tabular' then nil
-              when 'hybrid'  then true
-              end
-
+    @render_chart = (@ght_type == 'hybrid')
     render controller_name == 'report' ? 'show' : 'shared/show_report'
   end
 
@@ -710,7 +704,6 @@ class ApplicationController < ActionController::Base
     total = @sb[:pages][:items] / @sb[:pages][:perpage]
     total += 1 if @sb[:pages][:items] % @sb[:pages][:perpage] != 0
     @sb[:pages][:total] = total
-    title = @report.name
     @title = @report.title
     if @report.extras[:total_html_rows] == 0
       add_flash(_("No records found for this report"), :warning)

@@ -8,6 +8,6 @@ class ApplicationHelper::Button::ViewGHT < ApplicationHelper::Button::Basic
   private
 
   def proper_type?
-    @ght_type != "tabular" || @report.try(:graph).present? || @zgraph
+    @ght_type != "tabular" || @report.try(:graph).present? || @render_chart
   end
 end

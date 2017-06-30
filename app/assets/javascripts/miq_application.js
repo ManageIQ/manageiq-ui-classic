@@ -19,7 +19,6 @@ function miqOnLoad() {
   });
 
   miqBuildCalendar();
-  miqLoadCharts();
 
   if (typeof miqLoadTL == "function") {
     miqLoadTL();
@@ -477,70 +476,6 @@ function miqResetSizeTimer() {
 // Pass fields to server given a URL and fields in name/value pairs
 function miqPassFields(url, args) {
   return url + '?' + $.param(args);
-}
-
-// Load XML/SWF charts data (non-IE)
-// This method is called by the XML/SWF charts when a chart is loaded into the DOM
-function Loaded_Chart(chart_id) {
-  if (ManageIQ.browser != 'Explorer') {
-    if ((ManageIQ.charts.chartData === null) && (document.readyState == "loading")) {
-      setTimeout(function() { Loaded_Chart(chart_id) }, 200);
-      return;
-    }
-
-    if (ManageIQ.charts.chartData !== null) {
-      doLoadChart(chart_id, document.getElementsByName(chart_id)[0]);
-    }
-  }
-}
-
-function doLoadChart(chart_id, chart_object) {
-  var id_splitted = chart_id.split('_');
-  var set = id_splitted[1];
-  var idx = id_splitted[2];
-  var comp = id_splitted[3];
-
-  if (typeof (comp) === 'undefined') {
-    chart_object.Update_XML(ManageIQ.charts.chartData[set][idx].xml, false);
-  } else {
-    chart_object.Update_XML(ManageIQ.charts.chartData[set][idx].xml2, false);
-  }
-}
-
-// Load XML/SWF charts data (IE)
-function miqLoadCharts() {
-  if (typeof ManageIQ.charts.chartData != 'undefined' && ManageIQ.browser == 'Explorer') {
-    for (var set in ManageIQ.charts.chartData) {
-      var mcd = ManageIQ.charts.chartData[set];
-      for (var i = 0; i < mcd.length; i++) {
-        miqLoadChart("miq_" + set + "_" + i);
-        if (typeof mcd[i].xml2 != "undefined") {
-          miqLoadChart("miq_" + set + "_" + i + "_2");
-        }
-      }
-    }
-  }
-}
-
-function miqLoadChart(chart_id) {
-  var chart_object;
-
-  if (document.getElementById(chart_id) != undefined &&
-      typeof document.getElementById(chart_id) != 'undefined' &&
-      typeof document.getElementById(chart_id).Update_XML != 'undefined') {
-    // Verify with console.log after sleep
-    chart_object = document.getElementById(chart_id);
-  } else if (typeof document.getElementsByName(chart_id)[0] != 'undefined' &&
-             typeof document.getElementsByName(chart_id)[0].Update_XML != 'undefined') {
-    chart_object = document.getElementsByName(chart_id)[0];
-  }
-  if (chart_object === undefined) {
-    setTimeout(function () {
-      miqLoadChart(chart_id);
-    }, 100);
-  } else {
-    doLoadChart(chart_id, chart_object);
-  }
 }
 
 function miqChartLinkData(col, row, value, category, series, id, message) {

@@ -14,7 +14,7 @@
   - if Charting.data_ok?(datum)
     -# we need to count all charts to be able to display multiple
     -# charts on a dashboard screen
-    - WidgetPresenter.chart_data.push(:xml => datum)
+    - WidgetPresenter.chart_data.push(:data => datum)
     - chart_index = WidgetPresenter.chart_data.length - 1
     - chart_data = Charting.deserialized(datum)
 
