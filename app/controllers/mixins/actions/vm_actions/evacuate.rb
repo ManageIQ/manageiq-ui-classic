@@ -4,13 +4,13 @@ module Mixins
       module Evacuate
         def evacuate
           assert_privileges("instance_evacuate")
-          @record ||= VmOrTemplate.find_by(:id => params[:rec_id])
+          @record ||= find_records_with_rbac(VmOrTemplate, params[:id]).first
           drop_breadcrumb(:name => _("Evacuate Instances"), :url  => "/vm_cloud/evacuate") unless @explorer
           @sb[:explorer] = @explorer
           @in_a_form = true
           @evacuate = true
 
-          @evacuate_items = VmOrTemplate.find(session[:evacuate_items]).sort_by(&:name)
+          @evacuate_items = find_records_with_rbac(VmOrTemplate, session[:evacuate_items]).sort_by(&:name)
           build_targets_hash(@evacuate_items)
           @view = get_db_view(VmOrTemplate)
           @view.table = MiqFilter.records2table(@evacuate_items, @view.cols + ['id'])
@@ -20,8 +20,7 @@ module Mixins
 
         def evacuatevms
           assert_privileges("instance_evacuate")
-          recs = find_checked_ids_with_rbac(VmOrTemplate)
-          recs = [params[:id].to_i] if recs.blank?
+          recs = checked_or_params
           session[:evacuate_items] = recs
           if @explorer
             evacuate
@@ -35,31 +34,12 @@ module Mixins
 
         def evacuate_vm
           assert_privileges("instance_evacuate")
+
           case params[:button]
-          when "cancel"
-            add_flash(_("Evacuation of Instances was cancelled by the user"))
-          when "submit"
-            @evacuate_items = VmOrTemplate.find(session[:evacuate_items]).sort_by(&:name)
-            @evacuate_items.each do |vm|
-              if vm.supports_evacuate?
-                options = {
-                  :hostname          => params['auto_select_host']  == 'on' ? nil : params['destination_host'],
-                  :on_shared_storage => params['on_shared_storage'] == 'on',
-                  :admin_password    => params['on_shared_storage'] == 'on' ? nil : params['admin_password']
-                }
-                task_id = vm.class.evacuate_queue(session[:userid], vm, options)
-                unless task_id.kind_of?(Integer)
-                  add_flash(_("Instance evacuation task failed."), :error)
-                end
-                add_flash(_("Queued evacuation of Instance \"%{name}\"") % {:name => vm.name})
-              else
-                add_flash(_("Unable to evacuate Instance \"%{name}\": %{details}") % {
-                  :name    => vm.name,
-                  :details => vm.unsupported_reason(:evacuate)
-                }, :error)
-              end
-            end
+          when "cancel" then add_flash(_("Evacuation of Instances was cancelled by the user"))
+          when "submit" then evacuate_handle_submit_button
           end
+
           @sb[:action] = nil
           if @sb[:explorer]
             replace_right_cell
@@ -90,8 +70,30 @@ module Mixins
             :hosts => hosts
           }
         end
+
+        private
+
+        def evacuate_handle_submit_button
+          @evacuate_items = find_records_with_rbac(VmOrTemplate, session[:evacuate_items]).sort_by(&:name)
+          @evacuate_items.each do |vm|
+            if vm.supports_evacuate?
+              options = {
+                :hostname          => params['auto_select_host']  == 'on' ? nil : params['destination_host'],
+                :on_shared_storage => params['on_shared_storage'] == 'on',
+                :admin_password    => params['on_shared_storage'] == 'on' ? nil : params['admin_password']
+              }
+              task_id = vm.class.evacuate_queue(session[:userid], vm, options)
+              add_flash(_("Instance evacuation task failed."), :error) unless task_id.kind_of?(Integer)
+              add_flash(_("Queued evacuation of Instance \"%{name}\"") % {:name => vm.name})
+            else
+              add_flash(_("Unable to evacuate Instance \"%{name}\": %{details}") % {
+                :name    => vm.name,
+                :details => vm.unsupported_reason(:evacuate)
+              }, :error)
+            end
+          end
+        end
       end
     end
   end
 end
-
