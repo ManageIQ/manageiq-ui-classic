@@ -76,7 +76,7 @@ module Mixins
                   Vm
                 end
           # Check RBAC for all items in session[:retire_items]
-          @retireitems = find_records_with_rbac(kls, session[:retire_items]).sort_by(&:name)
+          @retireitems = find_records_with_rbac(kls.order(:name), session[:retire_items])
           if params[:button]
             flash = retire_handle_form_buttons(kls)
             add_flash(flash)
