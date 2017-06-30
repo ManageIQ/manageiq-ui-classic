@@ -105,6 +105,8 @@ module PxeController::PxeCustomizationTemplates
       end
       if @edit[:new][:name].blank?
         add_flash(_("Name is required"), :error)
+      elsif CustomizationTemplate.all.pluck(:name).include?(@edit[:new][:name])
+        add_flash(_("Name has already been taken"), :error)
       end
       if @edit[:new][:typ].blank?
         add_flash(_("Type is required"), :error)
