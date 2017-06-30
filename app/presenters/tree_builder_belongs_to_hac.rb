@@ -63,6 +63,7 @@ class TreeBuilderBelongsToHac < TreeBuilder
   def x_get_tree_datacenter_kids(parent, count_only)
     kids = []
     parent.folders.each do |child|
+      kids.concat([child]) if child.kind_of?(EmsFolder) && child.name == 'datastore'
       next unless child.kind_of?(EmsFolder) && child.name == "host"
       kids.concat(child.folders_only)
       kids.concat(child.clusters)
