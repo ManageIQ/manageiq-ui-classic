@@ -951,7 +951,8 @@ module ApplicationController::Filter
     # Restore @edit hash if it's saved in @settings
     @expkey = :expression                                               # Reset to use default expression key
     if session[:adv_search] && session[:adv_search][model.to_s]
-      @edit = copy_hash(session[:edit])
+      adv_search_model = session[:adv_search][model.to_s]
+      @edit = copy_hash(adv_search_model[@expkey] ? adv_search_model : session[:edit])
       # default search doesnt exist or if it is marked as hidden
       if @edit && @edit[:expression] && !@edit[:expression][:selected].blank? &&
          !MiqSearch.exists?(@edit[:expression][:selected][:id])
