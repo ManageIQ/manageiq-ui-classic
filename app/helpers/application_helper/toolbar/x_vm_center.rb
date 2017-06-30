@@ -36,7 +36,7 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           t),
         button(
           :vm_transform,
-          'pficon fa-random fa-lg',
+          'fa fa-random fa-lg',
           t = N_('Transform this VM to RHV'),
           t,
           :klass => ApplicationHelper::Button::TransformVmButton
