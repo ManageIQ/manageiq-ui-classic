@@ -438,7 +438,7 @@ class ApplicationController < ActionController::Base
     @html     = report_build_html_table(rr.report_results, rr.html_rows.join)
     @ght_type = params[:type] || (@report.graph.blank? ? 'tabular' : 'hybrid')
     @render_chart = (@ght_type == 'hybrid')
-    render controller_name == 'report' ? 'show' : 'shared/show_report'
+    render 'shared/show_report'
   end
 
   def show_statistics
