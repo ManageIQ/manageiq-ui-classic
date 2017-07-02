@@ -39,15 +39,15 @@
                 {{item.name}}
             .card-pf-body
               %p.card-pf-aggregate-status-notifications
-                %span.card-pf-aggregate-status-notification{"ng-if" => "item.danger.length > 0",
-                                                            "ng-mouseover" => "vm.onHoverAlerts(item.danger)",
+                %span.card-pf-aggregate-status-notification{"ng-if" => "item.error.length > 0",
+                                                            "ng-mouseover" => "vm.onHoverAlerts(item.error)",
                                                             "tooltip-template" => "'/static/alert-overview-popover.html'",
                                                             "tooltip-append-to-body" => "true",
                                                             "tooltip-class" => "miq-alerts-center",
                                                             "tooltip-popup-delay" => "1000"}
                   %a{"href" => "#", "ng-click" => "vm.showGroupAlerts(item, 'Error')"}
                     %span.pficon.pficon-error-circle-o
-                    {{item.danger.length}}
+                    {{item.error.length}}
                 %span.card-pf-aggregate-status-notification{"ng-if" => "item.warning.length > 0",
                                                             "ng-mouseover" => "vm.onHoverAlerts(item.warning)",
                                                             "tooltip-template" => "'/static/alert-overview-popover.html'",
