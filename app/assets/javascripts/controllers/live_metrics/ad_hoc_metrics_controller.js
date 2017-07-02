@@ -19,9 +19,6 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
       // and set page config variables
       metricsParseUrlFactory(dash, $window);
       metricsConfigFactory(dash);
-
-      // load tenants
-      httpUtils.getTenants();
     }
 
     var initialization = function() {
@@ -59,10 +56,14 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
         actionsConfig: dash.actionsConfig
       };
 
-      var _tenant = dash.tenant.value || dash.DEFAULT_TENANT;
-      dash.url = '/container_dashboard/data' + dash.providerId  + '/?live=true&tenant=' + _tenant;
+      if (dash.tenant.value) {
+        // load filters
+        httpUtils.getMetricTags();
+      } else {
+        // load tenants and filters
+        httpUtils.getTenants();
+      }
 
-      httpUtils.getMetricTags();
       setAppliedFilters();
     }
 
