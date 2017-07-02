@@ -1354,6 +1354,7 @@ function miqInitToolbars() {
 function miqToolbarOnClick(_e) {
   var tb_url;
   var button = $(this);
+  var popup = false;
 
   // If it's a dropdown, collapse the parent container
   var parent = button.parents('div.btn-group.dropdown.open');
@@ -1372,20 +1373,13 @@ function miqToolbarOnClick(_e) {
     if (!confirm(button.data('confirm-tb'))) {
       return;
     }
-  } else if (button.data("confirm-tb") && button.data("popup")) {
-    // to open console in a new window
-    if (confirm(button.data('confirm-tb'))) {
-      if (button.data("window_url")) {
-        window.open(button.data('window_url'));
-      }
+  }
+
+  if (button.data("popup")) {
+    if (!button.data("confirm-tb") || confirm(button.data('confirm-tb'))) {
+      // popup windows are only supported for urls starting with '/' (non-ajax)
+      popup = true;
     }
-    return;
-  } else if (!button.data("confirm-tb") && button.data("popup")) {
-    // to open readonly report in a new window, doesnt have confirm message
-    if (button.data("window_url")) {
-      window.open(button.data('window_url'));
-    }
-    return;
   }
 
   if (button.data("url")) {
@@ -1401,7 +1395,11 @@ function miqToolbarOnClick(_e) {
       if (button.data("url_parms")) {
         tb_url += button.data('url_parms');
       }
-      DoNav(encodeURI(tb_url));
+      if (popup) {
+        window.open(tb_url);
+      } else {
+        DoNav(encodeURI(tb_url));
+      }
       return;
     } else {
       // An ajax url was defined
