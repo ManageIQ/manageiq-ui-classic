@@ -157,6 +157,11 @@ angular.module('miq.util').factory('metricsUtilsFactory', function() {
         return;
       }
 
+      // make sure we have tags
+      if (! item.tags) {
+        item.tags = {};
+      }
+
       item.data = item.data.sort(function(a, b) { return a.timestamp > b.timestamp; });
       var maxValue = Math.max.apply(Math, item.data.map(function(o) { return o.value; }))
       var m = metricPrefix(maxValue, item.tags.units || '');
