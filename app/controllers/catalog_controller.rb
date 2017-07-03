@@ -1,5 +1,6 @@
 class CatalogController < ApplicationController
   include AutomateTreeHelper
+  include ServiceDialogCreationMixin
 
   before_action :check_privileges
   before_action :get_session_data
@@ -692,15 +693,7 @@ class CatalogController < ApplicationController
   end
 
   def ot_form_field_changed
-    id = params[:id]
-    return unless load_edit("ot_edit__#{id}", "replace_cell__explorer")
-    ot_edit_get_form_vars
-    render :update do |page|
-      page << javascript_prologue
-      page << javascript_hide("buttons_off")
-      page << javascript_show("buttons_on")
-      page << "miqSparkle(false);"
-    end
+    dialog_creation_form_field_changed("ot_edit__#{params[:id]}")
   end
 
   def ot_copy_submit

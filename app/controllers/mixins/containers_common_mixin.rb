@@ -1,5 +1,6 @@
 module ContainersCommonMixin
   extend ActiveSupport::Concern
+  include ServiceDialogCreationMixin
 
   def button
     @edit = session[:edit]                          # Restore @edit for adv search box
@@ -14,6 +15,11 @@ module ContainersCommonMixin
       assign_policies(model) if params[:pressed] == "#{model.name.underscore}_protect"
       check_compliance(model) if params[:pressed] == "#{model.name.underscore}_check_compliance"
     end
+    if params[:pressed] == 'service_dialog_from_ct'
+      create_service_dialog
+      return
+    end
+
     return if ["#{params[:controller]}_tag"].include?(params[:pressed]) && @flash_array.nil? # Tag screen showing
 
     # Handle scan
@@ -28,7 +34,68 @@ module ContainersCommonMixin
     end
   end
 
+  def service_dialog_from_ct
+    assert_privileges("service_dialog_from_ct")
+    ct = ContainerTemplate.find_by(:id => params[:id])
+    @right_cell_text = _("Adding a new Service Dialog from Container Template \"%{name}\"") % {:name => ct.name}
+    @edit = {:new    => {:dialog_name => ""},
+             :key    => "ct_edit__#{ct.id}",
+             :rec_id => ct.id}
+    @in_a_form = true
+    render "service_dialog_from_ct"
+  end
+
+  def service_dialog_from_ct_submit
+    case params[:button]
+    when "cancel"
+      service_dialog_from_ct_submit_cancel
+    when "save"
+      service_dialog_from_ct_submit_save
+    end
+  end
+
+  def ct_form_field_changed
+    dialog_creation_form_field_changed("ct_edit__#{params[:id]}")
+  end
+
   private
+
+  def create_service_dialog
+    assert_privileges(params[:pressed])
+    drop_breadcrumb(:name => _("Create Service Dialog"), :url => "/container_template/service_dialog_from_ct")
+    javascript_redirect :action => 'service_dialog_from_ct',
+                        :id     => params[:id],
+                        :escape => false
+  end
+
+  def service_dialog_from_ct_submit_cancel
+    add_flash(_("Creation of a new Service Dialog was cancelled by the user"))
+    @in_a_form = false
+    @edit = @record = nil
+    session[:flash_msgs] = @flash_array.dup # Put msg in session for next transaction to display
+    javascript_redirect previous_breadcrumb_url
+  end
+
+  def service_dialog_from_ct_submit_save
+    assert_privileges("service_dialog_from_ct")
+    load_edit("ct_edit__#{params[:id]}")
+    begin
+      ct_params = ContainerTemplate.find_by(:id => params[:id]).container_template_parameters.to_a
+      Dialog::ContainerTemplateServiceDialog.new.create_dialog(@edit[:new][:dialog_name],
+                                                               ct_params)
+    rescue => bang
+      add_flash(_("Error when creating a Service Dialog from Container Template: %{error_message}") %
+                  {:error_message => bang.message}, :error)
+      javascript_flash
+    else
+      add_flash(_("Service Dialog \"%{name}\" was successfully created") %
+                  {:name => @edit[:new][:dialog_name]}, :success)
+      @in_a_form = false
+      @edit = @record = nil
+      session[:flash_msgs] = @flash_array.dup # Put msg in session for next transaction to display
+      javascript_redirect previous_breadcrumb_url
+    end
+  end
 
   # Scan all selected or single displayed image(s)
   def scan_images
