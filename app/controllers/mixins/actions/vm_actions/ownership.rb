@@ -131,8 +131,8 @@ module Mixins
             @user = @group = 'dont-change'
           else
             record = @ownershipitems.first
-            @user = record.evm_owner&.id&.to_s
-            @group = record.miq_group&.id&.to_s
+            @user = record.evm_owner.id.to_s if record.evm_owner
+            @group = record.miq_group.id.to_s if record.miq_group
           end
         end
 
