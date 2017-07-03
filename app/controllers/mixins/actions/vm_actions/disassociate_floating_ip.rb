@@ -79,17 +79,20 @@ module Mixins
               @record.disassociate_floating_ip_queue(session[:userid], floating_ip)
               add_flash(_("Disassociating Floating IP %{address} from Instance \"%{name}\"") % {
                 :address => floating_ip,
-                :name    => @record.name})
+                :name    => @record.name
+              })
             rescue => ex
               add_flash(_("Unable to disassociate Floating IP %{address} from Instance \"%{name}\": %{details}") % {
                 :address => floating_ip,
                 :name    => @record.name,
-                :details => get_error_message_from_fog(ex.to_s)}, :error)
+                :details => get_error_message_from_fog(ex.to_s)
+              }, :error)
             end
           else
             add_flash(_("Unable to disassociate Floating IP from Instance \"%{name}\": %{details}") % {
               :name    => @record.name,
-              :details => @record.unsupported_reason(:disassociate_floating_ip)}, :error)
+              :details => @record.unsupported_reason(:disassociate_floating_ip)
+            }, :error)
           end
           params[:id] = @record.id.to_s # reset id in params for show
           @record = nil
