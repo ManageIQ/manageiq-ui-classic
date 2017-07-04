@@ -1,0 +1,22 @@
+- prefix                 ||= 'provider_options'
+
+%h4
+  {{ emsOptionsModel.provider_options.proxy_settings.label }}
+%p
+  {{ emsOptionsModel.provider_options.proxy_settings.help_text }}
+%div{"ng-repeat" => "option in emsOptionsModel.provider_options.proxy_settings.settings"}
+  .form-group{"ng-class" => "{{ \"{'has_error': angularForm.provider_options_proxy_settings_\" + option.name + \".$invalid}\" }}"}
+    %label.col-md-2.control-label{"for" => "{{ \"provider_options_proxy_settings_\" + option.name }}"}
+      {{ option.label }}
+    .col-md-4
+      %input.form-control{"type"          => "text",
+                          "id"            => "{{ \"provider_options_proxy_settings_\" + option.name }}",
+                          "name"          => "{{ \"provider_options_proxy_settings_\" + option.name }}",
+                          "ng-model"      => "emsCommonModel.provider_options.proxy_settings[option.name].value",
+                          "ng-trim"       => false,
+                          "detect_spaces" => "",
+                          "placeholder"   => "{{ option.global_default }}",
+                          "title"         => "{{ option.help_text }}",
+                          "prefix"        => "#{prefix}"}
+      %span.help-block{"ng-show" => '{{ "angularForm.provider_options_proxy_settings_" + option.name + ".$error.detectedSpaces" }}'}
+        = _("Spaces are prohibited")

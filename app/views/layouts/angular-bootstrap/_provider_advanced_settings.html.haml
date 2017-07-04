@@ -1,0 +1,25 @@
+%h3
+  {{ emsOptionsModel.provider_options.advanced_settings.label }}
+%p
+  {{ emsOptionsModel.provider_options.advanced_settings.help_text }}
+%div{"ng-repeat" => "settings_section in emsOptionsModel.provider_options.advanced_settings.settings"}
+  %h4
+    {{ settings_section.label }}
+  %p
+    {{ settings_section.help_text }}
+  %div{"ng-repeat" => "option in settings_section.settings"}
+    .form-group{"ng-class" => "{{ \"{'has_error': angularForm.provider_options_\" + settings_section.section_name + \"_\" + option.name + \".$invalid}\" }}"}
+      %label.col-md-2.control-label{"for" => "{{ \"provider_options_\" + settings_section.section_name + \"_\" + option.name }}"}
+        {{ option.label }}
+      .col-md-4
+        %input.form-control{"type"          => "text",
+                            "ng-attr-id"    => "{{ \"provider_options_\" + settings_section.section_name + \"_\" + option.name }}",
+                            "ng-attr-name"  => "{{ \"provider_options_\" + settings_section.section_name + \"_\" + option.name }}",
+                            "ng-model"      => "emsCommonModel.provider_options.advanced_settings[settings_section.section_name][option.name].value",
+                            "ng-trim"       => false,
+                            "detect_spaces" => "",
+                            "placeholder"   => "{{ option.global_default }}",
+                            "title"         => "{{ option.help_text }}",
+                            "prefix"        => "provider_options"}
+        %span.help-block{"ng-show" => '{{ "angularForm.provider_options_" + settings_section.section_name + "_" + option.name + ".$error.detectedSpaces" }}'}
+          = _("Spaces are prohibited")

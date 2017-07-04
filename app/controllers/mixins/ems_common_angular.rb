@@ -185,6 +185,8 @@ module Mixins
       prometheus_alerts_security_protocol = security_protocol_default
       prometheus_alerts_tls_ca_certs = ""
 
+      provider_options = @ems.options || {}
+
       if @ems.connection_configurations.amqp.try(:endpoint)
         amqp_hostname = @ems.connection_configurations.amqp.endpoint.hostname
         amqp_port = @ems.connection_configurations.amqp.endpoint.port
@@ -361,6 +363,7 @@ module Mixins
                          :prometheus_alerts_security_protocol => prometheus_alerts_security_protocol,
                          :prometheus_alerts_tls_ca_certs      => prometheus_alerts_tls_ca_certs,
                          :prometheus_alerts_auth_status       => prometheus_alerts_auth_status,
+                         :provider_options                    => provider_options,
                          :alerts_selection                    => retrieve_alerts_selection}
       end
 
@@ -513,6 +516,7 @@ module Mixins
           prometheus_endpoint = {:role => :prometheus, :hostname => metrics_hostname, :port => metrics_port}
           prometheus_endpoint.merge!(endpoint_security_options(metrics_security_protocol, metrics_tls_ca_certs))
         end
+
         if params[:alerts_selection] == 'prometheus'
           params[:cred_type] = "prometheus_alerts"
           prometheus_alerts_endpoint = {:role => :prometheus_alerts, :hostname => prometheus_alerts_hostname, :port => prometheus_alerts_api_port}
@@ -537,6 +541,25 @@ module Mixins
       if ems.kind_of?(ManageIQ::Providers::Lenovo::PhysicalInfraManager)
         default_endpoint = {:role => :default, :hostname => hostname, :port => port}
       end
+
+      new_options = {}
+      if ems.class.respond_to?(:advanced_settings)
+        ems.class.advanced_settings.each do |section_name, section|
+          section[:settings].each do |opt, _|
+            new_options[section_name.to_sym] ||= {}
+            value = params["provider_options_#{section_name}_#{opt}".to_sym]
+            new_options[section_name.to_sym][opt.to_sym] = value if value.present?
+          end
+        end
+      end
+      if ems.class.respond_to?(:proxy_settings)
+        new_options[:proxy_settings] = {}
+        ems.class.proxy_settings.each do |opt, _|
+          value = params["provider_options_proxy_settings_#{opt}".to_sym]
+          new_options[:proxy_settings][opt] = value if value.present?
+        end
+      end
+      ems.options = new_options
 
       endpoints = {:default           => default_endpoint,
                    :ceilometer        => ceilometer_endpoint,

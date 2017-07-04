@@ -1,15 +1,17 @@
 describe('emsCommonFormController', function() {
-  var $scope, $controller, $httpBackend, miqService, compile;
+  var $scope, $controller, $httpBackend, miqService, compile, API;
 
   beforeEach(module('ManageIQ'));
 
-  beforeEach(inject(function(_$httpBackend_, $rootScope, _$controller_, _miqService_, _$compile_) {
+  beforeEach(inject(function(_$httpBackend_, $rootScope, _$controller_, _miqService_, _$compile_, _API_) {
     miqService = _miqService_;
     compile = _$compile_;
+    API = _API_;
     spyOn(miqService, 'miqAjaxButton');
     spyOn(miqService, 'restAjaxButton');
     spyOn(miqService, 'sparkleOn');
     spyOn(miqService, 'sparkleOff');
+    spyOn(API, 'options').and.callFake(function(url){ return Promise.resolve({}); });
     $scope = $rootScope.$new();
 
     var emsCommonFormResponse = {
@@ -29,7 +31,8 @@ describe('emsCommonFormController', function() {
           'createUrl': '/ems_cloud',
           'updateUrl': '/ems_cloud/12345'},
         emsCommonFormId: 'new',
-        miqService: miqService
+        miqService: miqService,
+        API: API
       });
   }));
 
@@ -102,7 +105,8 @@ describe('emsCommonFormController', function() {
             'createUrl': '/ems_cloud',
             'updateUrl': '/ems_cloud/12345'},
           emsCommonFormId: 12345,
-          miqService: miqService
+          miqService: miqService,
+          API: API
         });
       $httpBackend.flush();
     }));
@@ -167,7 +171,8 @@ describe('emsCommonFormController', function() {
             'createUrl': '/ems_cloud',
             'updateUrl': '/ems_cloud/update/'},
           emsCommonFormId: 12345,
-          miqService: miqService
+          miqService: miqService,
+          API: API
         });
       $httpBackend.flush();
     }));
@@ -232,7 +237,8 @@ describe('emsCommonFormController', function() {
             'createUrl': '/ems_cloud',
             'updateUrl': '/ems_cloud/update/'},
           emsCommonFormId: 12345,
-          miqService: miqService
+          miqService: miqService,
+          API: API
         });
       $httpBackend.flush();
     }));
@@ -374,20 +380,93 @@ describe('emsCommonFormController', function() {
       expect($scope.canValidateBasicInfo()).toBe(true);
     });
   });
+
+  describe('#updateProviderOptionsOldValues', function () {
+    it('sets sourceSection options in destSection', function () {
+      $httpBackend.flush();
+      $scope.emsOptionsModel.provider_options_original_values = {
+        test_settings: {
+          hello: "world",
+        },
+      };
+      $scope.emsOptionsModel.provider_options = {
+        test_settings:
+        { label: "test_settings", settings: { hello: {}}  }
+      };
+      $scope.emsCommonModel.provider_options = {};
+      $scope.emsCommonModel.provider_options.test_settings = {};
+      $scope.updateProviderOptionsOldValues($scope.emsOptionsModel.provider_options.test_settings,
+        $scope.emsCommonModel.provider_options.test_settings);
+      expect($scope.emsCommonModel.provider_options.test_settings.hello.value).toEqual("world");
+    });
+  });
+
+  describe('#setProviderOptionsDescription', function () {
+    beforeEach(inject(function() {
+      $httpBackend.flush();
+      $scope.emsCommonModel.emstype = 'kubernetes';
+      $scope.emsOptionsModel = {
+        provider_options:                 {},
+        provider_options_original_values: {},
+      };
+    }));
+
+    it ('updates options descriptions', function () {
+      $scope.emsCommonModel.emstype = 'kubernetes';
+      response = {
+        data: {
+          provider_settings: {
+            kubernetes: {
+              advanced_settings: {
+                settings: {
+                  my_settings_section: {
+                    label: "section_name_1",
+                    settings: {
+                      hello: {
+                        label:     'hello',
+                        help_text: 'help this text'
+                      }
+                    }
+                  }
+                }
+              },
+              proxy_settings: {
+                settings: {
+                  hello: {
+                    label:     'hello',
+                    help_text: 'help this text'
+                  }
+                }
+              }
+            }
+          }
+        }
+      };
+      $scope.setProviderOptionsDescription(response.data);
+      expect($scope.emsOptionsModel
+        .provider_options
+        .advanced_settings
+        .settings
+        .my_settings_section
+        .settings.hello.label).toEqual('hello');
+    });
+  });
 });
 
 describe('emsCommonFormController in the context of ems infra provider', function() {
-  var $scope, $controller, $httpBackend, miqService, compile;
+  var $scope, $controller, $httpBackend, miqService, compile, API;
 
   beforeEach(module('ManageIQ'));
 
-  beforeEach(inject(function (_$httpBackend_, $rootScope, _$controller_, _miqService_, _$compile_) {
+  beforeEach(inject(function (_$httpBackend_, $rootScope, _$controller_, _miqService_, _$compile_, _API_) {
     miqService = _miqService_;
+    API = _API_;
     compile = _$compile_;
     spyOn(miqService, 'miqAjaxButton');
     spyOn(miqService, 'restAjaxButton');
     spyOn(miqService, 'sparkleOn');
     spyOn(miqService, 'sparkleOff');
+    spyOn(API, 'options').and.callFake(function(url){ return Promise.resolve({});});
     $scope = $rootScope.$new();
 
     var emsCommonFormResponse = {
@@ -410,7 +489,8 @@ describe('emsCommonFormController in the context of ems infra provider', functio
           'updateUrl': '/ems_infra/12345'
         },
         emsCommonFormId: 'new',
-        miqService: miqService
+          miqService: miqService,
+          API: API
       });
   }));
 
@@ -467,7 +547,8 @@ describe('emsCommonFormController in the context of ems infra provider', functio
             'updateUrl': '/ems_infra/12345'
           },
           emsCommonFormId: 12345,
-          miqService: miqService
+          miqService: miqService,
+          API: API
         });
       $httpBackend.flush();
     }));
@@ -524,7 +605,8 @@ describe('emsCommonFormController in the context of ems infra provider', functio
             'updateUrl': '/ems_infra/update/'
           },
           emsCommonFormId: 12345,
-          miqService: miqService
+          miqService: miqService,
+          API: API
         });
       $httpBackend.flush();
     }));
@@ -593,7 +675,8 @@ describe('emsCommonFormController in the context of ems infra provider', functio
             'updateUrl': '/ems_infra/update/'
           },
           emsCommonFormId: 12345,
-          miqService: miqService
+          miqService: miqService,
+          API: API
         });
       $httpBackend.flush();
     }));
@@ -629,17 +712,19 @@ describe('emsCommonFormController in the context of ems infra provider', functio
 });
 
 describe('emsCommonFormController in the context of ems middleware provider', function () {
-  var $scope, $controller, $httpBackend, miqService, compile;
+  var $scope, $controller, $httpBackend, miqService, compile, API;
 
   beforeEach(module('ManageIQ'));
 
-  beforeEach(inject(function (_$httpBackend_, $rootScope, _$controller_, _miqService_, _$compile_) {
+  beforeEach(inject(function (_$httpBackend_, $rootScope, _$controller_, _miqService_, _$compile_, _API_) {
     miqService = _miqService_;
+    API = _API_;
     compile = _$compile_;
     spyOn(miqService, 'miqAjaxButton');
     spyOn(miqService, 'restAjaxButton');
     spyOn(miqService, 'sparkleOn');
     spyOn(miqService, 'sparkleOff');
+    spyOn(API, 'options').and.callFake(function(url){ return Promise.resolve({});});
     $scope = $rootScope.$new();
 
     var emsCommonFormResponse = {
@@ -662,7 +747,8 @@ describe('emsCommonFormController in the context of ems middleware provider', fu
           'updateUrl': '/ems_middleware/12345'
         },
         emsCommonFormId: 'new',
-        miqService: miqService
+        miqService: miqService,
+        API: API
       });
   }));
 
@@ -714,7 +800,8 @@ describe('emsCommonFormController in the context of ems middleware provider', fu
             'updateUrl': '/ems_middleware/12345'
           },
           emsCommonFormId: 12345,
-          miqService: miqService
+          miqService: miqService,
+          API: API
         });
       $httpBackend.flush();
     }));
