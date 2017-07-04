@@ -18,6 +18,37 @@ class DashboardController < ApplicationController
     redirect_to :action => 'show'
   end
 
+  def current_hostname
+    return URI.parse(request.env['HTTP_X_FORWARDED_FOR']).hostname if request.env['HTTP_X_FORWARDED_FOR']
+    URI.parse(request.original_url).hostname
+  end
+
+  def known_redirect_host?(hostname)
+    MiqServer.active_miq_servers.where(:has_active_cockpit_ws => true).each do |server|
+      return true if hostname == server.hostname
+      return true if hostname == server.ipaddress
+      settings = MiqCockpitWsWorker.fetch_worker_settings_from_server(server)
+      settings_host = URI.parse(settings[:external_url]).hostname if settings[:external_url]
+      return true if hostname == settings_host
+    end
+    false
+  end
+
+  # Redirect to cockpit with an api auth token
+  def cockpit_redirect
+    return head(:forbidden) unless params[:redirect_uri]
+
+    # We require that redirect hostname matches current host
+    # or is known as a miq_server
+    url = URI.parse(params[:redirect_uri])
+    if current_hostname != url.hostname && !url.hostname.nil?
+      return head(:forbidden) unless known_redirect_host?(url.hostname)
+    end
+
+    url.fragment = "access_token=#{generate_ui_api_token(current_user[:userid])}"
+    redirect_to url.to_s
+  end
+
   def saml_protected_page
     request.base_url + '/saml_login'
   end
