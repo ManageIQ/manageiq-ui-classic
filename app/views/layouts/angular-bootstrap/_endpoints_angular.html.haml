@@ -146,6 +146,7 @@
                          "emsCommonModel.emstype == 'openstack_infra'        || " + |
                          "emsCommonModel.emstype == 'nuage_network'          || " + |
                          "emsCommonModel.emstype == 'rhevm'                  || " + |
+                         "emsCommonModel.emstype == 'kubevirt'               || " + |
                          "emsCommonModel.emstype == 'vmware_cloud'           || " + |
                          "emsCommonModel.emstype == 'hawkular'               || " + |
                          "emsCommonModel.emstype == 'hawkular_datawarehouse' || " + |
@@ -194,9 +195,8 @@
       %span.help-block{"ng-show" => "angularForm.#{prefix}_database_name.$error.detectedSpaces"}
         = _("Spaces are prohibited")
 
-
 %div{"ng-if" => defined?(tls_verify_hide) ? false : true}
-  .form-group{"ng-if"=> "emsCommonModel.emstype == 'rhevm'"}
+  .form-group{"ng-if"=> "emsCommonModel.emstype == 'rhevm' || emsCommonModel.emstype == 'kubevirt'"}
     %label.col-md-2.control-label{"for" => "#{prefix}_tls_verify"}
       = _('Verify TLS Certificates')
     .col-md-8
@@ -213,6 +213,7 @@
 
 %div{"ng-if" => defined?(tls_ca_certs_hide) ? false : true}
   .form-group{"ng-if"=> "emsCommonModel.emstype == 'rhevm' || " +                                             |
+                        "emsCommonModel.emstype == 'kubevirt' || " +                                          |
                         "(emsCommonModel.ems_controller == 'ems_container' && " +                             |
                         " emsCommonModel.#{prefix}_security_protocol == 'ssl-with-validation-custom-ca') || " |
                         "(emsCommonModel.emstype == 'hawkular' && " +                                         |
@@ -223,13 +224,31 @@
       %textarea.form-control{"id"          => "#{prefix}_tls_ca_certs",
                              "name"        => "#{prefix}_tls_ca_certs",
                              "ng-model"    => "#{ng_model}.#{prefix}_tls_ca_certs",
-                             "ng-disabled" => "emsCommonModel.emstype == 'rhevm' && !#{ng_model}.#{prefix}_tls_verify",
+                             "ng-disabled" => "(emsCommonModel.emstype == 'rhevm' || emsCommonModel.emstype == 'kubevirt') && !#{ng_model}.#{prefix}_tls_verify",
                              "ng-required" => false,
                              "ng-trim"     => false,
                              "prefix"      => prefix.to_s,
                              "reset-validation-status" => "#{prefix}_auth_status"}
       %span.help-block
         = _("Paste here the trusted CA certificates, in PEM format.")
+
+%div{"ng-if"=> "emsCommonModel.emstype == 'kubevirt'"}
+  .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_kubevirt_token.$invalid}"}
+    %label.col-md-2.control-label{"for" => "#{prefix}_kubevirt_token"}
+      = _('Token')
+    .col-md-4
+      %input.form-control{"type"                    => "text",
+                          "id"                      => "#{prefix}_kubevirt_token",
+                          "name"                    => "#{prefix}_kubevirt_token",
+                          "ng-model"                => "#{ng_model}.#{prefix}_kubevirt_token",
+                          "ng-required"             => true,
+                          "ng-trim"                 => false,
+                          "detect-spaces"           => "",
+                          "checkchange"             => "",
+                          "prefix"                  => prefix.to_s,
+                          "reset-validation-status" => "#{prefix}_auth_status"}
+      %span.help-block{"ng-show" => "angularForm.#{prefix}_kubevirt_token.$error.required"}
+        = _("Required")
 
 .form-group{"ng-class" => "{'has-error': angularForm.realm.$invalid}",
             "ng-if" => "emsCommonModel.emstype == 'scvmm' && emsCommonModel.default_security_protocol == 'kerberos'"}

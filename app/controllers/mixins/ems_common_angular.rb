@@ -152,6 +152,14 @@ module Mixins
           :metrics_port     => params[:metrics_api_port],
           :metrics_database => params[:metrics_database_name],
         }]
+      when 'ManageIQ::Providers::Kubevirt::InfraManager'
+        [{
+          :token      => params[:default_kubevirt_token],
+          :server     => params[:default_hostname],
+          :port       => params[:default_api_port],
+          :verify_ssl => params[:default_tls_verify] == 'on' ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE,
+          :ca_certs   => params[:default_tls_ca_certs],
+        }]
       when 'ManageIQ::Providers::Vmware::InfraManager'
         [{:pass => password, :user => user, :ip => params[:default_hostname], :use_broker => false}]
       when 'ManageIQ::Providers::Nuage::NetworkManager'
@@ -535,6 +543,16 @@ module Mixins
                              :path     => metrics_database_name }
       end
 
+      if ems.kind_of?(ManageIQ::Providers::Kubevirt::InfraManager)
+        default_endpoint = {
+          :role                  => :default,
+          :hostname              => hostname,
+          :port                  => port,
+          :verify_ssl            => params[:default_tls_verify] == 'on' ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE,
+          :certificate_authority => params[:default_tls_ca_certs],
+        }
+      end
+
       if ems.kind_of?(ManageIQ::Providers::Google::CloudManager)
         ems.project = params[:project]
       end
@@ -696,6 +714,12 @@ module Mixins
          ems.supports_authentication?(:metrics) && params[:metrics_userid]
         metrics_password = params[:metrics_password] ? params[:metrics_password] : ems.authentication_password(:metrics)
         creds[:metrics] = {:userid => params[:metrics_userid], :password => metrics_password, :save => (mode != :validate)}
+      end
+      if ems.kind_of?(ManageIQ::Providers::Kubevirt::InfraManager)
+        creds[:default] = {
+          :auth_key => params[:default_kubevirt_token],
+          :save     => mode != :validate,
+        }
       end
       if ems.supports_authentication?(:auth_key) && params[:service_account]
         creds[:default] = {:auth_key => params[:service_account], :userid => "_", :save => (mode != :validate)}
