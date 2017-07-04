@@ -259,7 +259,6 @@ class DashboardController < ApplicationController
       page << javascript_prologue
       page.replace_html("lightbox_div", :partial => "zoomed_chart", :locals => {:widget => widget})
       page << "$('#lightbox-panel').fadeIn(300);"
-      page << "miqLoadCharts();"
     end
   end
 

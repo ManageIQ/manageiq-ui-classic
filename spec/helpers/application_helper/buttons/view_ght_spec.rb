@@ -2,13 +2,13 @@ describe ApplicationHelper::Button::ViewGHT do
   let(:view_context) { setup_view_context_with_sandbox(:active_tree => tree) }
   let(:ght_type) { 'tabular' }
   let(:report) { FactoryGirl.create(:miq_report) }
-  let(:zgraph) { nil }
+  let(:render_chart) { nil }
   let(:graph) { nil }
   subject do
     described_class.new(view_context, {},
-                        { 'ght_type' => ght_type,
-                          'report'   => report,
-                          'zgraph'   => zgraph }, {})
+                        {'ght_type'     => ght_type,
+                         'report'       => report,
+                         'render_chart' => render_chart}, {})
   end
 
   before { allow(report).to receive(:graph).and_return(graph) }
@@ -25,11 +25,11 @@ describe ApplicationHelper::Button::ViewGHT do
           let(:graph) { true }
           it { expect(subject.visible?).to be_truthy }
         end
-        context 'when zgraph is available' do
-          let(:zgraph) { true }
+        context 'when render_chart is available' do
+          let(:render_chart) { true }
           it { expect(subject.visible?).to be_truthy }
         end
-        context 'when ght_type == tabular && report does not have graph && not a zgraph' do
+        context 'when ght_type == tabular && report does not have graph && not a render_chart' do
           it { expect(subject.visible?).to be_falsey }
         end
       end

@@ -66,9 +66,9 @@ module ReportController::Reports
       unless rpt.graph.nil? || rpt.graph[:type].blank?            # If graph present
         # FIXME: UNTESTED!!!
         rpt.to_chart(settings(:display, :reporttheme), false, MiqReport.graph_options) # Generate the chart
-        @edit[:zgraph_xml] = rpt.chart                 # Save chart data
+        @edit[:chart_data] = rpt.chart
       else
-        @edit[:zgraph_xml] = nil
+        @edit[:chart_data] = nil
       end
     end
     miq_task.destroy
@@ -143,8 +143,8 @@ module ReportController::Reports
 
   # generate preview chart when editing report
   def preview_chart
-    render Charting.render_format => session[:edit][:zgraph_xml]
-    session[:edit][:zgraph_xml] = nil
+    render Charting.render_format => session[:edit][:chart_data]
+    session[:edit][:chart_data] = nil
   end
 
   # get saved reports for a specific report
