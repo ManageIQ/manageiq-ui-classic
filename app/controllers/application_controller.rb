@@ -321,7 +321,7 @@ class ApplicationController < ActionController::Base
     end
 
     if params[:model] == "physical_servers_with_host"
-      options[:where_clause] = "physical_servers.id in (select hosts.physical_server_id from hosts)"
+      options.merge!(generate_options)
     end
 
     options[:parent] = options[:parent] || @parent

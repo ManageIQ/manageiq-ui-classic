@@ -46,9 +46,12 @@ class EmsPhysicalInfraController < ApplicationController
   end
 
   def display_physical_servers_with_host
-    nested_list('physical_servers', PhysicalServer,
-                :where_clause     => "physical_servers.id in (select hosts.physical_server_id from hosts)",
-                :breadcrumb_title => _("Physical Servers with Host"))
+    nested_list('physical_servers', PhysicalServer, generate_options)
+  end
+
+  def generate_options
+    {:where_clause     => "physical_servers.id in (select hosts.physical_server_id from hosts)",
+     :breadcrumb_title => _("Physical Servers with Host")}
   end
 
   private
