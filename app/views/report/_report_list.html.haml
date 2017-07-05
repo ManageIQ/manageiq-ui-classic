@@ -2,7 +2,7 @@
   - if @sb[:active_accord] == :reports
     - if @in_a_form
       = render :partial => 'form'
-    - elsif @report && !@report_result
+    - elsif @report
       = render :partial => "layouts/flash_msg"
 
       = render :partial => 'shared/report_chart_and_html', :locals => {:chart => @render_chart, :html => @html, :report => @report}
