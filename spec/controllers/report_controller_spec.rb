@@ -1226,9 +1226,10 @@ describe ReportController do
           controller.instance_variable_set(:@sb, :last_savedreports_id => nil)
           allow(controller).to receive(:get_all_reps)
           controller.send(:show_saved_report)
-          fetched_report_result = controller.instance_variable_get(:@report_result)
-          expect(fetched_report_result.id).to eq(@rpt.miq_report_results.first.id)
-          expect(fetched_report_result.miq_report.id).to eq(@rpt.id)
+          fetched_report_result_id = controller.instance_variable_get(:@report_result_id)
+          expect(fetched_report_result_id).to eq(@rpt.miq_report_results.first.id)
+          fetched_report = controller.instance_variable_get(:@report)
+          expect(fetched_report.id).to eq(@rpt.id)
         end
       end
     end
