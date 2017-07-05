@@ -15,7 +15,7 @@ describe AnsibleRepositoryController do
       is_expected.to have_http_status 200
     end
 
-    it "render view for specific repostitory" do
+    it "render view for specific repository" do
       is_expected.to render_template(:partial => "layouts/_textual_groups_generic")
     end
   end
@@ -31,6 +31,21 @@ describe AnsibleRepositoryController do
 
     it "render view for list of repositories" do
       is_expected.to render_template(:partial => "layouts/_gtl")
+    end
+  end
+
+  context "#show_association" do
+    render_views
+
+    before(:each) do
+      @repository = FactoryGirl.create(:embedded_ansible_configuration_script_source, :name => "Test Repository")
+      @playbook = FactoryGirl.create(:embedded_playbook, :name => 'playbook_name', :configuration_script_source => @repository)
+    end
+
+    it "shows associated playbooks" do
+      get :show, :params => {:id => @repository.id, :display => 'playbooks'}
+      expect(response.status).to eq(200)
+      expect(response.body).to include("Test Repository (All Playbooks)")
     end
   end
 end
