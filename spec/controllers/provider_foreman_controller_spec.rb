@@ -144,7 +144,7 @@ describe ProviderForemanController do
     controller.instance_variable_set(:@provider, provider2)
     allow(controller).to receive(:render_flash)
     controller.save_provider
-    expect(assigns(:flash_array).first[:message]).to include("Name has already been taken")
+    expect(assigns(:flash_array).last[:message]).to include("Name has already been taken")
   end
 
   context "#edit" do
