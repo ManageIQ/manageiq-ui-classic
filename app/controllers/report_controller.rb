@@ -138,7 +138,7 @@ class ReportController < ApplicationController
 
     @widget_nodes ||= []
     @sb[:node_clicked] = false
-    x_node_set("root", :roles_tree) if params[:load_edit_err]
+    x_node_set("root", :roles_tree) if params[:load_edit_err] && tree_exists?(:roles_tree)
     @flash_array = @sb[:flash_msg] unless @sb[:flash_msg].blank?
     get_node_info
     @right_cell_text ||= _("All %{reports}") % {:reports => ui_lookup(:models => "MiqReport")}
@@ -158,7 +158,9 @@ class ReportController < ApplicationController
     if params[:id]
       self.x_active_accord = params[:id].sub(/_accord$/, '')
       self.x_active_tree   = "#{self.x_active_accord}_tree"
-      x_node_set("root", :roles_tree) unless @changed   # reset menu editor to show All Roles if nothing has been changed
+
+      # reset menu editor to show All Roles if nothing has been changed
+      x_node_set("root", :roles_tree) if !@changed && tree_exists?(:roles_tree)
 
       trees_to_replace = []
       trees_to_replace << :widgets if params[:id] == "widgets"
