@@ -362,6 +362,22 @@ describe AutomationManagerController do
       expect(view.table.data[1].name).to eq("ConfigScript3")
     end
 
+    it 'renders tree_select for one job template' do
+      record = FactoryGirl.create(:ansible_configuration_script,
+                                  :name        => "ConfigScriptTest1",
+                                  :survey_spec => {'spec' => [{'index' => 0, 'question_description' => 'Survey',
+                                                               'type' => 'text'}]})
+      stub_user(:features => :all)
+      allow(controller).to receive(:x_active_tree).and_return(:configuration_scripts_tree)
+      allow(controller).to receive(:x_active_accord).and_return(:configuration_scripts)
+      controller.instance_variable_set(:@_params, :id => "cf-" + ApplicationRecord.compress_id(record.id))
+      controller.send(:tree_select)
+      show_adv_search = controller.instance_variable_get(:@show_adv_search)
+      title = controller.instance_variable_get(:@right_cell_text)
+      expect(show_adv_search).to eq(false)
+      expect(title).to eq('Job Template (Ansible Tower) "ConfigScriptTest1"')
+    end
+
     it "calls get_view with the associated dbname for the Ansible Tower Providers accordion" do
       stub_user(:features => :all)
       allow(controller).to receive(:x_active_tree).and_return(:automation_manager_providers_tree)
