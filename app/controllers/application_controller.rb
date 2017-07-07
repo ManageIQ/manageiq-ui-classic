@@ -1952,7 +1952,7 @@ class ApplicationController < ActionController::Base
     end
 
     if indent.zero?
-      $log.warn("MIQ(#{controller_name}_controller-#{action_name}): ===============BEGIN SESSION DUMMP===============")
+      $log.warn("MIQ(#{controller_name}_controller-#{action_name}): ===============BEGIN SESSION DUMP===============")
     end
 
     if data.kind_of?(Hash)
@@ -1970,7 +1970,7 @@ class ApplicationController < ActionController::Base
     end
 
     if indent.zero?
-      $log.warn("MIQ(#{controller_name}_controller-#{action_name}): ===============END SESSION DUMMP===============")
+      $log.warn("MIQ(#{controller_name}_controller-#{action_name}): ===============END SESSION DUMP===============")
     end
   end
 
