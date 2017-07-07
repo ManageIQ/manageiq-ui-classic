@@ -88,7 +88,15 @@
                           :vm_scope          => true,
                           :basic_info_needed => true}
 
-    = render :partial => "layouts/angular/generic_form_buttons"
+    %form-button-component{"angular-form"    => "angularForm",
+                           "model-copy"      => "vm.modelCopy",
+                           "model"           => "vm.providerForemanModel",
+                           "redirect-url"    => "/#{controller_name}/explorer",
+                           "new-record"      => "vm.newRecord",
+                           "save-clicked"    => "vm.saveClicked(angularForm)",
+                           "add-clicked"     => "vm.addClicked(angularForm)",
+                           "entity"          => "Provider",
+                           "entity-name"     => "vm.providerForemanModel.name"}
     %span{:style => "color:black"}= _("Required. Should have privileged access, such as root or administrator.")
 
 :javascript
