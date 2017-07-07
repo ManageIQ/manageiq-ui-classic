@@ -45,9 +45,9 @@
   %form-button-component{"angular-form"    => "angularForm",
                          "model-copy"      => "vm.modelCopy",
                          "model"           => "vm.tenantModel",
-                         "redirect-url"    => "vm.redirectUrl",
+                         "redirect-url"    => "{{vm.redirectUrl}}",
                          "new-record"      => "vm.newRecord",
                          "save-clicked"    => "vm.saveClicked()",
                          "add-clicked"     => "vm.addClicked()",
-                         "entity"          => "vm.entity",
+                         "entity"          => "{{vm.entity}}",
                          "entity-name"     => "vm.tenantModel.name"}
