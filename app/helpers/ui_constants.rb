@@ -1,17 +1,4 @@
 module UiConstants
-  # Session data size logging constants
-  case Rails.env
-  when "test"
-    SESSION_LOG_THRESHOLD = 50.kilobytes
-    SESSION_ELEMENT_THRESHOLD = 5.kilobytes
-  when "development"
-    SESSION_LOG_THRESHOLD = 50.kilobytes
-    SESSION_ELEMENT_THRESHOLD = 5.kilobytes
-  else
-    SESSION_LOG_THRESHOLD = 100.kilobytes
-    SESSION_ELEMENT_THRESHOLD = 10.kilobytes
-  end
-
   # MAX_NAME_LEN = 20      # Default maximum name length
   # MAX_DESC_LEN = 50      # Default maximum description length
   # MAX_HOSTNAME_LEN = 50  # Default maximum host name length

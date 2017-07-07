@@ -30,6 +30,7 @@ class ApplicationController < ActionController::Base
   include Mixins::TimeHelper
   include Mixins::MenuSection
   include Mixins::GenericToolbarMixin
+  include Mixins::ControllerConstants
   include Mixins::CustomButtons
   include Mixins::CheckedIdMixin
 
