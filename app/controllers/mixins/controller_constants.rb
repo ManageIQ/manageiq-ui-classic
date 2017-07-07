@@ -2,10 +2,7 @@ module Mixins
   module ControllerConstants
     # Session data size logging constants
     case Rails.env
-    when "test"
-      SESSION_LOG_THRESHOLD = 50.kilobytes
-      SESSION_ELEMENT_THRESHOLD = 5.kilobytes
-    when "development"
+    when "test", "development"
       SESSION_LOG_THRESHOLD = 50.kilobytes
       SESSION_ELEMENT_THRESHOLD = 5.kilobytes
     else
