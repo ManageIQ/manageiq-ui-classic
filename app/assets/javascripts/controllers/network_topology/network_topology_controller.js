@@ -11,6 +11,8 @@ function NetworkTopologyCtrl($scope, $http, $interval, $location, topologyServic
   var icons = null;
 
   var d3 = window.d3;
+  $scope.d3 = d3;
+
   $scope.refresh = function() {
     var id;
     if ($location.absUrl().match("show/$") || $location.absUrl().match("show$")) {
