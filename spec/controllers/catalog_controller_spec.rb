@@ -865,4 +865,82 @@ describe CatalogController do
       expect(verbosity).to eq('0 (Normal)')
     end
   end
+
+  context "#atomic_req_submit" do
+    let(:ems) { FactoryGirl.create(:ems_openshift) }
+    let(:container_template) {
+      FactoryGirl.create(:container_template,
+                         :ext_management_system => ems,
+                         :name                  => "Test Template")
+    }
+
+    let(:service_template_catalog) { FactoryGirl.create(:service_template_catalog) }
+    let(:dialog) { FactoryGirl.create(:dialog) }
+
+    before :each do
+      controller.instance_variable_set(:@sb, {})
+      ns = FactoryGirl.create(:miq_ae_namespace, :name => "ns")
+      cls = FactoryGirl.create(:miq_ae_class, :namespace_id => ns.id, :name => "cls")
+      FactoryGirl.create(:miq_ae_instance, :class_id => cls.id, :name => "inst")
+      edit = {
+        :key          => "prov_edit__new",
+        :st_prov_type => "generic_container_template",
+        :new          => {
+          :name         => "New Name",
+          :description  => "New Description",
+          :st_prov_type => "generic_container_template",
+          :fqname       => "ns/cls/inst",
+          :display      => true,
+          :dialog_id    => dialog.id,
+          :template_id  => container_template.id,
+          :manager_id   => ems.id
+        }
+      }
+      session[:edit] = edit
+    end
+
+    it "Adds ServiceTemplateContainerTemplate record and it config_info" do
+      options = {:provision => {:container_template_id => container_template.id, :dialog_id => dialog.id, :fqname => "ns/cls/inst"}}
+      allow(controller).to receive(:replace_right_cell)
+      controller.send(:atomic_req_submit)
+      expect(assigns(:flash_array).first[:message]).to include("Service Catalog Item \"New Name\" was added")
+      expect(ServiceTemplateContainerTemplate.first.config_info).to eq(options)
+    end
+  end
+
+  context "#fetch_ct_details" do
+    let(:ems) { FactoryGirl.create(:ems_openshift) }
+    let(:container_template) {
+      FactoryGirl.create(:container_template,
+                         :ext_management_system => ems,
+                         :name                  => "Test Template")
+    }
+
+    let(:service_template_catalog) { FactoryGirl.create(:service_template_catalog) }
+    let(:dialog) { FactoryGirl.create(:dialog) }
+
+    let(:catalog_item_options) do
+      {
+        :name                        => 'container_template_catalog_item',
+        :description                 => 'test container template',
+        :service_template_catalog_id => service_template_catalog.id,
+        :display                     => true,
+        :config_info                 => {
+          :provision => {
+            :dialog_id             => dialog.id,
+            :container_template_id => container_template.id
+          },
+        }
+      }
+    end
+
+    let(:service_template_container_template) { ServiceTemplateContainerTemplate.create_catalog_item(catalog_item_options) }
+
+    it "returns container template service template details for summary screen" do
+      options = {:provisioning => {:template_name => "Test Template", :provider_name => ems.name}}
+      controller.instance_variable_set(:@record, service_template_container_template)
+      ct_details = controller.send(:fetch_ct_details)
+      expect(ct_details).to eq(options)
+    end
+  end
 end
