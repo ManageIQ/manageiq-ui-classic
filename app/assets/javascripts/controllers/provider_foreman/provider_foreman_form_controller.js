@@ -63,11 +63,6 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
     }
   };
 
-  vm.cancelClicked = function(angularForm) {
-    providerForemanEditButtonClicked('cancel');
-    angularForm.$setPristine(true);
-  };
-
   vm.resetClicked = function(angularForm) {
     $scope.$broadcast ('resetClicked');
     vm.providerForemanModel = angular.copy( vm.modelCopy );
