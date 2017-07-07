@@ -58,29 +58,6 @@ class AutomationManagerController < ApplicationController
     render_tagging_form
   end
 
-  def load_or_clear_adv_search
-    adv_search_build(configuration_manager_scripts_tree(x_active_tree))
-    session[:edit] = @edit
-    @explorer = true
-
-    if x_active_tree != :automation_manager_cs_filter_tree || x_node == "root"
-      listnav_search_selected(0)
-    else
-      @nodetype, id = parse_nodetype_and_id(valid_active_node(x_node))
-
-      if x_active_tree == :automation_manager_cs_filter_tree && @nodetype == "xx-csa"
-        search_id = @nodetype == "root" ? 0 : from_cid(id)
-        listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
-        if @edit[:adv_search_applied] &&
-           MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) &&
-           %w(reload tree_select).include?(params[:action])
-          self.x_node = params[:id]
-          quick_search_show
-        end
-      end
-    end
-  end
-
   def x_show
     tree_record
 
@@ -132,7 +109,7 @@ class AutomationManagerController < ApplicationController
   def configuration_scripts_tree_rec
     nodes = x_node.split('-')
     case nodes.first
-    when "root", "at"
+    when "root", "at", "cf"
       find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript, params[:id])
     end
   end

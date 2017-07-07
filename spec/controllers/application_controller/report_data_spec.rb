@@ -44,10 +44,10 @@ describe ApplicationController do
   end
 
   context "#process_params_model_view" do
-    it "should call vm_model_from_active_tree" do
-      allow(controller).to receive(:vm_model_from_active_tree)
+    it "should call model_from_active_tree" do
+      allow(controller).to receive(:model_from_active_tree)
       controller.send(:process_params_model_view, {:active_tree => "vandt_tree"}, {})
-      expect(controller).to have_received(:vm_model_from_active_tree)
+      expect(controller).to have_received(:model_from_active_tree)
     end
 
     it "should call controller_to_model" do

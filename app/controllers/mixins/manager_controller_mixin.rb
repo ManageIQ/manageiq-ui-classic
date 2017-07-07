@@ -519,5 +519,31 @@ module Mixins
     def title
       _("Providers")
     end
+
+    def load_or_clear_adv_search
+      if x_active_tree == "#{manager_prefix}_provider_tree" && active_tab_configured_systems?
+        adv_search_build(ConfiguredSystem)
+      else
+        adv_search_build(model_from_active_tree(x_active_tree))
+      end
+
+      session[:edit] = @edit
+      @explorer = true
+
+      if x_active_tree != "#{manager_prefix}_cs_filter_tree".to_sym || x_node == "root"
+        listnav_search_selected(0)
+      else
+        @nodetype, id = parse_nodetype_and_id(valid_active_node(x_node))
+
+        if x_active_tree == "#{manager_prefix}_cs_filter_tree".to_sym
+          search_id = @nodetype == "root" ? 0 : from_cid(id)
+          listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
+          if @edit[:adv_search_applied] && MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) && %w(reload tree_select).include?(params[:action])
+            self.x_node = params[:id]
+            quick_search_show
+          end
+        end
+      end
+    end
   end
 end

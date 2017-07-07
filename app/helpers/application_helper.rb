@@ -220,7 +220,17 @@ module ApplicationHelper
     "host_services"     => SystemService,
     "chargebacks"       => ChargebackRate,
     "playbooks"         => ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook
+  }.freeze
 
+  MODEL_TREE = {
+    :instances_filter_tree                => "ManageIQ::Providers::CloudManager::Vm",
+    :images_filter_tree                   => "ManageIQ::Providers::CloudManager::Template",
+    :vms_filter_tree                      => "ManageIQ::Providers::InfraManager::Vm",
+    :templates_filter_tree                => "ManageIQ::Providers::InfraManager::Template",
+    :templates_images_filter_tree         => "MiqTemplate",
+    :vms_instances_filter_tree            => "Vm",
+    :automation_manager_cs_filter_tree    => "ConfiguredSystem",
+    :configuration_manager_cs_filter_tree => "ConfiguredSystem",
   }.freeze
 
   HAS_ASSOCATION = %w(

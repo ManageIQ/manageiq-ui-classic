@@ -608,6 +608,33 @@ describe AutomationManagerController do
     end
   end
 
+  context "load_or_clear_adv_search" do
+    before(:each) do
+      stub_user(:features => :all)
+      @tree_node_id = ApplicationRecord.compress_id(@ans_configured_system.id)
+      seed_session_trees('automation_manager', :automation_manager_cs_filter, "xx-csa-#{@tree_node_id}")
+    end
+
+    it "calls search selected with 0 for root" do
+      allow(controller).to receive(:x_active_tree).and_return(:automation_manager_cs_filter_tree)
+      allow(controller).to receive(:x_node).and_return("root")
+      allow(controller).to receive(:replace_right_cell)
+      controller.send(:tree_select)
+      exp = [{"???"=>"???", :token=>2}, :exp_available_tags=>nil, :exp_available_fields=>nil, :exp_cfield=>nil, :exp_check=>nil, :exp_ckey=>nil, :exp_chosen_report=>nil, :exp_chosen_search=>nil,
+        :exp_cvalue=>nil, :exp_count=>nil, :exp_field=>nil, :exp_key=>"???", :exp_last_loaded=>nil, :exp_mode=>nil, :exp_model=>"ConfiguredSystem", :exp_orig_key=>"???", :exp_regkey=>nil, :exp_regval=>nil, :exp_skey=>nil,
+        :exp_table=>[["???", 2]], :exp_tag=>nil, :exp_token=>2, :exp_typ=>nil, :exp_value=>nil]
+      expect(session[:adv_search][:ConfiguredSystem][:expression]).to match(exp)
+    end
+
+    it "calls search selected with 0 for folder nodes" do
+      allow(controller).to receive(:x_active_tree).and_return(:automation_manager_cs_filter_tree)
+      allow(controller).to receive(:replace_right_cell)
+      controller.instance_variable_set(:@_params, :id => "xx-csa-#{@tree_node_id}")
+      controller.send(:tree_select)
+      expect(controller).to receive(:listnav_search_selected).with(0)
+    end
+  end
+
   def user_with_feature(features)
     features = EvmSpecHelper.specific_product_features(*features)
     FactoryGirl.create(:user, :features => features)
