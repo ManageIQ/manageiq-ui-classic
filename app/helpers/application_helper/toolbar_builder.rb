@@ -142,7 +142,7 @@ class ApplicationHelper::ToolbarBuilder
     )
 
     button[:enabled] = input[:enabled]
-    %i(title text confirm).each do |key|
+    %i(title text confirm enabled).each do |key|
       unless input[key].blank?
         button[key] = button.localized(key, input[key])
       end

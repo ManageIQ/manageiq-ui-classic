@@ -270,6 +270,8 @@ module EmsCommon
       redirect_to :action => "new" if params[:pressed] == "new"
       deleteemss if params[:pressed] == "#{table_name}_delete"
       refreshemss if params[:pressed] == "#{table_name}_refresh"
+      pause_or_resume_emss(:pause => true) if params[:pressed] == "#{table_name}_pause"
+      pause_or_resume_emss(:resume => true) if params[:pressed] == "#{table_name}_resume"
       #     scanemss if params[:pressed] == "scan"
       tag(model) if params[:pressed] == "#{table_name}_tag"
 
@@ -549,6 +551,21 @@ module EmsCommon
          :product => I18n.t('product.name'),
          :model   => ui_lookup(:table => table_name),
          :models  => ui_lookup(:tables => table_name)}) if @flash_array.nil?
+    elsif task == "pause_ems" || task == "resume_ems"
+      action = task.split("_").first
+      model.where(:id => emss).order("lower(name)").each do |ems|
+        id = ems.id
+        ems_name = ems.name
+        audit = {:event        => "ems_record_#{action}_initiated",
+                 :message      => _("[%{name}] Record #{action} initiated") % {:name => ems_name},
+                 :target_id    => id,
+                 :target_class => model.to_s,
+                 :userid       => session[:userid]}
+        AuditEvent.success(audit)
+
+        ems.disable! if action == "pause"
+        ems.enable! if action == "resume"
+      end
     else
       model.where(:id => emss).order("lower(name)").each do |ems|
         id = ems.id
@@ -674,6 +691,43 @@ module EmsCommon
         add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => table_name)}, :error)
       else
         call_ems_refresh([params[:id]])
+      end
+      params[:display] = @display
+    end
+  end
+
+  def call_ems_pause_resume(emss, options)
+    action = if options[:resume]
+               "resume"
+             elsif options[:pause]
+               "pause"
+             end
+
+    process_emss(emss, "#{action}_ems") unless emss.empty?
+    return if @flash_array.present?
+    add_flash(n_("#{action.capitalize} initiated for %{count} %{model} from the %{product} Database",
+                 "#{action.capitalize} initiated for %{count} %{models} from the %{product} Database", emss.length) %
+                {:count   => emss.length,
+                 :product => I18n.t('product.name'),
+                 :model   => ui_lookup(:table => table_name),
+                 :models  => ui_lookup(:tables => table_name)})
+  end
+
+  def pause_or_resume_emss(options)
+    assert_privileges(params[:pressed])
+    if @lastaction == "show_list"
+      emss = find_checked_items
+      if emss.empty?
+        add_flash(_("No %{model} were selected for pause") % {:model => ui_lookup(:table => table_name)}, :error)
+      end
+      call_ems_pause_resume(emss, options)
+      show_list
+      @refresh_partial = "layouts/gtl"
+    else
+      if params[:id].nil? || model.find_by_id(params[:id]).nil?
+        add_flash(_("%{record} no longer exists") % {:record => ui_lookup(:table => table_name)}, :error)
+      else
+        call_ems_pause_resume([params[:id]], options)
       end
       params[:display] = @display
     end
