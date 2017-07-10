@@ -31,7 +31,6 @@ module ReportController::SavedReports
     end
 
     @report_result_id = session[:report_result_id] = rr.id
-    @report_result = rr
     session[:report_result_runtime] = rr.last_run_on
 
     return unless rr.status.downcase == "complete"
