@@ -2,6 +2,57 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased - as of Sprint 63 end 2017-07-10
+
+### Added
+- Automation-Automate: Custom button submit all [(#1572)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1572)
+- Compute
+  - Containers: Added "Create Service Dialog from Container Template" support [(#1591)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1591)
+  - Physical Infrastructure: Added hosts and vms relationship with physical server to physical Infra topology [(#1570)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1570)
+  - Services: Added "Container Template" type support in Catalog Item editor [(#1634)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1634)
+
+### Changed
+- Update patternfly-timeline to 1.0.5 [(#1573)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1573)
+
+### Fixed
+- Automation-Ansible
+  - Add Tags to Ansible Tower Provider and Foreman Provider [(#1534)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1534)
+  - Error when navigating from the Ansible repository to the playbook list [(#1532)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1532)
+  - Changed max length of name and description fields to be consistent [(#1590)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1590)
+  - Get right fields in Adv search in Automation Ansible Tower [(#1164)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1164)
+- Cloud-Intel-Reporting
+  - ReportController - replace_right_cell - don't rebuild trees which don't exist [(#1665)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1665)
+  - Don't x_node_set on a tree which doesn't exist [(#1657)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1657)
+  - Fix Report full screen view should be in a new window [(#1641)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1641)
+  - Enabled 'Delete Saved Report' toolbar button [(#1589)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1589)
+  - Fix displaying report result [(#1650)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1650)
+- Compute
+  - Cloud
+    - Fix formatting and localization of EMS task flash messages [(#1536)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1536)
+    - Only use supports_reset check for displaying reset button [(#1598)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1598)
+  - Containers
+    - Display a warning for large amount of objects in topology view [(#1605)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1605)
+    - Fix empty settings error in containers topology [(#1507)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1507)
+    - Fix PDF download button for persistent volume [(#1624)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1624)
+  - Infrastructure: Add RBAC check for Right Size Recommendation [(#1538)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1538)
+  - Physical Infrastructure
+    - Fix display of hosts on physical infra topology [(#1609)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1609)
+    - Fix network address issue [(#1588)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1588)
+- Console
+  - Allow VMRC connection to a VMware provider accessed through IPv6 [(#1579)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1579)
+  - app: Redirect to cockpit [(#1649)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1649)
+- GTLs: Do not run move of new pagination and remove of old one when new one is present [(#1556)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1556)
+- Graphics: fix broken "vm_transform" toolbar icon [(#1633)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1633)
+- Networks
+  - Use matching via descendants for CloudNetwork model [(#1474)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1474)
+  - Floating IPs: Fix edit form buttons [(#1582)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1582)
+- Settings
+ - Remove "items" keyword from list in my settings [(#1587)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1587)
+ - Fix error when saving trusted forest settings [(#1566)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1566)
+- Expressions-Filters: Set Field value to a blank value to avoid crashes due to a nil value [(#1637)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1637)
+- Storage: add force option to cloud volume create form [(#1623)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1623)
+- Trees: Add missing datastore nodes to HaC tree  [(#1635)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1635)
+
 ## Unreleased - as of Sprint 63 end 2017-06-19
 
 ### Added
