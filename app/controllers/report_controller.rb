@@ -664,7 +664,7 @@ class ReportController < ApplicationController
       :db           => :build_db_tree,
       :widgets      => :build_widgets_tree,
     }.each do |tree, method|
-      next unless tree_exists?(tree)
+      next unless tree_exists?(tree.to_s + "_tree")
 
       if replace_trees.include?(tree) || rebuild
         trees[tree] = send(method)
