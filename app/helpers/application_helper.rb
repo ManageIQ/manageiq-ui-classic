@@ -211,16 +211,16 @@ module ApplicationHelper
   end
 
   MODEL_STRING = {
-    "all_vms"           => VmOrTemplate,
-    "all_miq_templates" => MiqTemplate,
-    "instances"         => Vm,
-    "images"            => MiqTemplate,
-    "groups"            => Account,
-    "users"             => Account,
-    "host_services"     => SystemService,
-    "chargebacks"       => ChargebackRate,
-    "playbooks"         => ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook
-
+    "all_vms"                                => VmOrTemplate,
+    "all_miq_templates"                      => MiqTemplate,
+    "instances"                              => Vm,
+    "images"                                 => MiqTemplate,
+    "groups"                                 => Account,
+    "users"                                  => Account,
+    "host_services"                          => SystemService,
+    "chargebacks"                            => ChargebackRate,
+    "playbooks"                              => ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook,
+    "manageiq/providers/automation_managers" => ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript
   }.freeze
 
   HAS_ASSOCATION = %w(
