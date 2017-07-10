@@ -656,11 +656,20 @@ class ReportController < ApplicationController
 
     trees                = {}
     rebuild              = @in_a_form ? false : rebuild_trees
-    trees[:reports]      = build_reports_tree      if replace_trees.include?(:reports) || rebuild
-    trees[:schedules]    = build_schedules_tree    if replace_trees.include?(:schedules) || rebuild
-    trees[:savedreports] = build_savedreports_tree if replace_trees.include?(:savedreports) || rebuild
-    trees[:db]           = build_db_tree           if replace_trees.include?(:db) || rebuild
-    trees[:widgets]      = build_widgets_tree      if replace_trees.include?(:widgets) || rebuild
+
+    {
+      :reports      => :build_reports_tree,
+      :schedules    => :build_schedules_tree,
+      :savedreports => :build_savedreports_tree,
+      :db           => :build_db_tree,
+      :widgets      => :build_widgets_tree,
+    }.each do |tree, method|
+      next unless tree_exists?(tree)
+
+      if replace_trees.include?(tree) || rebuild
+        trees[tree] = send(method)
+      end
+    end
 
     presenter = ExplorerPresenter.new(
       :active_tree => x_active_tree,
