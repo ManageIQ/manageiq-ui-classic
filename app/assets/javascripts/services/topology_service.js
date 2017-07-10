@@ -137,7 +137,7 @@ ManageIQ.angular.app.service('topologyService', function() {
 
     $scope.searchNode = function() {
       var svg = topologyService.getSVG($scope.d3);
-      var query = $('input#search_topology')[0].value;
+      var query = $('input#search')[0].value;
 
       $scope.searching = true;
       $scope.notFound = ! topologyService.searchNode(svg, query);
@@ -147,7 +147,7 @@ ManageIQ.angular.app.service('topologyService', function() {
       topologyService.resetSearch($scope.d3);
 
       // Reset the search term in search input
-      $('input#search_topology')[0].value = "";
+      $('input#search')[0].value = "";
 
       $scope.searching = false;
       $scope.notFound = false;

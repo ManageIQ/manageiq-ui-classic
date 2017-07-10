@@ -11,6 +11,7 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
   var icons = null;
 
   var d3 = window.d3;
+  $scope.d3 = d3;
 
   $scope.refresh = function() {
     var id, type;

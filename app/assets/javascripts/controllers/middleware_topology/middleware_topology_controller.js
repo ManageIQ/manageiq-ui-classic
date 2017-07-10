@@ -7,8 +7,10 @@ MiddlewareTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', '
 function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologyService, miqService) {
   var self = this;
   $scope.vs = null;
-  var d3 = window.d3;
   var icons;
+
+  var d3 = window.d3;
+  $scope.d3 = d3;
 
   $scope.refresh = function() {
     var id;
