@@ -1098,59 +1098,77 @@ describe ReportController do
     before do
       FactoryGirl.create(:tenant, :parent => Tenant.root_tenant)
       login_as FactoryGirl.create(:user_admin) # not sure why this needs to be an admin...
-    end
 
-    it "should rebuild trees when last report result is newer than last tree build time" do
       controller.instance_variable_set(:@sb,
-                                       :trees       => {:reports_tree => {:active_node => "root"}},
+                                       :trees => {'reports_tree'      => {:active_node => "root"},
+                                                  'savedreports_tree' => {:active_node => "root"},
+                                                  'widgets_tree'      => {:active_node => "root"},
+                                                  'db_tree'           => {:active_node => "root"}},
                                        :active_tree => :reports_tree)
+
       allow(controller).to receive(:x_node) { 'root' }
       allow(controller).to receive(:get_node_info)
-      allow(controller).to receive(:x_build_dyna_tree)
-      last_build_time = Time.now.utc
-      controller.instance_variable_set(:@sb, :rep_tree_build_time => last_build_time)
+
+      expect(controller).to receive(:render)
+    end
+
+    let(:sb) { controller.instance_variable_get(:@sb) }
+
+    it "should rebuild trees when last report result is newer than last tree build time" do
+      # report is newer, set build_time first
+      sb[:rep_tree_build_time] = Time.now.utc
       FactoryGirl.create(:miq_report_with_results)
+
+      expect(controller).to receive(:build_reports_tree)
       expect(controller).to receive(:build_savedreports_tree)
       expect(controller).to receive(:build_db_tree)
       expect(controller).to receive(:build_widgets_tree)
-      expect(controller).to receive(:render)
+
+      controller.send(:replace_right_cell)
+    end
+
+    it "should not rebuild trees which weren't previously built, even though newer" do
+      # report is newer, set build_time first
+      sb[:rep_tree_build_time] = Time.now.utc
+      FactoryGirl.create(:miq_report_with_results)
+
+      sb[:trees].delete('db_tree')
+      sb[:trees].delete('widgets_tree')
+
+      expect(controller).to receive(:build_reports_tree)
+      expect(controller).to receive(:build_savedreports_tree)
+      expect(controller).not_to receive(:build_db_tree)
+      expect(controller).not_to receive(:build_widgets_tree)
+
       controller.send(:replace_right_cell)
     end
 
     it "should not rebuild trees when last report result is older than last tree build time" do
+      # report is older, set build_time after
       FactoryGirl.create(:miq_report_with_results)
-      controller.instance_variable_set(:@sb,
-                                       :trees       => {:reports_tree => {:active_node => "root"}},
-                                       :active_tree => :reports_tree)
-      allow(controller).to receive(:x_node) { 'root' }
-      allow(controller).to receive(:get_node_info)
-      allow(controller).to receive(:x_build_dyna_tree)
-      last_build_time = Time.now.utc
-      controller.instance_variable_set(:@sb, :rep_tree_build_time => last_build_time)
+      sb[:rep_tree_build_time] = Time.now.utc
+
+      expect(controller).not_to receive(:build_reports_tree)
       expect(controller).not_to receive(:build_savedreports_tree)
       expect(controller).not_to receive(:build_db_tree)
       expect(controller).not_to receive(:build_widgets_tree)
-      expect(controller).to receive(:render)
+
       controller.send(:replace_right_cell)
     end
 
     it "should rebuild trees reports tree when replace_trees is passed in" do
       # even tho rebuild_trees is false, it should still rebuild reports tree because
       # {:replace_trees => [:reports]} is passed in
-      Tenant.seed
+
+      # report is older, set build_time after
       FactoryGirl.create(:miq_report_with_results)
-      controller.instance_variable_set(:@sb,
-                                       :trees       => {:reports_tree => {:active_node => "root"}},
-                                       :active_tree => :reports_tree)
-      allow(controller).to receive(:x_node) { 'root' }
-      allow(controller).to receive(:get_node_info)
-      allow(controller).to receive(:x_build_dyna_tree)
-      last_build_time = Time.now.utc
-      controller.instance_variable_set(:@sb, :rep_tree_build_time => last_build_time)
+      sb[:rep_tree_build_time] = Time.now.utc
+
+      expect(controller).to receive(:build_reports_tree)
       expect(controller).not_to receive(:build_savedreports_tree)
       expect(controller).not_to receive(:build_db_tree)
       expect(controller).not_to receive(:build_widgets_tree)
-      expect(controller).to receive(:render)
+
       controller.send(:replace_right_cell, :replace_trees => [:reports])
     end
   end
