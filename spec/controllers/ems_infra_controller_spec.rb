@@ -70,9 +70,11 @@ describe EmsInfraController do
 
     it "should set correct VM for right-sizing when on list of VM's of another CI" do
       ems_infra = FactoryGirl.create(:ext_management_system)
-      post :button, :params => { :pressed => "vm_right_size", :id => ems_infra.id, :display => 'vms', :check_10r839 => '1' }
+      vm = FactoryGirl.create(:vm_vmware, :ext_management_system => ems_infra)
+      allow(controller).to receive(:find_records_with_rbac) { [vm] }
+      post :button, :params => { :pressed => "vm_right_size", :id => ems_infra.id, :display => 'vms', "check_#{vm.id}" => '1' }
       expect(controller.send(:flash_errors?)).not_to be_truthy
-      expect(response.body).to include("/vm/right_size/#{ApplicationRecord.uncompress_id('10r839')}")
+      expect(response.body).to include("/vm/right_size/#{ApplicationRecord.uncompress_id(vm.id)}")
     end
 
     it "when Host Analyze then Check Compliance is pressed" do
