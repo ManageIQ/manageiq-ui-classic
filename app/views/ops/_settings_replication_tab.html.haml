@@ -5,7 +5,7 @@
                                  "ng-controller" => "pglogicalReplicationFormController as vm",
                                  'miq-form'      => 'true',
                                  'model-copy'    => 'vm.modelCopy',
-                                 'model'         => 'vm.tenantModel',
+                                 'model'         => 'vm.pglogicalReplicationModel',
                                  'form-changed'  => true,
                                  "ng-show"       => "vm.afterGet"}
     = render :partial => "layouts/flash_msg"
@@ -17,7 +17,7 @@
                           options_for_select([["<#{_('None')}>", 'none'], ["Global", 'global'], ["Remote", 'remote']]),
                           "ng-model"                    => "vm.pglogicalReplicationModel.replication_type",
                           "ng-change"                   => "vm.replicationTypeChanged()",
-                          "miqrequired"                 => "",
+                          "ng-required"                 => true,
                           "selectpicker-for-select-tag" => "")
 
     .subscriptions_div{"ng-if" => "vm.pglogicalReplicationModel.replication_type == 'global'"}
@@ -48,26 +48,26 @@
                                   "id"          => "host",
                                   "name"        => "host",
                                   "ng-model"    => "vm.pglogicalReplicationModel.dbname",
-                                  "miqrequired" => ""}
+                                  "ng-required" => true}
             %td
               %input.form-control{"type"        => "text",
                                   "id"          => "host",
                                   "name"        => "host",
                                   "ng-model"    => "vm.pglogicalReplicationModel.host",
-                                  "miqrequired" => ""}
+                                  "ng-required" => true}
             %td
               %input.form-control{"type"        => "text",
                                   "id"          => "userid",
                                   "name"        => "userid",
                                   "ng-model"    => "vm.pglogicalReplicationModel.user",
-                                  "miqrequired" => ""}
+                                  "ng-required" => true}
             %td
               %input.form-control{"type"        => "password",
                                   "id"          => "password",
                                   "name"        => "password",
                                   "ng-model"    => "vm.pglogicalReplicationModel.password",
                                   "placeholder" => placeholder_if_present("vm.pglogicalReplicationModel.password"),
-                                  "miqrequired" => ""}
+                                  "ng-required" => true}
             %td
               %input.form-control{"type"        => "text",
                                   "id"          => "port",
@@ -102,7 +102,7 @@
                                   "name"        => "dbname",
                                   "ng-model"    => "vm.pglogicalReplicationModel.dbname",
                                   "ng-change"   => "vm.showChanged($index, 'dbname')",
-                                  "miqrequired" => ""}
+                                  "ng-required" => true}
 
             %td{"ng-if" => "!vm.pglogicalReplicationModel.updateEnabled || (vm.pglogicalReplicationModel.updateEnabled && $index !== vm.pglogicalReplicationModel.s_index)",
                 "ng-class"=>"{'active': vm.showChanged($index, 'host')}"}
@@ -112,7 +112,7 @@
               %input.form-control{"type"        => "text",
                                   "name"        => "host",
                                   "ng-model"    => "vm.pglogicalReplicationModel.host",
-                                  "miqrequired" => ""}
+                                  "ng-required" => true}
             %td{"ng-if" => "!vm.pglogicalReplicationModel.updateEnabled || (vm.pglogicalReplicationModel.updateEnabled && $index !== vm.pglogicalReplicationModel.s_index)",
                 "ng-class"=>"{'active': vm.showChanged($index, 'user')}"}
               {{subscription.user}}
@@ -121,7 +121,7 @@
               %input.form-control{"type"        => "text",
                                   "name"        => "user",
                                   "ng-model"    => "vm.pglogicalReplicationModel.user",
-                                  "miqrequired" => ""}
+                                  "ng-required" => true}
 
             %td{"ng-if" => "!vm.pglogicalReplicationModel.updateEnabled || (vm.pglogicalReplicationModel.updateEnabled && $index !== vm.pglogicalReplicationModel.s_index)",
                 "ng-class"=>"{'active': vm.showChanged($index, 'password')}"}

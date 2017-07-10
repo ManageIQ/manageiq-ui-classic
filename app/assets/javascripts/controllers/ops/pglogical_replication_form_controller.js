@@ -57,14 +57,11 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
 
   // check if subscription values have been changed
   var subscriptionChanged = function(new_subscription, original_subscription) {
-    if (new_subscription.dbname   === original_subscription.dbname &&
+    return (new_subscription.dbname   === original_subscription.dbname &&
         new_subscription.host     === original_subscription.host &&
         new_subscription.user     === original_subscription.user &&
         new_subscription.password === original_subscription.password &&
-        new_subscription.port     === original_subscription.port)
-      return false;
-    else
-      return true;
+        new_subscription.port     === original_subscription.port);
   }
 
   // replication type changed, show appropriate flash message
@@ -183,15 +180,11 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
 
   // validate subscription, all required fields should have data
   vm.subscriptionValid = function() {
-    if (typeof vm.pglogicalReplicationModel.dbname   != 'undefined' && vm.pglogicalReplicationModel.dbname   !== '' &&
+    return (typeof vm.pglogicalReplicationModel.dbname   != 'undefined' && vm.pglogicalReplicationModel.dbname   !== '' &&
         typeof vm.pglogicalReplicationModel.host     != 'undefined' && vm.pglogicalReplicationModel.host     !== '' &&
         typeof vm.pglogicalReplicationModel.user     != 'undefined' && vm.pglogicalReplicationModel.user     !== '' &&
-        typeof vm.pglogicalReplicationModel.password != 'undefined' && vm.pglogicalReplicationModel.password !== ''
-      )
-      return true;
-    else
-      return false;
-  }
+        typeof vm.pglogicalReplicationModel.password != 'undefined' && vm.pglogicalReplicationModel.password !== '');
+  };
 
   vm.saveEnabled = function(form) {
     var saveable = false;
@@ -205,31 +198,17 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
         vm.pglogicalReplicationModel.subscriptions.length >= 1) {
         return true;
       }
-      else if (saveable &&
-        vm.pglogicalReplicationModel.replication_type !== "global" &&
-        vm.pglogicalReplicationModel.subscriptions.length == 0) {
-        return true;
-      }
-      else {
-        return false;
-      }
+      else return (saveable && vm.pglogicalReplicationModel.replication_type !== "global" &&
+        vm.pglogicalReplicationModel.subscriptions.length == 0);
     } else {
       saveable = form.$dirty && form.$valid;
-      if (saveable && ((vm.modelCopy.replication_type !== "remote") || !angular.equals(vm.pglogicalReplicationModel.exclusion_list, vm.modelCopy.exclusion_list))) {
-        return true;
-      }
-      else {
-        return false
-      }
+      return (saveable && ((vm.modelCopy.replication_type !== "remote") || !angular.equals(vm.pglogicalReplicationModel.exclusion_list, vm.modelCopy.exclusion_list)));
     }
   }
 
   // method to set flag to disable certain buttons when add of subscription in progress
   vm.addInProgress = function() {
-    if (vm.pglogicalReplicationModel.addEnabled === true)
-      return true;
-    else
-      return false;
+    return (vm.pglogicalReplicationModel.addEnabled === true);
   }
 
   // validate new/existing subscription
@@ -259,10 +238,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
   vm.showCancelDelete = function(idx) {
     var subscription = vm.pglogicalReplicationModel.subscriptions[idx];
     // only show subscriptions in red if they were saved subscriptions and deleted in current edit session
-    if (subscription.remove === true)
-      return true;
-    else
-      return false;
+    return (subscription.remove === true);
   }
 
   // put back subscription that was deleted into new subscriptions array
@@ -276,7 +252,7 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
     // if updating a record use form fields to compare
     if (vm.pglogicalReplicationModel.updateEnabled) {
       var subscription = {};
-      subscription["dbname"]  = vm.pglogicalReplicationModel.dbname;
+      subscription["dbname"]   = vm.pglogicalReplicationModel.dbname;
       subscription["host"]     = vm.pglogicalReplicationModel.host;
       subscription["user"]     = vm.pglogicalReplicationModel.user;
       subscription["password"] = vm.pglogicalReplicationModel.password;
@@ -291,12 +267,9 @@ ManageIQ.angular.app.controller('pglogicalReplicationFormController', ['$http', 
   }
 
   vm.subscriptionInValidMessage = function() {
-    if (vm.pglogicalReplicationModel.replication_type == 'global' &&
+    return (vm.pglogicalReplicationModel.replication_type == 'global' &&
       (vm.pglogicalReplicationModel.subscriptions.length === 0 ||
-      (vm.pglogicalReplicationModel.subscriptions.length == 1 && vm.pglogicalReplicationModel.subscriptions[0].remove === true)))
-      return true;
-    else
-      return false;
+      (vm.pglogicalReplicationModel.subscriptions.length == 1 && vm.pglogicalReplicationModel.subscriptions[0].remove === true)));
   };
 
 
