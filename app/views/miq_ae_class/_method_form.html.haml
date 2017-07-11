@@ -65,7 +65,7 @@
       = render :partial => 'layouts/exp_editor'
     - else
       %hr
-      %h3= (@edit[:new][:location] == 'builtin') ? _('Builtin name') : _("Data")
+      %h3= @edit[:new][:location] == 'builtin' ? _('Builtin name') : _("Data")
       = render :partial => "method_data", :locals => {:field_name => "#{prefix}method"}
       %hr
   %h3= _("Input Parameters")

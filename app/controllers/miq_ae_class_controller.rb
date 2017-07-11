@@ -725,14 +725,14 @@ class MiqAeClassController < ApplicationController
     @edit[:new][:available_expression_objects] = MiqAeMethod.available_expression_objects.sort
     @edit[:new][:location] = @ae_method.location.nil? ? "inline" : @ae_method.location
     if @edit[:new][:location] == "expression"
-       hash = YAML.load(@ae_method.data)
-       if hash[:db] && hash[:expression]
-         @edit[:new][:expression] = hash[:expression]
-         expression_setup(hash[:db])
-       end
-     else
-       @edit[:new][:data] = @ae_method.data.to_s
-     end
+      expr_hash = YAML.load(@ae_method.data)
+      if expr_hash[:db] && expr_hash[:expression]
+        @edit[:new][:expression] = expr_hash[:expression]
+        expression_setup(expr_hash[:db])
+      end
+    else
+      @edit[:new][:data] = @ae_method.data.to_s
+    end
     @edit[:new][:data] = @ae_method.data.to_s
     if @edit[:new][:location] == "inline" && !@ae_method.data
       @edit[:new][:data] = MiqAeMethod.default_method_text
@@ -761,12 +761,12 @@ class MiqAeClassController < ApplicationController
     @edit[:new][:exp_object] = db
     adv_search_build(db)
   end
- 
+
   def expression_cleanup
     @edit[:expression_method] = false
     # @edit[:new][:expression]  = nil
     # @edit[:expression] = nil
-   end
+  end
 
   def ae_class_for_instance_or_method(record)
     record.id ? record.ae_class : MiqAeClass.find_by_id(from_cid(x_node.split("-").last))
@@ -872,7 +872,7 @@ class MiqAeClassController < ApplicationController
         exp_object = params[:cls_exp_object] || params[:exp_object] || @edit[:new][:exp_object]
         expression_setup(exp_object) if exp_object
       else
-         expression_cleanup
+        expression_cleanup
       end
       if row_selected_in_grid?
         @refresh_div = "class_methods_div"
@@ -2187,7 +2187,7 @@ class MiqAeClassController < ApplicationController
     miqaemethod.data = if @edit[:new][:location] == 'expression'
                          data_for_expression
                        else
-                          @edit[:new][:data]
+                         @edit[:new][:data]
                        end
     miqaemethod.class_id = from_cid(@edit[:ae_class_id])
   end
