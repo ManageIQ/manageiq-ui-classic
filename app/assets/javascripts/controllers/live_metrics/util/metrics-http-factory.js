@@ -77,6 +77,7 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
     };
 
     var getMetricTags = function() {
+      dash.url = '/container_dashboard/data' + dash.providerId  + '/?live=true&tenant=' + dash.tenant.value;
       $http.get(dash.url + '&query=metric_tags&limit=250')
         .then(getMetricTagsData)
         .catch(function(error) {
@@ -106,6 +107,9 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
             dash.tenant = dash.tenantList[i];
           }
         });
+
+        // update tag list
+        getMetricTags()
       });
     }
 
