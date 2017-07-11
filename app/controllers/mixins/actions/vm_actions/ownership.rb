@@ -21,8 +21,7 @@ module Mixins
           @edit ||= {}
           @edit[:controller] = controller
 
-          recs = session[:checked_items]
-          recs = checked_or_params if recs.nil?
+          recs = session[:checked_items] || checked_or_params
 
           @edit[:object_ids] = recs
           if recs.empty?
