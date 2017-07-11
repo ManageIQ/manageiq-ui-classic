@@ -6,7 +6,7 @@
         %th{:colspan => "6"}
           = title
       %tr
-        %th{:rowspan => "2"} Bay Number
+        %th{:rowspan => "2"} Location
         %th{:rowspan => "2"} Name
         %th{:rowspan => "2"} Manufacturer
         %th{:rowspan => "2"} FRU
@@ -18,7 +18,7 @@
       - item[:value].each do |subitem|
         %tr
           %td
-            = subitem[:bay_number]
+            = subitem[:location]
           %td
             = subitem[:adapter_name]
           %td

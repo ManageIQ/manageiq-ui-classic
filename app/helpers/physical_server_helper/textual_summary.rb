@@ -174,14 +174,12 @@ module PhysicalServerHelper::TextualSummary
         mac_addresses.push(child_device.address)
       end
 
-      unless nic.device_name.nil?
-        network_adapters.push(:bay_number    => nic.location,
-                              :adapter_name  => nic.device_name,
-                              :manufacturer  => nic.manufacturer,
-                              :fru           => nic.field_replaceable_unit,
-                              :port_names    => port_names,
-                              :mac_addresses => mac_addresses)
-      end
+      network_adapters.push(:location      => nic.location,
+                            :adapter_name  => nic.device_name,
+                            :manufacturer  => nic.manufacturer,
+                            :fru           => nic.field_replaceable_unit,
+                            :port_names    => port_names,
+                            :mac_addresses => mac_addresses)
     end
 
     {:value => network_adapters}
