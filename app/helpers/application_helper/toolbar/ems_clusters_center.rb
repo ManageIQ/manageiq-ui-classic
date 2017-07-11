@@ -29,7 +29,7 @@ class ApplicationHelper::Toolbar::EmsClustersCenter < ApplicationHelper::Toolbar
         button(
           :ems_cluster_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove selected items'),
+          t = N_('Remove selected items from Inventory'),
           t,
           :url_parms => "main_div",
           :confirm   => N_("Warning: The selected items and ALL of their components will be permanently removed!?"),

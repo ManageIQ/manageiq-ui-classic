@@ -9,7 +9,7 @@ class ApplicationHelper::Toolbar::OrchestrationStackCenter < ApplicationHelper::
         button(
           :orchestration_stack_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove this Orchestration Stack'),
+          t = N_('Remove this Orchestration Stack from Inventory'),
           t,
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This Orchestration Stack and ALL of its components will be permanently removed!")),

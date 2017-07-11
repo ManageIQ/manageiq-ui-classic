@@ -26,7 +26,7 @@ class ApplicationHelper::Toolbar::AutomationManagerProviderCenter < ApplicationH
         button(
           :automation_manager_delete_provider,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove this Provider'),
+          t = N_('Remove this Provider from Inventory'),
           t,
           :url     => "delete",
           :confirm => N_("Warning: The selected Provider and ALL of their components will be permanently removed!")

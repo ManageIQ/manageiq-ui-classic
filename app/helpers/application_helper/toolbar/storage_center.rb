@@ -18,8 +18,8 @@ class ApplicationHelper::Toolbar::StorageCenter < ApplicationHelper::Toolbar::Ba
         button(
           :storage_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove this Datastore'),
-          N_('Remove Datastore'),
+          N_('Remove this Datastore from Inventory'),
+          N_('Remove Datastore from Inventory'),
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This Datastore and ALL of its components will be permanently removed!"),
           :klass     => ApplicationHelper::Button::StorageDelete),

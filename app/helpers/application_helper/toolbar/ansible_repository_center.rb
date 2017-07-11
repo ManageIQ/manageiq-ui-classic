@@ -36,7 +36,7 @@ class ApplicationHelper::Toolbar::AnsibleRepositoryCenter < ApplicationHelper::T
         button(
           :embedded_configuration_script_source_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove this Repository'),
+          t = N_('Remove this Repository from Inventory'),
           t,
           :klass => ApplicationHelper::Button::EmbeddedAnsible,
           :url_parms => "&refresh=y",

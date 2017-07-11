@@ -26,7 +26,7 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfraCenter < ApplicationHelper::To
         button(
           :ems_physical_infra_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove this Infrastructure Provider'),
+          t = N_('Remove this Infrastructure Provider from Inventory'),
           t,
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This Infrastructure Provider and ALL of its components will be permanently removed!")),

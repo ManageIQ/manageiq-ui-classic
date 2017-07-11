@@ -26,7 +26,7 @@ class ApplicationHelper::Toolbar::EmsContainerCenter < ApplicationHelper::Toolba
         button(
           :ems_container_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove this Containers Provider'),
+          t = N_('Remove this Containers Provider from Inventory'),
           t,
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This Containers Provider and ALL of its components will be permanently removed!")),

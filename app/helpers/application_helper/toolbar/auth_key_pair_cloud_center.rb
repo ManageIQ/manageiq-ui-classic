@@ -9,7 +9,7 @@ class ApplicationHelper::Toolbar::AuthKeyPairCloudCenter < ApplicationHelper::To
         button(
           :auth_key_pair_cloud_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove this Key Pair'),
+          t = N_('Remove this Key Pair from Inventory'),
           t,
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: The selected Key Pair and ALL of its components will be permanently removed!")),

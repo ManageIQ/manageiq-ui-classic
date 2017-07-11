@@ -93,8 +93,8 @@ class ApplicationHelper::Toolbar::HostsCenter < ApplicationHelper::Toolbar::Basi
         button(
           :host_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove Selected items'),
-          N_('Remove items'),
+          N_('Remove Selected items from Inventory'),
+          N_('Remove items from Inventory'),
           :url_parms => "main_div",
           :confirm   => N_("Warning: The selected items and ALL of their components will be permanently removed!?"),
           :enabled   => false,

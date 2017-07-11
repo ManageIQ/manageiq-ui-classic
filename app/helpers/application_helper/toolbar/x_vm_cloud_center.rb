@@ -36,8 +36,8 @@ class ApplicationHelper::Toolbar::XVmCloudCenter < ApplicationHelper::Toolbar::B
         button(
           :instance_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove this Instance'),
-          N_('Remove Instance'),
+          N_('Remove this Instance from Inventory'),
+          N_('Remove Instance from Inventory'),
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This Instance and ALL of its components will be permanently removed!")),
         button(

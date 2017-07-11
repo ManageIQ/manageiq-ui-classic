@@ -34,8 +34,8 @@ class ApplicationHelper::Toolbar::EmsMiddlewaresCenter < ApplicationHelper::Tool
         button(
           :ems_middleware_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove selected Middleware Providers'),
-          N_('Remove Middleware Providers'),
+          N_('Remove selected Middleware Providers from Inventory'),
+          N_('Remove Middleware Providers from Inventory'),
           :url_parms => "main_div",
           :confirm   => N_("Warning: The selected Middleware Providers and ALL of their components will be permanently removed!"),
           :enabled   => false,
