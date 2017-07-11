@@ -34,6 +34,9 @@ $(function() {
     },
   });
 
-  $('#ctrlaltdel').click(vnc.sendCtrlAltDel);
   vnc.connect(host, port, $('#remote-console').attr('data-secret'), $('#remote-console').attr('data-url'));
+
+  $('#ctrlaltdel').on('click', function() {
+    vnc.sendCtrlAltDel();
+  });
 });
