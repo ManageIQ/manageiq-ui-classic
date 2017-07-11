@@ -290,8 +290,8 @@ class HostController < ApplicationController
       end
       @in_a_form = true
       @changed = session[:changed]
+      require "net/ssh"
       begin
-        require 'MiqSshUtil'
         verify_host.verify_credentials(params[:type], :remember_host => params.key?(:remember_host))
       rescue Net::SSH::HostKeyMismatch => e   # Capture the Host key mismatch from the verify
         render :update do |page|
