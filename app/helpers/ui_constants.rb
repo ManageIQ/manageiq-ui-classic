@@ -38,15 +38,6 @@ module UiConstants
   }
   DEFAULT_PDF_PAGE_SIZE = "US-Letter"
 
-  # Per page choices for task/jobs
-  PPCHOICES2 = [
-    [5, 5],
-    [10, 10],
-    [20, 20],
-    [50, 50],
-    [100, 100],
-  ]
-
   # Setting high number incase we don't want to display paging controls on list views
   ONE_MILLION = 1000000
 
