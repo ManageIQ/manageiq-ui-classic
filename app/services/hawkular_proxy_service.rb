@@ -3,19 +3,23 @@ class HawkularProxyService
 
   TENANT_LABEL_MAX_LEN = 25
   TENANT_LABEL_SPECIAL_CASES = {
-    "_system"         => "System",
-    "_ops"            => "Operations",
-    "default"         => "Default",
-    "admin"           => "Admin",
-    "openshift-infra" => "OpenShift Infra"
+    "_system"                      => "System",
+    "_ops"                         => "Operations",
+    "default"                      => "Default",
+    "admin"                        => "Admin",
+    "openshift-infra"              => "OpenShift Infra",
+    "kubernetes-nodes"             => "Kubernetes Nodes",
+    "kubernetes-apiserver"         => "Kubernetes API server",
+    "kubernetes-service-endpoints" => "Kubernetes Service",
   }.freeze
 
   def initialize(provider_id, controller)
+    @db_name = "Hawkular"
     @provider_id = provider_id
     @controller = controller
 
     @params = controller.params
-    @ems = ManageIQ::Providers::ContainerManager.find(@provider_id) unless @provider_id.blank?
+    @ems = ExtManagementSystem.find(@provider_id.to_i) unless @provider_id.blank?
     @tenant = @params['tenant'] || '_system'
 
     @cli = ManageIQ::Providers::Kubernetes::ContainerManager::MetricsCapture::HawkularClient.new(@ems, @tenant)
@@ -78,7 +82,7 @@ class HawkularProxyService
   rescue StandardError => e
     {
       :parameters => params,
-      :error      => ActionView::Base.full_sanitizer.sanitize(e.to_s) + " " + _("(Please check your Hawkular server)")
+      :error      => ActionView::Base.full_sanitizer.sanitize(e.to_s) + " " + _("(Please check your #{@db_name} server)")
     }
   end
 

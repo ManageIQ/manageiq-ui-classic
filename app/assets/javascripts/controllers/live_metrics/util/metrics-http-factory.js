@@ -54,16 +54,21 @@ angular.module('miq.util').factory('metricsHttpFactory', function() {
       var ends = dash.timeFilter.date.valueOf(); // javascript time is in milisec
       var diff = dash.timeFilter.time_range * dash.timeFilter.range_count * NUMBER_OF_MILLISEC_IN_HOUR; // time_range is in hours
       var starts = ends - diff;
-      var bucket_duration = parseInt(diff / NUMBER_OF_MILLISEC_IN_SEC / numberOfBucketsInChart); // bucket duration is in seconds
+      var bucketDuration = parseInt(diff / NUMBER_OF_MILLISEC_IN_SEC / numberOfBucketsInChart); // bucket duration is in seconds
 
       // make sure bucket duration is not smaller then minBucketDurationInSecondes seconds
-      if (bucket_duration < dash.minBucketDurationInSecondes) {
-        bucket_duration = dash.minBucketDurationInSecondes;
+      if (bucketDuration < dash.minBucketDurationInSecondes) {
+        bucketDuration = dash.minBucketDurationInSecondes;
       }
 
-      // hawkular time is in milisec (hawkular bucket_duration is in seconds)
-      var params = '&query=get_data&type=' + currentItem.type + '&metric_id=' + currentItem.id + '&ends=' + ends +
-                   '&starts=' + starts + '&bucket_duration=' + bucket_duration + 's';
+      // hawkular time is in milisec (hawkular bucketDuration is in seconds)
+      var params = '&query=get_data&ends=' + ends + '&starts=' + starts + '&bucket_duration=' + bucketDuration + 's';
+
+      // uniqe metric id for prometheus is the sum of all _tags_
+      params += '&tags=' + JSON.stringify(currentItem.tags);
+
+      // uniqe metric id for hawkular is the _type_ and _id_ of the metric
+      params += '&type=' + currentItem.type + '&metric_id=' + currentItem.id;
 
       $http.get(dash.url + params)
         .then(function(response) {
