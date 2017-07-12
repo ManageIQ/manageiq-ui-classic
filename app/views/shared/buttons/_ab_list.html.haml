@@ -117,4 +117,7 @@
 - elsif params[:pressed] == "ab_group_reorder" || (params[:button] == "reset" && params[:action] == "ab_group_reorder")
   = render :partial => 'shared/buttons/group_order_form'
 - elsif @custom_button
-  = render :partial => 'shared/buttons/ab_show'
+  - if params[:action] == 'button_update' && (params[:button] == 'visibility_expression' || params[:button] == 'enablement_expression')
+    = render :partial => 'shared/buttons/ab_form'
+  -else
+    = render :partial => 'shared/buttons/ab_show'

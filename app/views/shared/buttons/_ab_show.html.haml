@@ -86,6 +86,24 @@
 %hr
 
 %h3
+  = _('Visibility Expression')
+.form-horizontal.static
+  - if @custom_button && !@custom_button.visibility_expression.nil? && @custom_button.visibility_expression.kind_of?(MiqExpression)
+    = h(@custom_button.visibility_expression.to_human)
+  - else
+    = render :partial => 'layouts/info_msg', :locals => {:message => _("No Visibility Expression defined, this button will be always visible")}
+    %hr
+
+%h3
+  = _("Enablement Expression")
+.form-horizontal.static
+  - if @custom_button && !@custom_button.enablement_expression.nil? && @custom_button.enablement_expression.kind_of?(MiqExpression)
+    = h(@custom_button.enablement_expression.to_human)
+  - else
+    = render :partial => 'layouts/info_msg', :locals => {:message => _("No Enablement Expression defined, this button will be always enabled")}
+%hr
+
+%h3
   = _('Attribute/Value Pairs')
 - if @resolve[:new][:attrs].empty?
   = render :partial => 'layouts/info_msg', :locals => {:message => _("No Attribute/Value Pairs found.")}
@@ -101,18 +119,3 @@
           = h(attr[1])
 %hr
 
-%h3
-  = _('Visibility')
-.form-horizontal.static
-  - show_to = @custom_button.visibility.nil? || (@custom_button.visibility && @custom_button.visibility[:roles] && @custom_button.visibility[:roles][0] == "_ALL_") ? _("To All") : _("By Role")
-  .form-group
-    %label.control-label.col-md-2
-      = _('Show')
-    .col-md-8
-      = h(show_to)
-  - if show_to == "By Role" && !@sb[:user_roles].blank?
-    .form-group
-      %label.control-label.col-md-2
-        = _('User Roles')
-      .col-md-8
-        = h(@sb[:user_roles].join(", "))
