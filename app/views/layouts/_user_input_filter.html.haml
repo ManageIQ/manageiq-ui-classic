@@ -20,7 +20,7 @@
                   - if @edit[:qs_tokens][token].key?(:field)
                     - if @edit[:qs_tokens][token][:value_type] == :boolean && @edit[:qs_tokens][token][:value].present?
                       = select_tag("value_#{token}",
-                                   options_for_select(["<Choose>"] + MiqExpression.get_entry_details(@edit[:qs_tokens][token][:tag]).sort_by { |desc, _name| desc.downcase },
+                                   options_for_select([_("<Choose>")] + MiqExpression.get_entry_details(@edit[:qs_tokens][token][:tag]).sort_by { |desc, _name| desc.downcase },
                                                        nil),
                                    :multiple              => false,
                                    :class                 => "widthed",
@@ -28,12 +28,21 @@
                                    "data-miq_sparkle_off" => true,
                                    "data-miq_observe"     => {:url => url}.to_json)
                     - else
-                      = text_field_tag("value_#{token}", nil,
-                                       :maxlength         => 500,
-                                       :onkeyup           => "miqQsEnterEscape(event);",
-                                       "data-miq_observe" => {:interval => '.5',
-                                                              :url      => url}.to_json,
-                                       :placeholder => ("true/false" if @edit[:qs_tokens][token][:value_type] == :boolean))
+                      - if @edit[:qs_tokens][token][:value_type] == :boolean
+                        = select_tag("value_#{token}",
+                                     options_for_select([[_("<Choose>"), nil],[_('False'), false], [_('True'), true]], nil),
+                                     :multiple              => false,
+                                     :class                 => "widthed",
+                                     "data-miq_sparkle_on"  => true,
+                                     "data-miq_sparkle_off" => true,
+                                     "data-miq_observe"     => {:url => url}.to_json)
+                      - else
+                        = text_field_tag("value_#{token}", nil,
+                                         :maxlength         => 500,
+                                         :onkeyup           => "miqQsEnterEscape(event);",
+                                         "data-miq_observe" => {:interval => '.5',
+                                                                :url      => url}.to_json,
+                                         :placeholder => ("true/false" if @edit[:qs_tokens][token][:value_type] == :boolean))
                       - if @edit[:qs_tokens][token][:value_type] == :percent
                         = "%"
                       - elsif @edit[:qs_tokens][token][:value_type] == :megabytes
@@ -50,7 +59,7 @@
 
                   - elsif @edit[:qs_tokens][token].key?(:tag)
                     = select_tag("value_#{token}",
-                                 options_for_select(["<Choose>"] + MiqExpression.get_entry_details(@edit[:qs_tokens][token][:tag]).sort { |a, b| a.first.downcase <=> b.first.downcase },
+                                 options_for_select([_("<Choose>")] + MiqExpression.get_entry_details(@edit[:qs_tokens][token][:tag]).sort { |a, b| a.first.downcase <=> b.first.downcase },
                                                      nil),
                                  :multiple              => false,
                                  :class                 => "widthed",
