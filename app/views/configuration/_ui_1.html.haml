@@ -70,7 +70,7 @@
                 = _(item_per_page[0])
               .col-md-8
                 = select_tag(_(item_per_page[1]),
-                             options_for_select(PPCHOICES, @edit[:new][:perpage][item_per_page[2]]),
+                             options_for_select(pp_choices, @edit[:new][:perpage][item_per_page[2]]),
                            :class    => "selectpicker")
 
             :javascript
@@ -84,7 +84,7 @@
                 = _(item_per_page[0])
               .col-md-8
                 = select_tag(_(item_per_page[1]),
-                             options_for_select([[N_("Unlimited"), 0]].concat(PPCHOICES), @edit[:new][:topology][item_per_page[2]]),
+                             options_for_select([[N_("Unlimited"), 0]].concat(pp_choices), @edit[:new][:topology][item_per_page[2]]),
                              :class    => "selectpicker")
             :javascript
               miqSelectPickerEvent("#{item_per_page[1]}", "#{url}")

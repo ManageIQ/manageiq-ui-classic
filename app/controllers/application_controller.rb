@@ -41,6 +41,13 @@ class ApplicationController < ActionController::Base
 
   helper CloudResourceQuotaHelper
 
+  # Expose constants as a helper method in views
+  helper do
+    def pp_choices
+      PPCHOICES
+    end
+  end
+
   include_concern 'Automate'
   include_concern 'CiProcessing'
   include_concern 'Compare'
