@@ -244,10 +244,14 @@ describe AutomationManagerController do
   end
 
   it "builds ansible tower child tree" do
+    automation_manager1 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider1.id)
+    automation_manager2 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider2.id)
+    user = login_as user_with_feature(%w(automation_manager_providers providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord))
+    allow(User).to receive(:current_user).and_return(user)
     controller.send(:build_automation_manager_tree, :automation_manager_providers, :automation_manager_providers_tree)
     tree_builder = TreeBuilderAutomationManagerProviders.new("root", "", {})
     objects = tree_builder.send(:x_get_tree_roots, false, {})
-    expected_objects = [@automation_manager1, @automation_manager2]
+    expected_objects = [automation_manager1, automation_manager2]
     expect(objects).to match_array(expected_objects)
   end
 
@@ -260,21 +264,24 @@ describe AutomationManagerController do
   end
 
   it "builds ansible tower job templates tree" do
+    user = login_as user_with_feature(%w(automation_manager_providers providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord))
+    allow(User).to receive(:current_user).and_return(user)
     controller.send(:build_automation_manager_tree, :configuration_scripts, :configuration_scripts_tree)
     tree_builder = TreeBuilderAutomationManagerConfigurationScripts.new("root", "", {})
     objects = tree_builder.send(:x_get_tree_roots, false, {})
-    expected_objects = [@automation_manager1, @automation_manager2]
-    expect(objects).to match_array(expected_objects)
+    expect(objects).to include(@automation_manager1)
+    expect(objects).to include(@automation_manager2)
   end
 
   it "constructs the ansible tower job templates tree node" do
-    login_as user_with_feature(%w(providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord))
+    user = login_as user_with_feature(%w(providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord))
+    allow(User).to receive(:current_user).and_return(user)
     controller.send(:build_automation_manager_tree, :configuration_scripts, :configuration_scripts_tree)
     tree_builder = TreeBuilderAutomationManagerConfigurationScripts.new("root", "", {})
-    objects = tree_builder.send(:x_get_tree_roots, false, {})
-    objects = tree_builder.send(:x_get_tree_cmat_kids, objects[0], false)
-    expected_objects = [@ans_job_template1, @ans_job_template3]
-    expect(objects).to match_array(expected_objects)
+    root_objects = tree_builder.send(:x_get_tree_roots, false, {})
+    objects = tree_builder.send(:x_get_tree_cmat_kids, root_objects[1], false)
+    expect(objects).to include(@ans_job_template1)
+    expect(objects).to include(@ans_job_template3)
   end
 
   context "renders tree_select" do

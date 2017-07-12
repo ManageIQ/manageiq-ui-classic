@@ -22,12 +22,33 @@ class TreeBuilderAutomationManagerConfigurationScripts < TreeBuilder
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only, _options)
-    roots = ManageIQ::Providers::AnsibleTower::AutomationManager
-    count_only_or_objects_filtered(count_only, roots, "name", :match_via_descendants => ConfigurationScript)
+    objects = []
+    templates = Rbac.filtered(ManageIQ::Providers::AnsibleTower::AutomationManager.order("lower(name)"), :match_via_descendants => ConfigurationScript)
+
+    templates.each do |temp|
+      objects.push(temp)
+    end
+
+    objects.push(:id          => "global",
+                 :text        => _("Global Filters"),
+                 :icon        => "pficon pficon-folder-close",
+                 :tip         => _("Global Shared Filters"),
+                 :cfmeNoClick => true)
+    objects.push(:id          => "my",
+                 :text        => _("My Filters"),
+                 :icon        => "pficon pficon-folder-close",
+                 :tip         => _("My Personal Filters"),
+                 :cfmeNoClick => true)
+    count_only_or_objects(count_only, objects)
   end
 
   def x_get_tree_cmat_kids(object, count_only)
     scripts = ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript.where(:manager_id => object.id)
     count_only_or_objects_filtered(count_only, scripts, "name")
+  end
+
+  def x_get_tree_custom_kids(object, count_only, options)
+    objects = MiqSearch.where(:db => options[:leaf]).filters_by_type(object[:id])
+    count_only_or_objects(count_only, objects, 'description')
   end
 end
