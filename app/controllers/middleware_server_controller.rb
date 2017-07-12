@@ -128,7 +128,11 @@ class MiddlewareServerController < ApplicationController
     render :json => {
       :status => :internal_server_error,
       :data   => {
-        :msg => _("Cannot connect to provider of server with ID: \"%s\". Is it running?") % params[:server_id]
+        :msg => _("Cannot connect to provider \"%{provider}\" of server \"%{server}\". Is it running?") %
+                {
+                  :provider => mw_manager.name,
+                  :server   => mw_server.name
+                }
       }
     }
   end

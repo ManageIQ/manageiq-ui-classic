@@ -19,7 +19,14 @@
         miq_tabs_init('#jdbc_tabs');
 
     .modal-footer
-      %button.btn.btn-default.dialog-cancel-button{:type      => "button",
+      %button.btn.btn-default.dialog-cancel-button{"ng-show"  => "vm.warnMsg",
+                                                   :type      => "button",
+                                                   "alt"      => (t = _("Close")),
+                                                   "title"    => t,
+                                                   "ng-click" => "vm.reset()"}
+        = t
+      %button.btn.btn-default.dialog-cancel-button{"ng-hide"  => "vm.warnMsg",
+                                                   :type      => "button",
                                                    "alt"      => (t = _("Cancel")),
                                                    "title"    => t,
                                                    "ng-click" => "vm.reset()"}
