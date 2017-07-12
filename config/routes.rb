@@ -2165,6 +2165,8 @@ Rails.application.routes.draw do
         dialog_list
         dialog_res_remove
         dialog_res_reorder
+        enablement_expression
+        visibility_expression
         explorer
         field_value_accept
         field_value_delete
@@ -2186,7 +2188,7 @@ Rails.application.routes.draw do
         x_history
         x_show
       ) +
-               button_post
+               button_post + exp_post
     },
 
     :miq_ae_tools             => {

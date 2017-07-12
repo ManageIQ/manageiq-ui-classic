@@ -80,7 +80,10 @@
                      options_for_select([[_('Submit all'), 'all'], [_('One by one'), 'one']], @edit[:new][:submit_how]),
                      "data-miq_sparkle_on" => true,
                     )
-
+  = render(:partial => "layouts/role_visibility_expression",
+           :locals  => {:rec_id => @custom_button ? @custom_button.id : 'new', :action => "automate_button_field_changed"})
+  = render(:partial => "layouts/role_enablement_expression",
+           :locals  => {:rec_id => @custom_button ? @custom_button.id : 'new', :action => "automate_button_field_changed"})
   = render(:partial => "layouts/ae_resolve_options",
     :locals         => {:resolve => @edit,
       :form_action               => "ae_resolve",
@@ -94,3 +97,4 @@
   miqSelectPickerEvent('dialog_id', '#{url}');
   miqSelectPickerEvent('display_for', '#{url}');
   miqSelectPickerEvent('submit_how', '#{url}');
+
