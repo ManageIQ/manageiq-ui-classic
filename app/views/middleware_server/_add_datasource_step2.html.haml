@@ -24,12 +24,14 @@
                                                    "title"    => t,
                                                    "ng-click" => "vm.reset()"}
         = t
-      %button.btn.btn-default{:type      => "button",
+      %button.btn.btn-default{"ng-hide"  => "vm.warnMsg",
+                              :type      => "button",
                               "alt"      => (t = _("Back")),
                               "title"    => t,
                               "ng-click" => "vm.addDatasourceStep2Back()"}
         = t
-      %button.btn.btn-primary{:type         => "button",
+      %button.btn.btn-primary{"ng-hide"     => "vm.warnMsg",
+                              :type         => "button",
                               "alt"         => (t = _("Next")),
                               "title"       => t,
                               "ng-click"    => "vm.addDatasourceStep2Next()",
