@@ -904,7 +904,7 @@ class MiqAeClassController < ApplicationController
       render :update do |page|
         page << javascript_prologue
         page.replace_html('form_div', :partial => 'method_form', :locals => {:prefix => ""}) if @edit[:new][:location] == 'expression'
-        page.replace_html(@refresh_div, :partial => @refresh_partial)  if @refresh_div && (@prev_location != @edit[:new][:location] || params[:exp_object] || params[:cls_exp_object])
+        page.replace_html(@refresh_div, :partial => @refresh_partial) if @refresh_div && (@prev_location != @edit[:new][:location] || params[:exp_object] || params[:cls_exp_object])
         # page.replace_html("hider_1", :partial=>"method_data", :locals=>{:field_name=>@field_name})  if @prev_location != @edit[:new][:location]
         if params[:cls_field_datatype]
           if session[:field_data][:datatype] == "password"
