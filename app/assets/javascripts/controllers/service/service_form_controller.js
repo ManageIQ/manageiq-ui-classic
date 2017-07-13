@@ -9,7 +9,7 @@ ManageIQ.angular.app.controller('serviceFormController', ['$http', '$scope', 'se
     vm.formId    = serviceFormId;
     vm.afterGet  = false;
     vm.newRecord = false;
-    vm.modelCopy = angular.copy( vm.serviceModel );
+    vm.modelCopy = Object.assign({}, vm.serviceModel);
     vm.model     = 'serviceModel';
     vm.saveable  = miqService.saveable;
 
@@ -34,7 +34,7 @@ ManageIQ.angular.app.controller('serviceFormController', ['$http', '$scope', 'se
   };
 
   vm.resetClicked = function() {
-    vm.serviceModel = angular.copy( vm.modelCopy );
+    vm.serviceModel = Object.assign({}, vm.modelCopy);
     $scope.angularForm.$setUntouched(true);
     $scope.angularForm.$setPristine(true);
     miqService.miqFlash('warn', __('All changes have been reset'));
@@ -52,7 +52,7 @@ ManageIQ.angular.app.controller('serviceFormController', ['$http', '$scope', 'se
     vm.serviceModel.description = data.description;
 
     vm.afterGet = true;
-    vm.modelCopy = angular.copy( vm.serviceModel );
+    vm.modelCopy = Object.assign({}, vm.serviceModel);
   }
 
   init();
