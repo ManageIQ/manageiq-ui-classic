@@ -30,7 +30,6 @@ ManageIQ.angular.app.controller('serviceFormController', ['$http', '$scope', 'se
 
   vm.cancelClicked = function() {
     serviceEditButtonClicked('cancel');
-    $scope.angularForm.$setPristine(true);
   };
 
   vm.resetClicked = function() {
@@ -41,8 +40,7 @@ ManageIQ.angular.app.controller('serviceFormController', ['$http', '$scope', 'se
   };
 
   vm.saveClicked = function() {
-    serviceEditButtonClicked('save', true);
-    $scope.angularForm.$setPristine(true);
+    serviceEditButtonClicked('save', vm.serviceModel);
   };
 
   function getServiceFormData(response) {
