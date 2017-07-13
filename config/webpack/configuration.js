@@ -9,8 +9,8 @@ const { execSync } = require('child_process')
 const configPath = resolve('config', 'webpacker.yml')
 const loadersDir = join(__dirname, 'loaders')
 const settings = safeLoad(readFileSync(configPath), 'utf8')[env.NODE_ENV]
-const outputRoot = execSync('rake webpack:output', { encoding: 'utf8' }).trim();
-const engines = JSON.parse(execSync('rake webpack:engines', { encoding: 'utf8' }).trim());
+
+const { output: outputRoot, engines } = require('./paths.json');
 
 function removeOuterSlashes(string) {
   return string.replace(/^\/*/, '').replace(/\/*$/, '')

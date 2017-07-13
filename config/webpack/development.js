@@ -17,9 +17,9 @@ module.exports = merge(sharedConfig, {
 
   devServer: {
     clientLogLevel: 'none',
-    https: settings.dev_server.https,
-    host: settings.dev_server.host,
-    port: settings.dev_server.port,
+    https: settings.dev_server && settings.dev_server.https,
+    host: settings.dev_server && settings.dev_server.host,
+    port: settings.dev_server && settings.dev_server.port,
     contentBase: output.path,
     publicPath: output.publicPath,
     compress: true,
