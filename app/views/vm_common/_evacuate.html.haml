@@ -74,6 +74,8 @@
             :title   => t,
             :onclick => "miqAjaxButton('#{url_for_only_path(:action => "evacuate_vm", :button => "cancel")}');")
 
+      = render :partial => "layouts/gtl"
+
 :javascript
   ManageIQ.angular.app.value('vmCloudEvacuateFormId', "#{@evacuate_items.length == 1 ? @evacuate_items[0].id : ''}");
   miq_bootstrap('#form_div');
