@@ -3,16 +3,19 @@ ManageIQ.angular.app.controller('serviceFormController', ['$http', '$scope', 'se
     var vm = this;
 
     var init = function() {
-      $scope.serviceModel = {
+
+      vm.serviceModel = {
         name: '',
         description: ''
       };
-      $scope.formId    = serviceFormId;
-      $scope.afterGet  = false;
-      $scope.newRecord = false;
-      $scope.modelCopy = angular.copy( $scope.serviceModel );
-      $scope.model     = "serviceModel";
-      ManageIQ.angular.scope = $scope;
+      vm.formId    = serviceFormId;
+      vm.afterGet  = false;
+      vm.newRecord = false;
+      vm.modelCopy = angular.copy( vm.serviceModel );
+      vm.model     = "serviceModel";
+      vm.saveable  = miqService.saveable;
+
+      ManageIQ.angular.scope = vm;
 
       miqService.sparkleOn();
       $http.get('/service/service_form_fields/' + serviceFormId)
@@ -27,19 +30,19 @@ ManageIQ.angular.app.controller('serviceFormController', ['$http', '$scope', 'se
       miqService.miqAjaxButton(url, serializeFields);
     };
 
-    $scope.cancelClicked = function() {
+    vm.cancelClicked = function() {
       serviceEditButtonClicked('cancel');
       $scope.angularForm.$setPristine(true);
     };
 
-    $scope.resetClicked = function() {
-      $scope.serviceModel = angular.copy( $scope.modelCopy );
+    vm.resetClicked = function() {
+      vm.serviceModel = angular.copy( vm.modelCopy );
       $scope.angularForm.$setUntouched(true);
       $scope.angularForm.$setPristine(true);
       miqService.miqFlash("warn", __("All changes have been reset"));
     };
 
-    $scope.saveClicked = function() {
+    vm.saveClicked = function() {
       serviceEditButtonClicked('save', true);
       $scope.angularForm.$setPristine(true);
     };
@@ -47,12 +50,11 @@ ManageIQ.angular.app.controller('serviceFormController', ['$http', '$scope', 'se
     function getServiceFormData(response) {
       var data = response.data;
 
-      $scope.serviceModel.name        = data.name;
-      $scope.serviceModel.description = data.description;
+      vm.serviceModel.name        = data.name;
+      vm.serviceModel.description = data.description;
 
-      $scope.afterGet = true;
-      $scope.modelCopy = angular.copy( $scope.serviceModel );
-      miqService.sparkleOff();
+      vm.afterGet = true;
+      vm.modelCopy = angular.copy( vm.serviceModel );
     }
 
     init();
