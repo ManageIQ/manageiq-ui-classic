@@ -4,8 +4,9 @@
                                "ng-controller" => "serviceFormController as vm",
                                "ng-show"       => "vm.afterGet",
                                "model"         => "vm.serviceModel",
-                               "model-copy"     => "vm.modelCopy",
-                               "miq-form"      => true}
+                               "model-copy"    => "vm.modelCopy",
+                               "miq-form"      => true,
+                               "form-changed"  => true}
   = render :partial => "layouts/flash_msg"
   %div
     %div
@@ -22,7 +23,6 @@
                               "ng-model"    => "vm.serviceModel.name",
                               "maxlength"   => "#{MAX_NAME_LEN}",
                               "miqrequired" => "",
-                              "checkchange" => "",
                               "auto-focus"  => ""}
           %span.help-block{"ng-show" => "angularForm.name.$error.miqrequired"}
             = _("Required")
@@ -35,8 +35,7 @@
                               "name"        => "description",
                               "ng-model"    => "vm.serviceModel.description",
                               "maxlength"  => "#{MAX_DESC_LEN}",
-                              "miqrequired" => "",
-                              "checkchange" => ""}
+                              "miqrequired" => ""}
   = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript
