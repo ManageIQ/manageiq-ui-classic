@@ -32,9 +32,9 @@ describe ApplicationHelper, "::ToolbarBuilder" do
 
     shared_examples "with custom buttons" do
       before do
-        @button_set = FactoryGirl.create(:custom_button_set, :set_data => {:applies_to_class => applies_to_class})
+        @button_set = FactoryGirl.create(:custom_button_set, :set_data => {:applies_to_class => applies_to_class, :button_icon => 'fa fa-cogs'})
         login_as user
-        @button1 = FactoryGirl.create(:custom_button, :applies_to_class => applies_to_class, :visibility => {:roles => ["_ALL_"]}, :options => {})
+        @button1 = FactoryGirl.create(:custom_button, :applies_to_class => applies_to_class, :visibility => {:roles => ["_ALL_"]}, :options => {:button_icon => 'fa fa-star'})
         @button_set.add_member @button1
       end
 
@@ -44,7 +44,8 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :class         => @button1.applies_to_class,
           :name          => @button1.name,
           :description   => @button1.description,
-          :image         => @button1.options[:button_image],
+          :image         => @button1.options[:button_icon],
+          :color         => nil,
           :text_display  => @button1.options.key?(:display) ? @button1.options[:display] : true,
           :target_object => subject.id
         }
@@ -52,7 +53,8 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :id           => @button_set.id,
           :text         => @button_set.name,
           :description  => @button_set.description,
-          :image        => @button_set.set_data[:button_image],
+          :image        => @button_set.set_data[:button_icon],
+          :color        => nil,
           :text_display => @button_set.set_data.key?(:display) ? @button_set.set_data[:display] : true,
           :buttons      => [expected_button1]
         }
@@ -69,7 +71,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         button1 = {
           :id        => "custom__custom_#{@button1.id}",
           :type      => :button,
-          :icon      => "miq-custom-button-#{@button1.options[:button_image]} fa-lg",
+          :icon      => "#{@button1.options[:button_icon]} fa-lg",
           :title     => CGI.escapeHTML(@button1.description.to_s),
           :text      => escaped_button1_text,
           :enabled   => true,
@@ -81,7 +83,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         button_set_item1 = {
           :id      => "custom_#{@button_set.id}",
           :type    => :buttonSelect,
-          :icon    => "miq-custom-button-#{@button_set.set_data[:button_image]} fa-lg",
+          :icon    => "#{@button_set.set_data[:button_icon]} fa-lg",
           :title   => @button_set.description,
           :text    => @button_set.name,
           :enabled => true,
@@ -98,7 +100,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         button1 = {
           :id        => "custom__custom_#{@button1.id}",
           :type      => :button,
-          :icon      => "miq-custom-button-#{@button1.options[:button_image]} fa-lg",
+          :icon      => "#{@button1.options[:button_icon]} fa-lg",
           :title     => CGI.escapeHTML(@button1.description.to_s),
           :text      => escaped_button1_text,
           :enabled   => true,
@@ -110,7 +112,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         button_set_item1 = {
           :id      => "custom_#{@button_set.id}",
           :type    => :buttonSelect,
-          :icon    => "miq-custom-button-#{@button_set.set_data[:button_image]} fa-lg",
+          :icon    => "#{@button_set.set_data[:button_icon]} fa-lg",
           :title   => @button_set.description,
           :text    => @button_set.name,
           :enabled => true,

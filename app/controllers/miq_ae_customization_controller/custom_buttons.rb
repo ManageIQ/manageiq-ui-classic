@@ -47,7 +47,8 @@ module MiqAeCustomizationController::CustomButtons
           group[:id] = aset.id
           group[:name] = aset.name
           group[:description] = aset.description
-          group[:button_image] = aset.set_data[:button_image]
+          group[:button_icon] = aset.set_data[:button_icon]
+          group[:button_color] = aset.set_data[:button_color]
           @sb[:button_groups].push(group) unless @sb[:button_groups].include?(group)
         end
       end
@@ -63,7 +64,8 @@ module MiqAeCustomizationController::CustomButtons
             button[:name] = b.name
             button[:id] = b.id
             button[:description] = b.description
-            button[:button_image] = b.options[:button_image]
+            button[:button_icon] = b.options[:button_icon]
+            button[:button_color] = b.options[:button_color]
             @sb[:buttons].push(button)
           end
         end
@@ -119,7 +121,8 @@ module MiqAeCustomizationController::CustomButtons
               button[:name] = b.name
               button[:id] = b.id
               button[:description] = b.description
-              button[:button_image] = b.options[:button_image]
+              button[:button_icon] = b.options[:button_icon]
+              button[:button_color] = b.options[:button_color]
               @sb[:buttons].push(button) unless @sb[:buttons].include?(button)
             end
           end

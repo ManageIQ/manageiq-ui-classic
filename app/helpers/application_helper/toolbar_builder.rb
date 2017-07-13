@@ -244,7 +244,7 @@ class ApplicationHelper::ToolbarBuilder
     button = {
       :id        => "custom__custom_#{button_id}",
       :type      => :button,
-      :icon      => "miq-custom-button-#{input[:image]} fa-lg",
+      :icon      => "#{input[:image]} fa-lg",
       :title     => input[:description].to_s,
       :enabled   => options[:enabled],
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
@@ -262,7 +262,8 @@ class ApplicationHelper::ToolbarBuilder
       :class         => cb.applies_to_class,
       :description   => cb.description,
       :name          => cb.name,
-      :image         => cb.options[:button_image],
+      :image         => cb.options[:button_icon],
+      :color         => cb.options[:button_color],
       :text_display  => cb.options.key?(:display) ? cb.options[:display] : true,
       :target_object => record_id
     }
@@ -273,7 +274,7 @@ class ApplicationHelper::ToolbarBuilder
       props = {
         :id      => "custom_#{group[:id]}",
         :type    => :buttonSelect,
-        :icon    => "miq-custom-button-#{group[:image]} fa-lg",
+        :icon    => "#{group[:image]} fa-lg",
         :title   => group[:description],
         :enabled => true,
         :items   => group[:buttons].collect { |b| create_custom_button(b, model, record) }
@@ -338,7 +339,8 @@ class ApplicationHelper::ToolbarBuilder
         :id           => cbs.id,
         :text         => cbs.name.split("|").first,
         :description  => cbs.description,
-        :image        => cbs.set_data[:button_image],
+        :image        => cbs.set_data[:button_icon],
+        :color        => cbs.set_data[:button_color],
         :text_display => cbs.set_data.key?(:display) ? cbs.set_data[:display] : true
       }
 

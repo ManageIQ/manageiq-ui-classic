@@ -8,7 +8,6 @@ module TreeNode
       end
     end
 
-
     set_attribute(:tooltip) do
       if @object.description
         _("Button Group: %{button_group_description}") % {:button_group_description => @object.description}
@@ -16,5 +15,7 @@ module TreeNode
         @object.name.split("|").first
       end
     end
+
+    set_attribute(:color) { @object.set_data.try(:[], :button_color) }
   end
 end
