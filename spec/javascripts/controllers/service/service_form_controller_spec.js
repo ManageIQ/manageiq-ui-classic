@@ -1,5 +1,5 @@
 describe('serviceFormController', function() {
-  var $scope, $controller, $httpBackend, miqService;
+  var $scope, $controller, $httpBackend, miqService, vm;
 
   beforeEach(module('ManageIQ'));
 
@@ -10,10 +10,11 @@ describe('serviceFormController', function() {
     spyOn(miqService, 'miqAjaxButton');
     spyOn(miqService, 'sparkleOn');
     spyOn(miqService, 'sparkleOff');
+
     $scope = $rootScope.$new();
     $httpBackend = _$httpBackend_;
 
-    $controller = _$controller_('serviceFormController', {
+    vm = _$controller_('serviceFormController', {
       $scope: $scope,
       serviceFormId: 1000000000001,
       miqService: miqService
@@ -36,8 +37,8 @@ describe('serviceFormController', function() {
 
   describe('initialization', function() {
     it('sets the service name to the value returned via the http request', function() {
-      expect($scope.serviceModel.name).toEqual('serviceName');
-      expect($scope.serviceModel.description).toEqual('serviceDescription');
+      expect(vm.serviceModel.name).toEqual('serviceName');
+      expect(vm.serviceModel.description).toEqual('serviceDescription');
     });
   });
 
@@ -46,7 +47,7 @@ describe('serviceFormController', function() {
       $scope.angularForm = {
         $setPristine: function (value){}
       };
-      $scope.cancelClicked();
+      vm.cancelClicked();
     });
 
     it('turns the spinner on via the miqService', function() {
@@ -60,16 +61,16 @@ describe('serviceFormController', function() {
 
   describe('#resetClicked', function() {
     beforeEach(function() {
-      $scope.serviceModel.name = 'foo';
+      vm.serviceModel.name = 'foo';
       $scope.angularForm = {
         $setPristine: function (value){},
         $setUntouched: function (value){},
       };
-      $scope.resetClicked();
+      vm.resetClicked();
     });
 
     it('resets value of name field to initial value', function() {
-      expect($scope.serviceModel.name).toEqual('serviceName');
+      expect(vm.serviceModel.name).toEqual('serviceName');
     });
   });
 
@@ -78,7 +79,7 @@ describe('serviceFormController', function() {
       $scope.angularForm = {
         $setPristine: function (value){}
       };
-      $scope.saveClicked();
+      vm.saveClicked();
     });
 
     it('turns the spinner on via the miqService', function() {
