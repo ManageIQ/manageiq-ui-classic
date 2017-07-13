@@ -1,5 +1,5 @@
 - items = expand_textual_group(items)
-- if items.present?
+- if items.present? && items[0][:value].present?
   %table.table.table-bordered.table-striped.table-summary-screen
     %thead
       %tr
