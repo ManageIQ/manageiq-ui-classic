@@ -13,7 +13,7 @@ describe ApplicationController do
     end
 
     it "Verify Invalid input flash error message when invalid id is passed in" do
-      expect { controller.send(:find_record_with_rbac, ExtManagementSystem, "invalid") }.to raise_error(RuntimeError, "Invalid input")
+      expect { controller.send(:find_record_with_rbac, ExtManagementSystem, "invalid") }.to raise_error(RuntimeError, "Can't access selected records")
     end
 
     it "Verify flash error message when passed in id no longer exists in database" do

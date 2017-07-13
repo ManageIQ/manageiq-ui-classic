@@ -525,8 +525,8 @@ module ApplicationController::Performance
 
   # Send error message if record is found and authorized, else return the record
   def perf_menu_record_valid(model, id)
-    record = find_records_with_rbac(model.constantize, id)
-    if record.empty?
+    record = find_record_with_rbac(model.constantize, id)
+    if record.present?
       add_flash(_("Can't access selected record"))
     end
     unless @flash_array.blank?

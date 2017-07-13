@@ -22,7 +22,7 @@ module Mixins
           @in_a_form = true
           @live_migrate = true
 
-          @live_migrate_items = find_records_with_rbac(VmOrTemplate, session[:live_migrate_items]).sort_by(&:name)
+          @live_migrate_items = find_records_with_rbac(VmOrTemplate.order(:name), session[:live_migrate_items])
           build_targets_hash(@live_migrate_items)
           @view = get_db_view(VmOrTemplate)
           @view.table = MiqFilter.records2table(@live_migrate_items, @view.cols + ['id'])
@@ -32,7 +32,7 @@ module Mixins
 
         def live_migrate_form_fields
           assert_privileges("instance_live_migrate")
-          @record = find_records_with_rbac(VmOrTemplate, [params[:id]]).first
+          @record = find_record_with_rbac(VmOrTemplate, params[:id])
           hosts = []
           unless @record.ext_management_system.nil?
             # wrap in a rescue block in the event the connection to the provider fails
@@ -61,7 +61,7 @@ module Mixins
           when "cancel"
             add_flash(_("Live migration of Instances was cancelled by the user"))
           when "submit"
-            @live_migrate_items = find_records_with_rbac(VmOrTemplate, session[:live_migrate_items]).sort_by(&:name)
+            @live_migrate_items = find_records_with_rbac(VmOrTemplate.order(:name), session[:live_migrate_items])
             @live_migrate_items.each do |vm|
               if vm.supports_live_migrate?
                 options = {

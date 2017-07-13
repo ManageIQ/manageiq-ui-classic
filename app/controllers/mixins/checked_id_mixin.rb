@@ -66,27 +66,6 @@ module Mixins
     #   klass - class of accessed object
     #   id    - accessed object id
     # Returns:
-    #   database record of checked item. If user does not have rights for it,
-    #   raises an exception
-    def find_record_with_rbac(klass, id, options = {})
-      raise _("Invalid input") unless is_integer?(id)
-      tested_object = klass.find_by(:id => id)
-      if tested_object.nil?
-        raise(_("Can't access selected records"))
-      end
-      Rbac.filtered_object(tested_object, :user => current_user, :named_scope => options[:named_scope]) ||
-        raise(_("Can't access selected records"))
-    end
-
-    # !============================================!
-    # PLEASE PREFER find_records_with_rbac OVER THIS
-    # !============================================!
-    #
-    # Test RBAC in case there is only one record
-    # Params:
-    #   klass - class of accessed object
-    #   id    - accessed object id
-    # Returns:
     #   id of checked item. If user does not have rights for it,
     #   raises an exception
     def find_id_with_rbac(klass, id)
@@ -117,8 +96,25 @@ module Mixins
     end
 
     # Find a record by model and id and test it with RBAC
+    #
+    # Wrapper for find_records_with_rbac method for case when only a single
+    # record is required
+    #
     # Params:
-    #   klass   - class of accessed objects
+    #   klass   - class of accessed object
+    #   id      - accessed object id
+    #   options - additional options
+    #
+    # Returns:
+    #   Instance of selected item
+    #
+    def find_record_with_rbac(klass, id, options = {})
+      find_records_with_rbac(klass, Array.wrap(id), options).first
+    end
+
+    # Find records by model and id and test it with RBAC
+    # Params:
+    #   klass   - class or scope of accessed objects
     #   ids     - accessed object ids
     #   options - :named_scope :
     #
@@ -127,9 +123,7 @@ module Mixins
     #   either sets flash or raises exception
     #
     def find_records_with_rbac(klass, ids, options = {})
-      filtered = Rbac.filtered(klass.where(:id => ids),
-                               :user        => current_user,
-                               :named_scope => options[:named_scope])
+      filtered = Rbac.filtered(klass.where(:id => ids), :named_scope => options[:named_scope])
       raise(_("Can't access selected records")) unless ids.length == filtered.length
       filtered
     end

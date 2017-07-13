@@ -349,11 +349,11 @@ module EmsCommon
     elsif params[:pressed] == "host_aggregate_edit"
       javascript_redirect :controller => "host_aggregate",
                           :action     => "edit",
-                          :id         => find_records_with_rbac(HostAggregate, checked_or_params).first
+                          :id         => find_record_with_rbac(HostAggregate, checked_or_params)
     elsif params[:pressed] == "cloud_tenant_edit"
       javascript_redirect :controller => "cloud_tenant",
                           :action     => "edit",
-                          :id         => find_records_with_rbac(CloudTenant, checked_or_params).first
+                          :id         => find_record_with_rbac(CloudTenant, checked_or_params)
     elsif params[:pressed] == "cloud_volume_new"
       javascript_redirect :controller         => "cloud_volume",
                           :action             => "new",
@@ -361,19 +361,19 @@ module EmsCommon
     elsif params[:pressed] == "cloud_volume_snapshot_create"
       javascript_redirect :controller => "cloud_volume",
                           :action     => "snapshot_new",
-                          :id         => find_records_with_rbac(CloudVolume, checked_or_params).first
+                          :id         => find_record_with_rbac(CloudVolume, checked_or_params)
     elsif params[:pressed] == "cloud_volume_attach"
       javascript_redirect :controller => "cloud_volume",
                           :action     => "attach",
-                          :id         => find_records_with_rbac(CloudVolume, checked_or_params).first
+                          :id         => find_record_with_rbac(CloudVolume, checked_or_params)
     elsif params[:pressed] == "cloud_volume_detach"
       javascript_redirect :controller => "cloud_volume",
                           :action     => "detach",
-                          :id         => find_records_with_rbac(CloudVolume, checked_or_params).first
+                          :id         => find_record_with_rbac(CloudVolume, checked_or_params)
     elsif params[:pressed] == "cloud_volume_edit"
       javascript_redirect :controller => "cloud_volume",
                           :action     => "edit",
-                          :id         => find_records_with_rbac(CloudVolume, checked_or_params).first
+                          :id         => find_record_with_rbac(CloudVolume, checked_or_params)
     elsif params[:pressed] == "cloud_volume_delete"
       # Clear CloudVolumeController's lastaction, since we are calling the delete_volumes from
       # an external controller. This will ensure that the final redirect is properly handled.
@@ -384,15 +384,15 @@ module EmsCommon
     elsif params[:pressed] == "network_router_edit"
       javascript_redirect :controller => "network_router",
                           :action     => "edit",
-                          :id         => find_records_with_rbac(NetworkRouter, checked_or_params).first
+                          :id         => find_record_with_rbac(NetworkRouter, checked_or_params)
     elsif params[:pressed] == "network_router_add_interface"
       javascript_redirect :controller => "network_router",
                           :action     => "add_interface_select",
-                          :id         => find_records_with_rbac(NetworkRouter, checked_or_params).first
+                          :id         => find_record_with_rbac(NetworkRouter, checked_or_params)
     elsif params[:pressed] == "network_router_remove_interface"
       javascript_redirect :controller => "network_router",
                           :action     => "remove_interface_select",
-                          :id         => find_records_with_rbac(NetworkRouter, checked_or_params).first
+                          :id         => find_record_with_rbac(NetworkRouter, checked_or_params)
     elsif params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new", "#{pfx}_clone",
                                                    "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
       render_or_redirect_partial(pfx)

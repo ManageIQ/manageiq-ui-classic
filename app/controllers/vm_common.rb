@@ -539,7 +539,7 @@ module VmCommon
 
   # Set right_size selected db records
   def right_size(record = nil)
-    @record ||= record ? record : find_records_with_rbac(params[:id]).first
+    @record ||= record ? record : find_record_with_rbac(Vm, params[:id])
     @lastaction = "right_size"
     @rightsize = true
     @in_a_form = true
