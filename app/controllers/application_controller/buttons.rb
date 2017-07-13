@@ -776,7 +776,7 @@ module ApplicationController::Buttons
   def button_valid?(button_hash = @edit[:new])
     add_flash(_("Button Text is required"), :error) if button_hash[:name].strip.blank?
 
-    if button_hash[:button_image].blank? || button_hash[:button_image].zero?
+    if button_hash[:button_image].blank? || button_hash[:button_image].to_i.zero?
       add_flash(_("Button Image must be selected"), :error)
     end
 
@@ -794,7 +794,7 @@ module ApplicationController::Buttons
       add_flash(_('URL can be opened only by buttons for a single entity'), :error)
     end
 
-    if !button_hash[:dialog_id].empty? && button_hash[:display_for] != 'single'
+    if !button_hash[:dialog_id].blank? && button_hash[:display_for] != 'single'
       add_flash(_('Dialog can be opened only by buttons for a single entity'), :error)
     end
 
