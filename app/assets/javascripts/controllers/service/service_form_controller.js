@@ -1,4 +1,7 @@
 ManageIQ.angular.app.controller('serviceFormController', ['$http', '$scope', 'serviceFormId', 'miqService', function($http, $scope, serviceFormId, miqService) {
+
+    var vm = this;
+
     var init = function() {
       $scope.serviceModel = {
         name: '',
