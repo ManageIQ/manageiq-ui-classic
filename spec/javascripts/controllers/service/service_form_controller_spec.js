@@ -14,7 +14,7 @@ describe('serviceFormController', function() {
     $scope = $rootScope.$new();
     $httpBackend = _$httpBackend_;
 
-    vm = _$controller_('serviceFormController', {
+    vm   = _$controller_('serviceFormController', {
       $scope: $scope,
       serviceFormId: 1000000000001,
       miqService: miqService
