@@ -22,7 +22,7 @@
                               "name"        => "name",
                               "ng-model"    => "vm.serviceModel.name",
                               "maxlength"   => "#{MAX_NAME_LEN}",
-                              "miqrequired" => "",
+                              "required"    => true,
                               "auto-focus"  => ""}
           %span.help-block{"ng-show" => "angularForm.name.$error.miqrequired"}
             = _("Required")
@@ -34,8 +34,8 @@
                               "id"          => "description",
                               "name"        => "description",
                               "ng-model"    => "vm.serviceModel.description",
-                              "maxlength"  => "#{MAX_DESC_LEN}",
-                              "miqrequired" => ""}
+                              "maxlength"   => "#{MAX_DESC_LEN}",
+                              "required"    => true}
   = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript
