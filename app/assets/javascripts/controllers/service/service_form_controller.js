@@ -45,10 +45,7 @@ ManageIQ.angular.app.controller('serviceFormController', ['$http', '$scope', 'se
 
   function getServiceFormData(response) {
     var data = response.data;
-
-    vm.serviceModel.name        = data.name;
-    vm.serviceModel.description = data.description;
-
+    vm.serviceModel = Object.assign({}, data);
     vm.afterGet = true;
     vm.modelCopy = Object.assign({}, vm.serviceModel);
   }
