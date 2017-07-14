@@ -15,7 +15,11 @@ module ApplicationHelper::Dialogs
     end
 
     values = field.values.to_h
-    result = field.value.split(',').collect do |val|
+    if field.value.kind_of?(Integer)
+      return values.include?(field.value) ? values.to_h[field.value] : field.value
+    end
+
+    result = field.value.to_s.split(',').collect do |val|
       if values.include?(val)
         values.to_h[val]
       else
