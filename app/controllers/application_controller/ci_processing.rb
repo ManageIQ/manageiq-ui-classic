@@ -18,6 +18,8 @@ module ApplicationController::CiProcessing
     include Mixins::Actions::HostActions::Power
     include Mixins::Actions::HostActions::Misc
 
+    include Mixins::Actions::ButtonActions
+
     include Mixins::ExplorerShow
   end
 
