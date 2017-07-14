@@ -310,8 +310,8 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           :confirm   => N_("The selected snapshot will be permanently deleted. Are you sure you want to delete the selected snapshot?"),
           :url_parms => "main_div",
           :onwhen    => "1",
-          :klass     => ApplicationHelper::Button::GenericFeatureButtonWithDisable,
-          :options   => {:feature => :remove_snapshot}),
+          :klass     => ApplicationHelper::Button::VmSnapshotRemoveOne
+        ),
         button(
           :vm_snapshot_delete_all,
           'pficon pficon-delete fa-lg',
