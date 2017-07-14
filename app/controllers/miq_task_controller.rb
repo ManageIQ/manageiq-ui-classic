@@ -25,7 +25,7 @@ class MiqTaskController < ApplicationController
   end
 
   def build_jobs_tab
-    @pp_choices = PPCHOICES2  # Get special pp choices for jobs/tasks lists
+    @pp_choices = UiConstants::PPCHOICES2 # Get special pp choices for jobs/tasks lists
     @settings[:perpage][:job_task] ||= 50       # Default to 50 per page until changed
     @tasks_options = HashWithIndifferentAccess.new if @tasks_options.blank?
     @tasks_options[:zones] = Zone.all.collect { |z| z.name unless z.miq_servers.blank? }.compact
@@ -179,7 +179,7 @@ class MiqTaskController < ApplicationController
     end
 
     list_jobs # Get the jobs based on the latest options
-    @pp_choices = PPCHOICES2                             # Get special pp choices for jobs/tasks lists
+    @pp_choices = UiConstants::PPCHOICES2 # Get special pp choices for jobs/tasks lists
 
     render :update do |page|
       page << javascript_prologue

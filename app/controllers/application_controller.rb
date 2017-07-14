@@ -1872,7 +1872,7 @@ class ApplicationController < ActionController::Base
     handle_remember_tab
 
     # Get all of the global variables used by most of the controllers
-    @pp_choices = PPCHOICES
+    @pp_choices = UiConstants::PPCHOICES
     @panels = session[:panels].nil? ? {} : session[:panels]
     @breadcrumbs = session[:breadcrumbs].nil? ? [] : session[:breadcrumbs]
     @panels["icon"] = true if @panels["icon"].nil?                # Default icon panels to be open
