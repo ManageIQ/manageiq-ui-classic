@@ -9,6 +9,7 @@ module Mixins
 
         # Set Ownership selected db records
         def set_ownership
+          binding.pry
           assert_privileges(params[:pressed])
           ownership_items = []
           # check to see if coming from show_list or drilled into vms from another CI
@@ -82,6 +83,7 @@ module Mixins
 
         # Assign/unassign ownership to a set of objects
         def ownership(ownership_items = [])
+          binding.pry
           @sb[:explorer] = true if @explorer
           @in_a_form = @ownershipedit = true
           drop_breadcrumb(:name => _("Set Ownership"), :url => "/vm_common/ownership")

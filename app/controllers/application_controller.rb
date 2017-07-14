@@ -2186,6 +2186,7 @@ class ApplicationController < ActionController::Base
   end
 
   def previous_breadcrumb_url
+    binding.pry
     @breadcrumbs[-2][:url]
   end
   helper_method(:previous_breadcrumb_url)

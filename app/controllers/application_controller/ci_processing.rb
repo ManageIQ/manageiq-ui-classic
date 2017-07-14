@@ -1023,7 +1023,7 @@ module ApplicationController::CiProcessing
     when "#{pfx}_retire"                    then retirevms
     when "#{pfx}_retire_now"                then retirevms_now
     when "#{pfx}_right_size"                then vm_right_size
-    when "#{pfx}_ownership"                 then set_ownership
+    when "#{pfx}_ownership"                 then generic_action(:ownership)
     when "#{pfx}_guest_shutdown"            then guestshutdown
     when "#{pfx}_guest_standby"             then gueststandby
     when "#{pfx}_guest_restart"             then guestreboot
