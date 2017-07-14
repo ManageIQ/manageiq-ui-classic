@@ -8,7 +8,7 @@ class ApplicationHelper::Toolbar::AnsibleCredentialsCenter < ApplicationHelper::
       :items => [
         button(
           :embedded_automation_manager_credentials_add,
-          'pficon pficon-edit fa-lg',
+          'pficon pficon-add-circle-o fa-lg',
           t = N_('Add New Credential'),
           t,
           :klass => ApplicationHelper::Button::EmbeddedAnsible,
