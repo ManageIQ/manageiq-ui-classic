@@ -13,20 +13,18 @@ module ApplicationHelper::Dialogs
     if !field.values || field.values.empty?
       return field.value
     end
-
-    values = field.values.to_h
-    if field.value.kind_of?(Integer)
-      return values.include?(field.value) ? values.to_h[field.value] : field.value
-    end
-
-    result = field.value.to_s.split(',').collect do |val|
-      if values.include?(val)
-        values.to_h[val]
-      else
-        val
+    if field.value.kind_of?(String) && field.value.include?(',')
+      values = field.values.map do |a|
+        a.map!(&:to_s)
+      end.to_h
+      result = field.value.split(',').collect do |val|
+        values.include?(val) ? values[val] : val
       end
+      result.join(',')
+    else
+      values = field.values.to_h
+      values.include?(field.value) ? values[field.value] : field.value
     end
-    result.join(',')
   end
 
   def category_tags(category_id)
