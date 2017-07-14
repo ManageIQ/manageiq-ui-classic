@@ -10,6 +10,8 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
   vm.modelCopy = angular.copy( $scope.networkRouterModel );
   vm.model = "networkRouterModel";
 
+  vm.saveable = miqService.saveable;
+
   ManageIQ.angular.scope = vm;
 
   if (networkRouterFormId == 'new') {
