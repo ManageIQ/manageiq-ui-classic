@@ -169,7 +169,7 @@ module ReportController::Reports::Editor
     build_tabs
 
     get_time_profiles # Get time profiles list (global and user specific)
-    cb_entities_by_provider if Chargeback.db_is_chargeback?(@edit[:new][:model])
+    cb_entities_by_provider if Chargeback.db_is_chargeback?(@edit[:new][:model]) && [ChargebackContainerImage, ChargebackContainerProject].include?(@edit[:new][:model].safe_constantize)
     case @sb[:miq_tab].split("_")[1]
     when "1"  # Select columns
       @edit[:models] ||= reportable_models
@@ -1301,7 +1301,7 @@ module ReportController::Reports::Editor
       @edit[:new][:cb_interval_size] = options[:interval_size]
       @edit[:new][:cb_end_interval_offset] = options[:end_interval_offset]
       @edit[:new][:cb_groupby] = options[:groupby]
-      cb_entities_by_provider
+      cb_entities_by_provider if [ChargebackContainerImage, ChargebackContainerProject].include?(@rpt.db.safe_constantize)
     end
 
     # Only show chargeback users choice if an admin
