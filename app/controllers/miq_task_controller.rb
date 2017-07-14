@@ -6,6 +6,15 @@ class MiqTaskController < ApplicationController
 
   include Mixins::GenericSessionMixin
 
+  # Per page choices for task/jobs
+  PPCHOICES2 = [
+    [5, 5],
+    [10, 10],
+    [20, 20],
+    [50, 50],
+    [100, 100],
+  ].freeze
+
   def index
     @tabform = nil
     # TODO: remove :feature => "job_my_smartproxy" and  :feature => "job_all_smartproxy" from miq_user_roles.yml
