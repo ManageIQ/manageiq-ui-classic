@@ -10,7 +10,7 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
   vm.modelCopy = angular.copy( $scope.networkRouterModel );
   vm.model = "networkRouterModel";
 
-  ManageIQ.angular.scope = $scope;
+  ManageIQ.angular.scope = vm;
 
   if (networkRouterFormId == 'new') {
     vm.networkRouterModel.name = "";
@@ -85,14 +85,9 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
     var data = response.data;
 
     vm.afterGet = true;
-    vm.available_networks = data.available_networks;
-    vm.available_subnets = data.available_subnets;
-    vm.networkRouterModel.name = data.name;
-    vm.networkRouterModel.cloud_network_id = data.cloud_network_id;
-    vm.networkRouterModel.cloud_subnet_id = data.cloud_subnet_id;
-    vm.networkRouterModel.ems_id = data.ems_id;
-    vm.networkRouterModel.enable_snat = data.enable_snat;
-    vm.networkRouterModel.external_gateway = data.external_gateway;
+
+    Object.assign(vm, _.pick(data, ['available_networks', 'available_subnets']));
+    Object.assign(vm.networkRouterModel, _.omit(data, ['available_networks', 'available_subnets']));
 
     vm.modelCopy = angular.copy( vm.networkRouterModel );
     miqService.sparkleOff();
