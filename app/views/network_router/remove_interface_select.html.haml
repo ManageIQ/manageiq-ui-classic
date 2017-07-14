@@ -14,7 +14,7 @@
                       "selectpicker-for-select-tag" => "")
   = render :partial => "layouts/angular/x_custom_form_buttons_angular",
            :locals  => {:button_label           => _("Remove"),
-                        :button_click           => "removeInterfaceClicked()"}
+                        :button_click           => "vm.removeInterfaceClicked()"}
 
 :javascript
   ManageIQ.angular.app.value('networkRouterFormId', '#{@router.id}');

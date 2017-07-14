@@ -65,15 +65,15 @@ ManageIQ.angular.app.controller('networkRouterFormController', ['$http', '$scope
     miqService.miqFlash("warn", "All changes have been reset");
   };
 
-  vm.filterNetworkManagerChanged = function(id) {
+  vm.filterNetworkManagerChanged = function() {
     miqService.sparkleOn();
-    $http.get('/network_router/network_router_networks_by_ems/' + id)
+    $http.get('/network_router/network_router_networks_by_ems/' + vm.networkRouterModel.ems_id)
       .then(getNetworkRouterFormByEmsData)
       .catch(miqService.handleFailure);
 
     miqService.getProviderTenants(function(data) {
       vm.available_tenants = data.resources;
-    })(id);
+    })(vm.networkRouterModel.ems_id);
   };
 
   vm.filterCloudNetworkChanged = function(id) {
