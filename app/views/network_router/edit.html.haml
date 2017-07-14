@@ -1,4 +1,8 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "networkRouterFormController as vm"}
+%form#form_div{:name           => "angularForm",
+               'ng-controller' => "networkRouterFormController as vm""miq-form",
+               'form-changed'  => true,
+               "model"         => "vm.networkRouterModel",
+               "model-copy"    => 'vm.modelCopy'}
   = render :partial => "layouts/flash_msg"
 
   = render :partial => "common_new_edit"

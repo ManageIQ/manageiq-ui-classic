@@ -1,4 +1,9 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "networkRouterFormController as vm"}
+%form#form_div{:name => "angularForm",
+               "ng-controller" => "networkRouterFormController as vm",
+               "form-changed"  => true,
+               "model"         => "vm.networkRouterModel",
+               "model-copy"    => 'vm.modelCopy',
+               }
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Network Provider')
