@@ -30,14 +30,3 @@ if File.exist? 'manageiq-ui-classic.gemspec'
     end
   end
 end
-
-def asset_engines
-  all_engines = Rails::Engine.subclasses.each_with_object({}) do |engine, acc|
-    acc[engine] = engine.root.realpath.to_s
-  end
-
-  # we only read assets from app/javascript/, filtering engines based on existence of that dir
-  all_engines.select do |_name, path|
-    Dir.exist? File.join(path, 'app', 'javascript')
-  end
-end

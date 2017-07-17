@@ -6,8 +6,11 @@ namespace :update do
   end
 
   task :yarn do
-    Dir.chdir ManageIQ::UI::Classic::Engine.root do
-      system("yarn") || abort("\n== yarn failed ==")
+    asset_engines.each do |_name, dir|
+      Dir.chdir dir do
+        next unless File.file? 'package.json'
+        system("yarn") || abort("\n== yarn failed in #{dir} ==")
+      end
     end
   end
 
@@ -44,5 +47,16 @@ end
 if Rake::Task.task_defined?("assets:clobber")
   Rake::Task["assets:clobber"].enhance do
     Rake::Task["webpack:clobber"].invoke
+  end
+end
+
+def asset_engines
+  all_engines = Rails::Engine.subclasses.each_with_object({}) do |engine, acc|
+    acc[engine] = engine.root.realpath.to_s
+  end
+
+  # we only read assets from app/javascript/, filtering engines based on existence of that dir
+  all_engines.select do |_name, path|
+    Dir.exist? File.join(path, 'app', 'javascript')
   end
 end
