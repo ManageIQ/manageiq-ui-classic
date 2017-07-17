@@ -11,6 +11,7 @@ module VmCloudHelper::TextualSummary
   include TextualMixins::TextualPowerState
   include TextualMixins::TextualRegion
   include TextualMixins::TextualScanHistory
+  include TextualMixins::TextualVisibleCustomAttributes
   # TODO: Determine if DoNav + url_for + :title is the right way to do links, or should it be link_to with :title
 
   #
@@ -285,12 +286,6 @@ module VmCloudHelper::TextualSummary
   def textual_vmsafe_timeout
     return nil unless @record.vmsafe_enable
     {:label => _("Timeout (ms)"), :value => @record.vmsafe_timeout_ms}
-  end
-
-  def textual_miq_custom_attributes
-    attrs = @record.miq_custom_attributes
-    return nil if attrs.blank?
-    attrs.sort_by(&:name).collect { |a| {:label => a.name, :value => a.value} }
   end
 
   def textual_ems_custom_attributes
