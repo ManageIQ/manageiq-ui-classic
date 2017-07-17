@@ -17,8 +17,8 @@ ManageIQ.angular.app.controller('serviceFormController', ['$http', '$scope', 'se
 
     miqService.sparkleOn();
     $http.get('/service/service_form_fields/' + serviceFormId)
-        .then(getServiceFormData)
-        .catch(miqService.handleFailure);
+      .then(getServiceFormData)
+      .catch(miqService.handleFailure);
   };
 
   var serviceEditButtonClicked = function(buttonName, serializeFields) {
