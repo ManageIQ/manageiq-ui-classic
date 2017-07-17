@@ -4,7 +4,8 @@ if File.exist? 'manageiq-ui-classic.gemspec'
 
   # yarn:install is a rails 5.1 task, webpacker:compile needs it
   namespace :yarn do
-    task :install => ["update:yarn"]
+    #task :install => ["update:yarn"]
+    puts 'yarn:install called, not doing anything'
   end
 
   # need the initializer for the rake tasks to work
