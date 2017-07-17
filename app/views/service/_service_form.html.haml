@@ -1,8 +1,12 @@
 - @angular_form = true
 
 %form.form-horizontal#form_div{"name"          => "angularForm",
-                               "ng-controller" => "serviceFormController",
-                               "ng-show"       => "afterGet"}
+                               "ng-controller" => "serviceFormController as vm",
+                               "ng-show"       => "vm.afterGet",
+                               "model"         => "vm.serviceModel",
+                               "model-copy"    => "vm.modelCopy",
+                               "miq-form"      => true,
+                               "form-changed"  => true}
   = render :partial => "layouts/flash_msg"
   %div
     %div
@@ -16,10 +20,9 @@
           %input.form-control{"type"        => "text",
                               "id"          => "name",
                               "name"        => "name",
-                              "ng-model"    => "serviceModel.name",
+                              "ng-model"    => "vm.serviceModel.name",
                               "maxlength"   => "#{MAX_NAME_LEN}",
-                              "miqrequired" => "",
-                              "checkchange" => "",
+                              "required"    => true,
                               "auto-focus"  => ""}
           %span.help-block{"ng-show" => "angularForm.name.$error.miqrequired"}
             = _("Required")
@@ -30,11 +33,10 @@
           %input.form-control{"type"        => "text",
                               "id"          => "description",
                               "name"        => "description",
-                              "ng-model"    => "serviceModel.description",
-                              "maxlength"  => "#{MAX_DESC_LEN}",
-                              "miqrequired" => "",
-                              "checkchange" => ""}
-  = render :partial => "layouts/angular/x_edit_buttons_angular"
+                              "ng-model"    => "vm.serviceModel.description",
+                              "maxlength"   => "#{MAX_DESC_LEN}",
+                              "required"    => true}
+  = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript
   ManageIQ.angular.app.value('serviceFormId', '#{@service.id}');
