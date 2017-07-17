@@ -53,14 +53,14 @@ module Mixins
 
       # Handle tag buttons if tagging supported by the controller
       if handle_status == :not_started &&
-        respond_to?(:tag, true) && params[:pressed].ends_with?("_tag")
+         respond_to?(:tag, true) && params[:pressed].ends_with?("_tag")
 
         handle_status = handle_tag_buttons(params[:pressed])
         return if handle_status == :finished
       end
 
       if handle_status == :not_started &&
-        respond_to?(:specific_buttons, true)
+         respond_to?(:specific_buttons, true)
 
         handled = specific_buttons(params[:pressed])
         return if handled
