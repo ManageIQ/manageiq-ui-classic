@@ -226,7 +226,8 @@ class MiqAeCustomizationController < ApplicationController
   end
 
   def replace_right_cell(options = {})
-    nodetype, replace_trees = options.values_at(:nodetype, :replace_trees)
+    nodetype, replace_trees = options.values_at(:action, :replace_trees)
+    nodetype ||= options[:nodetype]
     # fixme, don't call all the time
     build_ae_tree(:automate, :automate_tree) # Build Catalog Items tree
     trees = {}
