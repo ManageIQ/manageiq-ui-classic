@@ -981,29 +981,29 @@ module ApplicationController::CiProcessing
   # FIXME: need to unify pfx_for_vm_button_pressed and vm_style_button?
   def pfx_for_vm_button_pressed(pressed)
     if pressed.starts_with?("image_")
-      return "image"
+      "image"
     elsif pressed.starts_with?("instance_")
-      return "instance"
+      "instance"
     elsif pressed.starts_with?("vm_")
-      return "vm"
+      "vm"
     elsif pressed.starts_with?("miq_template_")
-      return "miq_template"
+      "miq_template"
     elsif pressed.starts_with?("orchestration_stack_")
-      return "orchestration_stack" # orchestration_stack does not belong here, added in 060dfb36
+      "orchestration_stack" # orchestration_stack does not belong here, added in 060dfb36
     else # need to get rid of the 'else' branch
-      return "vm"
+      "vm"
     end
   end
 
   # These VM-type buttons flash (in case of error) or redirect
   def vm_button_redirected?(pfx, pressed)
-    return ["#{pfx}_policy_sim", "#{pfx}_compare", "#{pfx}_tag",
-            "#{pfx}_retire", "#{pfx}_protect", "#{pfx}_ownership",
-            "#{pfx}_refresh", "#{pfx}_right_size",
-            "#{pfx}_reconfigure",
-            "#{pfx}_resize", "#{pfx}_live_migrate", "#{pfx}_evacuate"
-             ].include?(pressed) &&
-             @flash_array.nil?
+    ["#{pfx}_policy_sim", "#{pfx}_compare", "#{pfx}_tag",
+     "#{pfx}_retire", "#{pfx}_protect", "#{pfx}_ownership",
+     "#{pfx}_refresh", "#{pfx}_right_size",
+     "#{pfx}_reconfigure",
+     "#{pfx}_resize", "#{pfx}_live_migrate", "#{pfx}_evacuate"
+      ].include?(pressed) &&
+      @flash_array.nil?
   end
 
   def vm_style_button?(pressed)
