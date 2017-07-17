@@ -2,6 +2,9 @@ ManageIQ.angular.app.component('authCredentials', {
   bindings: {
     newRecord: '<',
     modelCopy: '<',
+    model: '<',
+    prefix: '@',
+    userRequired: '<',
     /**
     * setuserId should be in diagnostic databse form controller
     */
@@ -16,6 +19,7 @@ ManageIQ.angular.app.component('authCredentials', {
     this.$onInit = function() {
       this.bChangeStoredPassword = this.newRecord;
       this.bCancelPasswordChange = this.newRecord;
+      console.log('required: ', vm.userRequired);
     };
 
     this.changeStoredPassword = function() {
