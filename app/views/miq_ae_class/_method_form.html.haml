@@ -16,7 +16,7 @@
       .col-md-8
         = text_field_tag("#{prefix}method_name",
                         @edit[:new][:name],
-                        :maxlength         => MAX_NAME_LEN,
+                        :maxlength         => ViewHelper::MAX_NAME_LEN,
                         :class => "form-control",
                         "data-miq_observe" => obs)
     .form-group
@@ -25,7 +25,7 @@
       .col-md-8
         = text_field_tag("#{prefix}method_display_name",
                         @edit[:new][:display_name],
-                        :maxlength         => MAX_NAME_LEN,
+                        :maxlength         => ViewHelper::MAX_NAME_LEN,
                         :class => "form-control",
                         "data-miq_observe" => obs)
     .form-group

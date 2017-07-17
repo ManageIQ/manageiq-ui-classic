@@ -26,27 +26,27 @@
       %tr#new_tr
         %td
           = text_field("entry", "name",
-            :maxlength => MAX_NAME_LEN,
+            :maxlength => ViewHelper::MAX_NAME_LEN,
             "value"    => session[:nteventlog_data][:name],
             :style     => "width: 100%;")
         %td
           = text_field("entry", "message",
-            :maxlength => MAX_NAME_LEN,
+            :maxlength => ViewHelper::MAX_NAME_LEN,
             "value"    => session[:nteventlog_data][:message],
             :style     => "width: 100%;")
         %td
           = text_field("entry", "level",
-            :maxlength => MAX_NAME_LEN,
+            :maxlength => ViewHelper::MAX_NAME_LEN,
             "value"    => session[:nteventlog_data][:level],
             :style => "width: 100%;")
         %td
           = text_field("entry", "source",
-            :maxlength => MAX_NAME_LEN,
+            :maxlength => ViewHelper::MAX_NAME_LEN,
             "value"    => session[:nteventlog_data][:source],
             :style     => "width: 100%;")
         %td
           = text_field("entry", "num_days",
-            :maxlength => MAX_NAME_LEN,
+            :maxlength => ViewHelper::MAX_NAME_LEN,
             "value"    => session[:nteventlog_data][:numdays],
             :style     => "width: 100%;")
         %td.action-cell
@@ -68,27 +68,27 @@
           %tr{:id => "edit_tr"}
             %td
               = text_field("entry", "name",
-              :maxlength => MAX_NAME_LEN,
+              :maxlength => ViewHelper::MAX_NAME_LEN,
               "value"    => session[:nteventlog_data][:name],
               :style     => "width: 100%;")
             %td
               = text_field("entry", "message",
-                :maxlength => MAX_NAME_LEN,
+                :maxlength => ViewHelper::MAX_NAME_LEN,
                 "value"    => session[:nteventlog_data][:message],
                 :style     => "width: 100%;")
             %td
               = text_field("entry", "level",
-                :maxlength => MAX_NAME_LEN,
+                :maxlength => ViewHelper::MAX_NAME_LEN,
                 "value"    => h(session[:nteventlog_data][:level]),
                 :style     => "width: 100%;")
             %td
               = text_field("entry", "source",
-                :maxlength => MAX_NAME_LEN,
+                :maxlength => ViewHelper::MAX_NAME_LEN,
                 "value"    => session[:nteventlog_data][:source],
                 :style     => "width: 100%;")
             %td
               = text_field("entry", "num_days",
-                :maxlength => MAX_NAME_LEN,
+                :maxlength => ViewHelper::MAX_NAME_LEN,
                 "value"    => session[:nteventlog_data][:num_days],
                 :style     => "width: 100%;")
 

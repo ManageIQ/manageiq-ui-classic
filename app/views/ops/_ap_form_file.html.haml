@@ -19,7 +19,7 @@
     - else
       %tr#new_tr
         %td
-          = text_field("entry", "fname", :maxlength => MAX_NAME_LEN, :style => "width: 100%;")
+          = text_field("entry", "fname", :maxlength => ViewHelper::MAX_NAME_LEN, :style => "width: 100%;")
           = hidden_field("item", "type1", :value => "file")
         %td
           = check_box_tag("entry_content", 1, false, :id => "entry_content")
@@ -46,7 +46,7 @@
         - if params[:add] != "new"
           %tr{:class => cycle('row0', 'row1'), :id => "edit_tr"}
             %td
-              = text_field("entry", "fname", :maxlength => MAX_NAME_LEN, "value" => session[:edit_filename], :style => "width: 100%;")
+              = text_field("entry", "fname", :maxlength => ViewHelper::MAX_NAME_LEN, "value" => session[:edit_filename], :style => "width: 100%;")
               = hidden_field("item", "type1", :value => "file")
             %td
               - checked = !!entry["content"]

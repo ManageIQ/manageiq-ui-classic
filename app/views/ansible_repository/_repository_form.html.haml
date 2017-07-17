@@ -19,7 +19,7 @@
                             :name        => "name",
                             "id"         => "name",
                             'ng-model'   => "vm.repositoryModel.name",
-                            :maxlength   => MAX_NAME_LEN,
+                            :maxlength   => ViewHelper::MAX_NAME_LEN,
                             :required    => ""}
         %span.help-block{"ng-show" => "angularForm.name.$error.required"}
           = _("Required")

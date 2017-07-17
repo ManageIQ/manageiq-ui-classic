@@ -27,7 +27,7 @@
     .col-md-8
       = text_field_tag("object_message",
                        resolve[:new][:object_message],
-                       :maxlength         => MAX_NAME_LEN,
+                       :maxlength         => ViewHelper::MAX_NAME_LEN,
                        :class             => "form-control",
                        "data-miq_observe" => {:interval => '.5',
                                               :url      => url}.to_json)
@@ -39,7 +39,7 @@
     .col-md-8
       = text_field_tag("object_request",
                        resolve[:new][:object_request],
-                       :maxlength         => MAX_NAME_LEN,
+                       :maxlength         => ViewHelper::MAX_NAME_LEN,
                        :class            => "form-control",
                        "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
 - if form_action != "miq_action"
@@ -111,14 +111,14 @@
       .col-md-4
         = text_field_tag(f,
                          resolve[:new][:attrs][i][0],
-                         :maxlength         => MAX_NAME_LEN,
+                         :maxlength         => ViewHelper::MAX_NAME_LEN,
                          :class            => "form-control",
                          "data-miq_observe" => {:interval => '.5',
                                                 :url => url}.to_json)
       .col-md-4
         = text_field_tag(v,
                          resolve[:new][:attrs][i][1],
-                         :maxlength         => MAX_NAME_LEN,
+                         :maxlength         => ViewHelper::MAX_NAME_LEN,
                          :class            => "form-control",
                          "data-miq_observe" => {:interval => '.5',
                                                 :url => url}.to_json)

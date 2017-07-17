@@ -6,7 +6,7 @@
           :class => "rollover small",
           :id => "accept", :name => "accept", :alt => (t = _("Add this entry")), :title => t)
       %td
-        = text_field("entry", "value", :size => 50, :maxlength => MAX_NAME_LEN)
+        = text_field("entry", "value", :size => 50, :maxlength => ViewHelper::MAX_NAME_LEN)
       %td
         = text_field("entry", "description", :size => 50, :maxlength => ViewHelper::MAX_DESC_LEN)
   - else
@@ -16,7 +16,7 @@
           :class => "rollover small",
           :id => "accept", :name => "accept", :alt => (t = _("Update this entry")), :title => t)
       %td
-        = text_field("entry", "value", :size => 50, :maxlength => MAX_NAME_LEN, "value" => entry[0])
+        = text_field("entry", "value", :size => 50, :maxlength => ViewHelper::MAX_NAME_LEN, "value" => entry[0])
       %td
         = text_field("entry", "description", :size => 50, :maxlength => ViewHelper::MAX_DESC_LEN, "value" => entry[1])
         = hidden_field("entry", "id", "value" => h(idx))

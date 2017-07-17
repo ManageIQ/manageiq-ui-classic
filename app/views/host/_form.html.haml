@@ -21,7 +21,7 @@
                                   "id"          => "name",
                                   "name"        => "name",
                                   "ng-model"    => "hostModel.name",
-                                  "maxlength"   => "#{MAX_NAME_LEN}",
+                                  "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",
                                   "miqrequired" => "",
                                   "checkchange" => "",
                                   "auto-focus"  => ""}
@@ -82,7 +82,7 @@
               %input#mac_address.form-control{"type"        => "text",
                                               "name"        => "mac_address",
                                               "ng-model"    => "hostModel.mac_address",
-                                              "maxlength"   => "#{MAX_NAME_LEN}",
+                                              "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",
                                               "checkchange" => ""}
     %hr
     = render(:partial => "/layouts/angular/multi_auth_credentials",
