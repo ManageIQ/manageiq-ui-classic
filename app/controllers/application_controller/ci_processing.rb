@@ -1007,11 +1007,11 @@ module ApplicationController::CiProcessing
   end
 
   def vm_style_button?(pressed)
-    params[:pressed].starts_with?("image_",
-                                  "instance_",
-                                  "vm_",
-                                  "miq_template_",
-                                  "guest_") # guest_ seems to be a non-sense
+    pressed.starts_with?("image_",
+                         "instance_",
+                         "vm_",
+                         "miq_template_",
+                         "guest_") # guest_ seems to be a non-sense
   end
 
   def process_vm_buttons(pfx)
