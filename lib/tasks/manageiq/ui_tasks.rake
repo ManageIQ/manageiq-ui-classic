@@ -10,4 +10,6 @@ namespace :update do
       system("yarn") || abort("\n== yarn failed ==")
     end
   end
+
+  task :ui => ['update:bower', 'update:yarn']
 end
