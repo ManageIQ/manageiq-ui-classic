@@ -14,7 +14,7 @@ namespace :update do
     end
   end
 
-  task :ui => ['update:bower', 'update:yarn']
+  task :ui => ['update:bower', 'update:yarn', 'webpack:compile']
 end
 
 namespace :webpack do
