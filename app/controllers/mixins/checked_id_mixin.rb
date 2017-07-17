@@ -109,7 +109,7 @@ module Mixins
     #   Instance of selected item
     #
     def find_record_with_rbac(klass, id, options = {})
-      find_records_with_rbac(klass, Array.wrap(id), options).first
+      find_records_with_rbac(klass, Array.wrap(id).map { |record_id| from_cid(record_id) }, options).first
     end
 
     # Find records by model and id and test it with RBAC
