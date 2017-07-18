@@ -244,7 +244,7 @@
       .col-md-8
         = text_field_tag("smtp_from",
                           @edit[:new][:smtp][:from],
-                          :maxlength => MAX_DESC_LEN,
+                          :maxlength => ViewHelper::MAX_DESC_LEN,
                           :class => "form-control",
                           "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
     .form-group
@@ -254,7 +254,7 @@
         .input-group
           = text_field_tag("smtp_test_to",
                             @sb[:new_to],
-                            :maxlength => MAX_DESC_LEN,
+                            :maxlength => ViewHelper::MAX_DESC_LEN,
                             :class => "form-control",
                             "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
           %span.input-group-btn
@@ -313,6 +313,6 @@
       .col-md-8
         = text_field_tag("custom_support_url_description",
                           @edit[:new][:server][:custom_support_url_description],
-                          :maxlength => MAX_DESC_LEN,
+                          :maxlength => ViewHelper::MAX_DESC_LEN,
                           :class => "form-control",
                           "data-miq_observe" => {:interval => '.5', :url => url}.to_json)

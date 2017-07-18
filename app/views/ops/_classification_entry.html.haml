@@ -5,7 +5,7 @@
       %td
         = text_field("entry", "name", :maxlength => MAX_NAME_LEN, :style => "width: 100%;")
       %td
-        = text_field("entry", "description", :maxlength => MAX_DESC_LEN, :style => "width: 100%;")
+        = text_field("entry", "description", :maxlength => ViewHelper::MAX_DESC_LEN, :style => "width: 100%;")
       %td.action-cell
         %button.btn.btn-default.btn-block.btn-sm{:title => _("Add this entry"),
           "data-submit"         => 'classification_entries_div',
@@ -23,7 +23,7 @@
           :style     => "width: 100%;")
       %td
         = text_field("entry", "description",
-          :maxlength => MAX_DESC_LEN,
+          :maxlength => ViewHelper::MAX_DESC_LEN,
           "value"    => entry.description,
           :style     => "width: 100%;")
       %td.action-cell

@@ -15,7 +15,7 @@
             .col-md-8
               - if @edit
                 = text_field_tag("description", @edit[:new][:description],
-                  :maxlength         => MAX_DESC_LEN,
+                  :maxlength         => ViewHelper::MAX_DESC_LEN,
                   "data-miq_observe" => observe_with_interval,
                   :class             => "form-control")
                 = javascript_tag(javascript_focus('description'))

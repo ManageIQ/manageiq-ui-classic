@@ -108,7 +108,7 @@
         - if @edit[:new][:expression][:options][:trend_direction].to_s.ends_with?("more_than")
           = text_field_tag("trend_steepness",
             @edit[:new][:expression][:options][:trend_steepness],
-            :maxlength         => MAX_DESC_LEN,
+            :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
             "data-miq_observe" => observe_with_interval)
           = h(@edit[:perf_column_unit])
@@ -151,7 +151,7 @@
           miqSelectPickerEvent('select_event_log_message_filter_type', '#{url}', {beforeSend: true, complete: true})
         = text_field_tag("event_log_message_filter_value",
           @edit[:new][:expression][:options][:event_log_message_filter_value],
-          :maxlength         => MAX_DESC_LEN,
+          :maxlength         => ViewHelper::MAX_DESC_LEN,
           "data-miq_observe" => observe_with_interval)
       - else
         = h(@alert.expression[:options][:event_log_message_filter_type])
@@ -250,7 +250,7 @@
       - if @edit
         = text_field_tag(option[:name],
           @edit[:new][:expression][:options][option[:name]],
-          :maxlength         => MAX_DESC_LEN,
+          :maxlength         => ViewHelper::MAX_DESC_LEN,
           :class             => "form-control",
           "data-miq_observe" => observe_with_interval)
       - else
