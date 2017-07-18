@@ -319,6 +319,11 @@ class ApplicationController < ActionController::Base
         options[:parent] = identify_record(curr_model_id, controller_to_model) if curr_model_id && options[:parent].nil?
       end
     end
+
+    if params[:model] == "physical_servers_with_host"
+      options.merge!(generate_options)
+    end
+
     options[:parent] = options[:parent] || @parent
     options[:association] = params[:model] if HAS_ASSOCATION.include? params[:model]
     options[:selected_ids] = params[:records]

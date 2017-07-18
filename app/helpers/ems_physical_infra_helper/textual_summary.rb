@@ -14,7 +14,7 @@ module EmsPhysicalInfraHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(physical_servers datastores vms hosts)
+      %i(physical_servers datastores vms physical_servers_with_host)
     )
   end
 
@@ -62,9 +62,13 @@ module EmsPhysicalInfraHelper::TextualSummary
     h
   end
 
-  def textual_hosts
+  def textual_physical_servers_with_host
     count_of_host_relationships = (@record.physical_servers.select { |server| !server.host.nil? }).length
-    {:label => _("Hosts"), :icon => "pficon pficon-screen", :value => count_of_host_relationships}
+    h = {:label => _("Physical Servers with Host"), :icon => "pficon pficon-server", :value => count_of_host_relationships}
+    if count_of_host_relationships > 0
+      h[:link] = "/ems_physical_infra/#{@ems.id}?display=physical_servers_with_host"
+    end
+    h
   end
 
   def textual_guid

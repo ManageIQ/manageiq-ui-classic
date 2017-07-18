@@ -121,6 +121,7 @@ module EmsCommon
         orchestration_stacks
         persistent_volumes
         physical_servers
+        physical_servers_with_host
         security_groups
         storage_managers
         storages
