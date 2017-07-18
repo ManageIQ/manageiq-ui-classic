@@ -747,6 +747,7 @@ module ApplicationHelper
        cloud_tenant
        cloud_volume
        configuration_job
+       configuration_scripts
        container
        container_build
        container_group
