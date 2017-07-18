@@ -5,7 +5,7 @@
     .col-md-8
       = text_field_tag("hostname",
         @edit[:new][:hostname],
-        :maxlength         => MAX_HOSTNAME_LEN,
+        :maxlength         => ViewHelper::MAX_HOSTNAME_LEN,
         "class"            => "form-control",
         "data-miq_observe" => {:interval => '.5', :url => url}.to_json,
         :title             => _('Hostname or IPv4/IPv6 address'))
