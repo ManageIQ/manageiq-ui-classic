@@ -1,5 +1,4 @@
 module UiConstants
-  # MAX_NAME_LEN = 20      # Default maximum name length
   # dac - Changed to allow up to 255 characters for all text fields on 1/11/07
 
   CHARTS_REPORTS_FOLDER = File.join(Rails.root, "product/charts/miq_reports")
