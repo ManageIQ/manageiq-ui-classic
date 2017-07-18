@@ -1,9 +1,7 @@
 module UiConstants
   # MAX_NAME_LEN = 20      # Default maximum name length
-  # MAX_HOSTNAME_LEN = 50  # Default maximum host name length
   # dac - Changed to allow up to 255 characters for all text fields on 1/11/07
   MAX_NAME_LEN = 255        # Default maximum name length
-  MAX_HOSTNAME_LEN = 255    # Default maximum host name length
 
   CHARTS_REPORTS_FOLDER = File.join(Rails.root, "product/charts/miq_reports")
   CHARTS_LAYOUTS_FOLDER = File.join(Rails.root, "product/charts/layouts")
