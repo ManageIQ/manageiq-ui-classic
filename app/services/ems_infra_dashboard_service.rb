@@ -23,7 +23,7 @@ class EmsInfraDashboardService
   def status
     status_hsh = {
       :ems_clusters  => {
-        :title        => openstack? ? _('Deplyoment Roles') : _('Cluster'),
+        :title        => openstack? ? _('Deployment Roles') : _('Cluster'),
         :count        => @ems.present? ? @ems.ems_clusters.count : EmsCluster.count,
         :errorCount   => 0,
         :warningCount => 0,
@@ -131,7 +131,7 @@ class EmsInfraDashboardService
     {
       :clusterCpuUsage    => cluster_cpu_usage.presence,
       :clusterMemoryUsage => cluster_memory_usage.presence,
-      :title              => openstack? ? _('Deplyoment Roles Utilization') : _('Cluster Utilization')
+      :title              => openstack? ? _('Deployment Roles Utilization') : _('Cluster Utilization')
     }
   end
 
