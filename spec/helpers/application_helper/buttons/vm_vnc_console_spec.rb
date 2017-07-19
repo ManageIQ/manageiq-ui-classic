@@ -17,6 +17,11 @@ describe ApplicationHelper::Button::VmVncConsole do
         it_behaves_like 'vm_console_record_types', :vm_amazon => false
       end
     end
+
+    context 'vm console button is not visible' do
+      let(:record) { FactoryGirl.create(:vm_vmware, :ems_id => nil) }
+      it_behaves_like 'vm_console_not_visible?'
+    end
   end
 
   describe '#calculate_properties?' do

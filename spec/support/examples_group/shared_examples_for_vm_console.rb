@@ -1,7 +1,9 @@
 shared_examples 'vm_console_record_types' do |supported_records|
   supported_records.each do |type, support|
     context "and record is type of #{type}" do
-      let(:record) { FactoryGirl.create(type) }
+      let(:api_version) { 6.4 }
+      let(:ems) { FactoryGirl.create(:ems_vmware, :api_version => api_version) }
+      let(:record) { FactoryGirl.create(type, :ems_id => ems.id) }
       it { is_expected.to eq(support) }
     end
   end
@@ -31,6 +33,16 @@ shared_examples_for 'vm_console_visible?' do |console_type, records|
   context "when console does not support #{console_type}" do
     let(:remote_console_type) { "NOT_#{console_type}" }
     it { is_expected.to be_falsey }
+  end
+end
+
+shared_examples_for 'vm_console_not_visible?' do |console_type|
+  let(:remote_console_type) { console_type }
+  subject { button.visible? }
+  before { stub_settings(:server => {:remote_console_type => remote_console_type}) }
+
+  context "ems_id is not present" do
+    it { expect(subject).to be_falsey }
   end
 end
 
