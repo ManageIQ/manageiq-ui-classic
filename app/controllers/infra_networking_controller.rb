@@ -381,6 +381,7 @@ class InfraNetworkingController < ApplicationController
     )
 
     if record_showing
+      get_tagdata(@record)
       presenter.hide(:form_buttons_div)
       presenter.update(:main_div, r[:partial => "layouts/textual_groups_generic"])
     elsif @sb[:action] || params[:display]
