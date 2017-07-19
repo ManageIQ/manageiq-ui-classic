@@ -54,33 +54,33 @@ describe TreeBuilderSmartproxyAffinity do
       kids2 = @smartproxy_affinity_tree.send(:x_get_server_kids, @svr2, false)
       expect(kids1.size).to eq(2)
       expect(kids2.size).to eq(2)
-      expect(kids1.first).to eq(:id          => "#{@svr1[:id]}__host",
-                                :icon        => "pficon pficon-screen",
-                                :parent      => @svr1,
-                                :text        => "Host / Nodes",
-                                :cfmeNoClick => true,
-                                :children    => @selected_zone.send('host'.pluralize).sort_by(&:name),
+      expect(kids1.first).to eq(:id              => "#{@svr1[:id]}__host",
+                                :icon            => "pficon pficon-screen",
+                                :parent          => @svr1,
+                                :text            => "Host / Nodes",
+                                :cfmeNoClick     => true,
+                                :nodes           => @selected_zone.send('host'.pluralize).sort_by(&:name),
                                 :smartproxy_kind => "host")
-      expect(kids2.first).to eq(:id          => "#{@svr2[:id]}__host",
-                                :icon        => "pficon pficon-screen",
-                                :parent      => @svr2,
-                                :text        => "Host / Nodes",
-                                :cfmeNoClick => true,
-                                :children    => @selected_zone.send('host'.pluralize).sort_by(&:name),
+      expect(kids2.first).to eq(:id              => "#{@svr2[:id]}__host",
+                                :icon            => "pficon pficon-screen",
+                                :parent          => @svr2,
+                                :text            => "Host / Nodes",
+                                :cfmeNoClick     => true,
+                                :nodes           => @selected_zone.send('host'.pluralize).sort_by(&:name),
                                 :smartproxy_kind => "host")
-      expect(kids1.last).to eq(:id          => "#{@svr1[:id]}__storage",
-                               :icon        => "fa fa-database",
-                               :parent      => @svr1,
-                               :text        => "Datastores",
-                               :cfmeNoClick => true,
-                               :children    => @selected_zone.send('storage'.pluralize).sort_by(&:name),
+      expect(kids1.last).to eq(:id              => "#{@svr1[:id]}__storage",
+                               :icon            => "fa fa-database",
+                               :parent          => @svr1,
+                               :text            => "Datastores",
+                               :cfmeNoClick     => true,
+                               :nodes           => @selected_zone.send('storage'.pluralize).sort_by(&:name),
                                :smartproxy_kind => "storage")
-      expect(kids2.last).to eq(:id          => "#{@svr2[:id]}__storage",
-                               :icon        => "fa fa-database",
-                               :parent      => @svr2,
-                               :text        => "Datastores",
-                               :cfmeNoClick => true,
-                               :children    => @selected_zone.send('storage'.pluralize).sort_by(&:name),
+      expect(kids2.last).to eq(:id              => "#{@svr2[:id]}__storage",
+                               :icon            => "fa fa-database",
+                               :parent          => @svr2,
+                               :text            => "Datastores",
+                               :cfmeNoClick     => true,
+                               :nodes           => @selected_zone.send('storage'.pluralize).sort_by(&:name),
                                :smartproxy_kind => "storage")
     end
 
@@ -92,11 +92,11 @@ describe TreeBuilderSmartproxyAffinity do
       parents = [parent1, parent2, parent3, parent4]
       parents.each do |parent|
         kids = @smartproxy_affinity_tree.send(:x_get_tree_hash_kids, parent, false)
-        parent[:children].each_with_index do |kid, i|
+        parent[:nodes].each_with_index do |kid, i|
           expect(kids[i][:image]).to eq(parent[:image])
           expect(kids[i][:text]).to eq(kid.name)
           expect(kids[i][:id]).to eq("#{parent[:id]}_#{kid.id}")
-          expect(kids[i][:children]).to eq([])
+          expect(kids[i][:nodes]).to eq([])
           expect(kids[i][:select]).to eq(parent[:parent].send("vm_scan_#{parent[:smartproxy_kind]}_affinity").collect(&:id).include?(kid.id))
         end
       end

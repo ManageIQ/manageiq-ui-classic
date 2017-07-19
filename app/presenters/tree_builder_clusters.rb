@@ -46,7 +46,7 @@ class TreeBuilderClusters < TreeBuilder
         :icon        => 'pficon pficon-cluster',
         :tip         => node[:name],
         :select      => node[:capture],
-        :children    => @data[node[:id]][:ho_enabled] + @data[node[:id]][:ho_disabled],
+        :nodes       => @data[node[:id]][:ho_enabled] + @data[node[:id]][:ho_disabled],
         :cfmeNoClick => true
       }
     end
@@ -56,7 +56,7 @@ class TreeBuilderClusters < TreeBuilder
               :icon        => 'pficon pficon-screen',
               :tip         => _("Non-clustered Hosts"),
               :select      => non_cluster_selected,
-              :children    => @root[:non_cl_hosts],
+              :nodes       => @root[:non_cl_hosts],
               :cfmeNoClick => true
       }
       nodes.push(node)
@@ -65,7 +65,7 @@ class TreeBuilderClusters < TreeBuilder
   end
 
   def x_get_tree_hash_kids(parent, count_only)
-    hosts = parent[:children]
+    hosts = parent[:nodes]
     nodes = hosts.map do |node|
       if @data[parent[:id].to_i]
         value = @data[parent[:id].to_i][:ho_disabled].include? node
@@ -76,7 +76,7 @@ class TreeBuilderClusters < TreeBuilder
        :icon        => 'pficon pficon-screen',
        :select      => node.kind_of?(Hash) ? node[:capture] : !value,
        :cfmeNoClick => true,
-       :children    => []}
+       :nodes       => []}
     end
     count_only_or_objects(count_only, nodes)
   end

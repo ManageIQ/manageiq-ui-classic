@@ -40,7 +40,7 @@ describe TreeBuilderProtect do
         expect(roots[i][:id]).to eq("policy_profile_#{root.id}")
         expect(roots[i][:icon]).to eq(root.active? ? "fa fa-shield" : "fa fa-inactive fa-shield")
         expect(roots[i][:text]).to eq(root.description)
-        expect(roots[i][:children]).to eq(root.members)
+        expect(roots[i][:nodes]).to eq(root.members)
         expect(roots[i][:select]).to eq(@edit[:new].keys.include?(root.id))
       end
       expect(roots.size).to eq(3)
@@ -54,7 +54,7 @@ describe TreeBuilderProtect do
       expect(kids[0][:icon]).to eq("pficon pficon-virtual-machine fa-inactive")
       expect(kids[0][:tip]).to eq(@kids[0].description)
       expect(kids[0][:hideCheckbox]).to eq(true)
-      expect(kids[0][:children]).to eq([])
+      expect(kids[0][:nodes]).to eq([])
     end
   end
 end

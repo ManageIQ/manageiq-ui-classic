@@ -49,20 +49,20 @@ class TreeBuilderDatastores < TreeBuilder
         :tip         => "#{node[:name]} [#{node[:location]}]",
         :select      => node[:capture] == true,
         :cfmeNoClick => true,
-        :children    => children }
+        :nodes       => children }
     end
     count_only_or_objects(count_only, nodes)
   end
 
   def x_get_tree_hash_kids(parent, count_only)
-    nodes = parent[:children].map do |node|
+    nodes = parent[:nodes].map do |node|
       { :id           => node[:name],
         :text         => node[:name],
         :icon         => 'pficon pficon-screen',
         :tip          => node[:name],
         :hideCheckbox => true,
         :cfmeNoClick  => true,
-        :children     => [] }
+        :nodes        => [] }
     end
     count_only_or_objects(count_only, nodes)
   end

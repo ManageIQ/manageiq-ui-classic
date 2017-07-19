@@ -72,7 +72,7 @@ describe TreeBuilderSections do
                             :image       => false,
                             :select      => true,
                             :cfmeNoClick => true,
-                            :children    => [{:name => :_model_, :header => "Filesystem", :group => "Properties"}]}])
+                            :nodes       => [{:name => :_model_, :header => "Filesystem", :group => "Properties"}]}])
     end
 
     it 'sets children correctly' do
@@ -84,7 +84,7 @@ describe TreeBuilderSections do
                            :image       => false,
                            :cfmeNoClick => true,
                            :select      => true,
-                           :children    => []}])
+                           :nodes       => []}])
     end
   end
 end
