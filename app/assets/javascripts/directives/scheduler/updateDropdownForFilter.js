@@ -10,9 +10,9 @@ ManageIQ.angular.app.directive('updateDropdownForFilter', ['$timeout', function(
 
       if(scope['form_' + ctrl.$name + '_ngHide'] != "") {
         scope.$watch(scope['form_' + ctrl.$name + '_ngHide'], function () {
-          if (scope[scope['form_' + ctrl.$name + '_ngHide']] === true) {
+          if (scope.$eval(scope['form_' + ctrl.$name + '_ngHide']) === true) {
             angular.element(scope['form_' + ctrl.$name]).selectpicker('hide');
-          } else if (scope[scope['form_' + ctrl.$name + '_ngHide']] == "NO-OP" || scope[scope['form_' + ctrl.$name + '_ngHide']] == false) {
+          } else if (scope.$eval(scope['form_' + ctrl.$name + '_ngHide']) == "NO-OP" || scope.$eval(scope['form_' + ctrl.$name + '_ngHide']) == false) {
             selectListElement(scope, $timeout, ctrl, true);
           }
         });
@@ -36,7 +36,7 @@ ManageIQ.angular.app.directive('updateDropdownForFilter', ['$timeout', function(
 var selectListElement = function(scope, timeout, ctrl, refresh) {
   timeout(function() {
     if (refresh) {
-      if (scope[scope['form_' + ctrl.$name + '_ngHide']] === true) {
+      if (scope.$eval(scope['form_' + ctrl.$name + '_ngHide']) === true) {
         angular.element(scope['form_' + ctrl.$name]).selectpicker('hide');
       } else {
         angular.element(scope['form_' + ctrl.$name]).selectpicker({
@@ -48,10 +48,10 @@ var selectListElement = function(scope, timeout, ctrl, refresh) {
       }
     }
 
-    if (scope[scope['form_' + ctrl.$name + '_dropdownModel']][ctrl.$name] != undefined &&
-        scope[scope['form_' + ctrl.$name + '_dropdownModel']][ctrl.$name] != '') {
+    if (scope.$eval(scope['form_' + ctrl.$name + '_dropdownModel'])[ctrl.$name] != undefined &&
+        scope.$eval(scope['form_' + ctrl.$name + '_dropdownModel'])[ctrl.$name] != '') {
       angular.element(scope['form_' + ctrl.$name]).selectpicker('val',
-        scope[scope['form_' + ctrl.$name + '_dropdownModel']][ctrl.$name]);
+        scope.$eval(scope['form_' + ctrl.$name + '_dropdownModel'])[ctrl.$name]);
       angular.element(scope['form_' + ctrl.$name]).selectpicker('setStyle', 'btn-red-border', 'remove');
       angular.element(scope['form_' + ctrl.$name]).selectpicker('setStyle', 'btn-default');
       scope.invalidStyleSet = false;

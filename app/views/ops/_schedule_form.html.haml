@@ -2,9 +2,13 @@
 
 .form-horizontal
   %form#form_div{"name"          => "angularForm",
-                 "ng-controller" => "scheduleFormController",
+                 "ng-controller" => "scheduleFormController as vm",
                  'ng-cloak'      => '',
-                 "ng-show"       => "afterGet"}
+                 'miq-form'      => 'true',
+                 'model-copy'    => 'vm.modelCopy',
+                 'model'         => 'vm.scheduleModel',
+                 'form-changed'  => true,
+                 "ng-show"       => "vm.afterGet"}
     = render :partial => "layouts/flash_msg"
     %div
       %div
@@ -15,10 +19,9 @@
             %input.form-control{"type"        => "text",
                                 "id"          => "name",
                                 "name"        => "name",
-                                "ng-model"    => "scheduleModel.name",
+                                "ng-model"    => "vm.scheduleModel.name",
                                 "maxlength"   => "#{MAX_NAME_LEN}",
                                 "miqrequired" => "",
-                                "checkchange" => "",
                                 "auto-focus"  => ""}
             %span.help-block{"ng-show" => "angularForm.name.$error.miqrequired"}
               = _("Required")
@@ -29,10 +32,9 @@
             %input.form-control{"type"        => "text",
                                 "id"          => "description",
                                 "name"        => "description",
-                                "ng-model"    => "scheduleModel.description",
+                                "ng-model"    => "vm.scheduleModel.description",
                                 "maxlength"   => "#{MAX_DESC_LEN}",
-                                "miqrequired" => "",
-                                "checkchange" => ""}
+                                "miqrequired" => ""}
               %span.help-block{"ng-show" => "angularForm.description.$error.miqrequired"}
                 = _("Required")
         .form-group
@@ -41,22 +43,20 @@
           .col-md-10
             %input#enabled{"type"        => "checkbox",
                            "name"        => "enabled",
-                           "ng-model"    => "scheduleModel.enabled",
-                           "checkchange" => ""}
+                           "ng-model"    => "vm.scheduleModel.enabled"}
         .form-group
           %label.col-md-2.control-label
             = _("Action")
           .col-md-10
             = select_tag('action_typ',
                          options_for_select(@action_type_options_for_select),
-                         "ng-model"                    => "scheduleModel.action_typ",
-                         "ng-change"                   => "actionTypeChanged()",
-                         "checkchange"                 => "",
+                         "ng-model"                    => "vm.scheduleModel.action_typ",
+                         "ng-change"                   => "vm.actionTypeChanged()",
                          "selectpicker-for-select-tag" => "")
 
     = render :partial => "schedule_form_filter"
     = render :partial => "schedule_form_timer"
-    = render :partial => "layouts/angular/x_edit_buttons_angular"
+    = render :partial => "layouts/angular/generic_form_buttons"
 
 :javascript
   ManageIQ.angular.app.value('scheduleFormId', '#{@schedule.id || "new"}');
