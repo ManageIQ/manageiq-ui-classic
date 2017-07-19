@@ -169,7 +169,7 @@ module ReportController::Reports::Editor
     build_tabs
 
     get_time_profiles # Get time profiles list (global and user specific)
-    cb_entities_by_provider if Chargeback.db_is_chargeback?(@edit[:new][:model])
+    cb_entities_by_provider if Chargeback.db_is_chargeback?(@edit[:new][:model]) && [ChargebackContainerImage, ChargebackContainerProject].include?(@edit[:new][:model].safe_constantize)
     case @sb[:miq_tab].split("_")[1]
     when "1"  # Select columns
       @edit[:models] ||= reportable_models
@@ -1301,7 +1301,7 @@ module ReportController::Reports::Editor
       @edit[:new][:cb_interval_size] = options[:interval_size]
       @edit[:new][:cb_end_interval_offset] = options[:end_interval_offset]
       @edit[:new][:cb_groupby] = options[:groupby]
-      cb_entities_by_provider
+      cb_entities_by_provider if [ChargebackContainerImage, ChargebackContainerProject].include?(@rpt.db.safe_constantize)
     end
 
     # Only show chargeback users choice if an admin
@@ -1423,9 +1423,9 @@ module ReportController::Reports::Editor
 
   def cb_entities_by_provider
     @edit[:cb_providers] = { :container_project => {}, :container_image => {} }
-    ManageIQ::Providers::ContainerManager.includes(:container_projects, :container_images).all.each do |provider|
-      @edit[:cb_providers][:container_project][provider.name] = provider.id
-      @edit[:cb_providers][:container_image][provider.name] = provider.id
+    ManageIQ::Providers::ContainerManager.pluck(:name, :id).each do |provider_name, provider_id|
+      @edit[:cb_providers][:container_project][provider_name] = provider_id
+      @edit[:cb_providers][:container_image][provider_name] = provider_id
     end
   end
 
