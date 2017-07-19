@@ -73,12 +73,12 @@ module Mixins
 
     def create_ems_button_validate
       @in_a_form = true
+      ems_type = model.model_from_emstype(params[:emstype])
       # TODO: queue authentication checks for all providers, not just cloud
       result, details = if params[:controller] == "ems_cloud"
-                          queue_authentication_check
+                          ems_type.queue_authentication_check(get_task_args(ems_type), session[:userid], params[:zone])
                         else
-                          ems = model.model_from_emstype(params[:emstype]).new
-                          realtime_authentication_check(ems)
+                          realtime_authentication_check(ems_type.new)
                         end
       render_validation_result(result, details)
     end
@@ -102,35 +102,6 @@ module Mixins
       when "validate" then create_ems_button_validate
       when "cancel" then create_ems_button_cancel
       end
-    end
-
-    def queue_authentication_check
-      ems_type = model.model_from_emstype(params[:emstype])
-
-      task_opts = {
-        :action => "Validate EMS Provider Credentials",
-        :userid => session[:userid]
-      }
-
-      queue_opts = {
-        :args        => [*get_task_args(ems_type)],
-        :class_name  => ems_type,
-        :method_name => "raw_connect",
-        :queue_name  => "generic",
-        :role        => "ems_operations",
-        :zone        => params[:zone]
-      }
-
-      task_id = MiqTask.generic_action_with_callback(task_opts, queue_opts)
-      task = MiqTask.wait_for_taskid(task_id, :timeout => 30)
-
-      if task.nil?
-        error_message = "Task Error"
-      elsif MiqTask.status_error?(task.status) || MiqTask.status_timeout?(task.status)
-        error_message = task.message
-      end
-
-      [!error_message.present?, error_message]
     end
 
     def get_task_args(ems)

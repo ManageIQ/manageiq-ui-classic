@@ -308,11 +308,10 @@ describe EmsCloudController do
 
     it "queues the authentication type if it is a cloud provider" do
       allow(controller).to receive(:render)
-      allow(ExtManagementSystem).to receive(:model_from_emstype)
+      allow(ExtManagementSystem).to receive(:model_from_emstype).and_return(mocked_infra_class)
       controller.instance_variable_set(:@_params, :controller => "ems_cloud")
 
-      expect(MiqTask).to receive(:generic_action_with_callback)
-      expect(MiqTask).to receive(:wait_for_taskid)
+      expect(mocked_infra_class).to receive(:queue_authentication_check)
       controller.send(:create_ems_button_validate)
     end
 
