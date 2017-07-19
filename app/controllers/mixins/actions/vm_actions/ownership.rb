@@ -168,9 +168,10 @@ module Mixins
                            if params[:group].blank?    # to clear previously set group
                              nil
                            elsif params[:group] != @group
-                             MiqGroup.find_by_id(params[:group])
+                             MiqGroup.find(params[:group])
                            end
                          end
+
 
           klass = get_class_from_controller_param(request.parameters[:controller])
           param_ids = params[:objectIds].map(&:to_i)
