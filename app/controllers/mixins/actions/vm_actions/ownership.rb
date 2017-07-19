@@ -98,7 +98,7 @@ module Mixins
         # Build the ownership assignment screen
         def build_ownership_hash(ownership_ids)
           klass = get_class_from_controller_param(params[:controller])
-          @ownershipitems ||= find_records_with_rbac(klass, ownership_ids).sort_by(&:name)
+          @ownershipitems ||= filter_ownership_items(klass, ownership_ids)
           load_user_group_items(ownership_ids, klass)
 
           @groups = {}
@@ -125,7 +125,7 @@ module Mixins
         private
 
         def load_user_group_items(ownership_ids, klass)
-          @ownershipitems ||= find_records_with_rbac(klass, ownership_ids).sort_by(&:name)
+          @ownershipitems ||= filter_ownership_items(klass, ownership_ids)
           if ownership_ids.length > 1
             @user = @group = 'dont-change'
           else
