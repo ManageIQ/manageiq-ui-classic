@@ -10,7 +10,7 @@ describe TreeNode::MiqScsiLun do
 
   describe '#title' do
     it 'returns with the canonical name' do
-      expect(subject.title).to eq(object.canonical_name)
+      expect(subject.text).to eq(object.canonical_name)
     end
   end
 end

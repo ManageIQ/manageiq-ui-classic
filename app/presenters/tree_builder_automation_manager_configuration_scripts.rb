@@ -15,7 +15,7 @@ class TreeBuilderAutomationManagerConfigurationScripts < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("All Ansible Tower Job Templates"),
+      :text    => t = _("All Ansible Tower Job Templates"),
       :tooltip => t
     }
   end

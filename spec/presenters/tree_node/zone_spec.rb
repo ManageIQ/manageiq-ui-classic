@@ -6,5 +6,5 @@ describe TreeNode::Zone do
 
   include_examples 'TreeNode::Node#key prefix', 'z-'
   include_examples 'TreeNode::Node#icon', 'pficon pficon-zone'
-  include_examples 'TreeNode::Node#tooltip same as #title'
+  include_examples 'TreeNode::Node#tooltip same as #text'
 end

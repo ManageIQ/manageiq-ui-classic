@@ -9,7 +9,7 @@ describe TreeNode::LdapDomain do
 
   describe '#title' do
     it 'returns with the name prefixed by Domain:' do
-      expect(subject.title).to eq("Domain: #{object.name}")
+      expect(subject.text).to eq("Domain: #{object.name}")
     end
   end
 

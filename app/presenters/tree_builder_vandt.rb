@@ -13,7 +13,7 @@ class TreeBuilderVandt < TreeBuilder
 
   def root_options
     {
-      :title   => _("All VMs & Templates"),
+      :text    => _("All VMs & Templates"),
       :tooltip => _("All VMs & Templates that I can see")
     }
   end

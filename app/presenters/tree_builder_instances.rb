@@ -23,7 +23,7 @@ class TreeBuilderInstances < TreeBuilder
 
   def root_options
     {
-      :title   => _("Instances by Provider"),
+      :text    => _("Instances by Provider"),
       :tooltip => _("All Instances by Provider that I can see")
     }
   end

@@ -15,7 +15,7 @@ class TreeBuilderConfigurationManager < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("All Configuration Manager Providers"),
+      :text    => t = _("All Configuration Manager Providers"),
       :tooltip => t
     }
   end

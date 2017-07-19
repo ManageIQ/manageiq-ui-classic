@@ -12,7 +12,7 @@ class TreeBuilderTemplatesImagesFilter < TreeBuilderVmsFilter
 
   def root_options
     {
-      :title   => _("All Templates & Images"),
+      :text    => _("All Templates & Images"),
       :tooltip => _("All of the Templates & Images that I can see")
     }
   end

@@ -15,7 +15,7 @@ class TreeBuilderAeClass < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("Datastore"),
+      :text    => t = _("Datastore"),
       :tooltip => t
     }
   end

@@ -12,7 +12,7 @@ class TreeBuilderStorage < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("All Datastores"),
+      :text    => t = _("All Datastores"),
       :tooltip => t
     }
   end

@@ -6,5 +6,5 @@ describe TreeNode::MiqDialog do
 
   include_examples 'TreeNode::Node#key prefix', 'odg-'
   include_examples 'TreeNode::Node#icon', 'fa fa-comment-o'
-  include_examples 'TreeNode::Node#title description'
+  include_examples 'TreeNode::Node#text description'
 end

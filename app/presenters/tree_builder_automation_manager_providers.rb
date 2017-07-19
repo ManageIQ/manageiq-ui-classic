@@ -15,7 +15,7 @@ class TreeBuilderAutomationManagerProviders < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("All Ansible Tower Providers"),
+      :text    => t = _("All Ansible Tower Providers"),
       :tooltip => t
     }
   end

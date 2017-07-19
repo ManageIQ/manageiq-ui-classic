@@ -26,7 +26,7 @@ describe TreeBuilderImages do
   it 'sets root correctly' do
     root = @images_tree.root_options
     expect(root).to eq(
-      :title   => "Images by Provider",
+      :text    => "Images by Provider",
       :tooltip => "All Images by Provider that I can see"
     )
   end

@@ -9,7 +9,7 @@ describe TreeNode::DialogField do
 
   describe '#title' do
     it 'returns with the label' do
-      expect(subject.title).to eq(object.label)
+      expect(subject.text).to eq(object.label)
     end
   end
 end

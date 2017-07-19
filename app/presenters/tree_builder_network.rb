@@ -29,7 +29,7 @@ class TreeBuilderNetwork < TreeBuilder
 
   def root_options
     {
-      :title       => @root.name,
+      :text        => @root.name,
       :tooltip     => _("Host: %{name}") % {:name => @root.name},
       :icon        => 'pficon pficon-screen',
       :cfmeNoClick => true

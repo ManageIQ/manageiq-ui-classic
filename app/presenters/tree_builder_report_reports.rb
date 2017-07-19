@@ -22,7 +22,7 @@ class TreeBuilderReportReports < TreeBuilderReportReportsClass
 
   def root_options
     {
-      :title   => t = _("All Reports"),
+      :text    => t = _("All Reports"),
       :tooltip => t
     }
   end

@@ -5,6 +5,6 @@ describe TreeNode::MiqPolicy do
   let(:object) { FactoryGirl.create(:miq_policy, :towhat => 'Vm', :active => true, :mode => 'control') }
 
   include_examples 'TreeNode::Node#key prefix', 'p-'
-  include_examples 'TreeNode::Node#title description'
+  include_examples 'TreeNode::Node#text description'
   include_examples 'TreeNode::Node#icon', 'pficon pficon-virtual-machine'
 end

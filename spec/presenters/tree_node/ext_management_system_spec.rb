@@ -10,7 +10,7 @@ describe TreeNode::ExtManagementSystem do
       describe '#title' do
         before { object.name = nil }
         it 'returns with nil' do
-          expect(subject.title).to be_nil
+          expect(subject.text).to be_nil
         end
       end
     end

@@ -12,7 +12,7 @@ class TreeBuilderStoragePod < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("All Datastore Clusters"),
+      :text    => t = _("All Datastore Clusters"),
       :tooltip => t
     }
   end

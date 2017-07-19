@@ -7,7 +7,7 @@ class TreeBuilderConfigurationManagerConfiguredSystems < TreeBuilderConfiguredSy
 
   def root_options
     {
-      :title   => t = _("All Configured Systems"),
+      :text    => t = _("All Configured Systems"),
       :tooltip => t
     }
   end

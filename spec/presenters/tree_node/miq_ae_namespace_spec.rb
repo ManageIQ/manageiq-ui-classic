@@ -18,7 +18,7 @@ describe TreeNode::MiqAeNamespace do
 
     describe '#title' do
       it 'returns without any suffix' do
-        expect(subject.title).to eq('test1')
+        expect(subject.text).to eq('test1')
       end
     end
 
@@ -27,7 +27,7 @@ describe TreeNode::MiqAeNamespace do
 
       describe '#title' do
         it 'returns disabled in the suffix' do
-          expect(subject.title).to eq('test1 (Disabled)')
+          expect(subject.text).to eq('test1 (Disabled)')
         end
       end
     end
@@ -37,7 +37,7 @@ describe TreeNode::MiqAeNamespace do
 
       describe '#title' do
         it 'returns locked in the suffix' do
-          expect(subject.title).to eq('test1 (Locked)')
+          expect(subject.text).to eq('test1 (Locked)')
         end
       end
     end
@@ -47,7 +47,7 @@ describe TreeNode::MiqAeNamespace do
 
       describe '#title' do
         it 'returns both locked and disabled in the suffix' do
-          expect(subject.title).to eq('test1 (Locked & Disabled)')
+          expect(subject.text).to eq('test1 (Locked & Disabled)')
         end
       end
     end

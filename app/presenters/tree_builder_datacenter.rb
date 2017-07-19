@@ -47,13 +47,13 @@ class TreeBuilderDatacenter < TreeBuilder
   def root_options
     if @root.kind_of?(EmsCluster)
       {
-        :title   => @root.name,
+        :text    => @root.name,
         :tooltip => _("Cluster: %{name}") % {:name => @root.name},
         :icon    => "pficon pficon-cluster"
       }
     elsif @root.kind_of?(ResourcePool)
       {
-        :title   => @root.name,
+        :text    => @root.name,
         :tooltip => _("Resource Pool: %{name}") % {:name => @root.name},
         :icon    => "pficon-resource-pool"
       }

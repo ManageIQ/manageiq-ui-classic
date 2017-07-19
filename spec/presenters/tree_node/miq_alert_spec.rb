@@ -5,6 +5,6 @@ describe TreeNode::MiqAlert do
   let(:object) { FactoryGirl.create(:miq_alert) }
 
   include_examples 'TreeNode::Node#key prefix', 'al-'
-  include_examples 'TreeNode::Node#title description'
+  include_examples 'TreeNode::Node#text description'
   include_examples 'TreeNode::Node#icon', 'pficon pficon-warning-triangle-o'
 end

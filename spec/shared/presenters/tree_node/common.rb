@@ -22,26 +22,26 @@ shared_examples 'TreeNode::Node#icon' do |icon|
   end
 end
 
-shared_examples 'TreeNode::Node#tooltip same as #title' do
+shared_examples 'TreeNode::Node#tooltip same as #text' do
   describe '#tooltip' do
-    it 'returns the same as node title' do
-      expect(subject.tooltip).to eq(subject.title)
+    it 'returns the same as node text' do
+      expect(subject.tooltip).to eq(subject.text)
     end
   end
 end
 
 shared_examples 'TreeNode::Node#tooltip prefix' do |prefix|
   describe '#tooltip' do
-    it 'returns the prefixed title' do
-      expect(subject.tooltip).to eq("#{prefix}: #{subject.title}")
+    it 'returns the prefixed text' do
+      expect(subject.tooltip).to eq("#{prefix}: #{subject.text}")
     end
   end
 end
 
-shared_examples 'TreeNode::Node#title description' do
-  describe '#title' do
+shared_examples 'TreeNode::Node#text description' do
+  describe '#text' do
     it 'returns with the object description' do
-      expect(subject.title).to eq(object.description)
+      expect(subject.text).to eq(object.description)
     end
   end
 end

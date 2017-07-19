@@ -47,7 +47,7 @@ describe TreeBuilderPolicySimulation do
     it 'sets root correctly' do
       root = @policy_simulation_tree.send(:root_options)
       expect(root).to eq(
-        :title       => "<strong>Policy Simulation</strong>",
+        :text        => "<strong>Policy Simulation</strong>",
         :tooltip     => 'Policy Simulation',
         :icon        => 'pficon pficon-virtual-machine',
         :cfmeNoClick => true

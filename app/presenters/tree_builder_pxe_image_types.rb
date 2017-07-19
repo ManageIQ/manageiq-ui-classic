@@ -12,7 +12,7 @@ class TreeBuilderPxeImageTypes < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("All System Image Types"),
+      :text    => t = _("All System Image Types"),
       :tooltip => t
     }
   end

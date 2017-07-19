@@ -17,7 +17,7 @@ describe TreeBuilderNetwork do
     it 'returns Host as root' do
       root = @network_tree.send(:root_options)
       expect(root).to eq(
-        :title       => @network_tree.instance_variable_get(:@root).name,
+        :text        => @network_tree.instance_variable_get(:@root).name,
         :tooltip     => _("Host: %{name}") % {:name => @network_tree.instance_variable_get(:@root).name},
         :icon        => 'pficon pficon-screen',
         :cfmeNoClick => true

@@ -20,7 +20,7 @@ class TreeBuilderAutomate < TreeBuilderAeClass
 
   def root_options
     {
-      :title       => t = _("Datastore"),
+      :text        => t = _("Datastore"),
       :tooltip     => t,
       :cfmeNoClick => true
     }

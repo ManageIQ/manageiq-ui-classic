@@ -9,7 +9,7 @@ describe TreeNode::LdapRegion do
 
   describe '#title' do
     it 'returns with the name prefixed by Region:' do
-      expect(subject.title).to eq("Region: #{object.name}")
+      expect(subject.text).to eq("Region: #{object.name}")
     end
   end
 

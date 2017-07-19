@@ -6,6 +6,6 @@ describe TreeNode::MiqSearch do
 
   include_examples 'TreeNode::Node#key prefix', 'ms-'
   include_examples 'TreeNode::Node#icon', 'fa fa-filter'
-  include_examples 'TreeNode::Node#title description'
+  include_examples 'TreeNode::Node#text description'
   include_examples 'TreeNode::Node#tooltip prefix', 'Filter'
 end

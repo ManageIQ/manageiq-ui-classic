@@ -18,7 +18,7 @@ describe TreeBuilderSnapshots do
     it 'sets root correctly' do
       root = @s_tree.send(:root_options)
       expect(root).to eq(
-        :title       => @record.name,
+        :text        => @record.name,
         :tooltip     => @record.name,
         :icon        => 'pficon pficon-virtual-machine',
         :cfmeNoClick => true

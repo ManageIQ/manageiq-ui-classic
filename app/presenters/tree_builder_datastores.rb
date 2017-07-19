@@ -36,7 +36,7 @@ class TreeBuilderDatastores < TreeBuilder
         end
       end
 
-      title = ViewHelper.capture do
+      text = ViewHelper.capture do
         ViewHelper.concat_tag(:strong, node[:name])
         ViewHelper.concat ' ['
         ViewHelper.concat node[:location]
@@ -44,7 +44,7 @@ class TreeBuilderDatastores < TreeBuilder
       end
 
       { :id          => node[:id].to_s,
-        :text        => title,
+        :text        => text,
         :icon        => 'fa fa-database',
         :tip         => "#{node[:name]} [#{node[:location]}]",
         :select      => node[:capture] == true,

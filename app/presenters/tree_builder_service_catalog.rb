@@ -15,7 +15,7 @@ class TreeBuilderServiceCatalog < TreeBuilderCatalogsClass
 
   def root_options
     {
-      :title   => t = _("All Services"),
+      :text    => t = _("All Services"),
       :tooltip => t
     }
   end

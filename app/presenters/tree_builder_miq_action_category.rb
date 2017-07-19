@@ -32,7 +32,7 @@ class TreeBuilderMiqActionCategory < TreeBuilder
 
   def root_options
     {
-      :title   => @tenant_name,
+      :text    => @tenant_name,
       :tooltip => @tenant_name,
       :icon    => "fa fa-tag"
     }

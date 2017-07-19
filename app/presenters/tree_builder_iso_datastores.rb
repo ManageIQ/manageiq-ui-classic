@@ -14,7 +14,7 @@ class TreeBuilderIsoDatastores < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("All ISO Datastores"),
+      :text    => t = _("All ISO Datastores"),
       :tooltip => t
     }
   end

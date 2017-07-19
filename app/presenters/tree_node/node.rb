@@ -6,7 +6,7 @@ module TreeNode
       @options = options
     end
 
-    def title
+    def text
       @object.name
     end
 
@@ -70,7 +70,7 @@ module TreeNode
     def to_h
       node = {
         :key          => key,
-        :title        => escape(title),
+        :text         => escape(text),
         :tooltip      => escape(tooltip),
         :icon         => icon,
         :expand       => expand,

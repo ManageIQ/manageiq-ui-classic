@@ -6,7 +6,7 @@ describe TreeNode::MiqRegion do
 
   include_examples 'TreeNode::Node#key prefix', 'mr-'
   include_examples 'TreeNode::Node#icon', 'pficon pficon-regions'
-  include_examples 'TreeNode::Node#title description'
+  include_examples 'TreeNode::Node#text description'
 
   describe '#expand' do
     it 'returns with true' do

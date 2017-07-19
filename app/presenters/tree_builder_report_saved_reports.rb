@@ -15,7 +15,7 @@ class TreeBuilderReportSavedReports < TreeBuilderReportReportsClass
 
   def root_options
     {
-      :title   => t = _("All Saved Reports"),
+      :text    => t = _("All Saved Reports"),
       :tooltip => t
     }
   end

@@ -20,7 +20,7 @@ describe TreeBuilderStorageAdapters do
     it 'returns Host as root' do
       root = @sa_tree.send(:root_options)
       expect(root).to eq(
-        :title   => @sa_tree.instance_variable_get(:@root).name,
+        :text    => @sa_tree.instance_variable_get(:@root).name,
         :tooltip => "Host: #{@sa_tree.instance_variable_get(:@root).name}",
         :icon    => 'pficon pficon-screen'
       )

@@ -12,7 +12,7 @@ class TreeBuilderAeCustomization < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("Service Dialog Import/Export"),
+      :text    => t = _("Service Dialog Import/Export"),
       :tooltip => t
     }
   end

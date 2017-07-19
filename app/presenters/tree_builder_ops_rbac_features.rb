@@ -81,7 +81,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
     {
       :key         => "#{node_id_prefix}__#{root_feature}",
       :icon        => "pficon pficon-folder-close",
-      :title       => _(root_details[:name]),
+      :text        => _(root_details[:name]),
       :tooltip     => _(root_details[:description]) || _(root_details[:name]),
       :expand      => true,
       :cfmeNoClick => true,
@@ -120,7 +120,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
     {
       :key     => "#{node_id_prefix}___tab_all_vm_rules",
-      :title   => text,
+      :text    => text,
       :tooltip => text,
       :icon    => "pficon pficon-folder-close",
       :select  => checked

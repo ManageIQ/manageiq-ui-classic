@@ -31,19 +31,19 @@ describe TreeBuilderVmsAndTemplates do
       subfolder1.with_relationship_type("ems_metadata") { vms.each { |vm| subfolder1.add_child(vm) } }
 
       tree_v = TreeBuilderVmsAndTemplates.new(ems).tree
-      expect(tree_v[:title]).to eq(ems.name)
+      expect(tree_v[:text]).to eq(ems.name)
       expect(tree_v[:children].size).to eq(1)
 
       folders_v = tree_v[:children].first
-      expect(folders_v[:title]).to match folder.name
+      expect(folders_v[:text]).to match folder.name
       expect(folders_v[:children].size).to eq(1)
 
-      subfolders_v = folders_v[:children].detect { |f| f[:title] == subfolder1.name }
+      subfolders_v = folders_v[:children].detect { |f| f[:text] == subfolder1.name }
       expect(subfolders_v).to be_present
       expect(subfolders_v[:children].size).to eq(2)
 
       ems_vs = subfolders_v[:children]
-      expect(ems_vs.map { |e| e[:title] }).to match_array(vms.map(&:name))
+      expect(ems_vs.map { |e| e[:text] }).to match_array(vms.map(&:name))
     end
 
     it "returns no vms with display_vms=false" do
@@ -54,14 +54,14 @@ describe TreeBuilderVmsAndTemplates do
       subfolder1.with_relationship_type("ems_metadata") { vms.each { |vm| subfolder1.add_child(vm) } }
 
       tree_v = TreeBuilderVmsAndTemplates.new(ems).tree
-      expect(tree_v[:title]).to eq(ems.name)
+      expect(tree_v[:text]).to eq(ems.name)
       expect(tree_v[:children].size).to eq(1)
 
       folders_v = tree_v[:children].first
-      expect(folders_v[:title]).to match folder.name
+      expect(folders_v[:text]).to match folder.name
       expect(folders_v[:children].size).to eq(1) # would be 3 if we did not prune
 
-      subfolders_v = folders_v[:children].detect { |f| f[:title] == subfolder1.name }
+      subfolders_v = folders_v[:children].detect { |f| f[:text] == subfolder1.name }
       expect(subfolders_v).to be_present
       expect(subfolders_v[:children]).to be_blank # no vms in the tree
     end

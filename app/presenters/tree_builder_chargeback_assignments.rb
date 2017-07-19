@@ -7,7 +7,7 @@ class TreeBuilderChargebackAssignments < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("Assignments"),
+      :text    => t = _("Assignments"),
       :tooltip => t
     }
   end

@@ -15,12 +15,12 @@ class TreeBuilderOpsDiagnostics < TreeBuilderOps
 
   def root_options
     region = MiqRegion.my_region
-    title =  _("%{product} Region: %{region_description} [%{region}]") % {:region_description => region.description,
-                                                                          :region             => region.region,
-                                                                          :product            => I18n.t('product.name')}
+    text = _("%{product} Region: %{region_description} [%{region}]") % {:region_description => region.description,
+                                                                        :region             => region.region,
+                                                                        :product            => I18n.t('product.name')}
     {
-      :title   => title,
-      :tooltip => title,
+      :text    => text,
+      :tooltip => text,
       :icon    => 'pficon pficon-regions'
     }
   end

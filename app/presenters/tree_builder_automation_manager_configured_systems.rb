@@ -7,7 +7,7 @@ class TreeBuilderAutomationManagerConfiguredSystems < TreeBuilderConfiguredSyste
 
   def root_options
     {
-      :title   => t = _("All Ansible Tower Configured Systems"),
+      :text    => t = _("All Ansible Tower Configured Systems"),
       :tooltip => t
     }
   end

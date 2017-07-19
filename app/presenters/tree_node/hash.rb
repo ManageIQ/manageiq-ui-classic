@@ -1,6 +1,6 @@
 module TreeNode
   class Hash < Node
-    set_attribute(:title) { @object[:text] }
+    set_attribute(:text) { @object[:text] }
 
     set_attribute(:image) { @object[:image] }
 

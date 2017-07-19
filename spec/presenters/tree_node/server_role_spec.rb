@@ -11,7 +11,7 @@ describe TreeNode::ServerRole do
 
   describe '#title' do
     it 'returns with title' do
-      expect(subject.title).to eq("Role: SmartProxy (stopped)")
+      expect(subject.text).to eq("Role: SmartProxy (stopped)")
     end
   end
 end

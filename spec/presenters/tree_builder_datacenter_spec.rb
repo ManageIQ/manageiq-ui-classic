@@ -19,7 +19,7 @@ describe TreeBuilderDatacenter do
     it 'returns EmsCluster as root' do
       root = @datacenter_tree.send(:root_options)
       expect(root).to eq(
-        :title   => @datacenter_tree.instance_variable_get(:@root).name,
+        :text    => @datacenter_tree.instance_variable_get(:@root).name,
         :tooltip => "Cluster: #{@datacenter_tree.instance_variable_get(:@root).name}",
         :icon    => "pficon pficon-cluster"
       )
@@ -56,7 +56,7 @@ describe TreeBuilderDatacenter do
     it 'returns ResourcePool as root' do
       root = @datacenter_tree.send(:root_options)
       expect(root).to eq(
-        :title   => @datacenter_tree.instance_variable_get(:@root).name,
+        :text    => @datacenter_tree.instance_variable_get(:@root).name,
         :tooltip => "Resource Pool: #{@datacenter_tree.instance_variable_get(:@root).name}",
         :icon    => "pficon-resource-pool"
       )

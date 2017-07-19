@@ -1,8 +1,8 @@
 module TreeNode
   class MiqProductFeature < TreeNode::Menu::Node
-    set_attribute(:key)      { "#{@options[:node_id_prefix]}__#{@object.identifier}" }
-    set_attribute(:title)    { _(@object.name) }
-    set_attribute(:tooltip)  { _(@object.description) || _(@object.name) }
+    set_attribute(:key) { "#{@options[:node_id_prefix]}__#{@object.identifier}" }
+    set_attribute(:text) { _(@object.name) }
+    set_attribute(:tooltip) { _(@object.description) || _(@object.name) }
     set_attribute(:selected) { @options[:features].include?(@object.identifier.sub(/_accords$/, '')) }
 
     set_attribute(:icon) do

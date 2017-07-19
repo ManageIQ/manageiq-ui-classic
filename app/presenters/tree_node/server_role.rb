@@ -2,7 +2,7 @@ module TreeNode
   class ServerRole < Node
     set_attribute(:expand, true)
 
-    set_attributes(:title, :tooltip) do
+    set_attributes(:text, :tooltip) do
       status = "stopped"
       @object.assigned_server_roles.where(:active => true).each do |asr| # Go thru all active assigned server roles
         next unless asr.miq_server.started? # Find a started server

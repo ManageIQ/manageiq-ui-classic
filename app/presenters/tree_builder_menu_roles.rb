@@ -34,7 +34,7 @@ class TreeBuilderMenuRoles < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("Top Level"),
+      :text    => t = _("Top Level"),
       :tooltip => t,
       :key     => "xx-b__Report Menus for #{role_choice}"
     }

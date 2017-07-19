@@ -21,7 +21,7 @@ describe TreeBuilder do
       tree = TreeBuilderChargebackRates.new("cb_rates_tree", "cb_rates", {})
       root = tree.send(:root_options)
       expect(root).to eq(
-        :title   => 'Rates',
+        :text    => 'Rates',
         :tooltip => 'Rates'
       )
     end
@@ -79,7 +79,7 @@ describe TreeBuilder do
       Class.new(TreeBuilderChargebackRates) do
         def root_options
           {
-            :title   => "Foo",
+            :text    => "Foo",
             :tooltip => "Bar"
           }
         end
