@@ -11,8 +11,19 @@ class GenericObjectDefinitionController < ApplicationController
 
   menu_section :automate
 
+  def self.display_methods
+    %w(generic_objects)
+  end
+
   def self.model
     GenericObjectDefinition
   end
 
+  private
+
+  def textual_group_list
+    [%i(relationships)]
+  end
+
+  helper_method :textual_group_list
 end
