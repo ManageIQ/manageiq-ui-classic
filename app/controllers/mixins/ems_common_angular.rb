@@ -66,7 +66,7 @@ module Mixins
       if result
         add_flash(_("Credential validation was successful"))
       else
-        add_flash(_("Credential validation was not successful: %{details}") % {:details => details}, :error)
+        add_flash(_("Credential validation was not successful: %{details}") % {:details => strip_tags(details)}, :error)
       end
 
       render :json => {:message => @flash_array.last(1)[0][:message], :level => @flash_array.last(1)[0][:level]}
