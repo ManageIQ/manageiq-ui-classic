@@ -156,21 +156,21 @@ module Mixins
 
         def ownership_handle_save_button
           opts = {}
-          unless params[:user] == 'dont-change'
-            if params[:user].blank?     # to clear previously set user
-              opts[:owner] = nil
-            elsif params[:user] != @user
-              opts[:owner] = User.find(params[:user])
-            end
-          end
+          opts[:owner] = unless params[:user] == 'dont-change'
+                           if params[:user].blank?     # to clear previously set user
+                             nil
+                           elsif params[:user] != @user
+                            User.find(params[:user])
+                           end
+                         end
 
-          unless params[:group] == 'dont-change'
-            if params[:group].blank?    # to clear previously set group
-              opts[:group] = nil
-            elsif params[:group] != @group
-              opts[:group] = MiqGroup.find_by_id(params[:group])
-            end
-          end
+          opts[:group] = unless params[:group] == 'dont-change'
+                           if params[:group].blank?    # to clear previously set group
+                             nil
+                           elsif params[:group] != @group
+                             MiqGroup.find_by_id(params[:group])
+                           end
+                         end
 
           klass = get_class_from_controller_param(request.parameters[:controller])
           param_ids = params[:objectIds].map(&:to_i)
