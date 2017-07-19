@@ -132,6 +132,14 @@ div#saml-login hr {
   color: #FFFFFF; margin-left: 1ex;
 }
 
+.miq-drawer-close {
+  color: inherit;
+  cursor: pointer;
+  right: 0;
+  padding: 2px 5px;
+  position: absolute;
+}
+
 /// group switcher styling
 
 .navbar-right .dropdown-submenu > a {
