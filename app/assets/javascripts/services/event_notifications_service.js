@@ -129,7 +129,7 @@ function eventNotifications($timeout, API) {
     });
     if (group) {
       if (group.notifications) {
-        group.notifications.splice(0, 0, newNotification);
+        group.notifications.splice(_.sortedIndex(group.notifications, newNotification, function (x) { return -x.timeStamp; }), 0, newNotification);
       } else {
         group.notifications = [newNotification];
       }
