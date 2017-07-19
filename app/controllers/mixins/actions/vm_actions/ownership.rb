@@ -201,6 +201,11 @@ module Mixins
                                 :escape        => true
           end
         end
+
+        def filter_ownership_items(klass, ownership_ids)
+          records = find_records_with_rbac(klass.order(:name), ownership_ids)
+          records.with_ownership if klass.respond_to?(:with_ownership)
+        end
       end
     end
   end
