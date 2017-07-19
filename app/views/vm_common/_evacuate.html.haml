@@ -67,12 +67,12 @@
             :class   => "btn btn-primary",
             :alt     => t,
             :title   => t,
-            :onclick => "miqAjaxButton('#{url_for_only_path(:action => "evacuate_vm", :id => "#{@record.id}", :button => "submit")}');")
+            :onclick => "miqAjaxButton('#{url_for_only_path(:action => "evacuate_vm", :button => "submit")}');")
           = button_tag(t = _('Cancel'),
             :class   => "btn btn-default",
             :alt     => t,
             :title   => t,
-            :onclick => "miqAjaxButton('#{url_for_only_path(:action => "evacuate_vm", :id => "#{@record.id}", :button => "cancel")}');")
+            :onclick => "miqAjaxButton('#{url_for_only_path(:action => "evacuate_vm", :button => "cancel")}');")
 
 :javascript
   ManageIQ.angular.app.value('vmCloudEvacuateFormId', "#{@evacuate_items.length == 1 ? @evacuate_items[0].id : ''}");
