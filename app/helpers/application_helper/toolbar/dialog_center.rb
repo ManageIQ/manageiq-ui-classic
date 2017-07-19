@@ -14,6 +14,13 @@ class ApplicationHelper::Toolbar::DialogCenter < ApplicationHelper::Toolbar::Bas
           :url_parms => "main_div",
           :klass     => ApplicationHelper::Button::DialogAction),
         button(
+          :dialog_edit_editor,
+          'pficon pficon-edit fa-lg',
+          t = N_('Edit this Dialog in the Dialog Editor'),
+          t,
+          :url_parms => "main_div",
+          :klass     => ApplicationHelper::Button::DialogAction),
+        button(
           :dialog_copy,
           'fa fa-files-o fa-lg',
           t = N_('Copy this Dialog'),

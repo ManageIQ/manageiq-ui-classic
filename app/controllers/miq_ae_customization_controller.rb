@@ -14,6 +14,7 @@ class MiqAeCustomizationController < ApplicationController
   after_action :set_session_data
 
   AE_CUSTOM_X_BUTTON_ALLOWED_ACTIONS = {
+    'dialog_edit_editor'     => :dialog_edit_editor,
     'dialog_edit'            => :dialog_edit,
     'dialog_copy'            => :dialog_copy,
     'dialog_delete'          => :dialog_delete,
@@ -22,6 +23,7 @@ class MiqAeCustomizationController < ApplicationController
     'dialog_add_element'     => :dialog_add_element,
     'dialog_res_discard'     => :dialog_res_discard,
     'dialog_resource_remove' => :dialog_resource_remove,
+    'dialog_new_editor'      => :dialog_new_editor,
     'dialog_new'             => :dialog_new,
     'old_dialogs_new'        => :old_dialogs_new,
     'old_dialogs_edit'       => :old_dialogs_edit,
@@ -133,6 +135,14 @@ class MiqAeCustomizationController < ApplicationController
     @layout = "miq_ae_customization"
 
     render :layout => "application" unless request.xml_http_request?
+  end
+
+  def editor
+    if params[:id].present?
+      @record = Dialog.find(params[:id])
+    else
+      @record = Dialog.new
+    end
   end
 
   def tree_select

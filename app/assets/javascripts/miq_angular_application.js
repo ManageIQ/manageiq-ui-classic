@@ -9,6 +9,7 @@ ManageIQ.angular.app = angular.module('ManageIQ', [
   'miq.card',
   'miq.util',
   'kubernetesUI',
+  'miqStaticAssets.dialogEditor',
 ]);
 miqHttpInject(ManageIQ.angular.app);
 
@@ -17,6 +18,13 @@ ManageIQ.angular.rxSubject = new Rx.Subject();
 ManageIQ.constants = {
   reportData: 'report_data',
 };
+
+// FIXME: temporary workaround for gettext in UI components code
+ManageIQ.angular.app.filter('translate', function() {
+  return function(val) {
+    return __(val);
+  };
+});
 
 function miqHttpInject(angular_app) {
   angular_app.config(['$httpProvider', function($httpProvider) {

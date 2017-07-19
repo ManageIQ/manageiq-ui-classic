@@ -2151,6 +2151,7 @@ Rails.application.routes.draw do
       :get  => %w(
         dialog_accordion_json
         explorer
+        editor
         export_service_dialogs
         show
       ),
@@ -2163,6 +2164,8 @@ Rails.application.routes.draw do
         cancel_import
         change_tab
         dialog_edit
+        dialog_edit_editor
+        dialog_new_editor
         dialog_form_field_changed
         dialog_list
         dialog_res_remove
