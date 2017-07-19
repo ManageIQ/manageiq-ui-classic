@@ -278,7 +278,7 @@ class TreeBuilder
       node[:children] = kids unless kids.empty?
     else
       if x_get_tree_objects(object, options, true, parents) > 0
-        node[:isLazy] = true  # set child flag if children exist
+        node[:lazyLoad] = true # set child flag if children exist
       end
     end
     node
