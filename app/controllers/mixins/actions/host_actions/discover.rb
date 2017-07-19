@@ -23,6 +23,8 @@ module Mixins
           elsif session[:type] == "ems"
             if request.parameters[:controller] == 'ems_infra'
               @discover_type = ExtManagementSystem.ems_infra_discovery_types
+            elsif request.parameters[:controller] == 'ems_physical_infra'
+              @discover_type = ExtManagementSystem.ems_physical_infra_discovery_types
             else
               @discover_type = ManageIQ::Providers::CloudManager.subclasses.select(&:supports_discovery?).map do |cloud_manager|
                 [cloud_manager.description, cloud_manager.ems_type]
