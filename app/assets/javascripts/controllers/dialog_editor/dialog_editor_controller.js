@@ -39,7 +39,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
         return key in value;
       });
 
-    if (!useCustomizer) {
+    if (! useCustomizer) {
       return undefined;
     }
 
@@ -83,7 +83,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
     }
 
     // save the dialog
-    if (action == 'create') {
+    if (action === 'create') {
       dialogId = '';
     } else {
       dialogId = '/' + DialogEditor.getDialogId();

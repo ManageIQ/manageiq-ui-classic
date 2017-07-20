@@ -102,6 +102,7 @@ module MiqAeCustomizationController::Dialogs
   # Add new dialog
   def dialog_new
    assert_privileges("dialog_new")
+   @record = Dialog.new
    dialog_set_form_vars
    @in_a_form = true
    @sb[:node_typ] = nil
