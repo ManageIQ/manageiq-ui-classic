@@ -1,4 +1,7 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "networkRouterFormController as vm", :novalidate => true}
+%form#form_div{:name           => "angularForm",
+               'ng-controller' => "networkRouterFormController as vm",
+               :novalidate     => true,
+               'ng-cloak'      => '',}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Add Interface to Router')
@@ -12,7 +15,7 @@
                       "ng-model"                    => "vm.networkRouterModel.cloud_subnet_id",
                       "required"                    => "",
                       "selectpicker-for-select-tag" => "")
-  = render :partial => "layouts/angular/x_custom_form_buttons_angular",
+  = render :partial => "layouts/angular/custom_form_buttons_controller_as",
            :locals  => {:button_label           => _("Add"),
                         :button_click           => "vm.addInterfaceClicked()"}
 

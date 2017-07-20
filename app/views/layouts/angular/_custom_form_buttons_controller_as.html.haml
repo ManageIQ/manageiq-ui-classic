@@ -1,20 +1,19 @@
--# version for controllerAs is app/views/layouts/angular/custom_form_buttons_controller_as
 .clearfix
-.pull-right.button-group{"ng-controller" => "buttonGroupController"}
+.pull-right.button-group
   %miq-button{:name      => button_label,
               :title     => button_label,
               :alt       => button_label,
-              :enabled   => "saveable(angularForm)",
+              :enabled   => "vm.saveable(angularForm)",
               'on-click' => button_click,
               :primary   => 'true'}
   %miq-button{:name      => t = _("Reset"),
               :title     => t,
               :alt       => t,
               :enabled   => '!angularForm.$pristine',
-              'ng-show'  => '!newRecord',
-              'on-click' => "resetClicked()"}
+              'ng-show'  => '!vm.newRecord',
+              'on-click' => "vm.resetClicked()"}
   %miq-button{:name      => t = _("Cancel"),
               :title     => t,
               :alt       => t,
               :enabled   => 'true',
-              'on-click' => "cancelClicked($event)"}
+              'on-click' => "vm.cancelClicked($event)"}

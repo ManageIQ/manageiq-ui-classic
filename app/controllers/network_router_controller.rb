@@ -201,7 +201,7 @@ class NetworkRouterController < ApplicationController
     @router = find_record_with_rbac(NetworkRouter, params[:id])
     @in_a_form = true
     # needs to be initializes for haml
-    @network_provider_choices = []
+    @network_provider_choices = {}
     drop_breadcrumb(
       :name => _("Edit Router \"%{name}\"") % {:model => ui_lookup(:table => 'network_router'), :name => @router.name},
       :url  => "/network_router/edit/#{@router.id}"

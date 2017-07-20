@@ -1,12 +1,13 @@
 %form#form_div{:name           => "angularForm",
                'ng-controller' => "networkRouterFormController as vm",
+               'ng-cloak'      => '',
                "miq-form"      => true,
                'form-changed'  => true,
                "model"         => "vm.networkRouterModel",
                "model-copy"    => 'vm.modelCopy'}
   = render :partial => "layouts/flash_msg"
 
-  %div{"ng-show" => "vm.newRecord"}
+  %div{"ng-if" => "vm.newRecord"}
     %h3
       = _('Network Provider')
     .form-horizontal
@@ -94,7 +95,7 @@
                   "selectpicker-for-select-tag" => ""}
             %option{"value" => ""}
               = "<#{_('Choose')}>"
-  %div{"ng-show" => "vm.newRecord"}
+  %div{"ng-if" => "vm.newRecord"}
     %h3
       = _('Placement')
     .form-horizontal
