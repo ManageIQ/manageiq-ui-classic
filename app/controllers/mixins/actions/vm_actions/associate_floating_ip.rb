@@ -4,8 +4,7 @@ module Mixins
       module AssociateFloatingIp
         def associate_floating_ip_vms
           assert_privileges("instance_associate_floating_ip")
-          recs = find_checked_items
-          recs = [params[:id].to_i] if recs.blank?
+          recs = checked_or_params
           @record = find_record_with_rbac(VmCloud, recs.first)
           if @record.supports_associate_floating_ip? && @record.ext_management_system.present?
             if @explorer
