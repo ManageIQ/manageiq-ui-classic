@@ -6,6 +6,10 @@ ManageIQ.angular.app.component('authCredentials', {
     prefix: '@',
     userRequired: '<',
     /**
+    * emsCommonModel check for userid format username@realm
+    */
+    emsCommonModel: '<',
+    /**
     * setuserId should be in diagnostic databse form controller
     */
     setUserId: '&'
