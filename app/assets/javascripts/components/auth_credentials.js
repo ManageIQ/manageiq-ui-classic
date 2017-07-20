@@ -11,6 +11,9 @@ ManageIQ.angular.app.component('authCredentials', {
     validate: '<',
     validateUrl: '@',
     restful: '<',
+    /**
+    * is used in vrifyButton component for restfull validation, may be obsolete
+    */
     valtype: '@',
     /**
     * emsCommonModel check for userid format username@realm

@@ -1,3 +1,4 @@
+- validate_url = url_for_only_path(:action => 'authentication_validate', :id => @provider_manager.id || 'new', :type => nil, :button => "validate")
 - @angular_form = true
 
 .form-horizontal
@@ -76,16 +77,17 @@
     %hr
     %h3
       = _("Credentials")
-    = render :partial => "layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
-             :locals  => {:ng_show           => true,
-                          :vm_scope          => true,
-                          :ng_model          => "automationManagerModel",
-                          :ng_reqd_userid    => true,
-                          :ng_reqd_password  => true,
-                          :validate_url      => "authentication_validate",
-                          :id                => @provider_manager.id || "new",
-                          :valtype           => nil,
-                          :basic_info_needed => true}
+    %auth-credentials{'ng-show'             => true,
+                      'model'               => 'vm.automationManagerModel',
+                      'model-copy'          => 'vm.modelCopy',
+                      'prefix'              => 'log',
+                      'user-required'       => true,
+                      'password-required'   => true,
+                      'enable-valid-button' => 'angularForm.$valid',
+                      'validate-url'        => validate_url,
+                      'valtype'             => "log",
+                      'validate'            => 'vm.validateClicked',
+                      'new-record'          => !@provider_manager.id}
 
     = render :partial => "layouts/angular/generic_form_buttons"
     %span{:style => "color:black"}= _("Required. Should have privileged access, such as root or administrator.")

@@ -1,4 +1,4 @@
-- validate = "#{url_for_only_path(:action => 'log_depot_edit', :id => nil, :type => 'log', :button => "validate")}"
+- validate_url = url_for_only_path(:action => 'log_depot_edit', :id => nil, :type => 'log', :button => "validate")
 - @angular_form = true
 
 %form.form-horizontal#form_div{:name                                 => "angularForm",
@@ -45,7 +45,7 @@
                     'password-required'   => "miqDBBackupService.credsRequired(logCollectionModel, logCollectionModel.log_password)",
                     'prefix'              => 'log',
                     'enable-valid-button' => 'angularForm.$valid',
-                    'validate-url'        => validate,
+                    'validate-url'        => validate_url,
                     'valtype'             => "log",
                     'validate'            => 'validateClicked'}
 
