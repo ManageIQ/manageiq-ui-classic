@@ -182,7 +182,7 @@ class ServiceController < ApplicationController
 
   def service_ownership
     @explorer = true
-    set_ownership
+    generic_action(:ownership)
     replace_right_cell(:action => 'ownership')
   end
 

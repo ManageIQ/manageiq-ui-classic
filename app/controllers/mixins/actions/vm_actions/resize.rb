@@ -3,6 +3,7 @@ module Mixins
     module VmActions
       module Resize
         def resizevms
+          binding.pry
           assert_privileges("instance_resize")
           recs = find_checked_items
           recs = [params[:id].to_i] if recs.blank?
