@@ -10,7 +10,6 @@ module Mixins
         # Set Ownership selected db records
         def set_ownership
           assert_privileges(params[:pressed])
-          ownership_items = []
           # check to see if coming from show_list or drilled into vms from another CI
           controller = if request.parameters[:controller] == "vm" || ["all_vms", "vms", "instances", "images"].include?(params[:display])
                          "vm"
@@ -21,28 +20,22 @@ module Mixins
                        end
           @edit ||= {}
           @edit[:controller] = controller
-          recs = []
-          if !session[:checked_items].nil? && @lastaction == "set_checked_items"
-            recs = session[:checked_items]
-          else
-            recs = find_checked_ids_with_rbac(get_class_from_controller_param(controller))
-          end
-          if recs.blank?
-            id = find_id_with_rbac(get_class_from_controller_param(params[:controller]), params[:id])
-            recs = [id.to_i]
-          end
+
+          recs = session[:checked_items] || checked_or_params
+
           @edit[:object_ids] = recs
-          if recs.length < 1
+          if recs.empty?
             add_flash(_("One or more %{model} must be selected to Set Ownership") % {
               :model => Dictionary.gettext(db.to_s, :type => :model, :notfound => :titleize, :plural => true)}, :error)
             @refresh_div = "flash_msg_div"
             @refresh_partial = "layouts/flash_msg"
             return
-          else
-            ownership_items = recs.collect(&:to_i)
           end
 
-          if filter_ownership_items(get_class_from_controller_param(controller), ownership_items).empty?
+          @origin_ownership_items = recs.collect(&:to_i)
+          @ownershipitems = filter_ownership_items(get_class_from_controller_param(controller), recs)
+
+          if @ownershipitems.empty?
             add_flash(_('None of the selected items allow ownership changes'), :error)
             @refresh_div = "flash_msg_div"
             @refresh_partial = "layouts/flash_msg"
@@ -51,11 +44,11 @@ module Mixins
 
           if @explorer
             @sb[:explorer] = true
-            ownership(ownership_items)
+            ownership(@origin_ownership_items)
           else
             if role_allows?(:feature => "vm_ownership")
               drop_breadcrumb(:name => _("Set Ownership"), :url => "/vm_common/ownership")
-              javascript_redirect :controller => controller, :action => 'ownership', :rec_ids => ownership_items, :escape => false # redirect to build the ownership screen
+              javascript_redirect :controller => controller, :action => 'ownership', :rec_ids => @origin_ownership_items, :escape => false # redirect to build the ownership screen
             else
               head :ok
             end
@@ -81,12 +74,13 @@ module Mixins
         end
 
         # Assign/unassign ownership to a set of objects
-        def ownership(ownership_items = [])
+        def ownership(ownership_ids = [])
           @sb[:explorer] = true if @explorer
           @in_a_form = @ownershipedit = true
           drop_breadcrumb(:name => _("Set Ownership"), :url => "/vm_common/ownership")
-          ownership_items = params[:rec_ids] if params[:rec_ids]
-          build_ownership_info(ownership_items)
+          ownership_ids = params[:rec_ids] if params[:rec_ids]
+          @origin_ownership_items = ownership_ids
+          build_ownership_info(ownership_ids)
           return if @ownershipitems.empty?
           build_targets_hash(@ownershipitems)
           if @sb[:explorer]
@@ -96,48 +90,28 @@ module Mixins
           end
         end
 
-        def filter_ownership_items(klass, ownership_items)
-          @origin_ownership_items = ownership_items
-          @ownershipitems ||= begin
-            ownership_scope = klass.where(:id => ownership_items)
-            ownership_scope = ownership_scope.with_ownership if klass.respond_to?(:with_ownership)
-            Rbac.filtered(ownership_scope.order(:name))
-          end
-        end
-
-        def build_ownership_info(ownership_items)
+        def build_ownership_info(ownership_ids)
           @edit ||= {}
           klass = get_class_from_controller_param(params[:controller])
-          record = klass.find(ownership_items[0])
-          user = record.evm_owner if ownership_items.length == 1
-          @user = user ? user.id.to_s : nil
+          load_user_group_items(ownership_ids, klass)
 
           @groups = {} # Create new entries hash (2nd pulldown)
-          # need to do this only if 1 vm is selected and miq_group has been set for it
-          group = record.miq_group if ownership_items.length == 1
-          @group = group ? group.id.to_s : nil
           Rbac.filtered(MiqGroup.non_tenant_groups).each { |g| @groups[g.description] = g.id.to_s }
-
-          @user = @group = 'dont-change' if ownership_items.length > 1
-          @edit[:object_ids] = filter_ownership_items(klass, ownership_items)
+          @edit[:object_ids] = ownership_ids
           @view = get_db_view(klass == VmOrTemplate ? Vm : klass) # Instantiate the MIQ Report view object
           @view.table = MiqFilter.records2table(@ownershipitems, @view.cols + ['id'])
           session[:edit] = @edit
         end
 
         # Build the ownership assignment screen
-        def build_ownership_hash(ownership_items)
+        def build_ownership_hash(ownership_ids)
           klass = get_class_from_controller_param(params[:controller])
-          record = klass.find(ownership_items[0])
-          user = record.evm_owner if ownership_items.length == 1
-          @user = user ? user.id.to_s : ''
+          @ownershipitems ||= filter_ownership_items(klass, ownership_ids)
+          load_user_group_items(ownership_ids, klass)
+
           @groups = {}
-          group = record.miq_group if ownership_items.length == 1
-          @group = group ? group.id.to_s : nil
           Rbac.filtered(MiqGroup).each { |g| @groups[g.description] = g.id.to_s }
-          @user = @group = 'dont-change' if ownership_items.length > 1
-          @ownershipitems = Rbac.filtered(klass.where(:id => ownership_items).order(:name), :class => klass)
-          raise _('Invalid items passed') unless @ownershipitems.pluck(:id).to_set == ownership_items.map(&:to_i).to_set
+          raise _('Invalid items passed') unless @ownershipitems.pluck(:id).to_set == ownership_ids.map(&:to_i).to_set
           {:user  => @user,
            :group => @group}
         end
@@ -150,68 +124,96 @@ module Mixins
 
         def ownership_update
           case params[:button]
-          when "cancel"
-            add_flash(_("Set Ownership was cancelled by the user"))
+          when "cancel" then ownership_handle_cancel_button
+          when "save" then ownership_handle_save_button
+          when "reset" then ownership_handle_reset_button
+          end
+        end
+
+        private
+
+        def load_user_group_items(ownership_ids, klass)
+          @ownershipitems ||= filter_ownership_items(klass, ownership_ids)
+          if ownership_ids.length > 1
+            @user = @group = 'dont-change'
+          else
+            record = @ownershipitems.first
+            @user = record.evm_owner.id.to_s if record.evm_owner
+            @group = record.miq_group.id.to_s if record.miq_group
+          end
+        end
+
+        def ownership_handle_cancel_button
+          add_flash(_("Set Ownership was cancelled by the user"))
+          if @sb[:explorer]
+            @edit = @sb[:action] = nil
+            replace_right_cell
+          else
+            session[:flash_msgs] = @flash_array
+            javascript_redirect previous_breadcrumb_url
+          end
+        end
+
+        def ownership_handle_save_button
+          opts = {}
+          opts[:owner] = unless params[:user] == 'dont-change'
+                           if params[:user].blank?     # to clear previously set user
+                             nil
+                           elsif params[:user] != @user
+                            User.find(params[:user])
+                           end
+                         end
+
+          opts[:group] = unless params[:group] == 'dont-change'
+                           if params[:group].blank?    # to clear previously set group
+                             nil
+                           elsif params[:group] != @group
+                             MiqGroup.find(params[:group])
+                           end
+                         end
+
+
+          klass = get_class_from_controller_param(request.parameters[:controller])
+          param_ids = params[:objectIds].map(&:to_i)
+          raise _('Invalid items selected.') unless valid_items_for(klass, param_ids)
+
+          result = klass.set_ownership(param_ids, opts)
+          if result
+            object_types = object_types_for_flash_message(klass, params[:objectIds])
+
+            flash = _("Ownership saved for selected %{object_types}") % {:object_types => object_types}
+            add_flash(flash)
             if @sb[:explorer]
-              @edit = @sb[:action] = nil
+              @sb[:action] = nil
               replace_right_cell
             else
               session[:flash_msgs] = @flash_array
               javascript_redirect previous_breadcrumb_url
             end
-          when "save"
-            opts = {}
-            unless params[:user] == 'dont-change'
-              if params[:user].blank?     # to clear previously set user
-                opts[:owner] = nil
-              elsif params[:user] != @user
-                opts[:owner] = User.find(params[:user])
-              end
-            end
-
-            unless params[:group] == 'dont-change'
-              if params[:group].blank?    # to clear previously set group
-                opts[:group] = nil
-              elsif params[:group] != @group
-                opts[:group] = MiqGroup.find_by_id(params[:group])
-              end
-            end
-
-            klass = get_class_from_controller_param(request.parameters[:controller])
-            param_ids = params[:objectIds].map(&:to_i)
-            raise _('Invalid items selected.') unless valid_items_for(klass, param_ids)
-
-            result = klass.set_ownership(param_ids, opts)
-            unless result == true
-              result["missing_ids"].each { |msg| add_flash(msg, :error) } if result["missing_ids"]
-              result["error_updating"].each { |msg| add_flash(msg, :error) } if result["error_updating"]
-              javascript_flash
-            else
-              object_types = object_types_for_flash_message(klass, params[:objectIds])
-
-              flash = _("Ownership saved for selected %{object_types}") % {:object_types => object_types}
-              add_flash(flash)
-              if @sb[:explorer]
-                @sb[:action] = nil
-                replace_right_cell
-              else
-                session[:flash_msgs] = @flash_array
-                javascript_redirect previous_breadcrumb_url
-              end
-            end
-          when "reset"
-            @in_a_form = true
-            if @edit[:explorer]
-              ownership
-              add_flash(_("All changes have been reset"), :warning)
-              request.parameters[:controller] == "service" ? replace_right_cell(:nodetype => "ownership") : replace_right_cell
-            else
-              javascript_redirect :action        => 'ownership',
-                                  :flash_msg     => _("All changes have been reset"),
-                                  :flash_warning => true,
-                                  :escape        => true
-            end
+          else
+            result["missing_ids"].each { |msg| add_flash(msg, :error) } if result["missing_ids"]
+            result["error_updating"].each { |msg| add_flash(msg, :error) } if result["error_updating"]
+            javascript_flash
           end
+        end
+
+        def ownership_handle_reset_button
+          @in_a_form = true
+          if @edit[:explorer]
+            ownership
+            add_flash(_("All changes have been reset"), :warning)
+            request.parameters[:controller] == "service" ? replace_right_cell(:nodetype => "ownership") : replace_right_cell
+          else
+            javascript_redirect :action        => 'ownership',
+                                :flash_msg     => _("All changes have been reset"),
+                                :flash_warning => true,
+                                :escape        => true
+          end
+        end
+
+        def filter_ownership_items(klass, ownership_ids)
+          records = find_records_with_rbac(klass.order(:name), ownership_ids)
+          records.with_ownership if klass.respond_to?(:with_ownership)
         end
       end
     end
