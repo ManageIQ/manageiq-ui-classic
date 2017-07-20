@@ -423,16 +423,26 @@ class MiqRequestController < ApplicationController
     end
   end
 
+  def remote_and_global_requestors(requestor)
+    condition = []
+    requestors = User.where(:userid => requestor.try(:userid))
+    if requestors.count > 1
+      condition.push("or" => requestors.collect { |user| {"=" => {"value" => user.id, "field" => "MiqRequest-requester_id"}} })
+    else
+      condition.push("=" => {"value" => requestor.try(:id), "field" => "MiqRequest-requester_id"})
+    end
+  end
+
   # Create a condition from the passed in options
   def prov_condition(opts)
     cond = [{"AFTER" => {"value" => "#{opts[:time_period].to_i} Days Ago", "field" => "MiqRequest-created_on"}}]  # Start with setting time
 
     unless is_approver
-      cond.push("=" => {"value" => current_user.try(:id), "field" => "MiqRequest-requester_id"})
+      cond.push(*remote_and_global_requestors(current_user))
     end
 
     if opts[:user_choice] && opts[:user_choice] != "all"
-      cond.push("=" => {"value" => opts[:user_choice], "field" => "MiqRequest-requester_id"})
+      cond.push(*remote_and_global_requestors(User.find_by(:id => opts[:user_choice])))
     end
 
     if (a_s = opts[:applied_states].presence)
