@@ -5,6 +5,8 @@ ManageIQ.angular.app.component('authCredentials', {
     model: '<',
     prefix: '@',
     userRequired: '<',
+    hideUser: '<',
+    passwordRequired: '<',
     /**
     * emsCommonModel check for userid format username@realm
     */
