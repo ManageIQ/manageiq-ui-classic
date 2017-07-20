@@ -42,12 +42,4 @@
                         "switch-on-text"  => "Yes",
                         "switch-off-text" => "No"}
 
-  %form-button-component{"angular-form"    => "angularForm",
-                         "model-copy"      => "vm.modelCopy",
-                         "model"           => "vm.tenantModel",
-                         "redirect-url"    => "{{vm.redirectUrl}}",
-                         "new-record"      => "vm.newRecord",
-                         "save-clicked"    => "vm.saveClicked()",
-                         "add-clicked"     => "vm.addClicked()",
-                         "entity"          => "{{vm.entity}}",
-                         "entity-name"     => "vm.tenantModel.name"}
+  = render :partial => "layouts/angular/generic_form_buttons"

@@ -17,6 +17,7 @@ function tenantFormController(API, miqService) {
 
   vm.$onInit = function() {
     vm.entity = vm.divisible ? __('Tenant') : __('Project');
+    vm.saveable = miqService.saveable;
     vm.afterGet = false;
 
     vm.tenantModel = {
@@ -56,6 +57,22 @@ function tenantFormController(API, miqService) {
       )
         .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl, true))
         .catch(miqService.handleFailure);
+    };
+
+    vm.resetClicked = function(angularForm) {
+      vm.tenantModel = angular.copy(vm.modelCopy);
+      angularForm.$setUntouched(true);
+      angularForm.$setPristine(true);
+      miqService.miqFlash('warn', __('All changes have been reset'));
+    };
+
+    vm.cancelClicked = function() {
+      miqService.sparkleOn();
+      if (vm.newRecord) {
+        miqService.redirectBack(sprintf(__('Creation of new %s was canceled by the user.'), vm.entity), 'warning', vm.redirectUrl);
+      } else {
+        miqService.redirectBack(sprintf(__('Edit of %s \"%s\" was canceled by the user.'), vm.entity, vm.tenantModel.name), 'warning', vm.redirectUrl);
+      }
     };
   };
 
