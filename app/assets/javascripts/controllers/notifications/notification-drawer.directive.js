@@ -24,6 +24,13 @@ angular.module('miq.notifications').directive('miqNotificationDrawer', ['$window
       }
 
       $scope.limit = { notifications: 100 };
+
+      $scope.closeDrawer = function() {
+        sendDataWithRx({
+          controller: 'HeaderCtrl',
+          action: 'closeDrawer',
+        });
+      };
     }],
     link: function(scope, element) {
       scope.$watch('notificationGroups', function() {
