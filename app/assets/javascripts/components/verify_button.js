@@ -13,7 +13,6 @@ ManageIQ.angular.app.component('verifyButton', {
     vm.chooseValidation = function() {
       if (vm.restful) {
         vm.validate({target: '.validate_button:visible'}, vm.valtype, true);
-        console.log('validate restful');
       } else {
         vm.validate(vm.validateUrl);
       }
