@@ -8,7 +8,7 @@
       %td
         = text_field("entry", "value", :size => 50, :maxlength => MAX_NAME_LEN)
       %td
-        = text_field("entry", "description", :size => 50, :maxlength => MAX_DESC_LEN)
+        = text_field("entry", "description", :size => 50, :maxlength => ViewHelper::MAX_DESC_LEN)
   - else
     %tr{:id => "#{idx}_tr"}
       %td
@@ -18,7 +18,7 @@
       %td
         = text_field("entry", "value", :size => 50, :maxlength => MAX_NAME_LEN, "value" => entry[0])
       %td
-        = text_field("entry", "description", :size => 50, :maxlength => MAX_DESC_LEN, "value" => entry[1])
+        = text_field("entry", "description", :size => 50, :maxlength => ViewHelper::MAX_DESC_LEN, "value" => entry[1])
         = hidden_field("entry", "id", "value" => h(idx))
 - else
   - if entry == "new"

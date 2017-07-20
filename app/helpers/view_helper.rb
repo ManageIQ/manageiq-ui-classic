@@ -5,6 +5,8 @@ module ViewHelper
   extend ActionView::Helpers::CaptureHelper
   extend ActionView::Helpers::OutputSafetyHelper
 
+  MAX_DESC_LEN = 255
+
   class << self
     def concat_tag(*args, &block)
       concat content_tag(*args, &block)

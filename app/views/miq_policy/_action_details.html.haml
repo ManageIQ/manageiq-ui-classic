@@ -15,7 +15,7 @@
               - if @edit
                 = text_field_tag("description",
                   @edit[:new][:description],
-                  :maxlength         => MAX_DESC_LEN,
+                  :maxlength         => ViewHelper::MAX_DESC_LEN,
                   :class             => "form-control",
                   "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
                 = javascript_tag(javascript_focus('description'))

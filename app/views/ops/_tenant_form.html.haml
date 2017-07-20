@@ -31,7 +31,7 @@
                               "id"          => "tenant_description",
                               "name"        => "description",
                               "ng-model"    => "vm.tenantModel.description",
-                              "maxlength"   => "#{MAX_DESC_LEN}",
+                              "maxlength"   => "#{ViewHelper::MAX_DESC_LEN}",
                               "miqrequired" => ""}
             %span.help-block{"ng-show" => "angularForm.description.$error.miqrequired"}
               = _("Required")
