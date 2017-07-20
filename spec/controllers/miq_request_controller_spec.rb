@@ -75,6 +75,35 @@ describe MiqRequestController do
       end
     end
 
+    context "in Global region" do
+      let(:remote_user) { FactoryGirl.create(:user, :userid => "SomeUser") }
+      let(:global_user) { create_user_in_other_region(remote_user.userid) }
+
+      before { login_as global_user }
+
+      it "selected specific user" do
+        path = ["and", 2, "or"]
+        expect(MiqExpression).to receive(:new) do |h|
+          expect(h.fetch_path(path)).to include({"=" => {"value" => global_user.id,
+                                                         "field" => "MiqRequest-requester_id"}},
+                                                {"=" => {"value" => remote_user.id,
+                                                         "field" => "MiqRequest-requester_id"}})
+        end
+        controller.send(:prov_condition, :user_choice => remote_user.id)
+      end
+
+      it "user without approver priveleges" do
+        path = ["and", 1, "or"]
+        expect(MiqExpression).to receive(:new) do |h|
+          expect(h.fetch_path(path)).to include({"=" => {"value" => global_user.id,
+                                                         "field" => "MiqRequest-requester_id"}},
+                                                {"=" => {"value" => remote_user.id,
+                                                         "field" => "MiqRequest-requester_id"}})
+        end
+        controller.send(:prov_condition, {})
+      end
+    end
+
     context "MiqRequest-requester_id set based on user_choice" do
       let(:path) { ["and", 2, "=", "value"] }
 
@@ -85,11 +114,12 @@ describe MiqRequestController do
         controller.send(:prov_condition, :user_choice => "all")
       end
 
-      it "selected '1'" do
+      it "selected specific user" do
+        selected_user = FactoryGirl.create(:user)
         expect(MiqExpression).to receive(:new) do |h|
-          expect(h.fetch_path(path) == 1).to be_truthy
+          expect(h.fetch_path(path) == selected_user.id).to be_truthy
         end
-        controller.send(:prov_condition, :user_choice => 1)
+        controller.send(:prov_condition, :user_choice => selected_user.id)
       end
     end
 
@@ -199,5 +229,19 @@ describe MiqRequestController do
       layout = controller.instance_variable_get(:@layout)
       expect(layout).to eq("miq_request_vm")
     end
+  end
+
+  private
+
+  def create_user_in_other_region(userid)
+    other_region_id = ApplicationRecord.id_in_region(1, MiqRegion.my_region_number + 1)
+    FactoryGirl.create(:user, :id => other_region_id).tap do |u|
+      u.update_column(:userid, userid) # Bypass validation for test purposes
+    end
+  end
+
+  def requestor_expression_for_two_users(user1, user2)
+    [{"=" => {"value" => user1.id, "field" => "MiqRequest-requester_id"}},
+     {"=" => {"value" => user2.id, "field" => "MiqRequest-requester_id"}}]
   end
 end
