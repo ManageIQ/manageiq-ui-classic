@@ -1,7 +1,6 @@
 %div
-  %miq-button{:class     => 'validate_button',
-              :name      => _('Validate'),
-              'ng-click' => 'vm.validate()',
-              :enabled   => 'vm.enabled',
-              :xs        => 'true',
-              :primary   => 'true'}
+  %miq-button.validate_button{:name      => _('Validate'),
+                              'on-click' => "vm.chooseValidation()",
+                              :enabled   => 'vm.enabled',
+                              :xs        => 'true',
+                              :primary   => 'true'}

@@ -7,6 +7,11 @@ ManageIQ.angular.app.component('authCredentials', {
     userRequired: '<',
     hideUser: '<',
     passwordRequired: '<',
+    enableValidButton: '<',
+    validate: '<',
+    validateUrl: '@',
+    restful: '<',
+    valtype: '@',
     /**
     * emsCommonModel check for userid format username@realm
     */
@@ -14,7 +19,7 @@ ManageIQ.angular.app.component('authCredentials', {
     /**
     * setuserId should be in diagnostic databse form controller
     */
-    setUserId: '&'
+    setUserId: '&',
   },
   controllerAs: 'vm',
   controller: ['$scope', function($scope) {
@@ -25,7 +30,6 @@ ManageIQ.angular.app.component('authCredentials', {
     this.$onInit = function() {
       this.bChangeStoredPassword = this.newRecord;
       this.bCancelPasswordChange = this.newRecord;
-      console.log(vm.model);
     };
 
     this.changeStoredPassword = function() {
