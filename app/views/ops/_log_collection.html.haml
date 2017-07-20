@@ -46,6 +46,15 @@
                                     :valtype           => "log",
                                     :basic_info_needed => true}
 
+  %label {{miqDBBackupService.credsRequired(logCollectionModel, logCollectionModel.log_userid)}}
+
+  %auth-credentials{'ng-show'       => "miqDBBackupService.credsProtocol(logCollectionModel)",
+                    'new-record'    => true,
+                    'model'         => 'logCollectionModel',
+                    'model-copy'    => 'modelCopy',
+                    'user-required' => true,
+                    'prefix'        => 'log'}
+
   %div_for_paging{'ng-controller'           => "pagingDivButtonGroupController",
                   'paging_div_buttons_id'   => "angular_paging_div_buttons",
                   'paging_div_buttons_type' => "Save"}

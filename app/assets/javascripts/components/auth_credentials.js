@@ -19,7 +19,6 @@ ManageIQ.angular.app.component('authCredentials', {
     this.$onInit = function() {
       this.bChangeStoredPassword = this.newRecord;
       this.bCancelPasswordChange = this.newRecord;
-      console.log('required: ', vm.userRequired);
     };
 
     this.changeStoredPassword = function() {

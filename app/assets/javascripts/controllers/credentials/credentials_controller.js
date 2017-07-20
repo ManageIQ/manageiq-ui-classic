@@ -4,7 +4,7 @@ ManageIQ.angular.app.controller('CredentialsController', ['$scope', '$attrs', fu
   vm.vmScope = function() {
     return $scope.$eval($attrs.vmScope);
   };
-  
+
   vm.bChangeStoredPassword = undefined;
   vm.bCancelPasswordChange = undefined;
 
