@@ -46,6 +46,15 @@ module.exports = {
   plugins: [
     new webpack.EnvironmentPlugin(JSON.parse(JSON.stringify(env))),
     new ExtractTextPlugin(env.NODE_ENV === 'production' ? '[name]-[hash].css' : '[name].css'),
+
+    // Workaround for angular/angular#11580
+    new webpack.ContextReplacementPlugin(
+      // The (\\|\/) piece accounts for path separators in *nix and Windows
+      /angular(\\|\/)core(\\|\/)@angular/,
+      resolve(__dirname, '../../'), // location of your src
+      {} // a map of your routes
+    ),
+
     new ManifestPlugin({
       publicPath: output.publicPath,
       writeToFileEmit: true
