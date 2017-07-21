@@ -323,9 +323,8 @@ class ApplicationController < ActionController::Base
     if params[:model] == "physical_servers_with_host"
       options.merge!(generate_options)
     end
-
     options[:parent] = options[:parent] || @parent
-    options[:association] = HAS_ASSOCATION[params[:model]] if HAS_ASSOCATION.include? params[:model]
+    options[:association] = HAS_ASSOCATION[params[:model]] if HAS_ASSOCATION.include?(params[:model])
     options[:selected_ids] = params[:records]
     options
   end
@@ -418,6 +417,7 @@ class ApplicationController < ActionController::Base
     bc_text = @record.kind_of?(Vm) ? _("Event Logs") : _("ESX Logs")
     @sb[:action] = params[:action]
     @explorer = true if @record.kind_of?(VmOrTemplate)
+    params[:display] = "event_logs"
     if !params[:show].nil? || !params[:x_show].nil?
       id = params[:show] ? params[:show] : params[:x_show]
       @item = @record.event_logs.find(from_cid(id))
@@ -1106,7 +1106,7 @@ class ApplicationController < ActionController::Base
     default = "100/#{(@listicon || view.db).underscore}.png"
     image = case item
             when EventLog
-              "100/#{@listicon.downcase}.png"
+              "100/event_logs.png"
             when OsProcess
               "100/processes.png"
             when Storage
@@ -1404,9 +1404,6 @@ class ApplicationController < ActionController::Base
       object_ids = @edit[:pol_items] unless @edit[:pol_items].nil?
     end
     object_ids   = params[:records].map(&:to_i) unless params[:records].nil?
-    if !object_ids.nil? && object_ids.length == 1 && !options[:parent].nil? && object_ids.include?(options[:parent].id)
-      object_ids   = nil
-    end
     db           = db.to_s
     dbname       = options[:dbname] || db.gsub('::', '_').downcase # Get db name as text
     db_sym       = (options[:gtl_dbname] || dbname).to_sym # Get db name as symbol

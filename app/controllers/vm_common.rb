@@ -890,6 +890,7 @@ module VmCommon
     end
     @lastaction = "scan_histories"
     @sb[:action] = params[:action]
+    params[:display] = "scan_histories"
     if !params[:show].nil? || !params[:x_show].nil?
       id = params[:show] ? params[:show] : params[:x_show]
       @item = ScanHistory.find(from_cid(id))
