@@ -201,7 +201,7 @@ module Mixins
         end
 
         private
-        
+
         def discover_type(controller)
           if controller == 'ems_infra'
             @discover_type = ExtManagementSystem.ems_infra_discovery_types

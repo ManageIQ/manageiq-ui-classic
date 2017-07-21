@@ -1,9 +1,8 @@
-- url = url_for_only_path :action => 'discover_field_changed'
+- url = url_for_only_path(:action => 'discover_field_changed')
 = render :partial => 'layouts/flash_msg'
-= form_tag({:action => 'discover'},
-           :id     => 'discover_form',
-           :class  => "form-horizontal",
-           :method => :post) do
+= form_tag({:action => 'discover'}, {:id     => 'discover_form',
+                                     :class  => "form-horizontal",
+                                     :method => :post}) do
   %h3
     = _('Discover Type')
   - i = 0
@@ -36,7 +35,7 @@
                          @from[order.to_sym],
                          :size              => "3",
                          :maxlength         => 3,
-                         "data-miq_focus"   => (index == 0),
+                         "data-miq_focus"   => index.zero?,
                          "data-miq_observe" => {:interval => '.5',
                                                 :url      => url}.to_json)
   .form-group
