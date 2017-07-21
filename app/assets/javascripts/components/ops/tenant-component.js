@@ -2,7 +2,7 @@ ManageIQ.angular.app.component('tenantComponent', {
   bindings: {
     recordId: '=?',
     divisible: '=',
-    parent: '=?',
+    ancestry: '=?',
     redirectUrl: '@',
   },
   controllerAs: 'vm',
@@ -23,7 +23,7 @@ function tenantFormController(API, miqService) {
     vm.tenantModel = {
       name: '',
       description: '',
-      parent: vm.parent,
+      ancestry: vm.ancestry,
       use_config_for_attributes: '',
       default: '',
     };
@@ -54,7 +54,7 @@ function tenantFormController(API, miqService) {
       name: vm.tenantModel.name,
       description: vm.tenantModel.description,
       divisible: vm.divisible,
-      parent: { id: vm.tenantModel.parent }}
+      parent: { id: vm.tenantModel.ancestry }}
     )
       .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl, true))
       .catch(miqService.handleFailure);
@@ -78,12 +78,8 @@ function tenantFormController(API, miqService) {
 
   // private functions
   function getTenantFormData(response) {
-    vm.tenantModel.name                      = response.name;
-    vm.tenantModel.description               = response.description;
-    vm.tenantModel.default                   = ! angular.isDefined(response.ancestry);
-    vm.tenantModel.use_config_for_attributes = response.use_config_for_attributes;
-    vm.tenantModel.parent                    = response.ancestry;
-    vm.tenantModel.divisible                 = response.divisible;
+    Object.assign(vm.tenantModel, response);
+    vm.tenantModel.default = ! angular.isDefined(response.ancestry);
 
     vm.afterGet = true;
     vm.entity = vm.tenantModel.divisible ? __('Tenant') : __('Project');

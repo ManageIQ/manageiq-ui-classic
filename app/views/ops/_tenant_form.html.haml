@@ -3,7 +3,7 @@
 = render :partial => "layouts/flash_msg"
 
 %tenant-component{"record-id"    => @tenant.id,
-                  :parent        => @tenant_parent,
+                  :ancestry      => @tenant_parent,
                   :divisible     => params[:tenant_type] == "tenant",
                   "redirect-url" => "/#{controller_name}/explorer",}
 
