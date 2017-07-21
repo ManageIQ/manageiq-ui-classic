@@ -16,7 +16,7 @@ class ApplicationHelper::Toolbar::AnsibleCredentialCenter < ApplicationHelper::T
         button(
           :embedded_automation_manager_credentials_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove this Credential'),
+          t = N_('Remove this Credential from Inventory'),
           t,
           :klass => ApplicationHelper::Button::EmbeddedAnsible,
           :url_parms => "&refresh=y",

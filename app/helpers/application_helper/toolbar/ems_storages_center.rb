@@ -19,8 +19,8 @@ class ApplicationHelper::Toolbar::EmsStoragesCenter < ApplicationHelper::Toolbar
                      button(
                        :ems_storage_delete,
                        'pficon pficon-delete fa-lg',
-                       N_('Remove selected Storage Managers'),
-                       N_('Remove Storage Managers'),
+                       N_('Remove selected Storage Managers from Inventory'),
+                       N_('Remove Storage Managers from Inventory'),
                        :url_parms => "main_div",
                        :confirm   => N_("Warning: The selected Storage Managers and ALL of their components will be permanently removed!"),
                        :enabled   => false,

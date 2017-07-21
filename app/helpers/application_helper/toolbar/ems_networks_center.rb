@@ -35,8 +35,8 @@ class ApplicationHelper::Toolbar::EmsNetworksCenter < ApplicationHelper::Toolbar
         button(
           :ems_network_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove selected Network Providers'),
-          N_('Remove Network Providers'),
+          N_('Remove selected Network Providers from Inventory'),
+          N_('Remove Network Providers from Inventory'),
           :url_parms => "main_div",
           :confirm   => N_("Warning: The selected Network Providers and ALL of their components will be permanently removed!"),
           :enabled   => false,

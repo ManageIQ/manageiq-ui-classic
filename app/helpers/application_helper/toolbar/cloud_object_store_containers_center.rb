@@ -31,8 +31,8 @@ class ApplicationHelper::Toolbar::CloudObjectStoreContainersCenter < Application
           button(
             :cloud_object_store_container_delete,
             'pficon pficon-delete fa-lg',
-            N_('Remove selected Object Storage Containers'),
-            N_('Remove Object Storage Containers'),
+            N_('Remove selected Object Storage Containers from Inventory'),
+            N_('Remove Object Storage Containers from Inventory'),
             :url_parms => "main_div",
             :confirm   => N_("Warning: The selected Object Storage Containers and ALL related Objects will be "\
                              "permanently removed!"),

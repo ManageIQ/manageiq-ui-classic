@@ -15,8 +15,8 @@ class ApplicationHelper::Toolbar::IsoDatastoresCenter < ApplicationHelper::Toolb
         button(
           :iso_datastore_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove selected ISO Datastores'),
-          N_('Remove ISO Datastores'),
+          N_('Remove selected ISO Datastores from Inventory'),
+          N_('Remove ISO Datastores from Inventory'),
           :url_parms => "main_div",
           :confirm   => N_("Warning: The selected ISO Datastores and ALL of their components will be permanently removed!"),
           :enabled   => false,

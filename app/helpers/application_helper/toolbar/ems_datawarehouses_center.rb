@@ -34,8 +34,8 @@ class ApplicationHelper::Toolbar::EmsDatawarehousesCenter < ApplicationHelper::T
         button(
           :ems_datawarehouse_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove selected Datawarehouse Providers'),
-          N_('Remove Datawarehouse Providers'),
+          N_('Remove selected Datawarehouse Providers from Inventory'),
+          N_('Remove Datawarehouse Providers from Inventory'),
           :url_parms => "main_div",
           :confirm   => N_("Warning: The selected Datawarehouse Providers and ALL " \
                            "of their components will be permanently removed!"),

@@ -40,7 +40,7 @@ class ApplicationHelper::Toolbar::AutomationManagerProvidersCenter < Application
         button(
           :automation_manager_delete_provider,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove selected items'),
+          t = N_('Remove selected items from Inventory'),
           t,
           :url       => "delete",
           :url_parms => "main_div",

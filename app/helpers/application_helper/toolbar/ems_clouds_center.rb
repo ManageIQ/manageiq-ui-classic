@@ -42,8 +42,8 @@ class ApplicationHelper::Toolbar::EmsCloudsCenter < ApplicationHelper::Toolbar::
         button(
           :ems_cloud_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove selected Cloud Providers'),
-          N_('Remove Cloud Providers'),
+          N_('Remove selected Cloud Providers from Inventory'),
+          N_('Remove Cloud Providers from Inventory'),
           :url_parms => "main_div",
           :confirm   => N_("Warning: The selected Cloud Providers and ALL related components will be permanently removed!"),
           :enabled   => false,

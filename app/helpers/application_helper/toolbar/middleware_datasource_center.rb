@@ -43,7 +43,7 @@ class ApplicationHelper::Toolbar::MiddlewareDatasourceCenter < ApplicationHelper
           button(
             :middleware_datasource_remove,
             'pficon pficon-delete fa-lg',
-            N_('Remove Middleware Datasource'),
+            N_('Remove Middleware Datasource from Inventory'),
             N_('Remove'),
             :confirm => N_('Do you want to remove this Datasource? Some Applications could be using this '\
  +                             'Datasource and may malfunction if it is deleted.'),

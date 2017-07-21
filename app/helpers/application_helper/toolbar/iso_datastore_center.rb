@@ -9,7 +9,7 @@ class ApplicationHelper::Toolbar::IsoDatastoreCenter < ApplicationHelper::Toolba
         button(
           :iso_datastore_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove this ISO Datastore'),
+          t = N_('Remove this ISO Datastore from Inventory'),
           t,
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This ISO Datastore and ALL of its components will be permanently removed!")),

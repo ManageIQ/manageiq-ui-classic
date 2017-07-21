@@ -46,7 +46,7 @@ class ApplicationHelper::Toolbar::AnsibleRepositoriesCenter < ApplicationHelper:
         button(
           :embedded_configuration_script_source_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove selected Repositories'),
+          t = N_('Remove selected Repositories from Inventory'),
           t,
           :klass => ApplicationHelper::Button::EmbeddedAnsible,
           :url_parms => "unused_div",

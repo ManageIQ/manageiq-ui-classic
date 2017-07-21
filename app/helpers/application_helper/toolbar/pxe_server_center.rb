@@ -14,7 +14,7 @@ class ApplicationHelper::Toolbar::PxeServerCenter < ApplicationHelper::Toolbar::
         button(
           :pxe_server_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove this PXE Server'),
+          t = N_('Remove this PXE Server from Inventory'),
           t,
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This PXE Server and ALL of its components will be permanently removed!")),

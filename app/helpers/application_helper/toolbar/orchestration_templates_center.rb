@@ -32,9 +32,9 @@ class ApplicationHelper::Toolbar::OrchestrationTemplatesCenter < ApplicationHelp
         button(
           :orchestration_template_remove,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove selected Orchestration Templates'),
+          t = N_('Remove selected Orchestration Templates from Inventory'),
           t,
-          :confirm   => N_("Remove selected Orchestration Templates?"),
+          :confirm   => N_("Remove selected Orchestration Templates from Inventory?"),
           :url_parms => "main_div",
           :enabled   => false,
           :onwhen    => "1+"),

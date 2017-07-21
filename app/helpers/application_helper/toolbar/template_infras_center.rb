@@ -54,8 +54,8 @@ class ApplicationHelper::Toolbar::TemplateInfrasCenter < ApplicationHelper::Tool
         button(
           :miq_template_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove selected Templates'),
-          N_('Remove Templates'),
+          N_('Remove selected Templates from Inventory'),
+          N_('Remove Templates from Inventory'),
           :url_parms => "main_div",
           :confirm   => N_("Warning: The selected Templates and ALL of their components will be permanently removed!"),
           :enabled   => false,

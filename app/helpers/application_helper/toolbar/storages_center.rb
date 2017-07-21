@@ -20,8 +20,8 @@ class ApplicationHelper::Toolbar::StoragesCenter < ApplicationHelper::Toolbar::B
         button(
           :storage_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove selected Datastores'),
-          N_('Remove Datastores'),
+          N_('Remove selected Datastores from Inventory'),
+          N_('Remove Datastores from Inventory'),
           :url_parms => "main_div",
           :confirm   => N_("Warning: The selected Datastores and ALL of their components will be permanently removed!"),
           :enabled   => false,

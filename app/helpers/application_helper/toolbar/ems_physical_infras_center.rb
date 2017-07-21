@@ -40,8 +40,8 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
         button(
           :ems_physical_infra_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove selected Infrastructure Providers'),
-          N_('Remove Infrastructure Providers'),
+          N_('Remove selected Infrastructure Providers from Inventory'),
+          N_('Remove Infrastructure Providers from Inventory'),
           :url_parms => "main_div",
           :confirm   => N_("Warning: The selected Infrastructure Providers and ALL of their components will be permanently removed!"),
           :enabled   => false,

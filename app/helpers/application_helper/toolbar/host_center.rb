@@ -58,8 +58,8 @@ class ApplicationHelper::Toolbar::HostCenter < ApplicationHelper::Toolbar::Basic
         button(
           :host_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove this item'),
-          N_('Remove item'),
+          N_('Remove this item from Inventory'),
+          N_('Remove item from Inventory'),
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This item and ALL of its components will be permanently removed!?")),
       ]

@@ -21,7 +21,7 @@ class ApplicationHelper::Toolbar::EmsDatawarehouseCenter < ApplicationHelper::To
         button(
           :ems_datawarehouse_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove this Datawarehouse Provider'),
+          t = N_('Remove this Datawarehouse Provider from Inventory'),
           t,
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This Datawarehouse Provider and ALL" \

@@ -49,8 +49,8 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
         button(
           :vm_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove this Virtual machine'),
-          N_('Remove Virtual Machine'),
+          N_('Remove this Virtual machine from Inventory'),
+          N_('Remove Virtual Machine from Inventory'),
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This Virtual Machine and ALL of its components will be permanently removed!")),
         button(

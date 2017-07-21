@@ -27,7 +27,7 @@ class ApplicationHelper::Toolbar::EmsCloudCenter < ApplicationHelper::Toolbar::B
         button(
           :ems_cloud_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove this Cloud Provider'),
+          t = N_('Remove this Cloud Provider from Inventory'),
           t,
           :url_parms => "&refresh=y",
           :confirm   => N_("Warning: This Cloud Provider and ALL of its components will be permanently removed!")),

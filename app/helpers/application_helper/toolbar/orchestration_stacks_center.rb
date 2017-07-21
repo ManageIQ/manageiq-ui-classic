@@ -9,8 +9,8 @@ class ApplicationHelper::Toolbar::OrchestrationStacksCenter < ApplicationHelper:
         button(
           :orchestration_stack_delete,
           'pficon pficon-delete fa-lg',
-          N_('Remove selected Orchestration Stacks'),
-          N_('Remove Orchestration Stacks'),
+          N_('Remove selected Orchestration Stacks from Inventory'),
+          N_('Remove Orchestration Stacks from Inventory'),
           :url_parms => "main_div",
           :confirm   => N_("Warning: The selected Orchestration Stacks and ALL of their components will be permanently removed!"),
           :enabled   => false,
