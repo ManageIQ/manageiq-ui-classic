@@ -214,6 +214,8 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     // model attribute with AWS.
     vm.cloudVolumeModel.aws_volume_type = data.volume_type;
     vm.cloudVolumeModel.aws_availability_zone_id = data.availability_zone.ems_ref;
+    vm.cloudVolumeModel.aws_encryption = data.encrypted;
+    vm.cloudVolumeModel.aws_iops = data.iops;
 
     // If volume was created from snapshot and this snapshot still exists
     if (data.base_snapshot) {
@@ -221,7 +223,9 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     }
 
     // Update the IOPS based on the current volume size.
-    vm.sizeChanged(vm.cloudVolumeModel.size);
+    if (angular.isUndefined(vm.cloudVolumeModel.aws_iops)) {
+      vm.sizeChanged(vm.cloudVolumeModel.size);
+    }
 
     setForm();
   };
