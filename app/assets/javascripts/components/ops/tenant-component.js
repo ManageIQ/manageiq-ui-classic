@@ -43,7 +43,11 @@ function tenantFormController(API, miqService) {
 
   vm.saveClicked = function() {
     miqService.sparkleOn();
-    API.put('/api/tenants/' + vm.recordId, {name: vm.tenantModel.name, description: vm.tenantModel.description})
+    API.put('/api/tenants/' + vm.recordId, {
+      name: vm.tenantModel.name,
+      description: vm.tenantModel.description,
+      use_config_for_attributes: vm.tenantModel.use_config_for_attributes,
+    })
       .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully saved.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl, true))
       .catch(miqService.handleFailure);
   };
@@ -73,6 +77,12 @@ function tenantFormController(API, miqService) {
       miqService.redirectBack(sprintf(__('Creation of new %s was canceled by the user.'), vm.entity), 'warning', vm.redirectUrl);
     } else {
       miqService.redirectBack(sprintf(__('Edit of %s \"%s\" was canceled by the user.'), vm.entity, vm.tenantModel.name), 'warning', vm.redirectUrl);
+    }
+  };
+
+  vm.changeUseConfigForAttributes = function() {
+    if (vm.tenantModel.use_config_for_attributes) {
+      vm.tenantModel.name = vm.modelCopy.name;
     }
   };
 
