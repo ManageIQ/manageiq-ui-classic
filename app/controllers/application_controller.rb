@@ -325,7 +325,7 @@ class ApplicationController < ActionController::Base
     end
 
     options[:parent] = options[:parent] || @parent
-    options[:association] = params[:model] if HAS_ASSOCATION.include? params[:model]
+    options[:association] = HAS_ASSOCATION[params[:model]] if HAS_ASSOCATION.include? params[:model]
     options[:selected_ids] = params[:records]
     options
   end
@@ -1105,8 +1105,10 @@ class ApplicationController < ActionController::Base
   def fileicon(item, view)
     default = "100/#{(@listicon || view.db).underscore}.png"
     image = case item
-            when EventLog, OsProcess
+            when EventLog
               "100/#{@listicon.downcase}.png"
+            when OsProcess
+              "100/processes.png"
             when Storage
               "100/piecharts/datastore/#{calculate_pct_img(item.v_free_space_percent_of_total)}.png"
             when MiqRequest
@@ -1402,6 +1404,9 @@ class ApplicationController < ActionController::Base
       object_ids = @edit[:pol_items] unless @edit[:pol_items].nil?
     end
     object_ids   = params[:records].map(&:to_i) unless params[:records].nil?
+    if !object_ids.nil? && object_ids.length == 1 && !options[:parent].nil? && object_ids.include?(options[:parent].id)
+      object_ids   = nil
+    end
     db           = db.to_s
     dbname       = options[:dbname] || db.gsub('::', '_').downcase # Get db name as text
     db_sym       = (options[:gtl_dbname] || dbname).to_sym # Get db name as symbol
