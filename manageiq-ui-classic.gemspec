@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency "coffee-rails"
   s.add_dependency "jquery-hotkeys-rails"
   s.add_dependency "lodash-rails", "~>3.10.0"
+  s.add_dependency "more_core_extensions", "~>3.2"
   s.add_dependency "patternfly-sass", "~> 3.23.1"
   s.add_dependency "sass-rails"
   s.add_dependency "high_voltage", "~> 3.0.0"
