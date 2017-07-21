@@ -495,6 +495,11 @@ module UiConstants
 
   UTF_16BE_BOM = [254, 255].freeze
   UTF_16LE_BOM = [255, 254].freeze
+
+  CHAREGEBACK_ALLOCATED_METHODS = {}
+  CHAREGEBACK_ALLOCATED_METHODS[:max] = N_('Maximum')
+  CHAREGEBACK_ALLOCATED_METHODS[:avg] = N_('Average')
+  DEFAULT_CHARGEBACK_ALLOCATED_METHOD = CHAREGEBACK_ALLOCATED_METHODS.keys.first
 end
 
 # Make these constants globally available
