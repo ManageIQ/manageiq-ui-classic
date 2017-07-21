@@ -732,13 +732,30 @@ module MiqAeCustomizationController::Dialogs
     res
   end
 
+  def generic_tree_node(key, text, image, tip = nil, options = {})
+    text = ERB::Util.html_escape(text) unless text.html_safe?
+    node = {
+      :key   => key,
+      :title => text,
+    }
+    node[:image]        = ActionController::Base.helpers.image_path(image) if image
+    node[:addClass]     = options[:style_class]      if options[:style_class]
+    node[:cfmeNoClick]  = true                       if options[:cfme_no_click]
+    node[:expand]       = options[:expand]           if options[:expand]
+    node[:hideCheckbox] = true                       if options[:hideCheckbox]
+    node[:noLink]       = true                       if options[:noLink]
+    node[:select]       = options[:select]           if options[:select]
+    node[:tooltip]      = ERB::Util.html_escape(tip) if tip && !tip.html_safe?
+    node
+  end
+
   # Build a Dialogs tree
   def dialog_edit_build_tree
     x_tree_init(:dialog_edit_tree, :dialog_edit, nil)
     # building tab nodes under a dialog
     tab_nodes = []
     Array(@edit[:new][:tabs]).each_with_index do |tab, i|
-      tab_node = TreeNodeBuilder.generic_tree_node(
+      tab_node = generic_tree_node(
         "root_#{tab[:id]}-#{i}",
         tab[:label] || _('[New Tab]'),
         "100/dialog_tab.png",
@@ -751,7 +768,7 @@ module MiqAeCustomizationController::Dialogs
       group_nodes = []
       unless tab[:groups].blank?
         tab[:groups].each_with_index do |group, j|
-          group_node = TreeNodeBuilder.generic_tree_node(
+          group_node = generic_tree_node(
             "#{tab_node[:key]}_#{group[:id]}-#{j}",
             group[:label] || _('[New Box]'),
             "100/dialog_group.png",
@@ -770,7 +787,7 @@ module MiqAeCustomizationController::Dialogs
               else
                 field_tooltip = "#{@edit[:field_types][field[:typ]]}: #{field[:description]}"
               end
-              field_node = TreeNodeBuilder.generic_tree_node(
+              field_node = generic_tree_node(
                 "#{group_node[:key]}_#{field[:id]}-#{k}",
                 field[:label] || _('[New Element]'),
                 "100/dialog_field.png",
@@ -789,7 +806,7 @@ module MiqAeCustomizationController::Dialogs
       tab_nodes.push(tab_node)
     end
 
-    base_node = TreeNodeBuilder.generic_tree_node(
+    base_node = generic_tree_node(
       "root",
       (@edit[:new][:label].to_s || _('[New Dialog]')),
       "100/dialog.png",
