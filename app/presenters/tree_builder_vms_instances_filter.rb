@@ -11,7 +11,7 @@ class TreeBuilderVmsInstancesFilter < TreeBuilderVmsFilter
 
   def root_options
     {
-      :title   => _("All VMs & Instances"),
+      :text    => _("All VMs & Instances"),
       :tooltip => _("All of the VMs & Instances that I can see")
     }
   end

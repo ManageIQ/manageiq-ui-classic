@@ -66,7 +66,7 @@ describe TreeBuilderAlertProfileObj do
     describe '#root_options' do
       it 'sets root_options correctly' do
         res = subject.send(:root_options)
-        expect(res[:title]).to eq("Tags")
+        expect(res[:text]).to eq("Tags")
         expect(res[:tooltip]).to eq("")
         expect(res[:icon]).to eq("pficon pficon-folder-open")
         expect(res[:hideCheckbox]).to be_truthy

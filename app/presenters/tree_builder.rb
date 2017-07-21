@@ -210,7 +210,7 @@ class TreeBuilder
 
     child_nodes = children.map do |child|
       # already a node? FIXME: make a class for node
-      if child.kind_of?(Hash) && child.key?(:title) && child.key?(:key) && child.key?(:image)
+      if child.kind_of?(Hash) && child.key?(:text) && child.key?(:key) && child.key?(:image)
         child
       else
         x_build_node_tree(child, nil, options)

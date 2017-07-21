@@ -25,7 +25,7 @@ class TreeBuilderPolicySimulation < TreeBuilder
 
   def root_options
     {
-      :title       => ViewHelper.content_tag(:strong, @root_name),
+      :text        => ViewHelper.content_tag(:strong, @root_name),
       :tooltip     => @root_name,
       :icon        => 'pficon pficon-virtual-machine',
       :cfmeNoClick => true

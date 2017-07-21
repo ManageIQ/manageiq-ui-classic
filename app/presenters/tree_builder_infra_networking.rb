@@ -22,7 +22,7 @@ class TreeBuilderInfraNetworking < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("All Distributed Switches"),
+      :text    => t = _("All Distributed Switches"),
       :tooltip => t
     }
   end

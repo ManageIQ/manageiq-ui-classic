@@ -13,7 +13,7 @@ class TreeBuilderCondition < TreeBuilder
   # level 0 - root
   def root_options
     {
-      :title   => t = _("All Conditions"),
+      :text    => t = _("All Conditions"),
       :tooltip => t
     }
   end

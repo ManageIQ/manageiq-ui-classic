@@ -28,7 +28,7 @@ class TreeBuilderSnapshots < TreeBuilder
 
   def root_options
     {
-      :title       => @record.name,
+      :text        => @record.name,
       :tooltip     => @record.name,
       :icon        => 'pficon pficon-virtual-machine',
       :cfmeNoClick => true

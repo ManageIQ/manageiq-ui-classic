@@ -15,7 +15,7 @@ class TreeBuilderReportSchedules < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("All Schedules"),
+      :text    => t = _("All Schedules"),
       :tooltip => t,
       :icon    => 'fa fa-clock-o'
     }

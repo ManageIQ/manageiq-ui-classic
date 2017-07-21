@@ -21,7 +21,7 @@ class TreeBuilderImages < TreeBuilder
 
   def root_options
     {
-      :title   => _("Images by Provider"),
+      :text    => _("Images by Provider"),
       :tooltip => _("All Images by Provider that I can see")
     }
   end

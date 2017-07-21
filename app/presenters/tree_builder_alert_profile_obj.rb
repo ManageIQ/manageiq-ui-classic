@@ -8,7 +8,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
   end
 
   def override(node, object, _pid, _options)
-    node[:title] = (object.name.presence || object.description) unless object.kind_of?(MiddlewareServer)
+    node[:text] = (object.name.presence || object.description) unless object.kind_of?(MiddlewareServer)
     node[:hideCheckbox] = false
     node[:select] = @selected.include?(object.id)
   end
@@ -31,7 +31,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
 
   def root_options
     {
-      :title        => @cat_tree ? _("Tags") : ui_lookup(:tables => @assign_to),
+      :text         => @cat_tree ? _("Tags") : ui_lookup(:tables => @assign_to),
       :tooltip      => "",
       :icon         => "pficon pficon-folder-open",
       :hideCheckbox => true,

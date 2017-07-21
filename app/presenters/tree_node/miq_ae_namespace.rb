@@ -23,12 +23,6 @@ module TreeNode
 
     set_attribute(:klass) { @object.domain? && @object.enabled? ? nil : 'striketrough' }
 
-    private
-
-    def model
-      @object.domain? ? 'MiqAeDomain' : super
-    end
-
     def text
       title = super
       if @object.domain?
@@ -40,6 +34,12 @@ module TreeNode
         end
       end
       title
+    end
+
+    private
+
+    def model
+      @object.domain? ? 'MiqAeDomain' : super
     end
   end
 end

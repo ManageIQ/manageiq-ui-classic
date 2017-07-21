@@ -12,7 +12,7 @@ class TreeBuilderChargebackReports < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("Saved Chargeback Reports"),
+      :text    => t = _("Saved Chargeback Reports"),
       :tooltip => t
     }
   end

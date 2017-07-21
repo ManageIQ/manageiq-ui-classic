@@ -9,7 +9,7 @@ module TreeNode
       [image, icon]
     end
 
-    set_attribute(:title) do
+    set_attribute(:text) do
       if @object.tenant.ancestors.empty?
         @object.name
       else

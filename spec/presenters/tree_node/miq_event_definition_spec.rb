@@ -6,5 +6,5 @@ describe TreeNode::MiqEventDefinition do
 
   include_examples 'TreeNode::Node#key prefix', 'ev-'
   include_examples 'TreeNode::Node#icon', 'fa fa-star'
-  include_examples 'TreeNode::Node#title description'
+  include_examples 'TreeNode::Node#text description'
 end

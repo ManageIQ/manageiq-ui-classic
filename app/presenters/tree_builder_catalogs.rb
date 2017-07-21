@@ -12,7 +12,7 @@ class TreeBuilderCatalogs < TreeBuilderCatalogsClass
 
   def root_options
     {
-      :title   => t = _("All Catalogs"),
+      :text    => t = _("All Catalogs"),
       :tooltip => t
     }
   end

@@ -30,43 +30,43 @@ describe TreeNode::Node do
 
   describe '#to_h' do
     before { allow(subject).to receive(:image).and_return('') }
-    context 'title contains %2f' do
+    context 'text contains %2f' do
       let(:object) { OpenStruct.new(:name => 'foo %2f bar') }
 
       it 'does not escape' do
-        expect(subject.to_h[:title]).to eq('foo %2f bar')
+        expect(subject.to_h[:text]).to eq('foo %2f bar')
       end
     end
 
-    context 'title contains /' do
+    context 'text contains /' do
       let(:object) { OpenStruct.new(:name => 'foo / bar') }
 
       it 'does not escape' do
-        expect(subject.to_h[:title]).to eq('foo / bar')
+        expect(subject.to_h[:text]).to eq('foo / bar')
       end
     end
 
-    context 'title contains &nbsp;' do
+    context 'text contains &nbsp;' do
       let(:object) { OpenStruct.new(:name => 'foo &nbsp; bar') }
 
       it 'escapes the & to &amp' do
-        expect(subject.to_h[:title]).to eq('foo &amp;nbsp; bar')
+        expect(subject.to_h[:text]).to eq('foo &amp;nbsp; bar')
       end
     end
 
-    context 'title contains script' do
+    context 'text contains script' do
       let(:object) { OpenStruct.new(:name => '<script>alert("Hacked!");</script>') }
 
       it 'escapes the special characters' do
-        expect(subject.to_h[:title]).to eq('&lt;script&gt;alert(&quot;Hacked!&quot;);&lt;/script&gt;')
+        expect(subject.to_h[:text]).to eq('&lt;script&gt;alert(&quot;Hacked!&quot;);&lt;/script&gt;')
       end
     end
   end
 
-  describe '#title' do
+  describe '#text' do
     let(:object) { OpenStruct.new(:name => 'name') }
     it 'returns with the object name' do
-      expect(subject.title).to eq('name')
+      expect(subject.text).to eq('name')
     end
   end
 

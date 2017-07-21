@@ -14,15 +14,14 @@ class TreeBuilderReportRoles < TreeBuilder
   end
 
   def root_options
-    user = User.current_user
-    title = if user.super_admin_user?
-              _("All EVM Groups")
-            else
-              _("My EVM Groups")
-            end
+    text = if User.current_user.super_admin_user?
+             _("All EVM Groups")
+           else
+             _("My EVM Groups")
+           end
     {
-      :title   => title,
-      :tooltip => title,
+      :text    => text,
+      :tooltip => text,
       :icon    => 'ff ff-group'
     }
   end

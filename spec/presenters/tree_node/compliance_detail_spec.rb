@@ -9,7 +9,7 @@ describe TreeNode::ComplianceDetail do
 
   describe '#title' do
     it 'returns with the title' do
-      expect(subject.title).to eq("<strong>Policy: </strong>#{object.miq_policy_desc}")
+      expect(subject.text).to eq("<strong>Policy: </strong>#{object.miq_policy_desc}")
     end
   end
 

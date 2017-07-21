@@ -17,7 +17,7 @@ class TreeBuilderOpsVmdb < TreeBuilderOps
 
   def root_options
     {
-      :title   => t = _("VMDB"),
+      :text    => t = _("VMDB"),
       :tooltip => t,
       :icon    => 'fa fa-database'
     }

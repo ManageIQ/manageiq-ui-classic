@@ -10,7 +10,7 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
 
   def root_options
     {
-      :title   => t = _("Object Types"),
+      :text    => t = _("Object Types"),
       :tooltip => t
     }
   end

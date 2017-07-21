@@ -7,7 +7,7 @@ class TreeBuilderChargebackRates < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("Rates"),
+      :text    => t = _("Rates"),
       :tooltip => t
     }
   end

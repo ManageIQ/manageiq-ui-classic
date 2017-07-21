@@ -11,10 +11,10 @@ class TreeBuilderPxeCustomizationTemplates < TreeBuilder
   end
 
   def root_options
-    title = _("All Customization Templates - System Image Types")
+    text = _("All Customization Templates - System Image Types")
     {
-      :title   => title,
-      :tooltip => title
+      :text    => text,
+      :tooltip => text
     }
   end
 

@@ -9,7 +9,7 @@ describe TreeNode::Compliance do
 
   describe '#title' do
     it 'returns with the title' do
-      expect(subject.title).to eq("<strong>Compliance Check on: </strong>#{object.timestamp}")
+      expect(subject.text).to eq("<strong>Compliance Check on: </strong>#{object.timestamp}")
     end
   end
 

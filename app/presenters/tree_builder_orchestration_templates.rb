@@ -13,7 +13,7 @@ class TreeBuilderOrchestrationTemplates < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("All Orchestration Templates"),
+      :text    => t = _("All Orchestration Templates"),
       :tooltip => t
     }
   end

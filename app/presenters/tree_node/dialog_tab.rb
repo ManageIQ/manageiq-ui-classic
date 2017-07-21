@@ -1,5 +1,5 @@
 module TreeNode
   class DialogTab < Node
-    set_attribute(:title, &:label)
+    set_attribute(:text, &:label)
   end
 end

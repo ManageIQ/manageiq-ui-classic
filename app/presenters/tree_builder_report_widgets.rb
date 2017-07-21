@@ -11,7 +11,7 @@ class TreeBuilderReportWidgets < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("All Widgets"),
+      :text    => t = _("All Widgets"),
       :tooltip => t
     }
   end

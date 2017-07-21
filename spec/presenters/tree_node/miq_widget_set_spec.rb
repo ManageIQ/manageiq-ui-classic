@@ -6,5 +6,5 @@ describe TreeNode::MiqWidgetSet do
 
   include_examples 'TreeNode::Node#key prefix', '-'
   include_examples 'TreeNode::Node#icon', 'fa fa-tachometer'
-  include_examples 'TreeNode::Node#tooltip same as #title'
+  include_examples 'TreeNode::Node#tooltip same as #text'
 end

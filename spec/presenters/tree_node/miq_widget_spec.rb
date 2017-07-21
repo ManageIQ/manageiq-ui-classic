@@ -9,7 +9,7 @@ describe TreeNode::MiqWidget do
 
   describe '#tooltip' do
     it 'returns with the same as node title' do
-      expect(subject.tooltip).to eq(subject.title)
+      expect(subject.tooltip).to eq(subject.text)
     end
   end
 end

@@ -12,7 +12,7 @@ describe TreeNode::ServiceTemplateCatalog do
 
   describe '#title' do
     it 'returns with the catalog name and tenant name as a suffix' do
-      expect(subject.title).to eq("#{object.name} (#{object.tenant.name})")
+      expect(subject.text).to eq("#{object.name} (#{object.tenant.name})")
     end
   end
 end

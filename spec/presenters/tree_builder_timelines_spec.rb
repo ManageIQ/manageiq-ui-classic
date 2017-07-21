@@ -7,7 +7,7 @@ describe TreeBuilderTimelines do
                        :rpt_group     => 'First - Second')
   end
 
-  subject { TreeBuilderTimelines.new(:timelines_tree, :timelines, {}, true, :title => 'Menu') }
+  subject { TreeBuilderTimelines.new(:timelines_tree, :timelines, {}, true, :text => 'Menu') }
   let(:first_level) { subject.send(:x_get_tree_roots, false, nil) }
 
   describe '#tree_init_options' do

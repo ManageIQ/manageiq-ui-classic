@@ -9,11 +9,11 @@ describe TreeNode::MiqServer do
 
   include_examples 'TreeNode::Node#key prefix', 'svr-'
   include_examples 'TreeNode::Node#icon', 'pficon pficon-server'
-  include_examples 'TreeNode::Node#tooltip same as #title'
+  include_examples 'TreeNode::Node#tooltip same as #text'
 
   describe '#title' do
     it 'returns with the title' do
-      expect(subject.title).to eq("Server: #{object.name} [#{object.id}]")
+      expect(subject.text).to eq("Server: #{object.name} [#{object.id}]")
     end
   end
 

@@ -10,7 +10,7 @@ describe TreeNode::MiqScsiTarget do
 
   describe '#title' do
     it 'returns with the title' do
-      expect(subject.title).to eq("SCSI Target #{object.target} (#{object.iscsi_name})")
+      expect(subject.text).to eq("SCSI Target #{object.target} (#{object.iscsi_name})")
     end
   end
 end

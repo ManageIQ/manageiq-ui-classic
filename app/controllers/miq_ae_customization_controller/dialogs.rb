@@ -735,8 +735,8 @@ module MiqAeCustomizationController::Dialogs
   def generic_tree_node(key, text, image, tip = nil, options = {})
     text = ERB::Util.html_escape(text) unless text.html_safe?
     node = {
-      :key   => key,
-      :title => text,
+      :key  => key,
+      :text => text,
     }
     node[:image]        = ActionController::Base.helpers.image_path(image) if image
     node[:addClass]     = options[:style_class]      if options[:style_class]

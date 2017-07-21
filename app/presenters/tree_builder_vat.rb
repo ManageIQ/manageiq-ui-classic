@@ -13,7 +13,7 @@ class TreeBuilderVat < TreeBuilderDatacenter
 
   def root_options
     {
-      :title   => @root.name,
+      :text    => @root.name,
       :tooltip => @root.name,
       :image   => "svg/vendor-#{@root.image_name}.svg"
     }

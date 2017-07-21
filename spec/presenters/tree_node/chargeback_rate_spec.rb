@@ -6,5 +6,5 @@ describe TreeNode::ChargebackRate do
 
   include_examples 'TreeNode::Node#key prefix', 'cr-'
   include_examples 'TreeNode::Node#icon', 'fa fa-file-text-o'
-  include_examples 'TreeNode::Node#title description'
+  include_examples 'TreeNode::Node#text description'
 end

@@ -7,7 +7,7 @@ class TreeBuilderProvisioningDialogs < TreeBuilderAeCustomization
 
   def root_options
     {
-      :title   => t = _("All Dialogs"),
+      :text    => t = _("All Dialogs"),
       :tooltip => t
     }
   end

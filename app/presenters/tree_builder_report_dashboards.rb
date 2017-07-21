@@ -17,7 +17,7 @@ class TreeBuilderReportDashboards < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("All Dashboards"),
+      :text    => t = _("All Dashboards"),
       :tooltip => t
     }
   end

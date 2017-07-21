@@ -13,7 +13,7 @@ class TreeBuilderVmsFilter < TreeBuilder
 
   def root_options
     {
-      :title   => _("All VMs"),
+      :text    => _("All VMs"),
       :tooltip => _("All of the VMs that I can see")
     }
   end

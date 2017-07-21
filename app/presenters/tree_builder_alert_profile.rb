@@ -19,7 +19,7 @@ class TreeBuilderAlertProfile < TreeBuilder
   # level 0 - root
   def root_options
     {
-      :title   => t = _("All Alert Profiles"),
+      :text    => t = _("All Alert Profiles"),
       :tooltip => t
     }
   end

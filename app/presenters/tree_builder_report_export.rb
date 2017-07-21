@@ -16,7 +16,7 @@ class TreeBuilderReportExport < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("Import / Export"),
+      :text    => t = _("Import / Export"),
       :tooltip => t,
       :icon    => 'fa fa-file-text-o'
     }

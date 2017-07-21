@@ -6,7 +6,7 @@ describe TreeNode::Classification do
   shared_examples 'TreeNode::Classification' do
     include_examples 'TreeNode::Node#key prefix', 'cl-'
     include_examples 'TreeNode::Node#icon', 'pficon pficon-folder-close'
-    include_examples 'TreeNode::Node#title description'
+    include_examples 'TreeNode::Node#text description'
 
     [:no_click, :hide_checkbox].each do |method|
       describe "##{method}" do

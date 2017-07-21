@@ -14,7 +14,7 @@ class TreeBuilderPxeServers < TreeBuilder
 
   def root_options
     {
-      :title   => t = _("All PXE Servers"),
+      :text    => t = _("All PXE Servers"),
       :tooltip => t
     }
   end
