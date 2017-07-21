@@ -39,41 +39,41 @@ function tenantFormController(API, miqService) {
       vm.afterGet = true;
       vm.modelCopy = angular.copy( vm.tenantModel );
     }
+  };
 
-    vm.saveClicked = function() {
-      miqService.sparkleOn();
-      API.put('/api/tenants/' + vm.recordId, {name: vm.tenantModel.name, description: vm.tenantModel.description})
-        .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully saved.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl, true))
-        .catch(miqService.handleFailure);
-    };
+  vm.saveClicked = function() {
+    miqService.sparkleOn();
+    API.put('/api/tenants/' + vm.recordId, {name: vm.tenantModel.name, description: vm.tenantModel.description})
+      .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully saved.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl, true))
+      .catch(miqService.handleFailure);
+  };
 
-    vm.addClicked = function() {
-      miqService.sparkleOn();
-      API.post('/api/tenants/', {
-        name: vm.tenantModel.name,
-        description: vm.tenantModel.description,
-        divisible: vm.divisible,
-        parent: { id: vm.tenantModel.parent }}
-      )
-        .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl, true))
-        .catch(miqService.handleFailure);
-    };
+  vm.addClicked = function() {
+    miqService.sparkleOn();
+    API.post('/api/tenants/', {
+      name: vm.tenantModel.name,
+      description: vm.tenantModel.description,
+      divisible: vm.divisible,
+      parent: { id: vm.tenantModel.parent }}
+    )
+      .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl, true))
+      .catch(miqService.handleFailure);
+  };
 
-    vm.resetClicked = function(angularForm) {
-      vm.tenantModel = angular.copy(vm.modelCopy);
-      angularForm.$setUntouched(true);
-      angularForm.$setPristine(true);
-      miqService.miqFlash('warn', __('All changes have been reset'));
-    };
+  vm.resetClicked = function(angularForm) {
+    vm.tenantModel = angular.copy(vm.modelCopy);
+    angularForm.$setUntouched(true);
+    angularForm.$setPristine(true);
+    miqService.miqFlash('warn', __('All changes have been reset'));
+  };
 
-    vm.cancelClicked = function() {
-      miqService.sparkleOn();
-      if (vm.newRecord) {
-        miqService.redirectBack(sprintf(__('Creation of new %s was canceled by the user.'), vm.entity), 'warning', vm.redirectUrl);
-      } else {
-        miqService.redirectBack(sprintf(__('Edit of %s \"%s\" was canceled by the user.'), vm.entity, vm.tenantModel.name), 'warning', vm.redirectUrl);
-      }
-    };
+  vm.cancelClicked = function() {
+    miqService.sparkleOn();
+    if (vm.newRecord) {
+      miqService.redirectBack(sprintf(__('Creation of new %s was canceled by the user.'), vm.entity), 'warning', vm.redirectUrl);
+    } else {
+      miqService.redirectBack(sprintf(__('Edit of %s \"%s\" was canceled by the user.'), vm.entity, vm.tenantModel.name), 'warning', vm.redirectUrl);
+    }
   };
 
   // private functions
