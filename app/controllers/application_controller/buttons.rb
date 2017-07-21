@@ -623,7 +623,13 @@ module ApplicationController::Buttons
     @layout = "miq_ae_automate_button"
     @sb[:button_groups] = nil
     @sb[:buttons] = nil
-    replace_right_cell(:action => "group_edit")
+
+    # Symbol selection based on active controller
+    if controller_path == 'miq_ae_customization'
+      replace_right_cell(:nodetype => 'group_edit')
+    else
+      replace_right_cell(:action => 'group_edit')
+    end
   end
 
   def button_new_edit(typ)
@@ -644,7 +650,13 @@ module ApplicationController::Buttons
     @layout = "miq_ae_automate_button"
     @sb[:buttons] = nil
     @sb[:button_groups] = nil
-    replace_right_cell(:action => "button_edit")
+
+    # Symbol selection based on active controller
+    if controller_path == 'miq_ae_customization'
+      replace_right_cell(:nodetype => 'button_edit')
+    else
+      replace_right_cell(:action => 'button_edit')
+    end
   end
 
   # Set form variables for button add/edit
