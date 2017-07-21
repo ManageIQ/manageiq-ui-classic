@@ -31,10 +31,6 @@ class EmsDatawarehouseController < ApplicationController
     ems_datawarehouse_path(*args)
   end
 
-  def fileicon(item, _view)
-    item.decorate.try(:fileicon)
-  end
-
   def new_ems_path
     new_ems_datawarehouse_path
   end

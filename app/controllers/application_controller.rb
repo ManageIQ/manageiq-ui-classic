@@ -1006,7 +1006,7 @@ class ApplicationController < ActionController::Base
       if has_listicon
         item = listicon_item(view, row['id'])
         icon, icon2, image = listicon_glyphicon(item)
-        image = fileicon(item, view) unless image
+        image = "100/#{(@listicon || view.db).underscore}.png" if icon.nil? && image.nil? # TODO: we want to get rid of this
         icon = nil if %w(pxe).include? params[:controller]
         new_row[:img_url] = ActionController::Base.helpers.image_path(image.to_s)
         new_row[:cells] << {:title => _('View this item'),
@@ -1080,10 +1080,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def calculate_pct_img(val)
-    val == 100 ? 20 : ((val + 2) / 5.25).round # val is the percentage value of free space
-  end
-
   def listicon_item(view, id = nil)
     id = @id if id.nil?
 
@@ -1093,39 +1089,6 @@ class ApplicationController < ActionController::Base
       klass = view.db.constantize
       klass.find(id)    # Read the record from the db
     end
-  end
-
-  # Return the icon classname for the list view icon of a db,id pair
-  # this always supersedes fileicon if not nil
-  def listicon_icon(item)
-    item.decorate.try(:fonticon)
-  end
-
-  # Return the image name for the list view icon of a db,id pair
-  def fileicon(item, view)
-    default = "100/#{(@listicon || view.db).underscore}.png"
-    image = case item
-            when EventLog
-              "100/event_logs.png"
-            when OsProcess
-              "100/processes.png"
-            when Storage
-              "100/piecharts/datastore/#{calculate_pct_img(item.v_free_space_percent_of_total)}.png"
-            when MiqRequest
-              item.decorate.fileicon || "100/#{@listicon.downcase}.png" if @listicon.try(:downcase)
-            when Account
-              "100/#{item.accttype}.png"
-            when SystemService
-              "100/service.png"
-            when ManageIQ::Providers::CloudManager::AuthKeyPair
-              "100/auth_key_pair.png"
-            when MiqWorker
-              "100/processmanager-#{item.normalized_type}.png" if item.try(:normalized_type)
-            else
-              item.decorate.try(:fileicon) if item
-            end
-
-    image || default
   end
 
   def get_host_for_vm(vm)
