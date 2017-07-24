@@ -61,14 +61,14 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
   $scope.saveClicked = function() {
     miqService.sparkleOn();
     API.put('/api/configuration_script_sources/' + repositoryId, vm.repositoryModel)
-      .then(getBack)
+      .then(vm.getBack)
       .catch(miqService.handleFailure);
   };
 
   $scope.addClicked = function() {
     miqService.sparkleOn();
     API.post('/api/configuration_script_sources/', vm.repositoryModel)
-      .then(getBack)
+      .then(vm.getBack)
       .catch(miqService.handleFailure);
   };
 
@@ -87,7 +87,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
     setForm();
   };
 
-  var getBack = function(response) {
+  vm.getBack = function(response) {
     var message = '';
     var error = false;
     if (response.hasOwnProperty('results')) {
@@ -132,4 +132,3 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
   };
   init();
 }]);
-
