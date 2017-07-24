@@ -42,25 +42,30 @@ function tenantFormController(API, miqService) {
   };
 
   vm.saveClicked = function() {
-    miqService.sparkleOn();
-    API.put('/api/tenants/' + vm.recordId, {
+    var saveObject = {
       name: vm.tenantModel.name,
       description: vm.tenantModel.description,
       use_config_for_attributes: vm.tenantModel.use_config_for_attributes,
-    })
-      .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully saved.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl))
-      .catch(miqService.handleFailure);
+    };
+    var saveMsg = sprintf(__('%s \"%s\" has been successfully saved.'), vm.entity, vm.tenantModel.name);
+    vm.saveWithAPI('put', '/api/tenants/' + vm.recordId, saveObject, saveMsg);
   };
 
   vm.addClicked = function() {
-    miqService.sparkleOn();
-    API.post('/api/tenants/', {
+    var saveObject = {
       name: vm.tenantModel.name,
       description: vm.tenantModel.description,
       divisible: vm.divisible,
-      parent: { id: vm.tenantModel.ancestry }}
-    )
-      .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl))
+      parent: { id: vm.tenantModel.ancestry },
+    };
+    var saveMsg = sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.tenantModel.name);
+    vm.saveWithAPI('post', '/api/tenants/', saveObject, saveMsg);
+  };
+
+  vm.saveWithAPI = function(method, url, saveObject, saveMsg) {
+    miqService.sparkleOn();
+    API[method](url, saveObject)
+      .then(miqService.redirectBack.bind(vm, saveMsg, 'success', vm.redirectUrl))
       .catch(miqService.handleFailure);
   };
 
