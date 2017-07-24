@@ -7,6 +7,10 @@ class ApplicationHelper::Button::VmConsole < ApplicationHelper::Button::Basic
     @record.vendor == 'vmware'
   end
 
+  def ems?
+    @record.ems_id
+  end
+
   def supported_vendor_api?
     ExtManagementSystem.find(@record.ems_id).api_version.to_f < unsupported_vendor_api_version
   end

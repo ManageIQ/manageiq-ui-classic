@@ -2,7 +2,7 @@ class ApplicationHelper::Button::VmVncConsole < ApplicationHelper::Button::VmCon
   needs :@record
 
   def visible?
-    return console_supports_type?('VNC') if vmware?
+    return ems? && console_supports_type?('VNC') if vmware?
     @record.console_supported?('vnc')
   end
 
