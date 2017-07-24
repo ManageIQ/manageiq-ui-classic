@@ -328,7 +328,7 @@ module Mixins
     def sync_form_to_instance
       @provider.name       = params[:name]
       @provider.url        = params[:url]
-      @provider.verify_ssl = params[:verify_ssl].eql?("on")
+      @provider.verify_ssl = params[:verify_ssl].eql?("on") || params[:verify_ssl].eql?("true")
       @provider.zone       = Zone.find_by(:name => params[:zone].to_s)
     end
 
