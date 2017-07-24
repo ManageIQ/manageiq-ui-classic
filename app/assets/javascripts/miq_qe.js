@@ -86,16 +86,38 @@ ManageIQ.qe.inFlight = function() {
 ManageIQ.qe.gtl = {
   actionsToFunction: function() {
     var startEnd = function(pageNumber) {
-    var start = (pageNumber - 1) * this.settings.perpage;
-    var end = start + this.settings.perPage;
-    return {
-      start: start,
-      end: end,
-    };
+      var start = (pageNumber - 1) * this.settings.perpage;
+      var end = start + this.settings.perPage;
+      return {
+        start: start,
+        end: end,
+      };
     }.bind(this);
+
     var goToPage = function(pageNumber) {
       var pageItems = startEnd(pageNumber);
       this.onLoadNext(pageItems.start, pageItems.end);
+    }.bind(this);
+
+    var getItem = function(item) {
+      return {
+        select: function() {
+          this.onItemSelect(item, true);
+          this.$scope.$digest();
+        }.bind(this),
+        unselect: function() {
+          this.onItemSelect(item, false);
+          this.$scope.$digest();
+        }.bind(this),
+        is_selected: function() {
+          return item.selected;
+        },
+        click: function() {
+          this.onItemClicked(item, document.createEvent('Event'));
+          this.$scope.$digest();
+        }.bind(this),
+        item,
+      };
     }.bind(this);
     return {
       'select_item': function(id, isSelected) {
@@ -131,6 +153,60 @@ ManageIQ.qe.gtl = {
       },
       'next_page': function() {
         goToPage(this.settings.current + 1);
+      },
+      'get_current_page': function() {
+        ManageIQ.qe.gtl.result = this.settings.current;
+        return this.settings.current;
+      },
+      'get_pages_amount': function() {
+        ManageIQ.qe.gtl.result = this.settings.total;
+        return this.settings.total;
+      },
+      'get_items_per_page': function() {
+        ManageIQ.qe.gtl.result = this.settings.perpage;
+        return this.settings.perpage;
+      },
+      'set_items_per_page': function(itemsPerPage) {
+        this.settings.perPage = itemsPerPage;
+        goToPage(this.settings.current);
+      },
+      'get_sorting': function() {
+        var result = {
+          sortBy: this.settings.sort_col,
+          sortDir: this.settings.sort_dir,
+        };
+        ManageIQ.qe.gtl.result = result;
+        return result;
+      },
+      'set_sorting': function(sortBy) {
+        this.onSort(sortBy.columnId, sortBy.isAscending);
+      },
+      'get_all_items': function() {
+        var responseData = [];
+        this.gtlData.rows.forEach(function(oneItem) {
+          responseData.push(getItem(oneItem));
+        });
+        ManageIQ.qe.gtl.result = responseData;
+        return responseData;
+      },
+      'get_item': function(identificator) {
+        var foundItem;
+        var nameColumn = this.gtlData.cols.filter(function(data) {return data.text === 'Name';});
+        if (nameColumn) {
+          var index = this.gtlData.cols.indexOf(nameColumn[0]);
+          foundItem = this.gtlData.rows.filter(function(oneRow) {
+            return oneRow.cells[index].text === identificator;
+          });
+        }
+        if (foundItem.length === 0) {
+          foundItem = this.gtlData.rows.filter(function(oneRow) {return oneRow.id == identificator;});
+        }
+        if (foundItem.length === 1) {
+          var responseData = getItem(foundItem[0]);
+          ManageIQ.qe.gtl.result = responseData;
+          return responseData;
+        }
+        return {};
       },
     };
   },
