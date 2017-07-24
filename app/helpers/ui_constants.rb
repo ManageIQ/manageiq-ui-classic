@@ -5,8 +5,6 @@ module UiConstants
   MAX_NAME_LEN = 255        # Default maximum name length
   MAX_HOSTNAME_LEN = 255    # Default maximum host name length
 
-  MAX_DASHBOARD_COUNT = 10  # Default maximum count of Dashboard per group
-
   CHARTS_REPORTS_FOLDER = File.join(Rails.root, "product/charts/miq_reports")
   CHARTS_LAYOUTS_FOLDER = File.join(Rails.root, "product/charts/layouts")
   TIMELINES_FOLDER = File.join(Rails.root, "product/timelines")
