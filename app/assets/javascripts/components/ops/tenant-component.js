@@ -1,8 +1,8 @@
 ManageIQ.angular.app.component('tenantComponent', {
   bindings: {
-    recordId: '=?',
+    recordId: '@?',
     divisible: '=',
-    ancestry: '=?',
+    ancestry: '@?',
     redirectUrl: '@',
   },
   controllerAs: 'vm',
@@ -28,7 +28,7 @@ function tenantFormController(API, miqService) {
       default: '',
     };
 
-    if (angular.isDefined(vm.recordId)) {
+    if (vm.recordId) {
       vm.newRecord = false;
       miqService.sparkleOn();
       API.get('/api/tenants/' + vm.recordId)
