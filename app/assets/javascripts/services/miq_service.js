@@ -159,19 +159,9 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
     }
   };
 
-  this.redirectBack = function(message, flashType, redirectUrl, reload) {
-    var flash = { message: message };
+  this.redirectBack = function(message, flashType, redirectUrl) {
+    miqFlashLater({message: message, level: flashType});
 
-    flash.level = flashType;
-
-    miqFlashLater(flash);
-
-    $timeout(function() {
-      $window.location.href = redirectUrl;
-
-      if(reload) {
-        $window.location.reload(true);
-      }
-    }, 500);
+    $window.location.href = redirectUrl;
   };
 }]);

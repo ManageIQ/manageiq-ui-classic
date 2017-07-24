@@ -48,7 +48,7 @@ function tenantFormController(API, miqService) {
       description: vm.tenantModel.description,
       use_config_for_attributes: vm.tenantModel.use_config_for_attributes,
     })
-      .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully saved.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl, true))
+      .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully saved.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl))
       .catch(miqService.handleFailure);
   };
 
@@ -60,7 +60,7 @@ function tenantFormController(API, miqService) {
       divisible: vm.divisible,
       parent: { id: vm.tenantModel.ancestry }}
     )
-      .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl, true))
+      .then(miqService.redirectBack.bind(vm, sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.tenantModel.name), 'success', vm.redirectUrl))
       .catch(miqService.handleFailure);
   };
 
