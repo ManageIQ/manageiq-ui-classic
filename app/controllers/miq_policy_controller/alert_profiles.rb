@@ -180,7 +180,7 @@ module MiqPolicyController::AlertProfiles
     tree = nil
     return nil if alert_profile_get_assign_to_objects_empty?
     if @assign[:new][:assign_to] == "ems_folder"
-      tree = TreeBuilderBelongsToHac.new(:vat_tree,
+      tree = TreeBuilderBelongsToVat.new(:vat_tree,
                                          :vat,
                                          @sb,
                                          true,
