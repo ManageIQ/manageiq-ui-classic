@@ -45,10 +45,10 @@
               }
               break;
             case document.mozFullScreenEnabled:
-              if (document.mozFullscreenElement) {
-                document.mozExitFullscreen();
+              if (document.mozFullScreenElement) {
+                document.mozCancelFullScreen();
               } else {
-                document.documentElement.mozRequestFullscreen();
+                document.documentElement.mozRequestFullScreen();
               }
               break;
             case document.msFullscreenEnabled:
