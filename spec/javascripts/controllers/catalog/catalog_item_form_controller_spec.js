@@ -28,6 +28,7 @@ describe('catalogItemFormController', function() {
           repository_id: undefined,
           playbook_id:          10000000000493,
           credential_id:        10000000000090,
+          playbook_ttl:         100,
           hosts:                'localhost',
           verbosity:            '0',
           extra_vars:           {
