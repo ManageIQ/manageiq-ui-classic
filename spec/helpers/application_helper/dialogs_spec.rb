@@ -77,6 +77,15 @@ describe ApplicationHelper::Dialogs do
         expect(helper.dialog_dropdown_selected_value(dialog_field)).to eq('key')
       end
     end
+
+    context "can display an integer dropdown value" do
+      let(:values) { [[1, 'one']] }
+      let(:value) { 1 }
+
+      it "returns the field value if the options list is empty" do
+        expect(helper.dialog_dropdown_selected_value(dialog_field)).to eq('one')
+      end
+    end
   end
 
   describe "#category_tags" do
