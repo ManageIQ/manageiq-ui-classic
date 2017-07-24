@@ -33,13 +33,13 @@ describe('tenant-component', function() {
       vm.tenantModel.ancestry = null;
       vm.addClicked();
       expect(API.post).toHaveBeenCalledWith('/api/tenants/', {name: vm.tenantModel.name, description: vm.tenantModel.description, divisible: true, parent: {id: vm.tenantModel.ancestry}});
-      expect(miqService.redirectBack.bind).toHaveBeenCalledWith(vm, 'Tenant \"newTenant\" has been successfully added.', 'success', vm.redirectUrl, true);
+      expect(miqService.redirectBack.bind).toHaveBeenCalledWith(vm, 'Tenant \"newTenant\" has been successfully added.', 'success', vm.redirectUrl);
     });
   });
 
   describe('when the vm.recordId is defined', function () {
     beforeEach(module('ManageIQ'));
-    beforeEach(inject(function (_$componentController_, _API_, _miqService_) {
+    beforeEach(inject(function (_$componentController_, _API_, _miqService_, $q) {
       $componentController = _$componentController_;
       API = _API_;
       miqService = _miqService_;
@@ -61,16 +61,10 @@ describe('tenant-component', function() {
         };
       });
 
-      spyOn(API, 'put').and.callFake(function() {
-        return {
-          then: function () {
-            miqService.redirectBack();
-            return {catch: function() {}};
-          }
-        };
-      });
+      var deferred = $q.defer();
+      spyOn(API, 'put').and.callFake(function() {return deferred.promise;});
 
-      var bindings = {recordId: 1111, redirectUrl: '/controller/go_back', divisible: true};
+      var bindings = {recordId: '1111', redirectUrl: '/controller/go_back', divisible: true};
       vm = $componentController('tenantComponent', null, bindings);
       vm.$onInit();
     }));
@@ -99,7 +93,7 @@ describe('tenant-component', function() {
         name: vm.tenantModel.name,
         description: vm.tenantModel.description,
         use_config_for_attributes: vm.tenantModel.use_config_for_attributes,});
-      expect(miqService.redirectBack.bind).toHaveBeenCalledWith(vm, 'Tenant \"xyz\" has been successfully saved.', 'success', vm.redirectUrl, true);
+      expect(miqService.redirectBack.bind).toHaveBeenCalledWith(vm, 'Tenant \"xyz\" has been successfully saved.', 'success', vm.redirectUrl);
     });
   });
 });
