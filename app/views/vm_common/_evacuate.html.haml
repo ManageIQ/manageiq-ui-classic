@@ -10,7 +10,7 @@
         %input{:type         => "checkbox",
                :name         => "auto_select_host",
                'ng-model'    => "vmCloudModel.auto_select_host",
-               :miqrequired  => true,
+               :required     => true,
                :checkchange  => true,
                'ng-disabled' => "hosts.length == 0"}
 
