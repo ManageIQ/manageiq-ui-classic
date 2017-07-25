@@ -32,10 +32,10 @@
         - @id = row.id
         - cls =  @edit[:src_vm_id] && @edit[:src_vm_id] == @id ? "selected" : ""
         %tr{:class => cls, :onclick => "miqAjax('/miq_request/pre_prov/?sel_id=#{@id}');", :id => "row_#{@id}"}
-          %td
+          %td.text-nowrap
             = h(row.name)
           - if @edit[:vm_headers].include?("image?")
-            %td
+            %td.text-nowrap
               - if row.respond_to?(:image?)
                 = h(row.image? ? _("Image") : _("Snapshot"))
           %td
