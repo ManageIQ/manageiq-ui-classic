@@ -6,6 +6,7 @@ module ViewHelper
   extend ActionView::Helpers::OutputSafetyHelper
 
   MAX_DESC_LEN = 255
+  MAX_HOSTNAME_LEN = 255
 
   class << self
     def concat_tag(*args, &block)

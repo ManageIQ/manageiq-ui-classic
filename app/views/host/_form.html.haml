@@ -35,7 +35,7 @@
                                   "id"          => "hostname",
                                   "name"        => "hostname",
                                   "ng-model"    => "hostModel.hostname",
-                                  "maxlength"   => "#{MAX_HOSTNAME_LEN}",
+                                  "maxlength"   => "#{ViewHelper::MAX_HOSTNAME_LEN}",
                                   "miqrequired" => "",
                                   "checkchange" => ""}
               %span.help-block{"ng-show" => "angularForm.hostname.$error.miqrequired"}
