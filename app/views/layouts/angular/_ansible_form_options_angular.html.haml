@@ -108,17 +108,17 @@
           %span.help-block{"ng-show" => "angularForm.#{prefix}_inventory.$error.miqrequired"}
             = _("Required")
 
-    .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_playbook_ttl.$invalid}"}
-      %label.col-md-3.control-label{"for" => "#{prefix}_playbook_ttl"}
+    .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_execution_ttl.$invalid}"}
+      %label.col-md-3.control-label{"for" => "#{prefix}_execution_ttl"}
         = _("Max TTL (mins)")
       .col-md-9
         %input.form-control{:type         => "text",
-                            'ng-model'    => "#{ng_model}.#{prefix}_playbook_ttl",
-                            :name         => "#{prefix}_playbook_ttl",
+                            'ng-model'    => "#{ng_model}.#{prefix}_execution_ttl",
+                            :name         => "#{prefix}_execution_ttl",
                             :maxlength    => 50,
                             "ng-pattern"  => "/^\s*$|^[-+]?[0-9]+$/",
                             "checkchange" => true}
-        %span{"style"=>"color:red", "ng-show" => "angularForm.#{prefix}_playbook_ttl.$invalid"}
+        %span{"style"=>"color:red", "ng-show" => "angularForm.#{prefix}_execution_ttl.$invalid"}
           = _("Max TTL value must be numeric")
 
     #escalate_privilege{"ng-if" => "vm.retirement_playbook_selected('#{prefix}')"}
