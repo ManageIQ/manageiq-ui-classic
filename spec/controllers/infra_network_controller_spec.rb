@@ -5,6 +5,7 @@ describe InfraNetworkingController do
   let(:host) { FactoryGirl.create(:host, :name => 'test_host1') }
   let(:ems_vmware) { FactoryGirl.create(:ems_vmware, :name => 'test_vmware') }
   let(:cluster) { FactoryGirl.create(:cluster, :name => 'test_cluster') }
+  let(:user) { FactoryGirl.create(:user) }
   before { stub_user(:features => :all) }
 
   context 'render_views' do
@@ -53,6 +54,27 @@ describe InfraNetworkingController do
           post :tree_select, :params => { :id => 'root', :format => :js }
           expect(response.status).to eq(200)
         end
+      end
+
+      it "renders textual summary for an infrastructure switch" do
+        user
+        allow(switch).to receive(:tagged_with).with(:cat => user.userid).and_return("my tags")
+        classification = FactoryGirl.create(:classification, :name => "department", :description => "Department")
+        tag1 = FactoryGirl.create(:classification_tag,
+                                  :name   => "tag1",
+                                  :parent => classification)
+        tag2 = FactoryGirl.create(:classification_tag,
+                                  :name   => "tag2",
+                                  :parent => classification)
+        allow(Classification).to receive(:find_assigned_entries).with(switch).and_return([tag1, tag2])
+
+        tree_node_id = "sw-#{ApplicationRecord.compress_id(switch.id)}"
+        seed_session_trees('infra_networking', :infra_networking_tree)
+        post :tree_select, :params => { :id => tree_node_id, :tree => :infra_networking_tree, :format => :js }
+
+        expect(response.status).to eq(200)
+        expect(response.body).to include("Department: #{tag1.description}")
+        expect(response.body).to include(tag2.description)
       end
     end
   end
