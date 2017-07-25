@@ -184,10 +184,9 @@ module MiqPolicyController::AlertProfiles
                                          :vat,
                                          @sb,
                                          true,
-                                         :edit     => @edit,
-                                         :filters  => @filters,
-                                         :group    => @group,
-                                         :selected => @assign[:new][:objects].collect { |f| "EmsFolder_#{f}" })
+                                         :assign_to => @assign[:new][:assign_to],
+                                         :cat       => @assign[:new][:cat],
+                                         :selected  => @assign[:new][:objects].collect { |f| "EmsFolder_#{f}" })
     elsif @assign[:new][:assign_to] == "resource_pool"
       tree = TreeBuilderBelongsToHac.new(:hac_tree,
                                          :hac,
