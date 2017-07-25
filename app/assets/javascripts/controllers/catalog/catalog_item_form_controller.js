@@ -205,7 +205,8 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     postService.saveRecord('/api/service_templates/' + catalogItemFormId,
       redirectUrl + '?button=save',
       setConfigInfo(vm.catalogItemModel),
-      successMsg);
+      successMsg,
+      'edit');
     $scope.angularForm.$setPristine(true);
   };
 

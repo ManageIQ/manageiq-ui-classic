@@ -1,22 +1,25 @@
-- url = url_for_only_path(:action => 'evm_relationship_field_changed')
-#tab_div
+- @angular_form = true
+%form#form_div.form-horizontal{"name"          => "angularForm",
+                               "ng-controller" => "evmRelationshipFormController as vm",
+                               "ng-show"       => "vm.afterGet",
+                               "miq-form"      => true,
+                               "model"         => "vm.evmRelationshipModel",
+                               "model-copy"    => "vm.modelCopy"}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Servers')
   .form-horizontal
-    .form-group
+    .form-group{"ng-class" => "{'has-error': angularForm.miq_server.$invalid}"}
       %label.col-md-2.control-label
         = _('Select Server:')
       .col-md-8
-        = select_tag("server_id",
-                      options_for_select([["<#{_('Not a Server')}>", ""]] + @servers.sort, @edit[:new][:server]),
-                      "data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true,
-                      :class    => "selectpicker",
-                      "data-miq_observe" => {:url => url}.to_json)
-      :javascript
-        miqInitSelectPicker();
-        miqSelectPickerEvent("server_id", "#{url}")
-      %td{:width => '100'}
-  - unless @edit[:explorer]
-    = render(:partial => '/layouts/edit_form_buttons',
-      :locals => {:action_url => 'evm_relationship_update', :ajax_buttons => true})
+        %select{'ng-model'   => 'vm.evmRelationshipModel.miq_server',
+                'ng-options' => 'server.value as server.label for server in vm.select_options',
+                'pf-select'  => 'true'}
+          %option{"value" => ""}
+            = "<#{_('Not a Server')}>"
+  = render :partial => 'layouts/angular/generic_form_buttons'
+:javascript
+  ManageIQ.angular.app.value('evmRelationshipFormId', '#{@record.id}');
+  ManageIQ.angular.app.value('controllerName', '#{controller_name}');
+  miq_bootstrap('#form_div');

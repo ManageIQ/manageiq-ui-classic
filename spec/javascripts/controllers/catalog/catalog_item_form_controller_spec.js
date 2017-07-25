@@ -111,7 +111,8 @@ describe('catalogItemFormController', function() {
           '/api/service_templates/1000000000001',
           redirectUrl + '/1000000000001?button=save',
           $scope.vm.catalogItemModel,
-          'Catalog Item catalogItemName was saved'
+          'Catalog Item catalogItemName was saved',
+          'edit'
         );
         done();
       });
