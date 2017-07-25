@@ -323,9 +323,8 @@ class ApplicationController < ActionController::Base
     if params[:model] == "physical_servers_with_host"
       options.merge!(generate_options)
     end
-
     options[:parent] = options[:parent] || @parent
-    options[:association] = params[:model] if HAS_ASSOCATION.include? params[:model]
+    options[:association] = HAS_ASSOCATION[params[:model]] if HAS_ASSOCATION.include?(params[:model])
     options[:selected_ids] = params[:records]
     options
   end
@@ -418,6 +417,7 @@ class ApplicationController < ActionController::Base
     bc_text = @record.kind_of?(Vm) ? _("Event Logs") : _("ESX Logs")
     @sb[:action] = params[:action]
     @explorer = true if @record.kind_of?(VmOrTemplate)
+    params[:display] = "event_logs"
     if !params[:show].nil? || !params[:x_show].nil?
       id = params[:show] ? params[:show] : params[:x_show]
       @item = @record.event_logs.find(from_cid(id))
@@ -1105,8 +1105,10 @@ class ApplicationController < ActionController::Base
   def fileicon(item, view)
     default = "100/#{(@listicon || view.db).underscore}.png"
     image = case item
-            when EventLog, OsProcess
-              "100/#{@listicon.downcase}.png"
+            when EventLog
+              "100/event_logs.png"
+            when OsProcess
+              "100/processes.png"
             when Storage
               "100/piecharts/datastore/#{calculate_pct_img(item.v_free_space_percent_of_total)}.png"
             when MiqRequest

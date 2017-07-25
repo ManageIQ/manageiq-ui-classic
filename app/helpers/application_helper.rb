@@ -224,10 +224,13 @@ module ApplicationHelper
     "manageiq/providers/automation_managers" => ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript
   }.freeze
 
-  HAS_ASSOCATION = %w(
-    groups
-    users
-  ).freeze
+  HAS_ASSOCATION = {
+    "groups"         => "groups",
+    "users"          => "users",
+    "event_logs"     => "event_logs",
+    "OsProcess"      => "processes",
+    "scan_histories" => "scan_histories"
+  }.freeze
 
   def model_to_report_data
     current_model = if !@display.nil? && @display != "main"

@@ -355,6 +355,10 @@
 
   ReportDataController.prototype.movePagination = function() {
     this.$timeout(function() {
+      var sortItems = this.$document.getElementsByClassName('miq-sort-items');
+      if (sortItems) {
+        angular.element(sortItems).addClass(this.settings.dropDownClass[0]);
+      }
       $('table td.narrow').addClass('table-view-pf-select').removeClass('narrow');
       var pagination = this.$document.getElementsByClassName('miq-pagination');
       var pagingDiv = this.$document.querySelector('#paging_div');
