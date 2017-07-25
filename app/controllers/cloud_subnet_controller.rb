@@ -64,17 +64,24 @@ class CloudSubnetController < ApplicationController
       @subnet = CloudSubnet.new
       options = new_form_params
       ems = ExtManagementSystem.find(options[:ems_id])
-      options.delete(:ems_id)
-      task_id = ems.create_cloud_subnet_queue(session[:userid], options)
+      if CloudSubnet.class_by_ems(ems).supports_create?
+        options.delete(:ems_id)
+        task_id = ems.create_cloud_subnet_queue(session[:userid], options)
 
-      if task_id.kind_of?(Integer)
-        initiate_wait_for_task(:task_id => task_id, :action => "create_finished")
+        if task_id.kind_of?(Integer)
+          initiate_wait_for_task(:task_id => task_id, :action => "create_finished")
+        else
+          javascript_flash(
+            :text        => _("Cloud Subnet creation: Task start failed: ID [%{id}]") % {:id => task_id.to_s},
+            :severity    => :error,
+            :spinner_off => true
+          )
+        end
       else
-        javascript_flash(
-          :text        => _("Cloud Subnet creation: Task start failed: ID [%{id}]") % {:id => task_id.to_s},
-          :severity    => :error,
-          :spinner_off => true
-        )
+        @in_a_form = true
+        add_flash(_(CloudSubnet.unsupported_reason(:create)), :error)
+        drop_breadcrumb(:name => _("Add new Cloud Subnet "), :url => "/subnet/new")
+        javascript_flash
       end
     end
   end
@@ -152,16 +159,23 @@ class CloudSubnetController < ApplicationController
       cancel_action(_("Edit of Subnet \"%{name}\" was cancelled by the user") % {:name  => @subnet.name})
 
     when "save"
-      task_id = @subnet.update_cloud_subnet_queue(session[:userid], options)
+      if @subnet.supports_create?
+        task_id = @subnet.update_cloud_subnet_queue(session[:userid], options)
 
-      if task_id.kind_of?(Integer)
-        initiate_wait_for_task(:task_id => task_id, :action => "update_finished")
+        if task_id.kind_of?(Integer)
+          initiate_wait_for_task(:task_id => task_id, :action => "update_finished")
+        else
+          javascript_flash(
+            :text        => _("Cloud Subnet update failed: Task start failed: ID [%{id}]") % {:id => task_id.to_s},
+            :severity    => :error,
+            :spinner_off => true
+          )
+        end
       else
-        javascript_flash(
-          :text        => _("Cloud Subnet update failed: Task start failed: ID [%{id}]") % {:id => task_id.to_s},
-          :severity    => :error,
-          :spinner_off => true
-        )
+        add_flash(_("Couldn't initiate update of Cloud Subnet \"%{name}\": %{details}") % {
+          :name    => @subnet.name,
+          :details => @subnet.unsupported_reason(:update)
+        }, :error)
       end
     end
   end
@@ -226,7 +240,7 @@ class CloudSubnetController < ApplicationController
       options[:gateway] = params[:gateway].blank? ? nil : params[:gateway]
     end
     options[:ip_version] = params[:network_protocol] =~ /4/ ? 4 : 6
-    options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant_id]) if params[:cloud_tenant_id]
+    options[:cloud_tenant] = find_record_with_rbac(CloudTenant, from_cid(params[:cloud_tenant_id])) if params[:cloud_tenant_id]
     options[:network_id] = params[:network_id] if params[:network_id]
     options[:enable_dhcp] = params[:dhcp_enabled]
     # TODO: Add extra fields
