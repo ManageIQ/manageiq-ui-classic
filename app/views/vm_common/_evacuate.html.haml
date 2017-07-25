@@ -1,4 +1,8 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "vmCloudEvacuateFormController"}
+%form#form_div{:name => "angularForm",
+               'ng-controller' => "vmCloudEvacuateFormController",
+               'form-changed'  => true,
+               'model'         => 'vm.vmCloudModel',
+               "model-copy"    => 'vm.modelCopy'}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Evacuate Host')
@@ -11,7 +15,6 @@
                :name         => "auto_select_host",
                'ng-model'    => "vmCloudModel.auto_select_host",
                :required     => true,
-               :checkchange  => true,
                'ng-disabled' => "hosts.length == 0"}
 
         %input{:type         => "hidden",
