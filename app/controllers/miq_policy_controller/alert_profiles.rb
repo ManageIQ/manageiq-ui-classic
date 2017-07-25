@@ -192,10 +192,9 @@ module MiqPolicyController::AlertProfiles
                                          :hac,
                                          @sb,
                                          true,
-                                         :edit     => @edit,
-                                         :filters  => @filters,
-                                         :group    => @group,
-                                         :selected => @assign[:new][:objects].collect { |f| "ResourcePool_#{f}" })
+                                         :assign_to => @assign[:new][:assign_to],
+                                         :cat       => @assign[:new][:cat],
+                                         :selected  => @assign[:new][:objects].collect { |f| "ResourcePool_#{f}" })
     else
       tree = TreeBuilderAlertProfileObj.new(:object_tree,
                                             :object,
