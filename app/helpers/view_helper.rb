@@ -5,6 +5,7 @@ module ViewHelper
   extend ActionView::Helpers::CaptureHelper
   extend ActionView::Helpers::OutputSafetyHelper
 
+  MAX_NAME_LEN = 255
   MAX_DESC_LEN = 255
   MAX_HOSTNAME_LEN = 255
 

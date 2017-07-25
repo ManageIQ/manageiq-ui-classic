@@ -22,7 +22,7 @@
                             :name            => 'name',
                             :id              => 'name',
                             'ng-model'       => 'vm.keyPairModel.name',
-                            :maxlength       => MAX_NAME_LEN,
+                            :maxlength       => ViewHelper::MAX_NAME_LEN,
                             :required        => true,
                             'auto-focus'     => true}
         %span.help-block{"ng-show" => "angularForm.name.$error.required"}

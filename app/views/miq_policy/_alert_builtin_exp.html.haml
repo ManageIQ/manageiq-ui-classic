@@ -85,7 +85,7 @@
         - if @edit[:new][:expression][:options].key?(:value_threshold)
           = text_field_tag("value_threshold",
             @edit[:new][:expression][:options][:value_threshold],
-            :maxlength         => MAX_NAME_LEN,
+            :maxlength         => ViewHelper::MAX_NAME_LEN,
             :class             => "form-control",
             "data-miq_observe" => observe_with_interval)
       - else
@@ -236,7 +236,7 @@
           miqSelectPickerEvent('select_mw_operator', '#{url}', {beforeSend: true, complete: true})
         = text_field_tag("value_mw_garbage_collector",
           @edit[:new][:expression][:options][:value_mw_garbage_collector],
-          :maxlength         => MAX_NAME_LEN,
+          :maxlength         => ViewHelper::MAX_NAME_LEN,
           :class             => "form-control",
           "data-miq_observe" => observe_with_interval)
       - else

@@ -48,7 +48,7 @@
     .form-group
       %label.col-md-2.control-label{:valign => "top"}
         = field_hash[:description]
-        - len =  field_hash[:max_length] ? field_hash[:max_length] : MAX_NAME_LEN
+        - len =  field_hash[:max_length] ? field_hash[:max_length] : ViewHelper::MAX_NAME_LEN
         - if field_hash[:help]
           %a{:id               => "popover-#{field_hash.object_id}",
              :tabindex         => 0,
@@ -93,7 +93,7 @@
             -# Allow editing of the text field
             - if [:root_password, :sysprep_password, :sysprep_domain_password].include?(field)
               = password_field_tag(field_id, options[field],
-                                   :maxlength         => MAX_NAME_LEN,
+                                   :maxlength         => ViewHelper::MAX_NAME_LEN,
                                    :class             => "form-control",
                                    :disabled          => disabled,
                                    "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
@@ -143,12 +143,12 @@
           - if @edit && field_hash[:display] == :edit && !@edit[:stamp_typ]
             -# Allow editing of the text field
             = text_field_tag(field_id, options[field],
-              :maxlength         => MAX_NAME_LEN,
+              :maxlength         => ViewHelper::MAX_NAME_LEN,
               "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
             = "_(%s)_" % _("VM Number")
             -# = h(i)
             = text_field_tag("#{dialog}__vm_suffix", options[:vm_suffix],
-              :maxlength         => MAX_NAME_LEN,
+              :maxlength         => ViewHelper::MAX_NAME_LEN,
               "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
           - else
             -# Just show the field value
@@ -162,7 +162,7 @@
           - if @edit && field_hash[:display] == :edit && !field_hash[:values] && !@edit[:stamp_typ]
             -# Allow editing of the text field
             = text_field_tag(field_id, options[field].kind_of?(Array) ? options[field].last : options[field],
-              :maxlength         => MAX_NAME_LEN,
+              :maxlength         => ViewHelper::MAX_NAME_LEN,
               "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
           - elsif @edit && field_hash[:display] == :edit && field_hash[:values] && !@edit[:stamp_typ]
             -# Allow editing of the text field

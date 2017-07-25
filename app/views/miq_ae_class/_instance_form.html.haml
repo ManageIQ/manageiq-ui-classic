@@ -14,7 +14,7 @@
     .col-md-8
       = text_field_tag("#{prefix}inst_name",
                         @edit[:new][:ae_inst]["name"],
-                        :maxlength         => MAX_NAME_LEN,
+                        :maxlength         => ViewHelper::MAX_NAME_LEN,
                         :class => "form-control",
                         "data-miq_observe" => obs)
       = javascript_tag(javascript_focus("#{prefix}inst_name"))
@@ -24,7 +24,7 @@
     .col-md-8
       = text_field_tag("#{prefix}inst_display_name",
                       @edit[:new][:ae_inst]["display_name"],
-                      :maxlength         => MAX_NAME_LEN,
+                      :maxlength         => ViewHelper::MAX_NAME_LEN,
                       :class => "form-control",
                       "data-miq_observe" => obs)
   .form-group
@@ -33,7 +33,7 @@
     .col-md-8
       = text_field_tag("#{prefix}inst_description",
                       @edit[:new][:ae_inst]["description"],
-                      :maxlength         => MAX_NAME_LEN,
+                      :maxlength         => ViewHelper::MAX_NAME_LEN,
                       :class => "form-control",
                       "data-miq_observe" => obs)
 %hr

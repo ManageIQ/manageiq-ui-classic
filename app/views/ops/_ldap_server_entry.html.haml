@@ -10,7 +10,7 @@
                      :title => t,
                      :type  => "submit")
       %td
-        = text_field("entry", "hostname", :maxlength => MAX_NAME_LEN, :style => "width: 100%;")
+        = text_field("entry", "hostname", :maxlength => ViewHelper::MAX_NAME_LEN, :style => "width: 100%;")
       %td
         - url1 = url_for_only_path(:action => 'ldap_entry_changed',
                          :id     => @edit[:ldap_domain_id] || "new")
@@ -35,7 +35,7 @@
                      :type      => "submit")
       %td
         = text_field("entry", "hostname",
-                     :maxlength => MAX_NAME_LEN,
+                     :maxlength => ViewHelper::MAX_NAME_LEN,
                      "value"    => entry[:hostname],
                      :style     => "width: 100%;")
       %td

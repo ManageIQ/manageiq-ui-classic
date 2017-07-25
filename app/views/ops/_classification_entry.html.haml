@@ -3,7 +3,7 @@
   - if entry == "new"
     %tr#new_tr{:class => cycle('row0', 'row1')}
       %td
-        = text_field("entry", "name", :maxlength => MAX_NAME_LEN, :style => "width: 100%;")
+        = text_field("entry", "name", :maxlength => ViewHelper::MAX_NAME_LEN, :style => "width: 100%;")
       %td
         = text_field("entry", "description", :maxlength => ViewHelper::MAX_DESC_LEN, :style => "width: 100%;")
       %td.action-cell
@@ -18,7 +18,7 @@
     %tr{:class => cycle('row0', 'row1'), :id => "#{entry.id}_tr"}
       %td
         = text_field("entry", "name",
-          :maxlength => MAX_NAME_LEN,
+          :maxlength => ViewHelper::MAX_NAME_LEN,
           "value"    => entry.name,
           :style     => "width: 100%;")
       %td

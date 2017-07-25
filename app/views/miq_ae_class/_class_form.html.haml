@@ -13,7 +13,7 @@
       = _('Name')
     .col-md-8
       = text_field_tag("name", @edit[:new][:name],
-                        :maxlength         => MAX_NAME_LEN,
+                        :maxlength         => ViewHelper::MAX_NAME_LEN,
                         :class => "form-control",
                         "data-miq_observe" => obs)
       = javascript_tag(javascript_focus('name'))
@@ -22,7 +22,7 @@
       = _('Display Name')
     .col-md-8
       = text_field_tag("display_name", @edit[:new][:display_name],
-                        :maxlength         => MAX_NAME_LEN,
+                        :maxlength         => ViewHelper::MAX_NAME_LEN,
                         :class => "form-control",
                         "data-miq_observe" => obs)
   .form-group
@@ -30,6 +30,6 @@
       = _('Description')
     .col-md-8
       = text_field_tag("description", @edit[:new][:description],
-                       :maxlength => MAX_NAME_LEN,
+                       :maxlength => ViewHelper::MAX_NAME_LEN,
                        :class => "form-control",
                        "data-miq_observe" => obs)

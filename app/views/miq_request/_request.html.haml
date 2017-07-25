@@ -83,7 +83,7 @@
           .col-md-8
             = text_field_tag("reason", @edit[:reason],
               :class             => "form-control",
-              :maxlength         => MAX_NAME_LEN,
+              :maxlength         => ViewHelper::MAX_NAME_LEN,
               "data-miq_focus"   => true,
               "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
         - else

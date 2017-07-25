@@ -21,7 +21,7 @@
                               "id"          => "name",
                               "name"        => "name",
                               "ng-model"    => "vm.serviceModel.name",
-                              "maxlength"   => "#{MAX_NAME_LEN}",
+                              "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",
                               "required"    => true,
                               "auto-focus"  => ""}
           %span.help-block{"ng-show" => "angularForm.name.$error.miqrequired"}

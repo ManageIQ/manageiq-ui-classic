@@ -231,7 +231,7 @@
           %td
             = text_field_tag("#{f}",
               @edit[:new][:options][:variables][i][:oid],
-              :maxlength         => MAX_NAME_LEN,
+              :maxlength         => ViewHelper::MAX_NAME_LEN,
               :class             => "form-control",
               "data-miq_observe" => observe_with_interval)
           %td
@@ -250,7 +250,7 @@
           %td
             = text_field_tag(v,
               @edit[:new][:options][:variables][i][:value],
-              :maxlength         => MAX_NAME_LEN,
+              :maxlength         => ViewHelper::MAX_NAME_LEN,
               :disabled          => val_disabled,
               :class             => "form-control",
               "data-miq_observe" => observe_with_interval)

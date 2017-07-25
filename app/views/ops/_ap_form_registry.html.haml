@@ -25,12 +25,12 @@
           = _("HKLM")
         %td
           = text_field("entry", "kname",
-            :maxlength => MAX_NAME_LEN,
+            :maxlength => ViewHelper::MAX_NAME_LEN,
             "value"    => session[:reg_data][:key],
             :style     => "width: 100%;")
         %td
           = text_field("entry", "value",
-            :maxlength => MAX_NAME_LEN,
+            :maxlength => ViewHelper::MAX_NAME_LEN,
             "value"    => session[:reg_data][:value],
             :style     => "width: 100%;")
 
@@ -55,12 +55,12 @@
               = _("HKLM")
             %td
               = text_field("entry", "kname",
-                :maxlength => MAX_NAME_LEN,
+                :maxlength => ViewHelper::MAX_NAME_LEN,
                 "value"    => session[:reg_data][:key],
                 :style     => "width: 100%;")
             %td
               = text_field("entry", "value",
-                :maxlength => MAX_NAME_LEN,
+                :maxlength => ViewHelper::MAX_NAME_LEN,
                 "value"    => session[:reg_data][:value],
                 :style     => "width: 100%;")
             %td.action-cell

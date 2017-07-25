@@ -22,7 +22,7 @@
                           "id"          => "description",
                           'ng-model'    => "vm.timeProfileModel.description",
                           'ng-disabled' => "vm.timeProfileModel.restricted_time_profile",
-                          :maxlength    => MAX_NAME_LEN,
+                          :maxlength    => ViewHelper::MAX_NAME_LEN,
                           :required     => "",
                           "auto-focus"  => ""}
       %span.help-block{"ng-show" => "angularForm.description.$error.required"}

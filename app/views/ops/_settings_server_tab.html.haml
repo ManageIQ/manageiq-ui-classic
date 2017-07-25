@@ -141,19 +141,19 @@
       .col-md-8
         = text_field_tag("ntp_server_1",
                           @edit[:new][:ntp][:server][0],
-                          :maxlength => MAX_NAME_LEN,
+                          :maxlength => ViewHelper::MAX_NAME_LEN,
                           :class => "form-control",
                           "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
         %br/
         = text_field_tag("ntp_server_2",
                           @edit[:new][:ntp][:server][1],
-                          :maxlength => MAX_NAME_LEN,
+                          :maxlength => ViewHelper::MAX_NAME_LEN,
                           :class => "form-control",
                           "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
         %br/
         = text_field_tag("ntp_server_3",
                           @edit[:new][:ntp][:server][2],
-                          :maxlength => MAX_NAME_LEN,
+                          :maxlength => ViewHelper::MAX_NAME_LEN,
                           :class => "form-control",
                           "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
   .note
@@ -224,7 +224,7 @@
       .col-md-8
         = text_field_tag("smtp_user_name",
                           @edit[:new][:smtp][:user_name],
-                          :maxlength => MAX_NAME_LEN,
+                          :maxlength => ViewHelper::MAX_NAME_LEN,
                           :disabled => chk,
                           :class => "form-control",
                           "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
@@ -233,7 +233,7 @@
         = _("Password")
       .col-md-8
         = password_field_tag("smtp_password", '',
-                              :maxlength         => MAX_NAME_LEN,
+                              :maxlength         => ViewHelper::MAX_NAME_LEN,
                               :placeholder       => placeholder_if_present(@edit[:new][:smtp][:password]),
                               :disabled          => chk,
                               :class => "form-control",
@@ -304,7 +304,7 @@
       .col-md-8
         = text_field_tag("custom_support_url",
                           @edit[:new][:server][:custom_support_url],
-                          :maxlength => MAX_NAME_LEN,
+                          :maxlength => ViewHelper::MAX_NAME_LEN,
                           :class => "form-control",
                           "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
     .form-group
