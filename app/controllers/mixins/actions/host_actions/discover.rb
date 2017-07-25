@@ -21,14 +21,7 @@ module Mixins
           if session[:type] == "hosts"
             @discover_type = Host.host_discovery_types
           elsif session[:type] == "ems"
-            if request.parameters[:controller] == 'ems_infra'
-              @discover_type = ExtManagementSystem.ems_infra_discovery_types
-            else
-              @discover_type = ManageIQ::Providers::CloudManager.subclasses.select(&:supports_discovery?).map do |cloud_manager|
-                [cloud_manager.description, cloud_manager.ems_type]
-              end
-              @discover_type_selected = @discover_type.first.try!(:last)
-            end
+            discover_type(request.parameters[:controller])
           else
             @discover_type = ExtManagementSystem.ems_infra_discovery_types
           end
@@ -204,6 +197,21 @@ module Mixins
             elsif @ipmi == false
               page << javascript_hide("discover_credentials")
             end
+          end
+        end
+
+        private
+
+        def discover_type(controller)
+          if controller == 'ems_infra'
+            @discover_type = ExtManagementSystem.ems_infra_discovery_types
+          elsif controller == 'ems_physical_infra'
+            @discover_type = ExtManagementSystem.ems_physical_infra_discovery_types
+          else
+            @discover_type = ManageIQ::Providers::CloudManager.subclasses.select(&:supports_discovery?).map do |cloud_manager|
+              [cloud_manager.description, cloud_manager.ems_type]
+            end
+            @discover_type_selected = @discover_type.first.try!(:last)
           end
         end
       end

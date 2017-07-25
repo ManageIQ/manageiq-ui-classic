@@ -18,7 +18,7 @@ class ApplicationHelper::Toolbar::EmsPhysicalInfrasCenter < ApplicationHelper::T
         button(
           :ems_physical_infra_discover,
           'fa fa-search fa-lg',
-          t = N_('Discover Infrastructure Providers'),
+          t = N_('Discover Physical Infrastructure Providers'),
           t,
           :url       => "/discover",
           :url_parms => "?discover_type=ems"),
