@@ -1171,7 +1171,7 @@ function miqInitCodemirror(options) {
     lineNumbers: options.line_numbers,
     matchBrackets: true,
     theme: 'eclipse',
-    readOnly: options.read_only ? 'nocursor' : false,
+    readOnly: options.read_only,
     viewportMargin: Infinity,
   });
 
