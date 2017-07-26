@@ -4,6 +4,7 @@
   %form#form_div{:name           => 'angularForm',
                  'ng-controller' => 'timelineOptionsController',
                  'ng-show'       => 'vm.afterGet',
+                 'miq-form'      => true,
                  :novalidate     => true}
     - if @timeline
       %h3
