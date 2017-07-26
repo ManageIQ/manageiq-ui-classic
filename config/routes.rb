@@ -2043,17 +2043,12 @@ Rails.application.routes.draw do
         x_post
     },
 
-    :generic_object => {
+    :generic_object_definition => {
       :get => %w(
-        all_object_data
-        explorer
-        object_data
-        tree_data
+        show
+        show_list
       ),
       :post => %w(
-        create
-        delete
-        save
       )
     },
 
