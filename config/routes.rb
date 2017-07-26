@@ -3290,10 +3290,15 @@ Rails.application.routes.draw do
     },
   }
 
-  # TODO: the root needs to be defined in the main app for now
-  # root :to => 'dashboard#login'
+  root :to => 'dashboard#login'
+
+  # Let's serve pictures directly from the DB
+  get '/pictures/:basename' => 'picture#show', :basename => /[\da-zA-Z]+\.[\da-zA-Z]+/
 
   get '/saml_login(/*path)' => 'dashboard#saml_login'
+
+  # ping response for load balancing
+  get '/ping' => 'ping#index'
 
   controller_routes.each do |controller_name, controller_actions|
     # Default route with no action to controller's index action
