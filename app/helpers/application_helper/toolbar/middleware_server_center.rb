@@ -190,4 +190,21 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
       ]
     ),
   ])
+  button_group('middleware_reports', [
+    select(
+      :middleware_reports_choice,
+      'fa fa-file-text-o fa-lg',
+      t = N_('JDR Reports'),
+      t,
+      :items => [
+        button(
+          :middleware_jdr_generate,
+          'fa fa-play-circle-o fa-lg',
+          N_('Enqueue generation of new JDR report'),
+          N_('Generate JDR report'),
+          :klass   => ApplicationHelper::Button::MiddlewareServerAction
+        )
+      ]
+    )
+  ])
 end

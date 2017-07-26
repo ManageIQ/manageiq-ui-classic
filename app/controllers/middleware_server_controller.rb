@@ -28,6 +28,11 @@ class MiddlewareServerController < ApplicationController
                                    :hawk => N_('resuming'),
                                    :msg  => N_('Resume')
     },
+    :middleware_jdr_generate   => {:op   => :generate_jdr,
+                                   :skip => true,
+                                   :hawk => N_('generating JDR report'),
+                                   :msg  => N_('Generate JDR report')
+    }
   }.freeze
 
   STANDALONE_ONLY = {
@@ -282,22 +287,26 @@ class MiddlewareServerController < ApplicationController
   end
 
   def trigger_mw_operation(operation, mw_server, params = nil)
-    mw_manager = mw_server.ext_management_system
-    path = mw_server.ems_ref
+    unless operation == :generate_jdr
+      mw_manager = mw_server.ext_management_system
+      path = mw_server.ems_ref
 
-    # in domain mode case we want to run the operation on the server-config DMR resource
-    if mw_server.respond_to?(:in_domain?) && mw_server.in_domain?
-      path = path.sub(/%2Fserver%3D/, '%2Fserver-config%3D')
-    end
+      # in domain mode case we want to run the operation on the server-config DMR resource
+      if mw_server.respond_to?(:in_domain?) && mw_server.in_domain?
+        path = path.sub(/%2Fserver%3D/, '%2Fserver-config%3D')
+      end
 
-    op = mw_manager.public_method operation
+      op = mw_manager.public_method operation
 
-    if mw_server.instance_of? MiddlewareDeployment
-      op.call(path, mw_server.name)
-    elsif params
-      op.call(path, params)
+      if mw_server.instance_of? MiddlewareDeployment
+        op.call(path, mw_server.name)
+      elsif params
+        op.call(path, params)
+      else
+        op.call(path)
+      end
     else
-      op.call(path)
+      mw_server.enqueue_jdr_report(:requesting_user => current_userid)
     end
   end
 
