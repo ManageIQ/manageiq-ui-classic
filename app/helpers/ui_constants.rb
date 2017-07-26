@@ -7,7 +7,6 @@ module UiConstants
   TOOLBARS_FOLDER = File.join(Rails.root, "product/toolbars")
 
   TOP_TABLES_BY_ROWS_COUNT = 5
-  TOP_TABLES_BY_SIZE_COUNT = 5
   TOP_TABLES_BY_WASTED_SPACE_COUNT = 5
   GIGABYTE = 1024 * 1024 * 1024
 

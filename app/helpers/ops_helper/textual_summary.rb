@@ -116,7 +116,7 @@ module OpsHelper::TextualSummary
       :title     => _("Largest Tables"),
       :headers   => [_("Name"), _("Size")],
       :col_order => %w(name value),
-      :value     => vmdb_table_top_rows(:size, TOP_TABLES_BY_SIZE_COUNT)
+      :value     => vmdb_table_top_rows(:size, 5)
     }
   end
 
