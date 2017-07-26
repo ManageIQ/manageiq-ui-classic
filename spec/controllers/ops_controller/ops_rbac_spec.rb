@@ -8,7 +8,7 @@ describe OpsController do
       stub_user(:features => :all)
     end
 
-    let(:four_terabytes) {4096 * 1024 * 1024 * 1024}
+    let(:four_terabytes) { 4096 * 1024 * 1024 * 1024 }
 
     context "#tree_select" do
       it "renders rbac_details tab when rbac_tree root node is selected" do
