@@ -1,7 +1,6 @@
 describe ContainerTopologyService do
 
   let(:container_topology_service) { described_class.new(nil) }
-  let(:long_id) { "3572afee-3a41-11e5-a79a-001a4a231290_ruby-helloworld-database_openshift\n/mysql-55-centos7:latest" }
 
   describe "#build_topology" do
     subject { container_topology_service.build_topology }
@@ -10,9 +9,8 @@ describe ContainerTopologyService do
       expect(subject.keys).to match_array([:items, :kinds, :relations, :icons])
     end
 
-    let(:container) { Container.create(:name => "ruby-example", :ems_ref => long_id, :state => 'running') }
+    let(:container) { Container.create(:name => "ruby-example", :state => 'running') }
     let(:container_condition) { ContainerCondition.create(:name => 'Ready', :status => 'True') }
-    let(:container_def) { ContainerDefinition.create(:name => "ruby-example", :ems_ref => 'b6976f84-5184-11e5-950e-001a4a231290_ruby-helloworld_172.30.194.30:5000/test/origin-ruby-sample@sha256:0cd076c9beedb3b1f5cf3ba43da6b749038ae03f5886b10438556e36ec2a0dd9', :container => container) }
     let(:container_node) { ContainerNode.create(:ext_management_system => ems_kube, :name => "127.0.0.1", :ems_ref => "905c90ba-3e00-11e5-a0d2-18037327aaeb", :container_conditions => [container_condition], :lives_on => vm_rhev) }
     let(:ems_kube) { FactoryGirl.create(:ems_kubernetes_with_authentication_err) }
     let(:ems_openshift) { FactoryGirl.create(:ems_openshift) }
@@ -51,7 +49,7 @@ describe ContainerTopologyService do
       container_group = ContainerGroup.create(:ext_management_system => ems_kube,
                                               :container_node        => container_node, :container_replicator => container_replicator,
                                               :name                  => "myPod", :ems_ref => "96c35ccd-3e00-11e5-a0d2-18037327aaeb",
-                                              :phase                 => "Running", :container_definitions => [container_def])
+                                              :phase                 => "Running", :containers => [container])
       container_service = ContainerService.create(:ext_management_system => ems_kube, :container_groups => [container_group],
                                                   :ems_ref               => "95e49048-3e00-11e5-a0d2-18037327aaeb",
                                                   :name                  => "service1", :container_routes => [container_route])
@@ -134,7 +132,7 @@ describe ContainerTopologyService do
       container_topology_service.instance_variable_set(:@entity, ems_kube)
       container_group = ContainerGroup.create(:ext_management_system => ems_kube, :container_node => container_node,
                                               :name => "myPod", :ems_ref => "96c35ccd-3e00-11e5-a0d2-18037327aaeb",
-                                              :phase => "Running", :container_definitions => [container_def])
+                                              :phase => "Running", :containers => [container])
       container_service = ContainerService.create(:ext_management_system => ems_kube, :container_groups => [container_group],
                                                   :ems_ref => "95e49048-3e00-11e5-a0d2-18037327aaeb",
                                                   :name => "service1")
