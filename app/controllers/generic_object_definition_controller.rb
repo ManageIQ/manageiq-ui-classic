@@ -15,6 +15,10 @@ class GenericObjectDefinitionController < ApplicationController
     %w(generic_objects)
   end
 
+  def display_generic_objects
+    nested_list("generic_object", GenericObject)
+  end
+
   def self.model
     GenericObjectDefinition
   end
