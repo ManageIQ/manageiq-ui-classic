@@ -105,7 +105,10 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
   }
 
   function saveFailure() {
-    miqService.miqFlash('error', __('There was an error editing this dialog.'));
+    miqService.miqFlash(
+      'error',
+      __('There was an error editing this dialog: ') + arguments[0].error.message
+    );
   }
 
   // FIXME: @himdel: method copied from other place -> maybe extract somewhere?
