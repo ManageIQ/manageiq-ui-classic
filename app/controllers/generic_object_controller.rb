@@ -18,7 +18,7 @@ class GenericObjectController < ApplicationController
   private
 
   def textual_group_list
-    []
+    [%i(properties attribute_details_list)]
   end
 
   helper_method :textual_group_list

@@ -2045,6 +2045,7 @@ Rails.application.routes.draw do
 
     :generic_object => {
       :get => %w(
+        show
         show_list
       ),
       :post => %w(
