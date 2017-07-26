@@ -2,7 +2,45 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased - as of Sprint 63 end 2017-07-10
+## Unreleased - as of Sprint 65 end 2017-07-24
+
+### Added
+- Automation-Automate: Adding Dialog Editor into Ops UI [(#1398)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1398)
+- Compute-Physical: Display Physical Servers with Host in Physical Infra Textual Summary and listnav [(#1553)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1553)
+- Notifications: Notifications drawer - add a close button [(#1720)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1720)
+- Storage: Render iops and encrypted for cloud volume edit form [(#1642)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1642)
+
+### Fixed
+- Automation-Ansible
+  - Fix icon for Ansible credential add button [(#1687)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1687)
+  - Display Ansible Tower Job Templates filters [(#1082)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1082)
+- Automation-Automate
+  - Fix for Drop Down List Dialog does not keep default value for Integer type [(#1700)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1700)
+  - Dialog editor fixes [(#1728)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1728)
+  - Fixed issue with custom button editing [(#1686)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1686)
+  - Alter Button Group hover text [(#1735)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1735)
+  - Broken titles for automate buttons in new and edit dialog [(#1716)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1716)
+- Compute
+  - Cloud
+    - Added a ems_id existence check around VM VNC console button visibility [(#1723)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1723)
+    - Fix Power actions for Instances in Orchestration Stack page [(#1696)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1696)
+    - Fix Evacuate form [(#1676)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1676)
+    - Fix typo [(#1707)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1707)
+  - Continers: Strip html tags before sending error details to flash message [(#1712)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1712)
+  - Infrastructure
+    - Disable delete button for the active snapshot on oVirt [(#1628)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1628)
+    - Fix VNC console connection to Windows VMs and Ctrl-Alt-Del button [(#1672)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1672)
+  - Physical Infrastructure: Hide firmware table if there are no firmware entries [(#1694)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1694)
+- Dashboard: Revert "Fix missing constant in application_controller" [(#1692)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1692)
+- Expressions-Filters: Use a dropdown for a boolean user input field in Advanced Search [(#1334)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1334)
+- Graphics
+  - Add missing ansible worker image [(#1734)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1734)
+  - Add missing configuration_script_source.png to fix PDF generation [(#1706)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1706)
+- Intel-Chargeback: UI Fix for ChargeableField in chargeback editor [(#1727)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1727)
+- Notifications: Sort asynchronously arrived notifications by timestamp in the drawer [(#1713)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1713)
+- RBAC:Sort asynchronously arrived notifications by timestamp in the drawer [(#1713)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1713)
+
+## Unreleased - as of Sprint 64 end 2017-07-10
 
 ### Added
 - Automation-Automate: Custom button submit all [(#1572)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1572)
