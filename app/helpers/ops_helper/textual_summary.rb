@@ -107,7 +107,7 @@ module OpsHelper::TextualSummary
       :title     => _("Tables with the Most Rows"),
       :headers   => [_("Name"), _("Rows")],
       :col_order => %w(name value),
-      :value     => vmdb_table_top_rows(:rows, TOP_TABLES_BY_ROWS_COUNT)
+      :value     => vmdb_table_top_rows(:rows, 5)
     }
   end
 
