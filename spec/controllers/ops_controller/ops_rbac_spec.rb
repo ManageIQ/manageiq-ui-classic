@@ -8,6 +8,8 @@ describe OpsController do
       stub_user(:features => :all)
     end
 
+    let(:four_terabytes) { 4096 * 1024 * 1024 * 1024 }
+
     context "#tree_select" do
       it "renders rbac_details tab when rbac_tree root node is selected" do
         session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
@@ -42,7 +44,7 @@ describe OpsController do
         tenant = FactoryGirl.create(:tenant, :parent => Tenant.root_tenant)
         tenant.set_quotas(:cpu_allocated => {:value => 1024},
                           :vms_allocated => {:value => 27},
-                          :mem_allocated => {:value => 4096 * GIGABYTE})
+                          :mem_allocated => {:value => four_terabytes})
 
         session[:sandboxes] = {"ops" => {:active_tree => :rbac_tree}}
         post :tree_select, :params => { :id => "tn-#{controller.to_cid(tenant.id)}", :format => :js }
