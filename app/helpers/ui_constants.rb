@@ -7,7 +7,6 @@ module UiConstants
   TOOLBARS_FOLDER = File.join(Rails.root, "product/toolbars")
 
   TOP_TABLES_BY_WASTED_SPACE_COUNT = 5
-  GIGABYTE = 1024 * 1024 * 1024
 
   # PDF page sizes
   PDF_PAGE_SIZES = {
