@@ -16,21 +16,18 @@ class CloudVolumeController < ApplicationController
   # handle buttons pressed on the button bar
   def button
     @edit = session[:edit] # Restore @edit for adv search box
-    params[:display] = @display if %w(vms instances images).include?(@display)
+    params[:display] = @display if %w(instances).include?(@display)
     params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
 
-    if params[:pressed].starts_with?("instance_")
+    if params[:pressed].starts_with?("instance_") # support for instance_ buttons
       pfx = pfx_for_vm_button_pressed(params[:pressed])
       process_vm_buttons(pfx)
       # Control transferred to another screen, so return
-      return if ["#{pfx}_policy_sim", "#{pfx}_compare", "#{pfx}_tag", "#{pfx}_retire", "#{pfx}_resize",
-                 "#{pfx}_protect", "#{pfx}_ownership", "#{pfx}_refresh", "#{pfx}_right_size",
-                 "#{pfx}_resize", "#{pfx}_live_migrate", "#{pfx}_evacuate"].include?(params[:pressed]) && @flash_array.nil?
+      return if vm_button_redirected?(pfx, params[:pressed])
+
       unless ["#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone",
               "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
-        @refresh_div = "main_div"
-        @refresh_partial = "layouts/gtl"
-        show # Handle EMS buttons
+        show # will render show?display=instances
       end
     else
       @refresh_div = "main_div"

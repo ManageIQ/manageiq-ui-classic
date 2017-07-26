@@ -978,18 +978,40 @@ module ApplicationController::CiProcessing
     delete_elements(ResourcePool, :process_resourcepools)
   end
 
-  def pfx_for_vm_button_pressed(_button_pressed)
-    if params[:pressed].starts_with?("image_")
-      return "image"
-    elsif params[:pressed].starts_with?("instance_")
-      return "instance"
-    elsif params[:pressed].starts_with?("miq_template_")
-      return "miq_template"
-    elsif params[:pressed].starts_with?("orchestration_stack_")
-      return "orchestration_stack"
-    else
-      return "vm"
+  # FIXME: need to unify pfx_for_vm_button_pressed and vm_style_button?
+  def pfx_for_vm_button_pressed(pressed)
+    if pressed.starts_with?("image_")
+      "image"
+    elsif pressed.starts_with?("instance_")
+      "instance"
+    elsif pressed.starts_with?("vm_")
+      "vm"
+    elsif pressed.starts_with?("miq_template_")
+      "miq_template"
+    elsif pressed.starts_with?("orchestration_stack_")
+      "orchestration_stack" # orchestration_stack does not belong here, added in 060dfb36
+    else # need to get rid of the 'else' branch
+      "vm"
     end
+  end
+
+  # These VM-type buttons flash (in case of error) or redirect
+  def vm_button_redirected?(pfx, pressed)
+    ["#{pfx}_policy_sim", "#{pfx}_compare", "#{pfx}_tag",
+     "#{pfx}_retire", "#{pfx}_protect", "#{pfx}_ownership",
+     "#{pfx}_refresh", "#{pfx}_right_size",
+     "#{pfx}_reconfigure",
+     "#{pfx}_resize", "#{pfx}_live_migrate", "#{pfx}_evacuate"
+      ].include?(pressed) &&
+      @flash_array.nil?
+  end
+
+  def vm_style_button?(pressed)
+    pressed.starts_with?("image_",
+                         "instance_",
+                         "vm_",
+                         "miq_template_",
+                         "guest_") # guest_ seems to be a non-sense
   end
 
   def process_vm_buttons(pfx)
