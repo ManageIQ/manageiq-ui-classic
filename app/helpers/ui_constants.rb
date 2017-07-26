@@ -6,8 +6,6 @@ module UiConstants
   TIMELINES_FOLDER = File.join(Rails.root, "product/timelines")
   TOOLBARS_FOLDER = File.join(Rails.root, "product/toolbars")
 
-  TOP_TABLES_BY_WASTED_SPACE_COUNT = 5
-
   # PDF page sizes
   PDF_PAGE_SIZES = {
     "a0"            => N_("A0 - 841mm x 1189mm"),
