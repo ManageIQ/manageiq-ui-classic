@@ -1,3 +1,4 @@
+- validate_url = url_for_only_path(:action => 'log_depot_validate', :id => @schedule.id || 'new', :type => 'log', :button => "validate")
 #form_filter_div
   .div
     .div
@@ -94,16 +95,14 @@
                               :ng_model_uri        => "scheduleModel.uri",
                               :ng_model_uri_prefix => "scheduleModel.uri_prefix",
                               :uri_prefix_display  =>  "{{scheduleModel.uri_prefix}}://"}
-
-        = render :partial => "layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
-                 :locals  => {:ng_show           => "sambaBackup()",
-                              :ng_model          => "scheduleModel",
-                              :ng_reqd_userid    => "sambaRequired(scheduleModel.log_userid)",
-                              :ng_reqd_password  => "sambaRequired(scheduleModel.log_password)",
-                              :userid_disabled   => "scheduleModel.uri_prefix == 'nfs'",
-                              :password_disabled => "scheduleModel.uri_prefix == 'nfs'",
-                              :validate_url      => "log_depot_validate",
-                              :id                => @schedule.id || "new",
-                              :valtype           => "log",
-                              :basic_info_needed => true}
-                          
+      
+        %auth-credentials{'ng-show'              => 'sambaBackup()',
+                          'model'                => 'scheduleModel',
+                          'model-copy'           => 'modelCopy',
+                          'user-required'        => 'sambaRequired(scheduleModel.log_userid)',
+                          'password-required'    => 'sambaRequired(scheduleModel.log_password)',
+                          'prefix'               => 'log',
+                          'valtype'              => 'log',
+                          'enable-valid-button'  => 'angularForm.$valid',
+                          'validate'             => 'validateClicked',
+                          'validate-url'         => validate_url}
