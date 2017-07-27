@@ -70,6 +70,15 @@ module Mixins
         def disassociate_handle_cancel_button
           add_flash(_("Disassociation of Floating IP from Instance \"%{name}\" was cancelled by the user") % {:name => @record.name})
           @record = @sb[:action] = nil
+          if @sb[:explorer]
+            replace_right_cell
+          else
+            session[:flash_msgs] = @flash_array.dup
+            render :update do |page|
+              page << javascript_prologue
+              page.redirect_to previous_breadcrumb_url
+            end
+          end
         end
 
         def disassociate_handle_submit_button
