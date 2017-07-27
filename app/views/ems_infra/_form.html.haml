@@ -99,8 +99,6 @@
   - if controller_name == "ems_container"
     = render :partial => "/layouts/container_auth", :locals  => {:record => @ems}
   - else
-    %label
-      test
     %div{"ng-show" => "emsCommonModel.emstype != '' && emsCommonModel.emstype == 'azure'"}
       %h3
         = _("Credentials")
@@ -119,7 +117,9 @@
                             :change_stored_password => _("Change stored client key"),
                             :cancel_password_change => _("Cancel client key change"),
                             :verify_title_off       => _("Tenant ID, Client ID and matching Client Key fields are needed to perform verification of credentials")}
-      -# TODO: need to find testing data for form and restfull validation 
+      -# TODO: need to find testing data for form and restfull validation
+      %label
+        test
       %auth-credentials{'ng-show'             => true,
                         'model'               => 'emsCommonModel',
                         'model-copy'          => 'modelCopy',
