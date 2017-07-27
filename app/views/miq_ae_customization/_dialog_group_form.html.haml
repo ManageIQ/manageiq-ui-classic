@@ -10,7 +10,7 @@
                         @edit[:group_label],
                         :maxlength         => ViewHelper::MAX_NAME_LEN,
                         :class => "form-control",
-                        "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                        "data-miq_observe" => {:url => url}.to_json)
       = javascript_tag(javascript_focus('group_label'))
   .form-group
     %label.col-md-2.control-label
@@ -20,4 +20,4 @@
                         @edit[:group_description],
                         :maxlength         => 100,
                         :class => "form-control",
-                        "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                        "data-miq_observe" => {:url => url}.to_json)

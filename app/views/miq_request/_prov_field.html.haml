@@ -96,7 +96,7 @@
                                    :maxlength         => ViewHelper::MAX_NAME_LEN,
                                    :class             => "form-control",
                                    :disabled          => disabled,
-                                   "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                                   "data-miq_observe" => {:url => url}.to_json)
             - elsif [:request_notes, :vm_description].include?(field)
               = text_area_tag(field_id, options[field],
                               :maxlength                  => len,
@@ -104,13 +104,13 @@
                               :size                       => "25x4",
                               :counter                    => "description_count",
                               "data-miq_check_max_length" => true,
-                              "data-miq_observe"          => {:interval => '.5', :url => url}.to_json)
+                              "data-miq_observe"          => {:url => url}.to_json)
             - else
               = text_field_tag(field_id, options[field],
                                :maxlength         => len,
                                :class             => "form-control",
                                :disabled          => disabled,
-                               "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                               "data-miq_observe" => {:url => url}.to_json)
           - else
             -# Just show the field value
             - if [:root_password, :sysprep_password, :sysprep_domain_password].include?(field)
@@ -144,12 +144,12 @@
             -# Allow editing of the text field
             = text_field_tag(field_id, options[field],
               :maxlength         => ViewHelper::MAX_NAME_LEN,
-              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+              "data-miq_observe" => {:url => url}.to_json)
             = "_(%s)_" % _("VM Number")
             -# = h(i)
             = text_field_tag("#{dialog}__vm_suffix", options[:vm_suffix],
               :maxlength         => ViewHelper::MAX_NAME_LEN,
-              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+              "data-miq_observe" => {:url => url}.to_json)
           - else
             -# Just show the field value
             = "#{options[field]}_(%s)_#{options[:vm_suffix]}" % _("VM Number")
@@ -163,7 +163,7 @@
             -# Allow editing of the text field
             = text_field_tag(field_id, options[field].kind_of?(Array) ? options[field].last : options[field],
               :maxlength         => ViewHelper::MAX_NAME_LEN,
-              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+              "data-miq_observe" => {:url => url}.to_json)
           - elsif @edit && field_hash[:display] == :edit && field_hash[:values] && !@edit[:stamp_typ]
             -# Allow editing of the text field
             - if field_hash[:values].blank?

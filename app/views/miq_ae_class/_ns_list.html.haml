@@ -59,7 +59,7 @@
                               :maxlength         => ViewHelper::MAX_NAME_LEN,
                               :readonly => @ae_ns.domain? && !@ae_ns.editable_property?(:name)  ? true : false,
                               :class => "form-control",
-                              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                              "data-miq_observe" => {:url => url}.to_json)
             = javascript_tag(javascript_focus('ns_name'))
         .form-group
           %label.col-md-2.control-label
@@ -70,7 +70,7 @@
                               :maxlength         => ViewHelper::MAX_NAME_LEN,
                               :readonly => @ae_ns.domain? && !@ae_ns.editable_property?(:description) ? true : false,
                               :class => "form-control",
-                              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                              "data-miq_observe" => {:url => url}.to_json)
         - if @ae_ns.domain?
           .form-group
             %label.col-md-2.control-label

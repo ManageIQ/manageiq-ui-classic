@@ -16,8 +16,7 @@
                            :diabled => false,
                            :maxlength => 255,
                            :class => "form-control",
-                           "data-miq_observe" => {:interval => '.5',
-                                                  :url      => url}.to_json)
+                           "data-miq_observe" => {:url => url}.to_json)
       .form-group
         %label.col-md-2.control-label
           = _('Description')
@@ -28,8 +27,7 @@
                           :disabled => false,
                           :rows => 15,
                           :class => "form-control",
-                          "data-miq_observe" => {:interval => '.5',
-                                                 :url      => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)
       - if @edit[:current][:type] == "OrchestrationTemplateVnfd"
         - opts = [["<#{_('Choose')}>", nil]] + @edit[:current][:available_managers]
         .form-group

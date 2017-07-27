@@ -11,7 +11,7 @@
                         @edit[:field_label],
                         :maxlength         => ViewHelper::MAX_NAME_LEN,
                         :class => "form-control",
-                        "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                        "data-miq_observe" => {:url => url}.to_json)
         = javascript_tag(javascript_focus('field_label'))
 
     .form-group
@@ -22,7 +22,7 @@
                         @edit[:field_name],
                         :maxlength         => ViewHelper::MAX_NAME_LEN,
                         :class => "form-control",
-                        "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                        "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.col-md-2.control-label
         = _('Description')
@@ -31,7 +31,7 @@
                         @edit[:field_description],
                         :maxlength         => 100,
                         :class => "form-control",
-                        "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                        "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.col-md-2.control-label
         = _('Type')

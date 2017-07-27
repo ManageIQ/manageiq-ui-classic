@@ -29,8 +29,7 @@
                        resolve[:new][:object_message],
                        :maxlength         => ViewHelper::MAX_NAME_LEN,
                        :class             => "form-control",
-                       "data-miq_observe" => {:interval => '.5',
-                                              :url      => url}.to_json)
+                       "data-miq_observe" => {:url => url}.to_json)
       - unless is_browser_ie?
         = javascript_tag("if (!$('#description').length) #{javascript_focus('object_message')}")
   .form-group
@@ -41,7 +40,7 @@
                        resolve[:new][:object_request],
                        :maxlength         => ViewHelper::MAX_NAME_LEN,
                        :class            => "form-control",
-                       "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                       "data-miq_observe" => {:url => url}.to_json)
 - if form_action != "miq_action"
   - if ae_custom_button
     %hr
@@ -113,12 +112,10 @@
                          resolve[:new][:attrs][i][0],
                          :maxlength         => ViewHelper::MAX_NAME_LEN,
                          :class            => "form-control",
-                         "data-miq_observe" => {:interval => '.5',
-                                                :url => url}.to_json)
+                         "data-miq_observe" => {:url => url}.to_json)
       .col-md-4
         = text_field_tag(v,
                          resolve[:new][:attrs][i][1],
                          :maxlength         => ViewHelper::MAX_NAME_LEN,
                          :class            => "form-control",
-                         "data-miq_observe" => {:interval => '.5',
-                                                :url => url}.to_json)
+                         "data-miq_observe" => {:url => url}.to_json)

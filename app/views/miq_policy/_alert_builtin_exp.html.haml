@@ -1,6 +1,6 @@
 - if @edit
   - url = url_for_only_path(:action => 'alert_field_changed', :id => (@alert.id || 'new'))
-  - observe_with_interval = {:interval => '.5', :url => url}.to_json
+  - observe_with_interval = {:url => url}.to_json
 .form-group
   - case option[:name]
   - when :event_types

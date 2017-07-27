@@ -25,7 +25,7 @@
                            @edit[:new][:email][:from],
                            :maxlength         => ViewHelper::MAX_DESC_LEN,
                            :class             => "form-control",
-                           "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                           "data-miq_observe" => {:url => url}.to_json)
           = _("(Default: %{email_from})") % {:email_from => ::Settings.smtp.from}
   - if @edit[:new][:send_email]
     = render(:partial => "layouts/edit_to_email", :locals => {:action_url => action_url, :record => record})

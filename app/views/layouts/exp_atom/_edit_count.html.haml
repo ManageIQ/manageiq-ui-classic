@@ -22,7 +22,7 @@
   - unless @edit[@expkey][:alias].blank?
     = text_field_tag("alias", @edit[@expkey][:alias],
       :maxlength         => 50,
-      "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+      "data-miq_observe" => {:url => url}.to_json)
 
 - if @edit[@expkey][:exp_count]
   %br
@@ -40,7 +40,7 @@
     %span#chosen_value_span
       = text_field_tag("chosen_value", @edit[@expkey][:exp_value],
         :maxlength         => 500,
-        "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+        "data-miq_observe" => {:url => url}.to_json)
 
 :javascript
   miqInitSelectPicker();

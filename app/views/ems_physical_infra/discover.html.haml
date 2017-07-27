@@ -36,8 +36,7 @@
                          :size              => "3",
                          :maxlength         => 3,
                          "data-miq_focus"   => index.zero?,
-                         "data-miq_observe" => {:interval => '.5',
-                                                :url      => url}.to_json)
+                         "data-miq_observe" => {:url => url}.to_json)
   .form-group
     %label.col-md-2.control-label
       = _("To Address")
@@ -53,8 +52,7 @@
                        @to[:fourth],
                        :size              => "3",
                        :maxlength         => 3,
-                       "data-miq_observe" => {:interval => '.5',
-                                              :url      => url}.to_json)
+                       "data-miq_observe" => {:url => url}.to_json)
   .pull-right
     = button_tag(_("Start"),
                    :class => "btn btn-primary",

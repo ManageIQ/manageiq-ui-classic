@@ -49,7 +49,7 @@
             :maxlength         => ViewHelper::MAX_NAME_LEN,
             :class             => "form-control",
             :disabled          => @edit[:read_only],
-            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+            "data-miq_observe" => {:url => url}.to_json)
   .form-group
     %label.col-md-2.control-label
       = _('Row Count')

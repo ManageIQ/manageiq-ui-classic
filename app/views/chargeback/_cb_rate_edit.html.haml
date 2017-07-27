@@ -10,7 +10,7 @@
         = _('Description')
       .col-md-8
         = text_field_tag("description", @edit[:new][:description],
-                        :maxlength => ViewHelper::MAX_NAME_LEN, "data-miq_observe" => {:interval => '.5', :url => url}.to_json,
+                        :maxlength => ViewHelper::MAX_NAME_LEN, "data-miq_observe" => {:url => url}.to_json,
                         :class => "form-control")
         = javascript_tag(javascript_focus('description'))
 

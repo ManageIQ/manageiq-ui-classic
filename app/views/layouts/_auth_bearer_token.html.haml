@@ -4,7 +4,7 @@
 - record ||= nil
 - rec_id   = record && record.id ? record.id : "new"
 - url      = url_for_only_path(:action => change_url, :id => rec_id)
-- url_json = {:interval => '.5', :url => url}.to_json
+- url_json = {:url => url}.to_json
 - token_label ||= _("Token")
 
 .form-group

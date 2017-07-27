@@ -12,7 +12,7 @@
           = text_field_tag("name", @edit[:new][:name],
                           :maxlength         => 15,
                           :class             => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)
           .input-group-addon
             %label.checkbox-inline
               = check_box_tag("display", "1", @edit[:new][:display],
@@ -27,7 +27,7 @@
         = text_field_tag("description", @edit[:new][:description],
                         :maxlength         => 30,
                         :class             => "form-control",
-                        "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                        "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.control-label.col-md-2
         = _('Button Group Image')

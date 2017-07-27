@@ -13,8 +13,7 @@
                            :diabled => false,
                            :class => "form-control",
                            :maxlength => 255,
-                           "data-miq_observe" => {:interval => '.5',
-                                                  :url      => url}.to_json)
+                           "data-miq_observe" => {:url => url}.to_json)
   - unless @explorer
     = render(:partial => '/layouts/edit_form_buttons',
       :locals         => {:record_id => @edit[:rec_id],

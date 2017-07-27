@@ -53,7 +53,7 @@
                              :maxlength         => ViewHelper::MAX_DESC_LEN,
                              :style             => "float: left; margin-right: 2px",
                              :class             => "form-control",
-                             "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                             "data-miq_observe" => {:url => url}.to_json)
             %span.input-group-btn
               .btn.btn-default{:alt => t = _("Add"), :title => t, :onclick => "miqAjaxButton('#{url_for_only_path(:action => action_url, :button => 'add_email', :id => (record.id || 'new'))}');"}
                 %i.fa.fa-plus

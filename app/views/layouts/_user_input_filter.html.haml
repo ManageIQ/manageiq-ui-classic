@@ -40,8 +40,7 @@
                         = text_field_tag("value_#{token}", nil,
                                          :maxlength         => 500,
                                          :onkeyup           => "miqQsEnterEscape(event);",
-                                         "data-miq_observe" => {:interval => '.5',
-                                                                :url      => url}.to_json,
+                                         "data-miq_observe" => {:url => url}.to_json,
                                          :placeholder => ("true/false" if @edit[:qs_tokens][token][:value_type] == :boolean))
                       - if @edit[:qs_tokens][token][:value_type] == :percent
                         = "%"
@@ -70,8 +69,7 @@
                     = text_field_tag("value_#{token}", nil,
                                      :maxlength         => 500,
                                      :onkeyup           => "miqQsEnterEscape(event);",
-                                     "data-miq_observe" => {:interval => '.5',
-                                                            :url      => url}.to_json)
+                                     "data-miq_observe" => {:url => url}.to_json)
                 - else
                   = h([part].flatten.first)
               - else

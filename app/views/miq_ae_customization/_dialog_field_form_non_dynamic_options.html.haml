@@ -20,18 +20,18 @@
       - if @edit[:field_typ] =~ /TextArea/
         = text_area_tag("field_default_value",
           @edit[:field_default_value],
-          "data-miq_observe" => {:interval => '.5', :url => url}.to_json,
+          "data-miq_observe" => {:url => url}.to_json,
           :maxlength         => 8196,
           :size              => "50x6")
       - elsif @edit[:field_typ] =~ /TextBox/
         - if @edit[:field_protected]
           = password_field_tag('field_default_value__protected',
                                 @edit[:field_default_value],
-                                'data-miq_observe' => {:interval => '.5', :url => url}.to_json)
+                                'data-miq_observe' => {:url => url}.to_json)
         - else
           = text_field_tag("field_default_value",
                             @edit[:field_default_value],
-                            "data-miq_observe" => {:interval => '.5', :url => url}.to_json,
+                            "data-miq_observe" => {:url => url}.to_json,
                             :class => "form-control",
                             :maxlength         => 50)
       - else
@@ -83,7 +83,7 @@
         \/
         = text_field_tag("field_validator_rule",
                           @edit[:field_validator_rule],
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json,
+                          "data-miq_observe" => {:url => url}.to_json,
                           :disabled          => @edit[:field_validator_type].blank?,
                           :class => "form-control",
                           :maxlength         => 250)

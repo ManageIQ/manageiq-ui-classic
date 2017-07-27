@@ -20,5 +20,5 @@
             = text_field_tag("event_name", @edit[:new][:event_name],
               :maxlength => ViewHelper::MAX_DESC_LEN,
               :class     => "form-control",
-              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+              "data-miq_observe" => {:url => url}.to_json)
   %hr

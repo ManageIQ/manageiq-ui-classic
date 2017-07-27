@@ -1,6 +1,6 @@
 - if @sb[:active_tab] == "methods"
 - url = url_for_only_path(:action => 'form_method_field_changed', :id => (@ae_method.id || 'new'))
-- obs = {:interval => '.5', :url => url}.to_json
+- obs = {:url => url}.to_json
   %h3
     = _('Main Info')
   .form-horizontal

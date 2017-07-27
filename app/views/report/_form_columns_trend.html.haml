@@ -40,7 +40,7 @@
             = text_field_tag("chosen_limit_val", @edit[:new][:perf_limit_val],
               :maxlength         => 20,
               "class"            => "form-control",
-              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+              "data-miq_observe" => {:url => url}.to_json)
 - if @edit[:new][:perf_trend_col]
   .form-group
     %label.control-label.col-md-2
