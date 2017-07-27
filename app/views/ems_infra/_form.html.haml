@@ -1,3 +1,4 @@
+- validate_url = url_for_only_path(:action => @ems.id ? "update" : "create", :id => @ems.id || "new", :type => 'default', :button => "validate")
 - @angular_form = true
 
 .form-horizontal{'ng-cloak' => '',
@@ -98,6 +99,8 @@
   - if controller_name == "ems_container"
     = render :partial => "/layouts/container_auth", :locals  => {:record => @ems}
   - else
+    %label
+      test
     %div{"ng-show" => "emsCommonModel.emstype != '' && emsCommonModel.emstype == 'azure'"}
       %h3
         = _("Credentials")
@@ -116,6 +119,18 @@
                             :change_stored_password => _("Change stored client key"),
                             :cancel_password_change => _("Cancel client key change"),
                             :verify_title_off       => _("Tenant ID, Client ID and matching Client Key fields are needed to perform verification of credentials")}
+      -# TODO: need to find testing data for form and restfull validation 
+      %auth-credentials{'ng-show'             => true,
+                        'model'               => 'emsCommonModel',
+                        'model-copy'          => 'modelCopy',
+                        'password-required'   => "emsCommonModel.default_userid != ''",
+                        'prefix'              => 'default',
+                        'enable-valid-button' => 'canValidateBasicInfo()',
+                        'validate-url'        => validate_url,
+                        'valtype'             => "default",
+                        'validate'            => 'validateClicked',
+                        'restufull'           => true}
+
     %div{"ng-show" => "emsCommonModel.emstype != 'azure'"}
       = render :partial => "/layouts/angular/multi_auth_credentials", :locals  => {:record => @ems, :ng_model => "emsCommonModel"}
 
