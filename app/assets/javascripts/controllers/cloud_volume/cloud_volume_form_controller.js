@@ -21,7 +21,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     vm.newRecord = cloudVolumeFormId === 'new';
 
     miqService.sparkleOn();
-    API.get("/api/providers?expand=resources&attributes=id,name&filter[]=supports_block_storage?=true")
+    API.get("/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true")
       .then(getStorageManagers)
       .catch(miqService.handleFailure);
 
