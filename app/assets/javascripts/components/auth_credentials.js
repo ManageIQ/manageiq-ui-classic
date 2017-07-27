@@ -26,6 +26,7 @@ ManageIQ.angular.app.component('authCredentials', {
     setUserId: '&',
     checkAuthentication: '<',
     formLabels: '<',
+    guidRegex: '<',
   },
   controllerAs: 'vm',
   controller: ['$scope', function($scope) {
@@ -43,9 +44,9 @@ ManageIQ.angular.app.component('authCredentials', {
       vm.cancelPasswordChangeLabel = vm.formLabels && vm.formLabels.cancelPasswordChange || __('Cancel password change');
 
       vm.buttonLabels = {
-        verifyTitleOn: vm.formLabels && vm.formLabels.verifyTitleOn
+        verifyTitleOnLabel: vm.formLabels && vm.formLabels.verifyTitleOnLabel
                         || __('Validate the credentials by logging into the Server'),
-        verifyTitleOff: vm.formLabels && vm.formLabels.verifyTitleOff
+        verifyTitleOffLabel: vm.formLabels && vm.formLabels.verifyTitleOffLabel
                           || __('Server information, Username and matching password fields are needed to perform verification of credentials'),
       };
     };

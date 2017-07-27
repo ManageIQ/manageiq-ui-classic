@@ -234,6 +234,8 @@
     = render :partial => "/layouts/container_auth", :locals  => {:record => @ems}
   - else
     %div{"ng-if" => "emsCommonModel.emstype != '' && emsCommonModel.emstype == 'azure'"}
+      %label
+        test
       %h3
         = _("Credentials")
       = render :partial => "/layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
@@ -253,6 +255,22 @@
                             :change_stored_password => _("Change stored client key"),
                             :cancel_password_change => _("Cancel client key change"),
                             :verify_title_off       => _("Tenant ID, Client ID and matching Client Key fields are needed to perform verification of credentials")}
+
+
+    %auth-credentials{'ng-show'              => true,
+                      'model'                => 'emsCommonModel',
+                      'model-copy'           => 'modelCopy',
+                      'user-required'        => true,
+                      'password-required'    => true,
+                      'prefix'               => 'default',
+                      'enable-valid-button'  => 'canValidateBasicInfo()',
+                      'valtype'              => "default",
+                      'validate'             => 'validateClicked',
+                      'restfull'             => true,
+                      'check-authentication' => 'checkAuthentication',
+                      'form-labels'          => 'formLabels',
+                      'guid-regex'           => true}
+
     %div{"ng-if" => "emsCommonModel.emstype != '' && emsCommonModel.emstype != 'azure'"}
       = render :partial => "/layouts/angular/multi_auth_credentials", :locals  => {:record => @ems, :ng_model => "emsCommonModel"}
 

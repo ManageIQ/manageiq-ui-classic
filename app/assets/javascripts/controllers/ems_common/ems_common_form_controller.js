@@ -517,7 +517,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   };
 
   $scope.validateClicked = function($event, authType, formSubmit) {
-    console.log('validation data: ', $event, authType, formSubmit);
     $scope.authType = authType;
     miqService.validateWithREST($event, authType, $scope.actionUrl, formSubmit)
       .then(function success(data) {
