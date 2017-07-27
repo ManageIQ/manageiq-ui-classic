@@ -3,6 +3,8 @@ module OpsHelper::TextualSummary
   # Groups
   #
 
+  TOP_TABLES_BY_COUNT = 5
+
   def textual_group_vmdb_connection_properties
     TextualGroup.new(
       _("Properties"),
@@ -107,7 +109,7 @@ module OpsHelper::TextualSummary
       :title     => _("Tables with the Most Rows"),
       :headers   => [_("Name"), _("Rows")],
       :col_order => %w(name value),
-      :value     => vmdb_table_top_rows(:rows, 5)
+      :value     => vmdb_table_top_rows(:rows, TOP_TABLES_BY_COUNT)
     }
   end
 
@@ -116,7 +118,7 @@ module OpsHelper::TextualSummary
       :title     => _("Largest Tables"),
       :headers   => [_("Name"), _("Size")],
       :col_order => %w(name value),
-      :value     => vmdb_table_top_rows(:size, 5)
+      :value     => vmdb_table_top_rows(:size, TOP_TABLES_BY_COUNT)
     }
   end
 
@@ -125,7 +127,7 @@ module OpsHelper::TextualSummary
       :title     => _("Tables with Most Wasted Space"),
       :headers   => [_("Name"), _("Wasted")],
       :col_order => %w(name value),
-      :value     => vmdb_table_top_rows(:wasted_bytes, 5)
+      :value     => vmdb_table_top_rows(:wasted_bytes, TOP_TABLES_BY_COUNT)
     }
   end
 
