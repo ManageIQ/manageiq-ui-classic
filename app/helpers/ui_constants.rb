@@ -22,7 +22,6 @@ module UiConstants
     "US-Statement"  => N_("US Statement - 5.5in x 8.5in"),
     "US-Folio"      => N_("US Folio - 8.5in x 13.0in")
   }
-  DEFAULT_PDF_PAGE_SIZE = "US-Letter"
 
   # Setting high number incase we don't want to display paging controls on list views
   ONE_MILLION = 1000000
