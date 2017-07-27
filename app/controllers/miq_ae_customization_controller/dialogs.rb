@@ -569,7 +569,7 @@ module MiqAeCustomizationController::Dialogs
       page.replace("field_default_value",
                    :text => select_tag('field_default_value',
                                        options_for_select(values, selected),
-                                       'data-miq_observe' => {:interval => '.5', :url => url}.to_json))
+                                       'data-miq_observe' => {:url => url}.to_json))
       page << "$('#field_default_value').selectpicker();"
     end
   end
