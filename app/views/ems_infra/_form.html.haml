@@ -99,7 +99,9 @@
   - if controller_name == "ems_container"
     = render :partial => "/layouts/container_auth", :locals  => {:record => @ems}
   - else
-    %div{"ng-show" => "emsCommonModel.emstype != '' && emsCommonModel.emstype == 'azure'"}
+    %div{"ng-show" => "emsCommonModel.emstype != '' || emsCommonModel.emstype == 'azure'"}
+      %span
+        {{angularForm['default_auth_status'].$viewValue}}
       %h3
         = _("Credentials")
       = render :partial => "/layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
@@ -118,20 +120,21 @@
                             :cancel_password_change => _("Cancel client key change"),
                             :verify_title_off       => _("Tenant ID, Client ID and matching Client Key fields are needed to perform verification of credentials")}
       -# TODO: need to find testing data for form and restfull validation
+      %auth-credentials{'ng-show'              => true,
+                        'model'                => 'emsCommonModel',
+                        'model-copy'           => 'modelCopy',
+                        'password-required'    => "emsCommonModel.default_userid != ''",
+                        'prefix'               => 'default',
+                        'enable-valid-button'  => 'canValidateBasicInfo()',
+                        'validate-url'         => validate_url,
+                        'valtype'              => "default",
+                        'validate'             => 'validateClicked',
+                        'restufull'            => true,
+                        'check-authentication' => 'checkAuthentication',
+                        'auth-status'          => "angularForm['default_auth_status'].$viewValue"}
+    %div{"ng-show" => "emsCommonModel.emstype != 'azure'"}
       %label
         test
-      %auth-credentials{'ng-show'             => true,
-                        'model'               => 'emsCommonModel',
-                        'model-copy'          => 'modelCopy',
-                        'password-required'   => "emsCommonModel.default_userid != ''",
-                        'prefix'              => 'default',
-                        'enable-valid-button' => 'canValidateBasicInfo()',
-                        'validate-url'        => validate_url,
-                        'valtype'             => "default",
-                        'validate'            => 'validateClicked',
-                        'restufull'           => true}
-
-    %div{"ng-show" => "emsCommonModel.emstype != 'azure'"}
       = render :partial => "/layouts/angular/multi_auth_credentials", :locals  => {:record => @ems, :ng_model => "emsCommonModel"}
 
   = render :partial => "layouts/angular/x_edit_buttons_angular", :locals => {:record => @ems, :restful => true}
