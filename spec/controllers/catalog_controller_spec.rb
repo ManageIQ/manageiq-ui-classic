@@ -768,6 +768,7 @@ describe CatalogController do
             :repository_id   => repository.id,
             :playbook_id     => playbook.id,
             :dialog_id       => dialog.id,
+            :execution_ttl   => nil,
             :verbosity       => 4
           },
           :retirement => {
@@ -776,6 +777,7 @@ describe CatalogController do
             :credential_id   => auth.id,
             :repository_id   => repository.id,
             :playbook_id     => playbook.id,
+            :execution_ttl   => nil,
             :verbosity       => 0
           }
         }
@@ -791,6 +793,7 @@ describe CatalogController do
           :dialog             => "Some Label",
           :dialog_id          => dialog.id,
           :become_enabled     => "No",
+          :execution_ttl      => nil,
           :verbosity          => 4
         },
         :retirement   => {
@@ -799,6 +802,7 @@ describe CatalogController do
           :playbook           => playbook.name,
           :machine_credential => auth.name,
           :become_enabled     => "No",
+          :execution_ttl      => nil,
           :verbosity          => 0
         }
       }
@@ -818,6 +822,7 @@ describe CatalogController do
             :repository_id   => 1,
             :playbook_id     => playbook.id,
             :dialog_id       => 2,
+            :execution_ttl   => nil,
             :verbosity       => 4
           },
           :retirement => {
@@ -826,6 +831,7 @@ describe CatalogController do
             :credential_id   => auth.id,
             :repository_id   => repository.id,
             :playbook_id     => 2,
+            :execution_ttl   => nil,
             :verbosity       => 0
           }
         }
@@ -839,6 +845,7 @@ describe CatalogController do
           :playbook           => playbook.name,
           :machine_credential => auth.name,
           :become_enabled     => "No",
+          :execution_ttl      => nil,
           :verbosity          => 4
         },
         :retirement   => {
@@ -847,6 +854,7 @@ describe CatalogController do
           :playbook           => nil,
           :machine_credential => auth.name,
           :become_enabled     => "No",
+          :execution_ttl      => nil,
           :verbosity          => 0
         }
       }
