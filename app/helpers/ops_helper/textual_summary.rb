@@ -125,7 +125,7 @@ module OpsHelper::TextualSummary
       :title     => _("Tables with Most Wasted Space"),
       :headers   => [_("Name"), _("Wasted")],
       :col_order => %w(name value),
-      :value     => vmdb_table_top_rows(:wasted_bytes, TOP_TABLES_BY_WASTED_SPACE_COUNT)
+      :value     => vmdb_table_top_rows(:wasted_bytes, 5)
     }
   end
 
