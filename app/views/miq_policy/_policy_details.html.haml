@@ -1,6 +1,6 @@
 - if @edit
   - url = url_for_only_path(:action => 'policy_field_changed', :id => (@policy.id || 'new'))
-  - observe_with_interval = {:url => url}.to_json
+  - observe = {:url => url}.to_json
 #policy_details_div
   - if @policy
     #policy_info_div
@@ -19,7 +19,7 @@
                   = text_field_tag("description", @edit[:new][:description],
                     :maxlength         => ViewHelper::MAX_DESC_LEN,
                     :class             => "form-control",
-                    "data-miq_observe" => observe_with_interval)
+                    "data-miq_observe" => observe)
                   = javascript_tag(javascript_focus('description'))
               - else
                 .col-md-8
@@ -230,7 +230,7 @@
             :maxlength                  => "512",
             :counter                    => "notes_count",
             "data-miq_check_max_length" => true,
-            "data-miq_observe"          => observe_with_interval)
+            "data-miq_observe"          => observe)
       - else
         %h3= _("Notes")
         - if @policy.notes.blank?

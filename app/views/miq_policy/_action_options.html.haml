@@ -1,5 +1,4 @@
 - url = url_for_only_path(:action => 'action_field_changed', :id => (@action.id || 'new'))
-- observe_with_interval = {:url => url}.to_json
 - observe = {:url => url}.to_json
 #action_options_div
   - case @edit[:new][:action_type]
@@ -17,7 +16,7 @@
             @edit[:new][:options][:from],
             :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
-            "data-miq_observe" => observe_with_interval)
+            "data-miq_observe" => observe)
           = _("(Default: %{email_from})") % {:email_from => h(::Settings.smtp.from)}
       .form-group
         %label.control-label.col-md-2
@@ -27,7 +26,7 @@
             @edit[:new][:options][:to],
             :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
-            "data-miq_observe" => observe_with_interval)
+            "data-miq_observe" => observe)
   - when "set_custom_attribute"
     %h3
       = _('Custom Attribute Settings')
@@ -40,7 +39,7 @@
             @edit[:new][:options][:attribute],
             :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
-            "data-miq_observe" => observe_with_interval)
+            "data-miq_observe" => observe)
       .form-group
         %label.control-label.col-md-2
           = _('Value to Set')
@@ -49,7 +48,7 @@
             @edit[:new][:options][:value],
             :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
-            "data-miq_observe" => observe_with_interval)
+            "data-miq_observe" => observe)
   - when "tag"
     %h3
       = _('Applied Tag')
@@ -79,7 +78,7 @@
             @edit[:new][:options][:name],
             :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
-            "data-miq_observe" => observe_with_interval)
+            "data-miq_observe" => observe)
   - when "delete_snapshots_by_age"
     %h3
       = _("Snapshot Age Settings")
@@ -107,7 +106,7 @@
             @edit[:new][:options][:value],
             :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
-            "data-miq_observe" => observe_with_interval)
+            "data-miq_observe" => observe)
           = _('(Enter the value between 4 - 65636 MB)')
   - when "reconfigure_cpus"
     %h3
@@ -189,7 +188,7 @@
             @edit[:new][:options][:host],
             :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
-            "data-miq_observe" => observe_with_interval)
+            "data-miq_observe" => observe)
       .form-group
         %label.control-label.col-md-2
           = _("Version")
@@ -211,7 +210,7 @@
             @edit[:new][:options][:trap_id],
             :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
-            "data-miq_observe" => observe_with_interval)
+            "data-miq_observe" => observe)
     %h3
       = _("Variables")
     %table.table
@@ -233,7 +232,7 @@
               @edit[:new][:options][:variables][i][:oid],
               :maxlength         => ViewHelper::MAX_NAME_LEN,
               :class             => "form-control",
-              "data-miq_observe" => observe_with_interval)
+              "data-miq_observe" => observe)
           %td
             = select_tag("#{t}",
               options_for_select(["<#{_('None')}>"] + @edit[:snmp_var_types].sort,
@@ -253,7 +252,7 @@
               :maxlength         => ViewHelper::MAX_NAME_LEN,
               :disabled          => val_disabled,
               :class             => "form-control",
-              "data-miq_observe" => observe_with_interval)
+              "data-miq_observe" => observe)
   - when "assign_scan_profile"
     %h3
       = _("Analysis Profiles")
@@ -358,5 +357,5 @@
                   @edit[:new][:options][:hosts],
                   :maxlength         => ViewHelper::MAX_DESC_LEN,
                   :class             => "form-control",
-                  "data-miq_observe" => observe_with_interval)
+                  "data-miq_observe" => observe)
                 = _('Enter a comma separated list of IP or DNS names')
