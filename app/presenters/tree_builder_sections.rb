@@ -39,16 +39,16 @@ class TreeBuilderSections < TreeBuilder
                    :image       => false,
                    :select      => true,
                    :cfmeNoClick => true,
-                   :children    => [section])
+                   :nodes       => [section])
       else
-        nodes.last[:children].push(section)
+        nodes.last[:nodes].push(section)
       end
     end
     nodes.each do |node|
-      checked = node[:children].count { |kid| @data.include[kid[:name]][:checked] } # number of checked kids
+      checked = node[:nodes].count { |kid| @data.include[kid[:name]][:checked] } # number of checked kids
       if checked == 0
         node[:select] = false
-      elsif checked < node[:children].size
+      elsif checked < node[:nodes].size
         node[:select] = 'undefined'
       else
         node[:select] = true
@@ -58,14 +58,14 @@ class TreeBuilderSections < TreeBuilder
   end
 
   def x_get_tree_hash_kids(parent, count_only)
-    nodes = parent[:children].map do |kid|
+    nodes = parent[:nodes].map do |kid|
       {:id          => "group_#{kid[:group]}:#{kid[:name]}",
        :text        => kid[:header],
        :tip         => kid[:header],
        :image       => false,
        :select      => @data.include[kid[:name]][:checked],
        :cfmeNoClick => true,
-       :children    => []
+       :nodes       => []
       }
     end
     count_only_or_objects(count_only, nodes)

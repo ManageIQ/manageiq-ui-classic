@@ -33,11 +33,11 @@ class TreeBuilderVandt < TreeBuilder
 
   private
 
-  def find_child_recursive(children, id)
-    children.each do |t|
-      return t[:children] if t[:key] == id
+  def find_child_recursive(nodes, id)
+    nodes.each do |t|
+      return t[:nodes] if t[:key] == id
 
-      found = find_child_recursive(t[:children], id) if t[:children]
+      found = find_child_recursive(t[:nodes], id) if t[:nodes]
       return found unless found.nil?
     end
     nil

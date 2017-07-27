@@ -37,7 +37,7 @@ describe TreeBuilderClusters do
                                         :tip         => "Name",
                                         :select      => 'unsure',
                                         :cfmeNoClick => true,
-                                        :children    => @ho_enabled + @ho_disabled)
+                                        :nodes       => @ho_enabled + @ho_disabled)
       # non-cluster-node
       expect(cluster_nodes.last).to eq(:id          => "NonCluster",
                                        :text        => _("Non-clustered Hosts"),
@@ -45,7 +45,7 @@ describe TreeBuilderClusters do
                                        :tip         => _("Non-clustered Hosts"),
                                        :select      => true,
                                        :cfmeNoClick => true,
-                                       :children    => @non_cluster_hosts)
+                                       :nodes       => @non_cluster_hosts)
     end
 
     it 'sets non-cluster host nodes correctly' do
@@ -57,7 +57,7 @@ describe TreeBuilderClusters do
                                        :icon        => 'pficon pficon-screen',
                                        :select      => true,
                                        :cfmeNoClick => true,
-                                       :children    => []}])
+                                       :nodes       => []}])
     end
 
     it 'sets cluster hosts nodes correctly' do
@@ -70,7 +70,7 @@ describe TreeBuilderClusters do
          :icon        => 'pficon pficon-screen',
          :select      => true,
          :cfmeNoClick => true,
-         :children    => []}
+         :nodes       => []}
       end
       cluster_hosts_expected += @ho_disabled.map do |node|
         {:id          => "#{cluster_nodes.first[:id]}_#{node[:id]}",
@@ -79,7 +79,7 @@ describe TreeBuilderClusters do
          :icon        => 'pficon pficon-screen',
          :select      => false,
          :cfmeNoClick => true,
-         :children    => []}
+         :nodes       => []}
       end
       expect(cluster_hosts).to eq(cluster_hosts_expected)
     end

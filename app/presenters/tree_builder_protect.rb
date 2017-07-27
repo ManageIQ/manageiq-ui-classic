@@ -31,7 +31,7 @@ class TreeBuilderProtect < TreeBuilder
         :icon        => profile.active? ? "fa fa-shield" : "fa fa-inactive fa-shield",
         :tip         => profile.description,
         :select      => @data[:new][profile.id] == @data[:pol_items].length,
-        :children    => profile.members,
+        :nodes       => profile.members,
         :cfmeNoClick => true
       }
     end
@@ -39,7 +39,7 @@ class TreeBuilderProtect < TreeBuilder
   end
 
   def x_get_tree_hash_kids(parent, count_only)
-    nodes = parent[:children].map do |policy|
+    nodes = parent[:nodes].map do |policy|
       icon = case policy.towhat
              when 'Host'
                'pficon pficon-screen'
@@ -64,7 +64,7 @@ class TreeBuilderProtect < TreeBuilder
         :icon         => "#{icon}#{policy.active ? '' : ' fa-inactive'}",
         :tip          => policy.description,
         :hideCheckbox => true,
-        :children     => [],
+        :nodes        => [],
         :cfmeNoClick  => true
       }
     end

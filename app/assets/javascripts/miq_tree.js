@@ -649,7 +649,7 @@ function miqInitTree(options, tree) {
   }
 
   if (options.add_nodes) {
-    miqAddNodeChildren(options.tree_name, options.add_node_key, options.select_node, options.children);
+    miqAddNodeChildren(options.tree_name, options.add_node_key, options.select_node, options.nodes);
   }
 
   // Tree state persistence correction after the tree is completely loaded
