@@ -1,4 +1,5 @@
 ManageIQ.angular.app = angular.module('ManageIQ', [
+  'ui.select',
   'ui.bootstrap',
   'ui.codemirror',
   'patternfly',
