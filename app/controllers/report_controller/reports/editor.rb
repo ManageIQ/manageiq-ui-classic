@@ -5,6 +5,8 @@ module ReportController::Reports::Editor
     helper_method :cashed_reporting_available_fields, :cashed_reporting_available_fields
   end
 
+  DEFAULT_PDF_PAGE_SIZE = "US-Letter"
+
   CHARGEBACK_ALLOWED_FIELD_SUFFIXES = %w(
     _cost
     -owner_name
