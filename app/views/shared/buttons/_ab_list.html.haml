@@ -119,5 +119,5 @@
 - elsif @custom_button
   - if params[:action] == 'button_update' && (params[:button] == 'visibility_expression' || params[:button] == 'enablement_expression')
     = render :partial => 'shared/buttons/ab_form'
-  -else
+  - else
     = render :partial => 'shared/buttons/ab_show'

@@ -112,6 +112,7 @@ module ApplicationController::Buttons
       @edit[:new][:button_icon] = params[:button_icon] if params[:button_icon]
       @edit[:new][:button_color] = params[:button_color] if params[:button_color]
       @edit[:new][:dialog_id] = params[:dialog_id] if params[:dialog_id]
+      @edit[:new][:disabled_text] = params[:disabled_text] if params[:disabled_text]
       visibility_box_edit
     end
 
@@ -135,7 +136,6 @@ module ApplicationController::Buttons
   def ab_button_delete
     assert_privileges("ab_button_delete")
     custom_button = CustomButton.find(from_cid(params[:id]))
-    description = custom_button.description
     audit = {:event => "custom_button_record_delete", :message => "[#{custom_button.description}] Record deleted", :target_id => custom_button.id, :target_class => "CustomButton", :userid => session[:userid]}
     if custom_button.parent
       automation_set = CustomButtonSet.find_by_id(custom_button.parent.id)
@@ -466,7 +466,7 @@ module ApplicationController::Buttons
   def ab_expression
     session[:changed] = (@edit[:new] != @edit[:current])
     @expkey = params[:button].to_sym
-    @edit[:visibility_expression_table] = @edit[:new][:visibility_expression_table] == {"???" => "???"} ? nil : exp_build_table(@edit[:new][:visibility_expression_table])
+    @edit[:visibility_expression_table] = @edit[:new][:visibility_expression] == {"???" => "???"} ? nil : exp_build_table(@edit[:new][:visibility_expression])
     @edit[:enablement_expression_table] = @edit[:new][:enablement_expression] == {"???" => "???"} ? nil : exp_build_table(@edit[:new][:enablement_expression])
     replace_right_cell(:nodetype => 'button_edit')
   end
@@ -536,7 +536,6 @@ module ApplicationController::Buttons
       end
 
       ab_get_node_info(x_node) if x_active_tree == :ab_tree
-      build_filter_exp_table
       replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
     else
       @custom_button.errors.each do |field, msg|
@@ -564,14 +563,14 @@ module ApplicationController::Buttons
     exp_remove_tokens(@edit[:new][:visibility_expression])
     @custom_button.visibility_expression = MiqExpression.new(@edit[:new][:visibility_expression])
     if @custom_button.visibility_expression.kind_of?(MiqExpression) && @custom_button.visibility_expression.exp["???"]
-      add_flash(_("A valid expression must be present"), :error)
+      @custom_button.visibility_expression = nil
     end
 
     # Enablement Expression box
     exp_remove_tokens(@edit[:new][:enablement_expression])
     @custom_button.enablement_expression = MiqExpression.new(@edit[:new][:enablement_expression])
     if @custom_button.enablement_expression.kind_of?(MiqExpression) && @custom_button.enablement_expression.exp["???"]
-      add_flash(_("A valid expression must be present"), :error)
+      @custom_button.enablement_expression = nil
     end
 
     unless button_valid?
@@ -847,6 +846,7 @@ module ApplicationController::Buttons
     button.userid = session[:userid]
     button.uri = @edit[:uri]
     button[:options] = {}
+    button.disabled_text = @edit[:new][:disabled_text]
     #   button[:options][:target_attr_name] = @edit[:new][:target_attr_name]
     button.uri_path, button.uri_attributes, button.uri_message = CustomButton.parse_uri(@edit[:uri])
     button.uri_attributes["request"] = @edit[:new][:object_request]
@@ -869,20 +869,12 @@ module ApplicationController::Buttons
     end
     button_set_resource_action(button)
     exp_remove_tokens(@edit[:new][:visibility_expression])
-    if button.visibility_expression.kind_of?(MiqExpression) && button.visibility_expression.exp["???"]
-      add_flash(_("A valid visibility expression must be present"), :error)
-    end
     button.visibility_expression = @edit[:new][:visibility_expression]["???"] ? nil : MiqExpression.new(@edit[:new][:visibility_expression])
-
-    exp_remove_tokens(@edit[:new][:enablement_expression])
-    if button.enablement_expression.kind_of?(MiqExpression) && button.enablement_expression.exp["???"]
-      add_flash(_("A valid enablement expression must be present"), :error)
-    end
     button.enablement_expression = @edit[:new][:enablement_expression]["???"] ? nil : MiqExpression.new(@edit[:new][:enablement_expression])
   end
 
   def field_expression_model
-    @custom_button.applies_to_class
+    @custom_button.applies_to_class ||= (x_active_tree == :ab_tree ? @sb[:target_classes][@resolve[:target_class]] : "ServiceTemplate")
   end
 
   def button_set_expression_vars(field_expression, field_expression_table)
@@ -971,6 +963,7 @@ module ApplicationController::Buttons
       :description    => @custom_button.description,
       :button_icon    => @custom_button.options.try(:[], :button_icon),
       :button_color   => @custom_button.options.try(:[], :button_color),
+      :disabled_text  => @custom_button.disabled_text,
       :display        => @custom_button.options.try(:[], :display).nil? ? true : @custom_button.options[:display],
       :open_url       => @custom_button.options.try(:[], :open_url) ? @custom_button.options[:open_url] : false,
       :display_for    => @custom_button.options.try(:[], :display_for) ? @custom_button.options[:display_for] : 'single',

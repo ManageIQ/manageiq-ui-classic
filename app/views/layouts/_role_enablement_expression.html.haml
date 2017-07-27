@@ -3,7 +3,7 @@
     %h3= _("Enablement Expression (Choose an element of the expression to edit)")
     = render :partial => 'layouts/exp_editor'
   - else
-    %h3= _('Expression (Press the "Edit" button to edit the expression)')
+    %h3= _('Enablement Expression (Press the "Edit" button to edit the expression)')
     = link_to(image_tag(image_path('toolbars/edit.png'), :border => "0", :alt => (t = _("Edit this Expression"))),
       {:action => 'button_update', :button => "enablement_expression"},
       "data-miq_sparkle_on"  => true,
