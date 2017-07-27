@@ -24,7 +24,7 @@ module ViewHelper
     "US-Government" => N_("US Government - 8.0in x 11.0in"),
     "US-Statement"  => N_("US Statement - 5.5in x 8.5in"),
     "US-Folio"      => N_("US Folio - 8.5in x 13.0in")
-  }
+  }.freeze
 
   class << self
     def concat_tag(*args, &block)
