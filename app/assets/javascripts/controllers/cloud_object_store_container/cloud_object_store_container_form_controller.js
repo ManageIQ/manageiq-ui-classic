@@ -20,7 +20,7 @@ ManageIQ.angular.app.controller('cloudObjectStoreContainerFormController', ['miq
     vm.saveable = miqService.saveable;
 
     miqService.sparkleOn();
-    API.get('/api/providers?expand=resources&attributes=id,name&filter[]=supports_cloud_object_store_container_create?=true')
+    API.get('/api/providers?expand=resources&attributes=id,name,supports_cloud_object_store_container_create&filter[]=supports_cloud_object_store_container_create=true')
       .then(getStorageManagers)
       .catch(miqService.handleFailure);
 
