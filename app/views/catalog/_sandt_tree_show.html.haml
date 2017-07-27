@@ -228,6 +228,11 @@
                 = h(provisioning[:cloud_credential])
             .form-group
               %label.col-md-3.control-label
+                = _('Max TTL (mins)')
+              .col-md-9
+                = h(@record.config_info[:provision][:execution_ttl])
+            .form-group
+              %label.col-md-3.control-label
                 = _('Hosts')
               .col-md-9
                 = h(@record.config_info[:provision][:hosts])
@@ -305,6 +310,11 @@
                   = _('Cloud Credential')
                 .col-md-9
                   = h(retirement[:cloud_credential])
+              .form-group
+                %label.col-md-3.control-label
+                  = _('Max TTL (mins)')
+                .col-md-9
+                  = h(@record.config_info[:retirement][:execution_ttl])
               .form-group
                 %label.col-md-3.control-label
                   = _('Hosts')

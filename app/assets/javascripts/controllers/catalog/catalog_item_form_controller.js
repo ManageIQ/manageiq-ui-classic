@@ -15,6 +15,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       provisioning_machine_credential_id: '',
       provisioning_network_credential_id: '',
       provisioning_cloud_credential_id: '',
+      provisioning_execution_ttl: '',
       provisioning_inventory: 'localhost',
       provisioning_dialog_existing: 'existing',
       provisioning_dialog_id: '',
@@ -30,6 +31,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       retirement_machine_credential_id: '',
       retirement_network_credential_id: '',
       retirement_cloud_credential_id: '',
+      retirement_execution_ttl: '',
       retirement_inventory: 'localhost',
       retirement_key: '',
       retirement_value: '',
@@ -123,6 +125,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.catalogItemModel.provisioning_machine_credential_id = configData.provision.credential_id;
     vm.catalogItemModel.provisioning_network_credential_id = configData.provision.network_credential_id;
     vm.catalogItemModel.provisioning_cloud_credential_id = setIfDefined(configData.provision.cloud_credential_id);
+    vm.catalogItemModel.provisioning_execution_ttl = configData.provision.execution_ttl;
     vm.catalogItemModel.provisioning_inventory = configData.provision.hosts;
     vm.catalogItemModel.provisioning_dialog_existing = configData.provision.dialog_id ? "existing" : "create";
     vm.catalogItemModel.provisioning_dialog_id = configData.provision.dialog_id;
@@ -164,6 +167,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
 
     vm.catalogItemModel.retirement_network_credential_id = configData.retirement.network_credential_id;
     vm.catalogItemModel.retirement_cloud_credential_id = setIfDefined(configData.retirement.cloud_credential_id);
+    vm.catalogItemModel.retirement_execution_ttl = configData.retirement.execution_ttl;
     vm.catalogItemModel.retirement_inventory = configData.retirement.hosts;
     vm.catalogItemModel.retirement_key = '';
     vm.catalogItemModel.retirement_value = '';
@@ -247,6 +251,8 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
         }
       }
     }
+    if (vm.catalogItemModel.provisioning_execution_ttl !== undefined)
+      catalog_item['config_info']['provision']['execution_ttl'] = configData.provisioning_execution_ttl;
     catalog_item['config_info']['provision']['become_enabled'] = configData.provisioning_become_enabled;
     if (configData.provisioning_network_credential_id !== '')
       catalog_item['config_info']['provision']['network_credential_id'] = configData.provisioning_network_credential_id;
@@ -271,6 +277,8 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
       retirement['credential_id'] = configData.retirement_machine_credential_id;
     }
     if (vm.catalogItemModel.retirement_playbook_id !== undefined && configData.retirement_playbook_id !== '') {
+      if (vm.catalogItemModel.retirement_execution_ttl !== undefined)
+        retirement['execution_ttl'] = configData.retirement_execution_ttl;
       retirement['hosts'] = configData.retirement_inventory;
       retirement['extra_vars'] = formatExtraVars(configData.retirement_variables);
       catalog_item['config_info']['retirement']['become_enabled'] = configData.retirement_become_enabled;
@@ -569,6 +577,7 @@ ManageIQ.angular.app.controller('catalogItemFormController', ['$scope', 'catalog
     vm.retirement_cloud_type = vm.provisioning_cloud_type;
     vm._retirement_cloud_type = vm.provisioning_cloud_type;
     vm.catalogItemModel.retirement_cloud_credential_id = vm.catalogItemModel.provisioning_cloud_credential_id;
+    vm.catalogItemModel.retirement_execution_ttl = vm.catalogItemModel.provisioning_execution_ttl;
     vm.catalogItemModel.retirement_inventory = vm.catalogItemModel.provisioning_inventory;
     vm.catalogItemModel.retirement_become_enabled = vm.catalogItemModel.provisioning_become_enabled;
     vm.catalogItemModel.retirement_verbosity = vm.catalogItemModel.provisioning_verbosity;
