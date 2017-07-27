@@ -3,27 +3,17 @@ ManageIQ.angular.app.component('verifyButton', {
     validate: '<',
     enabled: '<',
     validateUrl: '<',
-    restful: '<',
+    restfull: '<',
     valtype: '<',
-    verifyTitleOff: '@',
-    verifyTitleOn: '@',
+    buttonLabels: '<',
   },
   controllerAs: 'vm',
   controller: ['$scope', function($scope) {
     $scope.__ = __;
     var vm = this;
 
-    this.$onInit = function() {
-      if (! vm.verifyTitleOff) {
-        vm.verifyTitleOff = 'test';
-        console.log('test button');
-      }
-      if (! vm.verifyTitleOn) {
-        vm.verifyTitleOn = 'test on';
-      }
-    };
     vm.chooseValidation = function() {
-      if (vm.restful) {
+      if (vm.restfull) {
         vm.validate({target: '.validate_button:visible'}, vm.valtype, true);
       } else {
         vm.validate(vm.validateUrl);

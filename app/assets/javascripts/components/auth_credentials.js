@@ -10,7 +10,7 @@ ManageIQ.angular.app.component('authCredentials', {
     enableValidButton: '<',
     validate: '<',
     validateUrl: '@',
-    restful: '<',
+    restfull: '<',
     verifyTitleOff: '@',
     /**
     * is used in vrifyButton component for restfull validation, may be obsolete
@@ -25,7 +25,7 @@ ManageIQ.angular.app.component('authCredentials', {
     */
     setUserId: '&',
     checkAuthentication: '<',
-    authStatus: '<',
+    formLabels: '<',
   },
   controllerAs: 'vm',
   controller: ['$scope', function($scope) {
@@ -36,7 +36,18 @@ ManageIQ.angular.app.component('authCredentials', {
     this.$onInit = function() {
       this.bChangeStoredPassword = this.newRecord;
       this.bCancelPasswordChange = this.newRecord;
-      console.log('auth model: ', vm.model);
+      // build inputs labels
+      vm.userIdLabel = vm.formLabels && vm.formLabels.userIdLabel || __('Username');
+      vm.passwordLabel = vm.formLabels && vm.formLabels.passwordLabel || __('Password');
+      vm.changeStoredPasswordLabel = vm.formLabels && vm.formLabels.changeStoredPassword || __('Change stored password');
+      vm.cancelPasswordChangeLabel = vm.formLabels && vm.formLabels.cancelPasswordChange || __('Cancel password change');
+
+      vm.buttonLabels = {
+        verifyTitleOn: vm.formLabels && vm.formLabels.verifyTitleOn
+                        || __('Validate the credentials by logging into the Server'),
+        verifyTitleOff: vm.formLabels && vm.formLabels.verifyTitleOff
+                          || __('Server information, Username and matching password fields are needed to perform verification of credentials'),
+      };
     };
 
     this.changeStoredPassword = function() {

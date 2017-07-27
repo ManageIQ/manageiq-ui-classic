@@ -1,8 +1,8 @@
 %div
   %miq-button.validate_button{:name      => _('Validate'),
                               'on-click' => "vm.chooseValidation()",
-                              "disabled-title" => _("Server information, Username and matching password fields are needed to perform verification of credentials"),
-                              "enabled-title"  => _("Validate the credentials by logging into the Server"),
+                              "disabled-title" => '{{vm.buttonLabels.verifyTitleOff}}',
+                              "enabled-title"  => '{{vm.buttonLabels.verifyTitleOn}}',
                               :enabled   => 'vm.enabled',
                               :xs        => 'true',
                               :primary   => 'true'}

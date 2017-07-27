@@ -129,12 +129,11 @@
                         'validate-url'         => validate_url,
                         'valtype'              => "default",
                         'validate'             => 'validateClicked',
-                        'restufull'            => true,
+                        'restfull'             => true,
                         'check-authentication' => 'checkAuthentication',
-                        'auth-status'          => "angularForm['default_auth_status'].$viewValue"}
+                        'form-labels'          => 'formLabels'}
+
     %div{"ng-show" => "emsCommonModel.emstype != 'azure'"}
-      %label
-        test
       = render :partial => "/layouts/angular/multi_auth_credentials", :locals  => {:record => @ems, :ng_model => "emsCommonModel"}
 
   = render :partial => "layouts/angular/x_edit_buttons_angular", :locals => {:record => @ems, :restful => true}
