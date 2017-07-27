@@ -176,6 +176,19 @@ describe ProviderForemanController do
       expect(@provider.zone).to eq(new_zone)
     end
 
+    it "should save the verify_ssl flag" do
+      controller.instance_variable_set(:@provider, @provider)
+      allow(controller).to receive(:leaf_record).and_return(false)
+      [true, false].each do |verify_ssl|
+        post :edit, :params => { :button     => 'save',
+                                 :id         => @config_mgr.id,
+                                 :url        => @provider.url,
+                                 :verify_ssl => verify_ssl.to_s }
+        expect(response.status).to eq(200)
+        expect(@provider.verify_ssl).to eq(verify_ssl ? 1 : 0)
+      end
+    end
+
     it "renders the edit page when the configuration manager id is selected from a list view" do
       post :edit, :params => { :miq_grid_checks => @config_mgr.id }
       expect(response.status).to eq(200)
