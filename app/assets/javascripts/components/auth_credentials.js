@@ -11,6 +11,7 @@ ManageIQ.angular.app.component('authCredentials', {
     validate: '<',
     validateUrl: '@',
     restful: '<',
+    verifyTitleOff: '@',
     /**
     * is used in vrifyButton component for restfull validation, may be obsolete
     */
