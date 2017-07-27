@@ -80,9 +80,16 @@
                      options_for_select([[_('Submit all'), 'all'], [_('One by one'), 'one']], @edit[:new][:submit_how]),
                      "data-miq_sparkle_on" => true,
                     )
-  = render(:partial => "layouts/role_visibility_expression",
-           :locals  => {:rec_id => @custom_button ? @custom_button.id : 'new', :action => "automate_button_field_changed"})
   = render(:partial => "layouts/role_enablement_expression",
+           :locals  => {:rec_id => @custom_button ? @custom_button.id : 'new', :action => "automate_button_field_changed"})
+%h3
+  = _('Disabled Button Text')
+  .form-horizontal.static
+    = text_field_tag("disabled_text", @edit[:new][:disabled_text],
+                          :maxlength         => 50,
+                          :class             => "form-control",
+                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+  = render(:partial => "layouts/role_visibility_expression",
            :locals  => {:rec_id => @custom_button ? @custom_button.id : 'new', :action => "automate_button_field_changed"})
   = render(:partial => "layouts/ae_resolve_options",
     :locals         => {:resolve => @edit,
