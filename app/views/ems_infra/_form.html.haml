@@ -1,4 +1,3 @@
-- validate_url = url_for_only_path(:action => @ems.id ? "update" : "create", :id => @ems.id || "new", :type => 'default', :button => "validate")
 - @angular_form = true
 
 .form-horizontal{'ng-cloak' => '',
@@ -108,7 +107,6 @@
                         'password-required'    => "emsCommonModel.default_userid != ''",
                         'prefix'               => 'default',
                         'enable-valid-button'  => 'canValidateBasicInfo()',
-                        'validate-url'         => validate_url,
                         'valtype'              => "default",
                         'validate'             => 'validateClicked',
                         'restfull'             => true,
