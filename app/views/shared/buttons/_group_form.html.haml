@@ -6,7 +6,7 @@
   .form-horizontal
     .form-group
       %label.control-label.col-md-2
-        = _('Button Group Text')
+        = _('Text')
       .col-md-8
         .input-group
           = text_field_tag("name", @edit[:new][:name],
@@ -22,7 +22,7 @@
               = javascript_tag(javascript_focus('name'))
     .form-group
       %label.control-label.col-md-2
-        = _('Button Group Hover Text')
+        = _('Hover Text')
       .col-md-8
         = text_field_tag("description", @edit[:new][:description],
                         :maxlength         => 30,
@@ -30,7 +30,7 @@
                         "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
     .form-group
       %label.control-label.col-md-2
-        = _('Button Group Image')
+        = _('Image')
       .col-md-8
         #form-group
         = select_tag('button_image',

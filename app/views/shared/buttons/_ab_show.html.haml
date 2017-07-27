@@ -5,7 +5,7 @@
 .form-horizontal.static
   .form-group
     %label.control-label.col-md-2
-      = _('Button Text')
+      = _('Text')
     .col-md-8
       = @custom_button.name
       - display = @custom_button.options.key?(:display) ? @custom_button.options[:display] : true
@@ -17,7 +17,7 @@
 
   .form-group
     %label.control-label.col-md-2
-      = _('Button Hover Text')
+      = _('Hover Text')
     .col-md-8
       = @custom_button.description
   .form-group
