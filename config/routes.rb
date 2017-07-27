@@ -181,9 +181,6 @@ Rails.application.routes.draw do
         delete
         edit
         explorer
-        exp_button
-        exp_changed
-        exp_token_pressed
         form_field_changed
         new
         provision
@@ -203,6 +200,7 @@ Rails.application.routes.draw do
         wait_for_task
       ) +
         adv_search_post +
+        exp_post +
         x_post
     },
 
@@ -1298,15 +1296,13 @@ Rails.application.routes.draw do
         show_list
         create
         create_del
-        exp_button
-        exp_changed
-        exp_token_pressed
         listnav_search_selected
         update
         update_del
         quick_search
       ) +
           adv_search_post +
+          exp_post +
           save_post
     },
 
@@ -2685,9 +2681,6 @@ Rails.application.routes.draw do
         delete
         edit
         explorer
-        exp_button
-        exp_changed
-        exp_token_pressed
         form_field_changed
         new
         provision
@@ -2708,6 +2701,7 @@ Rails.application.routes.draw do
         x_button
       ) +
                adv_search_post +
+               exp_post +
                x_post
     },
 
