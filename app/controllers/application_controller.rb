@@ -76,7 +76,7 @@ class ApplicationController < ActionController::Base
   before_action :allow_websocket
   after_action :set_global_session_data, :except => [:resize_layout]
 
-  ONE_MILLION = 1000000 # Setting high number incase we don't want to display paging controls on list views
+  ONE_MILLION = 1_000_000 # Setting high number incase we don't want to display paging controls on list views
 
   def local_request?
     Rails.env.development? || Rails.env.test?
