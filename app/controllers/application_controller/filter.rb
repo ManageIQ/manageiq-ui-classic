@@ -965,8 +965,7 @@ module ApplicationController::Filter
     else                                                                # Create new exp fields
       @edit = {}
       @edit[@expkey] ||= Expression.new
-      @edit[@expkey][:expression] = []                           # Store exps in an array
-      @edit[@expkey][:expression] = {"???" => "???"}                      # Set as new exp element
+      @edit[@expkey][:expression] = {"???" => "???"}                    # Set as new exp element
       @edit[@expkey][:use_mytags] = true                                # Include mytags in tag search atoms
       @edit[:custom_search] = false                                     # setting default to false
       @edit[:new] = {}
