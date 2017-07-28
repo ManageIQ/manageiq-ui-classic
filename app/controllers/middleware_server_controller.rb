@@ -31,8 +31,7 @@ class MiddlewareServerController < ApplicationController
     :middleware_jdr_generate   => {:op   => :generate_jdr,
                                    :skip => true,
                                    :hawk => N_('generating JDR report'),
-                                   :msg  => N_('Generate JDR report')
-    }
+                                   :msg  => N_('Generate JDR report')}
   }.freeze
 
   STANDALONE_ONLY = {
@@ -172,6 +171,21 @@ class MiddlewareServerController < ApplicationController
     end
   end
 
+  def jdr_download
+    mw_server = MiddlewareServer.find(from_cid(params[:id]))
+    jdr_report = mw_server.middleware_jdr_reports.find(from_cid(params[:key]))
+
+    response.headers['Content-Type'] = 'application/zip'
+    response.headers['Content-Disposition'] = "attachment; filename=#{jdr_report.binary_blob.name}"
+    response.headers['Content-Length'] = jdr_report.binary_blob.size
+
+    self.response_body = Enumerator.new do |y|
+      jdr_report.binary_blob.binary_blob_parts.find_each(:batch_size => 5) do |part|
+        y << part.data
+      end
+    end
+  end
+
   def self.display_methods
     %w(middleware_datasources middleware_deployments middleware_messagings)
   end
@@ -277,6 +291,8 @@ class MiddlewareServerController < ApplicationController
           name = operation_info.fetch(:param)
           val = params.fetch name || 0 # Default until we can really get it from the UI ( #9462/#8079)
           trigger_mw_operation operation_info.fetch(:op), mw_server, name => val
+        elsif operation_info.fetch(:op) == :generate_jdr
+          mw_server.enqueue_jdr_report(:requesting_user => current_userid)
         else
           trigger_mw_operation operation_info.fetch(:op), mw_server
         end
@@ -287,27 +303,22 @@ class MiddlewareServerController < ApplicationController
   end
 
   def trigger_mw_operation(operation, mw_server, params = nil)
-    unless operation == :generate_jdr
-      mw_manager = mw_server.ext_management_system
-      path = mw_server.ems_ref
+    mw_manager = mw_server.ext_management_system
+    path = mw_server.ems_ref
 
-      # in domain mode case we want to run the operation on the server-config DMR resource
-      if mw_server.respond_to?(:in_domain?) && mw_server.in_domain?
-        path = path.sub(/%2Fserver%3D/, '%2Fserver-config%3D')
-      end
-
-      op = mw_manager.public_method operation
-
-      if mw_server.instance_of? MiddlewareDeployment
-        op.call(path, mw_server.name)
-      elsif params
-        op.call(path, params)
-      else
-        op.call(path)
-      end
-    else
-      mw_server.enqueue_jdr_report(:requesting_user => current_userid)
+    # in domain mode case we want to run the operation on the server-config DMR resource
+    if mw_server.respond_to?(:in_domain?) && mw_server.in_domain?
+      path = path.sub(/%2Fserver%3D/, '%2Fserver-config%3D')
     end
+
+    args = [operation, path]
+    if mw_server.instance_of?(MiddlewareDeployment)
+      args << mw_server.name
+    elsif params
+      args << params
+    end
+
+    mw_manager.public_send(*args)
   end
 
   menu_section :mdl
