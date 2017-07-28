@@ -24,9 +24,6 @@ module UiConstants
   }
   DEFAULT_PDF_PAGE_SIZE = "US-Letter"
 
-  # Setting high number incase we don't want to display paging controls on list views
-  ONE_MILLION = 1000000
-
   # RSS Feeds
   RSS_FEEDS = {
     "Microsoft Security"         => "http://www.microsoft.com/protect/rss/rssfeed.aspx",
