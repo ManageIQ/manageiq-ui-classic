@@ -860,19 +860,12 @@ class ApplicationController < ActionController::Base
     folders = []
     user = current_user
     @sb[:grp_title] = reports_group_title
-    @data = []
+    data = []
     if !group.settings || group.settings[:report_menus].blank? || mode == "default"
       # array of all reports if menu not configured
-      @rep = MiqReport.for_user(current_user).sort_by { |r| [r.rpt_type, r.filename.to_s, r.name] }
-      if tree_type == "timeline"
-        @data = @rep.reject { |r| r.timeline.nil? }
-      else
-        @data = @rep.select do |r|
-          r.template_type == "report" && !r.template_type.blank?
-        end
-      end
-      @data.each do |r|
-        next if r.template_type != "report" && !r.template_type.blank?
+      data = MiqReport.for_user(current_user).where(:template_type => "report").order(:rpt_type, :filename, :name)
+      data.where.not(:timeline => nil) if tree_type == "timeline"
+      data.each do |r|
         r_group = r.rpt_group == "Custom" ? "#{@sb[:grp_title]} - Custom" : r.rpt_group # Get the report group
         title = r_group.split('-').collect(&:strip)
         if @temp_title != title[0]
