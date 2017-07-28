@@ -124,7 +124,7 @@ module ApplicationController::Buttons
         page.replace("form_role_visibility", :partial => "layouts/role_visibility", :locals => {:rec_id => (@custom_button.id || "new").to_s, :action => "automate_button_field_changed"})
       end
       unless params[:target_class]
-        @changed = (@edit[:new] != @edit[:current])
+        @changed = session[:changed] = (@edit[:new] != @edit[:current])
         page << javascript_for_miq_button_visibility(@changed)
       end
       page << "miqSparkle(false);"
@@ -135,6 +135,7 @@ module ApplicationController::Buttons
   def ab_button_delete
     assert_privileges("ab_button_delete")
     custom_button = CustomButton.find(from_cid(params[:id]))
+    description = custom_button.description
     audit = {:event => "custom_button_record_delete", :message => "[#{custom_button.description}] Record deleted", :target_id => custom_button.id, :target_class => "CustomButton", :userid => session[:userid]}
     if custom_button.parent
       automation_set = CustomButtonSet.find_by_id(custom_button.parent.id)
@@ -463,11 +464,11 @@ module ApplicationController::Buttons
   end
 
   def ab_expression
-    session[:changed] = (@edit[:new] != @edit[:current])
+    @changed = session[:changed] = (@edit[:new] != @edit[:current])
     @expkey = params[:button].to_sym
     @edit[:visibility_expression_table] = @edit[:new][:visibility_expression] == {"???" => "???"} ? nil : exp_build_table(@edit[:new][:visibility_expression])
     @edit[:enablement_expression_table] = @edit[:new][:enablement_expression] == {"???" => "???"} ? nil : exp_build_table(@edit[:new][:enablement_expression])
-    replace_right_cell(:nodetype => 'button_edit')
+    replace_right_cell(:nodetype => x_node)
   end
 
   def ab_button_cancel(typ)
@@ -674,7 +675,7 @@ module ApplicationController::Buttons
         CustomButton.find(from_cid(params[:id]))
     button_set_form_vars
     @in_a_form = true
-    session[:changed] = false
+    @changed = session[:changed] = false
     @breadcrumbs = []
     title = if typ == "new"
               _("Add Button")
@@ -870,6 +871,7 @@ module ApplicationController::Buttons
     end
     button_set_resource_action(button)
     exp_remove_tokens(@edit[:new][:visibility_expression])
+    exp_remove_tokens(@edit[:new][:enablement_expression])
     button.visibility_expression = @edit[:new][:visibility_expression]["???"] ? nil : MiqExpression.new(@edit[:new][:visibility_expression])
     button.enablement_expression = @edit[:new][:enablement_expression]["???"] ? nil : MiqExpression.new(@edit[:new][:enablement_expression])
   end
