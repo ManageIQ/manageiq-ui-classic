@@ -27,7 +27,7 @@
           = h(presenter.widget.title)
 
     - if presenter.widget.content_type == "menu"
-      = render :partial => 'widget_menu', :locals => {:widget => presenter.widget}
+      %widget-menu{:id => presenter.widget.id}
     - elsif presenter.widget.contents_for_user(current_user).blank?
       = render :partial => 'widget_blank', :locals => {:widget => presenter.widget}
     - elsif %w(report chart rss).include?(presenter.widget.content_type)
