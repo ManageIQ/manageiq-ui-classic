@@ -178,6 +178,7 @@ module ApplicationHelper::PageLayouts
       ems_storage
       flavor
       floating_ip
+      generic_object_definition
       host
       host_aggregate
       load_balancer
