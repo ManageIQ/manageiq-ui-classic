@@ -905,46 +905,45 @@ module ApplicationController::Filter
 
   # Remove an expression part based on the token
   def exp_remove(exp, token)
-    if exp[:token] && exp[:token] == token              # If the token matches
-      return true                                       #   Tell caller to remove me
-    else
-      keepkey, keepval, deletekey = nil                 # Holders for key, value pair to keep and key to delete
-      exp.each do |key, _value|                          # Go thru each exp element
-        next if key == :token                           # Skip the :token keys
-        case key.upcase
-        when "AND", "OR"                                # If AND or OR
-          exp[key].each_with_index do |item, idx|       #   check all array items
-            if exp_remove(item, token) == true          # See if this part should be removed
-              if item.key?("not")                   # The item to remove is a NOT
-                exp[key].insert(idx + 1, item["not"])      # Rechain the NOT child into the array
-                exp[key].delete_at(idx)                 # Remove the NOT item
-              else                                      # Item to remove is other than a NOT
-                exp[key].delete_at(idx)                 # Remove it from the array
-                if exp[key].length == 1                 # If only 1 part left
-                  exp[key][0].each do |k, _v|             # Find the key that's not :token
-                    next if k == :token                 # Skip the :token key
-                    keepkey = k                         # Hang on to the key to keep
-                    keepval = exp[key][0][k]            #   and the value to keep
-                    deletekey = key                     #   and the key to delete
-                    break
-                  end
+    return true if exp[:token] && exp[:token] == token # If the token matches
+                                                       #   Tell caller to remove me
+
+    keepkey, keepval, deletekey = nil                  # Holders for key, value pair to keep and key to delete
+    exp.each do |key, _value|                          # Go thru each exp element
+      next if key == :token                            # Skip the :token keys
+      case key.upcase
+      when "AND", "OR"                                 # If AND or OR
+        exp[key].each_with_index do |item, idx|        #   check all array items
+          if exp_remove(item, token) == true           # See if this part should be removed
+            if item.key?("not")                        # The item to remove is a NOT
+              exp[key].insert(idx + 1, item["not"])    # Rechain the NOT child into the array
+              exp[key].delete_at(idx)                  # Remove the NOT item
+            else                                       # Item to remove is other than a NOT
+              exp[key].delete_at(idx)                  # Remove it from the array
+              if exp[key].length == 1                  # If only 1 part left
+                exp[key][0].each do |k, _v|            # Find the key that's not :token
+                  next if k == :token                  # Skip the :token key
+                  keepkey = k                          # Hang on to the key to keep
+                  keepval = exp[key][0][k]             #   and the value to keep
+                  deletekey = key                      #   and the key to delete
+                  break
                 end
               end
             end
           end
-        when "NOT"                                      # If NOT, check the sub-hash
-          if exp_remove(exp[key], token) == true        # Next lower hash is to be removed
-            exp.delete("not")                           # Remove the NOT hash
-            return true                                 # Tell caller to remove me
-          end
-        else
-          return false
         end
+      when "NOT"                                       # If NOT, check the sub-hash
+        if exp_remove(exp[key], token) == true         # Next lower hash is to be removed
+          exp.delete("not")                            # Remove the NOT hash
+          return true                                  # Tell caller to remove me
+        end
+      else
+        return false
       end
-      exp[keepkey] = keepval if keepkey                 # Copy the key value to keep up 1 level
-      exp.delete(deletekey)                             # Remove the AND or OR hash
-      return false                                      # Done removing item, return
     end
+    exp[keepkey] = keepval if keepkey                  # Copy the key value to keep up 1 level
+    exp.delete(deletekey)                              # Remove the AND or OR hash
+    false                                              # Done removing item, return
   end
 
   # Build advanced search expression
