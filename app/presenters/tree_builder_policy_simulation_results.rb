@@ -23,9 +23,9 @@ class TreeBuilderPolicySimulationResults < TreeBuilder
   def root_options
     event = MiqEventDefinition.find(@root[:event_value])
     {
-      :text        => _("Policy Simulation Results for Event [%{description}]") % {:description => event.description},
-      :icon        => event.decorate.fonticon,
-      :cfmeNoClick => true
+      :text       => _("Policy Simulation Results for Event [%{description}]") % {:description => event.description},
+      :icon       => event.decorate.fonticon,
+      :selectable => false
     }
   end
 
@@ -39,63 +39,63 @@ class TreeBuilderPolicySimulationResults < TreeBuilder
 
   def vm_nodes(data)
     data.sort_by! { |a| a[:name].downcase }.map do |node|
-      {:id          => node[:id],
-       :text        => prefixed_title(_('VM'), node[:name]),
-       :icon        => 'pficon pficon-virtual-machine',
-       :profiles    => node[:profiles],
-       :cfmeNoClick => true}
+      {:id         => node[:id],
+       :text       => prefixed_title(_('VM'), node[:name]),
+       :icon       => 'pficon pficon-virtual-machine',
+       :profiles   => node[:profiles],
+       :selectable => false}
     end
   end
 
   def profile_nodes(data)
     data.sort_by! { |a| a[:description].downcase }.map do |node|
-      {:id          => node[:id],
-       :text        => prefixed_title(_('Profile'), node[:description]),
-       :icon        => node_icon(node[:result]),
-       :policies    => node[:policies],
-       :cfmeNoClick => true}
+      {:id         => node[:id],
+       :text       => prefixed_title(_('Profile'), node[:description]),
+       :icon       => node_icon(node[:result]),
+       :policies   => node[:policies],
+       :selectable => false}
     end
   end
 
   def policy_nodes(data)
     data.sort_by! { |a| a[:description].downcase }.map do |node|
       active_caption = node[:active] ? "" : _(" (Inactive)")
-      {:id          => node['id'],
-       :text        => prefixed_title("#{_('Policy')}#{active_caption}", node[:description]),
-       :icon        => node_icon(node[:result]),
-       :conditions  => node[:conditions],
-       :actions     => node[:actions],
-       :scope       => node[:scope],
-       :cfmeNoClick => true}
+      {:id         => node['id'],
+       :text       => prefixed_title("#{_('Policy')}#{active_caption}", node[:description]),
+       :icon       => node_icon(node[:result]),
+       :conditions => node[:conditions],
+       :actions    => node[:actions],
+       :scope      => node[:scope],
+       :selectable => false}
     end
   end
 
   def action_nodes(data)
     data.map do |node|
-      {:id          => node[:id],
-       :text        => prefixed_title(_('Action'), node[:description]),
-       :icon        => node_icon(node[:result]),
-       :cfmeNoClick => true}
+      {:id         => node[:id],
+       :text       => prefixed_title(_('Action'), node[:description]),
+       :icon       => node_icon(node[:result]),
+       :selectable => false}
     end
   end
 
   def condition_nodes(data)
     data.map do |node|
-      {:id          => node[:id],
-       :text        => prefixed_title(_('Condition'), node[:description]),
-       :icon        => node_icon(node[:result]),
-       :expression  => node[:expression],
-       :cfmeNoClick => true}
+      {:id         => node[:id],
+       :text       => prefixed_title(_('Condition'), node[:description]),
+       :icon       => node_icon(node[:result]),
+       :expression => node[:expression],
+       :selectable => false}
     end
   end
 
   def scope_node(data)
     name, tip = exp_build_string(data)
-    {:id          => nil,
-     :text        => prefixed_title(_('Scope'), name),
-     :tip         => tip,
-     :icon        => node_icon(data[:result]),
-     :cfmeNoClick => true}
+    {:id         => nil,
+     :text       => prefixed_title(_('Scope'), name),
+     :tip        => tip,
+     :icon       => node_icon(data[:result]),
+     :selectable => false}
   end
 
   def expression_node(data)
@@ -108,11 +108,11 @@ class TreeBuilderPolicySimulationResults < TreeBuilder
             else
               'fa fa-ban'
             end
-    {:id          => nil,
-     :text        => prefixed_title(_('Expression'), name),
-     :tip         => tip,
-     :icon        => image,
-     :cfmeNoClick => true}
+    {:id         => nil,
+     :text       => prefixed_title(_('Expression'), name),
+     :tip        => tip,
+     :icon       => image,
+     :selectable => false}
   end
 
   def x_get_tree_roots(count_only = false, _options = nil)

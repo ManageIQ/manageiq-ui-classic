@@ -33,13 +33,13 @@ class TreeBuilderSections < TreeBuilder
     @data.master_list.each_slice(3) do |section, _records, _fields|
       if group.blank? || section[:group] != group
         group = section[:group]
-        nodes.push(:id          => "group_#{section[:group]}",
-                   :text        => section[:group] == "Categories" ? "#{@current_tenant} Tags" : section[:group],
-                   :tip         => section[:group],
-                   :image       => false,
-                   :select      => true,
-                   :cfmeNoClick => true,
-                   :nodes       => [section])
+        nodes.push(:id         => "group_#{section[:group]}",
+                   :text       => section[:group] == "Categories" ? "#{@current_tenant} Tags" : section[:group],
+                   :tip        => section[:group],
+                   :image      => false,
+                   :select     => true,
+                   :selectable => false,
+                   :nodes      => [section])
       else
         nodes.last[:nodes].push(section)
       end
@@ -59,13 +59,13 @@ class TreeBuilderSections < TreeBuilder
 
   def x_get_tree_hash_kids(parent, count_only)
     nodes = parent[:nodes].map do |kid|
-      {:id          => "group_#{kid[:group]}:#{kid[:name]}",
-       :text        => kid[:header],
-       :tip         => kid[:header],
-       :image       => false,
-       :select      => @data.include[kid[:name]][:checked],
-       :cfmeNoClick => true,
-       :nodes       => []
+      {:id         => "group_#{kid[:group]}:#{kid[:name]}",
+       :text       => kid[:header],
+       :tip        => kid[:header],
+       :image      => false,
+       :select     => @data.include[kid[:name]][:checked],
+       :selectable => false,
+       :nodes      => []
       }
     end
     count_only_or_objects(count_only, nodes)

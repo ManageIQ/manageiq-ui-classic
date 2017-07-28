@@ -18,10 +18,10 @@ describe TreeBuilderSnapshots do
     it 'sets root correctly' do
       root = @s_tree.send(:root_options)
       expect(root).to eq(
-        :text        => @record.name,
-        :tooltip     => @record.name,
-        :icon        => 'pficon pficon-virtual-machine',
-        :cfmeNoClick => true
+        :text       => @record.name,
+        :tooltip    => @record.name,
+        :icon       => 'pficon pficon-virtual-machine',
+        :selectable => false
       )
     end
     it 'returns Snapshot as kids of root' do

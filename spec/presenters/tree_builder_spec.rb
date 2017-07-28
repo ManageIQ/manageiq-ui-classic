@@ -31,23 +31,25 @@ describe TreeBuilder do
     it "builds tree object and sets all settings and add nodes to tree object" do
       tree = TreeBuilderChargebackRates.new("cb_rates_tree", "cb_rates", {})
       nodes = [{'key'     => "root",
-                'nodes'   => [{'key'     => "xx-Compute",
-                               'tooltip' => "Compute",
-                               'icon'    => "pficon pficon-cpu",
-                               'state'   => { 'expanded' => true },
-                               'text'    => "Compute",
-                               'class'   => ''},
-                              {'key'     => "xx-Storage",
-                               'tooltip' => "Storage",
-                               'icon'    => "fa fa-hdd-o",
-                               'state'   => { 'expanded' => true },
-                               'text'    => "Storage",
-                               'class'   => ''}],
+                'nodes'   => [{'key'        => "xx-Compute",
+                               'tooltip'    => "Compute",
+                               'icon'       => "pficon pficon-cpu",
+                               'state'      => { 'expanded' => true },
+                               'text'       => "Compute",
+                               'selectable' => true,
+                               'class'      => ''},
+                              {'key'        => "xx-Storage",
+                               'tooltip'    => "Storage",
+                               'icon'       => "fa fa-hdd-o",
+                               'state'      => { 'expanded' => true },
+                               'selectable' => true,
+                               'text'       => "Storage",
+                               'class'      => ''}],
                 'state'   => { 'expanded' => true },
                 'text'    => "Rates",
                 'tooltip' => "Rates",
                 'class'   => '',
-                'icon'   => 'pficon pficon-folder-close'
+                'icon'    => 'pficon pficon-folder-close'
               }]
       tree.locals_for_render.key?(:bs_tree)
       expect(JSON.parse(tree.locals_for_render[:bs_tree])).to eq(nodes)

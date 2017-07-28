@@ -21,11 +21,11 @@ class TreeBuilderAlertProfileObj < TreeBuilder
 
   def set_locals_for_render
     super.merge!(
-      :oncheck     => "miqOnCheckHandler",
-      :check_url   => "/miq_policy/alert_profile_assign_changed/",
-      :checkboxes  => true,
-      :cfmeNoClick => true,
-      :onclick     => false
+      :oncheck    => "miqOnCheckHandler",
+      :check_url  => "/miq_policy/alert_profile_assign_changed/",
+      :checkboxes => true,
+      :selectable => false,
+      :onclick    => false
     )
   end
 
@@ -35,7 +35,7 @@ class TreeBuilderAlertProfileObj < TreeBuilder
       :tooltip      => "",
       :icon         => "pficon pficon-folder-open",
       :hideCheckbox => true,
-      :cfmeNoClick  => true,
+      :selectable   => false,
       :expand       => true
     }
   end

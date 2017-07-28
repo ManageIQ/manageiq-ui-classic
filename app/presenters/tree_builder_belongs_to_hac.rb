@@ -10,7 +10,7 @@ class TreeBuilderBelongsToHac < TreeBuilder
       node[:select] = options.key?(:selected) && options[:selected].include?("#{object.class.name}_#{object[:id]}")
     end
     node[:hideCheckbox] = true if object.kind_of?(Host) && object.ems_cluster_id.present?
-    node[:cfmeNoClick] = true
+    node[:selectable] = false
     node[:checkable] = options[:checkable_checkboxes] if options.key?(:checkable_checkboxes)
   end
 

@@ -10,7 +10,7 @@ class TreeBuilderSmartproxyAffinity < TreeBuilder
   private
 
   def override(node, _object, _pid, _options)
-    node[:cfmeNoClick] = true
+    node[:selectable] = false
   end
 
   def tree_init_options(_tree_name)
@@ -42,7 +42,7 @@ class TreeBuilderSmartproxyAffinity < TreeBuilder
        :icon            => icon,
        :parent          => parent,
        :text            => Dictionary.gettext(kid.camelcase, :type => :model, :notfound => :titleize, :plural => true),
-       :cfmeNoClick     => true,
+       :selectable      => false,
        :nodes           => @data.send(kid.pluralize).sort_by(&:name),
        :smartproxy_kind => kid}
     end
@@ -56,7 +56,7 @@ class TreeBuilderSmartproxyAffinity < TreeBuilder
        :icon            => parent[:icon],
        :text            => kid.name,
        :select          => affinities.include?(kid.id),
-       :cfmeNoClick     => true,
+       :selectable      => false,
        :nodes           => [],
        :smartproxy_kind => parent[:smartproxy_kind]}
     end

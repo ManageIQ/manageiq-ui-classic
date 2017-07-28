@@ -43,13 +43,13 @@ class TreeBuilderDatastores < TreeBuilder
         ViewHelper.concat ']'
       end
 
-      { :id          => node[:id].to_s,
-        :text        => text,
-        :icon        => 'fa fa-database',
-        :tip         => "#{node[:name]} [#{node[:location]}]",
-        :select      => node[:capture] == true,
-        :cfmeNoClick => true,
-        :nodes       => children }
+      { :id         => node[:id].to_s,
+        :text       => text,
+        :icon       => 'fa fa-database',
+        :tip        => "#{node[:name]} [#{node[:location]}]",
+        :select     => node[:capture] == true,
+        :selectable => false,
+        :nodes      => children }
     end
     count_only_or_objects(count_only, nodes)
   end
@@ -61,7 +61,7 @@ class TreeBuilderDatastores < TreeBuilder
         :icon         => 'pficon pficon-screen',
         :tip          => node[:name],
         :hideCheckbox => true,
-        :cfmeNoClick  => true,
+        :selectable   => false,
         :nodes        => [] }
     end
     count_only_or_objects(count_only, nodes)

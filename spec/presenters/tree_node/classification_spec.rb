@@ -8,11 +8,15 @@ describe TreeNode::Classification do
     include_examples 'TreeNode::Node#icon', 'pficon pficon-folder-close'
     include_examples 'TreeNode::Node#text description'
 
-    [:no_click, :hide_checkbox].each do |method|
-      describe "##{method}" do
-        it 'returns with true' do
-          expect(subject.send(method)).to be_truthy
-        end
+    describe '#hide_checkbox' do
+      it 'returns with true' do
+        expect(subject.send(:hide_checkbox)).to be_truthy
+      end
+    end
+
+    describe '#selectable' do
+      it 'returns with false' do
+        expect(subject.send(:selectable)).to be_falsey
       end
     end
   end

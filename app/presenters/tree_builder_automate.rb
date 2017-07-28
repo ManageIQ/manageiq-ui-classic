@@ -11,18 +11,18 @@ class TreeBuilderAutomate < TreeBuilderAeClass
   def override(node, object, _pid, _options)
     if @type == 'catalog'
       # Only the instance items should be clickable when selecting a catalog item entry point
-      node[:cfmeNoClick] = true unless object.kind_of?(MiqAeInstance) # catalog
+      node[:selectable] = false unless object.kind_of?(MiqAeInstance) # catalog
     elsif object.kind_of?(MiqAeNamespace) && object.domain?
       # Only the namespace items should be clickable when copying a class or instance
-      node[:cfmeNoClick] = true
+      node[:selectable] = false
     end
   end
 
   def root_options
     {
-      :text        => t = _("Datastore"),
-      :tooltip     => t,
-      :cfmeNoClick => true
+      :text       => t = _("Datastore"),
+      :tooltip    => t,
+      :selectable => false
     }
   end
 

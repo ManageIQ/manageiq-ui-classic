@@ -47,10 +47,10 @@ describe TreeBuilderPolicySimulation do
     it 'sets root correctly' do
       root = @policy_simulation_tree.send(:root_options)
       expect(root).to eq(
-        :text        => "<strong>Policy Simulation</strong>",
-        :tooltip     => 'Policy Simulation',
-        :icon        => 'pficon pficon-virtual-machine',
-        :cfmeNoClick => true
+        :text       => "<strong>Policy Simulation</strong>",
+        :tooltip    => 'Policy Simulation',
+        :icon       => 'pficon pficon-virtual-machine',
+        :selectable => false
       )
     end
 
@@ -132,7 +132,7 @@ describe TreeBuilderPolicySimulation do
       node = @policy_simulation_tree.send(:x_get_tree_roots, false).first
       expect(node[:text]).to eq("Items out of scope")
       expect(node[:icon]).to eq("fa fa-ban")
-      expect(node[:cfmeNoClick]).to eq(true)
+      expect(node[:selectable]).to eq(false)
     end
   end
 end
