@@ -95,7 +95,19 @@ module Mixins
               render :action => 'discover'
             else
               begin
-                if request.parameters[:controller] != "ems_cloud"
+                if request.parameters[:controller] == "ems_physical_infra"
+                  validate_addresses(from_ip, to_ip, params[:port])
+                  @discover_type_checked.each do |type|
+                    physical_infra_manager = ManageIQ::Providers::PhysicalInfraManager.subclasses.detect do |ems|
+                      ems.ems_type == type
+                    end
+                    ip_address = from_ip.split(".")
+                    ip_address.last.to_i.upto(to_ip.split(".").last.to_i) do |addr|
+                      ip = ip_address[0].to_s + "." + ip_address[1].to_s + "." + ip_address[2] + "." + addr.to_s
+                      physical_infra_manager.discover_queue(ip, params[:port])
+                    end
+                  end
+                elsif request.parameters[:controller] != "ems_cloud"
                   if params[:discover_type_ipmi].to_s == "1"
                     options = {:discover_types => discover_type, :credentials => {:ipmi => {:userid => @userid, :password => @password}}}
                   else
@@ -213,6 +225,24 @@ module Mixins
             end
             @discover_type_selected = @discover_type.first.try!(:last)
           end
+        end
+
+        def validate_addresses(from_ip, to_ip, port)
+          pattern = /^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/
+          raise _("Starting address is malformed") if (from_ip =~ pattern).nil?
+          raise _("Ending address is malformed") if (to_ip =~ pattern).nil?
+
+          from_ip.split(".").each_index do |i|
+            if to_ip.split(".")[i].to_i > 255 || to_ip.split(".")[i].to_i > 255
+              raise _("IP address octets must be 0 to 255")
+            end
+            if from_ip.split(".")[i].to_i > to_ip.split(".")[i].to_i
+              raise _("Ending address must be greater than starting address")
+            end
+          end
+
+          raise _("Invalid port number") if port.to_i <= 0
+          raise _("Port number must be 1 to 65535") if port.to_i > 65_535
         end
       end
     end

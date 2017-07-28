@@ -13,7 +13,7 @@ module ApplicationHelper
         "scvmm"           => _("Microsoft System Center VMM"),
         "virtualcenter"   => _("VMware vCenter"),
         "vmwareserver"    => _("VMware Server"),
-        "lxca"            => _("Lenovo XClarity Administrator")
+        "lenovo_ph_infra" => _("Lenovo XClarity Administrator")
       }
 
       if dtypes.key?(dtype)
