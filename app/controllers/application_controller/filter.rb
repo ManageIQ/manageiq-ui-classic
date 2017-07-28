@@ -914,7 +914,7 @@ module ApplicationController::Filter
       case key.upcase
       when "AND", "OR"                                 # If AND or OR
         exp[key].each_with_index do |item, idx|        #   check all array items
-          if exp_remove(item, token) == true           # See if this part should be removed
+          if exp_remove(item, token)                   # See if this part should be removed
             if item.key?("not")                        # The item to remove is a NOT
               exp[key].insert(idx + 1, item["not"])    # Rechain the NOT child into the array
               exp[key].delete_at(idx)                  # Remove the NOT item
@@ -933,7 +933,7 @@ module ApplicationController::Filter
           end
         end
       when "NOT"                                       # If NOT, check the sub-hash
-        if exp_remove(exp[key], token) == true         # Next lower hash is to be removed
+        if exp_remove(exp[key], token)                 # Next lower hash is to be removed
           exp.delete("not")                            # Remove the NOT hash
           return true                                  # Tell caller to remove me
         end
