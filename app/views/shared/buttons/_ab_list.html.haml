@@ -69,7 +69,7 @@
     .form-horizontal.static
       .form-group
         %label.control-label.col-md-2
-          = _('Button Group Text')
+          = _('Text')
         .col-md-8
           = @record.name.split('|').first
           - display = @record.set_data.key?(:display) ? @record.set_data[:display] : true
@@ -81,7 +81,7 @@
 
       .form-group
         %label.control-label.col-md-2
-          = _('Button Group Hover Text')
+          = _('Hover Text')
         .col-md-8
           = @record.description
       .form-group
