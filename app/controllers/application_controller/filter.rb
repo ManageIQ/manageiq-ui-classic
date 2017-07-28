@@ -18,24 +18,7 @@ module ApplicationController::Filter
     when "commit"
       exp_commit(@edit[@expkey][:exp_token])
     when "remove"
-      remove_top = exp_remove(@edit[@expkey][:expression], @edit[@expkey][:exp_token])
-      if remove_top == true
-        exp = @edit[@expkey][:expression]
-        if exp["not"]                                       # If the top expression is a NOT
-          exp["not"].each_key do |key|                      # Find the next lower key
-            next if key == :token                           # Skip the :token key
-            exp[key] = exp["not"][key]                      # Copy the key value up to the top
-            exp.delete("not")                               # Delete the NOT key
-          end
-        else
-          exp.clear                                         # Remove all existing keys
-          exp["???"] = "???"                                # Set new exp key
-          @edit[:edit_exp] = copy_hash(exp)
-          @edit[@expkey].update_from_exp_tree(exp)
-        end
-      else
-        @edit[:edit_exp] = nil
-      end
+      exp_remove_cmd
     when "discard"
       # Copy back the latest expression or empty expression, if nil
       @edit[@expkey].val1 = nil
@@ -756,6 +739,27 @@ module ApplicationController::Filter
           exp_add_not(exp[key], token)                # See if the NOT applies to the next level down
         end
       end
+    end
+  end
+
+  def exp_remove_cmd
+    remove_top = exp_remove(@edit[@expkey][:expression], @edit[@expkey][:exp_token])
+    if remove_top == true
+      exp = @edit[@expkey][:expression]
+      if exp["not"]                                       # If the top expression is a NOT
+        exp["not"].each_key do |key|                      # Find the next lower key
+          next if key == :token                           # Skip the :token key
+          exp[key] = exp["not"][key]                      # Copy the key value up to the top
+          exp.delete("not")                               # Delete the NOT key
+        end
+      else
+        exp.clear                                         # Remove all existing keys
+        exp["???"] = "???"                                # Set new exp key
+        @edit[:edit_exp] = copy_hash(exp)
+        @edit[@expkey].update_from_exp_tree(exp)
+      end
+    else
+      @edit[:edit_exp] = nil
     end
   end
 
