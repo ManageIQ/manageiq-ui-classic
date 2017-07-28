@@ -418,6 +418,7 @@ class MiqAeCustomizationController < ApplicationController
                          else
                            _("Adding a new %{model}") % {:model => ui_lookup(:model => "CustomButton")}
                          end
+      presenter.update(:main_div, render_proc[:partial => "shared/buttons/ab_form"])
     when 'group_edit'
       @right_cell_text = if @custom_button_set && @custom_button_set.id
                            _("Editing %{model} \"%{name}\"") % {:name  => @custom_button_set.name,

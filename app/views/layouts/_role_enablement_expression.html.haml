@@ -14,7 +14,7 @@
     %br
     - if @edit[:enablement_expression_table].nil?
       = render :partial => 'layouts/info_msg',
-               :locals  => {:message => _("No expression defined, a condition must contain a valid expression.")}
+               :locals  => {:message => _("No enablement expression defined.")}
     - else
       - @edit[:enablement_expression_table].each do |token|
         - if !["AND", "OR", "(", ")"].include?([token].flatten.first)

@@ -452,7 +452,7 @@ module ApplicationController::Buttons
 
   def button_create_update(typ)
     @edit = session[:edit]
-    @custom_button = @edit[:custom_button]
+    @record = @custom_button = @edit[:custom_button]
     @changed = (@edit[:new] != @edit[:current])
 
     case params[:button]
@@ -469,6 +469,7 @@ module ApplicationController::Buttons
     @expkey = params[:button].to_sym
     @edit[:visibility_expression_table] = @edit[:new][:visibility_expression] == {"???" => "???"} ? nil : exp_build_table(@edit[:new][:visibility_expression])
     @edit[:enablement_expression_table] = @edit[:new][:enablement_expression] == {"???" => "???"} ? nil : exp_build_table(@edit[:new][:enablement_expression])
+    @in_a_form = true
     replace_right_cell(:nodetype => x_node)
   end
 
@@ -559,20 +560,6 @@ module ApplicationController::Buttons
     @edit[:uri] = MiqAeEngine.create_automation_object(ab_button_name, attrs, :fqclass => @edit[:new][:starting_object], :message => @edit[:new][:object_message])
     @edit[:new][:description] = @edit[:new][:description].strip == "" ? nil : @edit[:new][:description] unless @edit[:new][:description].nil?
     button_set_record_vars(@custom_button)
-
-    # Visibility Expression box
-    exp_remove_tokens(@edit[:new][:visibility_expression])
-    @custom_button.visibility_expression = MiqExpression.new(@edit[:new][:visibility_expression])
-    if @custom_button.visibility_expression.kind_of?(MiqExpression) && @custom_button.visibility_expression.exp["???"]
-      @custom_button.visibility_expression = nil
-    end
-
-    # Enablement Expression box
-    exp_remove_tokens(@edit[:new][:enablement_expression])
-    @custom_button.enablement_expression = MiqExpression.new(@edit[:new][:enablement_expression])
-    if @custom_button.enablement_expression.kind_of?(MiqExpression) && @custom_button.enablement_expression.exp["???"]
-      @custom_button.enablement_expression = nil
-    end
 
     unless button_valid?
       @breadcrumbs = []
@@ -869,6 +856,10 @@ module ApplicationController::Buttons
       button.visibility[:roles] = ["_ALL_"]
     end
     button_set_resource_action(button)
+    button_set_expressions_record(button)
+  end
+
+  def button_set_expressions_record(button)
     exp_remove_tokens(@edit[:new][:visibility_expression])
     exp_remove_tokens(@edit[:new][:enablement_expression])
     button.visibility_expression = @edit[:new][:visibility_expression]["???"] ? nil : MiqExpression.new(@edit[:new][:visibility_expression])
@@ -1001,6 +992,7 @@ module ApplicationController::Buttons
     get_available_dialogs
     @edit[:current] = copy_hash(@edit[:new])
     session[:edit] = @edit
+    @changed = session[:changed] = (@edit[:new] != @edit[:current])
   end
 
   # Set user record variables to new values
