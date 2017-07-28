@@ -1,48 +1,37 @@
 ManageIQ.angular.app.component('widgetMenu', {
   bindings: {
-    id: '<'
+    id: '<',
   },
   controllerAs: 'vm',
-  controller: ['$http', 'miqService', function($http) {
+  controller: ['$http', 'miqService', function($http, miqService) {
     var vm = this;
-    vm.div_id = 0;
-    vm.widgetMenuModel = {
-      id: 0,
-      shortcuts: []
-    };
-    vm.shortcutsMissing = function(){
-      return false;
+    vm.widgetMenuModel = {shortcuts: []};
+    vm.shortcutsMissing = function() {
+      return vm.widgetMenuModel.shortcuts.length === 0;
     };
     this.$onInit = function() {
       $http.get('/dashboard/widget_menu_data/' + vm.id)
-        .then(getWidgetMenuDataComplete)
+        .then(function(response) { vm.widgetMenuModel = response.data; })
         .catch(miqService.handleFailure);
-      vm.div_id = 'dd_w' + vm.widgetMenuModel.id + '_box';
+      vm.div_id = 'dd_w' + vm.id + '_box';
     };
-    this.$onChanges = function(changes) {
-
-    };
-    function getWidgetMenuDataComplete(response) {
-      var data = response.data;
-      vm.widgetMenuModel = data;
-    }
   }],
   template: [
-    '<div class="mc" id={{vm.div_id}} >',
-      '<table class="table table-hover">',
-        '<tbody>',
-          '<div ng-if="vm.shortcutsMissing()">',
-            __('No shortcuts are authorized for this user, contact your Administrator'),
-          '</div>',
-          '<tr ng-if="!vm.shortcutsMissing()" ng-repeat="shortcut in vm.widgetMenuModel.shortcuts">',
-            '<td>',
-             '<a title="'+ __("Click to go this location") +'" href="{{shortcut.href}}">',
-              '{{shortcut.description}}',
-             '</a>',
-            '</td>',
-          '</tr>',
-        '</tbody>',
-      '</table>',
-    '</div>'
-  ].join("\n")
+    '<div class="mc" id={{vm.div_id}} ng-style="{ \'display\' : (vm.widgetMenuModel.minimized === true) ? \'none\' : \'\' }">',
+    '<table class="table table-hover">',
+    '<tbody>',
+    '<div ng-if="vm.shortcutsMissing()">',
+    __('No shortcuts are authorized for this user, contact your Administrator'),
+    '</div>',
+    '<tr ng-if="!vm.shortcutsMissing()" ng-repeat="shortcut in vm.widgetMenuModel.shortcuts">',
+    '<td>',
+    '<a title="' + __("Click to go this location") + '" href="{{shortcut.href}}">',
+    '{{shortcut.description}}',
+    '</a>',
+    '</td>',
+    '</tr>',
+    '</tbody>',
+    '</table>',
+    '</div>',
+  ].join("\n"),
 });
