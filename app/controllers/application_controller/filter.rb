@@ -47,7 +47,7 @@ module ApplicationController::Filter
     end
 
     if flash_errors?
-      javascript_flash(:flash_div_id => 'adv_search_flash')
+      javascript_flash
     else
       if ["commit", "not", "remove"].include?(params[:pressed])
         copy = copy_hash(@edit[@expkey][:expression])
