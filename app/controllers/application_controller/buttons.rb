@@ -467,8 +467,8 @@ module ApplicationController::Buttons
   def ab_expression
     @changed = session[:changed] = (@edit[:new] != @edit[:current])
     @expkey = params[:button].to_sym
-    @edit[:visibility_expression_table] = @edit[:new][:visibility_expression] == {"???" => "???"} ? nil : exp_build_table(@edit[:new][:visibility_expression])
-    @edit[:enablement_expression_table] = @edit[:new][:enablement_expression] == {"???" => "???"} ? nil : exp_build_table(@edit[:new][:enablement_expression])
+    @edit[:visibility_expression_table] = exp_build_table_or_nil(@edit[:new][:visibility_expression])
+    @edit[:enablement_expression_table] = exp_build_table_or_nil(@edit[:new][:enablement_expression])
     @in_a_form = true
     replace_right_cell(:nodetype => x_node)
   end
@@ -881,7 +881,7 @@ module ApplicationController::Buttons
     else
       @edit[field_expression][:expression] = copy_hash(@edit[:new][field_expression])
     end
-    @edit[field_expression_table] = @edit[field_expression][:expression] == {"???" => "???"} ? nil : exp_build_table(@edit[field_expression][:expression])
+    @edit[field_expression_table] = exp_build_table_or_nil(@edit[field_expression][:expression])
 
     @expkey = field_expression # Set expression key to expression
     @edit[field_expression].history.reset(@edit[field_expression][:expression])

@@ -1070,7 +1070,7 @@ class MiqPolicyController < ApplicationController
     else
       @edit[:expression][:expression] = copy_hash(@edit[:new][:expression])
     end
-    @edit[:expression_table] = @edit[:expression][:expression] == {"???" => "???"} ? nil : exp_build_table(@edit[:expression][:expression])
+    @edit[:expression_table] = exp_build_table_or_nil(@edit[:expression][:expression])
 
     @expkey = :expression                                               # Set expression key to expression
     @edit[@expkey].history.reset(@edit[:expression][:expression])
