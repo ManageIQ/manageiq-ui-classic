@@ -246,9 +246,10 @@
                         'valtype'                  => "default",
                         'validate'                 => 'validateClicked',
                         'restfull'                 => true,
-                        'cauthentication-required' => 'checkAuthentication',
+                        'authentication-required'  => 'checkAuthentication',
                         'form-labels'              => 'formLabels',
-                        'guid-regex'               => true}
+                        'guid-regex'               => true,
+                        'new-record'               => 'newRecord'}
 
     %div{"ng-if" => "emsCommonModel.emstype != '' && emsCommonModel.emstype != 'azure'"}
       = render :partial => "/layouts/angular/multi_auth_credentials", :locals  => {:record => @ems, :ng_model => "emsCommonModel"}
