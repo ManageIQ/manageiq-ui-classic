@@ -460,7 +460,7 @@ module ApplicationController::Buttons
     when 'add'    then ab_button_add
     when 'save'   then ab_button_save
     when 'reset'  then ab_button_reset
-    when "enablement_expression", 'visibility_expression' then ab_expression
+    when 'enablement_expression', 'visibility_expression' then ab_expression
     end
   end
 
