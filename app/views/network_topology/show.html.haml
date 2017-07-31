@@ -1,5 +1,5 @@
-- tooltipOptions = {"tooltip-placement" => "bottom", "tooltip" => "{{legendTooltip}}"}
-.topology{'ng-controller' => "networkTopologyController"}
+- tooltipOptions = {"tooltip-placement" => "bottom", "tooltip" => "{{legendTooltip}}",'miq-form' => true }
+.topology{'ng-controller' => "networkTopologyController as vm"}
   .legend
     %label#selected
     %div{'ng-if' => "kinds"}
@@ -53,7 +53,7 @@
 
   = render :partial => "shared/topology/not_found"
 
-  %kubernetes-topology-graph{:items => "items", :relations => "relations", :kinds => "kinds"}
+  %kubernetes-topology-graph{:items => "vm.items", :relations => "vm.relations", :kinds => "vm.kinds"}
 
 :javascript
   miq_bootstrap('.topology');
