@@ -236,20 +236,19 @@
     %div{"ng-if" => "emsCommonModel.emstype != '' && emsCommonModel.emstype == 'azure'"}
       %h3
         = _("Credentials")
-
-    %auth-credentials{'ng-show'                  => true,
-                      'model'                    => 'emsCommonModel',
-                      'model-copy'               => 'modelCopy',
-                      'user-required'            => true,
-                      'password-required'        => true,
-                      'prefix'                   => 'default',
-                      'enable-valid-button'      => 'angularForm.$valid',
-                      'valtype'                  => "default",
-                      'validate'                 => 'validateClicked',
-                      'restfull'                 => true,
-                      'cauthentication-required' => 'checkAuthentication',
-                      'form-labels'              => 'formLabels',
-                      'guid-regex'               => true}
+      %auth-credentials{'ng-show'                  => true,
+                        'model'                    => 'emsCommonModel',
+                        'model-copy'               => 'modelCopy',
+                        'user-required'            => true,
+                        'password-required'        => true,
+                        'prefix'                   => 'default',
+                        'enable-valid-button'      => 'angularForm.$valid',
+                        'valtype'                  => "default",
+                        'validate'                 => 'validateClicked',
+                        'restfull'                 => true,
+                        'cauthentication-required' => 'checkAuthentication',
+                        'form-labels'              => 'formLabels',
+                        'guid-regex'               => true}
 
     %div{"ng-if" => "emsCommonModel.emstype != '' && emsCommonModel.emstype != 'azure'"}
       = render :partial => "/layouts/angular/multi_auth_credentials", :locals  => {:record => @ems, :ng_model => "emsCommonModel"}
