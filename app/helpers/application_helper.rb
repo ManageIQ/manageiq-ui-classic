@@ -1371,6 +1371,7 @@ module ApplicationHelper
   end
 
   def render_listnav_filename
+    return controller.listnav_filename if controller.respond_to?(:listnav_filename, true)
     if @lastaction == "show_list" && !session[:menu_click] &&
        %w(auth_key_pair_cloud
           availability_zone
