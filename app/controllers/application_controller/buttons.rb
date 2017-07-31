@@ -111,6 +111,7 @@ module ApplicationController::Buttons
       @edit[:new][:description] = params[:description] if params[:description]
       @edit[:new][:button_image] = params[:button_image].to_i if params[:button_image]
       @edit[:new][:dialog_id] = params[:dialog_id] if params[:dialog_id]
+      @edit[:new][:disabled_text] = params[:disabled_text] if params[:disabled_text]
       visibility_box_edit
     end
 
@@ -123,7 +124,7 @@ module ApplicationController::Buttons
         page.replace("form_role_visibility", :partial => "layouts/role_visibility", :locals => {:rec_id => (@custom_button.id || "new").to_s, :action => "automate_button_field_changed"})
       end
       unless params[:target_class]
-        @changed = (@edit[:new] != @edit[:current])
+        @changed = session[:changed] = (@edit[:new] != @edit[:current])
         page << javascript_for_miq_button_visibility(@changed)
       end
       page << "miqSparkle(false);"
@@ -450,7 +451,7 @@ module ApplicationController::Buttons
 
   def button_create_update(typ)
     @edit = session[:edit]
-    @custom_button = @edit[:custom_button]
+    @record = @custom_button = @edit[:custom_button]
     @changed = (@edit[:new] != @edit[:current])
 
     case params[:button]
@@ -458,7 +459,17 @@ module ApplicationController::Buttons
     when 'add'    then ab_button_add
     when 'save'   then ab_button_save
     when 'reset'  then ab_button_reset
+    when "enablement_expression", 'visibility_expression' then ab_expression
     end
+  end
+
+  def ab_expression
+    @changed = session[:changed] = (@edit[:new] != @edit[:current])
+    @expkey = params[:button].to_sym
+    @edit[:visibility_expression_table] = @edit[:new][:visibility_expression] == {"???" => "???"} ? nil : exp_build_table(@edit[:new][:visibility_expression])
+    @edit[:enablement_expression_table] = @edit[:new][:enablement_expression] == {"???" => "???"} ? nil : exp_build_table(@edit[:new][:enablement_expression])
+    @in_a_form = true
+    replace_right_cell(:nodetype => x_node)
   end
 
   def ab_button_cancel(typ)
@@ -562,6 +573,7 @@ module ApplicationController::Buttons
       add_flash(_("Custom Button \"%{name}\" was saved") % {:name => @edit[:new][:description]})
       @edit = session[:edit] = nil
       ab_get_node_info(x_node) if x_active_tree == :ab_tree
+      build_filter_exp_table
       replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
     else
       @custom_button.errors.each do |field, msg|
@@ -577,7 +589,6 @@ module ApplicationController::Buttons
   end
 
   def ab_button_reset
-    ab_button_reset
     button_set_form_vars
     @changed = session[:changed] = false
     add_flash(_("All changes have been reset"), :warning)
@@ -651,7 +662,7 @@ module ApplicationController::Buttons
         CustomButton.find(from_cid(params[:id]))
     button_set_form_vars
     @in_a_form = true
-    session[:changed] = false
+    @changed = session[:changed] = false
     @breadcrumbs = []
     title = if typ == "new"
               _("Add Button")
@@ -822,6 +833,7 @@ module ApplicationController::Buttons
     button.userid = session[:userid]
     button.uri = @edit[:uri]
     button[:options] = {}
+    button.disabled_text = @edit[:new][:disabled_text]
     #   button[:options][:target_attr_name] = @edit[:new][:target_attr_name]
     button.uri_path, button.uri_attributes, button.uri_message = CustomButton.parse_uri(@edit[:uri])
     button.uri_attributes["request"] = @edit[:new][:object_request]
@@ -845,7 +857,37 @@ module ApplicationController::Buttons
       button.visibility[:roles] = ["_ALL_"]
     end
     button_set_resource_action(button)
-    # @custom_button.resource_action = @edit[:new][:dialog_id] ? Dialog.find_by_id(@edit[:new][:dialog_id]) : nil
+    button_set_expressions_record(button)
+  end
+
+  def button_set_expressions_record(button)
+    exp_remove_tokens(@edit[:new][:visibility_expression])
+    exp_remove_tokens(@edit[:new][:enablement_expression])
+    button.visibility_expression = @edit[:new][:visibility_expression]["???"] ? nil : MiqExpression.new(@edit[:new][:visibility_expression])
+    button.enablement_expression = @edit[:new][:enablement_expression]["???"] ? nil : MiqExpression.new(@edit[:new][:enablement_expression])
+  end
+
+  def field_expression_model
+    @custom_button.applies_to_class ||= (x_active_tree == :ab_tree ? @sb[:target_classes][@resolve[:target_class]] : "ServiceTemplate")
+  end
+
+  def button_set_expression_vars(field_expression, field_expression_table)
+    @edit[:new][field_expression] = @custom_button[field_expression].kind_of?(MiqExpression) ? @custom_button[field_expression].exp : nil
+    # Populate exp editor fields for the expression column
+    @edit[field_expression] ||= ApplicationController::Filter::Expression.new
+    @edit[field_expression][:expression] = [] # Store exps in an array
+    if @edit[:new][field_expression].blank?
+      @edit[field_expression][:expression] = {"???" => "???"} # Set as new exp element
+      @edit[:new][field_expression] = copy_hash(@edit[field_expression][:expression]) # Copy to new exp
+    else
+      @edit[field_expression][:expression] = copy_hash(@edit[:new][field_expression])
+    end
+    @edit[field_expression_table] = @edit[field_expression][:expression] == {"???" => "???"} ? nil : exp_build_table(@edit[field_expression][:expression])
+
+    @expkey = field_expression # Set expression key to expression
+    @edit[field_expression].history.reset(@edit[field_expression][:expression])
+    @edit[field_expression][:exp_table] = exp_build_table(@edit[field_expression][:expression])
+    @edit[field_expression][:exp_model] = field_expression_model # Set model for the exp editor
   end
 
   def button_set_resource_action(button)
@@ -917,6 +959,7 @@ module ApplicationController::Buttons
       :target_class   => @resolve[:target_class],
       :name           => @custom_button.name,
       :description    => @custom_button.description,
+      :disabled_text  => @custom_button.disabled_text,
       :button_image   => @custom_button.options.try(:[], :button_image).to_s,
       :display        => @custom_button.options.try(:[], :display).nil? ? true : @custom_button.options[:display],
       :open_url       => @custom_button.options.try(:[], :open_url) ? @custom_button.options[:open_url] : false,
@@ -924,6 +967,9 @@ module ApplicationController::Buttons
       :submit_how     => @custom_button.options.try(:[], :submit_how) ? @custom_button.options[:submit_how] : 'one',
       :object_message => @custom_button.uri_message || "create",
     )
+    button_set_expression_vars(:enablement_expression, :enablement_expression_table)
+    button_set_expression_vars(:visibility_expression, :visibility_expression_table)
+
     @edit[:current] = copy_hash(@edit[:new])
 
     @edit[:new][:button_images] = @edit[:current][:button_images] = build_button_image_options
@@ -952,6 +998,7 @@ module ApplicationController::Buttons
     get_available_dialogs
     @edit[:current] = copy_hash(@edit[:new])
     session[:edit] = @edit
+    @changed = session[:changed] = (@edit[:new] != @edit[:current])
   end
 
   # Set user record variables to new values
@@ -1149,5 +1196,11 @@ module ApplicationController::Buttons
     end
     is_consecutive = last_idx - first_idx + 1 <= params[:selected_fields].length
     [is_consecutive, first_idx, last_idx]
+  end
+
+  # Get information for a condition
+  def build_filter_exp_table
+    @visibility_expression_table = @custom_button.visibility_expression.kind_of?(MiqExpression) ? exp_build_table(@custom_button.visibility_expression.exp) : nil
+    @enablement_expression_table = @custom_button.enablement_expression.kind_of?(MiqExpression) ? exp_build_table(@custom_button.enablement_expression.exp) : nil
   end
 end
