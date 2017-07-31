@@ -43,15 +43,13 @@
             - tree_id = x_node
             - if obj[:typ] == "CustomButton"
               - typ = "cb"
-              - img = obj[:button_image]
               - rec_type = "Button"
             - else
               - typ = "cbg"
-              - img = obj[:button_image]
               - rec_type = "Group"
             %tr{:title => _("Click to view details"), :onclick => "miqTreeActivateNode('#{tree_box}', '#{tree_id}_#{typ}-#{to_cid(obj[:id])}')"}
               %td.table-view-pf-select
-                %i{:class => "miq-custom-button-#{img}"}
+                %i{:class => obj[:button_icon], :style => obj.key?(:button_color) ? "color: #{obj[:button_color]};" : nil}
               %td
                 = obj[:name].split("|").first
               - if x_active_tree == :sandt_tree
@@ -88,7 +86,7 @@
         %label.control-label.col-md-2
           = _('Image')
         .col-md-8
-          %span{:class => "miq-custom-button-#{@record.set_data[:button_image]}"}
+          %span{:class => @record.set_data[:button_icon], :style => @record.set_data.key?(:button_color) ? "color: #{@record.set_data[:button_color]};" : nil}
   - if @sb[:buttons].blank?
     %hr
     = render :partial => 'layouts/info_msg', :locals => {:message => _("No Buttons found.")}
@@ -107,7 +105,7 @@
           - id = @nodetype[0].split('-')[1] == "ub" ? "#{@nodetype[0]}_cb-#{to_cid(obj[:id])}" : "#{x_node}_cb-#{to_cid(obj[:id])}"
           %tr{:title => _("Click to view details"), :onclick => "miqTreeActivateNode('#{tree_box}', '#{id}')"}
             %td.table-view-pf-select
-              %i{:class => "miq-custom-button-#{obj[:button_image]}"}
+              %i{:class => obj[:button_icon], :style => obj.key?(:button_color) ? "color: #{obj[:button_color]};" : nil}
             %td
               = obj[:name]
             %td

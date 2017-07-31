@@ -109,7 +109,8 @@ module ApplicationController::Buttons
       @edit[:new][:display_for] = params[:display_for] if params[:display_for]
       @edit[:new][:submit_how] = params[:submit_how] if params[:submit_how]
       @edit[:new][:description] = params[:description] if params[:description]
-      @edit[:new][:button_image] = params[:button_image].to_i if params[:button_image]
+      @edit[:new][:button_icon] = params[:button_icon] if params[:button_icon]
+      @edit[:new][:button_color] = params[:button_color] if params[:button_color]
       @edit[:new][:dialog_id] = params[:dialog_id] if params[:dialog_id]
       visibility_box_edit
     end
@@ -353,7 +354,7 @@ module ApplicationController::Buttons
       render_flash(_("Description is required"), :error)
       return
     end
-    if @edit[:new][:button_image].blank? || @edit[:new][:button_image] == 0
+    if @edit[:new][:button_icon].blank?
       render_flash(_("Button Image must be selected"), :error)
       return
     end
@@ -689,9 +690,9 @@ module ApplicationController::Buttons
     @edit[:new][:name] = @custom_button_set[:name].split("|").first unless @custom_button_set[:name].blank?
     @edit[:new][:applies_to_class] = @custom_button_set[:set_data] && @custom_button_set[:set_data][:applies_to_class] ? @custom_button_set[:set_data][:applies_to_class] : @sb[:applies_to_class]
     @edit[:new][:description] = @custom_button_set.description
-    @edit[:new][:button_image] = @custom_button_set[:set_data] && @custom_button_set[:set_data][:button_image] ? @custom_button_set[:set_data][:button_image] : ""
+    @edit[:new][:button_icon] = @custom_button_set[:set_data] && @custom_button_set[:set_data][:button_icon] ? @custom_button_set[:set_data][:button_icon] : ""
+    @edit[:new][:button_color] = @custom_button_set[:set_data] && @custom_button_set[:set_data][:button_color] ? @custom_button_set[:set_data][:button_color] : ""
     @edit[:new][:display] = @custom_button_set[:set_data] && @custom_button_set[:set_data].key?(:display) ? @custom_button_set[:set_data][:display] : true
-    @edit[:new][:button_images] = build_button_image_options
     @edit[:new][:fields] = []
     button_order = @custom_button_set[:set_data] && @custom_button_set[:set_data][:button_order] ? @custom_button_set[:set_data][:button_order] : nil
     if button_order     # show assigned buttons in order they were saved
@@ -726,8 +727,8 @@ module ApplicationController::Buttons
       @edit[:new][:name] = params[:name] if params[:name]
       @edit[:new][:description] = params[:description] if params[:description]
       @edit[:new][:display] = params[:display] == "1" if params[:display]
-      @edit[:new][:button_image] = params[:button_image].to_i if params[:button_image]
-      @edit[:new][:button_images] = build_button_image_options
+      @edit[:new][:button_icon] = params[:button_icon] if params[:button_icon]
+      @edit[:new][:button_color] = params[:button_color] if params[:button_color]
     end
   end
 
@@ -788,7 +789,7 @@ module ApplicationController::Buttons
   def button_valid?(button_hash = @edit[:new])
     add_flash(_("Button Text is required"), :error) if button_hash[:name].strip.blank?
 
-    if button_hash[:button_image].blank? || button_hash[:button_image].to_i.zero?
+    if button_hash[:button_icon].blank?
       add_flash(_("Button Image must be selected"), :error)
     end
 
@@ -825,10 +826,8 @@ module ApplicationController::Buttons
     #   button[:options][:target_attr_name] = @edit[:new][:target_attr_name]
     button.uri_path, button.uri_attributes, button.uri_message = CustomButton.parse_uri(@edit[:uri])
     button.uri_attributes["request"] = @edit[:new][:object_request]
-    if !@edit[:new][:button_image].blank? && @edit[:new][:button_image] != ""
-      button[:options][:button_image] ||= {}
-      button[:options][:button_image] = @edit[:new][:button_image]
-    end
+    button.options[:button_icon] = @edit[:new][:button_icon] unless @edit[:new][:button_icon].blank?
+    button.options[:button_color] = @edit[:new][:button_color] unless @edit[:new][:button_color].blank?
 
     %i(display open_url display_for submit_how).each do |key|
       button[:options][key] = @edit[:new][key]
@@ -859,10 +858,6 @@ module ApplicationController::Buttons
       attrs = {:dialog => d}
       button.resource_action.build(attrs)
     end
-  end
-
-  def build_button_image_options
-    (1..15).collect { |i| ["Button Image #{i}", i, {"data-icon" => "miq-custom-button-#{i}"}] }
   end
 
   # Set form variables for button add/edit
@@ -917,7 +912,8 @@ module ApplicationController::Buttons
       :target_class   => @resolve[:target_class],
       :name           => @custom_button.name,
       :description    => @custom_button.description,
-      :button_image   => @custom_button.options.try(:[], :button_image).to_s,
+      :button_icon    => @custom_button.options.try(:[], :button_icon),
+      :button_color   => @custom_button.options.try(:[], :button_color),
       :display        => @custom_button.options.try(:[], :display).nil? ? true : @custom_button.options[:display],
       :open_url       => @custom_button.options.try(:[], :open_url) ? @custom_button.options[:open_url] : false,
       :display_for    => @custom_button.options.try(:[], :display_for) ? @custom_button.options[:display_for] : 'single',
@@ -925,8 +921,6 @@ module ApplicationController::Buttons
       :object_message => @custom_button.uri_message || "create",
     )
     @edit[:current] = copy_hash(@edit[:new])
-
-    @edit[:new][:button_images] = @edit[:current][:button_images] = build_button_image_options
 
     @edit[:visibility_types] = [["<To All>", "all"], ["<By Role>", "role"]]
     # Visibility Box
@@ -961,10 +955,8 @@ module ApplicationController::Buttons
     group.name = "#{@edit[:new][:name]}|#{@edit[:new][:applies_to_class]}|#{to_cid(applies_to_id)}" unless @edit[:new][:name].blank?
     group.set_data ||= {}
     group.set_data[:button_order] = @edit[:new][:fields].collect { |field| field[1] }
-    if !@edit[:new][:button_image].blank? && @edit[:new][:button_image] != ""
-      group.set_data[:button_image] ||= {}
-      group.set_data[:button_image] = @edit[:new][:button_image]
-    end
+    group.set_data[:button_icon] = @edit[:new][:button_icon] unless @edit[:new][:button_icon].blank?
+    group.set_data[:button_color] = @edit[:new][:button_color] unless @edit[:new][:button_color].blank?
     group.set_data[:display] = @edit[:new][:display]
     group.set_data[:applies_to_class] ||= {}
     group.set_data[:applies_to_class] = @edit[:new][:applies_to_class]
@@ -1002,7 +994,8 @@ module ApplicationController::Buttons
               group[:id] = g.id
               group[:name] = g.name
               group[:description] = g.description
-              group[:button_image] = g.kind_of?(CustomButton) ? g.options[:button_image] : g.set_data[:button_image]
+              group[:button_icon] = g.kind_of?(CustomButton) ? g.options[:button_icon] : g.set_data[:button_icon]
+              group[:button_color] = g.kind_of?(CustomButton) ? g.options[:button_color] : g.set_data[:button_color]
               group[:typ] = g.kind_of?(CustomButton) ? "CustomButton" : "CustomButtonSet"
               @sb[:button_groups].push(group) unless @sb[:button_groups].include?(group)
             end
@@ -1025,7 +1018,8 @@ module ApplicationController::Buttons
               button[:name] = b.name
               button[:id] = b.id
               button[:description] = b.description
-              button[:button_image] = b.options[:button_image]
+              button[:button_icon] = b.options[:button_icon]
+              button[:button_color] = b.options[:button_color]
               @sb[:buttons].push(button) unless @sb[:buttons].include?(button)
             end
           end

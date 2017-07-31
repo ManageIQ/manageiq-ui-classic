@@ -26,7 +26,7 @@ describe MiqAeCustomizationController do
       controller.instance_variable_set(:@breadcrumbs, [])
 
       edit = {
-        :new              => {:button_images => %w(01 02 03), :available_dialogs => {:id => '01', :name => '02'},
+        :new              => {:available_dialogs => {:id => '01', :name => '02'},
                   :instance_name => 'CustomButton_1',
                   :attrs => [%w(Attr1 01), %w(Attr2 02), %w(Attr3 03), %w(Attr4 04), %w(Attr5 05)],
                   :visibility_typ => 'Type1'},
@@ -37,7 +37,7 @@ describe MiqAeCustomizationController do
       controller.instance_variable_set(:@edit, edit)
       session[:edit] = edit
       session[:resolve] = {}
-      post :automate_button_field_changed, :params => { :instance_name => 'CustomButton', :name => 'test', :button_image => '01' }
+      post :automate_button_field_changed, :params => { :instance_name => 'CustomButton', :name => 'test', :button_icon => 'fa fa-star' }
       expect(response.status).to eq(200)
     end
   end

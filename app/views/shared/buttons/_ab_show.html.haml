@@ -24,7 +24,7 @@
     %label.control-label.col-md-2
       = _('Image')
     .col-md-8
-      %span{:class => "miq-custom-button-#{@custom_button.options[:button_image]}"}
+      %span{:class => @custom_button.options[:button_icon], :style => @custom_button.options.key?(:button_color) ? "color: #{@custom_button.options[:button_color]};" : nil}
   .form-group
     %label.control-label.col-md-2
       = _('Dialog')

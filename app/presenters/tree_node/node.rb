@@ -34,6 +34,10 @@ module TreeNode
       nil
     end
 
+    def color
+      nil
+    end
+
     def checkable
       true
     end
@@ -73,6 +77,7 @@ module TreeNode
         :text         => escape(text),
         :tooltip      => escape(tooltip),
         :icon         => icon,
+        :iconColor    => color,
         :expand       => expand,
         :hideCheckbox => hide_checkbox ? hide_checkbox : nil,
         :addClass     => klass,
