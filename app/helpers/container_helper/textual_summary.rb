@@ -140,4 +140,14 @@ module ContainerHelper::TextualSummary
       [var.name, var.value, var.field_path]
     end
   end
+
+  def textual_group_limits
+    TextualMultilabel.new(
+      _("Request and Limits"),
+      :labels => [_("Resource"), _("Value")],
+      :values => [[_("Limit CPU cores"), @record.limit_cpu_cores],
+                  [_("Limit CPU cores"), @record.limit_memory_bytes],
+                  [_("Request CPU cores"), @record.request_cpu_cores],
+                  [_("Request Memory"), @record.request_memory_bytes]])
+  end
 end

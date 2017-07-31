@@ -13,7 +13,7 @@ class ContainerController < ApplicationController
   private
 
   def textual_group_list
-    [%i(properties relationships smart_management), %i(env)]
+    [%i(properties relationships smart_management), %i(env limits)]
   end
   helper_method :textual_group_list
 
