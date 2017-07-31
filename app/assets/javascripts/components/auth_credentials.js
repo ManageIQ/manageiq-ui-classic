@@ -24,7 +24,7 @@ ManageIQ.angular.app.component('authCredentials', {
     * setuserId should be in diagnostic databse form controller
     */
     setUserId: '&',
-    checkAuthentication: '<',
+    authenticationRequired: '<',
     formLabels: '<',
     guidRegex: '<',
   },
