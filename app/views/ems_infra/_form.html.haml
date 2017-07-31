@@ -98,7 +98,7 @@
   - if controller_name == "ems_container"
     = render :partial => "/layouts/container_auth", :locals  => {:record => @ems}
   - else
-    %div{"ng-show" => "emsCommonModel.emstype !== '' && emsCommonModel.emstype === 'azure'"}
+    %div{"ng-if" => "emsCommonModel.emstype !== '' && emsCommonModel.emstype === 'azure'"}
       %h3
         = _("Credentials")
       %auth-credentials{'ng-show'              => true,
