@@ -1408,6 +1408,7 @@ module ApplicationHelper
           ems_storage
           flavor
           floating_ip
+          generic_object_definition
           host
           load_balancer
           middleware_datasource
@@ -1478,6 +1479,7 @@ module ApplicationHelper
              ems_storage
              flavor
              floating_ip
+             generic_object_definition
              host
              host_aggregate
              load_balancer
