@@ -90,7 +90,10 @@
 
       if (event.controller === COTNROLLER_NAME && this.apiFunctions && this.apiFunctions[event.action]) {
         var actionCallback = this.apiFunctions[event.action];
-        actionCallback.apply(this, event.data);
+        var resultData = actionCallback.apply(this, event.data);
+        if (event.eventCallback) {
+          event.eventCallback(resultData);
+        }
       }
     }.bind(this),
     function(err) {
