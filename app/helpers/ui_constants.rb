@@ -39,17 +39,6 @@ module UiConstants
     "Vmware RSS Feeds"           => "http://vmware.simplefeed.net/rss?f=995b0290-01dc-11dc-3032-0019bbc54f6f"
   }
 
-  # UI Themes
-  THEMES =  [
-    [_("Red"), "red"],
-    [_("Orange"), "orange"],
-    [_("Yellow"), "yellow"],
-    [_("Green"), "green"],
-    [_("Blue"), "blue"],
-    [_("ManageIQ-Blue"), "manageiq-blue"],
-    [_("Black"), "black"]
-  ]
-
   # Screen background color choices
   BG_COLORS = [
     "#c00",      # First entry is the default
