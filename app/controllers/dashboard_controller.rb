@@ -2,6 +2,17 @@ class DashboardController < ApplicationController
   include DashboardHelper
   include StartUrl
 
+  # UI Themes
+  THEMES = [
+    [_("Red"), "red"],
+    [_("Orange"), "orange"],
+    [_("Yellow"), "yellow"],
+    [_("Green"), "green"],
+    [_("Blue"), "blue"],
+    [_("ManageIQ-Blue"), "manageiq-blue"],
+    [_("Black"), "black"]
+  ].freeze
+
   menu_section :vi
 
   @@items_per_page = 8
