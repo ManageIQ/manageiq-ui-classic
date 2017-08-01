@@ -37,7 +37,7 @@
         = _('External RSS Feed/URL')
       .col-md-8
         = select_tag("rss_url",
-          options_for_select([["<#{_('Enter URL Manually')}>", nil]] + RSS_FEEDS.sort, @edit[:new][:url]),
+          options_for_select([["<#{_('Enter URL Manually')}>", nil]] + ReportController::RSS_FEEDS.sort, @edit[:new][:url]),
           :disabled => @edit[:read_only],
           :class    => "selectpicker")
         :javascript

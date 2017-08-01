@@ -1,6 +1,22 @@
 module ReportController::Widgets
   extend ActiveSupport::Concern
 
+  # RSS Feeds
+  RSS_FEEDS = {
+    "Microsoft Security"         => "http://www.microsoft.com/protect/rss/rssfeed.aspx",
+    "CNN Top Stories"            => "http://rss.cnn.com/rss/cnn_topstories.rss",
+    "Gartner Latest Research"    => "http://www.gartner.com/it/rss/leaders/latest_research_itoperations.jsp#",
+    "Google News"                => "http://news.google.com/?output=rss",
+    "SlashDot"                   => "http://slashdot.org/index.rdf",
+    "VM Etc."                    => "http://feeds.feedburner.com/vmetc?format=xml",
+    "Virtualization Pro"         => "http://itknowledgeexchange.techtarget.com/virtualization-pro/feed/",
+    "Virtualization Information" => "http://virtualizationinformation.com/?feed=rss2",
+    "Vmware Tips & Tricks"       => "http://rss.techtarget.com/840.xml",
+    "DABCC - News & Support"     => "http://feeds.dabcc.com/AllArticles",
+    "VmwareWolf"                 => "http://feeds.feedburner.com/vmwarewolf",
+    "Vmware RSS Feeds"           => "http://vmware.simplefeed.net/rss?f=995b0290-01dc-11dc-3032-0019bbc54f6f"
+  }.freeze
+
   def widget_refresh
     assert_privileges("widget_refresh")
     replace_right_cell
@@ -420,7 +436,7 @@ module ReportController::Widgets
       end
       @edit[:new][:feed_type] = @widget.options && @widget.options[:url] ? "external" : "internal"
       if @widget.options && @widget.options[:url]
-        RSS_FEEDS.each do |r|
+        self.class::RSS_FEEDS.each do |r|
           if r[1] == @widget.options[:url]
             @edit[:new][:url] = @widget.options[:url]
           end
