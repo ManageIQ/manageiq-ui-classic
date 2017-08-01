@@ -162,7 +162,7 @@ describe ApplicationController do
       e_expression = MiqExpression.new("=" => {:field => "Vm.name", :value => "Test"}, :token => 1)
       v_expression = MiqExpression.new("!=" => {:field => "Vm.description", :value => "DescriptionTest"}, :token => 1)
 
-      custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "Vm", :visibility_expression => v_expression, :enablement_expression => e_expression, :options => {:display => false, :button_image => "5"})
+      custom_button = FactoryGirl.create(:custom_button, :applies_to_class => "Vm", :visibility_expression => v_expression, :enablement_expression => e_expression, :options => {:display => false, :button_icon => "5"})
       custom_button.uri_path, custom_button.uri_attributes, custom_button.uri_message = CustomButton.parse_uri("/test/")
       custom_button.uri_attributes["request"] = "test_req"
       custom_button.save
@@ -174,7 +174,7 @@ describe ApplicationController do
       controller.send(:button_set_form_vars)
       expect(assigns(:edit)[:new][:target_class]).to eq(ui_lookup(:model => "Vm"))
       expect(assigns(:edit)[:new][:display]).to eq(false)
-      expect(assigns(:edit)[:new][:button_image]).to eq('5')
+      expect(assigns(:edit)[:new][:button_icon]).to eq('5')
       expect(assigns(:edit)[:new][:open_url]).to eq(false)
       expect(assigns(:edit)[:new][:enablement_expression]).to eq(e_expression.exp)
       expect(assigns(:edit)[:new][:visibility_expression]).to eq(v_expression.exp)
