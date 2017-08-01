@@ -3,7 +3,7 @@ NetworkTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', 'top
 
 function NetworkTopologyCtrl($scope, $http, $interval, $location, topologyService, miqService) {
   var vm = this;
-  ManageIQ.angular.scope = vm;
+  ManageIQ.angular.scope = $scope;
   miqHideSearchClearButton();
   vm.vs = null;
   var icons = null;
