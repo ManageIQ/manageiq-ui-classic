@@ -26,8 +26,8 @@ module TreeNode
       nil
     end
 
-    def no_click
-      nil
+    def selectable
+      true
     end
 
     def selected
@@ -81,7 +81,7 @@ module TreeNode
         :expand       => expand,
         :hideCheckbox => hide_checkbox ? hide_checkbox : nil,
         :addClass     => klass,
-        :cfmeNoClick  => no_click ? no_click : nil,
+        :selectable   => selectable,
         :select       => selected,
         :checkable    => checkable ? nil : false,
       }

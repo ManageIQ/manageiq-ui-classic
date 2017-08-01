@@ -32,7 +32,7 @@ describe TreeBuilderTags do
       expect(locals[:check_url]).to eq("/ops/rbac_group_field_changed/#{@group.id}___")
       expect(locals[:highlight_changes]).to eq(true)
       expect(locals[:oncheck]).to eq(nil)
-      expect(locals[:cfmeNoClick]).to eq(true)
+      expect(locals[:selectable]).to eq(false)
     end
     it 'set info about selected kids correctly' do
       expect(@tags_tree.send(:contain_selected_kid, @folder_selected)).to eq(true)
@@ -49,20 +49,20 @@ describe TreeBuilderTags do
     it 'sets second level nodes correctly' do
       selected_kid = @tags_tree.send(:x_get_classification_kids, @folder_selected, false)
       not_selected_kid = @tags_tree.send(:x_get_classification_kids, @folder_not_selected, false)
-      expect(selected_kid).to eq([{:id          => @tag_selected.id,
-                                   :icon        => "fa fa-tag",
-                                   :text        => @tag_selected.description,
-                                   :checkable   => @edit.present?,
-                                   :tooltip     => "Tag: #{@tag_selected.description}",
-                                   :cfmeNoClick => true,
-                                   :select      => true}])
-      expect(not_selected_kid).to eq([{:id          => @tag_not_selected.id,
-                                       :icon        => "fa fa-tag",
-                                       :text        => @tag_not_selected.description,
-                                       :checkable   => @edit.present?,
-                                       :tooltip     => "Tag: #{@tag_not_selected.description}",
-                                       :cfmeNoClick => true,
-                                       :select      => false}])
+      expect(selected_kid).to eq([{:id         => @tag_selected.id,
+                                   :icon       => "fa fa-tag",
+                                   :text       => @tag_selected.description,
+                                   :checkable  => @edit.present?,
+                                   :tooltip    => "Tag: #{@tag_selected.description}",
+                                   :selectable => false,
+                                   :select     => true}])
+      expect(not_selected_kid).to eq([{:id         => @tag_not_selected.id,
+                                       :icon       => "fa fa-tag",
+                                       :text       => @tag_not_selected.description,
+                                       :checkable  => @edit.present?,
+                                       :tooltip    => "Tag: #{@tag_not_selected.description}",
+                                       :selectable => false,
+                                       :select     => false}])
     end
   end
   context "edit mode" do
@@ -80,26 +80,26 @@ describe TreeBuilderTags do
       expect(locals[:check_url]).to eq("/ops/rbac_group_field_changed/new___")
       expect(locals[:highlight_changes]).to eq(true)
       expect(locals[:oncheck]).to eq("miqOnCheckUserFilters")
-      expect(locals[:cfmeNoClick]).to eq(true)
+      expect(locals[:selectable]).to eq(false)
     end
     it 'sets second level nodes correctly' do
       selected_kid = @tags_tree.send(:x_get_classification_kids, @folder_selected, false)
       not_selected_kid = @tags_tree.send(:x_get_classification_kids, @folder_not_selected, false)
 
-      expect(selected_kid).to eq([{:id          => @tag_selected.id,
-                                   :icon        => "fa fa-tag",
-                                   :text        => @tag_selected.description,
-                                   :checkable   => @edit.present?,
-                                   :tooltip     => "Tag: #{@tag_selected.description}",
-                                   :cfmeNoClick => true,
-                                   :select      => true}])
-      expect(not_selected_kid).to eq([{:id          => @tag_not_selected.id,
-                                       :icon        => "fa fa-tag",
-                                       :text        => @tag_not_selected.description,
-                                       :checkable   => @edit.present?,
-                                       :tooltip     => "Tag: #{@tag_not_selected.description}",
-                                       :cfmeNoClick => true,
-                                       :select      => false}])
+      expect(selected_kid).to eq([{:id         => @tag_selected.id,
+                                   :icon       => "fa fa-tag",
+                                   :text       => @tag_selected.description,
+                                   :checkable  => @edit.present?,
+                                   :tooltip    => "Tag: #{@tag_selected.description}",
+                                   :selectable => false,
+                                   :select     => true}])
+      expect(not_selected_kid).to eq([{:id         => @tag_not_selected.id,
+                                       :icon       => "fa fa-tag",
+                                       :text       => @tag_not_selected.description,
+                                       :checkable  => @edit.present?,
+                                       :tooltip    => "Tag: #{@tag_not_selected.description}",
+                                       :selectable => false,
+                                       :select     => false}])
     end
   end
 end

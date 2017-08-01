@@ -38,7 +38,7 @@ class TreeBuilderTags < TreeBuilder
                   :oncheck           => @edit.nil? ? nil : "miqOnCheckUserFilters",
                   :checkboxes        => true,
                   :highlight_changes => true,
-                  :cfmeNoClick       => true,
+                  :selectable        => false,
                   :onclick           => false)
   end
 
@@ -61,13 +61,13 @@ class TreeBuilderTags < TreeBuilder
     return parent.entries.size if count_only
     kids = parent.entries.map do |kid|
       select = selected_entry_value(parent, kid)
-      {:id          => kid.id,
-       :icon        => 'fa fa-tag',
-       :text        => kid.description,
-       :checkable   => @edit.present?,
-       :tooltip     => _("Tag: %{description}") % {:description => kid.description},
-       :cfmeNoClick => true,
-       :select      => select}
+      {:id         => kid.id,
+       :icon       => 'fa fa-tag',
+       :text       => kid.description,
+       :checkable  => @edit.present?,
+       :tooltip    => _("Tag: %{description}") % {:description => kid.description},
+       :selectable => false,
+       :select     => select}
     end
     count_only_or_objects(count_only, kids)
   end

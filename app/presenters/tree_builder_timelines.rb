@@ -60,12 +60,12 @@ class TreeBuilderTimelines < TreeBuilder
   def x_get_tree_roots(count_only, _options)
     kids = @reports.keys.sort.map do |item|
       {
-        :text        => item,
-        :id          => item,
-        :icon        => 'pficon pficon-folder-close',
-        :tip         => item,
-        :cfmeNoClick => true,
-        :expand      => true,
+        :text       => item,
+        :id         => item,
+        :icon       => 'pficon pficon-folder-close',
+        :tip        => item,
+        :selectable => false,
+        :expand     => true,
       }
     end
     count_only_or_objects(count_only, kids)
@@ -75,12 +75,12 @@ class TreeBuilderTimelines < TreeBuilder
     kids = if @reports.fetch_path(parent[:text])
              @reports[parent[:text]].keys.map do |item|
                {
-                 :text        => item,
-                 :id          => item,
-                 :icon        => 'pficon pficon-folder-close',
-                 :tip         => _("Group: %{name}") % {:name => item},
-                 :expand      => false,
-                 :cfmeNoClick => true,
+                 :text       => item,
+                 :id         => item,
+                 :icon       => 'pficon pficon-folder-close',
+                 :tip        => _("Group: %{name}") % {:name => item},
+                 :expand     => false,
+                 :selectable => false,
                }
              end
            else

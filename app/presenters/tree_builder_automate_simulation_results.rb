@@ -72,9 +72,9 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
 
   def get_root_elements(el, idx)
     object = {
-      :id          => "e_#{idx}",
-      :elements    => el.each_element { |e| e },
-      :cfmeNoClick => true
+      :id         => "e_#{idx}",
+      :elements   => el.each_element { |e| e },
+      :selectable => false
     }.merge(lookup_attrs(el))
     object[:attributes] = el.attributes if object[:text] == el.name
     object
@@ -85,10 +85,10 @@ class TreeBuilderAutomateSimulationResults < TreeBuilder
     if parent[:attributes]
       parent[:attributes].each_with_index do |k, idx|
         object = {
-          :id          => "a_#{idx}",
-          :icon        => "ff ff-attribute",
-          :cfmeNoClick => true,
-          :text        => "#{k.first} = #{k.last}"
+          :id         => "a_#{idx}",
+          :icon       => "ff ff-attribute",
+          :selectable => false,
+          :text       => "#{k.first} = #{k.last}"
         }
         kids.push(object)
       end

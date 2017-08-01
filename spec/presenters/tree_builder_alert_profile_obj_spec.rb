@@ -40,7 +40,7 @@ describe TreeBuilderAlertProfileObj do
         expect(locals[:check_url]).to eq("/miq_policy/alert_profile_assign_changed/")
         expect(locals[:oncheck]).to eq("miqOnCheckHandler")
         expect(locals[:checkboxes]).to be_truthy
-        expect(locals[:cfmeNoClick]).to be_truthy
+        expect(locals[:selectable]).to be_falsey
         expect(locals[:onclick]).to be_falsey
       end
     end
@@ -70,7 +70,7 @@ describe TreeBuilderAlertProfileObj do
         expect(res[:tooltip]).to eq("")
         expect(res[:icon]).to eq("pficon pficon-folder-open")
         expect(res[:hideCheckbox]).to be_truthy
-        expect(res[:cfmeNoClick]).to be_truthy
+        expect(res[:selectable]).to be_falsey
         expect(res[:expand]).to be_truthy
       end
     end

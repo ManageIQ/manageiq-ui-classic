@@ -12,12 +12,12 @@ describe TreeBuilderAutomateSimulationResults do
 
     it 'sets attribute nodes correctly' do
       nodes = @ae_simulation_tree.send(:x_get_tree_roots, false)
-      tree_data = {:id          => "e_1",
-                   :text        => "ManageIQ/SYSTEM / PROCESS / Automation",
-                   :image       => "100/q.png",
-                   :tooltip     => "ManageIQ/SYSTEM / PROCESS / Automation",
-                   :elements    => [],
-                   :cfmeNoClick => true
+      tree_data = {:id         => "e_1",
+                   :text       => "ManageIQ/SYSTEM / PROCESS / Automation",
+                   :image      => "100/q.png",
+                   :tooltip    => "ManageIQ/SYSTEM / PROCESS / Automation",
+                   :elements   => [],
+                   :selectable => false
                   }
       expect(nodes).to include(tree_data)
     end

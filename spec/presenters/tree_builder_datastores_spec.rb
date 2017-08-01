@@ -32,7 +32,7 @@ describe TreeBuilderDatastores do
       expect(kids.first[:tip]).to eq(@host[:name])
       expect(kids.first[:icon]).to eq('pficon pficon-screen')
       expect(kids.first[:hideCheckbox]).to eq(true)
-      expect(kids.first[:cfmeNoClick]).to eq(true)
+      expect(kids.first[:selectable]).to eq(false)
       expect(kids.first[:nodes]).to eq([])
     end
   end

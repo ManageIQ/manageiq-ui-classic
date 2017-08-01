@@ -34,16 +34,16 @@ class TreeBuilderConfiguredSystems < TreeBuilder
   def x_get_tree_roots(count_only, _options)
     objects = []
     objects.push(configured_systems)
-    objects.push(:id          => "global",
-                 :text        => _("Global Filters"),
-                 :icon        => "pficon pficon-folder-close",
-                 :tip         => _("Global Shared Filters"),
-                 :cfmeNoClick => true)
-    objects.push(:id          => "my",
-                 :text        => _("My Filters"),
-                 :icon        => "pficon pficon-folder-close",
-                 :tip         => _("My Personal Filters"),
-                 :cfmeNoClick => true)
+    objects.push(:id         => "global",
+                 :text       => _("Global Filters"),
+                 :icon       => "pficon pficon-folder-close",
+                 :tip        => _("Global Shared Filters"),
+                 :selectable => false)
+    objects.push(:id         => "my",
+                 :text       => _("My Filters"),
+                 :icon       => "pficon pficon-folder-close",
+                 :tip        => _("My Personal Filters"),
+                 :selectable => false)
     count_only_or_objects(count_only, objects)
   end
 end

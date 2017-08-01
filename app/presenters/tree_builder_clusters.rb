@@ -41,23 +41,23 @@ class TreeBuilderClusters < TreeBuilder
 
   def x_get_tree_roots(count_only = false, _options)
     nodes = @root[:clusters].map do |node|
-      { :id          => node[:id].to_s,
-        :text        => node[:name],
-        :icon        => 'pficon pficon-cluster',
-        :tip         => node[:name],
-        :select      => node[:capture],
-        :nodes       => @data[node[:id]][:ho_enabled] + @data[node[:id]][:ho_disabled],
-        :cfmeNoClick => true
+      { :id         => node[:id].to_s,
+        :text       => node[:name],
+        :icon       => 'pficon pficon-cluster',
+        :tip        => node[:name],
+        :select     => node[:capture],
+        :nodes      => @data[node[:id]][:ho_enabled] + @data[node[:id]][:ho_disabled],
+        :selectable => false
       }
     end
     if @root[:non_cl_hosts].present?
-      node = {:id          => "NonCluster",
-              :text        => _("Non-clustered Hosts"),
-              :icon        => 'pficon pficon-screen',
-              :tip         => _("Non-clustered Hosts"),
-              :select      => non_cluster_selected,
-              :nodes       => @root[:non_cl_hosts],
-              :cfmeNoClick => true
+      node = {:id         => "NonCluster",
+              :text       => _("Non-clustered Hosts"),
+              :icon       => 'pficon pficon-screen',
+              :tip        => _("Non-clustered Hosts"),
+              :select     => non_cluster_selected,
+              :nodes      => @root[:non_cl_hosts],
+              :selectable => false
       }
       nodes.push(node)
     end
@@ -70,13 +70,13 @@ class TreeBuilderClusters < TreeBuilder
       if @data[parent[:id].to_i]
         value = @data[parent[:id].to_i][:ho_disabled].include? node
       end
-      {:id          => "#{parent[:id]}_#{node[:id]}",
-       :text        => node[:name],
-       :tip         => _("Host: %{name}") % {:name => node[:name]},
-       :icon        => 'pficon pficon-screen',
-       :select      => node.kind_of?(Hash) ? node[:capture] : !value,
-       :cfmeNoClick => true,
-       :nodes       => []}
+      {:id         => "#{parent[:id]}_#{node[:id]}",
+       :text       => node[:name],
+       :tip        => _("Host: %{name}") % {:name => node[:name]},
+       :icon       => 'pficon pficon-screen',
+       :select     => node.kind_of?(Hash) ? node[:capture] : !value,
+       :selectable => false,
+       :nodes      => []}
     end
     count_only_or_objects(count_only, nodes)
   end

@@ -66,25 +66,25 @@ describe TreeBuilderSections do
     end
     it 'sets roots correctly' do
       roots = @sections_tree.send(:x_get_tree_roots, false)
-      expect(roots).to eq([{:id          => "group_Properties",
-                            :text        => "Properties",
-                            :tip         => "Properties",
-                            :image       => false,
-                            :select      => true,
-                            :cfmeNoClick => true,
-                            :nodes       => [{:name => :_model_, :header => "Filesystem", :group => "Properties"}]}])
+      expect(roots).to eq([{:id         => "group_Properties",
+                            :text       => "Properties",
+                            :tip        => "Properties",
+                            :image      => false,
+                            :select     => true,
+                            :selectable => false,
+                            :nodes      => [{:name => :_model_, :header => "Filesystem", :group => "Properties"}]}])
     end
 
     it 'sets children correctly' do
       root = @sections_tree.send(:x_get_tree_roots, false).first
       kids = @sections_tree.send(:x_get_tree_hash_kids, root, false)
-      expect(kids).to eq([{:id          => "group_Properties:_model_",
-                           :text        => "Filesystem",
-                           :tip         => "Filesystem",
-                           :image       => false,
-                           :cfmeNoClick => true,
-                           :select      => true,
-                           :nodes       => []}])
+      expect(kids).to eq([{:id         => "group_Properties:_model_",
+                           :text       => "Filesystem",
+                           :tip        => "Filesystem",
+                           :image      => false,
+                           :selectable => false,
+                           :select     => true,
+                           :nodes      => []}])
     end
   end
 end
