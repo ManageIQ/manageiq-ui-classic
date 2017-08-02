@@ -9,6 +9,10 @@ function logError(fn) {
         console.debug('script follows:', text);
       }
       return text;
+    } finally {
+      setTimeout(function() {
+        ManageIQ.qe.loading--;
+      });
     }
   };
 }
@@ -20,10 +24,6 @@ jQuery.jsonPayload = function (text, fallback) {
   } else {
     return fallback(text);
   }
-
-  setTimeout(function() {
-    ManageIQ.qe.loading--;
-  });
 };
 
 $.ajaxSetup({
