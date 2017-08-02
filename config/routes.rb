@@ -1420,6 +1420,7 @@ Rails.application.routes.draw do
         wait_for_task
         tagging_edit
         tag_edit_form_field_changed
+        jdr_delete
       ) +
                adv_search_post +
                compare_post +

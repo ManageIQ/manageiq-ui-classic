@@ -202,6 +202,18 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
         N_('Enqueue generation of new JDR report'),
         N_('Generate JDR report'),
         :klass => ApplicationHelper::Button::MiddlewareServerAction
+      ),
+      button(
+        :middleware_jdr_delete,
+        'pficon pficon-delete fa-lg',
+        N_('Delete selected JDR reports'),
+        N_('Delete selected JDR reports'),
+        :enabled => false,
+        :onwhen  => '1+',
+        :confirm => _('Do you want to delete selected JDR reports?'),
+        :klass   => ApplicationHelper::Button::MiddlewareServerAction,
+        :data    => {'function'      => 'miqCallAngular',
+                     'function-data' => '{"name": "deleteSelectedJdr", "args": []}'},
       )
     ]
   )])

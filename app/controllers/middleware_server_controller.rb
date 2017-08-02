@@ -172,7 +172,7 @@ class MiddlewareServerController < ApplicationController
   end
 
   def jdr_download
-    mw_server = MiddlewareServer.find(from_cid(params[:id]))
+    mw_server = find_record_with_rbac(MiddlewareServer, params[:id])
     jdr_report = mw_server.middleware_jdr_reports.find(from_cid(params[:key]))
 
     response.headers['Content-Type'] = 'application/zip'
@@ -184,6 +184,20 @@ class MiddlewareServerController < ApplicationController
         y << part.data
       end
     end
+  end
+
+  def jdr_delete
+    mw_server = find_record_with_rbac(MiddlewareServer, params[:id])
+    reports = mw_server.middleware_jdr_reports.find(params['mw_jdr_selected'])
+    mw_server.middleware_jdr_reports.destroy(reports)
+
+    flash_msg = n_('Deletion of one JDR report succeeded.',
+                   "Deletion of %{count} JDR reports succeeded.",
+                   reports.count) % {:count => reports.count}
+
+    redirect_to(:action    => 'show',
+                :id        => to_cid(mw_server.id),
+                :flash_msg => flash_msg)
   end
 
   def self.display_methods
