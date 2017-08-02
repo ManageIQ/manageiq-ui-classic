@@ -2350,6 +2350,11 @@ class ApplicationController < ActionController::Base
   end
   public :restful?
 
+  def validate_before_save?
+    false
+  end
+  public :validate_before_save?
+
   def determine_record_id_for_presenter
     if @in_a_form
       @edit && @edit[:rec_id]

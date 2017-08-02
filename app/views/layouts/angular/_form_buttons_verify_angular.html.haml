@@ -4,9 +4,9 @@
 - else
   - verify_title_on = _("Validate the credentials by logging into the Server")
   - verify_title_off ||= _("Server information, Username and matching password fields are needed to perform verification of credentials")
-- if controller.send(:restful?)
+- if controller.send(:restful?) || controller.send(:validate_before_save?)
   -# TODO: replace first argument with a sane way of submitting the form
-  - validate = "#{main_scope}.validateClicked({target: '.validate_button:visible'}, '#{valtype}', true)"
+  - validate = "#{main_scope}.validateClicked({target: '.validate_button:visible'}, '#{valtype}', true, angularForm, '#{url_for_only_path(:action => validate_url, :id => id, :type => valtype, :button => "validate")}')"
 - else
   - validate = "#{main_scope}.validateClicked('#{url_for_only_path(:action => validate_url, :id => id, :type => valtype, :button => "validate")}')"
 %div{"ng-show" => ng_show}

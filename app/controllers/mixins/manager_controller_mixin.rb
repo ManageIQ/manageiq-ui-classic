@@ -78,10 +78,12 @@ module Mixins
       begin
         @provider.verify_credentials(params[:type])
       rescue => error
-        render_flash(_("Credential validation was not successful: %{details}") % {:details => error}, :error)
+        add_flash(_("Credential validation was not successful: %{details}") % {:details => error}, :error)
       else
-        render_flash(_("Credential validation was successful"))
+        add_flash(_("Credential validation was successful"))
       end
+
+      render :json => {:message => @flash_array.last(1)[0][:message], :level => @flash_array.last(1)[0][:level]}
     end
 
     def explorer

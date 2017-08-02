@@ -13,7 +13,6 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
 
   vm.formId = providerForemanFormId;
   vm.afterGet = false;
-  vm.validateClicked = miqService.validateWithAjax;
   vm.modelCopy = angular.copy( vm.providerForemanModel );
   vm.model = 'providerForemanModel';
   vm.checkAuthentication = true;
@@ -84,6 +83,25 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
 
   vm.addClicked = function(angularForm) {
     vm.saveClicked(angularForm);
+  };
+
+  vm.validateClicked = function($event, authType, formSubmit, angularForm, url) {
+    miqService.validateWithREST($event, 'default', url, formSubmit)
+      .then(function success(data) {
+        $scope.$apply(function() {
+          if(data.level == 'error') {
+            vm.updateAuthStatus(false, angularForm);
+          } else {
+            vm.updateAuthStatus(true, angularForm);
+          }
+          miqService.miqFlash(data.level, data.message);
+          miqSparkleOff();
+        });
+      });
+  };
+
+  vm.updateAuthStatus = function(updatedValue, angularForm) {
+    angularForm.default_auth_status.$setViewValue(updatedValue);
   };
 
   $scope.postValidationModelRegistry = function(prefix) {
