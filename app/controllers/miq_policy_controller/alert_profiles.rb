@@ -180,33 +180,32 @@ module MiqPolicyController::AlertProfiles
     tree = nil
     return nil if alert_profile_get_assign_to_objects_empty?
     if @assign[:new][:assign_to] == "ems_folder"
-      tree = TreeBuilderBelongsToHac.new(:vat_tree,
-                                         :vat,
-                                         @sb,
-                                         true,
-                                         :edit     => @edit,
-                                         :filters  => @filters,
-                                         :group    => @group,
-                                         :selected => @assign[:new][:objects].collect { |f| "EmsFolder_#{f}" })
+      tree = instantiate_tree("TreeBuilderBelongsToVat",
+                              :vat_tree,
+                              :vat,
+                              @assign[:new][:objects].collect { |f| "EmsFolder_#{f}" })
     elsif @assign[:new][:assign_to] == "resource_pool"
-      tree = TreeBuilderBelongsToHac.new(:hac_tree,
-                                         :hac,
-                                         @sb,
-                                         true,
-                                         :edit     => @edit,
-                                         :filters  => @filters,
-                                         :group    => @group,
-                                         :selected => @assign[:new][:objects].collect { |f| "ResourcePool_#{f}" })
+      tree = instantiate_tree("TreeBuilderBelongsToHac",
+                              :hac_tree,
+                              :hac,
+                              @assign[:new][:objects].collect { |f| "ResourcePool_#{f}" })
     else
-      tree = TreeBuilderAlertProfileObj.new(:object_tree,
-                                            :object,
-                                            @sb,
-                                            true,
-                                            :assign_to => @assign[:new][:assign_to],
-                                            :cat       => @assign[:new][:cat],
-                                            :selected  => @assign[:new][:objects])
+      tree = instantiate_tree("TreeBuilderAlertProfileObj",
+                              :object_tree,
+                              :object,
+                              @assign[:new][:objects])
     end
     tree
+  end
+
+  def instantiate_tree(tree_class, tree_name, type, selected)
+    tree_class.constantize.new(tree_name,
+                               type,
+                               @sb,
+                               true,
+                               :assign_to => @assign[:new][:assign_to],
+                               :cat       => @assign[:new][:cat],
+                               :selected  => selected)
   end
 
   def alert_profile_build_edit_screen
