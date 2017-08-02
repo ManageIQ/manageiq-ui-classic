@@ -1051,7 +1051,7 @@ class MiqAeClassController < ApplicationController
         @changed = true
         javascript_flash
       else
-        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => @edit[:typ]), :name  => ae_ns.name})
+        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => @edit[:typ]), :name => get_record_display_name(ae_ns)})
         AuditEvent.success(build_saved_audit(ae_ns, @edit))
         session[:edit] = nil  # clean out the saved info
         @in_a_form = false
@@ -1231,7 +1231,7 @@ class MiqAeClassController < ApplicationController
                   end
       ns_set_record_vars(add_ae_ns)      # Set the record variables, but don't save
       if add_ae_ns.valid? && !flash_errors? && add_ae_ns.save
-        add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => add_ae_ns.class.name), :name  => add_ae_ns.name})
+        add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => add_ae_ns.class.name), :name => get_record_display_name(add_ae_ns)})
         @in_a_form = false
         replace_right_cell(:replace_trees => [:ae])
       else
@@ -1838,7 +1838,7 @@ class MiqAeClassController < ApplicationController
           domain.git_enabled? ? git_domains.push(domain) : aedomains.push(domain.id)
         else
           add_flash(_("Read Only %{model} \"%{name}\" cannot be deleted") %
-            {:model => ui_lookup(:model => "MiqAeDomain"), :name => domain.name}, :error)
+            {:model => ui_lookup(:model => "MiqAeDomain"), :name => get_record_display_name(domain)}, :error)
         end
       end
     end
@@ -1887,7 +1887,7 @@ class MiqAeClassController < ApplicationController
           ns_list.push(from_cid(item[1]))
         else
           add_flash(_("\"%{field}\" %{model} cannot be deleted") %
-                      {:model => ui_lookup(:model => "MiqAeDomain"), :field => record.name},
+                      {:model => ui_lookup(:model => "MiqAeDomain"), :field => get_record_display_name(record)},
                     :error)
         end
       else
@@ -2316,7 +2316,7 @@ class MiqAeClassController < ApplicationController
     @ae_ns = find_record_with_rbac(typ, from_cid(obj[0].split('-')[1]))
     if @ae_ns.domain? && !@ae_ns.editable_properties?
       add_flash(_("Read Only %{model} \"%{name}\" cannot be edited") %
-                  {:model => ui_lookup(:model => "MiqAeDomain"), :name  => @ae_ns.name},
+                  {:model => ui_lookup(:model => "MiqAeDomain"), :name => get_record_display_name(@ae_ns)},
                 :error)
     else
       ns_set_form_vars
