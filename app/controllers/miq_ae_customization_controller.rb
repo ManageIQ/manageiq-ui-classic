@@ -409,22 +409,22 @@ class MiqAeCustomizationController < ApplicationController
     end
   end
 
+  def right_cell_text_for_node(record, model_name)
+    if record && record.id
+      _("Editing %{model} \"%{name}\"") % {:name  => record.name,
+                                           :model => ui_lookup(:model => model_name)}
+    else
+      _("Adding a new %{model}") % {:model => ui_lookup(:model => model_name)}
+    end
+  end
+
   def setup_presenter_for_ab_tree(nodetype, presenter)
     case nodetype
     when 'button_edit'
-      @right_cell_text = if @custom_button && @custom_button.id
-                           _("Editing %{model} \"%{name}\"") % {:name  => @custom_button.name,
-                                                                :model => ui_lookup(:model => "CustomButton")}
-                         else
-                           _("Adding a new %{model}") % {:model => ui_lookup(:model => "CustomButton")}
-                         end
+      @right_cell_text = right_cell_text_for_node(@custom_button, "CustomButton")
+      presenter.update(:main_div, render_proc[:partial => "shared/buttons/ab_form"])
     when 'group_edit'
-      @right_cell_text = if @custom_button_set && @custom_button_set.id
-                           _("Editing %{model} \"%{name}\"") % {:name  => @custom_button_set.name,
-                                                                :model => ui_lookup(:model => "CustomButtonSet")}
-                         else
-                           _("Adding a new %{model}") % {:model => ui_lookup(:model => "CustomButtonSet")}
-                         end
+      @right_cell_text = right_cell_text_for_node(@custom_button_set, "CustomButonSet")
     when 'group_reorder'
       @right_cell_text = _("%{models} Group Reorder") % {:models => ui_lookup(:models => "CustomButton")}
     end

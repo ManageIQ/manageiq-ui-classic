@@ -1,5 +1,10 @@
 module ApplicationController::Filter::SubstMixin
   include ActiveSupport::Concern
+  def exp_build_table_or_nil(exp)
+    return nil if exp == {"???" => "???"}
+    exp_build_table(exp)
+  end
+
   # Build an array of expression symbols by recursively traversing the MiqExpression object
   #   and inserting sequential tokens for each expression part
   def exp_build_table(exp, quick_search = false)

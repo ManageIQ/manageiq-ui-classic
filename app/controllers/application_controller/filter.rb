@@ -30,7 +30,7 @@ module ApplicationController::Filter
     end
 
     if flash_errors?
-      javascript_flash(:flash_div_id => 'adv_search_flash')
+      javascript_flash(:flash_div_id => 'exp_editor_flash')
     else
       if ["commit", "not", "remove"].include?(params[:pressed])
         copy = copy_hash(@edit[@expkey][:expression])
@@ -45,8 +45,8 @@ module ApplicationController::Filter
       @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression])
       render :update do |page|
         page << javascript_prologue
-        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-        #       page.replace("form_expression_div", :partial=>"form_expression")
+        # Don't need to replace flash div as it's included throught
+        # exp_editor. That is rendered either throught adv_search_body or directly.
         if !@edit[:adv_search_open].nil?
           page.replace("adv_search_body", :partial => "layouts/adv_search_body")
           page.replace("adv_search_footer", :partial => "layouts/adv_search_footer")
@@ -73,7 +73,7 @@ module ApplicationController::Filter
     token = params[:token].to_i
     if token == @edit[@expkey][:exp_token] || # User selected same token as already selected
        (@edit[@expkey][:exp_token] && @edit[:edit_exp].key?("???")) # or new token in process
-      javascript_flash(:spinner_off => true)
+      javascript_flash(:flash_div_id => 'exp_editor_flash', :spinner_off => true)
     else
       exp = exp_find_by_token(@edit[@expkey][:expression], token)
       @edit[:edit_exp] = copy_hash(exp)
@@ -120,11 +120,11 @@ module ApplicationController::Filter
         page << javascript_prologue
       end
     elsif @refresh_div.to_s == 'flash_msg_div'
-      javascript_flash
+      javascript_flash(:flash_div_id => 'exp_editor_flash')
     else
       render :update do |page|
         page << javascript_prologue
-        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page.replace("exp_editor_flash", :partial => "layouts/flash_msg", :locals => {:flash_div_id => 'exp_editor_flash'})
         page.replace("exp_atom_editor_div", :partial => "layouts/exp_atom/editor")
 
         page << ENABLE_CALENDAR if @edit[@expkey].calendar_needed?

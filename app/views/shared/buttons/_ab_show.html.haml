@@ -86,6 +86,30 @@
 %hr
 
 %h3
+  = _("Enablement Expression")
+.form-horizontal.static
+  - if @custom_button && !@custom_button.enablement_expression.nil? && @custom_button.enablement_expression.kind_of?(MiqExpression)
+    = h(@custom_button.enablement_expression.to_human)
+  - else
+    = render :partial => 'layouts/info_msg', :locals => {:message => _("No Enablement Expression defined, this button will be always enabled")}
+%hr
+%h3
+  = _('Disabled Button Text')
+.form-horizontal.static
+  = h(@custom_button.disabled_text)
+
+%hr
+
+%h3
+  = _('Visibility Expression')
+.form-horizontal.static
+  - if @custom_button && !@custom_button.visibility_expression.nil? && @custom_button.visibility_expression.kind_of?(MiqExpression)
+    = h(@custom_button.visibility_expression.to_human)
+  - else
+    = render :partial => 'layouts/info_msg', :locals => {:message => _("No Visibility Expression defined, this button will be always visible")}
+%hr
+
+%h3
   = _('Attribute/Value Pairs')
 - if @resolve[:new][:attrs].empty?
   = render :partial => 'layouts/info_msg', :locals => {:message => _("No Attribute/Value Pairs found.")}
