@@ -6,9 +6,9 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
     url: '',
     zone: '',
     verify_ssl: '',
-    log_userid: '',
-    log_password: '',
-    log_verify: ''
+    default_userid: '',
+    default_password: '',
+    default_verify: '',
   };
 
   vm.formId = providerForemanFormId;
@@ -47,9 +47,9 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
 
   vm.isBasicInfoValid = function(angularForm) {
     if(angularForm.url.$valid &&
-      angularForm.log_userid.$valid &&
-      angularForm.log_password.$valid &&
-      angularForm.log_verify.$valid)
+      angularForm.default_userid.$valid &&
+      angularForm.default_password.$valid &&
+      angularForm.default_verify.$valid)
       return true;
     else
       return false;
@@ -94,10 +94,10 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
       vm.providerForemanModel.url = data.url;
       vm.providerForemanModel.verify_ssl = data.verify_ssl === 1;
 
-      vm.providerForemanModel.log_userid = data.log_userid;
+      vm.providerForemanModel.default_userid = data.default_userid;
 
-      if (vm.providerForemanModel.log_userid !== '') {
-        vm.providerForemanModel.log_password = vm.providerForemanModel.log_verify = miqService.storedPasswordPlaceholder;
+      if (vm.providerForemanModel.default_userid !== '') {
+        vm.providerForemanModel.default_password = vm.providerForemanModel.default_verify = miqService.storedPasswordPlaceholder;
       }
     }
 
