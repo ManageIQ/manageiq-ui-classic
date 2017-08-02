@@ -61,7 +61,8 @@ ManageIQ.qe.anythingInFlight = function() {
     (state.debounce) ||
     (state.document != 'complete') ||
     (state.jquery != 0) ||
-    (state.spinner);
+    (state.spinner) ||
+    (state.loading > 0);
 };
 
 ManageIQ.qe.spinnerPresent = function() {
@@ -73,6 +74,7 @@ ManageIQ.qe.debounceRunning = function() {
   return Object.keys(ManageIQ.qe.debounced).length > 0;
 };
 
+ManageIQ.qe.loading = 0;
 ManageIQ.qe.inFlight = function() {
   return {
     autofocus:  ManageIQ.qe.autofocus,
@@ -80,6 +82,7 @@ ManageIQ.qe.inFlight = function() {
     document:   document.readyState,
     jquery:     $.active,
     spinner:    ManageIQ.qe.spinnerPresent(),
+    loading:    ManageIQ.qe.loading,
   };
 };
 

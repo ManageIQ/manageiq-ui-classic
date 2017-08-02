@@ -20,6 +20,10 @@ jQuery.jsonPayload = function (text, fallback) {
   } else {
     return fallback(text);
   }
+
+  setTimeout(function() {
+    ManageIQ.qe.loading--;
+  });
 };
 
 $.ajaxSetup({
