@@ -1087,6 +1087,7 @@ Rails.application.routes.draw do
         timeline
         timeline_data
         widget_to_pdf
+        widget_report_data
         start_url
         widget_menu_data
       ),

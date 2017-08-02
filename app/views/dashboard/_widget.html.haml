@@ -30,9 +30,12 @@
       %widget-menu{:id => presenter.widget.id}
     - elsif presenter.widget.contents_for_user(current_user).blank?
       = render :partial => 'widget_blank', :locals => {:widget => presenter.widget}
+    - elsif presenter.widget.content_type == "report"
+      %widget-report{:id => presenter.widget.id}
     - elsif %w(report chart rss).include?(presenter.widget.content_type)
       = render :partial => "widget_#{presenter.widget.content_type}", :locals => {:widget => presenter.widget}
     - unless presenter.widget.content_type == "menu"
       = render :partial => 'widget_footer', :locals => {:widget => presenter.widget}
+
 :javascript
   miq_bootstrap("#w_#{presenter.widget.id}");
