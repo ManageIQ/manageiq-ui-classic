@@ -86,6 +86,27 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
     vm.saveClicked(angularForm);
   };
 
+  $scope.postValidationModelRegistry = function(prefix) {
+    if (vm.postValidationModel === undefined) {
+      vm.postValidationModel = {
+        default: {},
+      }
+    }
+    if (prefix === "default") {
+      if (vm.newRecord) {
+        var default_password = vm.providerForemanModel.default_password;
+      } else {
+        var default_password = vm.providerForemanModel.default_password === "" ? "" : miqService.storedPasswordPlaceholder;
+      }
+      vm.postValidationModel.default = {
+        url: vm.providerForemanModel.url,
+        verify_ssl: vm.providerForemanModel.verify_ssl,
+        default_userid: vm.providerForemanModel.default_userid,
+        default_password: default_password,
+      };
+    }
+  };
+
   function getProviderForemanFormData(response) {
     var data = response.data;
 
