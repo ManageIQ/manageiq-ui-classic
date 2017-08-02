@@ -9,6 +9,7 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
     default_userid: '',
     default_password: '',
     default_verify: '',
+    default_auth_status: false,
   };
 
   vm.formId = providerForemanFormId;
@@ -16,6 +17,7 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
   vm.validateClicked = miqService.validateWithAjax;
   vm.modelCopy = angular.copy( vm.providerForemanModel );
   vm.model = 'providerForemanModel';
+  vm.checkAuthentication = true;
 
   vm.saveable = miqService.saveable;
 
@@ -95,6 +97,7 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
       vm.providerForemanModel.verify_ssl = data.verify_ssl === 1;
 
       vm.providerForemanModel.default_userid = data.default_userid;
+      vm.providerForemanModel.default_auth_status = data.default_auth_status;
 
       if (vm.providerForemanModel.default_userid !== '') {
         vm.providerForemanModel.default_password = vm.providerForemanModel.default_verify = miqService.storedPasswordPlaceholder;
