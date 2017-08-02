@@ -6,16 +6,6 @@ module UiConstants
   TIMELINES_FOLDER = File.join(Rails.root, "product/timelines")
   TOOLBARS_FOLDER = File.join(Rails.root, "product/toolbars")
 
-  # Screen background color choices
-  BG_COLORS = [
-    "#c00",      # First entry is the default
-    "#ff8a00",
-    "#ffe400",
-    "#6b9130",
-    "#0c7ad7",
-    "#000"
-  ]
-
   # Theme settings - each subitem will be set in @settings[:css][:<subitem>] based on the selected theme
   THEME_CSS_SETTINGS = {
     "red"           => {
@@ -158,7 +148,6 @@ module UiConstants
       :reporttheme   => "MIQ",
       :quad_truncate => "m",
       :theme         => "red",            # Luminescent Blue
-      :bg_color      => BG_COLORS.first,  # Background color
       :taskbartext   => true,             # Show button text on taskbar
       :vmcompare     => "Compressed",     # Start VM compare and drift in compressed mode
       :hostcompare   => "Compressed",     # Start Host compare in compressed mode
