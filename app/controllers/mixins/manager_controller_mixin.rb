@@ -269,11 +269,12 @@ module Mixins
       manager = find_record(concrete_model, params[:id])
       provider = manager.provider
 
-      render :json => {:name           => provider.name,
-                       :zone           => provider.zone.name,
-                       :url            => provider.url,
-                       :verify_ssl     => provider.verify_ssl,
-                       :default_userid => provider.authentications.first.userid}
+      render :json => {:name                => provider.name,
+                       :zone                => provider.zone.name,
+                       :url                 => provider.url,
+                       :verify_ssl          => provider.verify_ssl,
+                       :default_userid      => provider.authentications.first.userid,
+                       :default_auth_status => provider.authentication_status_ok?}
     end
 
     private
