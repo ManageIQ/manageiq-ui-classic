@@ -7,8 +7,11 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
         'dialog_tabs': [{
           'label': 'New tab',
           'position': 0,
-          'dialog_groups': [
-          ],
+          'dialog_groups': [{
+            'label': 'New box',
+            'position': 0,
+            'dialog_fields': []
+          }],
         }],
       }],
     };
