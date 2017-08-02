@@ -4,6 +4,6 @@ class GenericObjectDefinitionDecorator < MiqDecorator
   end
 
   def self.fileicon
-    'svg/generic-object.svg'
+    '100/generic_object_definition.png'
   end
 end
