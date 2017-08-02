@@ -25,11 +25,11 @@ module Mixins
     end
 
     def build_credentials
-      return {} unless params[:log_userid]
+      return {} unless params[:default_userid]
       {
         :default => {
-          :userid   => params[:log_userid],
-          :password => params[:log_password] || @provider.authentication_password
+          :userid   => params[:default_userid],
+          :password => params[:default_password] || @provider.authentication_password
         }
       }
     end
@@ -269,11 +269,11 @@ module Mixins
       manager = find_record(concrete_model, params[:id])
       provider = manager.provider
 
-      render :json => {:name       => provider.name,
-                       :zone       => provider.zone.name,
-                       :url        => provider.url,
-                       :verify_ssl => provider.verify_ssl,
-                       :log_userid => provider.authentications.first.userid}
+      render :json => {:name           => provider.name,
+                       :zone           => provider.zone.name,
+                       :url            => provider.url,
+                       :verify_ssl     => provider.verify_ssl,
+                       :default_userid => provider.authentications.first.userid}
     end
 
     private
