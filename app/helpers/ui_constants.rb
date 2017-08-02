@@ -6,23 +6,6 @@ module UiConstants
   TIMELINES_FOLDER = File.join(Rails.root, "product/timelines")
   TOOLBARS_FOLDER = File.join(Rails.root, "product/toolbars")
 
-  # PDF page sizes
-  PDF_PAGE_SIZES = {
-    "a0"            => N_("A0 - 841mm x 1189mm"),
-    "a1"            => N_("A1 - 594mm x 841mm"),
-    "a2"            => N_("A2 - 420mm x 594mm"),
-    "a3"            => N_("A3 - 297mm x 420mm"),
-    "a4"            => N_("A4 - 210mm x 297mm (default)"),
-    "US-Letter"     => N_("US Letter - 8.5in x 11.0in"),
-    "US-Legal"      => N_("US Legal - 8.5in x 14.0in"),
-    "US-Executive"  => N_("US Executive - 7.25in x 10.5in"),
-    "US-Ledger"     => N_("US Ledger - 17.0in x 11.0in"),
-    "US-Tabloid"    => N_("US Tabloid - 11.0in x 17.0in"),
-    "US-Government" => N_("US Government - 8.0in x 11.0in"),
-    "US-Statement"  => N_("US Statement - 5.5in x 8.5in"),
-    "US-Folio"      => N_("US Folio - 8.5in x 13.0in")
-  }
-
   # RSS Feeds
   RSS_FEEDS = {
     "Microsoft Security"         => "http://www.microsoft.com/protect/rss/rssfeed.aspx",
