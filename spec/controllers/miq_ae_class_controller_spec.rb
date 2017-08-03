@@ -709,6 +709,59 @@ describe MiqAeClassController do
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("Automate Namespace \"foo_namespace\": Delete successful")
     end
+
+    it "Should use description in flash message when available" do
+      controller.instance_variable_set(:@_params,
+                                       :miq_grid_checks => "aen-#{@namespace.id}",
+                                       :id              => @namespace.id)
+      @namespace.update_column(:description, "foo_description")
+      @namespace.reload
+      controller.send(:delete_namespaces_or_classes)
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first[:message]).to include("Automate Namespace \"foo_description\": Delete successful")
+    end
+  end
+
+  context "#update_ns" do
+    before do
+      stub_user(:features => :all)
+      domain = FactoryGirl.create(:miq_ae_domain, :tenant => Tenant.seed)
+      @namespace = FactoryGirl.create(:miq_ae_namespace,
+                                      :name        => "foo_namespace",
+                                      :description => "foo_description",
+                                      :parent      => domain)
+      session[:edit] = {
+        :ae_ns_id => @namespace.id,
+        :typ      => "MiqAeDomain",
+        :key      => "aens_edit__#{@namespace.id}",
+        :rec_id   => @namespace.id,
+        :new      => {
+          :ns_name        => "test1",
+          :ns_description => "desc",
+          :enabled        => true
+        },
+        :current  => {
+          :ns_name        => "test",
+          :ns_description => "desc",
+          :enabled        => true
+        }
+      }
+      controller.instance_variable_set(:@sb,
+                                       :trees       => {},
+                                       :active_tree => :ae_tree)
+      allow(controller).to receive(:replace_right_cell)
+      controller.x_node = "aen-#{@namespace.compressed_id}"
+      allow(controller).to receive(:find_records_with_rbac).and_return([@namespace])
+    end
+
+    it "Should use description in flash message when editing a domain" do
+      controller.instance_variable_set(:@_params,
+                                       :button => "save",
+                                       :id     => @namespace.id)
+      controller.send(:update_ns)
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first[:message]).to include("Automate Domain \"desc\" was saved")
+    end
   end
 
   context "#deleteclasses" do
