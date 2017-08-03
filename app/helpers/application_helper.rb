@@ -1585,24 +1585,6 @@ module ApplicationHelper
     end
   end
 
-  def listicon_glyphicon_tag(item)
-    item = db.constantize.find(row["id"])
-    glyphicon, glyphicon2 = listicon_glyphicon(item)
-
-    content_tag(:i, nil, :class => glyphicon) do
-      content_tag(:i, nil, :class => glyphicon2) if glyphicon2
-    end
-  end
-
-  def listicon_tag(db, row)
-    item = db.constantize.find(row["id"])
-    if %w(MiqReportResult MiqSchedule MiqUserRole MiqWidget).include?(db)
-      listicon_glyphicon_tag(item)
-    else
-      fileicon_tag(item)
-    end
-  end
-
   # Wrapper around jquery-rjs' remote_function which adds an extra .html_safe()
   # Remove if merged: https://github.com/amatsuda/jquery-rjs/pull/3
   def remote_function(options)
