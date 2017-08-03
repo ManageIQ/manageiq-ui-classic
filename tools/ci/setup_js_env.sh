@@ -21,3 +21,6 @@ fi
 # make sure yarn is installed, in the right version
 bundle exec rake webpacker:check_yarn || npm install -g yarn
 yarn
+
+# compile webpacker assets
+bundle exec rake webpack:compile
