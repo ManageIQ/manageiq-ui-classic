@@ -271,7 +271,7 @@ describe HostController do
     it "renders a new page with ng-required condition set to false for password" do
       get :new
       expect(response.status).to eq(200)
-      expect(response.body).to match(/<auth-credentials .* password-required='false' .*><\/auth-credentials>/)      
+      expect(response.body).to match(/<auth-credentials .* password-required='false' .*><\/auth-credentials>/)
     end
   end
 
