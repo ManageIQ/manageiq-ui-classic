@@ -182,43 +182,7 @@ module ApplicationController::AdvancedSearch
     end
   end
 
-  # One of the form buttons was pressed on the advanced search panel
-  def adv_search_button
-    @edit = session[:edit]
-    @view = session[:view]
-
-    # setting default to false
-    @edit[:custom_search] = false
-
-    case params[:button]
-    when "saveit" then adv_search_button_saveid
-    when "loadit" then adv_search_button_loadit
-    when "delete" then
-      adv_search_button_delete
-      adv_search_button_reset_fields
-
-    when "reset"
-      add_flash(_("The current search details have been reset"), :warning)
-      adv_search_button_reset_fields
-
-    when "apply"  then
-      adv_search_button_apply
-      return
-
-    when "cancel"
-      @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression]) # Rebuild the existing expression table
-      @edit[@expkey].prefill_val_types
-    end
-
-    if params[:button] == "save"
-      @edit[:search_type] = nil unless @edit.key?(:search_type)
-    end
-
-    if ["delete", "saveit"].include?(params[:button])
-      adv_search_button_rebuild_left_div
-      return
-    end
-
+  def adv_search_button_redraw_search_partials
     render :update do |page|
       page << javascript_prologue
       if ["load", "save"].include?(params[:button])
@@ -230,6 +194,51 @@ module ApplicationController::AdvancedSearch
       end
       page.replace("adv_search_body",   :partial => "layouts/adv_search_body",   :locals => {:mode => display_mode})
       page.replace("adv_search_footer", :partial => "layouts/adv_search_footer", :locals => {:mode => display_mode})
+    end
+  end
+
+  # One of the form buttons was pressed on the advanced search panel
+  def adv_search_button
+    @edit = session[:edit]
+    @view = session[:view]
+
+    # setting default to false
+    @edit[:custom_search] = false
+
+    case params[:button]
+    when "saveit" then
+      adv_search_button_saveid
+
+      if params[:button] == "save"
+        @edit[:search_type] = nil unless @edit.key?(:search_type)
+        adv_search_button_redraw_search_partials
+      else
+        adv_search_button_rebuild_left_div
+      end
+
+    when "loadit" then
+      adv_search_button_loadit
+      adv_search_button_redraw_search_partials
+      adv_search_button_rebuild_left_div
+
+    when "delete" then
+      adv_search_button_delete
+      adv_search_button_reset_fields
+      adv_search_button_rebuild_left_div
+
+    when "reset"
+      add_flash(_("The current search details have been reset"), :warning)
+      adv_search_button_reset_fields
+      adv_search_button_redraw_search_partials
+
+    when "apply"  then
+      adv_search_button_apply
+
+    when "cancel"
+      @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression]) # Rebuild the existing expression table
+      @edit[@expkey].prefill_val_types
+      adv_search_button_redraw_search_partials
+
     end
   end
 
