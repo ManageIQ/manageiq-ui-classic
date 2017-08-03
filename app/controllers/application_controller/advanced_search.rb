@@ -154,6 +154,35 @@ module ApplicationController::AdvancedSearch
     @edit[@expkey][:selected] = nil                           # Clear selected search
   end
 
+  def adv_search_button_rebuild_left_div
+    if x_active_tree.to_s == "configuration_manager_cs_filter_tree"
+      build_configuration_manager_tree(:configuration_manager_cs_filter, x_active_tree)
+      build_accordions_and_trees
+      load_or_clear_adv_search
+    elsif @edit[:in_explorer] || %w(storage_tree configuration_scripts_tree).include?(x_active_tree.to_s)
+      tree_type = x_active_tree.to_s.sub(/_tree/, '').to_sym
+      builder = TreeBuilder.class_for_type(tree_type)
+      tree = builder.new(x_active_tree, tree_type, @sb)
+    elsif %w(ems_cloud ems_infra).include?(@layout)
+      build_listnav_search_list(@view.db)
+    else
+      build_listnav_search_list(@edit[@expkey][:exp_model])
+    end
+
+    render :update do |page|
+      page << javascript_prologue
+      if @edit[:in_explorer] || %w(storage_tree configuration_scripts_tree).include?(x_active_tree.to_s)
+        tree_name = x_active_tree.to_s
+        page.replace("#{tree_name}_div", :partial => "shared/tree", :locals => {
+          :tree => tree,
+          :name => tree_name
+        })
+      else
+        page.replace(:listnav_div, :partial => "layouts/listnav")
+      end
+    end
+  end
+
   # One of the form buttons was pressed on the advanced search panel
   def adv_search_button
     @edit = session[:edit]
@@ -184,19 +213,8 @@ module ApplicationController::AdvancedSearch
     end
 
     if ["delete", "saveit"].include?(params[:button])
-      if x_active_tree.to_s == "configuration_manager_cs_filter_tree"
-        build_configuration_manager_tree(:configuration_manager_cs_filter, x_active_tree)
-        build_accordions_and_trees
-        load_or_clear_adv_search
-      elsif @edit[:in_explorer] || %w(storage_tree configuration_scripts_tree).include?(x_active_tree.to_s)
-        tree_type = x_active_tree.to_s.sub(/_tree/, '').to_sym
-        builder = TreeBuilder.class_for_type(tree_type)
-        tree = builder.new(x_active_tree, tree_type, @sb)
-      elsif %w(ems_cloud ems_infra).include?(@layout)
-        build_listnav_search_list(@view.db)
-      else
-        build_listnav_search_list(@edit[@expkey][:exp_model])
-      end
+      adv_search_button_rebuild_left_div
+      return
     end
 
     render :update do |page|
@@ -212,17 +230,6 @@ module ApplicationController::AdvancedSearch
         page.replace("adv_search_footer", :partial => "layouts/adv_search_footer")
       end
 
-      if ["delete", "saveit"].include?(params[:button])
-        if @edit[:in_explorer] || %w(storage_tree configuration_scripts_tree).include?(x_active_tree.to_s)
-          tree_name = x_active_tree.to_s
-          page.replace("#{tree_name}_div", :partial => "shared/tree", :locals => {
-            :tree => tree,
-            :name => tree_name
-          })
-        else
-          page.replace(:listnav_div, :partial => "layouts/listnav")
-        end
-      end
     end
   end
 
