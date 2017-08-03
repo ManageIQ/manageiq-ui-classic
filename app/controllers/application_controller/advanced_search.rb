@@ -4,7 +4,7 @@ module ApplicationController::AdvancedSearch
   # Build advanced search expression
   def adv_search_build(model)
     # Restore @edit hash if it's saved in @settings
-    @expkey = :expression                                               # Reset to use default expression key
+    @expkey = :expression # Reset to use default expression key
     if session[:adv_search] && session[:adv_search][model.to_s]
       adv_search_model = session[:adv_search][model.to_s]
       @edit = copy_hash(adv_search_model[@expkey] ? adv_search_model : session[:edit])
@@ -76,24 +76,24 @@ module ApplicationController::AdvancedSearch
     elsif @edit[@expkey][:exp_chosen_report]
       r = MiqReport.for_user(current_user).find(@edit[@expkey][:exp_chosen_report].to_s)
       @edit[:new][@expkey] = r.conditions.exp
-      @edit[@expkey][:exp_last_loaded] = nil                                # Clear the last search loaded
-      @edit[:adv_search_report] = r.name                          # Save the report name
+      @edit[@expkey][:exp_last_loaded] = nil # Clear the last search loaded
+      @edit[:adv_search_report] = r.name     # Save the report name
     end
     @edit[:new_search_name] = @edit[:adv_search_name] = @edit[@expkey][:exp_last_loaded].nil? ? nil : @edit[@expkey][:exp_last_loaded][:description]
     @edit[@expkey][:expression] = copy_hash(@edit[:new][@expkey])
-    @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression])       # Build the expression table
+    @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression]) # Build the expression table
     @edit[@expkey].history.reset(@edit[@expkey][:expression])
-    @edit[@expkey][:exp_token] = nil                                        # Clear the current selected token
+    @edit[@expkey][:exp_token] = nil # Clear the current selected token
     add_flash(_("%{model} search \"%{name}\" was successfully loaded") %
       {:model => ui_lookup(:model => @edit[@expkey][:exp_model]), :name => @edit[:new_search_name]})
   end
 
   def adv_search_button_delete
-    s = MiqSearch.find(@edit[@expkey][:selected][:id])              # Fetch the latest record
+    s = MiqSearch.find(@edit[@expkey][:selected][:id])
     id = s.id
     sname = s.description
     begin
-      s.destroy                                                   # Delete the record
+      s.destroy
     rescue => bang
       add_flash(_("%{model} \"%{name}\": Error during 'delete': %{error_message}") %
         {:model => ui_lookup(:model => "MiqSearch"), :name => sname, :error_message => bang.message}, :error)
@@ -103,7 +103,7 @@ module ApplicationController::AdvancedSearch
           user_settings = current_user.settings || {}
           user_settings[:default_search].delete(@edit[@expkey][:exp_model].to_s.to_sym)
           current_user.update_attributes(:settings => user_settings)
-          @edit[:adv_search_applied] = nil          # clearing up applied search results
+          @edit[:adv_search_applied] = nil # clearing up applied search results
         end
       end
       add_flash(_("%{model} search \"%{name}\": Delete successful") %
@@ -130,12 +130,12 @@ module ApplicationController::AdvancedSearch
       quick_search_show
       return
     else
-      @edit[:adv_search_applied].delete(:qs_exp)            # Remove any active quick search
-      session[:adv_search] ||= {}                     # Create/reuse the adv search hash
+      @edit[:adv_search_applied].delete(:qs_exp) # Remove any active quick search
+      session[:adv_search] ||= {}                # Create/reuse the adv search hash
       session[:adv_search][@edit[@expkey][:exp_model]] = copy_hash(@edit) # Save by model name in settings
     end
     if @edit[:in_explorer]
-      self.x_node = "root"                                      # Position on root node
+      self.x_node = "root" # Position on root node
       replace_right_cell
     else
       javascript_redirect :action => 'show_list' # redirect to build the list screen
@@ -143,10 +143,10 @@ module ApplicationController::AdvancedSearch
   end
 
   def adv_search_button_reset_fields
-    @edit[@expkey][:expression] = {"???" => "???"}              # Set as new exp element
+    @edit[@expkey][:expression] = {"???" => "???"}            # Set as new exp element
     @edit[:new][@expkey] = @edit[@expkey][:expression]        # Copy to new exp
     @edit[@expkey].history.reset(@edit[@expkey][:expression])
-    @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression])       # Rebuild the expression table
+    @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression]) # Rebuild the expression table
     @edit[@expkey][:exp_last_loaded] = nil                    # Clear the last search loaded
     @edit[:adv_search_name] = nil                             # Clear search name
     @edit[:adv_search_report] = nil                           # Clear the report name
@@ -172,10 +172,7 @@ module ApplicationController::AdvancedSearch
       page << javascript_prologue
       if @edit[:in_explorer] || %w(storage_tree configuration_scripts_tree).include?(x_active_tree.to_s)
         tree_name = x_active_tree.to_s
-        page.replace("#{tree_name}_div", :partial => "shared/tree", :locals => {
-          :tree => tree,
-          :name => tree_name
-        })
+        page.replace("#{tree_name}_div", :partial => "shared/tree", :locals => {:tree => tree, :name => tree_name})
       else
         page.replace(:listnav_div, :partial => "layouts/listnav")
       end
@@ -185,7 +182,7 @@ module ApplicationController::AdvancedSearch
   def adv_search_button_redraw_search_partials
     render :update do |page|
       page << javascript_prologue
-      if ["load", "save"].include?(params[:button])
+      if %w(load save).include?(params[:button])
         display_mode = params[:button]
       else
         @edit[@expkey][:exp_chosen_report] = nil
@@ -206,7 +203,7 @@ module ApplicationController::AdvancedSearch
     @edit[:custom_search] = false
 
     case params[:button]
-    when "saveit" then
+    when "saveit"
       adv_search_button_saveid
 
       if params[:button] == "save"
@@ -216,12 +213,12 @@ module ApplicationController::AdvancedSearch
         adv_search_button_rebuild_left_div
       end
 
-    when "loadit" then
+    when "loadit"
       adv_search_button_loadit
       adv_search_button_redraw_search_partials
       adv_search_button_rebuild_left_div
 
-    when "delete" then
+    when "delete"
       adv_search_button_delete
       adv_search_button_reset_fields
       adv_search_button_rebuild_left_div
@@ -231,7 +228,7 @@ module ApplicationController::AdvancedSearch
       adv_search_button_reset_fields
       adv_search_button_redraw_search_partials
 
-    when "apply"  then
+    when "apply"
       adv_search_button_apply
 
     when "cancel"
@@ -285,16 +282,16 @@ module ApplicationController::AdvancedSearch
       format.js do
         @explorer = true
         if x_active_tree.to_s =~ /_filter_tree$/ &&
-           !["Vm", "MiqTemplate"].include?(TreeBuilder.get_model_for_prefix(@nodetype))
+           !%w(Vm MiqTemplate).include?(TreeBuilder.get_model_for_prefix(@nodetype))
           search_id = 0
-          if x_active_tree == :configuration_manager_cs_filter_tree || x_active_tree == :automation_manager_cs_filter_tree
+          if %w(configuration_manager_cs_filter_tree automation_manager_cs_filter_tree).include?(x_active_tree)
             adv_search_build("ConfiguredSystem")
           else
             adv_search_build(vm_model_from_active_tree(x_active_tree))
           end
-          session[:edit] = @edit              # Set because next method will restore @edit from session
+          session[:edit] = @edit # Set because next method will restore @edit from session
         end
-        listnav_search_selected(search_id)  # Clear or set the adv search filter
+        listnav_search_selected(search_id) # Clear or set the adv search filter
         self.x_node = "root"
         replace_right_cell
       end
@@ -303,7 +300,7 @@ module ApplicationController::AdvancedSearch
         @view = session[:view]
         @edit[:adv_search_applied] = nil
         @edit[:expression][:exp_last_loaded] = nil
-        session[:adv_search] ||= {}                   # Create/reuse the adv search hash
+        session[:adv_search] ||= {}                                         # Create/reuse the adv search hash
         session[:adv_search][@edit[@expkey][:exp_model]] = copy_hash(@edit) # Save by model name in settings
         default_search = settings(:default_search, @view.db.to_s.to_sym)
         if default_search.present? && default_search.to_i != 0
