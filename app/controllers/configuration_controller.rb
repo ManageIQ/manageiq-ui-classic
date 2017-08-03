@@ -130,19 +130,6 @@ class ConfigurationController < ApplicationController
     end
   end
 
-  # AJAX driven routine for background color selection
-  def bg_color_changed
-    # ui1 bgcolor changed
-    @edit = session[:edit]
-    @edit[:new][:display][:bg_color] = params[:bg_color]      # Capture the new setting
-    session[:changed] = (@edit[:new] != @edit[:current])
-    @changed = session[:changed]
-    render :update do |page|
-      page << javascript_prologue
-      page.replace 'tab_div', :partial => "ui_1"
-    end
-  end
-
   def update
     if params["save"]
       get_form_vars if @tabform != "ui_3"
