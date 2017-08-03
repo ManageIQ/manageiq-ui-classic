@@ -16,12 +16,6 @@ module UiConstants
     "#000"
   ]
 
-  # Navigation Styles
-  NAV_STYLES = [
-    "vertical",     # First entry is the default
-    "wedged"
-  ]
-
   # Theme settings - each subitem will be set in @settings[:css][:<subitem>] based on the selected theme
   THEME_CSS_SETTINGS = {
     "red"           => {
@@ -168,7 +162,6 @@ module UiConstants
       :taskbartext   => true,             # Show button text on taskbar
       :vmcompare     => "Compressed",     # Start VM compare and drift in compressed mode
       :hostcompare   => "Compressed",     # Start Host compare in compressed mode
-      :nav_style     => NAV_STYLES.first,  # Navigation style
       :timezone      => nil,               # This will be set when the user logs in
       :display_vms   => false # don't display vms by default
     },

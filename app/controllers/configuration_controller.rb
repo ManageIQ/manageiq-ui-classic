@@ -130,18 +130,6 @@ class ConfigurationController < ApplicationController
     end
   end
 
-  # AJAX driven routine for nav style selection
-  def nav_style_changed
-    @edit = session[:edit]
-    @edit[:new][:display][:nav_style] = params[:nav_style]    # Capture the new setting
-    session[:changed] = (@edit[:new] != @edit[:current])
-    @changed = session[:changed]
-    render :update do |page|
-      page << javascript_prologue
-      page.replace 'tab_div', :partial => "ui_1"
-    end
-  end
-
   # AJAX driven routine for background color selection
   def bg_color_changed
     # ui1 bgcolor changed
