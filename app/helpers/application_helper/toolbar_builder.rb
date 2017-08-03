@@ -267,6 +267,8 @@ class ApplicationHelper::ToolbarBuilder
       :image         => cb.options[:button_icon],
       :color         => cb.options[:button_color],
       :text_display  => cb.options.key?(:display) ? cb.options[:display] : true,
+      :enabled       => cb.evaluate_enablement_expression_for(record),
+      :disabled_text => cb.disabled_text,
       :target_object => record_id
     }
   end
