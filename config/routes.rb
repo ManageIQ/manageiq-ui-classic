@@ -2050,11 +2050,23 @@ Rails.application.routes.draw do
 
     :generic_object_definition => {
       :get => %w(
+        download_data
+        download_summary_pdf
         show
         show_list
       ),
       :post => %w(
-      )
+        create_del
+        exp_button
+        exp_changed
+        exp_token_pressed
+        listnav_search_selected
+        update_del
+        quick_search
+        show_list
+      ) +
+        adv_search_post +
+        save_post
     },
 
     :ansible_credential => {
