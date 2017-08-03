@@ -6,6 +6,7 @@ ManageIQ.angular.app.component('authCredentials', {
     prefix: '@',
     userRequired: '<',
     hideUser: '<',
+    hidePassword: '<',
     passwordRequired: '<',
     enableValidButton: '<',
     validate: '<',
@@ -40,6 +41,7 @@ ManageIQ.angular.app.component('authCredentials', {
       // build inputs labels
       vm.userIdLabel = vm.formLabels && vm.formLabels.userIdLabel || __('Username');
       vm.passwordLabel = vm.formLabels && vm.formLabels.passwordLabel || __('Password');
+      vm.newPasswordLabel = vm.formLabels && vm.formLabels.verifyLabel || __('New password');
       vm.changeStoredPasswordLabel = vm.formLabels && vm.formLabels.changeStoredPassword || __('Change stored password');
       vm.cancelPasswordChangeLabel = vm.formLabels && vm.formLabels.cancelPasswordChange || __('Cancel password change');
 
@@ -59,9 +61,9 @@ ManageIQ.angular.app.component('authCredentials', {
     this.cancelPasswordChange = function() {
       if (vm.bChangeStoredPassword) {
         vm.bCancelPasswordChange = true;
-        Object.assign(vm.model, {
-          [vm.prefix + '_password']: vm.modelCopy[vm.prefix + '_password'],
-        });
+        var tmp = {};
+        tmp[vm.prefix + '_password'] = vm.modelCopy[vm.prefix + '_password'];
+        Object.assign(vm.model, tmp);
         vm.bChangeStoredPassword = false;
       }
     };

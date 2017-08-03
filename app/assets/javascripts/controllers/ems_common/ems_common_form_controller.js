@@ -72,6 +72,21 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       verifyTitleOff: __('Tenant ID, Client ID and matching Client Key fields are needed to perform verification of credentials'),
     };
 
+    $scope.formLabelsEC2 = {
+      userIdLabel: __('Access Key ID'),
+      passwordLabel: __('Secret Access Key'),
+      changeStoredPassword: __('Change stored secret access key'),
+      cancelPasswordChange: __('Cancel secret access key change'),
+      verifyTitleOff: __('Access Key ID and matching Secret Access Key fields are needed to perform verification of credentials'),
+    };
+
+    $scope.formLabelsToken = {
+      passwordLabel: __('Token'),
+      verifyLabel: __('New Token'),
+      changeStoredPassword: __('Change stored token'),
+      cancelPasswordChange: __('Cancel stored token'),
+    };
+
     $scope.model = 'emsCommonModel';
 
     ManageIQ.angular.scope = $scope;
