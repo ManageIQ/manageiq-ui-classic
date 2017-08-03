@@ -220,16 +220,14 @@ module ApplicationController::AdvancedSearch
     render :update do |page|
       page << javascript_prologue
       if ["load", "save"].include?(params[:button])
-        page.replace("adv_search_body", :partial => "layouts/adv_search_body", :locals => {:mode => params[:button]})
-        page.replace("adv_search_footer", :partial => "layouts/adv_search_footer",
-                                          :locals  => {:mode => params[:button]})
+        display_mode = params[:button]
       else
         @edit[@expkey][:exp_chosen_report] = nil
         @edit[@expkey][:exp_chosen_search] = nil
-        page.replace("adv_search_body", :partial => "layouts/adv_search_body")
-        page.replace("adv_search_footer", :partial => "layouts/adv_search_footer")
+        display_mode = nil
       end
-
+      page.replace("adv_search_body",   :partial => "layouts/adv_search_body",   :locals => {:mode => display_mode})
+      page.replace("adv_search_footer", :partial => "layouts/adv_search_footer", :locals => {:mode => display_mode})
     end
   end
 
