@@ -640,10 +640,6 @@ function miqInitTree(options, tree) {
     miqTreeActivateNodeSilently(options.tree_name, options.select_node);
   }
 
-  if (options.reselect_node) {
-    miqTreeActivateNodeSilently(options.tree_name, options.reselect_node);
-  }
-
   if (options.expand_parent_nodes) {
     miqExpandParentNodes(options.tree_name, options.select_node);
   }
