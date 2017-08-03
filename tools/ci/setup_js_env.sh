@@ -5,8 +5,6 @@ if ! cmp --silent bower.json vendor/assets/bower_components/bower.json; then
   rm -rf vendor/assets/bower_components
 fi
 
-yarn
-
 if [ -d vendor/assets/bower_components ]; then
   # Using bower_components from cache
   echo "bower assets installed... moving on."
