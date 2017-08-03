@@ -193,7 +193,6 @@ class TreeBuilder
       :tree_name  => @name.to_s,
       :bs_tree    => @bs_tree,
       :onclick    => "miqOnClickSelectTreeNode",
-      :tree_state => true,
       :checkboxes => false
     }
   end

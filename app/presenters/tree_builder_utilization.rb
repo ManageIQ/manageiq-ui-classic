@@ -13,9 +13,7 @@ class TreeBuilderUtilization < TreeBuilderRegion
 
   def set_locals_for_render
     locals = super
-    locals.merge!(:onclick     => "miqOnClickSelectOptimizeTreeNode",
-                  :select_node => @selected_node.to_s,
-                  :tree_state  => true)
+    locals.merge!(:onclick => "miqOnClickSelectOptimizeTreeNode", :select_node => @selected_node.to_s)
   end
 
   def root_options

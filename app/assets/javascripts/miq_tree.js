@@ -613,10 +613,10 @@ function miqInitTree(options, tree) {
       miqTreeOnNodeChecked(options, node);
     },
     onNodeExpanded:       function (event, node) {
-      if (options.tree_state) miqTreeState(options.cookie_id, node.key, true);
+      miqTreeState(options.cookie_id, node.key, true);
     },
     onNodeCollapsed:      function (event, node) {
-      if (options.tree_state) miqTreeState(options.cookie_id, node.key, false);
+      miqTreeState(options.cookie_id, node.key, false);
     },
     lazyLoad:             function (node, display) {
       if (options.autoload) {
@@ -653,11 +653,9 @@ function miqInitTree(options, tree) {
   }
 
   // Tree state persistence correction after the tree is completely loaded
-  if (options.tree_state) {
-    miqTreeObject(options.tree_name).getNodes().forEach(function (node) {
-      if (miqTreeState(options.cookie_id, node.key) === !node.state.expanded) {
-        miqTreeObject(options.tree_name).toggleNodeExpanded(node);
-      }
-    });
-  }
+  miqTreeObject(options.tree_name).getNodes().forEach(function (node) {
+    if (miqTreeState(options.cookie_id, node.key) === !node.state.expanded) {
+      miqTreeObject(options.tree_name).toggleNodeExpanded(node);
+    }
+  });
 }

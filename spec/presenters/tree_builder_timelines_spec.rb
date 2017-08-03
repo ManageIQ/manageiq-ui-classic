@@ -20,10 +20,9 @@ describe TreeBuilderTimelines do
   describe '#set_locals_for_render' do
     it 'set locals correctly' do
       locals = subject.send(:set_locals_for_render)
-      expect(locals).to include(:id_prefix  => 'timelines_',
-                                :onclick    => "miqOnClickTimelineSelection",
-                                :click_url  => "/dashboard/show_timeline/",
-                                :tree_state => true)
+      expect(locals).to include(:id_prefix => 'timelines_',
+                                :onclick   => "miqOnClickTimelineSelection",
+                                :click_url => "/dashboard/show_timeline/")
     end
   end
 
