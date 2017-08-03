@@ -140,7 +140,6 @@ module ApplicationController::AdvancedSearch
     else
       javascript_redirect :action => 'show_list' # redirect to build the list screen
     end
-    return
   end
 
   def adv_search_button_reset_fields
@@ -202,7 +201,10 @@ module ApplicationController::AdvancedSearch
       add_flash(_("The current search details have been reset"), :warning)
       adv_search_button_reset_fields
 
-    when "apply"  then adv_search_button_apply
+    when "apply"  then
+      adv_search_button_apply
+      return
+
     when "cancel"
       @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression]) # Rebuild the existing expression table
       @edit[@expkey].prefill_val_types
