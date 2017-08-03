@@ -1,6 +1,6 @@
 ManageIQ.angular.app.component('widgetReport', {
   bindings: {
-    id: '<'
+    id: '<',
   },
   controllerAs: 'vm',
   controller: ['$http', 'miqService', '$sce', function($http, miqService, $sce) {
@@ -19,20 +19,20 @@ ManageIQ.angular.app.component('widgetReport', {
   }],
   template: [
     '<div class="mc" id={{vm.div_id}}>',
-      '<div class="blank-slate-pf " style="padding: 10px" ng-if="!vm.contentPresent()">',
-        '<div class="blank-slate-pf-icon">',
-          '<i class="fa fa-cog">',
-          '</i>',
-          '<h1>',
-            __('No report data found.'),
-          '</h1>',
-        '</div>',
-      '</div>',
-      '<div ng-if="vm.contentPresent()">',
-        '<div ng-bind-html="vm.widgetReportModel.content">',
-        '</div>',
-      '</div>',
-    '</div>'
+    '<div class="blank-slate-pf " style="padding: 10px" ng-if="!vm.contentPresent()">',
+    '<div class="blank-slate-pf-icon">',
+    '<i class="fa fa-cog">',
+    '</i>',
+    '<h1>',
+    __('No report data found.'),
+    '</h1>',
+    '</div>',
+    '</div>',
+    '<div ng-if="vm.contentPresent()">',
+    '<div ng-bind-html="vm.widgetReportModel.content">',
+    '</div>',
+    '</div>',
+    '</div>',
 
-  ].join("\n")
+  ].join("\n"),
 });
