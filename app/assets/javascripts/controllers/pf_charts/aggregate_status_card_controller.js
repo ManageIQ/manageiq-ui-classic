@@ -34,7 +34,6 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardController', 
     })
 
     $q.all([promiseProviderData]).then(function() {
-      alert(JSON.stringify(vm.provider.type))
       //var iconInfo = self.getIcon(vm.provider);
       vm.status = {
 //         "title": vm.provider.name,
