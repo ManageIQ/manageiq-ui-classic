@@ -48,6 +48,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  include_concern 'AdvancedSearch'
   include_concern 'Automate'
   include_concern 'CiProcessing'
   include_concern 'Compare'
