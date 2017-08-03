@@ -19,7 +19,7 @@ module ApplicationController::AdvancedSearch
       @edit.delete(:exp_token)                                          # Remove any existing atom being edited
     else                                                                # Create new exp fields
       @edit = {}
-      @edit[@expkey] ||= Expression.new
+      @edit[@expkey] ||= ApplicationController::Filter::Expression.new
       @edit[@expkey][:expression] = {"???" => "???"}                    # Set as new exp element
       @edit[@expkey][:use_mytags] = true                                # Include mytags in tag search atoms
       @edit[:custom_search] = false                                     # setting default to false
