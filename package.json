@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "~4.0.3",
     "core-js": "~2.4.1",
     "rxjs": "~5.3.0",
+    "ui-select": "0.19.8",
     "zone.js": "~0.8.5"
   },
   "devDependencies": {
@@ -67,9 +68,6 @@
     "webpack-dev-server": "~2.4.2",
     "webpack-manifest-plugin": "~1.1.0",
     "webpack-merge": "~4.1.0"
-  },
-  "dependencies": {
-    "ui-select": "0.19.8"
   },
   "engines": {
     "node": ">= 6.9.1",
