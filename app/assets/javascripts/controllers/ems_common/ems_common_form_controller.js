@@ -549,7 +549,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
   $scope.updateAuthStatus = function(updatedValue) {
     if (! $scope.angularForm[$scope.authType + '_auth_status']) {
-      console.log('try to insert into child form');
+      console.log('try to insert into child form: ', $scope.angularForm.authCredentialsForm);
       $scope.angularForm.authCredentialsForm[$scope.authType + '_auth_status'].$setViewValue(updatedValue);
     } else {
       $scope.angularForm[$scope.authType + '_auth_status'].$setViewValue(updatedValue);
