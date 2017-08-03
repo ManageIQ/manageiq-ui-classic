@@ -1,4 +1,4 @@
-class GenericObjectDefinitionController < ApplicationController
+class GenericObjectController < ApplicationController
   before_action :check_privileges
   before_action :get_session_data
 
@@ -11,22 +11,14 @@ class GenericObjectDefinitionController < ApplicationController
 
   menu_section :automate
 
-  def self.display_methods
-    %w(generic_objects)
-  end
-
-  def display_generic_objects
-    nested_list("generic_object", GenericObject)
-  end
-
   def self.model
-    GenericObjectDefinition
+    GenericObject
   end
 
   private
 
   def textual_group_list
-    [%i(properties relationships attribute_details_list association_details_list method_details_list)]
+    [%i(properties attribute_details_list)]
   end
 
   helper_method :textual_group_list

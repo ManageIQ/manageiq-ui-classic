@@ -2039,6 +2039,15 @@ Rails.application.routes.draw do
         x_post
     },
 
+    :generic_object => {
+      :get => %w(
+        show
+        show_list
+      ),
+      :post => %w(
+      )
+    },
+
     :generic_object_definition => {
       :get => %w(
         show
