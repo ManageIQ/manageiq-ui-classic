@@ -128,7 +128,7 @@ class DashboardController < ApplicationController
 
   def widget_report_data
     widget = MiqWidget.find(params[:id])
-    render :json => {:content => widget.contents_for_user(current_user).contents.html_safe}
+    render :json => {:content => widget.contents_for_user(current_user).contents}
   end
 
   def show
