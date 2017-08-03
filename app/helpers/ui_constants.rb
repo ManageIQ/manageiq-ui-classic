@@ -48,8 +48,6 @@ module UiConstants
     }
   }
 
-  PERPAGE_TYPES = %w(grid tile list reports).each_with_object({}) { |value, acc| acc[value] = value.to_sym }.freeze
-
   # Default UI settings
   DEFAULT_SETTINGS = {
     :quadicons => { # Show quad icons, by resource type

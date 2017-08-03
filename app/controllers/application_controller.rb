@@ -78,6 +78,8 @@ class ApplicationController < ActionController::Base
 
   ONE_MILLION = 1_000_000 # Setting high number incase we don't want to display paging controls on list views
 
+  PERPAGE_TYPES = %w(grid tile list reports).each_with_object({}) { |value, acc| acc[value] = value.to_sym }.freeze
+
   def local_request?
     Rails.env.development? || Rails.env.test?
   end
