@@ -133,38 +133,6 @@ module UiConstants
 
   VIEW_RESOURCES = DEFAULT_SETTINGS[:views].keys.each_with_object({}) { |value, acc| acc[value.to_s] = value }.freeze
 
-  TIMER_DAYS = [
-    [N_("Day"), "1"],
-    [N_("2 Days"), "2"],
-    [N_("3 Days"), "3"],
-    [N_("4 Days"), "4"],
-    [N_("5 Days"), "5"],
-    [N_("6 Days"), "6"],
-  ]
-  TIMER_HOURS = [
-    [N_("Hour"), "1"],
-    [N_("2 Hours"), "2"],
-    [N_("3 Hours"), "3"],
-    [N_("4 Hours"), "4"],
-    [N_("6 Hours"), "6"],
-    [N_("8 Hours"), "8"],
-    [N_("12 Hours"), "12"],
-  ]
-  TIMER_WEEKS = [
-    [N_("Week"), "1"],
-    [N_("2 Weeks"), "2"],
-    [N_("3 Weeks"), "3"],
-    [N_("4 Weeks"), "4"],
-  ]
-  TIMER_MONTHS = [
-    [N_("Month"), "1"],
-    [N_("2 Months"), "2"],
-    [N_("3 Months"), "3"],
-    [N_("4 Months"), "4"],
-    [N_("5 Months"), "5"],
-    [N_("6 Months"), "6"],
-  ]
-
   # Maximum fields to show for automation engine resolution screens
   AE_MAX_RESOLUTION_FIELDS = 5
 

@@ -1,4 +1,40 @@
 module ReportHelper
+
+  TIMER_DAYS = [
+    [N_("Day"), "1"],
+    [N_("2 Days"), "2"],
+    [N_("3 Days"), "3"],
+    [N_("4 Days"), "4"],
+    [N_("5 Days"), "5"],
+    [N_("6 Days"), "6"],
+  ].freeze
+
+  TIMER_HOURS = [
+    [N_("Hour"), "1"],
+    [N_("2 Hours"), "2"],
+    [N_("3 Hours"), "3"],
+    [N_("4 Hours"), "4"],
+    [N_("6 Hours"), "6"],
+    [N_("8 Hours"), "8"],
+    [N_("12 Hours"), "12"],
+  ].freeze
+
+  TIMER_WEEKS = [
+    [N_("Week"), "1"],
+    [N_("2 Weeks"), "2"],
+    [N_("3 Weeks"), "3"],
+    [N_("4 Weeks"), "4"],
+  ].freeze
+
+  TIMER_MONTHS = [
+    [N_("Month"), "1"],
+    [N_("2 Months"), "2"],
+    [N_("3 Months"), "3"],
+    [N_("4 Months"), "4"],
+    [N_("5 Months"), "5"],
+    [N_("6 Months"), "6"],
+  ].freeze
+  
   Timer = Struct.new(
     :typ,
     :months,
