@@ -38,6 +38,111 @@ module ApplicationController::AdvancedSearch
     end
   end
 
+  def adv_search_button_saveid
+    if @edit[:new_search_name].nil? || @edit[:new_search_name] == ""
+      add_flash(_("Search Name is required"), :error)
+      params[:button] = "save" # Redraw the save screen
+    else
+      s = @edit[@expkey].build_search(@edit[:new_search_name], @edit[:search_type], session[:userid])
+      s.filter = MiqExpression.new(@edit[:new][@expkey]) # Set the new expression
+      if s.save
+        add_flash(_("%{model} search \"%{name}\" was saved") %
+          {:model => ui_lookup(:model => @edit[@expkey][:exp_model]),
+           :name => @edit[:new_search_name]})
+        @edit[@expkey].select_filter(s)
+        @edit[:new_search_name] = @edit[:adv_search_name] = @edit[@expkey][:exp_last_loaded][:description] unless @edit[@expkey][:exp_last_loaded].nil?
+        @edit[@expkey][:expression] = copy_hash(@edit[:new][@expkey])
+        # Build the expression table
+        @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression])
+        @edit[@expkey].history.reset(@edit[@expkey][:expression])
+        # Clear the current selected token
+        @edit[@expkey][:exp_token] = nil
+      else
+        s.errors.each do |field, msg|
+          add_flash("#{field.to_s.capitalize} #{msg}", :error)
+        end
+        params[:button] = "save" # Redraw the save screen
+      end
+    end
+  end
+
+  def adv_search_button_loadit
+    if @edit[@expkey][:exp_chosen_search]
+      @edit[:selected] = true
+      s = MiqSearch.find(@edit[@expkey][:exp_chosen_search].to_s)
+      @edit[:new][@expkey] = s.filter.exp
+      @edit[@expkey].select_filter(s, true)
+      @edit[:search_type] = s[:search_type] == 'global' ? 'global' : nil
+    elsif @edit[@expkey][:exp_chosen_report]
+      r = MiqReport.for_user(current_user).find(@edit[@expkey][:exp_chosen_report].to_s)
+      @edit[:new][@expkey] = r.conditions.exp
+      @edit[@expkey][:exp_last_loaded] = nil                                # Clear the last search loaded
+      @edit[:adv_search_report] = r.name                          # Save the report name
+    end
+    @edit[:new_search_name] = @edit[:adv_search_name] = @edit[@expkey][:exp_last_loaded].nil? ? nil : @edit[@expkey][:exp_last_loaded][:description]
+    @edit[@expkey][:expression] = copy_hash(@edit[:new][@expkey])
+    @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression])       # Build the expression table
+    @edit[@expkey].history.reset(@edit[@expkey][:expression])
+    @edit[@expkey][:exp_token] = nil                                        # Clear the current selected token
+    add_flash(_("%{model} search \"%{name}\" was successfully loaded") %
+      {:model => ui_lookup(:model => @edit[@expkey][:exp_model]), :name => @edit[:new_search_name]})
+  end
+
+  def adv_search_button_delete
+    s = MiqSearch.find(@edit[@expkey][:selected][:id])              # Fetch the latest record
+    id = s.id
+    sname = s.description
+    begin
+      s.destroy                                                   # Delete the record
+    rescue => bang
+      add_flash(_("%{model} \"%{name}\": Error during 'delete': %{error_message}") %
+        {:model => ui_lookup(:model => "MiqSearch"), :name => sname, :error_message => bang.message}, :error)
+    else
+      if (def_search = settings(:default_search, @edit[@expkey][:exp_model].to_s.to_sym)) # See if a default search exists
+        if id.to_i == def_search.to_i
+          user_settings = current_user.settings || {}
+          user_settings[:default_search].delete(@edit[@expkey][:exp_model].to_s.to_sym)
+          current_user.update_attributes(:settings => user_settings)
+          @edit[:adv_search_applied] = nil          # clearing up applied search results
+        end
+      end
+      add_flash(_("%{model} search \"%{name}\": Delete successful") %
+        {:model => ui_lookup(:model => @edit[@expkey][:exp_model]), :name => sname})
+      audit = {:event        => "miq_search_record_delete",
+               :message      => "[#{sname}] Record deleted",
+               :target_id    => id,
+               :target_class => "MiqSearch",
+               :userid       => session[:userid]}
+      AuditEvent.success(audit)
+    end
+  end
+
+  def adv_search_button_apply
+    @edit[@expkey][:selected] = @edit[@expkey][:exp_last_loaded] # Save the last search loaded (saved)
+    @edit[:adv_search_applied] ||= {}
+    @edit[:adv_search_applied][:exp] = {}
+    adv_search_set_text # Set search text filter suffix
+    @edit[:selected] = true
+    @edit[:adv_search_applied][:exp] = @edit[:new][@expkey]   # Save the expression to be applied
+    @edit[@expkey].exp_token = nil                            # Remove any existing atom being edited
+    @edit[:adv_search_open] = false                           # Close the adv search box
+    if MiqExpression.quick_search?(@edit[:adv_search_applied][:exp])
+      quick_search_show
+      return
+    else
+      @edit[:adv_search_applied].delete(:qs_exp)            # Remove any active quick search
+      session[:adv_search] ||= {}                     # Create/reuse the adv search hash
+      session[:adv_search][@edit[@expkey][:exp_model]] = copy_hash(@edit) # Save by model name in settings
+    end
+    if @edit[:in_explorer]
+      self.x_node = "root"                                      # Position on root node
+      replace_right_cell
+    else
+      javascript_redirect :action => 'show_list' # redirect to build the list screen
+    end
+    return
+  end
+
   # One of the form buttons was pressed on the advanced search panel
   def adv_search_button
     @edit = session[:edit]
@@ -47,110 +152,13 @@ module ApplicationController::AdvancedSearch
     @edit[:custom_search] = false
 
     case params[:button]
-    when "saveit"
-      if @edit[:new_search_name].nil? || @edit[:new_search_name] == ""
-        add_flash(_("Search Name is required"), :error)
-        params[:button] = "save" # Redraw the save screen
-      else
-        s = @edit[@expkey].build_search(@edit[:new_search_name], @edit[:search_type], session[:userid])
-        s.filter = MiqExpression.new(@edit[:new][@expkey]) # Set the new expression
-        if s.save
-          add_flash(_("%{model} search \"%{name}\" was saved") %
-            {:model => ui_lookup(:model => @edit[@expkey][:exp_model]),
-             :name => @edit[:new_search_name]})
-          @edit[@expkey].select_filter(s)
-          @edit[:new_search_name] = @edit[:adv_search_name] = @edit[@expkey][:exp_last_loaded][:description] unless @edit[@expkey][:exp_last_loaded].nil?
-          @edit[@expkey][:expression] = copy_hash(@edit[:new][@expkey])
-          # Build the expression table
-          @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression])
-          @edit[@expkey].history.reset(@edit[@expkey][:expression])
-          # Clear the current selected token
-          @edit[@expkey][:exp_token] = nil
-        else
-          s.errors.each do |field, msg|
-            add_flash("#{field.to_s.capitalize} #{msg}", :error)
-          end
-          params[:button] = "save" # Redraw the save screen
-        end
-      end
-
-    when "loadit"
-      if @edit[@expkey][:exp_chosen_search]
-        @edit[:selected] = true
-        s = MiqSearch.find(@edit[@expkey][:exp_chosen_search].to_s)
-        @edit[:new][@expkey] = s.filter.exp
-        @edit[@expkey].select_filter(s, true)
-        @edit[:search_type] = s[:search_type] == 'global' ? 'global' : nil
-      elsif @edit[@expkey][:exp_chosen_report]
-        r = MiqReport.for_user(current_user).find(@edit[@expkey][:exp_chosen_report].to_s)
-        @edit[:new][@expkey] = r.conditions.exp
-        @edit[@expkey][:exp_last_loaded] = nil                                # Clear the last search loaded
-        @edit[:adv_search_report] = r.name                          # Save the report name
-      end
-      @edit[:new_search_name] = @edit[:adv_search_name] = @edit[@expkey][:exp_last_loaded].nil? ? nil : @edit[@expkey][:exp_last_loaded][:description]
-      @edit[@expkey][:expression] = copy_hash(@edit[:new][@expkey])
-      @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression])       # Build the expression table
-      @edit[@expkey].history.reset(@edit[@expkey][:expression])
-      @edit[@expkey][:exp_token] = nil                                        # Clear the current selected token
-      add_flash(_("%{model} search \"%{name}\" was successfully loaded") %
-        {:model => ui_lookup(:model => @edit[@expkey][:exp_model]), :name => @edit[:new_search_name]})
-
-    when "delete"
-      s = MiqSearch.find(@edit[@expkey][:selected][:id])              # Fetch the latest record
-      id = s.id
-      sname = s.description
-      begin
-        s.destroy                                                   # Delete the record
-      rescue => bang
-        add_flash(_("%{model} \"%{name}\": Error during 'delete': %{error_message}") %
-          {:model => ui_lookup(:model => "MiqSearch"), :name => sname, :error_message => bang.message}, :error)
-      else
-        if (def_search = settings(:default_search, @edit[@expkey][:exp_model].to_s.to_sym)) # See if a default search exists
-          if id.to_i == def_search.to_i
-            user_settings = current_user.settings || {}
-            user_settings[:default_search].delete(@edit[@expkey][:exp_model].to_s.to_sym)
-            current_user.update_attributes(:settings => user_settings)
-            @edit[:adv_search_applied] = nil          # clearing up applied search results
-          end
-        end
-        add_flash(_("%{model} search \"%{name}\": Delete successful") %
-          {:model => ui_lookup(:model => @edit[@expkey][:exp_model]), :name => sname})
-        audit = {:event        => "miq_search_record_delete",
-                 :message      => "[#{sname}] Record deleted",
-                 :target_id    => id,
-                 :target_class => "MiqSearch",
-                 :userid       => session[:userid]}
-        AuditEvent.success(audit)
-      end
-
+    when "saveit" then adv_search_button_saveid
+    when "loadit" then adv_search_button_loadit
+    when "delete" then adv_search_button_delete
     when "reset"
       add_flash(_("The current search details have been reset"), :warning)
 
-    when "apply"
-      @edit[@expkey][:selected] = @edit[@expkey][:exp_last_loaded] # Save the last search loaded (saved)
-      @edit[:adv_search_applied] ||= {}
-      @edit[:adv_search_applied][:exp] = {}
-      adv_search_set_text # Set search text filter suffix
-      @edit[:selected] = true
-      @edit[:adv_search_applied][:exp] = @edit[:new][@expkey]   # Save the expression to be applied
-      @edit[@expkey].exp_token = nil                            # Remove any existing atom being edited
-      @edit[:adv_search_open] = false                           # Close the adv search box
-      if MiqExpression.quick_search?(@edit[:adv_search_applied][:exp])
-        quick_search_show
-        return
-      else
-        @edit[:adv_search_applied].delete(:qs_exp)            # Remove any active quick search
-        session[:adv_search] ||= {}                     # Create/reuse the adv search hash
-        session[:adv_search][@edit[@expkey][:exp_model]] = copy_hash(@edit) # Save by model name in settings
-      end
-      if @edit[:in_explorer]
-        self.x_node = "root"                                      # Position on root node
-        replace_right_cell
-      else
-        javascript_redirect :action => 'show_list' # redirect to build the list screen
-      end
-      return
-
+    when "apply"  then adv_search_button_apply
     when "cancel"
       @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression]) # Rebuild the existing expression table
       @edit[@expkey].prefill_val_types
