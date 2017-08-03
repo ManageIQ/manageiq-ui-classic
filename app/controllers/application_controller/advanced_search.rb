@@ -143,6 +143,17 @@ module ApplicationController::AdvancedSearch
     return
   end
 
+  def adv_search_button_reset_fields
+    @edit[@expkey][:expression] = {"???" => "???"}              # Set as new exp element
+    @edit[:new][@expkey] = @edit[@expkey][:expression]        # Copy to new exp
+    @edit[@expkey].history.reset(@edit[@expkey][:expression])
+    @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression])       # Rebuild the expression table
+    @edit[@expkey][:exp_last_loaded] = nil                    # Clear the last search loaded
+    @edit[:adv_search_name] = nil                             # Clear search name
+    @edit[:adv_search_report] = nil                           # Clear the report name
+    @edit[@expkey][:selected] = nil                           # Clear selected search
+  end
+
   # One of the form buttons was pressed on the advanced search panel
   def adv_search_button
     @edit = session[:edit]
@@ -154,9 +165,13 @@ module ApplicationController::AdvancedSearch
     case params[:button]
     when "saveit" then adv_search_button_saveid
     when "loadit" then adv_search_button_loadit
-    when "delete" then adv_search_button_delete
+    when "delete" then
+      adv_search_button_delete
+      adv_search_button_reset_fields
+
     when "reset"
       add_flash(_("The current search details have been reset"), :warning)
+      adv_search_button_reset_fields
 
     when "apply"  then adv_search_button_apply
     when "cancel"
@@ -164,17 +179,7 @@ module ApplicationController::AdvancedSearch
       @edit[@expkey].prefill_val_types
     end
 
-    # Reset fields if delete or reset ran
-    if ["delete", "reset"].include?(params[:button])
-      @edit[@expkey][:expression] = {"???" => "???"}              # Set as new exp element
-      @edit[:new][@expkey] = @edit[@expkey][:expression]        # Copy to new exp
-      @edit[@expkey].history.reset(@edit[@expkey][:expression])
-      @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression])       # Rebuild the expression table
-      @edit[@expkey][:exp_last_loaded] = nil                    # Clear the last search loaded
-      @edit[:adv_search_name] = nil                             # Clear search name
-      @edit[:adv_search_report] = nil                           # Clear the report name
-      @edit[@expkey][:selected] = nil                           # Clear selected search
-    elsif params[:button] == "save"
+    if params[:button] == "save"
       @edit[:search_type] = nil unless @edit.key?(:search_type)
     end
 
