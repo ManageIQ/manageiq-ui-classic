@@ -1,21 +1,22 @@
 module ApplicationController::AdvancedSearch
   extend ActiveSupport::Concern
 
+  def adv_search_clear_default_search_if_cant_be_seen
+    # default search doesnt exist or if it is marked as hidden
+    if @edit && @edit[:expression] && !@edit[:expression][:selected].blank?
+      s = MiqSearch.find_by(:id => @edit[:expression][:selected][:id])
+      clear_default_search if s.nil? || s.search_key == "_hidden_"
+    end
+  end
+
   # Build advanced search expression
   def adv_search_build(model)
     # Restore @edit hash if it's saved in @settings
     @expkey = :expression # Reset to use default expression key
-    if session[:adv_search] && session[:adv_search][model.to_s]
+    if session.fetch_path(:adv_search, model.to_s)
       adv_search_model = session[:adv_search][model.to_s]
       @edit = copy_hash(adv_search_model[@expkey] ? adv_search_model : session[:edit])
-      # default search doesnt exist or if it is marked as hidden
-      if @edit && @edit[:expression] && !@edit[:expression][:selected].blank? &&
-         !MiqSearch.exists?(@edit[:expression][:selected][:id])
-        clear_default_search
-      elsif @edit && @edit[:expression] && !@edit[:expression][:selected].blank?
-        s = MiqSearch.find(@edit[:expression][:selected][:id])
-        clear_default_search if s.search_key == "_hidden_"
-      end
+      adv_search_clear_default_search_if_cant_be_seen
       @edit.delete(:exp_token)                                          # Remove any existing atom being edited
     else                                                                # Create new exp fields
       @edit = {}
