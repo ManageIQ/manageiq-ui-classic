@@ -43,6 +43,7 @@ module ApplicationController::AdvancedSearch
     if @edit[:new_search_name].nil? || @edit[:new_search_name] == ""
       add_flash(_("Search Name is required"), :error)
       params[:button] = "save" # Redraw the save screen
+      false
     else
       s = @edit[@expkey].build_search(@edit[:new_search_name], @edit[:search_type], session[:userid])
       s.filter = MiqExpression.new(@edit[:new][@expkey]) # Set the new expression
@@ -58,11 +59,13 @@ module ApplicationController::AdvancedSearch
         @edit[@expkey].history.reset(@edit[@expkey][:expression])
         # Clear the current selected token
         @edit[@expkey][:exp_token] = nil
+        true
       else
         s.errors.each do |field, msg|
           add_flash("#{field.to_s.capitalize} #{msg}", :error)
         end
         params[:button] = "save" # Redraw the save screen
+        false
       end
     end
   end
@@ -214,13 +217,13 @@ module ApplicationController::AdvancedSearch
 
     case params[:button]
     when "saveit"
-      adv_search_button_saveid
+      saved = adv_search_button_saveid
 
-      if params[:button] == "save"
+      if saved
+        adv_search_redraw_left_div
+      else
         @edit[:search_type] = nil unless @edit.key?(:search_type)
         adv_search_redraw_search_partials
-      else
-        adv_search_redraw_left_div
       end
 
     when "loadit"
