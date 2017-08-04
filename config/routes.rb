@@ -3321,10 +3321,6 @@ Rails.application.routes.draw do
     end
 
     default_routes.each do |action_name|
-      # TODO GET will be removed, now is it just for compatibility with ui-components
-      get "#{controller_name}/#{action_name}(/:id)",
-          :action     => action_name,
-          :controller => controller_name
       post "#{controller_name}/#{action_name}(/:id)",
           :action     => action_name,
           :controller => controller_name
