@@ -1,28 +1,9 @@
--#
-  Parameters:
-    widget -- MiqWidget instance
-.mc{:id => "dd_w#{widget.id}_box",
-  :style => @sb[:dashboards][@sb[:active_db]][:minimized].include?(widget.id) ? 'display:none' : ''}
+- datum = widget.contents_for_user(current_user).contents
+-# we need to count all charts to be able to display multiple
+-# charts on a dashboard screen
+- WidgetPresenter.chart_data.push(:data => datum)
+- chart_index = WidgetPresenter.chart_data.length - 1
+- chart_data = Charting.deserialized(datum)
 
-  - if widget.contents_for_user(current_user).contents.blank?
-    .blank-slate-pf{:style => "padding: 10px"}
-      .blank-slate-pf-icon
-        %i.fa.fa-cog
-      %h1= _('No chart data found.')
+= chart_local(chart_data, :id => "miq_widgetchart_#{chart_index}".html_safe)
 
-  - datum = widget.contents_for_user(current_user).contents
-  - if Charting.data_ok?(datum)
-    -# we need to count all charts to be able to display multiple
-    -# charts on a dashboard screen
-    - WidgetPresenter.chart_data.push(:data => datum)
-    - chart_index = WidgetPresenter.chart_data.length - 1
-    - chart_data = Charting.deserialized(datum)
-
-    = chart_local(chart_data,
-                  :id     => "miq_widgetchart_#{chart_index}".html_safe)
-  - else
-    .blank-slate-pf{:style => "padding: 10px"}
-      .blank-slate-pf-icon
-        %i.pficon.pficon-warning-triangle-o
-      %h1= _('Invalid chart data.')
-      %p= _('Invalid chart data. Try regenerating the widgets.')
