@@ -226,7 +226,6 @@ module ApplicationController::AdvancedSearch
     when "loadit"
       adv_search_button_loadit
       adv_search_redraw_search_partials
-      adv_search_redraw_left_div
 
     when "delete"
       adv_search_button_delete
