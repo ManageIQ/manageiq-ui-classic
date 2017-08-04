@@ -227,6 +227,9 @@ module ApplicationController::AdvancedSearch
       adv_search_button_loadit
       adv_search_redraw_search_partials
 
+    when 'load'
+      adv_search_redraw_search_partials('load')
+
     when "delete"
       adv_search_button_delete
       adv_search_button_reset_fields
