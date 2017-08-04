@@ -237,8 +237,7 @@ class ApplicationHelper::ToolbarBuilder
            x_edit_view_tb history_main ems_container_dashboard ems_infra_dashboard).include?(name)
   end
 
-  def create_custom_button(input, model, record, options = {})
-    options[:enabled] = true unless options.key?(:enabled)
+  def create_custom_button(input, model, record)
     button_id = input[:id]
     button_name = input[:name].to_s
     record_id = record.present? ? record.id : 'LIST'
@@ -311,7 +310,7 @@ class ApplicationHelper::ToolbarBuilder
     if record.present?
       service_buttons = record_to_service_buttons(record)
       unless service_buttons.empty?
-        buttons = service_buttons.collect { |b| create_custom_button(b, model, record, :enabled => nil) }
+        buttons = service_buttons.collect { |b| create_custom_button(b, model, record) }
         toolbar.button_group("custom_buttons_", buttons)
       end
     end
