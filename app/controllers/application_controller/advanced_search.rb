@@ -192,15 +192,12 @@ module ApplicationController::AdvancedSearch
     adv_search_redraw_listnav
   end
 
-  def adv_search_redraw_search_partials
+  def adv_search_redraw_search_partials(display_mode = nil)
     render :update do |page|
       page << javascript_prologue
-      if %w(load save).include?(params[:button])
-        display_mode = params[:button]
-      else
+      unless %w(load save).include?(display_mode)
         @edit[@expkey][:exp_chosen_report] = nil
         @edit[@expkey][:exp_chosen_search] = nil
-        display_mode = nil
       end
       page.replace("adv_search_body",   :partial => "layouts/adv_search_body",   :locals => {:mode => display_mode})
       page.replace("adv_search_footer", :partial => "layouts/adv_search_footer", :locals => {:mode => display_mode})
@@ -223,7 +220,7 @@ module ApplicationController::AdvancedSearch
         adv_search_redraw_left_div
       else
         @edit[:search_type] = nil unless @edit.key?(:search_type)
-        adv_search_redraw_search_partials
+        adv_search_redraw_search_partials('save')
       end
 
     when "loadit"
@@ -272,11 +269,7 @@ module ApplicationController::AdvancedSearch
         @exp_to_load = exp_build_table(MiqReport.for_user(current_user).find(params[:chosen_report]).conditions.exp)
       end
     end
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("adv_search_body", :partial => "layouts/adv_search_body", :locals => {:mode => 'load'})
-      page.replace("adv_search_footer", :partial => "layouts/adv_search_footer", :locals => {:mode => 'load'})
-    end
+    adv_search_redraw_search_partials('load')
   end
 
   # Character typed into search name field
