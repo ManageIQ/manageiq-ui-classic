@@ -331,6 +331,12 @@ class ApplicationController < ActionController::Base
     options[:parent] = options[:parent] || @parent
     options[:association] = HAS_ASSOCATION[params[:model]] if HAS_ASSOCATION.include?(params[:model])
     options[:selected_ids] = params[:records]
+    if respond_to?("display_#{params[:model]}") && params[:model_id]
+      @record = find_record_with_rbac(model, params[:model_id])
+      send("display_#{params[:model]}")
+      options[:view] = @view
+      options[:pages] = @pages
+    end
     options
   end
   private :process_params_options
