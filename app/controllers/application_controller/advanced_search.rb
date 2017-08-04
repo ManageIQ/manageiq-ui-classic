@@ -292,11 +292,7 @@ module ApplicationController::AdvancedSearch
         if x_active_tree.to_s =~ /_filter_tree$/ &&
            !%w(Vm MiqTemplate).include?(TreeBuilder.get_model_for_prefix(@nodetype))
           search_id = 0
-          if %w(configuration_manager_cs_filter_tree automation_manager_cs_filter_tree).include?(x_active_tree)
-            adv_search_build("ConfiguredSystem")
-          else
-            adv_search_build(vm_model_from_active_tree(x_active_tree))
-          end
+          adv_search_build(model_from_active_tree(x_active_tree))
           session[:edit] = @edit # Set because next method will restore @edit from session
         end
         listnav_search_selected(search_id) # Clear or set the adv search filter

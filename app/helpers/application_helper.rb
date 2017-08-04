@@ -977,8 +977,10 @@ module ApplicationHelper
     end
   end
 
-  def vm_model_from_active_tree(tree)
+  def model_from_active_tree(tree)
     case tree
+    when :configuration_manager_cs_filter_tree, :automation_manager_cs_filter_tree
+      "ConfiguredSystem"
     when :instances_filter_tree
       "ManageIQ::Providers::CloudManager::Vm"
     when :images_filter_tree
