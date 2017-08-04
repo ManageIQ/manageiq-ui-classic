@@ -154,7 +154,22 @@ module ApplicationController::AdvancedSearch
     @edit[@expkey][:selected] = nil                           # Clear selected search
   end
 
-  def adv_search_button_rebuild_left_div
+  def adv_search_redraw_tree(tree)
+    render :update do |page|
+      page << javascript_prologue
+      tree_name = x_active_tree.to_s
+      page.replace("#{tree_name}_div", :partial => "shared/tree", :locals => {:tree => tree, :name => tree_name})
+    end
+  end
+
+  def adv_search_redraw_listnav
+    render :update do |page|
+      page << javascript_prologue
+      page.replace(:listnav_div, :partial => "layouts/listnav")
+    end
+  end
+
+  def adv_search_redraw_left_div
     if x_active_tree.to_s == "configuration_manager_cs_filter_tree"
       build_configuration_manager_tree(:configuration_manager_cs_filter, x_active_tree)
       build_accordions_and_trees
@@ -163,24 +178,18 @@ module ApplicationController::AdvancedSearch
       tree_type = x_active_tree.to_s.sub(/_tree/, '').to_sym
       builder = TreeBuilder.class_for_type(tree_type)
       tree = builder.new(x_active_tree, tree_type, @sb)
+      adv_search_redraw_tree(tree)
+      return
     elsif %w(ems_cloud ems_infra).include?(@layout)
       build_listnav_search_list(@view.db)
     else
       build_listnav_search_list(@edit[@expkey][:exp_model])
     end
 
-    render :update do |page|
-      page << javascript_prologue
-      if @edit[:in_explorer] || %w(storage_tree configuration_scripts_tree).include?(x_active_tree.to_s)
-        tree_name = x_active_tree.to_s
-        page.replace("#{tree_name}_div", :partial => "shared/tree", :locals => {:tree => tree, :name => tree_name})
-      else
-        page.replace(:listnav_div, :partial => "layouts/listnav")
-      end
-    end
+    adv_search_redraw_listnav
   end
 
-  def adv_search_button_redraw_search_partials
+  def adv_search_redraw_search_partials
     render :update do |page|
       page << javascript_prologue
       if %w(load save).include?(params[:button])
@@ -209,25 +218,25 @@ module ApplicationController::AdvancedSearch
 
       if params[:button] == "save"
         @edit[:search_type] = nil unless @edit.key?(:search_type)
-        adv_search_button_redraw_search_partials
+        adv_search_redraw_search_partials
       else
-        adv_search_button_rebuild_left_div
+        adv_search_redraw_left_div
       end
 
     when "loadit"
       adv_search_button_loadit
-      adv_search_button_redraw_search_partials
-      adv_search_button_rebuild_left_div
+      adv_search_redraw_search_partials
+      adv_search_redraw_left_div
 
     when "delete"
       adv_search_button_delete
       adv_search_button_reset_fields
-      adv_search_button_rebuild_left_div
+      adv_search_redraw_left_div
 
     when "reset"
       add_flash(_("The current search details have been reset"), :warning)
       adv_search_button_reset_fields
-      adv_search_button_redraw_search_partials
+      adv_search_redraw_search_partials
 
     when "apply"
       adv_search_button_apply
