@@ -247,7 +247,7 @@ class ApplicationHelper::ToolbarBuilder
       :icon      => "#{input[:image]} fa-lg",
       :color     => input[:color],
       :title     => input[:description].to_s,
-      :enabled   => options[:enabled],
+      :enabled   => input[:enabled],
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
       :url       => "button",
       :url_parms => "?id=#{record_id}&button_id=#{button_id}&cls=#{model}&pressed=custom_button&desc=#{button_name}"
