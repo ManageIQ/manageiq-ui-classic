@@ -32,13 +32,32 @@ if ENV["BUNDLE_GEMFILE"].nil? || ENV["BUNDLE_GEMFILE"] == File.expand_path("../G
   load 'jasmine/tasks/jasmine.rake'
 end
 
+class StaticOrHaml
+  def initialize(dir = 'app/views/static')
+    @dir = dir
+    @rack_file = Rack::File.new(@dir)
+  end
+
+  def call(env)
+    path = Pathname.new(@dir).join(env["PATH_INFO"].sub(/^\/+/, ''))
+    return [404, {}, []] unless File.exists?(path)
+
+    return @rack_file.call(env) unless path.to_s.ends_with?('.haml')
+
+    raw = File.read(path)
+    compiled = Haml::Engine.new(raw).render
+
+    [200, {"Content-Type" => "text/html"}, [compiled]]
+  end
+end
+
 module Jasmine
   class << self
     alias old_initialize_config initialize_config
 
     def initialize_config
       old_initialize_config
-      @config.add_rack_path('/static', lambda { Rack::File.new('app/views/static') })
+      @config.add_rack_path('/static', lambda { StaticOrHaml.new })
     end
   end
 end
