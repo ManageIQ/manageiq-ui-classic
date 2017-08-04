@@ -1,9 +1,9 @@
 /* global miqHttpInject */
-ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', 'miqService',
+ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '$timeout', 'miqService',
   'metricsUtilsFactory', 'metricsHttpFactory', 'metricsConfigFactory', 'metricsParseUrlFactory',
-  function($http, $window, miqService, metricsUtilsFactory, metricsHttpFactory, metricsConfigFactory, metricsParseUrlFactory) {
+  function($http, $window, $timeout, miqService, metricsUtilsFactory, metricsHttpFactory, metricsConfigFactory, metricsParseUrlFactory) {
     var dash = this;
-    var utils = metricsUtilsFactory(dash);
+    var utils = metricsUtilsFactory(dash, $timeout);
     var httpUtils = metricsHttpFactory(dash, $http, utils, miqService);
 
     dash.getTenants = httpUtils.getTenants;
@@ -11,6 +11,7 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
     dash.refreshGraph = httpUtils.refreshGraph;
     dash.setFilterOptions = utils.setFilterOptions;
     dash.metricPrefix = utils.metricPrefix;
+    dash.calcDataDifferentials = utils.calcDataDifferentials;
     dash.setPage = httpUtils.setPage;
 
     var pageSetup = function() {
@@ -149,6 +150,9 @@ ManageIQ.angular.app.controller('adHocMetricsController', ['$http', '$window', '
       dash.showGraph = true;
       dash.chartDataInit = false;
       httpUtils.refreshGraph();
+
+      // enable the bootstrapSwitch to run chart refresh
+      angular.element('[name=rate-switch]').bootstrapSwitch({ onSwitchChange: utils.redrawGraph });
     };
 
     dash.viewMetrics = function() {
