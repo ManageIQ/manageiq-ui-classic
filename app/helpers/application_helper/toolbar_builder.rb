@@ -246,7 +246,7 @@ class ApplicationHelper::ToolbarBuilder
       :type      => :button,
       :icon      => "#{input[:image]} fa-lg",
       :color     => input[:color],
-      :title     => input[:description].to_s,
+      :title     => !input[:enabled] && input[:disabled_text] ? input[:disabled_text] : input[:description].to_s,
       :enabled   => input[:enabled],
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
       :url       => "button",
