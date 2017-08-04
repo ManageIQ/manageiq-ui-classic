@@ -311,7 +311,7 @@ describe EmsCloudController do
       allow(ExtManagementSystem).to receive(:model_from_emstype).and_return(mocked_infra_class)
       controller.instance_variable_set(:@_params, :controller => "ems_cloud")
 
-      expect(mocked_infra_class).to receive(:queue_authentication_check)
+      expect(mocked_infra_class).to receive(:validate_credentials_task)
       controller.send(:create_ems_button_validate)
     end
 

@@ -76,7 +76,7 @@ module Mixins
       ems_type = model.model_from_emstype(params[:emstype])
       # TODO: queue authentication checks for all providers, not just cloud
       result, details = if params[:controller] == "ems_cloud"
-                          ems_type.queue_authentication_check(get_task_args(ems_type), session[:userid], params[:zone])
+                          ems_type.validate_credentials_task(get_task_args(ems_type), session[:userid], params[:zone])
                         else
                           realtime_authentication_check(ems_type.new)
                         end
