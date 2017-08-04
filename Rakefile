@@ -32,6 +32,17 @@ if ENV["BUNDLE_GEMFILE"].nil? || ENV["BUNDLE_GEMFILE"] == File.expand_path("../G
   load 'jasmine/tasks/jasmine.rake'
 end
 
+module Jasmine
+  class << self
+    alias old_initialize_config initialize_config
+
+    def initialize_config
+      old_initialize_config
+      @config.add_rack_path('/static', lambda { Rack::File.new('app/views/static') })
+    end
+  end
+end
+
 namespace :spec do
   namespace :javascript do
     desc "Setup environment for javascript specs"
