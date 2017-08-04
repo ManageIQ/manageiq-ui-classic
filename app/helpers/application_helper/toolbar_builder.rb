@@ -274,14 +274,16 @@ class ApplicationHelper::ToolbarBuilder
 
   def custom_button_selects(model, record, toolbar_result)
     get_custom_buttons(model, record, toolbar_result).collect do |group|
+      buttons = group[:buttons].collect { |b| create_custom_button(b, model, record) }
+
       props = {
         :id      => "custom_#{group[:id]}",
         :type    => :buttonSelect,
         :icon    => "#{group[:image]} fa-lg",
         :color   => group[:color],
         :title   => group[:description],
-        :enabled => true,
-        :items   => group[:buttons].collect { |b| create_custom_button(b, model, record) }
+        :enabled => record ? true : buttons.all?{ |button| button[:enabled]},
+        :items   => buttons
       }
       props[:text] = group[:text] if group[:text_display]
 
