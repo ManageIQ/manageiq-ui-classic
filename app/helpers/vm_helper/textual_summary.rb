@@ -549,8 +549,17 @@ module VmHelper::TextualSummary
     h
   end
 
+  def os_normalized
+    @record.os_image_name.downcase
+  end
+
+  def os_linux_or_unknown?
+    os = os_normalized
+    os == "unknown" || os =~ /linux/
+  end
+
   def textual_guest_applications
-    os = @record.os_image_name.downcase
+    os = os_normalized
     return nil if os == "unknown"
     num = @record.number_of(:guest_applications)
     label = (os =~ /linux/) ? n_("Package", "Packages", num) : n_("Application", "Applications", num)
@@ -565,8 +574,7 @@ module VmHelper::TextualSummary
   end
 
   def textual_win32_services
-    os = @record.os_image_name.downcase
-    return nil if os == "unknown" || os =~ /linux/
+    return nil if os_linux_or_unknown?
     num = @record.number_of(:win32_services)
     h = {:label => _("Win32 Services"), :icon => "fa fa-cog", :value => num}
     if num > 0
@@ -578,8 +586,7 @@ module VmHelper::TextualSummary
   end
 
   def textual_kernel_drivers
-    os = @record.os_image_name.downcase
-    return nil if os == "unknown" || os =~ /linux/
+    return nil if os_linux_or_unknown?
     num = @record.number_of(:kernel_drivers)
     # TODO: Why is this image different than graphical?
     h = {:label => _("Kernel Drivers"), :icon => "fa fa-cog", :value => num}
@@ -592,8 +599,7 @@ module VmHelper::TextualSummary
   end
 
   def textual_filesystem_drivers
-    os = @record.os_image_name.downcase
-    return nil if os == "unknown" || os =~ /linux/
+    return nil if os_linux_or_unknown?
     num = @record.number_of(:filesystem_drivers)
     # TODO: Why is this image different than graphical?
     h = {:label => _("File System Drivers"), :icon => "fa fa-cog", :value => num}
@@ -607,8 +613,7 @@ module VmHelper::TextualSummary
   end
 
   def textual_registry_items
-    os = @record.os_image_name.downcase
-    return nil if os == "unknown" || os =~ /linux/
+    return nil if os_linux_or_unknown?
     num = @record.number_of(:registry_items)
     # TODO: Why is this label different from the link title text?
     h = {:label => _("Registry Entries"), :icon => "pficon pficon-registry", :value => num}
