@@ -60,7 +60,7 @@ module TextualMixins::VmCommon
     os = os_normalized
     return nil if os == "unknown"
     num = @record.number_of(:guest_applications)
-    label = (os =~ /linux/) ? n_("Package", "Packages", num) : n_("Application", "Applications", num)
+    label = os =~ /linux/ ? n_("Package", "Packages", num) : n_("Application", "Applications", num)
 
     h = {:label => label, :icon => "ff ff-software-package", :value => num}
     if num > 0
@@ -147,7 +147,7 @@ module TextualMixins::VmCommon
 
   def textual_snapshots
     num = @record.number_of(:snapshots)
-    h = {:label => _("Snapshots"), :icon => "fa fa-camera", :value => (num == 0 ? _("None") : num)}
+    h = {:label => _("Snapshots"), :icon => "fa fa-camera", :value => (num.zero? ? _("None") : num)}
     if role_allows?(:feature => "vm_snapshot_show_list") && @record.supports_snapshots?
       h[:title] = _("Show the snapshot info for this VM")
       h[:explorer] = true
@@ -168,7 +168,7 @@ module TextualMixins::VmCommon
   def textual_event_logs
     return nil if @record.kind_of?(ManageIQ::Providers::CloudManager::Template)
     num = @record.operating_system.nil? ? 0 : @record.operating_system.number_of(:event_logs)
-    h = {:label => _("Event Logs"), :icon => "fa fa-file-text-o", :value => (num == 0 ? _("Not Available") : _("Available"))}
+    h = {:label => _("Event Logs"), :icon => "fa fa-file-text-o", :value => (num.zero? ? _("Not Available") : _("Available"))}
     if num > 0
       h[:title] = n_("Show Event Log on this VM", "Show Event Logs on this VM", num)
       h[:explorer] = true
@@ -193,7 +193,7 @@ module TextualMixins::VmCommon
       h[:value] = _("From %{time} Ago") % {:time => time_ago_in_words(date.in_time_zone(Time.zone)).titleize}
       h[:title] = _("Show Running Processes on this VM")
       h[:explorer] = true
-      h[:link]  = url_for_only_path(:controller => controller.controller_name, :action => 'processes', :id => @record)
+      h[:link] = url_for_only_path(:controller => controller.controller_name, :action => 'processes', :id => @record)
     end
     h
   end
@@ -252,4 +252,3 @@ module TextualMixins::VmCommon
     {:label => _("State Changed On"), :value => (date.nil? ? _("N/A") : format_timezone(date))}
   end
 end
-
