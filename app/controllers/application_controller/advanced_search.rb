@@ -212,9 +212,7 @@ module ApplicationController::AdvancedSearch
 
     case params[:button]
     when "saveit"
-      saved = adv_search_button_saveid
-
-      if saved
+      if adv_search_button_saveid
         adv_search_redraw_left_div
       else
         @edit[:search_type] = nil unless @edit.key?(:search_type)
