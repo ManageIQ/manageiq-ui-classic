@@ -42,7 +42,6 @@ module ApplicationController::AdvancedSearch
   def adv_search_button_saveid
     if @edit[:new_search_name].nil? || @edit[:new_search_name] == ""
       add_flash(_("Search Name is required"), :error)
-      params[:button] = "save" # Redraw the save screen
       false
     else
       s = @edit[@expkey].build_search(@edit[:new_search_name], @edit[:search_type], session[:userid])
@@ -64,7 +63,6 @@ module ApplicationController::AdvancedSearch
         s.errors.each do |field, msg|
           add_flash("#{field.to_s.capitalize} #{msg}", :error)
         end
-        params[:button] = "save" # Redraw the save screen
         false
       end
     end
