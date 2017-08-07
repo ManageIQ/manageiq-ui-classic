@@ -174,6 +174,11 @@ module ContainerSummaryHelper
     textual_link(@record.persistent_volumes)
   end
 
+  def textual_pod_to_persistent_volume_relationship
+    link = url_for_only_path(:id => @record.id, :action => "show", :display => "persistent_volumes")
+    textual_link(@record.persistent_volumes, :as => PersistentVolume, :link => link)
+  end
+
   def textual_parent
     textual_link(@record.parent)
   end
