@@ -10,7 +10,7 @@ module ApplicationHelper::Dialogs
   end
 
   def dialog_dropdown_selected_value(field)
-    if !field.values || field.values.empty?
+    if !field.values || field.values.empty? || filed.value.kind_of?(Numeric)
       return field.value
     end
     if field.value.kind_of?(String) && field.value.include?(',')
