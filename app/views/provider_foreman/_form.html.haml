@@ -8,6 +8,7 @@
                  "miq-form"      => true,
                  "model"         => "vm.providerForemanModel",
                  "model-copy"    => 'vm.modelCopy',
+                 "form-changed"  => "",
                  :novalidate     => true}
     = render :partial => "layouts/flash_msg"
     %br
@@ -20,7 +21,6 @@
                             'ng-model'   => "vm.providerForemanModel.name",
                             :maxlength   => ViewHelper::MAX_NAME_LEN,
                             :required    => "",
-                            :checkchange => true,
                             "auto-focus" => ""}
         %span.help-block{"ng-show" => "angularForm.name.$error.required"}
           = _("Required")
@@ -36,14 +36,12 @@
                               "ng-model"    => "vm.providerForemanModel.zone",
                               "maxlength"   => 15,
                               "required"    => "",
-                              "checkchange" => "",
                               "readonly"    => true,
                               "style"       => "color: black;"}
         - else
           = select_tag('zone',
                        options_for_select(@server_zones.sort_by { |name, _name| name }),
                        "ng-model"                    => "vm.providerForemanModel.zone",
-                       "checkchange"                 => "",
                        "required"                    => "",
                        "selectpicker-for-select-tag" => "")
 
@@ -59,7 +57,6 @@
                             :required                 => "",
                             "ng-trim"                 => false,
                             "detect_spaces"           => "",
-                            :checkchange              => true,
                             :prefix                   => "default",
                             "main-scope"              => "vm",
                             "reset-validation-status" => "default_auth_status"}
@@ -76,8 +73,7 @@
                'ng-model'                => "vm.providerForemanModel.verify_ssl",
                :prefix                   => "default",
                "main-scope"              => "vm",
-               "reset-validation-status" => "default_auth_status",
-               :checkchange              => true}
+               "reset-validation-status" => "default_auth_status"}
 
 
     %hr
