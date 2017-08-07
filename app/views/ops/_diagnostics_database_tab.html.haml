@@ -87,18 +87,17 @@
                               :ng_model_uri        => "diagnosticsDatabaseModel.uri",
                               :ng_model_uri_prefix => "diagnosticsDatabaseModel.uri_prefix",
                               :uri_prefix_display  =>  "{{diagnosticsDatabaseModel.uri_prefix}}://"}
-
-  %auth-credentials{'ng-show'               => "sambaBackup()",
-                      'model'               => 'diagnosticsDatabaseModel',
-                      'model-copy'          => 'modelCopy',
-                      'user-required'       => 'sambaRequired(diagnosticsDatabaseModel.log_userid)',
-                      'password-required'   => 'sambaRequired(diagnosticsDatabaseModel.log_password)',
-                      'prefix'              => 'log',
-                      'enable-valid-button' => 'angularForm.$valid',
-                      'validate-url'        => validate_url,
-                      'valtype'             => "log",
-                      'validate'            => 'validateClicked',
-                      'new-record'          => true}
+  %auth-credentials{'ng-show'             => "sambaBackup()",
+                    'model'               => 'diagnosticsDatabaseModel',
+                    'model-copy'          => 'modelCopy',
+                    'user-required'       => 'sambaRequired(diagnosticsDatabaseModel.log_userid)',
+                    'password-required'   => 'sambaRequired(diagnosticsDatabaseModel.log_password)',
+                    'prefix'              => 'log',
+                    'enable-valid-button' => 'angularForm.$valid',
+                    'validate-url'        => validate_url,
+                    'valtype'             => "log",
+                    'validate'            => 'validateClicked',
+                    'new-record'          => true}
 
   %input{:type => "hidden", :value => "db_backup", :name => "action_typ"}
 
