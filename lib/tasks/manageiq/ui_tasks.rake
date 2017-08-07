@@ -29,10 +29,8 @@ namespace :webpack do
   [:compile, :clobber].each do |webpacker_task|
     task webpacker_task do
       Dir.chdir ManageIQ::UI::Classic::Engine.root do
-        Bundler.with_clean_env do
-          system("bundle exec rake webpack:paths") || abort("\n== webpack:paths failed ==")
-          system("bundle exec rake webpacker:#{webpacker_task}") || abort("\n== webpacker:#{webpacker_task} failed ==")
-        end
+        system("bundle exec rake webpack:paths") || abort("\n== webpack:paths failed ==")
+        system("bundle exec rake webpacker:#{webpacker_task}") || abort("\n== webpacker:#{webpacker_task} failed ==")
       end
     end
   end
