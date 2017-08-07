@@ -7,13 +7,15 @@ end
 
 # need the initializer for the rake tasks to work
 require ManageIQ::UI::Classic::Engine.root.join('config/initializers/webpacker.rb')
-load 'tasks/webpacker.rake'
-load 'tasks/webpacker/compile.rake'
-load 'tasks/webpacker/clobber.rake'
-load 'tasks/webpacker/verify_install.rake'  # needed by compile
-load 'tasks/webpacker/check_node.rake'  # needed by verify_install
-load 'tasks/webpacker/check_yarn.rake'  # needed by verify_install
-load 'tasks/webpacker/check_webpack_binstubs.rake'  # needed by verify_install
+unless Rake::Task.task_defined?("webpacker")
+  load 'tasks/webpacker.rake'
+  load 'tasks/webpacker/compile.rake'
+  load 'tasks/webpacker/clobber.rake'
+  load 'tasks/webpacker/verify_install.rake'         # needed by compile
+  load 'tasks/webpacker/check_node.rake'             # needed by verify_install
+  load 'tasks/webpacker/check_yarn.rake'             # needed by verify_install
+  load 'tasks/webpacker/check_webpack_binstubs.rake' # needed by verify_install
+end
 
 namespace :webpack do
   task :paths do
