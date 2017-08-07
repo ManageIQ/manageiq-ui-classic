@@ -25,7 +25,10 @@ ManageIQ.angular.app.component('authCredentials', {
     this.$onInit = function() {
       this.bChangeStoredPassword = this.newRecord;
       this.bCancelPasswordChange = this.newRecord;
-      // build inputs labels
+      this.buildInputsLabels();
+    };
+
+    this.buildInputsLabels = function() {
       vm.userIdLabel = vm.formLabels && vm.formLabels.userIdLabel || __('Username');
       vm.passwordLabel = vm.formLabels && vm.formLabels.passwordLabel || __('Password');
       vm.newPasswordLabel = vm.formLabels && vm.formLabels.verifyLabel || __('New password');
@@ -34,9 +37,9 @@ ManageIQ.angular.app.component('authCredentials', {
 
       vm.buttonLabels = {
         verifyTitleOnLabel: vm.formLabels && vm.formLabels.verifyTitleOnLabel
-                        || __('Validate the credentials by logging into the Server'),
+                      || __('Validate the credentials by logging into the Server'),
         verifyTitleOffLabel: vm.formLabels && vm.formLabels.verifyTitleOffLabel
-                          || __('Server information, Username and matching password fields are needed to perform verification of credentials'),
+                        || __('Server information, Username and matching password fields are needed to perform verification of credentials'),
       };
     };
 
