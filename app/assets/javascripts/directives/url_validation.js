@@ -6,7 +6,7 @@ ManageIQ.angular.app.directive('urlValidation', function() {
         if (!viewValue) {
           return true;
         }
-        return validUrl(viewValue);
+        return !!validUrl(viewValue);
       };
 
       var validUrl = function(s) {
