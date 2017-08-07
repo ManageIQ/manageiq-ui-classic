@@ -1,9 +1,9 @@
 %form#form_div{:name            => "angularForm",
-               'ng-controller' => "vmCloudDetachFormController as vm",
-               "miq-form"      => true,
-               'form-changed'  => true,
-               "model"         => "vm.vmCloudModel",
-               "model-copy"    => 'vm.modelCopy'}
+               'ng-controller'  => "vmCloudDetachFormController as vm",
+               "miq-form"       => true,
+               'form-changed'   => true,
+               "model"          => "vm.vmCloudModel",
+               "model-copy"     => 'vm.modelCopy'}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Detach Volume')
@@ -15,12 +15,12 @@
         = select_tag("volume_id",
                       options_for_select(@volume_choices.sort),
                       "ng-model"                    => "vm.vmCloudModel.volume_id",
-                      :required                  => true,
+                      :required                     => true,
                       "selectpicker-for-select-tag" => "")
 
-    %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
-                    'paging_div_buttons_id'            => "angular_paging_div_buttons",
-                    'paging_div_buttons_type'          => "Submit"}
+  %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
+                  'paging_div_buttons_id'            => "angular_paging_div_buttons",
+                  'paging_div_buttons_type'          => "Submit"}
 
 
 :javascript

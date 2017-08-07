@@ -7,8 +7,8 @@
       %label.col-md-2.control-label
         = _('Floating IP')
       .col-md-8
-        %select{:name      => 'floating_ip',
-                'ng-model' => 'vm.vmCloudModel.floating_ip',
+        %select{:name        => 'floating_ip',
+                'ng-model'   => 'vm.vmCloudModel.floating_ip',
                 'ng-options' => 'floating_ip.address for floating_ip in vm.floating_ips track by floating_ip.address'}
 
     %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
@@ -20,7 +20,7 @@
       %tr
         %td{:align => 'right'}
           = button_tag(_("Submit"),
-                     :class        => "btn btn-primary",
+                     :class         => "btn btn-primary",
                       "ng-click"    => "submitClicked()",
                       "ng-disabled" => "angularForm.$pristine || angularForm.$invalid",
                       "ng-class"    => "{'btn-disabled': angularForm.$pristine || angularForm.$invalid}")

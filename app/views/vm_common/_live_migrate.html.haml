@@ -14,6 +14,7 @@
       .col-md-8
         %input{:type         => "checkbox",
                :name         => "auto_select_host",
+               :required     => true,
                'ng-model'    => "vm.vmCloudModel.auto_select_host",
                'ng-disabled' => "vm.hosts.length == 0"}
 
@@ -27,8 +28,8 @@
       .col-md-8
         %input{:type        => "checkbox",
                :name        => "block_migration",
-               'ng-model'   => "vm.vmCloudModel.block_migration",
-               :checkchange => true}
+               :required    => true,
+               'ng-model'   => "vm.vmCloudModel.block_migration"}
     .form-group
       %label.col-md-2.control-label
         = _('Disk Over Commit')
@@ -36,7 +37,7 @@
         %input{:type        => "checkbox",
                :name        => "disk_over_commit",
                'ng-model'   => "vm.vmCloudModel.disk_over_commit",
-               :checkchange => true}
+               :required    => true}
   #live-migrate-select-destination-host{'ng-hide' => 'vm.vmCloudModel.auto_select_host'}
     %h3
       = _('Select Destination Host')
