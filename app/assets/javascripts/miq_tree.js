@@ -583,7 +583,7 @@ function miqInitTree(options, tree) {
     showCheckbox:         options.checkboxes,
     hierarchicalCheck:    options.hierarchical_check,
     highlightChanges:     options.highlight_changes,
-    levels:               options.min_expand_level,
+    levels:               1,
     allowReselect:        options.allow_reselect,
     expandIcon:           'fa fa-fw fa-angle-right',
     collapseIcon:         'fa fa-fw fa-angle-down',
