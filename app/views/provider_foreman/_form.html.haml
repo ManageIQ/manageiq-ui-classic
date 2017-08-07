@@ -88,7 +88,7 @@
                       'validate-url'        => validate_url,
                       'valtype'             => nil,
                       'new-record'          => @provider_manager.id ? false : true,
-                      'validate'            => 'validateClicked'}
+                      'validate'            => 'vm.validateClicked'}
 
     = render :partial => "layouts/angular/generic_form_buttons"
     %span{:style => "color:black"}= _("Required. Should have privileged access, such as root or administrator.")
