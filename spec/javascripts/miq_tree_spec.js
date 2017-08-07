@@ -4,7 +4,7 @@ describe('miq_tree', function() {
       it('checks child nodes', function () {
         $('body').append($('<div id="testbox">'));
 
-        miqInitTree({tree_id: "testbox", post_check: true, hierarchical_check: true}, [
+        miqInitTree({tree_name: "test", tree_id: "testbox", post_check: true, hierarchical_check: true}, [
           {
             key: "1",
             text: "Parent unset, children partial",

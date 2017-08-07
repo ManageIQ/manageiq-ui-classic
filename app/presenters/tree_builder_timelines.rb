@@ -38,10 +38,9 @@ class TreeBuilderTimelines < TreeBuilder
 
   def set_locals_for_render
     super.merge!(
-      :id_prefix  => 'timelines_',
-      :onclick    => "miqOnClickTimelineSelection",
-      :click_url  => "/dashboard/show_timeline/",
-      :tree_state => true
+      :id_prefix => 'timelines_',
+      :onclick   => "miqOnClickTimelineSelection",
+      :click_url => "/dashboard/show_timeline/"
     )
   end
 
