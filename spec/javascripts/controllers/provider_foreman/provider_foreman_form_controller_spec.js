@@ -17,7 +17,7 @@ describe('providerForemanFormController', function() {
       url: '',
       zone: 'foo_zone',
       verify_ssl: 0,
-      log_userid: ''
+      default_userid: ''
     };
 
     $httpBackend = _$httpBackend_;
@@ -37,26 +37,23 @@ describe('providerForemanFormController', function() {
 
   describe('initialization', function() {
     describe('when the providerForemanFormId is new', function() {
-      it('sets the name to blank', function () {
+      it('sets the name to blank', function() {
         expect(vm.providerForemanModel.name).toEqual('');
       });
-      it('sets the zone to blank', function () {
+      it('sets the zone to blank', function() {
         expect(vm.providerForemanModel.zone).toEqual('foo_zone');
       });
-      it('sets the url to blank', function () {
+      it('sets the url to blank', function() {
         expect(vm.providerForemanModel.url).toEqual('');
       });
-      it('sets the verify_ssl to blank', function () {
+      it('sets the verify_ssl to blank', function() {
         expect(vm.providerForemanModel.verify_ssl).toBeFalsy();
       });
-      it('sets the log_userid to blank', function () {
-        expect(vm.providerForemanModel.log_userid).toEqual('');
+      it('sets the default_userid to blank', function() {
+        expect(vm.providerForemanModel.default_userid).toEqual('');
       });
-      it('sets the log_password to blank', function () {
-        expect(vm.providerForemanModel.log_password).toEqual('');
-      });
-      it('sets the log_verify to blank', function () {
-        expect(vm.providerForemanModel.log_verify).toEqual('');
+      it('sets the default_password to blank', function() {
+        expect(vm.providerForemanModel.default_password).toEqual('');
       });
     });
 
@@ -66,40 +63,36 @@ describe('providerForemanFormController', function() {
         url: '10.10.10.10',
         zone: 'My Test Zone',
         verify_ssl: 1,
-        log_userid: 'admin'
+        default_userid: 'admin'
       };
 
       beforeEach(inject(function(_$controller_) {
         $httpBackend.whenGET('/provider_foreman/form_fields/12345').respond(providerForemanFormResponse);
-        vm = _$controller_('providerForemanFormController',
-          {
-            $scope: $scope,
-            providerForemanFormId: '12345',
-            miqService: miqService
-          });
+        vm = _$controller_('providerForemanFormController', {
+          $scope: $scope,
+          providerForemanFormId: '12345',
+          miqService: miqService
+        });
         $httpBackend.flush();
       }));
 
-      it('sets the name to the value returned from http request', function () {
+      it('sets the name to the value returned from http request', function() {
         expect(vm.providerForemanModel.name).toEqual('Foreman');
       });
-      it('sets the zone to the value returned from the http request', function () {
+      it('sets the zone to the value returned from the http request', function() {
         expect(vm.providerForemanModel.zone).toEqual('My Test Zone');
       });
-      it('sets the url to the value returned from http request', function () {
+      it('sets the url to the value returned from http request', function() {
         expect(vm.providerForemanModel.url).toEqual('10.10.10.10');
       });
-      it('sets the verify_ssl to the value returned from http request', function () {
+      it('sets the verify_ssl to the value returned from http request', function() {
         expect(vm.providerForemanModel.verify_ssl).toBeTruthy();
       });
-      it('sets the log_userid to the value returned from http request', function () {
-        expect(vm.providerForemanModel.log_userid).toEqual('admin');
+      it('sets the default_userid to the value returned from http request', function() {
+        expect(vm.providerForemanModel.default_userid).toEqual('admin');
       });
-      it('sets the log_password to the value returned from http request', function () {
-        expect(vm.providerForemanModel.log_password).toEqual(miqService.storedPasswordPlaceholder);
-      });
-      it('sets the log_verify to the value returned from http request', function () {
-        expect(vm.providerForemanModel.log_verify).toEqual(miqService.storedPasswordPlaceholder);
+      it('sets the default_password to the value returned from http request', function() {
+        expect(vm.providerForemanModel.default_password).toEqual(miqService.storedPasswordPlaceholder);
       });
     });
   });
@@ -107,8 +100,8 @@ describe('providerForemanFormController', function() {
   describe('#resetClicked', function() {
     beforeEach(function() {
       var angularForm = {
-        $setPristine: function (value){},
-        $setUntouched: function (value){},
+        $setPristine: function(value) {},
+        $setUntouched: function(value) {},
       };
       vm.resetClicked(angularForm);
     });
@@ -121,7 +114,7 @@ describe('providerForemanFormController', function() {
   describe('#saveClicked', function() {
     beforeEach(function() {
       var angularForm = {
-        $setPristine: function (value){}
+        $setPristine: function(value) {}
       };
       vm.saveClicked(angularForm);
     });
@@ -143,7 +136,7 @@ describe('providerForemanFormController', function() {
   describe('#addClicked', function() {
     beforeEach(function() {
       var angularForm = {
-        $setPristine: function (value){}
+        $setPristine: function(value) {}
       };
       vm.addClicked(angularForm);
     });
@@ -163,19 +156,18 @@ describe('providerForemanFormController', function() {
       var element = angular.element(
         '<form name="angularForm">' +
         '<input ng-model="vm.providerForemanModel.url" name="url" required text />' +
-        '<input ng-model="vm.providerForemanModel.log_userid" name="log_userid" required text />' +
-        '<input ng-model="vm.providerForemanModel.log_password" name="log_password" required text />' +
-        '<input ng-model="vm.providerForemanModel.log_verify" name="log_verify" required text />' +
-        '</form>'
-      );
+        '<input ng-model="vm.providerForemanModel.default_userid" name="default_userid" required text />' +
+        '<input ng-model="vm.providerForemanModel.default_password" name="default_password" required text />' +
+        '<input ng-model="vm.providerForemanModel.default_verify" name="default_verify" required text />' +
+        '</form>');
 
       $compile(element)($scope);
       $scope.$digest();
 
       $scope.angularForm.url.$setViewValue('foreman-url');
-      $scope.angularForm.log_userid.$setViewValue('admin');
-      $scope.angularForm.log_password.$setViewValue('password');
-      $scope.angularForm.log_verify.$setViewValue('password');
+      $scope.angularForm.default_userid.$setViewValue('admin');
+      $scope.angularForm.default_password.$setViewValue('password');
+      $scope.angularForm.default_verify.$setViewValue('password');
     }));
 
     it('returns true if all the Validation fields are filled in', function() {
