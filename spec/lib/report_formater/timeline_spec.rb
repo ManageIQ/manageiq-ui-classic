@@ -161,3 +161,47 @@ describe ReportFormatter::TimelineMessage do
     end
   end
 end
+
+describe '#set data for headers that exist in col headers' do
+  def stub_ems_event(event_type)
+    ems = FactoryGirl.create(:ems_amazon)
+    ems_event = EventStream.create!(:event_type => event_type, :ems_id => ems.id)
+    ems_event
+  end
+
+  before do
+    @report = FactoryGirl.create(:miq_report,
+                                 :db        => "EventStream",
+                                 :col_order => %w(id name event_type timestamp vm_location),
+                                 :headers   => %w(id name event_type timestamp vm_location),
+                                 :timeline  => {:field => "EmsEvent-timestamp", :position => "Last"})
+    @report.rpt_options = {:categories => {:power    => {:display_name => "Power Activity",
+                                                         :event_groups => %w(VmPoweredOffEvent VmPoweredOnEvent)},
+                                           :snapshot => {:display_name => "Snapshot Activity",
+                                                         :event_groups => %w(AlarmCreatedEvent AlarmRemovedEvent)}}
+    }
+
+    data = [Ruport::Data::Record.new("id"      => stub_ems_event("VmPoweredOffEvent").id,
+                                     "name"        => "Baz",
+                                     "event_type"  => "VmPoweredOffEvent",
+                                     "vm_location" => "foo",
+                                     "timestamp"   => Time.zone.now
+                                    )
+          ]
+
+    @report.table = Ruport::Data::Table.new(
+      :column_names => %w(id name event_type timestamp vm_location),
+      :data         => data
+    )
+  end
+
+  it 'shows headers only if they exist in report col headers' do
+    @report.rpt_options = nil
+    allow_any_instance_of(Ruport::Controller::Options).to receive(:mri).and_return(@report)
+    events = ReportFormatter::ReportTimeline.new.build_document_body
+    expect(JSON.parse(events)[0]["data"][0][0]["description"]).to include("Source Instance Location:")
+    expect(JSON.parse(events)[0]["data"][0][0]["description"]).to_not include("Source Instance:")
+    expect(JSON.parse(events)[0]["data"][0][0]["description"]).to_not include("Destination Instance:")
+    expect(JSON.parse(events)[0]["data"][0][0]["description"]).to_not include("Destination Instance Location:")
+  end
+end
