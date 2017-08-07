@@ -3,6 +3,7 @@ module ReportController::Reports::Editor
 
   included do
     helper_method :cashed_reporting_available_fields, :cashed_reporting_available_fields
+    helper_method :chargeback_allocated_methods, :chargeback_allocated_methods
   end
 
   DEFAULT_PDF_PAGE_SIZE = "US-Letter".freeze
@@ -19,6 +20,10 @@ module ReportController::Reports::Editor
     -vm_guid
     -vm_uid
   ).freeze
+
+  def chargeback_allocated_methods
+    Hash[CHAREGEBACK_ALLOCATED_METHODS.map { |x| _(x) }]
+  end
 
   def miq_report_new
     assert_privileges("miq_report_new")

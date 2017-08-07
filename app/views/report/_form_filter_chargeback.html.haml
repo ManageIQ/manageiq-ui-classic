@@ -17,7 +17,7 @@
       %label.control-label.col-md-2
         = _('Method for allocated metrics')
       .col-md-8
-        - opts = CHAREGEBACK_ALLOCATED_METHODS.invert.to_a
+        - opts = chargeback_allocated_methods.invert.to_a
         = select_tag("method_for_allocated_metrics",
           options_for_select(opts, @edit[:new][:method_for_allocated_metrics]), :class => "selectpicker")
         :javascript
