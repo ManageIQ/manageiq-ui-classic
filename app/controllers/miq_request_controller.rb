@@ -303,6 +303,7 @@ class MiqRequestController < ApplicationController
   def prov_load_tab
     if @options && @options[:current_tab_key] == :purpose # Need to build again for purpose tab
       fld = @options[:wf].kind_of?(MiqHostProvisionWorkflow) ? "tag_ids" : "vm_tags"
+      # TODO undo
       build_tags_tree(@options[:wf], @options[fld.to_s.to_sym], false)
     end
     # need to build host list view, to display on show screen
