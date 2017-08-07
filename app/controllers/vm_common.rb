@@ -946,7 +946,7 @@ module VmCommon
     if x_active_tree.to_s =~ /_filter_tree$/ && !record_requested
 
       search_id = @nodetype == "root" ? 0 : from_cid(id)
-      adv_search_build(vm_model_from_active_tree(x_active_tree))
+      adv_search_build(model_from_active_tree(x_active_tree))
       session[:edit] = @edit              # Set because next method will restore @edit from session
       listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
       if @edit[:adv_search_applied] &&

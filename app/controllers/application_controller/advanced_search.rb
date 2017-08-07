@@ -1,21 +1,22 @@
 module ApplicationController::AdvancedSearch
   extend ActiveSupport::Concern
 
+  def adv_search_clear_default_search_if_cant_be_seen
+    # default search doesnt exist or if it is marked as hidden
+    if @edit && @edit[:expression] && !@edit[:expression][:selected].blank?
+      s = MiqSearch.find_by(:id => @edit[:expression][:selected][:id])
+      clear_default_search if s.nil? || s.search_key == "_hidden_"
+    end
+  end
+
   # Build advanced search expression
   def adv_search_build(model)
     # Restore @edit hash if it's saved in @settings
     @expkey = :expression # Reset to use default expression key
-    if session[:adv_search] && session[:adv_search][model.to_s]
+    if session.fetch_path(:adv_search, model.to_s)
       adv_search_model = session[:adv_search][model.to_s]
       @edit = copy_hash(adv_search_model[@expkey] ? adv_search_model : session[:edit])
-      # default search doesnt exist or if it is marked as hidden
-      if @edit && @edit[:expression] && !@edit[:expression][:selected].blank? &&
-         !MiqSearch.exists?(@edit[:expression][:selected][:id])
-        clear_default_search
-      elsif @edit && @edit[:expression] && !@edit[:expression][:selected].blank?
-        s = MiqSearch.find(@edit[:expression][:selected][:id])
-        clear_default_search if s.search_key == "_hidden_"
-      end
+      adv_search_clear_default_search_if_cant_be_seen
       @edit.delete(:exp_token)                                          # Remove any existing atom being edited
     else                                                                # Create new exp fields
       @edit = {}
@@ -41,7 +42,7 @@ module ApplicationController::AdvancedSearch
   def adv_search_button_saveid
     if @edit[:new_search_name].nil? || @edit[:new_search_name] == ""
       add_flash(_("Search Name is required"), :error)
-      params[:button] = "save" # Redraw the save screen
+      false
     else
       s = @edit[@expkey].build_search(@edit[:new_search_name], @edit[:search_type], session[:userid])
       s.filter = MiqExpression.new(@edit[:new][@expkey]) # Set the new expression
@@ -57,11 +58,12 @@ module ApplicationController::AdvancedSearch
         @edit[@expkey].history.reset(@edit[@expkey][:expression])
         # Clear the current selected token
         @edit[@expkey][:exp_token] = nil
+        true
       else
         s.errors.each do |field, msg|
           add_flash("#{field.to_s.capitalize} #{msg}", :error)
         end
-        params[:button] = "save" # Redraw the save screen
+        false
       end
     end
   end
@@ -153,7 +155,22 @@ module ApplicationController::AdvancedSearch
     @edit[@expkey][:selected] = nil                           # Clear selected search
   end
 
-  def adv_search_button_rebuild_left_div
+  def adv_search_redraw_tree(tree)
+    render :update do |page|
+      page << javascript_prologue
+      tree_name = x_active_tree.to_s
+      page.replace("#{tree_name}_div", :partial => "shared/tree", :locals => {:tree => tree, :name => tree_name})
+    end
+  end
+
+  def adv_search_redraw_listnav
+    render :update do |page|
+      page << javascript_prologue
+      page.replace(:listnav_div, :partial => "layouts/listnav")
+    end
+  end
+
+  def adv_search_redraw_left_div
     if x_active_tree.to_s == "configuration_manager_cs_filter_tree"
       build_configuration_manager_tree(:configuration_manager_cs_filter, x_active_tree)
       build_accordions_and_trees
@@ -162,32 +179,23 @@ module ApplicationController::AdvancedSearch
       tree_type = x_active_tree.to_s.sub(/_tree/, '').to_sym
       builder = TreeBuilder.class_for_type(tree_type)
       tree = builder.new(x_active_tree, tree_type, @sb)
+      adv_search_redraw_tree(tree)
+      return
     elsif %w(ems_cloud ems_infra).include?(@layout)
       build_listnav_search_list(@view.db)
     else
       build_listnav_search_list(@edit[@expkey][:exp_model])
     end
 
-    render :update do |page|
-      page << javascript_prologue
-      if @edit[:in_explorer] || %w(storage_tree configuration_scripts_tree).include?(x_active_tree.to_s)
-        tree_name = x_active_tree.to_s
-        page.replace("#{tree_name}_div", :partial => "shared/tree", :locals => {:tree => tree, :name => tree_name})
-      else
-        page.replace(:listnav_div, :partial => "layouts/listnav")
-      end
-    end
+    adv_search_redraw_listnav
   end
 
-  def adv_search_button_redraw_search_partials
+  def adv_search_redraw_search_partials(display_mode = nil)
     render :update do |page|
       page << javascript_prologue
-      if %w(load save).include?(params[:button])
-        display_mode = params[:button]
-      else
+      unless %w(load save).include?(display_mode)
         @edit[@expkey][:exp_chosen_report] = nil
         @edit[@expkey][:exp_chosen_search] = nil
-        display_mode = nil
       end
       page.replace("adv_search_body",   :partial => "layouts/adv_search_body",   :locals => {:mode => display_mode})
       page.replace("adv_search_footer", :partial => "layouts/adv_search_footer", :locals => {:mode => display_mode})
@@ -204,29 +212,29 @@ module ApplicationController::AdvancedSearch
 
     case params[:button]
     when "saveit"
-      adv_search_button_saveid
-
-      if params[:button] == "save"
-        @edit[:search_type] = nil unless @edit.key?(:search_type)
-        adv_search_button_redraw_search_partials
+      if adv_search_button_saveid
+        adv_search_redraw_left_div
       else
-        adv_search_button_rebuild_left_div
+        @edit[:search_type] = nil unless @edit.key?(:search_type)
+        adv_search_redraw_search_partials('save')
       end
 
     when "loadit"
       adv_search_button_loadit
-      adv_search_button_redraw_search_partials
-      adv_search_button_rebuild_left_div
+      adv_search_redraw_search_partials
+
+    when 'load'
+      adv_search_redraw_search_partials('load')
 
     when "delete"
       adv_search_button_delete
       adv_search_button_reset_fields
-      adv_search_button_rebuild_left_div
+      adv_search_redraw_left_div
 
     when "reset"
       add_flash(_("The current search details have been reset"), :warning)
       adv_search_button_reset_fields
-      adv_search_button_redraw_search_partials
+      adv_search_redraw_search_partials
 
     when "apply"
       adv_search_button_apply
@@ -259,11 +267,7 @@ module ApplicationController::AdvancedSearch
         @exp_to_load = exp_build_table(MiqReport.for_user(current_user).find(params[:chosen_report]).conditions.exp)
       end
     end
-    render :update do |page|
-      page << javascript_prologue
-      page.replace("adv_search_body", :partial => "layouts/adv_search_body", :locals => {:mode => 'load'})
-      page.replace("adv_search_footer", :partial => "layouts/adv_search_footer", :locals => {:mode => 'load'})
-    end
+    adv_search_redraw_search_partials('load')
   end
 
   # Character typed into search name field
@@ -284,11 +288,7 @@ module ApplicationController::AdvancedSearch
         if x_active_tree.to_s =~ /_filter_tree$/ &&
            !%w(Vm MiqTemplate).include?(TreeBuilder.get_model_for_prefix(@nodetype))
           search_id = 0
-          if %w(configuration_manager_cs_filter_tree automation_manager_cs_filter_tree).include?(x_active_tree)
-            adv_search_build("ConfiguredSystem")
-          else
-            adv_search_build(vm_model_from_active_tree(x_active_tree))
-          end
+          adv_search_build(model_from_active_tree(x_active_tree))
           session[:edit] = @edit # Set because next method will restore @edit from session
         end
         listnav_search_selected(search_id) # Clear or set the adv search filter
