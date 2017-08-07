@@ -51,15 +51,18 @@
       %label.col-md-2.control-label{"for" => "provider_url"}
         = _("Url")
       .col-md-8
-        %input.form-control{:type           => "text",
-                            :name           => "url",
-                            'ng-model'      => "vm.providerForemanModel.url",
-                            :maxlength      => ViewHelper::MAX_DESC_LEN,
-                            "id"            => "url",
-                            :required       => "",
-                            "ng-trim"       => false,
-                            "detect_spaces" => "",
-                            :checkchange    => true}
+        %input.form-control{:type                     => "text",
+                            :name                     => "url",
+                            'ng-model'                => "vm.providerForemanModel.url",
+                            :maxlength                => ViewHelper::MAX_DESC_LEN,
+                            "id"                      => "url",
+                            :required                 => "",
+                            "ng-trim"                 => false,
+                            "detect_spaces"           => "",
+                            :checkchange              => true,
+                            :prefix                   => "default",
+                            "main-scope"              => "vm",
+                            "reset-validation-status" => "default_auth_status"}
         %span.help-block{"ng-show" => "angularForm.url.$error.required"}
           = _("Required")
         %span.help-block{"ng-show" => "angularForm.url.$error.detectedSpaces"}
@@ -68,10 +71,13 @@
       %label.col-md-2.control-label
         = _("Verify Peer Certificate")
       .col-md-8
-        %input{:type            => "checkbox",
-               :name            => "verify_ssl",
-               'ng-model'       => "vm.providerForemanModel.verify_ssl",
-               :checkchange     => true}
+        %input{:type                     => "checkbox",
+               :name                     => "verify_ssl",
+               'ng-model'                => "vm.providerForemanModel.verify_ssl",
+               :prefix                   => "default",
+               "main-scope"              => "vm",
+               "reset-validation-status" => "default_auth_status",
+               :checkchange              => true}
 
 
     %hr
