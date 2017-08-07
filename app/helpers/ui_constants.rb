@@ -499,7 +499,6 @@ module UiConstants
   CHAREGEBACK_ALLOCATED_METHODS = {}
   CHAREGEBACK_ALLOCATED_METHODS[:max] = N_('Maximum')
   CHAREGEBACK_ALLOCATED_METHODS[:avg] = N_('Average')
-  DEFAULT_CHARGEBACK_ALLOCATED_METHOD = CHAREGEBACK_ALLOCATED_METHODS.keys.first
 end
 
 # Make these constants globally available
