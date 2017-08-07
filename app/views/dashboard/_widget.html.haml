@@ -34,8 +34,8 @@
       %widget-report{:id => presenter.widget.id}
     - elsif presenter.widget.content_type == "chart"
       %widget-chart{:id => presenter.widget.id}
-    - elsif %w(rss).include?(presenter.widget.content_type)
-      = render :partial => "widget_#{presenter.widget.content_type}", :locals => {:widget => presenter.widget}
+    - elsif presenter.widget.content_type == "rss"
+      %widget-rss{:id => presenter.widget.id}
     - unless presenter.widget.content_type == "menu"
       = render :partial => 'widget_footer', :locals => {:widget => presenter.widget}
 

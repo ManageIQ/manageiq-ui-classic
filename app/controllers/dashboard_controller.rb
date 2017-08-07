@@ -148,6 +148,14 @@ class DashboardController < ApplicationController
                      :minimized => @sb[:dashboards][@sb[:active_db]][:minimized].include?(params[:id])}
   end
 
+  def widget_rss_data
+    widget = MiqWidget.find(params[:id])
+    content = widget.contents_for_user(current_user).contents.gsub("https://localhost:3000",
+                                                                   "#{request.protocol}#{request.host}:#{request.port}").html_safe
+    render :json => {:content   => content,
+                     :minimized => @sb[:dashboards][@sb[:active_db]][:minimized].include?(params[:id])}
+  end
+
   def show
     @layout    = "dashboard"
     @dashboard = true
