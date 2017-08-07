@@ -132,11 +132,6 @@ class InfraNetworkingController < ApplicationController
     session.delete(:exp_parms)
     @in_a_form = false
 
-    if params[:id]
-      nodetype, id = params[:id].split("-")
-      @reselect_node = self.x_node = "#{nodetype}-#{to_cid(id)}"
-      get_node_info(x_node)
-    end
     render :layout => "application"
   end
 

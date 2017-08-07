@@ -12,7 +12,6 @@
 - allow_reselect              ||= false
 - highlight_changes           ||= false
 - post_check                  ||= false
-- reselect_node               ||= @reselect_node
 - bs_tree                     ||= '{}'
 - min_expand_level            ||= 1
 - tree_id                     ||= "tree_div"
@@ -39,7 +38,6 @@
              :controller         => j(request.parameters[:controller]),
              :silent_activate    => @explorer && tree_name == x_active_tree.to_s,
              :select_node        => select_node,
-             :reselect_node      => reselect_node,
              :highlight_changes  => highlight_changes,
              :expand_parent_nodes=> @expand_parent_nodes,
              :add_nodes          => add_node_key && nodes && tree_name == x_active_tree.to_s,
