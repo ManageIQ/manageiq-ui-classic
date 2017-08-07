@@ -23,6 +23,7 @@ require 'high_voltage'
 require 'lodash-rails'
 require 'jquery-hotkeys-rails'
 require "novnc-rails"
+require 'webpacker'
 
 module ManageIQ
   module UI

@@ -5,6 +5,7 @@ rvm:
 sudo: false
 cache:
   bundler: true
+  yarn: true
   directories:
   - vendor/assets/bower_components
 addons:

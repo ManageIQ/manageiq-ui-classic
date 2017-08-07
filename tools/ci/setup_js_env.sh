@@ -5,8 +5,6 @@ if ! cmp --silent bower.json vendor/assets/bower_components/bower.json; then
   rm -rf vendor/assets/bower_components
 fi
 
-yarn
-
 if [ -d vendor/assets/bower_components ]; then
   # Using bower_components from cache
   echo "bower assets installed... moving on."
@@ -19,3 +17,12 @@ else
   [ $STATUS = 0 ] || exit 1
   [ -d vendor/assets/bower_components ] || exit 1
 fi
+
+# make sure yarn is installed, in the right version
+bundle exec rake webpacker:check_yarn || npm install -g yarn
+
+# install npm dependencies
+yarn
+
+# compile webpacker assets
+bundle exec rake webpack:compile
