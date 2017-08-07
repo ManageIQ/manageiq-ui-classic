@@ -11,7 +11,7 @@ ManageIQ.angular.app.component('authCredentials', {
     enableValidButton: '<',
     validate: '<',
     validateUrl: '@',
-    restfull: '<',
+    restful: '<',
     authenticationRequired: '<',
     formLabels: '<',
     guidRegex: '<',

@@ -3,7 +3,7 @@ ManageIQ.angular.app.component('verifyButton', {
     validate: '<',
     enabled: '<',
     validateUrl: '<',
-    restfull: '<',
+    restful: '<',
     valtype: '<',
     buttonLabels: '<',
   },
@@ -13,7 +13,7 @@ ManageIQ.angular.app.component('verifyButton', {
     var vm = this;
 
     vm.chooseValidation = function() {
-      if (vm.restfull) {
+      if (vm.restful) {
         vm.validate({target: '.validate_button:visible'}, vm.valtype, true);
       } else {
         vm.validate(vm.validateUrl);

@@ -4,7 +4,7 @@ describe TextualSummaryHelper do
   end
 
   context "textual_link" do
-    context "with a restfully-routed model" do
+    context "with a restfuly-routed model" do
       it "uses the restful path to retrieve the summary screen link" do
         ems = FactoryGirl.create(:ems_openstack)
         ems.availability_zones << FactoryGirl.create(:availability_zone_openstack)
