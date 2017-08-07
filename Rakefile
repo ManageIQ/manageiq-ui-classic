@@ -25,8 +25,12 @@ if defined?(RSpec) && defined?(RSpec::Core::RakeTask)
   end
 end
 
-require 'jasmine'
-load 'jasmine/tasks/jasmine.rake'
+# Only load the jasmine tasks if we are within this repo, otherwise, the bundle
+# won't contain the jasmine gem (i.e., from manageiq)
+if ENV["BUNDLE_GEMFILE"].nil? || ENV["BUNDLE_GEMFILE"] == File.expand_path("../Gemfile", __FILE__)
+  require 'jasmine'
+  load 'jasmine/tasks/jasmine.rake'
+end
 
 namespace :spec do
   namespace :javascript do
