@@ -134,6 +134,7 @@ class ApplicationHelper::ToolbarBuilder
   def apply_common_props(button, input)
     button.update(
       :icon    => input[:icon],
+      :color   => input[:color],
       :name    => button[:id],
       :hidden  => button[:hidden] || !!input[:hidden],
       :pressed => input[:pressed],
@@ -245,6 +246,7 @@ class ApplicationHelper::ToolbarBuilder
       :id        => "custom__custom_#{button_id}",
       :type      => :button,
       :icon      => "#{input[:image]} fa-lg",
+      :color     => input[:color],
       :title     => input[:description].to_s,
       :enabled   => options[:enabled],
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
@@ -275,6 +277,7 @@ class ApplicationHelper::ToolbarBuilder
         :id      => "custom_#{group[:id]}",
         :type    => :buttonSelect,
         :icon    => "#{group[:image]} fa-lg",
+        :color   => group[:color],
         :title   => group[:description],
         :enabled => true,
         :items   => group[:buttons].collect { |b| create_custom_button(b, model, record) }
