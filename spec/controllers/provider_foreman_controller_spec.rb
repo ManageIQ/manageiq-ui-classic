@@ -557,16 +557,16 @@ describe ProviderForemanController do
   end
 
   context "#build_credentials" do
-    it "uses params[:log_password] for validation if one exists" do
+    it "uses params[:default_password] for validation if one exists" do
       controller.instance_variable_set(:@_params,
-                                       :log_userid   => "userid",
-                                       :log_password => "password2")
+                                       :default_userid   => "userid",
+                                       :default_password => "password2")
       creds = {:userid => "userid", :password => "password2"}
       expect(controller.send(:build_credentials)).to include(:default => creds)
     end
 
-    it "uses the stored password for validation if params[:log_password] does not exist" do
-      controller.instance_variable_set(:@_params, :log_userid => "userid")
+    it "uses the stored password for validation if params[:default_password] does not exist" do
+      controller.instance_variable_set(:@_params, :default_userid => "userid")
       controller.instance_variable_set(:@provider, @provider)
       expect(@provider).to receive(:authentication_password).and_return('password')
       creds = {:userid => "userid", :password => "password"}
