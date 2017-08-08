@@ -209,9 +209,6 @@ class CatalogController < ApplicationController
       self.x_active_accord = 'sandt'
       st = ServiceTemplate.find_by_id(from_cid(params[:id].split("-").last))
       prefix = st.service_template_catalog_id ? "stc-#{to_cid(st.service_template_catalog_id)}_st-" : "-Unassigned_st-"
-      add_nodes = open_parent_nodes(st)
-      @add_nodes = {}
-      @add_nodes[:sandt_tree] = add_nodes if add_nodes  # Set nodes that need to be added, if any
       self.x_node = "#{prefix}#{to_cid(id)}"
       get_node_info(x_node)
     else
