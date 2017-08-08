@@ -39,10 +39,22 @@ if Rake::Task.task_defined?("assets:precompile")
   Rake::Task["assets:precompile"].enhance do
     Rake::Task["webpack:compile"].invoke
   end
+
+  Rake::Task["assets:precompile"].actions.each do |action|
+    if action.source_location[0].include?(File.join("lib", "tasks", "webpacker"))
+      Rake::Task["assets:precompile"].actions.delete(action)
+    end
+  end
 end
 if Rake::Task.task_defined?("assets:clobber")
   Rake::Task["assets:clobber"].enhance do
     Rake::Task["webpack:clobber"].invoke
+  end
+
+  Rake::Task["assets:clobber"].actions.each do |action|
+    if action.source_location[0].include?(File.join("lib", "tasks", "webpacker"))
+      Rake::Task["assets:clobber"].actions.delete(action)
+    end
   end
 end
 
