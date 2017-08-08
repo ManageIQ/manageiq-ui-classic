@@ -1,0 +1,8 @@
+.container-fluid.container-tiles-pf.aggregate_status{"ng-controller" => "aggregateStatusCardController as vm", "style" => "display:inline-block;"}
+  .row.row-tile-pf
+    .col-xs-12.col-sm-12.col-md-2
+      %pf-aggregate-status-card{"status" => "vm.status", "show-top-border" => "true"}
+    .col-xs-12.col-sm-12.col-md-10
+      .row
+        %div{:class => "col-xs-6.col-sm-6.col-md-3", "ng-repeat" => "status in vm.AggStatus"}
+          %pf-aggregate-status-card{"status" => "status", "show-top-border" => "true"}
