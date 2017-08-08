@@ -60,7 +60,7 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     vm.automationManagerModel.default_userid = data.default_userid;
     vm.automationManagerModel.default_auth_status = data.default_auth_status;
 
-    if (vm.automationManagerModel.default_userid != '') {
+    if (vm.automationManagerModel.default_userid !== '') {
       vm.automationManagerModel.default_password = miqService.storedPasswordPlaceholder;
     }
 
@@ -111,17 +111,17 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     vm.saveClicked();
   };
 
-  vm.validateClicked = function($event, authType, formSubmit, angularForm, url) {
+  vm.validateClicked = function($event, _authType, formSubmit, angularForm, url) {
     miqService.validateWithREST($event, 'default', url, formSubmit)
       .then(function success(data) {
         $scope.$apply(function() {
-          if(data.level == 'error') {
+          if (data.level === 'error') {
             vm.updateAuthStatus(false, angularForm);
           } else {
             vm.updateAuthStatus(true, angularForm);
           }
           miqService.miqFlash(data.level, data.message);
-          miqSparkleOff();
+          miqService.sparkleOff();
         });
       });
   };
@@ -134,19 +134,20 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     if (vm.postValidationModel === undefined) {
       vm.postValidationModel = {
         default: {},
-      }
+      };
     }
     if (prefix === "default") {
+      var defaultPassword;
       if (vm.newRecord) {
-        var default_password = vm.automationManagerModel.default_password;
+        defaultPassword = vm.automationManagerModel.default_password;
       } else {
-        var default_password = vm.automationManagerModel.default_password === "" ? "" : miqService.storedPasswordPlaceholder;
+        defaultPassword = vm.automationManagerModel.default_password === "" ? "" : miqService.storedPasswordPlaceholder;
       }
       vm.postValidationModel.default = {
         url: vm.automationManagerModel.url,
         verify_ssl: vm.automationManagerModel.verify_ssl,
         default_userid: vm.automationManagerModel.default_userid,
-        default_password: default_password,
+        default_password: defaultPassword,
       };
     }
   };
