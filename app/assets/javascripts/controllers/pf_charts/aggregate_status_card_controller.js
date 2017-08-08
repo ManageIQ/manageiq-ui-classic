@@ -34,12 +34,10 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardController', 
     })
 
     $q.all([promiseProviderData]).then(function() {
-      //var iconInfo = self.getIcon(vm.provider);
       vm.status = {
 //         "title": vm.provider.name,
-        "iconImage": "/assets/svg/vendor-vmware.svg",
-        "largeIcon": true,
-//          "iconClass": "/assets/svg/vendor-" + getIcon(vm.provider.type) + ".svg"
+        "iconImage": "/assets/svg/vendor-" + getIcon(vm.provider.type) + ".svg",
+        "largeIcon": true
       };
 
       vm.AggStatus = [];
@@ -60,18 +58,12 @@ angular.module( 'patternfly.card' ).controller('aggregateStatusCardController', 
   }
 
   var getProviderData = function(response) {
-    //var data = response;
-    //alert(JSON.stringify(response))
     Object.assign(vm.provider, response);
   };
 
-  var getIcon = function getIcon(d) {
-    switch(d.item.kind) {
-      case 'InfraManager':
-        return icons[d.item.display_kind];
-      default:
-        return icons[d.item.kind];
-    }
+  var getIcon = function getIcon(providerType) {
+    var type = providerType.split("::");
+    return type[2].toLowerCase();
   };
 
   var getUrl = function(providerId, entity) {
