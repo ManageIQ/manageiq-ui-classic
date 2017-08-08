@@ -1,0 +1,10 @@
+.heatmap{"ng-controller" => "heatmapController as vm"}
+  .row
+    %h3
+      {{vm.title}}
+    .row.row-tile-pf
+      .col-xs-12.col-sm-6.col-md-6
+        .col-xs-6.col-sm-6.col-md-6.example-heatmap-container{"ng-repeat" => "(key, data) in vm.data"}
+          %pf-heatmap{:id => "vm.id", "chart-title" => "key", "data" => "data", "chart-data-available" => "vm.dataAvailable", "show-legend" => "vm.showLegends", "legend-labels" => "vm.legendLabels", "max-block-size" => "20", "block-padding" => "5", "heatmap-color-pattern" => "vm.heatmapColorPattern", "thresholds" => "vm.thresholds", "click-action" => "vm.clickAction", "loading-done" => true}
+          %span.trend-footer-pf
+            = _("Last 30 Days")

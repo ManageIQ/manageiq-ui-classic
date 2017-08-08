@@ -1,5 +1,6 @@
 .ems-infra-dashboard
   = render :partial => "aggregate-status-card"
+  = render :partial => "heatmap"
 
 :javascript
   ManageIQ.angular.app.value('providerId', '#{@record.id}');
