@@ -1,5 +1,11 @@
 module Mixins
   module ManagerControllerMixin
+    extend ActiveSupport::Concern
+
+    included do
+      include Mixins::GenericFormMixin
+    end
+
     def index
       redirect_to :action => 'explorer'
     end
@@ -83,7 +89,7 @@ module Mixins
         add_flash(_("Credential validation was successful"))
       end
 
-      render :json => {:message => @flash_array.last(1)[0][:message], :level => @flash_array.last(1)[0][:level]}
+      render_flash_json
     end
 
     def explorer
