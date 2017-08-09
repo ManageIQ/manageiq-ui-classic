@@ -87,7 +87,7 @@ ManageIQ.qe.gtl = {
   actionsToFunction: function() {
     var startEnd = function(pageNumber) {
       var start = (pageNumber - 1) * this.settings.perpage;
-      var end = start + this.settings.perPage;
+      var end = start + this.settings.perpage;
       return {
         start: start,
         end: end,
@@ -96,7 +96,36 @@ ManageIQ.qe.gtl = {
 
     var goToPage = function(pageNumber) {
       var pageItems = startEnd(pageNumber);
-      this.onLoadNext(pageItems.start, pageItems.end);
+      this.onLoadNext(pageItems.start, this.settings.perpage);
+    }.bind(this);
+
+    var queryItem = function(identificator) {
+      var foundItem;
+      var nameColumn = this.gtlData.cols.filter(function(data) {return data.text === 'Name';});
+      if (nameColumn) {
+        var index = this.gtlData.cols.indexOf(nameColumn[0]);
+        foundItem = this.gtlData.rows.filter(function(oneRow) {
+          return oneRow.cells[index].text === identificator;
+        });
+      }
+      if (foundItem.length === 0) {
+        foundItem = this.gtlData.rows.filter(function(oneRow) {return oneRow.id == identificator;});
+      }
+      return foundItem.length === 1 ? foundItem[0] : {};
+    }.bind(this);
+
+    var processItem = function(item) {
+      return {
+        cells: item.cells.reduce(function(acc, value, index){
+          var colName = this.gtlData.cols[index].text || index;
+          acc[colName] = value.text;
+          return acc;
+        }.bind(this), {}),
+        id: item.id,
+        long_id: item.long_id,
+        quadicon: item.quadicon,
+        img_url: item.img_url
+      }
     }.bind(this);
 
     var getItem = function(item) {
@@ -116,7 +145,7 @@ ManageIQ.qe.gtl = {
           this.onItemClicked(item, document.createEvent('Event'));
           this.$scope.$digest();
         }.bind(this),
-        item: item,
+        item: processItem(item),
       };
     }.bind(this);
     return {
@@ -148,7 +177,7 @@ ManageIQ.qe.gtl = {
       'first_page': function() {
         goToPage(1);
       },
-      'perevious_page': function() {
+      'previous_page': function() {
         goToPage(this.settings.current - 1);
       },
       'next_page': function() {
@@ -167,7 +196,7 @@ ManageIQ.qe.gtl = {
         return this.settings.perpage;
       },
       'set_items_per_page': function(itemsPerPage) {
-        this.settings.perPage = itemsPerPage;
+        this.settings.perpage = itemsPerPage;
         goToPage(this.settings.current);
       },
       'get_sorting': function() {
@@ -179,6 +208,13 @@ ManageIQ.qe.gtl = {
         return result;
       },
       'set_sorting': function(sortBy) {
+        if (sortBy.columnName) {
+          sortBy.columnId = this.gtlData.cols.indexOf(
+            this.gtlData.cols.filter(function(item) {
+              return item.text === sortBy.columnName;
+            })[0]
+          );
+        }
         this.onSort(sortBy.columnId, sortBy.isAscending);
       },
       'get_all_items': function() {
@@ -190,23 +226,19 @@ ManageIQ.qe.gtl = {
         return responseData;
       },
       'get_item': function(identificator) {
-        var foundItem;
-        var nameColumn = this.gtlData.cols.filter(function(data) {return data.text === 'Name';});
-        if (nameColumn) {
-          var index = this.gtlData.cols.indexOf(nameColumn[0]);
-          foundItem = this.gtlData.rows.filter(function(oneRow) {
-            return oneRow.cells[index].text === identificator;
-          });
-        }
-        if (foundItem.length === 0) {
-          foundItem = this.gtlData.rows.filter(function(oneRow) {return oneRow.id == identificator;});
-        }
-        if (foundItem.length === 1) {
-          var responseData = getItem(foundItem[0]);
+        var foundItem = queryItem(identificator);
+        if (foundItem.id) {
+          var responseData = getItem(foundItem);
           ManageIQ.qe.gtl.result = responseData;
           return responseData;
         }
-        return {};
+        ManageIQ.qe.gtl.result = foundItem;
+        return foundItem;
+      },
+      'is_displayed': function(identificator) {
+        var foundItem = queryItem(identificator);
+        ManageIQ.qe.gtl.result = foundItem.id ? true : false;
+        return foundItem.id ? true : false;
       },
     };
   },
