@@ -62,6 +62,15 @@
                        "checkchange"                 => "",
                        "required"                    => "",
                        "selectpicker-for-select-tag" => "")
+    .form-group{"ng-class" => "{'has-error': angularForm.alerts.$invalid}"}
+      %label.col-md-2.control-label{"for" => "prov_alerts"}
+        = _("Alerts")
+      .col-md-8
+        = select_tag('alerts_selection', options_for_select([[_("Disabled"), "disabled"], [_("Prometheus"), "prometheus"]]),
+                        "ng-model"                    => "emsCommonModel.alerts_selection",
+                        "checkchange"                 => "",
+                        "required"                    => "",
+                        "selectpicker-for-select-tag" => "")
 
     .form-group{"ng-class" => "{'has-error': angularForm.metrics.$invalid}"}
       %label.col-md-2.control-label{"for" => "prov_metrics"}
