@@ -36,7 +36,7 @@ class UserValidationService
     start_url = session[:start_url] # Hang on to the initial start URL
     db_user = User.find_by_userid(user[:name])
     session_reset
-    feature = missing_user_features(db_user)
+    feature = User.missing_user_features(db_user)
     return ValidateResult.new(
       :fail,
       _("Login not allowed, User's %{feature} is missing. Please contact the administrator") % {:feature => feature}
@@ -56,16 +56,6 @@ class UserValidationService
       return ValidateResult.new(:fail, _("The user's role is not authorized for any access, please contact the administrator!"))
     end
     ValidateResult.new(:pass, nil, startpage)
-  end
-
-  def missing_user_features(db_user)
-    if !db_user || !db_user.userid
-      "User"
-    elsif !db_user.current_group
-      "Group"
-    elsif !db_user.current_group.miq_user_role
-      "Role"
-    end
   end
 
   private
