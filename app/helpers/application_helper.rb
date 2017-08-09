@@ -285,6 +285,8 @@ module ApplicationHelper
             "ansible_credential"
           elsif record.kind_of?(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
             "ansible_repository"
+          elsif record.kind_of?(ManageIQ::Providers::Foreman::ConfigurationManager)
+            "provider_foreman"
           elsif record.class.respond_to?(:db_name)
             record.class.db_name
           else
