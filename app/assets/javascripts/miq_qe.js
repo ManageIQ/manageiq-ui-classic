@@ -101,7 +101,6 @@ ManageIQ.qe.gtl = {
 
     var queryItem = function(identificator) {
       var foundItem;
-      var result = {};
       var nameColumn = this.gtlData.cols.filter(function(data) {return data.text === 'Name';});
       if (nameColumn) {
         var index = this.gtlData.cols.indexOf(nameColumn[0]);
@@ -112,20 +111,21 @@ ManageIQ.qe.gtl = {
       if (foundItem.length === 0) {
         foundItem = this.gtlData.rows.filter(function(oneRow) {return oneRow.id == identificator;});
       }
-      if (foundItem.length === 1) {
-        result = {
-          cells: foundItem[0].cells.reduce(function(acc, value, index){
-            var colName = this.gtlData.cols[index].text || index;
-            acc[colName] = value.text;
-            return acc;
-          }.bind(this), {}),
-          id: foundItem[0].id,
-          long_id: foundItem[0].long_id,
-          quadicon: foundItem[0].quadicon,
-          img_url: foundItem[0].img_url
-        }
+      return foundItem.length === 1 ? foundItem[0] : {};
+    }.bind(this);
+
+    var processItem = function(item) {
+      return {
+        cells: item.cells.reduce(function(acc, value, index){
+          var colName = this.gtlData.cols[index].text || index;
+          acc[colName] = value.text;
+          return acc;
+        }.bind(this), {}),
+        id: item.id,
+        long_id: item.long_id,
+        quadicon: item.quadicon,
+        img_url: item.img_url
       }
-      return result;
     }.bind(this);
 
     var getItem = function(item) {
@@ -145,7 +145,7 @@ ManageIQ.qe.gtl = {
           this.onItemClicked(item, document.createEvent('Event'));
           this.$scope.$digest();
         }.bind(this),
-        item: item,
+        item: processItem(item),
       };
     }.bind(this);
     return {
