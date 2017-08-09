@@ -104,7 +104,7 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
     angularForm.default_auth_status.$setViewValue(updatedValue);
   };
 
-  $scope.postValidationModelRegistry = function(prefix) {
+  vm.postValidationModelRegistry = function(prefix) {
     if (vm.postValidationModel === undefined) {
       vm.postValidationModel = {
         default: {},
