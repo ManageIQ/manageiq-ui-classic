@@ -28,6 +28,8 @@
 
     - if presenter.widget.content_type == "menu"
       %widget-menu{:id => presenter.widget.id}
+        Loading...
+      =javascript_pack_tag 'hello_angular'
     - elsif presenter.widget.contents_for_user(current_user).blank?
       = render :partial => 'widget_blank', :locals => {:widget => presenter.widget}
     - elsif %w(report chart rss).include?(presenter.widget.content_type)
