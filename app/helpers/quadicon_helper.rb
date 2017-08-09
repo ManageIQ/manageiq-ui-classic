@@ -154,7 +154,7 @@ module QuadiconHelper
   # FIXME: Even better would be to ask the object what method to use
   def quadicon_builder_factory(item, options)
     case quadicon_builder_name_from(item)
-    when 'service', 'service_template', 'service_ansible_tower', 'service_template_ansible_tower'
+    when 'service', 'service_template', 'service_ansible_tower', 'service_template_ansible_tower', 'service_template_orchestration'
       render_service_quadicon(item, options)
     when 'resource_pool'         then render_resource_pool_quadicon(item, options)
     when 'host'                  then render_host_quadicon(item, options)
@@ -333,6 +333,7 @@ module QuadiconHelper
     Repository
     Service
     ServiceTemplate
+    ServiceTemplateOrchestration
     Storage
     ServiceAnsibleTower
     ServiceTemplateAnsibleTower
