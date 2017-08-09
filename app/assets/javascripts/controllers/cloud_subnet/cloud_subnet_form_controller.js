@@ -14,6 +14,7 @@ ManageIQ.angular.app.controller('cloudSubnetFormController', ['cloudSubnetFormId
     vm.formId = cloudSubnetFormId;
     vm.model = "cloudSubnetModel";
     vm.newRecord = cloudSubnetFormId === "new";
+    ManageIQ.angular.scope = vm;
     vm.saveable = miqService.saveable;
 
     if (vm.newRecord) {
@@ -34,8 +35,8 @@ ManageIQ.angular.app.controller('cloudSubnetFormController', ['cloudSubnetFormId
         vm.cloudSubnetModel.network_protocol = data.network_protocol;
         vm.afterGet = true;
         vm.modelCopy = angular.copy( vm.cloudSubnetModel );
+        miqService.sparkleOff();
       }).catch(miqService.handleFailure);
-      miqService.sparkleOff();
     }
   };
 
