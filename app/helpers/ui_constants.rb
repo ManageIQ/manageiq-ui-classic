@@ -6,38 +6,6 @@ module UiConstants
   TIMELINES_FOLDER = File.join(Rails.root, "product/timelines")
   TOOLBARS_FOLDER = File.join(Rails.root, "product/toolbars")
 
-  # Theme settings - each subitem will be set in @settings[:css][:<subitem>] based on the selected theme
-  THEME_CSS_SETTINGS = {
-    "red"           => {
-      :font_color       => "#c00",
-      :background_color => "#c00"
-    },
-    "orange"        => {
-      :font_color       => "#ff8a00",
-      :background_color => "#ff8a00"
-    },
-    "yellow"        => {
-      :font_color       => "#ffe400",
-      :background_color => "#ffe400"
-    },
-    "green"         => {
-      :font_color       => "#6b9130",
-      :background_color => "#6b9130"
-    },
-    "blue"          => {
-      :font_color       => "#0c7ad7",
-      :background_color => "#0c7ad7"
-    },
-    "manageiq-blue" => {
-      :font_color       => "#0c7ad7",
-      :background_color => "#187aa2"
-    },
-    "black"         => {
-      :font_color       => "#000",
-      :background_color => "#000"
-    }
-  }
-
   # Default UI settings
   DEFAULT_SETTINGS = {
     :quadicons => { # Show quad icons, by resource type
