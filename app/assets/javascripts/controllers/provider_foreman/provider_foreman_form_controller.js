@@ -1,15 +1,9 @@
-ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$scope', 'providerForemanFormId', 'miqService', function($http, $scope, providerForemanFormId, miqService) {
+ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$scope', 'providerForemanFormId', 'miqService', 'configurationManagerService', function($http, $scope, providerForemanFormId, miqService, configurationManagerService) {
   var vm = this;
 
-  vm.providerForemanModel = {
-    name: '',
-    url: '',
-    zone: '',
-    verify_ssl: '',
-    default_userid: '',
-    default_password: '',
-    default_auth_status: false,
-  };
+  vm.providerForemanModel = configurationManagerService.managerModel;
+
+  vm.postValidationModel = {};
 
   vm.formId = providerForemanFormId;
   vm.afterGet = false;
@@ -18,6 +12,7 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
   vm.checkAuthentication = true;
 
   vm.saveable = miqService.saveable;
+  vm.validateClicked = configurationManagerService.validateClicked;
 
   ManageIQ.angular.scope = vm;
 
@@ -85,45 +80,8 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
     vm.saveClicked(angularForm);
   };
 
-  vm.validateClicked = function($event, _authType, formSubmit, angularForm, url) {
-    miqService.validateWithREST($event, 'default', url, formSubmit)
-      .then(function success(data) {
-        $scope.$apply(function() {
-          if (data.level === 'error') {
-            vm.updateAuthStatus(false, angularForm);
-          } else {
-            vm.updateAuthStatus(true, angularForm);
-          }
-          miqService.miqFlash(data.level, data.message);
-          miqService.sparkleOff();
-        });
-      });
-  };
-
-  vm.updateAuthStatus = function(updatedValue, angularForm) {
-    angularForm.default_auth_status.$setViewValue(updatedValue);
-  };
-
   vm.postValidationModelRegistry = function(prefix) {
-    if (vm.postValidationModel === undefined) {
-      vm.postValidationModel = {
-        default: {},
-      };
-    }
-    if (prefix === "default") {
-      var defaulPassword;
-      if (vm.newRecord) {
-        defaulPassword = vm.providerForemanModel.default_password;
-      } else {
-        defaulPassword = vm.providerForemanModel.default_password === "" ? "" : miqService.storedPasswordPlaceholder;
-      }
-      vm.postValidationModel.default = {
-        url: vm.providerForemanModel.url,
-        verify_ssl: vm.providerForemanModel.verify_ssl,
-        default_userid: vm.providerForemanModel.default_userid,
-        default_password: defaulPassword,
-      };
-    }
+    configurationManagerService.postValidationModelRegistry(prefix, vm.newRecord, vm.postValidationModel, vm.providerForemanModel);
   };
 
   function getProviderForemanFormData(response) {

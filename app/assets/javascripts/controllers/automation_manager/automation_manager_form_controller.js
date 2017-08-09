@@ -1,18 +1,14 @@
-ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', function($http, $scope, automationManagerFormId, miqService) {
+ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', 'configurationManagerService', function($http, $scope, automationManagerFormId, miqService, configurationManagerService) {
   var vm = this;
 
-  vm.automationManagerModel = {
-    name: '',
-    url: '',
-    zone: '',
-    verify_ssl: '',
-    default_userid: '',
-    default_password: '',
-    default_auth_status: false,
-  };
+  vm.automationManagerModel = configurationManagerService.managerModel;
+
+  vm.postValidationModel = {};
+
   vm.formId = automationManagerFormId;
   vm.afterGet = false;
   vm.saveable = miqService.saveable;
+  vm.validateClicked = configurationManagerService.validateClicked;
   vm.modelCopy = angular.copy(vm.automationManagerModel);
   vm.model = 'automationManagerModel';
   vm.checkAuthentication = true;
@@ -111,44 +107,7 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     vm.saveClicked();
   };
 
-  vm.validateClicked = function($event, _authType, formSubmit, angularForm, url) {
-    miqService.validateWithREST($event, 'default', url, formSubmit)
-      .then(function success(data) {
-        $scope.$apply(function() {
-          if (data.level === 'error') {
-            vm.updateAuthStatus(false, angularForm);
-          } else {
-            vm.updateAuthStatus(true, angularForm);
-          }
-          miqService.miqFlash(data.level, data.message);
-          miqService.sparkleOff();
-        });
-      });
-  };
-
-  vm.updateAuthStatus = function(updatedValue, angularForm) {
-    angularForm.default_auth_status.$setViewValue(updatedValue);
-  };
-
   vm.postValidationModelRegistry = function(prefix) {
-    if (vm.postValidationModel === undefined) {
-      vm.postValidationModel = {
-        default: {},
-      };
-    }
-    if (prefix === "default") {
-      var defaultPassword;
-      if (vm.newRecord) {
-        defaultPassword = vm.automationManagerModel.default_password;
-      } else {
-        defaultPassword = vm.automationManagerModel.default_password === "" ? "" : miqService.storedPasswordPlaceholder;
-      }
-      vm.postValidationModel.default = {
-        url: vm.automationManagerModel.url,
-        verify_ssl: vm.automationManagerModel.verify_ssl,
-        default_userid: vm.automationManagerModel.default_userid,
-        default_password: defaultPassword,
-      };
-    }
+    configurationManagerService.postValidationModelRegistry(prefix, vm.newRecord, vm.postValidationModel, vm.automationManagerModel);
   };
 }]);
