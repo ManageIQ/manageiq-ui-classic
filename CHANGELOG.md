@@ -2,6 +2,48 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased - as of Sprint 66 end 2017-08-07
+
+### Added
+- Automation-Automate
+  - Create a box in new dialog automatically [(#1791)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1791)
+  - Generic Object Instances UI - `show_list` and `show` [(#1765)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1765)
+  - Use the fonticon picker component to pick custom button icons [(#1801)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1801)
+- Compute-Containers
+  - Add container limits to container summary page [(#1401)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1401)
+  - Kibana SSO encoding of query parameters in the url [(#1741)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1741)
+- Formatting-Styling: Introducing custom and colored fonticons for CustomButtons [(#1685)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1685)
+- Generic Objects
+  - Generic Object Classes Listview - bells and whistles [(#1788)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1788)
+  - Generic Objects UI [(#1724)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1724)
+  - fonticon and fileicon for Generic Object Definition records [(#1787)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1787)
+  - Update generic object decorator [(#1825)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1825)
+  - Updating generic object defintion decorator [(#1812)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1812)
+  - Add more details in Generic Object Class Summary screen [(#1800)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1800)
+- GTLs: Report data api [(#1750)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1750)
+- Toolbars: Enablement and Visibility expression UI for custom buttons [(#1792)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1792)
+- Services: Added input field for max playbook_ttl value [(#1742)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1742)
+
+### Fixed
+- Automation-Automate
+  - Adding an Automate Task schedule: remove time_zone as the last Attribute/Value pair [(#1794)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1794)
+  - Changed Domain/Namespace add/edit flash messages to be consistent [(#1814)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1814)
+  - Correct label text wording for Custom Button Group summary page. [(#1777)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1777)
+  - Corrected duplicate flash message of reset button in priority order [(#1813)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1813)
+- Cloud-Intel
+  - Fixed issue with downloading report [(#1827)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1827)
+  - Fixed code to only set data/headers if column exists in Report col headers. [(#1842)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1842)
+- Compute-Cloud: Fix button actions on Availability Zone nested resources [(#1631)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1631)
+- Display checkable folders in the Alert Profile Assignment tree for `ems_folder` [(#1747)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1747)
+- Fix HAML indentation for Report Widget fragment [(#1782)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1782)
+- Fix breaking VMs page after closing user input dialog [(#668)](https://github.com/ManageIQ/manageiq-ui-classic/pull/668)
+- Zone select shows only zones in current region [(#1769)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1769)
+- Allow copying/focusing in disabled codemirror editor [(#1758)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1758)
+- Change GET to POST route report data [(#1833)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1833)
+- Fix a syntax error in miq_qe.js [(#1799)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1799)
+- restyle cell so that Instance Type doesn't wrap [(#1746)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1746)
+- Modify the API params to support filtering on non-column methods [(#1711)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1711)
+
 ## Unreleased - as of Sprint 65 end 2017-07-24
 
 ### Added
