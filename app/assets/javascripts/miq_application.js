@@ -1646,6 +1646,11 @@ function miqUncompressedId(id) {
 function queryParam(name) { return QS(window.location.href).get(name); }
 
 function miqFormatNotification(text, bindings) {
+  if (!text) {
+    // prevent Jed exceptions when a notification has missing text (__(undefined))
+    return "";
+  }
+
   var str = __(text);
   _.each(bindings, function (value, key) {
     str = str.replace(new RegExp('%{' + key + '}', 'g'), value.text);
