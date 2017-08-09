@@ -101,17 +101,31 @@ ManageIQ.qe.gtl = {
 
     var queryItem = function(identificator) {
       var foundItem;
-        var nameColumn = this.gtlData.cols.filter(function(data) {return data.text === 'Name';});
-        if (nameColumn) {
-          var index = this.gtlData.cols.indexOf(nameColumn[0]);
-          foundItem = this.gtlData.rows.filter(function(oneRow) {
-            return oneRow.cells[index].text === identificator;
-          });
+      var result = {};
+      var nameColumn = this.gtlData.cols.filter(function(data) {return data.text === 'Name';});
+      if (nameColumn) {
+        var index = this.gtlData.cols.indexOf(nameColumn[0]);
+        foundItem = this.gtlData.rows.filter(function(oneRow) {
+          return oneRow.cells[index].text === identificator;
+        });
+      }
+      if (foundItem.length === 0) {
+        foundItem = this.gtlData.rows.filter(function(oneRow) {return oneRow.id == identificator;});
+      }
+      if (foundItem.length === 1) {
+        result = {
+          cells: foundItem[0].cells.reduce(function(acc, value, index){
+            var colName = this.gtlData.cols[index].text || index;
+            acc[colName] = value.text;
+            return acc;
+          }.bind(this), {}),
+          id: foundItem[0].id,
+          long_id: foundItem[0].long_id,
+          quadicon: foundItem[0].quadicon,
+          img_url: foundItem[0].img_url
         }
-        if (foundItem.length === 0) {
-          foundItem = this.gtlData.rows.filter(function(oneRow) {return oneRow.id == identificator;});
-        }
-        return foundItem.length === 1 ? foundItem[0] : {};
+      }
+      return result;
     }.bind(this);
 
     var getItem = function(item) {
@@ -194,6 +208,13 @@ ManageIQ.qe.gtl = {
         return result;
       },
       'set_sorting': function(sortBy) {
+        if (sortBy.columnName) {
+          sortBy.columnId = this.gtlData.cols.indexOf(
+            this.gtlData.cols.filter(function(item) {
+              return item.text === sortBy.columnName;
+            })[0]
+          );
+        }
         this.onSort(sortBy.columnId, sortBy.isAscending);
       },
       'get_all_items': function() {
@@ -217,7 +238,7 @@ ManageIQ.qe.gtl = {
       'is_displayed': function(identificator) {
         var foundItem = queryItem(identificator);
         ManageIQ.qe.gtl.result = foundItem.id ? true : false;
-        return foundItem;
+        return foundItem.id ? true : false;
       },
     };
   },
