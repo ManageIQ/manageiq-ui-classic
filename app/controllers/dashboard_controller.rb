@@ -2,17 +2,6 @@ class DashboardController < ApplicationController
   include DashboardHelper
   include StartUrl
 
-  # UI Themes
-  THEMES = [
-    [_("Red"), "red"],
-    [_("Orange"), "orange"],
-    [_("Yellow"), "yellow"],
-    [_("Green"), "green"],
-    [_("Blue"), "blue"],
-    [_("ManageIQ-Blue"), "manageiq-blue"],
-    [_("Black"), "black"]
-  ].freeze
-
   menu_section :vi
 
   @@items_per_page = 8
@@ -382,9 +371,7 @@ class DashboardController < ApplicationController
       @user_name     = params[:user_name]
       @user_password = params[:user_password]
     end
-    css = settings(:css) # Save prior CSS settings
     @settings = copy_hash(DEFAULT_SETTINGS)               # Need settings, else pages won't display
-    @settings[:css] = css if css                          # Restore CSS settings for other tabs previusly logged in
     @more = params[:type] && params[:type] != "less"
     flash[:notice] = _("Session was timed out due to inactivity. Please log in again.") if params[:timeout] == "true"
     logon_details = MiqServer.my_server(true).logon_status_details
@@ -693,16 +680,6 @@ class DashboardController < ApplicationController
       @settings.each { |key, value| value.merge!(db_user.settings[key]) unless db_user.settings[key].nil? }
       @settings[:default_search] = db_user.settings[:default_search]  # Get the user's default search setting
     end
-
-    # Copy ALL display settings into the :css hash so we can easily add new settings
-    @settings[:css] ||= {}
-    @settings[:css].merge!(@settings[:display])
-    @settings.store_path(:display, :theme, THEMES.first.last) unless THEMES.collect(&:last).include?(settings(:display, :theme))
-    @settings[:css].merge!(THEME_CSS_SETTINGS[settings(:display, :theme)])
-
-    @css ||= {}
-    @css.merge!(@settings[:display])
-    @css.merge!(THEME_CSS_SETTINGS[settings(:display, :theme)])
 
     session[:user_TZO] = params[:user_TZO] ? params[:user_TZO].to_i : nil     # Grab the timezone (future use)
     session[:browser] ||= Hash.new("Unknown")
