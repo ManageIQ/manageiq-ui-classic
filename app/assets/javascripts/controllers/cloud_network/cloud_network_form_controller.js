@@ -7,6 +7,7 @@ ManageIQ.angular.app.controller('cloudNetworkFormController', ['cloudNetworkForm
     vm.formId = cloudNetworkFormId;
     vm.model = "cloudNetworkModel";
     vm.newRecord = cloudNetworkFormId === "new";
+    ManageIQ.angular.scope = vm;
     vm.saveable = miqService.saveable;
 
     if (vm.newRecord) {
@@ -32,8 +33,8 @@ ManageIQ.angular.app.controller('cloudNetworkFormController', ['cloudNetworkForm
         vm.cloudNetworkModel.vlan_transparent = data.vlan_transparent;
         vm.afterGet = true;
         vm.modelCopy = angular.copy( vm.cloudNetworkModel );
+        miqService.sparkleOff();
       }).catch(miqService.handleFailure);
-      miqService.sparkleOff();
     }
   };
 
