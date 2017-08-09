@@ -2,6 +2,10 @@ module Mixins
   module EmsCommonAngular
     extend ActiveSupport::Concern
 
+    included do
+      include Mixins::GenericFormMixin
+    end
+
     def update
       assert_privileges("#{permission_prefix}_edit")
       case params[:button]
@@ -69,7 +73,7 @@ module Mixins
         add_flash(_("Credential validation was not successful: %{details}") % {:details => strip_tags(details)}, :error)
       end
 
-      render :json => {:message => @flash_array.last(1)[0][:message], :level => @flash_array.last(1)[0][:level]}
+      render_flash_json
     end
 
     def create

@@ -15,5 +15,9 @@ module Mixins
         render_flash unless @flash_array.nil? || performed?
       end
     end
+
+    def render_flash_json
+      render :json => {:message => @flash_array.last(1)[0][:message], :level => @flash_array.last(1)[0][:level]}
+    end
   end
 end
