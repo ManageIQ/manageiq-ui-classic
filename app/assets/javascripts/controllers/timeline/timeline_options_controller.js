@@ -22,21 +22,21 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['$http', '$scope',
     vm.availableCategories = categories;
   };
 
-  $scope.eventTypeUpdated = function() {
+  vm.eventTypeUpdated = function() {
     vm.reportModel.tl_categories = [];
   };
 
-  $scope.countDecrement = function() {
+  vm.countDecrement = function() {
     if (vm.reportModel.tl_range_count > 1) {
       vm.reportModel.tl_range_count--;
     }
   };
 
-  $scope.countIncrement = function() {
+  vm.countIncrement = function() {
     vm.reportModel.tl_range_count++;
   };
 
-  $scope.applyButtonClicked = function() {
+  vm.applyButtonClicked = function() {
     if (vm.reportModel.tl_categories.length === 0) {
       return;
     }

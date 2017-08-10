@@ -24,8 +24,8 @@
                   'ng-model'                    => 'vm.reportModel.tl_show',
                   "selectpicker-for-select-tag" => '',
                   :class                        => 'selectpicker',
-                  'ng-change'                   => 'eventTypeUpdated()')
-                %span{'ng-if' => 'reportModel.tl_show === "timeline"'}
+                  'ng-change'                   => 'vm.eventTypeUpdated()')
+                %span{'ng-if' => 'vm.reportModel.tl_show === "timeline"'}
                   = select_tag("tl_category_management",
                     options_for_select(@tl_options.management.events.keys.sort, nil),
                     'ng-model'                    => 'vm.reportModel.tl_categories',
@@ -66,12 +66,12 @@
               %div{'class' => 'timeline-date-box'}
                 .input-group.bootstrap-touchspin.timeline-stepper.pull-left
                   %span.input-group-btn
-                    %button.btn.btn-default.bootstrap-touchspin-down{"ng-click" => "countDecrement()", :type => "button"} -
+                    %button.btn.btn-default.bootstrap-touchspin-down{"ng-click" => "vm.countDecrement()", :type => "button"} -
                   %input.timeline-range-input.bootstrap-touchspin.form-control{"ng-model" => "vm.reportModel.tl_range_count",
                                                                                 :readonly => "readonly",
                                                                                 :type     => "text"}
                   %span.input-group-btn
-                    %button.btn.btn-default.bootstrap-touchspin-up{"ng-click" => "countIncrement()", :type => "button"} +
+                    %button.btn.btn-default.bootstrap-touchspin-up{"ng-click" => "vm.countIncrement()", :type => "button"} +
                 = select_tag("tl_range",
                   options_for_select([[_("Days"), "days"],
                                       [_("Weeks"), "weeks"],
@@ -91,7 +91,7 @@
                       'date'    => 'vm.reportModel.tl_date',
                       'class'   => 'pull-righto timeline-date-input'}
             %div
-              .btn.btn-default{'ng-click'    => 'applyButtonClicked()',
+              .btn.btn-default{'ng-click'    => 'vm.applyButtonClicked()',
                               'ng-disabled' => 'vm.reportModel.tl_categories.length === 0',
                               'class'       => 'timeline-apply'}
                 = _("Apply")
