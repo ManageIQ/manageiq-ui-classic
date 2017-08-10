@@ -1986,20 +1986,8 @@ class CatalogController < ApplicationController
     replace_trees_by_presenter(presenter, trees)
 
     if @sb[:buttons_node]
-      if action == "button_edit"
-        right_cell_text = if @custom_button && @custom_button.id
-                            _("Editing Button \"%{name}\"") % {:name => @custom_button.name}
-                          else
-                            _("Adding a new Button")
-                          end
-      elsif action == "group_edit"
-        right_cell_text = if @custom_button_set && @custom_button_set.id
-                            _("Editing Button Group \"%{name}\"") % {:name => @custom_button_set.name.split('|').first}
-                          else
-                            _("Adding a new Button Group")
-                          end
-      elsif action == "group_reorder"
-        right_cell_text = _("Buttons Group Reorder")
+      if action == "group_reorder"
+        right_cell_text = _("Button Group Reorder")
       end
     end
     presenter[:right_cell_text] = right_cell_text
