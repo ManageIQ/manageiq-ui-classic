@@ -2,8 +2,9 @@
 
 #tl_options_div
   %form#form_div{:name           => 'angularForm',
-                 'ng-controller' => 'timelineOptionsController',
-                 'ng-show'       => 'afterGet',
+                 'ng-controller' => 'timelineOptionsController as vm',
+                 'ng-show'       => 'vm.afterGet',
+                 'miq-form'      => true,
                  :novalidate     => true}
     - if @timeline
       %h3
@@ -20,14 +21,14 @@
               %div{'class' => 'timeline-filterbar'}
                 = select_tag("tl_show",
                   options_for_select(ApplicationController::Timelines::SELECT_EVENT_TYPE.map {|key, value| [_(key), value]}, nil),
-                  'ng-model'                    => 'reportModel.tl_show',
+                  'ng-model'                    => 'vm.reportModel.tl_show',
                   "selectpicker-for-select-tag" => '',
                   :class                        => 'selectpicker',
                   'ng-change'                   => 'eventTypeUpdated()')
                 %span{'ng-if' => 'reportModel.tl_show === "timeline"'}
                   = select_tag("tl_category_management",
                     options_for_select(@tl_options.management.events.keys.sort, nil),
-                    'ng-model'                    => 'reportModel.tl_categories',
+                    'ng-model'                    => 'vm.reportModel.tl_categories',
                     "selectpicker-for-select-tag" => '',
                     'data-live-search'            => 'true',
                     'data-actions-box'            => 'true',
@@ -35,10 +36,10 @@
                     'data-deselect-all-text'      => _('Deselect All'),
                     'multiple'                    => '',
                     :class                        => 'selectpicker category-selector')
-                %span{'ng-if' => 'reportModel.tl_show !== "timeline"'}
+                %span{'ng-if' => 'vm.reportModel.tl_show !== "timeline"'}
                   = select_tag("tl_category_policy",
                     options_for_select(@tl_options.policy.events.keys.sort, nil),
-                    'ng-model'                    => 'reportModel.tl_categories',
+                    'ng-model'                    => 'vm.reportModel.tl_categories',
                     "selectpicker-for-select-tag" => '',
                     'data-live-search'            => 'true',
                     'data-actions-box'            => 'true',
@@ -46,27 +47,27 @@
                     'data-deselect-all-text'      => _('Deselect All'),
                     'multiple'                    => '',
                     :class                        => 'selectpicker category-selector')
-                %span{'ng-if' => 'reportModel.tl_show === "timeline"', 'class' => 'timeline-option'}
+                %span{'ng-if' => 'vm.reportModel.tl_show === "timeline"', 'class' => 'timeline-option'}
                   %label
                     %input{:type         => 'checkbox',
                             :name         => 'showDetailedEvents',
-                            'ng-model'    => 'reportModel.showDetailedEvents'}
+                            'ng-model'    => 'vm.reportModel.showDetailedEvents'}
                     = _("Show Detailed Events")
-                %span{'ng-if' => 'reportModel.tl_show !== "timeline"', 'class' => 'timeline-option'}
+                %span{'ng-if' => 'vm.reportModel.tl_show !== "timeline"', 'class' => 'timeline-option'}
                   %label.radio
-                    %input{"ng-model" => "reportModel.tl_result", :type => "radio", :value => "success"}
+                    %input{"ng-model" => "vm.reportModel.tl_result", :type => "radio", :value => "success"}
                     = _("Successful Events")
                   %label.radio
-                    %input{"ng-model" => "reportModel.tl_result", :type => "radio", :value => "failure"}
+                    %input{"ng-model" => "vm.reportModel.tl_result", :type => "radio", :value => "failure"}
                     = _("Failed Events")
                   %label.radio
-                    %input{"ng-model" => "reportModel.tl_result", :type => "radio", :value => "both"}
+                    %input{"ng-model" => "vm.reportModel.tl_result", :type => "radio", :value => "both"}
                     = _("Both")
               %div{'class' => 'timeline-date-box'}
                 .input-group.bootstrap-touchspin.timeline-stepper.pull-left
                   %span.input-group-btn
                     %button.btn.btn-default.bootstrap-touchspin-down{"ng-click" => "countDecrement()", :type => "button"} -
-                  %input.timeline-range-input.bootstrap-touchspin.form-control{"ng-model" => "reportModel.tl_range_count",
+                  %input.timeline-range-input.bootstrap-touchspin.form-control{"ng-model" => "vm.reportModel.tl_range_count",
                                                                                 :readonly => "readonly",
                                                                                 :type     => "text"}
                   %span.input-group-btn
@@ -75,23 +76,23 @@
                   options_for_select([[_("Days"), "days"],
                                       [_("Weeks"), "weeks"],
                                       [_("Months"), "months"]], nil),
-                  'ng-model'                    => 'reportModel.tl_timerange',
+                  'ng-model'                    => 'vm.reportModel.tl_timerange',
                   "selectpicker-for-select-tag" => '',
                   :class                        => 'selectpicker pull-left')
                 = select_tag("tl_timepivot",
                   options_for_select([[_("centered"), "centered"],
                                       [_("starting"), "starting"],
                                       [_("ending"), "ending"]], nil),
-                  'ng-model'                    => 'reportModel.tl_timepivot',
+                  'ng-model'                    => 'vm.reportModel.tl_timepivot',
                   "selectpicker-for-select-tag" => '',
                   :class                        => 'selectpicker pull-left timeline-pivot-input')
                 %input{'pf-datepicker' => '',
-                      'options' => 'dateOptions',
-                      'date'    => 'reportModel.tl_date',
+                      'options' => 'vm.dateOptions',
+                      'date'    => 'vm.reportModel.tl_date',
                       'class'   => 'pull-righto timeline-date-input'}
             %div
               .btn.btn-default{'ng-click'    => 'applyButtonClicked()',
-                              'ng-disabled' => 'reportModel.tl_categories.length === 0',
+                              'ng-disabled' => 'vm.reportModel.tl_categories.length === 0',
                               'class'       => 'timeline-apply'}
                 = _("Apply")
             = hidden_field_tag(:ignore_form_changes)
