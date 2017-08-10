@@ -12,7 +12,6 @@
 - highlight_changes           ||= false
 - post_check                  ||= false
 - bs_tree                     ||= '{}'
-- min_expand_level            ||= 1
 - tree_id                     ||= "tree_div"
 - tree_name                   ||= "tree"
 - add_node_key                = Hash.new(@add_nodes).fetch(x_active_tree, {}).fetch(:key, nil)
@@ -22,7 +21,6 @@
              :tree_name          => tree_name,
              :group_changed      => session[:group_changed],
              :cookie_id          => "#{cookie_prefix}#{tree_name}",
-             :min_expand_level   => min_expand_level ? min_expand_level : 1,
              :checkboxes         => checkboxes,
              :hierarchical_check => three_checks,
              :onclick            => onclick,
