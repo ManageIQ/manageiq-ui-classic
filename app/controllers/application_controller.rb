@@ -980,7 +980,7 @@ class ApplicationController < ActionController::Base
     view_context.instance_variable_set(:@explorer, @explorer)
     table.data.each do |row|
       target = @targets_hash[row.id] unless row['id'].nil?
-      if @in_report_data
+      if @in_report_data && get_view_calculate_gtl_type(view.db) != "list"
         quadicon = view_context.render_quadicon(target) if !target.nil? && type_has_quadicon(target.class.name)
       end
       new_row = {
