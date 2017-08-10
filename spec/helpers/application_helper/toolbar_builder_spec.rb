@@ -47,6 +47,8 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :image         => @button1.options[:button_icon],
           :color         => nil,
           :text_display  => @button1.options.key?(:display) ? @button1.options[:display] : true,
+          :enabled       => true,
+          :disabled_text => nil,
           :target_object => subject.id
         }
         expected_button_set = {
@@ -58,7 +60,6 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :text_display => @button_set.set_data.key?(:display) ? @button_set.set_data[:display] : true,
           :buttons      => [expected_button1]
         }
-
         expect(toolbar_builder.get_custom_buttons(subject.class, subject, Mixins::CustomButtons::Result.new(:single))).to eq([expected_button_set])
       end
 

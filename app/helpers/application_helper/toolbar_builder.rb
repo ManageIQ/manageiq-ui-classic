@@ -237,8 +237,7 @@ class ApplicationHelper::ToolbarBuilder
            x_edit_view_tb history_main ems_container_dashboard ems_infra_dashboard).include?(name)
   end
 
-  def create_custom_button(input, model, record, options = {})
-    options[:enabled] = true unless options.key?(:enabled)
+  def create_custom_button(input, model, record)
     button_id = input[:id]
     button_name = input[:name].to_s
     record_id = record.present? ? record.id : 'LIST'
@@ -247,8 +246,8 @@ class ApplicationHelper::ToolbarBuilder
       :type      => :button,
       :icon      => "#{input[:image]} fa-lg",
       :color     => input[:color],
-      :title     => input[:description].to_s,
-      :enabled   => options[:enabled],
+      :title     => !input[:enabled] && input[:disabled_text] ? input[:disabled_text] : input[:description].to_s,
+      :enabled   => input[:enabled],
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
       :url       => "button",
       :url_parms => "?id=#{record_id}&button_id=#{button_id}&cls=#{model}&pressed=custom_button&desc=#{button_name}"
@@ -267,20 +266,24 @@ class ApplicationHelper::ToolbarBuilder
       :image         => cb.options[:button_icon],
       :color         => cb.options[:button_color],
       :text_display  => cb.options.key?(:display) ? cb.options[:display] : true,
+      :enabled       => cb.evaluate_enablement_expression_for(record),
+      :disabled_text => cb.disabled_text,
       :target_object => record_id
     }
   end
 
   def custom_button_selects(model, record, toolbar_result)
     get_custom_buttons(model, record, toolbar_result).collect do |group|
+      buttons = group[:buttons].collect { |b| create_custom_button(b, model, record) }
+
       props = {
         :id      => "custom_#{group[:id]}",
         :type    => :buttonSelect,
         :icon    => "#{group[:image]} fa-lg",
         :color   => group[:color],
         :title   => group[:description],
-        :enabled => true,
-        :items   => group[:buttons].collect { |b| create_custom_button(b, model, record) }
+        :enabled => record ? true : buttons.all?{ |button| button[:enabled]},
+        :items   => buttons
       }
       props[:text] = group[:text] if group[:text_display]
 
@@ -309,7 +312,7 @@ class ApplicationHelper::ToolbarBuilder
     if record.present?
       service_buttons = record_to_service_buttons(record)
       unless service_buttons.empty?
-        buttons = service_buttons.collect { |b| create_custom_button(b, model, record, :enabled => nil) }
+        buttons = service_buttons.collect { |b| create_custom_button(b, model, record) }
         toolbar.button_group("custom_buttons_", buttons)
       end
     end
