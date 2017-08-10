@@ -718,6 +718,7 @@ class MiqCapacityController < ApplicationController
   def bottleneck_tl_to_xml
     @timeline = true
     if @sb[:bottlenecks][:report].table.data.length == 0
+      @flash_array = nil
       add_flash(_("No records found for this timeline"), :warning)
     else
       tz = @sb[:bottlenecks][:report].tz ? @sb[:bottlenecks][:report].tz : Time.zone
