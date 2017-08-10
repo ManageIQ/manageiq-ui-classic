@@ -1665,7 +1665,6 @@ function chartData(type, data, data2) {
     }
 
     var titleFormat = _.cloneDeep(format);
-    titleFormat.options.precision += 1;
     data.tooltip.format.value = function (value, _ratio, _id) {
       var format = ManageIQ.charts.formatters[titleFormat.function].c3(titleFormat.options);
       return format(value);
