@@ -1,4 +1,6 @@
 ManageIQ.angular.app.controller('timelineOptionsController', ['$http', '$scope', 'miqService', 'url', 'categories', function($http, $scope, miqService, url, categories) {
+  var vm = this;
+
   var init = function() {
     $scope.reportModel = {
       tl_show: 'timeline',
@@ -18,6 +20,25 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['$http', '$scope',
     };
     ManageIQ.angular.scope = $scope;
     $scope.availableCategories = categories;
+
+    vm.reportModel = {
+      tl_show: 'timeline',
+      tl_categories: ['Power Activity'],
+      tl_timerange: 'weeks',
+      tl_timepivot: 'ending',
+      tl_result: 'success',
+      tl_range_count: 1,
+      tl_date: new Date(ManageIQ.calendar.calDateTo),
+    };
+
+    vm.afterGet  = true;
+    vm.dateOptions = {
+      autoclose: true,
+      todayHighlight: true,
+      orientation: 'bottom',
+    };
+    ManageIQ.angular.scope = vm;
+    vm.availableCategories = categories;
   };
 
   $scope.eventTypeUpdated = function() {
