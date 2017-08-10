@@ -1,8 +1,6 @@
-ManageIQ.angular.app.controller('timelineOptionsController', ['$http', '$scope', 'miqService', 'url', 'categories', function($http, $scope, miqService, url, categories) {
-  let vm = this;
-
-  const init = () => {
-    vm.reportModel = {
+class TimelineOptionsController {
+  constructor(miqService, url, categories) {
+    this.reportModel = {
       tl_show: 'timeline',
       tl_categories: ['Power Activity'],
       tl_timerange: 'weeks',
@@ -12,76 +10,80 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['$http', '$scope',
       tl_date: new Date(ManageIQ.calendar.calDateTo),
     };
 
-    vm.afterGet  = true;
-    vm.dateOptions = {
+    this.miqService = miqService;
+    this.url =  url;
+    this.categories = categories;
+
+    this.afterGet  = true;
+    this.dateOptions = {
       autoclose: true,
       todayHighlight: true,
       orientation: 'bottom',
     };
-    ManageIQ.angular.scope = vm;
-    vm.availableCategories = categories;
+    ManageIQ.angular.scope = this;
+    this.availableCategories = categories;
+  }
+
+  eventTypeUpdated = () => {
+    this.reportModel.tl_categories = [];
   };
 
-  vm.eventTypeUpdated = () => {
-    vm.reportModel.tl_categories = [];
-  };
-
-  vm.countDecrement = () => {
-    if (vm.reportModel.tl_range_count > 1) {
-      vm.reportModel.tl_range_count--;
+  countDecrement() {
+    if (this.reportModel.tl_range_count > 1) {
+      this.reportModel.tl_range_count--;
     }
-  };
+  }
 
-  vm.countIncrement = () => {
-    vm.reportModel.tl_range_count++;
-  };
+  countIncrement() {
+    this.reportModel.tl_range_count++;
+  }
 
-  vm.applyButtonClicked = () => {
-    if (vm.reportModel.tl_categories.length === 0) {
+  applyButtonClicked() {
+    if (this.reportModel.tl_categories.length === 0) {
       return;
     }
 
     // NOTE: process selection
-    if (vm.reportModel.tl_timerange === 'days') {
-      vm.reportModel.tl_typ = 'Hourly';
-      vm.reportModel.tl_days = vm.reportModel.tl_range_count;
+    if (this.reportModel.tl_timerange === 'days') {
+      this.reportModel.tl_typ = 'Hourly';
+      this.reportModel.tl_days = this.reportModel.tl_range_count;
     } else {
-      vm.reportModel.tl_typ = 'Daily';
-      if (vm.reportModel.tl_timerange === 'weeks') {
-        vm.reportModel.tl_days = vm.reportModel.tl_range_count * 7;
+      this.reportModel.tl_typ = 'Daily';
+      if (this.reportModel.tl_timerange === 'weeks') {
+        this.reportModel.tl_days = this.reportModel.tl_range_count * 7;
       } else {
-        vm.reportModel.tl_days = vm.reportModel.tl_range_count * 30;
+        this.reportModel.tl_days = this.reportModel.tl_range_count * 30;
       }
     }
     // NOTE: moment is not immutable yet
-    let selectedDay = moment(vm.reportModel.tl_date);
+    let selectedDay = moment(this.reportModel.tl_date);
     let startDay = selectedDay.clone();
     let endDay = selectedDay.clone();
 
-    if (vm.reportModel.tl_timepivot === 'starting') {
-      endDay.add(vm.reportModel.tl_days, 'days').toDate();
-      vm.reportModel.miq_date = endDay.format('MM/DD/YYYY');
-    } else if (vm.reportModel.tl_timepivot === 'centered') {
-      let enddays = Math.ceil(vm.reportModel.tl_days / 2);
+    if (this.reportModel.tl_timepivot === 'starting') {
+      endDay.add(this.reportModel.tl_days, 'days').toDate();
+      this.reportModel.miq_date = endDay.format('MM/DD/YYYY');
+    } else if (this.reportModel.tl_timepivot === 'centered') {
+      let enddays = Math.ceil(this.reportModel.tl_days / 2);
       startDay.subtract(enddays, 'days').toDate();
       endDay.add(enddays, 'days').toDate();
-      vm.reportModel.miq_date = endDay.format('MM/DD/YYYY');
-    }  else if (vm.reportModel.tl_timepivot === 'ending') {
-      startDay.subtract(vm.reportModel.tl_days, 'days');
-      vm.reportModel.miq_date = endDay.format('MM/DD/YYYY');
+      this.reportModel.miq_date = endDay.format('MM/DD/YYYY');
+    }  else if (this.reportModel.tl_timepivot === 'ending') {
+      startDay.subtract(this.reportModel.tl_days, 'days');
+      this.reportModel.miq_date = endDay.format('MM/DD/YYYY');
     }
     ManageIQ.calendar.calDateFrom = startDay.toDate();
     ManageIQ.calendar.calDateTo = endDay.toDate();
-    if (vm.reportModel.tl_show === 'timeline') {
-      if (vm.reportModel.showDetailedEvents) {
-        vm.reportModel.tl_fl_typ = 'detail';
+    if (this.reportModel.tl_show === 'timeline') {
+      if (this.reportModel.showDetailedEvents) {
+        this.reportModel.tl_fl_typ = 'detail';
       } else {
-        vm.reportModel.tl_fl_typ = 'critical';
+        this.reportModel.tl_fl_typ = 'critical';
       }
     }
-    miqService.sparkleOn();
-    miqService.miqAsyncAjaxButton(url, miqService.serializeModel(vm.reportModel));
-  };
-
-  init();
-}]);
+    this.miqService.sparkleOn();
+    this.miqService.miqAsyncAjaxButton(this.url, this.miqService.serializeModel(this.reportModel));
+  }
+}
+TimelineOptionsController.$inject = ['miqService', 'url', 'categories'];
+ManageIQ.angular.app.controller('timelineOptionsController', TimelineOptionsController);
