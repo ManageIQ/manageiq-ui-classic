@@ -15,6 +15,8 @@
         .row
           .col-sm-12.toolbar-pf-actions.timeline-toolbar
             .form-group
+              %label
+                test
               %div{'class' => 'timeline-filterbar'}
                 = select_tag("tl_show",
                   options_for_select(ApplicationController::Timelines::SELECT_EVENT_TYPE.map {|key, value| [_(key), value]}, nil),
