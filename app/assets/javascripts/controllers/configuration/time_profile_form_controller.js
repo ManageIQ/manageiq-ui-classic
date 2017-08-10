@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('timeProfileFormController', ['$http', '$scope', 'timeProfileFormId', 'miqService', function($http, $scope, timeProfileFormId, miqService) {
+ManageIQ.angular.app.controller('timeProfileFormController', ['$http', 'timeProfileFormId', 'miqService', function($http, timeProfileFormId, miqService) {
   var vm = this;
 
   var init = function() {
@@ -30,6 +30,8 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', '$scope',
     vm.model = 'timeProfileModel';
 
     ManageIQ.angular.scope = vm;
+
+    vm.saveable = miqService.saveable;
 
     miqService.sparkleOn();
     $http.get('/configuration/time_profile_form_fields/' + timeProfileFormId)
@@ -170,21 +172,21 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', '$scope',
     miqService.miqAjaxButton(url, timeProfileModelObj);
   };
   // $scope preserved because it's used by x_edit_buttons_angular
-  $scope.cancelClicked = function() {
+  vm.cancelClicked = function() {
     timeProfileEditButtonClicked('cancel');
   };
 
-  $scope.resetClicked = function() {
+  vm.resetClicked = function(angularForm) {
     vm.timeProfileModel = angular.copy( vm.modelCopy );
-    $scope.angularForm.$setPristine(true);
+    angularForm.$setPristine(true);
     miqService.miqFlash("warn", __("All changes have been reset"));
   };
 
-  $scope.saveClicked = function() {
+  vm.saveClicked = function() {
     timeProfileEditButtonClicked('save', true);
   };
 
-  $scope.addClicked = $scope.saveClicked;
+  vm.addClicked = vm.saveClicked;
 
   function getTimeProfileFormData(response) {
     var data = response.data;
@@ -197,7 +199,7 @@ ManageIQ.angular.app.controller('timeProfileFormController', ['$http', '$scope',
     vm.note = sprintf(__("In use by %s reports, cannot be disabled"), vm.timeProfileModel.miq_reports_count);
 
     vm.afterGet = true;
-    vm.modelCopy                    = angular.copy( vm.timeProfileModel );
+    vm.modelCopy = angular.copy( vm.timeProfileModel );
 
     miqService.sparkleOff();
   }

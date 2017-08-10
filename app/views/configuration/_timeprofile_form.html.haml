@@ -193,7 +193,8 @@
                             "switch-readonly" => "vm.timeProfileModel.restricted_time_profile || vm.timeProfileModel.miq_reports_count > 0"}
         %div{"ng-if" => "vm.timeProfileModel.miq_reports_count > 0"}
           {{note}}
-  = render :partial => "layouts/angular/x_edit_buttons_angular"
+
+  = render :partial => 'layouts/angular/generic_form_buttons'
   %br
   %br
   %div{"ng-if" => "vm.timeProfileModel.miq_reports_count > 0"}
