@@ -31,7 +31,8 @@
         = stylesheet_link_tag 'miq_debug'
       = csrf_meta_tag
       = render :partial => 'layouts/i18n_js'
-      = javascript_pack_tag 'application'
+      -# FIXME: the conditional below is a temporary fix for a webpacker issue, remove when it's resolved
+      = javascript_pack_tag 'application' unless Rails.env.test?
 
       :javascript
         ManageIQ.charts.provider = "#{Charting.backend}";
