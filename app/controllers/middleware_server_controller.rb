@@ -124,8 +124,17 @@ class MiddlewareServerController < ApplicationController
     render :json => {
       :status => :success, :data => drivers
     }
-  rescue StandardError => err
-    render :json => {:msg => err.message}, :status => :internal_server_error
+  rescue StandardError => _err
+    render :json => {
+      :status => :internal_server_error,
+      :data   => {
+        :msg => _("Cannot connect to provider \"%{provider}\" of server \"%{server}\". Is it running?") %
+                {
+                  :provider => mw_manager.name,
+                  :server   => mw_server.name
+                }
+      }
+    }
   end
 
   def add_datasource

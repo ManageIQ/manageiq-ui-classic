@@ -124,21 +124,24 @@ function MwAddDatasourceService($http, $q) {
     var deferred = $q.defer();
     var BASE_URL = '/middleware_server/jdbc_drivers';
     var parameterizedUrl = BASE_URL + '?server_id=' + serverId;
+    var serverError = 'internal_server_error';
 
     $http.get(parameterizedUrl).then(function(driverData) {
-      var transformedData = _.chain(driverData.data.data)
-        .map(function(driver) {
-          return {'id': driver.properties['Driver Name'].toUpperCase(),
-                  'label': driver.properties['Driver Name'],
-                  'moduleName': driver.properties['Module Name'],
-                  'xaDsClass': driver.properties['XA DS Class'],
-                  'driverClass': driver.properties['Driver Class']};
-      })
-      .value();
+      if (driverData.data.status === serverError) {
+        deferred.reject(driverData.data);
+      } else {
+        var transformedData = _.chain(driverData.data.data)
+          .map(function(driver) {
+            return {'id': driver.properties['Driver Name'].toUpperCase(),
+                    'label': driver.properties['Driver Name'],
+                    'moduleName': driver.properties['Module Name'],
+                    'xaDsClass': driver.properties['XA DS Class'],
+                    'driverClass': driver.properties['Driver Class']};
+        })
+        .value();
 
-      deferred.resolve(transformedData);
-    }).catch(function(errorMsg) {
-      deferred.reject(errorMsg);
+        deferred.resolve(transformedData);
+      }
     });
     return deferred.promise;
   };
