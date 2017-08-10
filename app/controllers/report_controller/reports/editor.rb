@@ -3,6 +3,7 @@ module ReportController::Reports::Editor
 
   included do
     helper_method :cashed_reporting_available_fields, :cashed_reporting_available_fields
+    helper_method :chargeback_allocated_methods, :chargeback_allocated_methods
   end
 
   DEFAULT_PDF_PAGE_SIZE = "US-Letter".freeze
@@ -19,6 +20,14 @@ module ReportController::Reports::Editor
     -vm_guid
     -vm_uid
   ).freeze
+
+  def chargeback_allocated_methods
+    Hash[CHAREGEBACK_ALLOCATED_METHODS.map { |x| _(x) }]
+  end
+
+  def default_chargeback_allocated_method
+    chargeback_allocated_methods.keys.first
+  end
 
   def miq_report_new
     assert_privileges("miq_report_new")
@@ -519,6 +528,7 @@ module ReportController::Reports::Editor
         @edit[:new][:cb_groupby] ||= "date"                     # Default to Date grouping
         @edit[:new][:tz] = session[:user_tz]
         @edit[:new][:cb_include_metrics] = true if @edit[:new][:model] == 'ChargebackVm'
+        @edit[:new][:method_for_allocated_metrics] = default_chargeback_allocated_method
       end
       reset_report_col_fields
       build_edit_screen
@@ -612,6 +622,8 @@ module ReportController::Reports::Editor
       end
     elsif params.key?(:cb_include_metrics)
       @edit[:new][:cb_include_metrics] = params[:cb_include_metrics] == 'true'
+    elsif params.key?(:method_for_allocated_metrics)
+      @edit[:new][:method_for_allocated_metrics] = params[:method_for_allocated_metrics].try(:to_sym) || default_chargeback_allocated_method
     elsif params.key?(:cb_owner_id)
       @edit[:new][:cb_owner_id] = params[:cb_owner_id].blank? ? nil : params[:cb_owner_id]
     elsif params.key?(:cb_tenant_id)
@@ -1013,6 +1025,7 @@ module ReportController::Reports::Editor
         options[:entity_id] = @edit[:new][:cb_entity_id]
       end
 
+      options[:method_for_allocated_metrics] = @edit[:new][:method_for_allocated_metrics]
       options[:include_metrics] = @edit[:new][:cb_include_metrics]
       options[:groupby] = @edit[:new][:cb_groupby]
       options[:groupby_tag] = @edit[:new][:cb_groupby] == 'tag' ? @edit[:new][:cb_groupby_tag] : nil
@@ -1297,6 +1310,7 @@ module ReportController::Reports::Editor
 
       # @edit[:new][:cb_include_metrics] = nil - it means YES (YES is default value for new and legacy reports)
       @edit[:new][:cb_include_metrics] = options[:include_metrics].nil? || options[:include_metrics]
+      @edit[:new][:method_for_allocated_metrics] = options[:method_for_allocated_metrics].try(:to_sym) || default_chargeback_allocated_method
       @edit[:new][:cb_groupby_tag] = options[:groupby_tag] if options.key?(:groupby_tag)
       @edit[:new][:cb_model] = Chargeback.report_cb_model(@rpt.db)
       @edit[:new][:cb_interval] = options[:interval]
