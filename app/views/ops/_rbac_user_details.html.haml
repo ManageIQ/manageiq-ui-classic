@@ -132,8 +132,9 @@
                 %br
           - else
             - options = (@edit[:new][:group].present? ? [] : [[_("<Choose a Group>"), nil]]) + @edit[:groups]
+            - select_groups = @edit[:new][:userid].blank? ? @edit[:new][:group] : groups.map(&:id)
             = select_tag('chosen_group',
-                         options_for_select(options, @edit[:new][:group]),
+                         options_for_select(options, select_groups),
                          :class    => "selectpicker",
                          :multiple => true,
                          :style    => "overflow-x: scroll;")

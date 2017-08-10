@@ -726,9 +726,8 @@ module OpsController::OpsRbac
 
     case key
     when :user
-      rbac_user_validate?
-      record = @edit[:user_id] ? User.find(@edit[:user_id]) : User.new
-      rbac_user_set_record_vars(record)
+      record = @edit[:user_id] ? User.find_by(:id => @edit[:user_id]) : User.new
+      rbac_user_set_record_vars(record) if rbac_user_validate?
     when :group then
       rbac_group_validate?
       record = @edit[:group_id] ? MiqGroup.find(@edit[:group_id]) : MiqGroup.new
@@ -739,7 +738,7 @@ module OpsController::OpsRbac
       rbac_role_set_record_vars(record)
     end
 
-    if record.valid? && !flash_errors? && record.save
+    if record.valid? && !flash_errors? && record.save!
       populate_role_features(record) if what == "role"
       self.current_user = record if what == 'user' && @edit[:current][:userid] == current_userid
       AuditEvent.success(build_saved_audit(record, add_pressed))
@@ -1032,8 +1031,20 @@ module OpsController::OpsRbac
     user.name       = @edit[:new][:name]
     user.userid     = @edit[:new][:userid]
     user.email      = @edit[:new][:email]
-    user.miq_groups = [MiqGroup.find_by(:id => @edit[:new][:group])].compact
+    user.miq_groups = Rbac.filtered(MiqGroup.find(rbac_user_get_group_ids))
     user.password   = @edit[:new][:password] if @edit[:new][:password]
+  end
+
+  # Get array of group ids
+  def rbac_user_get_group_ids
+    case @edit[:new][:group]
+    when 'null'
+      []
+    when String
+      @edit[:new][:group].split(',').delete_if(&:blank?)
+    when Array
+      @edit[:new][:group]
+    end
   end
 
   # Validate some of the user fields
@@ -1043,10 +1054,14 @@ module OpsController::OpsRbac
       add_flash(_("Password/Verify Password do not match"), :error)
       valid = false
     end
-    if @edit[:new][:group].blank?
+
+    new_group_ids = rbac_user_get_group_ids
+    new_groups = new_group_ids.present? && MiqGroup.find(new_group_ids).present? ? MiqGroup.find(new_group_ids) : []
+
+    if new_group_ids.blank?
       add_flash(_("A User must be assigned to a Group"), :error)
       valid = false
-    elsif Rbac.filtered([MiqGroup.find_by(:id => @edit[:new][:group])].compact).empty?
+    elsif Rbac.filtered(new_groups).count != new_group_ids.count
       add_flash(_("A User must be assigned to an allowed Group"), :error)
       valid = false
     end
