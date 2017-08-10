@@ -190,7 +190,7 @@ module MiqPolicyController::AlertProfiles
     tree = nil
     unless @objects.empty?               # Build object tree
       if @assign[:new][:assign_to] == "ems_folder"
-        tree = TreeBuilderBelongsToHac.new(:vat_tree,
+        tree = TreeBuilderBelongsToVat.new(:vat_tree,
                                            :vat,
                                            @sb,
                                            true,
