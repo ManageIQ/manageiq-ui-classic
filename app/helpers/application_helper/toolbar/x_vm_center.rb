@@ -35,13 +35,6 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           t = N_('Edit this VM'),
           t),
         button(
-          :vm_transform,
-          'fa fa-random fa-lg',
-          t = N_('Transform this VM to RHV'),
-          t,
-          :klass => ApplicationHelper::Button::TransformVmButton
-        ),
-        button(
           :vm_ownership,
           'pficon pficon-user fa-lg',
           N_('Set Ownership for this VM'),
@@ -135,6 +128,13 @@ class ApplicationHelper::Toolbar::XVmCenter < ApplicationHelper::Toolbar::Basic
           N_('Migrate this VM'),
           :klass => ApplicationHelper::Button::GenericFeatureButton,
           :options => {:feature => :migrate}),
+        button(
+          :vm_transform,
+          'fa fa-random fa-lg',
+          t = N_('Transform this VM to RHV'),
+          t,
+          :klass => ApplicationHelper::Button::TransformVmButton
+        ),
         button(
           :vm_retire,
           'fa fa-clock-o fa-lg',
