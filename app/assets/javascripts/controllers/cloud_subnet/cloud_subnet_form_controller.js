@@ -20,7 +20,7 @@ ManageIQ.angular.app.controller('cloudSubnetFormController', ['$scope', 'cloudSu
       $scope.cloudSubnetModel.dhcp_enabled = data.dhcp_enabled;
       $scope.cloudSubnetModel.cidr = data.cidr;
       $scope.cloudSubnetModel.gateway = data.gateway;
-      $scope.cloudSubnetModel.network_protocol = data.network_protocol;
+      $scope.cloudSubnetModel.network_protocol = data.extra_attributes.ip_version;
       $scope.modelCopy = angular.copy( $scope.cloudSubnetModel );
       miqService.sparkleOff();
     }).catch(miqService.handleFailure);
