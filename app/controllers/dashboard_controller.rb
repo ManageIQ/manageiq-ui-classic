@@ -117,7 +117,7 @@ class DashboardController < ApplicationController
   end
 
   def widget_chart_data
-    widget = MiqWidget.find(params[:id])
+    widget = find_record_with_rbac(MiqWidget, params[:id])
     datum = widget.contents_for_user(current_user).contents
     if Charting.data_ok?(datum)
       content = r[:partial => "widget_chart", :locals => {:widget => widget}].html_safe
@@ -129,6 +129,7 @@ class DashboardController < ApplicationController
     render :json => {:content   => content,
                      :minimized => @sb[:dashboards][@sb[:active_db]][:minimized].include?(params[:id]),
                      :valid     => valid}
+  end
 
   def widget_menu_data
     widget = find_record_with_rbac(MiqWidget, params[:id])

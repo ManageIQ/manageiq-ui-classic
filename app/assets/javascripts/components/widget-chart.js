@@ -28,7 +28,7 @@ ManageIQ.angular.app.component('widgetChart', {
     };
   }],
   template: [
-    '<div class="mc" id={{vm.div_id}} ng-class="{ hidden: vm.widgetChartModel.minimized }">',
+    '<div class="mc" id="{{vm.div_id}}" ng-class="{ hidden: vm.widgetChartModel.minimized }">',
     '  <div class="blank-slate-pf " style="padding: 10px" ng-if="!vm.contentPresent() && vm.contentValid()">',
     '    <div class="blank-slate-pf-icon">',
     '      <i class="fa fa-cog">',
