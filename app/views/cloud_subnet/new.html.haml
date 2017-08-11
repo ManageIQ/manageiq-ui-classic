@@ -1,4 +1,11 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "cloudSubnetFormController", :novalidate => true}
+%form#form_div{"name"          => "angularForm",
+   "form-changed"  => true,
+   "miq-form"      => true,
+   "model"         => "vm.cloudSubnetModel",
+   "model-copy"    => "vm.modelCopy",
+   "ng-cloak"      => "",
+   "ng-controller" => "cloudSubnetFormController as vm",
+   "ng-show"       => "vm.afterGet"}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Network Provider')
@@ -8,75 +15,52 @@
         = _('Network Manager')
       .col-md-8
         = select_tag("ems_id",
-                      options_for_select([["<#{_('Choose')}>", nil]] + @network_provider_choices.sort),
-                      "ng-model"                    => "cloudSubnetModel.ems_id",
-                      "required"                    => "",
-                      :miqrequired                  => true,
-                      :checkchange                  => true,
-                      "ng-change"                   => "filterNetworkManagerChanged(cloudSubnetModel.ems_id)",
-                      "selectpicker-for-select-tag" => "")
-
-  %h3
-    = _('Cloud Subnet details')
+            options_for_select([["<#{_('Choose')}>", nil]] + @network_provider_choices.sort),
+            "ng-model"                    => "vm.cloudSubnetModel.ems_id",
+            "ng-change"                   => "vm.filterNetworkManagerChanged(vm.cloudSubnetModel.ems_id)",
+            "required"                    => "",
+            "selectpicker-for-select-tag" => "")
+        %span.help-block{"ng-show" => "angularForm.ems_id.$error.required"}
+          = _("Required")
   .form-horizontal
-    .form-group{"ng-if" => "cloudSubnetModel.ems_id"}
-      %label.col-md-2.control-label
-        = _('Network')
-      .col-md-8
-        %select{"name"                        => "cloud_network_id",
-                "ng-model"                    => "cloudSubnetModel.network_id",
-                "required"                    => "",
-                :miqrequired                  => true,
-                :checkchange                  => true,
-                'ng-options'                  => 'network.ems_ref as network.name for network in available_networks',
-                'pf-select'                   => true,
-                "selectpicker-for-select-tag" => ""}
-          %option{"value" => ""}
-            = "<#{_('Choose')}>"
-
-    = render :partial => "common_new_edit"
-
-    .form-group
-      %label.col-md-2.control-label
-        = _('IP Version')
-      .col-md-8
-        = select_tag("network_protocol",
-                      options_for_select([4, 6]),
-                      "ng-model"                    => "cloudSubnetModel.network_protocol",
-                      "required"                    => "",
-                      :miqrequired                  => true,
-                      :checkchange                  => true,
-                      "selectpicker-for-select-tag" => "")
-    .form-group
-      %label.col-md-2.control-label
-        = _('Subnet CIDR')
-      .col-md-8
-        %input.form-control{:type          => "text",
-                            :name          => "cidr",
-                            'ng-model'     => "cloudSubnetModel.cidr",
-                            'ng-maxlength' => 20,
-                            :miqrequired   => false,
-                            :checkchange   => true}
-
-  %h3
-    = _('Placement')
-  .form-horizontal
-    .form-group{"ng-if" => "cloudSubnetModel.ems_id"}
+    .form-group{"ng-if"    => "vm.cloudSubnetModel.ems_id",
+                "ng-class" => "{'has-error': angularForm.cloud_tenant_id.$invalid}"}
+      %h3
+        = _('Placement')
       %label.col-md-2.control-label
         = _('Cloud Tenant')
       .col-md-8
         %select{"name"                        => "cloud_tenant_id",
-                "ng-model"                    => "cloudSubnetModel.cloud_tenant_id",
+                "ng-model"                    => "vm.cloudSubnetModel.cloud_tenant_id",
+                "ng-options"                  => "tenant.id as tenant.name for tenant in vm.available_tenants",
+                "pf-select"                   => true,
                 "required"                    => "",
-                :miqrequired                  => true,
-                :checkchange                  => true,
-                'ng-options'                  => 'tenant.id as tenant.name for tenant in available_tenants',
-                'pf-select'                   => true,
                 "selectpicker-for-select-tag" => ""}
           %option{"value" => ""}
             = "<#{_('Choose')}>"
+        %span.help-block{"ng-show" => "angularForm.cloud_tenant_id.$error.required"}
+          = _("Required")
+  %h3
+    = _('Cloud Subnet details')
+  .form-horizontal
+    .form-group{"ng-if"    => "vm.cloudSubnetModel.ems_id",
+                "ng-class" => "{'has-error': angularForm.network_id.$invalid}"}
+      %label.col-md-2.control-label
+        = _('Network')
+      .col-md-8
+        %select{"name"                        => "network_id",
+                "ng-model"                    => "vm.cloudSubnetModel.network_id",
+                "ng-options"                  => "network.ems_ref as network.name for network in vm.available_networks",
+                "pf-select"                   => true,
+                "required"                    => "",
+                "selectpicker-for-select-tag" => ""}
+          %option{"value" => ""}
+            = "<#{_('Choose')}>"
+        %span.help-block{"ng-show" => "angularForm.network_id.$error.required"}
+          = _("Required")
+  = render :partial => "common_new_edit"
+  = render :partial => "layouts/angular/generic_form_buttons"
 
-  = render :partial => "layouts/angular/x_edit_buttons_angular"
 :javascript
   ManageIQ.angular.app.value('cloudSubnetFormId', '#{@subnet.id || "new"}');
   miq_bootstrap('#form_div');
