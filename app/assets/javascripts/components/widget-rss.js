@@ -17,7 +17,7 @@ ManageIQ.angular.app.component('widgetRss', {
     };
   }],
   template: [
-    '<div class="mc" id={{vm.div_id}}  ng-class="{ hidden: vm.widgetReportModel.minimized }">',
+    '<div class="mc" id="{{vm.div_id}}"  ng-class="{ hidden: vm.widgetReportModel.minimized }">',
     '  <div class="blank-slate-pf " style="padding: 10px" ng-if="!vm.contentPresent()">',
     '    <div class="blank-slate-pf-icon">',
     '      <i class="fa fa-cog">',

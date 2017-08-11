@@ -149,7 +149,7 @@ class DashboardController < ApplicationController
   end
 
   def widget_rss_data
-    widget = MiqWidget.find(params[:id])
+    widget = find_record_with_rbac(MiqWidget, params[:id])
     content = widget.contents_for_user(current_user).contents.gsub("https://localhost:3000",
                                                                    "#{request.protocol}#{request.host}:#{request.port}").html_safe
     render :json => {:content   => content,
