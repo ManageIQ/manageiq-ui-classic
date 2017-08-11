@@ -117,7 +117,7 @@ class DashboardController < ApplicationController
   end
 
   def widget_menu_data
-    widget = MiqWidget.find(params[:id])
+    widget = find_record_with_rbac(MiqWidget, params[:id])
     shortcuts = widget.miq_widget_shortcuts.order("sequence").select do |shortcut|
                   role_allows?(:feature => shortcut.miq_shortcut.rbac_feature_name, :any => true)
                 end.map do |shortcut|
