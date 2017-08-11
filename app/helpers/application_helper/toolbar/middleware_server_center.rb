@@ -129,8 +129,6 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           :klass   => ApplicationHelper::Button::MiddlewareDomainServerAction),
       ]
     ),
-  ])
-  button_group('middleware_server_deployments', [
     select(
       :middleware_server_deployments_choice,
       'pficon pficon-save fa-lg',
@@ -149,8 +147,6 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           :klass => ApplicationHelper::Button::MiddlewareStandaloneServerAction)
       ]
     ),
-  ])
-  button_group('middleware_server_jdbc_drivers', [
     select(
       :middleware_server_jdbc_drivers_choice,
       'fa fa-plug fa-lg',
@@ -169,8 +165,6 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           :klass => ApplicationHelper::Button::MiddlewareStandaloneServerAction)
       ]
     ),
-  ])
-  button_group('middleware_server_datasources', [
     select(
       :middleware_server_datasources_choice,
       'fa fa-database fa-lg',
@@ -189,32 +183,11 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           :klass => ApplicationHelper::Button::MiddlewareStandaloneServerAction)
       ]
     ),
+    button(
+      :middleware_dr_generate,
+      'pficon pficon-import fa-lg',
+      N_('Enqueue generation of new JDR report'),
+      N_('Generate JDR')
+    )
   ])
-  button_group('middleware_reports', [select(
-    :middleware_reports_choice,
-    'fa fa-file-text-o fa-lg',
-    t = N_('JDR Reports'),
-    t,
-    :items => [
-      button(
-        :middleware_jdr_generate,
-        'fa fa-play-circle-o fa-lg',
-        N_('Enqueue generation of new JDR report'),
-        N_('Generate JDR report'),
-        :klass => ApplicationHelper::Button::MiddlewareServerAction
-      ),
-      button(
-        :middleware_jdr_delete,
-        'pficon pficon-delete fa-lg',
-        N_('Delete selected JDR reports'),
-        N_('Delete selected JDR reports'),
-        :enabled => false,
-        :onwhen  => '1+',
-        :confirm => _('Do you want to delete selected JDR reports?'),
-        :klass   => ApplicationHelper::Button::MiddlewareServerAction,
-        :data    => {'function'      => 'miqCallAngular',
-                     'function-data' => '{"name": "deleteSelectedJdr", "args": []}'},
-      )
-    ]
-  )])
 end

@@ -28,7 +28,7 @@ class MiddlewareServerController < ApplicationController
                                    :hawk => N_('resuming'),
                                    :msg  => N_('Resume')
     },
-    :middleware_jdr_generate   => {:op   => :generate_jdr,
+    :middleware_dr_generate    => {:op   => :generate_diagnostic_report,
                                    :skip => true,
                                    :hawk => N_('generating JDR report'),
                                    :msg  => N_('Generate JDR report')}
@@ -171,25 +171,25 @@ class MiddlewareServerController < ApplicationController
     end
   end
 
-  def jdr_download
+  def dr_download
     mw_server = find_record_with_rbac(MiddlewareServer, params[:id])
-    jdr_report = mw_server.middleware_jdr_reports.find(from_cid(params[:key]))
+    diagnostic_report = mw_server.middleware_diagnostic_reports.find(from_cid(params[:key]))
 
     response.headers['Content-Type'] = 'application/zip'
-    response.headers['Content-Disposition'] = "attachment; filename=#{jdr_report.binary_blob.name}"
-    response.headers['Content-Length'] = jdr_report.binary_blob.size
+    response.headers['Content-Disposition'] = "attachment; filename=#{diagnostic_report.binary_blob.name}"
+    response.headers['Content-Length'] = diagnostic_report.binary_blob.size
 
     self.response_body = Enumerator.new do |y|
-      jdr_report.binary_blob.binary_blob_parts.find_each(:batch_size => 5) do |part|
+      diagnostic_report.binary_blob.binary_blob_parts.find_each(:batch_size => 5) do |part|
         y << part.data
       end
     end
   end
 
-  def jdr_delete
+  def dr_delete
     mw_server = find_record_with_rbac(MiddlewareServer, params[:id])
-    reports = mw_server.middleware_jdr_reports.find(params['mw_jdr_selected'])
-    mw_server.middleware_jdr_reports.destroy(reports)
+    reports = mw_server.middleware_diagnostic_reports.find(params['mw_dr_selected'])
+    mw_server.middleware_diagnostic_reports.destroy(reports)
 
     flash_msg = n_('Deletion of one JDR report succeeded.',
                    "Deletion of %{count} JDR reports succeeded.",
@@ -198,6 +198,17 @@ class MiddlewareServerController < ApplicationController
     redirect_to(:action    => 'show',
                 :id        => to_cid(mw_server.id),
                 :flash_msg => flash_msg)
+  end
+
+  def dr_report_download
+    dr_class = ManageIQ::Providers::Hawkular::MiddlewareManager::MiddlewareDiagnosticReport
+
+    mw_server = find_record_with_rbac(MiddlewareServer, params[:id])
+    report = MiqReport.load_from_view_options(dr_class, current_user)
+    report.build_table(mw_server.middleware_diagnostic_reports, dr_class, :no_sort => true)
+    @filename = filename_timestamp(report.title)
+    download_csv(report) if params[:download_type] == 'csv'
+    download_txt(report) if params[:download_type] == 'text'
   end
 
   def self.display_methods
@@ -305,8 +316,8 @@ class MiddlewareServerController < ApplicationController
           name = operation_info.fetch(:param)
           val = params.fetch name || 0 # Default until we can really get it from the UI ( #9462/#8079)
           trigger_mw_operation operation_info.fetch(:op), mw_server, name => val
-        elsif operation_info.fetch(:op) == :generate_jdr
-          mw_server.enqueue_jdr_report(:requesting_user => current_userid)
+        elsif operation_info.fetch(:op) == :generate_diagnostic_report
+          mw_server.enqueue_diagnostic_report(:requesting_user => current_userid)
         else
           trigger_mw_operation operation_info.fetch(:op), mw_server
         end

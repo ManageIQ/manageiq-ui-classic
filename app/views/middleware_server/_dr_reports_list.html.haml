@@ -1,0 +1,69 @@
+- if @record.middleware_diagnostic_reports.any?
+  .row
+    .col-md-12
+      %h3
+        %span.fa.fa-angle-down
+        = _('JDR Reports')
+  .row
+    .col-md-12
+      .form-group
+        .dropdown.btn-group
+          %button#dr_download_dd.btn.btn-default.dropdown-toggle{'data-toggle' => 'dropdown'}
+            %span.fa.fa-download
+            %span.caret
+          %ul.dropdown-menu{:role => 'menu', 'aria-labelledby' => 'dr_download_dd'}
+            %li{:role => 'presentation'}
+              %a.pointer{:role     => 'menuitem',
+                         :tabindex => '-1',
+                         :onclick  => "DoNav('#{url_for(:action => 'dr_report_download', :id => to_cid(@record.id), 'download_type' => 'text')}');"}
+                %span.fa.fa-file-text-o
+                = _('Download as Text')
+            %li{:role => 'presentation'}
+              %a.pointer{:role     => 'menuitem',
+                         :tabindex => '-1',
+                         :onclick  => "DoNav('#{url_for(:action => 'dr_report_download', :id => to_cid(@record.id), 'download_type' => 'csv')}');"}
+                %span.fa.fa-file-text-o
+                = _('Download as CSV')
+        %button#dr_btn_delete.btn.btn-default{'onclick' => 'miqCallAngular({name: "deleteSelectedDr", args: []});', :disabled => 'disabled'}
+          %span.pficon.pficon-delete.fa
+          = _('Delete')
+      = form_tag url_for(:action => 'dr_delete', :id => to_cid(@record.id)), :method => :post, :id => 'mw_dr_reports' do
+        %table.table.table-bordered.table-striped.table-summary-screen
+          %thead
+            %tr
+              %th &nbsp; <!-- Checkbox -->
+              %th &nbsp; <!-- Icon -->
+              %th= _('Filename')
+              %th= _('Size')
+              %th= _('Queued at')
+              %th= _('Username')
+              %th= _('Status')
+              %th= _('Actions')
+          %tbody
+            - @record.middleware_diagnostic_reports.each do |item|
+              %tr
+                %td
+                  %input{:type     => "checkbox",
+                         :disabled => !item.ran?,
+                         :name     => 'mw_dr_selected[]',
+                         :value    => to_cid(item.id),
+                         :onclick  => 'miqCallAngular({name: "drChecked", args: []});'}
+                %td
+                  - if item.ready?
+                    %span.pficon.pficon-ok
+                  - elsif item.erred?
+                    %span.pficon.pficon-error-circle-o
+                  - else
+                    %span.fa.fa-lg.fa-play-circle-o
+                %td= item.binary_blob ? item.binary_blob.name : _('N/A')
+                %td= item.binary_blob ? number_to_human_size(item.binary_blob.size) : _('N/A')
+                %td= format_timezone(item.queued_at)
+                %td= item.requesting_user
+                %td= item.status
+                %td.action-cell
+                  %button{'class'    => 'btn btn-default btn-block btn-sm',
+                          'type'     => 'button',
+                          'disabled' => item.ready? ? nil : 'disabled',
+                          'onclick'  => "DoNav('#{url_for(:action => 'dr_download', :id => to_cid(@record.id), :key => to_cid(item.id))}');"}
+                    %span.fa.fa-download
+                    = _('Download')

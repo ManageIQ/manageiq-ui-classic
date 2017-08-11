@@ -1397,7 +1397,8 @@ Rails.application.routes.draw do
         tagging_edit
         tag_edit_form_field_changed
         jdbc_drivers
-        jdr_download
+        dr_download
+        dr_report_download
       ) +
                compare_get,
       :post => %w(
@@ -1420,7 +1421,7 @@ Rails.application.routes.draw do
         wait_for_task
         tagging_edit
         tag_edit_form_field_changed
-        jdr_delete
+        dr_delete
       ) +
                adv_search_post +
                compare_post +

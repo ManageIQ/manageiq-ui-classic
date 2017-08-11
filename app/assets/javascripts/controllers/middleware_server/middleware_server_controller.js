@@ -174,9 +174,14 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
   // JDR
   // //////////////////////////////////////////////////////////////////////
 
-  $scope.deleteSelectedJdr = function() {
-    $document.find('#mw_jdr_reports').submit();
+  $scope.deleteSelectedDr = function() {
+    $document.find('#mw_dr_reports').submit();
   };
+
+  $scope.drChecked = function() {
+    var checked_count = $document.find('#mw_dr_reports input[type=checkbox]:checked').length;
+    $document.find('#dr_btn_delete').prop('disabled', checked_count == 0);
+  }
 }
 
 ManageIQ.angular.app.controller('mwServerOpsController', MwServerOpsController);
