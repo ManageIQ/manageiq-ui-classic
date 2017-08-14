@@ -458,7 +458,6 @@ function miqTreeEventSafeEval(func) {
     'miqOnClickSnapshotTree',
     'miqOnClickTagCat',
     'miqOnClickTimelineSelection',
-    'miqSetAETreeNodeSelectionClass',
   ];
 
   if (whitelist.includes(func)) {
