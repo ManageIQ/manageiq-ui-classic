@@ -7,6 +7,8 @@ class ConfigurationController < ApplicationController
   Dir.mkdir logo_dir unless File.exist?(logo_dir)
   @@logo_file = File.join(logo_dir, "custom_logo.png")
 
+  VIEW_RESOURCES = DEFAULT_SETTINGS[:views].keys.each_with_object({}) { |value, acc| acc[value.to_s] = value }.freeze
+
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action

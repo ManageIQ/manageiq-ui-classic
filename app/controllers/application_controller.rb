@@ -81,6 +81,122 @@ class ApplicationController < ActionController::Base
 
   PERPAGE_TYPES = %w(grid tile list reports).each_with_object({}) { |value, acc| acc[value] = value.to_sym }.freeze
 
+  # Default UI settings
+  DEFAULT_SETTINGS = {
+    :quadicons => { # Show quad icons, by resource type
+      :service         => true,
+      :ems             => true,
+      :ems_cloud       => true,
+      :host            => true,
+      :miq_template    => true,
+      :physical_server => true,
+      :storage         => true,
+      :vm              => true
+    },
+    :views     => { # List view setting, by resource type
+      :authkeypaircloud                         => "list",
+      :availabilityzone                         => "list",
+      :hostaggregate                            => "list",
+      :catalog                                  => "list",
+      :cm_providers                             => "list",
+      :cm_configured_systems                    => "list",
+      :compare                                  => "expanded",
+      :compare_mode                             => "details",
+      :condition                                => "list",
+      :container                                => "list",
+      :containergroup                           => "list",
+      :containernode                            => "list",
+      :containerservice                         => "list",
+      :containerroute                           => "list",
+      :containerproject                         => "list",
+      :containerreplicator                      => "list",
+      :containerimage                           => "list",
+      :containerimageregistry                   => "list",
+      :persistentvolume                         => "list",
+      :containerbuild                           => "list",
+      :containertemplate                        => "list",
+      :cloudobjectstorecontainer                => "list",
+      :cloudobjectstoreobject                   => "list",
+      :cloudtenant                              => "list",
+      :cloudvolume                              => "list",
+      :cloudvolumebackup                        => "list",
+      :cloudvolumesnapshot                      => "list",
+      :drift                                    => "expanded",
+      :drift_mode                               => "details",
+      :emscluster                               => "grid",
+      :emscontainer                             => "grid",
+      :filesystem                               => "list",
+      :flavor                                   => "list",
+      :host                                     => "grid",
+      :job                                      => "list",
+      :manageiq_providers_cloudmanager          => "grid",
+      :manageiq_providers_cloudmanager_template => "list",
+      :manageiq_providers_cloudmanager_vm       => "grid",
+      :manageiq_providers_containermanager      => "grid",
+      :manageiq_providers_inframanager          => "grid",
+      :manageiq_providers_inframanager_vm       => "grid",
+      :manageiq_providers_inframanager_template => "list",
+      :manageiq_providers_middlewaremanager     => "grid",
+      :manageiq_providers_storagemanager        => "list",
+      :middlewaredatasource                     => "list",
+      :middlewaredeployment                     => "list",
+      :middlewaredomain                         => "list",
+      :middlewaremessaging                      => "list",
+      :middlewareserver                         => "list",
+      :middlewareservergroup                    => "list",
+      :miqaction                                => "list",
+      :miqaeclass                               => "list",
+      :miqaeinstance                            => "list",
+      :miqevent                                 => "list",
+      :miqpolicy                                => "list",
+      :miqpolicyset                             => "list",
+      :miqreportresult                          => "list",
+      :miqrequest                               => "list",
+      :miqtemplate                              => "list",
+      :orchestrationstack                       => "list",
+      :orchestrationtemplate                    => "list",
+      :servicetemplate                          => "list",
+      :storagemanager                           => "list",
+      :miqtask                                  => "list",
+      :ms                                       => "grid",
+      :policy                                   => "list",
+      :policyset                                => "grid",
+      :resourcepool                             => "grid",
+      :service                                  => "grid",
+      :scanhistory                              => "list",
+      :storage_files                            => "list",
+      :summary_mode                             => "dashboard",
+      :registryitems                            => "list",
+      :serverbuild                              => "list",
+      :storage                                  => "grid",
+      :tagging                                  => "grid",
+      :treesize                                 => "20",
+      :vm                                       => "grid",
+      :vmortemplate                             => "grid",
+      :vmcompare                                => "compressed"
+    },
+    :perpage   => { # Items per page, by view setting
+      :grid    => 20,
+      :tile    => 20,
+      :list    => 20,
+      :reports => 20
+    },
+    :topology  => {
+      :containers_max_items => 100
+    },
+    :display   => {
+      :startpage     => "/dashboard/show",
+      :reporttheme   => "MIQ",
+      :quad_truncate => "m",
+      :theme         => "red",            # Luminescent Blue
+      :taskbartext   => true,             # Show button text on taskbar
+      :vmcompare     => "Compressed",     # Start VM compare and drift in compressed mode
+      :hostcompare   => "Compressed",     # Start Host compare in compressed mode
+      :timezone      => nil,               # This will be set when the user logs in
+      :display_vms   => false # don't display vms by default
+    },
+  }
+
   def local_request?
     Rails.env.development? || Rails.env.test?
   end
