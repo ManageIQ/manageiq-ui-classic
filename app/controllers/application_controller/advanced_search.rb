@@ -19,13 +19,17 @@ module ApplicationController::AdvancedSearch
       adv_search_clear_default_search_if_cant_be_seen
       @edit.delete(:exp_token)                                          # Remove any existing atom being edited
     else                                                                # Create new exp fields
-      @edit = {}
+      @edit ||= {}
       @edit[@expkey] ||= ApplicationController::Filter::Expression.new
       @edit[@expkey][:expression] = {"???" => "???"}                    # Set as new exp element
       @edit[@expkey][:use_mytags] = true                                # Include mytags in tag search atoms
       @edit[:custom_search] = false                                     # setting default to false
-      @edit[:new] = {}
-      @edit[:new][@expkey] = @edit[@expkey][:expression]                # Copy to new exp
+      @edit[:new] ||= {}
+      if @edit[:new][@expkey]
+        @edit[@expkey][:expression] = @edit[:new][@expkey]                # Copy to new exp
+      else
+        @edit[:new][@expkey] = @edit[@expkey][:expression]                # Copy to new exp
+      end
       @edit[@expkey].history.reset(@edit[@expkey][:expression])
       @edit[:adv_search_open] = false
       @edit[@expkey][:exp_model] = model.to_s
