@@ -1118,6 +1118,10 @@ class MiqAeClassController < ApplicationController
       @in_a_form = false
       replace_right_cell
     when "save"
+      # dont allow save if expression has not been added or existing one has been removed
+      validate_expression("save") if @edit[:new][:location] == 'expression'
+      return if flash_errors?
+
       ae_method = find_record_with_rbac(MiqAeMethod, params[:id])
       set_method_record_vars(ae_method)                     # Set the record variables, but don't save
       begin
@@ -1230,6 +1234,11 @@ class MiqAeClassController < ApplicationController
     when "add"
       return unless load_edit("aemethod_edit__new", "replace_cell__explorer")
       get_method_form_vars
+
+      # dont allow add if expression has not been added or existing one has been removed
+      validate_expression("add") if @edit[:new][:location] == 'expression'
+      return if flash_errors?
+
       add_aemethod = MiqAeMethod.new
       set_method_record_vars(add_aemethod)                        # Set the record variables, but don't save
       begin
@@ -1611,6 +1620,14 @@ class MiqAeClassController < ApplicationController
   end
 
   private
+
+  def validate_expression(task)
+    if @edit[@expkey][:expression]["???"] == "???"
+      add_flash(_("Error during '%{task}': Expression element is required") % {:task => _(task)}, :error)
+      @in_a_form = true
+      javascript_flash
+    end
+  end
 
   def features
     [ApplicationController::Feature.new_with_hash(:role        => "miq_ae_class_explorer",
