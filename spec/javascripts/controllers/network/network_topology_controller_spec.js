@@ -32,13 +32,13 @@ describe('networkTopologyController', function() {
 
     describe('kinds contain all expected kinds', function() {
       it('in all main objects', function() {
-        expect(Object.keys(($controller.kinds).length).toBeGreaterThan(7);
-        expect(($controller.kinds["CloudSubnet"]).toBeDefined();
-        expect(($controller.kinds["NetworkRouter"]).toBeDefined();
-        expect(($controller.kinds["FloatingIp"]).toBeDefined();
-        expect(($controller.kinds["Vm"]).toBeDefined();
-        expect(($controller.kinds["SecurityGroup"]).toBeDefined();
-        expect(($controller.kinds["CloudTenant"]).toBeDefined();
+        expect(Object.keys($controller.kinds).length).toBeGreaterThan(7);
+        expect($controller.kinds["CloudSubnet"]).toBeDefined();
+        expect($controller.kinds["NetworkRouter"]).toBeDefined();
+        expect($controller.kinds["FloatingIp"]).toBeDefined();
+        expect($controller.kinds["Vm"]).toBeDefined();
+        expect($controller.kinds["SecurityGroup"]).toBeDefined();
+        expect($controller.kinds["CloudTenant"]).toBeDefined();
       });
     });
 
