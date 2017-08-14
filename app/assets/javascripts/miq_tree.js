@@ -217,16 +217,6 @@ function miqOnClickHostNet(id) {
   }
 }
 
-// OnClick handler for Timeline Tree
-function miqOnClickTimelineSelection(id) {
-  var allIds = id.split('rep-');
-  // Valid id should be something like xx-first_xx-second_rep-1r215, so it should return two 'ids' if split by rep- identifier
-  if (allIds.length === 2) {
-    var rep_id = allIds[allIds.length - 1];
-    miqJqueryRequest(ManageIQ.tree.clickUrl + '?id=' + rep_id, {beforeSend: true, complete: true});
-  }
-}
-
 // OnCheck handler for the belongs to drift/compare sections tree
 function miqOnCheckSections(_tree_name, key, checked, all_checked) {
   var url = ManageIQ.tree.checkUrl + '?id=' + encodeURIComponent(key) + '&check=' + checked;
@@ -457,7 +447,6 @@ function miqTreeEventSafeEval(func) {
     'miqOnClickSmartProxyAffinityCheck',
     'miqOnClickSnapshotTree',
     'miqOnClickTagCat',
-    'miqOnClickTimelineSelection',
   ];
 
   if (whitelist.includes(func)) {

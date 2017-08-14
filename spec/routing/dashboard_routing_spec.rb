@@ -129,9 +129,9 @@ describe 'routes for DashboardController' do
     end
   end
 
-  describe "#show_timeline" do
+  describe "#tree_select" do
     it "routes with POST" do
-      expect(post("/dashboard/show_timeline")).to route_to("dashboard#show_timeline")
+      expect(post("/dashboard/tree_select")).to route_to("dashboard#tree_select")
     end
   end
 
