@@ -1,6 +1,6 @@
 miqHttpInject(angular.module('miq.containers.providersModule', ['ui.bootstrap', 'patternfly', 'miq.dialogs', 'miq.wizard', 'ManageIQ', 'miq.api'])).controller('containers.deployProviderController',
-  ['$rootScope', '$scope', 'miqService', 'API',
-  function($rootScope, $scope, miqService, API) {
+  ['$rootScope', '$scope', 'miqService', 'API', '$timeout',
+  function($rootScope, $scope, miqService, API, $timeout) {
     'use strict';
 
     $scope.showDeploymentWizard = false;
@@ -244,5 +244,17 @@ miqHttpInject(angular.module('miq.containers.providersModule', ['ui.bootstrap', 
       $scope.showDeploymentWizard = false;
       return true;
     };
+
+    ManageIQ.rxSubject.subscribe(function(event) {
+      if (event.controller !== 'containers.deployProviderController') {
+        return;
+      }
+
+      $timeout(function() {
+        if (event.name === 'showListener') {
+          $scope.showListener();
+        }
+      });
+    });
   }
 ]);
