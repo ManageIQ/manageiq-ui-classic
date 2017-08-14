@@ -732,7 +732,7 @@ describe MiqAeClassController do
                                       :parent      => domain)
       session[:edit] = {
         :ae_ns_id => @namespace.id,
-        :typ      => "MiqAeDomain",
+        :typ      => "MiqAeNamespace",
         :key      => "aens_edit__#{@namespace.id}",
         :rec_id   => @namespace.id,
         :new      => {
@@ -760,7 +760,7 @@ describe MiqAeClassController do
                                        :id     => @namespace.id)
       controller.send(:update_ns)
       flash_messages = assigns(:flash_array)
-      expect(flash_messages.first[:message]).to include("Automate Domain \"desc\" was saved")
+      expect(flash_messages.first[:message]).to include("Automate Namespace \"desc\" was saved")
     end
   end
 
