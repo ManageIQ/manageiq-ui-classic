@@ -2,7 +2,7 @@ class ApplicationHelper::Button::TransformVmButton < ApplicationHelper::Button::
   needs :@record
 
   def visible?
-    false
+    @record.vendor == "vmware"
   end
 
   def disabled?
