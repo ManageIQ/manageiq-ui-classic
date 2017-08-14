@@ -197,6 +197,8 @@ class ApplicationController < ActionController::Base
     },
   }
 
+  AE_MAX_RESOLUTION_FIELDS = 5 # Maximum fields to show for automation engine resolution screens
+
   def local_request?
     Rails.env.development? || Rails.env.test?
   end
