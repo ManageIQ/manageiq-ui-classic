@@ -134,7 +134,7 @@ class AutomationManagerController < ApplicationController
   def configuration_scripts_tree_rec
     nodes = x_node.split('-')
     case nodes.first
-    when "root", "at"
+    when "root", "at", "cf"
       find_record(ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript, params[:id])
     end
   end
