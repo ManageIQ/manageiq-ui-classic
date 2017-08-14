@@ -1,8 +1,10 @@
-- tooltipOptions = {"tooltip-placement" => "bottom", "tooltip" => "{{legendTooltip}}"}
-.topology{'ng-controller' => "cloudTopologyController"}
+- tooltipOptions = {"tooltip-placement" => "bottom", "tooltip" => "{{vm.legendTooltip}}"}
+.topology{'ng-controller' => "cloudTopologyController as vm"}
   .legend
     %label#selected
-    %div{'ng-if' => "kinds"}
+    %label
+      test
+    %div{'ng-if' => "vm.kinds"}
       %kubernetes-topology-icon{tooltipOptions, :kind => "Vm"}
         %label
           %i.pficon.pficon-virtual-machine
@@ -29,7 +31,7 @@
 
   = render :partial => "shared/topology/not_found"
 
-  %kubernetes-topology-graph{:items => "items", :relations => "relations", :kinds => "kinds"}
+  %kubernetes-topology-graph{:items => "vm.items", :relations => "vm.relations", :kinds => "vm.kinds"}
 
 :javascript
   miq_bootstrap('.topology');
