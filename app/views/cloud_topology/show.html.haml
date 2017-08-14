@@ -1,23 +1,21 @@
-- tooltipOptions = {"tooltip-placement" => "bottom", "tooltip" => "{{vm.legendTooltip}}"}
+- tooltip_options = {"tooltip-placement" => "bottom", "tooltip" => "{{vm.legendTooltip}}"}
 .topology{'ng-controller' => "cloudTopologyController as vm"}
   .legend
     %label#selected
-    %label
-      test
     %div{'ng-if' => "vm.kinds"}
-      %kubernetes-topology-icon{tooltipOptions, :kind => "Vm"}
+      %kubernetes-topology-icon{tooltip_options, :kind => "Vm"}
         %label
           %i.pficon.pficon-virtual-machine
           = _("VMs")
-      %kubernetes-topology-icon{tooltipOptions, :kind => "AvailabilityZone"}
+      %kubernetes-topology-icon{tooltip_options, :kind => "AvailabilityZone"}
         %label
           %i.pficon.pficon-zone
           = _("Availability Zones")
-      %kubernetes-topology-icon{tooltipOptions, :kind => "CloudTenant"}
+      %kubernetes-topology-icon{tooltip_options, :kind => "CloudTenant"}
         %label
           %i.pficon.pficon-cloud-tenant
           = _("Cloud Tenants")
-      %kubernetes-topology-icon{tooltipOptions, :kind => "Tag"}
+      %kubernetes-topology-icon{tooltip_options, :kind => "Tag"}
         %label
           %i.fa.fa-tag
           = _("Tags")

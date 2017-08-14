@@ -13,6 +13,7 @@ ManageIQ.angular.app.service('topologyService', function() {
     return status;
   };
 
+
   this.showHideNames = function($scope) {
     return function() {
       $scope.checkboxModel.value = $('input#box_display_names')[0].checked;
@@ -216,24 +217,27 @@ ManageIQ.angular.app.service('topologyService', function() {
   // this injects some common code in the controller - temporary pending a proper merge
   this.mixinSearch = function($scope) {
     var topologyService = this;
-
     $scope.searching = false;
     $scope.notFound = false;
-
-    $scope.searchNode = function() {
-      var svg = topologyService.getSVG($scope.d3);
-      var query = $('input#search_topology')[0].value;
-
-      $scope.searching = true;
-      $scope.notFound = ! topologyService.searchNode(svg, query);
-    };
-
+      // NOTE: listener on search
+    ManageIQ.angular.rxSubject.subscribe(function(event) {
+      if (event.service === 'topologyService') {
+        if (event.name === 'searchNode') {
+          $scope.searching = true;
+          var svg = topologyService.getSVG($scope.d3);
+          var query = $('input#search_topology')[0].value;
+          $scope.notFound = ! topologyService.searchNode(svg, query);
+        } else if (event.name === 'resetSearch') {
+          topologyService.resetSearch($scope.d3);
+          $('input#search_topology')[0].value = '';
+          $scope.searching = false;
+          $scope.notFound = false;
+        }
+      }
+    });
     $scope.resetSearch = function() {
       topologyService.resetSearch($scope.d3);
-
-      // Reset the search term in search input
       $('input#search_topology')[0].value = '';
-
       $scope.searching = false;
       $scope.notFound = false;
     };

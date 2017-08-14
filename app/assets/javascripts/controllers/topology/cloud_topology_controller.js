@@ -4,7 +4,6 @@ CloudTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', 'topol
 function CloudTopologyCtrl($scope, $http, $interval, $location, topologyService, miqService) {
   var vm = this;
 
-  ManageIQ.angular.scope = $scope;
   miqHideSearchClearButton();
   vm.vs = null;
   var icons = null;
@@ -15,7 +14,13 @@ function CloudTopologyCtrl($scope, $http, $interval, $location, topologyService,
 
   topologyService.mixinContextMenu(vm, vm);
 
-  $scope.refresh = function() {
+  ManageIQ.angular.rxSubject.subscribe(function(event) {
+    if (event.controller === 'cloudTopologyController' && event.name === 'refresh') {
+      vm.refresh();
+    }
+  });
+
+  vm.refresh = function() {
     var id;
     if ($location.absUrl().match('show/$') || $location.absUrl().match('show$')) {
       id = '';
@@ -36,13 +41,13 @@ function CloudTopologyCtrl($scope, $http, $interval, $location, topologyService,
     var currentSelectedKinds = vm.kinds;
 
     vm.items = data.data.items;
-    vm.relations = $scope.relations = data.data.relations;
+    vm.relations = data.data.relations;
     // NOTE: $scope.kind is required by kubernetes-topology-icon
     vm.kinds = $scope.kinds = data.data.kinds;
     icons = data.data.icons;
 
     if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys(vm.kinds).length)) {
-      vm.kinds = vm.kinds = currentSelectedKinds;
+      vm.kinds = currentSelectedKinds;
     }
   }
 
@@ -53,9 +58,8 @@ function CloudTopologyCtrl($scope, $http, $interval, $location, topologyService,
   vm.legendTooltip = __('Click here to show/hide entities of this type');
 
   $('input#box_display_names').click(topologyService.showHideNames(vm));
-  $scope.refresh();
-  var promise = $interval($scope.refresh, 1000 * 60 * 3);
-// NOTE: cannot move $on events to scope until angular2
+  vm.refresh();
+  var promise = $interval(vm.refresh, 1000 * 60 * 3);
   $scope.$on('$destroy', function() {
     $interval.cancel(promise);
   });
@@ -79,7 +83,6 @@ function CloudTopologyCtrl($scope, $http, $interval, $location, topologyService,
         return topologyService.getItemStatusClass(d);
       })
       .on('contextmenu', function(d) {
-        vm.contextMenu(this, d);
         vm.contextMenu(this, d);
       });
 
@@ -199,7 +202,4 @@ function CloudTopologyCtrl($scope, $http, $interval, $location, topologyService,
   };
 
   topologyService.mixinSearch(vm);
-  // NOTE: need for searching in miq-toolbar
-  $scope.searchNode = vm.searchNode;
-  $scope.resetSearch = vm.resetSearch;
 }
