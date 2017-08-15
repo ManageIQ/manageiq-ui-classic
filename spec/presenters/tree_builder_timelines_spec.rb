@@ -13,16 +13,7 @@ describe TreeBuilderTimelines do
   describe '#tree_init_options' do
     it 'sets init options correctly' do
       tree_options = subject.send(:tree_init_options, :timelines)
-      expect(tree_options).to eq(:full_ids => true, :lazy => false, :add_root => false)
-    end
-  end
-
-  describe '#set_locals_for_render' do
-    it 'set locals correctly' do
-      locals = subject.send(:set_locals_for_render)
-      expect(locals).to include(:id_prefix => 'timelines_',
-                                :onclick   => "miqOnClickTimelineSelection",
-                                :click_url => "/dashboard/show_timeline/")
+      expect(tree_options).to eq(:lazy => false, :add_root => false)
     end
   end
 

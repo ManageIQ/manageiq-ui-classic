@@ -532,10 +532,11 @@ class DashboardController < ApplicationController
     build_timeline_listnav
   end
 
-  def show_timeline
+  def tree_select # timeline tree
     @breadcrumbs = []
     @layout      = "timeline"
     if params[:id]
+      _, params[:id] = parse_nodetype_and_id(params[:id])
       build_timeline
       render :update do |page|
         page << javascript_prologue
