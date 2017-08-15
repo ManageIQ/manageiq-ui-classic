@@ -61,6 +61,24 @@ describe OpsController do
     end
   end
 
+  describe "#fetch_target_ids" do
+    include OpsController::Settings::AutomateSchedules
+    let(:ops) { OpsController.new }
+
+    before do
+      ops.instance_variable_set(:@params, {})
+    end
+
+    [nil, 'null'].each do |target|
+      it "skips Rbac if :target_class is #{target}" do
+        ops.params = {:target_class => target }
+        expect(ops).to receive(:render).once
+        expect(Rbac).to receive(:filtered).never
+        ops.fetch_target_ids
+      end
+    end
+  end
+
   describe "#fetch_automate_request_vars" do
     include OpsController::Settings::AutomateSchedules
     let(:ops) { OpsController.new }
