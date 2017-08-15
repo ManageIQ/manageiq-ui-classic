@@ -53,7 +53,7 @@ function miqRemoveNodeChildren(treename, key) {
   }
 }
 
-function miqMenuEditor(id) {
+function miqOnCheckMenuRoles(id) {
   var nid = id.split('__');
   if (nid[0] != 'r') {
     var url = ManageIQ.tree.clickUrl + '?node_id=' + encodeURIComponent(id) + '&node_clicked=1';
@@ -429,10 +429,10 @@ function miqSquashToggle(treeName) {
 
 function miqTreeEventSafeEval(func) {
   var whitelist = [
-    'miqMenuEditor',
     'miqOnCheckCUFilters',
     'miqOnCheckGenealogy',
     'miqOnCheckHandler',
+    'miqOnCheckMenuRoles',
     'miqOnCheckProtect',
     'miqOnCheckProvTags',
     'miqOnCheckSections',
