@@ -2,6 +2,8 @@ module ReportFormatter
   class TimelineMessage
     include CompressedIds
 
+    TIMELINE_TIME_COLUMNS = %w(created_on timestamp).freeze
+
     def initialize(row, event, flags, db)
       @row, @event, @flags, @db = row, event, flags, db
     end
