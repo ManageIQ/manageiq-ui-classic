@@ -189,7 +189,7 @@ function miqOnCheckProtect(node, _treename) {
 }
 
 // OnClick handler for the VM Snapshot Tree
-function miqOnClickSnapshotTree(id) {
+function miqOnClickSnapshots(id) {
   var pieces = id.split(/-/);
   var shortId = pieces[pieces.length - 1]
   miqJqueryRequest('/' + ManageIQ.controller + '/snap_pressed/' + shortId, {beforeSend: true, complete: true});
@@ -438,7 +438,7 @@ function miqTreeEventSafeEval(func) {
     'miqOnClickSelectOptimizeTreeNode',
     'miqOnClickSelectTreeNode',
     'miqOnClickServerRoles',
-    'miqOnClickSnapshotTree',
+    'miqOnClickSnapshots',
     'miqOnClickTagCat',
   ];
 
