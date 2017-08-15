@@ -29,7 +29,7 @@ class TreeBuilderGenealogy < TreeBuilder
       :click_url  => "/vm/genealogy_tree_selected/",
       :onclick    => "miqOnClickGenealogyTree",
       :checkboxes => true,
-      :oncheck    => "miqGetChecked",
+      :oncheck    => "miqOnCheckGenealogy",
       :check_url  => "/vm/set_checked_items/"
     )
   end

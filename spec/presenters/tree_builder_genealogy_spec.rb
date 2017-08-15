@@ -28,7 +28,7 @@ describe TreeBuilderGenealogy do
       expect(subject.send(:set_locals_for_render)).to include(:click_url  => "/vm/genealogy_tree_selected/",
                                                               :onclick    => "miqOnClickGenealogyTree",
                                                               :checkboxes => true,
-                                                              :oncheck    => "miqGetChecked",
+                                                              :oncheck    => "miqOnCheckGenealogy",
                                                               :check_url  => "/vm/set_checked_items/")
     end
   end

@@ -240,7 +240,7 @@ function miqOnClickSmartProxyAffinityCheck(node) {
   miqJqueryRequest(ManageIQ.tree.checkUrl + node.key + '?check=' + checked);
 }
 
-function miqGetChecked(node, treename) {
+function miqOnCheckGenealogy(node, treename) {
   var count = 0;
   var tree = miqTreeObject(treename);
   // Map the selected nodes into an array of keys
@@ -429,9 +429,9 @@ function miqSquashToggle(treeName) {
 
 function miqTreeEventSafeEval(func) {
   var whitelist = [
-    'miqGetChecked',
     'miqMenuEditor',
     'miqOnCheckCUFilters',
+    'miqOnCheckGenealogy',
     'miqOnCheckHandler',
     'miqOnCheckProtect',
     'miqOnCheckProvTags',
