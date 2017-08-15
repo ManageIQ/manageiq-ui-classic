@@ -426,14 +426,14 @@ function miqTreeEventSafeEval(func) {
     'miqOnCheckProvTags',
     'miqOnCheckSections',
     'miqOnCheckUserFilters',
+    'miqOnClickAutomate',
+    'miqOnClickDiagnostics',
     'miqOnClickGeneric',
     'miqOnClickHostNet',
-    'miqOnClickAutomate',
     'miqOnClickSelectDlgEditTreeNode',
-    'miqOnClickUtilization',
     'miqOnClickSelectTreeNode',
-    'miqOnClickDiagnostics',
     'miqOnClickSnapshots',
+    'miqOnClickUtilization',
   ];
 
   if (whitelist.includes(func)) {
