@@ -350,7 +350,7 @@ class ApplicationHelper::ToolbarBuilder
         :text_display => cbs.set_data.key?(:display) ? cbs.set_data[:display] : true
       }
 
-      available = CustomButton.available_for_user(current_user, cbs.name) # get all uri records for this user for specified uri set
+      available = cbs.custom_buttons.select(&:visible_for_current_user?)
       available = available.select do |b|
         cbs.members.include?(b) && toolbar_result.plural_form_matches(b)
       end
