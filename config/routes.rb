@@ -1088,6 +1088,7 @@ Rails.application.routes.draw do
         timeline_data
         widget_to_pdf
         start_url
+        widget_menu_data
       ),
       :post => %w(
         external_authenticate

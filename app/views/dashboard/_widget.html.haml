@@ -27,10 +27,14 @@
           = h(presenter.widget.title)
 
     - if presenter.widget.content_type == "menu"
-      = render :partial => 'widget_menu', :locals => {:widget => presenter.widget}
+      %widget-menu{:id => presenter.widget.id}
+        Loading...
+      =javascript_pack_tag 'hello_angular'
     - elsif presenter.widget.contents_for_user(current_user).blank?
       = render :partial => 'widget_blank', :locals => {:widget => presenter.widget}
     - elsif %w(report chart rss).include?(presenter.widget.content_type)
       = render :partial => "widget_#{presenter.widget.content_type}", :locals => {:widget => presenter.widget}
     - unless presenter.widget.content_type == "menu"
       = render :partial => 'widget_footer', :locals => {:widget => presenter.widget}
+:javascript
+  miq_bootstrap("#w_#{presenter.widget.id}");

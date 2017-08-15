@@ -1,16 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
 
-import { AppComponent } from './app.component';
+
+import { WidgetMenu } from './widget_menu';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    WidgetMenu
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [WidgetMenu]
 })
 export class AppModule { }
