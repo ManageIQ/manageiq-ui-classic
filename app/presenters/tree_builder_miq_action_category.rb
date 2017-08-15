@@ -26,7 +26,7 @@ class TreeBuilderMiqActionCategory < TreeBuilder
     locals = super
     locals.merge!(
       :click_url => "/miq_policy/action_tag_pressed/",
-      :onclick   => "miqOnClickTagCat"
+      :onclick   => "miqOnClickGeneric"
     )
   end
 

@@ -23,6 +23,11 @@ function miqOnCheckGeneric(node) {
   miqJqueryRequest(url);
 }
 
+// Generic OnClick handler for selecting nodes in tree
+function miqOnClickGeneric(id) {
+  miqJqueryRequest(ManageIQ.tree.clickUrl + id, {beforeSend: true, complete: true});
+}
+
 function miqAddNodeChildren(treename, key, selected_node, children) {
   var node = miqTreeFindNodeByKey(treename, key);
   if (node.lazyLoad) {
@@ -224,16 +229,6 @@ function miqOnCheckSections(_tree_name, key, checked, all_checked) {
   return true;
 }
 
-// OnClick handler for catgories Tree
-function miqOnClickTagCat(id) {
-  miqJqueryRequest(ManageIQ.tree.clickUrl + '?id=' + id, {beforeSend: true, complete: true});
-}
-
-// OnClick handler for Genealogy Tree
-function miqOnClickGenealogyTree(id) {
-  miqJqueryRequest(ManageIQ.tree.clickUrl + id, {beforeSend: true, complete: true});
-}
-
 function miqOnCheckGenealogy(node, treename) {
   var count = 0;
   var tree = miqTreeObject(treename);
@@ -431,7 +426,7 @@ function miqTreeEventSafeEval(func) {
     'miqOnCheckProvTags',
     'miqOnCheckSections',
     'miqOnCheckUserFilters',
-    'miqOnClickGenealogyTree',
+    'miqOnClickGeneric',
     'miqOnClickHostNet',
     'miqOnClickAutomate',
     'miqOnClickSelectDlgEditTreeNode',
@@ -439,7 +434,6 @@ function miqTreeEventSafeEval(func) {
     'miqOnClickSelectTreeNode',
     'miqOnClickServerRoles',
     'miqOnClickSnapshots',
-    'miqOnClickTagCat',
   ];
 
   if (whitelist.includes(func)) {
