@@ -14,20 +14,20 @@ const { env, settings, output, loadersDir, engines } = require('./configuration.
 
 const extensionGlob = `**/*{${settings.extensions.join(',')}}*` // */
 const entryPath = join(settings.source_path, settings.source_entry_path)
-let packPaths = []
+let packPaths = {}
 
 Object.keys(engines).forEach(function(k) {
   let root = engines[k]
   let glob = join(root, entryPath, extensionGlob)
-  let paths = sync(glob)
-  packPaths.push(...paths)
+  packPaths[k] = sync(glob)
 })
 
 module.exports = {
-  entry: packPaths.reduce(
-    (map, entry) => {
-      const pluginName = dirname(entry).substring(0, dirname(entry).length - join(entryPath).length)
-      map[join(basename(pluginName), basename(entry, extname(entry)))] = resolve(entry)
+  entry: Object.keys(packPaths).reduce(
+    (map, pluginName) => {
+      packPaths[pluginName].forEach(function(entry) {
+        map[join(pluginName, basename(entry, extname(entry)))] = resolve(entry)
+      })
       return map
     }, {}
   ),
