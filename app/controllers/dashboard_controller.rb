@@ -116,6 +116,17 @@ class DashboardController < ApplicationController
     redirect_to start_url_for_user(nil)
   end
 
+  def widget_menu_data
+    widget = find_record_with_rbac(MiqWidget, params[:id])
+    shortcuts = widget.miq_widget_shortcuts.order("sequence").select do |shortcut|
+                  role_allows?(:feature => shortcut.miq_shortcut.rbac_feature_name, :any => true)
+                end.map do |shortcut|
+                  {:description => shortcut.description, :href => shortcut.miq_shortcut.url }
+                end
+    render :json => {:shortcuts => shortcuts,
+                     :minimized => @sb[:dashboards][@sb[:active_db]][:minimized].include?(params[:id])}
+  end
+
   def show
     @layout    = "dashboard"
     @dashboard = true
