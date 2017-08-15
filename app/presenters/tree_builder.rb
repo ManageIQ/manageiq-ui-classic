@@ -8,7 +8,7 @@ class TreeBuilder
   def self.class_for_type(type)
     raise('Obsolete tree type.') if type == :filter
     @x_tree_node_classes ||= {}
-    @x_tree_node_classes[type] ||= X_TREE_NODE_CLASSES[type].constantize
+    @x_tree_node_classes[type] ||= LEFT_TREE_CLASSES[type].constantize
   end
 
   def initialize(name, type, sandbox, build = true)
@@ -359,97 +359,155 @@ class TreeBuilder
   end
   private :resolve_object_lambdas
 
-  X_TREE_NODE_CLASSES = {
-    # Catalog explorer trees
-    :configuration_manager_providers => "TreeBuilderConfigurationManager",
-    :configuration_manager_cs_filter => "TreeBuilderConfigurationManagerConfiguredSystems",
-
-    # Catalog explorer trees
-    :ot                              => "TreeBuilderOrchestrationTemplates",
-    :sandt                           => "TreeBuilderCatalogItems",
-    :stcat                           => "TreeBuilderCatalogs",
-    :svccat                          => "TreeBuilderServiceCatalog",
-
-    # Chargeback explorer trees
-    :cb_assignments                  => "TreeBuilderChargebackAssignments",
-    :cb_rates                        => "TreeBuilderChargebackRates",
-    :cb_reports                      => "TreeBuilderChargebackReports",
-
-    :vandt                           => "TreeBuilderVandt",
-    :vms_filter                      => "TreeBuilderVmsFilter",
-    :templates_filter                => "TreeBuilderTemplateFilter",
-
-    :infra_networking                => "TreeBuilderInfraNetworking",
-
-    :instances                       => "TreeBuilderInstances",
-    :images                          => "TreeBuilderImages",
-    :instances_filter                => "TreeBuilderInstancesFilter",
-    :images_filter                   => "TreeBuilderImagesFilter",
-    :vms_instances_filter            => "TreeBuilderVmsInstancesFilter",
-    :templates_images_filter         => "TreeBuilderTemplatesImagesFilter",
-
-    :policy_simulation               => "TreeBuilderPolicySimulation",
-    :policy_profile                  => "TreeBuilderPolicyProfile",
-    :policy                          => "TreeBuilderPolicy",
-    :event                           => "TreeBuilderEvent",
-    :condition                       => "TreeBuilderCondition",
-    :action                          => "TreeBuilderAction",
-    :alert_profile                   => "TreeBuilderAlertProfile",
-    :alert                           => "TreeBuilderAlert",
-
-    # reports explorer trees
-    :db                              => "TreeBuilderReportDashboards",
-    :export                          => "TreeBuilderReportExport",
-    :reports                         => "TreeBuilderReportReports",
-    :roles                           => "TreeBuilderReportRoles",
+  LEFT_TREE_CLASSES = {
+    # Cloud Intel
+    ## Reports
+    ### Saved Reports
     :savedreports                    => "TreeBuilderReportSavedReports",
+    ### Reports
+    :reports                         => "TreeBuilderReportReports",
+    ### Schedules
     :schedules                       => "TreeBuilderReportSchedules",
+    ### Dashboards
+    :db                              => "TreeBuilderReportDashboards",
+    ### Dashboard Widgets
     :widgets                         => "TreeBuilderReportWidgets",
+    ### Edit Report Menus
+    :roles                           => "TreeBuilderReportRoles",
+    ### Import/Export
+    :export                          => "TreeBuilderReportExport",
+    ## Timelines (TODO)
 
-    # automate explorer tree
-    :ae                              => "TreeBuilderAeClass",
+    ## Chargeback
+    ### Reports
+    :cb_reports                      => "TreeBuilderChargebackReports",
+    ### Rates
+    :cb_rates                        => "TreeBuilderChargebackRates",
+    ### Assignments
+    :cb_assignments                  => "TreeBuilderChargebackAssignments",
 
-    # miq_ae_customization explorer trees
-    :ab                              => "TreeBuilderButtons",
-    :dialogs                         => "TreeBuilderServiceDialogs",
-    :dialog_import_export            => "TreeBuilderAeCustomization",
-    :old_dialogs                     => "TreeBuilderProvisioningDialogs",
-
-    # OPS explorer trees
-    :diagnostics                     => "TreeBuilderOpsDiagnostics",
-    :rbac                            => "TreeBuilderOpsRbac",
-    :servers_by_role                 => "TreeBuilderServersByRole",
-    :roles_by_server                 => "TreeBuilderRolesByServer",
-    :settings                        => "TreeBuilderOpsSettings",
-    :vmdb                            => "TreeBuilderOpsVmdb",
-
-    # PXE explorer trees
-    :customization_templates         => "TreeBuilderPxeCustomizationTemplates",
-    :iso_datastores                  => "TreeBuilderIsoDatastores",
-    :pxe_image_types                 => "TreeBuilderPxeImageTypes",
-    :pxe_servers                     => "TreeBuilderPxeServers",
-
-    # Services explorer tree
+    # Services
+    ## My services
+    ### Services
     :svcs                            => "TreeBuilderServices",
 
-    :sa                              => "TreeBuilderStorageAdapters",
+    ## Catalogs
+    ### Service Catalogs
+    :svccat                          => "TreeBuilderServiceCatalog",
+    ### Catalog Items
+    :sandt                           => "TreeBuilderCatalogItems",
+    ### Orchestration Templates
+    :ot                              => "TreeBuilderOrchestrationTemplates",
+    ### Catalogs
+    :stcat                           => "TreeBuilderCatalogs",
 
-    # Datastores explorer trees
+    ## Workloads
+    ### VMs & Instances
+    :vms_instances_filter            => "TreeBuilderVmsInstancesFilter",
+    ### Templates & Images
+    :templates_images_filter         => "TreeBuilderTemplatesImagesFilter",
+
+    # Compute
+    ## Clouds
+    ### Instances
+    #### Instances by provider
+    :instances                       => "TreeBuilderInstances",
+    #### Images by provider
+    :images                          => "TreeBuilderImages",
+    #### Instances
+    :instances_filter                => "TreeBuilderInstancesFilter",
+    #### Images
+    :images_filter                   => "TreeBuilderImagesFilter",
+
+    ## Infrastructure
+    ### Virtual Machines
+    #### VMs & Templates
+    :vandt                           => "TreeBuilderVandt",
+    #### VMs
+    :vms_filter                      => "TreeBuilderVmsFilter",
+    #### Templates
+    :templates_filter                => "TreeBuilderTemplateFilter",
+    ### Datastores
+    #### Datastores
     :storage                         => "TreeBuilderStorage",
+    #### Datastore Clusters
     :storage_pod                     => "TreeBuilderStoragePod",
+    ### PXE
+    #### PXE Servers
+    :pxe_servers                     => "TreeBuilderPxeServers",
+    #### Customization Templates
+    :customization_templates         => "TreeBuilderPxeCustomizationTemplates",
+    #### System Image Types
+    :pxe_image_types                 => "TreeBuilderPxeImageTypes",
+    #### ISO Datastores
+    :iso_datastores                  => "TreeBuilderIsoDatastores",
 
-    :datacenter                      => "TreeBuilderDatacenter",
-    :vat                             => "TreeBuilderVat",
+    ### Networking
+    #### Switches
+    :infra_networking                => "TreeBuilderInfraNetworking",
 
-    :network                         => "TreeBuilderNetwork",
-    :df                              => "TreeBuilderDefaultFilters",
+    # Configuration
+    ## Management
+    ### Providers
+    :configuration_manager_providers => "TreeBuilderConfigurationManager",
+    ### Configured Systems
+    :configuration_manager_cs_filter => "TreeBuilderConfigurationManagerConfiguredSystems",
 
-    # Automation trees
+    # Control
+    ## Explorer
+    ### Policy Profiles
+    :policy_profile                  => "TreeBuilderPolicyProfile",
+    ### Policies
+    :policy                          => "TreeBuilderPolicy",
+    ### Events
+    :event                           => "TreeBuilderEvent",
+    ### Conditions
+    :condition                       => "TreeBuilderCondition",
+    ### Actions
+    :action                          => "TreeBuilderAction",
+    ### Alert Profiles
+    :alert_profile                   => "TreeBuilderAlertProfile",
+    ### Alerts
+    :alert                           => "TreeBuilderAlert",
+
+    # Automation
+    ## Ansible Tower
+    ### Providers
     :automation_manager_providers    => "TreeBuilderAutomationManagerProviders",
+    ### Configured Systems
     :automation_manager_cs_filter    => "TreeBuilderAutomationManagerConfiguredSystems",
+    ### Job Templates
     :configuration_scripts           => "TreeBuilderAutomationManagerConfigurationScripts",
 
-  }
+    ## Automate
+    ### Explorer
+    #### Datastore
+    :ae                              => "TreeBuilderAeClass",
+    ### Customization
+    #### Provisioning Dialogs
+    :old_dialogs                     => "TreeBuilderProvisioningDialogs",
+    #### Service Dialogs
+    :dialogs                         => "TreeBuilderServiceDialogs",
+    #### Buttons
+    :ab                              => "TreeBuilderButtons",
+    #### Import/Export
+    :dialog_import_export            => "TreeBuilderAeCustomization",
+
+    # Optimize
+    ## Utilization
+    ### Utilization (TODO)
+    ### Bottlenecks (TODO)
+
+    # OPS (Configuration)
+    ## Settings
+    :settings                        => "TreeBuilderOpsSettings",
+    ## Access Control
+    :rbac                            => "TreeBuilderOpsRbac",
+    ## Diagnostics
+    :diagnostics                     => "TreeBuilderOpsDiagnostics",
+    ## Database
+    :vmdb                            => "TreeBuilderOpsVmdb",
+  }.freeze
 
   # Tree node prefixes for generic explorers
   X_TREE_NODE_PREFIXES = {
