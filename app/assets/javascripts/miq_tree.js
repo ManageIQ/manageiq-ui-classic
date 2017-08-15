@@ -285,7 +285,7 @@ function miqTreeExpandRecursive(treeId, fullNodeId) {
 }
 
 // OnClick handler for Server Roles Tree
-function miqOnClickServerRoles(id) {
+function miqOnClickDiagnostics(id) {
   var typ = id.split('-')[0]; // Break apart the node ids
   switch (typ) {
     case 'svr':
@@ -432,7 +432,7 @@ function miqTreeEventSafeEval(func) {
     'miqOnClickSelectDlgEditTreeNode',
     'miqOnClickUtilization',
     'miqOnClickSelectTreeNode',
-    'miqOnClickServerRoles',
+    'miqOnClickDiagnostics',
     'miqOnClickSnapshots',
   ];
 
