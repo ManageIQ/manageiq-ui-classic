@@ -997,13 +997,14 @@ module OpsController::OpsRbac
     copy = @sb[:typ] == "copy"
     # save a shadow copy of the record if record is being copied
     @user = copy ? @record.dup : @record
+    @user.miq_groups = @record.miq_groups if copy
     @edit = {:new => {}, :current => {}}
     @edit[:user_id] = @record.id unless copy
     @edit[:key] = "rbac_user_edit__#{@edit[:user_id] || "new"}"
     # prefill form fields for edit and copy action
     @edit[:new].merge!(:name  => @user.name,
                        :email => @user.email,
-                       :group => @user.current_group ? @user.current_group.id : nil)
+                       :group => @user.miq_groups ? @user.miq_groups.map(&:id) : nil)
     unless copy
       @edit[:new].merge!(:userid   => @user.userid,
                          :password => @user.password,
