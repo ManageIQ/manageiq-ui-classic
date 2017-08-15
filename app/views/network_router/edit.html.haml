@@ -1,10 +1,1 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "networkRouterFormController"}
-  = render :partial => "layouts/flash_msg"
-
-  = render :partial => "common_new_edit"
-
-  = render :partial => "layouts/angular/x_edit_buttons_angular"
-
-:javascript
-  ManageIQ.angular.app.value('networkRouterFormId', '#{@router.id}');
-  miq_bootstrap('#form_div');
+= render :partial => "common_new_edit"
