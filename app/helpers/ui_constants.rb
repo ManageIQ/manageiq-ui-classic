@@ -6,13 +6,6 @@ module UiConstants
   TIMELINES_FOLDER = File.join(Rails.root, "product/timelines")
   TOOLBARS_FOLDER = File.join(Rails.root, "product/toolbars")
 
-  # START of TIMELINE TIMEZONE Code
-  TIMELINE_TIME_COLUMNS = [
-    "created_on",
-    "timestamp"
-  ]
-  # END of TIMELINE TIMEZONE Code
-
   # Choices for trend and C&U days back pulldowns
   WEEK_CHOICES = {
     7  => N_("1 Week"),
