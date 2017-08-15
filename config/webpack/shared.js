@@ -26,10 +26,9 @@ Object.keys(engines).forEach(function(k) {
 module.exports = {
   entry: packPaths.reduce(
     (map, entry) => {
-      const localMap = map
-      const namespace = relative(join(entryPath), dirname(entry))
-      localMap[join(namespace, basename(entry, extname(entry)))] = resolve(entry)
-      return localMap
+      const pluginName = dirname(entry).substring(0, dirname(entry).length - join(entryPath).length)
+      map[join(basename(pluginName), basename(entry, extname(entry)))] = resolve(entry)
+      return map
     }, {}
   ),
 
