@@ -22,4 +22,6 @@ class AvailabilityZoneController < ApplicationController
   helper_method :textual_group_list
 
   menu_section :clo
+
+  has_custom_buttons
 end

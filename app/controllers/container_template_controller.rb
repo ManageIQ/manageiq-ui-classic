@@ -14,4 +14,6 @@ class ContainerTemplateController < ApplicationController
   helper_method :textual_group_list
 
   menu_section :cnt
+
+  has_custom_buttons
 end

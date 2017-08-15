@@ -35,4 +35,6 @@ class ContainerImageController < ApplicationController
   end
 
   menu_section :cnt
+
+  has_custom_buttons
 end

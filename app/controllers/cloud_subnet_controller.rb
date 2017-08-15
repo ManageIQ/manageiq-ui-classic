@@ -28,6 +28,9 @@ class CloudSubnetController < ApplicationController
       delete_subnets
     when "cloud_subnet_edit"
       javascript_redirect :action => "edit", :id => checked_item_id
+    when params[:pressed] == "custom_button"
+      custom_buttons
+      return
     else
       if params[:pressed] == "cloud_subnet_new"
         javascript_redirect :action => "new"
@@ -275,4 +278,6 @@ class CloudSubnetController < ApplicationController
   end
 
   menu_section :net
+
+  has_custom_buttons
 end
