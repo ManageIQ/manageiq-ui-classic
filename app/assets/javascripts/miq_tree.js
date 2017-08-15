@@ -143,7 +143,7 @@ function miqTreeScrollToNode(tree, id) {
   parentPanelBody.animate({scrollTop: (parentPanelBody.position().top + node.$el.position().top)});
 }
 
-function miqOnClickSelectAETreeNode(id) {
+function miqOnClickAutomate(id) {
   miqTreeExpandNode('automate_tree', id);
   miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select/?id=' + id + '&tree=automate_tree');
 }
@@ -433,7 +433,7 @@ function miqTreeEventSafeEval(func) {
     'miqOnCheckUserFilters',
     'miqOnClickGenealogyTree',
     'miqOnClickHostNet',
-    'miqOnClickSelectAETreeNode',
+    'miqOnClickAutomate',
     'miqOnClickSelectDlgEditTreeNode',
     'miqOnClickUtilization',
     'miqOnClickSelectTreeNode',
