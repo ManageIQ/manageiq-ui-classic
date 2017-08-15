@@ -27,8 +27,7 @@ module.exports = {
   entry: packPaths.reduce(
     (map, entry) => {
       const pluginName = dirname(entry).substring(0, dirname(entry).length - join(entryPath).length)
-      const prefix = basename(entry, extname(entry)) === 'application' ? '' : basename(pluginName) + '/'
-      map[prefix + basename(entry, extname(entry))] = resolve(entry)
+      map[join(basename(pluginName), basename(entry, extname(entry)))] = resolve(entry)
       return map
     }, {}
   ),
