@@ -102,7 +102,7 @@
 %h3
   = _("Attribute/Value Pairs")
 .form-horizontal
-  - AE_MAX_RESOLUTION_FIELDS.times do |i|
+  - ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
     - f = "attribute_" + (i + 1).to_s
     - v = "value_" + (i + 1).to_s
     .form-group

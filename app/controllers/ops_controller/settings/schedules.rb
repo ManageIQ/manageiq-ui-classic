@@ -492,7 +492,7 @@ module OpsController::Settings::Schedules
       schedule.verify_file_depot(uri_settings)
     elsif params[:action_typ] == "automation_request"
       ui_attrs = []
-      AE_MAX_RESOLUTION_FIELDS.times do |i|
+      ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
         next unless params[:ui_attrs] && params[:ui_attrs][i.to_s]
         ui_attrs[i] = []
         ui_attrs[i][0] = params[:ui_attrs][i.to_s][0]

@@ -102,7 +102,7 @@ module MiqPolicyController::MiqActions
     params.each do |var, val|
       vars = var.split("_")
       if (vars[0] == "attribute" || vars[0] == "value") && !val.blank?
-        AE_MAX_RESOLUTION_FIELDS.times do |i|
+        ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
           f = ("attribute_" + (i + 1).to_s)
           v = ("value_" + (i + 1).to_s)
           @edit[:new][:attrs][i][0] = params[f] if params[f.to_sym]
@@ -256,7 +256,7 @@ module MiqPolicyController::MiqActions
     @edit[:new][:object_message] = @edit[:new][:options][:ae_message] unless @edit[:new][:options][:ae_message].nil?
     @edit[:new][:object_request] = @edit[:new][:options][:ae_request] unless @edit[:new][:options][:ae_request].nil?
     @edit[:new][:attrs] ||= []
-    AE_MAX_RESOLUTION_FIELDS.times { @edit[:new][:attrs].push([]) }
+    ApplicationController::AE_MAX_RESOLUTION_FIELDS.times { @edit[:new][:attrs].push([]) }
     unless @edit[:new][:options][:ae_hash].nil?
       @edit[:new][:options][:ae_hash].each_with_index do |kv, i|
         @edit[:new][:attrs][i][0] = kv[0]

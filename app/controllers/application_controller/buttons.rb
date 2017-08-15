@@ -96,7 +96,7 @@ module ApplicationController::Buttons
       @edit[:new][:other_name] = params[:other_name] if params[:other_name]
       @edit[:new][:object_message] = params[:object_message] if params[:object_message]
       @edit[:new][:object_request] = params[:object_request] if params[:object_request]
-      AE_MAX_RESOLUTION_FIELDS.times do |i|
+      ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
         f = ("attribute_" + (i + 1).to_s)
         v = ("value_" + (i + 1).to_s)
         @edit[:new][:attrs][i][0] = params[f] if params[f.to_sym]
@@ -948,9 +948,9 @@ module ApplicationController::Buttons
         end
       end
     end
-    # AE_MAX_RESOLUTION_FIELDS.times{@edit[:new][:attrs].push(Array.new)} if @edit[:new][:attrs].empty?
-    # num = AE_MAX_RESOLUTION_FIELDS - @edit[:new][:attrs].length
-    (AE_MAX_RESOLUTION_FIELDS - @edit[:new][:attrs].length).times { @edit[:new][:attrs].push([]) }
+    # ApplicationController::AE_MAX_RESOLUTION_FIELDS.times{@edit[:new][:attrs].push(Array.new)} if @edit[:new][:attrs].empty?
+    # num = ApplicationController::AE_MAX_RESOLUTION_FIELDS - @edit[:new][:attrs].length
+    (ApplicationController::AE_MAX_RESOLUTION_FIELDS - @edit[:new][:attrs].length).times { @edit[:new][:attrs].push([]) }
     @edit[:new][:starting_object] ||= "SYSTEM/PROCESS"
     @edit[:new][:instance_name] ||= "Request"
 
@@ -1128,10 +1128,10 @@ module ApplicationController::Buttons
       @resolve[:target_classes] = Array(@resolve[:target_classes].invert).sort
       @resolve[:new][:attrs] ||= []
       if @resolve[:new][:attrs].empty?
-        AE_MAX_RESOLUTION_FIELDS.times { @resolve[:new][:attrs].push([]) }
+        ApplicationController::AE_MAX_RESOLUTION_FIELDS.times { @resolve[:new][:attrs].push([]) }
       else
-        # add empty array if @resolve[:new][:attrs] length is less than AE_MAX_RESOLUTION_FIELDS
-        AE_MAX_RESOLUTION_FIELDS.times { @resolve[:new][:attrs].push([]) if @resolve[:new][:attrs].length < AE_MAX_RESOLUTION_FIELDS }
+        # add empty array if @resolve[:new][:attrs] length is less than ApplicationController::AE_MAX_RESOLUTION_FIELDS
+        ApplicationController::AE_MAX_RESOLUTION_FIELDS.times { @resolve[:new][:attrs].push([]) if @resolve[:new][:attrs].length < ApplicationController::AE_MAX_RESOLUTION_FIELDS }
       end
       @resolve[:throw_ready] = ready_to_throw
     else

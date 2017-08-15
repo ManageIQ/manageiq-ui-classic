@@ -6,9 +6,6 @@ module UiConstants
   TIMELINES_FOLDER = File.join(Rails.root, "product/timelines")
   TOOLBARS_FOLDER = File.join(Rails.root, "product/toolbars")
 
-  # Maximum fields to show for automation engine resolution screens
-  AE_MAX_RESOLUTION_FIELDS = 5
-
   DRIFT_TIME_COLUMNS = [
     "last_scan_on",
     "boot_time",
