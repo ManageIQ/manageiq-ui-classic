@@ -22,7 +22,8 @@ class TreeBuilderPolicy < TreeBuilder
                                  :ContainerNode       => _("Container Node Compliance Policies"),
                                  :ContainerImage      => _("Container Image Compliance Policies"),
                                  :ExtManagementSystem => _("Provider Compliance Policies"),
-                                 :PhysicalServer      => _("Physical Infrastructure Compliance Policies")},
+                                 :PhysicalServer      => _("Physical Infrastructure Compliance Policies"),
+                                 :MiddlewareServer    => _("Middleware Server Compliance Policies")},
                  :control    => {:Host                => _("Host Control Policies"),
                                  :Vm                  => _("Vm Control Policies"),
                                  :ContainerReplicator => _("Replicator Control Policies"),
@@ -30,7 +31,8 @@ class TreeBuilderPolicy < TreeBuilder
                                  :ContainerNode       => _("Container Node Control Policies"),
                                  :ContainerImage      => _("Container Image Control Policies"),
                                  :ExtManagementSystem => _("Provider Control Policies"),
-                                 :PhysicalServer      => _("Physical Infrastructure Control Policies")}}
+                                 :PhysicalServer      => _("Physical Infrastructure Control Policies"),
+                                 :MiddlewareServer    => _("Middleware Server Control Policies")}}
 
     MiqPolicyController::UI_FOLDERS.collect do |model|
       text = text_i18n[mode.to_sym][model.name.to_sym]
@@ -51,6 +53,9 @@ class TreeBuilderPolicy < TreeBuilder
                'pficon pficon-server'
              when 'PhysicalServer'
                'pficon pficon-enterprise'
+             when 'MiddlewareServer'
+               #temporary
+               'pficon pficon-server'
              end
       {
         :id   => "#{mode}-#{model.name.camelize(:lower)}",
