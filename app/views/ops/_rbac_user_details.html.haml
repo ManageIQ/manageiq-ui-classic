@@ -144,6 +144,7 @@
       - if @edit
         %label.col-md-2
           = _("Selected Groups")
+          = render :partial => "ops/rbac_group_selected"
     - unless @edit
       .form-group
         %label.col-md-2.control-label

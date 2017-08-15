@@ -835,7 +835,12 @@ module OpsController::OpsRbac
           page.replace(@refresh_div, :partial => @refresh_partial)
         end
         bad = false
-      elsif x_node.split("-").first == "g" || x_node == "xx-g"
+      else
+        # only do following if groups of a user change (adding/editing a user)
+        if x_node.split("-").first == "u" || x_node == "xx-u"
+          page.replace("group_selected",
+                       :partial => "ops/rbac_group_selected")
+        end
         # only do following for groups
         page.replace(@refresh_div,
                      :partial => @refresh_partial,
