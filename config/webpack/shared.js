@@ -26,10 +26,10 @@ Object.keys(engines).forEach(function(k) {
 module.exports = {
   entry: packPaths.reduce(
     (map, entry) => {
-      const localMap = map
-      const namespace = relative(join(entryPath), dirname(entry))
-      localMap[join(namespace, basename(entry, extname(entry)))] = resolve(entry)
-      return localMap
+      const pluginName = dirname(entry).substring(0, dirname(entry).length - join(entryPath).length)
+      const prefix = basename(entry, extname(entry)) === 'application' ? '' : basename(pluginName) + '/'
+      map[prefix + basename(entry, extname(entry))] = resolve(entry)
+      return map
     }, {}
   ),
 
