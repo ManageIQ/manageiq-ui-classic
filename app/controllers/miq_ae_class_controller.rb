@@ -722,7 +722,17 @@ class MiqAeClassController < ApplicationController
     @edit[:new][:scope] = "instance"
     @edit[:new][:language] = "ruby"
     @edit[:new][:available_locations] = MiqAeMethod.available_locations
+    @edit[:new][:available_expression_objects] = MiqAeMethod.available_expression_objects.sort
     @edit[:new][:location] = @ae_method.location.nil? ? "inline" : @ae_method.location
+    if @edit[:new][:location] == "expression"
+      expr_hash = YAML.load(@ae_method.data)
+      if expr_hash[:db] && expr_hash[:expression]
+        @edit[:new][:expression] = expr_hash[:expression]
+        expression_setup(expr_hash[:db])
+      end
+    else
+      @edit[:new][:data] = @ae_method.data.to_s
+    end
     @edit[:new][:data] = @ae_method.data.to_s
     if @edit[:new][:location] == "inline" && !@ae_method.data
       @edit[:new][:data] = MiqAeMethod.default_method_text
@@ -744,6 +754,20 @@ class MiqAeClassController < ApplicationController
     session[:log_depot_default_verify_status] = false
     session[:edit] = @edit
     session[:changed] = @changed = false
+  end
+
+  def expression_setup(db)
+    @edit[:expression_method] = true
+    @edit[:new][:exp_object] = db
+    if params[:exp_object] || params[:cls_exp_object]
+      session[:adv_search] = nil
+      @edit[@expkey] = @edit[:new][@expkey] = nil
+    end
+    adv_search_build(db)
+  end
+
+  def expression_cleanup
+    @edit[:expression_method] = false
   end
 
   def ae_class_for_instance_or_method(record)
@@ -844,6 +868,14 @@ class MiqAeClassController < ApplicationController
       return unless load_edit("aemethod_edit__#{params[:id]}", "replace_cell__explorer")
       @prev_location = @edit[:new][:location]
       get_method_form_vars
+
+      if @edit[:new][:location] == 'expression'
+        @edit[:new][:exp_object] ||= @edit[:new][:available_expression_objects].first
+        exp_object = params[:cls_exp_object] || params[:exp_object] || @edit[:new][:exp_object]
+        expression_setup(exp_object) if exp_object
+      else
+        expression_cleanup
+      end
       if row_selected_in_grid?
         @refresh_div = "class_methods_div"
         @refresh_partial = "class_methods"
@@ -869,7 +901,8 @@ class MiqAeClassController < ApplicationController
       @edit[:default_verify_status] = @edit[:new][:location] == "inline" && @edit[:new][:data] && @edit[:new][:data] != ""
       render :update do |page|
         page << javascript_prologue
-        page.replace_html(@refresh_div, :partial => @refresh_partial)  if @refresh_div && @prev_location != @edit[:new][:location]
+        page.replace_html('form_div', :partial => 'method_form', :locals => {:prefix => ""}) if @edit[:new][:location] == 'expression'
+        page.replace_html(@refresh_div, :partial => @refresh_partial) if @refresh_div && (@prev_location != @edit[:new][:location] || params[:exp_object] || params[:cls_exp_object])
         # page.replace_html("hider_1", :partial=>"method_data", :locals=>{:field_name=>@field_name})  if @prev_location != @edit[:new][:location]
         if params[:cls_field_datatype]
           if session[:field_data][:datatype] == "password"
@@ -927,6 +960,7 @@ class MiqAeClassController < ApplicationController
           end
         end
         page << javascript_for_miq_button_visibility_changed(@changed)
+        page << "miqSparkle(false)"
       end
     end
   end
@@ -1082,6 +1116,10 @@ class MiqAeClassController < ApplicationController
       @in_a_form = false
       replace_right_cell
     when "save"
+      # dont allow save if expression has not been added or existing one has been removed
+      validate_expression("save") if @edit[:new][:location] == 'expression'
+      return if flash_errors?
+
       ae_method = find_record_with_rbac(MiqAeMethod, params[:id])
       set_method_record_vars(ae_method)                     # Set the record variables, but don't save
       begin
@@ -1177,6 +1215,11 @@ class MiqAeClassController < ApplicationController
     end
   end
 
+  def data_for_expression
+    {:db         => @edit[:new][:exp_object],
+     :expression => @edit[:new][:expression]}.to_yaml
+  end
+
   def create_method
     assert_privileges("miq_ae_method_new")
     @in_a_form = true
@@ -1189,6 +1232,11 @@ class MiqAeClassController < ApplicationController
     when "add"
       return unless load_edit("aemethod_edit__new", "replace_cell__explorer")
       get_method_form_vars
+
+      # dont allow add if expression has not been added or existing one has been removed
+      validate_expression("add") if @edit[:new][:location] == 'expression'
+      return if flash_errors?
+
       add_aemethod = MiqAeMethod.new
       set_method_record_vars(add_aemethod)                        # Set the record variables, but don't save
       begin
@@ -1570,6 +1618,14 @@ class MiqAeClassController < ApplicationController
   end
 
   private
+
+  def validate_expression(task)
+    if @edit[@expkey][:expression]["???"] == "???"
+      add_flash(_("Error during '%{task}': Expression element is required") % {:task => _(task)}, :error)
+      @in_a_form = true
+      javascript_flash
+    end
+  end
 
   def features
     [ApplicationController::Feature.new_with_hash(:role        => "miq_ae_class_explorer",
@@ -2147,6 +2203,11 @@ class MiqAeClassController < ApplicationController
     miqaemethod.location = @edit[:new][:location]
     miqaemethod.language = @edit[:new][:language]
     miqaemethod.data = @edit[:new][:data]
+    miqaemethod.data = if @edit[:new][:location] == 'expression'
+                         data_for_expression
+                       else
+                         @edit[:new][:data]
+                       end
     miqaemethod.class_id = from_cid(@edit[:ae_class_id])
   end
 
@@ -2502,6 +2563,10 @@ class MiqAeClassController < ApplicationController
       inputs = @record.inputs
       @sb[:squash_state] = true
       @sb[:active_tab] = "methods"
+      if @record.location == 'expression'
+        hash = YAML.load(@record.data)
+        @expression = hash[:expression] ? MiqExpression.new(hash[:expression]).to_human : ""
+      end
       domain_overrides
       set_right_cell_text(x_node, @record)
     end

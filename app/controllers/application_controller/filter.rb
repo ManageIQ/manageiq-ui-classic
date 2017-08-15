@@ -53,6 +53,11 @@ module ApplicationController::Filter
         else
           page.replace("exp_editor_div", :partial => "layouts/exp_editor")
         end
+
+        if @edit[:expression_method]
+          page.replace("exp_editor_div", :partial => "layouts/exp_editor")
+        end
+
         if ["not", "discard", "commit", "remove"].include?(params[:pressed])
           page << javascript_hide("exp_buttons_on")
           page << javascript_hide("exp_buttons_not")
