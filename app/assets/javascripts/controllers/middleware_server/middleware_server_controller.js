@@ -1,13 +1,10 @@
 ManageIQ.angular.app.controller('mwServerController', MwServerController);
 ManageIQ.angular.app.controller('mwServerGroupController', MwServerGroupController);
 
-MwServerController.$inject = ['$scope', 'miqService', 'mwAddDatasourceService'];
-MwServerGroupController.$inject = ['$scope', 'miqService' ];
-
 /**
  * MwServerController - since there can be only one controller per page due to:
  * 'ManageIQ.angular.scope = $scope;'
- * We are now using Rx.js Observables instead of miqCallAngular, for sending configurable
+ * We are now using Rx.js Observables, for sending configurable
  * data from miq buttons.
  * This is the parent controller for the page that is bootstrapped,
  * interacting with the page via $scope and then 'sendDataWithRx' events down to the sub
@@ -28,21 +25,23 @@ MwServerGroupController.$inject = ['$scope', 'miqService' ];
  * @param {MwAddDatasourceService} mwAddDatasourceService - Datasource services
  * @constructor
  */
-function MwServerController($scope, miqService, mwAddDatasourceService) {
-  return MwServerControllerFactory($scope, miqService, mwAddDatasourceService, false);
+MwServerController.$inject = ['$scope', 'miqService', 'mwAddDatasourceService', '$timeout'];
+function MwServerController($scope, miqService, mwAddDatasourceService, $timeout) {
+  return MwServerControllerFactory($scope, miqService, mwAddDatasourceService, false, $timeout);
 }
 
-function MwServerGroupController($scope, miqService, mwAddDatasourceService) {
-  return MwServerControllerFactory($scope, miqService, mwAddDatasourceService, true);
+MwServerGroupController.$inject = ['$scope', 'miqService', 'mwAddDatasourceService', '$timeout'];
+function MwServerGroupController($scope, miqService, mwAddDatasourceService, $timeout) {
+  return MwServerControllerFactory($scope, miqService, mwAddDatasourceService, true, $timeout);
 }
 
-function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, isGroupDeployment) {
+function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, isGroupDeployment, $timeout) {
   ManageIQ.angular.scope = $scope;
 
   ManageIQ.angular.rxSubject.subscribe(function(event) {
     var eventType = event.type;
-    var  operation = event.operation;
-    var  timeout = event.timeout;
+    var operation = event.operation;
+    var timeout = event.timeout;
 
     $scope.paramsModel = $scope.paramsModel || {};
     if (eventType === 'mwServerOps'  && operation) {
@@ -57,6 +56,20 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
     if (eventType === 'mwReloadDeployDialog') {
       $scope.warnMsg = event.msg;
       $scope.$apply();
+    }
+
+    if (event.controller === 'middlewareServerController') {
+      $timeout(function() {
+        if (event.name === 'showDeployListener') {
+          $scope.showDeployListener();
+        }
+        if (event.name === 'showDatasourceListener') {
+          $scope.showDatasourceListener();
+        }
+        if (event.name === 'showDeployListener') {
+          $scope.showDeployListener();
+        }
+      });
     }
   });
 

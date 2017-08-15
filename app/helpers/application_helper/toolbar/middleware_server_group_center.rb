@@ -95,8 +95,8 @@ class ApplicationHelper::Toolbar::MiddlewareServerGroupCenter < ApplicationHelpe
                        N_('Add Deployment'),
                        :data => {'toggle'        => 'modal',
                                  'target'        => '#modal_d_div',
-                                 'function'      => 'miqCallAngular',
-                                 'function-data' => '{"name": "showDeployListener", "args": []}'}
+                                 'function'      => 'sendDataWithRx',
+                                 'function-data' => '{"name": "showDeployListener", "controller": "middlewareServerController"}'}
                      )
                    ]
                  ),

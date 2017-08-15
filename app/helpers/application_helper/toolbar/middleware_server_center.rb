@@ -144,8 +144,8 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           N_('Add Deployment'),
           :data => {'toggle'        => 'modal',
                     'target'        => '#modal_d_div',
-                    'function'      => 'miqCallAngular',
-                    'function-data' => '{"name": "showDeployListener", "args": []}'},
+                    'function'      => 'sendDataWithRx',
+                    'function-data' => '{"name": "showDeployListener", "controller": "middlewareServerController"}'},
           :klass => ApplicationHelper::Button::MiddlewareStandaloneServerAction)
       ]
     ),
@@ -164,8 +164,8 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           N_('Add JDBC Driver'),
           :data => {'toggle'        => 'modal',
                     'target'        => '#modal_jdbc_div',
-                    'function'      => 'miqCallAngular',
-                    'function-data' => '{"name": "showJdbcDriverListener", "args": []}'},
+                    'function'      => 'sendDataWithRx',
+                    'function-data' => '{"name": "showJdbcDriverListener", "controller": "middlewareServerController"}'},
           :klass => ApplicationHelper::Button::MiddlewareStandaloneServerAction)
       ]
     ),
@@ -184,8 +184,8 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           N_('Add Datasource'),
           :data => {'toggle'        => 'modal',
                     'target'        => '#modal_ds_div',
-                    'function'      => 'miqCallAngular',
-                    'function-data' => '{"name": "showDatasourceListener", "args": []}'},
+                    'function'      => 'sendDataWithRx',
+                    'function-data' => '{"name": "showDatasourceListener", "controller": "middlewareServerController"}'},
           :klass => ApplicationHelper::Button::MiddlewareStandaloneServerAction)
       ]
     ),
