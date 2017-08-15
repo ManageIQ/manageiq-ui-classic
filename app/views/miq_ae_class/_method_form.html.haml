@@ -62,12 +62,15 @@
           :javascript
             miqInitSelectPicker();
             miqSelectPickerEvent("#{prefix}exp_object", "#{url}",  {beforeSend: true})
-      = render :partial => 'layouts/exp_editor'
     - else
       %hr
       %h3= @edit[:new][:location] == 'builtin' ? _('Builtin name') : _("Data")
       = render :partial => "method_data", :locals => {:field_name => "#{prefix}method"}
       %hr
+  - if @edit[:new][:location] == 'expression'
+    .div
+      %h3= _("Expression (Choose an element of the expression to edit)")
+      = render :partial => 'layouts/exp_editor'
   %h3= _("Input Parameters")
   %table.table.table-bordered.table-striped
     %thead

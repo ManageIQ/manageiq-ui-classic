@@ -768,8 +768,6 @@ class MiqAeClassController < ApplicationController
 
   def expression_cleanup
     @edit[:expression_method] = false
-    # @edit[:new][:expression]  = nil
-    # @edit[:expression] = nil
   end
 
   def ae_class_for_instance_or_method(record)
