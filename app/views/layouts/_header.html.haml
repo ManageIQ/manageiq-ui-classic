@@ -1,4 +1,5 @@
 = render :partial => 'layouts/about_modal'
+#reduxDemo{style: "float: right; background-color:#3f9c35; font-size:22px;", class: 'card-pf'}
 %nav.navbar.navbar-pf-vertical#notification-app{'ng-controller' => "headerController as vm"}
   .navbar-header
     %button{:type => "button", :class => "navbar-toggle"}
@@ -40,6 +41,7 @@
   = render :partial => "layouts/notifications_drawer"
   = render :partial => "layouts/toast_list"
 
+  = javascript_pack_tag 'manageiq-ui-classic/redux'
 :javascript
   miq_bootstrap('#notification-app', 'miq.notifications');
 
