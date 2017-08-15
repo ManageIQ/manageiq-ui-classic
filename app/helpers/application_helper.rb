@@ -1128,7 +1128,18 @@ module ApplicationHelper
       item.id.to_sym == @layout.to_sym ? 'active' : nil
   end
 
+  # special handling for custom menu sections and items
+  def section_nav_class_iframe(section)
+    if params[:sid].present?
+      section.id.to_s == params[:sid] ? 'active' : nil
+    elsif params[:id].present?
+      section.contains_item_id?(params[:id]) ? 'active' : nil
+    end
+  end
+
   def section_nav_class(section)
+    return section_nav_class_iframe(section) if params[:action] == 'iframe'
+
     active = controller.menu_section_id(controller.params) || @layout.to_sym
 
     if section.parent.nil?
