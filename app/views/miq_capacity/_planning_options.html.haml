@@ -114,7 +114,7 @@
                               @sb[:planning][:options][:values][:cpu],
                               :maxlength         => 15,
                               :disabled          => !@sb[:planning][:options][:trend_cpu],
-                              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                              "data-miq_observe" => {:url => url}.to_json)
           - else
             = @sb[:planning][:options][:values][:cpu]
           = _('MHz')
@@ -132,7 +132,7 @@
                               @sb[:planning][:options][:values][:vcpus],
                               :maxlength         => 15,
                               :disabled          => !@sb[:planning][:options][:trend_vcpus],
-                              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                              "data-miq_observe" => {:url => url}.to_json)
           - else
             = @sb[:planning][:options][:values][:vcpus]
     - if vm_opts[:memory]
@@ -149,7 +149,7 @@
                               @sb[:planning][:options][:values][:memory],
                               :maxlength         => 15,
                               :disabled          => !@sb[:planning][:options][:trend_memory],
-                              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                              "data-miq_observe" => {:url => url}.to_json)
           - else
             = @sb[:planning][:options][:values][:memory]
           = _('MB')
@@ -167,7 +167,7 @@
                               @sb[:planning][:options][:values][:storage],
                               :maxlength         => 15,
                               :disabled          => !@sb[:planning][:options][:trend_storage],
-                              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                              "data-miq_observe" => {:url => url}.to_json)
           - else
             = @sb[:planning][:options][:values][:storage]
           = _('GB')

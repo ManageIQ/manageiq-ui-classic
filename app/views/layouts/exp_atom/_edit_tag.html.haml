@@ -28,7 +28,7 @@
     = text_field_tag("alias",
       @edit[@expkey][:alias],
       :maxlength         => 50,
-      "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+      "data-miq_observe" => {:url => url}.to_json)
 
 - if @edit[@expkey][:exp_tag]
   %br

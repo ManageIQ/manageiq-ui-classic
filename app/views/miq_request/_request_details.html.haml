@@ -41,7 +41,7 @@
             :maxlength         => ViewHelper::MAX_NAME_LEN,
             :class             => "form-control",
             "data-miq_focus"   => true,
-            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+            "data-miq_observe" => {:url => url}.to_json)
       - else
         .col-md-8
           = h(@miq_request.reason)

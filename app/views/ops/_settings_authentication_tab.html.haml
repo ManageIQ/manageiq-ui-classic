@@ -46,19 +46,19 @@
                             @edit[:new][:authentication][:ldaphost][0],
                             :maxlength => 50,
                             :class => "form-control",
-                            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                            "data-miq_observe" => {:url => url}.to_json)
           %br/
           = text_field_tag("authentication_ldaphost_2",
                             @edit[:new][:authentication][:ldaphost][1],
                             :maxlength => 50,
                             :class => "form-control",
-                            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                            "data-miq_observe" => {:url => url}.to_json)
           %br/
           = text_field_tag("authentication_ldaphost_3",
                             @edit[:new][:authentication][:ldaphost][2],
                             :maxlength => 50,
                             :class => "form-control",
-                            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                            "data-miq_observe" => {:url => url}.to_json)
       .form-group
         %label.col-md-2.control-label
           = _("LDAP Port")
@@ -67,7 +67,7 @@
                             @edit[:new][:authentication][:ldapport],
                             :maxlength => 6,
                             :class => "form-control",
-                            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                            "data-miq_observe" => {:url => url}.to_json)
       .form-group
         %label.col-md-2.control-label
           = _("User Type")
@@ -93,7 +93,7 @@
                             @edit[:new][:authentication][:domain_prefix],
                             :maxlength => 255,
                             :class => "form-control",
-                            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                            "data-miq_observe" => {:url => url}.to_json)
       .form-group
         %label.col-md-2.control-label
           = _("User Suffix:")
@@ -114,7 +114,7 @@
                             @edit[:new][:authentication][:user_suffix],
                             :maxlength => 255,
                             :class => "form-control",
-                            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                            "data-miq_observe" => {:url => url}.to_json)
     %hr
   = hidden_div_if(@edit[:new][:authentication][:mode] != "amazon", :id => "amazon_div") do
     %h3= _("Amazon Primary AWS Account Settings for IAM")
@@ -127,7 +127,7 @@
                             @edit[:new][:authentication][:amazon_key],
                             :maxlength => 50,
                             :class => "form-control",
-                            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                            "data-miq_observe" => {:url => url}.to_json)
       .form-group
         %label.col-md-2.control-label
           = _("Secret Key")
@@ -136,7 +136,7 @@
                                 :maxlength         => 50,
                                 :placeholder       => placeholder_if_present(@edit[:new][:authentication][:amazon_secret]),
                                 :class => "form-control",
-                                "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                                "data-miq_observe" => {:url => url}.to_json)
     %hr
   = hidden_div_if(!%w(ldap ldaps).include?(@edit[:new][:authentication][:mode]), :id => "ldap_role_div") do
     %h3
@@ -186,7 +186,7 @@
                                 @edit[:new][:authentication][:basedn],
                                 :maxlength => 255,
                                 :class => "form-control",
-                                "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                                "data-miq_observe" => {:url => url}.to_json)
         .form-group
           %label.col-md-2.control-label
             = _("Bind DN")
@@ -195,7 +195,7 @@
                                 @edit[:new][:authentication][:bind_dn],
                                 :maxlength => 255,
                                 :class => "form-control",
-                                "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                                "data-miq_observe" => {:url => url}.to_json)
         .form-group
           %label.col-md-2.control-label
             = _("Bind Password")
@@ -204,7 +204,7 @@
                                 :maxlength         => 128,
                                 :placeholder       => placeholder_if_present(@edit[:new][:authentication][:bind_pwd]),
                                 :class => "form-control",
-                                "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                                "data-miq_observe" => {:url => url}.to_json)
         .form-group
           .col-md-10{:align => "right"}
             = render :partial => 'ldap_verify_button', :locals => {:id => "#{@sb[:active_tab].split('_').last}"}

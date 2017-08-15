@@ -5,7 +5,7 @@
 
 - if @edit
   - url = url_for_only_path(:action => 'rbac_user_field_changed', :id => (@edit[:user_id] || "new"))
-- observe_url_json = {:interval => '.5', :url => url}.to_json
+- observe_url_json = {:url => url}.to_json
 - disabled = @edit && @edit[:new][:userid] == "admin"
 
 = render :partial => "layouts/flash_msg"

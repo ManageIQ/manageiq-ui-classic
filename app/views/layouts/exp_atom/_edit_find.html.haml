@@ -24,7 +24,7 @@
   - unless @edit[@expkey][:alias].blank?
     = text_field_tag("alias", @edit[@expkey][:alias],
       :maxlength         => 50,
-      "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+      "data-miq_observe" => {:url => url}.to_json)
 
 - if @edit[@expkey][:exp_field]
   %br
@@ -52,7 +52,7 @@
             @edit[@expkey][:exp_value][0] ? @edit[@expkey][:exp_value][0].split(" ").first : "",
             :readonly               => "true",
             :size                   => 10,
-            "data-miq_observe_date" => {:interval => '.5', :url => url}.to_json)
+            "data-miq_observe_date" => {:url => url}.to_json)
           - if @edit[@expkey][:exp_value][0].to_s.include?(":")
             = select_tag("miq_time_1_0",
               options_for_select(Array.new(24) { |i| ["#{i}:00", "#{i}:15", "#{i}:30", "#{i}:45"] }.flatten, @edit[@expkey][:exp_value][0].split(" ").last),
@@ -76,7 +76,7 @@
               @edit[@expkey][:exp_value][1] ? @edit[@expkey][:exp_value][1].split(" ").first : "",
               :readonly               => "true",
               :size                   => 10,
-              "data-miq_observe_date" => {:interval => '.5', :url => url}.to_json)
+              "data-miq_observe_date" => {:url => url}.to_json)
             - if @edit[@expkey][:exp_value][1].to_s.include?(":")
               = select_tag("miq_time_1_1",
                 options_for_select(Array.new(24) { |i| ["#{i}:00", "#{i}:15", "#{i}:30", "#{i}:45"] }.flatten, @edit[@expkey][:exp_value][1].split(" ").last),
@@ -116,7 +116,7 @@
       - else
         = text_field_tag("chosen_value", @edit[@expkey][:exp_value],
           :maxlength         => 500,
-          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+          "data-miq_observe" => {:url => url}.to_json)
         - if @edit[@expkey][:val1][:type] == :percent
           \%
         - elsif MiqExpression::FORMAT_SUB_TYPES[@edit[@expkey][:val1][:type]][:units]
@@ -166,7 +166,7 @@
               = datepicker_input_tag("miq_date_2_0", v,
                 :readonly               => "true",
                 :size                   => 10,
-                "data-miq_observe_date" => {:interval => '.5', :url => url}.to_json)
+                "data-miq_observe_date" => {:url => url}.to_json)
               - if @edit[@expkey][:exp_cvalue][0].to_s.include?(":")
                 - opts = Array.new(24) { |i| ["#{i}:00", "#{i}:15", "#{i}:30", "#{i}:45"] }.flatten
                 = select_tag("miq_time_2_0",
@@ -191,7 +191,7 @@
                 = datepicker_input_tag("miq_date_2_1", val,
                   :readonly               => "true",
                   :size                   => 10,
-                  "data-miq_observe_date" => {:interval => '.5', :url => url}.to_json)
+                  "data-miq_observe_date" => {:url => url}.to_json)
                 - if @edit[@expkey][:exp_cvalue][1].to_s.include?(":")
                   - opts = Array.new(24) { |i| ["#{i}:00", "#{i}:15", "#{i}:30", "#{i}:45"] }.flatten
                   = select_tag("miq_time_2_1",
@@ -232,7 +232,7 @@
           - else
             = text_field_tag("chosen_cvalue", @edit[@expkey][:exp_cvalue],
               :maxlength         => 500,
-              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+              "data-miq_observe" => {:url => url}.to_json)
             - if @edit[@expkey][:val2][:type] == :percent
               \%
             - elsif MiqExpression::FORMAT_SUB_TYPES[@edit[@expkey][:val2][:type]][:units]
@@ -252,7 +252,7 @@
     %span#chosen_cvalue_span
       = text_field_tag("chosen_cvalue", @edit[@expkey][:exp_cvalue],
         :maxlength         => 40,
-        "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+        "data-miq_observe" => {:url => url}.to_json)
 
 :javascript
   miqInitSelectPicker();

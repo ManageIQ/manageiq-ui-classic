@@ -60,8 +60,7 @@
                            :maxlength         => 25,
                            :class             => "form-control",
                            :disabled          => disabled,
-                           "data-miq_observe" => {:interval => '.5',
-                                                  :url      => url}.to_json)
+                           "data-miq_observe" => {:url => url}.to_json)
       .form-group
         %label.col-md-2.control-label
           = _("Description")
@@ -69,8 +68,7 @@
           = text_field_tag("description", @edit[:new][:description],
                            :maxlength         => 50,
                            :class             => "form-control",
-                           "data-miq_observe" => {:interval => '.5',
-                                                  :url      => url}.to_json)
+                           "data-miq_observe" => {:url => url}.to_json)
       - if @category.nil?
         = javascript_tag(javascript_focus('name'))
       - else
@@ -82,8 +80,7 @@
           = text_field_tag("example_text", @edit[:new][:example_text],
                            :maxlength         => 255,
                            :class             => "form-control",
-                           "data-miq_observe" => {:interval => '.5',
-                                                  :url      => url}.to_json)
+                           "data-miq_observe" => {:url => url}.to_json)
       .form-group
         %label.col-md-2.control-label
           = _("Show in Console")

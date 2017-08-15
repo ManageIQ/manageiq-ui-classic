@@ -29,7 +29,7 @@
                          @edit[:new][:depot_name],
                          :maxlength         => 50,
                          :class             => "form-control",
-                         "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                         "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.control-label.col-md-2
         = _("URI")
@@ -37,7 +37,7 @@
         #{@edit[:new][:uri_prefix]}://
         = text_field_tag("uri", @edit[:new][:uri],
                          :maxlength         => 100,
-                         "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                         "data-miq_observe" => {:url => url}.to_json)
       = javascript_tag(javascript_focus('uri'))
     - if @edit[:new][:requires_credentials]
       -# log depot validation is handled by log_depot_edit :validate case,

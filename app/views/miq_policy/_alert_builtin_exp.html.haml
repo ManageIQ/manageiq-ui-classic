@@ -1,6 +1,6 @@
 - if @edit
   - url = url_for_only_path(:action => 'alert_field_changed', :id => (@alert.id || 'new'))
-  - observe_with_interval = {:interval => '.5', :url => url}.to_json
+  - observe = {:url => url}.to_json
 .form-group
   - case option[:name]
   - when :event_types
@@ -87,7 +87,7 @@
             @edit[:new][:expression][:options][:value_threshold],
             :maxlength         => ViewHelper::MAX_NAME_LEN,
             :class             => "form-control",
-            "data-miq_observe" => observe_with_interval)
+            "data-miq_observe" => observe)
       - else
         = h(option[:values][@alert.db][@alert.expression[:options][:perf_column]])
         = h(@alert.expression[:options][:operator])
@@ -110,7 +110,7 @@
             @edit[:new][:expression][:options][:trend_steepness],
             :maxlength         => ViewHelper::MAX_DESC_LEN,
             :class             => "form-control",
-            "data-miq_observe" => observe_with_interval)
+            "data-miq_observe" => observe)
           = h(@edit[:perf_column_unit])
           = _('Per Minute')
       - else
@@ -152,7 +152,7 @@
         = text_field_tag("event_log_message_filter_value",
           @edit[:new][:expression][:options][:event_log_message_filter_value],
           :maxlength         => ViewHelper::MAX_DESC_LEN,
-          "data-miq_observe" => observe_with_interval)
+          "data-miq_observe" => observe)
       - else
         = h(@alert.expression[:options][:event_log_message_filter_type])
         = h(@alert.expression[:options][:event_log_message_filter_value])
@@ -238,7 +238,7 @@
           @edit[:new][:expression][:options][:value_mw_garbage_collector],
           :maxlength         => ViewHelper::MAX_NAME_LEN,
           :class             => "form-control",
-          "data-miq_observe" => observe_with_interval)
+          "data-miq_observe" => observe)
       - else
         = h(@alert.expression[:options][:mw_operator])
         = h(@alert.expression[:options][:value_mw_garbage_collector])
@@ -252,6 +252,6 @@
           @edit[:new][:expression][:options][option[:name]],
           :maxlength         => ViewHelper::MAX_DESC_LEN,
           :class             => "form-control",
-          "data-miq_observe" => observe_with_interval)
+          "data-miq_observe" => observe)
       - else
         = h(@alert.expression[:options][option[:name]])

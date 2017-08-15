@@ -30,8 +30,7 @@
                          :maxlength         => 25,
                          :class             => "form-control",
                          :disabled          => disabled,
-                         "data-miq_observe" => {:interval => '.5',
-                                                :url      => url}.to_json)
+                         "data-miq_observe" => {:url => url}.to_json)
     %h3= _("Choose a tag category to map to")
     .form-group
       %label.col-md-2.control-label
@@ -40,8 +39,7 @@
         = text_field_tag("category", @edit[:new][:category],
                          :maxlength         => 50,
                          :class             => "form-control",
-                         "data-miq_observe" => {:interval => '.5',
-                                                :url      => url}.to_json)
+                         "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.col-md-2.control-label
       .col-md-8

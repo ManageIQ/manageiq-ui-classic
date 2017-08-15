@@ -54,7 +54,7 @@ $(document).ready(function () {
     $(this).data('params', miqSerializeForm(form_id));
   });
 
-  // Bind in the observe support. If interval is configured, use the observe_field function
+  // Bind in the observe support.
   var attemptAutoRefreshTrigger = function(parms) {
     return function() {
       if (parms.auto_refresh === true) {
@@ -63,44 +63,7 @@ $(document).ready(function () {
     };
   };
 
-  var observeWithInterval = function(el, parms) {
-    if (el.data('isObserved')) {
-      return;
-    }
-    el.data('isObserved', true);
-
-    var interval = parms.interval;
-    var url = parms.url;
-    var submit = parms.submit;
-
-    el.observe_field(interval, function () {
-      var oneTrans = this.getAttribute('data-miq_send_one_trans'); // Grab one trans URL, if present
-      if (typeof submit != "undefined") {
-        // If submit element passed in
-        miqObserveRequest(url, {
-          data: miqSerializeForm(submit),
-          done: attemptAutoRefreshTrigger(parms),
-        });
-      } else if (oneTrans) {
-        miqSendOneTrans(url, {
-          observe: true,
-          done: attemptAutoRefreshTrigger(parms),
-        });
-      } else {
-        // tack on the id and value to the URL
-        var data = {};
-        data[el.attr('id')] = el.prop('value');
-
-        miqObserveRequest(url, {
-          done: attemptAutoRefreshTrigger(parms),
-          data: data,
-        });
-      }
-    });
-  };
-
   var observeOnChange = function(el, parms) {
-    // No interval passed, use event observer
     el.off('change');
     el.on('change', _.debounce(function() {
       var id = el.attr('id');
@@ -120,11 +83,7 @@ $(document).ready(function () {
     var el = $(this);
     var parms = $.parseJSON(el.attr('data-miq_observe'));
 
-    if (typeof parms.interval == "undefined") {
-      observeOnChange(el, parms);
-    } else {
-      observeWithInterval(el, parms);
-    }
+    observeOnChange(el, parms);
   });
 
   $(document).on('change', '[data-miq_observe_checkbox]', function (event) {

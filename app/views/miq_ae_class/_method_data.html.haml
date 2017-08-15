@@ -9,7 +9,7 @@
     = text_field_tag("#{field_name}_data",
       @edit[:new][:data],
       :maxlength         => ViewHelper::MAX_NAME_LEN,
-      "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+      "data-miq_observe" => {:url => url}.to_json)
   - if @edit[:new][:location] == 'builtin'
     %em= _('Optional, if not specified, method name is used.')
   %tr

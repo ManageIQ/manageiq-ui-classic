@@ -16,7 +16,7 @@
                           :maxlength         => 50,
                           :class             => "form-control",
                           :disabled          => read_only,
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)
         - unless read_only
           = javascript_tag(javascript_focus('name'))
     .form-group
@@ -27,7 +27,7 @@
                           @edit[:new][:description],
                           :maxlength         => 20,
                           :class             => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.control-label.col-md-2
         = _('Locked')

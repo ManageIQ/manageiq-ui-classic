@@ -15,8 +15,7 @@
                          @edit[:new][:name].to_s,
                          :class => "form-control",
                          :maxlength         => 40,
-                         "data-miq_observe" => {:interval => ".5",
-                                                :url      => url}.to_json)
+                         "data-miq_observe" => {:url => url}.to_json)
         = javascript_tag(javascript_focus('name'))
     .form-group
       %label.col-sm-2.control-label
@@ -27,8 +26,7 @@
                          @edit[:new][:description],
                          :class => "form-control",
                          :maxlength         => 60,
-                         "data-miq_observe" => {:interval => ".5",
-                                                :url      => url}.to_json)
+                         "data-miq_observe" => {:url => url}.to_json)
   %hr
   %h3
     = _('Assign Catalog Items')

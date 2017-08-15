@@ -10,7 +10,7 @@
       .col-md-8
         = text_field_tag("name", @edit[:new][:name], :maxlength => ViewHelper::MAX_NAME_LEN,
                         :class => "form-control",
-                        "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                        "data-miq_observe" => {:url => url}.to_json)
         = javascript_tag(javascript_focus('name'))
     .form-group
       %label.col-md-2.control-label
@@ -32,7 +32,7 @@
               #{@edit[:new][:uri_prefix]}://
             = text_field_tag("uri", @edit[:new][:uri], :maxlength => 100,
                             :class => "form-control",
-                            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                            "data-miq_observe" => {:url => url}.to_json)
       - if @edit[:new][:uri_prefix] != "nfs"
         = render(:partial => "/layouts/auth_credentials", :locals => {:pfx => "log",
                   :change_url => "pxe_server_form_field_changed",
@@ -44,28 +44,28 @@
       .col-md-8
         = text_field_tag("access_url", @edit[:new][:access_url], :maxlength => ViewHelper::MAX_NAME_LEN,
                           :class => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.col-md-2.control-label
         = _('PXE Directory')
       .col-md-8
         = text_field_tag("pxe_directory", @edit[:new][:pxe_directory], :maxlength => ViewHelper::MAX_NAME_LEN,
                           :class => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.col-md-2.control-label
         = _('Windows Images Directory')
       .col-md-8
         = text_field_tag("windows_images_directory", @edit[:new][:windows_images_directory],
                           :class => "form-control",
-                          :maxlength => ViewHelper::MAX_NAME_LEN, "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          :maxlength => ViewHelper::MAX_NAME_LEN, "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.col-md-2.control-label
         = _('Customization Directory')
       .col-md-8
         = text_field_tag("customization_directory", @edit[:new][:customization_directory],
                           :class => "form-control",
-                          :maxlength => ViewHelper::MAX_NAME_LEN, "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          :maxlength => ViewHelper::MAX_NAME_LEN, "data-miq_observe" => {:url => url}.to_json)
 
   %hr
   %h3
@@ -78,4 +78,4 @@
         .col-md-8
           = text_field_tag("pxemenu_#{index}", h(menu), :maxlength => ViewHelper::MAX_NAME_LEN,
                             :class => "form-control",
-                            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                            "data-miq_observe" => {:url => url}.to_json)

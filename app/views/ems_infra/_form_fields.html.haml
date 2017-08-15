@@ -6,7 +6,7 @@
       = text_field_tag("hostname",
         @edit[:new][:hostname],
         :maxlength => ViewHelper::MAX_HOSTNAME_LEN,
-        "data-miq_observe" => {:interval => '.5', :url => url}.to_json,
+        "data-miq_observe" => {:url => url}.to_json,
         :class => "form-control",
         :title => _("Hostname or IPv4/IPv6 address"))
   - if @edit[:new][:emstype] == "scvmm" || @edit[:new][:emstype] == "openstack" || @edit[:new][:emstype] == "openstack_infra"
@@ -30,5 +30,4 @@
                            @edit[:new][:realm],
                            :maxlength => ViewHelper::MAX_NAME_LEN,
                            :class             => "form-control",
-                           "data-miq_observe" => {:interval => ".5",
-                                                  :url => url}.to_json)
+                           "data-miq_observe" => {:url => url}.to_json)

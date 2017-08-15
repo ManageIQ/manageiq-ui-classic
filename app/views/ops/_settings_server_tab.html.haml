@@ -35,7 +35,7 @@
                           @edit[:new][:server][:company],
                           :maxlength => 20,
                           :class => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.col-md-2.control-label
         = _("Appliance Name")
@@ -44,7 +44,7 @@
                           @edit[:new][:server][:name],
                           :maxlength => 20,
                           :class => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.col-md-2.control-label
         = _("Zone*")
@@ -55,7 +55,7 @@
                             :maxlength => 15,
                             :disabled => true,
                             :class => "form-control",
-                            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                            "data-miq_observe" => {:url => url}.to_json)
         - else
           = select_tag('server_zone',
                         options_for_select(session[:server_zones].sort, @edit[:new][:server][:zone]),
@@ -143,19 +143,19 @@
                           @edit[:new][:ntp][:server][0],
                           :maxlength => ViewHelper::MAX_NAME_LEN,
                           :class => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)
         %br/
         = text_field_tag("ntp_server_2",
                           @edit[:new][:ntp][:server][1],
                           :maxlength => ViewHelper::MAX_NAME_LEN,
                           :class => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)
         %br/
         = text_field_tag("ntp_server_3",
                           @edit[:new][:ntp][:server][2],
                           :maxlength => ViewHelper::MAX_NAME_LEN,
                           :class => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)
   .note
     = _("Specified NTP settings applied here will override Zone NTP settings.")
   %hr
@@ -170,7 +170,7 @@
                           @edit[:new][:smtp][:host],
                           :maxlength => 255,
                           :class => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.col-md-2.control-label
         = _("Port")
@@ -179,7 +179,7 @@
                           @edit[:new][:smtp][:port],
                           :maxlength => 6,
                           :class => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.col-md-2.control-label
         = _("Domain")
@@ -188,7 +188,7 @@
                           @edit[:new][:smtp][:domain],
                           :maxlength => 255,
                           :class => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.col-md-2.control-label
         = _("Start TLS Automatically")
@@ -227,7 +227,7 @@
                           :maxlength => ViewHelper::MAX_NAME_LEN,
                           :disabled => chk,
                           :class => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.col-md-2.control-label
         = _("Password")
@@ -237,7 +237,7 @@
                               :placeholder       => placeholder_if_present(@edit[:new][:smtp][:password]),
                               :disabled          => chk,
                               :class => "form-control",
-                              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                              "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.col-md-2.control-label
         = _("From E-mail Address")
@@ -246,7 +246,7 @@
                           @edit[:new][:smtp][:from],
                           :maxlength => ViewHelper::MAX_DESC_LEN,
                           :class => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.col-md-2.control-label
         = _("Test E-mail Address")
@@ -256,7 +256,7 @@
                             @sb[:new_to],
                             :maxlength => ViewHelper::MAX_DESC_LEN,
                             :class => "form-control",
-                            "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                            "data-miq_observe" => {:url => url}.to_json)
           %span.input-group-btn
             = render :partial => 'email_verify_button', :locals => {:id => "#{@sb[:active_tab].split('_').last}"}
   %hr
@@ -306,7 +306,7 @@
                           @edit[:new][:server][:custom_support_url],
                           :maxlength => ViewHelper::MAX_NAME_LEN,
                           :class => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.col-md-2.control-label
         = _("Description")
@@ -315,4 +315,4 @@
                           @edit[:new][:server][:custom_support_url_description],
                           :maxlength => ViewHelper::MAX_DESC_LEN,
                           :class => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)

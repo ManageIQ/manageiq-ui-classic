@@ -1,6 +1,6 @@
 - if @edit
   - url = url_for_only_path(:action => 'profile_field_changed', :id => (@profile.id || 'new'))
-  - observe_with_interval = {:interval => '.5', :url => url}.to_json
+  - observe = {:url => url}.to_json
 - if @profile
   #profile_info_div
     = render :partial => "layouts/flash_msg"
@@ -17,7 +17,7 @@
               = text_field_tag("description", @edit[:new][:description],
                 :maxlength         => ViewHelper::MAX_DESC_LEN,
                 :class             => "form-control",
-                "data-miq_observe" => observe_with_interval)
+                "data-miq_observe" => observe)
             = javascript_tag(javascript_focus('description'))
           - else
             .col-md-8
@@ -99,7 +99,7 @@
         :maxlength                  => "512",
         :counter                    => "notes_count",
         "data-miq_check_max_length" => true,
-        "data-miq_observe"          => observe_with_interval)
+        "data-miq_observe"          => observe)
       %hr
     - else
       %h3= _("Notes")

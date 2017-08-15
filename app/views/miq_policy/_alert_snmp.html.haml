@@ -1,6 +1,6 @@
 - if @edit
   - url = url_for_only_path(:action => 'alert_field_changed', :id => (@alert.id || 'new'))
-  - observe_with_interval = {:interval => '.5', :url => url}.to_json
+  - observe = {:url => url}.to_json
   - observe = {:url => url}.to_json
 #alert_snmp_div
   %h3
@@ -21,17 +21,17 @@
             = text_field_tag("host_1", @edit[:new][:snmp][:host][0],
               :maxlength         => ViewHelper::MAX_DESC_LEN,
               :class             => "form-control",
-              "data-miq_observe" => observe_with_interval)
+              "data-miq_observe" => observe)
             %br
             = text_field_tag("host_2", @edit[:new][:snmp][:host][1],
               :maxlength => ViewHelper::MAX_DESC_LEN,
               :class             => "form-control",
-              "data-miq_observe" => observe_with_interval)
+              "data-miq_observe" => observe)
             %br
             = text_field_tag("host_3", @edit[:new][:snmp][:host][2],
               :maxlength => ViewHelper::MAX_DESC_LEN,
               :class             => "form-control",
-              "data-miq_observe" => {:interval => '.5',  :url => url}.to_json)
+              "data-miq_observe" => {:url => url}.to_json)
         .form-group
           %label.control-label.col-md-2
             = _("Version")
@@ -50,7 +50,7 @@
             = text_field_tag("trap_id", @edit[:new][:snmp][:trap_id],
               :maxlength         => ViewHelper::MAX_DESC_LEN,
               :class             => "form-control",
-              "data-miq_observe" => observe_with_interval)
+              "data-miq_observe" => observe)
   - if @edit[:new][:send_snmp]
     %br
     %table.table.table-striped.table-bordered.table-hover
@@ -66,7 +66,7 @@
               = text_field_tag("oid__#{i + 1}", @edit[:new][:snmp][:variables][i][:oid],
                 :maxlength         => ViewHelper::MAX_DESC_LEN,
                 :class             => "form-control",
-                "data-miq_observe" => observe_with_interval)
+                "data-miq_observe" => observe)
             %td
               = select_tag("var_type__#{i + 1}",
                 options_for_select(["<#{_('None')}>"] + @edit[:snmp_var_types].sort, @edit[:new][:snmp][:variables][i][:var_type]),
@@ -85,5 +85,5 @@
                 :disabled  => val_disabled,
                 :maxlength => ViewHelper::MAX_DESC_LEN,
                 :class             => "form-control",
-                "data-miq_observe" => observe_with_interval)
+                "data-miq_observe" => observe)
   %hr

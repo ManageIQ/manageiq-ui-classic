@@ -69,7 +69,7 @@
                     = javascript_tag("ManageIQ.reportEditor.valueStyles['#styleval_#{f_idx}_#{s_idx}'] = '#{field_type}';")
                     = text_field_tag("styleval_#{f_idx}_#{s_idx}", styles[s_idx][:value],
                       :maxlength         => 50,
-                      "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                      "data-miq_observe" => {:url => url}.to_json)
                     - if field_type == :percent
                       \%
                     - elsif MiqExpression::FORMAT_SUB_TYPES.fetch_path(field_type, :units)

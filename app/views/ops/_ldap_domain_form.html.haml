@@ -15,7 +15,7 @@
                          @edit[:new][:name],
                          :maxlength         => ViewHelper::MAX_NAME_LEN,
                          :class => "form-control",
-                         "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                         "data-miq_observe" => {:url => url}.to_json)
         = javascript_tag(javascript_focus('name'))
     %hr
     %h3= _("LDAP Settings")
@@ -53,7 +53,7 @@
                          @edit[:new][:user_suffix],
                          :maxlength         => 50,
                          :class => "form-control",
-                         "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                         "data-miq_observe" => {:url => url}.to_json)
     %hr
     %h3= _("Role Settings")
     .form-group
@@ -85,7 +85,7 @@
                          @edit[:new][:base_dn],
                          :maxlength => 255,
                          :class => "form-control",
-                         "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                         "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.col-md-2.control-label
         = _("Bind DN")
@@ -94,7 +94,7 @@
                          @edit[:new][:bind_dn],
                          :maxlength => 255,
                          :class => "form-control",
-                         "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                         "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.col-md-2.control-label
         = _("Bind Password")
@@ -103,5 +103,5 @@
                              @edit[:new][:bind_pwd],
                              :maxlength => 128,
                              :class => "form-control",
-                             "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                             "data-miq_observe" => {:url => url}.to_json)
     = render :partial => 'ldap_server_entries', :locals => {:entry => nil, :domain_id => "#{@edit[:ldap_domain_id] || "new"}"}

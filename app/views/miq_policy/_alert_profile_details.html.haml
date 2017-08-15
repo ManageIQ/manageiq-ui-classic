@@ -1,6 +1,6 @@
 - if @edit
   - url = url_for_only_path(:action => 'alert_profile_field_changed', :id => (@alert_profile.id || 'new'))
-  - observe_with_interval = {:interval => '.5', :url => url}.to_json
+  - observe = {:url => url}.to_json
 #alert_profile_details_div
   - if @assign
     = render :partial => 'alert_profile_assign'
@@ -17,7 +17,7 @@
               - if @edit
                 = text_field_tag("description", @edit[:new][:description],
                   :maxlength         => ViewHelper::MAX_DESC_LEN,
-                  "data-miq_observe" => observe_with_interval,
+                  "data-miq_observe" => observe,
                   :class             => "form-control",
                   :style             => "overflow-x: scroll;")
                 = javascript_tag(javascript_focus('description'))
@@ -99,7 +99,7 @@
               :maxlength                  => "512",
               :counter                    => "notes_count",
               "data-miq_check_max_length" => true,
-              "data-miq_observe"          => observe_with_interval)
+              "data-miq_observe"          => observe)
             %hr
       - else
         %h3

@@ -81,7 +81,7 @@
       \/
       = text_field_tag("field_validator_rule",
                         @edit[:field_validator_rule],
-                        "data-miq_observe" => {:interval => '.5', :url => url}.to_json,
+                        "data-miq_observe" => {:url => url}.to_json,
                         :disabled          => @edit[:field_validator_type].blank?,
                         :class => "form-control",
                         :maxlength         => 250)

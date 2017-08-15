@@ -14,13 +14,13 @@
                            @edit[:new][:name].to_s,
                            :maxlength         => 40,
                            :class             => "form-control",
-                           "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                           "data-miq_observe" => {:url => url}.to_json)
         .col-md-4
           = text_field_tag("description",
                            @edit[:new][:description],
                            :maxlength         => 60,
                            :class             => "form-control",
-                           "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                           "data-miq_observe" => {:url => url}.to_json)
         .col-md-3
           = check_box_tag("display", "1", @edit[:new][:display],
                           "data-miq_observe_checkbox" => {:url => url}.to_json)
@@ -148,7 +148,7 @@
                              @edit[:new][:reconfigure_fqname],
                              :class             => "form-control",
                              :onFocus           => 'miqShowAE_Tree("reconfigure");miqButtons("hide", "automate");',
-                             "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                             "data-miq_observe" => {:url => url}.to_json)
             %span.input-group-btn
               #reconfigure_fqname_div{:style => @edit[:new][:reconfigure_fqname] != "" ? "" : "display:none"}
                 = link_to({:action => 'ae_tree_select_discard',

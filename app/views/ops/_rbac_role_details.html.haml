@@ -19,7 +19,7 @@
                                @edit[:new][:name],
                                :maxlength         => 50,
                                :class => "form-control",
-                               "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                               "data-miq_observe" => {:url => url}.to_json)
               = javascript_tag(javascript_focus('name'))
         .form-group
           %label.col-md-4.control-label

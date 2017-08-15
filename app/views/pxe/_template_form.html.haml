@@ -12,7 +12,7 @@
                       @edit[:new][:name],
                       :maxlength => ViewHelper::MAX_NAME_LEN,
                       :class => "form-control",
-                      "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                      "data-miq_observe" => {:url => url}.to_json)
         = javascript_tag(javascript_focus('name'))
     .form-group
       %label.col-md-2.control-label
@@ -20,7 +20,7 @@
       .col-md-8
         = text_field_tag("description", @edit[:new][:description], :maxlength => 100,
                           :class => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+                          "data-miq_observe" => {:url => url}.to_json)
     .form-group
       %label.col-md-2.control-label
         = _('Image Type')

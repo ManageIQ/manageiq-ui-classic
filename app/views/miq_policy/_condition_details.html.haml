@@ -1,6 +1,6 @@
 - if @edit
   - url = url_for_only_path(:action => 'condition_field_changed', :id => (@condition.id || 'new'))
-  - observe_with_interval = {:interval => '.5', :url => url}.to_json
+  - observe = {:url => url}.to_json
 #condition_details_div
   - if @condition
     #condition_info_div
@@ -16,7 +16,7 @@
               - if @edit
                 = text_field_tag("description", @edit[:new][:description],
                   :maxlength         => ViewHelper::MAX_DESC_LEN,
-                  "data-miq_observe" => observe_with_interval,
+                  "data-miq_observe" => observe,
                   :class             => "form-control")
                 = javascript_tag(javascript_focus('description'))
               - else
@@ -68,7 +68,7 @@
             :maxlength                  => "512",
             :counter                    => "notes_count",
             "data-miq_check_max_length" => true,
-            "data-miq_observe"          => observe_with_interval)
+            "data-miq_observe"          => observe)
       - else
         %h3= _("Notes")
         - if @condition.notes.blank?
