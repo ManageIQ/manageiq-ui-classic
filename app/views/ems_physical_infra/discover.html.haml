@@ -55,6 +55,16 @@
                        :maxlength         => 3,
                        "data-miq_observe" => {:interval => '.5',
                                               :url      => url}.to_json)
+  .form-group
+    %label.col-md-2.control-label
+      = _("Port")
+    .col-md-8
+      = text_field_tag('port',
+                       @port,
+                       :size                  => '5',
+                       :maxlength             => '5',
+                       "data-miq_observe" => {:interval => '.5',
+                                              :url      => url}.to_json)
   .pull-right
     = button_tag(_("Start"),
                    :class => "btn btn-primary",
