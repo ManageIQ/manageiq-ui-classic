@@ -152,7 +152,7 @@ function miqOnClickIncludeDomainPrefix() {
   miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select_toggle?button=domain');
 }
 
-function miqOnClickSelectOptimizeTreeNode(id) {
+function miqOnClickUtilization(id) {
   var tree;
   if (miqDomElementExists('utilization_accord')) {
     tree = "utilization_tree";
@@ -435,7 +435,7 @@ function miqTreeEventSafeEval(func) {
     'miqOnClickHostNet',
     'miqOnClickSelectAETreeNode',
     'miqOnClickSelectDlgEditTreeNode',
-    'miqOnClickSelectOptimizeTreeNode',
+    'miqOnClickUtilization',
     'miqOnClickSelectTreeNode',
     'miqOnClickServerRoles',
     'miqOnClickSnapshots',
