@@ -23,7 +23,7 @@ class TreeBuilderSmartproxyAffinity < TreeBuilder
                   :onclick      => false,
                   :three_checks => true,
                   :post_check   => true,
-                  :oncheck      => 'miqOnClickSmartProxyAffinityCheck',
+                  :oncheck      => 'miqOnCheckGeneric',
                   :check_url    => '/ops/smartproxy_affinity_field_changed/')
   end
 

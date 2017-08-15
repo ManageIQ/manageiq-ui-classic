@@ -42,7 +42,7 @@ class TreeBuilderBelongsToHac < TreeBuilder
     locals = super
 
     oncheck, check_url = if @assign_to
-                           ["miqOnCheckHandler", "/miq_policy/alert_profile_assign_changed/"]
+                           ["miqOnCheckGeneric", "/miq_policy/alert_profile_assign_changed/"]
                          elsif @edit
                            ["miqOnCheckUserFilters", "/ops/rbac_group_field_changed/#{group_id}___"]
                          else

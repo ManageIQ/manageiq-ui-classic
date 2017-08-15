@@ -17,8 +17,8 @@ function miqTreeFindNodeByKey(tree, key) {
   });
 }
 
-// OnCheck handler for the checkboxes in tree
-function miqOnCheckHandler(node) {
+// Generic OnCheck handler for the checkboxes in tree
+function miqOnCheckGeneric(node) {
   var url = ManageIQ.tree.checkUrl + node.key + '?check=' + (node.state.checked ? '1' : '0');
   miqJqueryRequest(url);
 }
@@ -234,12 +234,6 @@ function miqOnClickGenealogyTree(id) {
   miqJqueryRequest(ManageIQ.tree.clickUrl + id, {beforeSend: true, complete: true});
 }
 
-// OnCheck handler for the SmartProxy Affinity tree
-function miqOnClickSmartProxyAffinityCheck(node) {
-  var checked = node.state.checked ? '1' : '0';
-  miqJqueryRequest(ManageIQ.tree.checkUrl + node.key + '?check=' + checked);
-}
-
 function miqOnCheckGenealogy(node, treename) {
   var count = 0;
   var tree = miqTreeObject(treename);
@@ -431,7 +425,7 @@ function miqTreeEventSafeEval(func) {
   var whitelist = [
     'miqOnCheckCUFilters',
     'miqOnCheckGenealogy',
-    'miqOnCheckHandler',
+    'miqOnCheckGeneric',
     'miqOnCheckMenuRoles',
     'miqOnCheckProtect',
     'miqOnCheckProvTags',
@@ -444,7 +438,6 @@ function miqTreeEventSafeEval(func) {
     'miqOnClickSelectOptimizeTreeNode',
     'miqOnClickSelectTreeNode',
     'miqOnClickServerRoles',
-    'miqOnClickSmartProxyAffinityCheck',
     'miqOnClickSnapshotTree',
     'miqOnClickTagCat',
   ];

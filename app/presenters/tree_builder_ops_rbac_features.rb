@@ -27,7 +27,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
       :post_check   => true
     }
 
-    locals[:oncheck] = "miqOnCheckHandler" if @editable
+    locals[:oncheck] = "miqOnCheckGeneric" if @editable
 
     super.merge!(locals)
   end
