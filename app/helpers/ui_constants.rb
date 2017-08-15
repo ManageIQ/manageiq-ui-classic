@@ -6,11 +6,6 @@ module UiConstants
   TIMELINES_FOLDER = File.join(Rails.root, "product/timelines")
   TOOLBARS_FOLDER = File.join(Rails.root, "product/toolbars")
 
-  DRIFT_TIME_COLUMNS = [
-    "last_scan_on",
-    "boot_time",
-    "last_logon"
-  ]
   # START of TIMELINE TIMEZONE Code
   TIMELINE_TIME_COLUMNS = [
     "created_on",

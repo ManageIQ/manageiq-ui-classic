@@ -1,6 +1,12 @@
 module ApplicationController::Compare
   extend ActiveSupport::Concern
 
+  DRIFT_TIME_COLUMNS = [
+    "last_scan_on",
+    "boot_time",
+    "last_logon"
+  ].freeze
+
   def get_compare_report(model)
     db = model.kind_of?(String) ? model.constantize : model
     MiqReport.find_by(:filename => "#{db.table_name}.yaml", :template_type => "compare")
