@@ -226,16 +226,13 @@ class CloudNetworkController < ApplicationController
     options = {}
     # True by default
     params[:enabled] = false unless params[:enabled]
-    # TODO: uncomment once form contains this field
-    # params[:port_security_enabled] = false unless params[:port_security_enabled]
-    params[:qos_policy_id] = nil if params[:qos_policy_id] && params[:qos_policy_id].empty?
-
     options[:name] = params[:name] if params[:name] unless @network.name == params[:name]
     options[:admin_state_up] = switch_to_bol(params[:enabled]) unless @network.enabled == switch_to_bol(params[:enabled])
     options[:shared] = switch_to_bol(params[:shared]) unless @network.shared == switch_to_bol(params[:shared])
     unless @network.external_facing == switch_to_bol(params[:external_facing])
       options[:external_facing] = switch_to_bol(params[:external_facing])
     end
+
     # TODO: uncomment once form contains this field
     # options[:port_security_enabled] = switch_to_bol(params[:port_security_enabled]) unless @network.port_security_enabled == switch_to_bol(params[:port_security_enabled])
     options[:qos_policy_id] = params[:qos_policy_id] unless @network.qos_policy_id == params[:qos_policy_id]
@@ -256,6 +253,8 @@ class CloudNetworkController < ApplicationController
     # options[:port_security_enabled] = params[:port_security_enabled] if params[:port_security_enabled]
     options[:qos_policy_id] = params[:qos_policy_id] if params[:qos_policy_id]
     options[:provider_network_type] = params[:provider_network_type] if params[:provider_network_type]
+    options[:provider_physical_network] = params[:provider_physical_network] if params[:provider_physical_network]
+    options[:provider_segmentation_id] = params[:provider_segmentation_id] if params[:provider_segmentation_id]
     options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant_id]) if params[:cloud_tenant_id]
     options
   end

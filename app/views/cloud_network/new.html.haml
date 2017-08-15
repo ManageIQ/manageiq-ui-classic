@@ -45,7 +45,7 @@
   .form-horizontal{"ng-if" => "vm.cloudNetworkModel.cloud_tenant_id"}
     %h3
       = _('Network Provider Information')
-    .form-group{"ng-class" => "{'has-error': angularForm.provider_network_type.$invalid}"}
+    .form-group
       %label.col-md-2.control-label
         = _('Provider Network Type')
       .col-md-8
@@ -53,10 +53,23 @@
                       options_for_select([["<#{_('Choose')}>", nil]] + @network_provider_network_type_choices.sort),
                       "ng-model"                    => "vm.cloudNetworkModel.provider_network_type",
                       "pf-select"                   => true,
-                      "required"                    => "",
                       "selectpicker-for-select-tag" => "")
-        %span.help-block{"ng-show" => "angularForm.provider_network_type.$error.required"}
-          = _("Required")
+    .form-group{"ng-if" => "vm.cloudNetworkModel.provider_network_type"}
+      %label.control-label.col-md-2
+        = _('Physical Network')
+      .col-md-8
+        %input.form-control{"type"         => "text",
+                            "name"         => "provider_physical_network",
+                            "ng-model"     => "vm.cloudNetworkModel.provider_physical_network",
+                            'ng-maxlength' => 128}
+    .form-group{"ng-if" => "vm.network_type_pattern.test(vm.cloudNetworkModel.provider_network_type)"}
+      %label.control-label.col-md-2
+        = _('Segmentation ID')
+      .col-md-8
+        %input.form-control{"type"         => "text",
+                            "name"         => "provider_segmentation_id",
+                            "ng-model"     => "vm.cloudNetworkModel.provider_segmentation_id",
+                            'ng-maxlength' => 128}
 
   = render :partial => "common_new_edit"
   = render :partial => "layouts/angular/generic_form_buttons"
