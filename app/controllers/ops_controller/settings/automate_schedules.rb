@@ -18,14 +18,15 @@ module OpsController::Settings::AutomateSchedules
   end
 
   def fetch_target_ids
-    targets = Rbac.filtered(params[:target_class]).select(:id, :name)
-    unless targets.nil?
-      targets = targets.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
-      target_id = ""
+    if params[:target_class] && params[:target_class] != 'null'
+      targets = Rbac.filtered(params[:target_class]).select(:id, :name)
+      unless targets.nil?
+        targets = targets.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
+      end
     end
 
     render :json => {
-      :target_id => target_id,
+      :target_id => '',
       :targets   => targets
     }
   end
