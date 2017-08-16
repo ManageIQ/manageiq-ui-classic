@@ -8,7 +8,7 @@ class AutomationManagerController < ApplicationController
   include Mixins::GenericSessionMixin
   include Mixins::ManagerControllerMixin
 
-  menu_section :automation_manager
+  menu_section :at
 
   def self.model
     ManageIQ::Providers::AutomationManager

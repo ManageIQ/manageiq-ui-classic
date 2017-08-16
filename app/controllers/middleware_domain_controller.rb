@@ -17,7 +17,7 @@ class MiddlewareDomainController < ApplicationController
     "#{model.name.underscore}/show"
   end
 
-  menu_section :cnt
+  menu_section :mdl
 
   private
 
