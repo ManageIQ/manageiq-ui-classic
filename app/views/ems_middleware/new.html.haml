@@ -13,7 +13,8 @@
   %input{:type => 'hidden', :id => "cred_type", :name => "cred_type", :value => "default"}
 
   = render :partial => "form"
-
+  %new-provider-form
+= javascript_pack_tag 'manageiq-ui-classic/middleware_forms'
 :javascript
   ManageIQ.angular.app.value('emsCommonFormId', '#{@ems.id || "new"}');
   miq_bootstrap($('#form_id').val());
