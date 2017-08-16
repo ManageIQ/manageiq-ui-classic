@@ -104,7 +104,7 @@ describe('repositoryFormController', function() {
       });
       $scope.vm.modelCopy = angular.copy($scope.vm.repositoryModel); //set modelCopy to default value
       $scope.vm.repositoryModel.description = 'value changed'; //values changed
-      $scope.resetClicked();
+      $scope.vm.resetClicked($scope.angularForm);
     });
 
     it('sets values to original', function(done) {
@@ -129,7 +129,7 @@ describe('repositoryFormController', function() {
       });
       spyOn(controller, 'getBack').and.callFake(function(){ return true;});
 
-      $scope.saveClicked();
+      $scope.vm.saveClicked();
     });
 
     it('calls API', function(done) {
