@@ -202,9 +202,8 @@ module MiqPolicyController::AlertProfiles
                                            :hac,
                                            @sb,
                                            true,
-                                           :edit     => @edit,
-                                           :filters  => @filters,
-                                           :group    => @group,
+                                           :assign_to => @assign[:new][:assign_to],
+                                           :cat       => @assign[:new][:cat],
                                            :selected => @assign[:new][:objects].collect { |f| "ResourcePool_#{f}" })
       else
         root_node = TreeNodeBuilder.generic_tree_node(

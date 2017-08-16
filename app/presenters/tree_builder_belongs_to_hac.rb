@@ -7,7 +7,11 @@ class TreeBuilderBelongsToHac < TreeBuilder
 
   def override(node, object, _pid, options)
     if [ExtManagementSystem, EmsCluster, Datacenter, EmsFolder, ResourcePool].any? { |klass| object.kind_of?(klass) }
-      node[:select] = options.key?(:selected) && options[:selected].include?("#{object.class.name}_#{object[:id]}")
+      node[:select] = if @assign_to
+                        options.key?(:selected) && options[:selected].include?("ResourcePool_#{object[:id]}")
+                      else
+                        options.key?(:selected) && options[:selected].include?("#{object.class.name}_#{object[:id]}")
+                      end
     end
     node[:hideCheckbox] = true if object.kind_of?(Host) && object.ems_cluster_id.present?
     node[:cfmeNoClick] = true
