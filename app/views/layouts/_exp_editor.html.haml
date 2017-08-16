@@ -9,7 +9,7 @@
 #exp_editor_div
   = render :partial => 'layouts/flash_msg', :locals => {:flash_div_id => 'exp_editor_flash'}
   %fieldset
-    .toolbar-pf-actions
+    .toolbar-pf-actions{:style => "margin-left: 20px"}
       .form-group
         - if @edit[@expkey].history.idx > 0
           - t = _('Undo the last change')
