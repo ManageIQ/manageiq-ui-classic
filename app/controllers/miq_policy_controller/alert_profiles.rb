@@ -152,10 +152,10 @@ module MiqPolicyController::AlertProfiles
     end
     if params.key?(:id)
       if params[:check] == "1"
-        @assign[:new][:objects].push(params[:id].split("_").last.to_i)
+        @assign[:new][:objects].push(from_cid(params[:id].split("-").last))
         @assign[:new][:objects].sort!
       else
-        @assign[:new][:objects].delete(params[:id].split("_").last.to_i)
+        @assign[:new][:objects].delete(from_cid(params[:id].split("-").last))
       end
     end
 
@@ -190,22 +190,20 @@ module MiqPolicyController::AlertProfiles
     tree = nil
     unless @objects.empty?               # Build object tree
       if @assign[:new][:assign_to] == "ems_folder"
-        tree = TreeBuilderBelongsToHac.new(:vat_tree,
+        tree = TreeBuilderBelongsToVat.new(:vat_tree,
                                            :vat,
                                            @sb,
                                            true,
-                                           :edit     => @edit,
-                                           :filters  => @filters,
-                                           :group    => @group,
-                                           :selected => @assign[:new][:objects].collect { |f| "EmsFolder_#{f}" })
+                                           :assign_to => @assign[:new][:assign_to],
+                                           :cat       => @assign[:new][:cat],
+                                           :selected  => @assign[:new][:objects].collect { |f| "EmsFolder_#{f}" })
       elsif @assign[:new][:assign_to] == "resource_pool"
         tree = TreeBuilderBelongsToHac.new(:hac_tree,
                                            :hac,
                                            @sb,
                                            true,
-                                           :edit     => @edit,
-                                           :filters  => @filters,
-                                           :group    => @group,
+                                           :assign_to => @assign[:new][:assign_to],
+                                           :cat       => @assign[:new][:cat],
                                            :selected => @assign[:new][:objects].collect { |f| "ResourcePool_#{f}" })
       else
         root_node = TreeNodeBuilder.generic_tree_node(
