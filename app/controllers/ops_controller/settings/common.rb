@@ -32,6 +32,7 @@ module OpsController::Settings::Common
       else
         @refresh_div = nil
       end
+      @changed = false unless rhn_save_enabled?
     when 'settings_workers'
       @changed = (@edit[:new].config != @edit[:current].config)
       if @edit[:new].config[:workers][:worker_base][:ui_worker][:count] != @edit[:current].config[:workers][:worker_base][:ui_worker][:count]
