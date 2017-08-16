@@ -11,6 +11,7 @@
     - if @sb[:planning][:rpt].extras[:vm_profile]
       = render :partial => "planning_vm_profile"
   - if @perf_record
-    %p= _("* Information shown is based on available trend data going back %{weeks}.") % {:weeks => _(WEEK_CHOICES[@sb[:planning][:options][:days]])}
+    %p
+      = _("* Information shown is based on available trend data going back %{weeks}.") % {:weeks => _(ViewHelper::WEEK_CHOICES[@sb[:planning][:options][:days]])}
   - else
     = render :partial => "planning_instructions"

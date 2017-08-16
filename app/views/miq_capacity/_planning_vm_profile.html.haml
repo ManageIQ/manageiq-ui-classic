@@ -57,7 +57,7 @@
 %dl.dl-horizontal
   %dt= _('Trend for Past')
   %dd
-    = h(_(WEEK_CHOICES[@sb[:planning][:options][:days].to_i]))
+    = h(_(ViewHelper::WEEK_CHOICES[@sb[:planning][:options][:days].to_i]))
   %dt= _('Time Profile')
   %dd
     - if @sb[:planning][:options][:time_profile].nil?
