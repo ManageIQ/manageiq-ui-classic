@@ -164,15 +164,10 @@ function miqOnClickUtilization(id) {
   } else if (miqDomElementExists('bottlenecks_accord')) {
     tree = "bottlenecks_tree";
   }
-  if (id.split('-')[1].split('_')[0] == 'folder' ) {
-    miqTreeActivateNodeSilently(tree, id);
-    return;
-  } else {
-    var rep_id = id.split('__');
-    miqTreeActivateNodeSilently(tree, rep_id);
-    var url = "/miq_capacity/optimize_tree_select/?id=" + rep_id[0];
-    miqJqueryRequest(url, {beforeSend: true});
-  }
+  var rep_id = id.split('__');
+  miqTreeActivateNodeSilently(tree, rep_id);
+  var url = "/miq_capacity/optimize_tree_select/?id=" + rep_id[0];
+  miqJqueryRequest(url, {beforeSend: true});
 }
 
 // delete specific tree cookies
