@@ -35,6 +35,14 @@ module ViewHelper
     1.hour     => N_("1 Hour")
   }.freeze
 
+  # Choices for trend and C&U days back pulldowns
+  WEEK_CHOICES = {
+    7  => N_("1 Week"),
+    14 => N_("2 Weeks"),
+    21 => N_("3 Weeks"),
+    28 => N_("4 Weeks")
+  }.freeze
+
   class << self
     def concat_tag(*args, &block)
       concat content_tag(*args, &block)

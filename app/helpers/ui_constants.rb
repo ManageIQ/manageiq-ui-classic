@@ -1,17 +1,6 @@
 module UiConstants
   # dac - Changed to allow up to 255 characters for all text fields on 1/11/07
 
-  # Choices for trend and C&U days back pulldowns
-  WEEK_CHOICES = {
-    7  => N_("1 Week"),
-    14 => N_("2 Weeks"),
-    21 => N_("3 Weeks"),
-    28 => N_("4 Weeks")
-    # 60 => "2 Months",   # Removed longer times when on demand daily rollups was added in sprint 59 due to performance
-    # 90 => "3 Months",
-    # 180 => "6 Months"
-  }
-
   # Choices for Target options show pulldown
   TARGET_TYPE_CHOICES = {
     "EmsCluster" => N_("Clusters"),
