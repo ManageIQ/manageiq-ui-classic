@@ -26,6 +26,15 @@ module ViewHelper
     "US-Folio"      => N_("US Folio - 8.5in x 13.0in")
   }.freeze
 
+  # Choices for C&U last hour real time minutes back pulldown
+  REALTIME_CHOICES = {
+    10.minutes => N_("10 Minutes"),
+    15.minutes => N_("15 Minutes"),
+    30.minutes => N_("30 Minutes"),
+    45.minutes => N_("45 Minutes"),
+    1.hour     => N_("1 Hour")
+  }
+
   class << self
     def concat_tag(*args, &block)
       concat content_tag(*args, &block)

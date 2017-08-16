@@ -17,15 +17,6 @@ module UiConstants
     # 180 => "6 Months"
   }
 
-  # Choices for C&U last hour real time minutes back pulldown
-  REALTIME_CHOICES = {
-    10.minutes => N_("10 Minutes"),
-    15.minutes => N_("15 Minutes"),
-    30.minutes => N_("30 Minutes"),
-    45.minutes => N_("45 Minutes"),
-    1.hour     => N_("1 Hour")
-  }
-
   # Choices for Target options show pulldown
   TARGET_TYPE_CHOICES = {
     "EmsCluster" => N_("Clusters"),
