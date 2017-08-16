@@ -121,6 +121,13 @@ module Mixins
       render :layout => "application"
     end
 
+    def identify_record(id, klass = self.class.model)
+      type, _id = parse_nodetype_and_id(x_node)
+      klass = TreeBuilder.get_model_for_prefix(type).constantize if type
+      record = super(id, klass)
+      record
+    end
+
     def tree_autoload
       @view ||= session[:view]
       super
