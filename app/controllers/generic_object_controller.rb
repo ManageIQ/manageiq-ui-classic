@@ -15,6 +15,16 @@ class GenericObjectController < ApplicationController
     GenericObject
   end
 
+  def self.populate_display_methods(record)
+    define_singleton_method("display_methods") do
+      associations = %w()
+      record.property_associations.each do |key, _value|
+        associations.push(key)
+      end
+      associations
+    end
+  end
+
   private
 
   def textual_group_list
