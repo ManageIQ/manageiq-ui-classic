@@ -19,13 +19,13 @@ function miqTreeFindNodeByKey(tree, key) {
 
 // Generic OnCheck handler for the checkboxes in tree
 function miqOnCheckGeneric(node) {
-  var url = ManageIQ.tree.checkUrl + node.key + '?check=' + (node.state.checked ? '1' : '0');
+  var url = ManageIQ.tree.checkUrl + encodeURIComponent(node.key) + '?check=' + (node.state.checked ? '1' : '0');
   miqJqueryRequest(url);
 }
 
 // Generic OnClick handler for selecting nodes in tree
 function miqOnClickGeneric(id) {
-  miqJqueryRequest(ManageIQ.tree.clickUrl + id, {beforeSend: true, complete: true});
+  miqJqueryRequest(ManageIQ.tree.clickUrl + encodeURIComponent(id), {beforeSend: true, complete: true});
 }
 
 function miqAddNodeChildren(treename, key, selected_node, children) {
@@ -72,13 +72,13 @@ function miqOnCheckMenuRoles(id) {
 // OnClick handler to run tree_select server method
 function miqOnClickSelectTreeNode(id) {
   var rec_id = id.split('__');
-  var url = '/' + ManageIQ.controller + '/tree_select/?id=' + rec_id[0];
+  var url = '/' + ManageIQ.controller + '/tree_select/?id=' + encodeURIComponent(rec_id[0]);
   miqJqueryRequest(url, {beforeSend: true});
 }
 
 function miqOnClickSelectDlgEditTreeNode(id) {
   var rec_id = id.split('__');
-  var url = 'tree_select/?id=' + rec_id[0];
+  var url = 'tree_select/?id=' + encodeURIComponent(rec_id[0]);
   miqJqueryRequest(url, {beforeSend: true, complete: true});
 }
 
@@ -128,7 +128,7 @@ function miqOnCheckProvTags(node, treename) {
   }
 
   var all_checked = tree.getChecked().map(function (item) {
-    return item.key;
+    return encodeURIComponent(item.key);
   });
 
   miqJqueryRequest(ManageIQ.tree.checkUrl + '?ids_checked=' + all_checked);
@@ -138,7 +138,7 @@ function miqOnCheckProvTags(node, treename) {
 function miqOnClickSelectRbacTreeNode(id) {
   var tree = 'rbac_tree';
   miqTreeExpandNode(tree, 'xx-' + id.split('-')[0]);
-  miqJqueryRequest('/' + ManageIQ.controller + '/tree_select/?id=' + id + '&tree=' + tree, {beforeSend: true});
+  miqJqueryRequest('/' + ManageIQ.controller + '/tree_select/?id=' + encodeURIComponent(id) + '&tree=' + tree, {beforeSend: true});
   miqTreeScrollToNode(tree, id);
 }
 
@@ -150,7 +150,7 @@ function miqTreeScrollToNode(tree, id) {
 
 function miqOnClickAutomate(id) {
   miqTreeExpandNode('automate_tree', id);
-  miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select/?id=' + id + '&tree=automate_tree');
+  miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select/?id=' + encodeURIComponent(id) + '&tree=automate_tree');
 }
 
 function miqOnClickIncludeDomainPrefix() {
@@ -166,7 +166,7 @@ function miqOnClickUtilization(id) {
   }
   var rep_id = id.split('__');
   miqTreeActivateNodeSilently(tree, rep_id);
-  var url = "/miq_capacity/optimize_tree_select/?id=" + rep_id[0];
+  var url = "/miq_capacity/optimize_tree_select/?id=" + encodeURIComponent(rep_id[0]);
   miqJqueryRequest(url, {beforeSend: true});
 }
 
@@ -183,7 +183,7 @@ function miqTreeToggleExpand(treename, expand_mode) {
 // OnCheck handler for the Protect screen
 function miqOnCheckProtect(node, _treename) {
   var ppid = node.key.split('_').pop();
-  var url = ManageIQ.tree.checkUrl + ppid + '?check=' + Number(node.state.checked);
+  var url = ManageIQ.tree.checkUrl + encodeURIComponent(ppid) + '?check=' + Number(node.state.checked);
   miqJqueryRequest(url);
   return true;
 }
@@ -192,7 +192,7 @@ function miqOnCheckProtect(node, _treename) {
 function miqOnClickSnapshots(id) {
   var pieces = id.split(/-/);
   var shortId = pieces[pieces.length - 1]
-  miqJqueryRequest('/' + ManageIQ.controller + '/snap_pressed/' + shortId, {beforeSend: true, complete: true});
+  miqJqueryRequest('/' + ManageIQ.controller + '/snap_pressed/' + encodeURIComponent(shortId), {beforeSend: true, complete: true});
 }
 
 // OnClick handler for Host Network Tree
@@ -201,16 +201,16 @@ function miqOnClickHostNet(id) {
   var nid = ids[ids.length - 1].split('-'); // Get the last part of the node id
   switch (nid[0]) {
     case 'v':
-      DoNav("/vm/show/" + nid[1]);
+      DoNav("/vm/show/" + encodeURIComponent(nid[1]));
       break;
     case 'h':
-      DoNav("/host/show/" + nid[1]);
+      DoNav("/host/show/" + encodeURIComponent(nid[1]));
       break;
     case 'c':
-      DoNav("/ems_cluster/show/" + nid[1]);
+      DoNav("/ems_cluster/show/" + encodeURIComponent(nid[1]));
       break;
     case 'rp':
-      DoNav("/resource_pool/show/" + nid[1]);
+      DoNav("/resource_pool/show/" + encodeURIComponent(nid[1]));
       break;
     default:
       break;
@@ -229,7 +229,7 @@ function miqOnCheckGenealogy(node, treename) {
   var tree = miqTreeObject(treename);
   // Map the selected nodes into an array of keys
   var selectedKeys = tree.getChecked().map(function (item) {
-    return item.key;
+    return encodeURIComponent(item.key);
   });
   // Activate toolbar items according to the selection
   miqSetButtons(selectedKeys.length, 'center_tb');
@@ -247,12 +247,12 @@ function miqCheckAll(cb, treename) {
   }
   // Map the selected nodes into an array of keys
   var selectedKeys = tree.getChecked().map(function (item) {
-    return item.key;
+    return encodeURIComponent(item.key);
   });
   // Activate toolbar items according to the selection
   miqSetButtons(selectedKeys.length, 'center_tb');
   // Inform the backend about the checkbox changes
-  miqJqueryRequest(ManageIQ.tree.checkUrl + '?check_all=' + cb.checked + '&all_checked=' + selectedKeys);
+  miqJqueryRequest(ManageIQ.tree.checkUrl + '?check_all=' + encodeURIComponent(cb.checked) + '&all_checked=' + selectedKeys);
 }
 
 function miqTreeExpandNode(treename, key) {
@@ -286,7 +286,7 @@ function miqOnClickDiagnostics(id) {
     case 'svr':
     case 'role':
     case 'asr':
-      miqJqueryRequest(ManageIQ.tree.clickUrl + '?id=' + id, {beforeSend: true, complete: true});
+      miqJqueryRequest(ManageIQ.tree.clickUrl + '?id=' + encodeURIComponent(id), {beforeSend: true, complete: true});
       break;
   }
 }
@@ -295,7 +295,7 @@ function miqOnClickDiagnostics(id) {
 function miqOnCheckUserFilters(node, tree_name) {
   var tree_typ = tree_name.split('_')[0];
   var checked = Number(node.state.checked);
-  var url = ManageIQ.tree.checkUrl + node.key + "?check=" + checked + "&tree_typ=" + tree_typ;
+  var url = ManageIQ.tree.checkUrl + encodeURIComponent(node.key) + "?check=" + checked + "&tree_typ=" + encodeURIComponent(tree_typ);
   miqJqueryRequest(url);
   return true;
 }
@@ -303,13 +303,13 @@ function miqOnCheckUserFilters(node, tree_name) {
 // OnCheck handler for Check All checkbox on C&U collection trees
 function miqCheckCUAll(cb, treename) {
   cb.checked ? miqTreeObject(treename).checkAll({silent: true}) : miqTreeObject(treename).uncheckAll({silent: true});
-  var url = ManageIQ.tree.checkUrl + '?check_all=' + cb.checked + '&tree_name=' + treename;
+  var url = ManageIQ.tree.checkUrl + '?check_all=' + encodeURIComponent(cb.checked) + '&tree_name=' + encodeURIComponent(treename);
   miqJqueryRequest(url);
 }
 
 // OnCheck handler for the C&U collection trees
 function miqOnCheckCUFilters(tree_name, key, checked) {
-  var url = ManageIQ.tree.checkUrl + '?id=' + key + '&check=' + checked + '&tree_name=' + tree_name;
+  var url = ManageIQ.tree.checkUrl + '?id=' + encodeURIComponent(key) + '&check=' + encodeURIComponent(checked) + '&tree_name=' + encodeURIComponent(tree_name);
   miqJqueryRequest(url);
   return true;
 }
