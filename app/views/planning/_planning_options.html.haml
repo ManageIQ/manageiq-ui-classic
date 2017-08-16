@@ -210,7 +210,7 @@
           = _('CPU Speed')
         .col-md-8
           = select_tag("limit_cpu",
-                        options_for_select(TREND_LIMIT_PERCENTS, @sb[:options][:limit_cpu]),
+                        options_for_select(PlanningHelper::TREND_LIMIT_PERCENTS, @sb[:options][:limit_cpu]),
                         :disabled              => !@sb[:options][:trend_cpu],
                         "class"                => "selectpicker",
                         "data-miq_sparkle_on"  => true,
@@ -238,7 +238,7 @@
           = _('Memory Size')
         .col-md-8
           = select_tag("limit_memory",
-                        options_for_select(TREND_LIMIT_PERCENTS, @sb[:options][:limit_memory]),
+                        options_for_select(PlanningHelper::TREND_LIMIT_PERCENTS, @sb[:options][:limit_memory]),
                         :disabled              => !@sb[:options][:trend_memory],
                         "class"                => "selectpicker",
                         "data-miq_sparkle_on"  => true,
@@ -252,7 +252,7 @@
           = _('Datastore Space')
         .col-md-8
           = select_tag("limit_storage",
-                        options_for_select(TREND_LIMIT_PERCENTS, @sb[:options][:limit_storage]),
+                        options_for_select(PlanningHelper::TREND_LIMIT_PERCENTS, @sb[:options][:limit_storage]),
                         :disabled => !@sb[:options][:trend_storage],
                         "class"                => "selectpicker",
                         "data-miq_sparkle_on"  => true,
@@ -269,7 +269,7 @@
         = _('Trends for past')
       .col-md-8
         = select_tag("trend_days",
-                      options_for_select(ViewHelper::WEEK_CHOICES.invert.sort_by(&:last), @sb[:options][:days].to_i),
+                      options_for_select(PlanningHelper::WEEK_CHOICES.invert.sort_by(&:last), @sb[:options][:days].to_i),
                       "class"                => "selectpicker",
                       "data-miq_sparkle_on"  => true,
                       "data-miq_sparkle_off" => true)
