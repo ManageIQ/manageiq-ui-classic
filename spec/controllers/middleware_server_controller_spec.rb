@@ -47,6 +47,7 @@ describe MiddlewareServerController do
         is_expected.to render_template(:partial => 'middleware_server/_deploy')
         is_expected.to render_template(:partial => 'middleware_server/_add_jdbc_driver')
         is_expected.to render_template(:partial => 'middleware_server/_add_datasource')
+        is_expected.to render_template(:partial => 'middleware_server/_dr_reports_list')
       end
     end
 

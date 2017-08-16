@@ -311,15 +311,10 @@ class MiddlewareServerController < ApplicationController
       if mw_server.product == 'Hawkular' && operation_info.fetch(:skip)
         add_flash(_("Not %{hawkular_info} the provider") % {:hawkular_info => operation_info.fetch(:hawk)})
       else
-        if operation_info.key? :param
-          # Fetch param from UI - > see #9462/#8079
-          name = operation_info.fetch(:param)
-          val = params.fetch name || 0 # Default until we can really get it from the UI ( #9462/#8079)
-          trigger_mw_operation operation_info.fetch(:op), mw_server, name => val
-        elsif operation_info.fetch(:op) == :generate_diagnostic_report
+        if operation_info.fetch(:op) == :generate_diagnostic_report
           mw_server.enqueue_diagnostic_report(:requesting_user => current_userid)
         else
-          trigger_mw_operation operation_info.fetch(:op), mw_server
+          run_operation_on_record(operation_info, mw_server)
         end
         operation_triggered = true
       end

@@ -1,10 +1,10 @@
 - if @record.middleware_diagnostic_reports.any?
-  .row
+  .row#mw_dr_header
     .col-md-12
-      %h3
+      %h3.pointer{:onclick => 'miqCallAngular({name: "toggleShowDiagnosticReports", args: []});'}
         %span.fa.fa-angle-down
         = _('JDR Reports')
-  .row
+  .row#mw_dr_section
     .col-md-12
       .form-group
         .dropdown.btn-group
@@ -24,9 +24,10 @@
                          :onclick  => "DoNav('#{url_for(:action => 'dr_report_download', :id => to_cid(@record.id), 'download_type' => 'csv')}');"}
                 %span.fa.fa-file-text-o
                 = _('Download as CSV')
-        %button#dr_btn_delete.btn.btn-default{'onclick' => 'miqCallAngular({name: "deleteSelectedDr", args: []});', :disabled => 'disabled'}
-          %span.pficon.pficon-delete.fa
-          = _('Delete')
+        - if role_allows?(:feature => :middleware_dr_delete)
+          %button#dr_btn_delete.btn.btn-default{'onclick' => 'miqCallAngular({name: "deleteSelectedDr", args: []});', :disabled => 'disabled'}
+            %span.pficon.pficon-delete.fa
+            = _('Delete')
       = form_tag url_for(:action => 'dr_delete', :id => to_cid(@record.id)), :method => :post, :id => 'mw_dr_reports' do
         %table.table.table-bordered.table-striped.table-summary-screen
           %thead
@@ -55,7 +56,8 @@
                     %span.pficon.pficon-error-circle-o
                   - else
                     %span.fa.fa-lg.fa-play-circle-o
-                %td= item.binary_blob ? item.binary_blob.name : _('N/A')
+                %td.text-overflow-pf{:style => 'max-width: 16em'}
+                  = item.binary_blob ? item.binary_blob.name : _('N/A')
                 %td= item.binary_blob ? number_to_human_size(item.binary_blob.size) : _('N/A')
                 %td= format_timezone(item.queued_at)
                 %td= item.requesting_user
@@ -67,3 +69,4 @@
                           'onclick'  => "DoNav('#{url_for(:action => 'dr_download', :id => to_cid(@record.id), :key => to_cid(item.id))}');"}
                     %span.fa.fa-download
                     = _('Download')
+

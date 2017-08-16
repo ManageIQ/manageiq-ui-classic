@@ -179,9 +179,15 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
   };
 
   $scope.drChecked = function() {
-    var checked_count = $document.find('#mw_dr_reports input[type=checkbox]:checked').length;
-    $document.find('#dr_btn_delete').prop('disabled', checked_count == 0);
-  }
+    var checkedCount = $document.find('#mw_dr_reports input[type=checkbox]:checked').length;
+    $document.find('#dr_btn_delete').prop('disabled', checkedCount === 0);
+  };
+
+  $scope.toggleShowDiagnosticReports = function() {
+    $document.find('#mw_dr_section').toggle('slow');
+    $document.find('#mw_dr_header span').toggleClass('fa-angle-down');
+    $document.find('#mw_dr_header span').toggleClass('fa-angle-right');
+  };
 }
 
 ManageIQ.angular.app.controller('mwServerOpsController', MwServerOpsController);
