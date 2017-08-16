@@ -34,7 +34,6 @@ module UiConstants
 
   # Report Controller constants
   NOTHING_STRING = "<<< Nothing >>>"
-  MAX_REPORT_COLUMNS = 100      # Default maximum number of columns in a report
   GRAPH_MAX_COUNT = 10
 
   TREND_MODEL = "VimPerformanceTrend"   # Performance trend model name requiring special processing
