@@ -40,7 +40,7 @@ class StaticOrHaml
 
   def call(env)
     path = Pathname.new(@dir).join(env["PATH_INFO"].sub(/^\/+/, ''))
-    return [404, {}, []] unless File.exists?(path)
+    return [404, {}, []] unless File.exist?(path)
 
     return @rack_file.call(env) unless path.to_s.ends_with?('.haml')
 
@@ -57,7 +57,7 @@ module Jasmine
 
     def initialize_config
       old_initialize_config
-      @config.add_rack_path('/static', lambda { StaticOrHaml.new })
+      @config.add_rack_path('/static', -> { StaticOrHaml.new })
     end
   end
 end
