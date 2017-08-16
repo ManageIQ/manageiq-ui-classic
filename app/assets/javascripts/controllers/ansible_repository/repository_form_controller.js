@@ -18,7 +18,7 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
       scm_update_on_launch: false,
     };
 
-    vm.attributes = ['name', 'description', 'scm_type', 'scm_url', 'authentication_id', 'scm_branch:', 'scm_clean', 'scm_delete_on_update', 'scm_update_on_launch'];
+    vm.attributes = ['name', 'description', 'scm_type', 'scm_url', 'authentication_id', 'scm_branch', 'scm_clean', 'scm_delete_on_update', 'scm_update_on_launch'];
     vm.model = 'repositoryModel';
 
     ManageIQ.angular.scope = vm;
