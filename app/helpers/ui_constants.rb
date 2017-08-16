@@ -34,7 +34,6 @@ module UiConstants
 
   # Report Controller constants
   NOTHING_STRING = "<<< Nothing >>>"
-  SHOWALL_STRING = "<<< Show All >>>"
   MAX_REPORT_COLUMNS = 100      # Default maximum number of columns in a report
   GRAPH_MAX_COUNT = 10
 
