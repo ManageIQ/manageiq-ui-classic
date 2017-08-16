@@ -33,7 +33,7 @@ module ViewHelper
     30.minutes => N_("30 Minutes"),
     45.minutes => N_("45 Minutes"),
     1.hour     => N_("1 Hour")
-  }
+  }.freeze
 
   class << self
     def concat_tag(*args, &block)
