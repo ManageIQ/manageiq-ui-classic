@@ -22,7 +22,7 @@ class TreeBuilderMenuRoles < TreeBuilder
   def set_locals_for_render
     locals = {
       :click_url => "/report/menu_editor/",
-      :onclick   => "miqMenuEditor"
+      :onclick   => "miqOnCheckMenuRoles"
     }
 
     super.merge!(locals)

@@ -34,7 +34,7 @@ describe TreeBuilderMiqActionCategory do
     it 'set locals for render correctly' do
       locals = subject.send(:set_locals_for_render)
       expect(locals[:click_url]).to eq("/miq_policy/action_tag_pressed/")
-      expect(locals[:onclick]).to eq("miqOnClickTagCat")
+      expect(locals[:onclick]).to eq("miqOnClickGeneric")
     end
   end
 

@@ -17,10 +17,15 @@ function miqTreeFindNodeByKey(tree, key) {
   });
 }
 
-// OnCheck handler for the checkboxes in tree
-function miqOnCheckHandler(node) {
+// Generic OnCheck handler for the checkboxes in tree
+function miqOnCheckGeneric(node) {
   var url = ManageIQ.tree.checkUrl + node.key + '?check=' + (node.state.checked ? '1' : '0');
   miqJqueryRequest(url);
+}
+
+// Generic OnClick handler for selecting nodes in tree
+function miqOnClickGeneric(id) {
+  miqJqueryRequest(ManageIQ.tree.clickUrl + id, {beforeSend: true, complete: true});
 }
 
 function miqAddNodeChildren(treename, key, selected_node, children) {
@@ -53,7 +58,7 @@ function miqRemoveNodeChildren(treename, key) {
   }
 }
 
-function miqMenuEditor(id) {
+function miqOnCheckMenuRoles(id) {
   var nid = id.split('__');
   if (nid[0] != 'r') {
     var url = ManageIQ.tree.clickUrl + '?node_id=' + encodeURIComponent(id) + '&node_clicked=1';
@@ -143,7 +148,7 @@ function miqTreeScrollToNode(tree, id) {
   parentPanelBody.animate({scrollTop: (parentPanelBody.position().top + node.$el.position().top)});
 }
 
-function miqOnClickSelectAETreeNode(id) {
+function miqOnClickAutomate(id) {
   miqTreeExpandNode('automate_tree', id);
   miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select/?id=' + id + '&tree=automate_tree');
 }
@@ -152,7 +157,7 @@ function miqOnClickIncludeDomainPrefix() {
   miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select_toggle?button=domain');
 }
 
-function miqOnClickSelectOptimizeTreeNode(id) {
+function miqOnClickUtilization(id) {
   var tree;
   if (miqDomElementExists('utilization_accord')) {
     tree = "utilization_tree";
@@ -189,7 +194,7 @@ function miqOnCheckProtect(node, _treename) {
 }
 
 // OnClick handler for the VM Snapshot Tree
-function miqOnClickSnapshotTree(id) {
+function miqOnClickSnapshots(id) {
   var pieces = id.split(/-/);
   var shortId = pieces[pieces.length - 1]
   miqJqueryRequest('/' + ManageIQ.controller + '/snap_pressed/' + shortId, {beforeSend: true, complete: true});
@@ -224,23 +229,7 @@ function miqOnCheckSections(_tree_name, key, checked, all_checked) {
   return true;
 }
 
-// OnClick handler for catgories Tree
-function miqOnClickTagCat(id) {
-  miqJqueryRequest(ManageIQ.tree.clickUrl + '?id=' + id, {beforeSend: true, complete: true});
-}
-
-// OnClick handler for Genealogy Tree
-function miqOnClickGenealogyTree(id) {
-  miqJqueryRequest(ManageIQ.tree.clickUrl + id, {beforeSend: true, complete: true});
-}
-
-// OnCheck handler for the SmartProxy Affinity tree
-function miqOnClickSmartProxyAffinityCheck(node) {
-  var checked = node.state.checked ? '1' : '0';
-  miqJqueryRequest(ManageIQ.tree.checkUrl + node.key + '?check=' + checked);
-}
-
-function miqGetChecked(node, treename) {
+function miqOnCheckGenealogy(node, treename) {
   var count = 0;
   var tree = miqTreeObject(treename);
   // Map the selected nodes into an array of keys
@@ -296,7 +285,7 @@ function miqTreeExpandRecursive(treeId, fullNodeId) {
 }
 
 // OnClick handler for Server Roles Tree
-function miqOnClickServerRoles(id) {
+function miqOnClickDiagnostics(id) {
   var typ = id.split('-')[0]; // Break apart the node ids
   switch (typ) {
     case 'svr':
@@ -429,24 +418,22 @@ function miqSquashToggle(treeName) {
 
 function miqTreeEventSafeEval(func) {
   var whitelist = [
-    'miqGetChecked',
-    'miqMenuEditor',
     'miqOnCheckCUFilters',
-    'miqOnCheckHandler',
+    'miqOnCheckGenealogy',
+    'miqOnCheckGeneric',
+    'miqOnCheckMenuRoles',
     'miqOnCheckProtect',
     'miqOnCheckProvTags',
     'miqOnCheckSections',
     'miqOnCheckUserFilters',
-    'miqOnClickGenealogyTree',
+    'miqOnClickAutomate',
+    'miqOnClickDiagnostics',
+    'miqOnClickGeneric',
     'miqOnClickHostNet',
-    'miqOnClickSelectAETreeNode',
     'miqOnClickSelectDlgEditTreeNode',
-    'miqOnClickSelectOptimizeTreeNode',
     'miqOnClickSelectTreeNode',
-    'miqOnClickServerRoles',
-    'miqOnClickSmartProxyAffinityCheck',
-    'miqOnClickSnapshotTree',
-    'miqOnClickTagCat',
+    'miqOnClickSnapshots',
+    'miqOnClickUtilization',
   ];
 
   if (whitelist.includes(func)) {
