@@ -6,38 +6,15 @@ angular.module( 'patternfly.charts' ).controller('heatmapController', ['$scope',
 
   var init = function() {
     ManageIQ.angular.scope = vm;
+    var url = '/ems_infra_dashboard/cluster_metrics_data/' + providerId;
+    var heatmapPromise = $http.get(url).then(function(response) {
+      vm.heatmapData = response.data.data;
+    })
 
-    ///////////////////////////////////////
-    // Comment/remove block below to use http call
-    ///////////////////////////////////////
-    data = {
-      'clusterCpuUsage': [{"id":10000000000002,"node":"Default","provider":"RHV","unit":"Cores","total":48,"percent":0.35},
-         {"id":10000000000003,"node":"Default","provider":"RHV","unit":"Cores","total":98,"percent":0.95}],
-      'clusterMemoryUsage': [{"id":10000000000002,"node":"Default","provider":"RHV","unit":"GB","total":753,"percent":0.53},
-         {"id":10000000000003,"node":"Default","provider":"RHV","unit":"GB","total":2753,"percent":0.93}]
-    };
-    vm.title = 'Cluster Utilization';
-    vm.data = processHeatmapData(vm.data, data)
-
-    ///////////////////////////////////////
-    // Comment/remove block above to use http call
-    ///////////////////////////////////////
-
-    ////////////
-    //// use block below to use http call to set data
-    ////////////
-//     var url = '/ems_infra_dashboard/data/' + providerId;
-//     var heatmapPromise = $http.get(url).then(function(response) {
-//       vm.heatmapData = response.data.data;
-//     })
-//
-//     $q.all([heatmapPromise]).then(function() {
-//       vm.data = processHeatmapData(vm.data, vm.heatmapData.heatmaps)
-//       vm.title = vm.heatmapData.heatmaps.title;
-//     });
-    ////////////
-    //// use block above to use http call to set data
-    ////////////
+    $q.all([heatmapPromise]).then(function() {
+      vm.title = vm.heatmapData.heatmaps.title;
+      vm.data = processHeatmapData(vm.data, vm.heatmapData.heatmaps)
+    });
 
     vm.dataAvailable = true;
     vm.titleAlt = 'Utilization - Overriding Defaults';
@@ -64,30 +41,36 @@ angular.module( 'patternfly.charts' ).controller('heatmapController', ['$scope',
       var keys = Object.keys(data);
       for (i in keys) {
         if (keys[i] == 'title') { continue; }
-        var heatmapsStructData = data[keys[i]].map(function (d) {
-          var percent = -1;
-          var tooltip = __("Cluster: ") + d.node + "<br>" + __("Provider: ") + d.provider
-          if (d.percent === null || d.total === null) {
-            tooltip += "<br> " + __("Usage: Unknown");
-          }
-          else {
-            percent = d.percent
-            tooltip += "<br>" + __("Usage: ") + sprintf(__("%d%% in use of %d %s total"), (percent * 100).toFixed(0),
-                d.total, d.unit);
-          }
-          return {
-            "id": d.id,
-            "tooltip": tooltip,
-            "value": percent
-          };
-        })
+        if (data[keys[i]] === null) {
+          var heatmapsStructData = [];
+          heatmapsStruct.data[heatmapTitles[keys[i]]] = [];
+          vm.dataAvailable = false;
+        } else {
+          var heatmapsStructData = data[keys[i]].map(function (d) {
+            var percent = -1;
+            var tooltip = __("Cluster: ") + d.node + "<br>" + __("Provider: ") + d.provider
+            if (d.percent === null || d.total === null) {
+              tooltip += "<br> " + __("Usage: Unknown");
+            }
+            else {
+              percent = d.percent
+              tooltip += "<br>" + __("Usage: ") + sprintf(__("%d%% in use of %d %s total"), (percent * 100).toFixed(0),
+                  d.total, d.unit);
+            }
+            return {
+              "id": d.id,
+              "tooltip": tooltip,
+              "value": percent
+            };
+          })
+        }
         heatmapsStruct.data[heatmapTitles[keys[i]]] = _.sortBy(heatmapsStructData, 'value').reverse()
       }
     }
     else
       {
         heatmapsStruct.data = [];
-        heatmapsStruct.dataAvailable = false
+        vm.dataAvailable = false
       }
     return heatmapsStruct.data
   };

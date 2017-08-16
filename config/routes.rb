@@ -1263,6 +1263,7 @@ Rails.application.routes.draw do
       :get => %w(
         show
         data
+        cluster_metrics_data
       )
     },
 

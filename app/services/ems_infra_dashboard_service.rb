@@ -12,11 +12,31 @@ class EmsInfraDashboardService
     {
       :providers_link  => get_url_to_entity(:ems_infra),
       :status          => status,
-      :providers       => providers,
-      :heatmaps        => heatmaps,
-      :recentHosts     => recentHosts,
-      :recentVms       => recentVms,
-      :ems_utilization => ems_utilization,
+      :providers       => providers
+    }.compact
+  end
+
+  def cluster_heatmap_data
+    {
+      :heatmaps => heatmaps
+    }.compact
+  end
+
+  def recent_hosts_data
+    {
+      :recentHosts => recentHosts
+    }.compact
+  end
+
+  def recent_vms_data
+    {
+      :recentVms => recentHosts
+    }.compact
+  end
+
+  def ems_utilization
+    {
+      :ems_utilization => ems_utilization
     }.compact
   end
 
@@ -97,7 +117,7 @@ class EmsInfraDashboardService
     # Get latest hourly rollup for each node.
     cluster_ids = @ems.ems_clusters if @ems.present?
     metrics = MetricRollup.latest_rollups(EmsCluster.name, cluster_ids)
-    metrics = metrics.where('timestamp > ?', 1.day.ago.utc).includes(:resource)
+    metrics = metrics.where('timestamp > ?', 3000.day.ago.utc).includes(:resource)
     metrics = metrics.includes(:resource => [:ext_management_system]) unless @ems.present?
 
     cluster_cpu_usage = []
