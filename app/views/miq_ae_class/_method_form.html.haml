@@ -31,16 +31,20 @@
 
     .form-group
       %label.col-md-2.control-label
-        = _('Location')
+        = _('Type')
       .col-md-8
-        = select_tag("#{prefix}method_location",
-                      options_for_select(@edit[:new][:available_locations].sort,
-                      @edit[:new][:location]),
-                      :class    => "selectpicker",
-                      "data-miq_observe" => {:url => url}.to_json)
-        :javascript
-          miqInitSelectPicker();
-          miqSelectPickerEvent("#{prefix}method_location", "#{url}", {beforeSend: true})
+        - if @edit[:new][:location]
+          %p.form-control-static
+            = @edit[:new][:location]
+        - else
+          = select_tag("#{prefix}method_location",
+                        options_for_select([[_("<Choose>"), nil]] + @edit[:new][:available_locations].sort,
+                        @edit[:new][:location]),
+                        :class    => "selectpicker",
+                        "data-miq_observe" => {:url => url}.to_json)
+          :javascript
+            miqInitSelectPicker();
+            miqSelectPickerEvent("#{prefix}method_location", "#{url}", {beforeSend: true})
 
     - if @ae_method.created_on
       .form-group
@@ -48,25 +52,25 @@
           = _("Created On")
         .col-md-8
           = h(format_timezone(@ae_method.created_on, Time.zone, "gtl"))
-
-    - if @edit[:new][:location] == 'expression'
-      .form-group
-        %label.col-md-2.control-label
-          = _('Expression Object')
-        .col-md-8
-          = select_tag("#{prefix}exp_object",
-                        options_for_select(@edit[:new][:available_expression_objects],
-                        @edit[:new][:exp_object]),
-                        :class    => "selectpicker",
-                        "data-miq_observe" => {:url => url}.to_json)
-          :javascript
-            miqInitSelectPicker();
-            miqSelectPickerEvent("#{prefix}exp_object", "#{url}",  {beforeSend: true})
-    - else
-      %hr
-      %h3= @edit[:new][:location] == 'builtin' ? _('Builtin name') : _("Data")
-      = render :partial => "method_data", :locals => {:field_name => "#{prefix}method"}
-      %hr
+    - if @edit[:new][:location]
+      - if @edit[:new][:location] == 'expression'
+        .form-group
+          %label.col-md-2.control-label
+            = _('Expression Object')
+          .col-md-8
+            = select_tag("#{prefix}exp_object",
+                          options_for_select(@edit[:new][:available_expression_objects],
+                          @edit[:new][:exp_object]),
+                          :class    => "selectpicker",
+                          "data-miq_observe" => {:url => url}.to_json)
+            :javascript
+              miqInitSelectPicker();
+              miqSelectPickerEvent("#{prefix}exp_object", "#{url}",  {beforeSend: true})
+      - else
+        %hr
+        %h3= @edit[:new][:location] == 'builtin' ? _('Builtin name') : _("Data")
+        = render :partial => "method_data", :locals => {:field_name => "#{prefix}method"}
+        %hr
   - if @edit[:new][:location] == 'expression'
     .div
       %h3= _("Expression (Choose an element of the expression to edit)")

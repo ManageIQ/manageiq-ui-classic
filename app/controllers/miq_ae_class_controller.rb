@@ -721,9 +721,9 @@ class MiqAeClassController < ApplicationController
     @edit[:new][:display_name] = @ae_method.display_name
     @edit[:new][:scope] = "instance"
     @edit[:new][:language] = "ruby"
-    @edit[:new][:available_locations] = MiqAeMethod.available_locations
+    @edit[:new][:available_locations] = MiqAeMethod.available_locations unless @ae_method.id
     @edit[:new][:available_expression_objects] = MiqAeMethod.available_expression_objects.sort
-    @edit[:new][:location] = @ae_method.location.nil? ? "inline" : @ae_method.location
+    @edit[:new][:location] = @ae_method.location
     if @edit[:new][:location] == "expression"
       expr_hash = YAML.load(@ae_method.data)
       if expr_hash[:db] && expr_hash[:expression]
@@ -734,9 +734,6 @@ class MiqAeClassController < ApplicationController
       @edit[:new][:data] = @ae_method.data.to_s
     end
     @edit[:new][:data] = @ae_method.data.to_s
-    if @edit[:new][:location] == "inline" && !@ae_method.data
-      @edit[:new][:data] = MiqAeMethod.default_method_text
-    end
     @edit[:default_verify_status] = @edit[:new][:location] == "inline" && @edit[:new][:data] && @edit[:new][:data] != ""
     @edit[:new][:fields] = @ae_method.inputs.collect do |input|
       method_input_column_names.each_with_object({}) do |column, hash|
@@ -866,7 +863,6 @@ class MiqAeClassController < ApplicationController
       head :ok
     else
       return unless load_edit("aemethod_edit__#{params[:id]}", "replace_cell__explorer")
-      @prev_location = @edit[:new][:location]
       get_method_form_vars
 
       if @edit[:new][:location] == 'expression'
@@ -902,8 +898,7 @@ class MiqAeClassController < ApplicationController
       render :update do |page|
         page << javascript_prologue
         page.replace_html('form_div', :partial => 'method_form', :locals => {:prefix => ""}) if @edit[:new][:location] == 'expression'
-        page.replace_html(@refresh_div, :partial => @refresh_partial) if @refresh_div && (@prev_location != @edit[:new][:location] || params[:exp_object] || params[:cls_exp_object])
-        # page.replace_html("hider_1", :partial=>"method_data", :locals=>{:field_name=>@field_name})  if @prev_location != @edit[:new][:location]
+        page.replace_html(@refresh_div, :partial => @refresh_partial) if @refresh_div && (params[:cls_method_location] || params[:exp_object] || params[:cls_exp_object])
         if params[:cls_field_datatype]
           if session[:field_data][:datatype] == "password"
             page << javascript_hide("cls_field_default_value")
