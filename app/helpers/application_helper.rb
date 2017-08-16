@@ -1116,6 +1116,11 @@ module ApplicationHelper
     link_to(link_text, link_params, tag_args)
   end
 
+  # FIXME: The 'active' below is an active section not an item. That is wrong.
+  # What works is the "legacy" part that compares @layout to item.id.
+  # This assumes that these matches -- @layout and item.id. Moving forward we
+  # need to remove that assumption. However to do that we need figure some way
+  # to identify the active menu item here.
   def item_nav_class(item)
     active = controller.menu_section_id(controller.params) || @layout.to_sym
 
@@ -1124,7 +1129,18 @@ module ApplicationHelper
       item.id.to_sym == @layout.to_sym ? 'active' : nil
   end
 
+  # special handling for custom menu sections and items
+  def section_nav_class_iframe(section)
+    if params[:sid].present?
+      section.id.to_s == params[:sid] ? 'active' : nil
+    elsif params[:id].present?
+      section.contains_item_id?(params[:id]) ? 'active' : nil
+    end
+  end
+
   def section_nav_class(section)
+    return section_nav_class_iframe(section) if params[:action] == 'iframe'
+
     active = controller.menu_section_id(controller.params) || @layout.to_sym
 
     if section.parent.nil?

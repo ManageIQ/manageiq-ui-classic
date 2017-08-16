@@ -617,11 +617,16 @@ class MiqRequestController < ApplicationController
     session[:prov_options]         = @options if @options
   end
 
+  # Caution: The params[:typ] argument needs to match value from ?typ=VALUE
+  # from app/presenters/menu/default_menu.rb
+  #   Example: '/miq_request?typ=service' --> "'service'".
+  # The returned value needs to be equal to the first argument to Menu::Section.new(...)
+  #   Example:  Menu::Section.new(:clo, N_("Clouds"), 'fa fa-plus', [ ... --> ":clo"
   def menu_section(parms)
     case parms[:typ]
-    when 'at'   then :automate
-    when 'vm'   then :svc
-    when 'host' then :inf
+    when 'ae'      then :automate
+    when 'service' then :svc
+    when 'host'    then :inf
     end
   end
 end
