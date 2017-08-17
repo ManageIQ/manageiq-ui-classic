@@ -1,7 +1,6 @@
 import {createStore} from 'redux';
 import {addReducer, applyReducerHash} from './reducer';
 import {configureStore} from './store';
-
 import { AppState, MiqStore } from '../packs/miq-redux';
 
 ManageIQ.redux = {};
