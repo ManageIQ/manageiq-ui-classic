@@ -40,7 +40,7 @@ class TreeBuilderDefaultFilters < TreeBuilder
   def set_locals_for_render
     locals = super
     locals.merge!(:check_url         => "/configuration/filters_field_changed/",
-                  :onselect          => "miqOnCheckSections",
+                  :oncheck           => "miqOnCheckGeneric",
                   :checkboxes        => true,
                   :highlight_changes => true)
   end

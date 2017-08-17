@@ -91,7 +91,7 @@ class ConfigurationController < ApplicationController
   def filters_field_changed
     return unless load_edit("config_edit__ui3", "configuration")
     id = params[:id].split('-').last.to_i
-    @edit[:new].find { |x| x[:id] == id }[:search_key] = params[:check] == 'true' ? nil : '_hidden_'
+    @edit[:new].find { |x| x[:id] == id }[:search_key] = params[:check] == '1' ? nil : '_hidden_'
     @edit[:current].each_with_index do |arr, i|          # needed to compare each array element's attributes to find out if something has changed
       if @edit[:new][i][:search_key] != arr[:search_key]
         @changed = true
