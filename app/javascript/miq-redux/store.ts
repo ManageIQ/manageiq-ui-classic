@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose, Store} from 'redux';
-import {rootReducer} from './app-reducer';
+import {rootReducer} from './reducer';
 
-export type AppState = Object;
+import {AppState} from '../packs/miq-redux';
 
 const composeEnhancers = window['.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose;
 

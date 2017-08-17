@@ -12,4 +12,7 @@ export default class NewProviderForm implements ng.IComponentOptions {
 }
 
 class NewProviderController {
+    public $onInit() {
+        console.log(this);
+    }
 }
