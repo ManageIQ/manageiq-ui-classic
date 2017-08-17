@@ -3348,6 +3348,9 @@ Rails.application.routes.draw do
     end
   end
 
+  # API-like JSON trees
+  get '/tree/automate_entrypoint', :to => 'tree#automate_entrypoint'
+
   # pure-angular templates
   get '/static/*id' => 'static#show', :format => false
 
