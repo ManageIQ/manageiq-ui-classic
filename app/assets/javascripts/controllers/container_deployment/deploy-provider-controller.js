@@ -245,7 +245,7 @@ miqHttpInject(angular.module('miq.containers.providersModule', ['ui.bootstrap', 
       return true;
     };
 
-    ManageIQ.rxSubject.subscribe(function(event) {
+    ManageIQ.angular.rxSubject.subscribe(function(event) {
       if (event.controller !== 'containers.deployProviderController') {
         return;
       }
