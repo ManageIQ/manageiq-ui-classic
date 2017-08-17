@@ -11,9 +11,8 @@ class TimelineOptionsController {
     };
 
     this.miqService = miqService;
-    this.url =  url;
+    this.url = url;
     this.categories = categories;
-
     this.afterGet  = true;
     this.dateOptions = {
       autoclose: true,
@@ -24,13 +23,13 @@ class TimelineOptionsController {
     this.availableCategories = categories;
   }
 
-  eventTypeUpdated = () => {
+  eventTypeUpdated() {
     this.reportModel.tl_categories = [];
-  };
+  }
 
   countDecrement() {
     if (this.reportModel.tl_range_count > 1) {
-      this.reportModel.tl_range_count--;
+      this.reportModel.tl_range_count -= 1;
     }
   }
 
@@ -68,18 +67,14 @@ class TimelineOptionsController {
       startDay.subtract(enddays, 'days').toDate();
       endDay.add(enddays, 'days').toDate();
       this.reportModel.miq_date = endDay.format('MM/DD/YYYY');
-    }  else if (this.reportModel.tl_timepivot === 'ending') {
+    } else if (this.reportModel.tl_timepivot === 'ending') {
       startDay.subtract(this.reportModel.tl_days, 'days');
       this.reportModel.miq_date = endDay.format('MM/DD/YYYY');
     }
     ManageIQ.calendar.calDateFrom = startDay.toDate();
     ManageIQ.calendar.calDateTo = endDay.toDate();
     if (this.reportModel.tl_show === 'timeline') {
-      if (this.reportModel.showDetailedEvents) {
-        this.reportModel.tl_fl_typ = 'detail';
-      } else {
-        this.reportModel.tl_fl_typ = 'critical';
-      }
+      this.reportModel.tl_fl_typ = this.reportModel.showDetailedEvents ? 'detail' : 'critical';
     }
     this.miqService.sparkleOn();
     this.miqService.miqAsyncAjaxButton(this.url, this.miqService.serializeModel(this.reportModel));
