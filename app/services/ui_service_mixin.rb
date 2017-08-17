@@ -39,7 +39,10 @@ module UiServiceMixin
       :Openshift               => {:type => "image", :icon => provider_icon(:Openshift)},
       :Openstack               => {:type => "image", :icon => provider_icon(:Openstack)},
       :Redhat                  => {:type => "image", :icon => provider_icon(:Redhat)},
-      :Vmware                  => {:type => "image", :icon => provider_icon(:Vmware)}
+      :Vmware                  => {:type => "image", :icon => provider_icon(:Vmware)},
+
+      :StatusPaused            => {:type => "image", :icon => ActionController::Base.helpers.image_path("svg/currentstate-paused.svg")},
+      :StatusOn                => {:type => "image", :icon => ActionController::Base.helpers.image_path("svg/currentstate-on.svg")}
     }
   end
 

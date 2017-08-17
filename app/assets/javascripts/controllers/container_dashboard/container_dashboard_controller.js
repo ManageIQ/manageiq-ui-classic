@@ -87,7 +87,9 @@
         var providers = data.providers;
         if (providers) {
           if ($scope.id) {
-            $scope.providerTypeIconImage = data.providers[0].iconImage;
+            $scope.providerTypeName = providers[0].typeName;
+            $scope.providerTypeIconImage = providers[0].iconImage;
+            $scope.providerStatusIconImage = providers[0].statusIcon;
             $scope.isSingleProvider = true;
           } else {
             $scope.isSingleProvider = false;

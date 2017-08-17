@@ -97,9 +97,19 @@ class ContainerDashboardService
   end
 
   def build_provider_status(provider_type)
+    provider_status_icon = if @ems.present?
+                             if @ems.enabled?
+                               icons[:StatusOn][:icon]
+                             else
+                               icons[:StatusPaused][:icon]
+                             end
+                           end
+
     {
-      :count     => 0,
-      :iconImage => icons[provider_type][:icon]
+      :count      => 0,
+      :typeName   => _(provider_type.to_s),
+      :iconImage  => icons[provider_type][:icon],
+      :statusIcon => provider_status_icon
     }
   end
 
