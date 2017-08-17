@@ -5,6 +5,7 @@ describe('middlewareAddDatasourceController', function() {
   var $scope;
   var miqService;
   var $controller;
+  var $httpBackend;
 
   beforeEach(module('ManageIQ'));
 
