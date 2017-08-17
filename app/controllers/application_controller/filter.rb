@@ -523,141 +523,156 @@ module ApplicationController::Filter
     end
   end
 
+  def exp_commit_field(exp)
+    @edit[@expkey][:exp_value] ||= ''
+    if @edit[@expkey][:exp_field].nil?
+      add_flash(_("A field must be chosen to commit this expression element"), :error)
+    elsif @edit[@expkey][:exp_value] != :user_input &&
+          e = MiqExpression.atom_error(@edit[@expkey][:exp_field],
+                                       @edit[@expkey][:exp_key],
+                                       @edit[@expkey][:exp_value].kind_of?(Array) ?
+                                         @edit[@expkey][:exp_value] :
+                                         (@edit[@expkey][:exp_value].to_s + Expression.prefix_by_dot(@edit[@expkey].val1_suffix))
+                                      )
+      add_flash(_("Field Value Error: %{msg}") % {:msg => e}, :error)
+    else
+      # Change datetime and date values from single element arrays to text string
+      if [:datetime, :date].include?(@edit[@expkey][:val1][:type])
+        @edit[@expkey][:exp_value] = @edit[@expkey][:exp_value].first.to_s if @edit[@expkey][:exp_value].length == 1
+      end
+
+      exp.delete(@edit[@expkey][:exp_orig_key])                     # Remove the old exp fields
+      exp[@edit[@expkey][:exp_key]] = {}                        # Add in the new key
+      exp[@edit[@expkey][:exp_key]]["field"] = @edit[@expkey][:exp_field]     # Set the field
+      unless @edit[@expkey][:exp_key].include?("NULL") || @edit[@expkey][:exp_key].include?("EMPTY")  # Check for "IS/IS NOT NULL/EMPTY"
+        exp[@edit[@expkey][:exp_key]]["value"] = @edit[@expkey][:exp_value]   #   else set the value
+        unless exp[@edit[@expkey][:exp_key]]["value"] == :user_input
+          exp[@edit[@expkey][:exp_key]]["value"] += Expression.prefix_by_dot(@edit[@expkey].val1_suffix)
+        end
+      end
+      exp[@edit[@expkey][:exp_key]]["alias"] = @edit[@expkey][:alias] if @edit.fetch_path(@expkey, :alias)
+    end
+  end
+
+  def exp_commit_count(exp)
+    if @edit[@expkey][:exp_value] != :user_input &&
+       e = MiqExpression.atom_error(:count, @edit[@expkey][:exp_key], @edit[@expkey][:exp_value])
+      add_flash(_("Field Value Error: %{msg}") % {:msg => e}, :error)
+    else
+      exp.delete(@edit[@expkey][:exp_orig_key])                     # Remove the old exp fields
+      exp[@edit[@expkey][:exp_key]] = {}                        # Add in the new key
+      exp[@edit[@expkey][:exp_key]]["count"] = @edit[@expkey][:exp_count]     # Set the count table
+      exp[@edit[@expkey][:exp_key]]["value"] = @edit[@expkey][:exp_value]     # Set the value
+      exp[@edit[@expkey][:exp_key]]["alias"] = @edit[@expkey][:alias] if @edit.fetch_path(@expkey, :alias)
+    end
+  end
+
+  def exp_commit_tag(exp)
+    if @edit[@expkey][:exp_tag].nil?
+      add_flash(_("A tag category must be chosen to commit this expression element"), :error)
+    elsif @edit[@expkey][:exp_value].nil?
+      add_flash(_("A tag value must be chosen to commit this expression element"), :error)
+    else
+      if exp.present?
+        exp.delete(@edit[@expkey][:exp_orig_key])                     # Remove the old exp fields
+        exp[@edit[@expkey][:exp_key]] = {}                        # Add in the new key
+        exp[@edit[@expkey][:exp_key]]["tag"] = @edit[@expkey][:exp_tag]         # Set the tag
+        exp[@edit[@expkey][:exp_key]]["value"] = @edit[@expkey][:exp_value]     # Set the value
+        exp[@edit[@expkey][:exp_key]]["alias"] = @edit[@expkey][:alias] if @edit.fetch_path(@expkey, :alias)
+      end
+    end
+  end
+
+  def exp_commit_regkey(exp)
+    if @edit[@expkey][:exp_regkey].blank?
+      add_flash(_("A registry key name must be entered to commit this expression element"), :error)
+    elsif @edit[@expkey][:exp_regval].blank? && @edit[@expkey][:exp_key] != "KEY EXISTS"
+      add_flash(_("A registry value name must be entered to commit this expression element"), :error)
+    elsif @edit[@expkey][:exp_key].include?("REGULAR EXPRESSION") && e = MiqExpression.atom_error(:regexp, @edit[@expkey][:exp_key], @edit[@expkey][:exp_value])
+      add_flash(_("Registry Value Error: %{msg}") % {:msg => e}, :error)
+    else
+      exp.delete(@edit[@expkey][:exp_orig_key])                     # Remove the old exp fields
+      exp[@edit[@expkey][:exp_key]] = {}                        # Add in the new key
+      exp[@edit[@expkey][:exp_key]]["regkey"] = @edit[@expkey][:exp_regkey]   # Set the key name
+      unless  @edit[@expkey][:exp_key].include?("KEY EXISTS")
+        exp[@edit[@expkey][:exp_key]]["regval"] = @edit[@expkey][:exp_regval] # Set the value name
+      end
+      unless  @edit[@expkey][:exp_key].include?("NULL") || # Check for "IS/IS NOT NULL/EMPTY" or "EXISTS"
+              @edit[@expkey][:exp_key].include?("EMPTY") ||
+              @edit[@expkey][:exp_key].include?("EXISTS")
+        exp[@edit[@expkey][:exp_key]]["value"] = @edit[@expkey][:exp_value]   #   else set the data value
+      end
+    end
+  end
+
+  def exp_commit_find(exp)
+    if @edit[@expkey][:exp_field].nil?
+      add_flash(_("A find field must be chosen to commit this expression element"), :error)
+    elsif ["checkall", "checkany"].include?(@edit[@expkey][:exp_check]) &&
+          @edit[@expkey][:exp_cfield].nil?
+      add_flash(_("A check field must be chosen to commit this expression element"), :error)
+    elsif @edit[@expkey][:exp_check] == "checkcount" &&
+          (@edit[@expkey][:exp_cvalue].nil? || is_integer?(@edit[@expkey][:exp_cvalue]) == false)
+      add_flash(_("The check count value must be an integer to commit this expression element"), :error)
+    elsif e = MiqExpression.atom_error(@edit[@expkey][:exp_field],
+                                       @edit[@expkey][:exp_skey],
+                                       @edit[@expkey][:exp_value].kind_of?(Array) ?
+                                         @edit[@expkey][:exp_value] :
+                                         (@edit[@expkey][:exp_value].to_s + Expression.prefix_by_dot(@edit[@expkey].val1_suffix))
+                                      )
+      add_flash(_("Find Value Error: %{msg}") % {:msg => e}, :error)
+    elsif e = MiqExpression.atom_error(@edit[@expkey][:exp_check] == "checkcount" ? :count : @edit[@expkey][:exp_cfield],
+                                       @edit[@expkey][:exp_ckey],
+                                       @edit[@expkey][:exp_cvalue].kind_of?(Array) ?
+                                         @edit[@expkey][:exp_cvalue] :
+                                         (@edit[@expkey][:exp_cvalue].to_s + Expression.prefix_by_dot(@edit[@expkey].val2_suffix))
+                                      )
+      add_flash(_("Check Value Error: %{msg}") % {:msg => e}, :error)
+    else
+      # Change datetime and date values from single element arrays to text string
+      if [:datetime, :date].include?(@edit[@expkey][:val1][:type])
+        @edit[@expkey][:exp_value] = @edit[@expkey][:exp_value].first.to_s if @edit[@expkey][:exp_value].length == 1
+      end
+      if @edit[@expkey][:val2][:type] && [:datetime, :date].include?(@edit[@expkey][:val2][:type])
+        @edit[@expkey][:exp_cvalue] = @edit[@expkey][:exp_cvalue].first.to_s if @edit[@expkey][:exp_cvalue].length == 1
+      end
+
+      exp.delete(@edit[@expkey][:exp_orig_key])                     # Remove the old exp fields
+      exp[@edit[@expkey][:exp_key]] = {}                        # Add in the new key
+      exp[@edit[@expkey][:exp_key]]["search"] = {}              # Create the search hash
+      skey = @edit[@expkey][:exp_skey]
+      exp[@edit[@expkey][:exp_key]]["search"][skey] = {}        # Create the search operator hash
+      exp[@edit[@expkey][:exp_key]]["search"][skey]["field"] = @edit[@expkey][:exp_field] # Set the search field
+      unless skey.include?("NULL") || skey.include?("EMPTY")  # Check for "IS/IS NOT NULL/EMPTY"
+        exp[@edit[@expkey][:exp_key]]["search"][skey]["value"] = @edit[@expkey][:exp_value] #   else set the value
+        exp[@edit[@expkey][:exp_key]]["search"][skey]["value"] += Expression.prefix_by_dot(@edit[@expkey].val1_suffix)
+      end
+      chk = @edit[@expkey][:exp_check]
+      exp[@edit[@expkey][:exp_key]][chk] = {}                 # Create the check hash
+      ckey = @edit[@expkey][:exp_ckey]
+      exp[@edit[@expkey][:exp_key]][chk][ckey] = {}           # Create the check operator hash
+      if @edit[@expkey][:exp_check] == "checkcount"
+        exp[@edit[@expkey][:exp_key]][chk][ckey]["field"] = "<count>" # Indicate count is being checked
+      else
+        exp[@edit[@expkey][:exp_key]][chk][ckey]["field"] = @edit[@expkey][:exp_cfield] # Set the check field
+      end
+      unless ckey.include?("NULL") || ckey.include?("EMPTY")  # Check for "IS/IS NOT NULL/EMPTY"
+        exp[@edit[@expkey][:exp_key]][chk][ckey]["value"] = @edit[@expkey][:exp_cvalue] #   else set the value
+        exp[@edit[@expkey][:exp_key]][chk][ckey]["value"] += Expression.prefix_by_dot(@edit[@expkey].val2_suffix)
+      end
+      exp[@edit[@expkey][:exp_key]]["search"][skey]["alias"] = @edit[@expkey][:alias] if @edit.fetch_path(@expkey, :alias)
+    end
+  end
+
   # Update the current expression part with the latest changes
   def exp_commit(token)
     exp = exp_find_by_token(@edit[@expkey][:expression], token.to_i)
     case @edit[@expkey][:exp_typ]
-    when "field"
-      @edit[@expkey][:exp_value] ||= ''
-      if @edit[@expkey][:exp_field].nil?
-        add_flash(_("A field must be chosen to commit this expression element"), :error)
-      elsif @edit[@expkey][:exp_value] != :user_input &&
-            e = MiqExpression.atom_error(@edit[@expkey][:exp_field],
-                                         @edit[@expkey][:exp_key],
-                                         @edit[@expkey][:exp_value].kind_of?(Array) ?
-                                           @edit[@expkey][:exp_value] :
-                                           (@edit[@expkey][:exp_value].to_s + Expression.prefix_by_dot(@edit[@expkey].val1_suffix))
-                                        )
-        add_flash(_("Field Value Error: %{msg}") % {:msg => e}, :error)
-      else
-        # Change datetime and date values from single element arrays to text string
-        if [:datetime, :date].include?(@edit[@expkey][:val1][:type])
-          @edit[@expkey][:exp_value] = @edit[@expkey][:exp_value].first.to_s if @edit[@expkey][:exp_value].length == 1
-        end
-
-        exp.delete(@edit[@expkey][:exp_orig_key])                     # Remove the old exp fields
-        exp[@edit[@expkey][:exp_key]] = {}                        # Add in the new key
-        exp[@edit[@expkey][:exp_key]]["field"] = @edit[@expkey][:exp_field]     # Set the field
-        unless @edit[@expkey][:exp_key].include?("NULL") || @edit[@expkey][:exp_key].include?("EMPTY")  # Check for "IS/IS NOT NULL/EMPTY"
-          exp[@edit[@expkey][:exp_key]]["value"] = @edit[@expkey][:exp_value]   #   else set the value
-          unless exp[@edit[@expkey][:exp_key]]["value"] == :user_input
-            exp[@edit[@expkey][:exp_key]]["value"] += Expression.prefix_by_dot(@edit[@expkey].val1_suffix)
-          end
-        end
-        exp[@edit[@expkey][:exp_key]]["alias"] = @edit[@expkey][:alias] if @edit.fetch_path(@expkey, :alias)
-      end
-    when "count"
-      if @edit[@expkey][:exp_value] != :user_input &&
-         e = MiqExpression.atom_error(:count, @edit[@expkey][:exp_key], @edit[@expkey][:exp_value])
-        add_flash(_("Field Value Error: %{msg}") % {:msg => e}, :error)
-      else
-        exp.delete(@edit[@expkey][:exp_orig_key])                     # Remove the old exp fields
-        exp[@edit[@expkey][:exp_key]] = {}                        # Add in the new key
-        exp[@edit[@expkey][:exp_key]]["count"] = @edit[@expkey][:exp_count]     # Set the count table
-        exp[@edit[@expkey][:exp_key]]["value"] = @edit[@expkey][:exp_value]     # Set the value
-        exp[@edit[@expkey][:exp_key]]["alias"] = @edit[@expkey][:alias] if @edit.fetch_path(@expkey, :alias)
-      end
-    when "tag"
-      if @edit[@expkey][:exp_tag].nil?
-        add_flash(_("A tag category must be chosen to commit this expression element"), :error)
-      elsif @edit[@expkey][:exp_value].nil?
-        add_flash(_("A tag value must be chosen to commit this expression element"), :error)
-      else
-        if exp.present?
-          exp.delete(@edit[@expkey][:exp_orig_key])                     # Remove the old exp fields
-          exp[@edit[@expkey][:exp_key]] = {}                        # Add in the new key
-          exp[@edit[@expkey][:exp_key]]["tag"] = @edit[@expkey][:exp_tag]         # Set the tag
-          exp[@edit[@expkey][:exp_key]]["value"] = @edit[@expkey][:exp_value]     # Set the value
-          exp[@edit[@expkey][:exp_key]]["alias"] = @edit[@expkey][:alias] if @edit.fetch_path(@expkey, :alias)
-        end
-      end
-    when "regkey"
-      if @edit[@expkey][:exp_regkey].blank?
-        add_flash(_("A registry key name must be entered to commit this expression element"), :error)
-      elsif @edit[@expkey][:exp_regval].blank? && @edit[@expkey][:exp_key] != "KEY EXISTS"
-        add_flash(_("A registry value name must be entered to commit this expression element"), :error)
-      elsif @edit[@expkey][:exp_key].include?("REGULAR EXPRESSION") && e = MiqExpression.atom_error(:regexp, @edit[@expkey][:exp_key], @edit[@expkey][:exp_value])
-        add_flash(_("Registry Value Error: %{msg}") % {:msg => e}, :error)
-      else
-        exp.delete(@edit[@expkey][:exp_orig_key])                     # Remove the old exp fields
-        exp[@edit[@expkey][:exp_key]] = {}                        # Add in the new key
-        exp[@edit[@expkey][:exp_key]]["regkey"] = @edit[@expkey][:exp_regkey]   # Set the key name
-        unless  @edit[@expkey][:exp_key].include?("KEY EXISTS")
-          exp[@edit[@expkey][:exp_key]]["regval"] = @edit[@expkey][:exp_regval] # Set the value name
-        end
-        unless  @edit[@expkey][:exp_key].include?("NULL") || # Check for "IS/IS NOT NULL/EMPTY" or "EXISTS"
-                @edit[@expkey][:exp_key].include?("EMPTY") ||
-                @edit[@expkey][:exp_key].include?("EXISTS")
-          exp[@edit[@expkey][:exp_key]]["value"] = @edit[@expkey][:exp_value]   #   else set the data value
-        end
-      end
-    when "find"
-      if @edit[@expkey][:exp_field].nil?
-        add_flash(_("A find field must be chosen to commit this expression element"), :error)
-      elsif ["checkall", "checkany"].include?(@edit[@expkey][:exp_check]) &&
-            @edit[@expkey][:exp_cfield].nil?
-        add_flash(_("A check field must be chosen to commit this expression element"), :error)
-      elsif @edit[@expkey][:exp_check] == "checkcount" &&
-            (@edit[@expkey][:exp_cvalue].nil? || is_integer?(@edit[@expkey][:exp_cvalue]) == false)
-        add_flash(_("The check count value must be an integer to commit this expression element"), :error)
-      elsif e = MiqExpression.atom_error(@edit[@expkey][:exp_field],
-                                         @edit[@expkey][:exp_skey],
-                                         @edit[@expkey][:exp_value].kind_of?(Array) ?
-                                           @edit[@expkey][:exp_value] :
-                                           (@edit[@expkey][:exp_value].to_s + Expression.prefix_by_dot(@edit[@expkey].val1_suffix))
-                                        )
-        add_flash(_("Find Value Error: %{msg}") % {:msg => e}, :error)
-      elsif e = MiqExpression.atom_error(@edit[@expkey][:exp_check] == "checkcount" ? :count : @edit[@expkey][:exp_cfield],
-                                         @edit[@expkey][:exp_ckey],
-                                         @edit[@expkey][:exp_cvalue].kind_of?(Array) ?
-                                           @edit[@expkey][:exp_cvalue] :
-                                           (@edit[@expkey][:exp_cvalue].to_s + Expression.prefix_by_dot(@edit[@expkey].val2_suffix))
-                                        )
-        add_flash(_("Check Value Error: %{msg}") % {:msg => e}, :error)
-      else
-        # Change datetime and date values from single element arrays to text string
-        if [:datetime, :date].include?(@edit[@expkey][:val1][:type])
-          @edit[@expkey][:exp_value] = @edit[@expkey][:exp_value].first.to_s if @edit[@expkey][:exp_value].length == 1
-        end
-        if @edit[@expkey][:val2][:type] && [:datetime, :date].include?(@edit[@expkey][:val2][:type])
-          @edit[@expkey][:exp_cvalue] = @edit[@expkey][:exp_cvalue].first.to_s if @edit[@expkey][:exp_cvalue].length == 1
-        end
-
-        exp.delete(@edit[@expkey][:exp_orig_key])                     # Remove the old exp fields
-        exp[@edit[@expkey][:exp_key]] = {}                        # Add in the new key
-        exp[@edit[@expkey][:exp_key]]["search"] = {}              # Create the search hash
-        skey = @edit[@expkey][:exp_skey]
-        exp[@edit[@expkey][:exp_key]]["search"][skey] = {}        # Create the search operator hash
-        exp[@edit[@expkey][:exp_key]]["search"][skey]["field"] = @edit[@expkey][:exp_field] # Set the search field
-        unless skey.include?("NULL") || skey.include?("EMPTY")  # Check for "IS/IS NOT NULL/EMPTY"
-          exp[@edit[@expkey][:exp_key]]["search"][skey]["value"] = @edit[@expkey][:exp_value] #   else set the value
-          exp[@edit[@expkey][:exp_key]]["search"][skey]["value"] += Expression.prefix_by_dot(@edit[@expkey].val1_suffix)
-        end
-        chk = @edit[@expkey][:exp_check]
-        exp[@edit[@expkey][:exp_key]][chk] = {}                 # Create the check hash
-        ckey = @edit[@expkey][:exp_ckey]
-        exp[@edit[@expkey][:exp_key]][chk][ckey] = {}           # Create the check operator hash
-        if @edit[@expkey][:exp_check] == "checkcount"
-          exp[@edit[@expkey][:exp_key]][chk][ckey]["field"] = "<count>" # Indicate count is being checked
-        else
-          exp[@edit[@expkey][:exp_key]][chk][ckey]["field"] = @edit[@expkey][:exp_cfield] # Set the check field
-        end
-        unless ckey.include?("NULL") || ckey.include?("EMPTY")  # Check for "IS/IS NOT NULL/EMPTY"
-          exp[@edit[@expkey][:exp_key]][chk][ckey]["value"] = @edit[@expkey][:exp_cvalue] #   else set the value
-          exp[@edit[@expkey][:exp_key]][chk][ckey]["value"] += Expression.prefix_by_dot(@edit[@expkey].val2_suffix)
-        end
-        exp[@edit[@expkey][:exp_key]]["search"][skey]["alias"] = @edit[@expkey][:alias] if @edit.fetch_path(@expkey, :alias)
-      end
+    when "field"  then exp_commit_field(exp)
+    when "count"  then exp_commit_count(exp)
+    when "tag"    then exp_commit_tag(exp)
+    when "regkey" then exp_commit_regkey(exp)
+    when "find"   then exp_commit_find(exp)
     else
       add_flash(_("Select an expression element type"), :error)
     end
