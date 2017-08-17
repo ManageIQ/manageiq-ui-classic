@@ -327,6 +327,7 @@ Rails.application.routes.draw do
         x_show
       ) +
                button_post +
+               exp_post +
                dialog_runner_post
     },
 
