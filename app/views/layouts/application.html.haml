@@ -32,7 +32,9 @@
       = csrf_meta_tag
       = render :partial => 'layouts/i18n_js'
       -# FIXME: the conditional below is a temporary fix for a webpacker issue, remove when it's resolved
-      = javascript_pack_tag 'manageiq-ui-classic/application' unless Rails.env.test?
+      - unless Rails.env.test?
+        - Webpacker::Manifest.instance.data.keys.each do |pack|
+          = javascript_pack_tag pack if pack.ends_with? '-common.js'
 
       :javascript
         ManageIQ.charts.provider = "#{Charting.backend}";
