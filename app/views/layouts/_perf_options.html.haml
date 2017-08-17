@@ -35,7 +35,7 @@
           = _("Show")
         %dd
           = select_tag("perf_minutes",
-                       options_for_select(REALTIME_CHOICES.map { |k, v| [_(v), k] }.sort_by(&:last),
+                       options_for_select(ViewHelper::REALTIME_CHOICES.map { |k, v| [_(v), k] }.sort_by(&:last),
                        @perf_options[:rt_minutes]),
                        "data-miq_sparkle_on" => true,
                        :class    => "selectpicker")
