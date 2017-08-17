@@ -341,10 +341,13 @@
     if (mainContent) {
       angular.element(mainContent).removeClass('miq-sand-paper');
       angular.element(mainContent).removeClass('miq-list-content');
+      angular.element(document.querySelector('#paging_div .miq-pagination')).css('display', 'none');
       if (viewType && (viewType === 'grid' || viewType === 'tile')) {
+        angular.element(this.$document.querySelector('#paging_div .miq-pagination')).css('display', 'block');
         angular.element(mainContent).addClass('miq-sand-paper');
       } else if (viewType && viewType === 'list') {
         angular.element(mainContent).addClass('miq-list-content');
+        angular.element(this.$document.querySelector('#paging_div .miq-pagination')).css('display', 'block');
       }
     }
   };
@@ -358,7 +361,7 @@
 
   ReportDataController.prototype.movePagination = function() {
     this.$timeout(function() {
-      var sortItems = this.$document.getElementsByClassName('miq-sort-items');
+      var sortItems = this.$document.getElementsByTagName('miq-sort-items');
       if (sortItems) {
         angular.element(sortItems).addClass(this.settings.dropDownClass[0]);
       }
@@ -377,8 +380,12 @@
         oldPagination ? oldPagination.remove() : null;
 
         var cols = 12;
-        if ($('#form_buttons_div').css('display') !== 'none' && $('#form_buttons_div').children().length !== 0) {
-          cols = 10;
+        if ($('#form_buttons_div').css('display') !== 'none') {
+          if ($('#form_buttons_div').children().length !== 0) {
+            cols = 10;
+          } else {
+            $('#form_buttons_div').css('display', 'none');
+          }
         }
 
         var col = $('<div class="col-md-' + cols + '"></div>');
