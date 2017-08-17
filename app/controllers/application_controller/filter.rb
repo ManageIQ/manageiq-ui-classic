@@ -139,33 +139,41 @@ module ApplicationController::Filter
     end
   end
 
-  def adv_search_toggle
-    @edit = session[:edit]
-
-    # Rebuild the pulldowns if opening the search box
-    @edit[@expkey].prefill_val_types unless @edit[:adv_search_open]
+  def adv_search_toggle_on
+    # Rebuild the pulldowns
+    @edit[@expkey].prefill_val_types
 
     render :update do |page|
       page << javascript_prologue
-      if @edit[:adv_search_open] == true
-        @edit[:adv_search_open] = false
-        page << "$('#adv_search_img').prop('src', '#{ActionController::Base.helpers.image_path('toolbars/squashed-true.png')}')"
-        page << javascript_hide("advsearchModal")
-        page << javascript_hide("blocker_div")
-      else
-        @edit[:adv_search_open] = true
-        page << "ManageIQ.explorer.clearSearchToggle(#{clear_search_status});"
-        page.replace("adv_search_body", :partial => "layouts/adv_search_body")
-        page.replace("adv_search_footer", :partial => "layouts/adv_search_footer")
-        page << "$('#adv_search_img').prop('src', '#{ActionController::Base.helpers.image_path('toolbars/squashed-false.png')}')"
-        page << ENABLE_CALENDAR if @edit[@expkey].calendar_needed?
-        @edit[@expkey].render_values_to(page)
-      end
+      page << "ManageIQ.explorer.clearSearchToggle(#{clear_search_status});"
+      page.replace("adv_search_body", :partial => "layouts/adv_search_body")
+      page.replace("adv_search_footer", :partial => "layouts/adv_search_footer")
+      page << "$('#adv_search_img').prop('src', '#{ActionController::Base.helpers.image_path('toolbars/squashed-false.png')}')"
+      page << ENABLE_CALENDAR if @edit[@expkey].calendar_needed?
+      @edit[@expkey].render_values_to(page)
       page << set_spinner_off
-      # Rememeber this settting in the model settings
-      if session.fetch_path(:adv_search, @edit[@expkey][:exp_model])
-        session[:adv_search][@edit[@expkey][:exp_model]][:adv_search_open] = @edit[:adv_search_open]
-      end
+    end
+  end
+
+  def adv_search_toggle_off
+    render :update do |page|
+      page << javascript_prologue
+      page << "$('#adv_search_img').prop('src', '#{ActionController::Base.helpers.image_path('toolbars/squashed-true.png')}')"
+      page << javascript_hide("advsearchModal")
+      page << javascript_hide("blocker_div")
+      page << set_spinner_off
+    end
+  end
+
+  def adv_search_toggle
+    @edit = session[:edit]
+
+    @edit[:adv_search_open] ? adv_search_toggle_off : adv_search_toggle_on
+    @edit[:adv_search_open] = !@edit[:adv_search_open]
+
+    # Rememeber this settting in the model settings
+    if session.fetch_path(:adv_search, @edit[@expkey][:exp_model])
+      session[:adv_search][@edit[@expkey][:exp_model]][:adv_search_open] = @edit[:adv_search_open]
     end
   end
 
