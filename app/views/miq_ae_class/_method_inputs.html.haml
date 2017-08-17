@@ -5,6 +5,12 @@
     .form-horizontal.static
       .form-group
         %label.col-md-2.control-label
+          = _('Type')
+        .col-md-8
+          %p.form-control-static
+            = @ae_method.location
+      .form-group
+        %label.col-md-2.control-label
           = Dictionary.gettext('fqname', :type => :column, :notfound => :titleize)
         .col-md-8
           %p.form-control-static
@@ -21,12 +27,6 @@
         .col-md-8
           %p.form-control-static
             = @ae_method.display_name
-      .form-group
-        %label.col-md-2.control-label
-          = _('Type')
-        .col-md-8
-          %p.form-control-static
-            = @ae_method.location
       .form-group
         %label.col-md-2.control-label
           = _('Created On')
