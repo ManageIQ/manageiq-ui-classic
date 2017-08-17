@@ -11,6 +11,10 @@ class TreeBuilderUtilization < TreeBuilderRegion
 
   private
 
+  def override(node, _object, _pid, _options)
+    node[:selectable] = node[:key].split('-')[1].split('_')[0] != 'folder'
+  end
+
   def set_locals_for_render
     locals = super
     locals.merge!(:onclick => "miqOnClickUtilization", :select_node => @selected_node.to_s)
