@@ -17,13 +17,21 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(_count_only, _options)
-    resolve = {}
-    CustomButton.button_classes.each { |db| resolve[db] = ui_lookup(:model => db) }
-    @sb[:target_classes] = resolve.invert
-    resolve = Array(resolve.invert).sort
-    resolve.collect do |typ|
-      {:id => "ab_#{typ[1]}", :text => typ[0], :tip => typ[0]}.merge(buttons_node_image(typ[1]))
+    @sb[:target_classes] = {}
+    buttons = CustomButton.button_classes.map do |klass|
+      name = ui_lookup(:model => klass)
+      # FIXME: This is probably a session backed caching of a small hash and it should be removed
+      @sb[:target_classes][name] = klass
+
+      {
+        :id   => "ab_#{klass}",
+        :text => name,
+        :tip  => name,
+        :icon => klass.safe_constantize.try(:decorate).try(:fonticon)
+      }
     end
+
+    buttons.sort_by { |button| button[:text] }
   end
 
   def x_get_tree_custom_kids(object, count_only, _options)
@@ -34,19 +42,5 @@ class TreeBuilderButtons < TreeBuilderAeCustomization
       CustomButtonSet.new(:name => "[Unassigned Buttons]|ub-#{nodes[1]}", :description => "[Unassigned Buttons]")
     )
     count_only_or_objects(count_only, objects)
-  end
-
-  def buttons_node_image(node)
-    case node
-    when 'ExtManagementSystem' then {:icon  => 'pficon pficon-server'}
-    when 'CloudTenant'         then {:icon  => 'pficon-cloud-tenant'}
-    when 'EmsCluster'          then {:icon  => 'pficon pficon-cluster'}
-    when 'Host'                then {:icon  => 'pficon pficon-screen'}
-    when 'MiqTemplate'         then {:icon  => 'ff ff-template'}
-    when 'Service'             then {:icon  => 'pficon pficon-service'}
-    when 'Storage'             then {:icon  => 'fa fa-database'}
-    when 'Vm'                  then {:icon  => 'pficon pficon-virtual-machine'}
-    when 'PhysicalServer'      then {:icon  => 'pficon pficon-enterprise'}
-    end
   end
 end
