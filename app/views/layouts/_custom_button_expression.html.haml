@@ -1,25 +1,37 @@
--# expression_type 
+-# expression_type
 - table_key = "#{expression_type}_table".to_sym
 
-.div{:id => "form_#{expression_type}_div"}
+.form-horizontal{:id => "form_#{expression_type}_div"}
   - if @expkey == expression_type
-    %h3= title + _("(Choose an element of the expression to edit)")
-    = render :partial => 'layouts/exp_editor'
+    .form-group
+      %label.control-label.col-md-2
+        = title
+      .col-md-8
+        =_("Choose an element of the expression to edit")
+        = render :partial => 'layouts/exp_editor'
   - else
-    %h3= title + _('(Press the "Edit" button to edit the expression)')
-    = link_to(image_tag('toolbars/edit.png', :border => "0", :alt => (t = _("Edit this Expression"))),
-      {:action => 'button_update', :button => expression_type},
-      {"data-miq_sparkle_on" => true, "data-miq_sparkle_off" => true, :remote => true, "data-method" => :post, :title => t})
-    %br
-    - if @edit[table_key].nil?
-      = render :partial => 'layouts/info_msg',
-               :locals  => {:message => _("No enablement expression defined.")}
-    - else
-      - @edit[table_key].each do |token|
-        - if !["AND", "OR", "(", ")"].include?([token].flatten.first)
-          = h([token].flatten.first)
-        - else
-          %font{:color => "black"}
-            %b
-              = h([token].flatten.first)
+    .form-group
+      %label.control-label.col-md-2
+        = title
+      .col-md-8
+        = link_to({:action => "button_update",
+                      :button => expression_type},
+                      "data-miq_sparkle_on" => true,
+                      "data-miq_sparkle_off" => true,
+                      :remote => true,
+                      "data-method" => :post) do
+          %button.btn.btn-default
+            - if @edit[table_key].nil?
+              = _("Define Expression")
+            - else
+              = _("Edit Expression")
 
+        - unless @edit[table_key].nil?
+          .spacer
+          - @edit[table_key].each do |token|
+            - if !["AND", "OR", "(", ")"].include?([token].flatten.first)
+              = h([token].flatten.first)
+            - else
+              %font{:color => "black"}
+                %b
+                  = h([token].flatten.first)

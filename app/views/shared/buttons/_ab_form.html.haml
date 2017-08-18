@@ -18,7 +18,7 @@
         :title => _("Paste is not available, no object information has been copied from the Simulation screen"))
   = render :partial => "layouts/flash_msg"
   %h3
-    = _('Action')
+    = _('Options')
   .form-horizontal
     .form-group
       %label.control-label.col-md-2
@@ -90,17 +90,27 @@
                      options_for_select([[_('Submit all'), 'all'], [_('One by one'), 'one']], @edit[:new][:submit_how]),
                      "data-miq_sparkle_on" => true,
                     )
-  = render(:partial => "layouts/role_enablement_expression",
+    %hr
+    %h3
+      = _('Enablement')
+    = render(:partial => "layouts/role_enablement_expression",
            :locals  => {:rec_id => @custom_button ? @custom_button.id : 'new', :action => "automate_button_field_changed"})
-%h3
-  = _('Disabled Button Text')
-  .form-horizontal.static
-    = text_field_tag("disabled_text", @edit[:new][:disabled_text],
-                          :maxlength         => 50,
-                          :class             => "form-control",
-                          "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+
+    .form-group
+      %label.control-label.col-md-2
+        = _('Disabled Button Text')
+      .col-md-8
+        = text_field_tag("disabled_text", @edit[:new][:disabled_text],
+                              :maxlength         => 50,
+                              :class             => "form-control",
+                              "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
+  %hr
+  %h3
+    = _('Visibility')
   = render(:partial => "layouts/role_visibility_expression",
            :locals  => {:rec_id => @custom_button ? @custom_button.id : 'new', :action => "automate_button_field_changed"})
+
+
   = render(:partial => "layouts/ae_resolve_options",
     :locals         => {:resolve => @edit,
       :form_action               => "ae_resolve",

@@ -83,20 +83,20 @@
         = _('Selection')
       .col-md-8
         = h(@resolve[:new][:target_id])
-%hr
 
-%h3
-  = _("Enablement Expression")
-.form-horizontal.static
-  - if @custom_button && !@custom_button.enablement_expression.nil? && @custom_button.enablement_expression.kind_of?(MiqExpression)
-    = h(@custom_button.enablement_expression.to_human)
-  - else
-    = render :partial => 'layouts/info_msg', :locals => {:message => _("No Enablement Expression defined, this button will be always enabled")}
-%hr
-%h3
-  = _('Disabled Button Text')
-.form-horizontal.static
-  = h(@custom_button.disabled_text)
+  .form-group
+    %label.control-label.col-md-2
+      = _("Enablement Expression")
+    .col-md-8
+      - if @custom_button && !@custom_button.enablement_expression.nil? && @custom_button.enablement_expression.kind_of?(MiqExpression)
+        = h(@custom_button.enablement_expression.to_human)
+      - else
+        = render :partial => 'layouts/info_msg', :locals => {:message => _("No Enablement Expression defined, this button will be always enabled")}
+  .form-group
+    %label.control-label.col-md-2
+      = _('Disabled Button Text')
+    .col-md-8
+      = h(@custom_button.disabled_text)
 
 %hr
 
