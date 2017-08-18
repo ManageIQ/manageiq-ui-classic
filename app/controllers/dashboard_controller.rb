@@ -127,6 +127,12 @@ class DashboardController < ApplicationController
                      :minimized => @sb[:dashboards][@sb[:active_db]][:minimized].include?(params[:id])}
   end
 
+  def widget_report_data
+    widget = find_record_with_rbac(MiqWidget, params[:id])
+    render :json => {:content   => widget.contents_for_user(current_user).contents,
+                     :minimized => @sb[:dashboards][@sb[:active_db]][:minimized].include?(params[:id])}
+  end
+
   def show
     @layout    = "dashboard"
     @dashboard = true
