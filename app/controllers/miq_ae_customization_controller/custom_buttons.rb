@@ -3,17 +3,6 @@ module MiqAeCustomizationController::CustomButtons
 
   private
 
-  def buttons_node_image(node)
-    case node
-    when "ExtManagementSystem"
-      return "ext_management_system"
-    when "MiqTemplate"
-      return "vm"
-    else
-      return node.downcase
-    end
-  end
-
   def ab_get_node_info(node)
     @nodetype = node.split("_")
     nodeid = node.split("-")
