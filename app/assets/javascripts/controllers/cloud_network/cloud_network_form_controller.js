@@ -3,8 +3,15 @@ ManageIQ.angular.app.controller('cloudNetworkFormController', ['cloudNetworkForm
 
   var init = function() {
     vm.afterGet = false;
-    vm.cloudNetworkModel = { name: '', ems_id: '', cloud_tenant_id: '' };
-    vm.network_type_pattern = /vlan|vxlan|gre/;
+    vm.cloudNetworkModel = { name: '' };
+    vm.providers_network_types = {
+      "Local": "local",
+      "Flat": "flat",
+      "GRE": "gre",
+      "VLAN": "vlan",
+      "VXLAN": "vxlan",
+    };
+    vm.network_types_for_segmentation = /vlan|vxlan|gre/;
     vm.formId = cloudNetworkFormId;
     vm.model = "cloudNetworkModel";
     vm.newRecord = cloudNetworkFormId === "new";
@@ -12,7 +19,6 @@ ManageIQ.angular.app.controller('cloudNetworkFormController', ['cloudNetworkForm
     vm.saveable = miqService.saveable;
 
     if (vm.newRecord) {
-      vm.cloudNetworkModel.name = "";
       vm.cloudNetworkModel.enabled = true;
       vm.cloudNetworkModel.external_facing = false;
       vm.cloudNetworkModel.shared = false;
