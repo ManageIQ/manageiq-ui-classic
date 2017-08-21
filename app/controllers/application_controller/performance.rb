@@ -2,6 +2,7 @@ module ApplicationController::Performance
   extend ActiveSupport::Concern
 
   CHARTS_REPORTS_FOLDER = Rails.root.join("product", "charts", "miq_reports")
+  CHARTS_LAYOUTS_FOLDER = Rails.root.join("product", "charts", "layouts")
 
   # Process changes to performance charts
   def perf_chart_chooser
