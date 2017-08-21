@@ -1650,9 +1650,13 @@ class ApplicationController < ActionController::Base
   end
 
   def get_db_view(db, options = {})
-    if db == "ManageIQ_Providers_InfraManager_Template" && options[:association] == "all_vms_and_templates"
+    if %w(
+         ManageIQ_Providers_InfraManager_Template
+         ManageIQ_Providers_InfraManager_Vm
+       ).include?(db) && options[:association] == "all_vms_and_templates"
       options[:association] = nil
     end
+
     MiqReport.load_from_view_options(db, current_user, options, db_view_yaml_cache)
   end
 
