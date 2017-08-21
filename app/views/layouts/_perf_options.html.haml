@@ -10,7 +10,7 @@
         :javascript
            miqInitSelectPicker();
         - if @perf_options[:index] && %w(host vm).include?(request.parameters["controller"])
-          - rt_chart = YAML.load(File.open("#{CHARTS_LAYOUTS_FOLDER}/realtime_perf_charts/#{@perf_options[:model]}.yaml"))
+          - rt_chart = YAML.load(File.open("#{ApplicationController::Performance::CHARTS_LAYOUTS_FOLDER}/realtime_perf_charts/#{@perf_options[:model]}.yaml"))
           - @rt_hide = rt_chart[@perf_options[:index].to_i][:type] == "None"
         - if request.parameters["controller"] == "storage" && @perf_options[:cat]
           = select("perf", "typ", [[_("Hourly"), "Hourly"], [_("Daily"), "Daily"]], {:selected => @perf_options[:typ]},

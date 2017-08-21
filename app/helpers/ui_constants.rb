@@ -1,11 +1,6 @@
 module UiConstants
   # dac - Changed to allow up to 255 characters for all text fields on 1/11/07
 
-  CHARTS_REPORTS_FOLDER = File.join(Rails.root, "product/charts/miq_reports")
-  CHARTS_LAYOUTS_FOLDER = File.join(Rails.root, "product/charts/layouts")
-  TIMELINES_FOLDER = File.join(Rails.root, "product/timelines")
-  TOOLBARS_FOLDER = File.join(Rails.root, "product/toolbars")
-
   # Choices for trend and C&U days back pulldowns
   WEEK_CHOICES = {
     7  => N_("1 Week"),
