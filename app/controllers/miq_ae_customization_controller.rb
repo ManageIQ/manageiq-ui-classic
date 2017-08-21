@@ -129,8 +129,6 @@ class MiqAeCustomizationController < ApplicationController
 
     build_accordions_and_trees
 
-    @collapse_c_cell = true if (x_active_tree == :old_dialogs_tree &&
-        x_node == "root") || x_active_tree == :ab_tree
     @lastaction = "automate_button"
     @layout = "miq_ae_customization"
 

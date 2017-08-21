@@ -22,7 +22,6 @@ class MiqCapacityController < ApplicationController
     }]
 
     @explorer = true
-    @collapse_c_cell = true
     @sb[:active_tab] = "summary"
     self.x_node ||= ""
     @sb[:util] = {}            # reset existing values
@@ -47,7 +46,6 @@ class MiqCapacityController < ApplicationController
     @trees = [] # TODO: TreeBuilder
     @breadcrumbs = []
     @explorer = true
-    @collapse_c_cell = true
     @layout = "miq_capacity_bottlenecks"
     self.x_active_tree = 'bottlenecks_tree'
     util_build_tree(:bottlenecks, :bottlenecks_tree)
@@ -79,7 +77,6 @@ class MiqCapacityController < ApplicationController
     @explorer = true
     @accords = [{:name => "planning", :title => _("Planning Options"), :container => "planning_options_accord"}]
 
-    @collapse_c_cell = true
     self.x_active_tree = nil
     @sb[:active_tab] = "summary"
     @layout = "miq_capacity_planning"

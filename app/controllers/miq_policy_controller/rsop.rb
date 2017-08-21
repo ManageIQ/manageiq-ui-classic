@@ -3,7 +3,6 @@ module MiqPolicyController::Rsop
 
   def rsop
     @explorer = true
-    @collapse_c_cell = true
     if params[:button] == "submit"
       unless params[:task_id]                       # First time thru, kick off the report generate task
         case @sb[:rsop][:filter]

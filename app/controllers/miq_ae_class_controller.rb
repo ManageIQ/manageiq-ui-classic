@@ -68,7 +68,6 @@ class MiqAeClassController < ApplicationController
     @sb[:action] = nil
     @explorer = true
     # don't need right bottom cell
-    @collapse_c_cell = true
     @breadcrumbs = []
     bc_name = _("Explorer")
     bc_name += _(" (filtered)") if @filters && (!@filters[:tags].blank? || !@filters[:cats].blank?)
