@@ -125,7 +125,6 @@ class OpsController < ApplicationController
     # setting active record object here again, since they are no longer there due to redirect
     @ldap_group = @edit[:ldap_group] if params[:cls_id] && params[:cls_id].split('_')[0] == "lg"
     @x_edit_buttons_locals = set_form_locals if @in_a_form
-    @collapse_c_cell = @in_a_form || @pages ? false : true
     edit_changed? if @edit && !%w(settings_import settings_import_tags).include?(@sb[:active_tab])
     render :layout => "application"
   end

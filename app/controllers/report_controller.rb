@@ -149,7 +149,6 @@ class ReportController < ApplicationController
     @right_cell_text.gsub!(/'/, "&apos;")      # Need to escape single quote in title to load in right cell
     @x_edit_buttons_locals = set_form_locals if @in_a_form
     # show form buttons after upload is pressed
-    @collapse_c_cell = !@in_a_form && !@pages && !saved_report_paging?
     render :layout => "application"
   end
 
