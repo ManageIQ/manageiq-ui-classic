@@ -10,14 +10,6 @@ class CloudNetworkController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::GenericFormMixin
 
-  PROVIDERS_NETWORK_TYPES = {
-    "Local" => "local",
-    "Flat"  => "flat",
-    "GRE"   => "gre",
-    "VLAN"  => "vlan",
-    "VXLAN" => "vxlan",
-  }.freeze
-
   def self.display_methods
     %w(instances cloud_networks network_routers cloud_subnets)
   end
@@ -145,13 +137,14 @@ class CloudNetworkController < ApplicationController
   def edit
     params[:id] = checked_item_id unless params[:id].present?
     assert_privileges("cloud_network_edit")
+    @network_ems_provider_choices = {}
     @network = find_record_with_rbac(CloudNetwork, params[:id])
-    @network_provider_network_type_choices = PROVIDERS_NETWORK_TYPES
     @in_a_form = true
     drop_breadcrumb(
       :name => _("Edit Cloud Network \"%{name}\"") % {:name => @network.name},
       :url  => "/cloud_network/edit/#{@network.id}"
     )
+    render :change
   end
 
   def new
@@ -162,8 +155,9 @@ class CloudNetworkController < ApplicationController
     Rbac::Filterer.filtered(ManageIQ::Providers::Openstack::NetworkManager).find_each do |ems|
       @network_ems_provider_choices[ems.name] = ems.id
     end
-    @network_provider_network_type_choices = PROVIDERS_NETWORK_TYPES
+
     drop_breadcrumb(:name => _("Add New Cloud Network"), :url => "/cloud_network/new")
+    render :change
   end
 
   def update

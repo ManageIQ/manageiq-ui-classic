@@ -1,0 +1,16 @@
+%form#form_div{:name           => "angularForm",
+  "form-changed"  => true,
+  "miq-form"      => true,
+  "model"         => "vm.cloudNetworkModel",
+  "model-copy"    => "vm.modelCopy",
+  "ng-cloak"      => "",
+  "ng-controller" => "cloudNetworkFormController as vm",
+  "ng-show"       => "vm.afterGet"}
+
+  = render :partial => "layouts/flash_msg"
+  = render :partial => "common_new_edit"
+  = render :partial => "layouts/angular/generic_form_buttons"
+
+:javascript
+  ManageIQ.angular.app.value('cloudNetworkFormId', '#{@network.id || "new"}');
+  miq_bootstrap('#form_div');
