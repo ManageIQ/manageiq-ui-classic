@@ -1,6 +1,8 @@
 module ApplicationController::Performance
   extend ActiveSupport::Concern
 
+  CHARTS_REPORTS_FOLDER = Rails.root.join("product", "charts", "miq_reports")
+
   # Process changes to performance charts
   def perf_chart_chooser
     assert_privileges("perf_reload")
