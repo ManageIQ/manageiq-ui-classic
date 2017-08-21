@@ -78,7 +78,7 @@ class HawkularProxyService
   rescue StandardError => e
     {
       :parameters => params,
-      :error      => ActionView::Base.full_sanitizer.sanitize(e.message) + " " + _("(Please check your Hawkular server)")
+      :error      => ActionView::Base.full_sanitizer.sanitize(e.to_s) + " " + _("(Please check your Hawkular server)")
     }
   end
 
