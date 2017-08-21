@@ -5,8 +5,6 @@
 -#   @trees - all the available trees generated with TreeBuilder
 
 - case controller.controller_name
-- when 'miq_capacity'
-  = render :partial => "#{controller.action_name}_tree"
 - when 'miq_policy'
   - tree = @trees["#{name}_tree".to_sym]
   = render :partial => "shared/tree", :locals => {:tree => tree, :name => tree.name.to_s}

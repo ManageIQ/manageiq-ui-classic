@@ -157,19 +157,6 @@ function miqOnClickIncludeDomainPrefix() {
   miqJqueryRequest('/' + ManageIQ.controller + '/ae_tree_select_toggle?button=domain');
 }
 
-function miqOnClickUtilization(id) {
-  var tree;
-  if (miqDomElementExists('utilization_accord')) {
-    tree = "utilization_tree";
-  } else if (miqDomElementExists('bottlenecks_accord')) {
-    tree = "bottlenecks_tree";
-  }
-  var rep_id = id.split('__');
-  miqTreeActivateNodeSilently(tree, rep_id);
-  var url = "/miq_capacity/optimize_tree_select/?id=" + encodeURIComponent(rep_id[0]);
-  miqJqueryRequest(url, {beforeSend: true});
-}
-
 // delete specific tree cookies
 function miqDeleteTreeCookies(tree_prefix) {
   miqTreeClearState(tree_prefix);

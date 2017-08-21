@@ -119,7 +119,7 @@ module ApplicationHelper::PageLayouts
           (params[:controller] == "chargeback" && params[:action] == "chargeback") ||
           (params[:controller] == "miq_ae_tools" && (params[:action] == "resolve" || params[:action] == "show")) ||
           (params[:controller] == "miq_policy" && params[:action] == "rsop") ||
-          (params[:controller] == "miq_capacity")
+          (params[:controller] == "utilization" || params[:controller] == "planning" || params[:controller] == "bottlenecks")
       end
   end
 
@@ -128,7 +128,7 @@ module ApplicationHelper::PageLayouts
       begin
         rsop = controller.controller_name == 'miq_policy' && controller.action_name == 'rsop'
         resolve = controller.controller_name == 'miq_ae_tools' && controller.action_name == 'resolve'
-        planning = controller.controller_name == 'miq_capacity' && controller.action_name == 'planning'
+        planning = controller.controller_name == 'planning'
         rsop || resolve || planning
       end
   end

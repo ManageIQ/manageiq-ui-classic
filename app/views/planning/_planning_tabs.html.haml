@@ -11,7 +11,7 @@
       = render :partial => "planning_report"
 
 :javascript
-  miq_tabs_init('#planning_tabs', '/miq_capacity/change_tab');
+  miq_tabs_init('#planning_tabs', '/planning/change_tab');
 - if @sb[:active_tab] != 'report'
   :javascript
     $('#toolbar').hide();
