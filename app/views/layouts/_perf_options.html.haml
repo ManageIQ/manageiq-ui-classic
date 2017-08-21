@@ -62,7 +62,7 @@
             = _("Show")
           %dd
             = select_tag("perf_days",
-                          options_for_select(WEEK_CHOICES.map { |k, v| [_(v), k] }.sort,
+                          options_for_select(ViewHelper::WEEK_CHOICES.map { |k, v| [_(v), k] }.sort,
                             @perf_options[:days].to_i),
                           "data-miq_sparkle_on" => true,
                           :class    => "selectpicker")
