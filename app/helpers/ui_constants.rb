@@ -1,7 +1,6 @@
 module UiConstants
   # dac - Changed to allow up to 255 characters for all text fields on 1/11/07
 
-  TIMELINES_FOLDER = File.join(Rails.root, "product/timelines")
   TOOLBARS_FOLDER = File.join(Rails.root, "product/toolbars")
 
   # Choices for trend and C&U days back pulldowns

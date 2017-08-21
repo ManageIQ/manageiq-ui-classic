@@ -42,7 +42,7 @@ module ApplicationController::Timelines
   private ############################
 
   def tl_get_rpt(timeline)
-    MiqReport.new(YAML.load(File.open("#{TIMELINES_FOLDER}/miq_reports/#{timeline}.yaml")))
+    MiqReport.new(YAML.load(File.open("#{ApplicationController::TIMELINES_FOLDER}/miq_reports/#{timeline}.yaml")))
   end
 
   def tl_build_init_options(refresh = nil)
