@@ -21,6 +21,22 @@
     = _('Options')
   .form-horizontal
     .form-group
+      %label.col-md-2.control-label
+        = _('Button Type')
+      .col-md-8
+        - if @edit
+          = select_tag('button_type',
+                options_for_select(CustomButton::TYPES.invert, @edit[:new][:button_type]),
+                :class => "selectpicker")
+          :javascript
+                miqInitSelectPicker();
+                miqSelectPickerEvent('button_type', '#{url}', {beforeSend: true, complete: true})
+        - else
+          = h(@edit[:new][:button_type] == "default" ? "Default" : CustomButton::TYPES[[:button_type]])
+        - display = @edit[:new][:button_type] == "ansible_playbook" ? "" : "display:none"
+    #playbook_div{:style => display}
+      = render :partial => "shared/playbook_options"
+    .form-group
       %label.control-label.col-md-2
         = _('Text')
       .col-md-8

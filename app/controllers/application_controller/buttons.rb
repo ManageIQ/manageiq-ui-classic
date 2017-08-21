@@ -103,6 +103,7 @@ module ApplicationController::Buttons
       @edit[:new][:open_url] = params[:open_url] == "1" if params[:open_url]
       copy_params_if_set(@edit[:new], params, %i(name target_attr_name display_for submit_how description button_icon button_color dialog_id disabled_text))
       visibility_box_edit
+      playbook_box_edit
     end
 
     render :update do |page|
@@ -117,8 +118,48 @@ module ApplicationController::Buttons
         @changed = session[:changed] = (@edit[:new] != @edit[:current])
         page << javascript_for_miq_button_visibility(@changed)
       end
+      if @edit[:new][:button_type] == 'ansible_playbook'
+        page << javascript_show('playbook_div')
+        if @edit[:new][:inventory_type] == "manual"
+          page << javascript_show('manual_inventory_div')
+        else
+          page << javascript_hide('manual_inventory_div')
+        end
+      else
+        page << javascript_hide('playbook_div')
+      end
       page << "miqSparkle(false);"
     end
+  end
+
+  def playbook_box_edit
+    clear_playbook_variables if params[:button_type] == 'default'
+    initialize_playbook_variables if params[:button_type] == 'ansible_playbook'
+    if params[:inventory_manual] || params[:inventory_localhost] || params[:inventory_event_target]
+      update_playbook_variables(params)
+    end
+    @edit[:new][:service_template_id] = params[:service_template_id].to_i if params[:service_template_id]
+    @edit[:new][:hosts] = params[:hosts] if params[:hosts]
+  end
+
+  def update_playbook_variables(params)
+    @edit[:new][:inventory_type] = params[:inventory_manual] if params[:inventory_manual]
+    @edit[:new][:inventory_type] = params[:inventory_localhost] if params[:inventory_localhost]
+    @edit[:new][:inventory_type] = params[:inventory_event_target] if params[:inventory_event_target]
+    @edit[:new][:hosts] = '' if params[:inventory_localhost] || params[:inventory_event_target]
+  end
+
+  def clear_playbook_variables
+    @edit[:new][:service_template_id] = nil
+    @edit[:new][:inventory_type] = 'localhost'
+    @edit[:new][:hosts] = ''
+  end
+
+  def initialize_playbook_variables
+    @edit[:new][:service_template_id] = nil
+    @edit[:new][:inventory_type] = "localhost"
+    @edit[:new][:hosts] = ''
+    @edit[:new][:object_request] = CustomButton::PLAYBOOK_METHOD
   end
 
   # AJAX driven routine to delete a user
@@ -806,7 +847,16 @@ module ApplicationController::Buttons
       add_flash(_('Dialog can be opened only by buttons for a single entity'), :error)
     end
 
+    validate_playbook_button(button_hash)
+
     !flash_errors?
+  end
+
+  def validate_playbook_button(button_hash)
+    add_flash(_("An Ansible Playbook must be selected"), :error) if button_hahs[:service_template_id].blank?
+    if button_hash[:inventory_type] == 'manual' && button_hash[:hosts].blank?
+      add_flash(_("At least one host must be specified for manual mode"), :error)
+    end
   end
 
   # Set user record variables to new values
@@ -825,7 +875,7 @@ module ApplicationController::Buttons
     button.options[:button_icon] = @edit[:new][:button_icon] unless @edit[:new][:button_icon].blank?
     button.options[:button_color] = @edit[:new][:button_color] unless @edit[:new][:button_color].blank?
 
-    %i(display open_url display_for submit_how).each do |key|
+    %i(button_type display open_url display_for submit_how).each do |key|
       button[:options][key] = @edit[:new][key]
     end
     button.visibility ||= {}
@@ -841,6 +891,7 @@ module ApplicationController::Buttons
     end
     button_set_resource_action(button)
     button_set_expressions_record(button)
+    button_set_playbook_record(button)
   end
 
   def button_set_expressions_record(button)
@@ -886,6 +937,40 @@ module ApplicationController::Buttons
     end
   end
 
+  def button_set_playbook_record(button)
+    #TO DO - save playbook variables if button type is ansible playbook
+    if @edit[:new][:button_type] == 'ansible_playbook'
+      target = case @edit[:new][:inventory_type]
+               when "event_target"
+                 'vmdb_object'
+               when "manual"
+                 @edit[:new][:hosts]
+               when 'localhost'
+                 'localhost'
+               end
+      attrs = {:service_template_name => ServiceTemplate.find(@edit[:new][:service_template_id]).name, :hosts => target}
+      button.uri_attributes.merge!(attrs)
+    end
+  end
+
+  def button_set_playbook_form_vars
+    @edit[:ansible_playbooks] = ServiceTemplateAnsiblePlaybook.order(:name).pluck(:name, :id) || {}
+    @edit[:new][:service_template_id] = ServiceTemplate.find_by(:name => @custom_button.uri_attributes[:service_template_name]).try(:id)
+    @edit[:new][:inventory_type] = if @custom_button.uri_attributes[:hosts].blank?
+                                     'localhost'
+                                   else
+                                     case @custom_button.uri_attributes[:hosts]
+                                       when 'vmdb_object'
+                                         "event_target"
+                                       when 'localhost'
+                                         "localhost"
+                                       else
+                                         @edit[:new][:hosts] = @custom_button.uri_attributes[:hosts]
+                                         "manual"
+                                     end
+                                   end
+  end
+
   # Set form variables for button add/edit
   def button_set_form_vars
     @sb[:buttons_node] = true
@@ -922,8 +1007,13 @@ module ApplicationController::Buttons
         @edit[:new][:other_name] = instance_name
       end
       @edit[:new][:object_request] = @custom_button.uri_attributes["request"]
+
+      button_type = @custom_button.options.try(:[], :button_type) ? @custom_button.options[:button_type] : 'default'
+      default_attributes = %w(request)
+      default_attributes = %w(request service_template_name hosts) if button_type == 'ansible_playbook'
+
       @custom_button.uri_attributes.each do |attr|
-        if attr[0] != "object_name" && attr[0] != "request"
+        if attr[0] != "object_name" && !default_attributes.include?(attr[0].to_s)
           @edit[:new][:attrs].push(attr) unless @edit[:new][:attrs].include?(attr)
         end
       end
@@ -945,10 +1035,12 @@ module ApplicationController::Buttons
       :open_url       => @custom_button.options.try(:[], :open_url) ? @custom_button.options[:open_url] : false,
       :display_for    => @custom_button.options.try(:[], :display_for) ? @custom_button.options[:display_for] : 'single',
       :submit_how     => @custom_button.options.try(:[], :submit_how) ? @custom_button.options[:submit_how] : 'one',
+      :button_type    => button_type,
       :object_message => @custom_button.uri_message || "create",
     )
     button_set_expression_vars(:enablement_expression, :enablement_expression_table)
     button_set_expression_vars(:visibility_expression, :visibility_expression_table)
+    button_set_playbook_form_vars
 
     @edit[:current] = copy_hash(@edit[:new])
 
@@ -974,6 +1066,7 @@ module ApplicationController::Buttons
     end
     @edit[:new][:dialog_id] = @custom_button.resource_action.dialog_id.to_i
     get_available_dialogs
+
     @edit[:current] = copy_hash(@edit[:new])
     session[:edit] = @edit
     @changed = session[:changed] = (@edit[:new] != @edit[:current])
