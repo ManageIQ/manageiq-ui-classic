@@ -115,7 +115,7 @@
     });
   };
 
-  // default to using the error modal on error
+  // default to using the error modal on error, skip by using API.get.noErrorModal instead
   ["get", "post", "put", "delete", "options", "patch"].forEach(function(name) {
     var orig = API[name];
 
@@ -131,6 +131,8 @@
           throw err;
         });
     };
+
+    API[name].noErrorModal = orig;
   });
 
   window.vanillaJsAPI = API;
@@ -195,9 +197,15 @@
 angular.module('miq.api', [])
 .factory('API', ['$q', function($q) {
   var angularify = function(what) {
-    return function() {
+    var ret = function() {
       return $q.when(what.apply(vanillaJsAPI, arguments));
     };
+
+    if (what.noErrorModal) {
+      ret.noErrorModal = angularify(what.noErrorModal);
+    }
+
+    return ret;
   };
 
   return {
