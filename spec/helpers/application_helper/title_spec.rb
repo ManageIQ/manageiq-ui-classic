@@ -68,9 +68,19 @@ describe ApplicationHelper::Title do
       expect(subject).to eq(title + ": Control")
     end
 
-    it "when layout likes 'miq_capacity*'" do
-      @layout = "miq_capacity_some_thing"
-      expect(subject).to eq(title + ": Optimize")
+    it "when layout = 'miq_capacity_utilization'" do
+      @layout = "miq_capacity_utilization"
+      expect(subject).to eq(title + ": Utilization")
+    end
+
+    it "when layout = 'miq_capacity_planning'" do
+      @layout = "miq_capacity_planning"
+      expect(subject).to eq(title + ": Planning")
+    end
+
+    it "when layout = 'miq_capacity_bottlenecks'" do
+      @layout = "miq_capacity_bottlenecks"
+      expect(subject).to eq(title + ": Bottlenecks")
     end
 
     it "when layout likes 'miq_request*'" do
