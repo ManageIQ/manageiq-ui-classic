@@ -1,11 +1,11 @@
 #utilization_report_div
   = render :partial => "layouts/flash_msg"
-  - if @sb[:util] && @sb[:util][:trend_rpt] && @sb[:util][:summary]
+  - if @sb[:trend_rpt] && @sb[:summary]
     = render :partial => "utilization_options", :locals => {:cap_type => "report"}
     %hr
     %h3= _('Basic Information')
     %dl.dl-horizontal
-      - @sb[:util][:summary][:info].each do |si|
+      - @sb[:summary][:info].each do |si|
         %dt
           = si.first
         %dd
@@ -16,9 +16,9 @@
     - else
       - msg = _("No performance data is available for the selected item.")
     = render :partial => 'layouts/info_msg', :locals => {:message => msg}
-  - if @sb[:util] && @sb[:util][:summary]
+  - if @sb[:summary]
     - {:cpu => _('CPU'), :memory => _('Memory'), :storage => _('Disk')}.each do |k, v|
-      - if @sb[:util][:summary][k] && !@sb[:util][:summary][k].empty?
+      - if @sb[:summary][k] && !@sb[:summary][k].empty?
         %hr
         %table.table.table-bordered.table-striped
           %thead
@@ -26,12 +26,12 @@
               %th{:colspan => 2, :align => "left"}
                 = v
           %tbody
-            - @sb[:util][:summary][k].each do |c|
+            - @sb[:summary][k].each do |c|
               %tr
                 %td
                   = c.first
                 %td
                   = c.last
-  - if @sb[:util] && @sb[:util][:trend_rpt]
+  - if @sb[:trend_rpt]
     %hr
-    = _('* Information shown is based on available trend data from %{start_time} to %{end_time} in the %{timezone} time zone.') % {:start_time => format_timezone(@sb[:util][:options][:trend_start], @sb[:util][:options][:tz], "date"), :end_time => format_timezone(@sb[:util][:options][:trend_end], @sb[:util][:options][:tz], "date"), :timezone => @sb[:util][:options][:time_profile_tz] || @sb[:util][:options][:tz]}
+    = _('* Information shown is based on available trend data from %{start_time} to %{end_time} in the %{timezone} time zone.') % {:start_time => format_timezone(@sb[:options][:trend_start], @sb[:options][:tz], "date"), :end_time => format_timezone(@sb[:options][:trend_end], @sb[:options][:tz], "date"), :timezone => @sb[:options][:time_profile_tz] || @sb[:options][:tz]}

@@ -27,7 +27,7 @@ describe UtilizationController do
                                            :utilization_tree => {:active_node => node[:active_node]},
                                          },
                                                :active_tree => :utilization_tree,
-                                               :util        => {:options => {}})
+                                               :options     => {})
         expect(controller).not_to receive(:render)
         controller.send(:get_node_info, node[:active_node])
         expect(assigns(:right_cell_text)).to eq("#{node[:title_prefix]} \"#{node[:title]}\" #{title_suffix}")

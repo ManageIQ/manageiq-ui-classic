@@ -9,7 +9,7 @@
         = _('Trends for past')
       .col-md-10
         = select_tag("#{cap_type}_days",
-          options_for_select(ViewHelper::WEEK_CHOICES.map {|k, v| [_(v), k]}.sort, @sb[:util][:options][:days].to_i),
+          options_for_select(ViewHelper::WEEK_CHOICES.map {|k, v| [_(v), k]}.sort, @sb[:options][:days].to_i),
           "class"               => "selectpicker")
         :javascript
           miqInitSelectPicker();
@@ -20,9 +20,9 @@
       %label.control-label.col-md-2
         = _('Classification')
       .col-md-10
-        - options = [["<#{_('None')}>", "<None>"]] + (@sb[:util][:tags] ? @sb[:util][:tags].invert.sort : [])
+        - options = [["<#{_('None')}>", "<None>"]] + (@sb[:tags] ? @sb[:tags].invert.sort : [])
         = select_tag("#{cap_type}_tag",
-          options_for_select(options, @sb[:util][:options][:tag]),
+          options_for_select(options, @sb[:options][:tag]),
           "class"               => "selectpicker")
         :javascript
           miqInitSelectPicker();
@@ -37,11 +37,11 @@
           = _('No Time Profiles found')
         - elsif session[:time_profiles].length == 1
           -# Only 1 choice, show the value
-          = session[:time_profiles][@sb[:util][:options][:time_profile].to_i]
+          = session[:time_profiles][@sb[:options][:time_profile].to_i]
         - else
           = select_tag("#{cap_type}_time_profile",
             options_for_select(Array(session[:time_profiles].invert).sort_by(&:first),
-            @sb[:util][:options][:time_profile]),
+            @sb[:options][:time_profile]),
             "class"               => "selectpicker")
           :javascript
             miqInitSelectPicker();
@@ -53,7 +53,7 @@
           = _('Selected Day')
         .col-md-10
           = datepicker_input_tag("miq_date_#{date_id}",
-            @sb[:util][:options][:chart_date],
+            @sb[:options][:chart_date],
             :readonly               => "true",
             "data-miq_sparkle_on"   => true,
             "data-miq_observe_date" => {:url => url}.to_json)
