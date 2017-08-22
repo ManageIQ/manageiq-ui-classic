@@ -20,8 +20,10 @@ function ErrorModalController($timeout) {
 
     if (source === 'API') {
       $ctrl.contentType = err.headers.get("content-type");
+      $ctrl.url = err.url;
     } else if (source === '$http') {
       $ctrl.contentType = err.headers('content-type');
+      $ctrl.url = err.config.url;
     }
 
     $ctrl.error = err;
@@ -69,6 +71,12 @@ angular.module('miq.error', [])
       '            <i class="error-icon pficon-error-circle-o"></i>',
       '          </div>',
       '          <div class="col-xs-12 col-md-10">',
+      '            <p ng-if="$ctrl.url">',
+      '              <strong>',
+      '                URL',
+      '              </strong>',
+      '              {{$ctrl.url}}',
+      '            </p>',
       '            <p>',
       '              <strong>',
       '                Status',
