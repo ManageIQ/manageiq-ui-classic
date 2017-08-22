@@ -115,6 +115,23 @@
     });
   };
 
+  // default to using the error modal on error
+  ["get", "post", "put", "delete", "options", "patch"].forEach(function(name) {
+    var orig = API[name];
+
+    API[name] = function() {
+      return orig.apply(this, arguments)
+        .catch(function(err) {
+          sendDataWithRx({
+            serverError: err,
+          });
+
+          console.error('Server returned a non-200 response:', err.status, err.statusText, err);
+          throw err;
+        });
+    };
+  });
+
   window.vanillaJsAPI = API;
 
 
