@@ -8,7 +8,7 @@ describe BottlenecksController do
     end
 
     describe '#index' do
-      it 'sets breadcrumb' do
+      it 'renders the page' do
         seed_session_trees('miq_capacity', :bottlenecks_tree, 'foobar')
         expect(controller).to receive(:get_node_info)
         # render fails but it's not needed for this test
@@ -51,7 +51,6 @@ describe BottlenecksController do
                                 :title_prefix => "Datastore",
                                 :title        => ds.name}}
       tree_nodes.each do |_key, node|
-        controller.instance_variable_set(:@breadcrumbs, [])
         controller.instance_variable_set(:@sb, :trees       => {
                                            :bottlenecks_tree => {:active_node => node[:active_node]}
                                          },

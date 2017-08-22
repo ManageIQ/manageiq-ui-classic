@@ -23,7 +23,6 @@ describe UtilizationController do
                                 :title_prefix => "Datastore",
                                 :title        => ds.name}}
       tree_nodes.each do |_key, node|
-        controller.instance_variable_set(:@breadcrumbs, [])
         controller.instance_variable_set(:@sb, :trees       => {
                                            :utilization_tree => {:active_node => node[:active_node]},
                                          },

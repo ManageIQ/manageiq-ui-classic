@@ -9,7 +9,6 @@ class UtilizationController < ApplicationController
   def index
     @explorer = true
     @trees = [] # TODO: TreeBuilder
-    @breadcrumbs = []
     self.x_active_tree = 'utilization_tree'
 
     @accords = [{

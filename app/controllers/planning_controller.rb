@@ -5,7 +5,6 @@ class PlanningController < ApplicationController
   menu_section(:opt)
 
   def index
-    @breadcrumbs = []
     @explorer = true
     @accords = [{:name => "planning", :title => _("Planning Options"), :container => "planning_options_accord"}]
 
@@ -18,7 +17,6 @@ class PlanningController < ApplicationController
   end
 
   def plan
-    @breadcrumbs = []
     @explorer = true
     @accords = [{:name => "planning", :title => _("Planning Options"), :container => "planning_options_accord"}]
 
@@ -172,7 +170,6 @@ class PlanningController < ApplicationController
   end
 
   def reset
-    @breadcrumbs = []
     @explorer = true
     @accords = [{:name => "planning", :title => _("Planning Options"), :container => "planning_options_accord"}]
 
@@ -210,7 +207,6 @@ class PlanningController < ApplicationController
   end
 
   def build_options
-    @breadcrumbs = []
     @sb[:planning] ||= {} # Leave existing values
     @sb[:planning] = {} if params[:button] == "reset" # Clear everything on reset
     @sb[:planning][:options] ||= {} # Leave existing values

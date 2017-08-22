@@ -9,7 +9,6 @@ class BottlenecksController < ApplicationController
   def index
     @explorer = true
     @trees = [] # TODO: TreeBuilder
-    @breadcrumbs = []
     @explorer = true
     @layout = "miq_capacity_bottlenecks"
     self.x_active_tree = 'bottlenecks_tree'
@@ -128,7 +127,6 @@ class BottlenecksController < ApplicationController
     end
     @sb[:active_tab] = "summary" # reset tab back to first tab when node is changed in the tree
     show_timeline(refresh) # Create the timeline report
-    drop_breadcrumb(:name => _("Activity"), :url => "/bottlenecks/?refresh=n")
   end
 
   def show_timeline(refresh = nil)
