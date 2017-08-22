@@ -74,7 +74,7 @@ module ReportController::Reports::Editor
         replace_right_cell
         return
       end
-      if @edit[:new][:graph_type] && (@edit[:new][:sortby1].blank? || @edit[:new][:sortby1] == NOTHING_STRING)
+      if @edit[:new][:graph_type] && (@edit[:new][:sortby1].blank? || @edit[:new][:sortby1] == ReportHelper::NOTHING_STRING)
         add_flash(_("Report can not be saved unless sort field has been configured for Charts"), :error)
         @sb[:miq_tab] = "edit_4"
         build_edit_screen
@@ -150,7 +150,7 @@ module ReportController::Reports::Editor
       page << "miqSparkle(false);"
       page << javascript_for_miq_button_visibility_changed(@changed)
       if @tl_changed  # Reload the screen if the timeline data was changed
-        page.replace_html("tl_sample_div", :partial => "form_tl_sample") if @tl_field != NOTHING_STRING
+        page.replace_html("tl_sample_div", :partial => "form_tl_sample") if @tl_field != ReportHelper::NOTHING_STRING
       elsif @formatting_changed   # Reload the screen if the formatting pulldowns need to be reset
         page.replace_html("formatting_div", :partial => "form_formatting")
       elsif @tl_repaint
@@ -271,7 +271,7 @@ module ReportController::Reports::Editor
       else
         @position_time = format_timezone(Time.now - 1.year, "UTC", nil)
       end
-      @timeline = true if @tl_field != NOTHING_STRING
+      @timeline = true if @tl_field != ReportHelper::NOTHING_STRING
       @tl_json = sample_timeline
     when "7"  # Preview
       # generate preview report when
@@ -306,15 +306,15 @@ module ReportController::Reports::Editor
 
   # Reset report column fields if model or interval was changed
   def reset_report_col_fields
-    @edit[:new][:fields]          = []                    # Clear fields array
-    @edit[:new][:headers]         = {}                  # Clear headers hash
+    @edit[:new][:fields]          = [] # Clear fields array
+    @edit[:new][:headers]         = {} # Clear headers hash
     @edit[:new][:pivot]           = ReportController::PivotOptions.new
-    @edit[:new][:sortby1]         = NOTHING_STRING      # Clear sort fields
-    @edit[:new][:sortby2]         = NOTHING_STRING
+    @edit[:new][:sortby1]         = ReportHelper::NOTHING_STRING # Clear sort fields
+    @edit[:new][:sortby2]         = ReportHelper::NOTHING_STRING
     @edit[:new][:filter_operator] = nil
     @edit[:new][:filter_string]   = nil
     @edit[:new][:categories]      = []
-    @edit[:new][:graph_type]      = nil             # Clear graph field
+    @edit[:new][:graph_type]      = nil # Clear graph field
     @edit[:new][:chart_mode]      = nil
     @edit[:new][:chart_column]    = nil
     @edit[:new][:perf_trend_col]  = nil
@@ -324,8 +324,8 @@ module ReportController::Reports::Editor
     @edit[:new][:perf_trend_pct3] = nil
     @edit[:new][:perf_limit_col]  = nil
     @edit[:new][:perf_limit_val]  = nil
-    @edit[:new][:record_filter]   = nil           # Clear record filter
-    @edit[:new][:display_filter]  = nil         # Clear display filter
+    @edit[:new][:record_filter]   = nil # Clear record filter
+    @edit[:new][:display_filter]  = nil # Clear display filter
     @edit[:miq_exp]               = true
   end
 
@@ -709,7 +709,7 @@ module ReportController::Reports::Editor
     @edit[:new][:pivot] ||= ReportController::PivotOptions.new
     @edit[:new][:pivot].update(params)
     if params[:chosen_pivot1] || params[:chosen_pivot2] || params[:chosen_pivot3]
-      if @edit[:new][:pivot].by1 == NOTHING_STRING
+      if @edit[:new][:pivot].by1 == ReportHelper::NOTHING_STRING
         @edit[:pivot_cols] = {}                       # Clear pivot_cols if no pivot grouping fields selected
       else
         @edit[:pivot_cols].delete(@edit[:new][:pivot].by1)   # Remove any pivot grouping fields from pivot cols
@@ -738,7 +738,7 @@ module ReportController::Reports::Editor
       # Remove any col options for any existing sort + suffix
       @edit[:new][:col_options].delete(@edit[:new][:sortby1].split("-").last) if @edit[:new][:sortby1].split("__")[1]
       @edit[:new][:sortby1] = params[:chosen_sort1]
-      @edit[:new][:sortby2] = NOTHING_STRING if params[:chosen_sort1] == NOTHING_STRING || params[:chosen_sort1] == @edit[:new][:sortby2].split("__").first
+      @edit[:new][:sortby2] = ReportHelper::NOTHING_STRING if params[:chosen_sort1] == ReportHelper::NOTHING_STRING || params[:chosen_sort1] == @edit[:new][:sortby2].split("__").first
       @refresh_div = "sort_div"
       @refresh_partial = "form_sort"
     elsif params[:chosen_sort2] && params[:chosen_sort2] != @edit[:new][:sortby2].split("__").first
@@ -804,7 +804,7 @@ module ReportController::Reports::Editor
 
   def gfv_timeline
     if params[:chosen_tl] && params[:chosen_tl] != @edit[:new][:tl_field]
-      if @edit[:new][:tl_field] == NOTHING_STRING || params[:chosen_tl] == NOTHING_STRING
+      if @edit[:new][:tl_field] == ReportHelper::NOTHING_STRING || params[:chosen_tl] == ReportHelper::NOTHING_STRING
         @refresh_div = "tl_settings_div"
         @refresh_partial = "form_tl_settings"
         @tl_changed = true
@@ -886,11 +886,11 @@ module ReportController::Reports::Editor
                 @edit[:new][:col_options].delete(co_key) if co_val.empty? # Remove the col, if empty
               end
             end
-            @edit[:new][:sortby1] = NOTHING_STRING
-            @edit[:new][:sortby2] = NOTHING_STRING
+            @edit[:new][:sortby1] = ReportHelper::NOTHING_STRING
+            @edit[:new][:sortby2] = ReportHelper::NOTHING_STRING
           end
           if @edit[:new][:sortby1] && nf.last == @edit[:new][:sortby2].split("__").first  # If deleting the second sort field
-            @edit[:new][:sortby2] = NOTHING_STRING
+            @edit[:new][:sortby2] = ReportHelper::NOTHING_STRING
           end
 
           # Clear out selected chart data column
@@ -950,14 +950,14 @@ module ReportController::Reports::Editor
     rpt.order = @edit[:new][:sortby1].nil? ? nil : @edit[:new][:order]
 
     # Set the graph fields
-    if @edit[:new][:sortby1] == NOTHING_STRING || @edit[:new][:graph_type].nil?
+    if @edit[:new][:sortby1] == ReportHelper::NOTHING_STRING || @edit[:new][:graph_type].nil?
       rpt.dims  = nil
       rpt.graph = nil
     else
       if @edit[:new][:graph_type] =~ /^(Pie|Donut)/ # Pie and Donut charts must be set to 1 dimension
         rpt.dims = 1
       else
-        rpt.dims = @edit[:new][:sortby2] == NOTHING_STRING ? 1 : 2  # Set dims to 1 or 2 based on presence of sortby2
+        rpt.dims = @edit[:new][:sortby2] == ReportHelper::NOTHING_STRING ? 1 : 2 # Set dims to 1 or 2 based on presence of sortby2
       end
       if @edit[:new][:chart_mode] == 'values' && @edit[:new][:chart_column].blank?
         options = chart_fields_options
@@ -1040,7 +1040,7 @@ module ReportController::Reports::Editor
     end
 
     # Set the timeline field
-    if @edit[:new][:tl_field] == NOTHING_STRING
+    if @edit[:new][:tl_field] == ReportHelper::NOTHING_STRING
       rpt.timeline = nil
     else
       rpt.timeline = Hash.new
@@ -1049,7 +1049,7 @@ module ReportController::Reports::Editor
     end
 
     # Set the line break group field
-    if @edit[:new][:sortby1] == NOTHING_STRING  # If no sort fields
+    if @edit[:new][:sortby1] == ReportHelper::NOTHING_STRING # If no sort fields
       rpt.group = nil               # Clear line break group
     else                            # Otherwise, check the setting
       case @edit[:new][:group]
@@ -1071,7 +1071,7 @@ module ReportController::Reports::Editor
     rpt.col_formats = []
     rpt.headers = []
     rpt.include = Hash.new
-    rpt.sortby = @edit[:new][:sortby1] == NOTHING_STRING ? nil : []  # Clear sortby if sortby1 not present, else set up array
+    rpt.sortby = @edit[:new][:sortby1] == ReportHelper::NOTHING_STRING ? nil : [] # Clear sortby if sortby1 not present, else set up array
 
     # Add in the chargeback static fields
     if Chargeback.db_is_chargeback?(rpt.db) # For chargeback, add in specific chargeback report options
@@ -1091,7 +1091,7 @@ module ReportController::Reports::Editor
     @edit[:new][:fields].each do |field_entry|          # Go thru all of the fields
       field = field_entry[1]                            # Get the encoded fully qualified field name
 
-      if @edit[:new][:pivot].by1 != NOTHING_STRING && # If we are doing pivoting and
+      if @edit[:new][:pivot].by1 != ReportHelper::NOTHING_STRING && # If we are doing pivoting and
          @edit[:pivot_cols].key?(field)              # this is a pivot calc column
         @edit[:pivot_cols][field].each do |calc_typ|    # Add header/format/col_order for each calc type
           rpt.headers.push(@edit[:new][:headers][field + "__#{calc_typ}"])
@@ -1363,7 +1363,7 @@ module ReportController::Reports::Editor
     @edit[:new][:display_filter] = @edit[expkey][:expression] if @edit[:new][:display_filter].nil?              # Copy to new exp
 
     # Get timeline fields
-    @edit[:new][:tl_field]     = NOTHING_STRING
+    @edit[:new][:tl_field]     = ReportHelper::NOTHING_STRING
     @edit[:new][:tl_position]  = "Last"
     if @rpt.timeline.kind_of?(Hash)    # Timeline has any data
       @edit[:new][:tl_field]     = @rpt.timeline[:field]     unless @rpt.timeline[:field].blank?
@@ -1402,8 +1402,8 @@ module ReportController::Reports::Editor
     end
 
     # build selected fields array from the report record
-    @edit[:new][:sortby1]  = NOTHING_STRING # Initialize sortby fields to nothing
-    @edit[:new][:sortby2]  = NOTHING_STRING
+    @edit[:new][:sortby1]  = ReportHelper::NOTHING_STRING # Initialize sortby fields to nothing
+    @edit[:new][:sortby2]  = ReportHelper::NOTHING_STRING
     @edit[:new][:pivot] = ReportController::PivotOptions.new
     if params[:pressed] == "miq_report_new"
       @edit[:new][:fields]      = []
@@ -1560,7 +1560,7 @@ module ReportController::Reports::Editor
   def build_field_order
     @edit[:new][:field_order] = []
     @edit[:new][:fields].each do |f|
-      if @edit[:new][:pivot] && @edit[:new][:pivot].by1 != NOTHING_STRING && # If we are doing pivoting and
+      if @edit[:new][:pivot] && @edit[:new][:pivot].by1 != ReportHelper::NOTHING_STRING && # If we are doing pivoting and
          @edit[:pivot_cols].key?(f.last)             # this is a pivot calc column
         MiqReport::PIVOTS.each do |c|
           calc_typ = c.first
@@ -1766,7 +1766,7 @@ module ReportController::Reports::Editor
     when '5'
       if @edit[:new][:fields].empty?
         add_flash(_('Charts tab is not available until at least 1 field has been selected'), :error)
-      elsif @edit[:new][:sortby1].blank? || @edit[:new][:sortby1] == NOTHING_STRING
+      elsif @edit[:new][:sortby1].blank? || @edit[:new][:sortby1] == ReportHelper::NOTHING_STRING
         add_flash(_('Charts tab is not available unless a sort field has been selected'), :error)
         active_tab = 'edit_4'
       end
