@@ -4,7 +4,7 @@
   #left_cell_bottom{:align => "center"}
     #buttons_on{:style => session[:changed] ? "" : "display: none;"}
       = link_to(_("Submit"),
-        {:action => "planning", :button => "submit"},
+        {:action => "plan", :button => "submit"},
         :class                => "btn btn-primary",
         :alt                  => (t = _("Submit Planning options")),
         "data-miq_sparkle_on" => true,
@@ -13,7 +13,7 @@
         :title                => t)
 
       = link_to(_("Reset"),
-        {:action => "planning", :button => "reset"},
+        {:action => "reset", :button => "reset"},
         "data-miq_sparkle_on"  => true,
         :class                 => "btn btn-default",
         :alt                   => (t = _("Reset all Planning options")),
@@ -26,7 +26,7 @@
         :class => "btn btn-primary disabled",
         :title => _("Select a reference VM or Manual Input source to Submit the Planning Options"))
       = link_to(_("Reset"),
-        {:action => "planning", :button => "reset"},
+        {:action => "reset", :button => "reset"},
         :class                 => "btn btn-default",
         :alt                   => (t = _("Reset all Planning options")),
         "data-miq_sparkle_on"  => true,

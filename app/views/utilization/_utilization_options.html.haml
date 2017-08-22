@@ -1,5 +1,5 @@
 - cap_type ||= "details"
-- url = url_for_only_path(:action => 'util_chart_chooser', :id => @record.id)
+- url = url_for_only_path(:action => 'chart_chooser', :id => @record.id)
 %div{:id => "capacity_#{cap_type}_options_div", :onclick => "if (typeof miqMenu != 'undefined') miqMenu.hideContextMenu();"}
   %h3
     = _('Options')

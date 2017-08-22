@@ -2239,25 +2239,45 @@ Rails.application.routes.draw do
       )
     },
 
-    :miq_capacity             => {
+    :utilization              => {
       :get  => %w(
-        bottlenecks
-        timeline_data
         index
-        planning
-        planning_report_download
-        util_report_download
-        utilization
+        report_download
+        timeline_data
       ),
       :post => %w(
-        bottleneck_tl_chooser
         change_tab
-        optimize_tree_select
-        planning
-        planning_option_changed
-        reload
+        chart_chooser
         tree_autoload
-        util_chart_chooser
+        tree_select
+        wait_for_task
+      )
+    },
+
+    :planning                 => {
+      :get  => %w(
+        index
+        report_download
+      ),
+      :post => %w(
+        change_tab
+        option_changed
+        plan
+        reset
+        wait_for_task
+      )
+    },
+
+    :bottlenecks              => {
+      :get  => %w(
+        index
+        timeline_data
+      ),
+      :post => %w(
+        reload
+        tl_chooser
+        tree_autoload
+        tree_select
         wait_for_task
       )
     },
