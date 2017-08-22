@@ -8,18 +8,19 @@ function ErrorModalController($timeout) {
   ManageIQ.angular.rxSubject.subscribe(function(event) {
     if ('serverError' in event) {
       $timeout(function() {
-        $ctrl.show(event.serverError);
+        $ctrl.show(event.serverError, event.source);
       });
     }
   });
 
-  $ctrl.show = function(err) {
+  $ctrl.show = function(err, source) {
     if (!err || !_.isObject(err)) {
       return;
     }
 
     $ctrl.data = err.data;
     $ctrl.error = err;
+    $ctrl.source = source;
     $ctrl.isHtml = err.headers && err.headers('content-type') && err.headers('content-type').match('text/html');
 
     // special handling for our error screen
@@ -54,7 +55,7 @@ angular.module('miq.error', [])
       '            </span>',
       '          </button>',
       '          <h4 class="modal-title">',
-      '            Server Error',
+      '            Server Error {{$ctrl.source && "(" + $ctrl.source + ")"}}',
       '          </h4>',
       '        </div>',
       '        <div class="modal-body">',

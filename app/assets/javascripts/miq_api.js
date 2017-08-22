@@ -124,9 +124,10 @@
         .catch(function(err) {
           sendDataWithRx({
             serverError: err,
+            source: 'API',
           });
 
-          console.error('Server returned a non-200 response:', err.status, err.statusText, err);
+          console.error('API: Server returned a non-200 response:', err.status, err.statusText, err);
           throw err;
         });
     };
