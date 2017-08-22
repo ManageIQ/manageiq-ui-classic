@@ -18,10 +18,16 @@ function ErrorModalController($timeout) {
       return;
     }
 
-    $ctrl.data = err.data;
+    if (source === 'API') {
+      $ctrl.contentType = err.headers.get("content-type");
+    } else if (source === '$http') {
+      $ctrl.contentType = err.headers('content-type');
+    }
+
     $ctrl.error = err;
     $ctrl.source = source;
-    $ctrl.isHtml = err.headers && err.headers('content-type') && err.headers('content-type').match('text/html');
+    $ctrl.data = err.data;
+    $ctrl.isHtml = ($ctrl.contentType || "").match('text/html');
 
     // special handling for our error screen
     if ($ctrl.isHtml && $ctrl.data) {
@@ -73,7 +79,7 @@ angular.module('miq.error', [])
       '              <strong>',
       '                Content-Type',
       '              </strong>',
-      '              {{$ctrl.error.headers("content-type")}}',
+      '              {{$ctrl.contentType}}',
       '            </p>',
       '            <p>',
       '              <strong>',

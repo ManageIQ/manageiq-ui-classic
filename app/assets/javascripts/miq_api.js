@@ -183,13 +183,32 @@
 
     if (response.status >= 300) {
       // Not 1** or 2**
-      return response.json()
-        .then(function(obj) {
-          return Promise.reject(obj);
-        });
+      // clone() because otherwise if json() fails, you can't call text()
+      return response.clone().json()
+        .catch(tryHtmlError(response))
+        .then(rejectWithData(response));
     }
 
     return response.json();
+  }
+
+  function tryHtmlError(response) {
+    return function() {
+      // non-JSON error message, assuming html
+      return response.text();
+    };
+  }
+
+  function rejectWithData(response) {
+    return function(obj) {
+      return Promise.reject({
+        data: obj,
+        headers: response.headers,
+        status: response.status,
+        statusText: response.statusText,
+        url: response.url,
+      });
+    };
   }
 })(window);
 
