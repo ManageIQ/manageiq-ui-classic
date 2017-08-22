@@ -1,8 +1,6 @@
 class UtilizationController < ApplicationController
   before_action :check_privileges
   before_action :get_session_data
-  after_action :cleanup_action
-  after_action :set_session_data
 
   menu_section(:opt)
 
@@ -128,17 +126,8 @@ class UtilizationController < ApplicationController
   private
 
   def get_session_data
-    @title        = _("Utilization")
-    @layout     ||= "miq_capacity_utilization"
-    @lastaction   = session[:miq_capacity_lastaction]
-    @display      = session[:miq_capacity_display]
-    @current_page = session[:miq_capacity_current_page]
-  end
-
-  def set_session_data
-    session[:miq_capacity_lastaction]   = @lastaction
-    session[:miq_capacity_current_page] = @current_page
-    session[:miq_capacity_display]      = @display unless @display.nil?
+    @title = _("Utilization")
+    @layout ||= "miq_capacity_utilization"
   end
 
   # Get all info for the node about to be displayed

@@ -1,8 +1,6 @@
 class PlanningController < ApplicationController
   before_action :check_privileges
   before_action :get_session_data
-  after_action :cleanup_action
-  after_action :set_session_data
 
   menu_section(:opt)
 
@@ -188,17 +186,8 @@ class PlanningController < ApplicationController
   private
 
   def get_session_data
-    @title        = _("Planning")
-    @layout     ||= "miq_capacity_planning"
-    @lastaction   = session[:miq_capacity_lastaction]
-    @display      = session[:miq_capacity_display]
-    @current_page = session[:miq_capacity_current_page]
-  end
-
-  def set_session_data
-    session[:miq_capacity_lastaction]   = @lastaction
-    session[:miq_capacity_current_page] = @current_page
-    session[:miq_capacity_display]      = @display unless @display.nil?
+    @title = _("Planning")
+    @layout ||= "miq_capacity_planning"
   end
 
   def wizard_get_vms_records(filter_type, filter_value)

@@ -1,8 +1,6 @@
 class BottlenecksController < ApplicationController
   before_action :check_privileges
   before_action :get_session_data
-  after_action :cleanup_action
-  after_action :set_session_data
 
   menu_section(:opt)
 
@@ -88,17 +86,8 @@ class BottlenecksController < ApplicationController
   private
 
   def get_session_data
-    @title        = _("Bottlenecks")
-    @layout     ||= "miq_capacity_bottlenecks"
-    @lastaction   = session[:miq_capacity_lastaction]
-    @display      = session[:miq_capacity_display]
-    @current_page = session[:miq_capacity_current_page]
-  end
-
-  def set_session_data
-    session[:miq_capacity_lastaction]   = @lastaction
-    session[:miq_capacity_current_page] = @current_page
-    session[:miq_capacity_display]      = @display unless @display.nil?
+    @title = _("Bottlenecks")
+    @layout ||= "miq_capacity_bottlenecks"
   end
 
   def replace_right_cell
