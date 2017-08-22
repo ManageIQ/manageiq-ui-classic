@@ -4,7 +4,7 @@
   - else
     = render :partial => "layouts/flash_msg"
     = render :partial => 'bottlenecks_options', :locals  => {:typ => "report"}
-    - if @sb[:bottlenecks] && @sb[:bottlenecks][:report]
+    - if @sb[:report]
       %hr
       %h3= _('Bottleneck Event Details')
-      = @sb[:bottlenecks][:report].to_html.html_safe
+      = @sb[:report].to_html.html_safe

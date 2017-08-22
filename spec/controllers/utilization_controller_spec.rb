@@ -23,12 +23,11 @@ describe UtilizationController do
                                 :title_prefix => "Datastore",
                                 :title        => ds.name}}
       tree_nodes.each do |_key, node|
-        controller.instance_variable_set(:@breadcrumbs, [])
         controller.instance_variable_set(:@sb, :trees       => {
                                            :utilization_tree => {:active_node => node[:active_node]},
                                          },
                                                :active_tree => :utilization_tree,
-                                               :util        => {:options => {}})
+                                               :options     => {})
         expect(controller).not_to receive(:render)
         controller.send(:get_node_info, node[:active_node])
         expect(assigns(:right_cell_text)).to eq("#{node[:title_prefix]} \"#{node[:title]}\" #{title_suffix}")

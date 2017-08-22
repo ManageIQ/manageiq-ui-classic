@@ -8,7 +8,7 @@
         = _('Event Groups')
       .col-md-10
         = select_tag("tl_#{typ}_fl_grp1",
-          options_for_select([["<#{_('ALL')}> ", ""]] + @sb[:bottlenecks][:groups].sort, @sb[:bottlenecks][:tl_options][:filter1]),
+          options_for_select([["<#{_('ALL')}> ", ""]] + @sb[:groups].sort, @sb[:tl_options][:filter1]),
           "class" => "selectpicker",
           "data-miq_sparkle_on"  => true,
           "data-miq_sparkle_off" => true)
@@ -20,7 +20,7 @@
         %label.control-label.col-md-2
           = _('Show Host Events')
         .col-md-10
-          = check_box_tag("tl_#{typ}_hosts", "1", @sb[:bottlenecks][:tl_options][:hosts],
+          = check_box_tag("tl_#{typ}_hosts", "1", @sb[:tl_options][:hosts],
             "data-miq_sparkle_on"       => true,
             "data-miq_sparkle_off"      => true,
             "data-miq_observe_checkbox" => {:url => url}.to_json)
@@ -30,7 +30,7 @@
       .col-md-10
         = select_tag("tl_#{typ}_tz",
           options_for_select(ALL_TIMEZONES,
-          @sb[:bottlenecks][:tl_options][:tz]),
+          @sb[:tl_options][:tz]),
           "data-live-search" => "true",
           "class" => "selectpicker",
           "data-miq_sparkle_on"  => true,
