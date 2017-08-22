@@ -13,6 +13,23 @@ function ErrorModalController($timeout) {
     }
   });
 
+  function findError(data) {
+    // find the exception in our miq rails error screen
+    var m = data.match(/<h2>\s*Error text:\s*<\/h2>\s*<br>\s*<h3>\s*(.*?)\s*<\/h3>/);
+    if (m) {
+      return m[1];
+    }
+
+    // the same in JS-encoded form
+    m = data.match(/\\u003ch2\\u003e\\nError text:\\n\\u003c\/h2\\u003e\\n\\u003cbr\\u003e\\n\\u003ch3\\u003e\\n(.*?)\\n\\u003c\/h3\\u003e/);
+    if (m) {
+      return m[1];
+    }
+
+    // no luck
+    return data;
+  }
+
   $ctrl.show = function(err, source) {
     if (!err || !_.isObject(err)) {
       return;
@@ -33,10 +50,7 @@ function ErrorModalController($timeout) {
 
     // special handling for our error screen
     if ($ctrl.isHtml && $ctrl.data) {
-      var m = $ctrl.data.match(/<h2>\s*Error text:\s*<\/h2>\s*<br>\s*<h3>\s*(.*?)\s*<\/h3>/);
-      if (m) {
-        $ctrl.data = m[1];
-      }
+      $ctrl.data = findError($ctrl.data);
     }
 
     $ctrl.status = (err.status !== -1) ? err.status + " " + err.statusText : "Server not responding";
