@@ -703,10 +703,6 @@ module ApplicationHelper
       miq_ae_class
       miq_ae_export
       miq_ae_tools
-      miq_capacity_bottlenecks
-      miq_capacity_planning
-      miq_capacity_utilization
-      miq_capacity_waste
       miq_policy
       miq_policy_export
       miq_policy_rsop
