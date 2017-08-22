@@ -28,7 +28,7 @@ ManageIQ.angular.app.filter('translate', function() {
 });
 
 function miqHttpInject(angular_app) {
-  angular_app.config(['$httpProvider', function($httpProvider) {
+  angular_app.config(['$httpProvider', '$compileProvider', function($httpProvider, $compileProvider) {
     $httpProvider.defaults.headers.common['X-Angular-Request'] = true;
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = function() {
       return $('meta[name=csrf-token]').attr('content');
@@ -47,6 +47,8 @@ function miqHttpInject(angular_app) {
         },
       };
     }]);
+
+    $compileProvider.strictComponentBindingsEnabled(true);
   }]);
 
   return angular_app;
