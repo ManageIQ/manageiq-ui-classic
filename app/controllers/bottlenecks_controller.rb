@@ -8,30 +8,14 @@ class BottlenecksController < ApplicationController
 
   def index
     @explorer = true
-    @trees = [] # TODO: TreeBuilder
-    @explorer = true
-    @layout = "miq_capacity_bottlenecks"
-    self.x_active_tree = 'bottlenecks_tree'
-
-    @accords = [{
-      :name      => "bottlenecks",
-      :title     => _("Bottlenecks"),
-      :container => "bottlenecks_accord",
-      :image     => "enterprise"
-    }]
-
-    @trees << TreeBuilderUtilization.new(
-      :bottlenecks_tree, :bottlenecks, @sb, true, :selected_node => x_node(:bottlenecks_tree)
-    )
     @right_cell_text = _("Bottlenecks Summary")
-
     @sb[:active_tab] = "summary"
-    self.x_node ||= ""
     @timeline = true
-    if @sb[:report]
-      tl_to_xml # Use existing report to generate timeline
-    end
-    get_node_info(x_node)  if x_node != "" # Get the bottleneck info for the tree node
+
+    tl_to_xml if @sb[:report] # Use existing report to generate timeline
+
+    build_accordions_and_trees
+
     render :layout => "application"
   end
 
@@ -82,6 +66,17 @@ class BottlenecksController < ApplicationController
   end
 
   private
+
+  def features
+    [
+      {:role     => "bottlenecks",
+       :role_any => true,
+       :name     => :utilization,
+       :title    => _("Bottlenecks")}
+    ].map do |hsh|
+      ApplicationController::Feature.new_with_hash(hsh)
+    end
+  end
 
   def get_session_data
     @title = _("Bottlenecks")

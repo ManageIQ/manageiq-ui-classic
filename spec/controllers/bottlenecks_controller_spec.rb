@@ -10,6 +10,7 @@ describe BottlenecksController do
     describe '#index' do
       it 'renders the page' do
         seed_session_trees('miq_capacity', :bottlenecks_tree, 'foobar')
+        controller.instance_variable_set(:@sb, {})
         expect(controller).to receive(:get_node_info)
         # render fails but it's not needed for this test
         expect(controller).to receive(:render)

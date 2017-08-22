@@ -8,24 +8,12 @@ class UtilizationController < ApplicationController
 
   def index
     @explorer = true
-    @trees = [] # TODO: TreeBuilder
-    self.x_active_tree = 'utilization_tree'
-
-    @accords = [{
-      :name      => "enterprise",
-      :title     => _("Utilization"),
-      :container => "utilization_accord",
-      :image     => "enterprise"
-    }]
-
     @right_cell_text = _("Utilization Summary")
-    @trees << TreeBuilderUtilization.new(
-      :utilization_tree, :utilization, @sb, true, :selected_node => x_node(:utilization_tree)
-    )
-
     @sb[:active_tab] = "summary"
-    self.x_node ||= ""
-    @sb[:options] = {}  # reset existing values
+    @sb[:options] = {} # reset existing values
+
+    build_accordions_and_trees
+
     get_time_profiles # Get time profiles list (global and user specific)
 
     # Get the time zone from the time profile, if one is in use
@@ -122,6 +110,17 @@ class UtilizationController < ApplicationController
   end
 
   private
+
+  def features
+    [
+      {:role     => "utilization",
+       :role_any => true,
+       :name     => :utilization,
+       :title    => _("Utilization")}
+    ].map do |hsh|
+      ApplicationController::Feature.new_with_hash(hsh)
+    end
+  end
 
   def get_session_data
     @title = _("Utilization")

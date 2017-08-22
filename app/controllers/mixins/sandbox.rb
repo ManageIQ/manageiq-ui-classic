@@ -116,6 +116,7 @@ module Sandbox
     automation_manager_providers
     automation_manager_cs_filter
     automation_manager_configuration_scripts
+    bottlenecks
     cb_assignments
     cb_rates
     cb_reports
@@ -159,6 +160,7 @@ module Sandbox
     templates_filter
     templates_images_filter
     templates_images_filter
+    utilization
     vandt
     vmdb
     vms_filter
