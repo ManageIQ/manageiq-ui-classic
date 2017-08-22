@@ -18,7 +18,7 @@ module ReportHelper
     :miq_rpt_gray_bg     => _("Gray Background")
   }
 
-  NOTHING_STRING = "<<< Nothing >>>".freeze
+  NOTHING_STRING = "<<< #{_('Nothing')} >>>".freeze
 
   def visibility_options(widget)
     typ = widget.visibility.keys.first
