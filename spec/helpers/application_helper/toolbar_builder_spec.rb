@@ -31,11 +31,18 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     end
 
     shared_examples "with custom buttons" do
+      def add_button_to_set(button_set, button)
+        button_set.add_member(button)
+        button_set.set_data[:button_order] ||= []
+        button_set.set_data[:button_order].push(button.id)
+        button_set.save
+      end
+
       before do
         @button_set = FactoryGirl.create(:custom_button_set, :set_data => {:applies_to_class => applies_to_class, :button_icon => 'fa fa-cogs'})
         login_as user
         @button1 = FactoryGirl.create(:custom_button, :applies_to_class => applies_to_class, :visibility => {:roles => ["_ALL_"]}, :options => {:button_icon => 'fa fa-star'})
-        @button_set.add_member @button1
+        add_button_to_set(@button_set, @button1)
       end
 
       it "#get_custom_buttons" do
@@ -60,6 +67,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :text_display => @button_set.set_data.key?(:display) ? @button_set.set_data[:display] : true,
           :buttons      => [expected_button1]
         }
+
         expect(toolbar_builder.get_custom_buttons(subject.class, subject, Mixins::CustomButtons::Result.new(:single))).to eq([expected_button_set])
       end
 
