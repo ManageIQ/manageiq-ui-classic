@@ -1089,28 +1089,28 @@ module ApplicationController::Performance
     @perf_record = MiqEnterprise.first
 
     unless params[:task_id] || params[:display_vms]     # First time thru, generate report async
-      unless (refresh == "n" || params[:refresh] == "n") && @sb[:planning][:options] && @sb[:planning][:options][:model] == @perf_record.class.base_class.to_s
-        @sb[:planning][:options] ||= {}
-        @sb[:planning][:options][:typ] = "Daily"
-        @sb[:planning][:options][:days] ||= "30"
-        @sb[:planning][:options][:model] = "VimPerformancePlanning"
-        @sb[:planning][:options][:record_id] = @perf_record.id
+      unless (refresh == "n" || params[:refresh] == "n") && @sb[:options] && @sb[:options][:model] == @perf_record.class.base_class.to_s
+        @sb[:options] ||= {}
+        @sb[:options][:typ] = "Daily"
+        @sb[:options][:days] ||= "30"
+        @sb[:options][:model] = "VimPerformancePlanning"
+        @sb[:options][:record_id] = @perf_record.id
       end
-      @sb[:planning][:options][:trend_end] = perf_planning_end_date
-      @sb[:planning][:options][:days] ||= "30"
-      @sb[:planning][:options][:ght_type] ||= "hybrid"
-      @sb[:planning][:options][:chart_type] = :summary
-      @sb[:planning][:rpt] = nil                  # Clear existing planning report
+      @sb[:options][:trend_end] = perf_planning_end_date
+      @sb[:options][:days] ||= "30"
+      @sb[:options][:ght_type] ||= "hybrid"
+      @sb[:options][:chart_type] = :summary
+      @sb[:rpt] = nil                  # Clear existing planning report
       rpt = perf_get_chart_rpt("vim_perf_planning")
 
-      rpt.headers[0] = "#{ui_lookup(:model => @sb[:planning][:options][:target_typ])} Name"
+      rpt.headers[0] = "#{ui_lookup(:model => @sb[:options][:target_typ])} Name"
       rpt.db_options = Hash.new
       rpt.db_options[:rpt_type] = "planning"
       # Set the default planning options
-      rpt.db_options[:options] = {:vm_options => VimPerformancePlanning.vm_default_options(@sb[:planning][:options][:vm_mode])}
+      rpt.db_options[:options] = {:vm_options => VimPerformancePlanning.vm_default_options(@sb[:options][:vm_mode])}
 
-      if @sb[:planning][:options][:vm_mode] == :manual  # Set the manually entered values
-        @sb[:planning][:options][:values].each do |k, v|
+      if @sb[:options][:vm_mode] == :manual  # Set the manually entered values
+        @sb[:options][:values].each do |k, v|
           if k.to_sym == :storage
             rpt.db_options[:options][:vm_options][k.to_sym][:value] = v * 1.gigabyte
           else
@@ -1119,54 +1119,54 @@ module ApplicationController::Performance
         end
       end
 
-      rpt.db_options[:options][:vm] = @sb[:planning][:options][:chosen_vm] ? @sb[:planning][:options][:chosen_vm].to_i : nil
+      rpt.db_options[:options][:vm] = @sb[:options][:chosen_vm] ? @sb[:options][:chosen_vm].to_i : nil
 
       rpt.db_options[:options][:range] = {
-        :days     => @sb[:planning][:options][:days],
-        :end_date => @sb[:planning][:options][:trend_end]
+        :days     => @sb[:options][:days],
+        :end_date => @sb[:options][:trend_end]
       }
 
-      rpt.db_options[:options][:target_tags] = {:compute_type => @sb[:planning][:options][:target_typ].to_sym}
-      rpt.db_options[:options][:target_tags][:compute_filter] = @sb[:planning][:options][:target_filter] if @sb[:planning][:options][:target_filter]
+      rpt.db_options[:options][:target_tags] = {:compute_type => @sb[:options][:target_typ].to_sym}
+      rpt.db_options[:options][:target_tags][:compute_filter] = @sb[:options][:target_filter] if @sb[:options][:target_filter]
 
       rpt.db_options[:options][:target_options] = {}
-      if @sb[:planning][:options][:trend_cpu]
+      if @sb[:options][:trend_cpu]
         rpt.db_options[:options][:target_options][:cpu] = {
           :mode      => :perf_trend,
           :metric    => :max_cpu_usagemhz_rate_average,
           :limit_col => :derived_cpu_available,
-          :limit_pct => @sb[:planning][:options][:limit_cpu]
+          :limit_pct => @sb[:options][:limit_cpu]
         }
       end
-      if @sb[:planning][:options][:trend_memory]
+      if @sb[:options][:trend_memory]
         rpt.db_options[:options][:target_options][:memory] = {
           :mode      => :perf_trend,
           :metric    => :max_derived_memory_used,
           :limit_col => :derived_memory_available,
-          :limit_pct => @sb[:planning][:options][:limit_memory]
+          :limit_pct => @sb[:options][:limit_memory]
         }
       end
-      if @sb[:planning][:options][:trend_storage]
+      if @sb[:options][:trend_storage]
         rpt.db_options[:options][:target_options][:storage] = {
           :mode      => :current,
           :metric    => :used_space,
           :limit_col => :total_space,
-          :limit_pct => @sb[:planning][:options][:limit_storage]
+          :limit_pct => @sb[:options][:limit_storage]
         }
       end
-      if @sb[:planning][:options][:trend_vcpus]
+      if @sb[:options][:trend_vcpus]
         rpt.db_options[:options][:target_options][:vcpus] = {
           :mode        => :current,
           :limit_col   => :total_vcpus, # not sure of name, but should be # vcpus/core times # of cores
-          :limit_ratio => @sb[:planning][:options][:limit_vcpus]
+          :limit_ratio => @sb[:options][:limit_vcpus]
         }
       end
-      rpt.tz = @sb[:planning][:options][:tz]
-      rpt.time_profile_id = @sb[:planning][:options][:time_profile]
+      rpt.tz = @sb[:options][:tz]
+      rpt.time_profile_id = @sb[:options][:time_profile]
 
       # Remove columns not checked in options
       [:cpu, :vcpus, :memory, :storage].each do |k|
-        if @sb[:planning][:vm_opts][k].nil? || !@sb[:planning][:options]["trend_#{k}".to_sym]
+        if @sb[:vm_opts][k].nil? || !@sb[:options]["trend_#{k}".to_sym]
           i = rpt.col_order.index("#{k}_vm_count")
           rpt.col_order.delete_at(i)
           rpt.headers.delete_at(i)
@@ -1186,23 +1186,23 @@ module ApplicationController::Performance
 
     # Remove columns not checked in options
     [:cpu, :vcpus, :memory, :storage].each do |k|
-      if @sb[:planning][:vm_opts][k].nil? || !@sb[:planning][:options]["trend_#{k == :storage ? "disk" : k.to_s}".to_sym]
+      if @sb[:vm_opts][k].nil? || !@sb[:options]["trend_#{k == :storage ? "disk" : k.to_s}".to_sym]
         chart_layouts[:VimPerformancePlanning].first[:columns].delete_if { |col| col == "#{k}_vm_count" }
       end
     end
 
     if params.key?(:display_vms)                # Only changed date for the timestamp charts, no need to rebuild the report object
-      rpt = @sb[:planning][:rpt]
+      rpt = @sb[:rpt]
     elsif params[:task_id]                          # Came in after async report generation
       miq_task = MiqTask.find(params[:task_id])     # Not first time, read the task record
       rpt = miq_task.miq_report_result.report_results # Grab the report object from the blob
       miq_task.destroy                              # Get rid of the task and results
     end
-    @sb[:planning][:options][:index] = nil
-    unless @sb[:planning][:options][:index]
-      chart_layouts[@sb[:planning][:options][:model].to_sym].each_with_index do |chart, _idx|
+    @sb[:options][:index] = nil
+    unless @sb[:options][:index]
+      chart_layouts[@sb[:options][:model].to_sym].each_with_index do |chart, _idx|
         if chart[:type] == "None" || # No chart is available for this slot
-           (@sb[:planning][:options][:tag] && chart[:allowed_child_tag] && !@sb[:planning][:options][:tag].starts_with?(chart[:allowed_child_tag]))  # Tag not allowed
+           (@sb[:options][:tag] && chart[:allowed_child_tag] && !@sb[:options][:tag].starts_with?(chart[:allowed_child_tag]))  # Tag not allowed
           chart_data.push(nil)              # Push a placeholder onto the chart data array
         else
           options = chart
@@ -1210,36 +1210,36 @@ module ApplicationController::Performance
             trendcol = perf_get_chart_trendcol(chart)
           end
           options[:chart_type] = chart[:chart_type].to_sym if chart[:chart_type]  # Override :summary chart type if specified in chart definition
-          options[:max_value] = @sb[:planning][:options][:display_vms] if @sb[:planning][:options][:display_vms]
+          options[:max_value] = @sb[:options][:display_vms] if @sb[:options][:display_vms]
           chart_data.push(perf_gen_chart(rpt, options).merge(:menu => chart[:menu]))
           chart[:title] = rpt.title           # Grab title from chart in case formatting added units
         end
         charts.push(chart)
       end
     else
-      chart = chart_layouts[@sb[:planning][:options][:model].to_sym][@sb[:planning][:options][:index].to_i]
+      chart = chart_layouts[@sb[:options][:model].to_sym][@sb[:options][:index].to_i]
       perf_remove_chart_cols(chart)
       options = chart.merge(:width => 1000, :height => 700)
       if chart[:trends]
         trendcol = perf_get_chart_trendcol(chart)
       end
       options[:chart_type] = chart[:chart_type].to_sym if chart[:chart_type]  # Override :summary chart type if specified in chart definition
-      options[:max_value] = @sb[:planning][:options][:display_vms] if @sb[:planning][:options][:display_vms]
+      options[:max_value] = @sb[:options][:display_vms] if @sb[:options][:display_vms]
       chart_data.push(perf_gen_chart(rpt, options).merge(:menu => chart[:menu]))
       chart[:title] = rpt.title                 # Grab title from chart in case formatting added units
       charts.push(chart)
     end
-    @sb[:planning][:rpt] = rpt                  # Hang on to the report data for the trend charts
-    @sb[:planning][:charts] = charts
-    @sb[:planning][:chart_data] = {}
-    @sb[:planning][:chart_data]["planning"] = chart_data
+    @sb[:rpt] = rpt                  # Hang on to the report data for the trend charts
+    @sb[:charts] = charts
+    @sb[:chart_data] = {}
+    @sb[:chart_data]["planning"] = chart_data
   end
 
   # Get the ending trend date for planning trend lookups
   def perf_planning_end_date
     s, e = MiqEnterprise.first.first_and_last_capture
     return if s.nil?                                      # Nothing to do if no util data
-    tz = @sb[:planning][:options][:time_profile_tz] || @sb[:planning][:options][:tz]  # Use tz in time profile or chosen tz, if no profile tz
+    tz = @sb[:options][:time_profile_tz] || @sb[:options][:tz]  # Use tz in time profile or chosen tz, if no profile tz
     edate = e.in_time_zone(tz)
     edate = edate.hour < 23 ? edate - 1.day : edate # Eliminate partial end days
     create_time_in_tz([edate.month, edate.day, edate.year].join("/") + " 23", tz)

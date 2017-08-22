@@ -1,17 +1,17 @@
 #planning_report_div
   = render :partial => "layouts/flash_msg"
 
-  - if @perf_record && @sb[:planning] && @sb[:planning][:rpt]
+  - if @perf_record && @sb[:rpt]
 
-    %h3= _("VM Counts per %{model}") % {:model => ui_lookup(:model => @sb[:planning][:options][:target_typ])}
-    = @sb[:planning][:rpt].to_html.html_safe
+    %h3= _("VM Counts per %{model}") % {:model => ui_lookup(:model => @sb[:options][:target_typ])}
+    = @sb[:rpt].to_html.html_safe
     - tvms = 0
-    - @sb[:planning][:rpt].table.data.each { |r| tvms += r["total_vm_count"].to_i }
-    = _('Total number of VMs that can fit on all of the above %{models}: %{count}') % {:models => ui_lookup(:models => @sb[:planning][:options][:target_typ]), :count => tvms}
-    - if @sb[:planning][:rpt].extras[:vm_profile]
+    - @sb[:rpt].table.data.each { |r| tvms += r["total_vm_count"].to_i }
+    = _('Total number of VMs that can fit on all of the above %{models}: %{count}') % {:models => ui_lookup(:models => @sb[:options][:target_typ]), :count => tvms}
+    - if @sb[:rpt].extras[:vm_profile]
       = render :partial => "planning_vm_profile"
   - if @perf_record
     %p
-      = _("* Information shown is based on available trend data going back %{weeks}.") % {:weeks => _(ViewHelper::WEEK_CHOICES[@sb[:planning][:options][:days]])}
+      = _("* Information shown is based on available trend data going back %{weeks}.") % {:weeks => _(ViewHelper::WEEK_CHOICES[@sb[:options][:days]])}
   - else
     = render :partial => "planning_instructions"
