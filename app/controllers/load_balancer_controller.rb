@@ -21,4 +21,6 @@ class LoadBalancerController < ApplicationController
   helper_method :textual_group_list
 
   menu_section :net
+
+  has_custom_buttons
 end

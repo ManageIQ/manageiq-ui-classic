@@ -29,6 +29,9 @@ class SecurityGroupController < ApplicationController
       delete_security_groups
     when "security_group_edit"
       javascript_redirect :action => "edit", :id => checked_item_id(params)
+    when params[:pressed] == "custom_button"
+      custom_buttons
+      return
     else
       if params[:pressed] == "security_group_new"
         javascript_redirect :action => "new"
@@ -322,4 +325,6 @@ class SecurityGroupController < ApplicationController
                    security_groups.length) % {:number => security_groups.length})
     end
   end
+
+  has_custom_buttons
 end

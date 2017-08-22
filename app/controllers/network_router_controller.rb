@@ -532,4 +532,6 @@ class NetworkRouterController < ApplicationController
       false
     end
   end
+
+  has_custom_buttons
 end

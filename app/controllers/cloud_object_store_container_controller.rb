@@ -21,6 +21,9 @@ class CloudObjectStoreContainerController < ApplicationController
     case params[:pressed]
     when "cloud_object_store_container_new"
       return javascript_redirect(:action => "new")
+    when "custom_button"
+      custom_buttons
+      return
     else
       process_cloud_object_storage_buttons(params[:pressed])
     end
@@ -129,4 +132,6 @@ class CloudObjectStoreContainerController < ApplicationController
   helper_method :textual_group_list
 
   menu_section :ost
+
+  has_custom_buttons
 end

@@ -19,6 +19,11 @@ class CloudVolumeController < ApplicationController
     params[:display] = @display if %w(instances).include?(@display)
     params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
 
+    if params[:pressed] == "custom_button"
+      custom_buttons
+      return
+    end
+
     if params[:pressed].starts_with?("instance_") # support for instance_ buttons
       pfx = pfx_for_vm_button_pressed(params[:pressed])
       process_vm_buttons(pfx)
@@ -686,4 +691,6 @@ class CloudVolumeController < ApplicationController
   end
 
   menu_section :bst
+
+  has_custom_buttons
 end

@@ -44,6 +44,11 @@ module Mixins
       params[:display] = @display if %w(vms images instances).include?(@display)
       params[:page] = @current_page unless @current_page.nil? # Save current page for list refresh
 
+      if params[:pressed] == "custom_button"
+        custom_buttons
+        return
+      end
+
       handle_status = :not_started
       # Handle vm-style buttons if included in the controller
       if respond_to?(:process_vm_buttons, true)

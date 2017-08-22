@@ -206,6 +206,7 @@ Rails.application.routes.draw do
 
     :availability_zone        => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         index
@@ -400,6 +401,7 @@ Rails.application.routes.draw do
 
     :cloud_object_store_container => {
       :get => %w(
+        dialog_load
         download_data
         download_summary_pdf
         index
@@ -484,6 +486,7 @@ Rails.application.routes.draw do
 
     :cloud_volume             => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         attach
@@ -635,6 +638,7 @@ Rails.application.routes.draw do
 
     :container_group          => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         edit
@@ -751,6 +755,7 @@ Rails.application.routes.draw do
 
     :container_image          => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         edit
@@ -849,6 +854,7 @@ Rails.application.routes.draw do
 
     :container_project        => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         edit
@@ -912,6 +918,7 @@ Rails.application.routes.draw do
 
     :persistent_volume        => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         edit
@@ -968,6 +975,7 @@ Rails.application.routes.draw do
 
     :container_template          => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         index
@@ -1674,6 +1682,7 @@ Rails.application.routes.draw do
 
     :security_group           => {
       :get  => %w(
+        dialog_load
         edit
         download_data
         download_summary_pdf
@@ -1739,6 +1748,7 @@ Rails.application.routes.draw do
 
     :cloud_subnet             => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         cloud_subnet_form_fields
@@ -1774,6 +1784,7 @@ Rails.application.routes.draw do
 
     :cloud_network             => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         edit
@@ -1837,6 +1848,7 @@ Rails.application.routes.draw do
     :network_router           => {
       :get  => %w(
         add_interface_select
+        dialog_load
         download_data
         download_summary_pdf
         edit
@@ -1877,6 +1889,7 @@ Rails.application.routes.draw do
 
     :load_balancer             => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         index
@@ -2007,6 +2020,7 @@ Rails.application.routes.draw do
 
     :infra_networking         => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         explorer
@@ -2674,6 +2688,7 @@ Rails.application.routes.draw do
     :orchestration_stack      => {
       :get  => %w(
         cloud_networks
+        dialog_load
         download_data
         download_summary_pdf
         retirement_info
