@@ -1,5 +1,6 @@
 class ContainerProjectController < ApplicationController
   include ContainersCommonMixin
+  include Mixins::DashboardViewMixin
 
   before_action :check_privileges
   before_action :get_session_data

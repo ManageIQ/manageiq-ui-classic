@@ -14,7 +14,7 @@ describe ContainerProjectController do
     EvmSpecHelper.create_guid_miq_server_zone
     ems = FactoryGirl.create(:ems_kubernetes)
     container_project = ContainerProject.create(:ext_management_system => ems, :name => "Test Project")
-    get :show, :params => { :id => container_project.id }
+    get :show, :params => { :id => container_project.id, :display => 'main' }
     expect(response.status).to eq(200)
     expect(response.body).to_not be_empty
     expect(assigns(:breadcrumbs)).to eq([{:name => "Projects",
@@ -30,7 +30,7 @@ describe ContainerProjectController do
       @project = FactoryGirl.create(:container_project)
     end
 
-    subject { get :show, :id => @project.id }
+    subject { get :show, :id => @project.id, :display => 'main' }
 
     context "render" do
       render_views
@@ -39,6 +39,20 @@ describe ContainerProjectController do
         is_expected.to have_http_status 200
         is_expected.to render_template(:partial => "layouts/listnav/_container_project")
         is_expected.to render_template('shared/summary/_textual_multilabel')
+      end
+
+      it "renders topology view" do
+        get :show, :params => { :id => @project.id, :display => 'topology' }
+        expect(response.status).to eq(200)
+        expect(response.body).to_not be_empty
+        expect(response).to render_template('container_topology/show')
+      end
+
+      it "renders dashboard view" do
+        get :show, :params => { :id => @project.id, :display => 'dashboard' }
+        expect(response.status).to eq(200)
+        expect(response.body).to_not be_empty
+        expect(response).to render_template('container_project/_show_dashboard')
       end
     end
   end
