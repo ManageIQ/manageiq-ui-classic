@@ -54,7 +54,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       metrics_auth_status: '',
       ssh_keypair_auth_status: '',
       hawkular_auth_status: '',
-      vmware_cloud_api_version: ''
+      vmware_cloud_api_version: '',
     };
     $scope.formId = emsCommonFormId;
     $scope.afterGet = false;
@@ -63,6 +63,29 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     $scope.createUrl = $attrs.createUrl;
     $scope.updateUrl = $attrs.updateUrl;
     $scope.checkAuthentication = true;
+
+    $scope.formLabels = {
+      userIdLabel: __('Client ID'),
+      passwordLabel: __('Client Key'),
+      changeStoredPassword: __('Change stored client key'),
+      cancelPasswordChange: __('Cancel client key change'),
+      verifyTitleOff: __('Tenant ID, Client ID and matching Client Key fields are needed to perform verification of credentials'),
+    };
+
+    $scope.formLabelsEC2 = {
+      userIdLabel: __('Access Key ID'),
+      passwordLabel: __('Secret Access Key'),
+      changeStoredPassword: __('Change stored secret access key'),
+      cancelPasswordChange: __('Cancel secret access key change'),
+      verifyTitleOff: __('Access Key ID and matching Secret Access Key fields are needed to perform verification of credentials'),
+    };
+
+    $scope.formLabelsToken = {
+      passwordLabel: __('Token'),
+      verifyLabel: __('New Token'),
+      changeStoredPassword: __('Change stored token'),
+      cancelPasswordChange: __('Cancel stored token'),
+    };
 
     $scope.model = 'emsCommonModel';
 
@@ -84,7 +107,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         .catch(miqService.handleFailure);
     }
     $scope.actionUrl = $scope.newRecord ? $scope.createUrl : $scope.updateUrl;
-    $scope.currentTab = "default";
+    $scope.currentTab = 'default';
 
     function getEmsFormIdDataComplete(response) {
       var data = response.data;
@@ -102,7 +125,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
       $scope.emsCommonModel.openstack_infra_providers_exist = data.openstack_infra_providers_exist;
 
-      $scope.emsCommonModel.provider_id                     = data.provider_id !== undefined ? data.provider_id.toString() : "";
+      $scope.emsCommonModel.provider_id                     = data.provider_id !== undefined ? data.provider_id.toString() : '';
 
       $scope.emsCommonModel.default_api_port                = data.default_api_port !== undefined && data.default_api_port !== '' ? data.default_api_port.toString() : $scope.getDefaultApiPort($scope.emsCommonModel.emstype);
       $scope.emsCommonModel.amqp_api_port                   = data.amqp_api_port !== undefined && data.amqp_api_port !== '' ? data.amqp_api_port.toString() : '5672';
@@ -161,7 +184,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         $scope.emsCommonModel.ssh_keypair_password = miqService.storedPasswordPlaceholder;
       }
       if ($scope.emsCommonModel.bearer_token_exists) {
-        $scope.emsCommonModel.default_userid = "_";
+        $scope.emsCommonModel.default_userid = '_';
         $scope.emsCommonModel.default_password = miqService.storedPasswordPlaceholder;
       }
 
@@ -210,68 +233,63 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     $scope.currentTab = id;
   };
 
-  $scope.canValidateBasicInfo = function () {
-    return $scope.isBasicInfoValid()
+  $scope.canValidateBasicInfo = function() {
+    return $scope.isBasicInfoValid();
   };
 
   $scope.isBasicInfoValid = function() {
-    if(($scope.currentTab == "default" && $scope.emsCommonModel.emstype != "azure") &&
-      ($scope.emsCommonModel.emstype == "ec2" ||
-       $scope.emsCommonModel.emstype == "openstack" && $scope.emsCommonModel.default_hostname ||
-       $scope.emsCommonModel.emstype == "scvmm" && $scope.emsCommonModel.default_hostname ||
-       $scope.emsCommonModel.emstype == "openstack_infra" && $scope.emsCommonModel.default_hostname ||
-       $scope.emsCommonModel.emstype == "nuage_network"  && $scope.emsCommonModel.default_hostname ||
-       $scope.emsCommonModel.emstype == "rhevm" && $scope.emsCommonModel.default_hostname ||
-       $scope.emsCommonModel.emstype == "vmwarews" && $scope.emsCommonModel.default_hostname ||
-       $scope.emsCommonModel.emstype == "vmware_cloud" && $scope.emsCommonModel.default_hostname) &&
-      ($scope.emsCommonModel.default_userid != '' && $scope.angularForm.default_userid.$valid &&
-       $scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid)) {
+    if (($scope.currentTab == 'default' && $scope.emsCommonModel.emstype != 'azure') &&
+      ($scope.emsCommonModel.emstype == 'ec2' ||
+       $scope.emsCommonModel.emstype == 'openstack' && $scope.emsCommonModel.default_hostname ||
+       $scope.emsCommonModel.emstype == 'scvmm' && $scope.emsCommonModel.default_hostname ||
+       $scope.emsCommonModel.emstype == 'openstack_infra' && $scope.emsCommonModel.default_hostname ||
+       $scope.emsCommonModel.emstype == 'nuage_network'  && $scope.emsCommonModel.default_hostname ||
+       $scope.emsCommonModel.emstype == 'rhevm' && $scope.emsCommonModel.default_hostname ||
+       $scope.emsCommonModel.emstype == 'vmwarews' && $scope.emsCommonModel.default_hostname ||
+       $scope.emsCommonModel.emstype == 'vmware_cloud' && $scope.emsCommonModel.default_hostname)) {
       return true;
-    } else if(($scope.currentTab == "amqp") &&
+    } else if (($scope.currentTab === 'amqp') &&
       ($scope.emsCommonModel.amqp_hostname) &&
-      ($scope.emsCommonModel.amqp_userid != '' && $scope.angularForm.amqp_userid !== undefined && $scope.angularForm.amqp_userid.$valid &&
-       $scope.emsCommonModel.amqp_password != '' && $scope.angularForm.amqp_password !== undefined && $scope.angularForm.amqp_password.$valid)) {
+      ($scope.emsCommonModel.amqp_userid &&
+       $scope.emsCommonModel.amqp_password)) {
       return true;
-    } else if(($scope.currentTab == "default" && $scope.emsCommonModel.emstype == "azure") &&
+    } else if (($scope.currentTab == 'default' && $scope.emsCommonModel.emstype == 'azure') &&
       ($scope.emsCommonModel.azure_tenant_id != '' && $scope.angularForm.azure_tenant_id.$valid) &&
-      ($scope.emsCommonModel.default_userid != '' && $scope.angularForm.default_userid.$valid &&
-       $scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid)) {
+      ($scope.emsCommonModel.default_userid)) {
       return true;
-    } else if(($scope.currentTab == "ssh_keypair" && $scope.emsCommonModel.emstype == "openstack_infra") &&
+    } else if (($scope.currentTab == 'ssh_keypair' && $scope.emsCommonModel.emstype == 'openstack_infra') &&
       ($scope.emsCommonModel.ssh_keypair_userid != '' && $scope.angularForm.ssh_keypair_userid.$valid &&
       $scope.emsCommonModel.ssh_keypair_password != '' && $scope.angularForm.ssh_keypair_password.$valid)) {
       return true;
-    } else if(($scope.currentTab == "metrics" && $scope.emsCommonModel.emstype == "rhevm") &&
+    } else if (($scope.currentTab == 'metrics' && $scope.emsCommonModel.emstype == 'rhevm') &&
       $scope.emsCommonModel.metrics_database_name &&
       ($scope.emsCommonModel.metrics_hostname != '' && $scope.angularForm.metrics_hostname.$valid) &&
-      ($scope.emsCommonModel.metrics_userid != '' && $scope.angularForm.metrics_userid.$valid &&
-      $scope.emsCommonModel.metrics_password != '' && $scope.angularForm.metrics_password.$valid)) {
+      ($scope.emsCommonModel.metrics_userid)) {
       return true;
-    } else if($scope.currentTab == "default" &&
-        ["ems_container", "ems_middleware", "ems_datawarehouse", "ems_physical_infra"].indexOf($scope.emsCommonModel.ems_controller) >= 0 &&
+    } else if ($scope.currentTab == 'default' &&
+        ['ems_container', 'ems_middleware', 'ems_datawarehouse', 'ems_physical_infra'].indexOf($scope.emsCommonModel.ems_controller) >= 0 &&
       ($scope.emsCommonModel.emstype) &&
       ($scope.emsCommonModel.default_hostname != '' && $scope.emsCommonModel.default_api_port) &&
-      ($scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid)) {
+      ($scope.emsCommonModel.default_password)) {
       return true;
-    } else if(($scope.currentTab == "hawkular" && $scope.emsCommonModel.ems_controller == "ems_container") &&
+    } else if (($scope.currentTab == 'hawkular' && $scope.emsCommonModel.ems_controller == 'ems_container') &&
       ($scope.emsCommonModel.emstype) &&
       ($scope.emsCommonModel.hawkular_hostname != '' && $scope.emsCommonModel.hawkular_api_port) &&
-      ($scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid)) {
+      ($scope.emsCommonModel.default_password)) {
       return true;
-    } else if($scope.emsCommonModel.emstype == "gce" && $scope.emsCommonModel.project != '' &&
-      ($scope.currentTab == "default" ||
-      ($scope.currentTab == "service_account" && $scope.emsCommonModel.service_account != ''))) {
+    } else if ($scope.emsCommonModel.emstype == 'gce' && $scope.emsCommonModel.project != '' &&
+      ($scope.currentTab == 'default' ||
+      ($scope.currentTab == 'service_account' && $scope.emsCommonModel.service_account != ''))) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   };
 
   $scope.isDetectionEnabled = function() {
-    return ($scope.currentTab == "hawkular" && $scope.emsCommonModel.ems_controller == "ems_container") &&
-      ($scope.emsCommonModel.emstype == "openshift") &&
+    return ($scope.currentTab == 'hawkular' && $scope.emsCommonModel.ems_controller == 'ems_container') &&
+      ($scope.emsCommonModel.emstype == 'openshift') &&
       ($scope.emsCommonModel.default_hostname && $scope.emsCommonModel.default_api_port) &&
-      ($scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid);
+      ($scope.emsCommonModel.default_password);
   };
 
   var emsCommonEditButtonClicked = function(buttonName, _serializeFields, $event) {
@@ -288,29 +306,26 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
   $scope.cancelClicked = function($event) {
     angular.element('#button_name').val('cancel');
-    if($scope.newRecord)
-      emsCommonAddButtonClicked('cancel', false, $event);
-    else
-      emsCommonEditButtonClicked('cancel', false, $event);
+    if ($scope.newRecord)      {emsCommonAddButtonClicked('cancel', false, $event);}    else      {emsCommonEditButtonClicked('cancel', false, $event);}
 
     $scope.angularForm.$setPristine(true);
   };
 
   $scope.resetClicked = function() {
-    $scope.$broadcast ('resetClicked');
+    $scope.$broadcast('resetClicked');
     $scope.emsCommonModel = angular.copy( $scope.modelCopy );
     $scope.angularForm.$setPristine(true);
-    miqService.miqFlash("warn", __("All changes have been reset"));
+    miqService.miqFlash('warn', __('All changes have been reset'));
 
-    if ($scope.emsCommonModel.event_stream_selection === "ceilometer") {
-      $scope.$broadcast('clearErrorOnTab', {tab: "amqp"});
+    if ($scope.emsCommonModel.event_stream_selection === 'ceilometer') {
+      $scope.$broadcast('clearErrorOnTab', {tab: 'amqp'});
     }
 
-    if ($scope.emsCommonModel.metrics_selection === "hawkular_disabled") {
-      $scope.$broadcast('clearErrorOnTab', {tab: "hawkular"});
+    if ($scope.emsCommonModel.metrics_selection === 'hawkular_disabled') {
+      $scope.$broadcast('clearErrorOnTab', {tab: 'hawkular'});
     }
 
-    var authStatus = $scope.currentTab + "_auth_status";
+    var authStatus = $scope.currentTab + '_auth_status';
     if ($scope.emsCommonModel[authStatus] === true) {
       $scope.postValidationModelRegistry($scope.currentTab);
     }
@@ -348,20 +363,20 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
   $scope.providerTypeChanged = function() {
     if ($scope.emsCommonModel.ems_controller === 'ems_container') {
-      $scope.emsCommonModel.default_api_port = "8443"; // TODO: correct per-type port
-      $scope.emsCommonModel.metrics_selection = "hawkular_".concat($scope.emsCommonModel.metrics_selection_default);
+      $scope.emsCommonModel.default_api_port = '8443'; // TODO: correct per-type port
+      $scope.emsCommonModel.metrics_selection = 'hawkular_'.concat($scope.emsCommonModel.metrics_selection_default);
       // Container types are nearly identical, no point resetting most fields on type change.
       return;
     }
-    $scope.emsCommonModel.default_api_port = "";
-    $scope.emsCommonModel.provider_region = "";
-    $scope.emsCommonModel.default_security_protocol = "";
+    $scope.emsCommonModel.default_api_port = '';
+    $scope.emsCommonModel.provider_region = '';
+    $scope.emsCommonModel.default_security_protocol = '';
     $scope.emsCommonModel.default_tls_verify = true;
-    $scope.emsCommonModel.default_tls_ca_certs = "";
-    $scope.note = "";
+    $scope.emsCommonModel.default_tls_ca_certs = '';
+    $scope.note = '';
     if ($scope.emsCommonModel.emstype === 'openstack' || $scope.emsCommonModel.emstype === 'openstack_infra') {
       $scope.emsCommonModel.default_api_port = $scope.getDefaultApiPort($scope.emsCommonModel.emstype);
-      $scope.emsCommonModel.event_stream_selection = "ceilometer";
+      $scope.emsCommonModel.event_stream_selection = 'ceilometer';
       $scope.emsCommonModel.amqp_security_protocol = 'non-ssl';
       if ($scope.emsCommonModel.emstype === 'openstack') {
         $scope.emsCommonModel.tenant_mapping_enabled = false;
@@ -369,15 +384,15 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     } else if ($scope.emsCommonModel.emstype === 'scvmm') {
       $scope.emsCommonModel.default_security_protocol = 'ssl';
     } else if ($scope.emsCommonModel.emstype === 'rhevm') {
-      $scope.emsCommonModel.metrics_api_port = "5432";
+      $scope.emsCommonModel.metrics_api_port = '5432';
       $scope.emsCommonModel.default_api_port = $scope.getDefaultApiPort($scope.emsCommonModel.emstype);
-      $scope.emsCommonModel.metrics_database_name = "ovirt_engine_history";
+      $scope.emsCommonModel.metrics_database_name = 'ovirt_engine_history';
     } else if ($scope.emsCommonModel.emstype === 'vmware_cloud') {
-      $scope.emsCommonModel.default_api_port = "443";
-      $scope.emsCommonModel.event_stream_selection = "none";
+      $scope.emsCommonModel.default_api_port = '443';
+      $scope.emsCommonModel.event_stream_selection = 'none';
       $scope.emsCommonModel.amqp_security_protocol = 'non-ssl';
     } else if ($scope.emsCommonModel.emstype === 'lenovo_ph_infra') {
-      $scope.emsCommonModel.default_api_port = "443";
+      $scope.emsCommonModel.default_api_port = '443';
     }
   };
 
@@ -386,7 +401,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       if ($scope.emsCommonModel.default_security_protocol === 'non-ssl') {
         $scope.emsCommonModel.default_api_port = $scope.getDefaultApiPort($scope.emsCommonModel.emstype);
       } else {
-        $scope.emsCommonModel.default_api_port = "13000";
+        $scope.emsCommonModel.default_api_port = '13000';
       }
     }
   };
@@ -407,109 +422,108 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   };
 
   $scope.getDefaultApiPort = function(emstype) {
-    if( emstype=='openstack' || emstype === 'openstack_infra') {
+    if ( emstype == 'openstack' || emstype === 'openstack_infra') {
       return '5000';
     }
-    else {
-      return '';
-    }
+
+    return '';
   };
 
   $scope.populatePostValidationModel = function() {
     if ($scope.emsCommonModel.default_auth_status === true) {
-      $scope.postValidationModelRegistry("default");
+      $scope.postValidationModelRegistry('default');
     }
     if ($scope.emsCommonModel.amqp_auth_status === true) {
-      $scope.postValidationModelRegistry("amqp");
+      $scope.postValidationModelRegistry('amqp');
     }
     if ($scope.emsCommonModel.service_account_auth_status === true) {
-      $scope.postValidationModelRegistry("service_account");
+      $scope.postValidationModelRegistry('service_account');
     }
     if ($scope.emsCommonModel.metrics_auth_status === true) {
-      $scope.postValidationModelRegistry("metrics");
+      $scope.postValidationModelRegistry('metrics');
     }
     if ($scope.emsCommonModel.ssh_keypair_auth_status === true) {
-      $scope.postValidationModelRegistry("ssh_keypair");
+      $scope.postValidationModelRegistry('ssh_keypair');
     }
     if ($scope.emsCommonModel.hawkular_auth_status === true) {
-      $scope.postValidationModelRegistry("hawkular");
+      $scope.postValidationModelRegistry('hawkular');
     }
   };
 
   $scope.postValidationModelRegistry = function(prefix) {
     if ($scope.postValidationModel === undefined) {
       $scope.postValidationModel = {default: {},
-                                    amqp: {},
-                                    metrics: {},
-                                    ssh_keypair: {},
-                                    hawkular: {}}
+        amqp: {},
+        metrics: {},
+        ssh_keypair: {},
+        hawkular: {}};
     }
-    if (prefix === "default") {
+    if (prefix === 'default') {
       if ($scope.newRecord) {
         var default_password = $scope.emsCommonModel.default_password;
       } else {
-        var default_password = $scope.emsCommonModel.default_password === "" ? "" : miqService.storedPasswordPlaceholder;
+        var default_password = $scope.emsCommonModel.default_password === '' ? '' : miqService.storedPasswordPlaceholder;
       }
       $scope.postValidationModel.default = {
-        default_hostname:          $scope.emsCommonModel.default_hostname,
-        default_api_port:          $scope.emsCommonModel.default_api_port,
+        default_hostname: $scope.emsCommonModel.default_hostname,
+        default_api_port: $scope.emsCommonModel.default_api_port,
         default_security_protocol: $scope.emsCommonModel.default_security_protocol,
-        default_tls_verify:        $scope.emsCommonModel.default_tls_verify,
-        default_tls_ca_certs:      $scope.emsCommonModel.default_tls_ca_certs,
-        default_userid:            $scope.emsCommonModel.default_userid,
-        default_password:          default_password,
-        realm:                     $scope.emsCommonModel.realm,
-        azure_tenant_id:           $scope.emsCommonModel.azure_tenant_id,
-        subscription:              $scope.emsCommonModel.subscription,
-        provider_region:           $scope.emsCommonModel.provider_region
+        default_tls_verify: $scope.emsCommonModel.default_tls_verify,
+        default_tls_ca_certs: $scope.emsCommonModel.default_tls_ca_certs,
+        default_userid: $scope.emsCommonModel.default_userid,
+        default_password: default_password,
+        realm: $scope.emsCommonModel.realm,
+        azure_tenant_id: $scope.emsCommonModel.azure_tenant_id,
+        subscription: $scope.emsCommonModel.subscription,
+        provider_region: $scope.emsCommonModel.provider_region,
       };
-    } else if (prefix === "amqp") {
+    } else if (prefix === 'amqp') {
       if ($scope.newRecord) {
         var amqp_password = $scope.emsCommonModel.amqp_password;
       } else {
-        var amqp_password = $scope.emsCommonModel.amqp_password === "" ? "" : miqService.storedPasswordPlaceholder;
+        var amqp_password = $scope.emsCommonModel.amqp_password === '' ? '' : miqService.storedPasswordPlaceholder;
       }
       $scope.postValidationModel.amqp = {
-        amqp_hostname:             $scope.emsCommonModel.amqp_hostname,
-        amqp_api_port:             $scope.emsCommonModel.amqp_api_port,
-        amqp_security_protocol:    $scope.emsCommonModel.amqp_security_protocol,
-        amqp_userid:               $scope.emsCommonModel.amqp_userid,
-        amqp_password:             amqp_password,
+        amqp_hostname: $scope.emsCommonModel.amqp_hostname,
+        amqp_api_port: $scope.emsCommonModel.amqp_api_port,
+        amqp_security_protocol: $scope.emsCommonModel.amqp_security_protocol,
+        amqp_userid: $scope.emsCommonModel.amqp_userid,
+        amqp_password: amqp_password,
       };
-    } else if (prefix === "metrics") {
+    } else if (prefix === 'metrics') {
       if ($scope.newRecord) {
         var metrics_password = $scope.emsCommonModel.metrics_password;
       } else {
-        var metrics_password = $scope.emsCommonModel.metrics_password === "" ? "" : miqService.storedPasswordPlaceholder;
+        var metrics_password = $scope.emsCommonModel.metrics_password === '' ? '' : miqService.storedPasswordPlaceholder;
       }
       var metricsValidationModel = {
-        metrics_hostname:          $scope.emsCommonModel.metrics_hostname,
-        metrics_api_port:          $scope.emsCommonModel.metrics_api_port,
-        metrics_userid:            $scope.emsCommonModel.metrics_userid,
-        metrics_password:          metrics_password,
+        metrics_hostname: $scope.emsCommonModel.metrics_hostname,
+        metrics_api_port: $scope.emsCommonModel.metrics_api_port,
+        metrics_userid: $scope.emsCommonModel.metrics_userid,
+        metrics_password: metrics_password,
       };
-      $scope.postValidationModel['metrics'] = metricsValidationModel;
-    } else if (prefix === "ssh_keypair") {
+      $scope.postValidationModel.metrics = metricsValidationModel;
+    } else if (prefix === 'ssh_keypair') {
       if ($scope.newRecord) {
         var ssh_keypair_password = $scope.emsCommonModel.ssh_keypair_password;
       } else {
-        var ssh_keypair_password = $scope.emsCommonModel.ssh_keypair_password === "" ? "" : miqService.storedPasswordPlaceholder;
+        var ssh_keypair_password = $scope.emsCommonModel.ssh_keypair_password === '' ? '' : miqService.storedPasswordPlaceholder;
       }
-      $scope.postValidationModel['ssh_keypair'] = {
-        ssh_keypair_userid:        $scope.emsCommonModel.ssh_keypair_userid,
-        ssh_keypair_password:      ssh_keypair_password,
-      }
-    } else if (prefix === "service_account") {
-      $scope.postValidationModel['service_account'] = {
-        service_account:           $scope.emsCommonModel.service_account
-      }
-    } else if (prefix === "hawkular") {
-      $scope.postValidationModel['hawkular'] = {
-        hawkular_hostname:          $scope.emsCommonModel.hawkular_hostname,
-        hawkular_api_port:          $scope.emsCommonModel.hawkular_api_port,
+      $scope.postValidationModel.ssh_keypair = {
+        ssh_keypair_userid: $scope.emsCommonModel.ssh_keypair_userid,
+        ssh_keypair_password: ssh_keypair_password,
+      };
+    } else if (prefix === 'service_account') {
+      $scope.postValidationModel.service_account = {
+        service_account: $scope.emsCommonModel.service_account,
+      };
+    } else if (prefix === 'hawkular') {
+      $scope.postValidationModel.hawkular = {
+        hawkular_hostname: $scope.emsCommonModel.hawkular_hostname,
+        hawkular_api_port: $scope.emsCommonModel.hawkular_api_port,
         hawkular_security_protocol: $scope.emsCommonModel.hawkular_security_protocol,
-        hawkular_tls_ca_certs:      $scope.emsCommonModel.hawkular_tls_ca_certs,
-      }
+        hawkular_tls_ca_certs: $scope.emsCommonModel.hawkular_tls_ca_certs,
+      };
     }
   };
 
@@ -518,7 +532,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     miqService.validateWithREST($event, authType, $scope.actionUrl, formSubmit)
       .then(function success(data) {
         $scope.$apply(function() {
-          if(data.level == "error") {
+          if (data.level == 'error') {
             $scope.updateAuthStatus(false);
           } else {
             $scope.updateAuthStatus(true);
@@ -530,7 +544,11 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   };
 
   $scope.updateAuthStatus = function(updatedValue) {
-    $scope.angularForm[$scope.authType + '_auth_status'].$setViewValue(updatedValue);
+    if (! $scope.angularForm[$scope.authType + '_auth_status']) {
+      $scope.emsCommonModel[$scope.authType + '_auth_status'] = updatedValue;
+    } else {
+      $scope.angularForm[$scope.authType + '_auth_status'].$setViewValue(updatedValue);
+    }
   };
 
   $scope.updateHawkularHostname = function(value) {
@@ -538,8 +556,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
   };
 
   $scope.radioSelectionChanged = function() {
-    if ($scope.emsCommonModel.event_stream_selection === "ceilometer" ||
-        $scope.emsCommonModel.event_stream_selection === "none") {
+    if ($scope.emsCommonModel.event_stream_selection === 'ceilometer' ||
+        $scope.emsCommonModel.event_stream_selection === 'none') {
       if ($scope.postValidationModel !== undefined) {
         $scope.emsCommonModel.amqp_hostname = $scope.postValidationModel.amqp.amqp_hostname;
         $scope.emsCommonModel.amqp_api_port = $scope.postValidationModel.amqp.amqp_api_port;
@@ -547,13 +565,13 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         $scope.emsCommonModel.amqp_userid = $scope.postValidationModel.amqp.amqp_userid;
         $scope.emsCommonModel.amqp_password = $scope.postValidationModel.amqp.amqp_password;
       }
-      $scope.$broadcast('clearErrorOnTab', {tab: "amqp"});
+      $scope.$broadcast('clearErrorOnTab', {tab: 'amqp'});
     }
   };
 
   $scope.containerMetricsChanged = function() {
-    if ($scope.emsCommonModel.metrics_selection === "hawkular_disabled") {
-      $scope.$broadcast('clearErrorOnTab', {tab: "hawkular"});
+    if ($scope.emsCommonModel.metrics_selection === 'hawkular_disabled') {
+      $scope.$broadcast('clearErrorOnTab', {tab: 'hawkular'});
     }
   };
 

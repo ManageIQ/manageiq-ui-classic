@@ -4,7 +4,7 @@ ManageIQ.angular.app.controller('CredentialsController', ['$scope', '$attrs', fu
   vm.vmScope = function() {
     return $scope.$eval($attrs.vmScope);
   };
-  
+
   vm.bChangeStoredPassword = undefined;
   vm.bCancelPasswordChange = undefined;
 
@@ -13,6 +13,9 @@ ManageIQ.angular.app.controller('CredentialsController', ['$scope', '$attrs', fu
   });
 
   $scope.$on('setNewRecord', function(_event, args) {
+    /**
+    * vm.vmScope is parent controller
+    */
     vm.vmScope().newRecord = args ? args.newRecord : true;
   });
 

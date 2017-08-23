@@ -1,3 +1,4 @@
+- validate_url = url_for_only_path(:action => 'log_depot_edit', :id => nil, :type => 'log', :button => "validate")
 - @angular_form = true
 
 %form.form-horizontal#form_div{:name                                 => "angularForm",
@@ -36,15 +37,18 @@
                                     :ng_model_uri_prefix => "logCollectionModel.uri_prefix",
                                     :ng_readonly         => "logCollectionModel.log_protocol == 'Red Hat Dropbox'",
                                     :uri_prefix_display  =>  "{{logCollectionModel.uri_prefix}}://"}
-  = render :partial => "layouts/angular-bootstrap/auth_credentials_angular_bootstrap",
-                       :locals  => {:ng_show           => "miqDBBackupService.credsProtocol(logCollectionModel)",
-                                    :ng_model          => "logCollectionModel",
-                                    :ng_reqd_userid    => "miqDBBackupService.credsRequired(logCollectionModel, logCollectionModel.log_userid)",
-                                    :ng_reqd_password  => "miqDBBackupService.credsRequired(logCollectionModel, logCollectionModel.log_password)",
-                                    :validate_url      => "log_depot_edit",
-                                    :id                => nil,
-                                    :valtype           => "log",
-                                    :basic_info_needed => true}
+
+  %auth-credentials{'ng-show'             => "miqDBBackupService.credsProtocol(logCollectionModel)",
+                    'model'               => 'logCollectionModel',
+                    'model-copy'          => 'modelCopy',
+                    'user-required'       => "miqDBBackupService.credsRequired(logCollectionModel, logCollectionModel.log_userid)",
+                    'password-required'   => "miqDBBackupService.credsRequired(logCollectionModel, logCollectionModel.log_password)",
+                    'prefix'              => 'log',
+                    'enable-valid-button' => 'angularForm.$valid',
+                    'validate-url'        => validate_url,
+                    'valtype'             => "log",
+                    'validate'            => 'validateClicked'}
+
 
   %div_for_paging{'ng-controller'           => "pagingDivButtonGroupController",
                   'paging_div_buttons_id'   => "angular_paging_div_buttons",

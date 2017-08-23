@@ -271,7 +271,7 @@ describe HostController do
     it "renders a new page with ng-required condition set to false for password" do
       get :new
       expect(response.status).to eq(200)
-      expect(response.body).to include("name='default_password' ng-disabled='!vm.showVerify(&#39;default_userid&#39;)' ng-model='$parent.hostModel.default_password' ng-required='false'")
+      expect(response.body).to match(/<auth-credentials .* password-required='false' .*><\/auth-credentials>/)
     end
   end
 

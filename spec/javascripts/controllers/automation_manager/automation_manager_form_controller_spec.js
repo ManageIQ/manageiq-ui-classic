@@ -166,22 +166,22 @@ describe('automationManagerFormController', function() {
 
   describe('Validates credential fields', function() {
     beforeEach(inject(function($compile, miqService) {
-      var angularForm;
       var element = angular.element(
         '<form name="angularForm">' +
         '<input ng-model="automationManagerModel.url" name="url" required />' +
+        '<ng-form name="authCredentialsForm">' +
         '<input ng-model="automationManagerModel.log_userid" name="log_userid" required />' +
         '<input ng-model="automationManagerModel.log_password" name="log_password" required />' +
+        '</ng-form>' +
         '</form>'
       );
 
+      // TODO: Temprary test form inputs, needs to be in auth component, but right now, we cant external templates for component in tests
       $compile(element)($scope);
       $scope.$digest();
-      angularForm = $scope.angularForm;
-
       $scope.angularForm.url.$setViewValue('automation-manager-url');
-      $scope.angularForm.log_userid.$setViewValue('admin');
-      $scope.angularForm.log_password.$setViewValue('password');
+      $scope.angularForm.authCredentialsForm.log_userid.$setViewValue('admin');
+      $scope.angularForm.authCredentialsForm.log_password.$setViewValue('password');
     }));
 
     it('returns true if all the Validation fields are filled in', function() {

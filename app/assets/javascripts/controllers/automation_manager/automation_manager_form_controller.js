@@ -73,8 +73,8 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
 
   vm.isBasicInfoValid = function() {
     return $scope.angularForm.url.$valid &&
-      $scope.angularForm.log_userid.$valid &&
-      $scope.angularForm.log_password.$valid;
+      $scope.angularForm.authCredentialsForm.log_userid.$valid &&
+      $scope.angularForm.authCredentialsForm.log_password.$valid;
   };
 
   var automationManagerEditButtonClicked = function(buttonName, serializeFields) {
