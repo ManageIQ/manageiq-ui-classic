@@ -68,12 +68,13 @@ module Mixins
                                                         :database => params[:metrics_database_name])
 
       if result
-        add_flash(_("Credential validation was successful"))
+        msg = _("Credential validation was successful")
       else
-        add_flash(_("Credential validation was not successful: %{details}") % {:details => strip_tags(details)}, :error)
+        msg = _("Credential validation was not successful: %{details}") % {:details => strip_tags(details)}
+        level = :error
       end
 
-      render_flash_json
+      render_flash_json(msg, level)
     end
 
     def create
