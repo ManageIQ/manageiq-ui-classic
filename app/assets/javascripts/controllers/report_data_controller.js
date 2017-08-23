@@ -341,7 +341,7 @@
     if (mainContent) {
       angular.element(mainContent).removeClass('miq-sand-paper');
       angular.element(mainContent).removeClass('miq-list-content');
-      angular.element(document.querySelector('#paging_div .miq-pagination')).css('display', 'none');
+      angular.element(this.$document.querySelector('#paging_div .miq-pagination')).css('display', 'none');
       if (viewType && (viewType === 'grid' || viewType === 'tile')) {
         angular.element(this.$document.querySelector('#paging_div .miq-pagination')).css('display', 'block');
         angular.element(mainContent).addClass('miq-sand-paper');
