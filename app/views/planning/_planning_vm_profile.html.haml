@@ -3,7 +3,7 @@
 %dl.dl-horizontal
   %dt= _('Source')
   %dd
-    = h(_(PLANNING_VM_MODES[@sb[:options][:submitted_vm_mode]]))
+    = h(_(PlanningHelper::PLANNING_VM_MODES[@sb[:options][:submitted_vm_mode]]))
 
   - if @sb[:vm_opts][:cpu] && @sb[:options][:trend_cpu] && @sb[:rpt].extras[:vm_profile][:cpu]
     %dt= _('CPU Speed')

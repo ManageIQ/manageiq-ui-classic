@@ -40,14 +40,7 @@ module UiConstants
 
   TREND_MODEL = "VimPerformanceTrend"   # Performance trend model name requiring special processing
 
-  # Source pulldown in VM Options
-  PLANNING_VM_MODES = {
-    :allocated => N_("Allocation"),
-    :reserved  => N_("Reservation"),
-    :used      => N_("Usage"),
-    :manual    => N_("Manual Input")
-  }
-  VALID_PLANNING_VM_MODES = PLANNING_VM_MODES.keys.index_by(&:to_s)
+  VALID_PLANNING_VM_MODES = PlanningHelper::PLANNING_VM_MODES.keys.index_by(&:to_s)
 
   TASK_TIME_PERIODS = {
     0 => N_("Today"),
