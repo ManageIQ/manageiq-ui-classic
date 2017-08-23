@@ -1,7 +1,7 @@
 ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$scope', 'providerForemanFormId', 'miqService', 'configurationManagerService', function($http, $scope, providerForemanFormId, miqService, configurationManagerService) {
   var vm = this;
 
-  vm.providerForemanModel = configurationManagerService.managerModel;
+  vm.providerForemanModel = angular.copy(configurationManagerService.managerModel);
 
   vm.postValidationModel = {};
 
