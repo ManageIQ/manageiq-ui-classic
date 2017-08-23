@@ -30,7 +30,7 @@
 %dl.dl-horizontal
   %dt= _('Show')
   %dd
-    = h(_(MiqCapacityHelper::TARGET_TYPE_CHOICES[@sb[:options][:target_typ]]))
+    = h(_(TARGET_TYPE_CHOICES[@sb[:options][:target_typ]]))
 
   - if @sb[:vm_opts][:cpu] && @sb[:options][:trend_cpu] && @sb[:rpt].extras[:vm_profile][:cpu]
     %dt= _('CPU Speed')

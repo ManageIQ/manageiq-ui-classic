@@ -9,7 +9,7 @@ module ApplicationHelper
   include ToolbarHelper
   include TextualSummaryHelper
   include NumberHelper
-  include MiqCapacityHelper
+  include PlanningHelper
   include Title
 
   # Need to generate paths w/o hostname by default to make proxying work.

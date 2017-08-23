@@ -181,7 +181,7 @@
       %label.control-label.col-md-4
         = _('Show')
       .col-md-8
-        - options = MiqCapacityHelper::TARGET_TYPE_CHOICES.map { |k, v| [_(v), k] }.sort_by(&:last)
+        - options = TARGET_TYPE_CHOICES.map { |k, v| [_(v), k] }.sort_by(&:last)
         = select_tag("target_typ",
                       options_for_select(options, @sb[:options][:target_typ]),
                       "class"                => "selectpicker",
