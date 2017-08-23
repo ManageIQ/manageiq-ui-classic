@@ -1,12 +1,24 @@
 %div
-    .form-group
-        %label.col-md-2.control-label{"for" => "ems_name"}
-            = _('Name')
-        .col-md-8
-            %input.form-control{"type"        => "text",
-                                "id"          => "ems_name",
-                                "name"        => "name",
-                                "ng-model"    => "providerName",
-                                "ng-change"   => "newProv.onNameChanged(providerName)",
-                                "ng-value"    => "newProv.newProviderName",
-                                "auto-focus"  => ""}
+  .form-group
+    %label.col-md-2.control-label{"for" => "ems_name"}
+      = _('Name')
+    .col-md-8
+      %input.form-control{"type"        => "text",
+                          "id"          => "ems_name",
+                          "name"        => "name",
+                          "ng-model"    => "newProv.newProvider.name",
+                          "ng-change"   => "newProv.onChangedProvider()",
+                          "ng-value"    => "newProv.newProvider.name",
+                          "auto-focus"  => ""}
+  .form-group
+    %label.col-md-2.control-label{"for" => "ems_type"}
+      = _('Type')
+    .col-md-8
+      %select{"ng-options"=>"type[0] for type in newProv.types track by type[1]",
+              "ng-model" => "newProv.newProvider.type",
+              "selectpicker-for-select-tag" => ""}
+
+      -# %pf-select{"ng-model"                    => "newProv.newProvider.type",
+      -#            "ng-change"                   => "newProv.onChangedProvider()",
+      -#            "id"                          => "ems_type",
+      -#            "options"=>"newProv.types"}

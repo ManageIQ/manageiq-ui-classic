@@ -9,7 +9,8 @@ function initNewProvider(state, action): AppState {
       middleware: {
         hawkular: {
           newProvider: {
-            name: ''
+            name: '',
+            type: undefined
           }
         }
       }

@@ -9,6 +9,7 @@ export default class NewProviderForm implements ng.IComponentOptions {
   public controller: any = NewProviderController;
   public controllerAs: string = 'newProv';
   public bindings: any = {
+    types: '<',
     formFieldsUrl: '@',
     novalidate: '@',
     createUrl: '@'
@@ -16,33 +17,46 @@ export default class NewProviderForm implements ng.IComponentOptions {
 }
 
 class NewProviderController {
+  public types: any[];
   public componentState: Object;
-  public newProviderName: string;
+  public newProvider: any;
   private formFieldsUrl: string;
   private novalidate: boolean;
   private createUrl: string;
   private reduxStore: MiqStore;
   private unbind: any = {};
+  public $name: string = 'newProvider';
+  private selects: NodeListOf<HTMLSelectElement>;
 
-  constructor() {
-    this.unbind.reducer = addReducer((state: AppState, action: Action) => {
-      return applyReducerHash(reducers, state, action)
-    });
+  public static $inject = ['$element'];
+
+  constructor(private $element: Element) {
+    this.unbind.reducer = addReducer(NewProviderController.applyReducers);
     this.reduxStore = getStore();
-    this.unbind.redux = this.reduxStore.subscribe(() => {
-      const currState: any = this.reduxStore.getState();
-      this.newProviderName = currState.providers.middleware.hawkular.newProvider.name;
-    });
+    this.unbind.redux = this.reduxStore.subscribe(() => this.updateStore());
+  }
+
+  private static applyReducers(state: AppState, action: Action) {
+    return applyReducerHash(reducers, state, action);
+  }
+
+  public updateStore() {
+    const currState: any = this.reduxStore.getState();
+    this.newProvider = {...currState.providers.middleware.hawkular.newProvider};
   }
 
   public $onInit() {
+    this.selects = this.$element.querySelectorAll('select');
     this.reduxStore.dispatch({ type: INIT_NEW_PROVIDER });
+    setTimeout(() => (<any>angular.element(this.selects)).selectpicker('refresh'));
   }
 
-  public onNameChanged(providerName) {
+  public onChangedProvider() {
+    console.log(this.newProvider);
     this.reduxStore.dispatch({
       type: UPDATE_NEW_PROVIDER, payload: {
-        name: providerName
+        name: this.newProvider.name,
+        type: this.newProvider.type
       }
     });
   }

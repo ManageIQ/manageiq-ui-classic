@@ -16,6 +16,7 @@
   = render :partial => "form"
   %new-provider-form{"create-url" => "asd",
                      "form-fields-url" => "rrr",
+                     "types" => "#{[[_('Choose'), nil]] + @ems_types}",
                      :novalidate => "true"}
 = javascript_pack_tag 'manageiq-ui-classic/middleware_forms'
 :javascript
