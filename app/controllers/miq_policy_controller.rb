@@ -226,8 +226,7 @@ class MiqPolicyController < ApplicationController
     self.x_active_tree ||= 'policy_profile_tree'
     self.x_active_accord ||= 'policy_profile'
 
-    trees = features.collect { |feature| [feature.tree_name, feature.build_tree(@sb)] }
-    @trees = Hash[* trees.flatten] # trees.to_h in Ruby 2.2
+    @trees = features.map { |feature| feature.build_tree(@sb) }
     @accords = features.map(&:accord_hash)
 
     if params[:profile].present?  # If profile record id passed in, position on that node
