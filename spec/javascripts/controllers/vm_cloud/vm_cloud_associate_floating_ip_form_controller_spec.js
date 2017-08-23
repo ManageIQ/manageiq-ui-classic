@@ -30,7 +30,8 @@ describe('vmCloudAssociateFloatingIpFormController', function() {
       setTimeout(function() {
         expect(miqService.miqAjaxButton).toHaveBeenCalledWith(
           '/vm_cloud/associate_floating_ip_vm/1000000000001?button=submit',
-          $scope.vm.vmCloudModel
+          $scope.vm.vmCloudModel,
+          {complete: false}
         );
         done();
       });
@@ -47,7 +48,7 @@ describe('vmCloudAssociateFloatingIpFormController', function() {
 
     it('delegates to miqService.miqAjaxButton', function(done) {
       setTimeout(function() {
-        expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/vm_cloud/associate_floating_ip_vm/1000000000001?button=cancel');
+        expect(miqService.miqAjaxButton).toHaveBeenCalledWith('/vm_cloud/associate_floating_ip_vm/1000000000001?button=cancel', {complete: false});
         done();
       });
     });

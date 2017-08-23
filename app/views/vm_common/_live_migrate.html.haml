@@ -47,7 +47,7 @@
           = _('Destination Host')
         .col-md-8
           %select{:name      => 'destination_host_id',
-                  'ng-model' => 'vm.mCloudModel.host',
+                  'ng-model' => 'vm.vmCloudModel.host',
                   'ng-options' => 'host.name as host.name for host in vm.hosts track by host.id'}
 
   %div_for_paging{'ng-controller'                    => "pagingDivButtonGroupController",
@@ -79,8 +79,6 @@
             :alt     => t,
             :title   => t,
             :onclick => "miqAjaxButton('#{url_for_only_path(:action => "live_migrate_vm", :id => "#{@record.id}", :button => "cancel")}');")
-
-
 
 :javascript
   ManageIQ.angular.app.value('vmCloudLiveMigrateFormId', "#{@live_migrate_items.length == 1 ? @live_migrate_items[0].id : ''}");
