@@ -4,7 +4,7 @@ class ApplicationHelper::Button::CockpitConsole < ApplicationHelper::Button::Bas
   def disabled?
     record_type = @record.respond_to?(:current_state) ? _('VM') : _('Container Node')
     @error_message = _("The web-based console is not available because the %{record_type} is not powered on" % {:record_type => record_type}) unless on?
-    @error_message = _('The web-based console is not available because the Windows platform is not supported') unless platform_supported?
+    @error_message = _('The web-based console is not available because the Windows platform is not supported') unless platform_supported?(record_type)
     @error_message.present?
   end
 
@@ -15,7 +15,11 @@ class ApplicationHelper::Button::CockpitConsole < ApplicationHelper::Button::Bas
     @record.ready_condition_status == 'True' if @record.respond_to?(:ready_condition_status) # Container status
   end
 
-  def platform_supported?
-    @record.respond_to?(:current_state) && @record.platform.downcase != 'windows'
+  def platform_supported?(record_type)
+    if record_type == 'VM'
+      @record.platform.downcase != 'windows'
+    else
+      true
+    end
   end
 end
