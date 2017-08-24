@@ -21,6 +21,8 @@ module ReportController::Reports::Editor
     -vm_uid
   ).freeze
 
+  MAX_REPORT_COLUMNS = 100 # Default maximum number of columns in a report
+
   def chargeback_allocated_methods
     Hash[CHAREGEBACK_ALLOCATED_METHODS.map { |x| _(x) }]
   end
