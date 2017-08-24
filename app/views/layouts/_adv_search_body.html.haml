@@ -77,7 +77,7 @@
             %label.control-label.col-md-5
               = _("Global search:")
             .col-md-6
-              - checked = @edit && @edit[:expression] && @edit[:expression][:selected] && @edit[:expression][:selected][:typ] == "global"
+              - checked = @edit && @edit[:search_type] == "global"
               = check_box_tag("search_type", "1", checked,
                 :style                      => "width: 20px",
                 "data-miq_observe_checkbox" => {:url => url2}.to_json)
