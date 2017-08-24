@@ -2,7 +2,7 @@
   = render :partial => "layouts/flash_msg"
   .row.row-tile-pf
     .col-xs-12.col-sm-12.col-md-2
-      .card-pf.card-pf-accented.card-pf-aggregate-status.provider-status-card
+      .card-pf.card-pf-accented.card-pf-aggregate-status.provider-status-card{"ng-if" => "isSingleProvider"}
         %h2.card-pf-title
           %img.provider-icon-small{"ng-src" =>"{{providerTypeIconImage}}"}
           {{providerTypeName}}
