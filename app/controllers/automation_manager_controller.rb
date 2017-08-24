@@ -172,6 +172,10 @@ class AutomationManagerController < ApplicationController
     end
   end
 
+  def validate_before_save?
+    true
+  end
+
   private
 
   def textual_group_list

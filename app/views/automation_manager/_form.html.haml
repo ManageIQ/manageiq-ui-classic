@@ -7,6 +7,7 @@
                  "miq-form"      => true,
                  "model"         => "vm.automationManagerModel",
                  "model-copy"    => "vm.modelCopy",
+                 "form-changed"  => "",
                  :novalidate     => true}
     = render :partial => "layouts/flash_msg"
     %br
@@ -19,7 +20,6 @@
                             'ng-model'       => "vm.automationManagerModel.name",
                             :maxlength       => ViewHelper::MAX_NAME_LEN,
                             :required        => "",
-                            :checkchange     => true,
                             "auto-focus"     => ""}
         %span.help-block{"ng-show" => "angularForm.name.$error.required"}
           = _("Required")
@@ -35,14 +35,12 @@
                               "ng-model"    => "vm.automationManagerModel.zone",
                               "maxlength"   => 15,
                               "required"    => "",
-                              "checkchange" => "",
                               "readonly"    => true,
                               "style"       => "color: black;"}
         - else
           = select_tag('zone',
                        options_for_select(@server_zones.sort_by { |name, _name| name }),
                        "ng-model"                    => "vm.automationManagerModel.zone",
-                       "checkchange"                 => "",
                        "required"                    => "",
                        "selectpicker-for-select-tag" => "")
 
@@ -50,15 +48,17 @@
       %label.col-md-2.control-label{"for" => "provider_url"}
         = _("Url")
       .col-md-8
-        %input.form-control{:type           => "text",
-                            :name           => "url",
-                            'ng-model'      => "vm.automationManagerModel.url",
-                            :maxlength      => ViewHelper::MAX_DESC_LEN,
-                            "id"            => "url",
-                            :required       => "",
-                            "ng-trim"       => false,
-                            "detect_spaces" => "",
-                            :checkchange    => true}
+        %input.form-control{:type                     => "text",
+                            :name                     => "url",
+                            'ng-model'                => "vm.automationManagerModel.url",
+                            :maxlength                => ViewHelper::MAX_DESC_LEN,
+                            "id"                      => "url",
+                            :required                 => "",
+                            "ng-trim"                 => false,
+                            "detect_spaces"           => "",
+                            :prefix                   => "default",
+                            "main-scope"              => "vm",
+                            "reset-validation-status" => "default_auth_status"}
         %span.help-block{"ng-show" => "angularForm.url.$error.required"}
           = _("Required")
         %span.help-block{"ng-show" => "angularForm.url.$error.detectedSpaces"}
@@ -67,11 +67,12 @@
       %label.col-md-2.control-label
         = _("Verify Peer Certificate")
       .col-md-8
-        %input{:type            => "checkbox",
-               :name            => "verify_ssl",
-               'ng-model'       => "vm.automationManagerModel.verify_ssl",
-               :checkchange     => true}
-
+        %input{:type                     => "checkbox",
+               :name                     => "verify_ssl",
+               'ng-model'                => "vm.automationManagerModel.verify_ssl",
+               :prefix                   => "default",
+               "main-scope"              => "vm",
+               "reset-validation-status" => "default_auth_status"}
 
     %hr
     %h3
@@ -84,6 +85,7 @@
                           :ng_reqd_password  => true,
                           :validate_url      => "authentication_validate",
                           :id                => @provider_manager.id || "new",
+                          :prefix            => "default",
                           :valtype           => nil,
                           :basic_info_needed => true}
 

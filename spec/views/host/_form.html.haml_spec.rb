@@ -2,6 +2,7 @@ describe "rendering fields in host new/edit form" do
   before(:each) do
     set_controller_for_view("host")
     set_controller_for_view_to_be_nonrestful
+    allow(controller).to receive(:validate_before_save?).and_return(false)
     @host = FactoryGirl.create(:host)
     @edit = {:new => @host}
   end

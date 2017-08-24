@@ -1,22 +1,18 @@
-ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$scope', 'providerForemanFormId', 'miqService', function($http, $scope, providerForemanFormId, miqService) {
+ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$scope', 'providerForemanFormId', 'miqService', 'configurationManagerService', function($http, $scope, providerForemanFormId, miqService, configurationManagerService) {
   var vm = this;
 
-  vm.providerForemanModel = {
-    name: '',
-    url: '',
-    zone: '',
-    verify_ssl: '',
-    log_userid: '',
-    log_password: '',
-  };
+  vm.providerForemanModel = angular.copy(configurationManagerService.managerModel);
+
+  vm.postValidationModel = {};
 
   vm.formId = providerForemanFormId;
   vm.afterGet = false;
-  vm.validateClicked = miqService.validateWithAjax;
   vm.modelCopy = angular.copy( vm.providerForemanModel );
   vm.model = 'providerForemanModel';
+  vm.checkAuthentication = true;
 
   vm.saveable = miqService.saveable;
+  vm.validateClicked = configurationManagerService.validateClicked;
 
   ManageIQ.angular.scope = vm;
 
@@ -46,8 +42,8 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
 
   vm.isBasicInfoValid = function(angularForm) {
     if(angularForm.url.$valid &&
-      angularForm.log_userid.$valid &&
-      angularForm.log_password.$valid)
+      angularForm.default_userid.$valid &&
+      angularForm.default_password.$valid)
       return true;
     else
       return false;
@@ -84,6 +80,10 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
     vm.saveClicked(angularForm);
   };
 
+  vm.postValidationModelRegistry = function(prefix) {
+    configurationManagerService.postValidationModelRegistry(prefix, vm.newRecord, vm.postValidationModel, vm.providerForemanModel);
+  };
+
   function getProviderForemanFormData(response) {
     var data = response.data;
 
@@ -92,10 +92,11 @@ ManageIQ.angular.app.controller('providerForemanFormController', ['$http', '$sco
       vm.providerForemanModel.url = data.url;
       vm.providerForemanModel.verify_ssl = data.verify_ssl === 1;
 
-      vm.providerForemanModel.log_userid = data.log_userid;
+      vm.providerForemanModel.default_userid = data.default_userid;
+      vm.providerForemanModel.default_auth_status = data.default_auth_status;
 
-      if (vm.providerForemanModel.log_userid !== '') {
-        vm.providerForemanModel.log_password = miqService.storedPasswordPlaceholder;
+      if (vm.providerForemanModel.default_userid !== '') {
+        vm.providerForemanModel.default_password = miqService.storedPasswordPlaceholder;
       }
     }
 
