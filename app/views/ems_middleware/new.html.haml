@@ -17,6 +17,7 @@
   %new-provider-form{"create-url" => "asd",
                      "form-fields-url" => "rrr",
                      "types" => "#{[[_('Choose'), nil]] + @ems_types}",
+                     "zones" => "#{@server_zones}",
                      :novalidate => "true"}
 = javascript_pack_tag 'manageiq-ui-classic/middleware_forms'
 :javascript

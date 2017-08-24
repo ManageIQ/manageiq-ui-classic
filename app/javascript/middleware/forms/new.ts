@@ -1,8 +1,6 @@
 import * as ng from 'angular';
-import { getStore, addReducer, applyReducerHash } from '../../miq-redux/lib';
-import { AppState, Action } from '../../miq-redux/redux-types';
-import { MiqStore } from '../../miq-redux/redux-types';
-import { INIT_NEW_PROVIDER, reducers, UPDATE_NEW_PROVIDER } from './new-provider-reducer';
+import { reducers } from './new-provider-reducer';
+import { DefaultFormController, IFormController } from '../../forms-common/defaultFormController';
 
 export default class NewProviderForm implements ng.IComponentOptions {
   public templateUrl: string = '/static/middleware/new-provider.html.haml';
@@ -10,59 +8,50 @@ export default class NewProviderForm implements ng.IComponentOptions {
   public controllerAs: string = 'newProv';
   public bindings: any = {
     types: '<',
+    zones: '<',
     formFieldsUrl: '@',
     novalidate: '@',
     createUrl: '@'
   };
 }
 
-class NewProviderController {
+class NewProviderController extends DefaultFormController implements IFormController {
+  public zones: any;
   public types: any[];
-  public componentState: Object;
-  public newProvider: any;
+  public formObject: any;
   private formFieldsUrl: string;
   private novalidate: boolean;
   private createUrl: string;
-  private reduxStore: MiqStore;
-  private unbind: any = {};
-  public $name: string = 'newProvider';
   private selects: NodeListOf<HTMLSelectElement>;
+  public protocols = [
+    ['<Choose>', undefined],
+    ['SSL', 'ssl-with-validation'],
+    ['SSL trusting custom CA', 'ssl-with-validation-custom-ca'],
+    ['SSL without validation', 'ssl-with-validation'],
+    ['Non-SSL', 'non-ssl'],
+  ];
 
-  public static $inject = ['$element'];
+  public static $inject = ['$element', '$scope', '$timeout'];
 
-  constructor(private $element: Element) {
-    this.unbind.reducer = addReducer(NewProviderController.applyReducers);
-    this.reduxStore = getStore();
-    this.unbind.redux = this.reduxStore.subscribe(() => this.updateStore());
+  constructor(private $element: Element, private $scope: ng.IScope, private $timeout: ng.ITimeoutService) {
+    super(reducers);
   }
 
-  private static applyReducers(state: AppState, action: Action) {
-    return applyReducerHash(reducers, state, action);
-  }
-
-  public updateStore() {
+  public updateFormObject() {
     const currState: any = this.reduxStore.getState();
-    this.newProvider = {...currState.providers.middleware.hawkular.newProvider};
+    this.formObject = { ...currState.providers.middleware.hawkular.newProvider };
+    this.refreshItems();
   }
 
-  public $onInit() {
-    this.selects = this.$element.querySelectorAll('select');
-    this.reduxStore.dispatch({ type: INIT_NEW_PROVIDER });
-    setTimeout(() => (<any>angular.element(this.selects)).selectpicker('refresh'));
-  }
-
-  public onChangedProvider() {
-    console.log(this.newProvider);
-    this.reduxStore.dispatch({
-      type: UPDATE_NEW_PROVIDER, payload: {
-        name: this.newProvider.name,
-        type: this.newProvider.type
-      }
+  public refreshItems() {
+    this.$timeout(() => {
+      this.$scope.$apply();
+      (<any>angular.element(this.selects)).selectpicker('refresh');
     });
   }
 
-  public $onDestroy() {
-    this.unbind.redux();
-    this.unbind.reducer();
+  public $onInit() {
+    super.$onInit();
+    this.selects = this.$element.querySelectorAll('select');
   }
 }

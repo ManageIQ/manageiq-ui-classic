@@ -1,16 +1,16 @@
-import { AppState } from '../../miq-redux/redux-types';
+import { UPDATE_FORM, INIT_FORM } from '../../miq-redux/lib';
+import { AppState, IMiqReducerHash } from '../../miq-redux/redux-types';
 import { merge, defaultsDeep } from 'lodash';
 
-export const INIT_NEW_PROVIDER: string = 'INIT_NEW_PROVIDER_HAWKULAR'
-export const UPDATE_NEW_PROVIDER = 'UPDATE_NEW_PROVIDER_HAWKULAR';
 function initNewProvider(state, action): AppState {
   const newProvider = {
     providers: {
       middleware: {
         hawkular: {
           newProvider: {
-            name: '',
-            type: undefined
+            type: undefined,
+            zone: 'default',
+            protocol: undefined
           }
         }
       }
@@ -24,15 +24,16 @@ function updateNewProvider(state, action): AppState {
     providers: {
       middleware: {
         hawkular: {
-          newProvider: action.payload
+          newProvider: {...action.payload}
         }
       }
     }
   };
+  console.log({ ...merge(state, newProvider) });
   return { ...merge(state, newProvider) }
 }
 
-export const reducers = {
-  [INIT_NEW_PROVIDER]: initNewProvider,
-  [UPDATE_NEW_PROVIDER]: updateNewProvider
+export const reducers: IMiqReducerHash = {
+  [INIT_FORM]: initNewProvider,
+  [UPDATE_FORM]: updateNewProvider
 };
