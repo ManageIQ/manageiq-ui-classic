@@ -1,17 +1,12 @@
-#accordion.panel-group
-  - if @accords.present? && @accords.length == 1 # there is no need for JavaScript if only one accordion is present
-    .panel.panel-default
-      .panel-heading
-        %h4.panel-title
-          %a{:href => '#'}
-            = @accords.first[:title]
-      .panel-collapse.collapse.in
-        .panel-body{:id => @accords.first[:container]}
-          = render :partial => 'shared/explorer_tree', :locals => {:name => @accords.first[:name]}
-  - elsif @accords.present? && @accords.length > 1
-    - accord_names = @accords.map { |accord| accord[:name].to_sym }
-    - @accords.each_with_index do |a, i|
-      = miq_accordion_panel(a[:title], accord_names.include?(@sb[:active_accord]) ? a[:name].to_sym == @sb[:active_accord] : i == 0, a[:container]) do
-        = render :partial => 'shared/explorer_tree', :locals => {:name => a[:name]}
+- if @accords
+  #accordion.panel-group
+    -# Set the first accordion as selected if there is no active_accord in the sandbox
+    - selected = @accords.find(-> { @accords.first }) { |accord| accord[:name].to_sym == @sb[:active_accord] }
+    - @accords.each do |accord|
+      = miq_accordion_panel(accord[:title], selected == accord, accord[:container]) do
+        -# Set the first tree to be rendered if there is a mismatch with the name/type
+        - tree = @trees.find(-> { @trees.first }) { |t| t.type == accord[:name].to_sym  }
+        = render :partial => 'shared/tree', :locals  => {:tree => tree, :name => tree.name.to_s}
+
     :javascript
       $('#accordion').on('show.bs.collapse', miqAccordSelect);
