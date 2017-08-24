@@ -1095,10 +1095,11 @@ Rails.application.routes.draw do
         show
         timeline
         timeline_data
-        widget_to_pdf
-        widget_report_data
         start_url
+        widget_to_pdf
+        widget_chart_data
         widget_menu_data
+        widget_report_data
       ),
       :post => %w(
         external_authenticate

@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file.
 
+## Sprint 67 ending 2017-08-21
+- Use to_s instead of message [(#1960)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1960)
+- Removed Waiting_to_start from the list of possible states for MiqTask [(#1959)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1959)
+- get_db_view - remove all_vms_and_templates association for infra vms as well [(#1957)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1957)
+- cloud network: consolidate new and edit [(#1955)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1955)
+- Adds rails-controller-testing to ui-classic [(#1953)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1953)
+- Added missing routes for expression editor. [(#1952)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1952)
+- Container list - fix Cannot read property subscribe of undefined [(#1948)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1948)
+- Restyle Button Edit Screen [(#1939)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1939)
+- Changed label "Location" to "Type" made field read-only after selection [(#1938)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1938)
+- Remove extra : [(#1927)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1927)
+- Add missing "migrating" power state image [(#1920)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1920)
+- Change webpacker to store plugin javascript in corespoding folder [(#1919)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1919)
+- Menu active item fixes [(#1915)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1915)
+- Hide History toolbar when in Reports Import/Export tree [(#1909)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1909)
+- Skip calling Rbac on a null or nil target_class [(#1906)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1906)
+- Use class variable gtl_type to check type of report this way we will receive correct report type [(#1888)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1888)
+- Allow rake update:ui to work without db connection [(#1887)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1887)
+- Delete dupe warning message in Optimize Bottlenecks [(#1886)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1886)
+- Menu: Don't remember iframes. [(#1883)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1883)
+- v2v: Move Transform button to "Lifecycle" group [(#1878)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1878)
+- Fix wrong breadcrumb link when click on Service Catalog [(#1873)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1873)
+- Do not try to render quadicon if rendering report with list [(#1867)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1867)
+- Report data api per page [(#1864)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1864)
+- Network provider fields [(#1862)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1862)
+- Fix missing custom button coloring in toolbars [(#1861)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1861)
+- Delete duplicate flash message for Automation Method Edit page actions [(#1851)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1851)
+- Set correct db value for Provider Foreman case [(#1847)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1847)
+- $validators return true/false [(#1846)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1846)
+- miqFormatNotification - don't throw when missing text [(#1836)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1836)
+- Remove get route for report data [(#1834)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1834)
+- Reverse-merge tree params if the tree is already in the sandbox [(#1830)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1830)
+- Add evaluation of enablement expression and displayed text to custom button [(#1828)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1828)
+- Make tooltip precision for CU chart constistent with Y axis labels [(#1807)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1807)
+- Add widget-report component and method to get data [(#1805)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1805)
+- Change discover to make lenovo provider discovery [(#1785)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1785)
+- Fixed save of RH satellite 6 subscription [(#1783)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1783)
+- Add widget-menu component and method to get data [(#1780)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1780)
+- Optional chargeback allocated calculation  [(#1738)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1738)
+- Expression method ui changes [(#1668)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1668)
+- Expose provider disable for containers providers [(#1663)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1663)
+- Fix title in Add/Edit Button/Button Groups [(#1592)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1592)
+- Use scope instead of a query to get soft-deleted items [(#1462)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1462)
+- If provider is not running and UI wants to fetch JDBC drivers close datasource modal [(#1435)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1435)
+
+
 ## Unreleased - as of Sprint 66 end 2017-08-07
 
 ### Added

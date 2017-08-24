@@ -92,7 +92,7 @@
         = _('Source')
       .col-md-8
         = select_tag("vm_mode",
-                      options_for_select(PLANNING_VM_MODES.map { |k, v| [_(v), k] }.sort, @sb[:options][:vm_mode]),
+                      options_for_select(PlanningHelper::PLANNING_VM_MODES.map { |k, v| [_(v), k] }.sort, @sb[:options][:vm_mode]),
                       "class"                => "selectpicker",
                       "data-miq_sparkle_on"  => true,
                       "data-miq_sparkle_off" => true)

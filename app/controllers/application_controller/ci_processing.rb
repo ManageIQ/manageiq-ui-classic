@@ -235,6 +235,14 @@ module ApplicationController::CiProcessing
     true
   end
 
+  def check_reset_requirements(selected_items)
+    if VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_reset? }
+      javascript_flash(:text => _("Reset does not apply to at least one of the selected items"), :severity => :error, :scroll_top => true)
+      return false
+    end
+    true
+  end
+
   def check_non_empty(items, display_name)
     if items.blank?
       add_flash(_("No items were selected for %{task}") % {:task => display_name}, :error)
@@ -246,6 +254,7 @@ module ApplicationController::CiProcessing
   def vm_button_operation_internal(items, task, display_name)
     return false if task == 'retire_now' && !check_retire_requirements(items)
     return false if task == 'scan' && !check_scan_requirements(items)
+    return false if task == 'reset' && !check_reset_requirements(items)
     return false unless check_non_empty(items, display_name)
 
     process_objects(items, task, display_name)

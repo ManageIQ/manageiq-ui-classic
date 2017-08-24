@@ -8,6 +8,7 @@ module ApplicationHelper
   include StiRoutingHelper
   include ToolbarHelper
   include TextualSummaryHelper
+  include PlanningHelper
   include NumberHelper
   include PlanningHelper
   include Title

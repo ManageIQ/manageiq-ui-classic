@@ -1,5 +1,11 @@
 module Mixins
   module ManagerControllerMixin
+    extend ActiveSupport::Concern
+
+    included do
+      include Mixins::GenericFormMixin
+    end
+
     def index
       redirect_to :action => 'explorer'
     end
@@ -25,11 +31,11 @@ module Mixins
     end
 
     def build_credentials
-      return {} unless params[:log_userid]
+      return {} unless params[:default_userid]
       {
         :default => {
-          :userid   => params[:log_userid],
-          :password => params[:log_password] || @provider.authentication_password
+          :userid   => params[:default_userid],
+          :password => params[:default_password] || @provider.authentication_password
         }
       }
     end
@@ -78,10 +84,13 @@ module Mixins
       begin
         @provider.verify_credentials(params[:type])
       rescue => error
-        render_flash(_("Credential validation was not successful: %{details}") % {:details => error}, :error)
+        msg = _("Credential validation was not successful: %{details}") % {:details => error}
+        level = :error
       else
-        render_flash(_("Credential validation was successful"))
+        msg = _("Credential validation was successful")
       end
+
+      render_flash_json(msg, level)
     end
 
     def explorer
@@ -269,11 +278,12 @@ module Mixins
       manager = find_record(concrete_model, params[:id])
       provider = manager.provider
 
-      render :json => {:name       => provider.name,
-                       :zone       => provider.zone.name,
-                       :url        => provider.url,
-                       :verify_ssl => provider.verify_ssl,
-                       :log_userid => provider.authentications.first.userid}
+      render :json => {:name                => provider.name,
+                       :zone                => provider.zone.name,
+                       :url                 => provider.url,
+                       :verify_ssl          => provider.verify_ssl,
+                       :default_userid      => provider.authentications.first.userid,
+                       :default_auth_status => provider.authentication_status_ok?}
     end
 
     private

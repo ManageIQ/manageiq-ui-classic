@@ -1,20 +1,17 @@
-ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', function($http, $scope, automationManagerFormId, miqService) {
+ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', 'configurationManagerService', function($http, $scope, automationManagerFormId, miqService, configurationManagerService) {
   var vm = this;
 
-  vm.automationManagerModel = {
-    name: '',
-    url: '',
-    zone: '',
-    verify_ssl: '',
-    log_userid: '',
-    log_password: '',
-  };
+  vm.automationManagerModel = angular.copy(configurationManagerService.managerModel);
+
+  vm.postValidationModel = {};
+
   vm.formId = automationManagerFormId;
   vm.afterGet = false;
-  vm.validateClicked = miqService.validateWithAjax;
   vm.saveable = miqService.saveable;
+  vm.validateClicked = configurationManagerService.validateClicked;
   vm.modelCopy = angular.copy(vm.automationManagerModel);
   vm.model = 'automationManagerModel';
+  vm.checkAuthentication = true;
 
   ManageIQ.angular.scope = vm;
 
@@ -25,8 +22,8 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     vm.automationManagerModel.name = '';
     vm.automationManagerModel.url = '';
     vm.automationManagerModel.verify_ssl = false;
-    vm.automationManagerModel.log_userid = '';
-    vm.automationManagerModel.log_password = '';
+    vm.automationManagerModel.default_userid = '';
+    vm.automationManagerModel.default_password = '';
 
     $http.get('/automation_manager/form_fields/' + automationManagerFormId)
       .then(getAutomationManagerNewFormDataComplete)
@@ -56,10 +53,11 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
     vm.automationManagerModel.zone = data.zone;
     vm.automationManagerModel.url = data.url;
     vm.automationManagerModel.verify_ssl = data.verify_ssl == "1";
-    vm.automationManagerModel.log_userid = data.log_userid;
+    vm.automationManagerModel.default_userid = data.default_userid;
+    vm.automationManagerModel.default_auth_status = data.default_auth_status;
 
-    if (vm.automationManagerModel.log_userid != '') {
-      vm.automationManagerModel.log_password = miqService.storedPasswordPlaceholder;
+    if (vm.automationManagerModel.default_userid !== '') {
+      vm.automationManagerModel.default_password = miqService.storedPasswordPlaceholder;
     }
 
     vm.modelCopy = angular.copy(vm.automationManagerModel);
@@ -73,8 +71,8 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
 
   vm.isBasicInfoValid = function() {
     return $scope.angularForm.url.$valid &&
-      $scope.angularForm.log_userid.$valid &&
-      $scope.angularForm.log_password.$valid;
+      $scope.angularForm.default_userid.$valid &&
+      $scope.angularForm.default_password.$valid;
   };
 
   var automationManagerEditButtonClicked = function(buttonName, serializeFields) {
@@ -107,5 +105,9 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
 
   vm.addClicked = function() {
     vm.saveClicked();
+  };
+
+  vm.postValidationModelRegistry = function(prefix) {
+    configurationManagerService.postValidationModelRegistry(prefix, vm.newRecord, vm.postValidationModel, vm.automationManagerModel);
   };
 }]);
