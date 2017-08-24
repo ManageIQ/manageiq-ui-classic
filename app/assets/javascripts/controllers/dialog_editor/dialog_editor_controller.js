@@ -68,6 +68,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
       dialogData = {
         description: DialogEditor.getDialogDescription(),
         label: DialogEditor.getDialogLabel(),
+        buttons: 'submit, cancel',
         dialog_tabs: [],
       };
       dialogData.dialog_tabs = _.cloneDeep(DialogEditor.getDialogTabs(), customizer);
