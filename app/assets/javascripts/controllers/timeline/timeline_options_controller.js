@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('timelineOptionsController', ['$http', '$scope', 'miqService', 'url', 'categories', function($http, $scope, miqService, url, categories) {
+ManageIQ.angular.app.controller('timelineOptionsController', ['$http', 'miqService', 'url', 'categories', function($http, miqService, url, categories) {
     var vm = this;
     var init = function() {
         vm.reportModel = {
@@ -26,7 +26,7 @@ ManageIQ.angular.app.controller('timelineOptionsController', ['$http', '$scope',
     };
 
     vm.countDecrement = function() {
-        if(vm.reportModel.tl_range_count > 1) {
+        if (vm.reportModel.tl_range_count > 1) {
             vm.reportModel.tl_range_count--;
         }
     };
