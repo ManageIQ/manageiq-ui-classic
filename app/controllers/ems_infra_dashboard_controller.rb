@@ -29,7 +29,7 @@ class EmsInfraDashboardController < ApplicationController
   end
 
   def ems_utilization_data
-    render :json => {:data => ems_utilization_data(params[:id])}
+    render :json => {:data => ems_data(params[:id])}
   end
 
   private
@@ -50,7 +50,7 @@ class EmsInfraDashboardController < ApplicationController
     EmsInfraDashboardService.new(ems_id, self).recent_vms_data
   end
 
-  def ems_utilization_data(ems_id)
+  def ems_data(ems_id)
     EmsInfraDashboardService.new(ems_id, self).ems_utilization_data
   end
 

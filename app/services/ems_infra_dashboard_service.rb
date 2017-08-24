@@ -34,7 +34,7 @@ class EmsInfraDashboardService
     }.compact
   end
 
-  def ems_utilization
+  def ems_utilization_data
     {
       :ems_utilization => ems_utilization
     }.compact
@@ -208,17 +208,17 @@ class EmsInfraDashboardService
           :xData => used_cpu.keys,
           :yData => used_cpu.values.map(&:round)
         },
-        :mem => {
+        :memory => {
           :used  => (used_mem.values.last / 1024.0).round,
           :total => (total_mem.values.last / 1024.0).round,
           :xData => used_mem.keys,
           :yData => used_mem.values.map { |m| (m / 1024.0).round }
-        }
+      }
       }
     else
       {
         :cpu => nil,
-        :mem => nil
+        :memory => nil
       }
     end
   end

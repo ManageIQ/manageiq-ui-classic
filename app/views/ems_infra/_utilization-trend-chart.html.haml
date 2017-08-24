@@ -1,0 +1,14 @@
+%div{'ng-controller' => "utilizationTrendChartController as vm", :class => "row", :style => "display:inline-block; width: 100%;"}
+  %div{:class => "col-md-6"}
+    %h3
+      {{vm.title}}
+    .row.row-tile-pf
+      .col-xs-6.col-sm-6.col-md-6.example-trend-container{"ng-repeat" => "(key, data_hash) in vm.data"}
+        %pf-utilization-trend-chart{'config' => "data_hash.config",
+          'chart-data' => "data_hash.data", 'center-label' => "vm.centerLabel",
+          'donut-config' => "data_hash.donutConfig", 'sparkline-config' => "data_hash.sparklineConfig",
+          'sparkline-chart-height' => "vm.custChartHeight",
+          'show-sparkline-x-axis' => "vm.custShowXAxis",
+          'show-sparkline-y-axis' => "vm.custShowYAxis"}
+        %span.trend-footer-pf{"ng-class" => "{ 'chart-transparent-text': data_hash.data.dataAvailable === false }"}
+          = _("Last 30 Days")

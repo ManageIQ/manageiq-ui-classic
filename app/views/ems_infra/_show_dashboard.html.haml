@@ -1,6 +1,10 @@
 .ems-infra-dashboard
   = render :partial => "aggregate-status-card"
-  = render :partial => "heatmap"
+  .row.row-tile-pf
+    .col-xs-12.col-sm-6.col-md-6
+      = render :partial => "utilization-trend-chart"
+    .col-xs-12.col-sm-6.col-md-6
+      = render :partial => "heatmap"
 
 :javascript
   ManageIQ.angular.app.value('providerId', '#{@record.id}');
