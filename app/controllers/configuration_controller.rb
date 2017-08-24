@@ -547,6 +547,7 @@ class ConfigurationController < ApplicationController
     when "ui_1"                                               # Visual Settings tab
       @edit[:new][:quadicons][:ems] = params[:quadicons_ems] == "true" if params[:quadicons_ems]
       @edit[:new][:quadicons][:ems_cloud] = params[:quadicons_ems_cloud] == "true" if params[:quadicons_ems_cloud]
+      @edit[:new][:quadicons][:ems_container] = params[:quadicons_ems_container] == "true" if params[:quadicons_ems_container]
       @edit[:new][:quadicons][:host] = params[:quadicons_host] == "true" if params[:quadicons_host]
       @edit[:new][:quadicons][:vm] = params[:quadicons_vm] == "true" if params[:quadicons_vm]
       @edit[:new][:quadicons][:physical_server] = params[:quadicons_physical_server] == "true" if params[:quadicons_physical_server]
