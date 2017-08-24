@@ -1231,8 +1231,11 @@ function miqAccordSelect(e) {
     return false;
   }
 
-  var url = '/' + $('body').data('controller') + '/accordion_select?id=' + $(e.target).attr('id');
-  miqJqueryRequest(url, {beforeSend: true, complete: true});
+  // No need to load anything if only a single accordion is present
+  if ($('#accordion > .panel').length > 1) {
+    var url = '/' + $('body').data('controller') + '/accordion_select?id=' + $(e.target).attr('id');
+    miqJqueryRequest(url, {beforeSend: true, complete: true});
+  }
   return true;
 }
 
