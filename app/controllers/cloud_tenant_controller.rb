@@ -24,7 +24,7 @@ class CloudTenantController < ApplicationController
       custom_buttons
     else
       editable_objects = CloudTenantController.display_methods.map(&:singularize) - %w(instance image) # handled in super
-      if params[:pressed].starts_with?(*editable_objects)
+      if params[:pressed].starts_with?(*editable_objects) && !params[:pressed].ends_with?('_tag')
         target_controller = editable_objects.find { |n| params[:pressed].starts_with?(n) }
         action = params[:pressed].sub("#{target_controller}_", '')
         action = "#{action}_#{target_controller.sub('cloud_','').pluralize}" if action == 'delete'
