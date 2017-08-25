@@ -142,6 +142,8 @@ class HawkularProxyService
   end
 
   def add_last_readings(metrics)
+    return metrics unless @db_name == "Hawkular"
+
     ids = metrics.map { |m| m["id"] if m["type"] == "gauge" }.compact
     gauges_data = get_raw_data(ids, "gauge") if ids.any?
 

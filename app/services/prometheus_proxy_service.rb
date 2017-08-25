@@ -111,10 +111,6 @@ class PrometheusProxyService < HawkularProxyService
     jobs.map { |id| { :label => labelize(id), :value => id } }
   end
 
-  def add_last_readings(metrics)
-    metrics
-  end
-
   def metric_tags_options(tag)
     timestamp = DateTime.now.utc.to_i
     response = @conn.get("label/#{tag}/values", :_ => timestamp)
