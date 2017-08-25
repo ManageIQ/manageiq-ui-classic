@@ -3,14 +3,14 @@ class HawkularProxyService
 
   TENANT_LABEL_MAX_LEN = 25
   TENANT_LABEL_SPECIAL_CASES = {
-    "_system"                      => "System",
-    "_ops"                         => "Operations",
-    "default"                      => "Default",
-    "admin"                        => "Admin",
-    "openshift-infra"              => "OpenShift Infra",
-    "kubernetes-nodes"             => "Kubernetes Nodes",
-    "kubernetes-apiserver"         => "Kubernetes API server",
-    "kubernetes-service-endpoints" => "Kubernetes Service",
+    "_system"                      => _("System"),
+    "_ops"                         => _("Operations"),
+    "default"                      => _("Default"),
+    "admin"                        => _("Admin"),
+    "openshift-infra"              => _("OpenShift Infra"),
+    "kubernetes-nodes"             => _("Kubernetes Nodes"),
+    "kubernetes-apiserver"         => _("Kubernetes API server"),
+    "kubernetes-service-endpoints" => _("Kubernetes Service"),
   }.freeze
 
   def initialize(provider_id, controller)
@@ -80,9 +80,10 @@ class HawkularProxyService
       }
     end
   rescue StandardError => e
+    msg = _("(Please check your %{type} server)") % {:type => @db_name}
     {
       :parameters => params,
-      :error      => ActionView::Base.full_sanitizer.sanitize(e.to_s) + " " + _("(Please check your #{@db_name} server)")
+      :error      => ActionView::Base.full_sanitizer.sanitize(e.to_s) + " " + msg
     }
   end
 
