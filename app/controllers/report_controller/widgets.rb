@@ -46,7 +46,6 @@ module ReportController::Widgets
 
     widget_set_form_vars
     session[:changed] = false
-    @lock_tree = true
     replace_right_cell
   end
 
@@ -101,7 +100,6 @@ module ReportController::Widgets
       widget_set_form_vars
       session[:changed] = false
       @in_a_form = true
-      @lock_tree = true
       replace_right_cell
     end
   end

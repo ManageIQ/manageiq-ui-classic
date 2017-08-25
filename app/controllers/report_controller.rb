@@ -890,16 +890,7 @@ class ReportController < ApplicationController
     presenter[:record_id] = (locals && locals[:record_id]) || determine_record_id_for_presenter
 
     # Lock current tree if in edit or assign, else unlock all trees
-    if @edit && @edit[:current]
-      presenter.lock_tree(x_active_tree)
-      # lock schedules tree when jumping from reports to add a schedule for a report
-      presenter.lock_tree(:schedules_tree) if params[:pressed] == 'miq_report_schedules'
-    else
-      presenter.lock_tree(x_active_tree, false)
-      [:db_tree, :reports_tree, :savedreports_tree, :schedules_tree, :widgets_tree, :roles_tree].each do |tree|
-        presenter.lock_tree(tree, false) if tree_exists?(tree)
-      end
-    end
+    presenter[:lock_sidebar] = @edit && @edit[:current]
 
     render :json => presenter.for_render
   end

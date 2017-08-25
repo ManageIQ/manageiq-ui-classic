@@ -244,7 +244,7 @@ class PxeController < ApplicationController
 
     # Save open nodes, if any were added
     presenter[:osf_node] = x_node
-    presenter.lock_tree(x_active_tree, @in_a_form && @edit)
+    presenter[:lock_sidebar] = @in_a_form && @edit
 
     render :json => presenter.for_render
   end

@@ -38,7 +38,6 @@ module ReportController::Menus
 
     @breadcrumbs = []
     drop_breadcrumb(:name => "Edit Report menus for '#{session[:role_choice]}'")
-    @lock_tree = true
     if session[:node_selected].index(':').nil? || params[:button] == "reset"
       edit_folder
       replace_right_cell if params[:node_clicked]
@@ -198,7 +197,6 @@ module ReportController::Menus
       session[:role_choice]     = nil
       @new_menu_node            = "roleroot"
       @menu_roles_tree = nil
-      @lock_tree                = false
       @edit = session[:edit]    = nil
       @changed                  = session[:changed] = false
       self.x_node = "root"
@@ -241,7 +239,6 @@ module ReportController::Menus
         session[:role_choice]     = nil
         @new_menu_node            = "roleroot"
         @menu_roles_tree = nil
-        @lock_tree                = false
         @changed                  = session[:changed] = false
         @edit = session[:edit]    = nil
         self.x_node = "root"

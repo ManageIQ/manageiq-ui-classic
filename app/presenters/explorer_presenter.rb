@@ -34,9 +34,9 @@ class ExplorerPresenter
   #   open_accord                      -- accordion to open
   #   exp                              -- data for the expression editor
   #   active_tree                      -- x_active_tree view state from controller
+  #   lock_sidebar                     -- enable or disable the sidebar
   #
   # Following options are hashes:
-  #   lock_unlock_trees         -- trees to lock/unlock
   #   update_partials           -- partials to update contents
   #   replace_partials          -- partials to replace (also wrapping tag)
   #   element_updates           -- update DOM element content or title FIXME: content can be
@@ -63,7 +63,6 @@ class ExplorerPresenter
 
   def initialize(options = {})
     @options = {
-      :lock_unlock_trees    => {},
       :set_visible_elements => {},
       :update_partials      => {},
       :element_updates      => {},
@@ -124,11 +123,6 @@ class ExplorerPresenter
 
   def set_visibility(value, *elements)
     elements.each { |el| @options[:set_visible_elements][el] = value }
-    self
-  end
-
-  def lock_tree(tree, lock = true)
-    @options[:lock_unlock_trees][tree] = !!lock
     self
   end
 
@@ -276,7 +270,7 @@ class ExplorerPresenter
       }
     end
 
-    data[:lockTrees] = @options[:lock_unlock_trees]
+    data[:lockSidebar] = !!@options[:lock_sidebar]
     data[:chartData] = @options[:load_chart]
     data[:resetChanges] = !!@options[:reset_changes]
     data[:resetOneTrans] = !!@options[:reset_one_trans]

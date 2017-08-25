@@ -590,7 +590,7 @@ class InfraNetworkingController < ApplicationController
     presenter.hide(:quicksearchbox)
     presenter[:hide_modal] = true
 
-    presenter.lock_tree(x_active_tree, @in_a_form)
+    presenter[:lock_sidebar] = @in_a_form
   end
 
   def display_adv_searchbox
