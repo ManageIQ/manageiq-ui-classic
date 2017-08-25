@@ -13,22 +13,15 @@ function miqOnLoad() {
   }
 
   // Track the mouse coordinates for popup menus
-  $(document).mousemove(function (e) {
+  $(document).mousemove(function(e) {
     ManageIQ.mouse.x = e.pageX;
     ManageIQ.mouse.y = e.pageY;
   });
 
   miqBuildCalendar();
 
-  if (typeof miqLoadTL == "function") {
-    miqLoadTL();
-    if (ManageIQ.timelineFilter) {
-      performFiltering(tl, [ 0, 1 ]);
-    }
-  }
-
   // Init the toolbars
-  if (typeof miqInitToolbars == "function") {
+  if (typeof miqInitToolbars === 'function') {
     miqInitToolbars();
   }
 
