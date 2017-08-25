@@ -93,7 +93,8 @@ class ApplicationController < ActionController::Base
       :miq_template    => true,
       :physical_server => true,
       :storage         => true,
-      :vm              => true
+      :vm              => true,
+      :ems_container   => true
     },
     :views     => { # List view setting, by resource type
       :authkeypaircloud                         => "list",
