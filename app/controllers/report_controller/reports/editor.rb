@@ -49,7 +49,6 @@ module ReportController::Reports::Editor
       set_form_vars
     end
     build_edit_screen
-    @ina_form = true
     replace_right_cell
   end
 
