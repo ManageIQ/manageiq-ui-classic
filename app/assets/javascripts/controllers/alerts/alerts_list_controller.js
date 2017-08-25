@@ -13,7 +13,7 @@ angular.module('alertsCenter').controller('alertsListController',
 
       // update display data for the alerts from the current alert settings
       angular.forEach(updatedAlerts, function(nextUpdate) {
-        matchingAlert = _.find(vm.alerts, function(existingAlert) {
+        var matchingAlert = _.find(vm.alerts, function(existingAlert) {
           return nextUpdate.id === existingAlert.id;
         });
 
@@ -31,13 +31,13 @@ angular.module('alertsCenter').controller('alertsListController',
 
     function setupConfig() {
       vm.severities = alertsCenterService.severities;
-      vm.acknowledgedTooltip = __("Acknowledged");
+      vm.acknowledgedTooltip = __('Acknowledged');
 
       vm.listConfig = {
         showSelectBox: false,
         selectItems: false,
         useExpandingRows: true,
-        onClick: expandRow
+        onClick: expandRow,
       };
 
       vm.menuActions = alertsCenterService.menuActions;
@@ -51,14 +51,14 @@ angular.module('alertsCenter').controller('alertsListController',
         fields: alertsCenterService.alertListFilterFields,
         resultsCount: vm.alertsList.length,
         appliedFilters: vm.currentFilters,
-        onFilterChange: vm.filterChange
+        onFilterChange: vm.filterChange,
       };
 
 
       vm.sortConfig = {
         fields: alertsCenterService.alertListSortFields,
         onSortChange: sortChange,
-        isAscending: true
+        isAscending: true,
       };
 
       // Default sort descending by severity
@@ -69,8 +69,8 @@ angular.module('alertsCenter').controller('alertsListController',
         filterConfig: vm.filterConfig,
         sortConfig: vm.sortConfig,
         actionsConfig: {
-          actionsInclude: true
-        }
+          actionsInclude: true,
+        },
       };
     }
 
@@ -95,8 +95,8 @@ angular.module('alertsCenter').controller('alertsListController',
     }
 
     function expandRow(item) {
-      if (!item.disableRowExpansion) {
-        item.isExpanded = !item.isExpanded;
+      if (! item.disableRowExpansion) {
+        item.isExpanded = ! item.isExpanded;
       }
       return false;
     }
@@ -128,5 +128,5 @@ angular.module('alertsCenter').controller('alertsListController',
 
     setupConfig();
     getAlerts();
-  }
+  },
 ]);

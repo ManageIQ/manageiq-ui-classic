@@ -13,7 +13,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     };
 
     vm.formId = cloudVolumeFormId;
-    vm.model = "cloudVolumeModel";
+    vm.model = 'cloudVolumeModel';
 
     ManageIQ.angular.scope = vm;
     vm.saveable = miqService.saveable;
@@ -21,7 +21,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     vm.newRecord = cloudVolumeFormId === 'new';
 
     miqService.sparkleOn();
-    API.get("/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true")
+    API.get('/api/providers?expand=resources&attributes=id,name,supports_block_storage&filter[]=supports_block_storage=true')
       .then(getStorageManagers)
       .catch(miqService.handleFailure);
 
@@ -42,10 +42,11 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
   };
 
   vm.cancelClicked = function() {
-    if (cloudVolumeFormId == 'new') {
-      var url = '/cloud_volume/create/new' + '?button=cancel';
+    var url;
+    if (cloudVolumeFormId === 'new') {
+      url = '/cloud_volume/create/new' + '?button=cancel';
     } else {
-      var url = '/cloud_volume/update/' + cloudVolumeFormId + '?button=cancel';
+      url = '/cloud_volume/update/' + cloudVolumeFormId + '?button=cancel';
     }
     miqService.miqAjaxButton(url);
   };
@@ -109,7 +110,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
   vm.resetClicked = function(angularForm) {
     vm.cloudVolumeModel = angular.copy(vm.modelCopy);
     angularForm.$setPristine(true);
-    miqService.miqFlash("warn", "All changes have been reset");
+    miqService.miqFlash('warn', 'All changes have been reset');
   };
 
   vm.storageManagerChanged = function(id) {
@@ -140,8 +141,8 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     // General Purpose (SSD) volumes under 1000 GiB can burst up to 3000 IOPS
 
     switch (voltype) {
-      case "gp2":
-      case "io1":
+      case 'gp2':
+      case 'io1':
         var volumeSize = parseInt(vm.cloudVolumeModel.size, 10);
         if (isNaN(volumeSize)) {
           vm.cloudVolumeModel.aws_iops = '';
@@ -179,10 +180,10 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
   var loadEBSVolumeTypes = function() {
     // This ia a fixed list of available cloud volume types for Amazon EBS.
     vm.awsVolumeTypes = [
-      { type: "gp2", name: "General Purpose SSD (GP2)" },
-      { type: "io1", name: "Provisioned IOPS SSD (IO1)" },
-      { type: "st1", name: "Throughput Optimized HDD (ST1)" },
-      { type: "sc1", name: "Cold HDD (SC1)" },
+      { type: 'gp2', name: 'General Purpose SSD (GP2)' },
+      { type: 'io1', name: 'Provisioned IOPS SSD (IO1)' },
+      { type: 'st1', name: 'Throughput Optimized HDD (ST1)' },
+      { type: 'sc1', name: 'Cold HDD (SC1)' },
     ];
 
     // Standard volume type is available only when creating new volume or editing
@@ -190,7 +191,7 @@ ManageIQ.angular.app.controller('cloudVolumeFormController', ['miqService', 'API
     // that the "Magnetic (standard)" option can be picked in the select that is
     // otherwise disabled.
     if (vm.newRecord || vm.cloudVolumeModel.aws_volume_type === 'standard') {
-      vm.awsVolumeTypes.push({ type: "standard", name: "Magnetic" });
+      vm.awsVolumeTypes.push({ type: 'standard', name: 'Magnetic' });
     }
   };
 
