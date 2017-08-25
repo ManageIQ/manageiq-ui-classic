@@ -13,6 +13,10 @@ module ApplicationController::Tags
       tagging_edit_tags_save
     when "reset", nil # Reset or first time in
       @tagging = session[:tag_db] = params[:db] ? params[:db] : db if params[:db] || db
+      # NOTE: For Tagging Reset button click make sure @tagging is properly set,
+      # seems to be set to nil interim and before right cell is rendered
+      @tagging ||= controller_to_model
+      @sb[:action] ||= "tag"
       tagging_edit_tags_reset
     end
   end
