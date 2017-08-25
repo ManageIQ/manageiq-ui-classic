@@ -340,6 +340,8 @@ class ApplicationHelper::ToolbarBuilder
 
   def get_custom_buttons(model, record, toolbar_result)
     cbses = CustomButtonSet.find_all_by_class_name(button_class_name(model), service_template_id(record))
+    cbses = CustomButtonSet.filter_with_visibility_expression(cbses, record)
+
     cbses.sort_by { |cbs| cbs.set_data[:group_index] }.collect do |cbs|
       group = {
         :id           => cbs.id,
