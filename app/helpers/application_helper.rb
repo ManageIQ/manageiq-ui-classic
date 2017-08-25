@@ -10,6 +10,7 @@ module ApplicationHelper
   include TextualSummaryHelper
   include PlanningHelper
   include NumberHelper
+  include PlanningHelper
   include Title
 
   # Need to generate paths w/o hostname by default to make proxying work.

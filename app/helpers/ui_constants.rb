@@ -1,12 +1,6 @@
 module UiConstants
   # dac - Changed to allow up to 255 characters for all text fields on 1/11/07
 
-  # Choices for Target options show pulldown
-  TARGET_TYPE_CHOICES = {
-    "EmsCluster" => N_("Clusters"),
-    "Host"       => N_("Hosts")
-  }
-
   # Choices for the trend limit percent pulldowns
   TREND_LIMIT_PERCENTS = {
     "200%" => 200,
