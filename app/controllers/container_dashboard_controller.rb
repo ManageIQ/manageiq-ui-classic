@@ -46,7 +46,13 @@ class ContainerDashboardController < ApplicationController
   end
 
   def collect_live_data(provider_id, query)
-    HawkularProxyService.new(provider_id, self).data(query)
+    ems = ExtManagementSystem.find(provider_id)
+
+    if ems && ems.connection_configurations.prometheus.try(:endpoint)
+      PrometheusProxyService.new(provider_id, self).data(query)
+    else
+      HawkularProxyService.new(provider_id, self).data(query)
+    end
   end
 
   menu_section :cnt
