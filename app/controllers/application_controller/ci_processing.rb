@@ -8,6 +8,8 @@ module ApplicationController::CiProcessing
     include Mixins::Actions::VmActions::Evacuate
     include Mixins::Actions::VmActions::AssociateFloatingIp
     include Mixins::Actions::VmActions::DisassociateFloatingIp
+    include Mixins::Actions::VmActions::AddSecurityGroup
+    include Mixins::Actions::VmActions::RemoveSecurityGroup
     include Mixins::Actions::VmActions::Resize
     include Mixins::Actions::VmActions::RightSize
     include Mixins::Actions::VmActions::Reconfigure
@@ -1045,6 +1047,8 @@ module ApplicationController::CiProcessing
     when "#{pfx}_live_migrate"              then livemigratevms
     when "#{pfx}_associate_floating_ip"     then associate_floating_ip_vms
     when "#{pfx}_disassociate_floating_ip"  then disassociate_floating_ip_vms
+    when "#{pfx}_add_security_group"        then add_security_group_vms
+    when "#{pfx}_remove_security_group"     then remove_security_group_vms
     when "#{pfx}_retire"                    then retirevms
     when "#{pfx}_retire_now"                then retirevms_now
     when "#{pfx}_right_size"                then vm_right_size

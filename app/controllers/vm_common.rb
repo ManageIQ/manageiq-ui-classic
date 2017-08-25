@@ -1242,7 +1242,7 @@ module VmCommon
       presenter.update(:main_div, r[:partial => partial, :locals => partial_locals])
 
       locals = {:action_url => action, :record_id => @record.try(:id)}
-      if %w(clone migrate miq_request_new pre_prov publish
+      if %w(clone migrate miq_request_new pre_prov publish add_security_group remove_security_group
             reconfigure resize live_migrate attach detach evacuate
             associate_floating_ip disassociate_floating_ip).include?(@sb[:action])
         locals[:no_reset]        = true                              # don't need reset button on the screen
@@ -1332,7 +1332,7 @@ module VmCommon
           ])
         # these subviews use angular, so they need to use a special partial
         # so the form buttons on the outer frame can be updated.
-        elsif %w(attach detach live_migrate resize evacuate ownership
+        elsif %w(attach detach live_migrate resize evacuate ownership add_security_group remove_security_group
                  associate_floating_ip disassociate_floating_ip).include?(@sb[:action])
           presenter.update(:form_buttons_div, r[:partial => "layouts/angular/paging_div_buttons"])
         elsif action != "retire" && action != "reconfigure_update"
@@ -1517,6 +1517,18 @@ module VmCommon
         :name => name, :model => ui_lookup(:table => table)
       }
       action = "disassociate_floating_ip_vm"
+    when "add_security_group"
+      partial = "vm_common/add_security_group"
+      header = _("Add Security Group to %{model} \"%{name}\"") % {
+        :name => name, :model => ui_lookup(:table => table)
+      }
+      action = "add_security_group"
+    when "remove_security_group"
+      partial = "vm_common/remove_security_group"
+      header = _("Remove Security Group from %{model} \"%{name}\"") % {
+        :name => name, :model => ui_lookup(:table => table)
+      }
+      action = "remove_security_group"
     when "clone", "migrate", "publish"
       partial = "miq_request/prov_edit"
       task_headers = {"clone"   => _("Clone %{vm_or_template}"),

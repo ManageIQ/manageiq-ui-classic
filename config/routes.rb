@@ -3056,6 +3056,10 @@ Rails.application.routes.draw do
         associate_floating_ip_form_fields
         disassociate_floating_ip
         disassociate_floating_ip_form_fields
+        add_security_group
+        add_security_group_form_fields
+        remove_security_group
+        remove_security_group_form_fields
         retire
         right_size
         show
@@ -3076,6 +3080,8 @@ Rails.application.routes.draw do
         live_migrate_vm
         associate_floating_ip_vm
         disassociate_floating_ip_vm
+        add_security_group_vm
+        remove_security_group_vm
         retire
         right_size
         set_checked_items
@@ -3119,6 +3125,10 @@ Rails.application.routes.draw do
         associate_floating_ip_form_fields
         disassociate_floating_ip
         disassociate_floating_ip_form_fields
+        add_security_group
+        add_security_group_form_fields
+        remove_security_group
+        remove_security_group_form_fields
       ) +
                compare_get,
       :post => %w(
@@ -3182,6 +3192,8 @@ Rails.application.routes.draw do
         ownership_update
         associate_floating_ip_vm
         disassociate_floating_ip_vm
+        add_security_group_vm
+        remove_security_group_vm
         wait_for_task
         ownership_form_fields
       ) +
