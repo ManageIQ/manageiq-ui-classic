@@ -39,9 +39,10 @@ function miqHttpInject(angular_app) {
         responseError: function(err) {
           sendDataWithRx({
             serverError: err,
+            source: '$http',
           });
 
-          console.error('Server returned a non-200 response:', err.status, err.statusText, err);
+          console.error('$http: Server returned a non-200 response:', err.status, err.statusText, err);
           return $q.reject(err);
         },
       };

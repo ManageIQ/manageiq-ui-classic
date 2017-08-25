@@ -115,6 +115,26 @@
     });
   };
 
+  // default to using the error modal on error, skip by using API.get.noErrorModal instead
+  ["get", "post", "put", "delete", "options", "patch"].forEach(function(name) {
+    var orig = API[name];
+
+    API[name] = function() {
+      return orig.apply(this, arguments)
+        .catch(function(err) {
+          sendDataWithRx({
+            serverError: err,
+            source: 'API',
+          });
+
+          console.error('API: Server returned a non-200 response:', err.status, err.statusText, err);
+          throw err;
+        });
+    };
+
+    API[name].noErrorModal = orig;
+  });
+
   window.vanillaJsAPI = API;
 
 
@@ -163,13 +183,32 @@
 
     if (response.status >= 300) {
       // Not 1** or 2**
-      return response.json()
-        .then(function(obj) {
-          return Promise.reject(obj);
-        });
+      // clone() because otherwise if json() fails, you can't call text()
+      return response.clone().json()
+        .catch(tryHtmlError(response))
+        .then(rejectWithData(response));
     }
 
     return response.json();
+  }
+
+  function tryHtmlError(response) {
+    return function() {
+      // non-JSON error message, assuming html
+      return response.text();
+    };
+  }
+
+  function rejectWithData(response) {
+    return function(obj) {
+      return Promise.reject({
+        data: obj,
+        headers: response.headers,
+        status: response.status,
+        statusText: response.statusText,
+        url: response.url,
+      });
+    };
   }
 })(window);
 
@@ -177,9 +216,15 @@
 angular.module('miq.api', [])
 .factory('API', ['$q', function($q) {
   var angularify = function(what) {
-    return function() {
+    var ret = function() {
       return $q.when(what.apply(vanillaJsAPI, arguments));
     };
+
+    if (what.noErrorModal) {
+      ret.noErrorModal = angularify(what.noErrorModal);
+    }
+
+    return ret;
   };
 
   return {
