@@ -913,7 +913,7 @@ class ChargebackController < ApplicationController
 
     presenter[:right_cell_text]     = @right_cell_text
     unless x_active_tree == :cb_assignments_tree
-      presenter.lock_tree(x_active_tree, @in_a_form && @edit)
+      presenter[:lock_sidebar] = @in_a_form && @edit
     end
 
     render :json => presenter.for_render

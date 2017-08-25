@@ -41,7 +41,6 @@ module ReportController::Dashboards
       if params[:button] == "reset"
         add_flash(_("All changes have been reset"), :warning)
       end
-      @lock_tree = true
       session[:changed] = @changed = false
       replace_right_cell
     end
@@ -101,7 +100,6 @@ module ReportController::Dashboards
       db_set_form_vars
       session[:changed] = false
       @in_a_form = true
-      @lock_tree = true
       replace_right_cell
     end
   end

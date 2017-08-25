@@ -49,7 +49,7 @@ module ReportController::Reports::Editor
       set_form_vars
     end
     build_edit_screen
-    @ina_form = @lock_tree = true
+    @ina_form = true
     replace_right_cell
   end
 
@@ -131,7 +131,6 @@ module ReportController::Reports::Editor
       build_edit_screen
       @changed          = (@edit[:new] != @edit[:current])
       session[:changed] = @changed
-      @lock_tree        = true
       replace_right_cell
     end
   end

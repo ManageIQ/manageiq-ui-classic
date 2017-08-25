@@ -874,6 +874,11 @@ img.tiny { margin: 0; padding: 0;width:20px;height:20px; border: 0; vertical-ali
 
 #spinner_div { margin-top: -45px; margin-left: -35px; width:180px; height: 180px; border-radius: 8px; background: image-url('layout/overlay_dark.png');}
 
+.sidebar-disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
 /// ===================================================================
 /// end misc styling
 /// ===================================================================

@@ -480,7 +480,7 @@ module Mixins
       presenter.hide(:quicksearchbox)
       presenter[:hide_modal] = true
 
-      presenter.lock_tree(x_active_tree, @in_a_form)
+      presenter[:lock_sidebar] = @in_a_form
     end
 
     def construct_edit_for_audit

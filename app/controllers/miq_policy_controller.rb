@@ -691,15 +691,7 @@ class MiqPolicyController < ApplicationController
 
     presenter[:record_id] = @record.try(:id)
 
-    # Lock current tree if in edit or assign, else unlock all trees
-    if (@edit || @assign) && params[:action] != "x_search_by_name"
-      presenter.lock_tree(x_active_tree)
-    else
-      [:policy_profile_tree, :policy_tree, :condition_tree,
-       :action_tree, :alert_profile_tree, :alert_tree].each do |tree|
-        presenter.lock_tree(tree, false)
-      end
-    end
+    presenter[:lock_sidebar] = (@edit || @assign) && params[:action] != "x_search_by_name"
 
     render :json => presenter.for_render
   end

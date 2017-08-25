@@ -429,7 +429,7 @@ class MiqAeCustomizationController < ApplicationController
 
     # Replace right side with based on selected tree node type
     presenter.update(:main_div, render_proc[:partial => "shared/buttons/ab_list"])
-    presenter.lock_tree(:ab_tree, @edit)
+    presenter[:lock_sidebar] = @edit
   end
 
   def setup_presenter_for_dialog_edit_tree(presenter)
