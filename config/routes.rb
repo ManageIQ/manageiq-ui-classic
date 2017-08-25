@@ -1100,6 +1100,7 @@ Rails.application.routes.draw do
         widget_chart_data
         widget_menu_data
         widget_report_data
+        widget_rss_data
       ),
       :post => %w(
         external_authenticate
