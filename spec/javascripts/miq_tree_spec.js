@@ -2,7 +2,7 @@ describe('miq_tree', function() {
   describe('miqInitTree', function () {
     describe('post_check', function () {
       it('checks child nodes', function () {
-        $('body').append($('<div id="testbox">'));
+        $('body').append($('<miq-tree-view name="test"><div id="testbox" class="treeview"/></miq-tree-view>'));
 
         miqInitTree({tree_name: "test", tree_id: "testbox", post_check: true, hierarchical_check: true}, [
           {
