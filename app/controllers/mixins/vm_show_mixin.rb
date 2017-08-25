@@ -78,15 +78,9 @@ module VmShowMixin
     get_node_info(x_node_right_cell)
   end
 
-  def set_active_elements_authorized_user(tree_name, accord_name, add_nodes, klass, id)
+  def set_active_elements_authorized_user(tree_name, accord_name, klass, id)
     self.x_active_tree   = tree_name
     self.x_active_accord = accord_name
-    if add_nodes
-      nodes = open_parent_nodes(klass.find_by_id(id))
-      # Create the hash so the view knows to highlight the selected node
-      @add_nodes = {}
-      @add_nodes[tree_name.to_sym] = nodes if nodes # Set nodes that need to be added, if any
-    end
   end
 
   def show_record(id = nil)

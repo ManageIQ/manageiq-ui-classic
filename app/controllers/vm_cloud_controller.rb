@@ -232,11 +232,11 @@ class VmCloudController < ApplicationController
 
     # Position in tree that matches selected record
     if role_allows?(:feature => "instances_accord") && prefix == "instances"
-      set_active_elements_authorized_user('instances_tree', 'instances', true, ManageIQ::Providers::CloudManager::Vm, id)
+      set_active_elements_authorized_user('instances_tree', 'instances', ManageIQ::Providers::CloudManager::Vm, id)
     elsif role_allows?(:feature => "images_accord") && prefix == "images"
-      set_active_elements_authorized_user('images_tree', 'images', true, ManageIQ::Providers::CloudManager::Template, id)
+      set_active_elements_authorized_user('images_tree', 'images', ManageIQ::Providers::CloudManager::Template, id)
     elsif role_allows?(:feature => "#{prefix}_filter_accord")
-      set_active_elements_authorized_user("#{prefix}_filter_tree", "#{prefix}_filter", false, nil, nil)
+      set_active_elements_authorized_user("#{prefix}_filter_tree", "#{prefix}_filter", nil, nil)
     else
       if (prefix == "vms" && role_allows?(:feature => "vms_instances_filter_accord")) ||
          (prefix == "templates" && role_allows?(:feature => "templates_images_filter_accord"))

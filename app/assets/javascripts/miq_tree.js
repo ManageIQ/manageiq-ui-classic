@@ -597,10 +597,6 @@ function miqInitTree(options, tree) {
     miqTreeActivateNodeSilently(options.tree_name, options.select_node);
   }
 
-  if (options.add_nodes) {
-    miqAddNodeChildren(options.tree_name, options.add_node_key, options.select_node, options.nodes);
-  }
-
   // Tree state persistence correction after the tree is completely loaded
   miqTreeObject(options.tree_name).getNodes().forEach(function (node) {
     if (miqTreeState(options.cookie_id, node.key) === !node.state.expanded) {
