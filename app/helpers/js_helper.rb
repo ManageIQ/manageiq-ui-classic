@@ -9,16 +9,6 @@ module JsHelper
     'miqSparkleOff();'
   end
 
-  # replacement for app/views/shared/ajax/_tree_lock_unlock.js.erb
-  def tree_lock(tree_var, lock = true)
-    bool_str = (!!lock).to_s
-    element = "#{tree_var}_div"
-    "
-      miqTreeObject('#{j_str(tree_var)}').#{lock ? 'disable' : 'enable'}All({silent: true, keepState: true});
-      #{javascript_dim(element, bool_str)}
-    ".html_safe
-  end
-
   # safe variant of j/escape_javascript that calls .to_s to work with non-string values
   def j_str(value)
     j(value.to_s)
@@ -34,10 +24,6 @@ module JsHelper
 
   def javascript_highlight(element, status)
     "miqHighlight('##{j_str(element)}', #{j_str(status)});".html_safe
-  end
-
-  def javascript_dim(element, status)
-    "miqDimDiv('##{j_str(element)}', #{j_str(status)});".html_safe
   end
 
   def javascript_disable_field(element)
