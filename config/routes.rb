@@ -547,6 +547,8 @@ Rails.application.routes.draw do
 
     :cloud_volume_backup    => {
       :get  => %w(
+        volume_select
+        volume_form_choices
         download_data
         edit
         index
@@ -557,6 +559,7 @@ Rails.application.routes.draw do
         tag_edit_form_field_changed
       ) + compare_get,
       :post => %w(
+        backup_restore
         button
         create
         dynamic_checkbox_refresh
@@ -568,6 +571,7 @@ Rails.application.routes.draw do
         tagging_edit
         tag_edit_form_field_changed
         update
+        wait_for_task
       ) + compare_post + adv_search_post + exp_post + save_post
     },
 
