@@ -15,22 +15,6 @@ describe JsHelper do
     end
   end
 
-  context '#tree_lock' do
-    it 'returns js to lock tree' do
-      expect(tree_lock('bar', true).gsub(/^\s+/, '')).to eq(<<-JS.strip_heredoc)
-        miqTreeObject('bar').disableAll({silent: true, keepState: true});
-        miqDimDiv('\#bar_div', true);
-      JS
-    end
-
-    it 'returns js to unlock tree' do
-      expect(tree_lock('bar', false).gsub(/^\s+/, '')).to eq(<<-JS.strip_heredoc)
-        miqTreeObject('bar').enableAll({silent: true, keepState: true});
-        miqDimDiv('\#bar_div', false);
-      JS
-    end
-  end
-
   context '#javascript_focus' do
     it 'returns js to focus on an element' do
       expect(javascript_focus('foo')).to eq("$('#foo').focus();")
@@ -41,13 +25,6 @@ describe JsHelper do
     it 'returns js to to add or remove the active class on the element' do
       expect(javascript_highlight('foo', true)).to eq("miqHighlight('\#foo', true);")
       expect(javascript_highlight('foo', false)).to eq("miqHighlight('\#foo', false);")
-    end
-  end
-
-  context '#javascript_dim' do
-    it 'returns js to to add or remove the dimmed class on the element' do
-      expect(javascript_dim('foo', true)).to eq("miqDimDiv('\#foo', true);")
-      expect(javascript_dim('foo', false)).to eq("miqDimDiv('\#foo', false);")
     end
   end
 
