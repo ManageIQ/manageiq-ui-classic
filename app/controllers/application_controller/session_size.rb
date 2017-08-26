@@ -32,26 +32,20 @@ module ApplicationController::SessionSize
 
     return unless data_size > SESSION_ELEMENT_THRESHOLD
 
+    deep_visit_data(data, :get_data_size, indent)
+  end
+
+  def deep_visit_data(data, method, indent)
     if data.kind_of?(Hash)
-      data.each { |k, v| data_size_process_pair(k, v, indent) }
+      data.each { |k, v| process_pair(k, v, indent, method) }
     elsif data.kind_of?(Array)
-      data.each_index do |k|
-        data_size_process_pair(k, data[k], indent)
-      end
+      data.each_with_index { |v, k| process_pair(k, v, indent, method) }
     end
   end
 
   def process_pair(k, value, ident, method)
     log_data_size(k, value, indent)
     send(method, value, indent + 1) if value.kind_of?(Hash) || value.kind_of?(Array)
-  end
-
-  def data_size_process_pair(k, value, ident)
-    process_pair(k, value, indent, :get_data_size)
-  end
-
-  def dump_session_data_process_pair(k, value, ident)
-    process_pair(k, value, indent, :dump_session_data)
   end
 
   def format_log_message(message)
@@ -72,13 +66,7 @@ module ApplicationController::SessionSize
       $log.warn(format_log_message('===============BEGIN SESSION DUMP==============='))
     end
 
-    if data.kind_of?(Hash)
-      data.each_pair { |k, | dump_session_data_process_pair(k, v, indent) }
-    elsif data.kind_of?(Array)
-      data.each_index do |k|
-        dump_session_data_process_pair(k, data[k], indent)
-      end
-    end
+    deep_visit_data(data, :dump_session_data, indent)
 
     if indent.zero?
       $log.warn(format_log_message('===============END SESSION DUMP==============='))
