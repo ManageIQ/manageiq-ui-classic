@@ -18,7 +18,7 @@ module ApplicationController::SessionSize
       data_size = Marshal.dump(data).size
     rescue => err
       data_size = 0
-      $log.warn("MIQ(#{controller_name}_controller-#{action_name}): get_data_size error: <#{err}>\n#{err.backtrace.join("\n")}")
+      $log.warn(format_log_message("get_data_size error: <#{err}>\n#{err.backtrace.join("\n")}"))
     end
 
     if indent.zero?
@@ -26,11 +26,8 @@ module ApplicationController::SessionSize
         puts "Session:\t #{data.class.name} of Size #{data_size}, Elements #{data.size}\n================================="
       end
       return if data_size < SESSION_LOG_THRESHOLD
-      msg = "Session object size of #{number_to_human_size(data_size)} exceeds threshold of #{number_to_human_size(SESSION_LOG_THRESHOLD)}"
-      if Rails.env.development?
-        puts "***** MIQ(#{controller_name}_controller-#{action_name}): #{msg}"
-      end
-      $log.warn("MIQ(#{controller_name}_controller-#{action_name}): " + msg)
+      msg = format_log_message("Session object size of #{number_to_human_size(data_size)} exceeds threshold of #{number_to_human_size(SESSION_LOG_THRESHOLD)}")
+      Rails.env.development? ? puts(msg) : $log.warn(msg)
     end
 
     return unless data_size > SESSION_ELEMENT_THRESHOLD
@@ -49,6 +46,10 @@ module ApplicationController::SessionSize
     get_data_size(value, indent + 1) if value.kind_of?(Hash) || value.kind_of?(Array)
   end
 
+  def format_log_message(message)
+    "MIQ(#{controller_name}_controller-#{action_name}): #{message}"
+  end
+
   # Dump the entire session contents to the evm.log
   def dump_session_data(data, indent = 0)
     begin
@@ -56,11 +57,11 @@ module ApplicationController::SessionSize
       data_size = Marshal.dump(data).size
     rescue => err
       data_size = 0
-      $log.warn("MIQ(#{controller_name}_controller-#{action_name}): dump_session error: <#{err}>\n#{err.backtrace.join("\n")}")
+      $log.warn(format_log_message("dump_session error: <#{err}>\n#{err.backtrace.join("\n")}"))
     end
 
     if indent.zero?
-      $log.warn("MIQ(#{controller_name}_controller-#{action_name}): ===============BEGIN SESSION DUMP===============")
+      $log.warn(format_log_message('===============BEGIN SESSION DUMP==============='))
     end
 
     if data.kind_of?(Hash)
@@ -78,7 +79,7 @@ module ApplicationController::SessionSize
     end
 
     if indent.zero?
-      $log.warn("MIQ(#{controller_name}_controller-#{action_name}): ===============END SESSION DUMP===============")
+      $log.warn(format_log_message('===============END SESSION DUMP==============='))
     end
   end
 
