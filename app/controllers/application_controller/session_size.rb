@@ -46,6 +46,11 @@ module ApplicationController::SessionSize
     get_data_size(value, indent + 1) if value.kind_of?(Hash) || value.kind_of?(Array)
   end
 
+  def dump_session_data_process_pair(k, value, ident)
+    log_data_size(k, value, indent)
+    dump_session_data(value, indent + 1) if value.kind_of?(Hash) || value.kind_of?(Array)
+  end
+
   def format_log_message(message)
     "MIQ(#{controller_name}_controller-#{action_name}): #{message}"
   end
@@ -65,16 +70,10 @@ module ApplicationController::SessionSize
     end
 
     if data.kind_of?(Hash)
-      data.keys.sort_by(&:to_s).each do |k|
-        value = data[k]
-        log_data_size(k, value, indent)
-        dump_session_data(value, indent + 1) if value.kind_of?(Hash) || value.kind_of?(Array)
-      end
+      data.each_pair { |k, | dump_session_data_process_pair(k, v, indent) }
     elsif data.kind_of?(Array)
       data.each_index do |k|
-        value = data[k]
-        log_data_size(k, value, indent)
-        dump_session_data(value, indent + 1)  if value.kind_of?(Hash) || value.kind_of?(Array)
+        dump_session_data_process_pair(k, data[k], indent)
       end
     end
 
