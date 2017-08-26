@@ -33,19 +33,20 @@ module ApplicationController::SessionSize
       $log.warn("MIQ(#{controller_name}_controller-#{action_name}): " + msg)
     end
 
-    if data.kind_of?(Hash) && data_size > SESSION_ELEMENT_THRESHOLD
-      data.keys.sort_by(&:to_s).each do |k|
-        value = data[k]
-        log_data_size(k, value, indent)
-        get_data_size(value, indent + 1)  if value.kind_of?(Hash) || value.kind_of?(Array)
-      end
-    elsif data.kind_of?(Array) && data_size > SESSION_ELEMENT_THRESHOLD
+    return unless data_size > SESSION_ELEMENT_THRESHOLD
+
+    if data.kind_of?(Hash)
+      data.each { |k, v| data_size_process_pair(k, v, indent) }
+    elsif data.kind_of?(Array)
       data.each_index do |k|
-        value = data[k]
-        log_data_size(k, value, indent)
-        get_data_size(value, indent + 1)  if value.kind_of?(Hash) || value.kind_of?(Array)
+        data_size_process_pair(k, data[k], indent)
       end
     end
+  end
+
+  def data_size_process_pair(k, value, ident)
+    log_data_size(k, value, indent)
+    get_data_size(value, indent + 1) if value.kind_of?(Hash) || value.kind_of?(Array)
   end
 
   # Dump the entire session contents to the evm.log
