@@ -22,10 +22,9 @@ module ApplicationController::SessionSize
     end
 
     if indent.zero?
-      if Rails.env.development?
-        puts "Session:\t #{data.class.name} of Size #{data_size}, Elements #{data.size}\n================================="
-      end
+      puts "Session:\t #{data.class.name} of Size #{data_size}, Elements #{data.size}\n=================================" if Rails.env.development?
       return if data_size < SESSION_LOG_THRESHOLD
+
       msg = format_log_message("Session object size of #{number_to_human_size(data_size)} exceeds threshold of #{number_to_human_size(SESSION_LOG_THRESHOLD)}")
       Rails.env.development? ? puts(msg) : $log.warn(msg)
     end
@@ -62,30 +61,24 @@ module ApplicationController::SessionSize
       $log.warn(format_log_message("dump_session error: <#{err}>\n#{err.backtrace.join("\n")}"))
     end
 
-    if indent.zero?
-      $log.warn(format_log_message('===============BEGIN SESSION DUMP==============='))
-    end
-
+    $log.warn(format_log_message('===============BEGIN SESSION DUMP===============')) if indent.zero?
     deep_visit_data(data, :dump_session_data, indent)
-
-    if indent.zero?
-      $log.warn(format_log_message('===============END SESSION DUMP==============='))
-    end
+    $log.warn(format_log_message('===============END SESSION DUMP===============')) if indent.zero?
   end
 
   # Log sizes and values from get_data_size and dump_session_data methods
   def log_data_size(el, value, indent)
-    indentation = "  " * indent
-    if value.kind_of?(Hash) || value.kind_of?(Array) || value.kind_of?(ActiveRecord::Base) ||
-       !value.respond_to?("size")
-      val_size = Marshal.dump(value).size
-    else
-      val_size = value.size
-    end
+    indentation = '  ' * indent
+    val_size = if value.kind_of?(Hash) || value.kind_of?(Array) || value.kind_of?(ActiveRecord::Base) || !value.respond_to?("size")
+                 Marshal.dump(value).size
+               else
+                 value.size
+               end
+
     line = "#{indentation}#{el} <#{value.class.name}> Size #{val_size}"
-    line << " Elements #{value.size}"  if value.kind_of?(Hash) || value.kind_of?(Array)
+    line << " Elements #{value.size}" if value.kind_of?(Hash) || value.kind_of?(Array)
     line << " ActiveRecord Object!!" if value.kind_of?(ActiveRecord::Base)
-    $log.warn("MIQ(#{controller_name}_controller-#{action_name}): " + line)
+    $log.warn(format_log_message(line))
 
     return if value.kind_of?(Hash) || value.kind_of?(Array) || value.kind_of?(ActiveRecord::Base)
 
