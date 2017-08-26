@@ -42,7 +42,7 @@ module ApplicationController::SessionSize
     end
   end
 
-  def process_pair(k, value, ident, method)
+  def process_pair(k, value, indent, method)
     log_data_size(k, value, indent)
     send(method, value, indent + 1) if value.kind_of?(Hash) || value.kind_of?(Array)
   end
