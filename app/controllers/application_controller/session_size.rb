@@ -53,14 +53,6 @@ module ApplicationController::SessionSize
 
   # Dump the entire session contents to the evm.log
   def dump_session_data(data, indent = 0)
-    begin
-      # TODO: (FB 9144) Determine how the session store handles singleton object so it does not throw errors.
-      data_size = Marshal.dump(data).size
-    rescue => err
-      data_size = 0
-      $log.warn(format_log_message("dump_session error: <#{err}>\n#{err.backtrace.join("\n")}"))
-    end
-
     $log.warn(format_log_message('===============BEGIN SESSION DUMP===============')) if indent.zero?
     deep_visit_data(data, :dump_session_data, indent)
     $log.warn(format_log_message('===============END SESSION DUMP===============')) if indent.zero?
@@ -85,4 +77,3 @@ module ApplicationController::SessionSize
     $log.debug { "Value #{value.inspect[0...2000]}" }
   end
 end
-
