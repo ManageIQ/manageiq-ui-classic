@@ -41,14 +41,17 @@ module ApplicationController::SessionSize
     end
   end
 
-  def data_size_process_pair(k, value, ident)
+  def process_pair(k, value, ident, method)
     log_data_size(k, value, indent)
-    get_data_size(value, indent + 1) if value.kind_of?(Hash) || value.kind_of?(Array)
+    send(method, value, indent + 1) if value.kind_of?(Hash) || value.kind_of?(Array)
+  end
+
+  def data_size_process_pair(k, value, ident)
+    process_pair(k, value, indent, :get_data_size)
   end
 
   def dump_session_data_process_pair(k, value, ident)
-    log_data_size(k, value, indent)
-    dump_session_data(value, indent + 1) if value.kind_of?(Hash) || value.kind_of?(Array)
+    process_pair(k, value, indent, :dump_session_data)
   end
 
   def format_log_message(message)
