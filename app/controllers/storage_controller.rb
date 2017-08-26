@@ -121,15 +121,8 @@ class StorageController < ApplicationController
 
     return if ["custom_button"].include?(params[:pressed])    # custom button screen, so return, let custom_buttons method handle everything
     return if ["storage_tag"].include?(params[:pressed]) && @flash_array.nil?   # Tag screen showing, so return
-    if !@flash_array && !@refresh_partial # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    elsif @flash_array && @lastaction == "show"
-      @storage = @record = identify_record(params[:id])
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    end
+
+    check_if_button_is_implemented
 
     if single_delete_test
       single_delete_redirect
@@ -241,7 +234,7 @@ class StorageController < ApplicationController
   end
 
   def x_show
-    @storage = @record = identify_record(params[:id], Storage)
+    @record = identify_record(params[:id], Storage)
     generic_x_show
   end
 
@@ -542,7 +535,7 @@ class StorageController < ApplicationController
     if !@record.nil? && @record[:type] == 'StorageCluster'
       return false
     end
-    !(@in_a_form || (x_active_tree == :storage_tree && @record) || (x_active_tree == :storage_pod_tree && (x_node == 'root' || @storage)))
+    !(@in_a_form || (x_active_tree == :storage_tree && @record) || (x_active_tree == :storage_pod_tree && (x_node == 'root' || @record)))
   end
 
   def breadcrumb_name(_model)

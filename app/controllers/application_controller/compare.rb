@@ -299,7 +299,7 @@ module ApplicationController::Compare
       elsif @sb[:compare_db] == "Vm"
         @record = @vm = @drift_obj = find_record_with_rbac(db, params[:id])
       elsif @sb[:compare_db] == "EmsCluster"
-        @record = @ems_cluster = @drift_obj = find_record_with_rbac(db, params[:id])
+        @record = @drift_obj = find_record_with_rbac(db, params[:id])
       else
         @record = @drift_obj = find_record_with_rbac(db, params[:id])
       end
