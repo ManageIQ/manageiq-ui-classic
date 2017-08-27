@@ -85,6 +85,37 @@ module ApplicationController::Compare
     compare_all_diff_same
   end
 
+  def update_compare_partial(command, mode)
+    render :update do |page|
+      page << javascript_prologue
+      case mode
+      when 'different'
+        page << "ManageIQ.toolbars.enableItem('#center_tb', '#{command}_all');"
+        page << "ManageIQ.toolbars.unmarkItem('#center_tb', '#{command}_all');"
+        page << "ManageIQ.toolbars.enableItem('#center_tb', '#{command}_same');"
+        page << "ManageIQ.toolbars.unmarkItem('#center_tb', '#{command}_same');"
+        page << "ManageIQ.toolbars.disableItem('#center_tb', '#{command}_diff');"
+        page << "ManageIQ.toolbars.markItem('#center_tb', '#{command}_diff');"
+      when 'same'
+        page << "ManageIQ.toolbars.enableItem('#center_tb', '#{command}_all');"
+        page << "ManageIQ.toolbars.unmarkItem('#center_tb', '#{command}_all');"
+        page << "ManageIQ.toolbars.disableItem('#center_tb', '#{command}_same');"
+        page << "ManageIQ.toolbars.markItem('#center_tb', '#{command}_same');"
+        page << "ManageIQ.toolbars.enableItem('#center_tb', '#{command}_diff');"
+        page << "ManageIQ.toolbars.unmarkItem('#center_tb', '#{command}_diff');"
+      else
+        page << "ManageIQ.toolbars.disableItem('#center_tb', '#{command}_all');"
+        page << "ManageIQ.toolbars.markItem('#center_tb', '#{command}_all');"
+        page << "ManageIQ.toolbars.enableItem('#center_tb', '#{command}_same');"
+        page << "ManageIQ.toolbars.unmarkItem('#center_tb', '#{command}_same');"
+        page << "ManageIQ.toolbars.enableItem('#center_tb', '#{command}_diff');"
+        page << "ManageIQ.toolbars.unmarkItem('#center_tb', '#{command}_diff');"
+      end
+      page.replace_html('main_div', :partial => 'layouts/compare')
+      page << 'miqSparkle(false);'
+    end
+  end
+
   def compare_all_diff_same
     @compare = Marshal.load(session[:miq_compare])
     @compressed = session[:miq_compressed]
@@ -97,33 +128,7 @@ module ApplicationController::Compare
       @items_per_page = params[:ppsetting].to_i           # Set the new per page value
     end
     compare_to_json(@compare)
-    render :update do |page|
-      page << javascript_prologue
-      if @sb[:miq_temp_params] == "different"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'compare_all');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'compare_all');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'compare_same');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'compare_same');"
-        page << "ManageIQ.toolbars.disableItem('#center_tb', 'compare_diff');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', 'compare_diff');"
-      elsif @sb[:miq_temp_params] == "same"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'compare_all');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'compare_all');"
-        page << "ManageIQ.toolbars.disableItem('#center_tb', 'compare_same');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', 'compare_same');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'compare_diff');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'compare_diff');"
-      else
-        page << "ManageIQ.toolbars.disableItem('#center_tb', 'compare_all');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', 'compare_all');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'compare_same');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'compare_same');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'compare_diff');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'compare_diff');"
-      end
-      page.replace_html("main_div", :partial => "layouts/compare")  # Replace the main div area contents
-      page << "miqSparkle(false);"
-    end
+    update_compare_partial('compare', @sb[:miq_temp_params])
   end
 
   # Compare multiple VMs to show same
@@ -409,33 +414,7 @@ module ApplicationController::Compare
                     :url  => "/#{@sb[:compare_db].downcase}/drift")
     @lastaction = "drift"
     @showtype = "drift"
-    render :update do |page|
-      page << javascript_prologue
-      if @sb[:miq_drift_params] == "different"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'drift_all');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'drift_all');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'drift_same');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'drift_same');"
-        page << "ManageIQ.toolbars.disableItem('#center_tb', 'drift_diff');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', 'drift_diff');"
-      elsif @sb[:miq_drift_params] == "same"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'drift_all');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'drift_all');"
-        page << "ManageIQ.toolbars.disableItem('#center_tb', 'drift_same');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', 'drift_same');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'drift_diff');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'drift_diff');"
-      else
-        page << "ManageIQ.toolbars.disableItem('#center_tb', 'drift_all');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', 'drift_all');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'drift_diff');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'drift_diff');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'drift_same');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'drift_same');"
-      end
-      page.replace_html("main_div", :partial => "layouts/compare") # Replace the main div area contents
-      page << "miqSparkle(false);"
-    end
+    update_compare_partial('drift', @sb[:miq_drift_params])
   end
 
   def drift_all
