@@ -344,36 +344,27 @@ module ApplicationController::Compare
     end
   end
 
-  def get_formatted_time(section, typ = "compare")
+  def format_data_in_section(section, method)
     @compare.results.each do |vm|
       vm[1][section.to_sym].each do |s|
-        if typ == "compare"
-          @compare.master_list.each_slice(3) do |sections, records, _fields| # section is a symbol, records and fields are arrays
-            if sections[:name].to_s == section.to_s
-              if !records.blank?
-                if s[1].kind_of?(Hash)
-                  s[1].each { |f| format_timezone_value_for_compare(f) }
-                end
-              else
-                format_timezone_value_for_compare(s)
+        @compare.master_list.each_slice(3) do |sections, records, _fields| # section is a symbol, records and fields are arrays
+          if sections[:name].to_s == section.to_s
+            if !records.blank?
+              if s[1].kind_of?(Hash)
+                s[1].each { |f| method.call(f) }
               end
-            end
-          end
-        else
-          @compare.master_list.each_slice(3) do |sections, records, _fields| # section is a symbol, records and fields are arrays
-            if sections[:name].to_s == section.to_s
-              if !records.blank?
-                if s[1].kind_of?(Hash)
-                  s[1].each { |f| format_timezone_value_for_drift(f) }
-                end
-              else
-                format_timezone_value_for_drift(s)
-              end
+            else
+              method.call(s)
             end
           end
         end
       end
     end
+  end
+
+  def get_formatted_time(section, typ = "compare")
+    method_name = typ == 'compare' ? :format_timezone_value_for_compare : :format_timezone_value_for_drift
+    format_data_in_section(section, method(method_name))
   end
 
   # Show drift analysis for multiple VM scans
