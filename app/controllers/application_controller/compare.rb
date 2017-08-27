@@ -332,6 +332,18 @@ module ApplicationController::Compare
     @compare
   end
 
+  def format_timezone_value_for_compare(datum)
+    if datum[1].kind_of?(Hash) && datum[1].key?(:_value_) && datum[1][:_value_].kind_of?(Time) && !datum[1][:_value_].blank? && datum[1][:_value_] != "" && datum[1][:_value_] != MiqCompare::EMPTY
+      datum[1][:_value_] = format_timezone(datum[1][:_value_], Time.zone, "view")
+    end
+  end
+
+  def format_timezone_value_for_drift(datum)
+    if DRIFT_TIME_COLUMNS.include?(datum[0].to_s) && datum[1].kind_of?(Hash) && datum[1].key?(:_value_) && !datum[1][:_value_].blank? && datum[1][:_value_] != "" && datum[1][:_value_] != MiqCompare::EMPTY
+      datum[1][:_value_] = format_timezone(datum[1][:_value_], Time.zone, "view")
+    end
+  end
+
   def get_formatted_time(section, typ = "compare")
     @compare.results.each do |vm|
       vm[1][section.to_sym].each do |s|
@@ -340,16 +352,10 @@ module ApplicationController::Compare
             if sections[:name].to_s == section.to_s
               if !records.blank?
                 if s[1].kind_of?(Hash)
-                  s[1].each do |f|
-                    if f[1].kind_of?(Hash) && f[1].key?(:_value_) && f[1][:_value_].kind_of?(Time) && !f[1][:_value_].blank? && f[1][:_value_] != "" && f[1][:_value_] != MiqCompare::EMPTY
-                      f[1][:_value_] = format_timezone(f[1][:_value_], Time.zone, "view")
-                    end
-                  end
+                  s[1].each { |f| format_timezone_value_for_compare(f) }
                 end
               else
-                if s[1].kind_of?(Hash) && s[1].key?(:_value_) && s[1][:_value_].kind_of?(Time) && !s[1][:_value_].blank? && s[1][:_value_] != "" && s[1][:_value_] != MiqCompare::EMPTY
-                  s[1][:_value_] = format_timezone(s[1][:_value_], Time.zone, "view")
-                end
+                format_timezone_value_for_compare(s)
               end
             end
           end
@@ -358,16 +364,10 @@ module ApplicationController::Compare
             if sections[:name].to_s == section.to_s
               if !records.blank?
                 if s[1].kind_of?(Hash)
-                  s[1].each do |f|
-                    if DRIFT_TIME_COLUMNS.include?(f[0].to_s) && f[1].kind_of?(Hash) && f[1].key?(:_value_) && !f[1][:_value_].blank? && f[1][:_value_] != "" && f[1][:_value_] != MiqCompare::EMPTY
-                      f[1][:_value_] = format_timezone(f[1][:_value_], Time.zone, "view")
-                    end
-                  end
+                  s[1].each { |f| format_timezone_value_for_drift(f) }
                 end
               else
-                if DRIFT_TIME_COLUMNS.include?(s[0].to_s) && s[1].kind_of?(Hash) && s[1].key?(:_value_) && !s[1][:_value_].blank? && s[1][:_value_] != "" && s[1][:_value_] != MiqCompare::EMPTY
-                  s[1][:_value_] = format_timezone(s[1][:_value_], Time.zone, "view")
-                end
+                format_timezone_value_for_drift(s)
               end
             end
           end
