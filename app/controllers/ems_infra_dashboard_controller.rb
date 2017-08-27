@@ -21,11 +21,11 @@ class EmsInfraDashboardController < ApplicationController
   end
 
   def recent_hosts_data
-    render :json => {:data => recent_hosts_data(params[:id])}
+    render :json => {:data => recent_hosts(params[:id])}
   end
 
   def recent_vms_data
-    render :json => {:data => recent_vms_data(params[:id])}
+    render :json => {:data => recent_vms(params[:id])}
   end
 
   def ems_utilization_data
@@ -42,11 +42,11 @@ class EmsInfraDashboardController < ApplicationController
     EmsInfraDashboardService.new(ems_id, self).cluster_heatmap_data
   end
 
-  def recent_hosts_data(ems_id)
+  def recent_hosts(ems_id)
     EmsInfraDashboardService.new(ems_id, self).recent_hosts_data
   end
 
-  def recent_vms_data(ems_id)
+  def recent_vms(ems_id)
     EmsInfraDashboardService.new(ems_id, self).recent_vms_data
   end
 

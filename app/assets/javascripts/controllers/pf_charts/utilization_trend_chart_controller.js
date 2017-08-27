@@ -15,35 +15,6 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartControlle
     });
 
     vm.title = "Global Utilization";
-
-//     vm.config = {
-//       title: 'Memory',
-//       units: 'GB'
-//     };
-//     vm.donutConfig = {
-//       chartId: 'chartA',
-//       thresholds: {'warning': '60', 'error': '90'}
-//     };
-//     vm.sparklineConfig = {
-//       'chartId': 'exampleSparkline',
-//       'tooltipType': 'default',
-//       'units': 'GB'
-//     };
-
-//     var today = new Date();
-//     var dates = ['dates'];
-//     for (var d = 20 - 1; d >= 0; d--) {
-//       dates.push(new Date(today.getTime() - (d * 24 * 60 * 60 * 1000)));
-//     }
-//     vm.data = {
-//       dataAvailable: true,
-//       used: 76,
-//       total: 100,
-//       xData: dates,
-//       yData: ['used', '10', '20', '30', '20', '30', '10', '14', '20', '25', '68', '54', '56', '78', '56', '67', '88',
-//               '76', '65', '87', '76']
-//     };
-
     vm.centerLabel = 'used';
     vm.custShowXAxis = false;
     vm.custShowYAxis = false;
@@ -74,7 +45,7 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartControlle
           };
         } else {
           metricsDataStruct.data[keys[i]] = {
-            'data': processData(data[keys[i]], 'dates', chartsMixin.chartConfig[keys[i] + 'UsageConfig'].units),
+            'data': chartsMixin.processData(data[keys[i]], 'dates', chartsMixin.chartConfig[keys[i] + 'UsageConfig'].units),
             'config': {
               'title': chartsMixin.chartConfig[keys[i] + 'UsageConfig'].title,
               'units': chartsMixin.chartConfig[keys[i] + 'UsageConfig'].units
@@ -88,16 +59,6 @@ angular.module( 'patternfly.charts' ).controller('utilizationTrendChartControlle
       metricsDataStruct.data = {dataAvailable: false};
     }
     return metricsDataStruct.data
-  };
-
-  var processData = function(data, xDataLabel, yDataLabel) {
-    if (!data) {
-      return { data: {dataAvailable: false} }
-    }
-
-    data.xData.unshift(xDataLabel);
-    data.yData.unshift(yDataLabel);
-    return data;
   };
 
   init();

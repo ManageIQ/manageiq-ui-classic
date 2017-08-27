@@ -30,7 +30,7 @@ class EmsInfraDashboardService
 
   def recent_vms_data
     {
-      :recentVms => recentHosts
+      :recentVms => recentVms
     }.compact
   end
 
@@ -158,20 +158,30 @@ class EmsInfraDashboardService
   def recentHosts
     # Get recent hosts
     all_hosts = recentRecords(Host)
-      {
-      :xData => all_hosts.keys,
-      :yData => all_hosts.values.map,
-      :title => openstack? ? _('Recent Nodes') : _('Recent Hosts'),
-      :label => openstack? ? _('Nodes') : _('Hosts'),
+    return { :dataAvailable => false } if all_hosts.blank?
+    {
+      :dataAvailable => true,
+      :xData         => all_hosts.keys,
+      :yData         => all_hosts.values.map,
+      :config => {
+        :title         => openstack? ? _('Recent Nodes') : _('Recent Hosts'),
+        :label         => openstack? ? _('Nodes') : _('Hosts'),
+      }
     }
   end
 
   def recentVms
     # Get recent VMs
     all_vms = recentRecords(VmOrTemplate)
+    return { :dataAvailable => false } if all_vms.blank?
     {
-      :xData => all_vms.keys,
-      :yData => all_vms.values.map
+      :dataAvailable => true,
+      :xData         => all_vms.keys,
+      :yData         => all_vms.values.map,
+      :config => {
+        :title         => _('Recent VMs'),
+        :label         => _('VMs'),
+      }
     }
   end
 
@@ -229,7 +239,7 @@ class EmsInfraDashboardService
 
     @daily_metrics ||= Metric::Helper.find_for_interval_name('daily', tp)
                                      .where(:resource => (@ems || ManageIQ::Providers::InfraManager.all))
-                                     .where('timestamp > ?', 30000.days.ago.utc).order('timestamp')
+                                     .where('timestamp > ?', 30.days.ago.utc).order('timestamp')
   end
 
   def openstack?

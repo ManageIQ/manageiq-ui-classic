@@ -1265,6 +1265,8 @@ Rails.application.routes.draw do
         data
         cluster_metrics_data
         ems_utilization_data
+        recent_hosts_data
+        recent_vms_data
       )
     },
 
