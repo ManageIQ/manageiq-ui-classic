@@ -5,24 +5,7 @@
   .card-pf.card-pf-view
     .card-pf-body
       .card-pf-heading-kebab
-        .dropdown.pull-right.dropdown-kebab-pf
-          %button.btn.btn-link.dropdown-toggle{:type => "button", :id => button_id, "data-toggle" => "dropdown", "aria-haspopup" => "true"}
-            %span.fa.fa-ellipsis-v
-          %ul.dropdown-menu.dropdown-menu-right{"aria-labelledby" => button_id}
-            - if role_allows?(:feature => "dashboard_add")
-              %li
-                = presenter.button_close
-            %li
-              = presenter.button_minmax
-            - if presenter.widget.contents_for_user(current_user).present?
-              - if %w(report chart).include?(presenter.widget.content_type)
-                %li
-                  = presenter.button_fullscreen
-                %li
-                  = presenter.button_pdf
-              - if %w(chart).include?(presenter.widget.content_type)
-                %li
-                  = presenter.button_zoom
+        %dropdown-menu{:id => button_id, "buttons-data" => presenter.widget_buttons}
         %h2.card-pf-title.sortable-handle{:style => "cursor:move"}
           = h(presenter.widget.title)
 
