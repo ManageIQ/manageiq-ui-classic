@@ -675,7 +675,7 @@ module ApplicationHelper
     if model
       if model.ends_with?("Performance", "MetricsRollup")
         return :performance
-      elsif model == UiConstants::TREND_MODEL
+      elsif model == ApplicationController::TREND_MODEL
         return :trend
       elsif model.starts_with?("Chargeback")
         return model.downcase.to_sym

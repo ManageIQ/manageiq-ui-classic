@@ -331,7 +331,7 @@ module ReportController::Reports::Editor
 
   def build_tabs
     req = "edit"
-    if @edit[:new][:model] == TREND_MODEL
+    if @edit[:new][:model] == ApplicationController::TREND_MODEL
       @tabs = [
         ["#{req}_1", _("Columns")],
         ["#{req}_3", _("Filter")],
@@ -1081,7 +1081,7 @@ module ReportController::Reports::Editor
     end
 
     # Remove when we support user sorting of trend reports
-    if rpt.db == TREND_MODEL
+    if rpt.db == ApplicationController::TREND_MODEL
       rpt.sortby = ["resource_name"]
       rpt.order = "Ascending"
     end
@@ -1428,7 +1428,7 @@ module ReportController::Reports::Editor
     @edit[:new][:name] = "Copy of #{@rpt.name}" if params[:pressed] == "miq_report_copy"
 
     # For trend reports, check for percent field chosen
-    if @rpt.db && @rpt.db == TREND_MODEL &&
+    if @rpt.db && @rpt.db == ApplicationController::TREND_MODEL &&
        MiqExpression.reporting_available_fields(@edit[:new][:model], @edit[:new][:perf_interval]).find do|af|
          af.last ==
          @edit[:new][:perf_trend_db] + "-" + @edit[:new][:perf_trend_col]
@@ -1623,7 +1623,7 @@ module ReportController::Reports::Editor
 
   def valid_report?(rpt)
     active_tab = 'edit_1'
-    if @edit[:new][:model] == TREND_MODEL
+    if @edit[:new][:model] == ApplicationController::TREND_MODEL
       unless @edit[:new][:perf_trend_col]
         add_flash(_('Trending for is required'), :error)
       end
@@ -1746,7 +1746,7 @@ module ReportController::Reports::Editor
         add_flash(_('Formatting tab is not available until at least 1 field has been selected'), :error)
       end
     when '3'
-      if @edit[:new][:model] == TREND_MODEL
+      if @edit[:new][:model] == ApplicationController::TREND_MODEL
         unless @edit[:new][:perf_trend_col]
           add_flash(_('Filter tab is not available until Trending for field has been selected'), :error)
         end
@@ -1786,7 +1786,7 @@ module ReportController::Reports::Editor
         end
       end
     when '7'
-      if @edit[:new][:model] == TREND_MODEL
+      if @edit[:new][:model] == ApplicationController::TREND_MODEL
         unless @edit[:new][:perf_trend_col]
           add_flash(_('Preview tab is not available until Trending for field has been selected'), :error)
         end
