@@ -315,8 +315,7 @@ function miqMenuChangeRow(action, elem) {
       // quick and dirty edit - FIXME use a $modal when converted to angular
       var text = $(elem).text().trim();
       text = prompt(__('New name?'), text);
-      if (text) // ! cancel
-        {
+      if (text) {
         $(elem).text(text);
       }
       break;
@@ -357,7 +356,7 @@ function miqMenuChangeRow(action, elem) {
       break;
 
     case 'delete':
-      if (! selected.length)        {
+      if (! selected.length) {
         break;
       }
 
@@ -519,7 +518,9 @@ function miqInitTree(options, tree) {
       }
       parent.nodes.forEach(function(node) {
         if (parent.state.checked === true) {
-          if (! node.state) {node.state = {};}
+          if (! node.state) {
+            node.state = {};
+          }
           node.state.checked = true;
         }
       });

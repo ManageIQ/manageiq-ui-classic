@@ -92,9 +92,8 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
     if (formSubmit) {
       miqSparkleOn();
       return miqRESTAjaxButton(url, $event.target, 'json');
-    }    else {
-      $event.preventDefault();
     }
+    $event.preventDefault();
   };
 
   this.validateClicked = function($event, authType, formSubmit, angularForm, url) {
