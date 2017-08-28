@@ -51,6 +51,34 @@ module ViewHelper
     N_('4 Years Ago')
   ].freeze
 
+  # FROM Date/Time expression atom selectors
+  FROM_HOURS = [
+    N_('This Hour'),
+    N_('Last Hour'),
+    N_('2 Hours Ago'),
+    N_('3 Hours Ago'),
+    N_('4 Hours Ago'),
+    N_('5 Hours Ago'),
+    N_('6 Hours Ago'),
+    N_('7 Hours Ago'),
+    N_('8 Hours Ago'),
+    N_('9 Hours Ago'),
+    N_('10 Hours Ago'),
+    N_('11 Hours Ago'),
+    N_('12 Hours Ago'),
+    N_('13 Hours Ago'),
+    N_('14 Hours Ago'),
+    N_('15 Hours Ago'),
+    N_('16 Hours Ago'),
+    N_('17 Hours Ago'),
+    N_('18 Hours Ago'),
+    N_('19 Hours Ago'),
+    N_('20 Hours Ago'),
+    N_('21 Hours Ago'),
+    N_('22 Hours Ago'),
+    N_('23 Hours Ago')
+  ].freeze
+
   class << self
     def concat_tag(*args, &block)
       concat content_tag(*args, &block)
