@@ -57,7 +57,7 @@
                       "data-miq_sparkle_off" => true,
                       "data-miq_observe"     => {:url => url}.to_json)
                   - elsif [:datetime, :date].include?(field_type)
-                    - opts = (field_type == :datetime ? FROM_HOURS : []) + FROM_DAYS + FROM_WEEKS + FROM_MONTHS + FROM_QUARTERS + ViewHelper::FROM_YEARS
+                    - opts = (field_type == :datetime ? ViewHelper::FROM_HOURS : []) + FROM_DAYS + FROM_WEEKS + FROM_MONTHS + FROM_QUARTERS + ViewHelper::FROM_YEARS
                     = select_tag("styleval_#{f_idx}_#{s_idx}",
                       options_for_select(Hash[opts.map {|x| [_(x), x]}], styles[s_idx][:value]),
                       :multiple              => false,

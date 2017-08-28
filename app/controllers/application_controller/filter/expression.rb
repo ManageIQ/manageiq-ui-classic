@@ -564,8 +564,8 @@ module ApplicationController::Filter
     end
 
     def self.through_choices(from_choice) # Return the through_choices pulldown array for FROM datetime/date operators
-      tc = if FROM_HOURS.include?(from_choice)
-             FROM_HOURS
+      tc = if ViewHelper::FROM_HOURS.include?(from_choice)
+             ViewHelper::FROM_HOURS
            elsif FROM_DAYS.include?(from_choice)
              FROM_DAYS
            elsif FROM_WEEKS.include?(from_choice)
