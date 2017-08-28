@@ -122,17 +122,6 @@ module UiConstants
   EXP_FROM = "FROM"
   EXP_IS = "IS"
 
-  FROM_DAYS = [
-    N_('Today'),
-    N_('Yesterday'),
-    N_('2 Days Ago'),
-    N_('3 Days Ago'),
-    N_('4 Days Ago'),
-    N_('5 Days Ago'),
-    N_('6 Days Ago'),
-    N_('7 Days Ago'),
-    N_('14 Days Ago')
-  ]
   FROM_WEEKS = [
     N_('This Week'),
     N_('Last Week'),
