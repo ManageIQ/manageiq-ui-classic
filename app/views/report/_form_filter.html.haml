@@ -1,7 +1,7 @@
 #filter_div
   - if @edit[:new][:perf_interval]
     = render :partial => "form_filter_performance"
-  - if @edit[:new][:model] == TREND_MODEL
+  - if @edit[:new][:model] == ApplicationController::TREND_MODEL
     -# No additional filters for trend reports
   - elsif Chargeback.db_is_chargeback?(@edit[:new][:model])
     = render :partial => "form_filter_chargeback"
