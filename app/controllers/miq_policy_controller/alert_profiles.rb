@@ -81,14 +81,11 @@ module MiqPolicyController::AlertProfiles
     when 'reset', nil # Reset or first time in
       alert_profile_edit_reset
       return
-    end
-
-    return unless alert_profile_edit_load_edit
-
-    case params[:button]
-    when "save", "add"
+    when 'save', 'add'
+      return unless alert_profile_edit_load_edit
       alert_profile_edit_save_add
-    when "move_right", "move_left", "move_allleft"
+    when 'move_right', 'move_left', 'move_allleft'
+      return unless alert_profile_edit_load_edit
       alert_profile_edit_move
     end
   end
