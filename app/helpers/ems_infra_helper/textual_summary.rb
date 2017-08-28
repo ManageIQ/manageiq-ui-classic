@@ -14,7 +14,7 @@ module EmsInfraHelper::TextualSummary
   def textual_group_relationships
     TextualGroup.new(
       _("Relationships"),
-      %i(infrastructure_folders folders clusters hosts datastores vms templates orchestration_stacks ems_cloud)
+      %i(infrastructure_folders folders clusters hosts datastores vms templates orchestration_stacks ems_cloud network_manager)
     )
   end
 
@@ -128,6 +128,12 @@ module EmsInfraHelper::TextualSummary
     return nil unless @record.provider.respond_to?(:cloud_ems)
 
     textual_link(@record.provider.try(:cloud_ems).first)
+  end
+
+  def textual_network_manager
+    return nil unless @record.ext_management_system.respond_to?(:network_manager)
+
+    textual_link(@record.ext_management_system.try(:network_manager))
   end
 
   def textual_datastores
