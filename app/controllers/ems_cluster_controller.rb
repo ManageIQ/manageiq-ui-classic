@@ -72,15 +72,7 @@ class EmsClusterController < ApplicationController
     return if ["custom_button"].include?(params[:pressed])    # custom button screen, so return, let custom_buttons method handle everything
     return if ["ems_cluster_tag", "ems_cluster_compare", "common_drift", "ems_cluster_protect"].include?(params[:pressed]) && @flash_array.nil?   # Tag screen showing, so return
 
-    if !@flash_array && !@refresh_partial # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    elsif @flash_array && @lastaction == "show"
-      @ems_cluster = @record = identify_record(params[:id])
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    end
+    check_if_button_is_implemented
 
     if single_delete_test
       single_delete_redirect
@@ -108,20 +100,20 @@ class EmsClusterController < ApplicationController
 
   def hosts_subsets
     condition         = nil
-    label             = _("%{name} (All %{titles})" % {:name => @ems_cluster.name, :titles => title_for_hosts})
+    label             = _("%{name} (All %{titles})" % {:name => @record.name, :titles => title_for_hosts})
     breadcrumb_suffix = ""
 
     host_service_group_name = params[:host_service_group_name]
     if host_service_group_name
       case params[:status]
       when 'running'
-        hosts_filter =  @ems_cluster.host_ids_with_running_service_group(host_service_group_name)
+        hosts_filter =  @record.host_ids_with_running_service_group(host_service_group_name)
         label        = _("Hosts with running %{name}") % {:name => host_service_group_name}
       when 'failed'
-        hosts_filter =  @ems_cluster.host_ids_with_failed_service_group(host_service_group_name)
+        hosts_filter =  @record.host_ids_with_failed_service_group(host_service_group_name)
         label        = _("Hosts with failed %{name}") % {:name => host_service_group_name}
       when 'all'
-        hosts_filter = @ems_cluster.host_ids_with_service_group(host_service_group_name)
+        hosts_filter = @record.host_ids_with_service_group(host_service_group_name)
         label        = _("All %{titles} with %{name}") % {:titles => title_for_hosts, :name => host_service_group_name}
       end
 

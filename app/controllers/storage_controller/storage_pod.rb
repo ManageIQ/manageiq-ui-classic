@@ -41,7 +41,7 @@ module StorageController::StoragePod
       nodes = treenodeid.split("-")
       if nodes[0] == "ds"
         @right_cell_div = "storage_details"
-        @record = @storage = Storage.find_by_id(from_cid(nodes[1]))
+        @record = Storage.find_by_id(from_cid(nodes[1]))
         @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => "Storage")}
       else
         storage_pod_list

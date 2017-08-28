@@ -104,15 +104,7 @@ class OrchestrationStackController < ApplicationController
                 @flash_array.nil? # Tag screen showing, so return
     end
 
-    if @flash_array.nil? && !@refresh_partial # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    elsif @flash_array && @lastaction == "show"
-      @orchestration_stack = @record = identify_record(params[:id])
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    end
+    check_if_button_is_implemented
 
     if single_delete_test
       single_delete_redirect

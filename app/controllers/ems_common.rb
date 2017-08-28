@@ -344,6 +344,7 @@ module EmsCommon
       return if ["custom_button"].include?(params[:pressed])    # custom button screen, so return, let custom_buttons method handle everything
       return if ["#{table_name}_tag", "#{table_name}_protect", "#{table_name}_timeline"].include?(params[:pressed]) &&
                 @flash_array.nil? # Tag screen showing, so return
+
       check_if_button_is_implemented
     end
 
