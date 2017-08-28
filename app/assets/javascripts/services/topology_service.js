@@ -55,7 +55,7 @@ ManageIQ.angular.app.service('topologyService', function() {
             .style('top', mousePosition[1] + 'px');
         popup.append('h5').text('Actions on ' + data.item.display_kind);
 
-        if (data.item.kind != 'Tag') {
+        if (data.item.kind !== 'Tag') {
           popup.append('p').text(__('Go to summary page')).on('click', function() {
             self.dblclick(data);
           });
@@ -85,7 +85,7 @@ ManageIQ.angular.app.service('topologyService', function() {
     };
 
     self.dblclick = function dblclick(d) {
-      if (d.item.kind == 'Tag') {
+      if (d.item.kind === 'Tag') {
         return false;
       }
       window.location.assign(topologyService.geturl(d));
@@ -205,7 +205,7 @@ ManageIQ.angular.app.service('topologyService', function() {
     while ((tmp_list.length > size_limit) && kind_index < remove_hierarchy.length) {
       var kind_to_hide = remove_hierarchy[kind_index];
       tmp_list = tmp_list.filter(function(item) {
-        return item.kind != kind_to_hide;
+        return item.kind !== kind_to_hide;
       });
       kind_index++;
       delete kinds[kind_to_hide];
@@ -216,6 +216,12 @@ ManageIQ.angular.app.service('topologyService', function() {
   // this injects some common code in the controller - temporary pending a proper merge
   this.mixinSearch = function($scope) {
     var topologyService = this;
+    var resetEvent = function() {
+      topologyService.resetSearch($scope.d3);
+      $('input#search_topology')[0].value = '';
+      $scope.searching = false;
+      $scope.notFound = false;
+    };
     $scope.searching = false;
     $scope.notFound = false;
       // NOTE: listener on search
@@ -227,18 +233,10 @@ ManageIQ.angular.app.service('topologyService', function() {
           var query = $('input#search_topology')[0].value;
           $scope.notFound = ! topologyService.searchNode(svg, query);
         } else if (event.name === 'resetSearch') {
-          topologyService.resetSearch($scope.d3);
-          $('input#search_topology')[0].value = '';
-          $scope.searching = false;
-          $scope.notFound = false;
+          resetEvent();
         }
       }
     });
-    $scope.resetSearch = function() {
-      topologyService.resetSearch($scope.d3);
-      $('input#search_topology')[0].value = '';
-      $scope.searching = false;
-      $scope.notFound = false;
-    };
+    $scope.resetSearch = resetEvent;
   };
 });

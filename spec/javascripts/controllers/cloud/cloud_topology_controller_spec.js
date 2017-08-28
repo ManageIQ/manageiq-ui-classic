@@ -3,11 +3,27 @@ describe('cloudTopologyController', function() {
   var $httpBackend;
   var vm;
   var mockData =  getJSONFixture('cloud_topology_response.json');
-  var cloudTenant = { id: '396086e5-7b0d-11e5-8286-18037327aaeb',  item: {display_kind: 'CloudTenant', name: 'admin', kind: 'CloudTenant', id: '396086e5-7b0d-11e5-8286-18037327aaeb', miq_id: '100012'}};
-  var cloudProvider = { id: '4',  item: {display_kind: 'Openstack', name: 'myProvider', kind: 'CloudManager', id: '2', miq_id: '2'}};
-
+  var cloudTenant = {
+    id: '396086e5-7b0d-11e5-8286-18037327aaeb',
+    item: {
+      display_kind: 'CloudTenant',
+      name: 'admin',
+      kind: 'CloudTenant',
+      id: '396086e5-7b0d-11e5-8286-18037327aaeb',
+      miq_id: '100012',
+    },
+  };
+  var cloudProvider = {
+    id: '4',
+    item: {
+      display_kind: 'Openstack',
+      name: 'myProvider',
+      kind: 'CloudManager',
+      id: '2',
+      miq_id: '2',
+    },
+  };
   beforeEach(module('ManageIQ'));
-
   beforeEach(inject(function(_$httpBackend_, $rootScope, _$controller_, $location) {
     spyOn($location, 'absUrl').and.returnValue('/network_topology/show');
     scope = $rootScope.$new();
@@ -43,10 +59,24 @@ describe('cloudTopologyController', function() {
 
   describe('the topology gets correct icons', function() {
     it('in graph elements', function() {
-      var d = { id: '2',  item: {display_kind: 'Openstack', kind: 'CloudManager', id: '2'}};
+      var d = {
+        id: '2',
+        item: {
+          display_kind: 'Openstack',
+          kind: 'CloudManager',
+          id: '2',
+        },
+      };
       expect(vm.getIcon(d)).toMatch(/openstack/);
       expect(vm.getIcon(cloudProvider)).toMatch(/openstack/);
-      d = { id: '4',  item: {display_kind: 'VM', kind: 'Vm', id: '4'}};
+      d = {
+        id: '4',
+        item: {
+          display_kind: 'VM',
+          kind: 'Vm',
+          id: '4',
+        },
+      };
       expect(vm.getIcon(d)).toEqual('\uE90f');
       expect(vm.getIcon(cloudTenant)).toEqual('\uE904');
     });
@@ -54,10 +84,26 @@ describe('cloudTopologyController', function() {
 
   describe('dimensions are returned correctly', function() {
     it('of all objects', function() {
-      var d = { id: '2',  item: {display_kind: 'Openstack', kind: 'CloudManager', id: '2', miq_id: '37'}};
+      var d = {
+        id: '2',
+        item: {
+          display_kind: 'Openstack',
+          kind: 'CloudManager',
+          id: '2',
+          miq_id: '37',
+        },
+      };
       expect(vm.getDimensions(d)).toEqual({ x: -20, y: -20, r: 28 });
       expect(vm.getDimensions(cloudProvider)).toEqual({ x: -20, y: -20, r: 28 });
-      d = { id: '4',  item: {display_kind: 'VM', kind: 'Vm', id: '4', miq_id: '25'}};
+      d = {
+        id: '4',
+        item: {
+          display_kind: 'VM',
+          kind: 'Vm',
+          id: '4',
+          miq_id: '25',
+        },
+      };
       expect(vm.getDimensions(d)).toEqual({ x: 0, y: 9, r: 21 });
       expect(vm.getDimensions(cloudTenant)).toEqual({ x: 0, y: 9, r: 19 });
     });
