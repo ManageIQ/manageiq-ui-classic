@@ -6,7 +6,7 @@ describe('verify-button', function() {
     beforeEach(inject(function($compile, $rootScope) {
       $scope = $rootScope;
       $scope.vm = {};
-      Promise.resolve($.get('/static/verify_button.html.haml'))
+      Promise.resolve($.get('/static/verify-button.html.haml'))
       .then(function(data) {
         element = angular.element(data);
       }).catch(function() {
@@ -17,8 +17,7 @@ describe('verify-button', function() {
     }));
     it('renders miq-button', function(done) {
       setTimeout(function() {
-        var miqButton = element.find('miq-button');
-        expect(miqButton.length).not.toBe(0);
+        expect(element.is('miq-button'));
         done();
       });
     });
