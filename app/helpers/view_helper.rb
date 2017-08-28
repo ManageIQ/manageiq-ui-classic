@@ -100,6 +100,14 @@ module ViewHelper
     N_('6 Months Ago')
   ].freeze
 
+  FROM_QUARTERS = [
+    N_('This Quarter'),
+    N_('Last Quarter'),
+    N_('2 Quarters Ago'),
+    N_('3 Quarters Ago'),
+    N_('4 Quarters Ago')
+  ].freeze
+
   FROM_YEARS = [
     N_('This Year'),
     N_('Last Year'),
