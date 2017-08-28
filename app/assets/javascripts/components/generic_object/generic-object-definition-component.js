@@ -1,0 +1,47 @@
+ManageIQ.angular.app.component('genericObjectDefinitionComponent', {
+  bindings: {
+    recordId: '@?',
+    redirectUrl: '@',
+  },
+  controllerAs: 'vm',
+  controller: genericObjectDefinitionFormController,
+  templateUrl: '/static/generic_object/generic_object_definition.html.haml',
+});
+
+genericObjectDefinitionFormController.$inject = ['API', 'miqService'];
+
+function genericObjectDefinitionFormController(API, miqService) {
+  var vm = this;
+
+  vm.$onInit = function() {
+    vm.saveable = miqService.saveable;
+    vm.afterGet = false;
+
+    vm.genericObjectDefinitionModel = {
+      name: '',
+      description: '',
+    };
+
+    if (vm.recordId) {
+      vm.newRecord = false;
+      miqService.sparkleOn();
+      API.get('/api/generic_object_definitions/' + vm.recordId)
+        .then(getGenericObjectDefinitionFormData)
+        .catch(miqService.handleFailure);
+    } else {
+      vm.newRecord = true;
+      vm.afterGet = true;
+      vm.modelCopy = angular.copy( vm.genericObjectDefinitionModel );
+    }
+  };
+
+  // private functions
+  function getGenericObjectDefinitionFormData(response) {
+    Object.assign(vm.genericObjectDefinitionModel, response);
+
+    vm.afterGet = true;
+    vm.modelCopy = angular.copy( vm.genericObjectDefinitionModel );
+
+    miqService.sparkleOff();
+  }
+}

@@ -28,7 +28,7 @@ class GenericObjectDefinitionController < ApplicationController
     if params[:pressed] == 'generic_object_definition_new'
       javascript_redirect :action => 'new'
     elsif params[:pressed] == 'generic_object_definition_edit'
-      javascript_redirect :action => 'edit'
+      javascript_redirect :action => 'edit', :id => from_cid(params[:id] || params[:miq_grid_checks])
     end
   end
 
@@ -41,6 +41,7 @@ class GenericObjectDefinitionController < ApplicationController
   def edit
     assert_privileges('generic_object_definition_edit')
     drop_breadcrumb(:name => _("Edit Generic Object Class"), :url => "/generic_object_definition/edit")
+    @generic_object_definition = GenericObjectDefinition.find(params[:id])
     @in_a_form = true
   end
 

@@ -1,0 +1,32 @@
+%form.form-horizontal{"name"         => "angularForm",
+                      "model-copy"   => "vm.modelCopy",
+                      "model"        => "vm.genericObjectDefinitionModel",
+                      "ng-show"      => "vm.afterGet",
+                      "ng-cloak"     => "",
+                      "form-changed" => true,
+                      "miq-form"     => true}
+  .form-group{"ng-class" => "{'has-error': angularForm.name.$invalid}"}
+    %label.col-md-2.control-label{"for" => "generic_object_definition_name"}
+      = _("Name")
+    .col-md-8
+      %input.form-control{"type"        => "text",
+                          "id"          => "generic_object_definition_name",
+                          "name"        => "name",
+                          "ng-model"    => "vm.genericObjectDefinitionModel.name",
+                          "maxlength"   => ViewHelper::MAX_NAME_LEN,
+                          "required"    => "",
+                          "auto-focus"  => ""}
+      %span.help-block{"ng-show" => "angularForm.name.$error.required"}
+        = _("Required")
+  .form-group{"ng-class" => "{'has-error': angularForm.description.$invalid}"}
+    %label.col-md-2.control-label{"for" => "generic_object_definition_description"}
+      = _("Description")
+    .col-md-8
+      %input.form-control{"type"        => "text",
+                          "id"          => "generic_object_definition_description",
+                          "name"        => "description",
+                          "ng-model"    => "vm.genericObjectDefinitionModel.description",
+                          "maxlength"   => "#{ViewHelper::MAX_DESC_LEN}",
+                          "required"    => ""}
+      %span.help-block{"ng-show" => "angularForm.description.$error.required"}
+        = _("Required")
