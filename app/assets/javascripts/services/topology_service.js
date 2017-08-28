@@ -103,8 +103,7 @@ ManageIQ.angular.app.service('topologyService', function() {
     nodes.style('opacity', '1');
 
     var found = true;
-
-    if (query != '') {
+    if (query !== '') {
       var selected = nodes.filter(function(d) {
         return d.item.name.indexOf(query) === -1;
       });
