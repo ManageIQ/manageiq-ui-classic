@@ -18,12 +18,12 @@ function configurationManagerService(miqService) {
   };
 
   this.postValidationModelRegistry = function(prefix, newRecord, postValidationModel, formModel) {
-    if (prefix === "default") {
+    if (prefix === 'default') {
       var defaultPassword;
       if (newRecord) {
         defaultPassword = formModel.default_password;
       } else {
-        defaultPassword = formModel.default_password === "" ? "" : miqService.storedPasswordPlaceholder;
+        defaultPassword = formModel.default_password === '' ? '' : miqService.storedPasswordPlaceholder;
       }
       postValidationModel.default = {
         url: formModel.url,

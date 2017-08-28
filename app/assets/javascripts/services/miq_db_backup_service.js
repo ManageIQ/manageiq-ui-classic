@@ -1,5 +1,5 @@
 ManageIQ.angular.app.service('miqDBBackupService', function() {
-  this.knownProtocolsList = ["Anonymous FTP", "FTP", "NFS", "Samba"];
+  this.knownProtocolsList = ['Anonymous FTP', 'FTP', 'NFS', 'Samba'];
 
   this.logProtocolNotSelected = function(model) {
     return model.log_protocol == '' || model.log_protocol == undefined;
@@ -21,17 +21,19 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
   };
 
   this.sambaBackup = function(model) {
-    if (model.log_protocol == 'Samba')
+    if (model.log_protocol == 'Samba')      {
       return true;
-    else
+    }    else      {
       return false;
+    }
   };
 
   this.credsProtocol = function(model) {
-    if (model.log_protocol == 'Samba' || model.log_protocol == 'FTP')
+    if (model.log_protocol == 'Samba' || model.log_protocol == 'FTP')      {
       return true;
-    else
+    }    else      {
       return false;
+    }
   };
 
   this.dbRequired = function(model, value) {
@@ -59,5 +61,5 @@ ManageIQ.angular.app.service('miqDBBackupService', function() {
     model.uri_prefix = null;
     model.depot_name = null;
     model.uri = null;
-  }
+  };
 });

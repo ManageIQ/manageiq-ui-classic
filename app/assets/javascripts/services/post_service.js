@@ -1,18 +1,17 @@
 /* global miqFlashLater */
 
 ManageIQ.angular.app.service('postService', ['miqService', '$timeout', '$window', 'API', function(miqService, $timeout, $window, API) {
-
   this.saveRecord = function(apiURL, redirectURL, updateObject, successMsg) {
     miqService.sparkleOn();
     return API.post(apiURL,
       angular.toJson({
-        action: "edit",
-        resource: updateObject
+        action: 'edit',
+        resource: updateObject,
       })).then(handleSuccess)
          .catch(miqService.handleFailure);
 
     function handleSuccess(response) {
-      $timeout(function () {
+      $timeout(function() {
         if (response.error) {
           var msg = __(response.error.klass + ': ' + response.error.message);
           miqService.miqFlash('error', msg);
@@ -29,13 +28,13 @@ ManageIQ.angular.app.service('postService', ['miqService', '$timeout', '$window'
     miqService.sparkleOn();
     return API.post(apiURL,
       angular.toJson({
-        action: "create",
-        resource: createObject
+        action: 'create',
+        resource: createObject,
       })).then(handleSuccess)
          .catch(miqService.handleFailure);
 
     function handleSuccess(response) {
-      $timeout(function () {
+      $timeout(function() {
         if (response.error) {
           var msg = __(response.error.klass + ': ' + response.error.message);
           miqService.miqFlash('error', msg);
@@ -49,7 +48,7 @@ ManageIQ.angular.app.service('postService', ['miqService', '$timeout', '$window'
   };
 
   this.cancelOperation = function(redirectURL, msg) {
-    $timeout(function () {
+    $timeout(function() {
       miqFlashLater({ message: msg });
       $window.location.href = redirectURL;
     });
