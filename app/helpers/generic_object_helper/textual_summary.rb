@@ -26,6 +26,22 @@ module GenericObjectHelper::TextualSummary
     )
   end
 
+  def textual_group_associations
+    associations = %i()
+    @record.property_associations.each do |key, _value|
+      associations.push(key.to_sym)
+      define_singleton_method("textual_#{key}") do
+        num = @record.send(key).count
+        h = {:label => _("%{label}") % {:label => key.capitalize}, :value => num}
+        if role_allows?(:feature => "generic_object_view") && num > 0
+          h.update(:link  => url_for_only_path(:action => 'show', :id => @record, :display => key),
+                   :title => _('Show all %{associated_models}') % {:associated_models => key.capitalize})
+        end
+      end
+    end
+    TextualGroup.new(_("Associations"), associations)
+  end
+
   def attributes_array
     @record.property_attributes.each do |var|
       [var[0], var[1]]

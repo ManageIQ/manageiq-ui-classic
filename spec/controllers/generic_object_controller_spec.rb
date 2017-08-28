@@ -9,7 +9,8 @@ describe GenericObjectController do
     before(:each) do
       EvmSpecHelper.create_guid_miq_server_zone
       login_as FactoryGirl.create(:user)
-      generic_obj = FactoryGirl.create(:generic_object)
+      generic_obj_defn = FactoryGirl.create(:generic_object_definition)
+      generic_obj = FactoryGirl.create(:generic_object, :generic_object_definition_id => generic_obj_defn.id)
       get :show, :params => {:id => generic_obj.id}
     end
     it { expect(response.status).to eq(200) }
