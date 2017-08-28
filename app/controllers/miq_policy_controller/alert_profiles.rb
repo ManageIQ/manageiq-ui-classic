@@ -35,32 +35,34 @@ module MiqPolicyController::AlertProfiles
     alert_profile.description = @edit[:new][:description]
     alert_profile.notes = @edit[:new][:notes]
     alert_profile.mode = @edit[:new][:mode]
-    if alert_profile.valid? && !@flash_array && alert_profile.save
-      alerts = alert_profile.members                        # Get the sets members
-      current = alerts.collect(&:id)                        # Build an array of the current alert ids
-      mems = @edit[:new][:alerts].invert                    # Get the ids from the member list box
-      begin
-        alerts.each { |a| alert_profile.remove_member(MiqAlert.find(a)) unless mems.include?(a.id) } # Remove any alerts no longer in the members list box
-        mems.each_key { |m| alert_profile.add_member(MiqAlert.find(m)) unless current.include?(m) }  # Add any alerts not in the set
-      rescue => bang
-        add_flash(_("Error during 'Alert Profile %{params}': %{message}") %
-          {:params => params[:button], :message => bang.message}, :error)
-      end
-      AuditEvent.success(build_saved_audit(alert_profile, params[:button] == "add"))
-      flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") : _("%{model} \"%{name}\" was added")
-      add_flash(flash_key % {:model => ui_lookup(:model => "MiqAlertSet"), :name => @edit[:new][:description]})
-      alert_profile_get_info(MiqAlertSet.find(alert_profile.id))
-      alert_profile_sync_provider(current, mems.keys)
-      @edit = nil
-      self.x_node = @new_alert_profile_node = "xx-#{alert_profile.mode}_ap-#{to_cid(alert_profile.id)}"
-      get_node_info(@new_alert_profile_node)
-      replace_right_cell(:nodetype => "ap", :replace_trees => [:alert_profile])
-    else
+
+    unless alert_profile.valid? && !@flash_array && alert_profile.save
       alert_profile.errors.each do |field, msg|
         add_flash("#{field.to_s.capitalize} #{msg}", :error)
       end
       replace_right_cell(:nodetype => "ap")
+      return
     end
+
+    alerts = alert_profile.members                        # Get the sets members
+    current = alerts.collect(&:id)                        # Build an array of the current alert ids
+    mems = @edit[:new][:alerts].invert                    # Get the ids from the member list box
+    begin
+      alerts.each { |a| alert_profile.remove_member(MiqAlert.find(a)) unless mems.include?(a.id) } # Remove any alerts no longer in the members list box
+      mems.each_key { |m| alert_profile.add_member(MiqAlert.find(m)) unless current.include?(m) }  # Add any alerts not in the set
+    rescue => bang
+      add_flash(_("Error during 'Alert Profile %{params}': %{message}") %
+        {:params => params[:button], :message => bang.message}, :error)
+    end
+    AuditEvent.success(build_saved_audit(alert_profile, params[:button] == "add"))
+    flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") : _("%{model} \"%{name}\" was added")
+    add_flash(flash_key % {:model => ui_lookup(:model => "MiqAlertSet"), :name => @edit[:new][:description]})
+    alert_profile_get_info(MiqAlertSet.find(alert_profile.id))
+    alert_profile_sync_provider(current, mems.keys)
+    @edit = nil
+    self.x_node = @new_alert_profile_node = "xx-#{alert_profile.mode}_ap-#{to_cid(alert_profile.id)}"
+    get_node_info(@new_alert_profile_node)
+    replace_right_cell(:nodetype => "ap", :replace_trees => [:alert_profile])
   end
 
   def alert_profile_edit_move
