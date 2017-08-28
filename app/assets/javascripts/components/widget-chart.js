@@ -5,7 +5,7 @@ ManageIQ.angular.app.component('widgetChart', {
   controllerAs: 'vm',
   controller: ['$http', 'miqService', '$sce', function($http, miqService, $sce) {
     var vm = this;
-    vm.widgetChartModel = {valid: false};
+    vm.widgetChartModel = {};
 
     this.$onInit = function() {
       $http.get('/dashboard/widget_chart_data/' + vm.id)
@@ -15,21 +15,15 @@ ManageIQ.angular.app.component('widgetChart', {
     };
 
     vm.getData = function(response) {
-      vm.widgetChartModel.content = $sce.trustAsHtml(response.data.content);
-      vm.widgetChartModel.valid = response.data.valid;
-    };
-
-    vm.contentPresent = function() {
-      return vm.widgetChartModel.content !== undefined;
-    };
-
-    vm.contentValid = function() {
-      return vm.widgetChartModel.valid;
+      vm.widgetChartModel.state = response.data.state;
+      if (response.data.content !== null) {
+        vm.widgetChartModel.content = $sce.trustAsHtml(response.data.content);
+      }
     };
   }],
   template: [
     '<div class="mc" id="{{vm.div_id}}" ng-class="{ hidden: vm.widgetChartModel.minimized }">',
-    '  <div class="blank-slate-pf " style="padding: 10px" ng-if="!vm.contentPresent() && vm.contentValid()">',
+    '  <div class="blank-slate-pf " style="padding: 10px" ng-if="vm.widgetChartModel.state === \'no_data\'">',
     '    <div class="blank-slate-pf-icon">',
     '      <i class="fa fa-cog">',
     '      </i>',
@@ -38,7 +32,7 @@ ManageIQ.angular.app.component('widgetChart', {
     __('No chart data found.'),
     '    </h1>',
     '  </div>',
-    '  <div class="blank-slate-pf " style="padding: 10px" ng-if="vm.contentPresent() && !vm.contentValid()">',
+    '  <div class="blank-slate-pf " style="padding: 10px" ng-if="vm.widgetChartModel.state === \'invalid\'">',
     '    <div class="blank-slate-pf-icon">',
     '      <i class="fa fa-cog">',
     '      </i>',
@@ -50,7 +44,7 @@ ManageIQ.angular.app.component('widgetChart', {
     __('Invalid chart data. Try regenerating the widgets.'),
     '    </p>',
     '  </div>',
-    '  <div ng-if="vm.contentPresent() && vm.contentValid()">',
+    '  <div ng-if="vm.widgetChartModel.state === \'valid\'">',
     '    <div ng-bind-html="vm.widgetChartModel.content">',
     '    </div>',
     '  </div>',
