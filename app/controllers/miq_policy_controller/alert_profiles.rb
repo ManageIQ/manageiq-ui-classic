@@ -1,74 +1,95 @@
 module MiqPolicyController::AlertProfiles
   extend ActiveSupport::Concern
 
-  def alert_profile_edit
-    case params[:button]
-    when "cancel"
-      @edit = nil
-      @alert_profile = session[:edit][:alert_profile_id] ? MiqAlertSet.find_by_id(session[:edit][:alert_profile_id]) : MiqAlertSet.new
+  def alert_profile_edit_cancel
+    @edit = nil
+    @alert_profile = session[:edit][:alert_profile_id] ? MiqAlertSet.find_by_id(session[:edit][:alert_profile_id]) : MiqAlertSet.new
 
-      if @alert_profile && @alert_profile.id.blank?
-        add_flash(_("Add of new %{model} was cancelled by the user") % {:model => ui_lookup(:model => "MiqAlertSet")})
-      else
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqAlertSet"), :name => @alert_profile.description})
+    if @alert_profile && @alert_profile.id.blank?
+      add_flash(_("Add of new %{model} was cancelled by the user") % {:model => ui_lookup(:model => "MiqAlertSet")})
+    else
+      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqAlertSet"), :name => @alert_profile.description})
+    end
+    get_node_info(x_node)
+    replace_right_cell(:nodetype => @nodetype)
+  end
+
+  def alert_profile_edit_reset
+    alert_profile_build_edit_screen
+    @sb[:action] = "alert_profile_edit"
+    if params[:button] == "reset"
+      add_flash(_("All changes have been reset"), :warning)
+    end
+    replace_right_cell(:nodetype => "ap")
+  end
+
+  def alert_profile_edit_save_add
+    assert_privileges("alert_profile_#{@alert_profile.id ? "edit" : "new"}")
+    add_flash(_("%{model} must contain at least one %{field}") % {:model => ui_lookup(:model => "MiqAlertSet"), :field => ui_lookup(:model => "MiqAlert")}, :error) if @edit[:new][:alerts].length == 0 # At least one member is required
+    alert_profile = @alert_profile.id.blank? ? MiqAlertSet.new : MiqAlertSet.find(@alert_profile.id)  # Get new or existing record
+    alert_profile.description = @edit[:new][:description]
+    alert_profile.notes = @edit[:new][:notes]
+    alert_profile.mode = @edit[:new][:mode]
+    if alert_profile.valid? && !@flash_array && alert_profile.save
+      alerts = alert_profile.members                        # Get the sets members
+      current = alerts.collect(&:id)                        # Build an array of the current alert ids
+      mems = @edit[:new][:alerts].invert                    # Get the ids from the member list box
+      begin
+        alerts.each { |a| alert_profile.remove_member(MiqAlert.find(a)) unless mems.include?(a.id) }  # Remove any alerts no longer in the members list box
+        mems.each_key { |m| alert_profile.add_member(MiqAlert.find(m)) unless current.include?(m) }   # Add any alerts not in the set
+      rescue => bang
+        add_flash(_("Error during 'Alert Profile %{params}': %{message}") %
+          {:params => params[:button], :message => bang.message}, :error)
       end
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => @nodetype)
-      return
-    when "reset", nil # Reset or first time in
-      alert_profile_build_edit_screen
-      @sb[:action] = "alert_profile_edit"
-      if params[:button] == "reset"
-        add_flash(_("All changes have been reset"), :warning)
+      AuditEvent.success(build_saved_audit(alert_profile, params[:button] == "add"))
+      flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") :
+                                              _("%{model} \"%{name}\" was added")
+      add_flash(flash_key % {:model => ui_lookup(:model => "MiqAlertSet"), :name => @edit[:new][:description]})
+      alert_profile_get_info(MiqAlertSet.find(alert_profile.id))
+      alert_profile_sync_provider(current, mems.keys)
+      @edit = nil
+      self.x_node = @new_alert_profile_node = "xx-#{alert_profile.mode}_ap-#{to_cid(alert_profile.id)}"
+      get_node_info(@new_alert_profile_node)
+      replace_right_cell(:nodetype => "ap", :replace_trees => [:alert_profile])
+    else
+      alert_profile.errors.each do |field, msg|
+        add_flash("#{field.to_s.capitalize} #{msg}", :error)
       end
       replace_right_cell(:nodetype => "ap")
+    end
+  end
+
+  def alert_profile_edit_move
+    handle_selection_buttons(:alerts)
+    session[:changed] = (@edit[:new] != @edit[:current])
+    replace_right_cell(:nodetype => "ap")
+  end
+
+  def alert_profile_edit_load_edit
+    # Load @edit/vars for other buttons
+    id = params[:id] ? params[:id] : "new"
+    return false unless load_edit("alert_profile_edit__#{id}", "replace_cell__explorer")
+    @alert_profile = @edit[:alert_profile_id] ? MiqAlertSet.find_by_id(@edit[:alert_profile_id]) : MiqAlertSet.new
+    true
+  end
+
+  def alert_profile_edit
+    case params[:button]
+    when 'cancel'
+      alert_profile_edit_cancel
+      return
+    when 'reset', nil # Reset or first time in
+      alert_profile_edit_reset
       return
     end
 
-    # Load @edit/vars for other buttons
-    id = params[:id] ? params[:id] : "new"
-    return unless load_edit("alert_profile_edit__#{id}", "replace_cell__explorer")
-    @alert_profile = @edit[:alert_profile_id] ? MiqAlertSet.find_by_id(@edit[:alert_profile_id]) : MiqAlertSet.new
+    return unless alert_profile_edit_load_edit
 
     case params[:button]
     when "save", "add"
-      assert_privileges("alert_profile_#{@alert_profile.id ? "edit" : "new"}")
-      add_flash(_("%{model} must contain at least one %{field}") % {:model => ui_lookup(:model => "MiqAlertSet"), :field => ui_lookup(:model => "MiqAlert")}, :error) if @edit[:new][:alerts].length == 0 # At least one member is required
-      alert_profile = @alert_profile.id.blank? ? MiqAlertSet.new : MiqAlertSet.find(@alert_profile.id)  # Get new or existing record
-      alert_profile.description = @edit[:new][:description]
-      alert_profile.notes = @edit[:new][:notes]
-      alert_profile.mode = @edit[:new][:mode]
-      if alert_profile.valid? && !@flash_array && alert_profile.save
-        alerts = alert_profile.members                        # Get the sets members
-        current = alerts.collect(&:id)                        # Build an array of the current alert ids
-        mems = @edit[:new][:alerts].invert                    # Get the ids from the member list box
-        begin
-          alerts.each { |a| alert_profile.remove_member(MiqAlert.find(a)) unless mems.include?(a.id) }  # Remove any alerts no longer in the members list box
-          mems.each_key { |m| alert_profile.add_member(MiqAlert.find(m)) unless current.include?(m) }   # Add any alerts not in the set
-        rescue => bang
-          add_flash(_("Error during 'Alert Profile %{params}': %{message}") %
-            {:params => params[:button], :message => bang.message}, :error)
-        end
-        AuditEvent.success(build_saved_audit(alert_profile, params[:button] == "add"))
-        flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") :
-                                                _("%{model} \"%{name}\" was added")
-        add_flash(flash_key % {:model => ui_lookup(:model => "MiqAlertSet"), :name => @edit[:new][:description]})
-        alert_profile_get_info(MiqAlertSet.find(alert_profile.id))
-        alert_profile_sync_provider(current, mems.keys)
-        @edit = nil
-        self.x_node = @new_alert_profile_node = "xx-#{alert_profile.mode}_ap-#{to_cid(alert_profile.id)}"
-        get_node_info(@new_alert_profile_node)
-        replace_right_cell(:nodetype => "ap", :replace_trees => [:alert_profile])
-      else
-        alert_profile.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
-        end
-        replace_right_cell(:nodetype => "ap")
-      end
+      alert_profile_edit_save_add
     when "move_right", "move_left", "move_allleft"
-      handle_selection_buttons(:alerts)
-      session[:changed] = (@edit[:new] != @edit[:current])
-      replace_right_cell(:nodetype => "ap")
+      alert_profile_edit_move
     end
   end
 
