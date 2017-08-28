@@ -1,3 +1,5 @@
+/* global miqAccordionSwap miqAddNodeChildren miqAsyncAjax miqBuildCalendar miqButtons miqDeleteTreeCookies miqDomElementExists miqExpandParentNodes miqInitDashboardCols
+ * miqInitAccordions miqInitMainContent miqInitToolbars miqRemoveNodeChildren miqSparkle miqSparkleOff miqTreeActivateNode miqTreeActivateNodeSilently miqTreeFindNodeByKey miqTreeObject load_c3_charts */
 ManageIQ.explorer = {};
 
 ManageIQ.explorer.updateElement = function(element, options) {
@@ -51,6 +53,7 @@ ManageIQ.explorer.process = function(data) {
     case 'window':
       ManageIQ.explorer.processWindow(data);
       break;
+    default:
   }
 };
 
@@ -75,14 +78,14 @@ ManageIQ.explorer.processFlash = function(data) {
   ManageIQ.explorer.scrollTop(data);
   ManageIQ.explorer.focus(data);
 
-  if (!_.isUndefined(data.activateNode)) {
+  if (! _.isUndefined(data.activateNode)) {
     miqTreeActivateNode(data.activateNode.tree, data.activateNode.node);
   }
 };
 
 ManageIQ.explorer.replacePartials = function(data) {
   if (_.isObject(data.replacePartials)) {
-    _.forEach(data.replacePartials, function (content, element) {
+    _.forEach(data.replacePartials, function(content, element) {
       if (! miqDomElementExists(element)) {
         console.error('replacePartials: #' + element + ' does not exist in the DOM');
       }
@@ -94,7 +97,7 @@ ManageIQ.explorer.replacePartials = function(data) {
 
 ManageIQ.explorer.updatePartials = function(data) {
   if (_.isObject(data.updatePartials)) {
-    _.forEach(data.updatePartials, function (content, element) {
+    _.forEach(data.updatePartials, function(content, element) {
       if (! miqDomElementExists(element)) {
         console.error('updatePartials: #' + element + ' does not exist in the DOM');
       }
@@ -124,27 +127,27 @@ ManageIQ.explorer.miqButtons = function(data) {
 ManageIQ.explorer.focus = function(data) {
   if (_.isString(data.focus)) {
     var element = $('#' + data.focus);
-    if ( element.length ) element.focus();
+    if (element.length) { element.focus(); }
   }
-}
+};
 
 ManageIQ.explorer.processReplaceRightCell = function(data) {
   /* variables for the expression editor */
   if (_.isObject(data.expEditor)) {
     if (_.isObject(data.expEditor.first)) {
-      if (!_.isUndefined(data.expEditor.first.type)) {
+      if (! _.isUndefined(data.expEditor.first.type)) {
         ManageIQ.expEditor.first.type   = data.expEditor.first.type;
       }
-      if (!_.isUndefined(data.expEditor.first.title)) {
+      if (! _.isUndefined(data.expEditor.first.title)) {
         ManageIQ.expEditor.first.title  = data.expEditor.first.title;
       }
     }
 
     if (_.isObject(data.expEditor.second)) {
-      if (!_.isUndefined(data.expEditor.second.type)) {
+      if (! _.isUndefined(data.expEditor.second.type)) {
         ManageIQ.expEditor.second.type   = data.expEditor.second.type;
       }
-      if (!_.isUndefined(data.expEditor.second.title)) {
+      if (! _.isUndefined(data.expEditor.second.title)) {
         ManageIQ.expEditor.second.title  = data.expEditor.second.title;
       }
     }
@@ -159,8 +162,7 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
   }
 
   /* dealing with tree nodes */
-  if (!_.isUndefined(data.addNodes)) {
-
+  if (! _.isUndefined(data.addNodes)) {
     if (data.addNodes.remove) {
       miqRemoveNodeChildren(data.addNodes.activeTree, data.addNodes.key);
     }
@@ -172,9 +174,9 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
   }
 
 
-  if (!_.isUndefined(data.deleteNode)) {
-    var del_node = miqTreeFindNodeByKey(data.deleteNode.activeTree, data.deleteNode.node)
-    miqTreeObject(data.deleteNode.activeTree).deleteNode(del_node);
+  if (! _.isUndefined(data.deleteNode)) {
+    var delNode = miqTreeFindNodeByKey(data.deleteNode.activeTree, data.deleteNode.node);
+    miqTreeObject(data.deleteNode.activeTree).deleteNode(delNode);
   }
 
   if (_.isString(data.dashboardUrl)) {
@@ -188,8 +190,8 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
   ManageIQ.explorer.updatePartials(data);
 
   if (_.isObject(data.updateElements)) {
-    _.forEach(data.updateElements, function (options, element) {
-        ManageIQ.explorer.updateElement(element, options);
+    _.forEach(data.updateElements, function(options, element) {
+      ManageIQ.explorer.updateElement(element, options);
     });
   }
 
@@ -201,16 +203,17 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
 
   if (data.clearGtlListGrid) { ManageIQ.grids.gtl_list_grid = undefined; }
 
-  if (_.isObject(data.setVisibility))
-    _.forEach(data.setVisibility, function (visible, element) {
+  if (_.isObject(data.setVisibility)) {
+    _.forEach(data.setVisibility, function(visible, element) {
       if ( miqDomElementExists(element) ) {
         if ( visible ) {
-          $('#' + element).show()
+          $('#' + element).show();
         } else {
-          $('#' + element).hide()
+          $('#' + element).hide();
         }
       }
     });
+  }
 
   ManageIQ.explorer.scrollTop(data);
 
@@ -228,13 +231,13 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
 
   if (_.isArray(data.reloadToolbars) && data.reloadToolbars.length) {
     ManageIQ.angular.rxSubject.onNext({
-      redrawToolbar: data.reloadToolbars
+      redrawToolbar: data.reloadToolbars,
     });
-  } else if (_.isObject(data.reloadToolbars) && !_.isArray(data.reloadToolbars)) {
+  } else if (_.isObject(data.reloadToolbars) && ! _.isArray(data.reloadToolbars)) {
     // FIXME remove this branch completely once sure
     console.error('Found a toolbar using the obsolete path! Please report or fix');
 
-    _.forEach(data.reloadToolbars, function (content, element) {
+    _.forEach(data.reloadToolbars, function(content, element) {
       $('#' + element).html(content);
     });
     miqInitToolbars();
@@ -242,7 +245,7 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
 
   ManageIQ.record = data.record;
 
-  if (!_.isUndefined(data.activateNode)) {
+  if (! _.isUndefined(data.activateNode)) {
     miqExpandParentNodes(data.activateNode.activeTree, data.activateNode.osf);
     miqTreeActivateNodeSilently(data.activateNode.activeTree, data.activateNode.osf);
   }
@@ -258,7 +261,7 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
 
   ManageIQ.explorer.focus(data);
 
-  if (!_.isUndefined(data.clearSearch)) {
+  if (! _.isUndefined(data.clearSearch)) {
     ManageIQ.explorer.clearSearchToggle(data.clearSearch);
   }
 
