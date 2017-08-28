@@ -9,9 +9,9 @@ module MiqPolicyController::AlertProfiles
     alert_profile_load
     @edit = nil
     if @alert_profile && @alert_profile.id.blank?
-      add_flash(_("Add of new %{model} was cancelled by the user") % {:model => ui_lookup(:model => "MiqAlertSet")})
+      add_flash(_("Add of new Alert Profile was cancelled by the user"))
     else
-      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqAlertSet"), :name => @alert_profile.description})
+      add_flash(_("Edit of Alert Profile \"%{name}\" was cancelled by the user") % {:name => @alert_profile.description})
     end
     get_node_info(x_node)
     replace_right_cell(:nodetype => @nodetype)
@@ -28,9 +28,8 @@ module MiqPolicyController::AlertProfiles
 
   def alert_profile_edit_save_add
     assert_privileges("alert_profile_#{@alert_profile.id ? "edit" : "new"}")
-    if @edit[:new][:alerts].empty?
-      add_flash(_("%{model} must contain at least one %{field}") % {:model => ui_lookup(:model => "MiqAlertSet"), :field => ui_lookup(:model => "MiqAlert")}, :error)
-    end
+    add_flash(_("Alert Profile must contain at least one Alert"), :error) if @edit[:new][:alerts].empty?
+
     alert_profile = @alert_profile.id.blank? ? MiqAlertSet.new : MiqAlertSet.find(@alert_profile.id) # Get new or existing record
     alert_profile.description = @edit[:new][:description]
     alert_profile.notes = @edit[:new][:notes]
@@ -55,8 +54,8 @@ module MiqPolicyController::AlertProfiles
         {:params => params[:button], :message => bang.message}, :error)
     end
     AuditEvent.success(build_saved_audit(alert_profile, params[:button] == "add"))
-    flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") : _("%{model} \"%{name}\" was added")
-    add_flash(flash_key % {:model => ui_lookup(:model => "MiqAlertSet"), :name => @edit[:new][:description]})
+    flash_key = params[:button] == "save" ? _("Alert Profile \"%{name}\" was saved") : _("Alert Profile \"%{name}\" was added")
+    add_flash(flash_key % {:name => @edit[:new][:description]})
     alert_profile_get_info(MiqAlertSet.find(alert_profile.id))
     alert_profile_sync_provider(current, mems.keys)
     @edit = nil
@@ -73,7 +72,7 @@ module MiqPolicyController::AlertProfiles
 
   def alert_profile_edit_load_edit
     # Load @edit/vars for other buttons
-    id = params[:id] ? params[:id] : "new"
+    id = params[:id] || 'new'
     return false unless load_edit("alert_profile_edit__#{id}", "replace_cell__explorer")
     alert_profile_load
     true
@@ -83,10 +82,8 @@ module MiqPolicyController::AlertProfiles
     case params[:button]
     when 'cancel'
       alert_profile_edit_cancel
-      return
     when 'reset', nil # Reset or first time in
       alert_profile_edit_reset
-      return
     when 'save', 'add'
       return unless alert_profile_edit_load_edit
       alert_profile_edit_save_add
@@ -103,14 +100,13 @@ module MiqPolicyController::AlertProfiles
     case params[:button]
     when "cancel"
       @assign = nil
-      add_flash(_("Edit %{model} assignments cancelled by user") % {:model => ui_lookup(:model => "MiqAlertSet")})
+      add_flash(_("Edit Alert Profile assignments cancelled by user"))
       get_node_info(x_node)
       replace_right_cell(:nodetype => @nodetype)
     when "save"
       if @assign[:new][:assign_to].to_s.ends_with?("-tags") && !@assign[:new][:cat]
         add_flash(_("A Tag Category must be selected"), :error)
-      elsif @assign[:new][:assign_to] &&
-            (@assign[:new][:assign_to] != "enterprise" && @assign[:new][:objects].length == 0)
+      elsif @assign[:new][:assign_to] && @assign[:new][:assign_to] != "enterprise" && @assign[:new][:objects].empty?
         add_flash(_("At least one Selection must be checked"), :error)
       end
       unless flash_errors?
@@ -134,9 +130,8 @@ module MiqPolicyController::AlertProfiles
   def alert_profile_delete
     alert_profiles = []
     # showing 1 alert set, delete it
-    if params[:id].nil? || MiqAlertSet.find_by_id(params[:id]).nil?
-      add_flash(_("%{model} no longer exists") % {:model => ui_lookup(:model => "MiqAlertSet")},
-                :error)
+    if params[:id].nil? || !MiqAlertSet.exist?(params[:id])
+      add_flash(_("Alert Profile no longer exists"), :error)
     else
       alert_profiles.push(params[:id])
       alert_profile_get_info(MiqAlertSet.find(params[:id]))
@@ -152,7 +147,7 @@ module MiqPolicyController::AlertProfiles
 
   def alert_profile_field_changed
     return unless load_edit("alert_profile_edit__#{params[:id]}", "replace_cell__explorer")
-    @alert_profile = @edit[:alert_profile_id] ? MiqAlertSet.find_by_id(@edit[:alert_profile_id]) : MiqAlertSet.new
+    @alert_profile = @edit[:alert_profile_id] ? MiqAlertSet.find(@edit[:alert_profile_id]) : MiqAlertSet.new
 
     @edit[:new][:description] = params[:description].blank? ? nil : params[:description] if params[:description]
     @edit[:new][:notes] = params[:notes].blank? ? nil : params[:notes] if params[:notes]
@@ -166,13 +161,13 @@ module MiqPolicyController::AlertProfiles
 
     if params.key?(:chosen_assign_to)
       @assign[:new][:assign_to] = params[:chosen_assign_to].blank? ? nil : params[:chosen_assign_to]
-      @assign[:new][:cat] = nil                                 # Clear chosen tag category
+      @assign[:new][:cat] = nil # Clear chosen tag category
     end
 
     @assign[:new][:cat] = params[:chosen_cat].blank? ? nil : params[:chosen_cat].to_i if params.key?(:chosen_cat)
     if params.key?(:chosen_assign_to) || params.key?(:chosen_cat)
-      @assign[:new][:objects] = []                       # Clear selected objects
-      @assign[:obj_tree] = alert_profile_build_obj_tree         # Build the selection tree
+      @assign[:new][:objects] = []                      # Clear selected objects
+      @assign[:obj_tree] = alert_profile_build_obj_tree # Build the selection tree
     end
     if params.key?(:id)
       if params[:check] == "1"
@@ -201,25 +196,16 @@ module MiqPolicyController::AlertProfiles
 
   # Build the assign objects selection tree
   def alert_profile_build_obj_tree
-    tree = nil
     return nil if alert_profile_get_assign_to_objects_empty?
     if @assign[:new][:assign_to] == "ems_folder"
-      tree = instantiate_tree("TreeBuilderBelongsToVat",
-                              :vat_tree,
-                              :vat,
-                              @assign[:new][:objects].collect { |f| "EmsFolder_#{f}" })
+      instantiate_tree("TreeBuilderBelongsToVat", :vat_tree, :vat,
+                       @assign[:new][:objects].collect { |f| "EmsFolder_#{f}" })
     elsif @assign[:new][:assign_to] == "resource_pool"
-      tree = instantiate_tree("TreeBuilderBelongsToHac",
-                              :hac_tree,
-                              :hac,
-                              @assign[:new][:objects].collect { |f| "ResourcePool_#{f}" })
+      instantiate_tree("TreeBuilderBelongsToHac", :hac_tree, :hac,
+                       @assign[:new][:objects].collect { |f| "ResourcePool_#{f}" })
     else
-      tree = instantiate_tree("TreeBuilderAlertProfileObj",
-                              :object_tree,
-                              :object,
-                              @assign[:new][:objects])
+      instantiate_tree("TreeBuilderAlertProfileObj", :object_tree, :object, @assign[:new][:objects])
     end
-    tree
   end
 
   def instantiate_tree(tree_class, tree_name, type, selected)
@@ -237,14 +223,14 @@ module MiqPolicyController::AlertProfiles
     @edit[:new] = {}
     @edit[:current] = {}
 
-    @alert_profile = params[:id] ? MiqAlertSet.find(params[:id]) : MiqAlertSet.new  # Get existing or new record
+    @alert_profile = params[:id] ? MiqAlertSet.find(params[:id]) : MiqAlertSet.new # Get existing or new record
     @edit[:key] = "alert_profile_edit__#{@alert_profile.id || "new"}"
     @edit[:rec_id] = @alert_profile.id || nil
 
     @edit[:alert_profile_id] = @alert_profile.id
     @edit[:new][:description] = @alert_profile.description
     @edit[:new][:notes] = @alert_profile.notes
-    @edit[:new][:mode] = @alert_profile.mode || @sb[:folder]  # Use existing model or model from selected folder
+    @edit[:new][:mode] = @alert_profile.mode || @sb[:folder] # Use existing model or model from selected folder
 
     @edit[:new][:alerts] = {}
     alerts = @alert_profile.members # Get the set's members
@@ -252,11 +238,11 @@ module MiqPolicyController::AlertProfiles
 
     @edit[:choices] = {}
     MiqAlert.where(:db => @edit[:new][:mode]).select(:id, :description).each do |a|
-      @edit[:choices][a.description] = a.id           # Build a hash for the alerts to choose from
+      @edit[:choices][a.description] = a.id # Build a hash for the alerts to choose from
     end
 
     @edit[:new][:alerts].each_key do |key|
-      @edit[:choices].delete(key)                     # Remove any alerts that are in the members list box
+      @edit[:choices].delete(key) # Remove any alerts that are in the members list box
     end
 
     @edit[:current] = copy_hash(@edit[:new])
@@ -278,9 +264,8 @@ module MiqPolicyController::AlertProfiles
     @assign[:alert_profile] = @alert_profile
 
     @assign[:cats] = {}
-    Classification.categories.collect do |c|
-      c if !c.read_only? && c.show && c.entries.size > 0
-    end.compact.each { |c| @assign[:cats][c.id] = c.description }
+    Classification.categories.find_all { |c| !c.read_only? && c.show && !c.entries.empty? }
+                  .each { |c| @assign[:cats][c.id] = c.description }
 
     @assign[:new][:assign_to] = nil
     @assign[:new][:cat] = nil
@@ -344,7 +329,7 @@ module MiqPolicyController::AlertProfiles
     aa = @alert_profile.get_assigned_tos
     @alert_profile_tag = Classification.find(aa[:tags].first.first.parent_id) unless aa[:tags].empty?
     @alert_profile_alerts = @alert_profile.miq_alerts.sort_by { |a| a.description.downcase }
-    @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "MiqAlertSet"), :name => alert_profile.description}
+    @right_cell_text = _("Alert Profile \"%{name}\"") % {:name => alert_profile.description}
     @right_cell_div = "alert_profile_details"
   end
 
