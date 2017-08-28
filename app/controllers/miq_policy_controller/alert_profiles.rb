@@ -3,7 +3,7 @@ module MiqPolicyController::AlertProfiles
 
   def alert_profile_edit_cancel
     @edit = nil
-    @alert_profile = session[:edit][:alert_profile_id] ? MiqAlertSet.find_by_id(session[:edit][:alert_profile_id]) : MiqAlertSet.new
+    @alert_profile = session[:edit][:alert_profile_id] ? MiqAlertSet.find(session[:edit][:alert_profile_id]) : MiqAlertSet.new
 
     if @alert_profile && @alert_profile.id.blank?
       add_flash(_("Add of new %{model} was cancelled by the user") % {:model => ui_lookup(:model => "MiqAlertSet")})
@@ -17,7 +17,7 @@ module MiqPolicyController::AlertProfiles
   def alert_profile_edit_reset
     alert_profile_build_edit_screen
     @sb[:action] = "alert_profile_edit"
-    if params[:button] == "reset"
+    if params[:button] == 'reset'
       add_flash(_("All changes have been reset"), :warning)
     end
     replace_right_cell(:nodetype => "ap")
@@ -25,8 +25,10 @@ module MiqPolicyController::AlertProfiles
 
   def alert_profile_edit_save_add
     assert_privileges("alert_profile_#{@alert_profile.id ? "edit" : "new"}")
-    add_flash(_("%{model} must contain at least one %{field}") % {:model => ui_lookup(:model => "MiqAlertSet"), :field => ui_lookup(:model => "MiqAlert")}, :error) if @edit[:new][:alerts].length == 0 # At least one member is required
-    alert_profile = @alert_profile.id.blank? ? MiqAlertSet.new : MiqAlertSet.find(@alert_profile.id)  # Get new or existing record
+    if @edit[:new][:alerts].empty?
+      add_flash(_("%{model} must contain at least one %{field}") % {:model => ui_lookup(:model => "MiqAlertSet"), :field => ui_lookup(:model => "MiqAlert")}, :error)
+    end
+    alert_profile = @alert_profile.id.blank? ? MiqAlertSet.new : MiqAlertSet.find(@alert_profile.id) # Get new or existing record
     alert_profile.description = @edit[:new][:description]
     alert_profile.notes = @edit[:new][:notes]
     alert_profile.mode = @edit[:new][:mode]
@@ -35,15 +37,14 @@ module MiqPolicyController::AlertProfiles
       current = alerts.collect(&:id)                        # Build an array of the current alert ids
       mems = @edit[:new][:alerts].invert                    # Get the ids from the member list box
       begin
-        alerts.each { |a| alert_profile.remove_member(MiqAlert.find(a)) unless mems.include?(a.id) }  # Remove any alerts no longer in the members list box
-        mems.each_key { |m| alert_profile.add_member(MiqAlert.find(m)) unless current.include?(m) }   # Add any alerts not in the set
+        alerts.each { |a| alert_profile.remove_member(MiqAlert.find(a)) unless mems.include?(a.id) } # Remove any alerts no longer in the members list box
+        mems.each_key { |m| alert_profile.add_member(MiqAlert.find(m)) unless current.include?(m) }  # Add any alerts not in the set
       rescue => bang
         add_flash(_("Error during 'Alert Profile %{params}': %{message}") %
           {:params => params[:button], :message => bang.message}, :error)
       end
       AuditEvent.success(build_saved_audit(alert_profile, params[:button] == "add"))
-      flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") :
-                                              _("%{model} \"%{name}\" was added")
+      flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") : _("%{model} \"%{name}\" was added")
       add_flash(flash_key % {:model => ui_lookup(:model => "MiqAlertSet"), :name => @edit[:new][:description]})
       alert_profile_get_info(MiqAlertSet.find(alert_profile.id))
       alert_profile_sync_provider(current, mems.keys)
@@ -69,7 +70,7 @@ module MiqPolicyController::AlertProfiles
     # Load @edit/vars for other buttons
     id = params[:id] ? params[:id] : "new"
     return false unless load_edit("alert_profile_edit__#{id}", "replace_cell__explorer")
-    @alert_profile = @edit[:alert_profile_id] ? MiqAlertSet.find_by_id(@edit[:alert_profile_id]) : MiqAlertSet.new
+    @alert_profile = @edit[:alert_profile_id] ? MiqAlertSet.find(@edit[:alert_profile_id]) : MiqAlertSet.new
     true
   end
 
