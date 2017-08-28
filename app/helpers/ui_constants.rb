@@ -1,5 +1,4 @@
 module UiConstants
-  # dac - Changed to allow up to 255 characters for all text fields on 1/11/07
 
   # Report Controller constants
   NOTHING_STRING = "<<< Nothing >>>"

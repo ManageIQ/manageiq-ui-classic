@@ -585,15 +585,6 @@ module ReportController::Widgets
     widget.enabled     = @edit[:new][:enabled]
     widget.options ||= {}
     widget.options[:row_count] = widget.row_count(@edit[:new][:row_count]) if %w(r rf).include?(@sb[:wtype])
-    #    if @sb[:wtype] == "m"
-    #      widget.miq_shortcuts = @edit[:new][:shortcuts].keys.collect{|s| MiqShortcut.find_by_id(s)}
-    #      ws = Array.new  # Create an array of widget shortcuts
-    #      @edit[:new][:shortcuts].keys.each_with_index do |s_id, s_idx|
-    #        sc = MiqShortcut.find_by_id(s_id)
-    #        ws.push(MiqWidgetShortcut.new(:sequence=>s_idx, :description=>@edit[:new][:shortcuts][s_id], :miq_shortcut=>sc))
-    #      end
-    #      widget.miq_widget_shortcuts = ws
-    #    end
     if @sb[:wtype] == "rf"
       widget.set_rss_properties(@edit[:new][:feed_type], @edit[:new][:rss_feed_id], @edit[:new][:url])
     else
