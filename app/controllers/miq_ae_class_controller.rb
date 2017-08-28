@@ -2050,6 +2050,18 @@ class MiqAeClassController < ApplicationController
     end
   end
 
+  def method_form_vars_process_fields(prefix = '')
+    @edit[:new][:fields].each_with_index do |field, i|
+      method_input_column_names.each do |column|
+        field[column] = params["#{prefix}fields_#{column}_#{i}".to_sym] if params["#{prefix}fields_#{column}_#{i}".to_sym]
+
+        next unless column == 'default_value'
+        field[column] = params["#{prefix}fields_value_#{i}".to_sym] if params["#{prefix}fields_value_#{i}".to_sym]
+        field[column] = params["#{prefix}fields_password_value_#{i}".to_sym] if params["#{prefix}fields_password_value_#{i}".to_sym]
+      end
+    end
+  end
+
   # Get variables from edit form
   def get_method_form_vars
     @ae_method = @edit[:ae_method_id] ? MiqAeMethod.find(from_cid(@edit[:ae_method_id])) : MiqAeMethod.new
@@ -2061,15 +2073,7 @@ class MiqAeClassController < ApplicationController
       @edit[:new][:location] = params[:method_location] if params[:method_location]
       @edit[:new][:location] ||= "inline"
       @edit[:new][:data] = params[:method_data] if params[:method_data]
-      @edit[:new][:fields].each_with_index do |field, i|
-        method_input_column_names.each do |column|
-          field[column] = params["fields_#{column}_#{i}".to_sym] if params["fields_#{column}_#{i}".to_sym]
-
-          next unless column == "default_value"
-          field[column] = params["fields_value_#{i}".to_sym] if params["fields_value_#{i}".to_sym]
-          field[column] = params["fields_password_value_#{i}".to_sym] if params["fields_password_value_#{i}".to_sym]
-        end
-      end
+      method_form_vars_process_fields
       session[:field_data][:name] = @edit[:new_field][:name] = params[:field_name] if params[:field_name]
       session[:field_data][:datatype] = @edit[:new_field][:datatype] = params[:field_datatype] if params[:field_datatype]
       session[:field_data][:default_value] = @edit[:new_field][:default_value] = params[:field_default_value] if params[:field_default_value]
@@ -2082,15 +2086,7 @@ class MiqAeClassController < ApplicationController
       @edit[:new][:location] ||= "inline"
       @edit[:new][:data] = params[:cls_method_data] if params[:cls_method_data]
       @edit[:new][:data] += "..." if params[:transOne] && params[:transOne] == "1" # Update the new data to simulate a change
-      @edit[:new][:fields].each_with_index do |field, i|
-        method_input_column_names.each do |column|
-          field[column] = params["cls_fields_#{column}_#{i}".to_sym] if params["cls_fields_#{column}_#{i}".to_sym]
-
-          next unless column == "default_value"
-          field[column] = params["cls_fields_value_#{i}".to_sym] if params["cls_fields_value_#{i}".to_sym]
-          field[column] = params["cls_fields_password_value_#{i}".to_sym] if params["cls_fields_password_value_#{i}".to_sym]
-        end
-      end
+      method_form_vars_process_fields('cls_')
       session[:field_data][:name] = @edit[:new_field][:name] = params[:cls_field_name] if params[:cls_field_name]
       session[:field_data][:datatype] = @edit[:new_field][:datatype] = params[:cls_field_datatype] if params[:cls_field_datatype]
       session[:field_data][:default_value] = @edit[:new_field][:default_value] = params[:cls_field_default_value] if params[:cls_field_default_value]
