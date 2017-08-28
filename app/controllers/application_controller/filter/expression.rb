@@ -568,8 +568,8 @@ module ApplicationController::Filter
              ViewHelper::FROM_HOURS
            elsif ViewHelper::FROM_DAYS.include?(from_choice)
              ViewHelper::FROM_DAYS
-           elsif FROM_WEEKS.include?(from_choice)
-             FROM_WEEKS
+           elsif ViewHelper::FROM_WEEKS.include?(from_choice)
+             ViewHelper::FROM_WEEKS
            elsif FROM_MONTHS.include?(from_choice)
              FROM_MONTHS
            elsif FROM_QUARTERS.include?(from_choice)
