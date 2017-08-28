@@ -5,6 +5,7 @@ class StorageController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::MoreShowActions
   include Mixins::ExplorerPresenterMixin
+  include Mixins::FindRecord
 
   before_action :check_privileges
   before_action :get_session_data
@@ -263,20 +264,6 @@ class StorageController < ApplicationController
     when "xx"  then @record = find_record(Storage, params[:id])
     when "dsc" then @storage_record = find_record(EmsFolder, from_cid(params[:id]))
     end
-  end
-
-  def find_record(model, id)
-    raise _("Invalid input") unless is_integer?(from_cid(id))
-    begin
-      record = model.where(:id => from_cid(id)).first
-    rescue ActiveRecord::RecordNotFound, StandardError => ex
-      if @explorer
-        self.x_node = "root"
-        add_flash(ex.message, :error, true)
-        session[:flash_msgs] = @flash_array.dup
-      end
-    end
-    record
   end
 
   def show_record(_id = nil)

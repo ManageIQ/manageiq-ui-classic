@@ -7,6 +7,7 @@ class InfraNetworkingController < ApplicationController
 
   include Mixins::GenericSessionMixin
   include Mixins::ExplorerPresenterMixin
+  include Mixins::FindRecord
 
   def self.model
     Switch
@@ -603,20 +604,6 @@ class InfraNetworkingController < ApplicationController
 
   def valid_switch_record?(switch_record)
     switch_record.try(:id)
-  end
-
-  def find_record(model, id)
-    raise _("Invalid input") unless is_integer?(from_cid(id))
-    begin
-      record = model.where(:id => from_cid(id)).first
-    rescue ActiveRecord::RecordNotFound, StandardError => ex
-      if @explorer
-        self.x_node = "root"
-        add_flash(ex.message, :error, true)
-        session[:flash_msgs] = @flash_array.dup
-      end
-    end
-    record
   end
 
   def render_tagging_form
