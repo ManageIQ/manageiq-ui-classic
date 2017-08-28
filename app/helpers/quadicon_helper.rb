@@ -217,6 +217,12 @@ module QuadiconHelper
     end
   end
 
+  def img_tag_reflection
+    content_tag(:div, :class => 'flobj') do
+      tag(:img, :src => ActionController::Base.helpers.image_path("layout/reflection.png"), :border => 0)
+    end
+  end
+
   # Renders a quadicon for PhysicalServer
   #
   def render_physical_server_quadicon(item, options)
@@ -236,9 +242,7 @@ module QuadiconHelper
 
     if options[:typ] == :listnav
       # Listnav, no href needed
-      output << content_tag(:div, :class => 'flobj') do
-        tag(:img, :src => ActionController::Base.helpers.image_path("layout/reflection.png"), :border => 0)
-      end
+      output << img_tag_reflection
     else
       href = if quadicon_show_links?
                if quadicon_edit_key?(:hostitems)
@@ -520,9 +524,7 @@ module QuadiconHelper
 
     if options[:typ] == :listnav
       # Listnav, no href needed
-      output << content_tag(:div, :class => 'flobj') do
-        tag(:img, :src => ActionController::Base.helpers.image_path("layout/reflection.png"), :border => 0)
-      end
+      output << img_tag_reflection
     else
       href = if quadicon_show_links?
                quadicon_edit_key?(:hostitems) ? "/host/edit/?selected_host=#{item.id}" : url_for_record(item)
