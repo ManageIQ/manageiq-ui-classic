@@ -2,7 +2,7 @@
 
   ManageIQ.angular.app.controller('containerDashboardController', ['$scope', 'dashboardUtilsFactory', 'chartsMixin', '$http', '$interval', '$window', 'miqService',
     function($scope, dashboardUtilsFactory, chartsMixin, $http, $interval, $window, miqService) {
-      document.getElementById("center_div").className += " miq-body";
+      document.getElementById('center_div').className += ' miq-body';
 
       // Obj-status cards init
       $scope.objectStatus = {
@@ -14,7 +14,7 @@
         pods:       dashboardUtilsFactory.createPodsStatus(),
         services:   dashboardUtilsFactory.createServicesStatus(),
         images:     dashboardUtilsFactory.createImagesStatus(),
-        routes:     dashboardUtilsFactory.createRoutesStatus()
+        routes:     dashboardUtilsFactory.createRoutesStatus(),
       };
 
       $scope.loadingDone = false;
@@ -23,13 +23,13 @@
       $scope.nodeCpuUsage = {
         title: __('CPU'),
         id: 'nodeCpuUsageMap',
-        loadingDone: false
+        loadingDone: false,
       };
 
       $scope.nodeMemoryUsage = {
         title: __('Memory'),
         id: 'nodeMemoryUsageMap',
-        loadingDone: false
+        loadingDone: false,
       };
 
       $scope.heatmaps = [$scope.nodeCpuUsage, $scope.nodeMemoryUsage];
@@ -40,7 +40,7 @@
       $scope.cpuUsageConfig = chartsMixin.chartConfig.cpuUsageConfig;
       $scope.cpuUsageSparklineConfig = {
         tooltipFn: chartsMixin.dailyTimeTooltip,
-        chartId: 'cpuSparklineChart'
+        chartId: 'cpuSparklineChart',
       };
       $scope.cpuUsageDonutConfig = {
         chartId: 'cpuDonutChart',
@@ -49,7 +49,7 @@
       $scope.memoryUsageConfig = chartsMixin.chartConfig.memoryUsageConfig;
       $scope.memoryUsageSparklineConfig = {
         tooltipFn: chartsMixin.dailyTimeTooltip,
-        chartId: 'memorySparklineChart'
+        chartId: 'memorySparklineChart',
       };
       $scope.memoryUsageDonutConfig = {
         chartId: 'memoryDonutChart',
@@ -119,24 +119,24 @@
         dashboardUtilsFactory.updateStatus($scope.objectStatus.routes, data.status.routes);
 
         // Node utilization donut
-        if (data.ems_utilization.interval_name != "daily") {
+        if (data.ems_utilization.interval_name !== 'daily') {
           $scope.cpuUsageSparklineConfig.tooltipFn = chartsMixin.hourlyTimeTooltip;
           $scope.memoryUsageSparklineConfig.tooltipFn = chartsMixin.hourlyTimeTooltip;
         }
-        if (data.ems_utilization.interval_name == "hourly") {
+        if (data.ems_utilization.interval_name === 'hourly') {
           $scope.cpuUsageConfig.timeFrame = __('Last 24 hours');
           $scope.memoryUsageConfig.timeFrame = __('Last 24 hours');
-        } else if (data.ems_utilization.interval_name == "realtime") {
+        } else if (data.ems_utilization.interval_name === 'realtime') {
           $scope.cpuUsageConfig.timeFrame = __('Last 10 minutes');
           $scope.memoryUsageConfig.timeFrame = __('Last 10 minutes');
         }
 
         if (data.ems_utilization.xy_data.cpu != null) {
-          data.ems_utilization.xy_data.cpu.xData = data.ems_utilization.xy_data.cpu.xData.map(function (date) {
-            return dashboardUtilsFactory.parseDate(date)
+          data.ems_utilization.xy_data.cpu.xData = data.ems_utilization.xy_data.cpu.xData.map(function(date) {
+            return dashboardUtilsFactory.parseDate(date);
           });
-          data.ems_utilization.xy_data.mem.xData = data.ems_utilization.xy_data.mem.xData.map(function (date) {
-            return dashboardUtilsFactory.parseDate(date)
+          data.ems_utilization.xy_data.mem.xData = data.ems_utilization.xy_data.mem.xData.map(function(date) {
+            return dashboardUtilsFactory.parseDate(date);
           });
         }
 
@@ -157,9 +157,9 @@
         $scope.nodeMemoryUsage.loadingDone = true;
 
         // Network metrics
-        if (data.network_metrics.interval_name == "daily") {
+        if (data.network_metrics.interval_name === 'daily') {
           $scope.networkUtilizationConfig = chartsMixin.chartConfig.dailyNetworkUsageConfig;
-        } else if (data.network_metrics.interval_name == "hourly") {
+        } else if (data.network_metrics.interval_name === 'hourly') {
           $scope.networkUtilizationConfig = chartsMixin.chartConfig.hourlyNetworkUsageConfig;
         } else {
           $scope.networkUtilizationConfig = chartsMixin.chartConfig.hourlyNetworkUsageConfig;
@@ -167,8 +167,8 @@
         }
 
         if (data.network_metrics.xy_data != null) {
-          data.network_metrics.xy_data.xData = data.network_metrics.xy_data.xData.map(function (date) {
-            return dashboardUtilsFactory.parseDate(date)
+          data.network_metrics.xy_data.xData = data.network_metrics.xy_data.xData.map(function(date) {
+            return dashboardUtilsFactory.parseDate(date);
           });
         }
 
@@ -177,15 +177,15 @@
                                                                        $scope.networkUtilizationConfig.units);
 
         // Pod metrics
-        if (data.pod_metrics.interval_name == "daily") {
+        if (data.pod_metrics.interval_name === 'daily') {
           $scope.podEntityTrendConfig = chartsMixin.chartConfig.dailyPodUsageConfig;
         } else {
           $scope.podEntityTrendConfig = chartsMixin.chartConfig.hourlyPodUsageConfig;
         }
 
         if (data.pod_metrics.xy_data != null) {
-          data.pod_metrics.xy_data.xData = data.pod_metrics.xy_data.xData.map(function (date) {
-            return dashboardUtilsFactory.parseDate(date)
+          data.pod_metrics.xy_data.xData = data.pod_metrics.xy_data.xData.map(function(date) {
+            return dashboardUtilsFactory.parseDate(date);
           });
         }
 
@@ -195,15 +195,15 @@
                                                                       $scope.podEntityTrendConfig.deletedLabel);
 
         // Image metrics
-        if (data.image_metrics.interval_name == "daily") {
+        if (data.image_metrics.interval_name === 'daily') {
           $scope.imageEntityTrendConfig = chartsMixin.chartConfig.dailyImageUsageConfig;
         } else {
           $scope.imageEntityTrendConfig = chartsMixin.chartConfig.hourlyImageUsageConfig;
         }
 
         if (data.image_metrics.xy_data != null) {
-          data.image_metrics.xy_data.xData = data.image_metrics.xy_data.xData.map(function (date) {
-            return dashboardUtilsFactory.parseDate(date)
+          data.image_metrics.xy_data.xData = data.image_metrics.xy_data.xData.map(function(date) {
+            return dashboardUtilsFactory.parseDate(date);
           });
         }
 
