@@ -19,7 +19,7 @@ class MiqAeClassController < ApplicationController
     # resetting flash array so messages don't get displayed when tab is changed
     @flash_array = []
     @explorer = true
-    @record = @ae_class = MiqAeClass.find_by_id(from_cid(x_node.split('-').last))
+    @record = @ae_class = MiqAeClass.find(from_cid(x_node.split('-').last))
     @sb[:active_tab] = params[:tab_id]
     render :update do |page|
       page << javascript_prologue
@@ -146,10 +146,10 @@ class MiqAeClassController < ApplicationController
     when "aem"
       get_method_node_info(id)
     when "aen"
-      @record = MiqAeNamespace.find_by_id(from_cid(id[1]))
+      @record = MiqAeNamespace.find(from_cid(id[1]))
       # need to set record as Domain record if it's a domain, editable_domains, enabled_domains,
       # visible domains methods returns list of Domains, need this for toolbars to hide/disable correct records.
-      @record = MiqAeDomain.find_by_id(from_cid(id[1])) if @record.domain?
+      @record = MiqAeDomain.find(from_cid(id[1])) if @record.domain?
       @version_message = domain_version_message(@record) if @record.domain?
       if @record.nil?
         set_root_node
@@ -2413,7 +2413,7 @@ class MiqAeClassController < ApplicationController
       :ns_description => @ae_ns.description
     }
     # set these field for a new domain or when existing record is a domain
-    @edit[:new].merge!(:enabled => @ae_ns.enabled) if @ae_ns.domain?
+    @edit[:new][:enabled] = @ae_ns.enabled if @ae_ns.domain?
     @edit[:current] = @edit[:new].dup
     @right_cell_text = ns_right_cell_text
     session[:edit] = @edit
