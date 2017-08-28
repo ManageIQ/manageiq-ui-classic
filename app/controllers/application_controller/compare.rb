@@ -348,14 +348,14 @@ module ApplicationController::Compare
     @compare.results.each do |vm|
       vm[1][section.to_sym].each do |s|
         @compare.master_list.each_slice(3) do |sections, records, _fields| # section is a symbol, records and fields are arrays
-          if sections[:name].to_s == section.to_s
-            if !records.blank?
-              if s[1].kind_of?(Hash)
-                s[1].each { |f| method.call(f) }
-              end
-            else
-              method.call(s)
-            end
+          next unless sections[:name].to_s == section.to_s
+
+          if records.blank?
+            method.call(s)
+          else
+            next unless s[1].kind_of?(Hash)
+
+            s[1].each { |f| method.call(f) }
           end
         end
       end
