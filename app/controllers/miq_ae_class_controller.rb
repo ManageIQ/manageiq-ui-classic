@@ -2061,13 +2061,13 @@ class MiqAeClassController < ApplicationController
       @edit[:new][:location] = params[:method_location] if params[:method_location]
       @edit[:new][:location] ||= "inline"
       @edit[:new][:data] = params[:method_data] if params[:method_data]
-      @edit[:new][:fields].each_with_index do |_flds, i|
+      @edit[:new][:fields].each_with_index do |field, i|
         method_input_column_names.each do |column|
-          @edit[:new][:fields][i][column] = params["fields_#{column}_#{i}".to_sym] if params["fields_#{column}_#{i}".to_sym]
-          if column == "default_value"
-            @edit[:new][:fields][i][column] = params["fields_value_#{i}".to_sym] if params["fields_value_#{i}".to_sym]
-            @edit[:new][:fields][i][column] = params["fields_password_value_#{i}".to_sym] if params["fields_password_value_#{i}".to_sym]
-          end
+          field[column] = params["fields_#{column}_#{i}".to_sym] if params["fields_#{column}_#{i}".to_sym]
+
+          next unless column == "default_value"
+          field[column] = params["fields_value_#{i}".to_sym] if params["fields_value_#{i}".to_sym]
+          field[column] = params["fields_password_value_#{i}".to_sym] if params["fields_password_value_#{i}".to_sym]
         end
       end
       session[:field_data][:name] = @edit[:new_field][:name] = params[:field_name] if params[:field_name]
@@ -2082,14 +2082,13 @@ class MiqAeClassController < ApplicationController
       @edit[:new][:location] ||= "inline"
       @edit[:new][:data] = params[:cls_method_data] if params[:cls_method_data]
       @edit[:new][:data] += "..." if params[:transOne] && params[:transOne] == "1" # Update the new data to simulate a change
-      @edit[:new][:fields].each_with_index do |_flds, i|
+      @edit[:new][:fields].each_with_index do |field, i|
         method_input_column_names.each do |column|
-          @edit[:new][:fields][i][column] =
-            params["cls_fields_#{column}_#{i}".to_sym] if params["cls_fields_#{column}_#{i}".to_sym]
-          next unless column == "default_value"
+          field[column] = params["cls_fields_#{column}_#{i}".to_sym] if params["cls_fields_#{column}_#{i}".to_sym]
 
-          @edit[:new][:fields][i][column] = params["cls_fields_value_#{i}".to_sym] if params["cls_fields_value_#{i}".to_sym]
-          @edit[:new][:fields][i][column] = params["cls_fields_password_value_#{i}".to_sym] if params["cls_fields_password_value_#{i}".to_sym]
+          next unless column == "default_value"
+          field[column] = params["cls_fields_value_#{i}".to_sym] if params["cls_fields_value_#{i}".to_sym]
+          field[column] = params["cls_fields_password_value_#{i}".to_sym] if params["cls_fields_password_value_#{i}".to_sym]
         end
       end
       session[:field_data][:name] = @edit[:new_field][:name] = params[:cls_field_name] if params[:cls_field_name]
