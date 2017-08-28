@@ -2125,14 +2125,10 @@ class MiqAeClassController < ApplicationController
   # Get variables from edit form
   def get_ns_form_vars
     @ae_ns = @edit[:typ].constantize.find_by_id(from_cid(@edit[:ae_ns_id]))
-    [:ns_name, :ns_description, :enabled].each do |field|
-      @edit[:new][field] = if field == :enabled
-                             params[:ns_enabled] == "1" if params[:ns_enabled]
-                           elsif params[field].present?
-                             params[field]
-                           else
-                             nil
-                           end
+    @edit[:new][:enabled] = params[:ns_enabled] == '1' if params[:ns_enabled]
+    [:ns_name, :ns_description].each do |field|
+      next unless params[field]
+      @edit[:new][field] = params[field].blank? ? nil : params[field]
     end
     @in_a_form = true
   end
@@ -2323,7 +2319,7 @@ class MiqAeClassController < ApplicationController
     consecutive, first_idx, last_idx = selected_consecutive?(available_fields, selected_fields)
     if consecutive
       if last_idx < available_fields.length - 1
-        insert_idx = last_idx + 1  # Insert before the element after the last one
+        insert_idx = last_idx + 1 # Insert before the element after the last one
         insert_idx = -1 if last_idx == available_fields.length - 2 # Insert at end if 1 away from end
         available_fields[first_idx..last_idx].each do |field|
           pulled = available_fields.delete(field)
@@ -2458,8 +2454,9 @@ class MiqAeClassController < ApplicationController
       javascript_flash
     end
     domain_toggle_lock(params[:id], locked)
-    add_flash(_("The selected %{model} were marked as %{action}") % {:model => ui_lookup(:model => "MiqAeDomain"), :action => action},
-              :info, true) unless flash_errors?
+    unless flash_errors?
+      add_flash(_("The selected %{model} were marked as %{action}") % {:model => ui_lookup(:model => "MiqAeDomain"), :action => action}, :info, true)
+    end
     replace_right_cell(:replace_trees => [:ae])
   end
 
@@ -2547,6 +2544,7 @@ class MiqAeClassController < ApplicationController
       @record = @ae_method = MiqAeMethod.find(from_cid(id[1]))
     rescue ActiveRecord::RecordNotFound
       set_root_node
+      return
     end
 
     @ae_class = @record.ae_class
