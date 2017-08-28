@@ -30,8 +30,6 @@ module UiConstants
   NOTHING_STRING = "<<< Nothing >>>"
   GRAPH_MAX_COUNT = 10
 
-  TREND_MODEL = "VimPerformanceTrend"   # Performance trend model name requiring special processing
-
   VALID_PLANNING_VM_MODES = PlanningHelper::PLANNING_VM_MODES.keys.index_by(&:to_s)
 
   TASK_TIME_PERIODS = {
