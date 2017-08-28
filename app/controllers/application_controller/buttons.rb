@@ -108,7 +108,7 @@ module ApplicationController::Buttons
 
     render :update do |page|
       page << javascript_prologue
-      if params.key?(:instance_name) || params.key?(:other_name) || params.key?(:target_class)
+      if [:instance_name, :other_name, :target_class, :button_type].any? { |k| params.key?(k) }
         page.replace("ab_form", :partial => "shared/buttons/ab_form")
       end
       if params[:visibility_typ]
@@ -120,11 +120,11 @@ module ApplicationController::Buttons
       end
       if @edit[:new][:button_type] == 'ansible_playbook'
         page << javascript_show('playbook_div')
-        if @edit[:new][:inventory_type] == "manual"
-          page << javascript_show('manual_inventory_div')
-        else
-          page << javascript_hide('manual_inventory_div')
-        end
+        page << if @edit[:new][:inventory_type] == "manual"
+                  javascript_show('manual_inventory_div')
+                else
+                  javascript_hide('manual_inventory_div')
+                end
       else
         page << javascript_hide('playbook_div')
       end
@@ -853,7 +853,7 @@ module ApplicationController::Buttons
   end
 
   def validate_playbook_button(button_hash)
-    add_flash(_("An Ansible Playbook must be selected"), :error) if button_hahs[:service_template_id].blank?
+    add_flash(_("An Ansible Playbook must be selected"), :error) if button_hash[:service_template_id].blank?
     if button_hash[:inventory_type] == 'manual' && button_hash[:hosts].blank?
       add_flash(_("At least one host must be specified for manual mode"), :error)
     end
@@ -938,7 +938,6 @@ module ApplicationController::Buttons
   end
 
   def button_set_playbook_record(button)
-    #TO DO - save playbook variables if button type is ansible playbook
     if @edit[:new][:button_type] == 'ansible_playbook'
       target = case @edit[:new][:inventory_type]
                when "event_target"
@@ -960,13 +959,13 @@ module ApplicationController::Buttons
                                      'localhost'
                                    else
                                      case @custom_button.uri_attributes[:hosts]
-                                       when 'vmdb_object'
-                                         "event_target"
-                                       when 'localhost'
-                                         "localhost"
-                                       else
-                                         @edit[:new][:hosts] = @custom_button.uri_attributes[:hosts]
-                                         "manual"
+                                     when 'vmdb_object'
+                                       "event_target"
+                                     when 'localhost'
+                                       "localhost"
+                                     else
+                                       @edit[:new][:hosts] = @custom_button.uri_attributes[:hosts]
+                                       "manual"
                                      end
                                    end
   end

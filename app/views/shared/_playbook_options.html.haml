@@ -18,17 +18,17 @@
   %label.control-label.col-md-2
     = _("Inventory")
   .col-md-8
-    = radio_button_tag('inventory', "localhost", !!(@edit[:new][:inventory_type] == "localhost"),
+    = radio_button_tag('inventory', "localhost", @edit[:new][:inventory_type] == "localhost",
       "title"            => _('Run on localhost'),
       "data-miq_observe" => {:url => url}.to_json)
     = label_tag('inventory_localhost', _("Localhost"), "title" => _('Run on localhost'))
     %br
-    = radio_button_tag('inventory', "event_target", !!(@edit[:new][:inventory_type] == "event_target"),
+    = radio_button_tag('inventory', "event_target", @edit[:new][:inventory_type] == "event_target",
       "title"            => _('Run on the target of the Policy Event'),
       "data-miq_observe" => {:url => url}.to_json)
     = label_tag('inventory_event_target', _("Target Machine"), "title" => _('Run on the target of the Policy Event'))
     %br
-    = radio_button_tag('inventory', "manual", !!(@edit[:new][:inventory_type] == "manual"),
+    = radio_button_tag('inventory', "manual", @edit[:new][:inventory_type] == "manual",
       "title" => _('Enter a comma separated list of IP or DNS names'),
       "data-miq_observe" => {:url => url}.to_json)
     = label_tag('inventory_manual', _("Specific Hosts"), "title" => _('Enter a comma separated list of IP or DNS names'))

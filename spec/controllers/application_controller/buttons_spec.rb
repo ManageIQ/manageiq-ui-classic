@@ -185,6 +185,43 @@ describe ApplicationController do
       controller.send(:button_set_form_vars)
       expect(assigns(:edit)[:new][:target_class]).to eq(ui_lookup(:model => "Vm"))
     end
+
+    it "check button_set_form_vars sets correct values when editing a playbook button" do
+      # button_set_form_vars expects that the simulation screen will be built,
+      #   which, in turn, needs *something* to come back from automate
+      allow(MiqAeClass).to receive_messages(:find_distinct_instances_across_domains => [double(:name => "foo")])
+      service_template = FactoryGirl.create(:service_template_ansible_playbook, :name => "playbook_test")
+      custom_button = FactoryGirl.create(:custom_button,
+                                         :applies_to_class => "Vm",
+                                         :options          => {:display     => false,
+                                                               :button_icon => "fa fa-info",
+                                                               :button_type => "ansible_playbook"})
+      custom_button.uri_path, custom_button.uri_attributes, custom_button.uri_message = CustomButton.parse_uri("/test/")
+      custom_button.uri_attributes[:service_template_name] = "playbook_test"
+      custom_button.uri_attributes[:inventory_type] = "localhost"
+      custom_button.uri_attributes["request"] = "Order_Ansible_Playbook"
+      custom_button.save
+      controller.instance_variable_set(:@_params, :id => custom_button.id)
+      controller.instance_variable_set(:@custom_button, custom_button)
+      controller.instance_variable_set(:@sb,
+                                       :trees       => {:ab_tree => {:active_node => "-ub-Vm_cb-10r51"}},
+                                       :active_tree => :ab_tree)
+      controller.send(:button_set_form_vars)
+      expect(assigns(:edit)[:new][:target_class]).to eq(ui_lookup(:model => "Vm"))
+      expect(assigns(:edit)[:new][:display]).to eq(false)
+      expect(assigns(:edit)[:new][:button_icon]).to eq('fa fa-info')
+      expect(assigns(:edit)[:new][:open_url]).to eq(false)
+      expect(assigns(:edit)[:new][:button_type]).to eq('ansible_playbook')
+      expect(assigns(:edit)[:new][:object_request]).to eq('Order_Ansible_Playbook')
+      expect(assigns(:edit)[:new][:service_template_id]).to eq(service_template.id)
+      expect(assigns(:edit)[:new][:inventory_type]).to eq('localhost')
+
+      controller.instance_variable_set(:@sb,
+                                       :trees       => {:ab_tree => {:active_node => "xx-ab_Vm_cbg-10r96_cb-10r7"}},
+                                       :active_tree => :ab_tree)
+      controller.send(:button_set_form_vars)
+      expect(assigns(:edit)[:new][:target_class]).to eq(ui_lookup(:model => "Vm"))
+    end
   end
 
   context "#button_valid?" do
