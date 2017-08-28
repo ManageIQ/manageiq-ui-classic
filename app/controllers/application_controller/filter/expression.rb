@@ -574,8 +574,8 @@ module ApplicationController::Filter
              FROM_MONTHS
            elsif FROM_QUARTERS.include?(from_choice)
              FROM_QUARTERS
-           elsif FROM_YEARS.include?(from_choice)
-             FROM_YEARS
+           elsif ViewHelper::FROM_YEARS.include?(from_choice)
+             ViewHelper::FROM_YEARS
            end
       # Return the THROUGH choices based on the FROM choice
       tc[0..tc.index(from_choice)]

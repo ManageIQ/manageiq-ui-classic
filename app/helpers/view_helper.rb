@@ -43,6 +43,14 @@ module ViewHelper
     28 => N_("4 Weeks")
   }.freeze
 
+  FROM_YEARS = [
+    N_('This Year'),
+    N_('Last Year'),
+    N_('2 Years Ago'),
+    N_('3 Years Ago'),
+    N_('4 Years Ago')
+  ].freeze
+
   class << self
     def concat_tag(*args, &block)
       concat content_tag(*args, &block)
