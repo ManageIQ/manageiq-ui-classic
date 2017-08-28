@@ -1040,7 +1040,6 @@ Rails.application.routes.draw do
       :get => %w(
         show
         data
-        project_data
       )
     },
 
@@ -1048,7 +1047,6 @@ Rails.application.routes.draw do
       :get => %w(
         show
         data
-        project_data
       )
     },
 
@@ -1056,6 +1054,7 @@ Rails.application.routes.draw do
       :get => %w(
         show
         data
+        project_data
       )
     },
 

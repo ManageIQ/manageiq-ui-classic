@@ -55,9 +55,7 @@ ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope'
       if (data.project_utilization.interval_name === "daily") {
         $scope.cpuUsageConfig.tooltipFn = chartsMixin.dailyTimeTooltip;
         $scope.memoryUsageConfig.tooltipFn = chartsMixin.dailyTimeTooltip;
-      }
-
-      if (data.project_utilization.interval_name === "hourly") {
+      } else { //hourly
         $scope.cpuUsageConfig.tooltipFn = chartsMixin.hourlyTimeTooltip;
         $scope.memoryUsageConfig.tooltipFn = chartsMixin.hourlyTimeTooltip;
         $scope.cpuUsageConfig.timeFrame = __('Last 24 hours');
@@ -84,7 +82,7 @@ ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope'
       // Network metrics
       if (data.network_metrics.interval_name === "daily") {
         $scope.networkUtilizationConfig = chartsMixin.chartConfig.dailyNetworkUsageConfig;
-      } else if (data.network_metrics.interval_name === "hourly") {
+      } else {
         $scope.networkUtilizationConfig = chartsMixin.chartConfig.hourlyNetworkUsageConfig;
       }
 
