@@ -466,11 +466,26 @@ table.table.table-summary-screen tbody td img {
     height: 44px;
     background-image: linear-gradient(to bottom, #FAFAFA 0%, #EDEDED 100%);
   }
+  #paging_div { /* sets paging_div at bottom of screen and styles */
+    height: 40px;
+    margin-top: 0;
+    top:0;
+    .col-md-12 {
+      padding: 0;
+    }
+    .content-view-pf-pagination {
+      margin: 0;
+      padding: 0;
+    }
+  }
 }
 
-.toolbar-pf#paging_div ul.pagination {
-  margin: 0;
+#paging_div {
+  border-top: 1px solid #c7c7c7;
+  background-image: linear-gradient(to bottom, #FAFAFA 0%, #EDEDED 100%);
 }
+
+
 
 /// end paginator styling
 
