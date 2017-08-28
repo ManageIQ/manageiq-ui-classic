@@ -1,10 +1,13 @@
 module MiqPolicyController::AlertProfiles
   extend ActiveSupport::Concern
 
-  def alert_profile_edit_cancel
-    @edit = nil
-    @alert_profile = session[:edit][:alert_profile_id] ? MiqAlertSet.find(session[:edit][:alert_profile_id]) : MiqAlertSet.new
+  def alert_profile_load
+    @alert_profile = @edit[:alert_profile_id] ? MiqAlertSet.find_by(:id => @edit[:alert_profile_id]) : MiqAlertSet.new
+  end
 
+  def alert_profile_edit_cancel
+    alert_profile_load
+    @edit = nil
     if @alert_profile && @alert_profile.id.blank?
       add_flash(_("Add of new %{model} was cancelled by the user") % {:model => ui_lookup(:model => "MiqAlertSet")})
     else
@@ -70,7 +73,7 @@ module MiqPolicyController::AlertProfiles
     # Load @edit/vars for other buttons
     id = params[:id] ? params[:id] : "new"
     return false unless load_edit("alert_profile_edit__#{id}", "replace_cell__explorer")
-    @alert_profile = @edit[:alert_profile_id] ? MiqAlertSet.find(@edit[:alert_profile_id]) : MiqAlertSet.new
+    alert_profile_load
     true
   end
 
