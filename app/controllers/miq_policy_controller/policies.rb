@@ -6,7 +6,7 @@ module MiqPolicyController::Policies
     when "cancel"
       id = params[:id] ? params[:id] : "new"
       return unless load_edit("policy_edit__#{id}", "replace_cell__explorer")
-      @policy = MiqPolicy.find_by_id(@edit[:policy_id]) if @edit[:policy_id]
+      @policy = MiqPolicy.find_by(:id => @edit[:policy_id]) if @edit[:policy_id]
       if @policy && @policy.id
         add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqPolicy"), :name => @policy.description})
       else
@@ -29,7 +29,7 @@ module MiqPolicyController::Policies
     # Load @edit/vars for other buttons
     id = params[:id] ? params[:id] : "new"
     return unless load_edit("policy_edit__#{id}", "replace_cell__explorer")
-    @policy = @edit[:policy_id] ? MiqPolicy.find_by_id(@edit[:policy_id]) : MiqPolicy.new
+    @policy = @edit[:policy_id] ? MiqPolicy.find_by(:id => @edit[:policy_id]) : MiqPolicy.new
 
     case params[:button]
     when "save", "add"
@@ -116,7 +116,7 @@ module MiqPolicyController::Policies
     assert_privileges("policy_delete")
     policies = []
     # showing 1 policy, delete it
-    pol = MiqPolicy.find_by_id(params[:id])
+    pol = MiqPolicy.find_by(:id => params[:id])
     if params[:id].nil? || pol.nil?
       add_flash(_("%{models} no longer exists") % {:models => ui_lookup(:model => "MiqPolicy")},
                 :error)
