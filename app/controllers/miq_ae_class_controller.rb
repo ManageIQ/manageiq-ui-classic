@@ -1424,7 +1424,7 @@ class MiqAeClassController < ApplicationController
               move_selected_fields_down(@edit[:new][:fields_list], params[:seq_fields], _("Fields"))
             end
 
-    if !moved
+    unless moved
       render_flash
       return
     end
@@ -1492,7 +1492,7 @@ class MiqAeClassController < ApplicationController
               move_selected_fields_down(@edit[:new][:domain_order], params[:seq_fields], _("Domains"))
             end
 
-    if !moved
+    unless moved
       render_flash
       return
     end
