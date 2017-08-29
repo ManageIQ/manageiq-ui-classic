@@ -22,13 +22,15 @@ function genericObjectTableController($timeout) {
     vm.tableHeaders.push('', '');
   };
 
-  vm.addRow = function(_currentRow, element) {
+  vm.addRow = function(_currentRow, element, fromDelete) {
     vm.keys.push('');
     vm.noOfRows = _.size(vm.keys);
 
-    $timeout(function() {
-      angular.element('#' + element).focus();
-    }, -1);
+    if (!fromDelete) {
+      $timeout(function () {
+        angular.element('#' + element).focus();
+      }, -1);
+    }
   };
 
   vm.deleteRow = function(currentRow) {
@@ -38,5 +40,9 @@ function genericObjectTableController($timeout) {
       _.pullAt(vm.values, [currentRow]);
     }
     vm.noOfRows = _.size(vm.keys);
+
+    if (vm.noOfRows === 0) {
+      vm.addRow(0, vm.keyType + '0', true);
+    }
   };
 }
