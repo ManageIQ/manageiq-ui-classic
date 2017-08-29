@@ -5,6 +5,7 @@ ManageIQ.angular.app.component('genericObjectTableComponent', {
     keyType: '@',
     tableHeaders: '=',
     valueOptions: '=',
+    newRecord: '=',
     noOfRows: '=',
     angularForm: '=',
   },
@@ -20,13 +21,17 @@ function genericObjectTableController($timeout) {
 
   vm.$onInit = function() {
     vm.tableHeaders.push('', '');
+
+    if (vm.newRecord) {
+      vm.addRow(0, vm.keyType + '0', true);
+    }
   };
 
-  vm.addRow = function(_currentRow, element, fromDelete) {
+  vm.addRow = function(_currentRow, element, addFromOtherSource) {
     vm.keys.push('');
     vm.noOfRows = _.size(vm.keys);
 
-    if (!fromDelete) {
+    if (!addFromOtherSource) {
       $timeout(function () {
         angular.element('#' + element).focus();
       }, -1);

@@ -33,6 +33,8 @@ function genericObjectDefinitionFormController(API, miqService) {
       attribute_types: [],
     };
 
+    vm.noOfAttributeRows = 0;
+
     if (vm.recordId) {
       vm.newRecord = false;
       miqService.sparkleOn();
