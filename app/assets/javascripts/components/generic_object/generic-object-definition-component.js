@@ -62,22 +62,28 @@ function genericObjectDefinitionFormController(API, miqService) {
   function getGenericObjectDefinitionFormData(response) {
     Object.assign(vm.genericObjectDefinitionModel, response);
 
-    _.forEach(vm.genericObjectDefinitionModel.properties.attributes, function(value, key) {
-      vm.genericObjectDefinitionModel.attribute_names.push(key);
-      vm.genericObjectDefinitionModel.attribute_types.push(value);
-    });
+    vm.noOfAttributeRows = assignObjectToKeyValueArrays(
+      vm.genericObjectDefinitionModel.properties.attributes,
+      vm.genericObjectDefinitionModel.attribute_names,
+      vm.genericObjectDefinitionModel.attribute_types);
 
-    _.forEach(vm.genericObjectDefinitionModel.properties.associations, function(value, key) {
-      vm.genericObjectDefinitionModel.association_names.push(key);
-      vm.genericObjectDefinitionModel.association_classes.push(value);
-    });
-
-    vm.noOfAttributeRows = _.size(vm.genericObjectDefinitionModel.attribute_names);
-    vm.noOfAssociationRows = _.size(vm.genericObjectDefinitionModel.association_names);
+    vm.noOfAssociationRows = assignObjectToKeyValueArrays(
+      vm.genericObjectDefinitionModel.properties.associations,
+      vm.genericObjectDefinitionModel.association_names,
+      vm.genericObjectDefinitionModel.association_classes);
 
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.genericObjectDefinitionModel );
 
     miqService.sparkleOff();
+  }
+
+  function assignObjectToKeyValueArrays(obj, keyArray, valueArray) {
+    _.forEach(obj, function(value, key) {
+      keyArray.push(key);
+      valueArray.push(value);
+    });
+
+    return _.size(keyArray);
   }
 }
