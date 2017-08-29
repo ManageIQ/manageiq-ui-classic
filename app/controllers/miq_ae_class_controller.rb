@@ -2292,9 +2292,12 @@ class MiqAeClassController < ApplicationController
   def move_selected_fields_up(available_fields, selected_fields, display_name)
     if no_items_selected?(selected_fields)
       add_flash(_("No %{name} were selected to move up") % {:name => display_name}, :error)
-      return
+      return false
     end
+
     consecutive, first_idx, last_idx = selected_consecutive?(available_fields, selected_fields)
+    @selected = selected_fields
+
     if consecutive
       if first_idx > 0
         available_fields[first_idx..last_idx].reverse_each do |field|
@@ -2302,18 +2305,22 @@ class MiqAeClassController < ApplicationController
           available_fields.insert(first_idx - 1, pulled)
         end
       end
-    else
-      add_flash(_("Select only one or consecutive %{name} to move up") % {:name => display_name}, :error)
+      return true
     end
-    @selected = selected_fields
+
+    add_flash(_("Select only one or consecutive %{name} to move up") % {:name => display_name}, :error)
+    false
   end
 
   def move_selected_fields_down(available_fields, selected_fields, display_name)
     if no_items_selected?(selected_fields)
       add_flash(_("No %{name} were selected to move down") % {:name => display_name}, :error)
-      return
+      return false
     end
+
     consecutive, first_idx, last_idx = selected_consecutive?(available_fields, selected_fields)
+    @selected = selected_fields
+
     if consecutive
       if last_idx < available_fields.length - 1
         insert_idx = last_idx + 1 # Insert before the element after the last one
@@ -2323,10 +2330,11 @@ class MiqAeClassController < ApplicationController
           available_fields.insert(insert_idx, pulled)
         end
       end
-    else
-      add_flash(_("Select only one or consecutive %{name} to move down") % {:name => display_name}, :error)
+      return true
     end
-    @selected = selected_fields
+
+    add_flash(_("Select only one or consecutive %{name} to move down") % {:name => display_name}, :error)
+    false
   end
 
   def no_items_selected?(field_name)
