@@ -85,6 +85,37 @@ module ApplicationController::Compare
     compare_all_diff_same
   end
 
+  def update_compare_partial(command, mode)
+    render :update do |page|
+      page << javascript_prologue
+      case mode
+      when 'different'
+        page << "ManageIQ.toolbars.enableItem('#center_tb', '#{command}_all');"
+        page << "ManageIQ.toolbars.unmarkItem('#center_tb', '#{command}_all');"
+        page << "ManageIQ.toolbars.enableItem('#center_tb', '#{command}_same');"
+        page << "ManageIQ.toolbars.unmarkItem('#center_tb', '#{command}_same');"
+        page << "ManageIQ.toolbars.disableItem('#center_tb', '#{command}_diff');"
+        page << "ManageIQ.toolbars.markItem('#center_tb', '#{command}_diff');"
+      when 'same'
+        page << "ManageIQ.toolbars.enableItem('#center_tb', '#{command}_all');"
+        page << "ManageIQ.toolbars.unmarkItem('#center_tb', '#{command}_all');"
+        page << "ManageIQ.toolbars.disableItem('#center_tb', '#{command}_same');"
+        page << "ManageIQ.toolbars.markItem('#center_tb', '#{command}_same');"
+        page << "ManageIQ.toolbars.enableItem('#center_tb', '#{command}_diff');"
+        page << "ManageIQ.toolbars.unmarkItem('#center_tb', '#{command}_diff');"
+      else
+        page << "ManageIQ.toolbars.disableItem('#center_tb', '#{command}_all');"
+        page << "ManageIQ.toolbars.markItem('#center_tb', '#{command}_all');"
+        page << "ManageIQ.toolbars.enableItem('#center_tb', '#{command}_same');"
+        page << "ManageIQ.toolbars.unmarkItem('#center_tb', '#{command}_same');"
+        page << "ManageIQ.toolbars.enableItem('#center_tb', '#{command}_diff');"
+        page << "ManageIQ.toolbars.unmarkItem('#center_tb', '#{command}_diff');"
+      end
+      page.replace_html('main_div', :partial => 'layouts/compare')
+      page << 'miqSparkle(false);'
+    end
+  end
+
   def compare_all_diff_same
     @compare = Marshal.load(session[:miq_compare])
     @compressed = session[:miq_compressed]
@@ -97,33 +128,7 @@ module ApplicationController::Compare
       @items_per_page = params[:ppsetting].to_i           # Set the new per page value
     end
     compare_to_json(@compare)
-    render :update do |page|
-      page << javascript_prologue
-      if @sb[:miq_temp_params] == "different"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'compare_all');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'compare_all');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'compare_same');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'compare_same');"
-        page << "ManageIQ.toolbars.disableItem('#center_tb', 'compare_diff');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', 'compare_diff');"
-      elsif @sb[:miq_temp_params] == "same"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'compare_all');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'compare_all');"
-        page << "ManageIQ.toolbars.disableItem('#center_tb', 'compare_same');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', 'compare_same');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'compare_diff');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'compare_diff');"
-      else
-        page << "ManageIQ.toolbars.disableItem('#center_tb', 'compare_all');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', 'compare_all');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'compare_same');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'compare_same');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'compare_diff');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'compare_diff');"
-      end
-      page.replace_html("main_div", :partial => "layouts/compare")  # Replace the main div area contents
-      page << "miqSparkle(false);"
-    end
+    update_compare_partial('compare', @sb[:miq_temp_params])
   end
 
   # Compare multiple VMs to show same
@@ -327,48 +332,39 @@ module ApplicationController::Compare
     @compare
   end
 
-  def get_formatted_time(section, typ = "compare")
+  def format_timezone_value_for_compare(datum)
+    if datum[1].kind_of?(Hash) && datum[1].key?(:_value_) && datum[1][:_value_].kind_of?(Time) && !datum[1][:_value_].blank? && datum[1][:_value_] != "" && datum[1][:_value_] != MiqCompare::EMPTY
+      datum[1][:_value_] = format_timezone(datum[1][:_value_], Time.zone, "view")
+    end
+  end
+
+  def format_timezone_value_for_drift(datum)
+    if DRIFT_TIME_COLUMNS.include?(datum[0].to_s) && datum[1].kind_of?(Hash) && datum[1].key?(:_value_) && !datum[1][:_value_].blank? && datum[1][:_value_] != "" && datum[1][:_value_] != MiqCompare::EMPTY
+      datum[1][:_value_] = format_timezone(datum[1][:_value_], Time.zone, "view")
+    end
+  end
+
+  def format_data_in_section(section, method)
     @compare.results.each do |vm|
       vm[1][section.to_sym].each do |s|
-        if typ == "compare"
-          @compare.master_list.each_slice(3) do |sections, records, _fields| # section is a symbol, records and fields are arrays
-            if sections[:name].to_s == section.to_s
-              if !records.blank?
-                if s[1].kind_of?(Hash)
-                  s[1].each do |f|
-                    if f[1].kind_of?(Hash) && f[1].key?(:_value_) && f[1][:_value_].kind_of?(Time) && !f[1][:_value_].blank? && f[1][:_value_] != "" && f[1][:_value_] != MiqCompare::EMPTY
-                      f[1][:_value_] = format_timezone(f[1][:_value_], Time.zone, "view")
-                    end
-                  end
-                end
-              else
-                if s[1].kind_of?(Hash) && s[1].key?(:_value_) && s[1][:_value_].kind_of?(Time) && !s[1][:_value_].blank? && s[1][:_value_] != "" && s[1][:_value_] != MiqCompare::EMPTY
-                  s[1][:_value_] = format_timezone(s[1][:_value_], Time.zone, "view")
-                end
-              end
-            end
-          end
-        else
-          @compare.master_list.each_slice(3) do |sections, records, _fields| # section is a symbol, records and fields are arrays
-            if sections[:name].to_s == section.to_s
-              if !records.blank?
-                if s[1].kind_of?(Hash)
-                  s[1].each do |f|
-                    if DRIFT_TIME_COLUMNS.include?(f[0].to_s) && f[1].kind_of?(Hash) && f[1].key?(:_value_) && !f[1][:_value_].blank? && f[1][:_value_] != "" && f[1][:_value_] != MiqCompare::EMPTY
-                      f[1][:_value_] = format_timezone(f[1][:_value_], Time.zone, "view")
-                    end
-                  end
-                end
-              else
-                if DRIFT_TIME_COLUMNS.include?(s[0].to_s) && s[1].kind_of?(Hash) && s[1].key?(:_value_) && !s[1][:_value_].blank? && s[1][:_value_] != "" && s[1][:_value_] != MiqCompare::EMPTY
-                  s[1][:_value_] = format_timezone(s[1][:_value_], Time.zone, "view")
-                end
-              end
-            end
+        @compare.master_list.each_slice(3) do |sections, records, _fields| # section is a symbol, records and fields are arrays
+          next unless sections[:name].to_s == section.to_s
+
+          if records.blank?
+            method.call(s)
+          else
+            next unless s[1].kind_of?(Hash)
+
+            s[1].each { |f| method.call(f) }
           end
         end
       end
     end
+  end
+
+  def get_formatted_time(section, typ = "compare")
+    method_name = typ == 'compare' ? :format_timezone_value_for_compare : :format_timezone_value_for_drift
+    format_data_in_section(section, method(method_name))
   end
 
   # Show drift analysis for multiple VM scans
@@ -409,33 +405,7 @@ module ApplicationController::Compare
                     :url  => "/#{@sb[:compare_db].downcase}/drift")
     @lastaction = "drift"
     @showtype = "drift"
-    render :update do |page|
-      page << javascript_prologue
-      if @sb[:miq_drift_params] == "different"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'drift_all');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'drift_all');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'drift_same');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'drift_same');"
-        page << "ManageIQ.toolbars.disableItem('#center_tb', 'drift_diff');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', 'drift_diff');"
-      elsif @sb[:miq_drift_params] == "same"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'drift_all');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'drift_all');"
-        page << "ManageIQ.toolbars.disableItem('#center_tb', 'drift_same');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', 'drift_same');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'drift_diff');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'drift_diff');"
-      else
-        page << "ManageIQ.toolbars.disableItem('#center_tb', 'drift_all');"
-        page << "ManageIQ.toolbars.markItem('#center_tb', 'drift_all');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'drift_diff');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'drift_diff');"
-        page << "ManageIQ.toolbars.enableItem('#center_tb', 'drift_same');"
-        page << "ManageIQ.toolbars.unmarkItem('#center_tb', 'drift_same');"
-      end
-      page.replace_html("main_div", :partial => "layouts/compare") # Replace the main div area contents
-      page << "miqSparkle(false);"
-    end
+    update_compare_partial('drift', @sb[:miq_drift_params])
   end
 
   def drift_all
