@@ -97,11 +97,11 @@ class PlanningController < ApplicationController
     @sb[:options][:values][:memory] = params[:trend_memory_val].to_i if params[:trend_memory_val]
     @sb[:options][:values][:storage] = params[:trend_storage_val].to_i if params[:trend_storage_val]
 
-    get_vm_values if params[:chosen_vm] || # Refetch the VM values if any of these options change
-                     params[:vm_mode] ||
-                     params[:trend_days] ||
-                     params[:tz] ||
-                     params[:time_profile]
+    fetch_vm_values if params[:chosen_vm] || # Refetch the VM values if any of these options change
+                       params[:vm_mode] ||
+                       params[:trend_days] ||
+                       params[:tz] ||
+                       params[:time_profile]
 
     @sb[:vm_opts] = VimPerformancePlanning.vm_default_options(@sb[:options][:vm_mode])
     unless (@sb[:vm_opts][:cpu] && @sb[:options][:trend_cpu]) || # Check that at least one required metric is checked
@@ -120,10 +120,8 @@ class PlanningController < ApplicationController
     else
       render :update do |page|
         page << javascript_prologue
-        unless params[:trend_cpu_val] || # Don't replace the div when input fields change
-               params[:trend_vcpus_val] ||
-               params[:trend_memory_val] ||
-               params[:trend_storage_val]
+        unless %i(trend_cpu_val trend_vcpus_val trend_memory_val trend_storage_val).find { |k| params[k] }
+          # Don't replace the div when input fields change
           page.replace("planning_options_div", :partial => "planning_options")
         end
         session[:changed] = @sb[:options][:chosen_vm] || @sb[:options][:vm_mode] == :manual
@@ -209,16 +207,12 @@ class PlanningController < ApplicationController
   end
 
   def build_options
-    @sb[:options] ||= {} # Leave existing values
-    @sb[:options][:days] ||= 7
-    @sb[:options][:vm_mode] ||= :allocated
-    @sb[:options][:trend_cpu] = true if @sb[:options][:trend_cpu].nil?
-    @sb[:options][:trend_vcpus] = true if @sb[:options][:trend_vcpus].nil?
-    @sb[:options][:trend_memory] = true if @sb[:options][:trend_memory].nil?
-    @sb[:options][:trend_storage] = true if @sb[:options][:trend_storage].nil?
-    @sb[:options][:tz] ||= session[:user_tz]
-    @sb[:options][:values] ||= {}
-    get_vm_values
+    @sb[:options] ||= {}
+    @sb[:options].reverse_merge(
+      :days => 7, :vm_mode => :allocated, :trend_cpu => true, :trend_vcpus => true,
+      :trend_memory => true, :trend_storage => true, :tz => session[:user_tz], :values => {}
+    )
+    fetch_vm_values
     get_time_profiles # Get time profiles list (global and user specific)
 
     # Get the time zone from the time profile, if one is in use
@@ -229,13 +223,12 @@ class PlanningController < ApplicationController
       set_time_profile_vars(selected_time_profile_for_pull_down, @sb[:options])
     end
 
-    @sb[:options][:target_typ] ||= "EmsCluster"
-    @sb[:options][:target_filters] = MiqSearch.where(:db => @sb[:options][:target_typ]).descriptions
-    @sb[:options][:limit_cpu] ||= 90
-    @sb[:options][:limit_vcpus] ||= 10
-    @sb[:options][:limit_memory] ||= 90
-    @sb[:options][:limit_storage] ||= 90
-    @sb[:options][:display_vms] ||= 100
+    @sb[:options].reverse_merge(
+      :target_typ => 'EmsCluster',
+      :target_filters => MiqSearch.where(:db => @sb[:options][:target_typ]).descriptions,
+      :limit_cpu => 90, :limit_vcpus => 10, :limit_memory => 90, :limit_storage => 90,
+      :display_vms => 100
+    )
 
     @sb[:emss] = {}
     find_filtered(ExtManagementSystem).each { |e| @sb[:emss][e.id.to_s] = e.name }
@@ -267,7 +260,7 @@ class PlanningController < ApplicationController
   end
 
   # Get the metric values for the selected VM based on the mode
-  def get_vm_values
+  def fetch_vm_values
     return if @sb[:options][:vm_mode] == :manual
     if @sb[:options][:chosen_vm]
       @sb[:options][:values] = {}
@@ -283,10 +276,10 @@ class PlanningController < ApplicationController
       vm_options.each do |k, v|
         next if v.nil?
         @sb[:options][:values][k] = if k == :storage
-                                                 (v[:value].to_i / 1.gigabyte).round
-                                               else
-                                                 v[:value].to_i.round
-                                               end
+                                      (v[:value].to_i / 1.gigabyte).round
+                                    else
+                                      v[:value].to_i.round
+                                    end
       end
     end
   end
