@@ -51,7 +51,7 @@ module ApplicationHelper
 
   def valid_html_id(id)
     id = id.to_s.gsub("::", "__")
-    raise "HTML ID is not valid" if /[^\w_]/.match(id)
+    raise "HTML ID is not valid" if id =~ /[^\w]/
     id
   end
 
