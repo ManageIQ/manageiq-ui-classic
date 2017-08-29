@@ -13,18 +13,22 @@ ManageIQ.angular.app.component('genericObjectTableComponent', {
   templateUrl: '/static/generic_object/generic_object_table.html.haml',
 });
 
-genericObjectTableController.$inject = [];
+genericObjectTableController.$inject = ['$timeout'];
 
-function genericObjectTableController() {
+function genericObjectTableController($timeout) {
   var vm = this;
 
   vm.$onInit = function() {
     vm.tableHeaders.push('', '');
   };
 
-  vm.addRow = function(_currentRow) {
+  vm.addRow = function(_currentRow, element) {
     vm.keys.push('');
     vm.noOfRows = _.size(vm.keys);
+
+    $timeout(function() {
+      angular.element('#' + element).focus();
+    }, -1);
   };
 
   vm.deleteRow = function(currentRow) {

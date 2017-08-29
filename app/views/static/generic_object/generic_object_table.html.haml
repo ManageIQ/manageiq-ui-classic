@@ -25,5 +25,5 @@
             %i.fa.fa-minus
       %td{:align => "center", :style => "width: 50px"}
         %span.input-group-btn
-          .btn.btn-default{:alt => t = _("Add Row"), :title => t, "ng-click" => "vm.addRow($index)", "ng-show" => "$index === vm.noOfRows - 1"}
+          .btn.btn-default{:alt => t = _("Add Row"), :title => t, "ng-click" => "vm.addRow($index, vm.keyType + ($index + 1))", "ng-show" => "$index === vm.noOfRows - 1"}
             %i.fa.fa-plus
