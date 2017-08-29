@@ -315,7 +315,7 @@ describe MiqAeClassController do
 
       context "when the record exists" do
         before do
-          allow(MiqAeInstance).to receive(:find_by_id).with(123).and_return(miq_ae_instance)
+          allow(MiqAeInstance).to receive(:find).with(123).and_return(miq_ae_instance)
           allow(miq_ae_instance).to receive(:ae_class).and_return(miq_ae_class)
           allow(MiqAeInstance).to receive(:get_homonymic_across_domains)
             .with(@user, "fqname").and_return([override, override2])
@@ -348,7 +348,7 @@ describe MiqAeClassController do
 
       context "when the record exists" do
         before do
-          allow(MiqAeClass).to receive(:find_by_id).with(1).and_return(miq_ae_class)
+          allow(MiqAeClass).to receive(:find).with(1).and_return(miq_ae_class)
           allow(MiqAeClass).to receive(:get_homonymic_across_domains)
             .with(@user, "cls_fqname").and_return([override, override2])
         end
@@ -380,7 +380,7 @@ describe MiqAeClassController do
 
       context "when the record exists" do
         before do
-          allow(MiqAeMethod).to receive(:find_by_id).with(123).and_return(miq_ae_method)
+          allow(MiqAeMethod).to receive(:find).with(123).and_return(miq_ae_method)
           allow(miq_ae_method).to receive(:location).with(no_args).and_return("inline")
           allow(miq_ae_method).to receive(:ae_class).and_return(miq_ae_class)
           allow(MiqAeMethod).to receive(:get_homonymic_across_domains)
