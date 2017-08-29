@@ -37,8 +37,9 @@ engines:
     config:
       concurrency: 1
       languages:
-      - ruby
-      - javascript
+        ruby:
+          mass_threshold: 30
+        javascript:
   eslint:
     enabled: true
     channel: "eslint-3"
