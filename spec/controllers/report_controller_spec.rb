@@ -494,12 +494,12 @@ describe ReportController do
           edit = assigns(:edit)
           edit[:new][:pivot] = ReportController::PivotOptions.new(P1, P2, P3)
           controller.instance_variable_set(:@edit, edit)
-          controller.instance_variable_set(:@_params, :chosen_pivot1 => NOTHING_STRING)
+          controller.instance_variable_set(:@_params, :chosen_pivot1 => ReportHelper::NOTHING_STRING)
           controller.send(:gfv_pivots)
           edit_new = assigns(:edit)[:new]
-          expect(edit_new[:pivot].by1).to eq(NOTHING_STRING)
-          expect(edit_new[:pivot].by2).to eq(NOTHING_STRING)
-          expect(edit_new[:pivot].by3).to eq(NOTHING_STRING)
+          expect(edit_new[:pivot].by1).to eq(ReportHelper::NOTHING_STRING)
+          expect(edit_new[:pivot].by2).to eq(ReportHelper::NOTHING_STRING)
+          expect(edit_new[:pivot].by3).to eq(ReportHelper::NOTHING_STRING)
           expect(assigns(:refresh_div)).to eq("consolidate_div")
           expect(assigns(:refresh_partial)).to eq("form_consolidate")
         end
@@ -508,12 +508,12 @@ describe ReportController do
           edit = assigns(:edit)
           edit[:new][:pivot] = ReportController::PivotOptions.new(P1, P2, P3)
           controller.instance_variable_set(:@edit, edit)
-          controller.instance_variable_set(:@_params, :chosen_pivot2 => NOTHING_STRING)
+          controller.instance_variable_set(:@_params, :chosen_pivot2 => ReportHelper::NOTHING_STRING)
           controller.send(:gfv_pivots)
           edit_new = assigns(:edit)[:new]
           expect(edit_new[:pivot].by1).to eq(P1)
-          expect(edit_new[:pivot].by2).to eq(NOTHING_STRING)
-          expect(edit_new[:pivot].by3).to eq(NOTHING_STRING)
+          expect(edit_new[:pivot].by2).to eq(ReportHelper::NOTHING_STRING)
+          expect(edit_new[:pivot].by3).to eq(ReportHelper::NOTHING_STRING)
           expect(assigns(:refresh_div)).to eq("consolidate_div")
           expect(assigns(:refresh_partial)).to eq("form_consolidate")
         end
@@ -527,7 +527,7 @@ describe ReportController do
           edit_new = assigns(:edit)[:new]
           expect(edit_new[:pivot].by1).to eq(P2)
           expect(edit_new[:pivot].by2).to eq(P3)
-          expect(edit_new[:pivot].by3).to eq(NOTHING_STRING)
+          expect(edit_new[:pivot].by3).to eq(ReportHelper::NOTHING_STRING)
           expect(assigns(:refresh_div)).to eq("consolidate_div")
           expect(assigns(:refresh_partial)).to eq("form_consolidate")
         end
@@ -541,7 +541,7 @@ describe ReportController do
           edit_new = assigns(:edit)[:new]
           expect(edit_new[:pivot].by1).to eq(P1)
           expect(edit_new[:pivot].by2).to eq(P3)
-          expect(edit_new[:pivot].by3).to eq(NOTHING_STRING)
+          expect(edit_new[:pivot].by3).to eq(ReportHelper::NOTHING_STRING)
           expect(assigns(:refresh_div)).to eq("consolidate_div")
           expect(assigns(:refresh_partial)).to eq("form_consolidate")
         end
@@ -576,17 +576,17 @@ describe ReportController do
           controller.send(:gfv_sort)
           edit_new = assigns(:edit)[:new]
           expect(edit_new[:sortby1]).to eq(S2)
-          expect(edit_new[:sortby2]).to eq(NOTHING_STRING)
+          expect(edit_new[:sortby2]).to eq(ReportHelper::NOTHING_STRING)
           expect(assigns(:refresh_div)).to eq("sort_div")
           expect(assigns(:refresh_partial)).to eq("form_sort")
         end
 
         it "clearing first sort col clears both sort cols" do
-          controller.instance_variable_set(:@_params, :chosen_sort1 => NOTHING_STRING)
+          controller.instance_variable_set(:@_params, :chosen_sort1 => ReportHelper::NOTHING_STRING)
           controller.send(:gfv_sort)
           edit_new = assigns(:edit)[:new]
-          expect(edit_new[:sortby1]).to eq(NOTHING_STRING)
-          expect(edit_new[:sortby2]).to eq(NOTHING_STRING)
+          expect(edit_new[:sortby1]).to eq(ReportHelper::NOTHING_STRING)
+          expect(edit_new[:sortby2]).to eq(ReportHelper::NOTHING_STRING)
           expect(assigns(:refresh_div)).to eq("sort_div")
           expect(assigns(:refresh_partial)).to eq("form_sort")
         end
@@ -646,11 +646,11 @@ describe ReportController do
         end
 
         it "clearing second sort col" do
-          controller.instance_variable_set(:@_params, :chosen_sort2 => NOTHING_STRING)
+          controller.instance_variable_set(:@_params, :chosen_sort2 => ReportHelper::NOTHING_STRING)
           controller.send(:gfv_sort)
           edit_new = assigns(:edit)[:new]
           expect(edit_new[:sortby1]).to eq(S1)
-          expect(edit_new[:sortby2]).to eq(NOTHING_STRING)
+          expect(edit_new[:sortby2]).to eq(ReportHelper::NOTHING_STRING)
         end
 
         it "sets second sort col suffix" do
@@ -694,10 +694,10 @@ describe ReportController do
         end
 
         it "clears timeline col" do
-          controller.instance_variable_set(:@_params, :chosen_tl => NOTHING_STRING)
+          controller.instance_variable_set(:@_params, :chosen_tl => ReportHelper::NOTHING_STRING)
           controller.send(:gfv_timeline)
           edit = assigns(:edit)
-          expect(edit[:new][:tl_field]).to eq(NOTHING_STRING)
+          expect(edit[:new][:tl_field]).to eq(ReportHelper::NOTHING_STRING)
         end
 
         it "sets event to position at" do

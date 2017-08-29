@@ -599,10 +599,10 @@ module ReportController::Widgets
     end
     widget.options[:col_order] = [] if @edit[:new][:pivot]
     @edit[:new][:pivot] ||= ReportController::PivotOptions.new
-    widget.options[:col_order].push(@edit[:new][:pivot].by1) if !@edit[:new][:pivot].by1.blank? && @edit[:new][:pivot].by1 != NOTHING_STRING
-    widget.options[:col_order].push(@edit[:new][:pivot].by2) if !@edit[:new][:pivot].by2.blank? && @edit[:new][:pivot].by2 != NOTHING_STRING
-    widget.options[:col_order].push(@edit[:new][:pivot].by3) if !@edit[:new][:pivot].by3.blank? && @edit[:new][:pivot].by3 != NOTHING_STRING
-    widget.options[:col_order].push(@edit[:new][:pivot].by4) if !@edit[:new][:pivot].by4.blank? && @edit[:new][:pivot].by4 != NOTHING_STRING
+    widget.options[:col_order].push(@edit[:new][:pivot].by1) if !@edit[:new][:pivot].by1.blank? && @edit[:new][:pivot].by1 != ReportHelper::NOTHING_STRING
+    widget.options[:col_order].push(@edit[:new][:pivot].by2) if !@edit[:new][:pivot].by2.blank? && @edit[:new][:pivot].by2 != ReportHelper::NOTHING_STRING
+    widget.options[:col_order].push(@edit[:new][:pivot].by3) if !@edit[:new][:pivot].by3.blank? && @edit[:new][:pivot].by3 != ReportHelper::NOTHING_STRING
+    widget.options[:col_order].push(@edit[:new][:pivot].by4) if !@edit[:new][:pivot].by4.blank? && @edit[:new][:pivot].by4 != ReportHelper::NOTHING_STRING
     widget.content_type = WIDGET_CONTENT_TYPE[@sb[:wtype]]
     widget.visibility ||= {}
     if @edit[:new][:visibility_typ] == "group"
@@ -647,7 +647,7 @@ module ReportController::Widgets
         add_flash(_("A %{type} must be selected") % {:type => typ.titleize}, :error)
       end
     end
-    if @sb[:wtype] == "r" && @edit[:new][:pivot].by1 == NOTHING_STRING
+    if @sb[:wtype] == "r" && @edit[:new][:pivot].by1 == ReportHelper::NOTHING_STRING
       add_flash(_("At least one Column must be selected"), :error)
     end
     if @sb[:wtype] == "m"

@@ -1,7 +1,6 @@
 module UiConstants
 
   # Report Controller constants
-  NOTHING_STRING = "<<< Nothing >>>"
   GRAPH_MAX_COUNT = 10
 
   VALID_PLANNING_VM_MODES = PlanningHelper::PLANNING_VM_MODES.keys.index_by(&:to_s)
