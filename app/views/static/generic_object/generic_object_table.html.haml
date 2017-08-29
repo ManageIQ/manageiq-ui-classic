@@ -1,0 +1,29 @@
+%table.table.datatable.table-striped.table-bordered
+  %thead
+    %tr
+      %th{"ng-repeat" => "header in vm.tableHeaders track by $index"}{{header}}
+  %tbody
+    %tr{"ng-repeat" => "key in vm.keys track by $index"}
+      %td.form-group
+        %input.form-control{"type"      => "text",
+                            "id"        => "{{vm.keyType}}{{$index}}",
+                            "name"      => "{{vm.keyType}}{{$index}}",
+                            "ng-model"  => "vm.keys[$index]",
+                            "maxlength" => "#{ViewHelper::MAX_NAME_LEN}",}
+      %td.form-group{"ng-if" => "vm.valueOptions", :style => "width: 50px"}
+        %select{"name"                        => "Value_{{vm.keyType}}{{$index}}",
+                "ng-model"                    => "vm.values[$index]",
+                "ng-options"                  => "valueOption.id as valueOption.name for valueOption in vm.valueOptions",
+                "data-live-search"            => "true",
+                "selectpicker-for-select-tag" => "",
+                "pf-select"                   => true,}
+          %option{"value" => "", "disabled" => ""}
+            = "<#{_('Choose')}>"
+      %td{:align => "center", :style => "width: 50px"}
+        %span.input-group-btn
+          .btn.btn-default{:alt => t = _("Delete Row"), :title => t, "ng-click" => "vm.deleteRow($index)"}
+            %i.fa.fa-minus
+      %td{:align => "center", :style => "width: 50px"}
+        %span.input-group-btn
+          .btn.btn-default{:alt => t = _("Add Row"), :title => t, "ng-click" => "vm.addRow($index)", "ng-show" => "$index === vm.noOfRows - 1"}
+            %i.fa.fa-plus

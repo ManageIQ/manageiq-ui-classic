@@ -17,7 +17,7 @@ function genericObjectDefinitionFormController(API, miqService) {
     vm.saveable = miqService.saveable;
     vm.afterGet = false;
 
-    vm.attributeTableHeaders = [__("Name"), __("Type"), "", ""];
+    vm.attributeTableHeaders = [__("Name"), __("Type")];
 
     vm.types = [
       {id: "integer", name: "integer"},
@@ -55,7 +55,7 @@ function genericObjectDefinitionFormController(API, miqService) {
       vm.genericObjectDefinitionModel.attribute_types.push(value);
     });
 
-    vm.noOfRows = _.size(vm.genericObjectDefinitionModel.attribute_names);
+    vm.noOfAttributeRows = _.size(vm.genericObjectDefinitionModel.attribute_names);
 
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.genericObjectDefinitionModel );

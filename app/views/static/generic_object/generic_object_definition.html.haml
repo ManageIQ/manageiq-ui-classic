@@ -34,30 +34,11 @@
     %label.col-md-2.control-label{"for" => "generic_object_definition_attrributes"}
       = _("Attributes")
     .col-md-8
-      %table.table.datatable.table-striped.table-bordered
-        %thead
-          %tr
-            %th{"ng-repeat" => "header in vm.attributeTableHeaders track by $index"}{{header}}
-        %tbody
-          %tr{"ng-repeat" => "attribute_name in vm.genericObjectDefinitionModel.attribute_names track by $index"}
-            %td
-              %input.form-control{"type"        => "text",
-                                  "id"          => "{{attribute_name}}",
-                                  "name"        => "{{attribute_name}}",
-                                  "ng-model"    => "vm.genericObjectDefinitionModel.attribute_names[$index]",
-                                  "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",}
-            %td{:style => "width: 50px"}
-              %select{"name"        => "{{attribute_name}}{{$index}}",
-                      "ng-model"    => "vm.genericObjectDefinitionModel.attribute_types[$index]",
-                      "ng-options"  => "type.id as type.name for type in vm.types",
-                      "pf-select"   => true,}
-                %option{"ng-value" => "", "disabled" => ""}
-                  = "<#{_('Choose')}>"
-            %td{:align => "center", :style => "width: 50px"}
-              %span.input-group-btn
-                .btn.btn-default{:alt => t = _("Delete Row"), :title => t, "ng-click" => "vm.deleteRow($index, vm.keyType)"}
-                  %i.fa.fa-minus
-            %td{:align => "center", :style => "width: 50px"}
-              %span.input-group-btn
-                .btn.btn-default{:alt => t = _("Add Row"), :title => t, "ng-click" => "vm.addRow($index, 'Attribute' + ($index + 1))", "ng-show" => "$index === vm.noOfRows - 1"}
-                  %i.fa.fa-plus
+      %generic-object-table-component{"keys"          => "vm.genericObjectDefinitionModel.attribute_names",
+                                      "values"        => "vm.genericObjectDefinitionModel.attribute_types",
+                                      "key-type"      => "Attribute",
+                                      "table-headers" => "vm.attributeTableHeaders",
+                                      "no-of-rows"    => "vm.noOfAttributeRows",
+                                      "angular-form"  => "angularForm",
+                                      "value-options" => "vm.types"}
+
