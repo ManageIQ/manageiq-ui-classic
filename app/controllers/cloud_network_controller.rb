@@ -138,6 +138,8 @@ class CloudNetworkController < ApplicationController
       if @flash_array.nil?
         add_flash(_("The selected Cloud Network was deleted"))
       end
+      session[:flash_msgs] = @flash_array.dup if @flash_array
+      javascript_redirect(previous_breadcrumb_url)
     end
   end
 
