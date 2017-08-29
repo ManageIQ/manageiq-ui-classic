@@ -156,20 +156,6 @@ module UiConstants
     N_('4 Quarters Ago')
   ]
 
-  # Need this for display purpose to map with id
-  WIDGET_TYPES = {
-    "r"  => N_('Reports'),
-    "c"  => N_('Charts'),
-    "rf" => N_('RSS Feeds'),
-    "m"  => N_('Menus')
-  }
-
-  SINGULAR_WIDGET_TYPES = {
-    "r"  => N_('Report'),
-    "c"  => N_('Chart'),
-    "rf" => N_('RSS Feed'),
-    "m"  => N_('Menu')
-  }
   # Need this for mapping with MiqWidget record content_type field
   WIDGET_CONTENT_TYPE = {
     "r"  => "report",
