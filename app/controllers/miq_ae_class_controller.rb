@@ -1446,31 +1446,30 @@ class MiqAeClassController < ApplicationController
       add_flash(_("Edit of Class Schema Sequence was cancelled by the user"))
       @in_a_form = false
       replace_right_cell
+
     when "save"
       return unless load_edit("fields_edit__seq", "replace_cell__explorer")
-      err = false
       ae_class = MiqAeClass.find(@edit[:ae_class_id])
       indexed_ae_fields = ae_class.ae_fields.index_by(&:name)
       @edit[:new][:fields_list].each_with_index do |f, i|
         fname = f.split('(').last.split(')').first # leave display name and parenthesis out
         indexed_ae_fields[fname].try(:priority=, i + 1)
       end
-      if ae_class.save
-        AuditEvent.success(build_saved_audit(ae_class, @edit))
-      else
+
+      unless ae_class.save
         flash_validation_errors(ae_class)
-        err = true
-      end
-      if !err
-        add_flash(_("Class Schema Sequence was saved"))
-        @sb[:action] = @edit = session[:edit] = nil # clean out the saved info
-        @in_a_form = false
-        replace_right_cell
-      else
         @in_a_form = true
         @changed = true
         javascript_flash
+        return
       end
+
+      AuditEvent.success(build_saved_audit(ae_class, @edit))
+      add_flash(_("Class Schema Sequence was saved"))
+      @sb[:action] = @edit = session[:edit] = nil # clean out the saved info
+      @in_a_form = false
+      replace_right_cell
+
     when "reset", nil # Reset or first time in
       id = params[:id] ? params[:id] : from_cid(@edit[:ae_class_id])
       @in_a_form = true
