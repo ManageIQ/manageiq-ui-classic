@@ -17,6 +17,13 @@ module ReportController::Widgets
     "Vmware RSS Feeds"           => "http://vmware.simplefeed.net/rss?f=995b0290-01dc-11dc-3032-0019bbc54f6f"
   }.freeze
 
+  SINGULAR_WIDGET_TYPES = {
+    "r"  => N_('Report'),
+    "c"  => N_('Chart'),
+    "rf" => N_('RSS Feed'),
+    "m"  => N_('Menu')
+  }.freeze
+
   def widget_refresh
     assert_privileges("widget_refresh")
     replace_right_cell

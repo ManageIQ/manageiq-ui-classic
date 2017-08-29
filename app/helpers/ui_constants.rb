@@ -190,12 +190,6 @@ module UiConstants
     N_('4 Years Ago')
   ]
 
-  SINGULAR_WIDGET_TYPES = {
-    "r"  => N_('Report'),
-    "c"  => N_('Chart'),
-    "rf" => N_('RSS Feed'),
-    "m"  => N_('Menu')
-  }
   # Need this for mapping with MiqWidget record content_type field
   WIDGET_CONTENT_TYPE = {
     "r"  => "report",
