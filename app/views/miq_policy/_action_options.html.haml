@@ -165,7 +165,7 @@
             %i.fa.fa-lg.hidden-xs.hidden-sm{:class => arrow_style}
             %i.fa.fa-lg.fa-rotate-90.hidden-md.hidden-lg{:class => arrow_style}
         .spacer
-          
+
       .col-md-5
         = _(' Selected Alerts:')
         %span#members_chosen_div
@@ -334,21 +334,18 @@
         %label.control-label.col-md-2
           = _("Inventory")
         .col-md-8
-          = radio_button_tag('inventory', "localhost", true,
+          = radio_button_tag('inventory', "localhost", @edit[:new][:inventory_type] == "localhost",
             "title"            => _('Run on localhost'),
-            "checked"          => @edit[:new][:inventory_type] == "localhost",
             "data-miq_observe" => observe)
           = label_tag('inventory_localhost', _("Localhost"), "title" => _('Run on localhost'))
           %br
-          = radio_button_tag('inventory', "event_target", false,
+          = radio_button_tag('inventory', "event_target", @edit[:new][:inventory_type] == "event_target",
             "title"            => _('Run on the target of the Policy Event'),
-            "checked"          => @edit[:new][:inventory_type] == "event_target",
             "data-miq_observe" => observe)
           = label_tag('inventory_event_target', _("Target Machine"), "title" => _('Run on the target of the Policy Event'))
           %br
-          = radio_button_tag('inventory', "manual", false,
+          = radio_button_tag('inventory', "manual", @edit[:new][:inventory_type] == "manual",
             "title" => _('Enter a comma separated list of IP or DNS names'),
-            "checked" => @edit[:new][:inventory_type] == "manual",
             "data-miq_observe" => observe)
           = label_tag('inventory_manual', _("Specific Hosts"), "title" => _('Enter a comma separated list of IP or DNS names'))
           #manual_inventory_div{:style => @edit[:new][:inventory_type] == "manual" ? "" : "display:none"}
