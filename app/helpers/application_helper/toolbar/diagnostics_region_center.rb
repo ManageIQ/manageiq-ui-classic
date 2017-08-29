@@ -1,4 +1,6 @@
 class ApplicationHelper::Toolbar::DiagnosticsRegionCenter < ApplicationHelper::Toolbar::Basic
+  extend ApplicationHelper::Toolbar::ServerMixin
+
   button_group('support_reloading', [
     button(
       :reload_server_tree,
@@ -30,60 +32,30 @@ class ApplicationHelper::Toolbar::DiagnosticsRegionCenter < ApplicationHelper::T
         button(
           :role_start,
           'fa fa-play-circle-o fa-lg',
-          proc do
-            _('Start the %{server_role_description} Role on Server %{server_name} [%{server_id}]') % {
-              :server_role_description => @record.server_role.description,
-              :server_name             => @record.miq_server.name,
-              :server_id               => @record.miq_server.id}
-          end,
+          server_role_string_proc(_('Start the %{server_role_description} Role on Server %{server_name} [%{server_id}]')),
           N_('Start Role'),
-          :confirm => proc do
-                        _("Start the %{server_role_description} Role on Server %{server_name} [%{server_id}]?") % {
-                          :server_role_description => @record.server_role.description,
-                          :server_name             => @record.miq_server.name,
-                          :server_id               => @record.miq_server.id}
-                      end,
+          :confirm => server_role_string_proc(_("Start the %{server_role_description} Role on Server %{server_name} [%{server_id}]?")),
           :klass => ApplicationHelper::Button::RoleStart
         ),
         button(
           :role_suspend,
           'fa fa-pause-circle-o fa-lg',
-          proc do
-            _('Suspend the %{server_role_description} Role on Server %{server_name} [%{server_id}]') % {
-              :server_role_description => @record.server_role.description,
-              :server_name             => @record.miq_server.name,
-              :server_id               => @record.miq_server.id}
-          end,
+          server_role_string_proc(_('Suspend the %{server_role_description} Role on Server %{server_name} [%{server_id}]')),
           N_('Suspend Role'),
-          :confirm => proc do
-                        _("Suspend the %{server_role_description} Role on Server %{server_name} [%{server_id}]?") % {
-                          :server_role_description => @record.server_role.description,
-                          :server_name             => @record.miq_server.name,
-                          :server_id               => @record.miq_server.id}
-                      end,
+          :confirm => server_role_string_proc(_("Suspend the %{server_role_description} Role on Server %{server_name} [%{server_id}]?")),
           :klass => ApplicationHelper::Button::RoleSuspend
         ),
         button(
           :demote_server,
           'pficon pficon-delete fa-lg_master',
-          proc do
-            _('Demote Server %{server_name} [%{server_id}] to secondary for the %{server_role_description} Role') % {
-              :server_role_description => @record.server_role.description,
-              :server_name             => @record.miq_server.name,
-              :server_id               => @record.miq_server.id}
-          end,
+          server_role_string_proc(_('Demote Server %{server_name} [%{server_id}] to secondary for the %{server_role_description} Role')),
           N_('Demote Server'),
           :confirm => N_("Do you want to demote this Server to secondary?  This will leave no primary Server for this Role."),
           :klass => ApplicationHelper::Button::ServerDemote),
         button(
           :promote_server,
           'fa fa-reply fa-rotate-90 fa-lg',
-          proc do
-            _('Promote Server %{server_name} [%{server_id}] to primary for the %{server_role_description} Role') % {
-              :server_role_description => @record.server_role.description,
-              :server_name             => @record.miq_server.name,
-              :server_id               => @record.miq_server.id}
-          end,
+          server_role_string_proc(_('Promote Server %{server_name} [%{server_id}] to primary for the %{server_role_description} Role')),
           N_('Promote Server'),
           :confirm => N_("Do you want to promote this Server to primary?  This will replace any existing primary Server for this Role."),
           :klass => ApplicationHelper::Button::ServerPromote),
