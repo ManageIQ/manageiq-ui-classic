@@ -2994,6 +2994,7 @@ Rails.application.routes.draw do
         reconfigure_form_fields
         launch_html5_console
         perf_chart_chooser
+        policies
         protect
         retire
         show
