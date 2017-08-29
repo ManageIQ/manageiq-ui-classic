@@ -1416,20 +1416,24 @@ class MiqAeClassController < ApplicationController
   # Get variables from user edit form
   def fields_seq_field_changed
     return unless load_edit("fields_edit__seq", "replace_cell__explorer")
-    move_selected_fields_up(@edit[:new][:fields_list], params[:seq_fields], _("Fields"))   if params[:button] == "up"
-    move_selected_fields_down(@edit[:new][:fields_list], params[:seq_fields], _("Fields")) if params[:button] == "down"
-    unless @flash_array
-      @refresh_div = "column_lists"
-      @refresh_partial = "fields_seq_form"
+
+    moved = case params[:button]
+            when 'up'
+              move_selected_fields_up(@edit[:new][:fields_list], params[:seq_fields], _("Fields"))
+            when 'down'
+              move_selected_fields_down(@edit[:new][:fields_list], params[:seq_fields], _("Fields"))
+            end
+
+    if !moved
+      render_flash
+      return
     end
-    @changed = (@edit[:new] != @edit[:current])
+
     render :update do |page|
       page << javascript_prologue
-      page.replace("flash_msg_div", :partial => "layouts/flash_msg") unless @refresh_div && @refresh_div != "column_lists"
-      page.replace(@refresh_div, :partial => @refresh_partial) if @refresh_div
-      if @changed
-        page << javascript_for_miq_button_visibility(@changed)
-      end
+      page.replace('column_lists', :partial => 'fields_seq_form')
+      @changed = (@edit[:new] != @edit[:current])
+      page << javascript_for_miq_button_visibility(@changed) if @changed
       page << "miqSparkle(false);"
     end
   end
