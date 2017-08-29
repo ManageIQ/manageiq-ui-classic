@@ -42,4 +42,16 @@
                                       "no-of-rows"    => "vm.noOfAttributeRows",
                                       "angular-form"  => "angularForm",
                                       "value-options" => "vm.types"}
+  .form-group
+    %label.col-md-2.control-label{"for" => "generic_object_definition_associations"}
+      = _("Associations")
+    .col-md-8
+      %generic-object-table-component{"keys"          => "vm.genericObjectDefinitionModel.association_names",
+                                      "values"        => "vm.genericObjectDefinitionModel.association_classes",
+                                      "key-type"      => "Association",
+                                      "table-headers" => "vm.associationTableHeaders",
+                                      "new-record"    => "vm.newRecord",
+                                      "no-of-rows"    => "vm.noOfAssociationRows",
+                                      "angular-form"  => "angularForm",
+                                      "value-options" => "vm.classes"}
 

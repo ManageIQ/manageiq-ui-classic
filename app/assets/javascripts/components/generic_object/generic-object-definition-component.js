@@ -18,6 +18,7 @@ function genericObjectDefinitionFormController(API, miqService) {
     vm.afterGet = false;
 
     vm.attributeTableHeaders = [__("Name"), __("Type")];
+    vm.associationTableHeaders = [__("Name"), __("Class")];
 
     vm.types = [
       {id: "integer", name: "integer"},
@@ -26,14 +27,23 @@ function genericObjectDefinitionFormController(API, miqService) {
       {id: "datetime", name: "datetime"},
     ];
 
+    vm.classes = [
+      {id: "Service", name: "Service"},
+      {id: "Vm", name: "Vm"},
+    ];
+
+
     vm.genericObjectDefinitionModel = {
       name: '',
       description: '',
       attribute_names: [],
       attribute_types: [],
+      association_names: [],
+      association_classes: [],
     };
 
     vm.noOfAttributeRows = 0;
+    vm.noOfAssociationRows = 0;
 
     if (vm.recordId) {
       vm.newRecord = false;
@@ -57,7 +67,13 @@ function genericObjectDefinitionFormController(API, miqService) {
       vm.genericObjectDefinitionModel.attribute_types.push(value);
     });
 
+    _.forEach(vm.genericObjectDefinitionModel.properties.associations, function(value, key) {
+      vm.genericObjectDefinitionModel.association_names.push(key);
+      vm.genericObjectDefinitionModel.association_classes.push(value);
+    });
+
     vm.noOfAttributeRows = _.size(vm.genericObjectDefinitionModel.attribute_names);
+    vm.noOfAssociationRows = _.size(vm.genericObjectDefinitionModel.association_names);
 
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.genericObjectDefinitionModel );
