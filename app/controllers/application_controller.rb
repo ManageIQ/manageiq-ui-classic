@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   helper ChartingHelper
   Charting.load_helpers(self)
 
-  include ActionView::Helpers::NumberHelper   # bring in the number helpers for number_to_human_size
+  include ActionView::Helpers::NumberHelper # bring in the number helpers for number_to_human_size
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::DateHelper
   include ApplicationHelper
@@ -198,10 +198,10 @@ class ApplicationController < ActionController::Base
       :taskbartext   => true,             # Show button text on taskbar
       :vmcompare     => "Compressed",     # Start VM compare and drift in compressed mode
       :hostcompare   => "Compressed",     # Start Host compare in compressed mode
-      :timezone      => nil,               # This will be set when the user logs in
+      :timezone      => nil,              # This will be set when the user logs in
       :display_vms   => false # don't display vms by default
     },
-  }
+  }.freeze
 
   AE_MAX_RESOLUTION_FIELDS = 5 # Maximum fields to show for automation engine resolution screens
 
@@ -280,12 +280,12 @@ class ApplicationController < ActionController::Base
           page << javascript_hide_if_exists("adv_searchbox_div")
         end
       end
-      format.html do                # HTML, send error screen
+      format.html do # HTML, send error screen
         @layout = "exception"
         response.status = 500
         render(:template => "layouts/exception", :locals => {:message => msg})
       end
-      format.any { head :not_found }  # Anything else, just send 404
+      format.any { head :not_found } # Anything else, just send 404
     end
   end
   private :render_exception
@@ -321,7 +321,7 @@ class ApplicationController < ActionController::Base
   # Send chart data to the client
   def render_chart
     if params[:report]
-      rpt = MiqReport.for_user(current_user).find_by_name(params[:report])
+      rpt = MiqReport.for_user(current_user).find_by(:name => params[:report])
       rpt.generate_table(:userid => session[:userid])
     else
       rpt = if session[:report_result_id]
@@ -359,14 +359,14 @@ class ApplicationController < ActionController::Base
 
     if MiqTask.find(params[:task_id].to_i).state != "Finished" # Task not done --> retry
       browser_refresh_task(params[:task_id])
-    else                                                  # Task done
-      @_params.instance_variable_get(:@parameters).merge!(session[:async][:params])           # Merge in the original parms and
-      send(session.fetch_path(:async, :params, :action))  # call the orig. method
+    else # Task done
+      @_params.instance_variable_get(:@parameters).merge!(session[:async][:params]) # Merge in the original parms and
+      send(session.fetch_path(:async, :params, :action)) # call the orig. method
     end
   end
 
   def browser_refresh_task(task_id)
-    session[:async][:interval] += 250 if session[:async][:interval] < 5000    # Slowly move up to 5 second retries
+    session[:async][:interval] += 250 if session[:async][:interval] < 5000 # Slowly move up to 5 second retries
     render :update do |page|
       page << javascript_prologue
       ajax_call = remote_function(:url => {:action => 'wait_for_task', :task_id => task_id})
@@ -385,7 +385,7 @@ class ApplicationController < ActionController::Base
     session[:async][:interval] ||= 1000 # Default interval to 1 second
     session[:async][:params] ||= {}
 
-    session[:async][:params]           = copy_hash(params)  # Save the incoming parms
+    session[:async][:params] = copy_hash(params) # Save the incoming parms
     session[:async][:params][:task_id] = task_id
 
     # override method to be called, when the task is done
@@ -538,7 +538,7 @@ class ApplicationController < ActionController::Base
 
   def event_logs
     @record = identify_record(params[:id])
-    @view = session[:view]                  # Restore the view from the session to get column names for the display
+    @view = session[:view] # Restore the view from the session to get column names for the display
     return if record_no_longer_exists?(@record)
 
     @lastaction = "event_logs"
@@ -562,7 +562,7 @@ class ApplicationController < ActionController::Base
 
   # Common method to show a standalone report
   def report_only
-    @report_only = true                 # Indicate stand alone report for views
+    @report_only = true # Indicate stand alone report for views
     # Render error message if report doesn't exist
     if params[:rr_id].nil? && @sb.fetch_path(:pages, :rr_id).nil?
       add_flash(_("This report isn't generated yet. It cannot be rendered."), :error)
@@ -600,20 +600,18 @@ class ApplicationController < ActionController::Base
   def log_depot_validate # this is a terrible name, it doesn't validate log_depots
     @schedule = nil # setting to nil, since we are using same view for both db_back and log_depot edit
     # if zone is selected in tree replace tab#3
-    if x_active_tree == :diagnostics_tree
-      if @sb[:active_tab] == "diagnostics_database"
-        # coming from diagnostics/database tab
-        pfx = "dbbackup"
-      end
-    else
-      if session[:edit] && session[:edit].key?(:pxe_id)
-        # add/edit pxe server
-        pfx = "pxe"
-      else
-        # add/edit dbbackup schedule
-        pfx = "schedule"
-      end
-    end
+    pfx = if x_active_tree == :diagnostics_tree
+            if @sb[:active_tab] == "diagnostics_database"
+              # coming from diagnostics/database tab
+              "dbbackup"
+            end
+          elsif session[:edit] && session[:edit].key?(:pxe_id)
+            # add/edit pxe server
+            "pxe"
+          else
+            # add/edit dbbackup schedule
+            "schedule"
+          end
 
     id = params[:id] ? params[:id] : "new"
     if pfx == "pxe"
@@ -671,23 +669,22 @@ class ApplicationController < ActionController::Base
     flds = direction == "right" ? "available_fields" : "selected_fields"
     edit_fields = direction == "right" ? "available_fields" : "fields"
     sort_fields = direction == "right" ? "fields" : "available_fields"
-    if !params[flds.to_sym] || params[flds.to_sym].length == 0 || params[flds.to_sym][0] == ""
+    if !params[flds.to_sym] || params[flds.to_sym].empty? || params[flds.to_sym][0] == ""
       lr_messages = {
         "left"  => _("No fields were selected to move left"),
         "right" => _("No fields were selected to move right")
       }
       add_flash(lr_messages[direction], :error)
     else
-      @edit[:new][edit_fields.to_sym].each do |af|                 # Go thru all available columns
-        if params[flds.to_sym].include?(af[1].to_s)        # See if this column was selected to move
-          unless @edit[:new][sort_fields.to_sym].include?(af)                # Only move if it's not there already
-            @edit[:new][sort_fields.to_sym].push(af)                     # Add it to the new fields list
-          end
+      @edit[:new][edit_fields.to_sym].each do |af|             # Go thru all available columns
+        if params[flds.to_sym].include?(af[1].to_s)            # See if this column was selected to move
+          next if @edit[:new][sort_fields.to_sym].include?(af) # Only move if it's not there already
+          @edit[:new][sort_fields.to_sym].push(af)             # Add it to the new fields list
         end
       end
       # Remove selected fields
       @edit[:new][edit_fields.to_sym].delete_if { |af| params[flds.to_sym].include?(af[1].to_s) }
-      @edit[:new][sort_fields.to_sym].sort!                  # Sort the selected fields array
+      @edit[:new][sort_fields.to_sym].sort! # Sort the selected fields array
       @refresh_div = "column_lists"
       @refresh_partial = "column_lists"
     end
@@ -703,15 +700,17 @@ class ApplicationController < ActionController::Base
       nodes.each_with_index do |_node, i|
         if i == nodes.length - 1
           # check if @cls is there, to make sure the class/instance still exists in Automate db
-          inst = @cls ? MiqAeInstance.find_by_class_id_and_name(@cls.id, nodes[i]) : nil
+          inst = @cls ? MiqAeInstance.find_by(:class_id => @cls.id, :name => nodes[i]) : nil
           # show this as selected/expanded node when tree loads
-          @open_nodes.push("aei-#{inst.id}") if inst
-          @active_node = "aei-#{to_cid(inst.id)}" if inst
+          if inst
+            @open_nodes.push("aei-#{inst.id}")
+            @active_node = "aei-#{to_cid(inst.id)}"
+          end
         elsif i == nodes.length - 2
-          @cls = MiqAeClass.find_by_namespace_id_and_name(@ns.id, nodes[i])
+          @cls = MiqAeClass.find_by(:namespace_id => @ns.id, :name => nodes[i])
           @open_nodes.push("aec-#{to_cid(@cls.id)}") if @cls
         else
-          @ns = MiqAeNamespace.find_by_name(nodes[i])
+          @ns = MiqAeNamespace.find_by(:name => nodes[i])
           @open_nodes.push("aen-#{to_cid(@ns.id)}") if @ns
         end
       end
@@ -745,9 +744,10 @@ class ApplicationController < ActionController::Base
       msg = "VMDB config updated"
     end
 
-    {:event   => "vmdb_config_update",
-     :userid  => session[:userid],
-     :message => build_audit_msg(new, current, msg)
+    {
+      :event   => "vmdb_config_update",
+      :userid  => session[:userid],
+      :message => build_audit_msg(new, current, msg)
     }
   end
 
@@ -773,7 +773,7 @@ class ApplicationController < ActionController::Base
          (current.nil? || (new[k] != current[k]))
         if password_field?(k) # Asterisk out password fields
           msg_arr << "#{k}:[*]#{' to [*]' unless current.nil?}"
-        elsif new[k].kind_of?(Hash)       # If the field is a hash,
+        elsif new[k].kind_of?(Hash) # If the field is a hash,
           # Make current a blank hash for following comparisons
           current[k] = {} if !current.nil? && current[k].nil?
           #   process keys of the current and new hashes
@@ -803,11 +803,11 @@ class ApplicationController < ActionController::Base
     response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
 
     # IE will not allow downloads if no-cache is used because it won't save the file in the temp folder, so use private
-    if is_browser_ie?
-      response.headers["Pragma"] = "private"
-    else
-      response.headers["Pragma"] = "no-cache"
-    end
+    response.headers["Pragma"] = if is_browser_ie?
+                                   'private'
+                                 else
+                                   'no-cache'
+                                 end
 
     response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
@@ -815,7 +815,7 @@ class ApplicationController < ActionController::Base
   # Common method enable/disable schedules
   def schedule_enable_disable(schedules, enabled)
     schedules.select { |schedule| schedule.enabled != enabled }
-             .sort_by { |e| e.name.downcase}.each do |schedule|
+             .sort_by { |e| e.name.downcase }.each do |schedule|
       schedule.enabled = enabled
       schedule.save!
     end
@@ -847,7 +847,7 @@ class ApplicationController < ActionController::Base
     total += 1 if @sb[:pages][:items] % @sb[:pages][:perpage] != 0
     @sb[:pages][:total] = total
     @title = @report.title
-    if @report.extras[:total_html_rows] == 0
+    if @report.extras[:total_html_rows].zero?
       add_flash(_("No records found for this report"), :warning)
       html = nil
     else
@@ -872,17 +872,18 @@ class ApplicationController < ActionController::Base
   def report_edit_aborted(lastaction)
     add_flash(_("Edit aborted!  %{product} does not support the browser's back button or access from multiple tabs or windows of the same browser.  Please close any duplicate sessions before proceeding.") % {:product => I18n.t('product.name')}, :error)
     session[:flash_msgs] = @flash_array.dup
-    if request.xml_http_request?  # Is this an Ajax request?
+    if request.xml_http_request? # Is this an Ajax request?
       if lastaction == "configuration"
         edit
         redirect_to_action = 'index'
       else
         redirect_to_action = lastaction
       end
-      js_args = {:action        => redirect_to_action,
-                 :id            => params[:id],
-                 :escape        => false,
-                 :load_edit_err => true
+      js_args = {
+        :action        => redirect_to_action,
+        :id            => params[:id],
+        :escape        => false,
+        :load_edit_err => true
       }
       javascript_redirect(javascript_process_redirect_args(js_args))
     else
@@ -936,7 +937,7 @@ class ApplicationController < ActionController::Base
 
   # if authenticating or past login screen
   def set_user_time_zone
-    user = current_user || (params[:user_name].presence && User.find_by_userid(params[:user_name]))
+    user = current_user || (params[:user_name].presence && User.find_by(:userid => params[:user_name]))
     session[:user_tz] = Time.zone = (user ? user.get_timezone : server_timezone)
   end
 
@@ -946,16 +947,15 @@ class ApplicationController < ActionController::Base
     @server_options[:zones] = []
     @server_options[:zone_servers] = {}
     MiqServer.all.each do |ms|
-      if show_all || ms.started?                                                          # Collect all or only started servers
-        if ms.id == MiqServer.my_server.id                                                # This is the current server
-          @server_options[:server_id] ||= ms.id
-          next                                                                            # Don't add to list
-        end
-        name = "#{ms.name} [#{ms.id}]"
-        @server_options[:zones].push(ms.my_zone) unless @server_options[:zones].include?(ms.my_zone)  # Collect all of the zones
-        @server_options[:zone_servers][ms.my_zone] ||= []                                # Initialize zone servers array
-        @server_options[:zone_servers][ms.my_zone].push(ms.id)                                # Add server to the zone
+      next if !show_all && !ms.started? # Collect all or only started servers
+
+      if ms.id == MiqServer.my_server.id # This is the current server
+        @server_options[:server_id] ||= ms.id
+        next # Don't add to list
       end
+      @server_options[:zones].push(ms.my_zone) unless @server_options[:zones].include?(ms.my_zone)
+      @server_options[:zone_servers][ms.my_zone] ||= []
+      @server_options[:zone_servers][ms.my_zone].push(ms.id)
     end
     @server_options[:server_id] ||= MiqServer.my_server.id
     @server_options[:zone] = MiqServer.find(@server_options[:server_id]).my_zone
@@ -965,7 +965,7 @@ class ApplicationController < ActionController::Base
 
   def populate_reports_menu(tree_type = 'reports', mode = 'menu')
     # checking to see if group (used to be role) was selected in menu editor tree, or came in from reports/timeline tree calls
-    group = !session[:role_choice].blank? ? MiqGroup.find_by_description(session[:role_choice]) : current_group
+    group = !session[:role_choice].blank? ? MiqGroup.find_by(:description => session[:role_choice]) : current_group
     @sb[:rpt_menu] = get_reports_menu(group, tree_type, mode)
   end
 
@@ -1019,7 +1019,7 @@ class ApplicationController < ActionController::Base
     else
       # Building custom reports array for super_admin/admin roles, it doesnt show up on menu if their menu was set which didnt contain custom folder in it
       temp = []
-      subfolder = %w( Custom )
+      subfolder = %w(Custom)
       @custom_folder = [@sb[:grp_title]]
       @custom_folder.push([subfolder]) unless @custom_folder.include?([subfolder])
 
@@ -1035,16 +1035,16 @@ class ApplicationController < ActionController::Base
         group.settings[:report_menus].each do |menu|
           folder_arr = []
           menu_name = menu[0]
-          menu[1].each_with_index do |reports, _i|
+          menu[1].each_with_index do |mreports, _i|
             reports_arr = []
-            folder_name = reports[0]
-            reports[1].each do |rpt|
-              r = MiqReport.find_by_name(rpt)
-              if r && !r.timeline.nil?
-                temp2.push([menu_name, folder_arr]) unless temp2.include?([menu_name, folder_arr])
-                reports_arr.push(rpt) unless reports_arr.include?(rpt)
-                folder_arr.push([folder_name, reports_arr]) unless folder_arr.include?([folder_name, reports_arr])
-              end
+            folder_name = mreports[0]
+            mreports[1].each do |rpt|
+              r = MiqReport.find_by(:name => rpt)
+              next if r.nil? || r.timeline.nil?
+
+              temp2.push([menu_name, folder_arr]) unless temp2.include?([menu_name, folder_arr])
+              reports_arr.push(rpt) unless reports_arr.include?(rpt)
+              folder_arr.push([folder_name, reports_arr]) unless folder_arr.include?([folder_name, reports_arr])
             end
           end
         end
@@ -1055,13 +1055,13 @@ class ApplicationController < ActionController::Base
     end
     # move Customs folder as last item in tree
     rptmenu[0].each do |r|
-      if r.class == String && r == @sb[:grp_title]
-        @custom_folder = copy_array(rptmenu[0]) if @custom_folder.nil?
-        # Keeping My Company Reports folder on top of the menu tree only if user is on edit tab, else delete it from tree
-        # only add custom folder if it has any reports
-        rptmenu.push(rptmenu[0]) unless rptmenu[0][1][0][1].empty?
-        rptmenu.delete_at(0)
-      end
+      next unless r.class == String && r == @sb[:grp_title]
+
+      @custom_folder = copy_array(rptmenu[0]) if @custom_folder.nil?
+      # Keeping My Company Reports folder on top of the menu tree only if user is on edit tab, else delete it from tree
+      # only add custom folder if it has any reports
+      rptmenu.push(rptmenu[0]) unless rptmenu[0][1][0][1].empty?
+      rptmenu.delete_at(0)
     end
     rptmenu
   end
@@ -1074,7 +1074,7 @@ class ApplicationController < ActionController::Base
     root = {:head => [], :rows => []}
 
     has_checkbox = !@embedded && !@no_checkboxes
-    has_listicon = !%w(miqaeclass miqaeinstance).include?(view.db.downcase)  # do not add listicon for AE class show_list
+    has_listicon = !%w(miqaeclass miqaeinstance).include?(view.db.downcase) # do not add listicon for AE class show_list
 
     # Show checkbox or placeholder column
     if has_checkbox
@@ -1095,7 +1095,7 @@ class ApplicationController < ActionController::Base
                       :align   => align}
     end
 
-    if @row_button  # Show a button as last col
+    if @row_button # Show a button as last col
       root[:head] << {:is_narrow => true}
     end
 
@@ -1169,12 +1169,13 @@ class ApplicationController < ActionController::Base
         new_row[:cells] << {:text => celltext} if celltext
       end
 
-      if @row_button # Show a button in the last col
-        new_row[:cells] << {:is_button => true,
-                            :text      => @row_button[:label],
-                            :title     => @row_button[:title],
-                            :onclick   => "#{@row_button[:function]}(\"#{row['id']}\");"}
-      end
+      next unless @row_button # Show a button in the last col
+      new_row[:cells] << {
+        :is_button => true,
+        :text      => @row_button[:label],
+        :title     => @row_button[:title],
+        :onclick   => "#{@row_button[:function]}(\"#{row['id']}\");"
+      }
     end
 
     root
@@ -1242,25 +1243,24 @@ class ApplicationController < ActionController::Base
     return if skip_breadcrumb?
     remove = 0
     @breadcrumbs.each do |bc|
-      if remove > 0         # already found a match,
-        remove += 1       #   increment pop counter
-      else
-        # Check for a name match BEFORE the first left paren "(" or a url match BEFORE the last slash "/"
-        if bc[:name].to_s.gsub(/\(.*/, "").rstrip == new_bc[:name].to_s.gsub(/\(.*/, "").rstrip ||
-           bc[:url].to_s.gsub(/\/.?$/, "") == new_bc[:url].to_s.gsub(/\/.?$/, "")
-          remove = 1
-        end
+      if remove > 0 # already found a match,
+        remove += 1 #   increment pop counter
+
+      # Check for a name match BEFORE the first left paren "(" or a url match BEFORE the last slash "/"
+      elsif bc[:name].to_s.gsub(/\(.*/, "").rstrip == new_bc[:name].to_s.gsub(/\(.*/, "").rstrip ||
+            bc[:url].to_s.gsub(%r{\/.?$}, "") == new_bc[:url].to_s.gsub(%r{\/.?$}, "")
+        remove = 1
       end
     end
     remove.times { @breadcrumbs.pop } # remove found element and any lower elements
-    if onlyreplace                                              # if replacing,
+    if onlyreplace
       @breadcrumbs.push(new_bc) if remove > 0 # only add it if something was removed
     else
       @breadcrumbs.push(new_bc)
     end
     @breadcrumbs.push(new_bc) if onlyreplace && @breadcrumbs.empty?
     if (@lastaction == "registry_items" || @lastaction == "filesystems" || @lastaction == "files") && new_bc[:name].length > 50
-      @title = new_bc [:name].slice(0..50) + "..."  # Set the title to be the new breadcrumb
+      @title = new_bc [:name].slice(0..50) + "..." # Set the title to be the new breadcrumb
     else
       @title = new_bc [:name] # Set the title to be the new breadcrumb
     end
@@ -1293,7 +1293,7 @@ class ApplicationController < ActionController::Base
   end
 
   def rbac_free_for_custom_button?(task, button_id)
-    task == "custom_button" && CustomButton.find_by_id(from_cid(button_id))
+    task == "custom_button" && CustomButton.find_by(:id => from_cid(button_id))
   end
 
   def check_button_rbac
@@ -1355,7 +1355,7 @@ class ApplicationController < ActionController::Base
   # get the sort column that was clicked on, else use the current one
   def get_sort_col
     unless params[:sortby].nil?
-      if @sortcol == params[:sortby].to_i                       # if same column was selected
+      if @sortcol == params[:sortby].to_i # if same column was selected
         @sortdir = flip_sort_direction(@sortdir)
       else
         @sortdir = "ASC"
@@ -1379,7 +1379,7 @@ class ApplicationController < ActionController::Base
       begin
         rep.public_send(task) if rep.respond_to?(task) # Run the task
       rescue
-        failure_count += 1  # Push msg and error flag
+        failure_count += 1 # Push msg and error flag
       else
         if task == "destroy"
           AuditEvent.success(
@@ -1417,11 +1417,13 @@ class ApplicationController < ActionController::Base
     elsif in_reg.empty?
       add_flash(_("All selected %{labels} are not in the current region") % {:labels => label.pluralize}, :error)
     else
-      add_flash(out_reg.length == 1 ?
-          _("%{label} is not in the current region and will be skipped") %
-          {:label => pluralize(out_reg.length, label)} :
-          _("%{labels} are not in the current region and will be skipped") %
-          {:labels => pluralize(out_reg.length, label)}, :error) unless out_reg.empty?
+      unless out_reg.empty?
+        add_flash(
+          n_("%{label} is not in the current region and will be skipped",
+             "%{label} are not in the current region and will be skipped", out_reg.length) %
+            {:label => pluralize(out_reg.length, label)}, :error
+        )
+      end
     end
     return in_reg, out_reg
   end
@@ -1458,7 +1460,7 @@ class ApplicationController < ActionController::Base
       stxt = @search_text.gsub("_", "`_")                 # Escape underscores
       stxt.gsub!("%", "`%")                               #   and percents
 
-      stxt = if stxt.starts_with?("*") && stxt.ends_with?("*")   # Replace beginning/ending * chars with % for SQL
+      stxt = if stxt.starts_with?("*") && stxt.ends_with?("*")  # Replace beginning/ending * chars with % for SQL
                "%#{stxt[1..-2]}%"
              elsif stxt.starts_with?("*")
                "%#{stxt[1..-1]}"
@@ -1500,7 +1502,7 @@ class ApplicationController < ActionController::Base
            params[:refresh] != "y" && # refresh not being forced and
            (
              params[:ppsetting] || params[:page] || # changed paging or
-             params[:type]                           # gtl type
+             params[:type]                          # gtl type
            )
       refresh_view = true
       session[:menu_click] = params[:menu_click]      # Creating a new view, remember if came from a menu_click
@@ -1508,7 +1510,7 @@ class ApplicationController < ActionController::Base
     end
 
     # Build the advanced search @edit hash
-    if (@explorer && !@in_a_form && !["adv_search_clear", "tree_select"].include?(action_name)) ||
+    if (@explorer && !@in_a_form && !%w(adv_search_clear tree_select).include?(action_name)) ||
        (action_name == "show_list" && !session[:menu_click])
       adv_search_build(db)
     end
@@ -1518,7 +1520,7 @@ class ApplicationController < ActionController::Base
     end
 
     parent      = options[:parent] || nil             # Get passed in parent object
-    @parent     = parent unless parent.nil?             # Save the parent object for the views to use
+    @parent     = parent unless parent.nil?           # Save the parent object for the views to use
     association = options[:association] || nil        # Get passed in association (i.e. "users")
     view_suffix = options[:view_suffix] || nil        # Get passed in view_suffix (i.e. "VmReconfigureRequest")
 
@@ -1537,14 +1539,14 @@ class ApplicationController < ActionController::Base
     view = refresh_view ? get_db_view(db.gsub('::', '_'), :association => association, :view_suffix => view_suffix) : session[:view]
 
     # Check for changed settings in params
-    if params[:ppsetting]                             # User selected new per page value
+    if params[:ppsetting] # User selected new per page value
       @settings.store_path(:perpage, perpage_key(dbname), params[:ppsetting].to_i)
     end
 
     if params[:sortby] # New sort order (by = col click, choice = pull down)
       params[:sortby]      = params[:sortby].to_i - 1
       params[:sort_choice] = view.headers[params[:sortby]]
-    elsif params[:sort_choice]                        # If user chose new sortcol, set sortby parm
+    elsif params[:sort_choice] # If user chose new sortcol, set sortby parm
       params[:sortby]      = view.headers.index(params[:sort_choice])
     end
 
@@ -1562,7 +1564,7 @@ class ApplicationController < ActionController::Base
     @items_per_page = controller_name.downcase == "miq_policy" ? ONE_MILLION : get_view_pages_perpage(dbname)
     @items_per_page = ONE_MILLION if 'vm' == db_sym.to_s && controller_name == 'service'
 
-    @current_page = options[:page] || ((params[:page].to_i < 1) ? 1 : params[:page].to_i)
+    @current_page = options[:page] || (params[:page].to_i < 1 ? 1 : params[:page].to_i)
 
     view.conditions = options[:conditions] # Get passed in conditions (i.e. tasks date filters)
 
@@ -1656,10 +1658,8 @@ class ApplicationController < ActionController::Base
   end
 
   def get_db_view(db, options = {})
-    if %w(
-         ManageIQ_Providers_InfraManager_Template
-         ManageIQ_Providers_InfraManager_Vm
-       ).include?(db) && options[:association] == "all_vms_and_templates"
+    if %w(ManageIQ_Providers_InfraManager_Template ManageIQ_Providers_InfraManager_Vm)
+       .include?(db) && options[:association] == "all_vms_and_templates"
       options[:association] = nil
     end
 
@@ -1685,24 +1685,22 @@ class ApplicationController < ActionController::Base
       else
         javascript_redirect :controller => @redirect_controller, :action => @refresh_partial, :id => @redirect_id
       end
+    elsif params[:pressed] == "ems_cloud_edit" && params[:id]
+      javascript_redirect edit_ems_cloud_path(params[:id])
+    elsif params[:pressed] == "ems_infra_edit" && params[:id]
+      javascript_redirect edit_ems_infra_path(params[:id])
+    elsif params[:pressed] == "ems_container_edit" && params[:id]
+      javascript_redirect edit_ems_container_path(params[:id])
+    elsif params[:pressed] == "ems_middleware_edit" && params[:id]
+      javascript_redirect edit_ems_middleware_path(params[:id])
+    elsif params[:pressed] == "ems_datawarehouse_edit" && params[:id]
+      javascript_redirect edit_ems_datawarehouse_path(params[:id])
+    elsif params[:pressed] == "ems_network_edit" && params[:id]
+      javascript_redirect edit_ems_network_path(params[:id])
+    elsif params[:pressed] == "ems_physical_infra_edit" && params[:id]
+      javascript_redirect edit_ems_physical_infra_path(params[:id])
     else
-      if params[:pressed] == "ems_cloud_edit" && params[:id]
-        javascript_redirect edit_ems_cloud_path(params[:id])
-      elsif params[:pressed] == "ems_infra_edit" && params[:id]
-        javascript_redirect edit_ems_infra_path(params[:id])
-      elsif params[:pressed] == "ems_container_edit" && params[:id]
-        javascript_redirect edit_ems_container_path(params[:id])
-      elsif params[:pressed] == "ems_middleware_edit" && params[:id]
-        javascript_redirect edit_ems_middleware_path(params[:id])
-      elsif params[:pressed] == "ems_datawarehouse_edit" && params[:id]
-        javascript_redirect edit_ems_datawarehouse_path(params[:id])
-      elsif params[:pressed] == "ems_network_edit" && params[:id]
-        javascript_redirect edit_ems_network_path(params[:id])
-      elsif params[:pressed] == "ems_physical_infra_edit" && params[:id]
-        javascript_redirect edit_ems_physical_infra_path(params[:id])
-      else
-        javascript_redirect :action => @refresh_partial, :id => @redirect_id
-      end
+      javascript_redirect :action => @refresh_partial, :id => @redirect_id
     end
   end
 
@@ -1715,7 +1713,7 @@ class ApplicationController < ActionController::Base
                    "jobs"
                  elsif @lastaction == "get_node_info"
                    nil
-                 elsif ! @lastaction.nil?
+                 elsif !@lastaction.nil?
                    @lastaction
                  else
                    "show_list"
@@ -1740,8 +1738,7 @@ class ApplicationController < ActionController::Base
   end
 
   # RJS code to show tag box effects and replace the main list view area
-  def replace_gtl_main_div(options = {})
-    action_url = options[:action_url] || @lastaction
+  def replace_gtl_main_div(_options = {})
     return if params[:action] == "button" && @lastaction == "show"
 
     if @grid_hash
@@ -1751,15 +1748,13 @@ class ApplicationController < ActionController::Base
 
     render :update do |page|
       page << javascript_prologue
-      page.replace(:flash_msg_div, :partial => "layouts/flash_msg")           # Replace the flash message
+      page.replace(:flash_msg_div, :partial => "layouts/flash_msg") # Replace the flash message
       page << "miqSetButtons(0, 'center_tb');" # Reset the center toolbar
       if layout_uses_listnav?
-        page.replace(:listnav_div, :partial => "layouts/listnav")               # Replace accordion, if list_nav_div is there
+        page.replace(:listnav_div, :partial => "layouts/listnav") # Replace accordion, if list_nav_div is there
       end
       if @grid_hash
-        page.replace_html("list_grid", :partial => "layouts/list_grid",
-                                       :locals => {:options    => grid_options,
-                                                   :js_options => js_options})
+        page.replace_html("list_grid", :partial => "layouts/list_grid", :locals => {:options => grid_options, :js_options => js_options})
         # Reset the center buttons
         page << "miqGridOnCheck();"
       else
@@ -1774,24 +1769,24 @@ class ApplicationController < ActionController::Base
   # Build the audit object when a record is created, including all of the new fields
   #   params - rec = db record, eh = edit hash containing new values
   def build_created_audit(rec, eh)
-    {:event        => "#{rec.class.to_s.downcase}_record_add",
-     :target_id    => rec.id,
-     :target_class => rec.class.base_class.name,
-     :userid       => session[:userid],
-     :message      => build_audit_msg(eh[:new], nil,
-                                      "[#{eh[:new][:name]}] Record created")
+    {
+      :event        => "#{rec.class.to_s.downcase}_record_add",
+      :target_id    => rec.id,
+      :target_class => rec.class.base_class.name,
+      :userid       => session[:userid],
+      :message      => build_audit_msg(eh[:new], nil, "[#{eh[:new][:name]}] Record created")
     }
   end
 
   # Build the audit object when a record is saved, including all of the changed fields
   #   params - rec = db record, eh = edit hash containing current and new values
   def build_saved_audit(rec, eh)
-    {:event        => "#{rec.class.to_s.downcase}_record_update",
-     :target_id    => rec.id,
-     :target_class => rec.class.base_class.name,
-     :userid       => session[:userid],
-     :message      => build_audit_msg(eh[:new], eh[:current],
-                                      "[#{eh[:new][:name] ? eh[:new][:name] : rec[:name]}] Record updated")
+    {
+      :event        => "#{rec.class.to_s.downcase}_record_update",
+      :target_id    => rec.id,
+      :target_class => rec.class.base_class.name,
+      :userid       => session[:userid],
+      :message      => build_audit_msg(eh[:new], eh[:current], "[#{eh[:new][:name] ? eh[:new][:name] : rec[:name]}] Record updated")
     }
   end
 
@@ -1852,7 +1847,7 @@ class ApplicationController < ActionController::Base
         end
       end
     else
-      @org_controller = "vm"                                      # request originated from controller
+      @org_controller = "vm" # request originated from controller
       klass = VmOrTemplate
       @refresh_partial = typ ? "prov_edit" : "pre_prov"
     end
@@ -1917,7 +1912,7 @@ class ApplicationController < ActionController::Base
 
   def handle_remember_tab
     return if request.xml_http_request? || !request.get? || request.format != Mime[:html] ||
-      request.headers['X-Angular-Request'].present?
+              request.headers['X-Angular-Request'].present?
 
     return if controller_name == 'dashboard' && %(iframe maintab).include?(action_name)
 
@@ -1964,7 +1959,7 @@ class ApplicationController < ActionController::Base
     @expkey = session[:expkey] ? session[:expkey] : :expression
 
     # Get server hash, if it is in the session for supported controllers
-    @server_options = session[:server_options] if ["configuration", "support"].include?(controller_name)
+    @server_options = session[:server_options] if %w(configuration support).include?(controller_name)
 
     # Get timelines hash, if it is in the session for the running controller
     @tl_options = tl_session_data
@@ -2004,7 +1999,7 @@ class ApplicationController < ActionController::Base
     # Commented following line in sprint 39. . . controllers should load @edit if they need it and we will
     # automatically save it in the session if it's present when the transaction ends
     #   @edit = session[:edit] ? session[:edit] : nil
-    true     # If we don't return true, the entire session stops cold
+    true # If we don't return true, the entire session stops cold
   end
 
   def set_global_session_data
@@ -2013,7 +2008,7 @@ class ApplicationController < ActionController::Base
     session[:layout] = @layout
     session[:panels] = @panels
     session[:breadcrumbs] = @breadcrumbs
-    session[:applied_tags] = @applied_tags  # Search box applied tags for the current list view
+    session[:applied_tags] = @applied_tags # Search box applied tags for the current list view
     session[:miq_compare] = @compare.nil? ? (@keep_compare ? session[:miq_compare] : nil) : Marshal.dump(@compare)
     session[:miq_compressed] = @compressed unless @compressed.nil?
     session[:miq_exists_mode] = @exists_mode unless @exists_mode.nil?
@@ -2027,23 +2022,23 @@ class ApplicationController < ActionController::Base
 
     # Capture breadcrumbs by main tab
     session[:tab_bc] ||= {}
-    unless session[:menu_click]   # Don't save breadcrumbs after a chart menu click
+    unless session[:menu_click] # Don't save breadcrumbs after a chart menu click
       case controller_name
 
       # These controllers don't use breadcrumbs, see above get method to store URL
       when "dashboard", "report", "support", "alert", "alert_center", "jobs", "ui_jobs", "miq_ae_tools", "miq_policy", "miq_action", "chargeback", "service", "utilization", "bottlenecks", "planning"
 
       when "ems_cloud", "availability_zone", "host_aggregate", "flavor"
-        session[:tab_bc][:clo] = @breadcrumbs.dup if ["show", "show_list"].include?(action_name)
+        session[:tab_bc][:clo] = @breadcrumbs.dup if %(show show_list).include?(action_name)
       when "ems_infra", "datacenter", "ems_cluster", "resource_pool", "storage", "pxe_server"
-        session[:tab_bc][:inf] = @breadcrumbs.dup if ["show", "show_list"].include?(action_name)
+        session[:tab_bc][:inf] = @breadcrumbs.dup if %(show show_list).include?(action_name)
       when "host"
-        session[:tab_bc][:inf] = @breadcrumbs.dup if ["show", "show_list", "log_viewer"].include?(action_name)
+        session[:tab_bc][:inf] = @breadcrumbs.dup if %w(show show_list log_viewer).include?(action_name)
       when "miq_request"
         if @layout == "miq_request_vm"
-          session[:tab_bc][:vms] = @breadcrumbs.dup if ["show", "show_list"].include?(action_name)
+          session[:tab_bc][:vms] = @breadcrumbs.dup if %w(show show_list).include?(action_name)
         else
-          session[:tab_bc][:inf] = @breadcrumbs.dup if ["show", "show_list"].include?(action_name)
+          session[:tab_bc][:inf] = @breadcrumbs.dup if %w(show show_list).include?(action_name)
         end
       when "vm"
         session[:tab_bc][:vms] = @breadcrumbs.dup if %w(
@@ -2128,18 +2123,18 @@ class ApplicationController < ActionController::Base
     mfilters = user ? user.get_managed_filters : []
     bfilters = user ? user.get_belongsto_filters : []
 
-    if db.respond_to?(:find_tags_by_grouping) && !mfilters.empty?
-      result = db.find_tags_by_grouping(mfilters, :ns => "*")
-    else
-      result = db.all
-    end
+    result = if db.respond_to?(:find_tags_by_grouping) && !mfilters.empty?
+               db.find_tags_by_grouping(mfilters, :ns => "*")
+             else
+               db.all
+             end
 
     result = MiqFilter.apply_belongsto_filters(result, bfilters) if db.respond_to?(:apply_belongsto_filters) && result
 
     result
   end
 
-  VISIBILITY_TYPES = {'role' => 'role', 'group' => 'group', 'all' => 'all'}
+  VISIBILITY_TYPES = {'role' => 'role', 'group' => 'group', 'all' => 'all'}.freeze
 
   def visibility_box_edit
     typ_changed = params[:visibility_typ].present?
@@ -2153,13 +2148,13 @@ class ApplicationController < ActionController::Base
 
       @edit[:new][key] = [] if typ_changed
       params.each do |var, value|
-        if var.starts_with?(prefix)
-          name = var.split(prefix).last
-          if value == "1"
-            @edit[:new][key] |= [name]    # union
-          elsif value.downcase == "null"
-            @edit[:new][key].delete(name)
-          end
+        next unless var.starts_with?(prefix)
+
+        name = var.split(prefix).last
+        if value == "1"
+          @edit[:new][key] |= [name] # union
+        elsif value.downcase == "null"
+          @edit[:new][key].delete(name)
         end
       end
     else
@@ -2191,11 +2186,12 @@ class ApplicationController < ActionController::Base
   #   klass - class of accessed objects
   #   ids   - array of accessed object ids
   def assert_rbac(klass, ids)
-    filtered, _ = Rbac.search(
-      :targets => ids.map(&:to_i),
-      :user => current_user,
-      :class => klass,
-      :results_format => :ids)
+    filtered, = Rbac.search(
+      :targets        => ids.map(&:to_i),
+      :user           => current_user,
+      :class          => klass,
+      :results_format => :ids
+    )
     raise _("Unauthorized object or action") unless ids.length == filtered.length
   end
 
@@ -2228,7 +2224,9 @@ class ApplicationController < ActionController::Base
           :locals  => {
             :tree => tree,
             :name => tree.name.to_s
-          }))
+          }
+        )
+      )
     end
   end
 
