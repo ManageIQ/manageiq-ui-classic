@@ -71,11 +71,20 @@ module Mixins
       verify_ems.authentication_check(params[:cred_type], :save => false, :database => params[:metrics_database_name])
     end
 
+    def realtime_raw_connect(ems_type)
+      ems_type.raw_connect(*get_task_args(ems_type))
+      true
+    rescue => err
+      [false, err.message]
+    end
+
     def create_ems_button_validate
       @in_a_form = true
       ems_type = model.model_from_emstype(params[:emstype])
-      # TODO: queue authentication checks for all providers, not just cloud
-      result, details = if params[:controller] == "ems_cloud"
+      # TODO: queue authentication for ALL types when selected role isn't the UI role
+      result, details = if params[:controller] == "ems_cloud" && session[:selected_roles].try(:include?, 'user_interface')
+                          realtime_raw_connect(ems_type)
+                        elsif params[:controller] == "ems_cloud"
                           ems_type.validate_credentials_task(get_task_args(ems_type), session[:userid], params[:zone])
                         else
                           realtime_authentication_check(ems_type.new)

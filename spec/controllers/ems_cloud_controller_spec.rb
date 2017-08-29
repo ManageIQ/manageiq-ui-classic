@@ -325,6 +325,16 @@ describe EmsCloudController do
       expect(mocked_infra).to receive(:authentication_check).with("default", hash_including(:save => false))
       controller.send(:create_ems_button_validate)
     end
+
+    it "does not queue the authentication check if it is a cloud provider with a ui role" do
+      session[:selected_roles] = ['user_interface']
+      allow(controller).to receive(:render)
+      allow(ExtManagementSystem).to receive(:model_from_emstype).and_return(mocked_infra_class)
+      controller.instance_variable_set(:@_params, :controller => "ems_cloud")
+
+      expect(mocked_infra_class).to receive(:raw_connect)
+      controller.send(:create_ems_button_validate)
+    end
   end
 
   describe "#test_toolbars" do
