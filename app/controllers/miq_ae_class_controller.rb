@@ -1413,18 +1413,20 @@ class MiqAeClassController < ApplicationController
     end
   end
 
+  def handle_up_down_buttons(hash_key, field_name)
+    case params[:button]
+    when 'up'
+      move_selected_fields_up(@edit[:new][hash_key], params[:seq_fields], field_name)
+    when 'down'
+      move_selected_fields_down(@edit[:new][hash_key], params[:seq_fields], field_name)
+    end
+  end
+
   # Get variables from user edit form
   def fields_seq_field_changed
     return unless load_edit("fields_edit__seq", "replace_cell__explorer")
 
-    moved = case params[:button]
-            when 'up'
-              move_selected_fields_up(@edit[:new][:fields_list], params[:seq_fields], _("Fields"))
-            when 'down'
-              move_selected_fields_down(@edit[:new][:fields_list], params[:seq_fields], _("Fields"))
-            end
-
-    unless moved
+    unless handle_up_down_buttons(:fields_list, _('Fields'))
       render_flash
       return
     end
@@ -1485,14 +1487,7 @@ class MiqAeClassController < ApplicationController
     return unless load_edit(params[:id], "replace_cell__explorer")
     @in_a_form = true
 
-    moved = case params[:button]
-            when 'up'
-              move_selected_fields_up(@edit[:new][:domain_order], params[:seq_fields], _("Domains"))
-            when 'down'
-              move_selected_fields_down(@edit[:new][:domain_order], params[:seq_fields], _("Domains"))
-            end
-
-    unless moved
+    unless handle_up_down_buttons(:domain_order, _('Domains'))
       render_flash
       return
     end
