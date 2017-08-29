@@ -66,8 +66,8 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
         if (event.name === 'showDatasourceListener') {
           $scope.showDatasourceListener();
         }
-        if (event.name === 'showDeployListener') {
-          $scope.showDeployListener();
+        if (event.name === 'showJdbcDriverListener') {
+          $scope.showJdbcDriverListener();
         }
       });
     }
