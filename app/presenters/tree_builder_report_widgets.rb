@@ -1,4 +1,12 @@
 class TreeBuilderReportWidgets < TreeBuilder
+  # Need this for display purpose to map with id
+  WIDGET_TYPES = {
+    "r"  => N_('Reports'),
+    "c"  => N_('Charts'),
+    "rf" => N_('RSS Feeds'),
+    "m"  => N_('Menus')
+  }.freeze
+
   private
 
   def tree_init_options(tree_name)

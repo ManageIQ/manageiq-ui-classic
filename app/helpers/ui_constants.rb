@@ -190,14 +190,6 @@ module UiConstants
     N_('4 Years Ago')
   ]
 
-  # Need this for display purpose to map with id
-  WIDGET_TYPES = {
-    "r"  => N_('Reports'),
-    "c"  => N_('Charts'),
-    "rf" => N_('RSS Feeds'),
-    "m"  => N_('Menus')
-  }
-
   SINGULAR_WIDGET_TYPES = {
     "r"  => N_('Report'),
     "c"  => N_('Chart'),
