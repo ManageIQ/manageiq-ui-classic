@@ -4,14 +4,16 @@
       %th{"ng-repeat" => "header in vm.tableHeaders track by $index"}{{header}}
   %tbody
     %tr{"ng-repeat" => "key in vm.keys track by $index"}
-      %td.form-group
-        %input.form-control{"type"      => "text",
-                            "id"        => "{{vm.keyType}}{{$index}}",
-                            "name"      => "{{vm.keyType}}{{$index}}",
-                            "ng-model"  => "vm.keys[$index]",
-                            "maxlength" => "#{ViewHelper::MAX_NAME_LEN}",}
-      %td.form-group{"ng-if" => "vm.valueOptions", :style => "width: 50px"}
+      %td.form-group{"ng-class" => "{'has-error': vm.angularForm['{{vm.keyType}}{{$index}}'].$invalid}"}
+        %input.form-control{"type"        => "text",
+                            "id"          => "{{vm.keyType}}{{$index}}",
+                            "name"        => "{{vm.keyType}}{{$index}}",
+                            "ng-required" => "vm.valueOptions && vm.values[$index]",
+                            "ng-model"    => "vm.keys[$index]",
+                            "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",}
+      %td.form-group{"ng-if" => "vm.valueOptions", :style => "width: 50px", "ng-class" => "{'has-error': vm.angularForm['Value_{{vm.keyType}}{{$index}}'].$invalid}"}
         %select{"name"                        => "Value_{{vm.keyType}}{{$index}}",
+                "ng-required"                 => "vm.keys[$index] !== ''",
                 "ng-model"                    => "vm.values[$index]",
                 "ng-options"                  => "valueOption.id as valueOption.name for valueOption in vm.valueOptions",
                 "data-live-search"            => "true",
