@@ -1434,7 +1434,7 @@ class MiqAeClassController < ApplicationController
       page.replace('column_lists', :partial => 'fields_seq_form')
       @changed = (@edit[:new] != @edit[:current])
       page << javascript_for_miq_button_visibility(@changed) if @changed
-      page << "miqSparkle(false);"
+      page << "miqsparkle(false);"
     end
   end
 
@@ -1484,16 +1484,28 @@ class MiqAeClassController < ApplicationController
 
   def priority_form_field_changed
     return unless load_edit(params[:id], "replace_cell__explorer")
-    priority_get_form_vars
+    @in_a_form = true
+
+    moved = case params[:button]
+            when 'up'
+              move_selected_fields_up(@edit[:new][:domain_order], params[:seq_fields], _("Domains"))
+            when 'down'
+              move_selected_fields_down(@edit[:new][:domain_order], params[:seq_fields], _("Domains"))
+            end
+
+    if !moved
+      render_flash
+      return
+    end
+
     render :update do |page|
       page << javascript_prologue
-      changed = (@edit[:new] != @edit[:current])
-      page.replace("flash_msg_div", :partial => "layouts/flash_msg") if @flash_array
-      page.replace(@refresh_div,
-                   :partial => @refresh_partial,
-                   :locals  => {:action => "domains_priority_edit"}) if @refresh_div
-      page << javascript_for_miq_button_visibility(changed)
-      page << "miqSparkle(false);"
+      page.replace('domains_list',
+                   :partial => 'domains_priority_form',
+                   :locals  => {:action => "domains_priority_edit"})
+      @changed = (@edit[:new] != @edit[:current])
+      page << javascript_for_miq_button_visibility(@changed) if @changed
+      page << "miqsparkle(false);"
     end
   end
 
@@ -2438,20 +2450,6 @@ class MiqAeClassController < ApplicationController
     }
     @edit[:current] = copy_hash(@edit[:new])
     session[:edit]  = @edit
-  end
-
-  def priority_get_form_vars
-    @in_a_form = true
-    if params[:button] == "up"
-      move_selected_fields_up(@edit[:new][:domain_order], params[:seq_fields], _("Domains"))
-    end
-    if params[:button] == "down"
-      move_selected_fields_down(@edit[:new][:domain_order], params[:seq_fields], _("Domains"))
-    end
-    unless @flash_array
-      @refresh_div     = "domains_list"
-      @refresh_partial = "domains_priority_form"
-    end
   end
 
   def domain_toggle(locked)
