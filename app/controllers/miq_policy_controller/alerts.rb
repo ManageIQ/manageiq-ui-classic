@@ -307,14 +307,14 @@ module MiqPolicyController::Alerts
       if @alert.responds_to_events == "_hourly_timer_"                    # Check for hourly timer event
         @edit[:new][:exp_event] = @alert.responds_to_events
       else
-        exp_event = MiqEventDefinition.find_by_name(@alert.responds_to_events)
+        exp_event = MiqEventDefinition.find_by(:name => @alert.responds_to_events)
         @edit[:new][:exp_event] = exp_event.nil? ? nil : exp_event.id
       end
     elsif @alert.expression.kind_of?(Hash) && @alert.expression[:eval_method] == "nothing"
       if @alert.responds_to_events == "_hourly_timer_"                    # Check for hourly timer event
         @edit[:new][:exp_event] = @alert.responds_to_events
       else
-        exp_event = MiqEventDefinition.find_by_name(@alert.responds_to_events)
+        exp_event = MiqEventDefinition.find_by(:name => @alert.responds_to_events)
         @edit[:new][:exp_event] = exp_event.nil? ? nil : exp_event.id
       end
     end
@@ -640,7 +640,7 @@ module MiqPolicyController::Alerts
     if @alert.responds_to_events == "_hourly_timer_"
       @event = _("Hourly Timer")
     else
-      e = MiqEventDefinition.find_by_name(@alert.responds_to_events)
+      e = MiqEventDefinition.find_by(:name => @alert.responds_to_events)
       @event = e.nil? ? _("<No Event configured>") : e.etype.description + ": " + e.description
     end
     if @alert.options && @alert.options[:notifications] && @alert.options[:notifications][:email] && @alert.options[:notifications][:email][:to]

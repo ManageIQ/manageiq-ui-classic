@@ -52,7 +52,7 @@ module MiqPolicyController::Policies
       end
       if policy.valid? && !@flash_array && policy.save
         if @policy.id.blank? && policy.mode == "compliance"   # New compliance policy
-          event = MiqEventDefinition.find_by_name("#{policy.towhat.downcase}_compliance_check") # Get the compliance event record
+          event = MiqEventDefinition.find_by(:name => "#{policy.towhat.downcase}_compliance_check") # Get the compliance event record
           policy.sync_events([event])                           # Set the default compliance event in the policy
           action_list = [[MiqAction.find_by_name("compliance_failed"), {:qualifier => :failure, :synchronous => true}]]
           policy.replace_actions_for_event(event, action_list)  # Add in the default action for the compliance event
