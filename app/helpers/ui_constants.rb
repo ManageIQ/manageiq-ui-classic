@@ -5,12 +5,6 @@ module UiConstants
 
   VALID_PLANNING_VM_MODES = PlanningHelper::PLANNING_VM_MODES.keys.index_by(&:to_s)
 
-  PROV_TIME_PERIODS = {
-    1  => N_("Last 24 Hours"),
-    7  => N_("Last 7 Days"),
-    30 => N_("Last 30 Days")
-  }
-
   ALL_TIMEZONES = ActiveSupport::TimeZone.all.collect { |tz| ["(GMT#{tz.formatted_offset}) #{tz.name}", tz.name] }
   # Following line does not include timezones with partial hour offsets
   # ALL_TIMEZONES = ActiveSupport::TimeZone.all.collect{|tz| tz.utc_offset % 3600 == 0 ? ["(GMT#{tz.formatted_offset}) #{tz.name}",tz.name] : nil}.compact
