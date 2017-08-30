@@ -174,22 +174,20 @@ module Mixins
         keystone_v3_domain_id = @ems.keystone_v3_domain_id
       end
 
-      if @ems.connection_configurations.hawkular.try(:endpoint)
-        metrics_hostname = @ems.connection_configurations.hawkular.endpoint.hostname
-        metrics_port = @ems.connection_configurations.hawkular.endpoint.port
-        metrics_auth_status = @ems.authentication_status_ok?(:hawkular)
-        metrics_security_protocol = @ems.connection_configurations.hawkular.endpoint.security_protocol
-        metrics_security_protocol ||= security_protocol_default
-        metrics_tls_ca_certs = @ems.connection_configurations.hawkular.endpoint.certificate_authority
+      if respond_to?(:retrieve_metrics_selection)
+        metrics_selection = retrieve_metrics_selection.to_sym
+        connection_configurations_metrics_endpoint = @ems.connection_configurations.try(metrics_selection).try(:endpoint)
+      else
+        connection_configurations_metrics_endpoint = nil
       end
 
-      if @ems.connection_configurations.prometheus.try(:endpoint)
-        metrics_hostname = @ems.connection_configurations.prometheus.endpoint.hostname
-        metrics_port = @ems.connection_configurations.prometheus.endpoint.port
-        metrics_auth_status = @ems.authentication_status_ok?(:prometheus)
-        metrics_security_protocol = @ems.connection_configurations.prometheus.endpoint.security_protocol
+      if connection_configurations_metrics_endpoint
+        metrics_hostname = connection_configurations_metrics_endpoint.hostname
+        metrics_port = connection_configurations_metrics_endpoint.port
+        metrics_auth_status = @ems.authentication_status_ok?(metrics_selection)
+        metrics_security_protocol = connection_configurations_metrics_endpoint.security_protocol
         metrics_security_protocol ||= security_protocol_default
-        metrics_tls_ca_certs = @ems.connection_configurations.prometheus.endpoint.certificate_authority
+        metrics_tls_ca_certs = connection_configurations_metrics_endpoint.certificate_authority
       end
 
       if @ems.connection_configurations.default.try(:endpoint)
