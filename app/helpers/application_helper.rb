@@ -51,7 +51,7 @@ module ApplicationHelper
 
   def valid_html_id(id)
     id = id.to_s.gsub("::", "__")
-    raise "HTML ID is not valid" if /[^\w_]/.match(id)
+    raise "HTML ID is not valid" if id =~ /[^\w]/
     id
   end
 
@@ -382,10 +382,8 @@ module ApplicationHelper
                  ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript
                  MiqReportResult).include?(view.db) &&
               %w(report automation_manager).include?(request.parameters[:controller])
-          suffix = ""
-          if params[:tab_id] == "saved_reports"
-            suffix = x_node
-          end
+          suffix = ''
+          suffix = x_node if params[:tab_id] == "saved_reports"
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + suffix
         elsif %w(User MiqGroup MiqUserRole Tenant).include?(view.db) &&
               %w(ops).include?(request.parameters[:controller])
@@ -1167,9 +1165,7 @@ module ApplicationHelper
   # FIXME: params[:type] is used in multiple contexts, we should rename it to
   # :gtl_type or remove it as we move to the Angular GTL component
   def pagination_or_gtl_request?
-    params[:ppsetting] || params[:searchtag] || params[:entry] ||
-      params[:sortby] || params[:sort_choice] ||
-      params[:type] || params[:page]
+    %i(ppsetting searchtag entry sortby sort_choice type page).find { |k| params[k] }
   end
 
   def update_gtl_div(action_url = 'explorer', button_div = 'center_tb')
