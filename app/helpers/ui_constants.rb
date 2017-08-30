@@ -121,14 +121,6 @@ module UiConstants
   EXP_FROM = "FROM"
   EXP_IS = "IS"
 
-  FROM_MONTHS = [
-    N_('This Month'),
-    N_('Last Month'),
-    N_('2 Months Ago'),
-    N_('3 Months Ago'),
-    N_('4 Months Ago'),
-    N_('6 Months Ago')
-  ]
   FROM_QUARTERS = [
     N_('This Quarter'),
     N_('Last Quarter'),

@@ -43,14 +43,6 @@ module ViewHelper
     28 => N_("4 Weeks")
   }.freeze
 
-  FROM_YEARS = [
-    N_('This Year'),
-    N_('Last Year'),
-    N_('2 Years Ago'),
-    N_('3 Years Ago'),
-    N_('4 Years Ago')
-  ].freeze
-
   # FROM Date/Time expression atom selectors
   FROM_HOURS = [
     N_('This Hour'),
@@ -97,6 +89,23 @@ module ViewHelper
     N_('2 Weeks Ago'),
     N_('3 Weeks Ago'),
     N_('4 Weeks Ago')
+  ].freeze
+
+  FROM_MONTHS = [
+    N_('This Month'),
+    N_('Last Month'),
+    N_('2 Months Ago'),
+    N_('3 Months Ago'),
+    N_('4 Months Ago'),
+    N_('6 Months Ago')
+  ].freeze
+
+  FROM_YEARS = [
+    N_('This Year'),
+    N_('Last Year'),
+    N_('2 Years Ago'),
+    N_('3 Years Ago'),
+    N_('4 Years Ago')
   ].freeze
 
   class << self

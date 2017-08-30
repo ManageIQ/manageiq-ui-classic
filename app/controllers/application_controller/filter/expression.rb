@@ -570,8 +570,8 @@ module ApplicationController::Filter
              ViewHelper::FROM_DAYS
            elsif ViewHelper::FROM_WEEKS.include?(from_choice)
              ViewHelper::FROM_WEEKS
-           elsif FROM_MONTHS.include?(from_choice)
-             FROM_MONTHS
+           elsif ViewHelper::FROM_MONTHS.include?(from_choice)
+             ViewHelper::FROM_MONTHS
            elsif FROM_QUARTERS.include?(from_choice)
              FROM_QUARTERS
            elsif ViewHelper::FROM_YEARS.include?(from_choice)
