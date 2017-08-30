@@ -1,49 +1,61 @@
 module MiqPolicyController::Alerts
   extend ActiveSupport::Concern
 
+  def alert_edit_cancel
+    @edit = nil
+    @alert = session[:edit][:alert_id] ? MiqAlert.find_by_id(session[:edit][:alert_id]) : MiqAlert.new
+    if @alert && @alert.id.blank?
+      add_flash(_("Add of new %{models} was cancelled by the user") % {:models => ui_lookup(:model => "MiqAlert")})
+    else
+      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqAlert"), :name => @alert.description})
+    end
+    get_node_info(x_node)
+    replace_right_cell(:nodetype => @nodetype)
+  end
+
+  def alert_edit_save_add
+    id = params[:id] && params[:button] != "add" ? params[:id] : "new"
+    return unless load_edit("alert_edit__#{id}", "replace_cell__explorer")
+    @alert = @edit[:alert_id] ? MiqAlert.find_by_id(@edit[:alert_id]) : MiqAlert.new
+    alert = @alert.id.blank? ? MiqAlert.new : MiqAlert.find(@alert.id)  # Get new or existing record
+    alert_set_record_vars(alert)
+    if alert_valid_record?(alert) && alert.valid? && !@flash_array && alert.save
+      AuditEvent.success(build_saved_audit(alert, params[:button] == "add"))
+      flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") :
+                                              _("%{model} \"%{name}\" was added")
+      add_flash(flash_key % {:model => ui_lookup(:model => "MiqAlert"), :name => @edit[:new][:description]})
+      alert_get_info(MiqAlert.find(alert.id))
+      alert_sync_provider(@edit[:alert_id] ? :update : :new)
+      @edit = nil
+      @nodetype = "al"
+      @new_alert_node = "al-#{to_cid(alert.id)}"
+      replace_right_cell(:nodetype => "al", :replace_trees => [:alert_profile, :alert])
+    else
+      alert.errors.each do |field, msg|
+        add_flash("#{field.to_s.capitalize} #{msg}", :error)
+      end
+      replace_right_cell(:nodetype => "al")
+    end
+  end
+
+  def alert_edit_reset
+    alert_build_edit_screen
+    @sb[:action] = "alert_edit"
+    if params[:button] == "reset"
+      add_flash(_("All changes have been reset"), :warning)
+    end
+    replace_right_cell(:nodetype => "al")
+  end
+
   def alert_edit
     assert_privileges(params[:pressed]) if params[:pressed]
     case params[:button]
     when "cancel"
-      @edit = nil
-      @alert = session[:edit][:alert_id] ? MiqAlert.find_by_id(session[:edit][:alert_id]) : MiqAlert.new
-      if @alert && @alert.id.blank?
-        add_flash(_("Add of new %{models} was cancelled by the user") % {:models => ui_lookup(:model => "MiqAlert")})
-      else
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqAlert"), :name => @alert.description})
-      end
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => @nodetype)
+      alert_edit_cancel
     when "save", "add"
-      id = params[:id] && params[:button] != "add" ? params[:id] : "new"
-      return unless load_edit("alert_edit__#{id}", "replace_cell__explorer")
-      @alert = @edit[:alert_id] ? MiqAlert.find_by_id(@edit[:alert_id]) : MiqAlert.new
-      alert = @alert.id.blank? ? MiqAlert.new : MiqAlert.find(@alert.id)  # Get new or existing record
-      alert_set_record_vars(alert)
-      if alert_valid_record?(alert) && alert.valid? && !@flash_array && alert.save
-        AuditEvent.success(build_saved_audit(alert, params[:button] == "add"))
-        flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") :
-                                                _("%{model} \"%{name}\" was added")
-        add_flash(flash_key % {:model => ui_lookup(:model => "MiqAlert"), :name => @edit[:new][:description]})
-        alert_get_info(MiqAlert.find(alert.id))
-        alert_sync_provider(@edit[:alert_id] ? :update : :new)
-        @edit = nil
-        @nodetype = "al"
-        @new_alert_node = "al-#{to_cid(alert.id)}"
-        replace_right_cell(:nodetype => "al", :replace_trees => [:alert_profile, :alert])
-      else
-        alert.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
-        end
-        replace_right_cell(:nodetype => "al")
-      end
+      alert_edit_save_add
     when "reset", nil # Reset or first time in
-      alert_build_edit_screen
-      @sb[:action] = "alert_edit"
-      if params[:button] == "reset"
-        add_flash(_("All changes have been reset"), :warning)
-      end
-      replace_right_cell(:nodetype => "al")
+      alert_edit_reset
     end
   end
 
