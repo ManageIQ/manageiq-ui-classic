@@ -16,8 +16,7 @@ module MiqPolicyController::Alerts
   def alert_edit_save_add
     id = params[:id] && params[:button] != "add" ? params[:id] : "new"
     return unless load_edit("alert_edit__#{id}", "replace_cell__explorer")
-    @alert = @edit[:alert_id] ? MiqAlert.find_by_id(@edit[:alert_id]) : MiqAlert.new
-    alert = @alert.id.blank? ? MiqAlert.new : MiqAlert.find(@alert.id)  # Get new or existing record
+    alert = @alert = @edit[:alert_id] ? MiqAlert.find(@edit[:alert_id]) : MiqAlert.new
     alert_set_record_vars(alert)
 
     unless alert_valid_record?(alert) && alert.valid? && !@flash_array && alert.save
