@@ -28,8 +28,7 @@ module MiqPolicyController::Alerts
     end
 
     AuditEvent.success(build_saved_audit(alert, params[:button] == "add"))
-    flash_key = params[:button] == 'save' ? _("Alert \"%{name}\" was saved") :
-                                            _("Alert \"%{name}\" was added")
+    flash_key = params[:button] == 'save' ? _("Alert \"%{name}\" was saved") : _("Alert \"%{name}\" was added")
     add_flash(flash_key % {:name => @edit[:new][:description]})
     alert_get_info(MiqAlert.find(alert.id))
     alert_sync_provider(@edit[:alert_id] ? :update : :new)
