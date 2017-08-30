@@ -29,6 +29,8 @@
                 = _("Active")
               .col-md-8
                 = check_box_tag("active", "1", @edit[:new][:active], "data-miq_observe_checkbox" => {:url => url}.to_json)
+          %hr
+
       - else
         %h3= _('Basic Information')
         .form-horizontal.static
@@ -53,21 +55,31 @@
       -# Scope
       - if @edit
         - if @edit[:typ] == "basic"
-          %h3= _("Scope (Choose an element of the Policy scope to edit)")
-          = render :partial => 'layouts/exp_editor'
-        %hr
+          %h3= _("Scope")
+          .form-horizontal.static
+            .form-group
+              %label.control-label.col-md-2
+              .col-md-8
+                = _("Choose an element of the Policy scope to edit")
+                = render :partial => 'layouts/exp_editor'
+          %hr
+
       - else
         %h3= _("Scope")
-        - if !@expression_table.nil?
-          - @expression_table.each do |token|
-            - if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
-              = h([token].flatten.first)
-            - else
-              %font{:color => "black"}
-                %b
-                  = h([token].flatten.first)
-        - else
-          = render :partial => 'layouts/info_msg', :locals => {:message => _("No Policy scope defined, the scope of this policy includes all elements.")}
+        .form-horizontal.static
+          .form-group
+            %label.control-label.col-md-2
+            .col-md-8
+              - if !@expression_table.nil?
+                - @expression_table.each do |token|
+                  - if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
+                    = h([token].flatten.first)
+                  - else
+                    %font{:color => "black"}
+                      %b
+                        = h([token].flatten.first)
+              - else
+                = render :partial => 'layouts/info_msg', :locals => {:message => _("No Policy scope defined, the scope of this policy includes all elements.")}
           %hr
 
       -# Conditions for this policy
@@ -220,17 +232,20 @@
       -# Notes field
       - if @edit
         - if @edit[:typ] == "basic"
-          %h3
-            = _("Notes")
-            (
-            %span#notes_count= @edit[:new][:notes] ? @edit[:new][:notes].length : 0
-            \/ 512)
-          = text_area_tag("notes", @edit[:new][:notes],
-            :rows                       => 4,
-            :maxlength                  => "512",
-            :counter                    => "notes_count",
-            "data-miq_check_max_length" => true,
-            "data-miq_observe"          => observe_with_interval)
+          %h3= _("Notes")      
+          .form-horizontal
+            .form-group
+              %label.control-label.col-md-2
+              .col-md-8
+                (
+                %span#notes_count= @edit[:new][:notes] ? @edit[:new][:notes].length : 0
+                \/ 512)
+                = text_area_tag("notes", @edit[:new][:notes],
+                  :rows                       => 4,
+                  :maxlength                  => "512",
+                  :counter                    => "notes_count",
+                  "data-miq_check_max_length" => true,
+                  "data-miq_observe"          => observe_with_interval)
       - else
         %h3= _("Notes")
         - if @policy.notes.blank?
