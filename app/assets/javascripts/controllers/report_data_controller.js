@@ -84,7 +84,7 @@
         this.initController(event.initController.data);
       } else if (event.unsubscribe && event.unsubscribe === COTNROLLER_NAME) {
         this.onUnsubscribe();
-      } else if (event.tollbarEvent && (event.tollbarEvent === 'itemClicked')) {
+      } else if (event.toolbarEvent && (event.toolbarEvent === 'itemClicked')) {
         this.setExtraClasses();
       }
 
