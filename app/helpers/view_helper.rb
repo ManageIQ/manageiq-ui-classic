@@ -91,6 +91,14 @@ module ViewHelper
     N_('14 Days Ago')
   ].freeze
 
+  FROM_WEEKS = [
+    N_('This Week'),
+    N_('Last Week'),
+    N_('2 Weeks Ago'),
+    N_('3 Weeks Ago'),
+    N_('4 Weeks Ago')
+  ].freeze
+
   class << self
     def concat_tag(*args, &block)
       concat content_tag(*args, &block)
