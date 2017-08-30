@@ -29,7 +29,7 @@ function updateNewProvider(state, action): AppState {
       }
     }
   };
-  console.log({ ...merge(state, newProvider) });
+
   return { ...merge(state, newProvider) }
 }
 

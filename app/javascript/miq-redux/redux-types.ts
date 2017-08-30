@@ -5,6 +5,7 @@ export interface IMiqAction extends Action {
   type: string;
   payload?: any;
 }
+
 export interface IMiqReducerHash {
   [propName: string]: AppReducer;
 }

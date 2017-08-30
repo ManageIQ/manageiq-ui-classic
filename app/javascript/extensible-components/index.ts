@@ -65,3 +65,4 @@ source.subscribe((component: IExtensionComponent) => {
     console.error('Unsupported action with extension components.');
   }
 });
+

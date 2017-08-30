@@ -1,6 +1,14 @@
 import * as ng from 'angular';
 import { reducers } from './new-provider-reducer';
 import { DefaultFormController, IFormController } from '../../forms-common/defaultFormController';
+import { 
+  IExtensibleComponent,
+  IMiQApiCallback,
+  RenderCallback,
+  IMiQRenderCallback,
+  addComponent
+} from '../../extensible-components/lib';
+import { ExtensibleComponent } from '../../extensible-components';
 
 export default class NewProviderForm implements ng.IComponentOptions {
   public templateUrl: string = '/static/middleware/new-provider.html.haml';
@@ -15,7 +23,8 @@ export default class NewProviderForm implements ng.IComponentOptions {
   };
 }
 
-class NewProviderController extends DefaultFormController implements IFormController {
+class NewProviderController extends DefaultFormController implements IFormController, IExtensibleComponent {
+  public extensibleComponent: ExtensibleComponent;
   public zones: any;
   public types: any[];
   public formObject: any;
@@ -35,6 +44,7 @@ class NewProviderController extends DefaultFormController implements IFormContro
 
   constructor(private $element: Element, private $scope: ng.IScope, private $timeout: ng.ITimeoutService) {
     super(reducers);
+    this.extensibleComponent = addComponent('new-provider-hawkular', this.apiCallbacks(), this.renderCallbacks());
   }
 
   public updateFormObject() {
@@ -53,5 +63,24 @@ class NewProviderController extends DefaultFormController implements IFormContro
   public $onInit() {
     super.$onInit();
     this.selects = this.$element.querySelectorAll('select');
+  }
+
+  public $onDestroy() {
+    super.$onDestroy();
+    this.extensibleComponent.delete();
+  }
+
+  public apiCallbacks(): IMiQApiCallback {
+    return {}
+  }
+
+  public renderCallbacks(): IMiQRenderCallback {
+    return {
+      newFieldsElement: (renderCallback) => this.newField(renderCallback)
+    }
+  }
+
+  private newField(renderCallback: RenderCallback) {
+    this.$timeout(() => renderCallback(angular.element(this.$element).find('.form-group.additional-fields')[0]));
   }
 }
