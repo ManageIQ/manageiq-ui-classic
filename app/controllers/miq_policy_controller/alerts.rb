@@ -19,23 +19,25 @@ module MiqPolicyController::Alerts
     @alert = @edit[:alert_id] ? MiqAlert.find_by_id(@edit[:alert_id]) : MiqAlert.new
     alert = @alert.id.blank? ? MiqAlert.new : MiqAlert.find(@alert.id)  # Get new or existing record
     alert_set_record_vars(alert)
-    if alert_valid_record?(alert) && alert.valid? && !@flash_array && alert.save
-      AuditEvent.success(build_saved_audit(alert, params[:button] == "add"))
-      flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") :
-                                              _("%{model} \"%{name}\" was added")
-      add_flash(flash_key % {:model => ui_lookup(:model => "MiqAlert"), :name => @edit[:new][:description]})
-      alert_get_info(MiqAlert.find(alert.id))
-      alert_sync_provider(@edit[:alert_id] ? :update : :new)
-      @edit = nil
-      @nodetype = "al"
-      @new_alert_node = "al-#{to_cid(alert.id)}"
-      replace_right_cell(:nodetype => "al", :replace_trees => [:alert_profile, :alert])
-    else
+
+    unless alert_valid_record?(alert) && alert.valid? && !@flash_array && alert.save
       alert.errors.each do |field, msg|
         add_flash("#{field.to_s.capitalize} #{msg}", :error)
       end
       replace_right_cell(:nodetype => "al")
+      return
     end
+
+    AuditEvent.success(build_saved_audit(alert, params[:button] == "add"))
+    flash_key = params[:button] == 'save' ? _("Alert \"%{name}\" was saved") :
+                                            _("Alert \"%{name}\" was added")
+    add_flash(flash_key % {:name => @edit[:new][:description]})
+    alert_get_info(MiqAlert.find(alert.id))
+    alert_sync_provider(@edit[:alert_id] ? :update : :new)
+    @edit = nil
+    @nodetype = "al"
+    @new_alert_node = "al-#{to_cid(alert.id)}"
+    replace_right_cell(:nodetype => "al", :replace_trees => [:alert_profile, :alert])
   end
 
   def alert_edit_reset
