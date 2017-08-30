@@ -19,6 +19,7 @@ function genericObjectDefinitionFormController(API, miqService) {
 
     vm.attributeTableHeaders = [__("Name"), __("Type")];
     vm.associationTableHeaders = [__("Name"), __("Class")];
+    vm.methodTableHeaders = [__("Name")];
 
     vm.types = [
       {id: "integer", name: "integer"},
@@ -40,10 +41,12 @@ function genericObjectDefinitionFormController(API, miqService) {
       attribute_types: [],
       association_names: [],
       association_classes: [],
+      method_names: [],
     };
 
     vm.noOfAttributeRows = 0;
     vm.noOfAssociationRows = 0;
+    vm.noOfMethodRows = 0;
 
     if (vm.recordId) {
       vm.newRecord = false;
@@ -54,6 +57,7 @@ function genericObjectDefinitionFormController(API, miqService) {
     } else {
       vm.newRecord = true;
       vm.afterGet = true;
+
       vm.modelCopy = angular.copy( vm.genericObjectDefinitionModel );
     }
   };
@@ -72,6 +76,10 @@ function genericObjectDefinitionFormController(API, miqService) {
       vm.genericObjectDefinitionModel.association_names,
       vm.genericObjectDefinitionModel.association_classes);
 
+    vm.noOfMethodRows = assignObjectToKeyValueArrays(
+      vm.genericObjectDefinitionModel.properties.methods,
+      vm.genericObjectDefinitionModel.method_names);
+
     vm.afterGet = true;
     vm.modelCopy = angular.copy( vm.genericObjectDefinitionModel );
 
@@ -79,11 +87,18 @@ function genericObjectDefinitionFormController(API, miqService) {
   }
 
   function assignObjectToKeyValueArrays(obj, keyArray, valueArray) {
-    _.forEach(obj, function(value, key) {
-      keyArray.push(key);
-      valueArray.push(value);
-    });
-
+    if (_.size(obj) == 0) {
+      keyArray.push('');
+    } else {
+      _.forEach(obj, function (value, key) {
+        if (valueArray) {
+          keyArray.push(key);
+          valueArray.push(value);
+        } else {
+          keyArray.push(value);
+        }
+      });
+    }
     return _.size(keyArray);
   }
 }

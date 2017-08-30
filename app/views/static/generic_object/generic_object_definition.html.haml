@@ -54,4 +54,13 @@
                                       "no-of-rows"    => "vm.noOfAssociationRows",
                                       "angular-form"  => "angularForm",
                                       "value-options" => "vm.classes"}
-
+  .form-group
+    %label.col-md-2.control-label{"for" => "generic_object_definition_methods"}
+      = _("Methods")
+    .col-md-8
+      %generic-object-table-component{"keys"          => "vm.genericObjectDefinitionModel.method_names",
+                                      "key-type"      => "Method",
+                                      "table-headers" => "vm.methodTableHeaders",
+                                      "new-record"    => "vm.newRecord",
+                                      "no-of-rows"    => "vm.noOfMethodRows",
+                                      "angular-form"  => "angularForm"}
