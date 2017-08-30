@@ -15,6 +15,21 @@ class MiqTaskController < ApplicationController
     [100, 100],
   ].freeze
 
+  TASK_STATES = [
+    [N_("Initializing"), "initializing"],
+    [N_("Cancelling"), "Cancelling"],
+    [N_("Aborting"), "Aborting"],
+    [N_("Finished"), "Finished"],
+    [N_("Snapshot Create"), "Snapshot_create"],
+    [N_("Scanning"), "Scanning"],
+    [N_("Snapshot Delete"), "Snapshot_delete"],
+    [N_("Synchronizing"), "Synchronizing"],
+    [N_("Deploy Smartproxy"), "Deploy_smartproxy"],
+    [N_("Initialized"), "Initialized"],
+    [N_("Queued"), "Queued"],
+    [N_("Active"), "Active"]
+  ].freeze
+
   def index
     @tabform = nil
     # TODO: remove :feature => "job_my_smartproxy" and  :feature => "job_all_smartproxy" from miq_user_roles.yml
@@ -224,7 +239,7 @@ class MiqTaskController < ApplicationController
       :error        => true,
       :warn         => true,
       :running      => true,
-      :states       => UiConstants::TASK_STATES,
+      :states       => TASK_STATES,
       :state_choice => "all",
       :time_period  => 0,
     }
