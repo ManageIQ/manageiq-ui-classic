@@ -139,21 +139,21 @@ describe EmsContainerController do
 
     it "Creates a provider with two endpoints if hawkular is enabled" do
       post :create, :params => {
-        "button"                     => "add",
-        "cred_type"                  => "hawkular",
-        "name"                       => "openshift_no_hawkular",
-        "emstype"                    => "openshift",
-        "zone"                       => 'default',
-        "default_security_protocol"  => "ssl-without-validation",
-        "default_hostname"           => "default_hostname",
-        "default_api_port"           => "5000",
-        "default_userid"             => "",
-        "default_password"           => "",
-        "provider_region"            => "",
-        "metrics_selection"          => "hawkular_enabled",
-        "hawkular_security_protocol" => "ssl-without-validation",
-        "hawkular_hostname"          => "hawkular_hostname",
-        "hawkular_api_port"          => "443",
+        "button"                    => "add",
+        "cred_type"                 => "hawkular",
+        "name"                      => "openshift_no_hawkular",
+        "emstype"                   => "openshift",
+        "zone"                      => 'default',
+        "default_security_protocol" => "ssl-without-validation",
+        "default_hostname"          => "default_hostname",
+        "default_api_port"          => "5000",
+        "default_userid"            => "",
+        "default_password"          => "",
+        "provider_region"           => "",
+        "metrics_selection"         => "hawkular",
+        "metrics_security_protocol" => "ssl-without-validation",
+        "metrics_hostname"          => "hawkular_hostname",
+        "metrics_api_port"          => "443",
       }
       expect(response.status).to eq(200)
       ems_openshift = ManageIQ::Providers::ContainerManager.first

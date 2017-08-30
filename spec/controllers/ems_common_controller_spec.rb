@@ -85,13 +85,11 @@ describe EmsContainerController do
     context "adding new provider without hawkular endpoint" do
       def test_creating(emstype)
         raise ArgumentError, "Unsupported type [#{emstype}]" unless %w(kubernetes openshift).include?(emstype)
-        metrics_selection = "hawkular_#{emstype == 'kubernetes' ? 'disabled' : 'enabled'}"
         @ems = ExtManagementSystem.model_from_emstype(emstype).new
         controller.instance_variable_set(:@_params,
                                          :name              => 'NimiCule',
                                          :default_userid    => '_',
                                          :default_hostname  => 'mytest.com',
-                                         :metrics_selection => metrics_selection,
                                          :default_api_port  => '8443',
                                          :default_password  => 'valid-token',
                                          :emstype           => emstype)
@@ -106,7 +104,7 @@ describe EmsContainerController do
 
       it "doesn't probe openshift for kubernetes" do
         test_creating('openshift')
-        expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq(nil)
+        expect(@ems.connection_configurations.hawkular).to eq(nil)
       end
     end
 
@@ -118,18 +116,18 @@ describe EmsContainerController do
         end
 
         def test_setting_many_fields
-          controller.instance_variable_set(:@_params, :name                       => 'EMS 2',
-                                                      :default_userid             => '_',
-                                                      :default_hostname           => '10.10.10.11',
-                                                      :default_api_port           => '5000',
-                                                      :default_security_protocol  => 'ssl-with-validation-custom-ca',
-                                                      :default_tls_ca_certs       => '-----BEGIN DUMMY...',
-                                                      :default_password           => 'valid-token',
-                                                      :metrics_selection          => 'hawkular_enabled',
-                                                      :hawkular_hostname          => '10.10.10.10',
-                                                      :hawkular_api_port          => '8443',
-                                                      :hawkular_security_protocol => 'ssl-with-validation',
-                                                      :emstype                    => @type)
+          controller.instance_variable_set(:@_params, :name                      => 'EMS 2',
+                                                      :default_userid            => '_',
+                                                      :default_hostname          => '10.10.10.11',
+                                                      :default_api_port          => '5000',
+                                                      :default_security_protocol => 'ssl-with-validation-custom-ca',
+                                                      :default_tls_ca_certs      => '-----BEGIN DUMMY...',
+                                                      :default_password          => 'valid-token',
+                                                      :metrics_selection         => 'hawkular',
+                                                      :metrics_hostname          => '10.10.10.10',
+                                                      :metrics_api_port          => '8443',
+                                                      :metrics_security_protocol => 'ssl-with-validation',
+                                                      :emstype                   => @type)
           controller.send(:set_ems_record_vars, @ems)
           expect(@flash_array).to be_nil
           cc = @ems.connection_configurations
@@ -150,7 +148,7 @@ describe EmsContainerController do
 
         def test_setting_few_fields
           controller.remove_instance_variable(:@_params)
-          controller.instance_variable_set(:@_params, :name => 'EMS 3', :default_userid => '_', :metrics_selection => 'hawkular_enabled')
+          controller.instance_variable_set(:@_params, :name => 'EMS 3', :default_userid => '_')
           controller.send(:set_ems_record_vars, @ems)
           expect(@flash_array).to be_nil
           expect(@ems.authentication_token("bearer")).to eq('valid-token')
@@ -163,7 +161,7 @@ describe EmsContainerController do
           test_setting_many_fields
 
           test_setting_few_fields
-          expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq(nil)
+          expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('10.10.10.10')
         end
 
         it "when editing openshift EMS" do
@@ -172,7 +170,7 @@ describe EmsContainerController do
           test_setting_many_fields
 
           test_setting_few_fields
-          expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq(nil)
+          expect(@ems.connection_configurations.hawkular.endpoint.hostname).to eq('10.10.10.10')
         end
       end
     end

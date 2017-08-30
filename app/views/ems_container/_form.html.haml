@@ -63,6 +63,19 @@
                        "required"                    => "",
                        "selectpicker-for-select-tag" => "")
 
+    .form-group{"ng-class" => "{'has-error': angularForm.metrics.$invalid}"}
+      %label.col-md-2.control-label{"for" => "prov_metrics"}
+        = _("Metrics")
+      .col-md-8
+        = select_tag('metrics_selection', options_for_select([[_("Disabled"), "disabled"], [_("Hawkular"), "hawkular"],
+                     [_("Prometheus"), "prometheus"]]),
+                     "ng-model"                    => "emsCommonModel.metrics_selection",
+                     "ng-change"                   => "metricSelectionChanged()",
+                     "checkchange"                 => "",
+                     "required"                    => "",
+                     "selectpicker-for-select-tag" => "")
+
+
   %hr
   = render :partial => "layouts/angular/multi_auth_credentials", :locals => {:record => @ems, :ng_model => "emsCommonModel"}
 
