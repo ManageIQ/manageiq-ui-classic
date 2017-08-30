@@ -10,7 +10,7 @@
           - if (label.kind_of? Hash) && label[:sortable]
             .pull-left
               = label[:value]
-            .pull-rigt
+            .pull-right
               %i{:class => label[:sortable] == :asc ? "fa-sort-asc" : "fa-sort-desc"}
           - else
             = label
