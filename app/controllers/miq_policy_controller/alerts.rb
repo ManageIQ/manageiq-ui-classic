@@ -6,7 +6,7 @@ module MiqPolicyController::Alerts
     case params[:button]
     when "cancel"
       @edit = nil
-      @alert = session[:edit][:alert_id] ? MiqAlert.find_by_id(session[:edit][:alert_id]) : MiqAlert.new
+      @alert = session[:edit][:alert_id] ? MiqAlert.find_by(:id => session[:edit][:alert_id]) : MiqAlert.new
       if @alert && @alert.id.blank?
         add_flash(_("Add of new %{models} was cancelled by the user") % {:models => ui_lookup(:model => "MiqAlert")})
       else
@@ -17,7 +17,7 @@ module MiqPolicyController::Alerts
     when "save", "add"
       id = params[:id] && params[:button] != "add" ? params[:id] : "new"
       return unless load_edit("alert_edit__#{id}", "replace_cell__explorer")
-      @alert = @edit[:alert_id] ? MiqAlert.find_by_id(@edit[:alert_id]) : MiqAlert.new
+      @alert = @edit[:alert_id] ? MiqAlert.find_by(:id => @edit[:alert_id]) : MiqAlert.new
       alert = @alert.id.blank? ? MiqAlert.new : MiqAlert.find(@alert.id)  # Get new or existing record
       alert_set_record_vars(alert)
       if alert_valid_record?(alert) && alert.valid? && !@flash_array && alert.save
@@ -52,10 +52,10 @@ module MiqPolicyController::Alerts
     alerts = []
     # showing 1 alert, delete it
 
-    if params[:id].nil? || MiqAlert.find_by_id(params[:id]).nil?
+    if params[:id].nil? || MiqAlert.find_by(:id => params[:id]).nil?
       add_flash(_("%{models} no longer exists") % {:models => ui_lookup(:model => "MiqAlert")},
                 :error)
-    elsif MiqAlert.find_by_id(params[:id]).read_only
+    elsif MiqAlert.find_by(:id => params[:id]).read_only
       add_flash(_("%{models} can not be deleted") % {:models => ui_lookup(:model => "MiqAlert")}, :error)
     else
       alerts.push(params[:id])
@@ -71,7 +71,7 @@ module MiqPolicyController::Alerts
 
   def alert_field_changed
     return unless load_edit("alert_edit__#{params[:id]}", "replace_cell__explorer")
-    @alert = @edit[:alert_id] ? MiqAlert.find_by_id(@edit[:alert_id]) : MiqAlert.new
+    @alert = @edit[:alert_id] ? MiqAlert.find_by(:id => @edit[:alert_id]) : MiqAlert.new
 
     @edit[:new][:description] = params[:description].blank? ? nil : params[:description] if params[:description]
     @edit[:new][:enabled] = params[:enabled_cb] == "1" if params.key?(:enabled_cb)
