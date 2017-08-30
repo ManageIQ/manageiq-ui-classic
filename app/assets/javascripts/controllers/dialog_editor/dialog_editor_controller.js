@@ -31,6 +31,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
 
   vm.saveDialogDetails = saveDialogDetails;
   vm.dismissChanges = dismissChanges;
+  vm.dialogIsValid = dialogIsValid;
 
   var beingCloned = null; // hack that solves recursion problem for cloneDeep
   function customizer(value) {
@@ -98,6 +99,73 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
       + dialogId,
       {action: action, resource: dialogData}
     ).then(saveSuccess, saveFailure);
+  }
+
+  function dialogHasName() {
+    return !_.isEmpty(DialogEditor.getDialogLabel());
+  }
+
+  function dialogHasTab() {
+    return DialogEditor.data.content[0].dialog_tabs.length > 0;
+  }
+
+  function dialogTabsHaveName() {
+    return _.every(
+      DialogEditor.data.content[0].dialog_tabs,
+      tab => !_.isEmpty(tab.label)
+    );
+  }
+
+  function dialogTabsHaveBox() {
+    return _.every(
+      DialogEditor.data.content[0].dialog_tabs,
+      tab => tab.dialog_groups.length > 0
+    );
+  }
+
+  function dialogBoxesHaveName() {
+    return _.every(
+      DialogEditor.data.content[0].dialog_tabs,
+      tab => _.every(
+        tab.dialog_groups,
+        group => !_.isEmpty(group.label)
+      )
+    );
+  }
+
+  function dialogBoxesHaveElement() {
+    return _.every(
+      DialogEditor.data.content[0].dialog_tabs,
+      tab => _.every(
+        tab.dialog_groups,
+        group => group.dialog_fields.length > 0
+      )
+    );
+  }
+
+  function dialogElementsHaveName() {
+    return _.every(
+      DialogEditor.data.content[0].dialog_tabs,
+      tab => _.every(
+        tab.dialog_groups,
+        group => _.every(
+          group.dialog_fields,
+          field => !(_.isEmpty(field.name) || _.isEmpty(field.label))
+        )
+      )
+    );
+  }
+
+  function dialogIsValid() {
+    return (
+      dialogHasName() &&
+      dialogHasTab() &&
+      dialogTabsHaveName() &&
+      dialogTabsHaveBox() &&
+      dialogBoxesHaveName() &&
+      dialogBoxesHaveElement() &&
+      dialogElementsHaveName()
+    );
   }
 
   function dismissChanges() {
