@@ -188,7 +188,12 @@ class MiddlewareServerController < ApplicationController
 
   def dr_delete
     mw_server = find_record_with_rbac(MiddlewareServer, params[:id])
-    reports = mw_server.middleware_diagnostic_reports.find(params['mw_dr_selected'])
+    selected_drs = if params['mw_dr_selected'].respond_to?(:map)
+                     params['mw_dr_selected'].map { |item| from_cid(item) }
+                   else
+                     [from_cid(params['mw_dr_selected'])]
+                   end
+    reports = mw_server.middleware_diagnostic_reports.find(selected_drs)
     mw_server.middleware_diagnostic_reports.destroy(reports)
 
     flash_msg = n_('Deletion of one JDR report succeeded.',

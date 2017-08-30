@@ -8,7 +8,7 @@
     .col-md-12
       .form-group
         .dropdown.btn-group
-          %button#dr_download_dd.btn.btn-default.dropdown-toggle{'data-toggle' => 'dropdown'}
+          %button#dr_download_dd.btn.btn-default.dropdown-toggle{'data-toggle' => 'dropdown', 'title' => _('Download list of JDR')}
             %span.fa.fa-download
             %span.caret
           %ul.dropdown-menu{:role => 'menu', 'aria-labelledby' => 'dr_download_dd'}
@@ -66,7 +66,7 @@
                   %button{'class'    => 'btn btn-default btn-block btn-sm',
                           'type'     => 'button',
                           'disabled' => item.ready? ? nil : 'disabled',
-                          'onclick'  => "DoNav('#{url_for(:action => 'dr_download', :id => to_cid(@record.id), :key => to_cid(item.id))}');"}
-                    %span.fa.fa-download
+                          'onclick'  => "DoNav('#{url_for(:action => 'dr_download', :id => to_cid(@record.id), :key => to_cid(item.id))}');",
+                          'title'    => _('Download JDR file')}
                     = _('Download')
 
