@@ -613,6 +613,29 @@ describe ProviderForemanController do
     end
   end
 
+  context 'download pdf file' do
+    let(:pdf_options) { controller.instance_variable_get(:@options) }
+
+    before :each do
+      @record = @config_profile
+      allow(PdfGenerator).to receive(:pdf_from_string).and_return("")
+      allow(controller).to receive(:tagdata).and_return(nil)
+      allow(controller).to receive(:x_node).and_return(config_profile_key(@config_profile))
+      login_as FactoryGirl.create(:user_admin)
+      stub_user(:features => :all)
+    end
+
+    it 'request returns 200' do
+      get :download_summary_pdf, :params => {:id => @record.id}
+      expect(response.status).to eq(200)
+    end
+
+    it 'title is set correctly' do
+      get :download_summary_pdf, :params => {:id => @record.id}
+      expect(pdf_options[:title]).to eq("#{ui_lookup(:model => @record.class.name)} \"#{@record.name}\"")
+    end
+  end
+
   def user_with_feature(features)
     features = EvmSpecHelper.specific_product_features(*features)
     FactoryGirl.create(:user, :features => features)
