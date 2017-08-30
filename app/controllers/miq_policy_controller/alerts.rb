@@ -3,7 +3,7 @@ module MiqPolicyController::Alerts
 
   def alert_edit_cancel
     @edit = nil
-    @alert = session[:edit][:alert_id] ? MiqAlert.find_by_id(session[:edit][:alert_id]) : MiqAlert.new
+    @alert = session[:edit][:alert_id] ? MiqAlert.find(session[:edit][:alert_id]) : MiqAlert.new
     if @alert && @alert.id.blank?
       add_flash(_("Add of new %{models} was cancelled by the user") % {:models => ui_lookup(:model => "MiqAlert")})
     else
@@ -65,10 +65,9 @@ module MiqPolicyController::Alerts
     alerts = []
     # showing 1 alert, delete it
 
-    if params[:id].nil? || MiqAlert.find_by_id(params[:id]).nil?
-      add_flash(_("%{models} no longer exists") % {:models => ui_lookup(:model => "MiqAlert")},
-                :error)
-    elsif MiqAlert.find_by_id(params[:id]).read_only
+    if params[:id].nil? || !MiqAlert.exists?(params[:id])
+      add_flash(_("%{models} no longer exists") % {:models => ui_lookup(:model => "MiqAlert")}, :error)
+    elsif MiqAlert.find(params[:id]).read_only
       add_flash(_("%{models} can not be deleted") % {:models => ui_lookup(:model => "MiqAlert")}, :error)
     else
       alerts.push(params[:id])
@@ -84,7 +83,7 @@ module MiqPolicyController::Alerts
 
   def alert_field_changed
     return unless load_edit("alert_edit__#{params[:id]}", "replace_cell__explorer")
-    @alert = @edit[:alert_id] ? MiqAlert.find_by_id(@edit[:alert_id]) : MiqAlert.new
+    @alert = @edit[:alert_id] ? MiqAlert.find(@edit[:alert_id]) : MiqAlert.new
 
     @edit[:new][:description] = params[:description].blank? ? nil : params[:description] if params[:description]
     @edit[:new][:enabled] = params[:enabled_cb] == "1" if params.key?(:enabled_cb)
@@ -206,7 +205,7 @@ module MiqPolicyController::Alerts
       # rebuild hash to hold user's email along with name if user record was found for display, defined as hash so only email id can be sent from form to be deleted from array above
       @email_to = {}
       @edit[:new][:email][:to].each_with_index do |e, _e_idx|
-        u = User.find_by_email(e)
+        u = User.find_by(:email => e)
         @email_to[e] = u ? "#{u.name} (#{e})" : e
       end
     end
@@ -262,7 +261,7 @@ module MiqPolicyController::Alerts
       @email_to = {}
       if @edit[:new][:email] && @edit[:new][:email][:to]
         @edit[:new][:email][:to].each_with_index do |e, _e_idx|
-          u = User.find_by_email(e)
+          u = User.find_by(:email => e)
           @email_to[e] = u ? "#{u.name} (#{e})" : e
         end
       end
@@ -658,7 +657,7 @@ module MiqPolicyController::Alerts
     end
     if @alert.options && @alert.options[:notifications] && @alert.options[:notifications][:email] && @alert.options[:notifications][:email][:to]
       @alert.options[:notifications][:email][:to].each do |to|
-        user = User.find_by_email(to)
+        user = User.find_by(:email => to)
         @email_to.push(user ? "#{user.name} (#{to})" : to)
       end
     end
@@ -673,7 +672,7 @@ module MiqPolicyController::Alerts
     end
 
     if @alert.expression && !@alert.expression.kind_of?(MiqExpression) # Get the EMS if it's in the expression
-      @ems = ExtManagementSystem.find_by_id(@alert.expression[:options][:ems_id].to_i)
+      @ems = ExtManagementSystem.find(@alert.expression[:options][:ems_id].to_i)
     end
     if @alert.expression.kind_of?(Hash) && @alert.expression[:eval_method]
       MiqAlert.expression_options(@alert.expression[:eval_method]).each do |eo|
