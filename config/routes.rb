@@ -2152,8 +2152,10 @@ Rails.application.routes.draw do
     :miq_ae_class             => {
       :get  => %w(
         explorer
+        method_form_fields
       ),
       :post => %w(
+        add_update_method
         ae_tree_select
         ae_tree_select_toggle
         change_tab

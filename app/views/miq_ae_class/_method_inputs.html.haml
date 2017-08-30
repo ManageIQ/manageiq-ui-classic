@@ -74,5 +74,8 @@
               %td= record.datatype.blank? ? 'string' : record.datatype
   - else
     #method_form_div
-      = render :partial => "method_form", :locals  => {:prefix => ""}
+      - if @record.location == "playbook"
+        = render :partial => "angular_method_form", :locals  => {:prefix => ""}
+      - else
+        = render :partial => "method_form", :locals  => {:prefix => ""}
   %br

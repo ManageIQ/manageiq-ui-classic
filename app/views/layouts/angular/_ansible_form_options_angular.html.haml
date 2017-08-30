@@ -107,8 +107,7 @@
                             "checkchange" => true}
           %span.help-block{"ng-show" => "angularForm.#{prefix}_inventory.$error.miqrequired"}
             = _("Required")
-
-    .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_execution_ttl.$invalid}"}
+    .form-group{"ng-if" =>"#{ng_model}.#{prefix}_execution_ttl!==undefined","ng-class" => "{'has-error': angularForm.#{prefix}_execution_ttl.$invalid}"}
       %label.col-md-3.control-label{"for" => "#{prefix}_execution_ttl"}
         = _("Max TTL (mins)")
       .col-md-9
@@ -138,9 +137,10 @@
       %label.col-md-3.control-label
         = _('Verbosity')
       .col-md-9
-        %select{"ng-model"    => "vm.catalogItemModel.#{prefix}_verbosity",
+        %select{"ng-model"    => "vm.#{ng_model}.#{prefix}_verbosity",
                 "name"        => "#{prefix}_verbosity",
                 'ng-options'  => 'v as k for (v, k) in vm.verbosity_types',
+                "checkchange" => "",
                 'pf-select'   => true}
 
     - if prefix == "retirement"
@@ -148,8 +148,8 @@
         %label.col-md-3.control-label{"for" => "catalog_id"}
           = _('Remove resources?')
         .col-md-9
-          %select{"ng-model"   => "vm.catalogItemModel.retirement_remove_resources",
-                  "name"       => "vm.catalogItemModel.retirement_remove_resources",
+          %select{"ng-model"   => "vm.#{ng_model}.retirement_remove_resources",
+                  "name"       => "vm.#{ng_model}.retirement_remove_resources",
                   'ng-options' => "v as k for (k, v) in vm.remove_resources_types",
                   :checkchange => true,
                   "pf-select"  => true}
@@ -223,7 +223,7 @@
                       %span{:class => "pficon pficon-delete"}
 
     - if prefix == "provisioning"
-      .form-group
+      .form-group{"ng-if" =>"#{ng_model}.#{prefix}_dialog_existing!==undefined"}
         %label.col-md-3.control-label
           = _("Dialog")
         .col-md-3
@@ -243,7 +243,7 @@
             %span.help-block{"ng-show" => "angularForm.#{prefix}_dialog_id.$error.$invalid"}
               = _("Required")
 
-      .form-group
+      .form-group{"ng-if" =>"#{ng_model}.#{prefix}_dialog_existing!==undefined"}
         %label.col-md-3.control-label
         .col-md-3
           %label.radio-inline

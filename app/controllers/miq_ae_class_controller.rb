@@ -304,7 +304,7 @@ class MiqAeClassController < ApplicationController
 
     presenter.replace('flash_msg_div', r[:partial => "layouts/flash_msg"]) if @flash_array
 
-    if @in_a_form
+    if @in_a_form && !@angular_form
       action_url = create_action_url(nodes.first)
       # incase it was hidden for summary screen, and incase there were no records on show_list
       presenter.show(:paging_div, :form_buttons_div)
@@ -496,9 +496,10 @@ class MiqAeClassController < ApplicationController
     else
       id = x_node.split('-')
     end
-    @ae_method = find_record_with_rbac(MiqAeMethod, from_cid(id[1]))
-    set_method_form_vars
-    @in_a_form = true
+    @record = @ae_method = find_record_with_rbac(MiqAeMethod, from_cid(id[1]))
+    @current_region = MiqRegion.my_region.region
+    set_method_form_vars unless @ae_method.location == "playbook"
+    @in_a_form = @angular_form = true
     session[:changed] = @changed = false
     replace_right_cell
   end
@@ -902,7 +903,15 @@ class MiqAeClassController < ApplicationController
       render :update do |page|
         page << javascript_prologue
         page.replace_html('form_div', :partial => 'method_form', :locals => {:prefix => ""}) if @edit[:new][:location] == 'expression'
-        page.replace_html(@refresh_div, :partial => @refresh_partial) if @refresh_div && (params[:cls_method_location] || params[:exp_object] || params[:cls_exp_object])
+        if @edit[:new][:location] == "playbook"
+          @record = @ae_method
+          @current_region = MiqRegion.my_region.region
+          page.replace_html(@refresh_div, :partial => 'angular_method_form')
+          page << javascript_hide("form_buttons_div")
+        else
+          page.replace_html(@refresh_div, :partial => @refresh_partial) if @refresh_div && (params[:cls_method_location] || params[:exp_object] || params[:cls_exp_object])
+        end
+
         if params[:cls_field_datatype]
           if session[:field_data][:datatype] == "password"
             page << javascript_hide("cls_field_default_value")
@@ -962,6 +971,36 @@ class MiqAeClassController < ApplicationController
         page << "miqSparkle(false)"
       end
     end
+  end
+
+  def method_form_fields
+    method = params[:id] == "new" ? MiqAeMethod.new : MiqAeMethod.find_by(:id => params[:id])
+    data = method.data ? JSON.parse(method.data) : {}
+    method_hash = {
+      :name => method.name,
+      :display_name => method.display_name,
+      :namespace_path => @sb[:namespace_path],
+      :class_id => method.id ? method.class_id : MiqAeClass.find(from_cid(x_node.split("-").last)).id,
+      :location => 'playbook',
+      :language => 'ruby',
+      :scope => "instance",
+      :config_info => {
+        :repository_id => data['repository_id'] || '',
+        :playbook_id => data['playbook_id'] || '',
+        :credential_id => data['credential_id'] || '',
+        :network_credential_id => data['network_credential_id'] || '',
+        :cloud_credential_id => data['cloud_credential_id'] || '',
+        :hosts => data['hosts'],
+        :verbosity => data['verbosity'],
+        :extra_vars => {
+          :sleep => '40',
+          :pkg => 'httpd',
+          :user => 'root',
+          :host => 'localhost'
+        },
+      }
+    }
+    render :json => method_hash
   end
 
   # AJAX driven routine to check for changes in ANY field on the form
@@ -1101,6 +1140,66 @@ class MiqAeClassController < ApplicationController
       replace_right_cell(:replace_trees => [:ae])
     end
   end
+
+  def add_update_method
+    assert_privileges("miq_ae_method_edit")
+    case params[:button]
+    when "cancel"
+      if params[:id] && params[:id] != "new"
+        method = find_record_with_rbac(MiqAeMethod, params[:id])
+        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqAeMethod"), :name => method.name})
+      else
+        add_flash(_("Add of %{model} was cancelled by the user") % {:model => ui_lookup(:model => "MiqAeMethod")})
+      end
+      replace_right_cell
+    when "add","save"
+      method = params[:id] != "new" ? find_record_with_rbac(MiqAeMethod, params[:id]) : MiqAeMethod.new
+      method.name = params["name"]
+      method.display_name = params["display_name"]
+      method.location = params["location"]
+      method.language = params["language"]
+      method.scope = params["scope"]
+      method.class_id = params[:class_id]
+      method.data = set_playbook_data.to_json
+      begin
+        method.save!
+      rescue => bang
+        add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
+        javascript_flash
+      else
+        old_method_attributes = method.attributes.clone
+        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqAeMethod"), :name => method.name})
+        AuditEvent.success(build_saved_audit_hash(old_method_attributes, method, params[:button] == "add"))
+        replace_right_cell(:replace_trees => [:ae])
+        return
+      end
+    end
+  end
+
+  def set_playbook_data
+    data = {
+      :repository_id => params['repository_id'],
+      :playbook_id => params['playbook_id'],
+      :credential_id => params['credential_id'],
+      :hosts => params['hosts'],
+      :verbosity => params['verbosity'],
+      :extra_vars => {
+        :sleep => '40',
+        :pkg => 'httpd',
+        :user => 'root',
+        :host => 'localhost'
+      }
+    }
+    data[:network_credential_id] = params['network_credential_id'] if params['network_credential_id']
+    data[:cloud_credential_id] = params['cloud_credential_id'] if params['cloud_credential_id']
+    data
+  end
+  {"name"=>"test1", "display_name"=>"testing", "class_id"=>"10000000000122", "language"=>"ruby", "scope"=>"instance",
+   "location"=>"playbook",
+   "repository_id"=>"10r14",
+   "playbook_id"=>"10r154",
+   "credential_id"=>"10r64",
+   "hosts"=>"localhost1", "verbosity"=>"0", "extra_vars"=>{"sleep"=>"40", "pkg"=>"httpd", "user"=>"root", "host"=>"localhost"}, "button"=>"save", "id"=>"10000000001069"}
 
   def update_method
     assert_privileges("miq_ae_method_edit")
@@ -2195,7 +2294,6 @@ class MiqAeClassController < ApplicationController
     miqaemethod.scope = @edit[:new][:scope]
     miqaemethod.location = @edit[:new][:location]
     miqaemethod.language = @edit[:new][:language]
-    miqaemethod.data = @edit[:new][:data]
     miqaemethod.data = if @edit[:new][:location] == 'expression'
                          data_for_expression
                        else
