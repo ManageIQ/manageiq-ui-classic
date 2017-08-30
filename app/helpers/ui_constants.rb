@@ -21,11 +21,6 @@ module UiConstants
                  [N_("Deploy Smartproxy"), "Deploy_smartproxy"],
                  [N_("Initialized"), "Initialized"], [N_("Queued"), "Queued"], [N_("Active"), "Active"]].freeze
 
-  PROV_STATES = {
-    "pending_approval" => N_("Pending Approval"),
-    "approved"         => N_("Approved"),
-    "denied"           => N_("Denied")
-  }
   PROV_TIME_PERIODS = {
     1  => N_("Last 24 Hours"),
     7  => N_("Last 7 Days"),

@@ -205,6 +205,12 @@ class ApplicationController < ActionController::Base
 
   AE_MAX_RESOLUTION_FIELDS = 5 # Maximum fields to show for automation engine resolution screens
 
+  PROV_STATES = {
+    "pending_approval" => N_("Pending Approval"),
+    "approved"         => N_("Approved"),
+    "denied"           => N_("Denied")
+  }.freeze
+
   def local_request?
     Rails.env.development? || Rails.env.test?
   end
