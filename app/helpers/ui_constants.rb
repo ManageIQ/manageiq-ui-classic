@@ -14,12 +14,6 @@ module UiConstants
     5 => N_("5 Days Ago"),
     6 => N_("6 Days Ago")
   }
-  TASK_STATES = [[N_("Initializing"), "initializing"],
-                 [N_("Cancelling"), "Cancelling"], [N_("Aborting"), "Aborting"], [N_("Finished"), "Finished"],
-                 [N_("Snapshot Create"), "Snapshot_create"], [N_("Scanning"), "Scanning"],
-                 [N_("Snapshot Delete"), "Snapshot_delete"], [N_("Synchronizing"), "Synchronizing"],
-                 [N_("Deploy Smartproxy"), "Deploy_smartproxy"],
-                 [N_("Initialized"), "Initialized"], [N_("Queued"), "Queued"], [N_("Active"), "Active"]].freeze
 
   PROV_STATES = {
     "pending_approval" => N_("Pending Approval"),
