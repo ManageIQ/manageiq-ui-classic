@@ -110,14 +110,6 @@ module UiConstants
   EXP_FROM = "FROM"
   EXP_IS = "IS"
 
-  FROM_QUARTERS = [
-    N_('This Quarter'),
-    N_('Last Quarter'),
-    N_('2 Quarters Ago'),
-    N_('3 Quarters Ago'),
-    N_('4 Quarters Ago')
-  ]
-
   # Need this for mapping with MiqWidget record content_type field
   WIDGET_CONTENT_TYPE = {
     "r"  => "report",

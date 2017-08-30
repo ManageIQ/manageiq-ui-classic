@@ -59,7 +59,7 @@
                   - elsif [:datetime, :date].include?(field_type)
                     - opts = h((field_type == :datetime ? ViewHelper::FROM_HOURS : []) +                  |
                                ViewHelper::FROM_DAYS + ViewHelper::FROM_WEEKS + ViewHelper::FROM_MONTHS + |
-                               FROM_QUARTERS + ViewHelper::FROM_YEARS)                                    |
+                               ViewHelper::FROM_QUARTERS + ViewHelper::FROM_YEARS)                        |
                     = select_tag("styleval_#{f_idx}_#{s_idx}",
                       options_for_select(Hash[opts.map {|x| [_(x), x]}], styles[s_idx][:value]),
                       :multiple              => false,
