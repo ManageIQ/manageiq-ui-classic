@@ -27,6 +27,10 @@ class EmsNetworkController < ApplicationController
     {:action => 'new'}
   end
 
+  def rbac_params
+    {:match_via_descendants => ManageIQ::Providers::NetworkManager}
+  end
+
   def ems_network_form_fields
     ems_form_fields
   end
