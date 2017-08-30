@@ -9,60 +9,6 @@ module UiConstants
   # Following line does not include timezones with partial hour offsets
   # ALL_TIMEZONES = ActiveSupport::TimeZone.all.collect{|tz| tz.utc_offset % 3600 == 0 ? ["(GMT#{tz.formatted_offset}) #{tz.name}",tz.name] : nil}.compact
 
-  # Assignment choices
-  ASSIGN_TOS = {}
-
-  # This set of assignments was created for miq_alerts
-  ASSIGN_TOS["ExtManagementSystem"] = {
-    "enterprise"                 => N_("The Enterprise"),
-    "ext_management_system"      => N_("Selected Providers"),
-    "ext_management_system-tags" => N_("Tagged Providers")
-  }
-  ASSIGN_TOS["EmsCluster"] = {
-    "ems_cluster"      => N_("Selected Cluster / Deployment Roles"),
-    "ems_cluster-tags" => N_("Tagged Cluster / Deployment Roles"),
-  }.merge(ASSIGN_TOS["ExtManagementSystem"])
-  ASSIGN_TOS["Host"] = {
-    "host"      => N_("Selected Host / Nodes"),
-    "host-tags" => N_("Tagged Host / Nodes")
-  }.merge(ASSIGN_TOS["EmsCluster"])
-  ASSIGN_TOS["Vm"] = {
-    "ems_folder"         => N_("Selected Folders"),
-    "resource_pool"      => N_("Selected Resource Pools"),
-    "resource_pool-tags" => N_("Tagged Resource Pools"),
-    "vm-tags"            => N_("Tagged VMs and Instances")
-  }.merge(ASSIGN_TOS["Host"])
-  ASSIGN_TOS["Storage"] = {
-    "enterprise"   => N_("The Enterprise"),
-    "storage"      => N_("Selected Datastores"),
-    "storage-tags" => N_("Tagged Datastores"),
-    "tenant"       => N_("Tenants")
-  }
-  ASSIGN_TOS["MiqServer"] = {
-    "miq_server" => N_("Selected Servers"),
-  }
-  ASSIGN_TOS["MiddlewareServer"] = {
-    "enterprise"        => N_("The Enterprise"),
-    "middleware_server" => N_("Selected Middleware Servers")
-  }
-  ASSIGN_TOS["ContainerNode"] = {
-    "enterprise" => N_("The Enterprise"),
-  }
-
-
-  # This set of assignments was created for chargeback_rates
-  ASSIGN_TOS[:chargeback_storage] = ASSIGN_TOS["Storage"]
-  ASSIGN_TOS[:chargeback_compute] = {
-    "enterprise"             => N_("The Enterprise"),
-    "ext_management_system"  => N_("Selected Providers"),
-    "ems_cluster"            => N_("Selected Cluster / Deployment Roles"),
-    "ems_container"          => N_("Selected Containers Providers"),
-    "vm-tags"                => N_("Tagged VMs and Instances"),
-    "container_image-tags"   => N_("Tagged Container Images"),
-    "container_image-labels" => N_("Labeled Container Images"),
-    "tenant"                 => N_("Tenants")
-  }
-
   # Snapshot ages for delete_snapshots_by_age action type
   SNAPSHOT_AGES = {}
   (1..23).each { |a| SNAPSHOT_AGES[a.hours.to_i] = (a.to_s + (a < 2 ? _(" Hour") : _(" Hours"))) }
