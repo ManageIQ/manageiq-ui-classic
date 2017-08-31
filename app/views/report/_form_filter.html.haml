@@ -1,59 +1,70 @@
 #filter_div
   - if @edit[:new][:perf_interval]
     = render :partial => "form_filter_performance"
+    %hr
   - if @edit[:new][:model] == ApplicationController::TREND_MODEL
     -# No additional filters for trend reports
   - elsif Chargeback.db_is_chargeback?(@edit[:new][:model])
     = render :partial => "form_filter_chargeback"
+    %hr
   - else
     -# Show expression editors for all other reports
-    %h3
-      = _("Primary (Record) Filter - Filters the %{model} table records") % {:model => @edit[:new][:model]}
-    - if @expkey == :record_filter
-      = render :partial => 'layouts/exp_editor'
-    - else
-      -# FIXME: alt/title incosistency
-      = link_to(image_tag(image_path('toolbars/edit.png'), :class => "rollover small", :alt => _("Edit this Expression")),
-        {:action => 'filter_change', :button => "record_filter", :id => "#{@edit[:rpt_id] || 'new'}"},
-        "data-miq_sparkle_on"  => true,
-        "data-miq_sparkle_off" => true,
-        :remote                => true,
-        "data-method"          => :post,
-        :title                 => _("Edit the Record Filter"))
-      %br
-      - if @edit[:record_filter][:expression].key?("???")
-        = _('No Record Filter defined.')
-      - else
-        - @edit[:record_filter][:exp_table].each do |token|
-          - if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
-            = h([token].flatten.first)
+    %h3= _("Primary (Record) Filter - Filters the %{model} table records") % {:model => @edit[:new][:model]}
+    .form-horizontal
+      .form-group
+        %label.control-label.col-md-2
+        .col-md-8
+
+          - if @expkey == :record_filter
+            = render :partial => 'layouts/exp_editor'
           - else
-            %font{:color => "black"}
-              %b
-                = h([token].flatten.first)
-    - unless @edit[:display_filter][:exp_available_fields].empty? && @edit[:display_filter][:exp_available_tags].empty?
-      -# Expression editor for the display filter
-      %fieldset
-        %h3
-          = _('Secondary (Display) Filter - Filters the rows based on child table fields')
-        - if @expkey == :display_filter
-          = render :partial => 'layouts/exp_editor'
-        - else
-          = link_to(image_tag(image_path('toolbars/edit.png'), :class => "rollover small", :alt => _("Edit this Expression")),
-            {:action => 'filter_change', :button => "display_filter", :id => "#{@edit[:rpt_id] || 'new'}"},
-            "data-miq_sparkle_on"  => true,
-            "data-miq_sparkle_off" => true,
-            :remote                => true,
-            "data-method"          => :post,
-            :title                 => "Edit the Display Filter")
-          %br
-          - if @edit[:display_filter][:expression].key?("???")
-            = _('No Display Filter defined.')
-          - else
-            - @edit[:display_filter][:exp_table].each do |token|
-              - if ! ["AND", "OR", "(", ")"].include?([token].flatten.first)
-                = h([token].flatten.first)
-              - else
-                %font{:color => "black"}
-                  %b
+            -# FIXME: alt/title incosistency
+            = link_to({:action => 'filter_change', :button => "record_filter", :id => "#{@edit[:rpt_id] || 'new'}"},
+                      "data-miq_sparkle_on"  => true,
+                      "data-miq_sparkle_off" => true,
+                      :remote                => true,
+                      "data-method"          => :post) do
+              %button.btn.btn-default
+                - if @edit[:record_filter][:expression].key?("???")
+                  = _("Create Record Filter")
+                - else
+                  = _("Edit Record Filter")
+            .spacer
+            - unless @edit[:record_filter][:expression].key?("???")
+              - @edit[:record_filter][:exp_table].each do |token|
+                - if !["AND", "OR", "(", ")"].include?([token].flatten.first)
+                  = h([token].flatten.first)
+                - else
+                  %font{:color => "black"}
+                    %b
+                      = h([token].flatten.first)
+    %hr
+    .form-horizontal
+      - unless @edit[:display_filter][:exp_available_fields].empty? && @edit[:display_filter][:exp_available_tags].empty?
+        -# Expression editor for the display filter
+        %h3= _('Secondary (Display) Filter - Filters the rows based on child table fields')
+        .form-group
+          %label.control-label.col-md-2
+          .col-md-8
+            - if @expkey == :display_filter
+              = render :partial => 'layouts/exp_editor'
+            - else
+              = link_to({:action => 'filter_change', :button => "display_filter", :id => "#{@edit[:rpt_id] || 'new'}"},
+                "data-miq_sparkle_on"  => true,
+                "data-miq_sparkle_off" => true,
+                :remote                => true,
+                "data-method"          => :post) do
+                %button.btn.btn-default
+                  - if @edit[:display_filter][:expression].key?("???")
+                    = _("Create Display Filter")
+                  - else 
+                    = _("Edit Display Filter")
+              .spacer
+              - unless @edit[:display_filter][:expression].key?("???")
+                - @edit[:display_filter][:exp_table].each do |token|
+                  - if !["AND", "OR", "(", ")"].include?([token].flatten.first)
                     = h([token].flatten.first)
+                  - else
+                    %font{:color => "black"}
+                      %b
+                        = h([token].flatten.first)
