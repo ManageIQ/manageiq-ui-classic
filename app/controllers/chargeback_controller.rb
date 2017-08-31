@@ -209,7 +209,6 @@ class ChargebackController < ApplicationController
         render_flash(_("No %{records} were selected for deletion") %
           {:records => ui_lookup(:models => "ChargebackRate")}, :error)
       end
-      process_cb_rates(rates, "destroy")  unless rates.empty?
     else # showing 1 rate, delete it
       cb_rate = ChargebackRate.find_by_id(params[:id])
       if cb_rate.nil?
