@@ -1914,14 +1914,10 @@ class CatalogController < ApplicationController
     replace_trees   = @replace_trees   if @replace_trees    # get_node_info might set this
     right_cell_text = @right_cell_text if @right_cell_text  # get_node_info might set this too
 
+    trees = build_replaced_trees(replace_trees, %i(sandt svccat stcat ot))
+
     type, _id = parse_nodetype_and_id(x_node)
-    trees = {}
-    if replace_trees
-      trees[:sandt]  = build_st_tree        if replace_trees.include?(:sandt)
-      trees[:svccat] = build_svccat_tree    if replace_trees.include?(:svccat)
-      trees[:stcat]  = build_stcat_tree     if replace_trees.include?(:stcat)
-      trees[:ot]     = build_orch_tmpl_tree if replace_trees.include?(:ot)
-    end
+
     allowed_records = %w(MiqTemplate OrchestrationTemplate Service ServiceTemplate ServiceTemplateCatalog)
     record_showing = (type && allowed_records.include?(TreeBuilder.get_model_for_prefix(type)) && !@view) ||
                      params[:action] == "x_show"
@@ -2092,7 +2088,7 @@ class CatalogController < ApplicationController
   end
 
   # Build a Catalog Items explorer tree
-  def build_st_tree
+  def build_sandt_tree
     TreeBuilderCatalogItems.new('sandt_tree', 'sandt', @sb)
   end
 
@@ -2107,7 +2103,7 @@ class CatalogController < ApplicationController
   end
 
   # Build a Orchestration Templates explorer tree
-  def build_orch_tmpl_tree
+  def build_ot_tree
     TreeBuilderOrchestrationTemplates.new('ot_tree', 'ot', @sb)
   end
 

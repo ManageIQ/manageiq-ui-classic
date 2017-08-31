@@ -102,17 +102,9 @@ class PxeController < ApplicationController
 
     @explorer = true
 
-    trees = {}
-    if replace_trees
-      trees[:pxe_servers]             = pxe_server_build_tree               if replace_trees.include?(:pxe_servers)
-      trees[:pxe_image_types]         = pxe_image_type_build_tree           if replace_trees.include?(:pxe_image_types)
-      trees[:customization_templates] = customization_template_build_tree   if replace_trees.include?(:customization_templates)
-      trees[:iso_datastores]          = iso_datastore_build_tree            if replace_trees.include?(:iso_datastores)
-    end
+    trees = build_replaced_trees(replace_trees, %i(pxe_servers pxe_image_types customization_templates iso_datastores))
 
-    presenter = ExplorerPresenter.new(
-      :active_tree => x_active_tree,
-    )
+    presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
 
     c_tb = build_toolbar(center_toolbar_filename) unless @in_a_form
     h_tb = build_toolbar('x_history_tb')

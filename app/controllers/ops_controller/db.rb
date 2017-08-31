@@ -86,7 +86,7 @@ module OpsController::Db
   private #######################
 
   # Build a VMDB tree for Database accordion
-  def db_build_tree
+  def vmdb_build_tree
     TreeBuilderOpsVmdb.new("vmdb_tree", "vmdb", @sb)
   end
 

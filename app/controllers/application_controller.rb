@@ -2262,7 +2262,7 @@ class ApplicationController < ActionController::Base
   end
 
   def reload_trees_by_presenter(presenter, trees)
-    trees.each_pair do |_, tree|
+    trees.each do |tree|
       next unless tree.present?
       presenter.reload_tree(tree.name, tree.locals_for_render[:bs_tree])
     end

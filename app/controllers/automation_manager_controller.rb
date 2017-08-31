@@ -343,22 +343,7 @@ class AutomationManagerController < ApplicationController
   end
 
   def rebuild_trees(replace_trees)
-    trees = {}
-    if replace_trees
-      if replace_trees.include?(:automation_manager_providers)
-        trees[:automation_manager_providers] = build_automation_manager_tree(:automation_manager_providers,
-                                                                             :automation_manager_providers_tree)
-      end
-      if replace_trees.include?(:automation_manager_cs_filter)
-        trees[:automation_manager_cs_filter] = build_automation_manager_tree(:automation_manager_cs_filter,
-                                                                             :automation_manager_cs_filter_tree)
-      end
-      if replace_trees.include?(:configuration_scripts)
-        trees[:configuration_scripts] = build_automation_manager_tree(:configuration_scripts,
-                                                                      :configuration_scripts_tree)
-      end
-    end
-    trees
+    build_replaced_trees(replace_trees, %i(automation_manager_providers automation_manager_cs_filter configuration_scripts))
   end
 
   def leaf_record

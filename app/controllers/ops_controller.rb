@@ -767,13 +767,7 @@ class OpsController < ApplicationController
 
   def replace_explorer_trees(replace_trees, presenter)
     # Build hash of trees to replace and optional new node to be selected
-    trees = {}
-    if replace_trees
-      trees[:settings]    = settings_build_tree     if replace_trees.include?(:settings)
-      trees[:rbac]        = rbac_build_tree         if replace_trees.include?(:rbac)
-      trees[:diagnostics] = diagnostics_build_tree  if replace_trees.include?(:diagnostics)
-      trees[:vmdb]        = db_build_tree           if replace_trees.include?(:vmdb)
-    end
+    trees = build_replaced_trees(replace_trees, %i(settings rbac diagnostics vmdb))
     reload_trees_by_presenter(presenter, trees)
   end
 
