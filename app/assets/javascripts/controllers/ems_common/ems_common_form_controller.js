@@ -108,9 +108,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.provider_id                     = data.provider_id !== undefined ? data.provider_id.toString() : "";
 
       $scope.emsCommonModel.default_api_port                = data.default_api_port !== undefined && data.default_api_port !== '' ? data.default_api_port.toString() : $scope.getDefaultApiPort($scope.emsCommonModel.emstype);
+      $scope.emsCommonModel.metrics_port                    = data.metrics_port !== undefined && data.metrics_port !== '' ? data.metrics_port.toString() : '443';
       $scope.emsCommonModel.amqp_api_port                   = data.amqp_api_port !== undefined && data.amqp_api_port !== '' ? data.amqp_api_port.toString() : '5672';
-      $scope.emsCommonModel.hawkular_api_port               = data.hawkular_api_port !== undefined && data.hawkular_api_port !== '' ? data.hawkular_api_port.toString() : '443';
-      $scope.emsCommonModel.metrics_api_port                = data.metrics_api_port !== undefined && data.metrics_api_port !== '' ? data.metrics_api_port.toString() : '';
       $scope.emsCommonModel.metrics_database_name           = data.metrics_database_name !== undefined && data.metrics_database_name !== '' ? data.metrics_database_name : data.metrics_default_database_name;
       $scope.emsCommonModel.api_version                     = data.api_version;
       $scope.emsCommonModel.default_security_protocol       = data.default_security_protocol;
@@ -138,7 +137,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.host_default_vnc_port_end       = data.host_default_vnc_port_end;
 
       $scope.emsCommonModel.event_stream_selection          = data.event_stream_selection;
-      $scope.emsCommonModel.metrics_selection               = data.metrics_selection;
       $scope.emsCommonModel.metrics_selection_default       = data.metrics_selection_default;
 
       $scope.emsCommonModel.bearer_token_exists             = data.bearer_token_exists;
@@ -149,6 +147,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.service_account_auth_status     = data.service_account_auth_status;
       $scope.emsCommonModel.metrics_auth_status             = data.metrics_auth_status;
       $scope.emsCommonModel.ssh_keypair_auth_status         = data.ssh_keypair_auth_status;
+      $scope.emsCommonModel.metrics_api_port                = data.metrics_api_port !== undefined && data.metrics_api_port !== '' ? data.metrics_api_port.toString() : '';
       $scope.emsCommonModel.alerts_selection                = data.alerts_selection;
       $scope.emsCommonModel.prometheus_alerts_hostname      = data.prometheus_alerts_hostname;
       $scope.emsCommonModel.prometheus_alerts_api_port      = data.prometheus_alerts_api_port !== undefined && data.prometheus_alerts_api_port !== '' ? data.prometheus_alerts_api_port.toString() : '443';
@@ -191,7 +190,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.openstack_infra_providers_exist = data.openstack_infra_providers_exist;
       $scope.emsCommonModel.default_api_port                = '';
       $scope.emsCommonModel.amqp_api_port                   = '5672';
-      $scope.emsCommonModel.metrics_selection               = data.metrics_selection;
       $scope.emsCommonModel.alerts_selection                = data.alerts_selection;
       $scope.emsCommonModel.prometheus_alerts_api_port      = '443';
       $scope.emsCommonModel.prometheus_alerts_auth_status   = data.prometheus_alerts_auth_status;
@@ -209,8 +207,8 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.default_auth_status             = data.default_auth_status;
       $scope.emsCommonModel.amqp_auth_status                = data.amqp_auth_status;
       $scope.emsCommonModel.service_account_auth_status     = data.service_account_auth_status;
-      $scope.emsCommonModel.metrics_auth_status             = true;
       $scope.emsCommonModel.ssh_keypair_auth_status         = true;
+      $scope.emsCommonModel.metrics_auth_status             = data.metrics_auth_status;
       $scope.emsCommonModel.vmware_cloud_api_version        = '9.0';
 
       miqService.sparkleOff();
@@ -268,9 +266,9 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       ($scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid)) {
       return true;
     } else if (($scope.currentTab == "alerts" && $scope.emsCommonModel.ems_controller == "ems_container") &&
-        ($scope.emsCommonModel.emstype) &&
-        ($scope.emsCommonModel.prometheus_alerts_hostname != '' && $scope.emsCommonModel.prometheus_alerts_api_port != '') &&
-        ($scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid)) {
+      ($scope.emsCommonModel.emstype) &&
+      ($scope.emsCommonModel.prometheus_alerts_hostname != '' && $scope.emsCommonModel.prometheus_alerts_api_port != '') &&
+      ($scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid)) {
       return true;
     } else if(($scope.currentTab == "metrics" && $scope.emsCommonModel.ems_controller == "ems_container") &&
       ($scope.emsCommonModel.emstype) &&
@@ -461,12 +459,12 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
 
   $scope.postValidationModelRegistry = function(prefix) {
     if ($scope.postValidationModel === undefined) {
-      $scope.postValidationModel = {default: {},
-                                    amqp: {},
-                                    metrics: {},
-                                    ssh_keypair: {},
-                                    hawkular: {},
-                                    prometheus_alerts: {}
+      $scope.postValidationModel = {
+        default: {},
+        amqp: {},
+        metrics: {},
+        ssh_keypair: {},
+        prometheus_alerts: {}
       }
     }
     if (prefix === "default") {
