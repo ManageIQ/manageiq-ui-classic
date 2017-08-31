@@ -21,7 +21,8 @@
     %button.btn.btn-default{"ng-click" => "vm.dismissChanges()",
                             :type => "button"}= _("Cancel")
     %button.btn.btn-primary{"ng-click" => "vm.saveDialogDetails()",
-                            "ng-disabled" => "!vm.dialogIsValid()",
+                            "ng-disabled" => "!vm.DialogValidation.dialogIsValid()",
+                            "ng-attr-title" => "{{vm.DialogValidation.invalid.message}}",
                             :type => "button"}= _("Save")
   = render :partial => "layouts/x_edit_buttons"
 
