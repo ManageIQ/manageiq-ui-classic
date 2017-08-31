@@ -1,23 +1,22 @@
-ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$timeout', '$scope', 'automationManagerFormId', 'miqService', 'configurationManagerService', function($http, $timeout, $scope, automationManagerFormId, miqService, configurationManagerService) {
+ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$scope', 'automationManagerFormId', 'miqService', 'configurationManagerService', function($http, $scope, automationManagerFormId, miqService, configurationManagerService) {
   var vm = this;
 
   vm.automationManagerModel = angular.copy(configurationManagerService.managerModel);
 
   vm.postValidationModel = {};
+  vm.formId = automationManagerFormId;
+  vm.model = 'automationManagerModel';
   vm.afterGet = false;
   vm.saveable = miqService.saveable;
   vm.modelCopy = angular.copy(vm.automationManagerModel);
-  vm.model = 'automationManagerModel';
   vm.checkAuthentication = true;
   vm.validationUrl = '/automation_manager/authentication_validate/' + automationManagerFormId + '?button=validate';
-  vm.prefix = 'default';
 
   ManageIQ.angular.scope = vm;
 
   miqService.sparkleOn();
   if (automationManagerFormId === 'new') {
     vm.newRecord = true;
-
     vm.automationManagerModel.name = '';
     vm.automationManagerModel.url = '';
     vm.automationManagerModel.verify_ssl = false;
@@ -38,7 +37,6 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$t
     var data = response.data;
 
     vm.automationManagerModel.zone = data.zone;
-
     vm.modelCopy = angular.copy(vm.automationManagerModel);
     vm.afterGet = true;
     miqService.sparkleOff();
@@ -50,7 +48,7 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$t
     vm.automationManagerModel.name = data.name;
     vm.automationManagerModel.zone = data.zone;
     vm.automationManagerModel.url = data.url;
-    vm.automationManagerModel.verify_ssl = data.verify_ssl === '1';
+    vm.automationManagerModel.verify_ssl = data.verify_ssl === 1;
     vm.automationManagerModel.default_userid = data.default_userid;
     vm.automationManagerModel.default_auth_status = data.default_auth_status;
 
@@ -67,7 +65,7 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$t
     var event = {target: '.validate_button:visible'};
     miqService.validateWithREST(event, vm.prefix, vm.validationUrl, true)
       .then(function success(data) {
-        $timeout(vm.automationManagerModel.default_auth_status = data.level !== 'error');
+        vm.automationManagerModel.default_auth_status = data.level !== 'error';
         miqService.miqFlash(data.level, data.message);
         miqService.sparkleOff();
       });
@@ -94,7 +92,6 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$t
 
   vm.cancelClicked = function() {
     automationManagerEditButtonClicked('cancel');
-    $scope.angularForm.$setPristine(true);
   };
 
   vm.resetClicked = function() {
@@ -106,7 +103,6 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$t
 
   vm.saveClicked = function() {
     automationManagerEditButtonClicked('save', true);
-    $scope.angularForm.$setPristine(true);
   };
 
   vm.addClicked = function() {
