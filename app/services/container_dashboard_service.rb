@@ -15,6 +15,7 @@ class ContainerDashboardService
       :providers_link  => get_url_to_entity(:ems_container),
       :status          => status,
       :providers       => providers,
+      :alerts          => alerts,
       :heatmaps        => heatmaps,
       :ems_utilization => ems_utilization,
       :network_metrics => network_metrics,
@@ -95,6 +96,29 @@ class ContainerDashboardService
       (result[ui_type] ||= build_provider_status(ui_type))[:count] += count
     end
     result.values
+  end
+
+  def alerts
+    provider_ids = ManageIQ::Providers::ContainerManager.all.pluck(:id)
+    relation = @ems ? @ems.miq_alert_statuses : MiqAlertStatus.where(:ems_id => provider_ids)
+    alerts_status = relation.present? ? relation.group(:severity).count.values_at('error', 'warning') : [nil, nil]
+
+    errors = alerts_status[0] || 0
+    warnings = alerts_status[1] || 0
+
+    errors_struct = errors > 0 ? {:iconClass => "pficon pficon-error-circle-o", :count => errors} : nil
+    warnings_struct = warnings > 0 ? {:iconClass => "pficon pficon-warning-triangle-o", :count => warnings} : nil
+    notifications = if (errors + warnings) > 0
+                      [errors_struct, warnings_struct].compact
+                    else
+                      [{:iconClass => "pficon-large pficon-ok"}]
+                    end
+
+    {
+      :count         => (errors + warnings) > 0 ? (errors + warnings) : nil,
+      :href          => @controller.url_for_only_path(:action => 'show', :controller => :alerts_overview),
+      :notifications => notifications
+    }
   end
 
   def build_provider_status(provider_type)
