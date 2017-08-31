@@ -332,7 +332,7 @@ class ApplicationController < ActionController::Base
       rpt.generate_table(:userid => session[:userid])
     else
       rpt = if session[:report_result_id]
-              MiqReportResult.for_user(current_user).find(session[:report_result_id]).report_results
+              MiqReportResult.find(session[:report_result_id]).report_results
             elsif session[:rpt_task_id].present?
               MiqTask.find(session[:rpt_task_id]).task_results
             else
