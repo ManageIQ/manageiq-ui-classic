@@ -48,3 +48,20 @@ ManageIQ.extensionComponents.source.subscribe((event: IExtensionComponent) => {
     throw new Error('Unsupported action with extension components.');
   }
 });
+
+ManageIQ.extensionComponents.subscribe = function(cmpName: string) {
+  let unsubscribe;
+  return {
+    with: (callback) => {
+      unsubscribe = ManageIQ.extensionComponents.source
+        .map(sourceAction => sourceAction.action === 'add' ? sourceAction.payload : {})
+        .filter(component => component && component.name === cmpName)
+        .subscribe(cmp => cmp && callback(cmp));
+
+      ManageIQ.extensionComponents.items.forEach((component) => {
+        component.name === cmpName && callback(component);
+      });
+    },
+    delete: () => unsubscribe && unsubscribe()
+  }
+}
