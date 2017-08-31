@@ -1,3 +1,4 @@
+- report_id = @edit[:rpt_id] || 'new'
 #filter_div
   - if @edit[:new][:perf_interval]
     = render :partial => "form_filter_performance"
@@ -19,7 +20,7 @@
             = render :partial => 'layouts/exp_editor'
           - else
             -# FIXME: alt/title incosistency
-            = link_to({:action => 'filter_change', :button => "record_filter", :id => "#{@edit[:rpt_id] || 'new'}"},
+            = link_to({:action => 'filter_change', :button => "record_filter", :id => report_id},
                       "data-miq_sparkle_on"  => true,
                       "data-miq_sparkle_off" => true,
                       :remote                => true,
@@ -32,12 +33,12 @@
             .spacer
             - unless @edit[:record_filter][:expression].key?("???")
               - @edit[:record_filter][:exp_table].each do |token|
-                - if !["AND", "OR", "(", ")"].include?([token].flatten.first)
-                  = h([token].flatten.first)
-                - else
+                - if %w(AND OR ( )).include?([token].flatten.first)
                   %font{:color => "black"}
                     %b
                       = h([token].flatten.first)
+                - else
+                  = h([token].flatten.first)
     %hr
     .form-horizontal
       - unless @edit[:display_filter][:exp_available_fields].empty? && @edit[:display_filter][:exp_available_tags].empty?
@@ -49,7 +50,7 @@
             - if @expkey == :display_filter
               = render :partial => 'layouts/exp_editor'
             - else
-              = link_to({:action => 'filter_change', :button => "display_filter", :id => "#{@edit[:rpt_id] || 'new'}"},
+              = link_to({:action => 'filter_change', :button => "display_filter", :id => report_id},
                 "data-miq_sparkle_on"  => true,
                 "data-miq_sparkle_off" => true,
                 :remote                => true,
@@ -57,14 +58,14 @@
                 %button.btn.btn-default
                   - if @edit[:display_filter][:expression].key?("???")
                     = _("Create Display Filter")
-                  - else 
+                  - else
                     = _("Edit Display Filter")
               .spacer
               - unless @edit[:display_filter][:expression].key?("???")
                 - @edit[:display_filter][:exp_table].each do |token|
-                  - if !["AND", "OR", "(", ")"].include?([token].flatten.first)
-                    = h([token].flatten.first)
-                  - else
+                  - if %w(AND OR ( )).include?([token].flatten.first)
                     %font{:color => "black"}
                       %b
                         = h([token].flatten.first)
+                  - else
+                    = h([token].flatten.first)
