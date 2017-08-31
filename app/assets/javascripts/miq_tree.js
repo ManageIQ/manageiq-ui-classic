@@ -1,7 +1,7 @@
 /* global DoNav miqClearTreeState miqDomElementExists miqJqueryRequest miqSetButtons miqSparkle */
 
 function miqTreeObject(tree) {
-  return $('#' + tree + 'box').treeview(true);
+  return $('miq-tree-view[name="' + tree + '"] > .treeview').treeview(true);
 }
 
 function miqTreeFindNodeByKey(tree, key) {
