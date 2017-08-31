@@ -101,71 +101,90 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
     ).then(saveSuccess, saveFailure);
   }
 
-  function dialogHasName() {
-    return !_.isEmpty(DialogEditor.getDialogLabel());
-  }
-
-  function dialogHasTab() {
-    return DialogEditor.data.content[0].dialog_tabs.length > 0;
-  }
-
-  function dialogTabsHaveName() {
-    return _.every(
-      DialogEditor.data.content[0].dialog_tabs,
-      tab => !_.isEmpty(tab.label)
-    );
-  }
-
-  function dialogTabsHaveBox() {
-    return _.every(
-      DialogEditor.data.content[0].dialog_tabs,
-      tab => tab.dialog_groups.length > 0
-    );
-  }
-
-  function dialogBoxesHaveName() {
-    return _.every(
-      DialogEditor.data.content[0].dialog_tabs,
-      tab => _.every(
-        tab.dialog_groups,
-        group => !_.isEmpty(group.label)
-      )
-    );
-  }
-
-  function dialogBoxesHaveElement() {
-    return _.every(
-      DialogEditor.data.content[0].dialog_tabs,
-      tab => _.every(
-        tab.dialog_groups,
-        group => group.dialog_fields.length > 0
-      )
-    );
-  }
-
-  function dialogElementsHaveName() {
-    return _.every(
-      DialogEditor.data.content[0].dialog_tabs,
-      tab => _.every(
-        tab.dialog_groups,
-        group => _.every(
-          group.dialog_fields,
-          field => !(_.isEmpty(field.name) || _.isEmpty(field.label))
-        )
-      )
-    );
-  }
-
   function dialogIsValid() {
-    return (
-      dialogHasName() &&
-      dialogHasTab() &&
-      dialogTabsHaveName() &&
-      dialogTabsHaveBox() &&
-      dialogBoxesHaveName() &&
-      dialogBoxesHaveElement() &&
-      dialogElementsHaveName()
-    );
+    var validators = {
+      dialog: [
+        function (dialog) {
+          return {
+            status: ! _.isEmpty(dialog.label),
+            errorMessage: __('Dialog needs to have a label')
+          }
+        },
+        function (dialog) {
+          return {
+            status: dialog.dialog_tabs.length > 0,
+            errorMessage: __('Dialog needs to have at least one tab')
+          }
+        }
+      ],
+      tabs: [
+        function (tab) {
+          return {
+            status: ! _.isEmpty(tab.label),
+            errorMessage: __('Dialog tab needs to have a name')
+          }
+        },
+        function (tab) {
+          return {
+            status: tab.dialog_groups.length > 0,
+            errorMessage: __('Dialog tab needs to have at least one box')
+          }
+        }
+      ],
+      groups: [
+        function (group) {
+          return {
+            status: ! _.isEmpty(group.label),
+            errorMessage: __('Dialog box needs to have a name')
+          }
+        },
+        function (group) {
+          return {
+            status: group.dialog_fields.length > 0,
+            errorMessage: __('Dialog box needs to have at least one element')
+          }
+        }
+      ],
+      fields: [
+        function (field) {
+          return {
+            status: ! _.isEmpty(field.name),
+            errorMessage: __('Dialog element needs to have a name')
+          }
+        },
+        function (field) {
+          return {
+            status: ! _.isEmpty(field.label),
+            errorMessage: __('Dialog element needs to have a label')
+          }
+        }
+      ]
+    };
+
+    let invalid = [];
+    let validate = function (f, item) {
+      let validation = f(item);
+      if (!validation.status) {
+        invalid.push({ message: validation.errorMessage, item: item });
+      }
+      return validation.status;
+    };
+
+    return _.every(DialogEditor.data.content, (dialog) => {
+      let u = _.every(validators.dialog, (f) => validate(f, dialog));
+      let v = _.every(dialog.dialog_tabs, (tab) => {
+        let w = _.every(validators.tabs, (f) => validate(f, tab));
+        let x = _.every(tab.dialog_groups, (group) => {
+          let y = _.every(validators.groups, (f) => validate(f, group));
+          let z = _.every(group.dialog_fields, (field) => {
+            return _.every(validators.fields, (f) => validate(f, field));
+          });
+          return y && z;
+        });
+        return w && x;
+      });
+      return u && v;
+    });
   }
 
   function dismissChanges() {
