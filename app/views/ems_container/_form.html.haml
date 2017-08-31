@@ -68,6 +68,7 @@
       .col-md-8
         = select_tag('alerts_selection', options_for_select([[_("Disabled"), "disabled"], [_("Prometheus"), "prometheus"]]),
                         "ng-model"                    => "emsCommonModel.alerts_selection",
+                        "ng-change"                   => "alertsSelectionChanged()",
                         "checkchange"                 => "",
                         "required"                    => "",
                         "selectpicker-for-select-tag" => "")

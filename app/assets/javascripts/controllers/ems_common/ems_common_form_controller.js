@@ -359,14 +359,22 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
     }
   };
 
-  $scope.metricSelectionChanged = function() {
-    if ($scope.emsCommonModel.metrics_selection == "disabled") {
+  $scope.tabSelectionChanged = function(tabSelector, selection) {
+    if (selection == "disabled") {
       $scope.changeAuthTab('default');
       angular.element('.nav-tabs a[href="#default"]').tab('show');
-      angular.element("#metrics_tab").hide();
+      angular.element(tabSelector).hide();
     } else {
-      angular.element("#metrics_tab").show();
+      angular.element(tabSelector).show();
     }
+  };
+
+  $scope.metricSelectionChanged = function() {
+    $scope.tabSelectionChanged("#metrics_tab", $scope.emsCommonModel.metrics_selection);
+  };
+
+  $scope.alertsSelectionChanged = function() {
+    $scope.tabSelectionChanged("#alerts_tab", $scope.emsCommonModel.alerts_selection);
   };
 
   $scope.providerTypeChanged = function() {
