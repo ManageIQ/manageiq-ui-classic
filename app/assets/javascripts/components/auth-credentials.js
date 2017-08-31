@@ -4,6 +4,7 @@ ManageIQ.angular.app.component('authCredentials', {
     model: '<',
     enableValidButton: '<',
     formLabels: '<',
+    validate: '<',
     prefix: '@',
     validateUrl: '@',
     userRequired: '<?',
@@ -11,6 +12,9 @@ ManageIQ.angular.app.component('authCredentials', {
     hideUser: '<?',
     hidePassword: '<?',
     newRecord: '<?',
+    restful: '<?',
+    authenticationRequired: '<?',
+    postValidationModelRegistry: '<?',
   },
   controllerAs: 'vm',
   controller: ['$scope', function($scope) {
@@ -65,5 +69,5 @@ ManageIQ.angular.app.component('authCredentials', {
       vm.cancelPasswordChange();
     });
   }],
-  templateUrl: '/static/auth_credentials.html.haml',
+  templateUrl: '/static/auth-credentials.html.haml',
 });
