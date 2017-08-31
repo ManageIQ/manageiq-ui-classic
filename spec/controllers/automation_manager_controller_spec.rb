@@ -5,11 +5,13 @@ describe AutomationManagerController do
   let(:tags) { ["/managed/quota_max_memory/2048"] }
   let(:automation_provider1) { FactoryGirl.create(:provider_ansible_tower, :name => "ansibletest", :url => "10.8.96.107", :zone => zone) }
   let(:automation_provider2) { FactoryGirl.create(:provider_ansible_tower, :name => "ansibletest2", :url => "10.8.96.108", :zone => zone) }
+  let(:automation_provider3) { FactoryGirl.create(:provider_ansible_tower, :name => "ansibletest_no_cs", :url => "192.0.2.1", :zone => zone) }
 
   before(:each) do
     Tag.find_or_create_by(:name => tags.first)
     @automation_manager1 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider1.id)
     @automation_manager2 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider2.id)
+    @automation_manager3 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider3.id)
 
     @inventory_group = ManageIQ::Providers::AutomationManager::InventoryRootGroup.create(:name => "testinvgroup", :ems_id => @automation_manager1.id)
     @inventory_group2 = ManageIQ::Providers::AutomationManager::InventoryRootGroup.create(:name => "testinvgroup2", :ems_id => @automation_manager2.id)
@@ -246,12 +248,13 @@ describe AutomationManagerController do
   it "builds ansible tower child tree" do
     automation_manager1 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider1.id)
     automation_manager2 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider2.id)
+    automation_manager3 = ManageIQ::Providers::AnsibleTower::AutomationManager.find_by(:provider_id => automation_provider3.id)
     user = login_as user_with_feature(%w(automation_manager_providers providers_accord automation_manager_configured_system automation_manager_configuration_scripts_accord))
     allow(User).to receive(:current_user).and_return(user)
     controller.send(:build_automation_manager_tree, :automation_manager_providers, :automation_manager_providers_tree)
     tree_builder = TreeBuilderAutomationManagerProviders.new("root", "", {})
     objects = tree_builder.send(:x_get_tree_roots, false, {})
-    expected_objects = [automation_manager1, automation_manager2]
+    expected_objects = [automation_manager1, automation_manager2, automation_manager3]
     expect(objects).to match_array(expected_objects)
   end
 
@@ -309,7 +312,7 @@ describe AutomationManagerController do
       controller.instance_variable_set(:@search_text, "manager")
       controller.send(:tree_select)
       view = controller.instance_variable_get(:@view)
-      expect(view.table.data.size).to eq(2)
+      expect(view.table.data.size).to eq(3)
 
       ems_id = ems_key_for_provider(automation_provider1)
       controller.instance_variable_set(:@_params, :id => ems_id)
@@ -349,7 +352,7 @@ describe AutomationManagerController do
       expect(search_text).to eq("manager")
       view = controller.instance_variable_get(:@view)
       show_adv_search = controller.instance_variable_get(:@show_adv_search)
-      expect(view.table.data.size).to eq(2)
+      expect(view.table.data.size).to eq(3)
       expect(show_adv_search).to eq(true)
     end
 
