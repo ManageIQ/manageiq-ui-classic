@@ -137,7 +137,6 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.emsCommonModel.host_default_vnc_port_end       = data.host_default_vnc_port_end;
 
       $scope.emsCommonModel.event_stream_selection          = data.event_stream_selection;
-      $scope.emsCommonModel.metrics_selection_default       = data.metrics_selection_default;
 
       $scope.emsCommonModel.bearer_token_exists             = data.bearer_token_exists;
 
@@ -265,15 +264,15 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       ($scope.emsCommonModel.default_hostname != '' && $scope.emsCommonModel.default_api_port) &&
       ($scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid)) {
       return true;
-    } else if (($scope.currentTab == "alerts" && $scope.emsCommonModel.ems_controller == "ems_container") &&
+    } else if(($scope.emsCommonModel.ems_controller == "ems_container") &&
       ($scope.emsCommonModel.emstype) &&
-      ($scope.emsCommonModel.prometheus_alerts_hostname != '' && $scope.emsCommonModel.prometheus_alerts_api_port != '') &&
-      ($scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid)) {
-      return true;
-    } else if(($scope.currentTab == "metrics" && $scope.emsCommonModel.ems_controller == "ems_container") &&
-      ($scope.emsCommonModel.emstype) &&
-      ($scope.emsCommonModel.metrics_hostname != '' && $scope.emsCommonModel.metrics_api_port) &&
-      ($scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid)) {
+      ($scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid) &&
+      (($scope.currentTab == "metrics" &&
+        $scope.emsCommonModel.metrics_hostname != '' &&
+        $scope.emsCommonModel.metrics_api_port) ||
+       ($scope.currentTab == "alerts" &&
+        $scope.emsCommonModel.prometheus_alerts_hostname != '' &&
+        $scope.emsCommonModel.prometheus_alerts_api_port != ''))) {
       return true;
     } else if($scope.emsCommonModel.emstype == "gce" && $scope.emsCommonModel.project != '' &&
       ($scope.currentTab == "default" ||
@@ -540,12 +539,11 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         service_account:           $scope.emsCommonModel.service_account
       }
     } else if (prefix == "prometheus_alerts") {
-      $scope.postValidationModel['prometheus_alerts'] = {
-        prometheus_alerts_hostname: $scope.emsCommonModel.prometheus_alerts_hostname,
-        prometheus_alerts_api_port: $scope.emsCommonModel.prometheus_alerts_api_port,
-        prometheus_alerts_security_protocol: $scope.emsCommonModel.prometheus_alerts_security_protocol,
-        prometheus_alerts_tls_ca_certs: $scope.emsCommonModel.prometheus_alerts_tls_ca_certs,
-      }
+      $scope.postValidationModel['prometheus_alerts'] = {};
+      ['prometheus_alerts_hostname', 'prometheus_alerts_api_port', 'prometheus_alerts_security_protocol', 'prometheus_alerts_tls_ca_certs']
+      .forEach( function(resource) {
+        $scope.postValidationModel['prometheus_alerts'][resource] = $scope.emsCommonModel[resource];
+      });
     }
   };
 
