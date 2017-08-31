@@ -104,60 +104,28 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
   function dialogIsValid() {
     var validators = {
       dialog: [
-        function (dialog) {
-          return {
-            status: ! _.isEmpty(dialog.label),
-            errorMessage: __('Dialog needs to have a label')
-          }
-        },
-        function (dialog) {
-          return {
-            status: dialog.dialog_tabs.length > 0,
-            errorMessage: __('Dialog needs to have at least one tab')
-          }
-        }
+        dialog => ({ status: ! _.isEmpty(dialog.label),
+                     errorMessage: __('Dialog needs to have a label') }),
+        dialog => ({ status: dialog.dialog_tabs.length > 0,
+                     errorMessage: __('Dialog needs to have at least one tab') })
       ],
       tabs: [
-        function (tab) {
-          return {
-            status: ! _.isEmpty(tab.label),
-            errorMessage: __('Dialog tab needs to have a name')
-          }
-        },
-        function (tab) {
-          return {
-            status: tab.dialog_groups.length > 0,
-            errorMessage: __('Dialog tab needs to have at least one box')
-          }
-        }
+        tab => ({ status: ! _.isEmpty(tab.label),
+                  errorMessage: __('Dialog tab needs to have a name') }),
+        tab => ({ status: tab.dialog_groups.length > 0,
+                  errorMessage: __('Dialog tab needs to have at least one box') })
       ],
       groups: [
-        function (group) {
-          return {
-            status: ! _.isEmpty(group.label),
-            errorMessage: __('Dialog box needs to have a name')
-          }
-        },
-        function (group) {
-          return {
-            status: group.dialog_fields.length > 0,
-            errorMessage: __('Dialog box needs to have at least one element')
-          }
-        }
+        group => ({ status: ! _.isEmpty(group.label),
+                    errorMessage: __('Dialog box needs to have a name') }),
+        group => ({ status: group.dialog_fields.length > 0,
+                    errorMessage: __('Dialog box needs to have at least one element') })
       ],
       fields: [
-        function (field) {
-          return {
-            status: ! _.isEmpty(field.name),
-            errorMessage: __('Dialog element needs to have a name')
-          }
-        },
-        function (field) {
-          return {
-            status: ! _.isEmpty(field.label),
-            errorMessage: __('Dialog element needs to have a label')
-          }
-        }
+        field => ({ status: ! _.isEmpty(field.name),
+                    errorMessage: __('Dialog element needs to have a name') }),
+        field => ({ status: ! _.isEmpty(field.label),
+                    errorMessage: __('Dialog element needs to have a label') })
       ]
     };
 
@@ -170,21 +138,17 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
       return validation.status;
     };
 
-    return _.every(DialogEditor.data.content, (dialog) => {
-      let u = _.every(validators.dialog, (f) => validate(f, dialog));
-      let v = _.every(dialog.dialog_tabs, (tab) => {
-        let w = _.every(validators.tabs, (f) => validate(f, tab));
-        let x = _.every(tab.dialog_groups, (group) => {
-          let y = _.every(validators.groups, (f) => validate(f, group));
-          let z = _.every(group.dialog_fields, (field) => {
-            return _.every(validators.fields, (f) => validate(f, field));
-          });
-          return y && z;
-        });
-        return w && x;
-      });
-      return u && v;
-    });
+    return _.every(DialogEditor.data.content, dialog =>
+      _.every(validators.dialog, f => validate(f, dialog)) &&
+      _.every(dialog.dialog_tabs, tab =>
+        _.every(validators.tabs, f => validate(f, tab)) &&
+        _.every(tab.dialog_groups, group =>
+          _.every(validators.groups, f => validate(f, group)) &&
+          _.every(group.dialog_fields, field =>
+            _.every(validators.fields, f => validate(f, field)))
+        )
+      )
+    );
   }
 
   function dismissChanges() {
