@@ -14,7 +14,7 @@ class ContainerProjectDashboardService
     {
       :status              => status,
       :project_utilization => project_utilization,
-      :network_metrics     => network_metrics,
+      :network_metrics     => project_network_metrics,
       :pods                => pods,
       :quota               => quota,
       :pod_metrics         => pod_metrics
@@ -45,7 +45,7 @@ class ContainerProjectDashboardService
         :count        => @project.containers.count,
         :errorCount   => 0,
         :warningCount => 0,
-        :href         => @controller.url_for(:controller => "container",
+        :href         => @controller.url_for(:controller => "container_project",
                                              :action     => "show",
                                              :id         => @project.id,
                                              :display    => "containers")
@@ -54,11 +54,11 @@ class ContainerProjectDashboardService
   end
 
   def project_utilization
-    empty_utilization_trend_data
+    daily_utilization || hourly_utilization || empty_utilization_trend_data
   end
 
-  def network_metrics
-    empty_network_trend_data
+  def project_network_metrics
+    daily_network_metrics || hourly_network_metrics || empty_network_trend_data
   end
 
   def pods
