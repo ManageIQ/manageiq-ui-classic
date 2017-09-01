@@ -1,6 +1,10 @@
 module ApplicationController::Buttons
   extend ActiveSupport::Concern
 
+  included do
+    include Mixins::PlaybookOptions
+  end
+
   def ab_group_edit
     assert_privileges("ab_group_edit")
     group_new_edit("edit")
@@ -103,7 +107,11 @@ module ApplicationController::Buttons
       @edit[:new][:open_url] = params[:open_url] == "1" if params[:open_url]
       copy_params_if_set(@edit[:new], params, %i(name target_attr_name display_for submit_how description button_icon button_color dialog_id disabled_text))
       visibility_box_edit
-      playbook_box_edit
+      clear_playbook_variables if params[:button_type] == 'default'
+      if params[:button_type] == 'ansible_playbook'
+        initialize_playbook_variables if params[:button_type] == 'ansible_playbook'
+        @edit[:new][:object_request] = CustomButton::PLAYBOOK_METHOD
+      end
     end
 
     render :update do |page|
@@ -118,48 +126,8 @@ module ApplicationController::Buttons
         @changed = session[:changed] = (@edit[:new] != @edit[:current])
         page << javascript_for_miq_button_visibility(@changed)
       end
-      if @edit[:new][:button_type] == 'ansible_playbook'
-        page << javascript_show('playbook_div')
-        page << if @edit[:new][:inventory_type] == "manual"
-                  javascript_show('manual_inventory_div')
-                else
-                  javascript_hide('manual_inventory_div')
-                end
-      else
-        page << javascript_hide('playbook_div')
-      end
       page << "miqSparkle(false);"
     end
-  end
-
-  def playbook_box_edit
-    clear_playbook_variables if params[:button_type] == 'default'
-    initialize_playbook_variables if params[:button_type] == 'ansible_playbook'
-    if params[:inventory_manual] || params[:inventory_localhost] || params[:inventory_event_target]
-      update_playbook_variables(params)
-    end
-    @edit[:new][:service_template_id] = params[:service_template_id].to_i if params[:service_template_id]
-    @edit[:new][:hosts] = params[:hosts] if params[:hosts]
-  end
-
-  def update_playbook_variables(params)
-    @edit[:new][:inventory_type] = params[:inventory_manual] if params[:inventory_manual]
-    @edit[:new][:inventory_type] = params[:inventory_localhost] if params[:inventory_localhost]
-    @edit[:new][:inventory_type] = params[:inventory_event_target] if params[:inventory_event_target]
-    @edit[:new][:hosts] = '' if params[:inventory_localhost] || params[:inventory_event_target]
-  end
-
-  def clear_playbook_variables
-    @edit[:new][:service_template_id] = nil
-    @edit[:new][:inventory_type] = 'localhost'
-    @edit[:new][:hosts] = ''
-  end
-
-  def initialize_playbook_variables
-    @edit[:new][:service_template_id] = nil
-    @edit[:new][:inventory_type] = "localhost"
-    @edit[:new][:hosts] = ''
-    @edit[:new][:object_request] = CustomButton::PLAYBOOK_METHOD
   end
 
   # AJAX driven routine to delete a user
