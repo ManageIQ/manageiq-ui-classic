@@ -504,43 +504,40 @@ module OpsController::OpsRbac
 
   def rbac_group_user_lookup
     rbac_group_user_lookup_field_changed
-    if @edit[:new][:user].nil? || @edit[:new][:user] == ""
-      add_flash(_("User must be entered to perform LDAP Group Look Up"), :error)
-    end
+    add_flash(_("User must be entered to perform LDAP Group Look Up"), :error) if @edit[:new][:user].blank?
+
     if ::Settings.authentication.mode != "httpd"
-      if @edit[:new][:user_id].nil? || @edit[:new][:user_id] == ""
-        add_flash(_("Username must be entered to perform LDAP Group Look Up"), :error)
-      end
-      if @edit[:new][:user_pwd].nil? || @edit[:new][:user_pwd] == ""
-        add_flash(_("User Password must be entered to perform LDAP Group Look Up"), :error)
-      end
+      add_flash(_("Username must be entered to perform LDAP Group Look Up"), :error) if @edit[:new][:user_id].blank?
+      add_flash(_("User Password must be entered to perform LDAP Group Look Up"), :error) if @edit[:new][:user_pwd].blank?
     end
-    if !@flash_array.nil?
+
+    unless @flash_array.nil?
       javascript_flash
+      return
+    end
+
+    @record = MiqGroup.find_by(:id => @edit[:group_id])
+    @sb[:roles] = @edit[:roles]
+    begin
+      @edit[:ldap_groups_by_user] = if ::Settings.authentication.mode == "httpd"
+                                      MiqGroup.get_httpd_groups_by_user(@edit[:new][:user])
+                                    else
+                                      MiqGroup.get_ldap_groups_by_user(@edit[:new][:user],
+                                                                       @edit[:new][:user_id],
+                                                                       @edit[:new][:user_pwd])
+                                    end
+    rescue => bang
+      @edit[:ldap_groups_by_user] = []
+      add_flash(_("Error during 'LDAP Group Look Up': %{message}") % {:message => bang.message}, :error)
+      render :update do |page|
+        page << javascript_prologue
+        page.replace("flash_msg_div", :partial => "layouts/flash_msg")
+        page.replace("ldap_user_div", :partial => "ldap_auth_users")
+      end
     else
-      @record = MiqGroup.find_by(:id => @edit[:group_id])
-      @sb[:roles] = @edit[:roles]
-      begin
-        if ::Settings.authentication.mode == "httpd"
-          @edit[:ldap_groups_by_user] = MiqGroup.get_httpd_groups_by_user(@edit[:new][:user])
-        else
-          @edit[:ldap_groups_by_user] = MiqGroup.get_ldap_groups_by_user(@edit[:new][:user],
-                                                                         @edit[:new][:user_id],
-                                                                         @edit[:new][:user_pwd])
-        end
-      rescue => bang
-        @edit[:ldap_groups_by_user] = []
-        add_flash(_("Error during 'LDAP Group Look Up': %{message}") % {:message => bang.message}, :error)
-        render :update do |page|
-          page << javascript_prologue
-          page.replace("flash_msg_div", :partial => "layouts/flash_msg")
-          page.replace("ldap_user_div", :partial => "ldap_auth_users")
-        end
-      else
-        render :update do |page|
-          page << javascript_prologue
-          page.replace("ldap_user_div", :partial => "ldap_auth_users")
-        end
+      render :update do |page|
+        page << javascript_prologue
+        page.replace("ldap_user_div", :partial => "ldap_auth_users")
       end
     end
   end
