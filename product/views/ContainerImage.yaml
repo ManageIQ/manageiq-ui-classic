@@ -40,6 +40,8 @@ col_order:
 - tag
 - image_ref
 - display_registry
+- total_containers
+- last_scan_attempt_on
 
 # Column titles, in order
 headers:
@@ -48,6 +50,8 @@ headers:
 - Tag
 - Id
 - Image Registry
+- Containers Count
+- Last Scan Attempt
 
 # Condition(s) string for the SQL query
 conditions: 
