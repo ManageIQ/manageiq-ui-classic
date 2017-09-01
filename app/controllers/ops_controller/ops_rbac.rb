@@ -344,8 +344,7 @@ module OpsController::OpsRbac
     tenants = []
     if !params[:id] # showing a tenants list
       tenants = Tenant.where(:id => find_checked_items).reject do |t|
-        add_flash(_("Default %{model} \"%{name}\" can not be deleted") % {:model => ui_lookup(:model => "Tenant"),
-                                                                          :name  => t.name}, :error) if t.parent.nil?
+        add_flash(_("Default Tenant \"%{name}\" can not be deleted") % {:name  => t.name}, :error) if t.parent.nil?
         t.parent.nil?
       end
     else # showing 1 tenant, delete it
