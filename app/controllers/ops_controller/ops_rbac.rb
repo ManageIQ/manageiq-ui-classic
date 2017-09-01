@@ -106,7 +106,7 @@ module OpsController::OpsRbac
     assert_privileges("rbac_tenant_edit")
     case params[:button]
     when "cancel"
-      @tenant = Tenant.find_by_id(params[:id])
+      @tenant = Tenant.find_by(:id => params[:id])
       if @tenant.try(:id).nil?
         add_flash(_("Add of new %{model} was cancelled by the user") %
                     {:model => tenant_type_title_string(params[:divisible] == "true")})
@@ -117,7 +117,7 @@ module OpsController::OpsRbac
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
     when "save", "add"
-      tenant = params[:id] != "new" ? Tenant.find_by_id(params[:id]) : Tenant.new
+      tenant = params[:id] != "new" ? Tenant.find(params[:id]) : Tenant.new
 
       # This should be changed to something like tenant.changed? and tenant.changes
       # when we have a version of Rails that supports detecting changes on serialized
@@ -162,7 +162,7 @@ module OpsController::OpsRbac
   end
 
   def tenant_form_fields
-    tenant      = Tenant.find_by_id(params[:id])
+    tenant      = Tenant.find(params[:id])
 
     render :json => {
       :name                      => tenant.name,
@@ -179,7 +179,7 @@ module OpsController::OpsRbac
     tenant.description = params[:description]
     tenant.use_config_for_attributes = tenant.root? && (params[:use_config_for_attributes] == "on")
     unless tenant.id # only set for new records
-      tenant.parent    = Tenant.find_by_id(from_cid(x_node.split('-').last))
+      tenant.parent    = Tenant.find(from_cid(x_node.split('-').last))
       tenant.divisible = params[:divisible] == "true"
     end
   end
@@ -188,13 +188,13 @@ module OpsController::OpsRbac
     assert_privileges("rbac_tenant_manage_quotas")
     case params[:button]
     when "cancel"
-      @tenant = Tenant.find_by_id(params[:id])
+      @tenant = Tenant.find(params[:id])
       add_flash(_("Manage quotas for %{model}\ \"%{name}\" was cancelled by the user") %
                     {:model => tenant_type_title_string(@tenant.divisible), :name => @tenant.name})
       get_node_info(x_node)
       replace_right_cell(:nodetype => x_node)
     when "save", "add"
-      tenant = Tenant.find_by_id(params[:id])
+      tenant = Tenant.find(params[:id])
       begin
         if !params[:quotas]
           tenant.set_quotas({})
@@ -227,7 +227,7 @@ module OpsController::OpsRbac
   end
 
   def tenant_quotas_form_fields
-    tenant = Tenant.find_by_id(params[:id])
+    tenant = Tenant.find(params[:id])
     tenant_quotas = tenant.get_quotas
     render :json => {
       :name   => tenant.name,
@@ -285,10 +285,10 @@ module OpsController::OpsRbac
       end
       process_users(users, "destroy") unless users.empty?
     else # showing 1 user, delete it
-      if params[:id].nil? || User.find_by_id(params[:id]).nil?
+      if params[:id].nil? || !User.exists?(params[:id])
         add_flash(_("User no longer exists"), :error)
       else
-        user = User.find_by_id(params[:id])
+        user = User.find(params[:id])
         if rbac_user_delete_restriction?(user)
           rbac_restricted_user_delete_flash(user)
         else
@@ -316,7 +316,7 @@ module OpsController::OpsRbac
     else # showing 1 role, delete it
       roles.push(params[:id])
       process_roles(roles, "destroy") unless roles.empty?
-      self.x_node  = "xx-ur" if MiqUserRole.find_by_id(params[:id]).nil? # reset node to show list
+      self.x_node  = "xx-ur" unless MiqUserRole.exists?(params[:id]) # reset node to show list
     end
     get_node_info(x_node)
     replace_right_cell(:nodetype => x_node, :replace_trees => [:rbac])
@@ -350,7 +350,7 @@ module OpsController::OpsRbac
       end
     else # showing 1 tenant, delete it
       tenants.push(params[:id])
-      parent_id = Tenant.find_by_id(params[:id]).parent.id
+      parent_id = Tenant.find(params[:id]).parent.id
       self.x_node = "tn-#{to_cid(parent_id)}"
     end
     process_tenants(tenants, "destroy") unless tenants.empty?
@@ -369,7 +369,7 @@ module OpsController::OpsRbac
     else # showing 1 group, delete it
       groups.push(params[:id])
       process_groups(groups, "destroy") unless groups.empty?
-      self.x_node  = "xx-g" if MiqGroup.find_by_id(params[:id]).nil? # reset node to show list
+      self.x_node  = "xx-g" unless MiqGroup.exists?(params[:id]) # reset node to show list
     end
     get_node_info(x_node)
     replace_right_cell(:nodetype => x_node, :replace_trees => [:rbac])
@@ -387,7 +387,7 @@ module OpsController::OpsRbac
       return unless load_edit("rbac_group_edit__seq", "replace_cell__explorer")
       err = false
       @edit[:new][:ldap_groups_list].each_with_index do |grp, i|
-        group = MiqGroup.find_by_description(grp)
+        group = MiqGroup.find_by(:description => grp)
         group.sequence = i + 1
         if group.save
           AuditEvent.success(build_saved_audit(group, params[:button] == "add"))
@@ -522,7 +522,7 @@ module OpsController::OpsRbac
     if !@flash_array.nil?
       javascript_flash
     else
-      @record = MiqGroup.find_by_id(@edit[:group_id])
+      @record = MiqGroup.find_by(:id => @edit[:group_id])
       @sb[:roles] = @edit[:roles]
       begin
         if ::Settings.authentication.mode == "httpd"
@@ -654,7 +654,7 @@ module OpsController::OpsRbac
       # create new record
       @record = klass.new
       if key == :role
-        @record.miq_product_features = [MiqProductFeature.find_by_identifier(MiqProductFeature.feature_root)]
+        @record.miq_product_features = [MiqProductFeature.find_by(:identifier => MiqProductFeature.feature_root)]
       end
     when "copy"
       # copy existing record
@@ -705,15 +705,15 @@ module OpsController::OpsRbac
     when :user
       rbac_user_validate?
       rbac_user_set_record_vars(
-        record = @edit[:user_id] ? User.find_by_id(@edit[:user_id]) : User.new)
+        record = @edit[:user_id] ? User.find(@edit[:user_id]) : User.new)
     when :group then
       rbac_group_validate?
       rbac_group_set_record_vars(
-        record = @edit[:group_id] ? MiqGroup.find_by_id(@edit[:group_id]) : MiqGroup.new)
+        record = @edit[:group_id] ? MiqGroup.find(@edit[:group_id]) : MiqGroup.new)
     when :role  then
       rbac_role_validate?
       rbac_role_set_record_vars(
-        record = @edit[:role_id] ? MiqUserRole.find_by_id(@edit[:role_id]) : MiqUserRole.new)
+        record = @edit[:role_id] ? MiqUserRole.find(@edit[:role_id]) : MiqUserRole.new)
     end
 
     if record.valid? && !flash_errors? && record.save
@@ -873,14 +873,14 @@ module OpsController::OpsRbac
         rbac_tenants_list
       end
     when "u"
-      @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "User"), :name => User.find_by_id(from_cid(id)).name}
+      @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "User"), :name => User.find(from_cid(id)).name}
       rbac_user_get_details(id)
     when "g"
-      @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "MiqGroup"), :name => MiqGroup.find_by_id(from_cid(id)).description}
+      @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "MiqGroup"), :name => MiqGroup.find(from_cid(id)).description}
       @edit = nil
       rbac_group_get_details(id)
     when "ur"
-      @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "MiqUserRole"), :name => MiqUserRole.find_by_id(from_cid(id)).name}
+      @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "MiqUserRole"), :name => MiqUserRole.find(from_cid(id)).name}
       rbac_role_get_details(id)
     when "tn"
       rbac_tenant_get_details(id)
@@ -899,17 +899,17 @@ module OpsController::OpsRbac
 
   def rbac_user_get_details(id)
     @edit = nil
-    @record = @user = User.find_by_id(from_cid(id))
+    @record = @user = User.find(from_cid(id))
     get_tagdata(@user)
   end
 
   def rbac_tenant_get_details(id)
-    @record = @tenant = Tenant.find_by_id(from_cid(id))
+    @record = @tenant = Tenant.find(from_cid(id))
     get_tagdata(@tenant)
   end
 
   def rbac_group_get_details(id)
-    @record = @group = MiqGroup.find_by_id(from_cid(id))
+    @record = @group = MiqGroup.find(from_cid(id))
     @belongsto = {}
     @filters = {}
     if @record.present?
@@ -961,7 +961,7 @@ module OpsController::OpsRbac
 
   def rbac_role_get_details(id)
     @edit = nil
-    @record = @role = MiqUserRole.find_by_id(from_cid(id))
+    @record = @role = MiqUserRole.find(from_cid(id))
     @rbac_menu_tree = build_rbac_feature_tree
   end
 
@@ -1009,7 +1009,7 @@ module OpsController::OpsRbac
     user.name       = @edit[:new][:name]
     user.userid     = @edit[:new][:userid]
     user.email      = @edit[:new][:email]
-    user.miq_groups = [MiqGroup.find_by_id(@edit[:new][:group])].compact
+    user.miq_groups = [MiqGroup.find_by(:id => @edit[:new][:group])].compact
     user.password   = @edit[:new][:password] if @edit[:new][:password]
   end
 
@@ -1023,7 +1023,7 @@ module OpsController::OpsRbac
     if @edit[:new][:group].blank?
       add_flash(_("A User must be assigned to a Group"), :error)
       valid = false
-    elsif Rbac.filtered([MiqGroup.find_by_id(@edit[:new][:group])].compact).empty?
+    elsif Rbac.filtered([MiqGroup.find_by(:id => @edit[:new][:group])].compact).empty?
       add_flash(_("A User must be assigned to an allowed Group"), :error)
       valid = false
     end
@@ -1155,10 +1155,10 @@ module OpsController::OpsRbac
 
   # Set group record variables to new values
   def rbac_group_set_record_vars(group)
-    role = MiqUserRole.find_by_id(@edit[:new][:role])
+    role = MiqUserRole.find(@edit[:new][:role])
     group.description = @edit[:new][:description]
     group.miq_user_role = role
-    group.tenant = Tenant.find_by_id(@edit[:new][:group_tenant]) if @edit[:new][:group_tenant]
+    group.tenant = Tenant.find(@edit[:new][:group_tenant]) if @edit[:new][:group_tenant]
     rbac_group_set_filters(group)             # Go set the filters for the group
   end
 
