@@ -1,15 +1,17 @@
 ManageIQ.angular.app.controller('vmCloudDetachFormController', ['$scope', 'vmCloudDetachFormId', 'miqService', function($scope, vmCloudDetachFormId, miqService) {
-  $scope.vmCloudModel = { name: '' };
-  $scope.formId = vmCloudDetachFormId;
-  $scope.afterGet = false;
-  $scope.modelCopy = angular.copy( $scope.vmCloudModel );
+  var vm = this;
 
-  ManageIQ.angular.scope = $scope;
+  vm.vmCloudModel = { name: '' };
+  vm.formId = vmCloudDetachFormId;
+  vm.afterGet = false;
+  vm.modelCopy = angular.copy(vm.vmCloudModel);
+
+  ManageIQ.angular.scope = vm;
 
   $scope.submitClicked = function() {
     miqService.sparkleOn();
     var url = '/vm_cloud/detach_volume/' + vmCloudDetachFormId + '?button=detach';
-    miqService.miqAjaxButton(url, true);
+    miqService.miqAjaxButton(url, vm.vmCloudModel);
   };
 
   $scope.cancelClicked = function() {
@@ -19,8 +21,7 @@ ManageIQ.angular.app.controller('vmCloudDetachFormController', ['$scope', 'vmClo
   };
 
   $scope.resetClicked = function() {
-    $scope.vmCloudModel = angular.copy( $scope.modelCopy );
-    $scope.angularForm.$setPristine(true);
+    vm.vmCloudModel = angular.copy(vm.modelCopy);
     miqService.miqFlash("warn", "All changes have been reset");
   };
 }]);
