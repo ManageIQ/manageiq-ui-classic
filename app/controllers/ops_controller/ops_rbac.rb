@@ -559,11 +559,12 @@ module OpsController::OpsRbac
   end
 
   def rbac_restricted_user_delete_flash(user)
-    if user.super_admin_user?
-      add_flash(_("Default %{model} \"%{name}\" cannot be deleted") % {:model => ui_lookup(:model => "User"), :name => user.name}, :error)
-    elsif user.userid == session[:userid]
-      add_flash(_("Current %{model} \"%{name}\" cannot be deleted") % {:model => ui_lookup(:model => "User"), :name => user.name}, :error)
-    end
+    msg = if user.super_admin_user?
+            _("Default EVM User \"%{name}\" cannot be deleted")
+          else
+            _("Current EVM User \"%{name}\" cannot be deleted")
+          end
+    add_flash(msg % {:name => user.name}, :error)
   end
 
   def rbac_restricted_user_copy_flash(user)
