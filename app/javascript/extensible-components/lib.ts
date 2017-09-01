@@ -13,9 +13,13 @@ export interface IExtensibleComponent {
   renderCallbacks: () => IMiQApiCallback;
 }
 
-export const extensionSource = ManageIQ.extensionComponents.source;
+export function getItems() {
+  return ManageIQ.extensions.getItems();
+}
 
-export const extensionItems = ManageIQ.extensionComponents.items;
+export function subscribe(cmpName: string) {
+  return ManageIQ.extensions.subscribe(cmpName);
+}
 
 /**
  * Helper function to create new component.
@@ -23,6 +27,6 @@ export const extensionItems = ManageIQ.extensionComponents.items;
  * @param api callback functions to change inner logic of component.
  * @param render callback function to apply render functions.
  */
-export function newComponent(name: string, api?: IMiQApiCallback, render?: IMiQApiCallback) {
-  return ManageIQ.extensionComponents.newComponent(name, api, render);
+export function addComponent(name: string, api?: IMiQApiCallback, render?: IMiQApiCallback) {
+  return ManageIQ.extensions.addComponent(name, api, render);
 }
