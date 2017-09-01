@@ -28,6 +28,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
     DialogEditor.setData(dialog);
     vm.dialog = dialog;
     vm.DialogValidation = DialogValidation;
+    vm.DialogEditor = DialogEditor;
   }
 
   vm.saveDialogDetails = saveDialogDetails;
