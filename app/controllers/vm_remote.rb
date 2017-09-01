@@ -12,7 +12,7 @@ module VmRemote
     vm = identify_record(params[:id], VmOrTemplate)
 
     if vm.supports_launch_cockpit?
-      javascript_open_window(vm.cockpit_url)
+      javascript_open_window(vm.cockpit_url.to_s)
     else
       javascript_flash(:text => vm.unsupported_reason(:launch_cockpit), :severity => :error, :spinner_off => true)
     end
