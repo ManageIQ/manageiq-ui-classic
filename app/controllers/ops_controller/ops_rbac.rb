@@ -491,11 +491,8 @@ module OpsController::OpsRbac
         break
       end
     end
-    if last_idx - first_idx + 1 > params[:seq_fields].length
-      return [false, first_idx, last_idx]
-    else
-      return [true, first_idx, last_idx]
-    end
+    consecutime = last_idx - first_idx + 1 <= params[:seq_fields].length
+    [consecutime, first_idx, last_idx]
   end
 
   def rbac_group_user_lookup_field_changed
