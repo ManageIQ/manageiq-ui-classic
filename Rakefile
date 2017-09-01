@@ -57,7 +57,12 @@ module Jasmine
 
     def initialize_config
       old_initialize_config
+
+      # serve haml templates from app/views/static/ on /static/
       @config.add_rack_path('/static', -> { StaticOrHaml.new })
+
+      # serve weback-compiled packs from public/packs/ on /packs/
+      @config.add_rack_path('/packs', -> { Rack::File.new(Rails.root.join('public', 'packs')) })
     end
   end
 end
