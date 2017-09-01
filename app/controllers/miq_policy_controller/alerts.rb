@@ -1,49 +1,61 @@
 module MiqPolicyController::Alerts
   extend ActiveSupport::Concern
 
+  def alert_edit_cancel
+    @edit = nil
+    @alert = session[:edit][:alert_id] ? MiqAlert.find(session[:edit][:alert_id]) : MiqAlert.new
+    if @alert && @alert.id.blank?
+      add_flash(_("Add of new %{models} was cancelled by the user") % {:models => ui_lookup(:model => "MiqAlert")})
+    else
+      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqAlert"), :name => @alert.description})
+    end
+    get_node_info(x_node)
+    replace_right_cell(:nodetype => @nodetype)
+  end
+
+  def alert_edit_save_add
+    id = params[:id] && params[:button] != "add" ? params[:id] : "new"
+    return unless load_edit("alert_edit__#{id}", "replace_cell__explorer")
+    alert = @alert = @edit[:alert_id] ? MiqAlert.find(@edit[:alert_id]) : MiqAlert.new
+    alert_set_record_vars(alert)
+
+    unless alert_valid_record?(alert) && alert.valid? && !@flash_array && alert.save
+      alert.errors.each do |field, msg|
+        add_flash("#{field.to_s.capitalize} #{msg}", :error)
+      end
+      replace_right_cell(:nodetype => "al")
+      return
+    end
+
+    AuditEvent.success(build_saved_audit(alert, params[:button] == "add"))
+    flash_key = params[:button] == 'save' ? _("Alert \"%{name}\" was saved") : _("Alert \"%{name}\" was added")
+    add_flash(flash_key % {:name => @edit[:new][:description]})
+    alert_get_info(MiqAlert.find(alert.id))
+    alert_sync_provider(@edit[:alert_id] ? :update : :new)
+    @edit = nil
+    @nodetype = "al"
+    @new_alert_node = "al-#{to_cid(alert.id)}"
+    replace_right_cell(:nodetype => "al", :replace_trees => [:alert_profile, :alert])
+  end
+
+  def alert_edit_reset
+    alert_build_edit_screen
+    @sb[:action] = "alert_edit"
+    if params[:button] == "reset"
+      add_flash(_("All changes have been reset"), :warning)
+    end
+    replace_right_cell(:nodetype => "al")
+  end
+
   def alert_edit
     assert_privileges(params[:pressed]) if params[:pressed]
     case params[:button]
     when "cancel"
-      @edit = nil
-      @alert = session[:edit][:alert_id] ? MiqAlert.find_by_id(session[:edit][:alert_id]) : MiqAlert.new
-      if @alert && @alert.id.blank?
-        add_flash(_("Add of new %{models} was cancelled by the user") % {:models => ui_lookup(:model => "MiqAlert")})
-      else
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqAlert"), :name => @alert.description})
-      end
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => @nodetype)
+      alert_edit_cancel
     when "save", "add"
-      id = params[:id] && params[:button] != "add" ? params[:id] : "new"
-      return unless load_edit("alert_edit__#{id}", "replace_cell__explorer")
-      @alert = @edit[:alert_id] ? MiqAlert.find_by_id(@edit[:alert_id]) : MiqAlert.new
-      alert = @alert.id.blank? ? MiqAlert.new : MiqAlert.find(@alert.id)  # Get new or existing record
-      alert_set_record_vars(alert)
-      if alert_valid_record?(alert) && alert.valid? && !@flash_array && alert.save
-        AuditEvent.success(build_saved_audit(alert, params[:button] == "add"))
-        flash_key = params[:button] == "save" ? _("%{model} \"%{name}\" was saved") :
-                                                _("%{model} \"%{name}\" was added")
-        add_flash(flash_key % {:model => ui_lookup(:model => "MiqAlert"), :name => @edit[:new][:description]})
-        alert_get_info(MiqAlert.find(alert.id))
-        alert_sync_provider(@edit[:alert_id] ? :update : :new)
-        @edit = nil
-        @nodetype = "al"
-        @new_alert_node = "al-#{to_cid(alert.id)}"
-        replace_right_cell(:nodetype => "al", :replace_trees => [:alert_profile, :alert])
-      else
-        alert.errors.each do |field, msg|
-          add_flash("#{field.to_s.capitalize} #{msg}", :error)
-        end
-        replace_right_cell(:nodetype => "al")
-      end
+      alert_edit_save_add
     when "reset", nil # Reset or first time in
-      alert_build_edit_screen
-      @sb[:action] = "alert_edit"
-      if params[:button] == "reset"
-        add_flash(_("All changes have been reset"), :warning)
-      end
-      replace_right_cell(:nodetype => "al")
+      alert_edit_reset
     end
   end
 
@@ -52,10 +64,9 @@ module MiqPolicyController::Alerts
     alerts = []
     # showing 1 alert, delete it
 
-    if params[:id].nil? || MiqAlert.find_by_id(params[:id]).nil?
-      add_flash(_("%{models} no longer exists") % {:models => ui_lookup(:model => "MiqAlert")},
-                :error)
-    elsif MiqAlert.find_by_id(params[:id]).read_only
+    if params[:id].nil? || !MiqAlert.exists?(params[:id])
+      add_flash(_("%{models} no longer exists") % {:models => ui_lookup(:model => "MiqAlert")}, :error)
+    elsif MiqAlert.find(params[:id]).read_only
       add_flash(_("%{models} can not be deleted") % {:models => ui_lookup(:model => "MiqAlert")}, :error)
     else
       alerts.push(params[:id])
@@ -71,7 +82,7 @@ module MiqPolicyController::Alerts
 
   def alert_field_changed
     return unless load_edit("alert_edit__#{params[:id]}", "replace_cell__explorer")
-    @alert = @edit[:alert_id] ? MiqAlert.find_by_id(@edit[:alert_id]) : MiqAlert.new
+    @alert = @edit[:alert_id] ? MiqAlert.find(@edit[:alert_id]) : MiqAlert.new
 
     @edit[:new][:description] = params[:description].blank? ? nil : params[:description] if params[:description]
     @edit[:new][:enabled] = params[:enabled_cb] == "1" if params.key?(:enabled_cb)
@@ -193,7 +204,7 @@ module MiqPolicyController::Alerts
       # rebuild hash to hold user's email along with name if user record was found for display, defined as hash so only email id can be sent from form to be deleted from array above
       @email_to = {}
       @edit[:new][:email][:to].each_with_index do |e, _e_idx|
-        u = User.find_by_email(e)
+        u = User.find_by(:email => e)
         @email_to[e] = u ? "#{u.name} (#{e})" : e
       end
     end
@@ -249,7 +260,7 @@ module MiqPolicyController::Alerts
       @email_to = {}
       if @edit[:new][:email] && @edit[:new][:email][:to]
         @edit[:new][:email][:to].each_with_index do |e, _e_idx|
-          u = User.find_by_email(e)
+          u = User.find_by(:email => e)
           @email_to[e] = u ? "#{u.name} (#{e})" : e
         end
       end
@@ -479,20 +490,13 @@ module MiqPolicyController::Alerts
     }
 
     # hourly_performance repeat times for Notify Every pull down
-    @sb[:alert][:hourly_repeat_times] ||= {
-      1.hour.to_i => _("1 Hour"), 2.hours.to_i => _("2 Hours"), 3.hours.to_i => _("3 Hours"),
-      4.hours.to_i => _("4 Hours"), 6.hours.to_i => _("6 Hours"), 12.hours.to_i => _("12 Hours"),
-      1.day.to_i => _("1 Day")
-    }
+    @sb[:alert][:hourly_repeat_times] ||= @sb[:alert][:hourly_time_thresholds]
 
     # repeat times for Notify Every pull down
     @sb[:alert][:repeat_times] ||= {
-      1.minutes.to_i => _("1 Minute"), 2.minutes.to_i => _("2 Minutes"), 3.minutes.to_i => _("3 Minutes"),
-      4.minutes.to_i => _("4 Minutes"), 5.minutes.to_i => _("5 Minutes"), 10.minutes.to_i => _("10 Minutes"),
-      15.minutes.to_i => _("15 Minutes"), 30.minutes.to_i => _("30 Minutes"), 1.hour.to_i => _("1 Hour"),
-      2.hours.to_i => _("2 Hours"), 3.hours.to_i => _("3 Hours"), 4.hours.to_i => _("4 Hours"),
+      3.hours.to_i => _("3 Hours"), 4.hours.to_i => _("4 Hours"),
       6.hours.to_i => _("6 Hours"), 12.hours.to_i => _("12 Hours"), 1.day.to_i => _("1 Day")
-    }
+    }.merge(@sb[:alert][:rt_time_thresholds])
 
     # repeat times for Notify Datawarehouse pull down
     @sb[:alert][:repeat_times_dwh] ||= {
@@ -645,7 +649,7 @@ module MiqPolicyController::Alerts
     end
     if @alert.options && @alert.options[:notifications] && @alert.options[:notifications][:email] && @alert.options[:notifications][:email][:to]
       @alert.options[:notifications][:email][:to].each do |to|
-        user = User.find_by_email(to)
+        user = User.find_by(:email => to)
         @email_to.push(user ? "#{user.name} (#{to})" : to)
       end
     end
@@ -660,7 +664,7 @@ module MiqPolicyController::Alerts
     end
 
     if @alert.expression && !@alert.expression.kind_of?(MiqExpression) # Get the EMS if it's in the expression
-      @ems = ExtManagementSystem.find_by_id(@alert.expression[:options][:ems_id].to_i)
+      @ems = ExtManagementSystem.find(@alert.expression[:options][:ems_id].to_i)
     end
     if @alert.expression.kind_of?(Hash) && @alert.expression[:eval_method]
       MiqAlert.expression_options(@alert.expression[:eval_method]).each do |eo|
