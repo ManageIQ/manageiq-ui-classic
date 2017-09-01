@@ -1,7 +1,14 @@
 /* global DoNav miqClearTreeState miqDomElementExists miqJqueryRequest miqSetButtons miqSparkle */
 
 function miqTreeObject(tree) {
-  return $('miq-tree-view[name="' + tree + '"] > .treeview').treeview(true);
+  var obj;
+  try {
+    obj = $('#' + tree + 'box').treeview(true);
+  } catch (_ex) {
+    obj = $('miq-tree-view[name="' + tree + '"] > .treeview').treeview(true);
+  } finally {
+    return obj;
+  }
 }
 
 function miqTreeFindNodeByKey(tree, key) {
