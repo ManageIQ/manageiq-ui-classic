@@ -660,8 +660,13 @@ module OpsController::OpsRbac
     key = what.to_sym
     if operation != "new"
       record = find_record_with_rbac(klass, checked_or_params_id)
-      if [:group, :role].include?(key) && record && record.read_only && operation != 'copy'
-        add_flash(_("Read Only %{model} \"%{name}\" can not be edited") % {:model => key == :role ? ui_lookup(:model => "MiqUserRole") : ui_lookup(:model => "MiqGroup"), :name => key == :role ? record.name : record.description}, :warning)
+      if %i(group role).include?(key) && record && record.read_only && operation != 'copy'
+        model, name = if key == :role
+                        [ui_lookup(:model => "MiqUserRole"), record.name]
+                      else
+                        [ui_lookup(:model => "MiqGroup"), record.description]
+                      end
+        add_flash(_("Read Only %{model} \"%{name}\" can not be edited") % {:model => model, :name => name }, :warning)
         javascript_flash
         return
       end
@@ -826,8 +831,10 @@ module OpsController::OpsRbac
     render :update do |page|
       page << javascript_prologue
       if %w(up down).include?(params[:button])
-        page.replace("flash_msg_div", :partial => "layouts/flash_msg") unless @refresh_div && @refresh_div != "column_lists"
-        page.replace(@refresh_div, :partial => @refresh_partial) if @refresh_div
+        if @refresh_div
+          page.replace("flash_msg_div", :partial => "layouts/flash_msg") if @refresh_div == "column_lists"
+          page.replace(@refresh_div, :partial => @refresh_partial)
+        end
         bad = false
       elsif x_node.split("-").first == "g" || x_node == "xx-g"
         # only do following for groups
