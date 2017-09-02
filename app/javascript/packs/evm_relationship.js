@@ -1,7 +1,7 @@
 // Run this Angular example by adding the following HTML markup to your view:
 //
-// <hello-angular>Loading...</hello-angular>
+// <miq-evm-relationship originalServerId="10r19"></miq-evm-relationship>
 //
-// <%= javascript_pack_tag 'hello_angular' %>
+// <%= javascript_pack_tag 'evm_relationship' %>
 
 require('../evm_relationship')

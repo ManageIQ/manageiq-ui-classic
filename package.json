@@ -20,6 +20,8 @@
     "@angular/common": "~4.0.3",
     "@angular/compiler": "~4.0.3",
     "@angular/core": "~4.0.3",
+    "@angular/forms": "~4.0.3",
+    "@angular/http": "~4.0.3",
     "@angular/platform-browser": "~4.0.3",
     "@angular/platform-browser-dynamic": "~4.0.3",
     "@ngrx/core": "^1.2.0",
