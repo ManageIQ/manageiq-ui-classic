@@ -103,62 +103,75 @@ module OpsController::OpsRbac
   end
   alias_method :rbac_project_add, :rbac_tenant_add
 
+  def rbac_tenant_edit_cancel
+    @tenant = Tenant.find_by(:id => params[:id])
+    if @tenant.try(:id).nil?
+      add_flash(_("Add of new %{model} was cancelled by the user") %
+                  {:model => tenant_type_title_string(params[:divisible] == "true")})
+    else
+      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") %
+                  {:model => tenant_type_title_string(params[:divisible] == "true"), :name => @tenant.name})
+    end
+    get_node_info(x_node)
+    replace_right_cell(:nodetype => x_node)
+  end
+
+  def rbac_tenant_edit_save_add
+    tenant = params[:id] != "new" ? Tenant.find(params[:id]) : Tenant.new
+
+    # This should be changed to something like tenant.changed? and tenant.changes
+    # when we have a version of Rails that supports detecting changes on serialized
+    # fields
+    old_tenant_attributes = tenant.attributes.clone
+    tenant_set_record_vars(tenant)
+
+    begin
+      tenant.save!
+    rescue => bang
+      add_flash(_("Error when adding a new tenant: %{message}") % {:message => bang.message}, :error)
+      javascript_flash
+      return
+    end
+
+    AuditEvent.success(build_saved_audit_hash(old_tenant_attributes, tenant, params[:button] == "add"))
+    add_flash(_("%{model} \"%{name}\" was saved") %
+                {:model => tenant_type_title_string(params[:divisible] == "true"), :name => tenant.name})
+    if params[:button] == "add"
+      rbac_tenants_list
+      rbac_get_info
+    else
+      get_node_info(x_node)
+    end
+    replace_right_cell(:nodetype => "root", :replace_trees => [:rbac])
+  end
+
+  def rbac_tenant_edit_reset
+    obj = find_checked_items
+    obj[0] = params[:id] if obj.blank? && params[:id]
+    @tenant = params[:typ] == "new" ? Tenant.new : find_checked_records_with_rbac(Tenant, obj).first # Get existing or new record
+
+    # This is only because ops_controller tries to set form locals, otherwise we should not use the @edit variable
+    @edit = {:tenant_id => @tenant.id}
+
+    # This is a hack to trick the controller into thinking we loaded an edit variable
+    session[:edit] = {:key => "tenant_edit__#{@tenant.id || 'new'}"}
+
+    session[:changed] = false
+    if params[:button] == "reset"
+      add_flash(_("All changes have been reset"), :warning)
+    end
+    replace_right_cell(:nodetype => "tenant_edit")
+  end
+
   def rbac_tenant_edit
     assert_privileges("rbac_tenant_edit")
     case params[:button]
     when "cancel"
-      @tenant = Tenant.find_by(:id => params[:id])
-      if @tenant.try(:id).nil?
-        add_flash(_("Add of new %{model} was cancelled by the user") %
-                    {:model => tenant_type_title_string(params[:divisible] == "true")})
-      else
-        add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") %
-                    {:model => tenant_type_title_string(params[:divisible] == "true"), :name => @tenant.name})
-      end
-      get_node_info(x_node)
-      replace_right_cell(:nodetype => x_node)
+      rbac_tenant_edit_cancel
     when "save", "add"
-      tenant = params[:id] != "new" ? Tenant.find(params[:id]) : Tenant.new
-
-      # This should be changed to something like tenant.changed? and tenant.changes
-      # when we have a version of Rails that supports detecting changes on serialized
-      # fields
-      old_tenant_attributes = tenant.attributes.clone
-      tenant_set_record_vars(tenant)
-
-      begin
-        tenant.save!
-      rescue => bang
-        add_flash(_("Error when adding a new tenant: %{message}") % {:message => bang.message}, :error)
-        javascript_flash
-      else
-        AuditEvent.success(build_saved_audit_hash(old_tenant_attributes, tenant, params[:button] == "add"))
-        add_flash(_("%{model} \"%{name}\" was saved") %
-                    {:model => tenant_type_title_string(params[:divisible] == "true"), :name => tenant.name})
-        if params[:button] == "add"
-          rbac_tenants_list
-          rbac_get_info
-        else
-          get_node_info(x_node)
-        end
-        replace_right_cell(:nodetype => "root", :replace_trees => [:rbac])
-      end
+      rbac_tenant_edit_save_add
     when "reset", nil # Reset or first time in
-      obj = find_checked_items
-      obj[0] = params[:id] if obj.blank? && params[:id]
-      @tenant = params[:typ] == "new" ? Tenant.new : find_checked_records_with_rbac(Tenant, obj).first # Get existing or new record
-
-      # This is only because ops_controller tries to set form locals, otherwise we should not use the @edit variable
-      @edit = {:tenant_id => @tenant.id}
-
-      # This is a hack to trick the controller into thinking we loaded an edit variable
-      session[:edit] = {:key => "tenant_edit__#{@tenant.id || 'new'}"}
-
-      session[:changed] = false
-      if params[:button] == "reset"
-        add_flash(_("All changes have been reset"), :warning)
-      end
-      replace_right_cell(:nodetype => "tenant_edit")
+      rbac_tenant_edit_reset
     end
   end
 
