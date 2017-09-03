@@ -131,6 +131,7 @@
     :locals         => {:resolve => @edit,
       :form_action               => "ae_resolve",
       :ae_custom_button          => true,
+      :ae_ansible_custom_button  => @edit[:new][:button_type] == "ansible_playbook",
       :field_changed_url         => "automate_button_field_changed"})
   = render(:partial => "layouts/role_visibility",
            :locals  => {:rec_id => @custom_button ? @custom_button.id : 'new', :action => "automate_button_field_changed"})
