@@ -1,7 +1,7 @@
 ManageIQ.angular.app.directive('resetValidationStatus', ['$rootScope', function($rootScope) {
   return {
     require: 'ngModel',
-    link: function (scope, elem, attrs, ctrl) {
+    link: function(scope, elem, attrs, ctrl) {
       scope.$watch(attrs.ngModel, function() {
         adjustValidationStatus(ctrl.$modelValue, _.get(scope, attrs.mainScope) || scope, ctrl, attrs, $rootScope);
       });
