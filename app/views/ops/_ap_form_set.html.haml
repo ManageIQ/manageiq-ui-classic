@@ -9,7 +9,7 @@
           - @selected = Array.new
           - @edit[:new]["category"][:definition]["content"].each do |a|
             - @selected.push(a["target"])
-        - CATEGORY_CHOICES.each_slice(3) do |keyvalue|
+        - OpsController::Settings::AnalysisProfiles::CATEGORY_CHOICES.each_slice(3) do |keyvalue|
           .form-group
             - keyvalue.each do |k, v|
               - checked = @selected.include? k if @selected
