@@ -1,6 +1,7 @@
 # This is a highly experimental implementation of something that we would like to have probably in an UI-API
 # It is definitely not a good example and it SHOULD NOT BE COPY-PASTED in any case
 class TreeController < ApplicationController
+  skip_after_action :set_global_session_data
   before_action :check_privileges
 
   def automate_entrypoint
