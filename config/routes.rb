@@ -278,15 +278,11 @@ Rails.application.routes.draw do
       :post => %w(
         ab_group_reorder
         accordion_select
-        ae_tree_select
-        ae_tree_select_discard
-        ae_tree_select_toggle
         atomic_form_field_changed
         atomic_st_edit
         automate_button_field_changed
         playbook_options_field_changed
         explorer
-        get_ae_tree_edit_key
         group_create
         group_form_field_changed
         group_reorder_field_changed
