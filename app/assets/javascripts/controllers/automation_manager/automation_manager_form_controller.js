@@ -11,6 +11,7 @@ ManageIQ.angular.app.controller('automationManagerFormController', ['$http', '$s
   vm.modelCopy = angular.copy(vm.automationManagerModel);
   vm.checkAuthentication = true;
   vm.validationUrl = '/automation_manager/authentication_validate/' + automationManagerFormId + '?button=validate';
+  vm.prefix = 'default';
 
   ManageIQ.angular.scope = vm;
 

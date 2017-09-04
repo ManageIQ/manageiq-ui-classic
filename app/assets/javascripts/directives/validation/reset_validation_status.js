@@ -22,7 +22,7 @@ var adjustValidationStatus = function(value, scope, ctrl, attrs, rootScope) {
     delete modelPostValidationObject[ctrl.$name];
 
     var modelObject = angular.copy(scope[scope.model]);
-    if (modelObject[ctrl.$name]) {
+    if (modelObject[ctrl.$name] !== undefined) {
       delete modelObject[ctrl.$name];
     }
 
