@@ -23,6 +23,11 @@ module ReportController::Reports::Editor
 
   MAX_REPORT_COLUMNS = 100 # Default maximum number of columns in a report
 
+  CHAREGEBACK_ALLOCATED_METHODS = {
+    :max => N_('Maximum'),
+    :avg => N_('Average')
+  }.freeze
+
   def chargeback_allocated_methods
     Hash[CHAREGEBACK_ALLOCATED_METHODS.map { |x| _(x) }]
   end
