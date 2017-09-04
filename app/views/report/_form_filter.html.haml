@@ -14,30 +14,12 @@
       .form-group
         %label.control-label.col-md-2
         .col-md-8
-
           - if @expkey == :record_filter
             = render :partial => 'layouts/exp_editor'
           - else
-            -# FIXME: alt/title incosistency
-            = link_to({:action => 'filter_change', :button => "record_filter", :id => "#{@edit[:rpt_id] || 'new'}"},
-                      "data-miq_sparkle_on"  => true,
-                      "data-miq_sparkle_off" => true,
-                      :remote                => true,
-                      "data-method"          => :post) do
-              %button.btn.btn-default
-                - if @edit[:record_filter][:expression].key?("???")
-                  = _("Create Record Filter")
-                - else
-                  = _("Edit Record Filter")
-            .spacer
-            - unless @edit[:record_filter][:expression].key?("???")
-              - @edit[:record_filter][:exp_table].each do |token|
-                - if !["AND", "OR", "(", ")"].include?([token].flatten.first)
-                  = h([token].flatten.first)
-                - else
-                  %font{:color => "black"}
-                    %b
-                      = h([token].flatten.first)
+            = render :partial => 'report/form_expression_buttons',
+                                 :locals => {:create_label => _('Create Record Filter'),
+                                             :display_label => _('Edit Record Filter')}
     %hr
     .form-horizontal
       - unless @edit[:display_filter][:exp_available_fields].empty? && @edit[:display_filter][:exp_available_tags].empty?
@@ -49,22 +31,6 @@
             - if @expkey == :display_filter
               = render :partial => 'layouts/exp_editor'
             - else
-              = link_to({:action => 'filter_change', :button => "display_filter", :id => "#{@edit[:rpt_id] || 'new'}"},
-                "data-miq_sparkle_on"  => true,
-                "data-miq_sparkle_off" => true,
-                :remote                => true,
-                "data-method"          => :post) do
-                %button.btn.btn-default
-                  - if @edit[:display_filter][:expression].key?("???")
-                    = _("Create Display Filter")
-                  - else 
-                    = _("Edit Display Filter")
-              .spacer
-              - unless @edit[:display_filter][:expression].key?("???")
-                - @edit[:display_filter][:exp_table].each do |token|
-                  - if !["AND", "OR", "(", ")"].include?([token].flatten.first)
-                    = h([token].flatten.first)
-                  - else
-                    %font{:color => "black"}
-                      %b
-                        = h([token].flatten.first)
+              = render :partial => 'report/form_expression_buttons',
+                       :locals => {:create_label => _('Create Display Filter'),
+                                   :display_label => _('Edit Display Filter')}
