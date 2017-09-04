@@ -21,50 +21,31 @@
   function API() {
   }
 
-  API.get = function(url, options) {
-    return fetch(url, _.extend({
-      method: 'GET',
-    }, process_options(options)))
-    .then(responseAndError(options));
+  var urlOnly = function(method) {
+    return function(url, options) {
+      return fetch(url, _.extend({
+        method: method,
+      }, process_options(options)))
+      .then(responseAndError(options));
+    };
   };
 
-  API.options = function(url, options) {
-    return fetch(url, _.extend({
-      method: 'OPTIONS',
-    }, process_options(options)))
-    .then(responseAndError(options));
+  var withData = function(method) {
+    return function(url, data, options) {
+      return fetch(url, _.extend({
+        method: method,
+        body: process_data(data),
+      }, process_options(options)))
+      .then(responseAndError(options));
+    };
   };
 
-  API.post = function(url, data, options) {
-    return fetch(url, _.extend({
-      method: 'POST',
-      body: process_data(data),
-    }, process_options(options)))
-    .then(responseAndError(options));
-  };
-
-  API.delete = function(url, options) {
-    return fetch(url, _.extend({
-      method: 'DELETE',
-    }, process_options(options)))
-    .then(responseAndError(options));
-  };
-
-  API.put = function(url, data, options) {
-    return fetch(url, _.extend({
-      method: 'PUT',
-      body: process_data(data),
-    }, process_options(options)))
-    .then(responseAndError(options));
-  };
-
-  API.patch = function(url, data, options) {
-    return fetch(url, _.extend({
-      method: 'PATCH',
-      body: process_data(data),
-    }, process_options(options)))
-    .then(responseAndError(options));
-  };
+  API.delete = urlOnly('DELETE');
+  API.get = urlOnly('GET');
+  API.options = urlOnly('OPTIONS');
+  API.patch = withData('PATCH');
+  API.post = withData('POST');
+  API.put = withData('PUT');
 
   var base64encode = window.btoa; // browser api
 
