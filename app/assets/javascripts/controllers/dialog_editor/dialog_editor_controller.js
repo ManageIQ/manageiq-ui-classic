@@ -109,10 +109,10 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
     getBack(vm.dialog.content[0].label + __(' was saved'), false, false);
   }
 
-  function saveFailure() {
+  function saveFailure(response) {
     miqService.miqFlash(
       'error',
-      __('There was an error editing this dialog: ') + arguments[0].error.message
+      __('There was an error editing this dialog: ') + response.data.error.message
     );
   }
 
