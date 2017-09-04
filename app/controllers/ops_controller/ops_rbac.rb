@@ -729,13 +729,11 @@ module OpsController::OpsRbac
       record = @edit[:user_id] ? User.find_by(:id => @edit[:user_id]) : User.new
       rbac_user_set_record_vars(record) if rbac_user_validate?
     when :group then
-      rbac_group_validate?
-      record = @edit[:group_id] ? MiqGroup.find(@edit[:group_id]) : MiqGroup.new
-      rbac_group_set_record_vars(record)
+      record = @edit[:group_id] ? MiqGroup.find_by(:id => @edit[:group_id]) : MiqGroup.new
+      rbac_group_set_record_vars(record) if rbac_group_validate?
     when :role  then
-      rbac_role_validate?
-      record = @edit[:role_id] ? MiqUserRole.find(@edit[:role_id]) : MiqUserRole.new
-      rbac_role_set_record_vars(record)
+      record = @edit[:role_id] ? MiqUserRole.find_by(:id => @edit[:role_id]) : MiqUserRole.new
+      rbac_role_set_record_vars(record) if rbac_role_validate?
     end
 
     if record.valid? && !flash_errors? && record.save!
