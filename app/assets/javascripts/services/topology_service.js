@@ -13,6 +13,7 @@ ManageIQ.angular.app.service('topologyService', function() {
     return status;
   };
 
+
   this.showHideNames = function($scope) {
     return function() {
       $scope.checkboxModel.value = $('input#box_display_names')[0].checked;
@@ -54,7 +55,7 @@ ManageIQ.angular.app.service('topologyService', function() {
             .style('top', mousePosition[1] + 'px');
         popup.append('h5').text('Actions on ' + data.item.display_kind);
 
-        if (data.item.kind != 'Tag') {
+        if (data.item.kind !== 'Tag') {
           popup.append('p').text(__('Go to summary page')).on('click', function() {
             self.dblclick(data);
           });
@@ -84,7 +85,7 @@ ManageIQ.angular.app.service('topologyService', function() {
     };
 
     self.dblclick = function dblclick(d) {
-      if (d.item.kind == 'Tag') {
+      if (d.item.kind === 'Tag') {
         return false;
       }
       window.location.assign(topologyService.geturl(d));
@@ -102,8 +103,7 @@ ManageIQ.angular.app.service('topologyService', function() {
     nodes.style('opacity', '1');
 
     var found = true;
-
-    if (query != '') {
+    if (query !== '') {
       var selected = nodes.filter(function(d) {
         return d.item.name.indexOf(query) === -1;
       });
@@ -205,7 +205,7 @@ ManageIQ.angular.app.service('topologyService', function() {
     while ((tmp_list.length > size_limit) && kind_index < remove_hierarchy.length) {
       var kind_to_hide = remove_hierarchy[kind_index];
       tmp_list = tmp_list.filter(function(item) {
-        return item.kind != kind_to_hide;
+        return item.kind !== kind_to_hide;
       });
       kind_index++;
       delete kinds[kind_to_hide];
@@ -216,26 +216,27 @@ ManageIQ.angular.app.service('topologyService', function() {
   // this injects some common code in the controller - temporary pending a proper merge
   this.mixinSearch = function($scope) {
     var topologyService = this;
-
-    $scope.searching = false;
-    $scope.notFound = false;
-
-    $scope.searchNode = function() {
-      var svg = topologyService.getSVG($scope.d3);
-      var query = $('input#search_topology')[0].value;
-
-      $scope.searching = true;
-      $scope.notFound = ! topologyService.searchNode(svg, query);
-    };
-
-    $scope.resetSearch = function() {
+    var resetEvent = function() {
       topologyService.resetSearch($scope.d3);
-
-      // Reset the search term in search input
       $('input#search_topology')[0].value = '';
-
       $scope.searching = false;
       $scope.notFound = false;
     };
+    $scope.searching = false;
+    $scope.notFound = false;
+      // NOTE: listener on search
+    ManageIQ.angular.rxSubject.subscribe(function(event) {
+      if (event.service === 'topologyService') {
+        if (event.name === 'searchNode') {
+          $scope.searching = true;
+          var svg = topologyService.getSVG($scope.d3);
+          var query = $('input#search_topology')[0].value;
+          $scope.notFound = ! topologyService.searchNode(svg, query);
+        } else if (event.name === 'resetSearch') {
+          resetEvent();
+        }
+      }
+    });
+    $scope.resetSearch = resetEvent;
   };
 });
