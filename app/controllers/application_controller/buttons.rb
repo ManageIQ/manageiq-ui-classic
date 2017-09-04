@@ -92,27 +92,16 @@ module ApplicationController::Buttons
       if params[:readonly]
         @edit[:new][:readonly] = (params[:readonly] != "1")
       end
-      @edit[:new][:instance_name] = params[:instance_name] if params[:instance_name]
-      @edit[:new][:other_name] = params[:other_name] if params[:other_name]
-      @edit[:new][:object_message] = params[:object_message] if params[:object_message]
-      @edit[:new][:object_request] = params[:object_request] if params[:object_request]
+      copy_params_if_set(@edit[:new], params, %i(instance_name other_name object_message object_request))
       ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
         f = ("attribute_" + (i + 1).to_s)
         v = ("value_" + (i + 1).to_s)
         @edit[:new][:attrs][i][0] = params[f] if params[f.to_sym]
         @edit[:new][:attrs][i][1] = params[v] if params[v.to_sym]
       end
-      @edit[:new][:target_attr_name] = params[:target_attr_name] if params[:target_attr_name]
-      @edit[:new][:name] = params[:name] if params[:name]
       @edit[:new][:display] = params[:display] == "1" if params[:display]
       @edit[:new][:open_url] = params[:open_url] == "1" if params[:open_url]
-      @edit[:new][:display_for] = params[:display_for] if params[:display_for]
-      @edit[:new][:submit_how] = params[:submit_how] if params[:submit_how]
-      @edit[:new][:description] = params[:description] if params[:description]
-      @edit[:new][:button_icon] = params[:button_icon] if params[:button_icon]
-      @edit[:new][:button_color] = params[:button_color] if params[:button_color]
-      @edit[:new][:dialog_id] = params[:dialog_id] if params[:dialog_id]
-      @edit[:new][:disabled_text] = params[:disabled_text] if params[:disabled_text]
+      copy_params_if_set(@edit[:new], params, %i(name target_attr_name display_for submit_how description button_icon button_color dialog_id disabled_text))
       visibility_box_edit
     end
 
@@ -743,11 +732,7 @@ module ApplicationController::Buttons
       move_cols_top if params[:button] == "top"
       move_cols_bottom if params[:button] == "bottom"
     else
-      @edit[:new][:name] = params[:name] if params[:name]
-      @edit[:new][:description] = params[:description] if params[:description]
-      @edit[:new][:display] = params[:display] == "1" if params[:display]
-      @edit[:new][:button_icon] = params[:button_icon] if params[:button_icon]
-      @edit[:new][:button_color] = params[:button_color] if params[:button_color]
+      copy_params_if_set(@edit[:new], params, %i(name description display button_icon button_color))
     end
   end
 
