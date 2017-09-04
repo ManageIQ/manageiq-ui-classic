@@ -93,11 +93,12 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
       dialogId = '/' + DialogEditor.getDialogId();
     }
 
-    API.post(
-      '/api/service_dialogs'
-      + dialogId,
-      {action: action, resource: dialogData}
-    ).then(saveSuccess, saveFailure);
+    API.post('/api/service_dialogs' + dialogId, {
+      action: action,
+      resource: dialogData,
+    }, { // options - don't show the error modal on validation errors
+      skipErrors: [400],
+    }).then(saveSuccess, saveFailure);
   }
 
   function dismissChanges() {
