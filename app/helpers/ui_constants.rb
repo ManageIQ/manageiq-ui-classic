@@ -109,9 +109,6 @@ module UiConstants
 
   MIQ_AE_COPY_ACTIONS = %w(miq_ae_class_copy miq_ae_instance_copy miq_ae_method_copy)
 
-  UTF_16BE_BOM = [254, 255].freeze
-  UTF_16LE_BOM = [255, 254].freeze
-
 end
 
 # Make these constants globally available
