@@ -120,7 +120,7 @@
         - @widget_nodes.each do |w|
           - if role_allows?(:feature => "miq_report_widget_editor")
             - params = {:title => _("Click to view selected widget"),
-              :onclick => remote_function(:url => "/report/x_show/xx-#{WIDGET_CONTENT_TYPE.invert[w.content_type]}_-#{to_cid(w.id)}?accord=widgets")}
+              :onclick => remote_function(:url => "/report/x_show/xx-#{ReportController::Widgets::WIDGET_CONTENT_TYPE.invert[w.content_type]}_-#{to_cid(w.id)}?accord=widgets")}
           - else
             - params = {}
           %tr{params}

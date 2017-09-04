@@ -24,6 +24,14 @@ module ReportController::Widgets
     "m"  => N_('Menu')
   }.freeze
 
+  # Need this for mapping with MiqWidget record content_type field
+  WIDGET_CONTENT_TYPE = {
+    "r"  => "report",
+    "c"  => "chart",
+    "rf" => "rss",
+    "m"  => "menu"
+  }.freeze
+
   def widget_refresh
     assert_privileges("widget_refresh")
     replace_right_cell
