@@ -75,16 +75,19 @@
         %label.col-md-2.control-label
           = _("Users in this Group")
         .col-md-8
-          - @group.users.sort_by { |a| a.name.downcase }.each do |u|
-            - if role_allows?(:feature => "rbac_user_show")
-              - params = {:class   => "pointer",
-                          :onclick => "miqTreeActivateNode('rbac_tree', 'u-#{to_cid(u.id)}');",
-                          :title   => _("View this User")}
-            - else
-              - params = {}
-            %i.pficon.pficon-user{params}
-            = h(u.name)
-            %br
+          - if role_allows?(:feature => "rbac_user_show")
+            - @group.users.sort_by { |a| a.name.downcase }.each do |u|
+              - params = {:class => "pointer",
+                          :onclick => "miqOnClickSelectRbacTreeNode('u-#{to_cid(u.id)}');",
+                          :title => _("View this User")}
+              %i.pficon.pficon-user{params}
+              = link_to(u.name, "#", params)
+              %br
+          - else
+            - @group.users.sort_by { |a| a.name.downcase }.each do |u|
+              %i.pficon.pficon-user
+              = link_to(u.name, "#")
+              %br
     - unless @edit
       = render :partial => "rbac_tag_box"
     - if @edit
