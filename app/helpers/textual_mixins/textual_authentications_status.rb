@@ -25,8 +25,14 @@ module TextualMixins::TextualAuthenticationsStatus
   end
 
   def map_authentications(authentications)
+    type = {
+      :hawkular          => _("Metrics"),
+      :prometheus        => _("Metrics"),
+      :prometheus_alerts => _("Alerts")
+    }
+
     authentications.map do |auth|
-      { :label => _("%{label} Authentication") % { :label => auth.authtype.to_s.titleize },
+      { :label => _("%{label} Authentication") % { :label => type[auth.authtype.to_sym] || auth.authtype.to_s.titleize },
         :value => textual_authentication_value(auth.status, auth.updated_on),
         :title => textual_authentication_title(auth.status, auth.updated_on, auth.last_valid_on) }
     end
