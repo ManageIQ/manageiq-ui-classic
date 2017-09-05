@@ -3,8 +3,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
     select(
       :instance_vmdb_choice,
       'fa fa-cog fa-lg',
-      t = N_('Configuration'),
-      t,
+      N_('Configuration'),
       :enabled => false,
       :onwhen  => "1+",
       :items   => [
@@ -56,8 +55,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
         button(
           :instance_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove selected items from Inventory'),
-          t,
+          N_('Remove selected items from Inventory'),
           :url_parms => "main_div",
           :confirm   => N_("Warning: The selected items and ALL of their components will be permanently removed!"),
           :enabled   => false,
@@ -78,8 +76,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
     select(
       :instance_policy_choice,
       'fa fa-shield fa-lg',
-      t = N_('Policy'),
-      t,
+      N_('Policy'),
       :enabled => false,
       :onwhen  => "1+",
       :items   => [
@@ -124,8 +121,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
     select(
       :instance_lifecycle_choice,
       'fa fa-recycle fa-lg',
-      t = N_('Lifecycle'),
-      t,
+      N_('Lifecycle'),
       :items => [
         button(
           :instance_miq_request_new,
@@ -162,8 +158,7 @@ class ApplicationHelper::Toolbar::VmCloudsCenter < ApplicationHelper::Toolbar::B
         button(
           :instance_evacuate,
           'fa fa-reply fa-rotate-90 fa-lg',
-          t = N_('Evacuate selected Instances'),
-          t,
+          N_('Evacuate selected Instances'),
           :url_parms => 'main_div',
           :enabled   => false,
           :onwhen    => '1+')

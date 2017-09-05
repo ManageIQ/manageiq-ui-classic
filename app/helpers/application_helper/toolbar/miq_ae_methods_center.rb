@@ -3,26 +3,22 @@ class ApplicationHelper::Toolbar::MiqAeMethodsCenter < ApplicationHelper::Toolba
     select(
       :miq_ae_method_vmdb_choice,
       'fa fa-cog fa-lg',
-      t = N_('Configuration'),
-      t,
+      N_('Configuration'),
       :items => [
         button(
           :miq_ae_class_edit,
           'pficon pficon-edit fa-lg',
-          t = N_('Edit this Class'),
-          t,
+          N_('Edit this Class'),
           :klass => ApplicationHelper::Button::MiqAeDefault),
         button(
           :miq_ae_class_copy,
           'fa fa-files-o fa-lg',
-          t = N_('Copy this Class'),
-          t,
+          N_('Copy this Class'),
           :klass => ApplicationHelper::Button::MiqAeClassCopy),
         button(
           :miq_ae_class_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove this Class'),
-          t,
+          N_('Remove this Class'),
           :url_parms => "&refresh=y",
           :confirm   => N_("Are you sure you want to remove this Class?"),
           :klass     => ApplicationHelper::Button::MiqAeDefault),
@@ -30,8 +26,7 @@ class ApplicationHelper::Toolbar::MiqAeMethodsCenter < ApplicationHelper::Toolba
         button(
           :miq_ae_method_new,
           'pficon pficon-add-circle-o fa-lg',
-          t = N_('Add a New Method'),
-          t,
+          N_('Add a New Method'),
           :klass => ApplicationHelper::Button::MiqAeNew),
         button(
           :miq_ae_method_edit,
