@@ -48,10 +48,6 @@ function genericObjectDefinitionFormController(API, miqService) {
       methodsTableChanged: false,
     };
 
-    vm.noOfAttributeRows = 0;
-    vm.noOfAssociationRows = 0;
-    vm.noOfMethodRows = 0;
-
     if (vm.recordId) {
       vm.newRecord = false;
       miqService.sparkleOn();
@@ -75,30 +71,53 @@ function genericObjectDefinitionFormController(API, miqService) {
     }
   };
 
+  vm.resetClicked = function(angularForm) {
+    vm.genericObjectDefinitionModel = Object.assign({}, vm.modelCopy);
+
+    assignAllObjectsToKeyValueArrays(true);
+
+    angularForm.$setUntouched(true);
+    angularForm.$setPristine(true);
+
+    miqService.miqFlash('warn', __('All changes have been reset'));
+  };
+
   // private functions
   function getGenericObjectDefinitionFormData(response) {
     Object.assign(vm.genericObjectDefinitionModel, response);
 
-    vm.noOfAttributeRows = assignObjectToKeyValueArrays(
+    assignAllObjectsToKeyValueArrays();
+
+    vm.afterGet = true;
+
+    miqService.sparkleOff();
+  }
+
+  function assignAllObjectsToKeyValueArrays(purge) {
+    if (purge) {
+      vm.genericObjectDefinitionModel.attribute_names = [];
+      vm.genericObjectDefinitionModel.attribute_types = [];
+      vm.genericObjectDefinitionModel.association_names = [];
+      vm.genericObjectDefinitionModel.association_classes = [];
+      vm.genericObjectDefinitionModel.method_names = [];
+    }
+
+    vm.genericObjectDefinitionModel.noOfAttributeRows = assignObjectToKeyValueArrays(
       vm.genericObjectDefinitionModel.properties.attributes,
       vm.genericObjectDefinitionModel.attribute_names,
       vm.genericObjectDefinitionModel.attribute_types);
 
-    vm.noOfAssociationRows = assignObjectToKeyValueArrays(
+    vm.genericObjectDefinitionModel.noOfAssociationRows = assignObjectToKeyValueArrays(
       vm.genericObjectDefinitionModel.properties.associations,
       vm.genericObjectDefinitionModel.association_names,
       vm.genericObjectDefinitionModel.association_classes);
 
-    vm.noOfMethodRows = assignObjectToKeyValueArrays(
+    vm.genericObjectDefinitionModel.noOfMethodRows = assignObjectToKeyValueArrays(
       vm.genericObjectDefinitionModel.properties.methods,
       vm.genericObjectDefinitionModel.method_names);
 
-    vm.afterGet = true;
-
     vm.modelCopy = Object.assign({}, vm.genericObjectDefinitionModel);
     vm.modelCopy = Object.freeze(vm.modelCopy);
-
-    miqService.sparkleOff();
   }
 
   function assignObjectToKeyValueArrays(obj, keyArray, valueArray) {
