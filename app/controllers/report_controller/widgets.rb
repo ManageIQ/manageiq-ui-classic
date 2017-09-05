@@ -509,10 +509,9 @@ module ReportController::Widgets
   def widget_get_form_vars
     @widget = @edit[:widget_id] ? MiqWidget.find_by_id(@edit[:widget_id]) : MiqWidget.new
 
-    @edit[:new][:title]       = params[:title]            if params[:title]
-    @edit[:new][:description] = params[:description]      if params[:description]
-    @edit[:new][:enabled]     = (params[:enabled] == "1") if params[:enabled]
-    @edit[:new][:filter]      = params[:filter_typ]       if params[:filter_typ]
+    copy_params_if_set(@edit[:new], params, %i(title description))
+    @edit[:new][:filter]  = params[:filter_typ]       if params[:filter_typ]
+    @edit[:new][:enabled] = (params[:enabled] == "1") if params[:enabled]
 
     # report/chart/menu options box
     @edit[:new][:row_count] = @widget.row_count(params[:row_count]) if params[:row_count]

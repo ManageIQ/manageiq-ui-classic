@@ -760,12 +760,8 @@ class CatalogController < ApplicationController
 
   def ot_add_form_field_changed
     return unless load_edit("ot_add__new", "replace_cell__explorer")
-    @edit[:new][:name] = params[:name] if params[:name]
-    @edit[:new][:description] = params[:description] if params[:description]
-    @edit[:new][:type] = params[:type] if params[:type]
-    @edit[:new][:content] = params[:content] if params[:content]
+    copy_params_if_set(@edit[:new], params, %i(name description type content manager_id))
     @edit[:new][:draft] = params[:draft] == "true" if params[:draft]
-    @edit[:new][:manager_id] = params[:manager_id] if params[:manager_id]
     @edit[:new][:available_managers] = available_orchestration_managers_for_template_type(params[:type])
 
     render :update do |page|
@@ -983,11 +979,8 @@ class CatalogController < ApplicationController
   end
 
   def ot_edit_get_form_vars
-    @edit[:new][:name] = params[:name] if params[:name]
-    @edit[:new][:description] = params[:description] if params[:description]
+    copy_params_if_set(@edit[:new], params, %i(name description dialog_name manager_id))
     @edit[:new][:draft] = params[:draft] == "true" if params[:draft]
-    @edit[:new][:dialog_name] = params[:dialog_name] if params[:dialog_name]
-    @edit[:new][:manager_id] = params[:manager_id] if params[:manager_id]
   end
 
   def ot_edit_set_form_vars(right_cell_text)
@@ -1186,8 +1179,7 @@ class CatalogController < ApplicationController
       move_cols_left_right("right") if params[:button] == "right"
       move_cols_left_right("left") if params[:button] == "left"
     else
-      @edit[:new][:name] = params[:name] if params[:name]
-      @edit[:new][:description]  = params[:description] if params[:description]
+      copy_params_if_set(@edit[:new], params, %i(name description))
     end
   end
 
@@ -1466,16 +1458,11 @@ class CatalogController < ApplicationController
   end
 
   def get_form_vars
-    @edit[:new][:name] = params[:name] if params[:name]
-    @edit[:new][:description]  = params[:description] if params[:description]
-    @edit[:new][:provision_cost]  = params[:provision_cost] if params[:provision_cost]
-    @edit[:new][:display]  = params[:display] == "1" if params[:display]
-    @edit[:new][:catalog_id] = params[:catalog_id] if params[:catalog_id]
-    @edit[:new][:dialog_id] = params[:dialog_id] if params[:dialog_id]
+    copy_params_if_set(@edit[:new], params, %i(name description provision_cost catalog_id dialog_id generic_subtype long_description))
+
+    @edit[:new][:display] = params[:display] == "1" if params[:display]
     # saving it in @edit as well, to use it later because prov_set_form_vars resets @edit[:new]
     @edit[:st_prov_type] = @edit[:new][:st_prov_type] = params[:st_prov_type] if params[:st_prov_type]
-    @edit[:new][:generic_subtype] = params[:generic_subtype] if params[:generic_subtype]
-    @edit[:new][:long_description] = params[:long_description] if params[:long_description]
     @edit[:new][:long_description] = @edit[:new][:long_description].to_s + "..." if params[:transOne]
 
     get_form_vars_orchestration if @edit[:new][:st_prov_type] == 'generic_orchestration'

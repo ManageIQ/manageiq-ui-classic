@@ -33,6 +33,7 @@ class ApplicationController < ActionController::Base
   include Mixins::ControllerConstants
   include Mixins::CustomButtons
   include Mixins::CheckedIdMixin
+  include ParamsHelper
 
   helper ToolbarHelper
   helper JsHelper
