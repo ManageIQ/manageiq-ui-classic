@@ -40,9 +40,12 @@ function genericObjectDefinitionFormController(API, miqService) {
       description: '',
       attribute_names: [],
       attribute_types: [],
+      attributesTableChanged: false,
       association_names: [],
       association_classes: [],
+      associationsTableChanged: false,
       method_names: [],
+      methodsTableChanged: false,
     };
 
     vm.noOfAttributeRows = 0;

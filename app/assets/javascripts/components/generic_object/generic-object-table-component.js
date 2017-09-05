@@ -8,6 +8,7 @@ ManageIQ.angular.app.component('genericObjectTableComponent', {
     newRecord: '=',
     noOfRows: '=',
     origKeysValues: '=',
+    tableChanged: '=',
     angularForm: '=',
   },
   controllerAs: 'vm',
@@ -49,6 +50,18 @@ function genericObjectTableController($timeout) {
 
     if (vm.noOfRows === 0) {
       vm.addRow(0, vm.keyType + '0', true);
+    }
+    vm.tableCellValueChanged();
+  };
+
+  vm.tableCellValueChanged = function() {
+    if (vm.values && !angular.equals(_.zipObject(vm.keys, vm.values), vm.origKeysValues)) {
+      vm.tableChanged = true;
+    } else if (!vm.values && _.difference(vm.keys, vm.origKeysValues, _.isEqual).length > 0) {
+      vm.tableChanged = true;
+    }
+    else {
+      vm.tableChanged = false;
     }
   };
 }
