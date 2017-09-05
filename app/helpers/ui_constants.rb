@@ -9,14 +9,6 @@ module UiConstants
   # Following line does not include timezones with partial hour offsets
   # ALL_TIMEZONES = ActiveSupport::TimeZone.all.collect{|tz| tz.utc_offset % 3600 == 0 ? ["(GMT#{tz.formatted_offset}) #{tz.name}",tz.name] : nil}.compact
 
-  CATEGORY_CHOICES = {}
-  CATEGORY_CHOICES["services"] = N_("Services")
-  CATEGORY_CHOICES["software"] = N_("Software")
-  CATEGORY_CHOICES["system"] = N_("System")
-  CATEGORY_CHOICES["accounts"] = N_("User Accounts")
-  CATEGORY_CHOICES["vmconfig"] = N_("VM Configuration")
-  # CATEGORY_CHOICES["vmevents"] = "VM Events"
-
   # Assignment choices
   ASSIGN_TOS = {}
 

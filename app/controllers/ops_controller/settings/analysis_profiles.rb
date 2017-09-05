@@ -1,6 +1,14 @@
 module OpsController::Settings::AnalysisProfiles
   extend ActiveSupport::Concern
 
+  CATEGORY_CHOICES = {
+    "system"   => N_("System"),
+    "services" => N_("Services"),
+    "software" => N_("Software"),
+    "accounts" => N_("User Accounts"),
+    "vmconfig" => N_("VM Configuration")
+  }.freeze
+
   # Show scanitemset list view
   def aps_list
     ap_build_list
