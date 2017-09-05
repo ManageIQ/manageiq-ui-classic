@@ -310,7 +310,7 @@ module Mixins
       update_partials(record_showing, presenter)
       replace_search_box(presenter)
       handle_bottom_cell(presenter)
-      replace_trees_by_presenter(presenter, trees)
+      reload_trees_by_presenter(presenter, trees)
       rebuild_toolbars(record_showing, presenter)
       presenter[:right_cell_text] = @right_cell_text
       presenter[:osf_node] = x_node # Open, select, and focus on this node

@@ -838,7 +838,7 @@ class ChargebackController < ApplicationController
     presenter = ExplorerPresenter.new(
       :active_tree => x_active_tree,
     )
-    replace_trees_by_presenter(presenter, :cb_rates => cb_rates_build_tree) if replace_trees.include?(:cb_rates)
+    reload_trees_by_presenter(presenter, :cb_rates => cb_rates_build_tree) if replace_trees.include?(:cb_rates)
 
     # FIXME
     #  if params[:action].ends_with?("_delete")

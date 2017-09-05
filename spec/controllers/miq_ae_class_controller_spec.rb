@@ -97,7 +97,7 @@ describe MiqAeClassController do
                                        :trees       => {:ae_tree => {:active_node => node}})
       controller.instance_variable_set(:@_params, :button => "reset", :id => cls1.id)
       allow(controller).to receive(:open_parent_nodes)
-      expect(controller).to_not receive(:replace_trees_by_presenter)
+      expect(controller).to_not receive(:reload_trees_by_presenter)
       expect(controller).to receive(:render)
       controller.send(:copy_objects)
       expect(controller.send(:flash_errors?)).not_to be_truthy

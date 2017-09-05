@@ -300,7 +300,7 @@ describe ApplicationController do
     end
   end
 
-  describe "#replace_trees_by_presenter" do
+  describe "#reload_trees_by_presenter" do
     let(:tree_1) { double(:name => 'tree_1') }
     let(:tree_2) { double(:name => 'tree_2') }
     let(:trees) { {'tree_1' => tree_1, 'tree_2' => tree_2, 'tree_3' => nil} }
@@ -310,7 +310,7 @@ describe ApplicationController do
       allow(tree_1).to receive(:locals_for_render).and_return(:bs_tree => {})
       allow(tree_2).to receive(:locals_for_render).and_return(:bs_tree => {})
       expect(presenter).to receive(:reload_tree).with(any_args).twice
-      controller.send(:replace_trees_by_presenter, presenter, trees)
+      controller.send(:reload_trees_by_presenter, presenter, trees)
     end
   end
 end

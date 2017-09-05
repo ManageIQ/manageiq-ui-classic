@@ -142,8 +142,8 @@ class ExplorerPresenter
     self
   end
 
-  def reload_tree(_name, tree)
-    @options[:reload_trees][tree.name] = tree.locals_for_render[:bs_tree]
+  def reload_tree(name, data)
+    @options[:reload_trees][name] = data
   end
 
   def replace(div_name, content)

@@ -774,7 +774,7 @@ class OpsController < ApplicationController
       trees[:diagnostics] = diagnostics_build_tree  if replace_trees.include?(:diagnostics)
       trees[:vmdb]        = db_build_tree           if replace_trees.include?(:vmdb)
     end
-    replace_trees_by_presenter(presenter, trees)
+    reload_trees_by_presenter(presenter, trees)
   end
 
   # Build the audit object when a profile is saved
