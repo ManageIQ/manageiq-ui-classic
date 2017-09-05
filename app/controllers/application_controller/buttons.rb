@@ -105,7 +105,7 @@ module ApplicationController::Buttons
       end
       @edit[:new][:display] = params[:display] == "1" if params[:display]
       @edit[:new][:open_url] = params[:open_url] == "1" if params[:open_url]
-      copy_params_if_set(@edit[:new], params, %i(name target_attr_name display_for submit_how description button_icon button_color dialog_id disabled_text))
+      copy_params_if_set(@edit[:new], params, %i(name target_attr_name display_for submit_how description button_icon button_color dialog_id disabled_text button_type inventory_type))
       visibility_box_edit
       clear_playbook_variables if params[:button_type] == 'default'
       if params[:button_type] == 'ansible_playbook'
