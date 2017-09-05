@@ -215,7 +215,7 @@ module ApplicationController::AdvancedSearch
     @edit[:custom_search] = false
 
     case params[:button]
-    when "saveit"
+    when "save", "saveit"
       if adv_search_button_saveid
         adv_search_redraw_left_div
       else
@@ -246,7 +246,7 @@ module ApplicationController::AdvancedSearch
     when "cancel"
       @edit[@expkey][:exp_table] = exp_build_table(@edit[@expkey][:expression]) # Rebuild the existing expression table
       @edit[@expkey].prefill_val_types
-      adv_search_button_redraw_search_partials
+      adv_search_redraw_search_partials
 
     end
   end
