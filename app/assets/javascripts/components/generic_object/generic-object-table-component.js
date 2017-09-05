@@ -7,6 +7,7 @@ ManageIQ.angular.app.component('genericObjectTableComponent', {
     valueOptions: '=',
     newRecord: '=',
     noOfRows: '=',
+    origKeysValues: '=',
     angularForm: '=',
   },
   controllerAs: 'vm',
