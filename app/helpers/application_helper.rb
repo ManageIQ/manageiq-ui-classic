@@ -13,6 +13,11 @@ module ApplicationHelper
   include PlanningHelper
   include Title
 
+  VALID_PERF_PARENTS = {
+    "EmsCluster" => :ems_cluster,
+    "Host"       => :host
+  }
+
   # Need to generate paths w/o hostname by default to make proxying work.
   #
   def url_for_only_path(args)

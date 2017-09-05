@@ -687,7 +687,7 @@ module ApplicationController::Performance
     if perf_parent?                               # Build the parent report, if asked for
       p_rpt = Marshal.load(Marshal.dump(rpt))    # Deep clone the main report
       p_rpt.where_clause[1] = @perf_options[:parent]
-      p_rpt.where_clause[2] = @perf_record.send(VALID_PERF_PARENTS[@perf_options[:parent]]).id
+      p_rpt.where_clause[2] = @perf_record.send(ApplicationHelper::VALID_PERF_PARENTS[@perf_options[:parent]]).id
       rpts.push(p_rpt)
     end
 
