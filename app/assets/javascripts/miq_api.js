@@ -56,6 +56,7 @@
       headers: {
         'Authorization': 'Basic ' + base64encode([login, password].join(':')),
       },
+      skipErrors: [401],
     })
     .then(function(response) {
       sessionStorage.miq_token = response.auth_token;
