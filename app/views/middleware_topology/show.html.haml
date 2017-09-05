@@ -45,7 +45,7 @@
 
   = render :partial => "shared/topology/not_found"
 
-  %kubernetes-topology-graph.middleware{:items => "items", :relations => "relations", :kinds => "kinds"}
+  %kubernetes-topology-graph.middleware{:items => "items", :relations => "relations", :kinds => "kinds", :selection => "selection", :force => "undefined", "radius" => "undefined"}
 
 :javascript
   miq_bootstrap('.topology');
