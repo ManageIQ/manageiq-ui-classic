@@ -95,11 +95,12 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
       dialogId = '/' + DialogEditor.getDialogId();
     }
 
-    API.post(
-      '/api/service_dialogs'
-      + dialogId,
-      {action: action, resource: dialogData}
-    ).then(saveSuccess, saveFailure);
+    API.post('/api/service_dialogs' + dialogId, {
+      action: action,
+      resource: dialogData,
+    }, { // options - don't show the error modal on validation errors
+      skipErrors: [400],
+    }).then(saveSuccess, saveFailure);
   }
 
   function dismissChanges() {
@@ -110,10 +111,10 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
     getBack(vm.dialog.content[0].label + __(' was saved'), false, false);
   }
 
-  function saveFailure() {
+  function saveFailure(response) {
     miqService.miqFlash(
       'error',
-      __('There was an error editing this dialog: ') + arguments[0].error.message
+      __('There was an error editing this dialog: ') + response.data.error.message
     );
   }
 

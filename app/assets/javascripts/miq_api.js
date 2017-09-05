@@ -21,50 +21,31 @@
   function API() {
   }
 
-  API.get = function(url, options) {
-    return fetch(url, _.extend({
-      method: 'GET',
-    }, process_options(options)))
-    .then(process_response);
+  var urlOnly = function(method) {
+    return function(url, options) {
+      return fetch(url, _.extend({
+        method: method,
+      }, process_options(options)))
+      .then(responseAndError(options));
+    };
   };
 
-  API.options = function(url, options) {
-    return fetch(url, _.extend({
-      method: 'OPTIONS',
-    }, process_options(options)))
-    .then(process_response);
+  var withData = function(method) {
+    return function(url, data, options) {
+      return fetch(url, _.extend({
+        method: method,
+        body: process_data(data),
+      }, process_options(options)))
+      .then(responseAndError(options));
+    };
   };
 
-  API.post = function(url, data, options) {
-    return fetch(url, _.extend({
-      method: 'POST',
-      body: process_data(data),
-    }, process_options(options)))
-    .then(process_response);
-  };
-
-  API.delete = function(url, options) {
-    return fetch(url, _.extend({
-      method: 'DELETE',
-    }, process_options(options)))
-    .then(process_response);
-  };
-
-  API.put = function(url, data, options) {
-    return fetch(url, _.extend({
-      method: 'PUT',
-      body: process_data(data),
-    }, process_options(options)))
-    .then(process_response);
-  };
-
-  API.patch = function(url, data, options) {
-    return fetch(url, _.extend({
-      method: 'PATCH',
-      body: process_data(data),
-    }, process_options(options)))
-    .then(process_response);
-  };
+  API.delete = urlOnly('DELETE');
+  API.get = urlOnly('GET');
+  API.options = urlOnly('OPTIONS');
+  API.patch = withData('PATCH');
+  API.post = withData('POST');
+  API.put = withData('PUT');
 
   var base64encode = window.btoa; // browser api
 
@@ -115,36 +96,17 @@
     });
   };
 
-  // default to using the error modal on error, skip by using API.get.noErrorModal instead
-  ["get", "post", "put", "delete", "options", "patch"].forEach(function(name) {
-    var orig = API[name];
-
-    API[name] = function() {
-      return orig.apply(this, arguments)
-        .catch(function(err) {
-          sendDataWithRx({
-            serverError: err,
-            source: 'API',
-          });
-
-          console.error('API: Server returned a non-200 response:', err.status, err.statusText, err);
-          throw err;
-        });
-    };
-
-    API[name].noErrorModal = orig;
-  });
-
   window.vanillaJsAPI = API;
 
 
   function process_options(o) {
-    o = o || {};
+    o = Object.assign({}, o || {});
     delete o.type;
     delete o.method;
     delete o.url;
     delete o.data;
     delete o.body;
+    delete o.skipErrors;
 
     if (o.skipTokenRenewal) {
       o.headers = o.headers || {};
@@ -178,7 +140,7 @@
   function process_response(response) {
     if (response.status === 204) {
       // No content
-      return null;
+      return Promise.resolve(null);
     }
 
     if (response.status >= 300) {
@@ -190,6 +152,26 @@
     }
 
     return response.json();
+  }
+
+  function responseAndError(options) {
+    options = options || {};
+
+    return function(response) {
+      var ret = process_response(response);
+
+      // true means skip all of them - no error modal at all
+      if (options.skipErrors === true) {
+        return ret;
+      }
+
+      return ret.catch(function(err) {
+        // no skipping by default
+        errorModal(err, options.skipErrors || []);
+
+        return Promise.reject(err);
+      });
+    };
   }
 
   function tryHtmlError(response) {
@@ -210,21 +192,27 @@
       });
     };
   }
+
+  function errorModal(err, skipErrors) {
+    // only show error modal unless the status code is in the list
+    if (! skipErrors.includes(err.status)) {
+      sendDataWithRx({
+        serverError: err,
+        source: 'API',
+      });
+
+      console.error('API: Server returned a non-200 response:', err.status, err.statusText, err);
+    }
+  }
 })(window);
 
 
 angular.module('miq.api', [])
 .factory('API', ['$q', function($q) {
   var angularify = function(what) {
-    var ret = function() {
+    return function() {
       return $q.when(what.apply(vanillaJsAPI, arguments));
     };
-
-    if (what.noErrorModal) {
-      ret.noErrorModal = angularify(what.noErrorModal);
-    }
-
-    return ret;
   };
 
   return {
