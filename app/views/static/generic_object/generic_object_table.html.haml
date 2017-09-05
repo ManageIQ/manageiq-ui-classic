@@ -8,13 +8,13 @@
         %input.form-control{"type"        => "text",
                             "id"          => "{{vm.keyType}}{{$index}}",
                             "name"        => "{{vm.keyType}}{{$index}}",
-                            "ng-required" => "vm.valueOptions && vm.values[$index]",
+                            "ng-required" => "vm.valueOptions && vm.values[$index] || vm.noOfRows > 1",
                             "ng-model"    => "vm.keys[$index]",
                             "ng-change"   => "vm.tableCellValueChanged()",
                             "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",}
       %td.form-group{"ng-if" => "vm.valueOptions", :style => "width: 50px", "ng-class" => "{'has-error': vm.angularForm['Value_{{vm.keyType}}{{$index}}'].$invalid}"}
         %select{"name"                        => "Value_{{vm.keyType}}{{$index}}",
-                "ng-required"                 => "vm.keys[$index] !== ''",
+                "ng-required"                 => "vm.keys[$index] !== '' || vm.noOfRows > 1",
                 "ng-model"                    => "vm.values[$index]",
                 "ng-change"                   => "vm.tableCellValueChanged()",
                 "ng-options"                  => "valueOption.id as valueOption.name for valueOption in vm.valueOptions",
