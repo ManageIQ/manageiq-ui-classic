@@ -107,11 +107,36 @@ module EmsContainerHelper::TextualSummary
     endpoints = @record.endpoints.where.not(:role => 'default')
     return if endpoints.nil?
 
+    endpoints_types = {
+      :hawkular          => {
+        :name => _("Metrics"),
+        :type => _("Hakular"),
+      },
+      :prometheus        => {
+        :name => _("Metrics"),
+        :type => _("prometheus"),
+      },
+      :prometheus_alerts => {
+        :name => _("Alerts"),
+        :type => _("prometheus"),
+      }
+    }
+
     endpoint_groups = endpoints.map do |e|
-      [
-        {:label => _("%{role} Host Name") % {:role => e.role.capitalize}, :value => e.hostname},
-        {:label => _("%{role} API Port") % {:role => e.role.capitalize}, :value => e.port}
-      ]
+      type = endpoints_types[e.role.to_sym]
+
+      if type
+        [
+          {:label => _("%{name} Host Name") % {:name => type[:name]}, :value => e.hostname},
+          {:label => _("%{name} API Port") % {:name => type[:name]}, :value => e.port},
+          {:label => _("%{name} Type") % {:name => type[:name]}, :value => type[:type]}
+        ]
+      else
+        [
+          {:label => _("%{name} Host Name") % {:name => e.role.capitalize}, :value => e.hostname},
+          {:label => _("%{name} API Port") % {:name => e.role.capitalize}, :value => e.port}
+        ]
+      end
     end
 
     TextualGroup.new(_("Endpoints"), endpoint_groups.flatten)
