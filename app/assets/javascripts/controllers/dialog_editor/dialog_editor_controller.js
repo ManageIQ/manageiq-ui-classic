@@ -1,4 +1,4 @@
-ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'miqService', 'DialogEditor', 'dialogId', function($window, API, miqService, DialogEditor, dialogId) {
+ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'miqService', 'DialogEditor', 'DialogValidation', 'dialogId', function($window, API, miqService, DialogEditor, DialogValidation, dialogId) {
   var vm = this;
 
   if (dialogId === 'new') {
@@ -27,6 +27,8 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
   function init(dialog) {
     DialogEditor.setData(dialog);
     vm.dialog = dialog;
+    vm.DialogValidation = DialogValidation;
+    vm.DialogEditor = DialogEditor;
   }
 
   vm.saveDialogDetails = saveDialogDetails;

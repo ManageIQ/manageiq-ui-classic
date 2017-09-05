@@ -18,8 +18,12 @@
       .draggable
         %dialog-editor-field-static
   .pull-right
-    %button.btn.btn-default{"ng-click" => "vm.dismissChanges()", :type => "button"}= _("Cancel")
-    %button.btn.btn-primary{"ng-click" => "vm.saveDialogDetails()", "ng-disabled" => "vm.dialogUnchanged()", :type => "button"}= _("Save")
+    %button.btn.btn-default{"ng-click" => "vm.dismissChanges()",
+                            :type => "button"}= _("Cancel")
+    %button.btn.btn-primary{"ng-click" => "vm.saveDialogDetails()",
+                            "ng-disabled" => "!vm.DialogValidation.dialogIsValid(vm.DialogEditor.data.content)",
+                            "ng-attr-title" => "{{vm.DialogValidation.invalid.message}}",
+                            :type => "button"}= _("Save")
   = render :partial => "layouts/x_edit_buttons"
 
 :javascript
