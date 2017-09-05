@@ -664,7 +664,7 @@ module MiqPolicyController::Alerts
     end
 
     if @alert.expression && !@alert.expression.kind_of?(MiqExpression) # Get the EMS if it's in the expression
-      @ems = ExtManagementSystem.find(@alert.expression[:options][:ems_id].to_i)
+      @ems = ExtManagementSystem.find_by(:id => @alert.expression[:options][:ems_id])
     end
     if @alert.expression.kind_of?(Hash) && @alert.expression[:eval_method]
       MiqAlert.expression_options(@alert.expression[:eval_method]).each do |eo|
