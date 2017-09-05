@@ -12,6 +12,8 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
       scope:'',
       key: '',
       key_value: '',
+      key_type: 'string',
+      available_datatypes: '',
       provisioning_repository_id: '',
       provisioning_playbook_id: '',
       provisioning_machine_credential_id: '',
@@ -20,7 +22,8 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
       provisioning_inventory: 'localhost',
       provisioning_key: '',
       provisioning_value: '',
-      provisioning_variables: {},
+      provisioning_type: 'string',
+      provisioning_inputs: [],
       provisioning_verbosity: '0',
       provisioning_editMode: false,
     };
@@ -59,6 +62,7 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
     vm.aeMethodModel.class_id = data.class_id;
     vm.aeMethodModel.language = data.language;
     vm.aeMethodModel.scope = data.scope;
+    vm.aeMethodModel.available_datatypes = data.available_datatypes;
     vm.formOptions();
     vm.formCloudCredentials(data.cloud_credential_id);
     getConfigInfo(data['config_info']);
@@ -98,7 +102,7 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
     vm.aeMethodModel.provisioning_machine_credential_id = configData['credential_id'];
     vm.aeMethodModel.provisioning_network_credential_id = configData['network_credential_id'];
     vm.aeMethodModel.provisioning_cloud_credential_id = setIfDefined(configData['cloud_credential_id']);
-    vm.aeMethodModel.provisioning_inventory = configData['hosts'];
+    vm.aeMethodModel.provisioning_inventory = configData['hosts'] ? configData['hosts'] : 'localhost';
     vm.aeMethodModel.provisioning_key = '';
     vm.aeMethodModel.provisioning_value = '';
 
@@ -107,19 +111,20 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
     } else {
       vm.aeMethodModel.provisioning_verbosity = configData['verbosity'];
     }
-
-    setExtraVars('provisioning_variables', configData['extra_vars']);
+    setExtraVars('provisioning_inputs', configData['extra_vars']);
   };
 
   var setExtraVars = function (variableName, extraVars) {
     if (typeof extraVars !== 'undefined') {
-      vm.aeMethodModel[variableName] = {};
-      for (var key in extraVars) {
-        vm.aeMethodModel[variableName][key] = extraVars[key];
-      }
+      vm.aeMethodModel[variableName] = [];
+      extraVars.forEach( function (arrayItem)
+      {
+        var input_vars = [arrayItem.name, arrayItem.default_value, arrayItem.datatype, arrayItem.id];
+        vm.aeMethodModel[variableName].push(input_vars);
+      });
     }
     $scope.checkFormPristine();
-  }
+  };
 
   $scope.resetClicked = function() {
     vm.aeMethodModel = angular.copy(vm.modelCopy);
@@ -151,18 +156,7 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
     $scope.angularForm.$setPristine(true);
   };
 
-  var formatExtraVars = function(extraVars){
-    if (typeof extraVars !== 'undefined') {
-      formattedExtraVars = {};
-      for (var key in extraVars) {
-        formattedExtraVars[key] =  extraVars[key];
-      }
-    }
-    return formattedExtraVars;
-  }
-
   var setConfigInfo = function(configData) {
-    alert(JSON.stringify(configData))
     method = {
       name: configData["name"],
       display_name: configData["display_name"],
@@ -175,7 +169,7 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
       credential_id: configData["provisioning_machine_credential_id"],
       hosts: configData["provisioning_inventory"],
       verbosity: configData["provisioning_verbosity"],
-      extra_vars: formatExtraVars(configData["provisioning_variables"])
+      extra_vars: configData["provisioning_inputs"]
     }
     if (configData["provisioning_network_credential_id"] !== '')
       method['network_credential_id'] = configData["provisioning_network_credential_id"];
@@ -268,6 +262,20 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
     $scope.checkFormPristine();
   });
 
+  $scope.$watch('vm.aeMethodModel.key_type', function(value) {
+    if (value && vm.aeMethodModel.key_type == vm.aeMethodModel.original_key_type) {
+      vm.aeMethodModel.key_value = '';
+    }
+    $scope.checkFormPristine();
+  });
+
+  $scope.$watch('vm.aeMethodModel.provisioning_type', function(value) {
+    if (value) {
+      vm.aeMethodModel.provisioning_value = '';
+    }
+    $scope.checkFormPristine();
+  });
+
   $scope.checkFormPristine = function() {
     if (angular.equals(vm.aeMethodModel, vm.modelCopy)) {
       $scope.angularForm.$setPristine();
@@ -314,47 +322,69 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
   })
 
   vm.addKeyValue = function() {
-    vm.aeMethodModel.provisioning_variables[vm.aeMethodModel.provisioning_key] =  vm.aeMethodModel.provisioning_value;
-    vm.aeMethodModel.provisioning_key = '';
-    vm.aeMethodModel.provisioning_value = '';
+    var valid = validate_input_name(vm.aeMethodModel.provisioning_key);
+    if (!valid)
+      return miqService.miqFlash("error", __("Inputs name must be unique"));
+    else {
+      vm.aeMethodModel.provisioning_inputs.push(
+        [vm.aeMethodModel.provisioning_key, vm.aeMethodModel.provisioning_value, vm.aeMethodModel.provisioning_type]);
+      vm.aeMethodModel.provisioning_key = '';
+      vm.aeMethodModel.provisioning_value = '';
+      vm.aeMethodModel.provisioning_type = 'string';
+    }
   }
 
   vm.provisioning_repository_selected = function() {
     return vm.aeMethodModel.provisioning_repository_id !== '';
   }
 
-  vm.removeKeyValue = function(key) {
-    delete vm.aeMethodModel.provisioning_variables[key];
+  vm.removeKeyValue = function(type, key, key_value, key_type, index) {
+    vm.aeMethodModel.provisioning_inputs.splice(index, 1);
     $scope.checkFormPristine();
   }
 
-  vm.editKeyValue = function(key, key_value, index) {
+  vm.editKeyValue = function(type, key, key_value, key_type, index) {
     vm.aeMethodModel.provisioning_editMode = true;
     vm.aeMethodModel.s_index = index;
     vm.aeMethodModel.key = key;
     vm.aeMethodModel.key_value = key_value;
+    vm.aeMethodModel.key_type = key_type;
     vm.aeMethodModel.original_key = key;
     vm.aeMethodModel.original_key_value = key_value;
+    vm.aeMethodModel.original_key_type = key_type;
   }
 
-  vm.cancelKeyValue = function() {
+  vm.cancelKeyValue = function(index) {
     vm.aeMethodModel.provisioning_editMode = false;
     vm.aeMethodModel.s_index = '';
-    vm.aeMethodModel.provisioning_variables[vm.aeMethodModel.original_key] = vm.aeMethodModel.original_key_value;
+    vm.aeMethodModel.provisioning_inputs[index][0] = vm.aeMethodModel.original_key
+    vm.aeMethodModel.provisioning_inputs[index][1] = vm.aeMethodModel.original_key_value;
+    vm.aeMethodModel.provisioning_inputs[index][2] = vm.aeMethodModel.original_key_type;
   }
 
-  vm.saveKeyValue = function(index) {
+  vm.saveKeyValue = function(type, index) {
+    var valid = validate_input_name(vm.aeMethodModel.key);
+    if (!valid)
+      return miqService.miqFlash("error", __("Input Name must be unique"));
     vm.aeMethodModel.provisioning_editMode = false;
     vm.aeMethodModel.s_index = '';
-    // delete key if key name was edited, and a add new key to hash with new name
-    if (vm.aeMethodModel.original_key !== vm.aeMethodModel.key)
-      delete vm.aeMethodModel.provisioning_variables[vm.aeMethodModel.original_key];
+    vm.aeMethodModel.provisioning_inputs[index][0] = vm.aeMethodModel.key;
+    vm.aeMethodModel.provisioning_inputs[index][1] = vm.aeMethodModel.key_value;
+    vm.aeMethodModel.provisioning_inputs[index][2] = vm.aeMethodModel.key_type;
+  }
 
-    vm.aeMethodModel.provisioning_variables[vm.aeMethodModel.key] = vm.aeMethodModel.key_value;
+  var validate_input_name = function(input_name){
+    var valid = true;
+    vm.aeMethodModel.provisioning_inputs.forEach( function (input)
+    {
+      if (input[0] === input_name)
+        valid = false;
+    });
+    return valid;
   }
 
   vm.variablesEmpty = function() {
-    field = vm.aeMethodModel.provisioning_variables;
+    field = vm.aeMethodModel.provisioning_inputs;
     return Object.keys(field).length === 0;
   };
 

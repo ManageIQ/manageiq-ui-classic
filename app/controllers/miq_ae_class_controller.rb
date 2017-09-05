@@ -984,6 +984,7 @@ class MiqAeClassController < ApplicationController
       :location => 'playbook',
       :language => 'ruby',
       :scope => "instance",
+      :available_datatypes => MiqAeField.available_datatypes_for_ui,
       :config_info => {
         :repository_id => data['repository_id'] || '',
         :playbook_id => data['playbook_id'] || '',
@@ -992,12 +993,19 @@ class MiqAeClassController < ApplicationController
         :cloud_credential_id => data['cloud_credential_id'] || '',
         :hosts => data['hosts'],
         :verbosity => data['verbosity'],
-        :extra_vars => {
-          :sleep => '40',
-          :pkg => 'httpd',
-          :user => 'root',
-          :host => 'localhost'
-        },
+        # :extra_vars => {
+        #   :sleep => '40',
+        #   :pkg => 'httpd',
+        #   :user => 'root',
+        #   :host => 'localhost'
+        # },
+        # :extra_vars => [
+        #   ['sleep', '40', 'string'],
+        #   ['pkg', 'httpd', 'string'],
+        #   ['user', 'root', 'string'],
+        #   ['host', 'localhost', "string"]
+        # ]
+        :extra_vars => method.inputs
       }
     }
     render :json => method_hash
@@ -1162,7 +1170,12 @@ class MiqAeClassController < ApplicationController
       method.class_id = params[:class_id]
       method.data = set_playbook_data.to_json
       begin
-        method.save!
+        MiqAeMethod.transaction do
+          to_save, to_delete = set_playbook_inputs(method)
+          method.inputs.destroy(MiqAeField.where(:id => to_delete))
+          method.inputs = to_save
+          method.save!
+        end
       rescue => bang
         add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
         javascript_flash
@@ -1174,6 +1187,25 @@ class MiqAeClassController < ApplicationController
         return
       end
     end
+  end
+
+  def set_playbook_inputs(method)
+    existing_inputs = method.inputs
+    new_inputs = params[:extra_vars]
+    inputs_to_save = []
+    inputs_to_delete = []
+    new_inputs.each do |i, input|
+      field = input.length == 4 ? MiqAeField.find_by(:id => input.last) : MiqAeField.new
+      field.name = input[0]
+      field.default_value = input[1] == "" ? nil : input[1]
+      field.datatype = input[2]
+      field.priority = i
+      inputs_to_save.push(field)
+    end
+    existing_inputs.each do |existing_input|
+      inputs_to_delete.push(existing_input.id) unless inputs_to_save.any? {|i| i.id == existing_input.id }
+    end
+    return inputs_to_save, inputs_to_delete
   end
 
   def set_playbook_data
@@ -1194,12 +1226,6 @@ class MiqAeClassController < ApplicationController
     data[:cloud_credential_id] = params['cloud_credential_id'] if params['cloud_credential_id']
     data
   end
-  {"name"=>"test1", "display_name"=>"testing", "class_id"=>"10000000000122", "language"=>"ruby", "scope"=>"instance",
-   "location"=>"playbook",
-   "repository_id"=>"10r14",
-   "playbook_id"=>"10r154",
-   "credential_id"=>"10r64",
-   "hosts"=>"localhost1", "verbosity"=>"0", "extra_vars"=>{"sleep"=>"40", "pkg"=>"httpd", "user"=>"root", "host"=>"localhost"}, "button"=>"save", "id"=>"10000000001069"}
 
   def update_method
     assert_privileges("miq_ae_method_edit")
