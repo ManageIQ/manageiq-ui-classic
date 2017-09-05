@@ -215,7 +215,7 @@ module ApplicationController::AdvancedSearch
     @edit[:custom_search] = false
 
     case params[:button]
-    when "saveit"
+    when "save", "saveit"
       if adv_search_button_saveid
         adv_search_redraw_left_div
       else
