@@ -140,7 +140,7 @@
               - elsif x_active_tree == :reports_tree
                 - click = "miqTreeActivateNode('reports_tree', '#{x_node}_rr-#{to_cid(row['id'])}');"
             - when "MiqWidget"
-              - typ = WIDGET_CONTENT_TYPE.invert[row['content_type']]
+              - typ = ReportController::Widgets::WIDGET_CONTENT_TYPE.invert[row['content_type']]
               - click = "miqTreeActivateNode('widgets_tree', 'xx-#{typ}_-#{to_cid(row['id'])}');"
             - when "IsoDatastore"
               - click = "miqTreeActivateNode('iso_datastores_tree', 'isd-#{to_cid(row['id'])}');"
@@ -234,7 +234,7 @@
                     - elsif x_active_tree == :reports_tree
                       - click = "miqTreeActivateNode('reports_tree', '#{x_node}_rr-#{to_cid(row['id'])}');"
                   - when "MiqWidget"
-                    - typ = WIDGET_CONTENT_TYPE.invert[row['content_type']]
+                    - typ = ReportController::Widgets::WIDGET_CONTENT_TYPE.invert[row['content_type']]
                     - click = remote_function(:loading  => "miqSparkle(true);",
                                               :complete => "miqSparkle(false);",
                                               :url      => {:action => 'x_show', :id => "xx-#{typ}_-#{to_cid(row['id'])}"})

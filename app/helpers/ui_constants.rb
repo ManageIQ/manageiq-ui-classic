@@ -86,14 +86,6 @@ module UiConstants
   EXP_FROM = "FROM"
   EXP_IS = "IS"
 
-  # Need this for mapping with MiqWidget record content_type field
-  WIDGET_CONTENT_TYPE = {
-    "r"  => "report",
-    "c"  => "chart",
-    "rf" => "rss",
-    "m"  => "menu"
-  }
-
   VALID_PERF_PARENTS = {
     "EmsCluster" => :ems_cluster,
     "Host"       => :host
