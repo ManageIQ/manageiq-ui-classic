@@ -307,8 +307,9 @@ describe ApplicationController do
     let(:presenter) { double(:presenter) }
 
     it "calls render and passes data to presenter for each pair w/ value" do
-      expect(controller).to receive(:render_to_string).with(any_args).twice
-      expect(presenter).to receive(:replace).with(any_args).twice
+      allow(tree_1).to receive(:locals_for_render).and_return(:bs_tree => {})
+      allow(tree_2).to receive(:locals_for_render).and_return(:bs_tree => {})
+      expect(presenter).to receive(:reload_tree).with(any_args).twice
       controller.send(:replace_trees_by_presenter, presenter, trees)
     end
   end

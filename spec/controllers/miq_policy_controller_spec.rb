@@ -200,14 +200,14 @@ describe MiqPolicyController do
   end
 
   describe '#replace_right_cell' do
-    it 'should replace policy_tree_div when replace_trees contains :policy' do
+    it 'should reload policy tree when reload_trees contains :policy_tree' do
       allow(controller).to receive(:params).and_return(:action => 'whatever')
       controller.instance_eval { @sb = {:active_tree => :policy_tree} }
       allow(controller).to receive(:render).and_return(nil)
       presenter = ExplorerPresenter.new(:active_tree => :policy_tree)
 
       controller.send(:replace_right_cell, :nodetype => 'root', :replace_trees => [:policy], :presenter => presenter)
-      expect(presenter[:replace_partials]).to have_key('policy_tree_div')
+      expect(presenter[:reload_trees]).to have_key(:policy_tree)
     end
 
     it 'should not hide center toolbar while doing searches' do

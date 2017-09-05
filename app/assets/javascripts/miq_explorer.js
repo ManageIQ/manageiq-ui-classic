@@ -107,6 +107,12 @@ ManageIQ.explorer.updatePartials = function(data) {
   }
 };
 
+ManageIQ.explorer.reloadTrees = function(data) {
+  if (_.isObject(data.reloadTrees)) {
+    sendDataWithRx({reloadTrees: data.reloadTrees});
+  }
+};
+
 ManageIQ.explorer.spinnerOff = function(data) {
   if (data.spinnerOff) {
     miqSparkle(false);
@@ -196,6 +202,8 @@ ManageIQ.explorer.processReplaceRightCell = function(data) {
   }
 
   ManageIQ.explorer.replacePartials(data);
+
+  ManageIQ.explorer.reloadTrees(data);
 
   if (_.isObject(data.buildCalendar)) { ManageIQ.explorer.buildCalendar(data.buildCalendar); }
 

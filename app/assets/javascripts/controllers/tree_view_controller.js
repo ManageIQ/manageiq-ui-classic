@@ -2,11 +2,21 @@
 (function() {
   var CONTROLLER_NAME = 'treeViewController';
 
-  var TreeViewController = function($http) {
+  var TreeViewController = function($http, $scope) {
     var vm = this;
     vm.$http = $http;
+    vm.$scope = $scope;
     vm.selectedNodes = {};
     vm.data = {};
+
+    ManageIQ.angular.rxSubject.subscribe(function(payload) {
+      if (payload.reloadTrees && _.isObject(payload.reloadTrees) && Object.keys(payload.reloadTrees).length > 0) {
+        _.forEach(payload.reloadTrees, function(value, key) {
+          vm.data[key] = value;
+        });
+        vm.$scope.$apply();
+      }
+    });
 
     vm.initSelected = function(tree, node) {
       vm.selectedNodes[tree] = vm.selectedNodes[tree] || { key: node };
@@ -35,6 +45,6 @@
     };
   };
 
-  TreeViewController.$inject = ['$http'];
+  TreeViewController.$inject = ['$http', '$scope'];
   window.miqHttpInject(angular.module('ManageIQ.treeView')).controller(CONTROLLER_NAME, TreeViewController);
 })();
