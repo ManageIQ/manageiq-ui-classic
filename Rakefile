@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'bundler/gem_tasks'
+require 'English'
 
 require 'manageiq-ui-classic'
 ManageIQ::UI::Classic::Engine.load_tasks
@@ -104,6 +105,16 @@ namespace :spec do
 
   desc "Try to compile assets"
   task :compile => ["app:assets:precompile"]
+
+  desc "run Jest tests"
+  task :jest do
+    system('yarn test')
+    exit $CHILD_STATUS.exitstatus
+  end
+  namespace :jest do
+    desc "Does nothing, needed by Travis"
+    task :setup
+  end
 end
 
 task :default => :spec
