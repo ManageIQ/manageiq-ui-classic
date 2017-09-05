@@ -26,3 +26,7 @@ yarn
 
 # compile webpacker assets
 bundle exec rake webpack:compile
+
+
+
+travis cache --delete
