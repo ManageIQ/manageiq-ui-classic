@@ -94,7 +94,9 @@ function genericObjectDefinitionFormController(API, miqService) {
       vm.genericObjectDefinitionModel.method_names);
 
     vm.afterGet = true;
-    vm.modelCopy = angular.copy( vm.genericObjectDefinitionModel );
+
+    vm.modelCopy = Object.assign({}, vm.genericObjectDefinitionModel);
+    vm.modelCopy = Object.freeze(vm.modelCopy);
 
     miqService.sparkleOff();
   }
