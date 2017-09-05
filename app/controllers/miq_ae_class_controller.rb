@@ -1413,24 +1413,30 @@ class MiqAeClassController < ApplicationController
     end
   end
 
+  def handle_up_down_buttons(hash_key, field_name)
+    case params[:button]
+    when 'up'
+      move_selected_fields_up(@edit[:new][hash_key], params[:seq_fields], field_name)
+    when 'down'
+      move_selected_fields_down(@edit[:new][hash_key], params[:seq_fields], field_name)
+    end
+  end
+
   # Get variables from user edit form
   def fields_seq_field_changed
     return unless load_edit("fields_edit__seq", "replace_cell__explorer")
-    move_selected_fields_up(@edit[:new][:fields_list], params[:seq_fields], _("Fields"))   if params[:button] == "up"
-    move_selected_fields_down(@edit[:new][:fields_list], params[:seq_fields], _("Fields")) if params[:button] == "down"
-    unless @flash_array
-      @refresh_div = "column_lists"
-      @refresh_partial = "fields_seq_form"
+
+    unless handle_up_down_buttons(:fields_list, _('Fields'))
+      render_flash
+      return
     end
-    @changed = (@edit[:new] != @edit[:current])
+
     render :update do |page|
       page << javascript_prologue
-      page.replace("flash_msg_div", :partial => "layouts/flash_msg") unless @refresh_div && @refresh_div != "column_lists"
-      page.replace(@refresh_div, :partial => @refresh_partial) if @refresh_div
-      if @changed
-        page << javascript_for_miq_button_visibility(@changed)
-      end
-      page << "miqSparkle(false);"
+      page.replace('column_lists', :partial => 'fields_seq_form')
+      @changed = (@edit[:new] != @edit[:current])
+      page << javascript_for_miq_button_visibility(@changed) if @changed
+      page << "miqsparkle(false);"
     end
   end
 
@@ -1442,31 +1448,30 @@ class MiqAeClassController < ApplicationController
       add_flash(_("Edit of Class Schema Sequence was cancelled by the user"))
       @in_a_form = false
       replace_right_cell
+
     when "save"
       return unless load_edit("fields_edit__seq", "replace_cell__explorer")
-      err = false
       ae_class = MiqAeClass.find(@edit[:ae_class_id])
       indexed_ae_fields = ae_class.ae_fields.index_by(&:name)
       @edit[:new][:fields_list].each_with_index do |f, i|
         fname = f.split('(').last.split(')').first # leave display name and parenthesis out
         indexed_ae_fields[fname].try(:priority=, i + 1)
       end
-      if ae_class.save
-        AuditEvent.success(build_saved_audit(ae_class, @edit))
-      else
+
+      unless ae_class.save
         flash_validation_errors(ae_class)
-        err = true
-      end
-      if !err
-        add_flash(_("Class Schema Sequence was saved"))
-        @sb[:action] = @edit = session[:edit] = nil # clean out the saved info
-        @in_a_form = false
-        replace_right_cell
-      else
         @in_a_form = true
         @changed = true
         javascript_flash
+        return
       end
+
+      AuditEvent.success(build_saved_audit(ae_class, @edit))
+      add_flash(_("Class Schema Sequence was saved"))
+      @sb[:action] = @edit = session[:edit] = nil # clean out the saved info
+      @in_a_form = false
+      replace_right_cell
+
     when "reset", nil # Reset or first time in
       id = params[:id] ? params[:id] : from_cid(@edit[:ae_class_id])
       @in_a_form = true
@@ -1480,16 +1485,21 @@ class MiqAeClassController < ApplicationController
 
   def priority_form_field_changed
     return unless load_edit(params[:id], "replace_cell__explorer")
-    priority_get_form_vars
+    @in_a_form = true
+
+    unless handle_up_down_buttons(:domain_order, _('Domains'))
+      render_flash
+      return
+    end
+
     render :update do |page|
       page << javascript_prologue
-      changed = (@edit[:new] != @edit[:current])
-      page.replace("flash_msg_div", :partial => "layouts/flash_msg") if @flash_array
-      page.replace(@refresh_div,
-                   :partial => @refresh_partial,
-                   :locals  => {:action => "domains_priority_edit"}) if @refresh_div
-      page << javascript_for_miq_button_visibility(changed)
-      page << "miqSparkle(false);"
+      page.replace('domains_list',
+                   :partial => 'domains_priority_form',
+                   :locals  => {:action => "domains_priority_edit"})
+      @changed = (@edit[:new] != @edit[:current])
+      page << javascript_for_miq_button_visibility(@changed) if @changed
+      page << "miqsparkle(false);"
     end
   end
 
@@ -1678,32 +1688,33 @@ class MiqAeClassController < ApplicationController
   def copy_save
     assert_privileges(@sb[:action])
     return unless load_edit("copy_objects__#{params[:id]}", "replace_cell__explorer")
-    @record = @edit[:typ].find_by_id(@edit[:rec_id])
-    domain = MiqAeDomain.find_by_id(@edit[:new][:domain])
-    @edit[:new][:new_name] = nil if @edit[:new][:new_name] == @edit[:old_name]
-    options = {
-      :ids                => @edit[:selected_items].keys,
-      :domain             => domain.name,
-      :namespace          => @edit[:new][:namespace],
-      :overwrite_location => @edit[:new][:override_existing],
-      :new_name           => @edit[:new][:new_name],
-      :fqname             => @edit[:fqname]
-    }
 
     begin
+      @record = @edit[:typ].find(@edit[:rec_id])
+      domain = MiqAeDomain.find(@edit[:new][:domain])
+      @edit[:new][:new_name] = nil if @edit[:new][:new_name] == @edit[:old_name]
+      options = {
+        :ids                => @edit[:selected_items].keys,
+        :domain             => domain.name,
+        :namespace          => @edit[:new][:namespace],
+        :overwrite_location => @edit[:new][:override_existing],
+        :new_name           => @edit[:new][:new_name],
+        :fqname             => @edit[:fqname]
+      }
       res = @edit[:typ].copy(options)
     rescue => bang
       render_flash(_("Error during '%{record} copy': %{error_message}") %
         {:record => ui_lookup(:model => @edit[:typ].to_s), :error_message => bang.message}, :error)
-    else
-      model = @edit[:selected_items].count > 1 ? :models : :model
-      add_flash(_("Copy selected %{record} was saved") % {:record => ui_lookup(model => @edit[:typ].to_s)})
-      @record = res.kind_of?(Array) ? @edit[:typ].find_by_id(res.first) : res
-      self.x_node = "#{TreeBuilder.get_prefix_for_model(@edit[:typ])}-#{to_cid(@record.id)}"
-      @in_a_form = @changed = session[:changed] = false
-      @sb[:action] = @edit = session[:edit] = nil
-      replace_right_cell
+      return
     end
+
+    model = @edit[:selected_items].count > 1 ? :models : :model
+    add_flash(_("Copy selected %{record} was saved") % {:record => ui_lookup(model => @edit[:typ].to_s)})
+    @record = res.kind_of?(Array) ? @edit[:typ].find(res.first) : res
+    self.x_node = "#{TreeBuilder.get_prefix_for_model(@edit[:typ])}-#{to_cid(@record.id)}"
+    @in_a_form = @changed = session[:changed] = false
+    @sb[:action] = @edit = session[:edit] = nil
+    replace_right_cell
   end
 
   def copy_reset(typ, ids, button_pressed)
@@ -1719,7 +1730,7 @@ class MiqAeClassController < ApplicationController
 
   def copy_cancel
     assert_privileges(@sb[:action])
-    @record = session[:edit][:typ].find_by_id(session[:edit][:rec_id])
+    @record = session[:edit][:typ].find_by(:id => session[:edit][:rec_id])
     model = @edit[:selected_items].count > 1 ? :models : :model
     @sb[:action] = session[:edit] = nil # clean out the saved info
     add_flash(_("Copy %{record} was cancelled by the user") % {:record => ui_lookup(model => @edit[:typ].to_s)})
@@ -1957,7 +1968,7 @@ class MiqAeClassController < ApplicationController
 
   # Get variables from edit form
   def get_form_vars
-    @ae_class = MiqAeClass.find_by_id(from_cid(@edit[:ae_class_id]))
+    @ae_class = MiqAeClass.find_by(:id => from_cid(@edit[:ae_class_id]))
     # for class add tab
     @edit[:new][:name] = params[:name].blank? ? nil : params[:name] if params[:name]
     @edit[:new][:description] = params[:description].blank? ? nil : params[:description] if params[:description]
@@ -1992,7 +2003,7 @@ class MiqAeClassController < ApplicationController
 
   # Get variables from edit form
   def fields_get_form_vars
-    @ae_class = MiqAeClass.find_by_id(from_cid(@edit[:ae_class_id]))
+    @ae_class = MiqAeClass.find_by(:id => from_cid(@edit[:ae_class_id]))
     @in_a_form = true
     @in_a_form_fields = true
     if params[:item].blank? && !%w(accept save).include?(params[:button]) && params["action"] != "field_delete"
@@ -2120,7 +2131,7 @@ class MiqAeClassController < ApplicationController
 
   # Get variables from edit form
   def get_ns_form_vars
-    @ae_ns = @edit[:typ].constantize.find_by_id(from_cid(@edit[:ae_ns_id]))
+    @ae_ns = @edit[:typ].constantize.find_by(:id => from_cid(@edit[:ae_ns_id]))
     @edit[:new][:enabled] = params[:ns_enabled] == '1' if params[:ns_enabled]
     [:ns_name, :ns_description].each do |field|
       next unless params[field]
@@ -2275,7 +2286,7 @@ class MiqAeClassController < ApplicationController
     @edit = {}
     @edit[:new] = {}
     @edit[:current] = {}
-    @ae_class = MiqAeClass.find_by_id(from_cid(id))
+    @ae_class = MiqAeClass.find_by(:id => from_cid(id))
     @edit[:rec_id] = @ae_class.try(:id)
     @edit[:ae_class_id] = @ae_class.id
     @edit[:new][:fields] = @ae_class.ae_fields.to_a.deep_clone
@@ -2291,9 +2302,12 @@ class MiqAeClassController < ApplicationController
   def move_selected_fields_up(available_fields, selected_fields, display_name)
     if no_items_selected?(selected_fields)
       add_flash(_("No %{name} were selected to move up") % {:name => display_name}, :error)
-      return
+      return false
     end
+
     consecutive, first_idx, last_idx = selected_consecutive?(available_fields, selected_fields)
+    @selected = selected_fields
+
     if consecutive
       if first_idx > 0
         available_fields[first_idx..last_idx].reverse_each do |field|
@@ -2301,18 +2315,22 @@ class MiqAeClassController < ApplicationController
           available_fields.insert(first_idx - 1, pulled)
         end
       end
-    else
-      add_flash(_("Select only one or consecutive %{name} to move up") % {:name => display_name}, :error)
+      return true
     end
-    @selected = selected_fields
+
+    add_flash(_("Select only one or consecutive %{name} to move up") % {:name => display_name}, :error)
+    false
   end
 
   def move_selected_fields_down(available_fields, selected_fields, display_name)
     if no_items_selected?(selected_fields)
       add_flash(_("No %{name} were selected to move down") % {:name => display_name}, :error)
-      return
+      return false
     end
+
     consecutive, first_idx, last_idx = selected_consecutive?(available_fields, selected_fields)
+    @selected = selected_fields
+
     if consecutive
       if last_idx < available_fields.length - 1
         insert_idx = last_idx + 1 # Insert before the element after the last one
@@ -2322,10 +2340,11 @@ class MiqAeClassController < ApplicationController
           available_fields.insert(insert_idx, pulled)
         end
       end
-    else
-      add_flash(_("Select only one or consecutive %{name} to move down") % {:name => display_name}, :error)
+      return true
     end
-    @selected = selected_fields
+
+    add_flash(_("Select only one or consecutive %{name} to move down") % {:name => display_name}, :error)
+    false
   end
 
   def no_items_selected?(field_name)
@@ -2425,20 +2444,6 @@ class MiqAeClassController < ApplicationController
     }
     @edit[:current] = copy_hash(@edit[:new])
     session[:edit]  = @edit
-  end
-
-  def priority_get_form_vars
-    @in_a_form = true
-    if params[:button] == "up"
-      move_selected_fields_up(@edit[:new][:domain_order], params[:seq_fields], _("Domains"))
-    end
-    if params[:button] == "down"
-      move_selected_fields_down(@edit[:new][:domain_order], params[:seq_fields], _("Domains"))
-    end
-    unless @flash_array
-      @refresh_div     = "domains_list"
-      @refresh_partial = "domains_priority_form"
-    end
   end
 
   def domain_toggle(locked)
