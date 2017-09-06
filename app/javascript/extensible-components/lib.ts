@@ -1,5 +1,4 @@
 export type RenderCallback = (element: HTMLElement) => void;
-
 export interface IExtensionComponent {
   action: string;
   payload: any;
