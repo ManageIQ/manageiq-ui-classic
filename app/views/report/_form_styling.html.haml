@@ -14,7 +14,15 @@
           = _('Style')
         %th
           = _('If')
-        %th
+        -# only draw th up to maximum styles defined in any of the columns
+        - @edit[:new][:field_order].each_with_index do |f, _|
+          - col_name = MiqExpression.parse_field_or_tag(f.last).report_column
+          - style = @edit.fetch_path(:new, :col_options, col_name, :style)
+          - styles_length = style.length if style
+          - @max_styles_length ||= 0
+          - @max_styles_length = styles_length if styles_length && @max_styles_length < styles_length
+        - @max_styles_length.times do |_|
+          %th
     %tbody
       - @edit[:new][:field_order].each_with_index do |f, f_idx|
         - field_type = MiqExpression.get_col_info(f.last.split("__").first)[:format_sub_type]
@@ -84,8 +92,7 @@
                         "data-miq_observe"     => {:url => url}.to_json)
               - elsif !styles[s_idx]
                 = _('Default')
-          - 3.times do |s_idx|
-            - break if s_idx > 0 && (styles[s_idx - 1].blank? || styles[s_idx - 1][:operator] == "DEFAULT")
+          - @max_styles_length.times do |s_idx|
             - if styles[s_idx] && styles[s_idx][:class]
               %td{:class => styles[s_idx][:class].to_s}
                 &nbsp;
