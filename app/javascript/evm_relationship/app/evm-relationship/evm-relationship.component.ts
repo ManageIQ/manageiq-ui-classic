@@ -21,7 +21,7 @@ import {WindowService} from "../common/window-service";
       <label class="col-md-2,control-label" for="serverName">Select Server:</label>
       <div class="col-md8">
         <select [formControlName]="'serverName'" id="serverName" class="form-control">
-          <option value=""></option>
+          <option value="">&lt;Not a Server&gt;</option>
           <option *ngFor="let server of servers?.resources" [value]="server.id">{{server.name}} ({{server.id}})</option>
         </select>
       </div>
