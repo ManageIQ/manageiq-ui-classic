@@ -77,14 +77,15 @@
                           :maxlength         => 30,
                           :class             => "form-control",
                           "data-miq_observe" => {:interval => '.5', :url => url}.to_json)
-    .form-group
-      %label.control-label.col-md-2
-        = _('Dialog')
-      .col-md-8
-        = select_tag('dialog_id',
-                      options_for_select([[_("<None>"), nil]] + Array(@edit[:new][:available_dialogs].invert).sort_by { |a| a.first.downcase }, @edit[:new][:dialog_id]),
-                      "data-miq_sparkle_on" => true,
-                      :class => "selectpicker")
+    - if @edit[:new][:button_type] != "ansible_playbook"
+      .form-group
+        %label.control-label.col-md-2
+          = _('Dialog')
+        .col-md-8
+          = select_tag('dialog_id',
+                        options_for_select([[_("<None>"), nil]] + Array(@edit[:new][:available_dialogs].invert).sort_by { |a| a.first.downcase }, @edit[:new][:dialog_id]),
+                        "data-miq_sparkle_on" => true,
+                        :class => "selectpicker")
     .form-group
       %label.control-label.col-md-2
         = _('Open URL')

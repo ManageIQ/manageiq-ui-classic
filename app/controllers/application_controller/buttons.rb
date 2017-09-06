@@ -107,9 +107,13 @@ module ApplicationController::Buttons
       @edit[:new][:open_url] = params[:open_url] == "1" if params[:open_url]
       copy_params_if_set(@edit[:new], params, %i(name target_attr_name display_for submit_how description button_icon button_color dialog_id disabled_text button_type inventory_type))
       visibility_box_edit
-      clear_playbook_variables if params[:button_type] == 'default'
+
+      if params[:button_type] == 'default'
+        clear_playbook_variables
+      end
       if params[:button_type] == 'ansible_playbook'
-        initialize_playbook_variables if params[:button_type] == 'ansible_playbook'
+        initialize_playbook_variables
+        @edit[:new][:dialog_id] = nil
         @edit[:new][:object_request] = CustomButton::PLAYBOOK_METHOD
       end
     end
