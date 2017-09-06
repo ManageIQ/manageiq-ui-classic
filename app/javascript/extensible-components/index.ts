@@ -42,7 +42,7 @@ function subscribe(cmpName: string) {
         component.name === cmpName && callback(component);
       });
     },
-    delete: () => unsubscribe && unsubscribe()
+    delete: () => unsubscribe && unsubscribe.dispose()
   }
 }
 

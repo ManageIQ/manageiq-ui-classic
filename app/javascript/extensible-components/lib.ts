@@ -14,7 +14,7 @@ export interface IExtensibleComponent {
 }
 
 export function getItems() {
-  return ManageIQ.extensions.getItems();
+  return ManageIQ.extensions.items;
 }
 
 export function subscribe(cmpName: string) {
