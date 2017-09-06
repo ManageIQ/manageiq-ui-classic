@@ -22,7 +22,7 @@
         :javascript
           miqInitSelectPicker();
           miqSelectPickerEvent('instance_name', "#{url}")
-  - if !ae_ansible_custom_button
+  - unless ae_ansible_custom_button
     .form-group
       %label.col-md-2.control-label
         = _("Message")
