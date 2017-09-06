@@ -1797,10 +1797,10 @@ class ApplicationController < ActionController::Base
   def build_saved_audit_hash(old_record_attributes, new_record, add)
     name  = new_record.respond_to?(:name) ? new_record.name : new_record.description
     msg   = if add
-      _("[%{name}] Record added (") % {:name => name}
-    else
-      _("[%{name}] Record updated (") % {:name => name}
-    end
+              _("[%{name}] Record added (") % {:name => name}
+            else
+              _("[%{name}] Record updated (") % {:name => name}
+            end
     event = "#{new_record.class.to_s.downcase}_record_#{add ? "add" : "update"}"
 
     attribute_difference = new_record.attributes.to_a - old_record_attributes.to_a

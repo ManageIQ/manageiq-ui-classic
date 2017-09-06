@@ -908,8 +908,8 @@ class MiqAeClassController < ApplicationController
           @current_region = MiqRegion.my_region.region
           page.replace_html(@refresh_div, :partial => 'angular_method_form')
           page << javascript_hide("form_buttons_div")
-        else
-          page.replace_html(@refresh_div, :partial => @refresh_partial) if @refresh_div && (params[:cls_method_location] || params[:exp_object] || params[:cls_exp_object])
+        elsif @refresh_div && (params[:cls_method_location] || params[:exp_object] || params[:cls_exp_object])
+          page.replace_html(@refresh_div, :partial => @refresh_partial)
         end
 
         if params[:cls_field_datatype]
@@ -977,23 +977,23 @@ class MiqAeClassController < ApplicationController
     method = params[:id] == "new" ? MiqAeMethod.new : MiqAeMethod.find_by(:id => params[:id])
     data = method.data ? JSON.parse(method.data) : {}
     method_hash = {
-      :name => method.name,
-      :display_name => method.display_name,
-      :namespace_path => @sb[:namespace_path],
-      :class_id => method.id ? method.class_id : MiqAeClass.find(from_cid(x_node.split("-").last)).id,
-      :location => 'playbook',
-      :language => 'ruby',
-      :scope => "instance",
+      :name                => method.name,
+      :display_name        => method.display_name,
+      :namespace_path      => @sb[:namespace_path],
+      :class_id            => method.id ? method.class_id : MiqAeClass.find(from_cid(x_node.split("-").last)).id,
+      :location            => 'playbook',
+      :language            => 'ruby',
+      :scope               => "instance",
       :available_datatypes => MiqAeField.available_datatypes_for_ui,
-      :config_info => {
-        :repository_id => data['repository_id'] || '',
-        :playbook_id => data['playbook_id'] || '',
-        :credential_id => data['credential_id'] || '',
+      :config_info         => {
+        :repository_id         => data['repository_id'] || '',
+        :playbook_id           => data['playbook_id'] || '',
+        :credential_id         => data['credential_id'] || '',
         :network_credential_id => data['network_credential_id'] || '',
-        :cloud_credential_id => data['cloud_credential_id'] || '',
-        :hosts => data['hosts'],
-        :verbosity => data['verbosity'],
-        :extra_vars => method.inputs
+        :cloud_credential_id   => data['cloud_credential_id'] || '',
+        :hosts                 => data['hosts'],
+        :verbosity             => data['verbosity'],
+        :extra_vars            => method.inputs
       }
     }
     render :json => method_hash
@@ -1148,7 +1148,7 @@ class MiqAeClassController < ApplicationController
         add_flash(_("Add of %{model} was cancelled by the user") % {:model => ui_lookup(:model => "MiqAeMethod")})
       end
       replace_right_cell
-    when "add","save"
+    when "add", "save"
       method = params[:id] != "new" ? find_record_with_rbac(MiqAeMethod, params[:id]) : MiqAeMethod.new
       method.name = params["name"]
       method.display_name = params["display_name"]
@@ -1159,7 +1159,7 @@ class MiqAeClassController < ApplicationController
       method.data = set_playbook_data.to_json
       begin
         MiqAeMethod.transaction do
-          to_save, to_delete = set_playbook_inputs(method)
+          to_save, to_delete = playbook_inputs(method)
           method.inputs.destroy(MiqAeField.where(:id => to_delete))
           method.inputs = to_save
           method.save!
@@ -1177,7 +1177,7 @@ class MiqAeClassController < ApplicationController
     end
   end
 
-  def set_playbook_inputs(method)
+  def playbook_inputs(method)
     existing_inputs = method.inputs
     new_inputs = params[:extra_vars]
     inputs_to_save = []
@@ -1191,7 +1191,7 @@ class MiqAeClassController < ApplicationController
       inputs_to_save.push(field)
     end
     existing_inputs.each do |existing_input|
-      inputs_to_delete.push(existing_input.id) unless inputs_to_save.any? {|i| i.id == existing_input.id }
+      inputs_to_delete.push(existing_input.id) unless inputs_to_save.any? { |i| i.id == existing_input.id }
     end
     return inputs_to_save, inputs_to_delete
   end
@@ -1199,10 +1199,10 @@ class MiqAeClassController < ApplicationController
   def set_playbook_data
     data = {
       :repository_id => params['repository_id'],
-      :playbook_id => params['playbook_id'],
+      :playbook_id   => params['playbook_id'],
       :credential_id => params['credential_id'],
-      :hosts => params['hosts'],
-      :verbosity => params['verbosity'],
+      :hosts         => params['hosts'],
+      :verbosity     => params['verbosity'],
     }
     data[:network_credential_id] = params['network_credential_id'] if params['network_credential_id']
     data[:cloud_credential_id] = params['cloud_credential_id'] if params['cloud_credential_id']
