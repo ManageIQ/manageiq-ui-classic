@@ -39,7 +39,7 @@ class EmsInfraController < ApplicationController
     redirect_to ems_infra_path(params[:id]) if params[:cancel]
 
     drop_breadcrumb(:name => _("Scale Infrastructure Provider"), :url => "/ems_infra/scaling")
-    @infra = ManageIQ::Providers::Openstack::InfraManager.find(params[:id])
+    @infra = get_infra_provider(params[:id])
     # TODO: Currently assumes there is a single stack per infrastructure provider. This should
     # be improved to support multiple stacks.
     @stack = @infra.direct_orchestration_stacks.first
@@ -54,7 +54,7 @@ class EmsInfraController < ApplicationController
 
     scale_parameters = params.select { |k, _v| k.include?('::count') || k.include?('Count') }.to_unsafe_h
     assigned_hosts = scale_parameters.values.sum(&:to_i)
-    infra = ManageIQ::Providers::Openstack::InfraManager.find(params[:id])
+    infra = get_infra_provider(params[:id])
     if assigned_hosts > infra.hosts.count
       # Validate number of selected hosts is not more than available
       log_and_flash_message(_("Assigning %{hosts} but only have %{hosts_count} hosts available.") % {:hosts => assigned_hosts, :hosts_count => infra.hosts.count.to_s})
@@ -80,7 +80,7 @@ class EmsInfraController < ApplicationController
     @in_a_form = true
 
     drop_breadcrumb(:name => _("Scale Infrastructure Provider Down"), :url => "/ems_infra/scaling")
-    @infra = ManageIQ::Providers::Openstack::InfraManager.find(params[:id])
+    @infra = get_infra_provider(params[:id])
     # TODO: Currently assumes there is a single stack per infrastructure provider. This should
     # be improved to support multiple stacks.
     @stack = @infra.direct_orchestration_stacks.first
@@ -97,8 +97,7 @@ class EmsInfraController < ApplicationController
     if host_ids.nil?
       log_and_flash_message(_("No compute hosts were selected for scale down."))
     else
-      hosts = host_ids.map { |host_id| find_record_with_rbac(Host, host_id) }
-      services = hosts.collect(&:cloud_services).flatten
+      hosts = get_hosts_to_scaledown_from_ids(host_ids)
 
       # verify selected nodes can be removed
       has_invalid_nodes, error_return_message = verify_hosts_for_scaledown(hosts)
@@ -110,7 +109,7 @@ class EmsInfraController < ApplicationController
       # figure out scaledown parameters and update stack
       stack_parameters = get_scaledown_parameters(hosts, @infra, @compute_hosts)
 
-      update_stack_down(@stack, stack_parameters, params[:id], hosts, :services => services)
+      update_stack_down(@stack, stack_parameters, params[:id], hosts)
     end
   end
 
@@ -194,14 +193,14 @@ class EmsInfraController < ApplicationController
           # OSP < 10 use heat stack update
           stack.update_stack_queue(session[:userid], nil, stack_parameters)
         end
-        redirect_to ems_infra_path(provider_id, :flash_msg => return_message)
+        redirect_to(ems_infra_path(provider_id, :flash_msg => return_message))
       rescue => ex
         log_and_flash_message(_("Unable to initiate scale up: %{message}") % {:message => ex})
       end
     end
   end
 
-  def update_stack_down(stack, stack_parameters, provider_id, hosts, additional_args = {})
+  def update_stack_down(stack, stack_parameters, provider_id, hosts)
     return_message = _(" Scaling down to %{a} compute nodes") % {:a => stack_parameters['ComputeCount']}
     if stack_is_ready?(stack) && stack_parameters_changed?(stack_parameters)
       begin
@@ -210,10 +209,11 @@ class EmsInfraController < ApplicationController
           stack.scale_down_queue(session[:userid], hosts)
         else
           # OSP < 10 use heat stack update
+          services = hosts.collect(&:cloud_services).flatten
           task_id = stack.update_stack_queue(session[:userid], nil, stack_parameters)
-          stack.queue_post_scaledown_task(additional_args[:services], task_id)
+          stack.queue_post_scaledown_task(services, task_id)
         end
-        redirect_to ems_infra_path(provider_id, :flash_msg => return_message)
+        redirect_to(ems_infra_path(provider_id, :flash_msg => return_message))
       rescue => ex
         log_and_flash_message(_("Unable to initiate scale down: %{message}") % {:message => ex})
       end
@@ -240,7 +240,7 @@ class EmsInfraController < ApplicationController
     if stack_parameters.empty?
       # No values were changed
       add_flash(_("A value must be changed or provider stack will not be updated."), :error)
-      false
+      return false
     end
     true
   end
@@ -311,6 +311,14 @@ class EmsInfraController < ApplicationController
 
   def parse_json(uploaded_file)
     JSON.parse(uploaded_file.read)["nodes"]
+  end
+
+  def get_infra_provider(id)
+    ManageIQ::Providers::Openstack::InfraManager.find(id)
+  end
+
+  def get_hosts_to_scaledown_from_ids(host_ids)
+    host_ids.map { |host_id| find_record_with_rbac(Host, host_id) }
   end
 
   menu_section :inf
