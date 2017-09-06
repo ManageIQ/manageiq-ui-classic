@@ -143,6 +143,10 @@ module Mixins
       metrics_security_protocol = security_protocol_default
       metrics_tls_ca_certs = ""
       keystone_v3_domain_id = ""
+      prometheus_alerts_hostname = ""
+      prometheus_alerts_api_port = ""
+      prometheus_alerts_security_protocol = security_protocol_default
+      prometheus_alerts_tls_ca_certs = ""
 
       if @ems.connection_configurations.amqp.try(:endpoint)
         amqp_hostname = @ems.connection_configurations.amqp.endpoint.hostname
@@ -188,6 +192,15 @@ module Mixins
         metrics_security_protocol = connection_configurations_metrics_endpoint.security_protocol
         metrics_security_protocol ||= security_protocol_default
         metrics_tls_ca_certs = connection_configurations_metrics_endpoint.certificate_authority
+      end
+
+      if @ems.connection_configurations.prometheus_alerts.try(:endpoint)
+        prometheus_alerts_hostname = @ems.connection_configurations.prometheus_alerts.endpoint.hostname
+        prometheus_alerts_api_port = @ems.connection_configurations.prometheus_alerts.endpoint.port
+        prometheus_alerts_auth_status = @ems.authentication_status_ok?(:alerts)
+        prometheus_alerts_security_protocol = @ems.connection_configurations.prometheus_alerts.endpoint.security_protocol
+        prometheus_alerts_security_protocol ||= security_protocol_default
+        prometheus_alerts_tls_ca_certs = @ems.connection_configurations.prometheus_alerts.endpoint.certificate_authority
       end
 
       if @ems.connection_configurations.default.try(:endpoint)
@@ -284,28 +297,34 @@ module Mixins
       } if controller_name == "ems_infra"
 
       if controller_name == "ems_container"
-        render :json => {:name                      => @ems.name,
-                         :emstype                   => @ems.emstype,
-                         :zone                      => zone,
-                         :hostname                  => @ems.hostname,
-                         :default_hostname          => @ems.connection_configurations.default.endpoint.hostname,
-                         :default_api_port          => @ems.connection_configurations.default.endpoint.port,
-                         :metrics_selection         => retrieve_metrics_selection,
-                         :metrics_selection_default => @ems.emstype == 'kubernetes' ? 'disabled' : 'enabled',
-                         :metrics_hostname          => metrics_hostname,
-                         :metrics_api_port          => metrics_port,
-                         :metrics_tls_ca_certs      => metrics_tls_ca_certs,
-                         :metrics_security_protocol => metrics_security_protocol,
-                         :api_version               => @ems.api_version ? @ems.api_version : "v2",
-                         :default_security_protocol => default_security_protocol,
-                         :default_tls_ca_certs      => default_tls_ca_certs,
-                         :provider_region           => @ems.provider_region,
-                         :default_userid            => @ems.authentication_userid ? @ems.authentication_userid : "",
-                         :service_account           => service_account ? service_account : "",
-                         :bearer_token_exists       => @ems.authentication_token(:bearer).nil? ? false : true,
-                         :ems_controller            => controller_name,
-                         :default_auth_status       => default_auth_status,
-                         :metrics_auth_status       => metrics_auth_status.nil? ? false : metrics_auth_status}
+        render :json => {:name                                => @ems.name,
+                         :emstype                             => @ems.emstype,
+                         :zone                                => zone,
+                         :hostname                            => @ems.hostname,
+                         :default_hostname                    => @ems.connection_configurations.default.endpoint.hostname,
+                         :default_api_port                    => @ems.connection_configurations.default.endpoint.port,
+                         :metrics_selection                   => retrieve_metrics_selection,
+                         :metrics_selection_default           => @ems.emstype == 'kubernetes' ? 'disabled' : 'enabled',
+                         :metrics_hostname                    => metrics_hostname,
+                         :metrics_api_port                    => metrics_port,
+                         :metrics_tls_ca_certs                => metrics_tls_ca_certs,
+                         :metrics_security_protocol           => metrics_security_protocol,
+                         :api_version                         => @ems.api_version ? @ems.api_version : "v2",
+                         :default_security_protocol           => default_security_protocol,
+                         :default_tls_ca_certs                => default_tls_ca_certs,
+                         :provider_region                     => @ems.provider_region,
+                         :default_userid                      => @ems.authentication_userid ? @ems.authentication_userid : "",
+                         :service_account                     => service_account ? service_account : "",
+                         :bearer_token_exists                 => @ems.authentication_token(:bearer).nil? ? false : true,
+                         :ems_controller                      => controller_name,
+                         :default_auth_status                 => default_auth_status,
+                         :metrics_auth_status                 => metrics_auth_status.nil? ? false : metrics_auth_status,
+                         :prometheus_alerts_api_port          => prometheus_alerts_api_port,
+                         :prometheus_alerts_hostname          => prometheus_alerts_hostname,
+                         :prometheus_alerts_security_protocol => prometheus_alerts_security_protocol,
+                         :prometheus_alerts_tls_ca_certs      => prometheus_alerts_tls_ca_certs,
+                         :prometheus_alerts_auth_status       => prometheus_alerts_auth_status,
+                         :alerts_selection                    => retrieve_alerts_selection}
       end
 
       if controller_name == "ems_middleware"
@@ -377,6 +396,10 @@ module Mixins
       metrics_security_protocol = params[:metrics_security_protocol].strip if params[:metrics_security_protocol]
       metrics_tls_ca_certs = params[:metrics_tls_ca_certs].strip if params[:metrics_tls_ca_certs]
       default_tls_ca_certs  = params[:default_tls_ca_certs].strip if params[:default_tls_ca_certs]
+      prometheus_alerts_tls_ca_certs = params[:prometheus_alerts_tls_ca_certs].strip if params[:prometheus_alerts_tls_ca_certs]
+      prometheus_alerts_hostname = params[:prometheus_alerts_hostname].strip if params[:prometheus_alerts_hostname]
+      prometheus_alerts_api_port = params[:prometheus_alerts_api_port].strip if params[:prometheus_alerts_api_port]
+      prometheus_alerts_security_protocol = params[:prometheus_alerts_security_protocol].strip if params[:prometheus_alerts_security_protocol]
       default_endpoint = {}
       amqp_endpoint = {}
       ceilometer_endpoint = {}
@@ -384,6 +407,7 @@ module Mixins
       metrics_endpoint = {}
       hawkular_endpoint = {}
       prometheus_endpoint = {}
+      prometheus_alerts_endpoint = {}
 
       if ems.kind_of?(ManageIQ::Providers::Openstack::CloudManager) || ems.kind_of?(ManageIQ::Providers::Openstack::InfraManager)
         default_endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
@@ -456,6 +480,11 @@ module Mixins
           prometheus_endpoint = {:role => :prometheus, :hostname => metrics_hostname, :port => metrics_port}
           prometheus_endpoint.merge!(endpoint_security_options(metrics_security_protocol, metrics_tls_ca_certs))
         end
+        if params[:alerts_selection] == 'prometheus'
+          params[:cred_type] = "prometheus_alerts"
+          prometheus_alerts_endpoint = {:role => :prometheus_alerts, :hostname => prometheus_alerts_hostname, :port => prometheus_alerts_api_port}
+          prometheus_alerts_endpoint.merge!(endpoint_security_options(prometheus_alerts_security_protocol, prometheus_alerts_tls_ca_certs))
+        end
       end
 
       if ems.kind_of?(ManageIQ::Providers::MiddlewareManager)
@@ -476,13 +505,14 @@ module Mixins
         default_endpoint = {:role => :default, :hostname => hostname, :port => port}
       end
 
-      endpoints = {:default     => default_endpoint,
-                   :ceilometer  => ceilometer_endpoint,
-                   :amqp        => amqp_endpoint,
-                   :ssh_keypair => ssh_keypair_endpoint,
-                   :metrics     => metrics_endpoint,
-                   :hawkular    => hawkular_endpoint,
-                   :prometheus  => prometheus_endpoint}
+      endpoints = {:default           => default_endpoint,
+                   :ceilometer        => ceilometer_endpoint,
+                   :amqp              => amqp_endpoint,
+                   :ssh_keypair       => ssh_keypair_endpoint,
+                   :metrics           => metrics_endpoint,
+                   :hawkular          => hawkular_endpoint,
+                   :prometheus        => prometheus_endpoint,
+                   :prometheus_alerts => prometheus_alerts_endpoint}
 
       build_connection(ems, endpoints, mode)
     end
@@ -499,7 +529,7 @@ module Mixins
       authentications = build_credentials(ems, mode)
       configurations = []
 
-      [:default, :ceilometer, :amqp, :ssh_keypair, :metrics, :hawkular, :prometheus].each do |role|
+      [:default, :ceilometer, :amqp, :ssh_keypair, :metrics, :hawkular, :prometheus, :prometheus_alerts].each do |role|
         configurations << build_configuration(ems, authentications, endpoints, role)
       end
 
@@ -555,6 +585,9 @@ module Mixins
           creds[:hawkular] = {:auth_key => default_key, :save => (mode != :validate)}
         elsif params[:metrics_selection] == "prometheus"
           creds[:prometheus] = {:auth_key => default_key, :save => (mode != :validate)}
+        end
+        if params[:alerts_selection] == 'prometheus'
+          creds[:prometheus_alerts] = {:auth_key => default_key, :save => (mode != :validate)}
         end
         creds[:bearer] = {:auth_key => default_key, :save => (mode != :validate)}
         creds.delete(:default)

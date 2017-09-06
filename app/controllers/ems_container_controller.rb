@@ -101,6 +101,11 @@ class EmsContainerController < ApplicationController
     end
   end
 
+  def retrieve_alerts_selection
+    return "disabled" if @ems.connection_configurations.try(:prometheus_alerts).nil?
+    "prometheus"
+  end
+
   private
 
   def textual_group_list
