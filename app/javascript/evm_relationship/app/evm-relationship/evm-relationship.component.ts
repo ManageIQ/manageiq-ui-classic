@@ -28,7 +28,7 @@ import {WindowService} from "../common/window-service";
     </div>
     <div class="pull-right">
       <button type="button" (click)="save()" [disabled]="serverIdIsOriginal" class="btn btn-primary">Save</button>
-      <button type="button" (click)="reset()" class="btn btn-default">Reset</button>
+      <button type="button" (click)="reset()" [disabled]="serverIdIsOriginal" class="btn btn-default">Reset</button>
       <button type="button" (click)="cancel()" class="btn btn-default">Cancel</button>
     </div>
   </div>
