@@ -264,15 +264,15 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       ($scope.emsCommonModel.default_hostname != '' && $scope.emsCommonModel.default_api_port) &&
       ($scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid)) {
       return true;
-    } else if(($scope.emsCommonModel.ems_controller == "ems_container") &&
+    } else if (($scope.emsCommonModel.ems_controller === "ems_container") &&
       ($scope.emsCommonModel.emstype) &&
-      ($scope.emsCommonModel.default_password != '' && $scope.angularForm.default_password.$valid) &&
-      (($scope.currentTab == "metrics" &&
-        $scope.emsCommonModel.metrics_hostname != '' &&
+      ($scope.emsCommonModel.default_password !== '' && $scope.angularForm.default_password.$valid) &&
+      (($scope.currentTab === "metrics" &&
+        $scope.emsCommonModel.metrics_hostname !== '' &&
         $scope.emsCommonModel.metrics_api_port) ||
-       ($scope.currentTab == "alerts" &&
-        $scope.emsCommonModel.prometheus_alerts_hostname != '' &&
-        $scope.emsCommonModel.prometheus_alerts_api_port != ''))) {
+       ($scope.currentTab === "alerts" &&
+        $scope.emsCommonModel.prometheus_alerts_hostname !== '' &&
+        $scope.emsCommonModel.prometheus_alerts_api_port !== ''))) {
       return true;
     } else if($scope.emsCommonModel.emstype == "gce" && $scope.emsCommonModel.project != '' &&
       ($scope.currentTab == "default" ||
@@ -471,7 +471,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
         amqp: {},
         metrics: {},
         ssh_keypair: {},
-        prometheus_alerts: {}
+        prometheus_alerts: {},
       }
     }
     if (prefix === "default") {
@@ -538,7 +538,7 @@ ManageIQ.angular.app.controller('emsCommonFormController', ['$http', '$scope', '
       $scope.postValidationModel['service_account'] = {
         service_account:           $scope.emsCommonModel.service_account
       }
-    } else if (prefix == "prometheus_alerts") {
+    } else if (prefix === "prometheus_alerts") {
       $scope.postValidationModel['prometheus_alerts'] = {};
       ['prometheus_alerts_hostname', 'prometheus_alerts_api_port', 'prometheus_alerts_security_protocol', 'prometheus_alerts_tls_ca_certs']
       .forEach( function(resource) {
