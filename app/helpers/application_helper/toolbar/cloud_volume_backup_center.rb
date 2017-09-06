@@ -1,4 +1,21 @@
 class ApplicationHelper::Toolbar::CloudVolumeBackupCenter < ApplicationHelper::Toolbar::Basic
+  button_group('cloud_volume_backup', [
+                 select(
+                   :cloud_volume_backup_choice,
+                   'fa fa-cog fa-lg',
+                   t = N_('Configuration'),
+                   t,
+                   :items => [
+                     button(
+                       :cloud_volume_backup_restore_to_volume,
+                       'pficon pficon-volume fa-lg',
+                       t = N_('Restore backup to Cloud Volume'),
+                       t,
+                       :url_parms => 'main_div',
+                     ),
+                   ]
+                 )
+               ])
   button_group('cloud_volume_backup_policy', [
     select(
       :cloud_volume_backup_policy_choice,
