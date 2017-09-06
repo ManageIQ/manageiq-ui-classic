@@ -1,12 +1,14 @@
 describe('Extensible components', function() {
+  var htmlPartial = '<div>something</div>';
   var cmp;
   var mockApi = {
     onSomeAction: jasmine.createSpy('onSomeAction', function() {}),
-    onSomeActionWithParams: jasmine.createSpy('onSomeActionWithParams', function(param) {}),
+    onSomeActionWithParams: jasmine.createSpy('onSomeActionWithParams', function(someParam){}),
   };
 
   var mockRender = {
-    addButtonHtml: jasmine.createSpy('addButtonHtml', function(htmlElem) {})
+    addButton: jasmine.createSpy('addButton', function(callback) {}),
+    addButton2: function(callback) { callback(htmlPartial); }
   };
 
   it('should be defined with empty items', function() {
@@ -49,11 +51,13 @@ describe('Extensible components', function() {
       });
 
       it('should react to render', function() {
-        var someHTML = '<div>something</div>';
+        var someCallback = jasmine.createSpy('someCallback', function(element) {});
         subscription.with(function(component) {
-          component.render.addButtonHtml(someHTML);
+          component.render.addButton(someCallback);
+          component.render.addButton2(someCallback);
         });
-        expect(mockRender.addButtonHtml).toHaveBeenCalledWith(someHTML);
+        expect(mockRender.addButton).toHaveBeenCalledWith(someCallback);
+        expect(someCallback).toHaveBeenCalledWith(htmlPartial);
       });
     });
 

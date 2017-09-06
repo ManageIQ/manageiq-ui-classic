@@ -1,4 +1,4 @@
-import { IExtensionComponent, IMiQApiCallback } from './lib';
+import { IExtensionComponent, IMiQApiCallback, IMiQRenderCallback } from './lib';
 
 const source = new Rx.Subject();
 const items = new Set();
@@ -8,7 +8,7 @@ const items = new Set();
  */
 export class ExtensibleComponent {
   public delete: () => void;
-  constructor(public name: string, public api: IMiQApiCallback, public render: IMiQApiCallback){}
+  constructor(public name: string, public api: IMiQApiCallback, public render: IMiQRenderCallback){}
 }
 
 /**
@@ -17,7 +17,7 @@ export class ExtensibleComponent {
  * @param api callback functions to change inner logic of component.
  * @param render callback function to apply render functions.
  */
-function addComponent(name: string, api?: IMiQApiCallback, render?: IMiQApiCallback) {
+function addComponent(name: string, api?: IMiQApiCallback, render?: IMiQRenderCallback) {
   let newCmp = new ExtensibleComponent(name, api, render);
   source.onNext({action: 'add', payload: newCmp});
   return newCmp;

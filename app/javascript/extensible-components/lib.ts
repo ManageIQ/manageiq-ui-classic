@@ -1,3 +1,5 @@
+export type RenderCallback = (element: HTMLElement) => void;
+
 export interface IExtensionComponent {
   action: string;
   payload: any;
@@ -7,10 +9,14 @@ export interface IMiQApiCallback {
   [propName: string]: Function;
 }
 
+export interface IMiQRenderCallback {
+  [propName: string]: (renderCallback: RenderCallback) => void;
+}
+
 export interface IExtensibleComponent {
   extensibleComponent: any;
   apiCallbacks: () => IMiQApiCallback;
-  renderCallbacks: () => IMiQApiCallback;
+  renderCallbacks: () => IMiQRenderCallback;
 }
 
 export function getItems() {
