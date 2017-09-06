@@ -72,7 +72,7 @@ export function miqReducer(state = INITIAL_STATE, action: evmRelationship.EvmRel
     case
     evmRelationship.EVM_DATA_SAVE_FAIL : {
       return Object.assign({}, state,
-        {servers: undefined, loading: false});
+        {loading: false});
     }
     case
     evmRelationship.CHANGE_SELECTED_SERVER_ID : {
