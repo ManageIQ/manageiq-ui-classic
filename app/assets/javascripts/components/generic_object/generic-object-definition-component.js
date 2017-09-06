@@ -8,9 +8,9 @@ ManageIQ.angular.app.component('genericObjectDefinitionComponent', {
   templateUrl: '/static/generic_object/generic_object_definition.html.haml',
 });
 
-genericObjectDefinitionFormController.$inject = ['API', 'miqService'];
+genericObjectDefinitionFormController.$inject = ['API', 'miqService', '$q'];
 
-function genericObjectDefinitionFormController(API, miqService) {
+function genericObjectDefinitionFormController(API, miqService, $q) {
   var vm = this;
 
   vm.$onInit = function() {
@@ -22,18 +22,8 @@ function genericObjectDefinitionFormController(API, miqService) {
     vm.associationTableHeaders = [__("Name"), __("Class")];
     vm.methodTableHeaders = [__("Name")];
 
-    vm.types = [
-      {id: "integer", name: "integer"},
-      {id: "string", name: "string"},
-      {id: "boolean", name: "boolean"},
-      {id: "datetime", name: "datetime"},
-    ];
-
-    vm.classes = [
-      {id: "Service", name: "Service"},
-      {id: "Vm", name: "Vm"},
-    ];
-
+    vm.types = [];
+    vm.classes = [];
 
     vm.genericObjectDefinitionModel = {
       name: '',
@@ -48,12 +38,19 @@ function genericObjectDefinitionFormController(API, miqService) {
       methodsTableChanged: false,
     };
 
+    var optionsPromise = API.options('/api/generic_object_definitions/')
+      .then(getGenericObjectDefinitionOptions)
+      .catch(miqService.handleFailure);
+
     if (vm.recordId) {
       vm.newRecord = false;
       miqService.sparkleOn();
-      API.get('/api/generic_object_definitions/' + vm.recordId)
+      var dataPromise = API.get('/api/generic_object_definitions/' + vm.recordId)
         .then(getGenericObjectDefinitionFormData)
         .catch(miqService.handleFailure);
+
+      $q.all([optionsPromise, dataPromise])
+        .then(promisesResolvedForLoad);
     } else {
       vm.newRecord = true;
       vm.afterGet = true;
@@ -87,10 +84,6 @@ function genericObjectDefinitionFormController(API, miqService) {
     Object.assign(vm.genericObjectDefinitionModel, response);
 
     assignAllObjectsToKeyValueArrays();
-
-    vm.afterGet = true;
-
-    miqService.sparkleOff();
   }
 
   function assignAllObjectsToKeyValueArrays(purge) {
@@ -134,5 +127,21 @@ function genericObjectDefinitionFormController(API, miqService) {
       });
     }
     return _.size(keyArray);
+  }
+
+  function getGenericObjectDefinitionOptions(response) {
+    buildOptionObject(response.data.allowed_association_types, vm.classes);
+    buildOptionObject(response.data.allowed_types, vm.types);
+  }
+
+  function buildOptionObject(optionData, optionObject) {
+    _.forEach(optionData, function (item) {
+      optionObject.push({id: item[1], name: item[0]});
+    });
+  }
+
+  function promisesResolvedForLoad() {
+    vm.afterGet = true;
+    miqService.sparkleOff();
   }
 }
