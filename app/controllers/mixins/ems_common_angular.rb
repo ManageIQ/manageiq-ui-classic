@@ -304,7 +304,8 @@ module Mixins
                          :service_account           => service_account ? service_account : "",
                          :bearer_token_exists       => @ems.authentication_token(:bearer).nil? ? false : true,
                          :ems_controller            => controller_name,
-                         :default_auth_status       => default_auth_status}
+                         :default_auth_status       => default_auth_status,
+                         :metrics_auth_status       => metrics_auth_status.nil? ? false : metrics_auth_status}
       end
 
       if controller_name == "ems_middleware"
