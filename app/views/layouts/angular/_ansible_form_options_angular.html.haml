@@ -137,7 +137,7 @@
       %label.col-md-3.control-label
         = _('Verbosity')
       .col-md-9
-        %select{"ng-model"    => "vm.#{ng_model}.#{prefix}_verbosity",
+        %select{"ng-model"    => "#{ng_model}.#{prefix}_verbosity",
                 "name"        => "#{prefix}_verbosity",
                 'ng-options'  => 'v as k for (v, k) in vm.verbosity_types',
                 "checkchange" => "",

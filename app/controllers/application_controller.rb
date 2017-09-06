@@ -2336,4 +2336,22 @@ class ApplicationController < ActionController::Base
     @accords = allowed_features.map(&:accord_hash)
     set_active_elements(allowed_features.first)
   end
+
+  def fetch_name_from_object(klass, id)
+    klass.find_by(:id => from_cid(id)).try(:name)
+  end
+
+  def verbosity_display(verbosity)
+    verbosity ||= "0"
+    verbosity_hsh = {
+      "0" => "0 (Normal)",
+      "1" => "1 (Verbose)",
+      "2" => "2 (More Verbose)",
+      "3" => "3 (Debug)",
+      "4" => "4 (Connection Debug)",
+      "5" => "5 (WinRM Debug)"
+    }
+    verbosity_hsh[verbosity.to_s]
+  end
+  helper_method :verbosity_display
 end

@@ -106,7 +106,7 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
     vm.aeMethodModel.provisioning_key = '';
     vm.aeMethodModel.provisioning_value = '';
 
-    if (configData['verbosity'] === undefined) {
+    if (configData['verbosity'] === undefined || configData['verbosity'] == '') {
       vm.aeMethodModel.provisioning_verbosity = '0';
     } else {
       vm.aeMethodModel.provisioning_verbosity = configData['verbosity'];

@@ -993,18 +993,6 @@ class MiqAeClassController < ApplicationController
         :cloud_credential_id => data['cloud_credential_id'] || '',
         :hosts => data['hosts'],
         :verbosity => data['verbosity'],
-        # :extra_vars => {
-        #   :sleep => '40',
-        #   :pkg => 'httpd',
-        #   :user => 'root',
-        #   :host => 'localhost'
-        # },
-        # :extra_vars => [
-        #   ['sleep', '40', 'string'],
-        #   ['pkg', 'httpd', 'string'],
-        #   ['user', 'root', 'string'],
-        #   ['host', 'localhost', "string"]
-        # ]
         :extra_vars => method.inputs
       }
     }
@@ -1215,12 +1203,6 @@ class MiqAeClassController < ApplicationController
       :credential_id => params['credential_id'],
       :hosts => params['hosts'],
       :verbosity => params['verbosity'],
-      :extra_vars => {
-        :sleep => '40',
-        :pkg => 'httpd',
-        :user => 'root',
-        :host => 'localhost'
-      }
     }
     data[:network_credential_id] = params['network_credential_id'] if params['network_credential_id']
     data[:cloud_credential_id] = params['cloud_credential_id'] if params['cloud_credential_id']
@@ -2680,9 +2662,24 @@ class MiqAeClassController < ApplicationController
     if @record.location == 'expression'
       hash = YAML.load(@record.data)
       @expression = hash[:expression] ? MiqExpression.new(hash[:expression]).to_human : ""
+    elsif @record.location == "playbook"
+      fetch_playbook_details
     end
     domain_overrides
     set_right_cell_text(x_node, @record)
+  end
+
+  def fetch_playbook_details
+    @playbook_details = {}
+    data = JSON.parse(@record.data)
+    @playbook_details[:repository] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ConfigurationScriptSource, data['repository_id'])
+    @playbook_details[:playbook] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::Playbook, data['playbook_id'])
+    @playbook_details[:machine_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential, data['credential_id'])
+    @playbook_details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, data['network_credential_id']) if data['network_credential_id']
+    @playbook_details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, data['cloud_credential_id']) if data['cloud_credential_id']
+    @playbook_details[:verbosity] = data['verbosity']
+    @playbook_details[:hosts] = data['hosts']
+    @playbook_details
   end
 
   def get_class_node_info(id)

@@ -832,20 +832,6 @@ class CatalogController < ApplicationController
   end
   helper_method :remove_resources_display
 
-  def verbosity_display(verbosity)
-    verbosity ||= "0"
-    verbosity_hsh = {
-      "0" => "0 (Normal)",
-      "1" => "1 (Verbose)",
-      "2" => "2 (More Verbose)",
-      "3" => "3 (Debug)",
-      "4" => "4 (Connection Debug)",
-      "5" => "5 (WinRM Debug)"
-    }
-    verbosity_hsh[verbosity.to_s]
-  end
-  helper_method :verbosity_display
-
   def features
     [{:role     => "svc_catalog_accord",
       :role_any => true,
@@ -1870,10 +1856,6 @@ class CatalogController < ApplicationController
       playbook_details[:retirement][:become_enabled] = retirement[:become_enabled] == true ? _('Yes') : _('No')
     end
     playbook_details
-  end
-
-  def fetch_name_from_object(klass, id)
-    klass.find_by(:id => id).try(:name)
   end
 
   def fetch_dialog(playbook_details, dialog_id, key)

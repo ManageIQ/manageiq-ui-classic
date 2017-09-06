@@ -50,6 +50,38 @@
           :read_only               => true}
     - elsif @ae_method.location == 'expression'
       = @expression
+    - elsif @ae_method.location == 'playbook'
+      .form-horizontal.static
+        .form-group
+          %label.col-md-2.control-label
+            = _('Repository')
+          .col-md-8
+            = h(@playbook_details[:repository])
+        .form-group
+          %label.col-md-2.control-label
+            = _('Playbook')
+          .col-md-8
+            = h(@playbook_details[:playbook])
+        .form-group
+          %label.col-md-2.control-label
+            = _('Machine Credential')
+          .col-md-8
+            = h(@playbook_details[:machine_credential])
+        .form-group
+          %label.col-md-2.control-label
+            = _('Cloud Credential')
+          .col-md-8
+            = h(@playbook_details[:cloud_credential])
+        .form-group
+          %label.col-md-2.control-label
+            = _('Hosts')
+          .col-md-8
+            = h(@playbook_details[:hosts])
+        .form-group
+          %label.col-md-2.control-label
+            = _('Verbosity')
+          .col-md-8
+            = h(verbosity_display(@playbook_details[:verbosity]))
     - else
       = @ae_method.data
     -# show inputs parameters grid if there are any inputs
