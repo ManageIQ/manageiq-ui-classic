@@ -108,7 +108,7 @@
           = _("Groups")
         - else
           = _("Available Groups")
-      .col-md-5
+      .col-md-2
         - groups = @user.present? && @user.miq_groups.present? ? @user.miq_groups.order(:description) : []
         - if groups.present? && @edit.blank?
           - if role_allows?(:feature => "rbac_group_show")
@@ -142,8 +142,9 @@
               miqInitSelectPicker();
               miqSelectPickerEvent('chosen_group', "#{url}")
       - if @edit
-        %label.col-md-2
+        %label.col-md-2.control-label
           = _("Selected Groups")
+        .col-md-3
           = render :partial => "ops/rbac_group_selected"
     - unless @edit
       .form-group
