@@ -135,12 +135,6 @@ class InfraNetworkingController < ApplicationController
     render :layout => "application"
   end
 
-  def tree_autoload_dynatree
-    @view ||= session[:view]
-    x_tree_init(:infra_networking_tree, :infra_networking, Switch)
-    super
-  end
-
   def tagging
     assert_privileges("infra_networking_tag")
     tagging_edit('Switch', false)
