@@ -14,6 +14,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 import {miqReducer} from "./reducer/reducer";
 import {WindowService} from "./common/window-service";
+import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 
 const initialState = {counter: 0};
 
@@ -30,6 +31,7 @@ const initialState = {counter: 0};
     EffectsModule.forRoot([
       EvmRelationshipEffects
     ]),
+    StoreDevtoolsModule.instrument()
   ],
   providers: [EvmRelationshipService, WindowService],
   bootstrap: [AppComponent]
