@@ -63,18 +63,6 @@ module UiConstants
     "tenant"                 => N_("Tenants")
   }
 
-  EXP_COUNT_TYPE = [N_("Count of"), "count"].freeze  # Selection for count based filters
-  EXP_FIND_TYPE = [N_("Find"), "find"].freeze        # Selection for find/check filters
-  EXP_TYPES = [                           # All normal filters
-    [N_("Field"), "field"],
-    EXP_COUNT_TYPE,
-    [N_("Tag"), "tag"],
-    EXP_FIND_TYPE
-  ]
-  VM_EXP_TYPES = [                        # Special VM registry filter
-    [N_("Registry"), "regkey"]
-  ]
-
   # Snapshot ages for delete_snapshots_by_age action type
   SNAPSHOT_AGES = {}
   (1..23).each { |a| SNAPSHOT_AGES[a.hours.to_i] = (a.to_s + (a < 2 ? _(" Hour") : _(" Hours"))) }

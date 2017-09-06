@@ -14,11 +14,11 @@
   -# Get all of the expression types, then remove the count and/or find based ones if model has none
   - unless exp_model == "_display_filter_"
     -# Not valid for secondary display filter
-    - exptypes = EXP_TYPES.map { |x| [_(x[0]), x[1]] }
+    - exptypes = ExpAtomHelper::EXP_TYPES.map { |x| [_(x[0]), x[1]] }
     - unless MiqExpression.miq_adv_search_lists(exp_model, :exp_available_counts).length > 0
-      - exptypes -= [[_(EXP_COUNT_TYPE[0]), EXP_COUNT_TYPE[1]]]
+      - exptypes -= [[_(ExpAtomHelper::EXP_COUNT_TYPE[0]), ExpAtomHelper::EXP_COUNT_TYPE[1]]]
     - unless MiqExpression.miq_adv_search_lists(exp_model, :exp_available_finds).length > 0
-      - exptypes -= [[_(EXP_FIND_TYPE[0]), EXP_FIND_TYPE[1]]]
+      - exptypes -= [[_(ExpAtomHelper::EXP_FIND_TYPE[0]), ExpAtomHelper::EXP_FIND_TYPE[1]]]
   #exp_atom_editor_div
     %fieldset
       .toolbar-pf-actions{:style => "margin-left: 20px"}
@@ -45,7 +45,7 @@
         - opts = ["<#{_('Choose')}>"]
         - case exp_model
         - when 'Vm'
-          - opts += exptypes + VM_EXP_TYPES.map { |x| [_(x[0]), x[1]] }
+          - opts += exptypes + ExpAtomHelper::VM_EXP_TYPES.map { |x| [_(x[0]), x[1]] }
         - when 'AuditEvent'
           - opts += [[_('Field'), 'field']]
         - when '_display_filter_'
