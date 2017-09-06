@@ -326,7 +326,7 @@
     this.settings.sortedByTitle = __('Sorted By');
     this.settings.isLoading = false;
     this.settings.scrollElement = MAIN_CONTETN_ID;
-    this.settings.dropDownClass = ['dropup'];
+    this.settings.dropdownClass = ['dropup'];
     this.settings.translateTotalOf = function(start, end, total) {
       if (typeof start !== 'undefined' && typeof end !== 'undefined' && typeof total !== 'undefined') {
         return sprintf(__('%d - %d of %d'), start + 1, end + 1, total);
@@ -363,7 +363,7 @@
     this.$timeout(function() {
       var sortItems = this.$document.getElementsByTagName('miq-sort-items');
       if (sortItems) {
-        angular.element(sortItems).addClass(this.settings.dropDownClass[0]);
+        angular.element(sortItems).addClass(this.settings.dropdownClass[0]);
       }
       $('table td.narrow').addClass('table-view-pf-select').removeClass('narrow');
       var pagination = this.$document.getElementsByClassName('miq-pagination');
