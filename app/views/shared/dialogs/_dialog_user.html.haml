@@ -1,0 +1,8 @@
+.row.wrapper{"ng-controller" => "dialogUserController as vm"}
+  .col-md-12.col-lg-12{'ng-if' => 'vm.dialog'}
+    %dialog-user{"dialog" =>"vm.dialog", "refresh-field" => "vm.refreshField(field)", "on-update" => "vm.setDialogData(data)"}
+
+:javascript
+  ManageIQ.angular.app.value('serviceTemplateId', '#{wf.target.compressed_id}');
+  ManageIQ.angular.app.value('serviceTemplateCatalogId', '#{wf.target.service_template_catalog.compressed_id}');
+  miq_bootstrap('.wrapper');
