@@ -74,11 +74,6 @@ module UiConstants
   EXP_FROM = "FROM"
   EXP_IS = "IS"
 
-  VALID_PERF_PARENTS = {
-    "EmsCluster" => :ems_cluster,
-    "Host"       => :host
-  }
-
   MIQ_AE_COPY_ACTIONS = %w(miq_ae_class_copy miq_ae_instance_copy miq_ae_method_copy)
 
 end
