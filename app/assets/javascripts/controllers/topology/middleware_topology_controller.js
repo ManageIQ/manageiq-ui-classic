@@ -32,7 +32,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
 
   $('input#box_display_names').click(topologyService.showHideNames(vm));
   vm.refresh();
-  var promise = $interval($scope.refresh, 1000 * 60 * 3);
+  var promise = $interval(vm.refresh, 1000 * 60 * 3);
 
   $scope.$on('$destroy', function() {
     $interval.cancel(promise);
@@ -49,38 +49,38 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     });
     added.append('circle')
       .attr('r', function(d) {
-        return self.getCircleDimensions(d).r;
+        return vm.getCircleDimensions(d).r;
       })
       .attr('class', function(d) {
         return topologyService.getItemStatusClass(d);
       })
       .on('contextmenu', function(d) {
-        self.contextMenu(this, d);
+        vm.contextMenu(this, d);
       });
     added.append('title');
     added.on('dblclick', function(d) {
-      return self.dblclick(d);
+      return vm.dblclick(d);
     });
 
     added.append('image')
       .attr('xlink:href', function(d) {
-        var iconInfo = self.getIcon(d);
+        var iconInfo = vm.getIcon(d);
         return (iconInfo.type == 'glyph' ? null : iconInfo.icon);
       })
       .attr('y', function(d) {
-        return self.getCircleDimensions(d).y;
+        return vm.getCircleDimensions(d).y;
       })
       .attr('x', function(d) {
-        return self.getCircleDimensions(d).x;
+        return vm.getCircleDimensions(d).x;
       })
       .attr('height', function(d) {
-        return self.getCircleDimensions(d).height;
+        return vm.getCircleDimensions(d).height;
       })
       .attr('width', function(d) {
-        return self.getCircleDimensions(d).width;
+        return vm.getCircleDimensions(d).width;
       })
       .on('contextmenu', function(d) {
-        self.contextMenu(this, d);
+        vm.contextMenu(this, d);
       });
 
     // attached labels
@@ -95,7 +95,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     // possible glyphs
     added.append('text')
       .each(function(d) {
-        var iconInfo = self.getIcon(d);
+        var iconInfo = vm.getIcon(d);
         if (iconInfo.type != 'glyph') {
           return;
         }
@@ -116,7 +116,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
         }
       })
       .on('contextmenu', function(d) {
-        self.contextMenu(this, d);
+        vm.contextMenu(this, d);
       });
 
     added.selectAll('title').text(function(d) {
@@ -128,7 +128,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     ev.preventDefault();
   });
 
-  self.getIcon = function getIcon(d) {
+  vm.getIcon = function getIcon(d) {
     if (d.item.icon) {
       return {
         'type': 'image',
@@ -139,7 +139,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     return icons[d.item.display_kind];
   };
 
-  self.getCircleDimensions = function getCircleDimensions(d) {
+  vm.getCircleDimensions = function getCircleDimensions(d) {
     var defaultDimensions = topologyService.defaultElementDimensions();
     switch (d.item.kind) {
       case 'MiddlewareManager':
@@ -179,8 +179,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
 
   function getMiddlewareTopologyData(response) {
     var data = response.data;
-
-    var currentSelectedKinds = $scope.kinds;
+    var currentSelectedKinds = vm.kinds;
 
     vm.items = data.data.items;
     vm.relations = data.data.relations;
