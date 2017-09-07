@@ -25,6 +25,8 @@ function genericObjectTableController($timeout) {
   vm.$onInit = function() {
     vm.tableHeaders.push('', '');
 
+    vm.invalidKeyName = __("Invalid name");
+
     if (vm.newRecord) {
       vm.addRow(0, vm.keyType + '0', true);
     }
