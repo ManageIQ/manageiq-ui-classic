@@ -72,6 +72,6 @@
       &nbsp;&nbsp;&nbsp;
       = _('* Set in Time Profile')
     - else
-      - ALL_TIMEZONES.each do |tz|
+      - ViewHelper::ALL_TIMEZONES.each do |tz|
         - if tz[1] == @sb[:options][:tz]
           = h(tz[0])

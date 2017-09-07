@@ -29,7 +29,7 @@
         = _('Time Zone')
       .col-md-10
         = select_tag("tl_#{typ}_tz",
-          options_for_select(ALL_TIMEZONES,
+          options_for_select(ViewHelper::ALL_TIMEZONES,
           @sb[:tl_options][:tz]),
           "data-live-search" => "true",
           "class" => "selectpicker",

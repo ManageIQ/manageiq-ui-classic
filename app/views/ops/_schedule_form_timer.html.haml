@@ -26,7 +26,7 @@
           = _("Time Zone")
         .col-md-10
           = select_tag("time_zone",
-                       options_for_select(ALL_TIMEZONES),
+                       options_for_select(ViewHelper::ALL_TIMEZONES),
                        "ng-model"    => "scheduleModel.time_zone",
                        "checkchange" => "",
                        "data-live-search"            => "true",

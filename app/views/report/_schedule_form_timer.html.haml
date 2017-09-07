@@ -52,7 +52,7 @@
         = _('Time Zone')
       .col-md-8
         = select_tag("time_zone",
-          options_for_select(ALL_TIMEZONES, @edit[:tz]),
+          options_for_select(ViewHelper::ALL_TIMEZONES, @edit[:tz]),
           "data-live-search" => "true",
           :class             => "selectpicker")
         :javascript
