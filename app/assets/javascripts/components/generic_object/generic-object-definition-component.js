@@ -128,6 +128,7 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
         bArrayEmpty = false;
         return false;
       }
+      return true;
     });
     return bArrayEmpty;
   };
@@ -167,10 +168,10 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
   }
 
   function assignObjectToKeyValueArrays(obj, keyArray, valueArray) {
-    if (_.size(obj) == 0) {
+    if (_.size(obj) === 0) {
       keyArray.push('');
     } else {
-      _.forEach(obj, function (value, key) {
+      _.forEach(obj, function(value, key) {
         if (valueArray) {
           keyArray.push(key);
           valueArray.push(value);
@@ -188,7 +189,7 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
   }
 
   function buildOptionObject(optionData, optionObject) {
-    _.forEach(optionData, function (item) {
+    _.forEach(optionData, function(item) {
       optionObject.push({id: item[1], name: item[0]});
     });
   }

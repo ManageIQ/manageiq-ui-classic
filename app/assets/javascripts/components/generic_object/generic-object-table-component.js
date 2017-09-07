@@ -38,8 +38,8 @@ function genericObjectTableController($timeout) {
     vm.keys.push('');
     vm.noOfRows = _.size(vm.keys);
 
-    if (!addFromOtherSource) {
-      $timeout(function () {
+    if (! addFromOtherSource) {
+      $timeout(function() {
         angular.element('#' + element).focus();
       }, -1);
     }
@@ -60,12 +60,11 @@ function genericObjectTableController($timeout) {
   };
 
   vm.tableCellValueChanged = function() {
-    if (vm.values && !angular.equals(_.zipObject(vm.keys, vm.values), vm.origKeysValues)) {
+    if (vm.values && ! angular.equals(_.zipObject(vm.keys, vm.values), vm.origKeysValues)) {
       vm.tableChanged = true;
-    } else if (!vm.values && _.difference(vm.keys, vm.origKeysValues, _.isEqual).length > 0) {
+    } else if (! vm.values && _.difference(vm.keys, vm.origKeysValues, _.isEqual).length > 0) {
       vm.tableChanged = true;
-    }
-    else {
+    } else {
       vm.tableChanged = false;
     }
   };
