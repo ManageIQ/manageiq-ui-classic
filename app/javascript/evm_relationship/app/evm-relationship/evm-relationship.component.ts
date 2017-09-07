@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, DoCheck, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {IServerItem, IServers, ServerId} from '../miq-types';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Store} from '@ngrx/store';
@@ -38,14 +38,14 @@ import {WindowService} from "../common/window-service";
 export class EvmRelationshipComponent implements OnInit, OnDestroy {
   @Input() evmRelationshipFormId;
   originalServerId: ServerId = '';
-  originalServerId$: Observable<ServerId>;
-  loading$: Observable<boolean>;
+  loading$: Observable<boolean>; // not currently used
   servers: IServers;
-  selectedServerId: ServerId = '';
+  serverId: ServerId = '';
   formGroup: FormGroup;
-  serverIdIsOriginal: boolean;
+  serverIdIsOriginal = true;
   private cancelServersSubscription;
   private cancelSelectedIdSubscription;
+  private cancelOriginalServerIdSubscription;
   private cancelServerNameSubscription;
   private cancelEvmDataSubscription;
 
@@ -56,34 +56,44 @@ export class EvmRelationshipComponent implements OnInit, OnDestroy {
       .subscribe(servers => {
         console.log('select servers: ', servers);
         this.servers = servers;
+        this.serverName.setValue(this.originalServerId);
       });
     this.cancelSelectedIdSubscription = this._store.select('app', 'selectedServerId')
       .subscribe(selectedServerId => {
-        this.selectedServerId = selectedServerId;
-        console.log(`selectedServerId changed: ${selectedServerId}`);
+        if(selectedServerId){
+          this.serverId = selectedServerId.selectedServerId;
+          console.log(`selectedServerId changed: ${selectedServerId.selectedServerId}`);
+        }
+      });
+    this.cancelOriginalServerIdSubscription = this._store.select('app', 'originalServerId')
+      .subscribe(originalServerId => {
+        if(originalServerId){
+          this.originalServerId = originalServerId;
+          console.log(`originalServerId changed: ${originalServerId}`);
+        }
       });
     this.cancelEvmDataSubscription = this._store.select('app', 'evmData')
       .subscribe(evmData => {
         if (evmData) {
           this._store.dispatch(new EvmRelationshipServerLoadAction(evmData.cloud_tenant_id));
+          this.originalServerId = evmData.cloud_tenant_id;
         }
       });
-    this.originalServerId$ = _store.select('app', 'originalServerId');
-    this.originalServerId$.subscribe(originalServerId => {
-      console.log(`originalServerId changed: ${originalServerId}`);
-      this.originalServerId = originalServerId;
-    });
     this._store.subscribe(state => {
       console.log('State Change Notification: ', state);
+      this.serverIdIsOriginal = this.hasSelectionChanged();
     });
     this.cancelServerNameSubscription = this.serverName.valueChanges.subscribe((value: any) => {
       console.log(`valueChanges: ${value}`);
       this._store.dispatch(new ChangeSelectedServerIdAction(value));
-      this.selectedServerId = value;
-      this.serverIdIsOriginal = this.originalServerId === this.selectedServerId;
-      console.log(`selectedServerId: ${this.selectedServerId} original: ${this.originalServerId}`);
+      this.serverId = value;
+      console.log(`selectedServerId: ${this.serverId} original: ${this.originalServerId}`);
       console.log(`serverIdIsOriginal: ${this.serverIdIsOriginal}`);
     });
+  }
+
+  hasSelectionChanged(){
+    return (this.originalServerId === this.serverId);
   }
 
   get serverName() {
@@ -91,7 +101,7 @@ export class EvmRelationshipComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(`intializing with originalServerId: ${this.evmRelationshipFormId}`);
+    console.log(`initializing with originalServerId: ${this.evmRelationshipFormId}`);
     this._store.dispatch(new EvmDataLoadAction(this.evmRelationshipFormId));
   }
 
@@ -100,6 +110,7 @@ export class EvmRelationshipComponent implements OnInit, OnDestroy {
     this.cancelServersSubscription();
     this.cancelServerNameSubscription();
     this.cancelEvmDataSubscription();
+    this.cancelOriginalServerIdSubscription();
   }
 
   private createForm() {
@@ -109,14 +120,14 @@ export class EvmRelationshipComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    console.log(`save pressed ${this.evmRelationshipFormId}, changed serverId to: ${this.selectedServerId}`);
+    console.log(`save pressed, evmFormId: ${this.evmRelationshipFormId}, changing serverId to: ${this.serverId}`);
     this._store.dispatch(new EvmRelationshipDataSaveAction(this.evmRelationshipFormId));
   }
 
   reset() {
-    console.log(`reset pressed ${this.selectedServerId} to ${this.originalServerId}`);
-    this._store.dispatch(new EvmRelationshipServerLoadAction(this.originalServerId));
-    this.selectedServerId = this.originalServerId;
+    console.log(`reset pressed: resetting ${this.serverId} to ${this.originalServerId}`);
+    this._store.dispatch(new ChangeSelectedServerIdAction(this.originalServerId));
+    this.serverName.setValue(this.originalServerId);
   }
 
   cancel() {
