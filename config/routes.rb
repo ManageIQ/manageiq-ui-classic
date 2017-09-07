@@ -2704,7 +2704,8 @@ Rails.application.routes.draw do
         ls_select
         ldap_entry_changed
         ls_delete
-      )
+      ) +
+        exp_post
     },
 
     :orchestration_stack      => {

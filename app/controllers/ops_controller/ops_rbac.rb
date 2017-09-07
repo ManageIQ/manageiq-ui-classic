@@ -69,9 +69,9 @@ module OpsController::OpsRbac
   def rbac_group_edit
     assert_privileges("rbac_group_edit")
     case params[:button]
-    when 'cancel'      then rbac_edit_cancel('group')
-    when 'save', 'add' then rbac_edit_save_or_add('group')
-    when 'reset', nil  then rbac_edit_reset(params[:typ], 'group', MiqGroup) # Reset or first time in
+    when 'cancel'            then rbac_edit_cancel('group')
+    when 'save', 'add'       then rbac_edit_save_or_add('group')
+    when 'reset', nil        then rbac_edit_reset(params[:typ], 'group', MiqGroup) # Reset or first time in
     end
   end
 
@@ -442,6 +442,15 @@ module OpsController::OpsRbac
     end
   end
 
+  def rbac_group_filter_expression
+    rbac_group_set_form_vars
+    @changed = session[:changed] = (@edit[:new] != @edit[:current])
+    @expkey = params[:button].to_sym
+    @edit[:filter_expression_table] = exp_build_table_or_nil(@edit[:new][:filter_expression])
+    @in_a_form = true
+    replace_right_cell(:nodetype => x_node)
+  end
+
   def rbac_group_seq_edit_screen
     @edit = {}
     @edit[:new] = {}
@@ -459,6 +468,7 @@ module OpsController::OpsRbac
     session[:edit] = @edit
     session[:changed] = false
   end
+
 
   def move_cols_up
     return unless load_edit("rbac_group_edit__seq", "replace_cell__explorer")
@@ -815,7 +825,7 @@ module OpsController::OpsRbac
   # AJAX driven routine to check for changes in ANY field on the form
   def rbac_field_changed(rec_type)
     id = params[:id].split('__').first # Get the record id
-    id = from_cid(id) unless id == "new" || id == "seq" # Decompress id if not "new"
+    id = from_cid(id) unless id == "new" || id == "seq" || !cid?(id) # Decompress id if not "new"
     return unless load_edit("rbac_#{rec_type}_edit__#{id}", "replace_cell__explorer")
 
     case rec_type
@@ -848,6 +858,8 @@ module OpsController::OpsRbac
         page.replace(@refresh_div,
                      :partial => @refresh_partial,
                      :locals  => {:type => "classifications", :action_url => 'rbac_group_field_changed'}) if @refresh_div
+
+        page.replace("customer_tags_div", :partial => "ops/rbac_group/customer_tags") if params[:use_filter_expression].present?
 
         # Only update description field value if ldap group user field was selected
         page << "$('#description').val('#{j_str(@edit[:new][:ldap_groups_user])}');" if params[:ldap_groups_user]
@@ -906,7 +918,7 @@ module OpsController::OpsRbac
       @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "User"), :name => User.find(from_cid(id)).name}
       rbac_user_get_details(id)
     when "g"
-      @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "MiqGroup"), :name => MiqGroup.find(from_cid(id)).description}
+      @right_cell_text = _("%{model} \"%{name}\"") % {:model => ui_lookup(:model => "MiqGroup"), :name => MiqGroup.find(cid?(id) ? from_cid(id) : id).description}
       @edit = nil
       rbac_group_get_details(id)
     when "ur"
@@ -939,11 +951,14 @@ module OpsController::OpsRbac
   end
 
   def rbac_group_get_details(id)
-    @record = @group = MiqGroup.find_by(:id => from_cid(id))
+    @record = @group = MiqGroup.find_by(:id => cid?(id) ? from_cid(id) : id)
     @belongsto = {}
     @filters = {}
+    @filter_expression = []
+    @use_filter_expression = false
     if @record.present?
       get_tagdata(@group)
+      @use_filter_expression = @group.entitlement[:filter_expression].kind_of?(MiqExpression)
       # Build the belongsto filters hash
       @group.get_belongsto_filters.each do |b| # Go thru the belongsto tags
         bobj = MiqFilter.belongsto2object(b) # Convert to an object
@@ -1143,6 +1158,16 @@ module OpsController::OpsRbac
       end
     end
 
+    if params[:use_filter_expression]
+      @edit[:new][:use_filter_expression] = params[:use_filter_expression]
+      if params[:use_filter_expression] == 'false'
+        @edit[:new][:use_filter_expression] = false
+        rbac_group_right_tree(@edit[:new][:belongsto].keys)
+      elsif params[:use_filter_expression] == 'true'
+        @edit[:use_filter_expression] = true
+      end
+    end
+
     params[:tree_typ] ? params[:tree_typ] + "_tree" : nil
   end
 
@@ -1153,6 +1178,7 @@ module OpsController::OpsRbac
     @edit = {
       :new => {
         :filters     => {},
+        :filter_expression => {},
         :belongsto   => {},
         :description => @group.description,
       },
@@ -1195,9 +1221,31 @@ module OpsController::OpsRbac
     @edit[:projects_tenants].push(["Tenants", all_tenants]) unless all_tenants.blank?
     @edit[:new][:group_tenant] = @group.tenant_id
 
+    rbac_group_filter_expression_vars(:filter_expression, :filter_expression_table)
     @edit[:current] = copy_hash(@edit[:new])
 
     rbac_group_right_tree(@edit[:new][:belongsto].keys)
+  end
+
+  def rbac_group_filter_expression_vars(field_expression, field_expression_table)
+    @edit[:new][field_expression] = @group.entitlement[field_expression].kind_of?(MiqExpression) ?  @group.entitlement[field_expression].exp : nil if @group
+    @edit[:new][:use_filter_expression] = true
+    # Populate exp editor fields for the expression column
+    @edit[field_expression] ||= ApplicationController::Filter::Expression.new
+    @edit[field_expression][:expression] = [] # Store exps in an array
+    if @edit[:new][field_expression].blank?
+      @edit[:new][:use_filter_expression] = false
+      @edit[field_expression][:expression] = {"???" => "???"} # Set as new exp element
+      @edit[:new][field_expression] = copy_hash(@edit[field_expression][:expression]) # Copy to new exp
+    else
+      @edit[field_expression][:expression] = copy_hash(@edit[:new][field_expression])
+    end
+    @edit[field_expression_table] = exp_build_table_or_nil(@edit[field_expression][:expression])
+
+    @expkey = field_expression # Set expression key to expression
+    @edit[field_expression].history.reset(@edit[field_expression][:expression])
+    @edit[field_expression][:exp_table] = exp_build_table(@edit[field_expression][:expression])
+    @edit[field_expression][:exp_model] = @group.class # Set model for the exp editor
   end
 
   # Set group record variables to new values
@@ -1207,6 +1255,8 @@ module OpsController::OpsRbac
     group.miq_user_role = role
     group.tenant = Tenant.find(@edit[:new][:group_tenant]) if @edit[:new][:group_tenant]
     rbac_group_set_filters(group) # Go set the filters for the group
+    rbac_group_set_filter_expression(group) # Go set the filters for the group
+
   end
 
   # Set filters in the group record from the @edit[:new] hash values
@@ -1219,6 +1269,13 @@ module OpsController::OpsRbac
     group.entitlement ||= Entitlement.new
     group.entitlement.set_managed_filters(@set_filter_values)
     group.entitlement.set_belongsto_filters(@edit[:new][:belongsto].values) # Set belongs to to hash values
+  end
+
+  def rbac_group_set_filter_expression(group)
+    group.entitlement ||= Entitlement.new
+    exp_remove_tokens(@edit[:new][:filter_expression])
+    group.entitlement.filter_expression = @edit[:new][:filter_expression]["???"] ? nil : MiqExpression.new(@edit[:new][:filter_expression])
+    #group.save
   end
 
   # Need to make arrays by category containing arrays of items so the filtering logic can apply
@@ -1240,7 +1297,8 @@ module OpsController::OpsRbac
     vmr = @record.settings.fetch_path(:restrictions, :vms) if @record.settings
     @edit[:new][:vm_restriction] = vmr || :none
     @edit[:new][:features] = rbac_expand_features(@record.feature_identifiers).sort
-
+    @expkey = :filter_expression
+    @edit[:filter_expression_table] = exp_build_table_or_nil(@edit[:new][:filter_expression])
     @edit[:current] = copy_hash(@edit[:new])
 
     @role_features = @record.feature_identifiers.sort
@@ -1364,6 +1422,7 @@ module OpsController::OpsRbac
   # Validate some of the role fields
   def rbac_group_validate?
     @assigned_filters = [] if @edit[:new][:filters].empty?
+    @filter_expression = [] if @edit[:new][:filter_expression].empty?
     if @edit[:new][:role].nil? || @edit[:new][:role] == ""
       add_flash(_("A User Group must be assigned a Role"), :error)
       return false

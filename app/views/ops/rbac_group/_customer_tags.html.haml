@@ -1,5 +1,19 @@
-%br
-= _("This user is limited to items with the selected tags.")
-%br
-%br
-= render(:partial => 'shared/tree', :locals => {:tree => @tags_tree, :name => @tags_tree.name})
+#customer_tags_div
+  - url = url_for(:action => 'rbac_group_field_changed', :id => @edit && @edit[:group_id] ? @edit[:group_id] : @record.try(:id) || "new")
+  %br
+  = _("This user is limited to items with the selected tags.")
+  %br
+  %br
+  .form-horizontal
+    .form-group
+      .col-md-4
+        .col-md-8
+          - if @edit
+            = check_box_tag("use_filter_expression", true, @edit[:new][:use_filter_expression], :data => {:on_text => _('Yes'), :off_text => _('No')})
+          :javascript
+            miqInitBootstrapSwitch('use_filter_expression', "#{url}")
+  - if @edit && @edit[:new][:use_filter_expression]
+    = render(:partial => "layouts/group_filter_expression",
+             :locals  => {:id => @edit[:group_id] || "new"})
+  - else
+    = render(:partial => 'shared/tree', :locals => {:tree => @tags_tree, :name => @tags_tree.name})
