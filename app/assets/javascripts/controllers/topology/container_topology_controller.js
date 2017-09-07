@@ -4,16 +4,16 @@ ContainerTopologyCtrl.$inject = ['$scope', '$http', '$interval', 'topologyServic
 function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $window, miqService) {
   ManageIQ.angular.scope = $scope;
   miqHideSearchClearButton();
-  var self = this;
-  $scope.vs = null;
+  var vm = this;
+  vm.vs = null;
   var icons = null;
 
   var d3 = window.d3;
-  $scope.d3 = d3;
+  vm.d3 = d3;
 
-  topologyService.mixinContextMenu(this, $scope);
+  topologyService.mixinContextMenu(vm, vm);
 
-  $scope.refresh = function() {
+  vm.refresh = function() {
     var id, type;
     var pathname = $window.location.pathname.replace(/\/$/, '');
     if (pathname.match('/container_topology/show$')) {
@@ -41,15 +41,15 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
       .catch(miqService.handleFailure);
   };
 
-  $scope.checkboxModel = {
+  vm.checkboxModel = {
     value: false
   };
 
-  $scope.legendTooltip = __("Click here to show/hide entities of this type");
+  vm.legendTooltip = __("Click here to show/hide entities of this type");
 
-  $('input#box_display_names').click(topologyService.showHideNames($scope));
-  $scope.refresh();
-  var promise = $interval($scope.refresh, 1000 * 60 * 3);
+  $('input#box_display_names').click(topologyService.showHideNames(vm));
+  vm.refresh();
+  var promise = $interval(vm.refresh, 1000 * 60 * 3);
 
   $scope.$on('$destroy', function() {
     $interval.cancel(promise);
@@ -66,9 +66,9 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
       If we remove some kinds beforehand, and then try to bring them back we
       get the hash {kind: undefined} instead of {kind: true}.
     */
-    if ($scope.kinds) {
-      Object.keys($scope.kinds).forEach(function (key) {
-        $scope.kinds[key] = true
+    if (vm.kinds) {
+      Object.keys(vm.kinds).forEach(function(key) {
+        vm.kinds[key] = true;
       });
     }
 
@@ -78,24 +78,24 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
 
     added.append("circle")
       .attr("r", function(d) {
-        return self.getDimensions(d).r;
+        return vm.getDimensions(d).r;
       })
       .attr('class', function(d) {
         return topologyService.getItemStatusClass(d);
       })
       .on("contextmenu", function(d) {
-        self.contextMenu(this, d);
+        vm.contextMenu(this, d);
       });
 
     added.append("title");
 
     added.on("dblclick", function(d) {
-      return self.dblclick(d);
+      return vm.dblclick(d);
     });
 
     added.append("image")
       .attr("xlink:href", function (d) {
-        var iconInfo = self.getIcon(d);
+        var iconInfo = vm.getIcon(d);
         switch(iconInfo.type) {
           case 'image':
             return iconInfo.icon;
@@ -104,32 +104,32 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
         }
       })
       .attr("height", function(d) {
-          var iconInfo = self.getIcon(d);
-          if (iconInfo.type != 'image') {
-            return 0;
-          }
-          return 40;
+        var iconInfo = vm.getIcon(d);
+        if (iconInfo.type !== 'image') {
+          return 0;
+        }
+        return 40;
       })
       .attr("width", function(d) {
-        var iconInfo = self.getIcon(d);
-        if (iconInfo.type != 'image') {
+        var iconInfo = vm.getIcon(d);
+        if (iconInfo.type !== 'image') {
           return 0;
         }
         return 40;
       })
       .attr("y", function(d) {
-        return self.getDimensions(d).y;
+        return vm.getDimensions(d).y;
       })
       .attr("x", function(d) {
-        return self.getDimensions(d).x;
+        return vm.getDimensions(d).x;
       })
       .on("contextmenu", function(d) {
-        self.contextMenu(this, d);
+        vm.contextMenu(this, d);
       });
 
     added.append("text")
       .each(function(d) {
-        var iconInfo = self.getIcon(d);
+        var iconInfo = vm.getIcon(d);
         if (iconInfo.type != 'glyph')
           return;
 
@@ -141,13 +141,13 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
       })
 
       .attr("y", function(d) {
-        return self.getDimensions(d).y;
+        return vm.getDimensions(d).y;
       })
       .attr("x", function(d) {
-        return self.getDimensions(d).x;
+        return vm.getDimensions(d).x;
       })
       .on("contextmenu", function(d) {
-        self.contextMenu(this, d);
+        vm.contextMenu(this, d);
       });
 
 
@@ -159,7 +159,7 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
       })
       .attr('class', function() {
          var class_name = "attached-label";
-         if ($scope.checkboxModel.value) {
+         if (vm.checkboxModel.value) {
            return class_name + ' visible';
          } else {
            return class_name;
@@ -170,13 +170,13 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
       return topologyService.tooltip(d).join("\n");
     });
 
-    $scope.vs = vertices;
+    vm.vs = vertices;
 
     /* Don't do default rendering */
     ev.preventDefault();
   });
 
-  this.getIcon = function getIcon(d) {
+  vm.getIcon = function getIcon(d) {
     switch(d.item.kind) {
       case 'ContainerManager':
         return icons[d.item.display_kind];
@@ -185,7 +185,7 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
     }
   };
 
-  this.getDimensions = function getDimensions(d) {
+  vm.getDimensions = function getDimensions(d) {
     var defaultDimensions = topologyService.defaultElementDimensions();
     switch (d.item.kind) {
       case "ContainerManager":
@@ -212,29 +212,32 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
   function getContainerTopologyData(response) {
     var data = response.data;
 
-    var currentSelectedKinds = $scope.kinds;
+    var currentSelectedKinds = vm.kinds;
 
-    $scope.items = data.data.items;
-    $scope.relations = data.data.relations;
-    $scope.kinds = data.data.kinds;
+    vm.items = data.data.items;
+    vm.relations = data.data.relations;
+    // NOTE: $scope.kinds is required by kubernetes-topology-icon
+    vm.kinds = $scope.kinds = data.data.kinds;
     icons = data.data.icons;
 
-    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys($scope.kinds).length)) {
-      $scope.kinds = currentSelectedKinds;
+    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys(vm.kinds).length)) {
+      vm.kinds = currentSelectedKinds;
     } else if (data.data.settings && data.data.settings.containers_max_items) {
       var size_limit = data.data.settings.containers_max_items;
-      var remove_hierarchy = ['Container',
-                              'ContainerGroup',
-                              'ContainerReplicator',
-                              'ContainerService',
-                              'ContainerRoute',
-                              'Host',
-                              'Vm',
-                              'ContainerNode',
-                              'ContainerManager'];
-      $scope.kinds = topologyService.reduce_kinds($scope.items, $scope.kinds, size_limit, remove_hierarchy);
+      var remove_hierarchy = [
+        'Container',
+        'ContainerGroup',
+        'ContainerReplicator',
+        'ContainerService',
+        'ContainerRoute',
+        'Host',
+        'Vm',
+        'ContainerNode',
+        'ContainerManager'
+      ];
+      vm.kinds = topologyService.reduce_kinds(vm.items, vm.kinds, size_limit, remove_hierarchy);
     }
   }
 
-  topologyService.mixinSearch($scope);
+  topologyService.mixinSearch(vm);
 }
