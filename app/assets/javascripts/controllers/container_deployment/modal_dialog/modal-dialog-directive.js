@@ -7,11 +7,11 @@ angular.module('miq.dialogs').directive('miqModal', function () {
     scope: {
       visible: '=',
       modalTitle: '@',
-      showHeader: '@',
-      showClose: '@',
-      modalSize: '@',
-      onShow: '&',
-      onHide: '&',
+      showHeader: '@?',
+      showClose: '@?',
+      modalSize: '@?',
+      onShow: '&?',
+      onHide: '&?',
       onCancel: '&'
     },
     templateUrl: '/static/modal-dialog.html',

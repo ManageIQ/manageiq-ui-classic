@@ -11,7 +11,9 @@
                    'ng-include' => "titleInclude"}
 
   %div{'pf-fixed-accordion' => true,
-       'scroll-selector'    => ".panel-body"}
+       'scroll-selector'    => ".panel-body",
+       'group-height'       => '',
+       'group-class'        => ''}
     .panel-group
       .panel.panel-default{'ng-repeat' => "notificationGroup in notificationGroups track by $index"}
         .panel-heading
