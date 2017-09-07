@@ -19,6 +19,7 @@ class AlertsListController < ApplicationController
   def class_icons
     res = {}
     [
+      'ManageIQ::Providers::Kubernetes::ContainerManager',
       'ManageIQ::Providers::Kubernetes::ContainerManager::ContainerNode',
       'ManageIQ::Providers::Openshift::ContainerManager',
     ].each do |klass|
