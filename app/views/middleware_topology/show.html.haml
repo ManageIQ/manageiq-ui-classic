@@ -1,8 +1,8 @@
 - tooltipOptions = {"tooltip-placement" => "bottom", "tooltip" => "{{legendTooltip}}"}
-.topology{'ng-controller' => "middlewareTopologyController"}
+.topology{'ng-controller' => "middlewareTopologyController as vm"}
   .legend.middleware
     %label#selected
-    %div{'ng-if' => "kinds"}
+    %div{'ng-if' => "vm.kinds"}
       %kubernetes-topology-icon{tooltipOptions, :kind => "MiddlewareServer"}
         %label
           %img{:src => image_path('svg/vendor-wildfly.svg'), :width => 18, :height => 18}
@@ -43,9 +43,9 @@
     %strong
       = _("Click on the legend to show/hide entities, and double click on the entities in the graph to navigate to their summary pages.")
 
-  = render :partial => "shared/topology/not_found"
+  = render :partial => "shared/topology/not_found_vm"
 
-  %kubernetes-topology-graph.middleware{:items => "items", :relations => "relations", :kinds => "kinds"}
+  %kubernetes-topology-graph.middleware{:items => "vm.items", :relations => "vm.relations", :kinds => "vm.kinds"}
 
 :javascript
   miq_bootstrap('.topology');

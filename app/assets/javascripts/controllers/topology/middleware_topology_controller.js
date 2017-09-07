@@ -4,15 +4,15 @@ MiddlewareTopologyCtrl.$inject = ['$scope', '$http', '$interval', '$location', '
 function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologyService, miqService) {
   ManageIQ.angular.scope = $scope;
   miqHideSearchClearButton();
-  var self = this;
-  $scope.vs = null;
+  var vm = this;
+  vm.vs = null;
   var d3 = window.d3;
-  $scope.d3 = d3;
+  vm.d3 = d3;
   var icons;
 
-  topologyService.mixinContextMenu(this, $scope);
+  topologyService.mixinContextMenu(vm, vm);
 
-  $scope.refresh = function() {
+  vm.refresh = function() {
     var id;
     if ($location.absUrl().match('show/$') || $location.absUrl().match('show$')) {
       id = '';
@@ -25,13 +25,13 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
       .catch(miqService.handleFailure);
   };
 
-  $scope.checkboxModel = {
+  vm.checkboxModel = {
     value: false,
   };
-  $scope.legendTooltip = 'Click here to show/hide entities of this type';
+  vm.legendTooltip = 'Click here to show/hide entities of this type';
 
-  $('input#box_display_names').click(topologyService.showHideNames($scope));
-  $scope.refresh();
+  $('input#box_display_names').click(topologyService.showHideNames(vm));
+  vm.refresh();
   var promise = $interval($scope.refresh, 1000 * 60 * 3);
 
   $scope.$on('$destroy', function() {
@@ -90,7 +90,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
       .text(function(d) {
         return d.item.name;
       })
-      .attr('class', 'attached-label' + ($scope.checkboxModel.value ? ' visible' : ''));
+      .attr('class', 'attached-label' + (vm.checkboxModel.value ? ' visible' : ''));
 
     // possible glyphs
     added.append('text')
@@ -122,7 +122,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     added.selectAll('title').text(function(d) {
       return topologyService.tooltip(d).join('\n');
     });
-    $scope.vs = vertices;
+    vm.vs = vertices;
 
     /* Don't do default rendering */
     ev.preventDefault();
@@ -182,14 +182,14 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
 
     var currentSelectedKinds = $scope.kinds;
 
-    $scope.items = data.data.items;
-    $scope.relations = data.data.relations;
-    $scope.kinds = data.data.kinds;
+    vm.items = data.data.items;
+    vm.relations = data.data.relations;
+    vm.kinds = $scope.kinds = data.data.kinds;
     icons = data.data.icons;
-    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys($scope.kinds).length)) {
-      $scope.kinds = currentSelectedKinds;
+    if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys(vm.kinds).length)) {
+      vm.kinds = currentSelectedKinds;
     }
   }
 
-  topologyService.mixinSearch($scope);
+  topologyService.mixinSearch(vm);
 }
