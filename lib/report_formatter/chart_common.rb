@@ -251,7 +251,7 @@ module ReportFormatter
 
     def keep_and_show_other
       # Show other sum value by default
-      mri.graph.kind_of?(Hash) ? [mri.graph[:count].to_i, mri.graph[:other]] : [GRAPH_MAX_COUNT, true]
+      mri.graph.kind_of?(Hash) ? [mri.graph[:count].to_i, mri.graph[:other]] : [ReportController::Reports::Editor::GRAPH_MAX_COUNT, true]
     end
 
     def build_reporting_chart_dim2

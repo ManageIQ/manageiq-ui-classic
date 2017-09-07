@@ -22,6 +22,7 @@ module ReportController::Reports::Editor
   ).freeze
 
   MAX_REPORT_COLUMNS = 100 # Default maximum number of columns in a report
+  GRAPH_MAX_COUNT = 10
 
   CHAREGEBACK_ALLOCATED_METHODS = {
     :max => N_('Maximum'),
