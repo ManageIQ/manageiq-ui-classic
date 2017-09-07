@@ -1,7 +1,7 @@
 %form.form-horizontal{"name"         => "angularForm",
                       "model-copy"   => "vm.modelCopy",
                       "model"        => "vm.genericObjectDefinitionModel",
-                      "ng-show"      => "vm.afterGet",
+                      "ng-show"      => "vm.afterGet && vm.tableRendered",
                       "ng-cloak"     => "",
                       "form-changed" => true,
                       "miq-form"     => true}
@@ -43,6 +43,7 @@
                                       "required-rule"    => "vm.noOfRows > 1",
                                       "new-record"       => "vm.newRecord",
                                       "no-of-rows"       => "vm.genericObjectDefinitionModel.noOfAttributeRows",
+                                      "table-rendered"   => "vm.tableRendered",
                                       "angular-form"     => "angularForm",
                                       "value-options"    => "vm.types"}
   .form-group
@@ -58,6 +59,7 @@
                                       "required-rule"    => "vm.noOfRows > 1",
                                       "new-record"       => "vm.newRecord",
                                       "no-of-rows"       => "vm.genericObjectDefinitionModel.noOfAssociationRows",
+                                      "table-rendered"   => "vm.tableRendered",
                                       "angular-form"     => "angularForm",
                                       "value-options"    => "vm.classes"}
   .form-group{"ng-class" => "{'has-error': vm.methodsArrayEmpty()}"}
@@ -72,6 +74,7 @@
                                       "required-rule"    => "vm.noOfRows > 0",
                                       "new-record"       => "vm.newRecord",
                                       "no-of-rows"       => "vm.genericObjectDefinitionModel.noOfMethodRows",
+                                      "table-rendered"   => "vm.tableRendered",
                                       "angular-form"     => "angularForm"}
       %span.help-block{"ng-show" => "vm.methodsArrayEmpty()"}
         = _("At least one Method name is required")

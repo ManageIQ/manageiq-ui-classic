@@ -39,6 +39,8 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
       methodsTableChanged: false,
     };
 
+    vm.tableRendered = false;
+
     var optionsPromise = API.options('/api/generic_object_definitions/')
       .then(getGenericObjectDefinitionOptions)
       .catch(miqService.handleFailure);

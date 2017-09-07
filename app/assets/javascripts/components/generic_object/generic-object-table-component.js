@@ -10,6 +10,7 @@ ManageIQ.angular.app.component('genericObjectTableComponent', {
     origKeysValues: '=',
     tableChanged: '=',
     requiredRule: '@?',
+    tableRendered: '=',
     angularForm: '=',
   },
   controllerAs: 'vm',
@@ -26,6 +27,7 @@ function genericObjectTableController($timeout) {
     vm.tableHeaders.push('', '');
 
     vm.invalidKeyName = __("Invalid name");
+    vm.tableRendered = true;
 
     if (vm.newRecord) {
       vm.addRow(0, vm.keyType + '0', true);
