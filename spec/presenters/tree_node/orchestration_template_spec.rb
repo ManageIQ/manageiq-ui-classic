@@ -4,7 +4,7 @@ describe TreeNode::OrchestrationTemplate do
   subject { described_class.new(object, nil, {}) }
 
   {
-    :orchestration_template_cfn                       => %w(OrchestrationTemplateCfn cfn),
+    :orchestration_template_cfn                       => %w(ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate cfn),
     :orchestration_template_hot_with_content          => %w(OrchestrationTemplateHot hot),
     :orchestration_template_azure_with_content        => %w(OrchestrationTemplateAzure azure),
     :orchestration_template_vnfd_with_content         => %w(OrchestrationTemplateVnfd vnfd),
