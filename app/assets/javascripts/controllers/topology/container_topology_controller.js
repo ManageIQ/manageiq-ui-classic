@@ -14,7 +14,9 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
   topologyService.mixinContextMenu(vm, vm);
 
   vm.refresh = function() {
-    var id, type;
+    var id;
+    var type;
+    var arr;
     var pathname = $window.location.pathname.replace(/\/$/, '');
     if (pathname.match('/container_topology/show$')) {
       // specifically the container_topology page - all container ems's
@@ -23,15 +25,15 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
     } else if (pathname.match('/(.+)/show/([0-9]+)')) {
       // any container entity except the ems
       // search for pattern ^/<controller>/show/<id>$ in the pathname - /container_project/show/11
-      var arr = pathname.match('/(.+)/show/([0-9]+)');
+      arr = pathname.match('/(.+)/show/([0-9]+)');
       type = arr[1] + '_topology';
-      id = '/' + arr[2]
+      id = '/' + arr[2];
     } else if (pathname.match('/(.+)/([0-9]+)')) {
       // single entity topology of ems_container
       // search for pattern ^/<controller>/<id>$ in the pathname - /ems_container/4
-      var arr = pathname.match('/(.+)/([0-9]+)');
+      arr = pathname.match('/(.+)/([0-9]+)');
       type = 'container_topology';
-      id = '/' + arr[2]
+      id = '/' + arr[2];
     }
 
     var url = '/' + type + '/data' + id;
@@ -94,14 +96,9 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
     });
 
     added.append("image")
-      .attr("xlink:href", function (d) {
+      .attr("xlink:href", function(d) {
         var iconInfo = vm.getIcon(d);
-        switch(iconInfo.type) {
-          case 'image':
-            return iconInfo.icon;
-          case "glyph":
-            return null;
-        }
+        return iconInfo.type === 'image' ? iconInfo.icon : null;
       })
       .attr("height", function(d) {
         var iconInfo = vm.getIcon(d);
@@ -158,31 +155,20 @@ function ContainerTopologyCtrl($scope, $http, $interval, topologyService, $windo
         return d.item.name;
       })
       .attr('class', function() {
-         var class_name = "attached-label";
-         if (vm.checkboxModel.value) {
-           return class_name + ' visible';
-         } else {
-           return class_name;
-         }
+        var class_name = "attached-label";
+        return vm.checkboxModel.value ? class_name + ' visible' : class_name;
       });
 
     added.selectAll("title").text(function(d) {
       return topologyService.tooltip(d).join("\n");
     });
-
     vm.vs = vertices;
-
     /* Don't do default rendering */
     ev.preventDefault();
   });
 
   vm.getIcon = function getIcon(d) {
-    switch(d.item.kind) {
-      case 'ContainerManager':
-        return icons[d.item.display_kind];
-      default:
-        return icons[d.item.kind];
-    }
+    return d.item.kind === 'ContainerManager' ? icons[d.item.display_kind] : icons[d.item.kind];
   };
 
   vm.getDimensions = function getDimensions(d) {

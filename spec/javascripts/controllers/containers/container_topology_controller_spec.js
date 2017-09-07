@@ -1,5 +1,8 @@
 describe('containerTopologyController', function() {
-    var scope, $controller, $httpBackend;
+    var scope;
+    var $controller;
+    var $httpBackend;
+    var ctrl;
     var mock_data =  getJSONFixture('container_topology_response.json');
     var replicator = {
         id: "396086e5-7b0d-11e5-8286-18037327aaeb",
@@ -37,7 +40,6 @@ describe('containerTopologyController', function() {
             id: "3",
         }
     };
-    var ctrl;
 
     beforeEach(module('ManageIQ'));
 
@@ -58,11 +60,7 @@ describe('containerTopologyController', function() {
 
       $httpBackend = _$httpBackend_;
       $httpBackend.when('GET','/container_topology/data/1').respond(mock_data);
-      ctrl = _$controller_('containerTopologyController',
-        {
-          $scope: scope,
-        }
-      );
+      ctrl = _$controller_('containerTopologyController', {$scope: scope});
       $httpBackend.flush();
     }));
 
@@ -73,6 +71,7 @@ describe('containerTopologyController', function() {
 
     describe('data loads successfully', function() {
       it('in all main objects', function() {
+        console.log('controller: ', ctrl);
         expect(ctrl.items).toBeDefined();
         expect(ctrl.relations).toBeDefined();
         expect(ctrl.kinds).toBeDefined();
