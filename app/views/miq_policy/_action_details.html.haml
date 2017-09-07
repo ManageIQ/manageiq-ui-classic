@@ -55,7 +55,7 @@
             .form-group
               %label.control-label.col-md-2= _('Delete if older than')
               .col-md-8
-                %p.form-control-static= h(SNAPSHOT_AGES[@action.options[:age]])
+                %p.form-control-static= h(MiqPolicyHelper::SNAPSHOT_AGES[@action.options[:age]])
 
           %hr
         - when "custom_automation"
