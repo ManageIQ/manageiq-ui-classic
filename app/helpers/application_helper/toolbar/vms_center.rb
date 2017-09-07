@@ -3,8 +3,7 @@ class ApplicationHelper::Toolbar::VmsCenter < ApplicationHelper::Toolbar::Basic
     select(
       :vm_vmdb_choice,
       'fa fa-cog fa-lg',
-      t = N_('Configuration'),
-      t,
+      N_('Configuration'),
       :enabled => false,
       :onwhen  => "1+",
       :items   => [
@@ -45,8 +44,7 @@ class ApplicationHelper::Toolbar::VmsCenter < ApplicationHelper::Toolbar::Basic
         button(
           :vm_delete,
           'pficon pficon-delete fa-lg',
-          t = N_('Remove selected items from Inventory'),
-          t,
+          N_('Remove selected items from Inventory'),
           :url_parms => "main_div",
           :confirm   => N_("Warning: The selected items and ALL of their components will be permanently removed!"),
           :enabled   => false,
@@ -59,8 +57,7 @@ class ApplicationHelper::Toolbar::VmsCenter < ApplicationHelper::Toolbar::Basic
     select(
       :vm_policy_choice,
       'fa fa-shield fa-lg',
-      t = N_('Policy'),
-      t,
+      N_('Policy'),
       :enabled => false,
       :onwhen  => "1+",
       :items   => [
@@ -105,8 +102,7 @@ class ApplicationHelper::Toolbar::VmsCenter < ApplicationHelper::Toolbar::Basic
     select(
       :vm_lifecycle_choice,
       'fa fa-recycle fa-lg',
-      t = N_('Lifecycle'),
-      t,
+      N_('Lifecycle'),
       :items => [
         button(
           :vm_miq_request_new,
