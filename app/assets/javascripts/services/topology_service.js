@@ -101,11 +101,10 @@ ManageIQ.angular.app.service('topologyService', function() {
   this.searchNode = function(svg, query) {
     var nodes = svg.selectAll('g');
     nodes.style('opacity', '1');
-
     var found = true;
     if (query !== '') {
       var selected = nodes.filter(function(d) {
-        return d.item.name.indexOf(query) === -1;
+        return d.item.name.toLowerCase().indexOf(query.toLowerCase()) === -1;
       });
       selected.style('opacity', '0.2');
 
