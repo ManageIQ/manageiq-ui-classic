@@ -267,15 +267,15 @@
       %label
         = _("Input Parameters")
     .col-md-6
-      %table.table
+      %table.table.table-bordered.table-striped
         %tr
           %td
             %input{:type         => "text",
                    'ng-model'    => "#{ng_model}.#{prefix}_key",
                    :name         => "#{prefix}_key",
-                   "placeholder" => "Variable",
+                   "placeholder" => "Input Name",
                    "checkchange" => ""}
-            %span.help-block{"ng-show" => "(#{ng_model}.#{prefix}_key === '' && #{ng_model}.#{prefix}_value !== '')"}
+            %span.help-block{"ng-show" => "#{ng_model}.#{prefix}_key === ''"}
               = _("Required")
           %td
             %input{:type         => "text",
@@ -289,21 +289,18 @@
                    'ng-if'       => "#{ng_model}.#{prefix}_type == 'password'",
                    'ng-model'    => "#{ng_model}.#{prefix}_value",
                    "placeholder" => placeholder_if_present("#{ng_model}.#{prefix}_value"),
-                   "ng-change" => "",
-                   "miqrequired" => ""}
-            %span.help-block{"ng-show" => "(#{ng_model}.#{prefix}_key !== '' && #{ng_model}.#{prefix}_value === '')"}
-              = _("Required")
+                   "ng-change" => ""}
           %td
             %select{"ng-model" => "#{ng_model}.#{prefix}_type",
                     "name"       => "#{prefix}_type",
                     'ng-options' => "v as v for v in #{ng_model}.available_datatypes",
                     'ng-change'  => '',
                     "pf-select"  => true}
-          %td
+          %td{"ng-if" => "#{ng_model}.#{prefix}_key != ''"}
             %button{:class     => "btn btn-link",
                     :type      => "button",
                     "ng-click" => "vm.addKeyValue('#{prefix}')",
-                    "ng-if"    => "(#{ng_model}.#{prefix}_key != '' && #{ng_model}.#{prefix}_value != '')"}
+                    "ng-if"    => "#{ng_model}.#{prefix}_key != ''"}
               %span{:class => "fa fa-plus tag-add"}
 
     #inputs_div
@@ -337,15 +334,13 @@
                                       :name         => "key_value",
                                       'ng-if'       => "#{ng_model}.key_type != 'password'",
                                       'ng-model'    => "#{ng_model}.key_value",
-                                      "ng-change" => "",
-                                      "miqrequired" => ""}
+                                      "ng-change" => ""}
                   %input.form-control{"type"        => "password",
                                       :name         => "key_value",
                                       'ng-if'       => "#{ng_model}.key_type == 'password'",
                                       'ng-model'    => "#{ng_model}.key_value",
                                       "placeholder" => placeholder_if_present("#{ng_model}.key_value"),
-                                      "ng-change" => "",
-                                      "miqrequired" => ""}
+                                      "ng-change" => ""}
                 %td{"ng-if" => "!#{ng_model}.#{prefix}_editMode || (#{ng_model}.#{prefix}_editMode && $index !== #{ng_model}.s_index)"}
                   {{arr[2]}}
                 %td{"ng-if" => "#{ng_model}.#{prefix}_editMode && $index === #{ng_model}.s_index"}
