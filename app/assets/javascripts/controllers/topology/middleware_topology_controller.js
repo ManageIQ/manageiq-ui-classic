@@ -65,7 +65,7 @@ function MiddlewareTopologyCtrl($scope, $http, $interval, $location, topologySer
     added.append('image')
       .attr('xlink:href', function(d) {
         var iconInfo = vm.getIcon(d);
-        return (iconInfo.type == 'glyph' ? null : iconInfo.icon);
+        return (iconInfo.type === 'glyph' ? null : iconInfo.icon);
       })
       .attr('y', function(d) {
         return vm.getCircleDimensions(d).y;
