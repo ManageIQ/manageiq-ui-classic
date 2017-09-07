@@ -113,6 +113,17 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
       .catch(miqService.handleFailure);
   };
 
+  vm.methodsArrayEmpty = function() {
+    var bArrayEmpty = true;
+    _.forEach(vm.genericObjectDefinitionModel.method_names, function(item) {
+      if (item !== '' && item !== null && item !== undefined) {
+        bArrayEmpty = false;
+        return false;
+      }
+    });
+    return bArrayEmpty;
+  };
+
   // private functions
   function getGenericObjectDefinitionFormData(response) {
     Object.assign(vm.genericObjectDefinitionModel, response);
