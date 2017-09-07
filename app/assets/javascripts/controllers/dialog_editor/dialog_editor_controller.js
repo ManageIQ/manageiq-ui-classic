@@ -5,10 +5,10 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
     var dialogInitContent = {
       'content': [{
         'dialog_tabs': [{
-          'label': 'New tab',
+          'label': __('New tab'),
           'position': 0,
           'dialog_groups': [{
-            'label': 'New box',
+            'label': __('New section'),
             'position': 0,
             'dialog_fields': []
           }],
