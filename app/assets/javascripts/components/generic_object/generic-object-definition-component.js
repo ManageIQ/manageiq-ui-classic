@@ -80,7 +80,17 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
     miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
+  vm.saveClicked = function() {
+    var saveMsg = sprintf(__('%s \"%s\" has been successfully saved.'), vm.entity, vm.genericObjectDefinitionModel.name);
+    vm.saveWithAPI('put', '/api/generic_object_definitions/' + vm.recordId, vm.prepSaveObject(), saveMsg);
+  };
+
   vm.addClicked = function() {
+    var saveMsg = sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.genericObjectDefinitionModel.name);
+    vm.saveWithAPI('post', '/api/generic_object_definitions/', vm.prepSaveObject(), saveMsg);
+  };
+
+  vm.prepSaveObject = function() {
     vm.genericObjectDefinitionModel.properties.attributes = {};
     vm.genericObjectDefinitionModel.properties.associations = {};
     vm.genericObjectDefinitionModel.properties.methods = [];
@@ -95,15 +105,11 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
 
     vm.genericObjectDefinitionModel.properties.methods = vm.genericObjectDefinitionModel.method_names;
 
-    var saveObject = {
+    return {
       name: vm.genericObjectDefinitionModel.name,
       description: vm.genericObjectDefinitionModel.description,
       properties: vm.genericObjectDefinitionModel.properties,
     };
-
-    var saveMsg = sprintf(__('%s \"%s\" has been successfully added.'), vm.entity, vm.genericObjectDefinitionModel.name);
-
-    vm.saveWithAPI('post', '/api/generic_object_definitions/', saveObject, saveMsg);
   };
 
   vm.saveWithAPI = function(method, url, saveObject, saveMsg) {
