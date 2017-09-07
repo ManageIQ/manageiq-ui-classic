@@ -1,8 +1,8 @@
 - tooltip_options = {"tooltip-placement" => "bottom", "tooltip" => "{{legendTooltip}}"}
-.topology{'ng-controller' => "containerTopologyController"}
+.topology{'ng-controller' => "containerTopologyController as vm"}
   .legend
     %label#selected
-    %div{'ng-if' => "kinds"}
+    %div{'ng-if' => "vm.kinds"}
       %kubernetes-topology-icon{tooltip_options, :kind => "ContainerReplicator"}
         %label
           %i.pficon.pficon-replicator
@@ -50,9 +50,9 @@
       = _("Note: displaying a very large number of objects in the topology display can adversely affect the performance of some web browsers.")
 
 
-  = render :partial => "shared/topology/not_found"
+  = render :partial => "shared/topology/not_found_vm"
 
-  %kubernetes-topology-graph{:items => "items", :relations => "relations", :kinds => "kinds"}
+  %kubernetes-topology-graph{:items => "vm.items", :relations => "vm.relations", :kinds => "vm.kinds"}
 
 :javascript
   miq_bootstrap('.topology');
