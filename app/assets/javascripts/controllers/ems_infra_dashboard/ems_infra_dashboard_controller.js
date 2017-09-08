@@ -1,7 +1,7 @@
 /* global miqHttpInject */
 
-  ManageIQ.angular.app.controller('emsInfraDashboardController', ['$scope', 'infraDashboardUtilsFactory', 'infraChartsMixin', '$http', '$interval', '$window', 'miqService',
-    function($scope, infraDashboardUtilsFactory, infraChartsMixin, $http, $interval, $window, miqService) {
+  ManageIQ.angular.app.controller('emsInfraDashboardController', ['$scope', 'infraDashboardUtilsFactory', 'infraChartsMixin', 'dashboardService',
+    function($scope, infraDashboardUtilsFactory, infraChartsMixin, dashboardService) {
       document.getElementById("center_div").className += " miq-body";
 
       // Obj-status cards init
@@ -52,28 +52,6 @@
         chartId: 'memoryDonutChart',
         thresholds: { 'warning': '60', 'error': '90' },
       };
-
-      $scope.refresh = function() {
-        // get the pathname and remove trailing / if exist
-        var pathname = $window.location.pathname.replace(/\/$/, '');
-        if (pathname.match(/show$/)) {
-          $scope.id = '';
-        } else {
-          // search for pattern ^/<controler>/<id>$ in the pathname
-          $scope.id = '/' + (/^\/[^\/]+\/(\d+)$/.exec(pathname)[1]);
-        }
-
-        var url = '/ems_infra_dashboard/data' + $scope.id;
-        $http.get(url)
-          .then(getEmsInfraDashboardData)
-          .catch(miqService.handleFailure);
-      };
-      $scope.refresh();
-      var promise = $interval($scope.refresh, 1000 * 60 * 3);
-
-      $scope.$on('$destroy', function() {
-        $interval.cancel(promise);
-      });
 
       function getEmsInfraDashboardData(response) {
         'use strict';
@@ -148,4 +126,6 @@
         // Trend lines data
         $scope.loadingDone = true;
       }
+
+      dashboardService.autoUpdateDashboard($scope, '/ems_infra_dashboard/data', getEmsInfraDashboardData);
     }]);

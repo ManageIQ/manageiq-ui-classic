@@ -1,7 +1,7 @@
 /* global miqHttpInject */
 
-ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope', 'dashboardUtilsFactory', 'chartsMixin', '$http', '$interval', '$window', 'miqService',
-  function($scope, dashboardUtilsFactory, chartsMixin, $http, $interval, $window, miqService) {
+ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope', 'dashboardUtilsFactory', 'chartsMixin', 'dashboardService',
+  function($scope, dashboardUtilsFactory, chartsMixin, dashboardService) {
     document.getElementById("center_div").className += " miq-body";
 
     // Obj-status cards init
@@ -20,29 +20,6 @@ ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope'
     $scope.memoryUsageConfig = chartsMixin.chartConfig.memoryUsageConfig;
     $scope.memoryUsageConfig.layout = 'compact';
     $scope.memoryUsageConfig.title = 'Memory Utilization';
-
-    $scope.refresh = function() {
-      // get the pathname and remove trailing / if exist
-      var pathname = $window.location.pathname.replace(/\/$/, '');
-
-      if (pathname.match(/show$/)) {
-        $scope.id = '';
-      } else {
-        // search for pattern ^/<controler>/<id>$ in the pathname
-        $scope.id = '/' + (/^\/[^\/]+\/show\/(\d+)/.exec(pathname)[1]);
-      }
-
-      var url = '/container_dashboard/project_data' + $scope.id;
-      $http.get(url)
-        .then(getContainerDashboardData)
-        .catch(miqService.handleFailure);
-    };
-    $scope.refresh();
-    var promise = $interval($scope.refresh, 1000 * 60 * 3);
-
-    $scope.$on('$destroy', function() {
-      $interval.cancel(promise);
-    });
 
     function getContainerDashboardData(response) {
       'use strict';
@@ -148,4 +125,6 @@ ManageIQ.angular.app.controller('containerProjectDashboardController', ['$scope'
 
       $scope.loadingDone = true;
     }
+
+    dashboardService.autoUpdateDashboard($scope, '/container_dashboard/project_data', getContainerDashboardData);
   }]);
