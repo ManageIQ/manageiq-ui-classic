@@ -33,7 +33,7 @@ class ContainerDashboardService
 
     {
       :nodes      => {
-        :count        => @ems.present? ? @ems.container_nodes.count : ContainerNode.count,
+        :count        => @ems.present? ? @ems.container_nodes.count : ContainerNode.active.count,
         :errorCount   => 0,
         :warningCount => 0,
         :href         => get_url_to_entity(:container_node)
@@ -148,7 +148,7 @@ class ContainerDashboardService
   end
 
   def realtime_heatmaps
-    node_ids = @ems.container_nodes if @ems.present?
+    node_ids = @ems.present? ? @ems.container_nodes : ContainerNode.active
     metrics = Metric::Helper.latest_metrics(ContainerNode.name, REALTIME_TIME_RANGE.minutes.ago.utc, node_ids)
     metrics = metrics.includes(:resource)
     metrics = metrics.includes(:resource => [:ext_management_system]) unless @ems.present?
@@ -157,7 +157,7 @@ class ContainerDashboardService
 
   def hourly_heatmaps
     # Get latest hourly rollup for each node.
-    node_ids = @ems.container_nodes if @ems.present?
+    node_ids = @ems.present? ? @ems.container_nodes : ContainerNode.active
     metrics = MetricRollup.latest_rollups(ContainerNode.name, node_ids)
     metrics = metrics.where('timestamp > ?', 1.day.ago.utc).includes(:resource)
     metrics = metrics.includes(:resource => [:ext_management_system]) unless @ems.present?
