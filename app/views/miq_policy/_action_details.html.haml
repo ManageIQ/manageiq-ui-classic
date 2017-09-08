@@ -64,33 +64,31 @@
           .form-horizontal
             .form-group
               .col-md-8
-                %fieldset
-                  %h3
-                    = _('Object Details')
-                  .form-horizontal
-                    .form-group
-                      %label.control-label.col-md-2
-                        = _('Starting Message')
-                      .col-md-8
-                        = h(@action.options[:ae_message])
-                    .form-group
-                      %label.control-label.col-md-2
-                        = _('Request')
-                      .col-md-8
-                        = h(@action.options[:ae_request])
-                %fieldset
-                  %h3
-                    = _('Attribute/Value Pairs')
-                  .form-horizontal
-                    - if !@action.options[:ae_hash].blank?
-                      - @action.options[:ae_hash].each do |k, v|
-                        .form-group
-                          %label.control-label.col-md-2
-                            = h(k)
-                          .col-md-8
-                            = h(v)
-                    - else
-                      = _('No Attribute/Value Pairs found')
+                %h4
+                  = _('Object Details')
+                .form-horizontal
+                  .form-group
+                    %label.control-label.col-md-2
+                      = _('Starting Message')
+                    .col-md-8
+                      = h(@action.options[:ae_message])
+                  .form-group
+                    %label.control-label.col-md-2
+                      = _('Request')
+                    .col-md-8
+                      = h(@action.options[:ae_request])
+                %h4
+                  = _('Attribute/Value Pairs')
+                .form-horizontal
+                  - if !@action.options[:ae_hash].blank?
+                    - @action.options[:ae_hash].each do |k, v|
+                      .form-group
+                        %label.control-label.col-md-2
+                          = h(k)
+                        .col-md-8
+                          = h(v)
+                  - else
+                    = _('No Attribute/Value Pairs found')
           %hr
         - when "email"
           %h3
