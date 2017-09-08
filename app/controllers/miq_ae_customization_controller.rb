@@ -422,7 +422,7 @@ class MiqAeCustomizationController < ApplicationController
       @right_cell_text = right_cell_text_for_node(@custom_button, "CustomButton")
       presenter.update(:main_div, render_proc[:partial => "shared/buttons/ab_form"])
     when 'group_edit'
-      @right_cell_text = right_cell_text_for_node(@custom_button_set, "CustomButonSet")
+      @right_cell_text = right_cell_text_for_node(@custom_button_set, "CustomButtonSet")
     when 'group_reorder'
       @right_cell_text = _("%{models} Group Reorder") % {:models => ui_lookup(:models => "CustomButton")}
     end
