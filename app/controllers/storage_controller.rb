@@ -396,7 +396,7 @@ class StorageController < ApplicationController
     update_partials(record_showing, presenter)
     replace_search_box(presenter)
     handle_bottom_cell(presenter)
-    replace_trees_by_presenter(presenter, trees)
+    reload_trees_by_presenter(presenter, trees)
     rebuild_toolbars(record_showing, presenter)
     case x_active_tree
     when :storage_tree

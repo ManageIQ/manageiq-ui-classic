@@ -2220,20 +2220,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def replace_trees_by_presenter(presenter, trees)
-    trees.each_pair do |name, tree|
+  def reload_trees_by_presenter(presenter, trees)
+    trees.each_pair do |_, tree|
       next unless tree.present?
-
-      presenter.replace(
-        "#{name}_tree_div",
-        render_to_string(
-          :partial => 'shared/tree',
-          :locals  => {
-            :tree => tree,
-            :name => tree.name.to_s
-          }
-        )
-      )
+      presenter.reload_tree(tree.name, tree.locals_for_render[:bs_tree])
     end
   end
 

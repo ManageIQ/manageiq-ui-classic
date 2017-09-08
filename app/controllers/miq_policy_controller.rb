@@ -522,7 +522,7 @@ class MiqPolicyController < ApplicationController
         raise _("unknown tree in replace_trees: %{name}") % {name => name}
       end
     end
-    replace_trees_by_presenter(presenter, trees)
+    reload_trees_by_presenter(presenter, trees)
 
     if params[:action].ends_with?('_delete') &&
        !x_node.starts_with?('p') &&

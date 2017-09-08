@@ -326,7 +326,7 @@ class ServiceController < ApplicationController
     )
 
     if Array(replace_trees).include?(:svcs)
-      replace_trees_by_presenter(presenter, :svcs => build_svcs_tree)
+      reload_trees_by_presenter(presenter, :svcs => build_svcs_tree)
     end
 
     # Replace right cell divs

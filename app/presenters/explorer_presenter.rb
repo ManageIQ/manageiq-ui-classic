@@ -68,6 +68,7 @@ class ExplorerPresenter
       :element_updates      => {},
       :replace_partials     => {},
       :reload_toolbars      => {},
+      :reload_trees         => {},
       :exp                  => {},
       :osf_node             => '',
       :show_miq_buttons     => false,
@@ -139,6 +140,10 @@ class ExplorerPresenter
       @options[:reload_toolbars][div_name] = toolbar_data
     end
     self
+  end
+
+  def reload_tree(name, data)
+    @options[:reload_trees][name] = data
   end
 
   def replace(div_name, content)
@@ -246,6 +251,7 @@ class ExplorerPresenter
     data[:updatePartials] = @options[:update_partials] # Replace content of given DOM element (element stays).
     data[:updateElements] = @options[:element_updates] # Update element in the DOM with given options
     data[:replacePartials] = @options[:replace_partials] # Replace given DOM element (and it's children) (element goes away).
+    data[:reloadTrees] = @options[:reload_trees] # Replace the data attribute of the given TreeViewComponent
     data[:buildCalendar] = format_calendar_dates(@options[:build_calendar])
     data[:initDashboard] = !! @options[:init_dashboard]
     data[:ajaxUrl] = ajax_action_url(@options[:ajax_action]) if @options[:ajax_action]

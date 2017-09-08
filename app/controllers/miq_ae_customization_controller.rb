@@ -248,7 +248,7 @@ class MiqAeCustomizationController < ApplicationController
     @explorer = true
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
 
-    replace_trees_by_presenter(presenter, trees)
+    reload_trees_by_presenter(presenter, trees)
     presenter[:osf_node] = x_node unless @in_a_form
 
     if ['dialog_edit', 'dialog_copy'].include?(params[:pressed])

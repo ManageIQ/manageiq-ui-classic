@@ -690,7 +690,7 @@ class ReportController < ApplicationController
       v_tb = build_toolbar("report_view_tb") if @report && [:reports_tree, :savedreports_tree].include?(x_active_tree)
     end
 
-    replace_trees_by_presenter(presenter, trees)
+    reload_trees_by_presenter(presenter, trees)
     presenter[:osf_node] = x_node  # Open, select, and focus on this node
 
     session[:changed] = (@edit[:new] != @edit[:current]) if @edit && @edit[:current] # to get save/reset buttons to highlight when something is changed

@@ -1967,7 +1967,7 @@ class CatalogController < ApplicationController
       :active_tree => x_active_tree,
       :add_nodes   => add_nodes
     )
-    replace_trees_by_presenter(presenter, trees)
+    reload_trees_by_presenter(presenter, trees)
 
     if @sb[:buttons_node]
       if action == "group_reorder"
