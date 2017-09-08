@@ -58,7 +58,7 @@ module ApplicationController::PolicySupport
         @sb[:action] = nil
       end
       if @edit[:explorer]
-        @edit = nil if params[:button] == "cancel"
+        @edit = nil if params[:button] == "cancel" || params[:button] == "save"
         replace_right_cell
       else
         @edit = nil                                       # Clear out the session :edit hash
