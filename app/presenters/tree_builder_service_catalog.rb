@@ -33,7 +33,7 @@ class TreeBuilderServiceCatalog < TreeBuilderCatalogsClass
   end
 
   def x_get_tree_stc_kids(object, count_only)
-    objects = Rbac.filtered(object.service_templates.select(&:display))
+    objects = Rbac.filtered(object.service_templates.where(:display => true))
     count_only_or_objects(count_only, objects, 'name')
   end
 end
