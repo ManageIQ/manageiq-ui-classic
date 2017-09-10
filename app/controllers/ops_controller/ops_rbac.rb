@@ -133,7 +133,7 @@ module OpsController::OpsRbac
       return
     end
 
-    AuditEvent.success(build_saved_audit_hash(old_tenant_attributes, tenant, params[:button] == "add"))
+    AuditEvent.success(build_saved_audit_hash_angular(old_tenant_attributes, tenant, params[:button] == "add"))
     add_flash(_("%{model} \"%{name}\" was saved") %
                 {:model => tenant_type_title_string(params[:divisible] == "true"), :name => tenant.name})
     if params[:button] == "add"

@@ -976,6 +976,7 @@ class MiqAeClassController < ApplicationController
   def method_form_fields
     method = params[:id] == "new" ? MiqAeMethod.new : MiqAeMethod.find_by(:id => params[:id])
     data = method.data ? JSON.parse(method.data) : {}
+    p "XXXXX #{data['cloud_credential_id']}"
     method_hash = {
       :name                => method.name,
       :display_name        => method.display_name,
@@ -1170,7 +1171,7 @@ class MiqAeClassController < ApplicationController
       else
         old_method_attributes = method.attributes.clone
         add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqAeMethod"), :name => method.name})
-        AuditEvent.success(build_saved_audit_hash(old_method_attributes, method, params[:button] == "add"))
+        AuditEvent.success(build_saved_audit_hash_angular(old_method_attributes, method, params[:button] == "add"))
         replace_right_cell(:replace_trees => [:ae])
         return
       end

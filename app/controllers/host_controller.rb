@@ -309,35 +309,6 @@ class HostController < ApplicationController
     end
   end
 
-  def build_saved_audit_hash_angular(old_attributes, new_record, add)
-    name  = new_record.respond_to?(:name) ? new_record.name : new_record.description
-    msg   = if add
-              _("[%{name}] Record added (") % {:name => name}
-            else
-              _("[%{name}] Record updated (") % {:name => name}
-            end
-    event = "#{new_record.class.to_s.downcase}_record_#{add ? "add" : "update"}"
-
-    attribute_difference = new_record.attributes.to_a - old_attributes.to_a
-    attribute_difference = Hash[*attribute_difference.flatten]
-
-    difference_messages = []
-
-    attribute_difference.each do |key, value|
-      difference_messages << _("%{key} changed to %{value}") % {:key => key, :value => value}
-    end
-
-    msg = msg + difference_messages.join(", ") + ")"
-
-    {
-      :event        => event,
-      :target_id    => new_record.id,
-      :target_class => new_record.class.base_class.name,
-      :userid       => session[:userid],
-      :message      => msg
-    }
-  end
-
   # handle buttons pressed on the button bar
   def button
     @edit = session[:edit]                                  # Restore @edit for adv search box

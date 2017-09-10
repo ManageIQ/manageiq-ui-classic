@@ -70,7 +70,7 @@ module OpsController::Settings::Schedules
         add_flash(_("Error when adding a new schedule: %{message}") % {:message => bang.message}, :error)
         javascript_flash
       else
-        AuditEvent.success(build_saved_audit_hash(old_schedule_attributes, schedule, params[:button] == "add"))
+        AuditEvent.success(build_saved_audit_hash_angular(old_schedule_attributes, schedule, params[:button] == "add"))
         add_flash(_("%{model} \"%{name}\" was saved") %
                       {:model => ui_lookup(:model => "MiqSchedule"), :name => schedule.name})
         if params[:button] == "add"
@@ -256,35 +256,6 @@ module OpsController::Settings::Schedules
   end
 
   private
-
-  def build_saved_audit_hash(old_schedule_attributes, new_schedule, add)
-    name  = new_schedule.respond_to?(:name) ? new_schedule.name : new_schedule.description
-    msg   = if add
-              _("[%{name}] Record added (") % {:name => name}
-            else
-              _("[%{name}] Record updated (") % {:name => name}
-            end
-    event = "#{new_schedule.class.to_s.downcase}_record_#{add ? "add" : "update"}"
-
-    attribute_difference = new_schedule.attributes.to_a - old_schedule_attributes.to_a
-    attribute_difference = Hash[*attribute_difference.flatten]
-
-    difference_messages = []
-
-    attribute_difference.each do |key, value|
-      difference_messages << _("%{key} changed to %{value}") % {:key => key, :value => value}
-    end
-
-    msg = msg + difference_messages.join(", ") + ")"
-
-    {
-      :event        => event,
-      :target_id    => new_schedule.id,
-      :target_class => new_schedule.class.base_class.name,
-      :userid       => session[:userid],
-      :message      => msg
-    }
-  end
 
   def schedule_check_compliance?(schedule)
     schedule.sched_action && schedule.sched_action[:method] && schedule.sched_action[:method] == "check_compliance"

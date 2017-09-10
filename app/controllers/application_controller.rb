@@ -1794,7 +1794,7 @@ class ApplicationController < ActionController::Base
     }
   end
 
-  def build_saved_audit_hash(old_record_attributes, new_record, add)
+  def build_saved_audit_hash_angular(old_record_attributes, new_record, add)
     name  = new_record.respond_to?(:name) ? new_record.name : new_record.description
     msg   = if add
               _("[%{name}] Record added (") % {:name => name}
