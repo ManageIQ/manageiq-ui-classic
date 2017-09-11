@@ -9,6 +9,8 @@ module ViewHelper
   MAX_DESC_LEN = 255
   MAX_HOSTNAME_LEN = 255
 
+  ALL_TIMEZONES = ActiveSupport::TimeZone.all.collect { |tz| ["(GMT#{tz.formatted_offset}) #{tz.name}", tz.name] }.freeze
+
   # PDF page sizes
   PDF_PAGE_SIZES = {
     "a0"            => N_("A0 - 841mm x 1189mm"),

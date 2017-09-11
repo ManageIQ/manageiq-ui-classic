@@ -176,7 +176,7 @@
           = _('Timezone')
         .col-md-8
           = select_tag('profile_tz',
-                       options_for_select([["<#{_('Determine at Run Time')}>", nil]] + ALL_TIMEZONES),
+                       options_for_select([["<#{_('Determine at Run Time')}>", nil]] + ViewHelper::ALL_TIMEZONES),
                        "ng-model"                    => "vm.timeProfileModel.profile_tz",
                        'ng-disabled'                 => "vm.timeProfileModel.restricted_time_profile",
                        "selectpicker-for-select-tag" => "",

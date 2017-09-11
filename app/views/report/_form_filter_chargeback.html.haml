@@ -204,7 +204,7 @@
       = _('Time Zone')
     .col-md-8
       = select_tag('chosen_tz',
-        options_for_select(ALL_TIMEZONES, @edit[:new][:tz]),
+        options_for_select(ViewHelper::ALL_TIMEZONES, @edit[:new][:tz]),
         :class => "selectpicker")
       :javascript
         miqInitSelectPicker();

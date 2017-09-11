@@ -13,9 +13,9 @@
       %label.col-md-2.control-label
         = _("Timezone")
       .col-md-8
-        = select_tag('cu_repair_tz',                                            |
-                    options_for_select(ALL_TIMEZONES, @edit[:new][:timezone]),  |
-                    :class    => "selectpicker")                                |
+        = select_tag('cu_repair_tz',                                                       |
+                    options_for_select(ViewHelper::ALL_TIMEZONES, @edit[:new][:timezone]), |
+                    :class    => "selectpicker")                                           |
       :javascript
         miqInitSelectPicker();
         miqSelectPickerEvent('cu_repair_tz', "#{url}")
