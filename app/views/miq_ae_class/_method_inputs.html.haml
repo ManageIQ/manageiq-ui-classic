@@ -72,6 +72,7 @@
                 - else
                   = record.default_value
               %td= record.datatype.blank? ? 'string' : record.datatype
+    = render :partial => "embedded_methods"
   - else
     #method_form_div
       = render :partial => "method_form", :locals  => {:prefix => ""}
