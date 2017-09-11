@@ -69,7 +69,7 @@
             "data-miq_sparkle_on"  => true,
             "data-miq_sparkle_off" => true)
 
-        - if @edit[@expkey][:exp_skey] == EXP_FROM && @edit[@expkey][:exp_value][0]
+        - if @edit[@expkey][:exp_skey] == ApplicationController::Filter::EXP_FROM && @edit[@expkey][:exp_value][0]
           = ('THROUGH')
           - if @edit[@expkey][:val1][:date_format] == 's'
             = datepicker_input_tag("miq_date_1_1",
@@ -184,7 +184,7 @@
                 "data-miq_sparkle_on"  => true,
                 "data-miq_sparkle_off" => true)
 
-            - if @edit[@expkey][:exp_ckey] == EXP_FROM && @edit[@expkey][:exp_cvalue][0]
+            - if @edit[@expkey][:exp_ckey] == ApplicationController::Filter::EXP_FROM && @edit[@expkey][:exp_cvalue][0]
               = _('THROUGH')
               - if @edit[@expkey][:val2][:date_format] == 's'
                 - val = @edit[@expkey][:exp_cvalue][1] ? @edit[@expkey][:exp_cvalue][1].split(" ").first : ""
