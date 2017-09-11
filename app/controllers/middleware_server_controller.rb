@@ -28,6 +28,10 @@ class MiddlewareServerController < ApplicationController
                                    :hawk => N_('resuming'),
                                    :msg  => N_('Resume')
     },
+    :middleware_dr_generate    => {:op   => :generate_diagnostic_report,
+                                   :skip => true,
+                                   :hawk => N_('generating JDR report'),
+                                   :msg  => N_('Generate JDR report')}
   }.freeze
 
   STANDALONE_ONLY = {
@@ -167,6 +171,51 @@ class MiddlewareServerController < ApplicationController
     end
   end
 
+  def dr_download
+    mw_server = find_record_with_rbac(MiddlewareServer, params[:id])
+    diagnostic_report = mw_server.middleware_diagnostic_reports.find(from_cid(params[:key]))
+
+    response.headers['Content-Type'] = 'application/zip'
+    response.headers['Content-Disposition'] = "attachment; filename=#{diagnostic_report.binary_blob.name}"
+    response.headers['Content-Length'] = diagnostic_report.binary_blob.size
+
+    self.response_body = Enumerator.new do |y|
+      diagnostic_report.binary_blob.binary_blob_parts.find_each(:batch_size => 5) do |part|
+        y << part.data
+      end
+    end
+  end
+
+  def dr_delete
+    mw_server = find_record_with_rbac(MiddlewareServer, params[:id])
+    selected_drs = if params['mw_dr_selected'].respond_to?(:map)
+                     params['mw_dr_selected'].map { |item| from_cid(item) }
+                   else
+                     [from_cid(params['mw_dr_selected'])]
+                   end
+    reports = mw_server.middleware_diagnostic_reports.find(selected_drs)
+    mw_server.middleware_diagnostic_reports.destroy(reports)
+
+    flash_msg = n_('Deletion of one JDR report succeeded.',
+                   "Deletion of %{count} JDR reports succeeded.",
+                   reports.count) % {:count => reports.count}
+
+    redirect_to(:action    => 'show',
+                :id        => to_cid(mw_server.id),
+                :flash_msg => flash_msg)
+  end
+
+  def dr_report_download
+    dr_class = ManageIQ::Providers::Hawkular::MiddlewareManager::MiddlewareDiagnosticReport
+
+    mw_server = find_record_with_rbac(MiddlewareServer, params[:id])
+    report = MiqReport.load_from_view_options(dr_class, current_user)
+    report.build_table(mw_server.middleware_diagnostic_reports, dr_class, :no_sort => true)
+    @filename = filename_timestamp(report.title)
+    download_csv(report) if params[:download_type] == 'csv'
+    download_txt(report) if params[:download_type] == 'text'
+  end
+
   def self.display_methods
     %w(middleware_datasources middleware_deployments middleware_messagings)
   end
@@ -267,13 +316,10 @@ class MiddlewareServerController < ApplicationController
       if mw_server.product == 'Hawkular' && operation_info.fetch(:skip)
         add_flash(_("Not %{hawkular_info} the provider") % {:hawkular_info => operation_info.fetch(:hawk)})
       else
-        if operation_info.key? :param
-          # Fetch param from UI - > see #9462/#8079
-          name = operation_info.fetch(:param)
-          val = params.fetch name || 0 # Default until we can really get it from the UI ( #9462/#8079)
-          trigger_mw_operation operation_info.fetch(:op), mw_server, name => val
+        if operation_info.fetch(:op) == :generate_diagnostic_report
+          mw_server.enqueue_diagnostic_report(:requesting_user => current_userid)
         else
-          trigger_mw_operation operation_info.fetch(:op), mw_server
+          run_operation_on_record(operation_info, mw_server)
         end
         operation_triggered = true
       end
@@ -290,15 +336,14 @@ class MiddlewareServerController < ApplicationController
       path = path.sub(/%2Fserver%3D/, '%2Fserver-config%3D')
     end
 
-    op = mw_manager.public_method operation
-
-    if mw_server.instance_of? MiddlewareDeployment
-      op.call(path, mw_server.name)
+    args = [operation, path]
+    if mw_server.instance_of?(MiddlewareDeployment)
+      args << mw_server.name
     elsif params
-      op.call(path, params)
-    else
-      op.call(path)
+      args << params
     end
+
+    mw_manager.public_send(*args)
   end
 
   menu_section :mdl

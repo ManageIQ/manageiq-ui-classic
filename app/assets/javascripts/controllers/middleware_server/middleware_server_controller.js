@@ -23,19 +23,20 @@ ManageIQ.angular.app.controller('mwServerGroupController', MwServerGroupControll
  * @param {scope} $scope  - angular $scope object
  * @param {MiqService} miqService - MiqServices
  * @param {MwAddDatasourceService} mwAddDatasourceService - Datasource services
+ * @param {document} $document - angular $document object
  * @constructor
  */
-MwServerController.$inject = ['$scope', 'miqService', 'mwAddDatasourceService', '$timeout'];
-function MwServerController($scope, miqService, mwAddDatasourceService, $timeout) {
-  return MwServerControllerFactory($scope, miqService, mwAddDatasourceService, false, $timeout);
+MwServerController.$inject = ['$scope', 'miqService', 'mwAddDatasourceService', '$timeout', '$document'];
+function MwServerController($scope, miqService, mwAddDatasourceService, $timeout, $document) {
+  return MwServerControllerFactory($scope, miqService, mwAddDatasourceService, false, $timeout, $document);
 }
 
-MwServerGroupController.$inject = ['$scope', 'miqService', 'mwAddDatasourceService', '$timeout'];
-function MwServerGroupController($scope, miqService, mwAddDatasourceService, $timeout) {
-  return MwServerControllerFactory($scope, miqService, mwAddDatasourceService, true, $timeout);
+MwServerGroupController.$inject = ['$scope', 'miqService', 'mwAddDatasourceService', '$timeout', '$document'];
+function MwServerGroupController($scope, miqService, mwAddDatasourceService, $timeout, $document) {
+  return MwServerControllerFactory($scope, miqService, mwAddDatasourceService, true, $timeout, $document);
 }
 
-function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, isGroupDeployment, $timeout) {
+function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, isGroupDeployment, $timeout, $document) {
   ManageIQ.angular.scope = $scope;
 
   ManageIQ.angular.rxSubject.subscribe(function(event) {
@@ -167,6 +168,25 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
   $scope.addJdbcDriver = function() {
     miqService.sparkleOn();
     $scope.$broadcast('mwAddJdbcDriverEvent', $scope.jdbcDriverModel);
+  };
+
+  // //////////////////////////////////////////////////////////////////////
+  // JDR
+  // //////////////////////////////////////////////////////////////////////
+
+  $scope.deleteSelectedDr = function() {
+    $document.find('#mw_dr_reports').submit();
+  };
+
+  $scope.drChecked = function() {
+    var checkedCount = $document.find('#mw_dr_reports input[type=checkbox]:checked').length;
+    $document.find('#dr_btn_delete').prop('disabled', checkedCount === 0);
+  };
+
+  $scope.toggleShowDiagnosticReports = function() {
+    $document.find('#mw_dr_section').toggle('slow');
+    $document.find('#mw_dr_header span').toggleClass('fa-angle-down');
+    $document.find('#mw_dr_header span').toggleClass('fa-angle-right');
   };
 }
 

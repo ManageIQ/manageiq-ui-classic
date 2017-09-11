@@ -129,8 +129,6 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           :klass   => ApplicationHelper::Button::MiddlewareDomainServerAction),
       ]
     ),
-  ])
-  button_group('middleware_server_deployments', [
     select(
       :middleware_server_deployments_choice,
       'pficon pficon-save fa-lg',
@@ -149,8 +147,6 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           :klass => ApplicationHelper::Button::MiddlewareStandaloneServerAction)
       ]
     ),
-  ])
-  button_group('middleware_server_jdbc_drivers', [
     select(
       :middleware_server_jdbc_drivers_choice,
       'fa fa-plug fa-lg',
@@ -169,8 +165,6 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           :klass => ApplicationHelper::Button::MiddlewareStandaloneServerAction)
       ]
     ),
-  ])
-  button_group('middleware_server_datasources', [
     select(
       :middleware_server_datasources_choice,
       'fa fa-database fa-lg',
@@ -189,5 +183,11 @@ class ApplicationHelper::Toolbar::MiddlewareServerCenter < ApplicationHelper::To
           :klass => ApplicationHelper::Button::MiddlewareStandaloneServerAction)
       ]
     ),
+    button(
+      :middleware_dr_generate,
+      'pficon pficon-import fa-lg',
+      N_('Enqueue generation of new JDR report'),
+      N_('Generate JDR')
+    )
   ])
 end
