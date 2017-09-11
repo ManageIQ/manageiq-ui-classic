@@ -83,7 +83,7 @@
             "data-miq_sparkle_on"  => true,
             "data-miq_sparkle_off" => true)
 
-        - if @edit[@expkey][:exp_key] == EXP_FROM && @edit[@expkey][:exp_value][0]
+        - if @edit[@expkey][:exp_key] == ApplicationController::Filter::EXP_FROM && @edit[@expkey][:exp_value][0]
           %br
           = _('THROUGH')
           %br

@@ -476,7 +476,7 @@ module ReportController::Reports::Editor
       elsif value.include?("NIL") || value.include?("EMPTY")
         @edit[:new][:col_options][field_name][:style][s_idx].delete(:value) # Remove value key
       elsif [:datetime, :date].include?(field_data_type)
-        @edit[:new][:col_options][field_name][:style][s_idx][:value] = EXP_TODAY  # Set default date value
+        @edit[:new][:col_options][field_name][:style][s_idx][:value] = ApplicationController::Filter::EXP_TODAY # Set default date value
       elsif [:boolean].include?(field_data_type)
         @edit[:new][:col_options][field_name][:style][s_idx][:value] = true       # Set default boolean value
       else
