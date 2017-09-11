@@ -240,7 +240,7 @@ class CloudSubnetController < ApplicationController
     options[:cidr] = params[:cidr] if params[:cidr]
     # An address is automatically assigned by Openstack when gateway is null
     if params[:gateway]
-      options[:gateway] = params[:gateway].blank? ? nil : params[:gateway]
+      options[:gateway_ip] = params[:gateway].blank? ? nil : params[:gateway]
     end
     options[:ip_version] = params[:network_protocol] =~ /4/ ? 4 : 6
     options[:cloud_tenant] = find_record_with_rbac(CloudTenant, from_cid(params[:cloud_tenant_id])) if params[:cloud_tenant_id]
