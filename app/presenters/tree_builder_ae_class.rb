@@ -22,7 +22,7 @@ class TreeBuilderAeClass < TreeBuilder
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only, _options)
-    objects = if MIQ_AE_COPY_ACTIONS.include?(@sb[:action])
+    objects = if MiqAeClassController::MIQ_AE_COPY_ACTIONS.include?(@sb[:action])
                 [MiqAeDomain.find_by_id(@sb[:domain_id])] # GIT support can't use where
               else
                 filter_ae_objects(User.current_tenant.visible_domains)
@@ -54,7 +54,7 @@ class TreeBuilderAeClass < TreeBuilder
       end
     end
     objects = filter_ae_objects(object.ae_namespaces)
-    unless MIQ_AE_COPY_ACTIONS.include?(@sb[:action])
+    unless MiqAeClassController::MIQ_AE_COPY_ACTIONS.include?(@sb[:action])
       ns_classes = filter_ae_objects(object.ae_classes)
       objects += ns_classes unless ns_classes.blank?
     end

@@ -9,6 +9,8 @@ class MiqAeClassController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  MIQ_AE_COPY_ACTIONS = %w(miq_ae_class_copy miq_ae_instance_copy miq_ae_method_copy).freeze
+
   # GET /automation_classes
   # GET /automation_classes.xml
   def index

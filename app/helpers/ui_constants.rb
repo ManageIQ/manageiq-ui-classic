@@ -13,8 +13,6 @@ module UiConstants
   EXP_FROM = "FROM"
   EXP_IS = "IS"
 
-  MIQ_AE_COPY_ACTIONS = %w(miq_ae_class_copy miq_ae_instance_copy miq_ae_method_copy)
-
 end
 
 # Make these constants globally available
