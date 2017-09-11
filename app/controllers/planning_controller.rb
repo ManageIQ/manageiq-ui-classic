@@ -4,6 +4,8 @@ class PlanningController < ApplicationController
 
   menu_section(:opt)
 
+  VALID_PLANNING_VM_MODES = PlanningHelper::PLANNING_VM_MODES.keys.index_by(&:to_s)
+
   def index
     @explorer = true
     @accords = [{:name => "planning", :title => _("Planning Options"), :container => "planning_options_accord"}]

@@ -1,7 +1,5 @@
 module UiConstants
 
-  VALID_PLANNING_VM_MODES = PlanningHelper::PLANNING_VM_MODES.keys.index_by(&:to_s)
-
   # Snapshot ages for delete_snapshots_by_age action type
   SNAPSHOT_AGES = {}
   (1..23).each { |a| SNAPSHOT_AGES[a.hours.to_i] = (a.to_s + (a < 2 ? _(" Hour") : _(" Hours"))) }
