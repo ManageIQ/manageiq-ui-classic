@@ -1,8 +1,7 @@
 module ApplicationController::Filter
-
-  EXP_TODAY = "Today"
-  EXP_FROM = "FROM"
-  EXP_IS = "IS"
+  EXP_TODAY = "Today".freeze
+  EXP_FROM = "FROM".freeze
+  EXP_IS = "IS".freeze
 
   Expression = Struct.new(
     :alias,
