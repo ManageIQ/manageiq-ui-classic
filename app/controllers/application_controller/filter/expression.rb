@@ -1,4 +1,7 @@
 module ApplicationController::Filter
+
+  EXP_TODAY = "Today"
+
   Expression = Struct.new(
     :alias,
     :expression,
