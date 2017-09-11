@@ -1,8 +1,5 @@
 module UiConstants
 
-  # Report Controller constants
-  GRAPH_MAX_COUNT = 10
-
   VALID_PLANNING_VM_MODES = PlanningHelper::PLANNING_VM_MODES.keys.index_by(&:to_s)
 
   ALL_TIMEZONES = ActiveSupport::TimeZone.all.collect { |tz| ["(GMT#{tz.formatted_offset}) #{tz.name}", tz.name] }
