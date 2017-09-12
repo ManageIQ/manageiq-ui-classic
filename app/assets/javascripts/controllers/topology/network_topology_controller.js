@@ -193,7 +193,7 @@ function NetworkTopologyCtrl($scope, $http, $interval, $location, topologyServic
     var currentSelectedKinds = vm.kinds;
     vm.items = data.data.items;
     vm.relations = data.data.relations;
-    vm.kinds = data.data.kinds;
+    vm.kinds = $scope.kinds = data.data.kinds;
     icons = data.data.icons;
 
     if (currentSelectedKinds && (Object.keys(currentSelectedKinds).length !== Object.keys(vm.kinds).length)) {
