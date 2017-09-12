@@ -26,13 +26,14 @@ describe MiqAeCustomizationController do
       controller.instance_variable_set(:@breadcrumbs, [])
 
       edit = {
-        :new              => {:available_dialogs => {:id => '01', :name => '02'},
-                  :instance_name => 'CustomButton_1',
-                  :attrs => [%w(Attr1 01), %w(Attr2 02), %w(Attr3 03), %w(Attr4 04), %w(Attr5 05)],
-                  :visibility_typ => 'Type1'},
-        :instance_names   => %w(CustomButton_1 CustomButton_2),
-        :visibility_types => %w(Type1 Type2),
-        :current          => {}
+        :new               => {:available_dialogs => {:id => '01', :name => '02'},
+                               :instance_name     => 'CustomButton_1',
+                               :attrs             => [%w(Attr1 01), %w(Attr2 02), %w(Attr3 03), %w(Attr4 04), %w(Attr5 05)],
+                               :visibility_typ    => 'Type1'},
+        :instance_names    => %w(CustomButton_1 CustomButton_2),
+        :visibility_types  => %w(Type1 Type2),
+        :ansible_playbooks => [],
+        :current           => {}
       }
       controller.instance_variable_set(:@edit, edit)
       session[:edit] = edit
@@ -61,6 +62,7 @@ describe MiqAeCustomizationController do
               :visibility_expression => v_expression.exp,
               :enablement_expression => e_expression.exp,
               :visibility_types      => %w(Type1 Type2),
+              :ansible_playbooks     => [],
               :current               => {}}
       controller.instance_variable_set(:@edit, edit)
       session[:edit] = edit

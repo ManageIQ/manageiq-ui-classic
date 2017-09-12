@@ -1,4 +1,4 @@
-- url = url_for_only_path(:action => 'playbook_options_field_changed', :id => (@custom_button.id || 'new'))
+- url = url_for_only_path(:action => 'playbook_options_field_changed', :id => (@custom_button.try(:id) || 'new'))
 - observe_with_interval = {:interval => '.5', :url => url}.to_json
 #form_playbook_options
 .form-group

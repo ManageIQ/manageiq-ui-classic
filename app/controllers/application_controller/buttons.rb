@@ -925,7 +925,7 @@ module ApplicationController::Buttons
   end
 
   def button_set_playbook_form_vars
-    @edit[:ansible_playbooks] = ServiceTemplateAnsiblePlaybook.order(:name).pluck(:name, :id) || {}
+    @edit[:ansible_playbooks] = ServiceTemplateAnsiblePlaybook.order(:name).pluck(:name, :id) || []
     @edit[:new][:service_template_id] = ServiceTemplate.find_by(:name => @custom_button.uri_attributes[:service_template_name]).try(:id)
     @edit[:new][:inventory_type] = if @custom_button.uri_attributes[:hosts].blank?
                                      'localhost'
