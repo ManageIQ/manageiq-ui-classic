@@ -12,10 +12,12 @@ require 'sprockets/railtie'
 if ENV["RAILS_ENV"] != "production" || defined?(Rake)
   require 'sass-rails'
   require 'coffee-rails'
+  require 'font-fabulous'
   require 'patternfly-sass'
 else
   require 'bootstrap-sass/engine'
   require 'font_awesome/sass/rails/engine'
+  require 'font-fabulous/engine'
   require 'patternfly-sass/engine'
 end
 

@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 5.0.0", ">= 5.0.0.1"
 
   s.add_dependency "coffee-rails"
+  s.add_dependency "font-fabulous", "~> 1.0.0"
   s.add_dependency "high_voltage", "~> 3.0.0"
   s.add_dependency "jquery-hotkeys-rails"
   s.add_dependency "lodash-rails", "~>3.10.0"
