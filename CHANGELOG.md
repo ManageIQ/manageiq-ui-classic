@@ -4,6 +4,63 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+
+## Unreleased as of Sprint 68 ending 2017-09-04
+
+### Added
+- Trees
+  - Fix miqTreeObject to work again with non-angularized trees [(#2073)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2073)
+- Compute
+  - Add link to network manager for infra providers [(#2028)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2028)
+  - Quad icons for containers providers [(#1950)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1950)
+  - Add support for displaying network adapter details [(#1654)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1654)
+  - Add support for monitoring selection in UI [(#1501)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1501)
+  - Add alerts to dashboard [(#1234)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1234)
+- User Interface
+  - Verify button component [(#2017)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2017)
+  - Take monitoring out of prototype [(#1982)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1982)
+  - Styling updates to accompany new pagination [(#1951)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1951)
+  - Add widget-rss component and method to load data [(#1841)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1841)
+  - Add widget-chart component and method to get data [(#1832)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1832)
+  - Allow MIQ defined Users to belong to multiple Groups [(#1752)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1752)
+  - Add prometheus view to ad hoc metrics [(#1677)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1677)
+- Notifications
+  - Use the error modal for API errors as well [(#1976)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1976)
+- Automate
+  - Introducing a controller that returns automate entry point tree JSON [(#1949)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1949)
+  - Add custom buttons [(#1912)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1912)
+  - Filter custom buttons according to visibility expressions [(#1824)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1824)
+
+### Fixed
+- Performance
+  - Fix bad use of constant in planning [(#2074)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2074)
+- Automate
+  - Hide the form_buttons_div when not required on CustomButtons screen [(#2072)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2072)
+  - Add 'submit' and 'cancel' buttons to service dialogs by default [(#1985)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1985)
+  - Add Validation as a requirement prior to a Save for Ansible and Foreman Providers [(#1850)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1850)
+- Providers
+  - Enable Cockpit console for RHOS provider [(#2039)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2039)
+- Notifications
+  - Close button on the right even when expanded [(#2036)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2036)
+- Middleware
+  - Fix breakage to MW Add JDBC Driver [(#2030)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2030)
+- User Interface
+  - Disable VM transform button when op not possible [(#2024)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2024)
+  - Chart widget has three states - no data valid/invalid data [(#2021)](https://github.com/ManageIQ/manageiq-ui-classic/pull/2021)
+  - Fix filter tab for chargeback report for all providers [(#1990)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1990)
+  - Fix logic error when displaying Cockpit button [(#1988)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1988)
+- Compute
+  - Show card only for single provider [(#1968)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1968)
+  - CloudTenant uses GenericButtonMixin for tagging [(#1964)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1964)
+  - Block unsupported VMs reset [(#1924)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1924)
+  - Additional features to the container image list view [(#1840)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1840)
+- Reporting
+  - Allow to see saved chargeback report after linked MiqTask deleted [(#1965)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1965)
+- Core
+  - Specify correct features names in Block/Object Storage toolbar button actions [(#1908)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1908)
+- Ansible Tower
+  - Manager nodes with no children should be visible in the providers tree [(#1709)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1709)
+
 ## Unreleased as of Sprint 67 ending 2017-08-21
 
 ### Fixed
