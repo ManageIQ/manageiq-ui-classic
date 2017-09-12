@@ -89,7 +89,7 @@
           = _("Delete if Older than")
         .col-md-8
           = select_tag('snapshot_age',
-            options_for_select([["<#{_('Choose')}>", nil]] + SNAPSHOT_AGES.invert.to_a.sort_by(&:last),
+            options_for_select([["<#{_('Choose')}>", nil]] + MiqPolicyHelper::SNAPSHOT_AGES.invert.to_a.sort_by(&:last),
             @edit[:new][:options][:age]),
             :class             => "selectpicker")
           :javascript
