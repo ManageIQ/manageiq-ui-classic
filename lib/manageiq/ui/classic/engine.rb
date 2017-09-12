@@ -42,11 +42,6 @@ module ManageIQ
           )
         end
 
-        config.after_initialize do
-          # HACK: Autoload UiConstants so other repos don't need to do this.  This file pollutes the global namespace for legacy bad reasons.
-          UiConstants
-        end
-
         def vmdb_plugin?
           true
         end

@@ -1,8 +1,3 @@
-# Make these constants globally available
-# TODO: Stop including constants in Object via UiConstants module since these
-# singleton constants don't play nice with Rails class reloading in dev mode.
-# Either access the constants through the UiConstants namespace or get it to
-# work with including it in all the views/controllers via application_helper.
 include ActionView::Helpers::NumberHelper
 
 require 'report_formatter/report_renderer'
