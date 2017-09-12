@@ -45,7 +45,11 @@ class StaticOrHaml
     return @rack_file.call(env) unless path.to_s.ends_with?('.haml')
 
     raw = File.read(path)
-    compiled = Haml::Engine.new(raw).render
+    scope = ActionView::Base.new
+    scope.controller = ActionController::Base.new
+    scope.view_paths << File.expand_path("../app/views", __FILE__)
+
+    compiled = Haml::Engine.new(raw).render(scope)
 
     [200, {"Content-Type" => "text/html"}, [compiled]]
   end
