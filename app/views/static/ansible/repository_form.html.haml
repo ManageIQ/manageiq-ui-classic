@@ -2,7 +2,6 @@
 %br
 .form-horizontal
   %form#form_div{:name           => "angularForm",
-                 'ng-controller' => "repositoryFormController as vm",
                  'ng-show'       => "vm.afterGet",
                  'ng-cloak'      => '',
                  "miq-form"      => true,
@@ -87,6 +86,3 @@
             = check_box_tag("scm_update_on_launch", "1", false, 'ng-model' => 'vm.repositoryModel.scm_update_on_launch')
             = _('Update on Launch')
     = render :partial => 'layouts/angular/generic_form_buttons'
-:javascript
-  ManageIQ.angular.app.value('repositoryId', '#{@id}');
-  miq_bootstrap('#form_div');

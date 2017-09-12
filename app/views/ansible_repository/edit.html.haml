@@ -1,2 +1,4 @@
 #main_div
-  = render :partial => 'repository_form'
+  %repository-form{'repository-id' => @id}
+:javascript
+  miq_bootstrap('repository-form');
