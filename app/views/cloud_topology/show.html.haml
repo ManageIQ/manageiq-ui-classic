@@ -1,21 +1,21 @@
-- tooltipOptions = {"tooltip-placement" => "bottom", "tooltip" => "{{legendTooltip}}"}
-.topology{'ng-controller' => "cloudTopologyController"}
+- tooltip_options = {"tooltip-placement" => "bottom", "tooltip" => "{{vm.legendTooltip}}"}
+.topology{'ng-controller' => "cloudTopologyController as vm"}
   .legend
     %label#selected
-    %div{'ng-if' => "kinds"}
-      %kubernetes-topology-icon{tooltipOptions, :kind => "Vm"}
+    %div{'ng-if' => "vm.kinds"}
+      %kubernetes-topology-icon{tooltip_options, :kind => "Vm"}
         %label
           %i.pficon.pficon-virtual-machine
           = _("VMs")
-      %kubernetes-topology-icon{tooltipOptions, :kind => "AvailabilityZone"}
+      %kubernetes-topology-icon{tooltip_options, :kind => "AvailabilityZone"}
         %label
           %i.pficon.pficon-zone
           = _("Availability Zones")
-      %kubernetes-topology-icon{tooltipOptions, :kind => "CloudTenant"}
+      %kubernetes-topology-icon{tooltip_options, :kind => "CloudTenant"}
         %label
           %i.pficon.pficon-cloud-tenant
           = _("Cloud Tenants")
-      %kubernetes-topology-icon{tooltipOptions, :kind => "Tag"}
+      %kubernetes-topology-icon{tooltip_options, :kind => "Tag"}
         %label
           %i.fa.fa-tag
           = _("Tags")
@@ -27,9 +27,9 @@
     %strong
       = _("Click on the legend to show/hide entities, and double click/right click the entities in the graph to navigate to their summary pages.")
 
-  = render :partial => "shared/topology/not_found"
+  = render :partial => "shared/topology/not_found_vm"
 
-  %kubernetes-topology-graph{:items => "items", :relations => "relations", :kinds => "kinds"}
+  %kubernetes-topology-graph{:items => "vm.items", :relations => "vm.relations", :kinds => "vm.kinds"}
 
 :javascript
   miq_bootstrap('.topology');

@@ -117,7 +117,7 @@ class PxeController < ApplicationController
     c_tb = build_toolbar(center_toolbar_filename) unless @in_a_form
     h_tb = build_toolbar('x_history_tb')
 
-    replace_trees_by_presenter(presenter, trees)
+    reload_trees_by_presenter(presenter, trees)
 
     # Rebuild the toolbars
     presenter.reload_toolbars(:history => h_tb)
@@ -244,7 +244,7 @@ class PxeController < ApplicationController
 
     # Save open nodes, if any were added
     presenter[:osf_node] = x_node
-    presenter.lock_tree(x_active_tree, @in_a_form && @edit)
+    presenter[:lock_sidebar] = @in_a_form && @edit
 
     render :json => presenter.for_render
   end

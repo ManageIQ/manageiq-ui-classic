@@ -14,8 +14,8 @@ class MiqRequestDecorator < MiqDecorator
       "100/checkmark.png"
     when "error"
       "100/x.png"
-    # else - handled in application controller
-    #  "100/#{@listicon.downcase}.png"
+    else
+      "100/miq_request.png"
     end
   end
 end

@@ -43,4 +43,6 @@ class EmsObjectStorageController < ApplicationController
   end
 
   menu_section :ost
+
+  has_custom_buttons
 end

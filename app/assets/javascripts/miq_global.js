@@ -13,7 +13,6 @@ if (! window.ManageIQ) {
     controller: null, // stored controller, used to build URL
     changes: null, // indicate if there are unsaved changes
     editor: null, // instance of CodeMirror editor
-    timelineFilter: null, //
     toolbars: null, // toolbars
     oneTransition: {
       IEButtonPressed: false, // pressed save/reset button identificator

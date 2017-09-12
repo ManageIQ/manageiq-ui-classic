@@ -25,8 +25,47 @@ if defined?(RSpec) && defined?(RSpec::Core::RakeTask)
   end
 end
 
-require 'jasmine'
-load 'jasmine/tasks/jasmine.rake'
+# Only load the jasmine tasks if we are within this repo, otherwise, the bundle
+# won't contain the jasmine gem (i.e., from manageiq)
+if ENV["BUNDLE_GEMFILE"].nil? || ENV["BUNDLE_GEMFILE"] == File.expand_path("../Gemfile", __FILE__)
+  require 'jasmine'
+  load 'jasmine/tasks/jasmine.rake'
+end
+
+class StaticOrHaml
+  def initialize(dir = 'app/views/static')
+    @dir = dir
+    @rack_file = Rack::File.new(@dir)
+  end
+
+  def call(env)
+    path = Pathname.new(@dir).join(env["PATH_INFO"].sub(/^\/+/, ''))
+    return [404, {}, []] unless File.exist?(path)
+
+    return @rack_file.call(env) unless path.to_s.ends_with?('.haml')
+
+    raw = File.read(path)
+    compiled = Haml::Engine.new(raw).render
+
+    [200, {"Content-Type" => "text/html"}, [compiled]]
+  end
+end
+
+module Jasmine
+  class << self
+    alias old_initialize_config initialize_config
+
+    def initialize_config
+      old_initialize_config
+
+      # serve haml templates from app/views/static/ on /static/
+      @config.add_rack_path('/static', -> { StaticOrHaml.new })
+
+      # serve weback-compiled packs from public/packs/ on /packs/
+      @config.add_rack_path('/packs', -> { Rack::File.new(Rails.root.join('public', 'packs')) })
+    end
+  end
+end
 
 namespace :spec do
   namespace :javascript do

@@ -4,7 +4,7 @@ add_flash miqFlashLater miqFlashSaved */
 ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API', '$window', function($timeout, $document, $q, API, $window) {
   var miqService = this;
 
-  this.storedPasswordPlaceholder = "●●●●●●●●";
+  this.storedPasswordPlaceholder = '●●●●●●●●';
   this.deploymentExists = 'EXISTS';
 
   this.showButtons = function() {
@@ -51,7 +51,7 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
 
   // FIXME: usually we just hide it, merge the logic
   this.miqFlashClear = function() {
-    $('#flash_msg_div').text("");
+    $('#flash_msg_div').text('');
   };
 
   this.miqFlashLater = function(msgObj) {
@@ -81,7 +81,7 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
     return $q.when(miqRESTAjaxButton(url, $event.target, 'json'));
   };
 
-  this.validateWithAjax = function (url) {
+  this.validateWithAjax = function(url) {
     miqSparkleOn();
     miqAjaxButton(url, true);
   };
@@ -89,13 +89,24 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
   this.validateWithREST = function($event, credType, url, formSubmit) {
     angular.element('#button_name').val('validate');
     angular.element('#cred_type').val(credType);
-    if(formSubmit) {
+    if (formSubmit) {
       miqSparkleOn();
       return miqRESTAjaxButton(url, $event.target, 'json');
     }
-    else {
-      $event.preventDefault();
-    }
+    $event.preventDefault();
+  };
+
+  this.validateClicked = function($event, authType, formSubmit, angularForm, url) {
+    miqService.validateWithREST($event, authType, url, formSubmit)
+      .then(function success(data) {
+        if (data.level === 'error') {
+          angularForm.default_auth_status.$setViewValue(false);
+        } else {
+          angularForm.default_auth_status.$setViewValue(true);
+        }
+        miqService.miqFlash(data.level, data.message);
+        miqService.sparkleOff();
+      });
   };
 
   this.disabledClick = function($event) {
@@ -106,7 +117,7 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
     var serializedObj = angular.copy(model);
 
     for (var k in serializedObj) {
-      if (serializedObj.hasOwnProperty(k) && !serializedObj[k]) {
+      if (serializedObj.hasOwnProperty(k) && ! serializedObj[k]) {
         delete serializedObj[k];
       }
     }
@@ -118,7 +129,7 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
     var serializedObj = angular.copy(model);
 
     for (var k in serializedObj) {
-      if ((ignoredFields.indexOf(k) >= 0) || (serializedObj.hasOwnProperty(k) && !serializedObj[k])) {
+      if ((ignoredFields.indexOf(k) >= 0) || (serializedObj.hasOwnProperty(k) && ! serializedObj[k])) {
         delete serializedObj[k];
       }
     }
@@ -148,7 +159,7 @@ ManageIQ.angular.app.service('miqService', ['$timeout', '$document', '$q', 'API'
       }
       miqService.sparkleOn();
 
-      API.get("/api/providers/" + id + "/cloud_tenants?expand=resources&attributes=id,name")
+      API.get('/api/providers/' + id + '/cloud_tenants?expand=resources&attributes=id,name')
         .then(getCloudTenantsByEms)
         .catch(miqService.handleFailure);
     };

@@ -411,7 +411,7 @@ module OpsController::Diagnostics
       @view, @pages = get_view(MiqServer) # Get the records (into a view) and the paginator
     end
     @no_checkboxes = @showlinks = true
-    @items_per_page = ONE_MILLION
+    @items_per_page = ApplicationController::ONE_MILLION
     @current_page = @pages[:current] unless @pages.nil? # save the current page number
 
     update_gtl_div('diagnostics_server_list') if pagination_or_gtl_request?

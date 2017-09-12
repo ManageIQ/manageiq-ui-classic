@@ -7,13 +7,13 @@ class ContainerController < ApplicationController
   after_action :set_session_data
 
   def show_list
-    process_show_list(:where_clause => 'containers.deleted_on IS NULL')
+    process_show_list(:named_scope => :active)
   end
 
   private
 
   def textual_group_list
-    [%i(properties relationships smart_management), %i(env)]
+    [%i(properties relationships smart_management), %i(env limits)]
   end
   helper_method :textual_group_list
 

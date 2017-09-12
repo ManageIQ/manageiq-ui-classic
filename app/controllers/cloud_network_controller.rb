@@ -10,14 +10,6 @@ class CloudNetworkController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::GenericFormMixin
 
-  PROVIDERS_NETWORK_TYPES = {
-    "Local" => "local",
-    "Flat"  => "flat",
-    "GRE"   => "gre",
-    "VLAN"  => "vlan",
-    "VXLAN" => "vxlan",
-  }.freeze
-
   def rbac_params
     {:match_via_descendants => ManageIQ::Providers::NetworkManager}
   end
@@ -42,6 +34,9 @@ class CloudNetworkController < ApplicationController
       javascript_redirect :action => "edit", :id => checked_item_id
     when "cloud_network_new"
       javascript_redirect :action => "new"
+    when "custom_button"
+      custom_buttons
+      return
     else
       if !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
         replace_gtl_main_div
@@ -138,19 +133,22 @@ class CloudNetworkController < ApplicationController
       if @flash_array.nil?
         add_flash(_("The selected Cloud Network was deleted"))
       end
+      session[:flash_msgs] = @flash_array.dup if @flash_array
+      javascript_redirect(previous_breadcrumb_url)
     end
   end
 
   def edit
     params[:id] = checked_item_id unless params[:id].present?
     assert_privileges("cloud_network_edit")
+    @network_ems_provider_choices = {}
     @network = find_record_with_rbac(CloudNetwork, params[:id])
-    @network_provider_network_type_choices = PROVIDERS_NETWORK_TYPES
     @in_a_form = true
     drop_breadcrumb(
       :name => _("Edit Cloud Network \"%{name}\"") % {:name => @network.name},
       :url  => "/cloud_network/edit/#{@network.id}"
     )
+    render :change
   end
 
   def new
@@ -161,9 +159,9 @@ class CloudNetworkController < ApplicationController
     network_managers.each do |network_manager|
       @network_ems_provider_choices[network_manager.name] = network_manager.id
     end
-    @network_provider_network_type_choices = PROVIDERS_NETWORK_TYPES
 
     drop_breadcrumb(:name => _("Add New Cloud Network"), :url => "/cloud_network/new")
+    render :change
   end
 
   def update
@@ -226,16 +224,13 @@ class CloudNetworkController < ApplicationController
     options = {}
     # True by default
     params[:enabled] = false unless params[:enabled]
-    # TODO: uncomment once form contains this field
-    # params[:port_security_enabled] = false unless params[:port_security_enabled]
-    params[:qos_policy_id] = nil if params[:qos_policy_id] && params[:qos_policy_id].empty?
-
     options[:name] = params[:name] if params[:name] unless @network.name == params[:name]
     options[:admin_state_up] = switch_to_bol(params[:enabled]) unless @network.enabled == switch_to_bol(params[:enabled])
     options[:shared] = switch_to_bol(params[:shared]) unless @network.shared == switch_to_bol(params[:shared])
     unless @network.external_facing == switch_to_bol(params[:external_facing])
       options[:external_facing] = switch_to_bol(params[:external_facing])
     end
+
     # TODO: uncomment once form contains this field
     # options[:port_security_enabled] = switch_to_bol(params[:port_security_enabled]) unless @network.port_security_enabled == switch_to_bol(params[:port_security_enabled])
     options[:qos_policy_id] = params[:qos_policy_id] unless @network.qos_policy_id == params[:qos_policy_id]
@@ -256,6 +251,8 @@ class CloudNetworkController < ApplicationController
     # options[:port_security_enabled] = params[:port_security_enabled] if params[:port_security_enabled]
     options[:qos_policy_id] = params[:qos_policy_id] if params[:qos_policy_id]
     options[:provider_network_type] = params[:provider_network_type] if params[:provider_network_type]
+    options[:provider_physical_network] = params[:provider_physical_network] if params[:provider_physical_network]
+    options[:provider_segmentation_id] = params[:provider_segmentation_id] if params[:provider_segmentation_id]
     options[:cloud_tenant] = find_record_with_rbac(CloudTenant, params[:cloud_tenant_id]) if params[:cloud_tenant_id]
     options
   end
@@ -283,4 +280,6 @@ class CloudNetworkController < ApplicationController
   end
 
   menu_section :net
+
+  has_custom_buttons
 end

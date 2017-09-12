@@ -1,5 +1,4 @@
 //= require jquery
-//= require spice-html5-bower/spiceHTML5/spicearraybuffer
 //= require spice-html5-bower
 //= require_tree ../locale
 //= require gettext/all

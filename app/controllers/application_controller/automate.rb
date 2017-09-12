@@ -54,7 +54,7 @@ module ApplicationController::Automate
     @edit[:new][:attrs]          = @resolve[:new][:attrs]
     @edit[:new][:target_class]   = @resolve[:target_class] = Hash[*@resolve[:target_classes].flatten.reverse][@resolve[:new][:target_class]]
     @edit[:uri] = @resolve[:uri]
-    (AE_MAX_RESOLUTION_FIELDS - @resolve[:new][:attrs].length).times { @edit[:new][:attrs].push([]) }
+    (ApplicationController::AE_MAX_RESOLUTION_FIELDS - @resolve[:new][:attrs].length).times { @edit[:new][:attrs].push([]) }
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
@@ -74,7 +74,7 @@ module ApplicationController::Automate
         @resolve[:new][:attrs].push(attr) unless @resolve[:new][:attrs].include?(attr)
       end
     end
-    (AE_MAX_RESOLUTION_FIELDS - @resolve[:new][:attrs].length).times { @resolve[:new][:attrs].push([]) }
+    (ApplicationController::AE_MAX_RESOLUTION_FIELDS - @resolve[:new][:attrs].length).times { @resolve[:new][:attrs].push([]) }
     if @edit[:new][:instance_name] && @edit[:instance_names].include?(@edit[:new][:instance_name])
       @resolve[:new][:instance_name] = @edit[:new][:instance_name]
     else
@@ -123,7 +123,6 @@ module ApplicationController::Automate
     custom_button_redirect = params[:button] == 'simulate' || params[:simulate] == 'simulate'
     assert_privileges(custom_button_redirect ? 'ab_button_simulate' : 'miq_ae_class_simulation')
     @explorer = true
-    @collapse_c_cell = true
     @breadcrumbs = []
     drop_breadcrumb(:name => _("Resolve"), :url => "/miq_ae_tools/resolve")
     @lastaction = "resolve"

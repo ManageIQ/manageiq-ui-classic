@@ -209,9 +209,6 @@ class CatalogController < ApplicationController
       self.x_active_accord = 'sandt'
       st = ServiceTemplate.find_by_id(from_cid(params[:id].split("-").last))
       prefix = st.service_template_catalog_id ? "stc-#{to_cid(st.service_template_catalog_id)}_st-" : "-Unassigned_st-"
-      add_nodes = open_parent_nodes(st)
-      @add_nodes = {}
-      @add_nodes[:sandt_tree] = add_nodes if add_nodes  # Set nodes that need to be added, if any
       self.x_node = "#{prefix}#{to_cid(id)}"
       get_node_info(x_node)
     else
@@ -763,12 +760,8 @@ class CatalogController < ApplicationController
 
   def ot_add_form_field_changed
     return unless load_edit("ot_add__new", "replace_cell__explorer")
-    @edit[:new][:name] = params[:name] if params[:name]
-    @edit[:new][:description] = params[:description] if params[:description]
-    @edit[:new][:type] = params[:type] if params[:type]
-    @edit[:new][:content] = params[:content] if params[:content]
+    copy_params_if_set(@edit[:new], params, %i(name description type content manager_id))
     @edit[:new][:draft] = params[:draft] == "true" if params[:draft]
-    @edit[:new][:manager_id] = params[:manager_id] if params[:manager_id]
     @edit[:new][:available_managers] = available_orchestration_managers_for_template_type(params[:type])
 
     render :update do |page|
@@ -986,11 +979,8 @@ class CatalogController < ApplicationController
   end
 
   def ot_edit_get_form_vars
-    @edit[:new][:name] = params[:name] if params[:name]
-    @edit[:new][:description] = params[:description] if params[:description]
+    copy_params_if_set(@edit[:new], params, %i(name description dialog_name manager_id))
     @edit[:new][:draft] = params[:draft] == "true" if params[:draft]
-    @edit[:new][:dialog_name] = params[:dialog_name] if params[:dialog_name]
-    @edit[:new][:manager_id] = params[:manager_id] if params[:manager_id]
   end
 
   def ot_edit_set_form_vars(right_cell_text)
@@ -1189,8 +1179,7 @@ class CatalogController < ApplicationController
       move_cols_left_right("right") if params[:button] == "right"
       move_cols_left_right("left") if params[:button] == "left"
     else
-      @edit[:new][:name] = params[:name] if params[:name]
-      @edit[:new][:description]  = params[:description] if params[:description]
+      copy_params_if_set(@edit[:new], params, %i(name description))
     end
   end
 
@@ -1469,16 +1458,11 @@ class CatalogController < ApplicationController
   end
 
   def get_form_vars
-    @edit[:new][:name] = params[:name] if params[:name]
-    @edit[:new][:description]  = params[:description] if params[:description]
-    @edit[:new][:provision_cost]  = params[:provision_cost] if params[:provision_cost]
-    @edit[:new][:display]  = params[:display] == "1" if params[:display]
-    @edit[:new][:catalog_id] = params[:catalog_id] if params[:catalog_id]
-    @edit[:new][:dialog_id] = params[:dialog_id] if params[:dialog_id]
+    copy_params_if_set(@edit[:new], params, %i(name description provision_cost catalog_id dialog_id generic_subtype long_description))
+
+    @edit[:new][:display] = params[:display] == "1" if params[:display]
     # saving it in @edit as well, to use it later because prov_set_form_vars resets @edit[:new]
     @edit[:st_prov_type] = @edit[:new][:st_prov_type] = params[:st_prov_type] if params[:st_prov_type]
-    @edit[:new][:generic_subtype] = params[:generic_subtype] if params[:generic_subtype]
-    @edit[:new][:long_description] = params[:long_description] if params[:long_description]
     @edit[:new][:long_description] = @edit[:new][:long_description].to_s + "..." if params[:transOne]
 
     get_form_vars_orchestration if @edit[:new][:st_prov_type] == 'generic_orchestration'
@@ -1860,6 +1844,7 @@ class CatalogController < ApplicationController
     playbook_details[:provisioning][:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, provision[:network_credential_id]) if provision[:network_credential_id]
     playbook_details[:provisioning][:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, provision[:cloud_credential_id]) if provision[:cloud_credential_id]
     fetch_dialog(playbook_details, provision[:dialog_id], :provisioning)
+    playbook_details[:provisioning][:execution_ttl] = provision[:execution_ttl]
     playbook_details[:provisioning][:verbosity] = provision[:verbosity]
     playbook_details[:provisioning][:become_enabled] = provision[:become_enabled] == true ? _('Yes') : _('No')
 
@@ -1874,6 +1859,7 @@ class CatalogController < ApplicationController
         playbook_details[:retirement][:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, retirement[:network_credential_id]) if retirement[:network_credential_id]
         playbook_details[:retirement][:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, retirement[:cloud_credential_id]) if retirement[:cloud_credential_id]
       end
+      playbook_details[:retirement][:execution_ttl] = retirement[:execution_ttl]
       playbook_details[:retirement][:verbosity] = retirement[:verbosity]
       playbook_details[:retirement][:become_enabled] = retirement[:become_enabled] == true ? _('Yes') : _('No')
     end
@@ -1981,23 +1967,11 @@ class CatalogController < ApplicationController
       :active_tree => x_active_tree,
       :add_nodes   => add_nodes
     )
-    replace_trees_by_presenter(presenter, trees)
+    reload_trees_by_presenter(presenter, trees)
 
     if @sb[:buttons_node]
-      if action == "button_edit"
-        right_cell_text = if @custom_button && @custom_button.id
-                            _("Editing Button \"%{name}\"") % {:name => @custom_button.name}
-                          else
-                            _("Adding a new Button")
-                          end
-      elsif action == "group_edit"
-        right_cell_text = if @custom_button_set && @custom_button_set.id
-                            _("Editing Button Group \"%{name}\"") % {:name => @custom_button_set.name.split('|').first}
-                          else
-                            _("Adding a new Button Group")
-                          end
-      elsif action == "group_reorder"
-        right_cell_text = _("Buttons Group Reorder")
+      if action == "group_reorder"
+        right_cell_text = _("Button Group Reorder")
       end
     end
     presenter[:right_cell_text] = right_cell_text
@@ -2109,7 +2083,7 @@ class CatalogController < ApplicationController
     presenter.set_visibility(h_tb.present? || c_tb.present? || v_tb.present?, :toolbar)
 
     presenter[:record_id] = determine_record_id_for_presenter
-    presenter.lock_tree(x_active_tree, @edit && @edit[:current])
+    presenter[:lock_sidebar] = @edit && @edit[:current]
     presenter[:osf_node] = x_node
     presenter.reset_changes
     presenter.reset_one_trans

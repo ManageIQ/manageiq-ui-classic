@@ -5,6 +5,7 @@ class StorageController < ApplicationController
   include Mixins::GenericShowMixin
   include Mixins::MoreShowActions
   include Mixins::ExplorerPresenterMixin
+  include Mixins::FindRecord
 
   before_action :check_privileges
   before_action :get_session_data
@@ -34,7 +35,7 @@ class StorageController < ApplicationController
     @display = params[:display] || "main"
     @lastaction = "show"
     @showtype = "config"
-    @record = find_record( Storage, id || params[:id])
+    @record = find_record(Storage, id || params[:id])
     return if record_no_longer_exists?(@record)
 
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
@@ -72,10 +73,9 @@ class StorageController < ApplicationController
     true
   end
 
-
   # handle buttons pressed on the button bar
   def button
-    @edit = session[:edit]                                  # Restore @edit for adv search box
+    @edit = session[:edit] # Restore @edit for adv search box
     params[:display] = @display if %w(all_vms vms hosts).include?(@display) # Were we displaying vms or hosts
 
     if params[:pressed].starts_with?("vm_", # Handle buttons from sub-items screen
@@ -86,10 +86,10 @@ class StorageController < ApplicationController
       scanhosts if params[:pressed] == "host_scan"
       analyze_check_compliance_hosts if params[:pressed] == "host_analyze_check_compliance"
       check_compliance_hosts if params[:pressed] == "host_check_compliance"
-      refreshhosts   if params[:pressed] == "host_refresh"
+      refreshhosts if params[:pressed] == "host_refresh"
       tag(Host) if params[:pressed] == "host_tag"
       assign_policies(Host) if params[:pressed] == "host_protect"
-      edit_record  if params[:pressed] == "host_edit"
+      edit_record if params[:pressed] == "host_edit"
       deletehosts if params[:pressed] == "host_delete"
 
       pfx = pfx_for_vm_button_pressed(params[:pressed])
@@ -101,7 +101,7 @@ class StorageController < ApplicationController
         return if ["host_tag", "#{pfx}_policy_sim", "host_scan", "host_refresh", "host_protect",
                    "#{pfx}_compare", "#{pfx}_tag", "#{pfx}_protect", "#{pfx}_retire",
                    "#{pfx}_ownership", "#{pfx}_right_size", "#{pfx}_reconfigure"].include?(params[:pressed]) &&
-                  @flash_array.nil?   # Tag screen is showing, so return
+                  @flash_array.nil? # Tag screen is showing, so return
 
         unless ["host_edit", "#{pfx}_edit", "#{pfx}_miq_request_new", "#{pfx}_clone", "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
           @refresh_div = "main_div"
@@ -119,29 +119,20 @@ class StorageController < ApplicationController
       custom_buttons if params[:pressed] == "custom_button"
     end
 
-    return if ["custom_button"].include?(params[:pressed])    # custom button screen, so return, let custom_buttons method handle everything
-    return if ["storage_tag"].include?(params[:pressed]) && @flash_array.nil?   # Tag screen showing, so return
-    if !@flash_array && !@refresh_partial # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    elsif @flash_array && @lastaction == "show"
-      @storage = @record = identify_record(params[:id])
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    end
+    return if ["custom_button"].include?(params[:pressed]) # custom button screen, so return, let custom_buttons method handle everything
+    return if ["storage_tag"].include?(params[:pressed]) && @flash_array.nil? # Tag screen showing, so return
+
+    check_if_button_is_implemented
 
     if single_delete_test
       single_delete_redirect
     elsif params[:pressed].ends_with?("_edit") || ["#{pfx}_miq_request_new", "#{pfx}_clone",
                                                    "#{pfx}_migrate", "#{pfx}_publish"].include?(params[:pressed])
       render_or_redirect_partial(pfx)
+    elsif !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
+      replace_gtl_main_div
     else
-      if !flash_errors? && @refresh_div == "main_div" && @lastaction == "show_list"
-        replace_gtl_main_div
-      else
-        javascript_flash
-      end
+      javascript_flash
     end
   end
 
@@ -191,14 +182,6 @@ class StorageController < ApplicationController
                      'debris_files')
   end
 
-  # gather up the storage records from the DB
-  def get_storages
-    page = params[:page].nil? ? 1 : params[:page].to_i
-    @current_page = page
-    @items_per_page = settings(:perpage, @gtl_type.to_sym) # Get the per page setting for this gtl type
-    @storage_pages, @storages = paginate(:storages, :per_page => @items_per_page, :order => @col_names[get_sort_col] + " " + @sortdir)
-  end
-
   def accordion_select
     @lastaction = "explorer"
     @explorer = true
@@ -230,8 +213,8 @@ class StorageController < ApplicationController
         search_id = @nodetype == "root" ? 0 : from_cid(id)
         listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
         if @edit[:adv_search_applied] &&
-          MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) &&
-          %w(reload tree_select).include?(params[:action])
+           MiqExpression.quick_search?(@edit[:adv_search_applied][:exp]) &&
+           %w(reload tree_select).include?(params[:action])
           self.x_node = params[:id]
           quick_search_show
           return
@@ -241,7 +224,7 @@ class StorageController < ApplicationController
   end
 
   def x_show
-    @storage = @record = identify_record(params[:id], Storage)
+    @record = identify_record(params[:id], Storage)
     generic_x_show
   end
 
@@ -267,10 +250,10 @@ class StorageController < ApplicationController
     nodes = x_node.split('-')
     case nodes.first
     when "root" then find_record(Storage, params[:id])
-    when "ds"   then find_record(Storage, params[:id])
+    when "ds" then find_record(Storage, params[:id])
     when "xx" then
       case nodes.second
-      when "ds"   then find_record(Storage, params[:id])
+      when "ds" then find_record(Storage, params[:id])
       end
     end
   end
@@ -283,21 +266,6 @@ class StorageController < ApplicationController
     end
   end
 
-  def find_record(model, id)
-    raise _("Invalid input") unless is_integer?(from_cid(id))
-    begin
-      record = model.where(:id => from_cid(id)).first
-    rescue ActiveRecord::RecordNotFound, StandardError => ex
-      if @explorer
-        self.x_node = "root"
-        add_flash(ex.message, :error, true)
-        session[:flash_msgs] = @flash_array.dup
-      end
-    end
-    record
-  end
-
-
   def show_record(_id = nil)
     @display = params[:display] || "main" unless pagination_or_gtl_request?
     @lastaction = "show"
@@ -305,8 +273,8 @@ class StorageController < ApplicationController
 
     if @record.nil?
       add_flash(_("Error: Record no longer exists in the database"), :error)
-      if request.xml_http_request? && params[:id]  # Is this an Ajax request clicking on a node that no longer exists?
-        @delete_node = params[:id]                  # Set node to be removed from the tree
+      if request.xml_http_request? && params[:id] # Is this an Ajax request clicking on a node that no longer exists?
+        @delete_node = params[:id]                # Set node to be removed from the tree
       end
       return
     end
@@ -320,7 +288,6 @@ class StorageController < ApplicationController
     @button_group = "storage_#{rec_cls}" if x_active_accord == :storage
   end
 
-
   def explorer
     @breadcrumbs = []
     @explorer = true
@@ -332,15 +299,15 @@ class StorageController < ApplicationController
       return
     end
 
-    params.instance_variable_get(:@parameters).merge!(session[:exp_parms]) if session[:exp_parms]  # Grab any explorer parm overrides
+    params.instance_variable_get(:@parameters).merge!(session[:exp_parms]) if session[:exp_parms] # Grab any explorer parm overrides
     session.delete(:exp_parms)
     @in_a_form = false
-    if params[:id]  # If a tree node id came in, show in one of the trees
+    if params[:id] # If a tree node id came in, show in one of the trees
       nodetype, id = params[:id].split("-")
       # treebuilder initializes x_node to root first time in locals_for_render,
       # need to set this here to force & activate node when link is clicked outside of explorer.
       self.x_active_tree = :storage_tree
-      self.x_node = @reselect_node = "#{nodetype}-#{to_cid(id)}"
+      self.x_node = "#{nodetype}-#{to_cid(id)}"
     end
 
     build_accordions_and_trees
@@ -386,7 +353,7 @@ class StorageController < ApplicationController
                          :qs_exp => @edit[:adv_search_applied][:qs_exp],
                          :text   => @right_cell_text)
     else
-      x_history_add_item(:id => node, :text => @right_cell_text)  # Add to history pulldown array
+      x_history_add_item(:id => node, :text => @right_cell_text) # Add to history pulldown array
     end
   end
 
@@ -409,11 +376,11 @@ class StorageController < ApplicationController
   def replace_right_cell(options = {})
     # FIXME: nodetype passed here, but not used
     _nodetype, replace_trees = options.values_at(:nodetype, :replace_trees)
-    replace_trees = @replace_trees if @replace_trees  # get_node_info might set this
+    replace_trees = @replace_trees if @replace_trees # get_node_info might set this
     # FIXME
     @explorer = true
 
-    if params[:action] == 'x_button'&& params[:pressed] == 'storage_tag'
+    if params[:action] == 'x_button' && params[:pressed] == 'storage_tag'
       tagging
       return
     end
@@ -429,13 +396,13 @@ class StorageController < ApplicationController
     update_partials(record_showing, presenter)
     replace_search_box(presenter)
     handle_bottom_cell(presenter)
-    replace_trees_by_presenter(presenter, trees)
+    reload_trees_by_presenter(presenter, trees)
     rebuild_toolbars(record_showing, presenter)
     case x_active_tree
-      when :storage_tree
-        presenter.update(:main_div, r[:partial => "storage_list"])
-      when :storage_pod_tree
-        presenter.update(:main_div, r[:partial => "storage_pod_list"])
+    when :storage_tree
+      presenter.update(:main_div, r[:partial => "storage_list"])
+    when :storage_pod_tree
+      presenter.update(:main_div, r[:partial => "storage_pod_list"])
     end
     presenter[:right_cell_text] = @right_cell_text
     presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
@@ -489,7 +456,6 @@ class StorageController < ApplicationController
     presenter[:clear_gtl_list_grid] = @gtl_type && @gtl_type != 'list'
   end
 
-
   def handle_bottom_cell(presenter)
     # Handle bottom cell
     if @pages || @in_a_form
@@ -535,14 +501,14 @@ class StorageController < ApplicationController
     presenter.hide(:quicksearchbox)
     presenter[:hide_modal] = true
 
-    presenter.lock_tree(x_active_tree, @in_a_form)
+    presenter[:lock_sidebar] = @in_a_form
   end
 
   def display_adv_searchbox
     if !@record.nil? && @record[:type] == 'StorageCluster'
       return false
     end
-    !(@in_a_form || (x_active_tree == :storage_tree && @record) || (x_active_tree == :storage_pod_tree && (x_node == 'root' || @storage)))
+    !(@in_a_form || (x_active_tree == :storage_tree && @record) || (x_active_tree == :storage_pod_tree && (x_node == 'root' || @record)))
   end
 
   def breadcrumb_name(_model)

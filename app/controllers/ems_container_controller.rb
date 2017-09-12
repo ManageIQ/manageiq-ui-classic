@@ -92,7 +92,18 @@ class EmsContainerController < ApplicationController
   end
 
   def retrieve_metrics_selection
-    @ems.endpoints.count == 1 ? 'hawkular_disabled' : 'hawkular_enabled'
+    if @ems.connection_configurations.try(:prometheus)
+      "prometheus"
+    elsif @ems.connection_configurations.try(:hawkular)
+      "hawkular"
+    else
+      "disabled"
+    end
+  end
+
+  def retrieve_alerts_selection
+    return "disabled" if @ems.connection_configurations.try(:prometheus_alerts).nil?
+    "prometheus"
   end
 
   private

@@ -22,7 +22,7 @@ class TreeBuilderMenuRoles < TreeBuilder
   def set_locals_for_render
     locals = {
       :click_url => "/report/menu_editor/",
-      :onclick   => "miqMenuEditor"
+      :onclick   => "miqOnCheckMenuRoles"
     }
 
     super.merge!(locals)
@@ -43,7 +43,7 @@ class TreeBuilderMenuRoles < TreeBuilder
   # Typically another method will populate the children of a root object.
   # Since our data is an array of Strings or Arrays, we don't have ids to tie
   # parents to children. Therefore we include the children with the parent.
-  # The :data key was chosen to avoid future conflicts with the :children key.
+  # The :data key was chosen to avoid future conflicts with the :nodes key.
   #
   def x_get_tree_roots(count_only = false, _options)
     branches = menus.map do |i|
@@ -87,12 +87,12 @@ class TreeBuilderMenuRoles < TreeBuilder
 
   def build_last_child(child)
     {
-      :id          => child,
-      :icon        => "fa fa-file-text-o",
-      :text        => child,
-      :tooltip     => child,
-      :cfmeNoClick => true,
-      :data        => []
+      :id         => child,
+      :icon       => "fa fa-file-text-o",
+      :text       => child,
+      :tooltip    => child,
+      :selectable => false,
+      :data       => []
     }
   end
 

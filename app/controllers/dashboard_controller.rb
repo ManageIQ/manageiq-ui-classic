@@ -116,6 +116,48 @@ class DashboardController < ApplicationController
     redirect_to start_url_for_user(nil)
   end
 
+  def widget_chart_data
+    widget = find_record_with_rbac(MiqWidget, params[:id])
+    datum = widget.contents_for_user(current_user).contents
+    content = nil
+    if datum.blank?
+      state = 'no_data'
+    elsif Charting.data_ok?(datum)
+      content = r[:partial => "widget_chart", :locals => {:widget => widget}].html_safe
+      state = 'valid'
+    else
+      state = 'invalid'
+    end
+    render :json => {:content   => content,
+                     :minimized => @sb[:dashboards][@sb[:active_db]][:minimized].include?(params[:id]),
+                     :state     => state}
+  end
+
+  def widget_menu_data
+    widget = find_record_with_rbac(MiqWidget, params[:id])
+    shortcuts = widget.miq_widget_shortcuts.order("sequence").select do |shortcut|
+                  role_allows?(:feature => shortcut.miq_shortcut.rbac_feature_name, :any => true)
+                end.map do |shortcut|
+                  {:description => shortcut.description, :href => shortcut.miq_shortcut.url }
+                end
+    render :json => {:shortcuts => shortcuts,
+                     :minimized => @sb[:dashboards][@sb[:active_db]][:minimized].include?(params[:id])}
+  end
+
+  def widget_report_data
+    widget = find_record_with_rbac(MiqWidget, params[:id])
+    render :json => {:content   => widget.contents_for_user(current_user).contents,
+                     :minimized => @sb[:dashboards][@sb[:active_db]][:minimized].include?(params[:id])}
+  end
+
+  def widget_rss_data
+    widget = find_record_with_rbac(MiqWidget, params[:id])
+    content = widget.contents_for_user(current_user).contents.gsub("https://localhost:3000",
+                                                                   "#{request.protocol}#{request.host}:#{request.port}").html_safe
+    render :json => {:content   => content,
+                     :minimized => @sb[:dashboards][@sb[:active_db]][:minimized].include?(params[:id])}
+  end
+
   def show
     @layout    = "dashboard"
     @dashboard = true
@@ -371,9 +413,7 @@ class DashboardController < ApplicationController
       @user_name     = params[:user_name]
       @user_password = params[:user_password]
     end
-    css = settings(:css) # Save prior CSS settings
     @settings = copy_hash(DEFAULT_SETTINGS)               # Need settings, else pages won't display
-    @settings[:css] = css if css                          # Restore CSS settings for other tabs previusly logged in
     @more = params[:type] && params[:type] != "less"
     flash[:notice] = _("Session was timed out due to inactivity. Please log in again.") if params[:timeout] == "true"
     logon_details = MiqServer.my_server(true).logon_status_details
@@ -534,10 +574,11 @@ class DashboardController < ApplicationController
     build_timeline_listnav
   end
 
-  def show_timeline
+  def tree_select # timeline tree
     @breadcrumbs = []
     @layout      = "timeline"
     if params[:id]
+      _, params[:id] = parse_nodetype_and_id(params[:id])
       build_timeline
       render :update do |page|
         page << javascript_prologue
@@ -682,16 +723,6 @@ class DashboardController < ApplicationController
       @settings.each { |key, value| value.merge!(db_user.settings[key]) unless db_user.settings[key].nil? }
       @settings[:default_search] = db_user.settings[:default_search]  # Get the user's default search setting
     end
-
-    # Copy ALL display settings into the :css hash so we can easily add new settings
-    @settings[:css] ||= {}
-    @settings[:css].merge!(@settings[:display])
-    @settings.store_path(:display, :theme, THEMES.first.last) unless THEMES.collect(&:last).include?(settings(:display, :theme))
-    @settings[:css].merge!(THEME_CSS_SETTINGS[settings(:display, :theme)])
-
-    @css ||= {}
-    @css.merge!(@settings[:display])
-    @css.merge!(THEME_CSS_SETTINGS[settings(:display, :theme)])
 
     session[:user_TZO] = params[:user_TZO] ? params[:user_TZO].to_i : nil     # Grab the timezone (future use)
     session[:browser] ||= Hash.new("Unknown")

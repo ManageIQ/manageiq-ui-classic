@@ -1,8 +1,8 @@
 - tooltipOptions = {"tooltip-placement" => "bottom-right", "tooltip" => "{{legendTooltip}}"}
-.topology{'ng-controller' => "physicalInfraTopologyController"}
+.topology{'ng-controller' => "physicalInfraTopologyController as vm"}
   .legend
     %label#selected
-    %div{'ng-if' => "kinds"}
+    %div{'ng-if' => "vm.kinds"}
       %kubernetes-topology-icon{tooltipOptions, :kind => "PhysicalServer"}
         %label
           %i.pficon.pficon-server-group
@@ -23,9 +23,9 @@
     %strong
       = _("Click on the legend to show/hide entities, and double click/right click the entities in the graph to navigate to their summary pages.")
 
-  = render :partial => "shared/topology/not_found"
+  = render :partial => "shared/topology/not_found_vm"
 
-  %kubernetes-topology-graph{:items => "items", :relations => "relations", :kinds => "kinds"}
+  %kubernetes-topology-graph{:items => "vm.items", :relations => "vm.relations", :kinds => "vm.kinds"}
 
 :javascript
   miq_bootstrap('.topology');

@@ -1,4 +1,12 @@
 class TreeBuilderReportWidgets < TreeBuilder
+  # Need this for display purpose to map with id
+  WIDGET_TYPES = {
+    "r"  => N_('Reports'),
+    "c"  => N_('Charts'),
+    "rf" => N_('RSS Feeds'),
+    "m"  => N_('Menus')
+  }.freeze
+
   private
 
   def tree_init_options(tree_name)
@@ -23,7 +31,7 @@ class TreeBuilderReportWidgets < TreeBuilder
   end
 
   def x_get_tree_custom_kids(object, count_only, _options)
-    widgets = MiqWidget.where(:content_type => WIDGET_CONTENT_TYPE[object[:id].split('-').last])
+    widgets = MiqWidget.where(:content_type => ReportController::Widgets::WIDGET_CONTENT_TYPE[object[:id].split('-').last])
     count_only_or_objects(count_only, widgets, 'title')
   end
 end

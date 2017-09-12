@@ -19,7 +19,7 @@ describe('automationManagerFormController', function() {
       url: '',
       zone: 'foo_zone',
       verify_ssl: 0,
-      log_userid: '',
+      default_userid: '',
     };
 
     $httpBackend = _$httpBackend_;
@@ -57,12 +57,12 @@ describe('automationManagerFormController', function() {
         expect(vm.automationManagerModel.verify_ssl).toBeFalsy();
       });
 
-      it('sets the log_userid to blank', function() {
-        expect(vm.automationManagerModel.log_userid).toEqual('');
+      it('sets the default_userid to blank', function() {
+        expect(vm.automationManagerModel.default_userid).toEqual('');
       });
 
-      it('sets the log_password to blank', function() {
-        expect(vm.automationManagerModel.log_password).toEqual('');
+      it('sets the default_password to blank', function() {
+        expect(vm.automationManagerModel.default_password).toEqual('');
       });
     });
 
@@ -72,7 +72,7 @@ describe('automationManagerFormController', function() {
         url: '10.10.10.10',
         zone: 'My Test Zone',
         verify_ssl: 1,
-        log_userid: 'admin',
+        default_userid: 'admin',
       };
 
       beforeEach(inject(function(_$controller_) {
@@ -103,12 +103,12 @@ describe('automationManagerFormController', function() {
         expect(vm.automationManagerModel.verify_ssl).toBeTruthy();
       });
 
-      it('sets the log_userid to the value returned from http request', function() {
-        expect(vm.automationManagerModel.log_userid).toEqual('admin');
+      it('sets the default_userid to the value returned from http request', function() {
+        expect(vm.automationManagerModel.default_userid).toEqual('admin');
       });
 
-      it('sets the log_password to the value returned from http request', function() {
-        expect(vm.automationManagerModel.log_password).toEqual(miqService.storedPasswordPlaceholder);
+      it('sets the default_password to the value returned from http request', function() {
+        expect(vm.automationManagerModel.default_password).toEqual(miqService.storedPasswordPlaceholder);
       });
     });
   });
@@ -170,8 +170,8 @@ describe('automationManagerFormController', function() {
       var element = angular.element(
         '<form name="angularForm">' +
         '<input ng-model="automationManagerModel.url" name="url" required />' +
-        '<input ng-model="automationManagerModel.log_userid" name="log_userid" required />' +
-        '<input ng-model="automationManagerModel.log_password" name="log_password" required />' +
+        '<input ng-model="automationManagerModel.default_userid" name="default_userid" required />' +
+        '<input ng-model="automationManagerModel.default_password" name="default_password" required />' +
         '</form>'
       );
 
@@ -180,8 +180,8 @@ describe('automationManagerFormController', function() {
       angularForm = $scope.angularForm;
 
       $scope.angularForm.url.$setViewValue('automation-manager-url');
-      $scope.angularForm.log_userid.$setViewValue('admin');
-      $scope.angularForm.log_password.$setViewValue('password');
+      $scope.angularForm.default_userid.$setViewValue('admin');
+      $scope.angularForm.default_password.$setViewValue('password');
     }));
 
     it('returns true if all the Validation fields are filled in', function() {

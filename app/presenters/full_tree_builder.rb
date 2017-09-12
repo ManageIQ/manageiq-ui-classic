@@ -25,16 +25,16 @@ class FullTreeBuilder < TreeBuilder
   # Recursively create the UI tree from a Relationship tree
   #
   # @param rel_tree [Hash] the Hash based Relationship tree to convert, with
-  #   key/value pairs in the form `ActiveRecord::Base (object) => Hash (children)`
+  #   key/value pairs in the form `ActiveRecord::Base (object) => Hash (nodes)`
   # @param parent_ui_tree_id [String] the UI tree id of the parent.  This value
   #   is used in the recursion and should not be passed for the root of the tree.
   # @return [Hash] the UI data as a nested Hash structure
   def convert_to_ui_tree(rel_tree, parent_ui_tree_id = nil)
-    ui_tree = rel_tree.collect do |object, children|
+    ui_tree = rel_tree.collect do |object, nodes|
       ui_node = x_build_single_node(object, parent_ui_tree_id, options)
 
-      unless children.blank?
-        ui_node[:children] = convert_to_ui_tree(children, ui_node[:key])
+      unless nodes.blank?
+        ui_node[:nodes] = convert_to_ui_tree(nodes, ui_node[:key])
       end
 
       ui_node

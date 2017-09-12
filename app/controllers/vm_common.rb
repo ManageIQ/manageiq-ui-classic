@@ -210,7 +210,7 @@ module VmCommon
       @sb[@sb[:active_accord]] = TreeBuilder.build_node_id(@record)
       @snapshot_tree = TreeBuilderSnapshots.new(:snapshot_tree, :snapshot, @sb, true, :root => @record)
       @active = if @snapshot_tree.selected_node
-                  snap_selected = Snapshot.find_by_id(from_cid(@snapshot_tree.selected_node.split('-').last))
+                  snap_selected = Snapshot.find(from_cid(@snapshot_tree.selected_node.split('-').last))
                   session[:snap_selected] = snap_selected.id
                   snap_selected.current?
                 else
@@ -281,7 +281,7 @@ module VmCommon
 
   def snap_pressed
     session[:snap_selected] = from_cid(params[:id])
-    @snap_selected = Snapshot.find_by_id(session[:snap_selected])
+    @snap_selected = Snapshot.find_by(:id => session[:snap_selected])
     @vm = @record = identify_record(x_node_right_cell.split('-').last, VmOrTemplate)
     if @snap_selected.nil?
       @display = "snapshot_info"
@@ -592,7 +592,7 @@ module VmCommon
   end
 
   def evm_relationship_get_form_vars
-    @record = VmOrTemplate.find_by_id(@edit[:vm_id])
+    @record = VmOrTemplate.find_by(:id => @edit[:vm_id])
     @edit[:new][:server] = params[:server_id] == "" ? nil : params[:server_id] if params[:server_id]
   end
 
@@ -704,7 +704,7 @@ module VmCommon
     assert_privileges(params[:pressed])
     @record = find_record_with_rbac(Vm, params[:id])
     begin
-      @vervice_name = Service.find_by_name(@record.location).name
+      @vervice_name = Service.find_by(:name => @record.location).name
       @record.remove_from_vsc(@vervice_name)
     rescue => bang
       add_flash(_("Error during 'Remove VM from service': %{message}") % {:message => bang.message}, :error)
@@ -747,8 +747,7 @@ module VmCommon
     changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
-      page.replace_html("main_div",
-                        :partial => "vm_common/form") if %w(allright left right).include?(params[:button])
+      page.replace_html("main_div", :partial => "vm_common/form") if %w(allright left right).include?(params[:button])
       page << javascript_for_miq_button_visibility(changed) if changed
       page << "miqSparkle(false);"
     end
@@ -853,7 +852,7 @@ module VmCommon
 
   def scan_history
     @vm = @record = identify_record(params[:id], VmOrTemplate)
-    @scan_history  = ScanHistory.find_by_vm_or_template_id(@record.id)
+    @scan_history = ScanHistory.find_by(:vm_or_template_id => @record.id)
     @listicon = "scan_history"
     @showtype = "scan_history"
     @lastaction = "scan_history"
@@ -883,7 +882,7 @@ module VmCommon
   def scan_histories
     @vm = @record = identify_record(params[:id], VmOrTemplate)
     @explorer = true if request.xml_http_request? # Ajax request means in explorer
-    @scan_history  = ScanHistory.find_by_vm_or_template_id(@record.id)
+    @scan_history = ScanHistory.find_by(:vm_or_template_id => @record.id)
     if @scan_history.nil?
       redirect_to :action => "scan_history", :flash_msg => _("Error: Record no longer exists in the database"), :flash_error => true
       return
@@ -946,7 +945,7 @@ module VmCommon
     if x_active_tree.to_s =~ /_filter_tree$/ && !record_requested
 
       search_id = @nodetype == "root" ? 0 : from_cid(id)
-      adv_search_build(vm_model_from_active_tree(x_active_tree))
+      adv_search_build(model_from_active_tree(x_active_tree))
       session[:edit] = @edit              # Set because next method will restore @edit from session
       listnav_search_selected(search_id) unless params.key?(:search_text) # Clear or set the adv search filter
       if @edit[:adv_search_applied] &&
@@ -1236,7 +1235,6 @@ module VmCommon
     add_ajax = false
     if record_showing
       presenter.hide(:form_buttons_div)
-      path_dir = @record.kind_of?(ManageIQ::Providers::CloudManager::Vm) || @record.kind_of?(ManageIQ::Providers::CloudManager::Template) ? "vm_cloud" : "vm_common"
       presenter.update(:main_div, r[:partial => "layouts/textual_groups_generic"])
     elsif @in_a_form
       partial_locals = {:controller => 'vm'}
@@ -1302,11 +1300,13 @@ module VmCommon
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
     end
 
-    presenter[:ajax_action] = {
-      :controller => request.parameters["controller"],
-      :action     => @ajax_action,
-      :record_id  => @record.id
-    } if add_ajax && ['performance', 'timeline'].include?(@sb[:action])
+    if add_ajax && %w(performance timeline).include?(@sb[:action])
+      presenter[:ajax_action] = {
+        :controller => request.parameters["controller"],
+        :action     => @ajax_action,
+        :record_id  => @record.id
+      }
+    end
 
     # Replace the searchbox
     presenter.replace(:adv_searchbox_div, r[
@@ -1367,7 +1367,7 @@ module VmCommon
 
     presenter.hide(:blocker_div) unless @edit && @edit[:adv_search_open]
     presenter[:hide_modal] = true
-    presenter.lock_tree(x_active_tree, @in_a_form && @edit)
+    presenter[:lock_sidebar] = @in_a_form && @edit
 
     render :json => presenter.for_render
   end
@@ -1701,12 +1701,12 @@ module VmCommon
 
   # Get variables from edit form
   def get_form_vars
-    @record = VmOrTemplate.find_by_id(@edit[:vm_id])
+    @record = VmOrTemplate.find_by(:id => @edit[:vm_id])
     @edit[:new][:custom_1] = params[:custom_1] if params[:custom_1]
     @edit[:new][:description] = params[:description] if params[:description]
     @edit[:new][:parent] = params[:chosen_parent].to_i if params[:chosen_parent]
     # if coming from explorer
-    get_vm_child_selection if ["allright", "left", "right"].include?(params[:button])
+    get_vm_child_selection if %w(allright left right).include?(params[:button])
   end
 
   # Build the audit object when a record is saved, including all of the changed fields
@@ -1732,7 +1732,7 @@ module VmCommon
       end
     end
     msg += ")"
-    audit = {:event => event, :target_id => vm.id, :target_class => vm.class.base_class.name, :userid => session[:userid], :message => msg}
+    {:event => event, :target_id => vm.id, :target_class => vm.class.base_class.name, :userid => session[:userid], :message => msg}
   end
 
   # get the sort column for the detail lists that was clicked on, else use the current one

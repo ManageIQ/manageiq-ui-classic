@@ -134,6 +134,7 @@ class ApplicationHelper::ToolbarBuilder
   def apply_common_props(button, input)
     button.update(
       :icon    => input[:icon],
+      :color   => input[:color],
       :name    => button[:id],
       :hidden  => button[:hidden] || !!input[:hidden],
       :pressed => input[:pressed],
@@ -142,7 +143,7 @@ class ApplicationHelper::ToolbarBuilder
     )
 
     button[:enabled] = input[:enabled]
-    %i(title text confirm).each do |key|
+    %i(title text confirm enabled).each do |key|
       unless input[key].blank?
         button[key] = button.localized(key, input[key])
       end
@@ -236,17 +237,17 @@ class ApplicationHelper::ToolbarBuilder
            x_edit_view_tb history_main ems_container_dashboard ems_infra_dashboard).include?(name)
   end
 
-  def create_custom_button(input, model, record, options = {})
-    options[:enabled] = true unless options.key?(:enabled)
+  def create_custom_button(input, model, record)
     button_id = input[:id]
     button_name = input[:name].to_s
     record_id = record.present? ? record.id : 'LIST'
     button = {
       :id        => "custom__custom_#{button_id}",
       :type      => :button,
-      :icon      => "miq-custom-button-#{input[:image]} fa-lg",
-      :title     => input[:description].to_s,
-      :enabled   => options[:enabled],
+      :icon      => "#{input[:image]} fa-lg",
+      :color     => input[:color],
+      :title     => !input[:enabled] && input[:disabled_text] ? input[:disabled_text] : input[:description].to_s,
+      :enabled   => input[:enabled],
       :klass     => ApplicationHelper::Button::ButtonWithoutRbacCheck,
       :url       => "button",
       :url_parms => "?id=#{record_id}&button_id=#{button_id}&cls=#{model}&pressed=custom_button&desc=#{button_name}"
@@ -262,21 +263,27 @@ class ApplicationHelper::ToolbarBuilder
       :class         => cb.applies_to_class,
       :description   => cb.description,
       :name          => cb.name,
-      :image         => cb.options[:button_image],
+      :image         => cb.options[:button_icon],
+      :color         => cb.options[:button_color],
       :text_display  => cb.options.key?(:display) ? cb.options[:display] : true,
+      :enabled       => cb.evaluate_enablement_expression_for(record),
+      :disabled_text => cb.disabled_text,
       :target_object => record_id
     }
   end
 
   def custom_button_selects(model, record, toolbar_result)
     get_custom_buttons(model, record, toolbar_result).collect do |group|
+      buttons = group[:buttons].collect { |b| create_custom_button(b, model, record) }
+
       props = {
         :id      => "custom_#{group[:id]}",
         :type    => :buttonSelect,
-        :icon    => "miq-custom-button-#{group[:image]} fa-lg",
+        :icon    => "#{group[:image]} fa-lg",
+        :color   => group[:color],
         :title   => group[:description],
-        :enabled => true,
-        :items   => group[:buttons].collect { |b| create_custom_button(b, model, record) }
+        :enabled => record ? true : buttons.all?{ |button| button[:enabled]},
+        :items   => buttons
       }
       props[:text] = group[:text] if group[:text_display]
 
@@ -305,7 +312,7 @@ class ApplicationHelper::ToolbarBuilder
     if record.present?
       service_buttons = record_to_service_buttons(record)
       unless service_buttons.empty?
-        buttons = service_buttons.collect { |b| create_custom_button(b, model, record, :enabled => nil) }
+        buttons = service_buttons.collect { |b| create_custom_button(b, model, record) }
         toolbar.button_group("custom_buttons_", buttons)
       end
     end
@@ -333,16 +340,19 @@ class ApplicationHelper::ToolbarBuilder
 
   def get_custom_buttons(model, record, toolbar_result)
     cbses = CustomButtonSet.find_all_by_class_name(button_class_name(model), service_template_id(record))
+    cbses = CustomButtonSet.filter_with_visibility_expression(cbses, record)
+
     cbses.sort_by { |cbs| cbs.set_data[:group_index] }.collect do |cbs|
       group = {
         :id           => cbs.id,
         :text         => cbs.name.split("|").first,
         :description  => cbs.description,
-        :image        => cbs.set_data[:button_image],
+        :image        => cbs.set_data[:button_icon],
+        :color        => cbs.set_data[:button_color],
         :text_display => cbs.set_data.key?(:display) ? cbs.set_data[:display] : true
       }
 
-      available = CustomButton.available_for_user(current_user, cbs.name) # get all uri records for this user for specified uri set
+      available = cbs.custom_buttons.select(&:visible_for_current_user?)
       available = available.select do |b|
         cbs.members.include?(b) && toolbar_result.plural_form_matches(b)
       end

@@ -43,26 +43,26 @@ class TreeBuilderDatastores < TreeBuilder
         ViewHelper.concat ']'
       end
 
-      { :id          => node[:id].to_s,
-        :text        => text,
-        :icon        => 'fa fa-database',
-        :tip         => "#{node[:name]} [#{node[:location]}]",
-        :select      => node[:capture] == true,
-        :cfmeNoClick => true,
-        :children    => children }
+      { :id         => node[:id].to_s,
+        :text       => text,
+        :icon       => 'fa fa-database',
+        :tip        => "#{node[:name]} [#{node[:location]}]",
+        :select     => node[:capture] == true,
+        :selectable => false,
+        :nodes      => children }
     end
     count_only_or_objects(count_only, nodes)
   end
 
   def x_get_tree_hash_kids(parent, count_only)
-    nodes = parent[:children].map do |node|
+    nodes = parent[:nodes].map do |node|
       { :id           => node[:name],
         :text         => node[:name],
         :icon         => 'pficon pficon-screen',
         :tip          => node[:name],
         :hideCheckbox => true,
-        :cfmeNoClick  => true,
-        :children     => [] }
+        :selectable   => false,
+        :nodes        => [] }
     end
     count_only_or_objects(count_only, nodes)
   end

@@ -226,8 +226,7 @@ class MiqPolicyController < ApplicationController
     self.x_active_tree ||= 'policy_profile_tree'
     self.x_active_accord ||= 'policy_profile'
 
-    trees = features.collect { |feature| [feature.tree_name, feature.build_tree(@sb)] }
-    @trees = Hash[* trees.flatten] # trees.to_h in Ruby 2.2
+    @trees = features.map { |feature| feature.build_tree(@sb) }
     @accords = features.map(&:accord_hash)
 
     if params[:profile].present?  # If profile record id passed in, position on that node
@@ -508,7 +507,7 @@ class MiqPolicyController < ApplicationController
       when :policy_profile
         self.x_node = @new_profile_node if @new_profile_node
       when :policy
-        nil
+        self.x_node = @new_policy_node if @new_policy_node
       when :event
         nil
       when :condition
@@ -523,7 +522,7 @@ class MiqPolicyController < ApplicationController
         raise _("unknown tree in replace_trees: %{name}") % {name => name}
       end
     end
-    replace_trees_by_presenter(presenter, trees)
+    reload_trees_by_presenter(presenter, trees)
 
     if params[:action].ends_with?('_delete') &&
        !x_node.starts_with?('p') &&
@@ -692,15 +691,7 @@ class MiqPolicyController < ApplicationController
 
     presenter[:record_id] = @record.try(:id)
 
-    # Lock current tree if in edit or assign, else unlock all trees
-    if (@edit || @assign) && params[:action] != "x_search_by_name"
-      presenter.lock_tree(x_active_tree)
-    else
-      [:policy_profile_tree, :policy_tree, :condition_tree,
-       :action_tree, :alert_profile_tree, :alert_tree].each do |tree|
-        presenter.lock_tree(tree, false)
-      end
-    end
+    presenter[:lock_sidebar] = (@edit || @assign) && params[:action] != "x_search_by_name"
 
     render :json => presenter.for_render
   end
@@ -1070,7 +1061,7 @@ class MiqPolicyController < ApplicationController
     else
       @edit[:expression][:expression] = copy_hash(@edit[:new][:expression])
     end
-    @edit[:expression_table] = @edit[:expression][:expression] == {"???" => "???"} ? nil : exp_build_table(@edit[:expression][:expression])
+    @edit[:expression_table] = exp_build_table_or_nil(@edit[:expression][:expression])
 
     @expkey = :expression                                               # Set expression key to expression
     @edit[@expkey].history.reset(@edit[:expression][:expression])

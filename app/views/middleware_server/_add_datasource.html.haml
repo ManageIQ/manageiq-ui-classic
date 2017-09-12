@@ -20,6 +20,9 @@
           %h4.modal-title#mw_ds_modal_label
             = _("Create Datasource")
         .modal-body
+          .alert.alert-warning{"ng-if" => "vm.warnMsg"}
+            %span.pficon.pficon-warning-triangle-o
+            {{vm.warnMsg}}
           %input#ds_server_id{:type  => "hidden",
                               :value => params[:id]}
 

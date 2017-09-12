@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     adv_search_load_choice
     adv_search_name_typed
     adv_search_toggle
+    adv_search_text_clear
   )
 
   button_post = %w(
@@ -181,9 +182,6 @@ Rails.application.routes.draw do
         delete
         edit
         explorer
-        exp_button
-        exp_changed
-        exp_token_pressed
         form_field_changed
         new
         provision
@@ -203,11 +201,13 @@ Rails.application.routes.draw do
         wait_for_task
       ) +
         adv_search_post +
+        exp_post +
         x_post
     },
 
     :availability_zone        => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         index
@@ -329,6 +329,7 @@ Rails.application.routes.draw do
         x_show
       ) +
                button_post +
+               exp_post +
                dialog_runner_post
     },
 
@@ -401,6 +402,7 @@ Rails.application.routes.draw do
 
     :cloud_object_store_container => {
       :get => %w(
+        dialog_load
         download_data
         download_summary_pdf
         index
@@ -485,6 +487,7 @@ Rails.application.routes.draw do
 
     :cloud_volume             => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         attach
@@ -548,6 +551,8 @@ Rails.application.routes.draw do
 
     :cloud_volume_backup    => {
       :get  => %w(
+        volume_select
+        volume_form_choices
         download_data
         edit
         index
@@ -558,6 +563,7 @@ Rails.application.routes.draw do
         tag_edit_form_field_changed
       ) + compare_get,
       :post => %w(
+        backup_restore
         button
         create
         dynamic_checkbox_refresh
@@ -569,6 +575,7 @@ Rails.application.routes.draw do
         tagging_edit
         tag_edit_form_field_changed
         update
+        wait_for_task
       ) + compare_post + adv_search_post + exp_post + save_post
     },
 
@@ -636,6 +643,7 @@ Rails.application.routes.draw do
 
     :container_group          => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         edit
@@ -752,6 +760,7 @@ Rails.application.routes.draw do
 
     :container_image          => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         edit
@@ -850,6 +859,7 @@ Rails.application.routes.draw do
 
     :container_project        => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         edit
@@ -913,6 +923,7 @@ Rails.application.routes.draw do
 
     :persistent_volume        => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         edit
@@ -969,6 +980,7 @@ Rails.application.routes.draw do
 
     :container_template          => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         index
@@ -1047,6 +1059,7 @@ Rails.application.routes.draw do
       :get => %w(
         show
         data
+        project_data
       )
     },
 
@@ -1088,8 +1101,12 @@ Rails.application.routes.draw do
         show
         timeline
         timeline_data
-        widget_to_pdf
         start_url
+        widget_to_pdf
+        widget_chart_data
+        widget_menu_data
+        widget_report_data
+        widget_rss_data
       ),
       :post => %w(
         external_authenticate
@@ -1102,8 +1119,8 @@ Rails.application.routes.draw do
         login_retry
         reset_widgets
         resize_layout
-        show_timeline
         tl_generate
+        tree_select
         wait_for_task
         widget_add
         widget_close
@@ -1298,15 +1315,13 @@ Rails.application.routes.draw do
         show_list
         create
         create_del
-        exp_button
-        exp_changed
-        exp_token_pressed
         listnav_search_selected
         update
         update_del
         quick_search
       ) +
           adv_search_post +
+          exp_post +
           save_post
     },
 
@@ -1400,6 +1415,8 @@ Rails.application.routes.draw do
         tagging_edit
         tag_edit_form_field_changed
         jdbc_drivers
+        dr_download
+        dr_report_download
       ) +
                compare_get,
       :post => %w(
@@ -1422,6 +1439,7 @@ Rails.application.routes.draw do
         wait_for_task
         tagging_edit
         tag_edit_form_field_changed
+        dr_delete
       ) +
                adv_search_post +
                compare_post +
@@ -1675,6 +1693,7 @@ Rails.application.routes.draw do
 
     :security_group           => {
       :get  => %w(
+        dialog_load
         edit
         download_data
         download_summary_pdf
@@ -1740,6 +1759,7 @@ Rails.application.routes.draw do
 
     :cloud_subnet             => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         cloud_subnet_form_fields
@@ -1775,6 +1795,7 @@ Rails.application.routes.draw do
 
     :cloud_network             => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         edit
@@ -1838,6 +1859,7 @@ Rails.application.routes.draw do
     :network_router           => {
       :get  => %w(
         add_interface_select
+        dialog_load
         download_data
         download_summary_pdf
         edit
@@ -1878,6 +1900,7 @@ Rails.application.routes.draw do
 
     :load_balancer             => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         index
@@ -2008,6 +2031,7 @@ Rails.application.routes.draw do
 
     :infra_networking         => {
       :get  => %w(
+        dialog_load
         download_data
         download_summary_pdf
         explorer
@@ -2045,16 +2069,32 @@ Rails.application.routes.draw do
 
     :generic_object => {
       :get => %w(
-        all_object_data
-        explorer
-        object_data
-        tree_data
+        show
+        show_list
       ),
       :post => %w(
-        create
-        delete
-        save
       )
+    },
+
+    :generic_object_definition => {
+      :get => %w(
+        download_data
+        download_summary_pdf
+        show
+        show_list
+      ),
+      :post => %w(
+        create_del
+        exp_button
+        exp_changed
+        exp_token_pressed
+        listnav_search_selected
+        update_del
+        quick_search
+        show_list
+      ) +
+        adv_search_post +
+        save_post
     },
 
     :ansible_credential => {
@@ -2145,7 +2185,8 @@ Rails.application.routes.draw do
         x_button
         x_history
         x_show
-      )
+      ) + adv_search_post +
+        exp_post
     },
     :miq_ae_customization     => {
       :get  => %w(
@@ -2170,6 +2211,8 @@ Rails.application.routes.draw do
         dialog_list
         dialog_res_remove
         dialog_res_reorder
+        enablement_expression
+        visibility_expression
         explorer
         field_value_accept
         field_value_delete
@@ -2191,7 +2234,7 @@ Rails.application.routes.draw do
         x_history
         x_show
       ) +
-               button_post
+               button_post + exp_post
     },
 
     :miq_ae_tools             => {
@@ -2221,25 +2264,45 @@ Rails.application.routes.draw do
       )
     },
 
-    :miq_capacity             => {
+    :utilization              => {
       :get  => %w(
-        bottlenecks
-        timeline_data
         index
-        planning
-        planning_report_download
-        util_report_download
-        utilization
+        report_download
+        timeline_data
       ),
       :post => %w(
-        bottleneck_tl_chooser
         change_tab
-        optimize_tree_select
-        planning
-        planning_option_changed
-        reload
+        chart_chooser
         tree_autoload
-        util_chart_chooser
+        tree_select
+        wait_for_task
+      )
+    },
+
+    :planning                 => {
+      :get  => %w(
+        index
+        report_download
+      ),
+      :post => %w(
+        change_tab
+        option_changed
+        plan
+        reset
+        wait_for_task
+      )
+    },
+
+    :bottlenecks              => {
+      :get  => %w(
+        index
+        timeline_data
+      ),
+      :post => %w(
+        reload
+        tl_chooser
+        tree_autoload
+        tree_select
         wait_for_task
       )
     },
@@ -2636,6 +2699,7 @@ Rails.application.routes.draw do
     :orchestration_stack      => {
       :get  => %w(
         cloud_networks
+        dialog_load
         download_data
         download_summary_pdf
         retirement_info
@@ -2690,9 +2754,6 @@ Rails.application.routes.draw do
         delete
         edit
         explorer
-        exp_button
-        exp_changed
-        exp_token_pressed
         form_field_changed
         new
         provision
@@ -2713,6 +2774,7 @@ Rails.application.routes.draw do
         x_button
       ) +
                adv_search_post +
+               exp_post +
                x_post
     },
 
@@ -3295,10 +3357,15 @@ Rails.application.routes.draw do
     },
   }
 
-  # TODO: the root needs to be defined in the main app for now
-  # root :to => 'dashboard#login'
+  root :to => 'dashboard#login'
+
+  # Let's serve pictures directly from the DB
+  get '/pictures/:basename' => 'picture#show', :basename => /[\da-zA-Z]+\.[\da-zA-Z]+/
 
   get '/saml_login(/*path)' => 'dashboard#saml_login'
+
+  # ping response for load balancing
+  get '/ping' => 'ping#index'
 
   controller_routes.each do |controller_name, controller_actions|
     # Default route with no action to controller's index action
@@ -3309,7 +3376,7 @@ Rails.application.routes.draw do
     end
 
     default_routes.each do |action_name|
-      get "#{controller_name}/#{action_name}(/:id)",
+      post "#{controller_name}/#{action_name}(/:id)",
           :action     => action_name,
           :controller => controller_name
     end
@@ -3333,6 +3400,9 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  # API-like JSON trees
+  get '/tree/automate_entrypoint', :to => 'tree#automate_entrypoint'
 
   # pure-angular templates
   get '/static/*id' => 'static#show', :format => false

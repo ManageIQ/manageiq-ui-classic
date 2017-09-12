@@ -149,7 +149,6 @@ class ReportController < ApplicationController
     @right_cell_text.gsub!(/'/, "&apos;")      # Need to escape single quote in title to load in right cell
     @x_edit_buttons_locals = set_form_locals if @in_a_form
     # show form buttons after upload is pressed
-    @collapse_c_cell = !@in_a_form && !@pages && !saved_report_paging?
     render :layout => "application"
   end
 
@@ -687,11 +686,11 @@ class ReportController < ApplicationController
     partial = options[:partial] ? options[:partial] : set_partial_name
     unless @in_a_form
       c_tb = build_toolbar(center_toolbar_filename)
-      h_tb = build_toolbar("x_history_tb")
+      h_tb = build_toolbar("x_history_tb") unless x_active_tree == :export_tree
       v_tb = build_toolbar("report_view_tb") if @report && [:reports_tree, :savedreports_tree].include?(x_active_tree)
     end
 
-    replace_trees_by_presenter(presenter, trees)
+    reload_trees_by_presenter(presenter, trees)
     presenter[:osf_node] = x_node  # Open, select, and focus on this node
 
     session[:changed] = (@edit[:new] != @edit[:current]) if @edit && @edit[:current] # to get save/reset buttons to highlight when something is changed
@@ -891,16 +890,7 @@ class ReportController < ApplicationController
     presenter[:record_id] = (locals && locals[:record_id]) || determine_record_id_for_presenter
 
     # Lock current tree if in edit or assign, else unlock all trees
-    if @edit && @edit[:current]
-      presenter.lock_tree(x_active_tree)
-      # lock schedules tree when jumping from reports to add a schedule for a report
-      presenter.lock_tree(:schedules_tree) if params[:pressed] == 'miq_report_schedules'
-    else
-      presenter.lock_tree(x_active_tree, false)
-      [:db_tree, :reports_tree, :savedreports_tree, :schedules_tree, :widgets_tree, :roles_tree].each do |tree|
-        presenter.lock_tree(tree, false) if tree_exists?(tree)
-      end
-    end
+    presenter[:lock_sidebar] = @edit && @edit[:current]
 
     render :json => presenter.for_render
   end

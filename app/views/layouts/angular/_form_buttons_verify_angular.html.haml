@@ -4,9 +4,9 @@
 - else
   - verify_title_on = _("Validate the credentials by logging into the Server")
   - verify_title_off ||= _("Server information, Username and matching password fields are needed to perform verification of credentials")
-- if controller.send(:restful?)
+- if controller.send(:restful?) || controller.send(:validate_before_save?)
   -# TODO: replace first argument with a sane way of submitting the form
-  - validate = "#{main_scope}.validateClicked({target: '.validate_button:visible'}, '#{valtype}', true)"
+  - validate = "#{main_scope}.validateClicked({target: '.validate_button:visible'}, '#{valtype}', true, angularForm, '#{url_for_only_path(:action => validate_url, :id => id, :type => valtype, :button => "validate")}')"
 - else
   - validate = "#{main_scope}.validateClicked('#{url_for_only_path(:action => validate_url, :id => id, :type => valtype, :button => "validate")}')"
 %div{"ng-show" => ng_show}
@@ -18,17 +18,17 @@
               'on-click'       => validate,
               :xs              => 'true',
               :primary         => 'true'}
-  %div{"ng-if" => "checkAuthentication"}
+  %div{"ng-if" => "#{main_scope}.checkAuthentication"}
     .form-group{"ng-class" => "{'has-error': angularForm.#{valtype}_auth_status.$error.validationRequired}"}
       .col-md-8
         %input.form-control{"type"                => "checkbox",
                             "id"                  => "#{valtype}_auth_status",
                             "name"                => "#{valtype}_auth_status",
-                            "ng-model"            => "#{ng_model}.#{valtype}_auth_status",
+                            "ng-model"            => "$parent.#{main_scope}.#{ng_model}.#{valtype}_auth_status",
                             "prefix"              => "#{valtype}",
+                            "main-scope"          => "$parent.#{main_scope}",
                             "validation-status"   => "",
-                            "adjust-error-on-tab" => "#{ng_model}.#{valtype}_auth_status",
+                            "adjust-error-on-tab" => "$parent.#{main_scope}.#{ng_model}.#{valtype}_auth_status",
                             "ng-show"             => false}
         %span.help-block{"ng-if" => "angularForm.#{valtype}_auth_status.$error.validationRequired"}
           = _("Validation Required")
-

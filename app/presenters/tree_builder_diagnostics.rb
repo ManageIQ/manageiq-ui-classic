@@ -18,7 +18,7 @@ class TreeBuilderDiagnostics < TreeBuilder
     locals = super
     locals.merge!(:autoload  => false,
                   :click_url => "/ops/diagnostics_tree_select/",
-                  :onclick   => "miqOnClickServerRoles")
+                  :onclick   => "miqOnClickDiagnostics")
   end
 
   def x_build_single_node(object, pid, options)

@@ -69,7 +69,7 @@
         = _("Appliance Time Zone")
       .col-md-8
         = select_tag('server_timezone',
-                      options_for_select(ALL_TIMEZONES, @edit[:new][:server][:timezone]),
+                      options_for_select(ViewHelper::ALL_TIMEZONES, @edit[:new][:server][:timezone]),
                       "data-live-search" => "true",
                       :class             => "selectpicker")
     :javascript

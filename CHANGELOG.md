@@ -2,7 +2,135 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased - as of Sprint 63 end 2017-07-10
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+
+## Unreleased as of Sprint 67 ending 2017-08-21
+
+### Fixed
+- Use to_s instead of message [(#1960)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1960)
+- get_db_view - remove all_vms_and_templates association for infra vms as well [(#1957)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1957)
+- cloud network: consolidate new and edit [(#1955)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1955)
+- Added missing routes for expression editor. [(#1952)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1952)
+- Container list - fix Cannot read property subscribe of undefined [(#1948)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1948)
+- Remove extra : [(#1927)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1927)
+- Add missing "migrating" power state image [(#1920)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1920)
+- Change webpacker to store plugin javascript in corespoding folder [(#1919)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1919)
+- Menu active item fixes [(#1915)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1915)
+- Hide History toolbar when in Reports Import/Export tree [(#1909)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1909)
+- Skip calling Rbac on a null or nil target_class [(#1906)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1906)
+- Use class variable gtl_type to check type of report this way we will receive correct report type [(#1888)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1888)
+- Allow rake update:ui to work without db connection [(#1887)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1887)
+- Delete dupe warning message in Optimize Bottlenecks [(#1886)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1886)
+- Menu: Don't remember iframes. [(#1883)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1883)
+- v2v: Move Transform button to "Lifecycle" group [(#1878)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1878)
+- Fix wrong breadcrumb link when click on Service Catalog [(#1873)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1873)
+- Do not try to render quadicon if rendering report with list [(#1867)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1867)
+- Delete duplicate flash message for Automation Method Edit page actions [(#1851)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1851)
+- Set correct db value for Provider Foreman case [(#1847)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1847)
+- $validators return true/false [(#1846)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1846)
+- miqFormatNotification - don't throw when missing text [(#1836)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1836)
+- Reverse-merge tree params if the tree is already in the sandbox [(#1830)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1830)
+- Make tooltip precision for CU chart constistent with Y axis labels [(#1807)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1807)
+- Fixed save of RH satellite 6 subscription [(#1783)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1783)
+- Fix title in Add/Edit Button/Button Groups [(#1592)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1592)
+- If provider is not running and UI wants to fetch JDBC drivers close datasource modal [(#1435)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1435)
+
+### Added
+- Removed Waiting_to_start from the list of possible states for MiqTask [(#1959)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1959)
+- Changed label "Location" to "Type" made field read-only after selection [(#1938)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1938)
+- Report data api per page [(#1864)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1864)
+- Network provider fields [(#1862)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1862)
+- Fix missing custom button coloring in toolbars [(#1861)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1861)
+- Add evaluation of enablement expression and displayed text to custom button [(#1828)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1828)
+- Add widget-report component and method to get data [(#1805)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1805)
+- Change discover to make lenovo provider discovery [(#1785)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1785)
+- Add widget-menu component and method to get data [(#1780)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1780)
+- Optional chargeback allocated calculation  [(#1738)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1738)
+- Expose provider disable for containers providers [(#1663)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1663)
+
+### Removed
+- Remove get route for report data [(#1834)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1834)
+
+### Changed
+- Expression method ui changes [(#1668)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1668)
+- Use scope instead of a query to get soft-deleted items [(#1462)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1462)
+
+
+## Unreleased - as of Sprint 66 end 2017-08-07
+
+### Added
+- Automation-Automate
+  - Create a box in new dialog automatically [(#1791)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1791)
+  - Generic Object Instances UI - `show_list` and `show` [(#1765)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1765)
+  - Use the fonticon picker component to pick custom button icons [(#1801)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1801)
+- Compute-Containers
+  - Add container limits to container summary page [(#1401)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1401)
+  - Kibana SSO encoding of query parameters in the url [(#1741)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1741)
+- Formatting-Styling: Introducing custom and colored fonticons for CustomButtons [(#1685)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1685)
+- Generic Objects
+  - Generic Object Classes Listview - bells and whistles [(#1788)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1788)
+  - Generic Objects UI [(#1724)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1724)
+  - fonticon and fileicon for Generic Object Definition records [(#1787)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1787)
+  - Update generic object decorator [(#1825)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1825)
+  - Updating generic object defintion decorator [(#1812)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1812)
+  - Add more details in Generic Object Class Summary screen [(#1800)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1800)
+- GTLs: Report data api [(#1750)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1750)
+- Toolbars: Enablement and Visibility expression UI for custom buttons [(#1792)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1792)
+- Services: Added input field for max playbook_ttl value [(#1742)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1742)
+
+### Fixed
+- Automation-Automate
+  - Adding an Automate Task schedule: remove time_zone as the last Attribute/Value pair [(#1794)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1794)
+  - Changed Domain/Namespace add/edit flash messages to be consistent [(#1814)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1814)
+  - Correct label text wording for Custom Button Group summary page. [(#1777)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1777)
+  - Corrected duplicate flash message of reset button in priority order [(#1813)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1813)
+- Cloud-Intel
+  - Fixed issue with downloading report [(#1827)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1827)
+  - Fixed code to only set data/headers if column exists in Report col headers. [(#1842)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1842)
+- Compute-Cloud: Fix button actions on Availability Zone nested resources [(#1631)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1631)
+- Display checkable folders in the Alert Profile Assignment tree for `ems_folder` [(#1747)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1747)
+- Fix HAML indentation for Report Widget fragment [(#1782)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1782)
+- Zone select shows only zones in current region [(#1769)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1769)
+- Allow copying/focusing in disabled codemirror editor [(#1758)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1758)
+- Change GET to POST route report data [(#1833)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1833)
+- Fix a syntax error in miq_qe.js [(#1799)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1799)
+- restyle cell so that Instance Type doesn't wrap [(#1746)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1746)
+- Modify the API params to support filtering on non-column methods [(#1711)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1711)
+
+## Unreleased - as of Sprint 65 end 2017-07-24
+
+### Added
+- Automation-Automate: Adding Dialog Editor into Ops UI [(#1398)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1398)
+- Compute-Physical: Display Physical Servers with Host in Physical Infra Textual Summary and listnav [(#1553)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1553)
+- Notifications: Notifications drawer - add a close button [(#1720)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1720)
+- Storage: Render iops and encrypted for cloud volume edit form [(#1642)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1642)
+
+### Fixed
+- Automation-Ansible
+  - Fix icon for Ansible credential add button [(#1687)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1687)
+- Automation-Automate
+  - Dialog editor fixes [(#1728)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1728)
+  - Fixed issue with custom button editing [(#1686)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1686)
+  - Alter Button Group hover text [(#1735)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1735)
+  - Broken titles for automate buttons in new and edit dialog [(#1716)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1716)
+- Compute
+  - Cloud
+    - Added a ems_id existence check around VM VNC console button visibility [(#1723)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1723)
+    - Fix Power actions for Instances in Orchestration Stack page [(#1696)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1696)
+    - Fix Evacuate form [(#1676)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1676)
+    - Fix typo [(#1707)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1707)
+  - Continers: Strip html tags before sending error details to flash message [(#1712)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1712)
+  - Infrastructure
+    - Disable delete button for the active snapshot on oVirt [(#1628)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1628)
+  - Physical Infrastructure: Hide firmware table if there are no firmware entries [(#1694)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1694)
+- Dashboard: Revert "Fix missing constant in application_controller" [(#1692)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1692)
+- Expressions-Filters: Use a dropdown for a boolean user input field in Advanced Search [(#1334)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1334)
+- Graphics
+  - Add missing ansible worker image [(#1734)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1734)
+  - Add missing configuration_script_source.png to fix PDF generation [(#1706)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1706)
+- Intel-Chargeback: UI Fix for ChargeableField in chargeback editor [(#1727)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1727)
+
+## Unreleased - as of Sprint 64 end 2017-07-10
 
 ### Added
 - Automation-Automate: Custom button submit all [(#1572)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1572)
@@ -21,31 +149,22 @@ All notable changes to this project will be documented in this file.
   - Changed max length of name and description fields to be consistent [(#1590)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1590)
   - Get right fields in Adv search in Automation Ansible Tower [(#1164)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1164)
 - Cloud-Intel-Reporting
-  - ReportController - replace_right_cell - don't rebuild trees which don't exist [(#1665)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1665)
-  - Don't x_node_set on a tree which doesn't exist [(#1657)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1657)
   - Fix Report full screen view should be in a new window [(#1641)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1641)
   - Enabled 'Delete Saved Report' toolbar button [(#1589)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1589)
-  - Fix displaying report result [(#1650)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1650)
 - Compute
   - Cloud
-    - Fix formatting and localization of EMS task flash messages [(#1536)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1536)
     - Only use supports_reset check for displaying reset button [(#1598)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1598)
   - Containers
-    - Display a warning for large amount of objects in topology view [(#1605)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1605)
-    - Fix empty settings error in containers topology [(#1507)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1507)
     - Fix PDF download button for persistent volume [(#1624)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1624)
   - Infrastructure: Add RBAC check for Right Size Recommendation [(#1538)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1538)
   - Physical Infrastructure
     - Fix display of hosts on physical infra topology [(#1609)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1609)
     - Fix network address issue [(#1588)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1588)
 - Console
-  - Allow VMRC connection to a VMware provider accessed through IPv6 [(#1579)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1579)
   - app: Redirect to cockpit [(#1649)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1649)
 - GTLs: Do not run move of new pagination and remove of old one when new one is present [(#1556)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1556)
-- Graphics: fix broken "vm_transform" toolbar icon [(#1633)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1633)
 - Networks
   - Use matching via descendants for CloudNetwork model [(#1474)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1474)
-  - Floating IPs: Fix edit form buttons [(#1582)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1582)
 - Settings
  - Remove "items" keyword from list in my settings [(#1587)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1587)
  - Fix error when saving trusted forest settings [(#1566)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1566)
@@ -56,7 +175,6 @@ All notable changes to this project will be documented in this file.
 ## Unreleased - as of Sprint 63 end 2017-06-19
 
 ### Added
-- Automation-Ansible: Added Verbosity drop down on both Provisioning & Retirement tabs [(#1493)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1493)
 - Compute
   - Cloud: Show last refresh time & date in provider summary screen [(#1518)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1518)
   - Containers
@@ -75,53 +193,29 @@ All notable changes to this project will be documented in this file.
     - Support Physical Infrastructure policies in the UI [(#1504)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1504)
     - Physical Server quadicon  [(#1173)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1173)
     - Add Physical Server relationship for Host summary page [(#1440)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1440)
-- Formatting: Update Policy Event Assignment styling [(#1543)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1543)
 
 ### Fixed
 - Angular: Remove "Confirm Password" input field previously required for Validation [(#1335)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1335)
-- Automation-Ansible
-  - Add git protocol to URL for Ansible repo [(#1557)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1557)
-  - Fixed parameters being passed in to rbac features check. [(#1567)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1567)  
-  - Add IDs to ansible credential form selects [(#1487)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1487)
-  - Change ng-show to ng-if in button group [(#1486)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1486)
-  - Rollback any changes to Dialog object when validating dialog elements. [(#1445)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1445)
 - Cloud-Intel-Reporting
-  - Parse the column/field name correctly in reports [(#1170)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1170)
-  - Allow to see saved reports after linked MiqTask deleted [(#1488)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1488)
   - Fix 'Download TXT' for nested list resources [(#1529)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1529)
 - Compute
   - Rename 'Cockpit Console' to 'Web Console' per cockpit product integration guidelines [(#1548)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1548)
-  - Cloud
-    - Disable Web Console button when VM's platform is Windows [(#1282)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1282)
-    - Fix flash messages on the Instance attach/detach cloud volume form [(#1514)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1514)
   - Containers
-    - Containers Dashboard: Show one square per node in realtime heatmaps [(#608)](https://github.com/ManageIQ/manageiq-ui-classic/pull/608)
-    - Make selected items persistance [(#1451)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1451)
     - Check for base unit when adjusting unit label [(#1447)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1447)
-  - Infrastructure
-    - Fixed titles and labels for Hosts & Clusters Openstack Providers [(#1560)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1560)
-    - Fix incorrect redirection after provider / host edit [(#1491)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1491)
   - Physical Infrastructure
     - Add format to physical server report [(#1480)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1480)
     - Fix Physical Server link in Physical Infra Summary page [(#1479)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1479)
-- Configuration Management: Fix filters in config mgmt Configured systems [(#776)](https://github.com/ManageIQ/manageiq-ui-classic/pull/776)
 - Control
   - All Conditions - use same folder icons as in tree [(#1551)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1551)
   - Alerts with resolved=nil should be visible [(#1503)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1503)
-  - Clickable labels in policy's event assignment screen [(#1511)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1511)
 - Middleware: Fix middleware providers broken links in timeline events [(#1492)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1492)
-- Networks
-  - CloudSubnet: IP version not displayed [(#1515)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1515)
-  - Enable the cancel button on the custom form button partial [(#1520)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1520)
 - Settings
   - Fix Features Tree for "everything under" features [(#1229)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1229)
-  - Fix reset button action for tenant tagging [(#1470)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1470)
   - Fix the placement of form buttons on the ops screens [(#1500)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1500)
 
 ## Unreleased - as of Sprint 62 end 2017-06-5
 
 ### Added
-- Formatting-Styling: Make textarea based item selector responsive [(#1376)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1376)
 - Compute: Physical Infrastructure
   - Add quick search and Advanced search to Physical Servers [(#1416)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1416)
   - Add support for displaying firmware details [(#1251)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1251)
@@ -134,41 +228,23 @@ All notable changes to this project will be documented in this file.
 - Automation-Ansible
   - Add reload button to Ansible Repositories [(#1366)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1366)
   - Changed icon for the button for consistency [(#1437)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1437)
-  - Set gtl buttons toolbar for automation manager when refreshed from hash [(#1410)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1410)
 - Cloud-Intel-Reporting
-  - Fix spec to use correct status of miq_task (CI failure) [(#1481)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1481)
   - Use for fetching report result status of MiqTask [(#1482)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1482)
-  - Custom Reports export - add missing action to the button [(#1427)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1427)
 - Compute
   - Cloud
     - Rename 'Web Console' to 'Cockpit Console' [(#1429)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1429)
-    - Ensure cloud tenant ID is read as string for cloud subnets [(#1406)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1406)
-    - Add cloud tenant filtering for various network object forms [(#1343)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1343)
-    - Key Pair (angular) - don't sparkleOff when waiting for task [(#1178)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1178)
-    - Redirect appropriately after cancel is pressed while provisioning instances [(#1472)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1472)
   - Containers
     - Tweak ad hoc page layout [(#1364)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1364)
     - Fix filter menu dropdown cutoff [(#1433)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1433)
-    - Rename column header in Container Template screen [(#1147)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1147)
-    - Fix topology max items feature [(#1453)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1453)
   - Infrastructure
     - Remove association for template only [(#1290)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1290)
-    - Display product.name instead of ManageIQ in remote console titles [(#1450)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1450)
-    - Fix Providers text and Cluster info in host listnav [(#1471)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1471)
-    - Added missing Tag class to fix display of tags on Infra Topology. [(#1404)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1404)
 - Settings
   - miq_tabs_init - use observe queue for tab switching too [(#1179)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1179)
-  - Fixed prompt for log collection by reorganizing button inheritance [(#1413)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1413)
-  - Fixed condition in disabled? method [(#1428)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1428)
-- Storage
-  - Display Adv search in Object Store Objects page [(#1455)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1455)
-  - Enable to download AWS volumes snapshot summary [(#1457)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1457)
 
 ## Unreleased - as of Sprint 61 end 2017-05-22
 
 ### Added
 - Angular Dialogs
-  - Add new fields to middleware Add JDBC Driver Dialog for XA JDBC Driver [(#1300)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1300)
   - Add the ability to customize JDBC Driver/Datasource defaults if not using standard options [(#1092)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1092)
 - Compute
   - Containers: Allow to explicitly disable hawkular in containers [(#1205)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1205)
@@ -185,49 +261,16 @@ All notable changes to this project will be documented in this file.
     - Add feature buttons for physical server toolbar  [(#1299)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1299)
 
 ### Fixed
-- Automation-Ansible: Changed if condition to rely on back-end method. [(#1351)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1351)
-- Compute
-  - Cloud: Make device path mandatory for EBS attachments [(#1321)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1321)
-  - Containers
-    - Fixed alphabetical order in Labels table  [(#1053)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1053)
-    - Fix oVirt metrics DB name validation [(#1379)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1379)
-    - Make containers view navlist [(#1204)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1204)
-  - Infrastructure
-    - Fix ems cluster multilink [(#1374)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1374)
-    - Fix HTML5 Console in IE11 [(#1337)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1337)
-    - Fix Default tab error indicator for OpenStack Infra [(#1341)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1341)
-- Dashboard: Add flash message partial to ems_container/\_show_dashboard [(#1312)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1312)
-- Formatting-Styling: Fix missing stylesheet extension [(#1332)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1332)
 - Networks: Added to_i to port & end_port attributes [(#1318)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1318)
-- Optimize: Delete duplicate flash message display in Optimize Planning page [(#1342)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1342)
-- RBAC
-  - Add missing ownership routes for MiqTemplate [(#1352)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1352)
-  - Add RBAC for requesters in MiqRequest [(#1214)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1214)
 - Services
   - Added a note [(#1319)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1319)
   - Fixed to also copy 'Escalate Privilege' when Copying provisioning tab [(#1327)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1327)
-  - Need to gsub occurrences of {{ }} in the output [(#1369)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1369)
-  - Display all services with 'display' = true in the Active and Retired Services trees [(#1340)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1340)
-  - Add Tag Information for Catalog Items [(#1357)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1357)
   - Fix displaying tag from DialogFieldTagControl [(#1316)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1316)
-  - Changed API call to pass in region number get list of repos/playbooks [(#1354)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1354)
-  - Display summary tags for the ansible playbook services [(#1297)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1297)
-  - New dialog name validation added. [(#1361)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1361)
-  - Save new dialog value & other UI issues fixed [(#1330)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1330)
-- Storage
-  - Add Create a snapshot of this volume to volume list [(#1388)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1388)
-  - Redirect delete action to cloud volume controller [(#1331)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1331)
-- Topology: indicate no results when searching [(#1277)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1277)
-- Trees: Only Host under Cluster have no checkbox [(#1338)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1338)
 
 ## Unreleased - as of Sprint 60 end 2017-05-08
 
 ### Added
 - Automation-Ansible: Add status to Repository Properties [(#1131)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1131)
-- Services
-  - Added "Escalate Privilege" checkbox [(#1207)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1207)
-  - Show additional fields for dynamic fields [(#1199)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1199)
-- Middleware: Crosslinked containers on middleware topology graph [(#1223)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1223)
 - Compute-Physical Infrastructure
   - Physical server routing [(#1162)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1162)
   - Add images for physical servers healthstates. [(#1166)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1166)
@@ -239,36 +282,17 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 - Automation-Ansible
-  - Use properties in the model when retrieving the ansible repo for editing [(#1230)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1230)
-  - Ansible refresh button: correctly send miq_grid_checks [(#1176)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1176)
-  - Better password management in Ansible Credential Form [(#1227)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1227)
-  - Credentials summary: don't display username & password twice [(#1068)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1068)
   - Enable Ansible refresh button after first successful refresh is complete [(#1141)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1141)
-  - Advanced search bar ansible tower fix [(#1209)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1209)
-- Automation-Automate: Clear out all dialog resources before adding/validating. [(#1306)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1306)
-- Cloud-Intelligence
-  - Add uid to report fields VM Chargeback Report [(#1208)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1208)
-  - Fix enabled Export button on Custom Reports Export [(#1142)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1142)
-  - Escape timeline JSON properly [(#1075)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1075)
 - Compute
   - Cloud
-    - Check :sort_by: :none to keep the field values in the order that they are inserted in the file. [(#1248)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1248)
-    - Fix VmCloud Resize/Reconfigure form bugs [(#1163)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1163)
     - Fixed typo in flash message. [(#1307)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1307)
-    - Removed incorrect class from compare button. [(#1293)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1293)
-    - Verify VM power status is not Nil when displaying Cloud Topology [(#1278)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1278)
   - Containers
-    - Add UI support for Pod to PV relationship [(#682)](https://github.com/ManageIQ/manageiq-ui-classic/pull/682)
-    - Fix tags format [(#1180)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1180)
     - Do not fail if the method is not defined on the topology graph [(#1221)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1221)
     - Fix regressions in ad hoc page layout [(#1203)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1203)
     - Make add container provider button title consistent with the others [(#1254)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1254)
-    - Make redirects after actions the way user would expect [(#1130)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1130)
   - Infrastructure
-    - Fix ownership link for infrastructure templates [(#1174)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1174)
     - Duplicate dom id compare advsearch [(#1269)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1269)
 - Formatting-Styling
-  - Fix Replication tab ellipsis styling [(#1185)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1185)
   - Fix checkbox alignment on button screens [(#1225)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1225)
 - GTL
   - When rates are sorted/changed page do not update GTL if in getting node info for report [(#1260)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1260)
@@ -277,35 +301,22 @@ All notable changes to this project will be documented in this file.
   - Do not change parent for report data if active tree is present [(#1194)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1194)
   - Task managemenet gtl [(#1192)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1192)
   - Skip links for quadicons in PDFs [(#1060)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1060)
-  - Fixed quadicon text links. [(#1188)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1188)
 - Middleware: Ensure that error indicator appears on Hawkular tab [(#1172)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1172)
 - Networks
-  - Floating IP related crosslinks for load balancers [(#1232)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1232)
   - Fix error on network topology when VM's power state is nil [(#1291)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1291)
 - RBAC
   - Find correct klass for rbac check for `retirevms` [(#1136)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1136)
   - Use correct params for find_record_with_rbac in resize method [(#1139)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1139)
-  - Added RBAC check to the check_compliance method [(#1012)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1012)
 - Services
-  - Incorrect authentication_type being used [(#1157)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1157)
   - CatalogController - fix typo in default assignment [(#1264)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1264)
   - Re-initialize 'Remove Resources' drop down after copy button is pressed. [(#1246)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1246)
-  - Add VMWare vApp type to the Create Orchestration Template type list [(#1201)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1201)
-  - Check whether form is pristine after deleting extra var during edit [(#1146)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1146)
-  - Removed decodeURI call. [(#1167)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1167)
-  - Send extra_vars & hosts values only when retirement playbook is selected [(#1210)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1210)
 - Settings
   - Fix duplicate DOM id in textual summaries. [(#1184)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1184)
   - Fix some duplicate DOM ids under ops. [(#1181)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1181)
   - Settings/server: Move flash message one level up fixing duplicate DOM ids. [(#1182)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1182)
-  - Fix buttons enabling/disabling on Ops/Edit Group when changing the tabs [(#1196)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1196)
-- Storage: Fix the storage manager id for cloud volume views [(#1302)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1302)
 - Topology
-  - Fix IE 11 & Edge styling issue in Topology legend [(#1155)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1155)
   - Fix unknown errors for image-based icons in middleware topology [(#1289)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1289)
-  - Connect clusterless hosts directly to the provider in infra topology [(#1156)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1156)
 - Trees
-  - Add some missing icons into automate simulation results tree [(#1153)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1153)
   - Fix duplicate DOM id when saving advanced search. [(#1177)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1177)
 
 
@@ -313,23 +324,19 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 - Compute: Cloud: Angularize the VmCloud resize form [(#919)](https://github.com/ManageIQ/manageiq-ui-classic/pull/919)
-- Toolbars: Custom buttons for list views [(#796)](https://github.com/ManageIQ/manageiq-ui-classic/pull/796)
 - Merge jobs and tasks layouts (leave only 'My Tasks' and 'All Tasks' tabs) [(#242)](https://github.com/ManageIQ/manageiq-ui-classic/pull/242)
-- Also post check tree nodes top-to-bottom when required [(#1057)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1057)
 
 ### Fixed
 - Containers:
   - Hide resolved alerts [(#1070)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1070)
   - Move set tenant button to the right of selector [(#1118)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1118)
   - Set Ad hoc page layot to be without listnave [(#1121)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1121)
-  - Add legend to ad hoc chart [(#1124)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1124)
   - Fix layout regression [(#1125)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1125)
 - Topology: Topology header - fix Enter in search [(#1005)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1005)
 
-## Unreleased - as of Sprint 58 end 2017-04-10 (not backported to Fine unless otherwise specified)
+## Unreleased - as of Sprint 58 end 2017-04-10
 
 ### Added
-- Compute: Containers: Adding SSO to External Logging link (backported to Fine) [(#550)](https://github.com/ManageIQ/manageiq-ui-classic/pull/550)
 - Middleware: Show cross linking containers links  [(#484)](https://github.com/ManageIQ/manageiq-ui-classic/pull/484)
 
 ### Fixed
@@ -337,12 +344,128 @@ All notable changes to this project will be documented in this file.
 - Default to a 0 evaluation frequency in dwh alerts [(#678)](https://github.com/ManageIQ/manageiq-ui-classic/pull/678)
 - Storage: Enable attach/detach operations to storage manager [(#746)](https://github.com/ManageIQ/manageiq-ui-classic/pull/746)
 
-## Fine Release Candidate
+### Fine-3
 
 ### Added
+- Automation-Ansible: Added Verbosity drop down on both Provisioning & Retirement tabs [(#1493)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1493)
+- Formatting-Styling
+  - Make text area based item selector responsive [(#1376)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1376)
+  - Update Policy Event Assignment styling [(#1543)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1543)
 
+### Fixed
+- Automation-Ansible
+  - Credentials summary: don't display username & password twice [(#1068)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1068)
+  - Display Ansible Tower Job Templates filters [(#1082)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1082)
+  - Set gtl buttons toolbar for automation manager when refreshed from hash [(#1410)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1410)
+  - Rollback any changes to Dialog object when validating dialog elements. [(#1445)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1445)
+  - Change ng-show to ng-if in button group [(#1486)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1486)
+  - Add IDs to ansible credential form selects [(#1487)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1487)
+  - Add git protocol to URL for Ansible repo [(#1557)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1557)
+  - Fixed parameters being passed in to rbac features check. [(#1567)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1567)  
+  - Fix for Drop Down List Dialog does not keep default value for Integer type [(#1700)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1700)
+- Cloud-Intelligence
+  - Escape timeline JSON properly [(#1075)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1075)
+  - Fix enabled Export button on Custom Reports Export [(#1142)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1142)
+  - Add uid to report fields VM Chargeback Report [(#1208)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1208)
+- Cloud-Intel-Reporting
+  - Parse the column/field name correctly in reports [(#1170)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1170)
+  - Custom Reports export - add missing action to the button [(#1427)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1427)
+  - Fix spec to use correct status of miq_task (CI failure) [(#1481)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1481)
+  - Allow to see saved reports after linked MiqTask deleted [(#1488)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1488)
+  - Fix displaying report result [(#1650)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1650)
+  - Don't x_node_set on a tree which doesn't exist [(#1657)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1657)
+  - ReportController - replace_right_cell - don't rebuild trees which don't exist [(#1665)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1665)
+- Compute
+  - Cloud
+    - Rename column header in Container Template screen [(#1147)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1147)
+    - Key Pair (angular) - don't sparkleOff when waiting for task [(#1178)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1178)
+    - Check :sort_by: :none to keep the field values in the order that they are inserted in the file. [(#1248)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1248)
+    - Disable Web Console button when VM's platform is Windows [(#1282)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1282)
+    - Add cloud tenant filtering for various network object forms [(#1343)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1343)
+    - Ensure cloud tenant ID is read as string for cloud subnets [(#1406)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1406)
+    - Redirect appropriately after cancel is pressed while provisioning instances [(#1472)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1472)
+    - Fix flash messages on the Instance attach/detach cloud volume form [(#1514)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1514)
+    - Fix formatting and localization of EMS task flash messages [(#1536)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1536)
+  - Containers
+    - Containers Dashboard: Show one square per node in realtime heatmaps [(#608)](https://github.com/ManageIQ/manageiq-ui-classic/pull/608)
+    - Fixed alphabetical order in Labels table  [(#1053)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1053)
+    - Add legend to ad hoc chart [(#1124)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1124)
+    - Make redirects after actions the way user would expect [(#1130)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1130)
+    - Make containers view navlist [(#1204)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1204)
+    - Fix oVirt metrics DB name validation [(#1379)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1379)
+    - Make selected items persistence [(#1451)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1451)
+    - Fix topology max items feature [(#1453)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1453)
+    - Fix empty settings error in containers topology [(#1507)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1507)
+    - Display a warning for large amount of objects in topology view [(#1605)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1605)
+  - Infrastructure
+    - Fix Default tab error indicator for OpenStack Infra [(#1341)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1341)
+    - Added missing Tag class to fix display of tags on Infra Topology. [(#1404)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1404)
+    - Display product.name instead of ManageIQ in remote console titles [(#1450)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1450)
+    - Fix Providers text and Cluster info in host listnav [(#1471)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1471)
+    - Fix incorrect redirection after provider / host edit [(#1491)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1491)
+    - Fixed titles and labels for Hosts & Clusters Openstack Providers [(#1560)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1560)
+    - Fix VNC console connection to Windows VMs and Ctrl-Alt-Del button [(#1672)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1672)
+- Configuration Management: Fix filters in config mgmt Configured systems [(#776)](https://github.com/ManageIQ/manageiq-ui-classic/pull/776)
+- Console
+  - Allow VMRC connection to a VMware provider accessed through IPv6 [(#1579)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1579)
+- Control: Clickable labels in policy's event assignment screen [(#1511)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1511)
+- Dashboard: Add flash message partial to ems_container/\_show_dashboard [(#1312)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1312)
+- Formatting-Styling
+  - Fix Replication tab ellipsis styling [(#1185)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1185)
+  - Fix missing stylesheet extension [(#1332)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1332)
+- Graphics: fix broken "vm_transform" toolbar icon [(#1633)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1633)
+- GTL
+  - Fixed alphabetical order in Labels table  [(#1053)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1053)
+- Networks
+  - Floating IP related crosslinks for load balancers [(#1232)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1232)
+  - CloudSubnet: IP version not displayed [(#1515)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1515)
+  - Enable the cancel button on the custom form button partial [(#1520)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1520)
+  - Floating IPs: Fix edit form buttons [(#1582)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1582)
+- Optimize: Delete duplicate flash message display in Optimize Planning page [(#1342)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1342)
+- RBAC
+  - Added RBAC check to the check_compliance method [(#1012)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1012)
+  - Add RBAC for requesters in MiqRequest [(#1214)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1214)
+- Services
+  - Incorrect authentication_type being used [(#1157)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1157)
+  - Display summary tags for the ansible playbook services [(#1297)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1297)
+  - Save new dialog value & other UI issues fixed [(#1330)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1330)
+  - Display all services with 'display' = true in the Active and Retired Services trees [(#1340)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1340)
+  - Changed API call to pass in region number get list of repos/playbooks [(#1354)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1354)
+  - Add Tag Information for Catalog Items [(#1357)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1357)
+  - New dialog name validation added. [(#1361)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1361)
+- Settings
+  - Fix buttons enabling/disabling on Ops/Edit Group when changing the tabs [(#1196)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1196)
+  - Fixed prompt for log collection by reorganizing button inheritance [(#1413)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1413)
+  - Fixed condition in disabled? method [(#1428)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1428)
+  - Fix reset button action for tenant tagging [(#1470)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1470)
+- Storage
+  - Redirect delete action to cloud volume controller [(#1331)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1331)
+  - Add Create a snapshot of this volume to volume list [(#1388)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1388)
+  - Display Adv search in Object Store Objects page [(#1455)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1455)
+  - Enable to download AWS volumes snapshot summary [(#1457)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1457)
+- Topology
+  - Fix IE 11 & Edge styling issue in Topology legend [(#1155)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1155)
+  - Connect clusterless hosts directly to the provider in infra topology [(#1156)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1156)
+  - Indicate no results when searching [(#1277)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1277)
+- Trees: Only Host under Cluster have no checkbox [(#1338)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1338)
+
+# Fine-2
+
+### Fixed
+- Middleware: Add new fields to middleware Add JDBC Driver Dialog for XA JDBC Driver [(#1300)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1300)
+- Ansible: Make device path mandatory for EBS attachments [(#1321)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1321)
+- Compute
+  - Cloud: Fix HTML5 Console in IE11 [(#1337)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1337)
+  - Infrastructure
+    - Changed if condition to rely on back-end method. [(#1351)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1351)
+    - Add missing ownership routes for MiqTemplate [(#1352)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1352)
+- RBAC: Need to gsub occurrences of {{ }} in the output [(#1369)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1369)
+- Services: Fix ems cluster multilink [(#1374)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1374)
+
+## Fine-1
+
+### Added
 - Ansible: UI for targeted Embedded Ansible refresh [(#1083)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1083)
-- Compute:
 - Automate:
   - Ansible: UI for Embedded Ansible Provider refresh [(#934)](https://github.com/ManageIQ/manageiq-ui-classic/pull/934)
   - Extended options in Ansible Repository textual summary [(#798)](https://github.com/ManageIQ/manageiq-ui-classic/pull/798)
@@ -360,6 +483,7 @@ All notable changes to this project will be documented in this file.
       - Display AWS instance labels in the Summary screen [(#631)](https://github.com/ManageIQ/manageiq-ui-classic/pull/631)
       - Support operation `delete` on CloudObjectStoreContainer [(#420)](https://github.com/ManageIQ/manageiq-ui-classic/pull/420)
     - Containers
+      - Adding SSO to External Logging link [(#550)](https://github.com/ManageIQ/manageiq-ui-classic/pull/550)
       - Add filter selections for the ad-hoc metrics page [(#735)](https://github.com/ManageIQ/manageiq-ui-classic/pull/735)
       - Tenant options instead of free text [(#690)](https://github.com/ManageIQ/manageiq-ui-classic/pull/690)
       - Add pagination to the ad-hoc page [(#683)](https://github.com/ManageIQ/manageiq-ui-classic/pull/683)
@@ -383,6 +507,7 @@ All notable changes to this project will be documented in this file.
   - For middleware UI only allow operations on mutable servers. [(#636)](https://github.com/ManageIQ/manageiq-ui-classic/pull/636)
   - Hawkular/add ssl support [(#460)](https://github.com/ManageIQ/manageiq-ui-classic/pull/460)
   - Enable Xa capability for Middleware  Datatsource options [(#149)](https://github.com/ManageIQ/manageiq-ui-classic/pull/149)
+  - Crosslinked containers on middleware topology graph [(#1223)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1223)
 - Services
   - Removed all dialog related settings from form & summary screen [(#786)](https://github.com/ManageIQ/manageiq-ui-classic/pull/786)
   - Changes to Credential drop down labels from plural to singular [(#734)](https://github.com/ManageIQ/manageiq-ui-classic/pull/734)
@@ -485,7 +610,12 @@ All notable changes to this project will be documented in this file.
 - Angular Dialogs
   - $scope.$on('destroy') should be '$destroy' [(#908)](https://github.com/ManageIQ/manageiq-ui-classic/pull/908)
   - Fix API error object code and display a flash error message [(#805)](https://github.com/ManageIQ/manageiq-ui-classic/pull/805)
+- Ansible
+  - Ansible refresh button: correctly send miq_grid_checks [(#1176)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1176)
+  - Advanced search bar ansible tower fix [(#1209)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1209)
 - Ansible Tower
+  - Better password management in Ansible Credential Form [(#1227)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1227)
+  - Use properties in the model when retrieving the ansible repo for editing [(#1230)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1230)
   - Moved menus under Automation maintab around [(#921)](https://github.com/ManageIQ/manageiq-ui-classic/pull/921)
   - Use manager_resource only to create Repository [(#899)](https://github.com/ManageIQ/manageiq-ui-classic/pull/899)
   - Disable embedded Ansible buttons if no embedded Ansible Provider found [(#891)](https://github.com/ManageIQ/manageiq-ui-classic/pull/891)
@@ -493,6 +623,7 @@ All notable changes to this project will be documented in this file.
   - PDF download for job template summary [(#523)](https://github.com/ManageIQ/manageiq-ui-classic/pull/523)
 - API (js) - handle non-2\*\* (and 1**) responses as errors [(#783)](https://github.com/ManageIQ/manageiq-ui-classic/pull/783)
 - Automate
+  - Clear out all dialog resources before adding/validating. [(#1306)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1306)
   - Fix duplicate DOM IDs and broken flash messages in miq_ae_class_controller  [(#801)](https://github.com/ManageIQ/manageiq-ui-classic/pull/801)
   - Ansible: Fix password placeholders in credential summary [(#797)](https://github.com/ManageIQ/manageiq-ui-classic/pull/797)
   - Fixes simulate message passing [(#742)](https://github.com/ManageIQ/manageiq-ui-classic/pull/742)
@@ -512,11 +643,16 @@ All notable changes to this project will be documented in this file.
   - Added missing main_div - fixed functions on hosts comparison [(#775)](https://github.com/ManageIQ/manageiq-ui-classic/pull/775)
   - Display Cluster Resource Pool [(#785)](https://github.com/ManageIQ/manageiq-ui-classic/pull/785)
   - Cloud
+    - Fix VmCloud Resize/Reconfigure form bugs [(#1163)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1163)
+    - Removed incorrect class from compare button. [(#1293)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1293)
+    - Verify VM power status is not Nil when displaying Cloud Topology [(#1278)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1278)
     - Removed Arbitration Profiles related toolbar buttons. [(#968)](https://github.com/ManageIQ/manageiq-ui-classic/pull/968)
     - Add missing routes for some Network resources [(#903)](https://github.com/ManageIQ/manageiq-ui-classic/pull/903)
     - Adds floating_ip to visibility [(#689)](https://github.com/ManageIQ/manageiq-ui-classic/pull/689)
     - Add a 'Labels' prefix to custom attribute column in reports [(#733)](https://github.com/ManageIQ/manageiq-ui-classic/pull/733)
   - Containers
+    - Add UI support for Pod to PV relationship [(#682)](https://github.com/ManageIQ/manageiq-ui-classic/pull/682)
+    - Fix tags format [(#1180)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1180)
     - Catch SSLError too when adding a provider [(#972)](https://github.com/ManageIQ/manageiq-ui-classic/pull/972)
     - Fix ad-hoc page css for new Patternfly version [(#826)](https://github.com/ManageIQ/manageiq-ui-classic/pull/826)
     - Fix ad-hoc page title regression [(#901)](https://github.com/ManageIQ/manageiq-ui-classic/pull/901)
@@ -529,6 +665,7 @@ All notable changes to this project will be documented in this file.
     - Fix multilabel tables for Container entities [(#748)](https://github.com/ManageIQ/manageiq-ui-classic/pull/748)
     - Fix overlapping in Container Image summary screen [(#272)](https://github.com/ManageIQ/manageiq-ui-classic/pull/272)
   - Infrastructure
+    - Fix ownership link for infrastructure templates [(#1174)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1174)
     - Fixed multiple 'VM Console' buttons appearing on VMs [(#949)](https://github.com/ManageIQ/manageiq-ui-classic/pull/949)
     - Datastore selection flash message fix [(#559)](https://github.com/ManageIQ/manageiq-ui-classic/pull/559)
     - Create snapshot with no active snapshot [(#598)](https://github.com/ManageIQ/manageiq-ui-classic/pull/598)
@@ -541,6 +678,7 @@ All notable changes to this project will be documented in this file.
   - Change summary icon on infra providers screen [(#985)](https://github.com/ManageIQ/manageiq-ui-classic/pull/985)
   - Fix Centos image dimensions [(#743)](https://github.com/ManageIQ/manageiq-ui-classic/pull/743)
   - Add missing “product-element” font icon [(#731)](https://github.com/ManageIQ/manageiq-ui-classic/pull/731)
+- GTL: Fixed quadicon text links. [(#1188)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1188)
 - Menus
   - Menu highlighting - use menu_section instead of @layout when possible [(#871)](https://github.com/ManageIQ/manageiq-ui-classic/pull/871)
   - Adjust custom menu load path to match split repositories. [(#832)](https://github.com/ManageIQ/manageiq-ui-classic/pull/832)
@@ -567,6 +705,14 @@ All notable changes to this project will be documented in this file.
   - Check selected Service Catalog Item for RBAC [(#779)](https://github.com/ManageIQ/manageiq-ui-classic/pull/779)
   - Added RBAC check to finding checked items in Ops RBAC controller [(#915)](https://github.com/ManageIQ/manageiq-ui-classic/pull/915)
 - Services
+  - Show additional fields for dynamic fields [(#1199)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1199)
+  - Added "Escalate Privilege" checkbox [(#1207)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1207)
+  - Show VMware credential in service provisioning summary [(#1160)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1160)
+  - Fix for Service Catalogs: Dialogs are hanging and keeps buffering [(#1197)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1197)
+  - Check whether form is pristine after deleting extra var during edit [(#1146)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1146)
+  - Removed decodeURI call. [(#1167)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1167)
+  - Add VMWare vApp type to the Create Orchestration Template type list [(#1201)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1201)
+  - Send extra_vars & hosts values only when retirement playbook is selected [(#1210)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1210)
   - Change the title for the playbook catalog item radio button to 'Run on the target of the Policy Event' [(#914)](https://github.com/ManageIQ/manageiq-ui-classic/pull/914)
   - Changed stdout format to be html [(#948)](https://github.com/ManageIQ/manageiq-ui-classic/pull/948)
   - Made changes to code to only access name if record exists. [(#946)](https://github.com/ManageIQ/manageiq-ui-classic/pull/946)
@@ -581,13 +727,16 @@ All notable changes to this project will be documented in this file.
   - Fixed some issues introduced with retirement remove resources option [(#697)](https://github.com/ManageIQ/manageiq-ui-classic/pull/697)
   - Fixed 'Catalog' should not be a required field [(#514)](https://github.com/ManageIQ/manageiq-ui-classic/pull/514)
   - Fixed Error handling of REST API calls. [(#490)](https://github.com/ManageIQ/manageiq-ui-classic/pull/490)
-- Storage: Fix volume attach/detach flash messages [(#745)](https://github.com/ManageIQ/manageiq-ui-classic/pull/745)
+- Storage
+  - Fix the storage manager id for cloud volume views [(#1302)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1302)
+  - Fix volume attach/detach flash messages [(#745)](https://github.com/ManageIQ/manageiq-ui-classic/pull/745)
 - Textual Summaries
   - Corrected class for items with link in textual summary [(#701)](https://github.com/ManageIQ/manageiq-ui-classic/pull/701)
   - Db summary textual [(#806)](https://github.com/ManageIQ/manageiq-ui-classic/pull/806)
   - TextualMultilabel: fix additional_table_class. [(#609)](https://github.com/ManageIQ/manageiq-ui-classic/pull/609)
   - Container node condition displayed with multilabel [(#541)](https://github.com/ManageIQ/manageiq-ui-classic/pull/541)
 - Trees
+  - Add some missing icons into automate simulation results tree [(#1153)](https://github.com/ManageIQ/manageiq-ui-classic/pull/1153)
   - Fix actions' icons of policy events [(#754)](https://github.com/ManageIQ/manageiq-ui-classic/pull/754)
   - Corrected custom button sorting [(#711)](https://github.com/ManageIQ/manageiq-ui-classic/pull/711)
   - Add default tab for first selected group after login [(#680)](https://github.com/ManageIQ/manageiq-ui-classic/pull/680)

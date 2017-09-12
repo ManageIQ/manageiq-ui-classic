@@ -8,10 +8,6 @@
   ManageIQ.calendar.calDateTo = null
 
   function miqOpsAfterOnload() {
-  = javascript_dim("settings_tree_div", false) if role_allows?(:feature => "ops_settings")
-  = javascript_dim("diagnostics_tree_div", false) if role_allows?(:feature => "ops_diagnostics")
-  = javascript_dim("vmdb_tree_div", false) if role_allows?(:feature => "ops_db")
-  = javascript_dim("rbac_tree_div", false) if role_allows?(:feature => "ops_rbac", :any => true)
   - if @sb[:active_tab] == "db_utilization"
     miqAsyncAjax('#{url_for_only_path(:action => @ajax_action, :id => @record)}');
   };

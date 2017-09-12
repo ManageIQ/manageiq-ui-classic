@@ -353,7 +353,7 @@ class ChargebackController < ApplicationController
     else
       @report_result_id = session[:report_result_id] = rr.id
       session[:report_result_runtime]  = rr.last_run_on
-      if MiqTask.state_finished(rr.miq_task_id)
+      if rr.status.downcase == "complete"
         @report = rr.report_results
         session[:rpt_task_id] = nil
         if @report.blank?
@@ -838,7 +838,7 @@ class ChargebackController < ApplicationController
     presenter = ExplorerPresenter.new(
       :active_tree => x_active_tree,
     )
-    replace_trees_by_presenter(presenter, :cb_rates => cb_rates_build_tree) if replace_trees.include?(:cb_rates)
+    reload_trees_by_presenter(presenter, :cb_rates => cb_rates_build_tree) if replace_trees.include?(:cb_rates)
 
     # FIXME
     #  if params[:action].ends_with?("_delete")
@@ -913,7 +913,7 @@ class ChargebackController < ApplicationController
 
     presenter[:right_cell_text]     = @right_cell_text
     unless x_active_tree == :cb_assignments_tree
-      presenter.lock_tree(x_active_tree, @in_a_form && @edit)
+      presenter[:lock_sidebar] = @in_a_form && @edit
     end
 
     render :json => presenter.for_render

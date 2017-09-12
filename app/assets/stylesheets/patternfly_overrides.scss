@@ -140,6 +140,12 @@ div#saml-login hr {
   position: absolute;
 }
 
+.drawer-pf-expanded .drawer-pf-title {
+  width: auto;
+  left: 0;
+  right: 0;
+}
+
 /// group switcher styling
 
 .navbar-right .dropdown-submenu > a {
@@ -383,7 +389,7 @@ table.table.table-summary-screen tbody td img {
 }
 
 .flobj { position: absolute;z-index: auto;width: 72px;}
-.flobj p { margin: 5px 0 0 0;padding: 0;color: #e3e4e4;vertical-align: middle;text-align:center;text-transform: none;text-shadow: 0 0 3px #000;font: normal 16px OpenSansSemibold,Arial,Helvetica,sans-serif !important;}
+.flobj p { margin: 5px 0 0 0;padding: 0;color: #e3e4e4;vertical-align: middle;text-align:center;text-transform: none;text-shadow: 0 0 3px #000;font: normal 16px OpenSansSemibold,Arial,Helvetica,sans-serif;}
 .a72 { padding: 3px  0 0 5px; width: 28px; height: 28px;font-size: 1.3em;line-height: 1.8em;}
 .b72 { padding: 3px 0 0 37px; font-size: 1.3em;line-height: 1.8em;}
 .c72 { padding: 38px 0 0 5px; width: 31px; height: 31px;font-size: 1.3em;line-height: 1.7em;}
@@ -466,11 +472,26 @@ table.table.table-summary-screen tbody td img {
     height: 44px;
     background-image: linear-gradient(to bottom, #FAFAFA 0%, #EDEDED 100%);
   }
+  #paging_div { /* sets paging_div at bottom of screen and styles */
+    height: 40px;
+    margin-top: 0;
+    top:0;
+    .col-md-12 {
+      padding: 0;
+    }
+    .content-view-pf-pagination {
+      margin: 0;
+      padding: 0;
+    }
+  }
 }
 
-.toolbar-pf#paging_div ul.pagination {
-  margin: 0;
+#paging_div {
+  border-top: 1px solid #c7c7c7;
+  background-image: linear-gradient(to bottom, #FAFAFA 0%, #EDEDED 100%);
 }
+
+
 
 /// end paginator styling
 
@@ -873,6 +894,11 @@ img.tiny { margin: 0; padding: 0;width:20px;height:20px; border: 0; vertical-ali
 }
 
 #spinner_div { margin-top: -45px; margin-left: -35px; width:180px; height: 180px; border-radius: 8px; background: image-url('layout/overlay_dark.png');}
+
+.sidebar-disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}
 
 /// ===================================================================
 /// end misc styling

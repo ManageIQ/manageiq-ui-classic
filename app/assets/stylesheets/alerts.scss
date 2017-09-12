@@ -28,8 +28,6 @@
   }
   .list-view-pf-view {
     margin-top: -1px;
-    margin-left: -20px;
-    margin-right: -20px;
   }
   .list-view-container, .row-tile-pf {
     height: calc(100vh - 196px);
@@ -60,6 +58,7 @@
     }
     .list-group-item-container {
       margin-right: -14px;
+      margin-top: 5px;
       [class^="col-"] {
         padding-left: 20px;
         padding-right: 20px;

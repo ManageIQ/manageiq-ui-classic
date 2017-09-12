@@ -53,6 +53,11 @@ class OrchestrationStackController < ApplicationController
     params[:display] = @display if ["instances"].include?(@display)  # Were we displaying vms/hosts/storages
     params[:page] = @current_page if @current_page.nil?   # Save current page for list refresh
 
+    if params[:pressed] == "custom_button"
+      custom_buttons
+      return
+    end
+
     if params[:pressed].starts_with?("instance_")        # Handle buttons from sub-items screen
       pfx = pfx_for_vm_button_pressed(params[:pressed])
       process_vm_buttons(pfx)
@@ -91,20 +96,15 @@ class OrchestrationStackController < ApplicationController
         orchestration_stack_retire_now
       when "orchestration_stack_tag"
         tag(OrchestrationStack)
+      when params[:pressed] == "custom_button"
+        custom_buttons
+        return
       end
       return if %w(orchestration_stack_retire orchestration_stack_tag).include?(params[:pressed]) &&
                 @flash_array.nil? # Tag screen showing, so return
     end
 
-    if @flash_array.nil? && !@refresh_partial # if no button handler ran, show not implemented msg
-      add_flash(_("Button not yet implemented"), :error)
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    elsif @flash_array && @lastaction == "show"
-      @orchestration_stack = @record = identify_record(params[:id])
-      @refresh_partial = "layouts/flash_msg"
-      @refresh_div = "flash_msg_div"
-    end
+    check_if_button_is_implemented
 
     if single_delete_test
       single_delete_redirect
@@ -242,4 +242,6 @@ class OrchestrationStackController < ApplicationController
   end
 
   menu_section :clo
+
+  has_custom_buttons
 end

@@ -1,14 +1,17 @@
-ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'miqService', 'DialogEditor', 'dialogId', function($window, API, miqService, DialogEditor, dialogId) {
+ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'miqService', 'DialogEditor', 'DialogValidation', 'dialogId', function($window, API, miqService, DialogEditor, DialogValidation, dialogId) {
   var vm = this;
 
   if (dialogId === 'new') {
     var dialogInitContent = {
       'content': [{
         'dialog_tabs': [{
-          'label': 'New tab',
+          'label': __('New tab'),
           'position': 0,
-          'dialog_groups': [
-          ],
+          'dialog_groups': [{
+            'label': __('New section'),
+            'position': 0,
+            'dialog_fields': []
+          }],
         }],
       }],
     };
@@ -24,6 +27,8 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
   function init(dialog) {
     DialogEditor.setData(dialog);
     vm.dialog = dialog;
+    vm.DialogValidation = DialogValidation;
+    vm.DialogEditor = DialogEditor;
   }
 
   vm.saveDialogDetails = saveDialogDetails;
@@ -65,6 +70,7 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
       dialogData = {
         description: DialogEditor.getDialogDescription(),
         label: DialogEditor.getDialogLabel(),
+        buttons: 'submit, cancel',
         dialog_tabs: [],
       };
       dialogData.dialog_tabs = _.cloneDeep(DialogEditor.getDialogTabs(), customizer);
@@ -89,11 +95,12 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
       dialogId = '/' + DialogEditor.getDialogId();
     }
 
-    API.post(
-      '/api/service_dialogs'
-      + dialogId,
-      {action: action, resource: dialogData}
-    ).then(saveSuccess, saveFailure);
+    API.post('/api/service_dialogs' + dialogId, {
+      action: action,
+      resource: dialogData,
+    }, { // options - don't show the error modal on validation errors
+      skipErrors: [400],
+    }).then(saveSuccess, saveFailure);
   }
 
   function dismissChanges() {
@@ -104,8 +111,11 @@ ManageIQ.angular.app.controller('dialogEditorController', ['$window', 'API', 'mi
     getBack(vm.dialog.content[0].label + __(' was saved'), false, false);
   }
 
-  function saveFailure() {
-    miqService.miqFlash('error', __('There was an error editing this dialog.'));
+  function saveFailure(response) {
+    miqService.miqFlash(
+      'error',
+      __('There was an error editing this dialog: ') + response.data.error.message
+    );
   }
 
   // FIXME: @himdel: method copied from other place -> maybe extract somewhere?

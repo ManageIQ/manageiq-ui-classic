@@ -1,6 +1,7 @@
 .bundle/
 .yardoc
 yarn.lock
+package-lock.json
 Gemfile.lock
 Gemfile.dev.rb
 _yardoc/
@@ -16,3 +17,4 @@ tmp/
 .ruby-version
 vendor/assets/bower_components/
 node_modules/
+config/webpack/paths.json

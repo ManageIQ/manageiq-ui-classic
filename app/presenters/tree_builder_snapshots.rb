@@ -23,15 +23,15 @@ class TreeBuilderSnapshots < TreeBuilder
 
   def set_locals_for_render
     locals = super
-    locals.merge!(:autoload => true, :onclick => 'miqOnClickSnapshotTree',)
+    locals.merge!(:autoload => true, :onclick => 'miqOnClickSnapshots',)
   end
 
   def root_options
     {
-      :text        => @record.name,
-      :tooltip     => @record.name,
-      :icon        => 'pficon pficon-virtual-machine',
-      :cfmeNoClick => true
+      :text       => @record.name,
+      :tooltip    => @record.name,
+      :icon       => 'pficon pficon-virtual-machine',
+      :selectable => false
     }
   end
 

@@ -16,7 +16,7 @@ class ContainerImageController < ApplicationController
   helper_method :textual_group_list
 
   def show_list
-    process_show_list(:where_clause => 'container_images.deleted_on IS NULL')
+    process_show_list(:named_scope => :active)
   end
 
   def guest_applications
@@ -35,4 +35,6 @@ class ContainerImageController < ApplicationController
   end
 
   menu_section :cnt
+
+  has_custom_buttons
 end

@@ -7,6 +7,7 @@ class InfraNetworkingController < ApplicationController
 
   include Mixins::GenericSessionMixin
   include Mixins::ExplorerPresenterMixin
+  include Mixins::FindRecord
 
   def self.model
     Switch
@@ -132,18 +133,7 @@ class InfraNetworkingController < ApplicationController
     session.delete(:exp_parms)
     @in_a_form = false
 
-    if params[:id]
-      nodetype, id = params[:id].split("-")
-      @reselect_node = self.x_node = "#{nodetype}-#{to_cid(id)}"
-      get_node_info(x_node)
-    end
     render :layout => "application"
-  end
-
-  def tree_autoload_dynatree
-    @view ||= session[:view]
-    x_tree_init(:infra_networking_tree, :infra_networking, Switch)
-    super
   end
 
   def tagging
@@ -595,7 +585,7 @@ class InfraNetworkingController < ApplicationController
     presenter.hide(:quicksearchbox)
     presenter[:hide_modal] = true
 
-    presenter.lock_tree(x_active_tree, @in_a_form)
+    presenter[:lock_sidebar] = @in_a_form
   end
 
   def display_adv_searchbox
@@ -608,20 +598,6 @@ class InfraNetworkingController < ApplicationController
 
   def valid_switch_record?(switch_record)
     switch_record.try(:id)
-  end
-
-  def find_record(model, id)
-    raise _("Invalid input") unless is_integer?(from_cid(id))
-    begin
-      record = model.where(:id => from_cid(id)).first
-    rescue ActiveRecord::RecordNotFound, StandardError => ex
-      if @explorer
-        self.x_node = "root"
-        add_flash(ex.message, :error, true)
-        session[:flash_msgs] = @flash_array.dup
-      end
-    end
-    record
   end
 
   def render_tagging_form
@@ -643,4 +619,6 @@ class InfraNetworkingController < ApplicationController
   end
 
   menu_section :inf
+
+  has_custom_buttons
 end

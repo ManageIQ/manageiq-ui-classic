@@ -32,17 +32,17 @@ describe TreeBuilderVmsAndTemplates do
 
       tree_v = TreeBuilderVmsAndTemplates.new(ems).tree
       expect(tree_v[:text]).to eq(ems.name)
-      expect(tree_v[:children].size).to eq(1)
+      expect(tree_v[:nodes].size).to eq(1)
 
-      folders_v = tree_v[:children].first
+      folders_v = tree_v[:nodes].first
       expect(folders_v[:text]).to match folder.name
-      expect(folders_v[:children].size).to eq(1)
+      expect(folders_v[:nodes].size).to eq(1)
 
-      subfolders_v = folders_v[:children].detect { |f| f[:text] == subfolder1.name }
+      subfolders_v = folders_v[:nodes].detect { |f| f[:text] == subfolder1.name }
       expect(subfolders_v).to be_present
-      expect(subfolders_v[:children].size).to eq(2)
+      expect(subfolders_v[:nodes].size).to eq(2)
 
-      ems_vs = subfolders_v[:children]
+      ems_vs = subfolders_v[:nodes]
       expect(ems_vs.map { |e| e[:text] }).to match_array(vms.map(&:name))
     end
 
@@ -55,15 +55,15 @@ describe TreeBuilderVmsAndTemplates do
 
       tree_v = TreeBuilderVmsAndTemplates.new(ems).tree
       expect(tree_v[:text]).to eq(ems.name)
-      expect(tree_v[:children].size).to eq(1)
+      expect(tree_v[:nodes].size).to eq(1)
 
-      folders_v = tree_v[:children].first
+      folders_v = tree_v[:nodes].first
       expect(folders_v[:text]).to match folder.name
-      expect(folders_v[:children].size).to eq(1) # would be 3 if we did not prune
+      expect(folders_v[:nodes].size).to eq(1) # would be 3 if we did not prune
 
-      subfolders_v = folders_v[:children].detect { |f| f[:text] == subfolder1.name }
+      subfolders_v = folders_v[:nodes].detect { |f| f[:text] == subfolder1.name }
       expect(subfolders_v).to be_present
-      expect(subfolders_v[:children]).to be_blank # no vms in the tree
+      expect(subfolders_v[:nodes]).to be_blank # no vms in the tree
     end
   end
 end

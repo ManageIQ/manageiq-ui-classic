@@ -3,17 +3,6 @@ module MiqAeCustomizationController::CustomButtons
 
   private
 
-  def buttons_node_image(node)
-    case node
-    when "ExtManagementSystem"
-      return "ext_management_system"
-    when "MiqTemplate"
-      return "vm"
-    else
-      return node.downcase
-    end
-  end
-
   def ab_get_node_info(node)
     @nodetype = node.split("_")
     nodeid = node.split("-")
@@ -47,14 +36,14 @@ module MiqAeCustomizationController::CustomButtons
           group[:id] = aset.id
           group[:name] = aset.name
           group[:description] = aset.description
-          group[:button_image] = aset.set_data[:button_image]
+          group[:button_icon] = aset.set_data[:button_icon]
+          group[:button_color] = aset.set_data[:button_color]
           @sb[:button_groups].push(group) unless @sb[:button_groups].include?(group)
         end
       end
     elsif @nodetype.length == 1 && nodeid[1] == "ub"        # Unassigned buttons group selected
       @sb[:buttons] = []
-      @right_cell_text = _("%{typ} Button Group \"Unassigned Buttons\"") %
-                         {:typ => @sb[:target_classes].invert[nodeid[2]]}
+      @right_cell_text = _("%{typ} Button Group \"Unassigned Buttons\"") % {:typ => @sb[:target_classes].invert[nodeid[2]]}
       uri = CustomButton.buttons_for(nodeid[2]).sort_by(&:name)
       unless uri.blank?
         uri.each do |b|
@@ -63,7 +52,8 @@ module MiqAeCustomizationController::CustomButtons
             button[:name] = b.name
             button[:id] = b.id
             button[:description] = b.description
-            button[:button_image] = b.options[:button_image]
+            button[:button_icon] = b.options[:button_icon]
+            button[:button_color] = b.options[:button_color]
             @sb[:buttons].push(button)
           end
         end
@@ -98,6 +88,8 @@ module MiqAeCustomizationController::CustomButtons
         # selected button is under assigned folder
         @resolve[:new][:target_class] = @sb[:target_classes].invert[@nodetype[1]]
       end
+      @visibility_expression_table = exp_build_table(@custom_button.visibility_expression.exp) if @custom_button.visibility_expression.kind_of?(MiqExpression)
+      @enablement_expression_table = exp_build_table(@custom_button.enablement_expression.exp) if @custom_button.enablement_expression.kind_of?(MiqExpression)
       @right_cell_text = _("Button \"%{name}\"") % {:name => @custom_button.name}
     else                # assigned buttons node/folder
       @sb[:applies_to_class] = @nodetype[1]
@@ -119,7 +111,8 @@ module MiqAeCustomizationController::CustomButtons
               button[:name] = b.name
               button[:id] = b.id
               button[:description] = b.description
-              button[:button_image] = b.options[:button_image]
+              button[:button_icon] = b.options[:button_icon]
+              button[:button_color] = b.options[:button_color]
               @sb[:buttons].push(button) unless @sb[:buttons].include?(button)
             end
           end

@@ -9,6 +9,8 @@ class MiqAeClassController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  MIQ_AE_COPY_ACTIONS = %w(miq_ae_class_copy miq_ae_instance_copy miq_ae_method_copy).freeze
+
   # GET /automation_classes
   # GET /automation_classes.xml
   def index
@@ -19,7 +21,7 @@ class MiqAeClassController < ApplicationController
     # resetting flash array so messages don't get displayed when tab is changed
     @flash_array = []
     @explorer = true
-    @record = @ae_class = MiqAeClass.find_by_id(from_cid(x_node.split('-').last))
+    @record = @ae_class = MiqAeClass.find(from_cid(x_node.split('-').last))
     @sb[:active_tab] = params[:tab_id]
     render :update do |page|
       page << javascript_prologue
@@ -68,7 +70,6 @@ class MiqAeClassController < ApplicationController
     @sb[:action] = nil
     @explorer = true
     # don't need right bottom cell
-    @collapse_c_cell = true
     @breadcrumbs = []
     bc_name = _("Explorer")
     bc_name += _(" (filtered)") if @filters && (!@filters[:tags].blank? || !@filters[:cats].blank?)
@@ -88,33 +89,34 @@ class MiqAeClassController < ApplicationController
       txt = _("Datastore")
       @sb[:namespace_path] = ""
     when "aec"
-      txt =  ui_lookup(:model => "MiqAeClass")
+      txt = ui_lookup(:model => "MiqAeClass")
       @sb[:namespace_path] = rec.fqname
     when "aei"
       txt = ui_lookup(:model => "MiqAeInstance")
       updated_by = rec.updated_by ? _(" by %{user}") % {:user => rec.updated_by} : ""
       @sb[:namespace_path] = rec.fqname
-      @right_cell_text = _("%{model} [%{name} - Updated %{time}%{update}]") %
-        {:model  => txt,
-         :name   => get_rec_name(rec),
-         :time   => format_timezone(rec.updated_on, Time.zone, "gtl"),
-         :update => updated_by}
+      @right_cell_text = _("%{model} [%{name} - Updated %{time}%{update}]") % {
+        :model  => txt,
+        :name   => get_rec_name(rec),
+        :time   => format_timezone(rec.updated_on, Time.zone, "gtl"),
+        :update => updated_by
+      }
     when "aem"
       txt = ui_lookup(:model => "MiqAeMethod")
       updated_by = rec.updated_by ? _(" by %{user}") % {:user => rec.updated_by} : ""
       @sb[:namespace_path] = rec.fqname
-      @right_cell_text = _("%{model} [%{name} - Updated %{time}%{update}]") %
-        {:model  => txt,
-         :name   => get_rec_name(rec),
-         :time   => format_timezone(rec.updated_on, Time.zone, "gtl"),
-         :update => updated_by}
+      @right_cell_text = _("%{model} [%{name} - Updated %{time}%{update}]") % {
+        :model  => txt,
+        :name   => get_rec_name(rec),
+        :time   => format_timezone(rec.updated_on, Time.zone, "gtl"),
+        :update => updated_by
+      }
     when "aen"
       txt = ui_lookup(:model => rec.domain? ? "MiqAeDomain" : "MiqAeNamespace")
       @sb[:namespace_path] = rec.fqname
     end
-    @sb[:namespace_path].gsub!(/\//, " / ") if @sb[:namespace_path]
-    @right_cell_text = "#{txt} \
-      #{_("\"%s\"") % get_rec_name(rec)}" unless %w(root aei aem).include?(nodes[0])
+    @sb[:namespace_path].gsub!(%r{\/}, " / ") if @sb[:namespace_path]
+    @right_cell_text = "#{txt} #{_("\"%s\"") % get_rec_name(rec)}" unless %w(root aei aem).include?(nodes[0])
   end
 
   def expand_toggle
@@ -147,10 +149,10 @@ class MiqAeClassController < ApplicationController
     when "aem"
       get_method_node_info(id)
     when "aen"
-      @record = MiqAeNamespace.find_by_id(from_cid(id[1]))
+      @record = MiqAeNamespace.find(from_cid(id[1]))
       # need to set record as Domain record if it's a domain, editable_domains, enabled_domains,
       # visible domains methods returns list of Domains, need this for toolbars to hide/disable correct records.
-      @record = MiqAeDomain.find_by_id(from_cid(id[1])) if @record.domain?
+      @record = MiqAeDomain.find(from_cid(id[1])) if @record.domain?
       @version_message = domain_version_message(@record) if @record.domain?
       if @record.nil?
         set_root_node
@@ -206,8 +208,8 @@ class MiqAeClassController < ApplicationController
 
   # Check for parent nodes missing from ae tree and return them if any
   def open_parent_nodes(record)
-    nodes         =  record.fqname.split("/")
-    parents       = []
+    nodes = record.fqname.split("/")
+    parents = []
     nodes.each_with_index do |_, i|
       if i == nodes.length - 1
         selected_node = x_node.split("-")
@@ -215,7 +217,7 @@ class MiqAeClassController < ApplicationController
         self.x_node = "#{selected_node[0]}-#{to_cid(record.id)}"
         parents.push(record)
       else
-        ns = MiqAeNamespace.find_by_fqname(nodes[0..i].join("/"))
+        ns = MiqAeNamespace.find_by(:fqname => nodes[0..i].join("/"))
         parents.push(ns) if ns
       end
     end
@@ -228,11 +230,11 @@ class MiqAeClassController < ApplicationController
     children = tree_add_child_nodes(existing_node)
     # set x_node after building tree nodes so parent node of new nodes can be selected in the tree.
     unless params[:action] == "x_show"
-      if @record.kind_of?(MiqAeClass)
-        self.x_node = "aen-#{to_cid(@record.namespace_id)}"
-      else
-        self.x_node = "aec-#{to_cid(@record.class_id)}"
-      end
+      self.x_node = if @record.kind_of?(MiqAeClass)
+                      "aen-#{to_cid(@record.namespace_id)}"
+                    else
+                      "aec-#{to_cid(@record.class_id)}"
+                    end
     end
     {:key => existing_node, :nodes => children}
   end
@@ -265,7 +267,7 @@ class MiqAeClassController < ApplicationController
     nodes = x_node.split('-')
 
     @in_a_form = @in_a_form_fields = @in_a_form_props = false if params[:button] == "cancel" ||
-                                                                 (["save", "add"].include?(params[:button]) && replace_trees)
+                                                                 (%w(save add).include?(params[:button]) && replace_trees)
     add_nodes = open_parent_nodes(@record) if params[:button] == "copy" ||
                                               params[:action] == "x_show"
     get_node_info(x_node) if !@in_a_form && @button != "reset"
@@ -280,7 +282,7 @@ class MiqAeClassController < ApplicationController
       :add_nodes       => add_nodes,
     )
 
-    replace_trees_by_presenter(presenter, :ae => build_ae_tree) unless replace_trees.blank?
+    reload_trees_by_presenter(presenter, :ae => build_ae_tree) unless replace_trees.blank?
 
     if @sb[:action] == "miq_ae_field_seq"
       presenter.update(:class_fields_div, r[:partial => "fields_seq_form"])
@@ -303,7 +305,7 @@ class MiqAeClassController < ApplicationController
     presenter.replace('flash_msg_div', r[:partial => "layouts/flash_msg"]) if @flash_array
 
     if @in_a_form
-      action_url =  create_action_url(nodes.first)
+      action_url = create_action_url(nodes.first)
       # incase it was hidden for summary screen, and incase there were no records on show_list
       presenter.show(:paging_div, :form_buttons_div)
       presenter.update(:form_buttons_div, r[
@@ -321,7 +323,7 @@ class MiqAeClassController < ApplicationController
       presenter.hide(:paging_div, :form_buttons_div)
     end
 
-    presenter.lock_tree(x_active_tree, @in_a_form && @edit)
+    presenter[:lock_sidebar] = @in_a_form && @edit
 
     if @record.kind_of?(MiqAeMethod) && !@in_a_form
       presenter.set_visibility(!@record.inputs.blank?, :params_div)
@@ -353,7 +355,7 @@ class MiqAeClassController < ApplicationController
     MiqAeField.available_datatypes_for_ui.collect { |t| [t.titleize, t, {"data-icon" => ae_field_fonticon(t)}] }
   end
 
-  def set_cls(cls)
+  def class_and_glyph(cls)
     case cls.to_s.split("::").last
     when "MiqAeClass"
       cls = "aec"
@@ -371,7 +373,7 @@ class MiqAeClassController < ApplicationController
       cls = "aem"
       glyphicon = "ff ff-method"
     end
-    return cls, glyphicon
+    [cls, glyphicon]
   end
 
   def build_details_grid(view, mode = true)
@@ -383,7 +385,7 @@ class MiqAeClassController < ApplicationController
     # Build the header row
     head = root.add_element("head")
     header = ""
-    new_column = head.add_element("column", "type" => "ch", "width" => 25, "align" => "center") # Checkbox column
+    head.add_element("column", "type" => "ch", "width" => 25, "align" => "center") # Checkbox column
     new_column = head.add_element("column", "width" => "30", "align" => "left", "sort" => "na")
     new_column.add_attribute("type", 'ro')
     new_column.text = header
@@ -399,7 +401,7 @@ class MiqAeClassController < ApplicationController
         view
       end
     records.each do |kids|
-      cls, glyphicon = set_cls(kids.class)
+      cls, glyphicon = class_and_glyph(kids.class)
       rec_name = get_rec_name(kids)
       if rec_name
         rec_name = rec_name.gsub(/\n/, "\\n")
@@ -428,7 +430,7 @@ class MiqAeClassController < ApplicationController
 
   def edit_class
     assert_privileges("miq_ae_class_edit")
-    if params[:pressed] == "miq_ae_item_edit"       # came from Namespace details screen
+    if params[:pressed] == "miq_ae_item_edit" # came from Namespace details screen
       id = @sb[:row_selected].split('-')
       @ae_class = find_record_with_rbac(MiqAeClass, from_cid(id[1]))
     else
@@ -446,7 +448,7 @@ class MiqAeClassController < ApplicationController
 
   def edit_fields
     assert_privileges("miq_ae_field_edit")
-    if params[:pressed] == "miq_ae_item_edit"       # came from Namespace details screen
+    if params[:pressed] == "miq_ae_item_edit" # came from Namespace details screen
       id = @sb[:row_selected].split('-')
       @ae_class = find_record_with_rbac(MiqAeClass, from_cid(id[1]))
     else
@@ -552,7 +554,7 @@ class MiqAeClassController < ApplicationController
     @changed = (@edit[:new] != @edit[:current])
     case params[:button]
     when "cancel"
-      session[:edit] = nil  # clean out the saved info
+      session[:edit] = nil # clean out the saved info
       add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqAeInstance"), :name => @ae_inst.name})
       @in_a_form = false
       replace_right_cell
@@ -564,22 +566,22 @@ class MiqAeClassController < ApplicationController
         javascript_flash
         return
       end
-      set_instances_record_vars(@ae_inst)    # Set the instance record variables, but don't save
+      set_instances_record_vars(@ae_inst) # Set the instance record variables, but don't save
       # Update the @ae_inst.ae_values directly because of update bug in RAILS
       # When saving a parent, the childrens updates are not getting saved
-      set_instances_value_vars(@ae_values, @ae_inst)  # Set the instance record variables, but don't save
+      set_instances_value_vars(@ae_values, @ae_inst) # Set the instance record variables, but don't save
       begin
         MiqAeInstance.transaction do
           @ae_inst.ae_values.each { |v| v.value = nil if v.value == "" }
           @ae_inst.save!
-        end   # end of transaction
+        end
       rescue => bang
         add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
         @in_a_form = true
         javascript_flash
       else
         AuditEvent.success(build_saved_audit(@ae_class, @edit))
-        session[:edit] = nil  # clean out the saved info
+        session[:edit] = nil # clean out the saved info
         @in_a_form = false
         add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqAeInstance"), :name => @ae_inst.name})
         replace_right_cell(:replace_trees => [:ae])
@@ -598,7 +600,7 @@ class MiqAeClassController < ApplicationController
     assert_privileges("miq_ae_instance_new")
     case params[:button]
     when "cancel"
-      session[:edit] = nil  # clean out the saved info
+      session[:edit] = nil # clean out the saved info
       add_flash(_("Add of new %{model} was cancelled by the user") % {:model => ui_lookup(:model => "MiqAeInstance")})
       @in_a_form = false
       replace_right_cell
@@ -620,7 +622,7 @@ class MiqAeClassController < ApplicationController
           add_aeinst.ae_values = @ae_values
           add_aeinst.ae_values.each { |v| v.value = nil if v.value == "" }
           add_aeinst.save!
-        end  # end of transaction
+        end
       rescue => bang
         @in_a_form = true
         render_flash(_("Error during 'add': %{message}") % {:message => bang.message}, :error)
@@ -688,10 +690,10 @@ class MiqAeClassController < ApplicationController
     end
 
     # combo to show existing fields
-    @combo_xml       = build_type_options
+    @combo_xml = build_type_options
     # passing in fields because that's how many combo boxes we need
     @dtype_combo_xml = build_dtype_options
-    @edit[:current]         = copy_hash(@edit[:new])
+    @edit[:current] = copy_hash(@edit[:new])
     @right_cell_text = if @edit[:rec_id].nil?
                          _("Adding a new %{model}") % {:model => ui_lookup(:model => "Class Schema")}
                        else
@@ -721,12 +723,19 @@ class MiqAeClassController < ApplicationController
     @edit[:new][:display_name] = @ae_method.display_name
     @edit[:new][:scope] = "instance"
     @edit[:new][:language] = "ruby"
-    @edit[:new][:available_locations] = MiqAeMethod.available_locations
-    @edit[:new][:location] = @ae_method.location.nil? ? "inline" : @ae_method.location
-    @edit[:new][:data] = @ae_method.data.to_s
-    if @edit[:new][:location] == "inline" && !@ae_method.data
-      @edit[:new][:data] = MiqAeMethod.default_method_text
+    @edit[:new][:available_locations] = MiqAeMethod.available_locations unless @ae_method.id
+    @edit[:new][:available_expression_objects] = MiqAeMethod.available_expression_objects.sort
+    @edit[:new][:location] = @ae_method.location
+    if @edit[:new][:location] == "expression"
+      expr_hash = YAML.load(@ae_method.data)
+      if expr_hash[:db] && expr_hash[:expression]
+        @edit[:new][:expression] = expr_hash[:expression]
+        expression_setup(expr_hash[:db])
+      end
+    else
+      @edit[:new][:data] = @ae_method.data.to_s
     end
+    @edit[:new][:data] = @ae_method.data.to_s
     @edit[:default_verify_status] = @edit[:new][:location] == "inline" && @edit[:new][:data] && @edit[:new][:data] != ""
     @edit[:new][:fields] = @ae_method.inputs.collect do |input|
       method_input_column_names.each_with_object({}) do |column, hash|
@@ -746,8 +755,22 @@ class MiqAeClassController < ApplicationController
     session[:changed] = @changed = false
   end
 
+  def expression_setup(db)
+    @edit[:expression_method] = true
+    @edit[:new][:exp_object] = db
+    if params[:exp_object] || params[:cls_exp_object]
+      session[:adv_search] = nil
+      @edit[@expkey] = @edit[:new][@expkey] = nil
+    end
+    adv_search_build(db)
+  end
+
+  def expression_cleanup
+    @edit[:expression_method] = false
+  end
+
   def ae_class_for_instance_or_method(record)
-    record.id ? record.ae_class : MiqAeClass.find_by_id(from_cid(x_node.split("-").last))
+    record.id ? record.ae_class : MiqAeClass.find(from_cid(x_node.split("-").last))
   end
 
   def validate_method_data
@@ -760,7 +783,7 @@ class MiqAeClassController < ApplicationController
       add_flash(_("Data validated successfully"))
     else
       res.each do |err|
-        line = err[0] if line == 0
+        line = err[0] if line.zero?
         add_flash(_("Error on line %{line_num}: %{err_txt}") % {:line_num => err[0], :err_txt => err[1]}, :error)
       end
     end
@@ -800,7 +823,7 @@ class MiqAeClassController < ApplicationController
     @changed = (@edit[:new] != @edit[:current])
     render :update do |page|
       page << javascript_prologue
-      unless ["up", "down"].include?(params[:button])
+      unless %w(up down).include?(params[:button])
         if params[:field_datatype] == "password"
           page << javascript_hide("field_default_value")
           page << javascript_show("field_password_value")
@@ -815,21 +838,21 @@ class MiqAeClassController < ApplicationController
             @edit[:new_field][:default_value] = ''
         end
         params.keys.each do |field|
-          if field.to_s.starts_with?("fields_datatype")
-            f = field.split('fields_datatype')
-            def_field = "fields_default_value_" << f[1].to_s
-            pwd_field = "fields_password_value_" << f[1].to_s
-            if @edit[:new][:fields][f[1].to_i]['datatype'] == "password"
-              page << javascript_hide(def_field)
-              page << javascript_show(pwd_field)
-              page << "$('##{pwd_field}').val('');"
-            else
-              page << javascript_hide(pwd_field)
-              page << javascript_show(def_field)
-              page << "$('##{def_field}').val('');"
-            end
-            @edit[:new][:fields][f[1].to_i]['default_value'] = nil
+          next unless field.to_s.starts_with?("fields_datatype")
+
+          f = field.split('fields_datatype')
+          def_field = "fields_default_value_" << f[1].to_s
+          pwd_field = "fields_password_value_" << f[1].to_s
+          if @edit[:new][:fields][f[1].to_i]['datatype'] == "password"
+            page << javascript_hide(def_field)
+            page << javascript_show(pwd_field)
+            page << "$('##{pwd_field}').val('');"
+          else
+            page << javascript_hide(pwd_field)
+            page << javascript_show(def_field)
+            page << "$('##{def_field}').val('');"
           end
+          @edit[:new][:fields][f[1].to_i]['default_value'] = nil
         end
       end
       page << javascript_for_miq_button_visibility_changed(@changed)
@@ -838,12 +861,19 @@ class MiqAeClassController < ApplicationController
 
   # AJAX driven routine to check for changes in ANY field on the form
   def form_method_field_changed
-    if !@sb[:form_vars_set]  # workaround to prevent an error that happens when IE sends a transaction form form even after save button is clicked when there is text_area in the form
+    if !@sb[:form_vars_set] # workaround to prevent an error that happens when IE sends a transaction form form even after save button is clicked when there is text_area in the form
       head :ok
     else
       return unless load_edit("aemethod_edit__#{params[:id]}", "replace_cell__explorer")
-      @prev_location = @edit[:new][:location]
       get_method_form_vars
+
+      if @edit[:new][:location] == 'expression'
+        @edit[:new][:exp_object] ||= @edit[:new][:available_expression_objects].first
+        exp_object = params[:cls_exp_object] || params[:exp_object] || @edit[:new][:exp_object]
+        expression_setup(exp_object) if exp_object
+      else
+        expression_cleanup
+      end
       if row_selected_in_grid?
         @refresh_div = "class_methods_div"
         @refresh_partial = "class_methods"
@@ -856,21 +886,23 @@ class MiqAeClassController < ApplicationController
       if @edit[:current][:location] == "inline" && @edit[:current][:data]
         @edit[:method_prev_data] = @edit[:current][:data]
       end
-      if @edit[:new][:location] == "inline" && !params[:cls_method_data] && !params[:method_data] && !params[:transOne]
-        if !@edit[:method_prev_data]
-          @edit[:new][:data] = MiqAeMethod.default_method_text
-        else
-          @edit[:new][:data] = @edit[:method_prev_data]
-        end
-      elsif params[:cls_method_location] || params[:method_location]      # reset data if location is changed
-        @edit[:new][:data] = ""
-      end
+      @edit[:new][:data] = if @edit[:new][:location] == "inline" && !params[:cls_method_data] &&
+                              !params[:method_data] && !params[:transOne]
+                             if !@edit[:method_prev_data]
+                               MiqAeMethod.default_method_text
+                             else
+                               @edit[:method_prev_data]
+                             end
+                           elsif params[:cls_method_location] || params[:method_location]
+                             # reset data if location is changed
+                             ''
+                           end
       @changed = (@edit[:new] != @edit[:current])
       @edit[:default_verify_status] = @edit[:new][:location] == "inline" && @edit[:new][:data] && @edit[:new][:data] != ""
       render :update do |page|
         page << javascript_prologue
-        page.replace_html(@refresh_div, :partial => @refresh_partial)  if @refresh_div && @prev_location != @edit[:new][:location]
-        # page.replace_html("hider_1", :partial=>"method_data", :locals=>{:field_name=>@field_name})  if @prev_location != @edit[:new][:location]
+        page.replace_html('form_div', :partial => 'method_form', :locals => {:prefix => ""}) if @edit[:new][:location] == 'expression'
+        page.replace_html(@refresh_div, :partial => @refresh_partial) if @refresh_div && (params[:cls_method_location] || params[:exp_object] || params[:cls_exp_object])
         if params[:cls_field_datatype]
           if session[:field_data][:datatype] == "password"
             page << javascript_hide("cls_field_default_value")
@@ -905,28 +937,29 @@ class MiqAeClassController < ApplicationController
             pwd_field = "fields_password_value_" << f[1].to_s
           end
 
-          if f
-            if @edit[:new][:fields][f[1].to_i]['datatype'] == "password"
-              page << javascript_hide(def_field)
-              page << javascript_show(pwd_field)
-              page << "$('##{pwd_field}').val('');"
-            else
-              page << javascript_hide(pwd_field)
-              page << javascript_show(def_field)
-              page << "$('##{def_field}').val('');"
-            end
-            @edit[:new][:fields][f[1].to_i]['default_value'] = nil
+          next unless f
+
+          if @edit[:new][:fields][f[1].to_i]['datatype'] == "password"
+            page << javascript_hide(def_field)
+            page << javascript_show(pwd_field)
+            page << "$('##{pwd_field}').val('');"
+          else
+            page << javascript_hide(pwd_field)
+            page << javascript_show(def_field)
+            page << "$('##{def_field}').val('');"
           end
+          @edit[:new][:fields][f[1].to_i]['default_value'] = nil
         end
         if @edit[:default_verify_status] != session[:log_depot_default_verify_status]
           session[:log_depot_default_verify_status] = @edit[:default_verify_status]
-          if @edit[:default_verify_status]
-            page << "miqValidateButtons('show', 'default_');"
-          else
-            page << "miqValidateButtons('hide', 'default_');"
-          end
+          page << if @edit[:default_verify_status]
+                    "miqValidateButtons('show', 'default_');"
+                  else
+                    "miqValidateButtons('hide', 'default_');"
+                  end
         end
         page << javascript_for_miq_button_visibility_changed(@changed)
+        page << "miqSparkle(false)"
       end
     end
   end
@@ -949,17 +982,17 @@ class MiqAeClassController < ApplicationController
     @changed = (@edit[:new] != @edit[:current])
     case params[:button]
     when "cancel"
-      session[:edit] = nil  # clean out the saved info
+      session[:edit] = nil # clean out the saved info
       add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqAeClass"), :name => @ae_class.name})
       @in_a_form = false
       replace_right_cell
     when "save"
       ae_class = find_record_with_rbac(MiqAeClass, params[:id])
-      set_record_vars(ae_class)                     # Set the record variables, but don't save
+      set_record_vars(ae_class) # Set the record variables, but don't save
       begin
         MiqAeClass.transaction do
           ae_class.save!
-        end  # end of transaction
+        end
       rescue => bang
         add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
         session[:changed] = @changed
@@ -968,7 +1001,7 @@ class MiqAeClassController < ApplicationController
       else
         add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqAeClass"), :name => ae_class.fqname})
         AuditEvent.success(build_saved_audit(ae_class, @edit))
-        session[:edit] = nil  # clean out the saved info
+        session[:edit] = nil # clean out the saved info
         @in_a_form = false
         replace_right_cell(:replace_trees => [:ae])
         return
@@ -1036,13 +1069,13 @@ class MiqAeClassController < ApplicationController
     @changed = (@edit[:new] != @edit[:current])
     case params[:button]
     when "cancel"
-      session[:edit] = nil  # clean out the saved info
-      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => @edit[:typ]), :name  => @ae_ns.name})
+      session[:edit] = nil # clean out the saved info
+      add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => @edit[:typ]), :name => @ae_ns.name})
       @in_a_form = false
       replace_right_cell
     when "save"
       ae_ns = find_record_with_rbac(@edit[:typ].constantize, params[:id])
-      ns_set_record_vars(ae_ns)                     # Set the record variables, but don't save
+      ns_set_record_vars(ae_ns) # Set the record variables, but don't save
       begin
         ae_ns.save!
       rescue => bang
@@ -1051,9 +1084,9 @@ class MiqAeClassController < ApplicationController
         @changed = true
         javascript_flash
       else
-        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => @edit[:typ]), :name  => ae_ns.name})
+        add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => @edit[:typ]), :name => get_record_display_name(ae_ns)})
         AuditEvent.success(build_saved_audit(ae_ns, @edit))
-        session[:edit] = nil  # clean out the saved info
+        session[:edit] = nil # clean out the saved info
         @in_a_form = false
         replace_right_cell(:replace_trees => [:ae])
       end
@@ -1076,21 +1109,25 @@ class MiqAeClassController < ApplicationController
     @changed = (@edit[:new] != @edit[:current])
     case params[:button]
     when "cancel"
-      session[:edit] = nil  # clean out the saved info
+      session[:edit] = nil # clean out the saved info
       add_flash(_("Edit of %{model} \"%{name}\" was cancelled by the user") % {:model => ui_lookup(:model => "MiqAeMethod"), :name => @ae_method.name})
       @sb[:form_vars_set] = false
       @in_a_form = false
       replace_right_cell
     when "save"
+      # dont allow save if expression has not been added or existing one has been removed
+      validate_expression("save") if @edit[:new][:location] == 'expression'
+      return if flash_errors?
+
       ae_method = find_record_with_rbac(MiqAeMethod, params[:id])
-      set_method_record_vars(ae_method)                     # Set the record variables, but don't save
+      set_method_record_vars(ae_method) # Set the record variables, but don't save
       begin
         MiqAeMethod.transaction do
           set_input_vars(ae_method)
           ae_method.inputs.destroy(MiqAeField.where(:id => @edit[:fields_to_delete]))
           ae_method.inputs.each { |fld| fld.default_value = nil if fld.default_value == "" }
           ae_method.save!
-        end  # end of transaction
+        end
       rescue => bang
         add_flash(_("Error during 'save': %{error_message}") % {:error_message => bang.message}, :error)
         session[:changed] = @changed
@@ -1099,7 +1136,7 @@ class MiqAeClassController < ApplicationController
       else
         add_flash(_("%{model} \"%{name}\" was saved") % {:model => ui_lookup(:model => "MiqAeMethod"), :name => ae_method.name})
         AuditEvent.success(build_saved_audit(ae_method, @edit))
-        session[:edit] = nil  # clean out the saved info
+        session[:edit] = nil # clean out the saved info
         @sb[:form_vars_set] = false
         @in_a_form = false
         replace_right_cell(:replace_trees => [:ae])
@@ -1154,7 +1191,7 @@ class MiqAeClassController < ApplicationController
       replace_right_cell(:replace_trees => [:ae])
     when "add"
       add_aeclass = MiqAeClass.new
-      set_record_vars(add_aeclass)                        # Set the record variables, but don't save
+      set_record_vars(add_aeclass) # Set the record variables, but don't save
       begin
         MiqAeClass.transaction do
           add_aeclass.save!
@@ -1177,6 +1214,11 @@ class MiqAeClassController < ApplicationController
     end
   end
 
+  def data_for_expression
+    {:db         => @edit[:new][:exp_object],
+     :expression => @edit[:new][:expression]}.to_yaml
+  end
+
   def create_method
     assert_privileges("miq_ae_method_new")
     @in_a_form = true
@@ -1189,8 +1231,13 @@ class MiqAeClassController < ApplicationController
     when "add"
       return unless load_edit("aemethod_edit__new", "replace_cell__explorer")
       get_method_form_vars
+
+      # dont allow add if expression has not been added or existing one has been removed
+      validate_expression("add") if @edit[:new][:location] == 'expression'
+      return if flash_errors?
+
       add_aemethod = MiqAeMethod.new
-      set_method_record_vars(add_aemethod)                        # Set the record variables, but don't save
+      set_method_record_vars(add_aemethod) # Set the record variables, but don't save
       begin
         MiqAeMethod.transaction do
           add_aemethod.save!
@@ -1229,9 +1276,9 @@ class MiqAeClassController < ApplicationController
                   else
                     MiqAeNamespace.new(:parent_id => from_cid(x_node.split('-')[1]))
                   end
-      ns_set_record_vars(add_ae_ns)      # Set the record variables, but don't save
+      ns_set_record_vars(add_ae_ns) # Set the record variables, but don't save
       if add_ae_ns.valid? && !flash_errors? && add_ae_ns.save
-        add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => add_ae_ns.class.name), :name  => add_ae_ns.name})
+        add_flash(_("%{model} \"%{name}\" was added") % {:model => ui_lookup(:model => add_ae_ns.class.name), :name => get_record_display_name(add_ae_ns)})
         @in_a_form = false
         replace_right_cell(:replace_trees => [:ae])
       else
@@ -1368,24 +1415,30 @@ class MiqAeClassController < ApplicationController
     end
   end
 
+  def handle_up_down_buttons(hash_key, field_name)
+    case params[:button]
+    when 'up'
+      move_selected_fields_up(@edit[:new][hash_key], params[:seq_fields], field_name)
+    when 'down'
+      move_selected_fields_down(@edit[:new][hash_key], params[:seq_fields], field_name)
+    end
+  end
+
   # Get variables from user edit form
   def fields_seq_field_changed
     return unless load_edit("fields_edit__seq", "replace_cell__explorer")
-    move_selected_fields_up(@edit[:new][:fields_list], params[:seq_fields], _("Fields"))   if params[:button] == "up"
-    move_selected_fields_down(@edit[:new][:fields_list], params[:seq_fields], _("Fields")) if params[:button] == "down"
-    unless @flash_array
-      @refresh_div = "column_lists"
-      @refresh_partial = "fields_seq_form"
+
+    unless handle_up_down_buttons(:fields_list, _('Fields'))
+      render_flash
+      return
     end
-    @changed = (@edit[:new] != @edit[:current])
+
     render :update do |page|
       page << javascript_prologue
-      page.replace("flash_msg_div", :partial => "layouts/flash_msg") unless @refresh_div && @refresh_div != "column_lists"
-      page.replace(@refresh_div, :partial => @refresh_partial) if @refresh_div
-      if @changed
-        page << javascript_for_miq_button_visibility(@changed)
-      end
-      page << "miqSparkle(false);"
+      page.replace('column_lists', :partial => 'fields_seq_form')
+      @changed = (@edit[:new] != @edit[:current])
+      page << javascript_for_miq_button_visibility(@changed) if @changed
+      page << "miqsparkle(false);"
     end
   end
 
@@ -1397,31 +1450,30 @@ class MiqAeClassController < ApplicationController
       add_flash(_("Edit of Class Schema Sequence was cancelled by the user"))
       @in_a_form = false
       replace_right_cell
+
     when "save"
       return unless load_edit("fields_edit__seq", "replace_cell__explorer")
-      err = false
       ae_class = MiqAeClass.find(@edit[:ae_class_id])
       indexed_ae_fields = ae_class.ae_fields.index_by(&:name)
       @edit[:new][:fields_list].each_with_index do |f, i|
         fname = f.split('(').last.split(')').first # leave display name and parenthesis out
         indexed_ae_fields[fname].try(:priority=, i + 1)
       end
-      if ae_class.save
-        AuditEvent.success(build_saved_audit(ae_class, @edit))
-      else
+
+      unless ae_class.save
         flash_validation_errors(ae_class)
-        err = true
-      end
-      if !err
-        add_flash(_("Class Schema Sequence was saved"))
-        @sb[:action] = @edit = session[:edit] = nil # clean out the saved info
-        @in_a_form = false
-        replace_right_cell
-      else
         @in_a_form = true
         @changed = true
         javascript_flash
+        return
       end
+
+      AuditEvent.success(build_saved_audit(ae_class, @edit))
+      add_flash(_("Class Schema Sequence was saved"))
+      @sb[:action] = @edit = session[:edit] = nil # clean out the saved info
+      @in_a_form = false
+      replace_right_cell
+
     when "reset", nil # Reset or first time in
       id = params[:id] ? params[:id] : from_cid(@edit[:ae_class_id])
       @in_a_form = true
@@ -1435,16 +1487,21 @@ class MiqAeClassController < ApplicationController
 
   def priority_form_field_changed
     return unless load_edit(params[:id], "replace_cell__explorer")
-    priority_get_form_vars
+    @in_a_form = true
+
+    unless handle_up_down_buttons(:domain_order, _('Domains'))
+      render_flash
+      return
+    end
+
     render :update do |page|
       page << javascript_prologue
-      changed = (@edit[:new] != @edit[:current])
-      page.replace("flash_msg_div", :partial => "layouts/flash_msg") if @flash_array
-      page.replace(@refresh_div,
-                   :partial => @refresh_partial,
-                   :locals  => {:action => "domains_priority_edit"}) if @refresh_div
-      page << javascript_for_miq_button_visibility(changed)
-      page << "miqSparkle(false);"
+      page.replace('domains_list',
+                   :partial => 'domains_priority_form',
+                   :locals  => {:action => "domains_priority_edit"})
+      @changed = (@edit[:new] != @edit[:current])
+      page << javascript_for_miq_button_visibility(@changed) if @changed
+      page << "miqsparkle(false);"
     end
   end
 
@@ -1458,7 +1515,7 @@ class MiqAeClassController < ApplicationController
     when "save"
       return unless load_edit("priority__edit", "replace_cell__explorer")
       domains = @edit[:new][:domain_order].reverse!.collect do |domain|
-        MiqAeDomain.find_by_name(domain.split(' (Locked)').first).id
+        MiqAeDomain.find_by(:name => domain.split(' (Locked)').first).id
       end
       current_tenant.reset_domain_priority_by_ordered_ids(domains)
       add_flash(_("Priority Order was saved"))
@@ -1551,7 +1608,7 @@ class MiqAeClassController < ApplicationController
 
   def x_show
     typ, id = params[:id].split("-")
-    @record = TreeBuilder.get_model_for_prefix(typ).constantize.find_by_id(from_cid(id))
+    @record = TreeBuilder.get_model_for_prefix(typ).constantize.find(from_cid(id))
     tree_select
   end
 
@@ -1571,6 +1628,14 @@ class MiqAeClassController < ApplicationController
 
   private
 
+  def validate_expression(task)
+    if @edit[@expkey][:expression]["???"] == "???"
+      add_flash(_("Error during '%{task}': Expression element is required") % {:task => _(task)}, :error)
+      @in_a_form = true
+      javascript_flash
+    end
+  end
+
   def features
     [ApplicationController::Feature.new_with_hash(:role        => "miq_ae_class_explorer",
                                                   :role_any    => true,
@@ -1580,8 +1645,8 @@ class MiqAeClassController < ApplicationController
   end
 
   def initial_setup_for_instances_form_vars(ae_inst_id)
-    @ae_inst   =  ae_inst_id ? MiqAeInstance.find(ae_inst_id) : MiqAeInstance.new
-    @ae_class  = ae_class_for_instance_or_method(@ae_inst)
+    @ae_inst = ae_inst_id ? MiqAeInstance.find(ae_inst_id) : MiqAeInstance.new
+    @ae_class = ae_class_for_instance_or_method(@ae_inst)
 
     @ae_values = @ae_class.ae_fields.sort_by { |a| [a.priority.to_i] }.collect do |fld|
       MiqAeValue.find_or_initialize_by(:field_id => fld.id.to_s, :instance_id => @ae_inst.id.to_s)
@@ -1625,32 +1690,33 @@ class MiqAeClassController < ApplicationController
   def copy_save
     assert_privileges(@sb[:action])
     return unless load_edit("copy_objects__#{params[:id]}", "replace_cell__explorer")
-    @record = @edit[:typ].find_by_id(@edit[:rec_id])
-    domain = MiqAeDomain.find_by_id(@edit[:new][:domain])
-    @edit[:new][:new_name] = nil if @edit[:new][:new_name] == @edit[:old_name]
-    options = {
-      :ids                => @edit[:selected_items].keys,
-      :domain             => domain.name,
-      :namespace          => @edit[:new][:namespace],
-      :overwrite_location => @edit[:new][:override_existing],
-      :new_name           => @edit[:new][:new_name],
-      :fqname             => @edit[:fqname]
-    }
 
     begin
+      @record = @edit[:typ].find(@edit[:rec_id])
+      domain = MiqAeDomain.find(@edit[:new][:domain])
+      @edit[:new][:new_name] = nil if @edit[:new][:new_name] == @edit[:old_name]
+      options = {
+        :ids                => @edit[:selected_items].keys,
+        :domain             => domain.name,
+        :namespace          => @edit[:new][:namespace],
+        :overwrite_location => @edit[:new][:override_existing],
+        :new_name           => @edit[:new][:new_name],
+        :fqname             => @edit[:fqname]
+      }
       res = @edit[:typ].copy(options)
     rescue => bang
       render_flash(_("Error during '%{record} copy': %{error_message}") %
         {:record => ui_lookup(:model => @edit[:typ].to_s), :error_message => bang.message}, :error)
-    else
-      model = @edit[:selected_items].count > 1 ? :models : :model
-      add_flash(_("Copy selected %{record} was saved") % {:record => ui_lookup(model => @edit[:typ].to_s)})
-      @record = res.kind_of?(Array) ? @edit[:typ].find_by_id(res.first) : res
-      self.x_node = "#{TreeBuilder.get_prefix_for_model(@edit[:typ])}-#{to_cid(@record.id)}"
-      @in_a_form = @changed = session[:changed] = false
-      @sb[:action] = @edit = session[:edit] = nil
-      replace_right_cell
+      return
     end
+
+    model = @edit[:selected_items].count > 1 ? :models : :model
+    add_flash(_("Copy selected %{record} was saved") % {:record => ui_lookup(model => @edit[:typ].to_s)})
+    @record = res.kind_of?(Array) ? @edit[:typ].find(res.first) : res
+    self.x_node = "#{TreeBuilder.get_prefix_for_model(@edit[:typ])}-#{to_cid(@record.id)}"
+    @in_a_form = @changed = session[:changed] = false
+    @sb[:action] = @edit = session[:edit] = nil
+    replace_right_cell
   end
 
   def copy_reset(typ, ids, button_pressed)
@@ -1666,7 +1732,7 @@ class MiqAeClassController < ApplicationController
 
   def copy_cancel
     assert_privileges(@sb[:action])
-    @record = session[:edit][:typ].find_by_id(session[:edit][:rec_id])
+    @record = session[:edit][:typ].find_by(:id => session[:edit][:rec_id])
     model = @edit[:selected_items].count > 1 ? :models : :model
     @sb[:action] = session[:edit] = nil # clean out the saved info
     add_flash(_("Copy %{record} was cancelled by the user") % {:record => ui_lookup(model => @edit[:typ].to_s)})
@@ -1680,7 +1746,7 @@ class MiqAeClassController < ApplicationController
     ids.each_with_index do |id, i|
       record = find_record_with_rbac(typ, from_cid(id))
       selected_items[record.id] = record.display_name.blank? ? record.name : "#{record.display_name} (#{record.name})"
-      @record = record if i == 0
+      @record = record if i.zero?
     end
     current_tenant.editable_domains.collect { |domain| domains[domain.id] = domain_display_name(domain) }
     initialize_copy_edit_vars(typ, button_pressed, domains, selected_items)
@@ -1749,9 +1815,9 @@ class MiqAeClassController < ApplicationController
     if rec.kind_of?(MiqAeNamespace) && rec.domain?
       editable_domain = editable_domain?(rec)
       enabled_domain  = rec.enabled
-      return add_read_only_suffix(rec.send(column),
-                                  editable_domain?(rec),
-                                  enabled_domain) unless editable_domain && enabled_domain
+      unless editable_domain && enabled_domain
+        return add_read_only_suffix(rec.send(column), editable_domain?(rec), enabled_domain)
+      end
     end
     rec.send(column)
   end
@@ -1831,14 +1897,14 @@ class MiqAeClassController < ApplicationController
     else
       selected = find_checked_items
       selected_ids = selected.map { |x| from_cid(x.split('-')[1]) }
-      # TODO replace with RBAC safe method #14665 is merged
+      # TODO: replace with RBAC safe method #14665 is merged
       domains = MiqAeDomain.where(:id => selected_ids)
       domains.each do |domain|
         if domain.editable_properties?
           domain.git_enabled? ? git_domains.push(domain) : aedomains.push(domain.id)
         else
           add_flash(_("Read Only %{model} \"%{name}\" cannot be deleted") %
-            {:model => ui_lookup(:model => "MiqAeDomain"), :name => domain.name}, :error)
+            {:model => ui_lookup(:model => "MiqAeDomain"), :name => get_record_display_name(domain)}, :error)
         end
       end
     end
@@ -1887,7 +1953,7 @@ class MiqAeClassController < ApplicationController
           ns_list.push(from_cid(item[1]))
         else
           add_flash(_("\"%{field}\" %{model} cannot be deleted") %
-                      {:model => ui_lookup(:model => "MiqAeDomain"), :field => record.name},
+                      {:model => ui_lookup(:model => "MiqAeDomain"), :field => get_record_display_name(record)},
                     :error)
         end
       else
@@ -1904,7 +1970,7 @@ class MiqAeClassController < ApplicationController
 
   # Get variables from edit form
   def get_form_vars
-    @ae_class = MiqAeClass.find_by_id(from_cid(@edit[:ae_class_id]))
+    @ae_class = MiqAeClass.find_by(:id => from_cid(@edit[:ae_class_id]))
     # for class add tab
     @edit[:new][:name] = params[:name].blank? ? nil : params[:name] if params[:name]
     @edit[:new][:description] = params[:description].blank? ? nil : params[:description] if params[:description]
@@ -1939,7 +2005,7 @@ class MiqAeClassController < ApplicationController
 
   # Get variables from edit form
   def fields_get_form_vars
-    @ae_class = MiqAeClass.find_by_id(from_cid(@edit[:ae_class_id]))
+    @ae_class = MiqAeClass.find_by(:id => from_cid(@edit[:ae_class_id]))
     @in_a_form = true
     @in_a_form_fields = true
     if params[:item].blank? && !%w(accept save).include?(params[:button]) && params["action"] != "field_delete"
@@ -1956,16 +2022,11 @@ class MiqAeClassController < ApplicationController
         end
       end
 
-      field_data[:default_value] = new_field[:default_value] =
-          params[:field_password_value] if params[:field_password_value]
+      field_data[:default_value] = new_field[:default_value] = params[:field_password_value] if params[:field_password_value]
       new_field[:priority] = 1
       @edit[:new][:fields].each_with_index do |flds, i|
         if i == @edit[:new][:fields].length - 1
-          if flds['priority'].nil?
-            new_field[:priority] = 1
-          else
-            new_field[:priority] = flds['priority'].to_i + 1
-          end
+          new_field[:priority] = flds['priority'].nil? ? 1 : flds['priority'].to_i + 1
         end
       end
       new_field[:class_id] = @ae_class.id
@@ -2002,9 +2063,21 @@ class MiqAeClassController < ApplicationController
     end
   end
 
+  def method_form_vars_process_fields(prefix = '')
+    @edit[:new][:fields].each_with_index do |field, i|
+      method_input_column_names.each do |column|
+        field[column] = params["#{prefix}fields_#{column}_#{i}".to_sym] if params["#{prefix}fields_#{column}_#{i}".to_sym]
+
+        next unless column == 'default_value'
+        field[column] = params["#{prefix}fields_value_#{i}".to_sym] if params["#{prefix}fields_value_#{i}".to_sym]
+        field[column] = params["#{prefix}fields_password_value_#{i}".to_sym] if params["#{prefix}fields_password_value_#{i}".to_sym]
+      end
+    end
+  end
+
   # Get variables from edit form
   def get_method_form_vars
-    @ae_method = @edit[:ae_method_id] ? MiqAeMethod.find_by_id(from_cid(@edit[:ae_method_id])) : MiqAeMethod.new
+    @ae_method = @edit[:ae_method_id] ? MiqAeMethod.find(from_cid(@edit[:ae_method_id])) : MiqAeMethod.new
     @in_a_form = true
     if params[:item].blank? && params[:button] != "accept" && params["action"] != "field_delete"
       # for method_inputs view
@@ -2013,18 +2086,7 @@ class MiqAeClassController < ApplicationController
       @edit[:new][:location] = params[:method_location] if params[:method_location]
       @edit[:new][:location] ||= "inline"
       @edit[:new][:data] = params[:method_data] if params[:method_data]
-      @edit[:new][:fields].each_with_index do |_flds, i|
-        method_input_column_names.each do |column|
-          @edit[:new][:fields][i][column] =
-            params["fields_#{column}_#{i}".to_sym] if params["fields_#{column}_#{i}".to_sym]
-          if column == "default_value"
-            @edit[:new][:fields][i][column] =
-              params["fields_value_#{i}".to_sym] if params["fields_value_#{i}".to_sym]
-            @edit[:new][:fields][i][column] =
-              params["fields_password_value_#{i}".to_sym] if params["fields_password_value_#{i}".to_sym]
-          end
-        end
-      end
+      method_form_vars_process_fields
       session[:field_data][:name] = @edit[:new_field][:name] = params[:field_name] if params[:field_name]
       session[:field_data][:datatype] = @edit[:new_field][:datatype] = params[:field_datatype] if params[:field_datatype]
       session[:field_data][:default_value] = @edit[:new_field][:default_value] = params[:field_default_value] if params[:field_default_value]
@@ -2036,19 +2098,8 @@ class MiqAeClassController < ApplicationController
       @edit[:new][:location] = params[:cls_method_location] if params[:cls_method_location]
       @edit[:new][:location] ||= "inline"
       @edit[:new][:data] = params[:cls_method_data] if params[:cls_method_data]
-      @edit[:new][:data] += "..."   if params[:transOne] && params[:transOne] == "1"          # Update the new data to simulate a change
-      @edit[:new][:fields].each_with_index do |_flds, i|
-        method_input_column_names.each do |column|
-          @edit[:new][:fields][i][column] =
-            params["cls_fields_#{column}_#{i}".to_sym] if params["cls_fields_#{column}_#{i}".to_sym]
-          if column == "default_value"
-            @edit[:new][:fields][i][column] =
-              params["cls_fields_value_#{i}".to_sym] if params["cls_fields_value_#{i}".to_sym]
-            @edit[:new][:fields][i][column] =
-              params["cls_fields_password_value_#{i}".to_sym] if params["cls_fields_password_value_#{i}".to_sym]
-          end
-        end
-      end
+      @edit[:new][:data] += "..." if params[:transOne] && params[:transOne] == "1" # Update the new data to simulate a change
+      method_form_vars_process_fields('cls_')
       session[:field_data][:name] = @edit[:new_field][:name] = params[:cls_field_name] if params[:cls_field_name]
       session[:field_data][:datatype] = @edit[:new_field][:datatype] = params[:cls_field_datatype] if params[:cls_field_datatype]
       session[:field_data][:default_value] = @edit[:new_field][:default_value] = params[:cls_field_default_value] if params[:cls_field_default_value]
@@ -2082,13 +2133,11 @@ class MiqAeClassController < ApplicationController
 
   # Get variables from edit form
   def get_ns_form_vars
-    @ae_ns = @edit[:typ].constantize.find_by_id(from_cid(@edit[:ae_ns_id]))
-    [:ns_name, :ns_description, :enabled].each do |field|
-      if field == :enabled
-        @edit[:new][field] = params[:ns_enabled] == "1" if params[:ns_enabled]
-      else
-        @edit[:new][field] = params[field].blank? ? nil : params[field] if params[field]
-      end
+    @ae_ns = @edit[:typ].constantize.find_by(:id => from_cid(@edit[:ae_ns_id]))
+    @edit[:new][:enabled] = params[:ns_enabled] == '1' if params[:ns_enabled]
+    [:ns_name, :ns_description].each do |field|
+      next unless params[field]
+      @edit[:new][field] = params[field].blank? ? nil : params[field]
     end
     @in_a_form = true
   end
@@ -2100,10 +2149,10 @@ class MiqAeClassController < ApplicationController
     end
 
     @ae_class.ae_fields.sort_by { |a| [a.priority.to_i] }.each_with_index do |_fld, i|
-      ['value', 'collect', 'on_entry', 'on_exit', 'on_error', 'max_retries', 'max_time'].each do |key|
-        @edit[:new][:ae_values][i][key] = params["#{prefix}inst_#{key}_#{i}".to_sym]  if params["#{prefix}inst_#{key}_#{i}".to_sym]
+      %w(value collect on_entry on_exit on_error max_retries max_time).each do |key|
+        @edit[:new][:ae_values][i][key] = params["#{prefix}inst_#{key}_#{i}".to_sym] if params["#{prefix}inst_#{key}_#{i}".to_sym]
       end
-      @edit[:new][:ae_values][i]["value"]    = params["#{prefix}inst_password_value_#{i}".to_sym] if params["#{prefix}inst_password_value_#{i}".to_sym]
+      @edit[:new][:ae_values][i]["value"] = params["#{prefix}inst_password_value_#{i}".to_sym] if params["#{prefix}inst_password_value_#{i}".to_sym]
     end
   end
 
@@ -2111,7 +2160,7 @@ class MiqAeClassController < ApplicationController
   def get_instances_form_vars
     # resetting inst/class/values from id stored in @edit.
     @ae_inst   = @edit[:ae_inst_id] ? MiqAeInstance.find(@edit[:ae_inst_id]) : MiqAeInstance.new
-    @ae_class  = MiqAeClass.find_by_id(from_cid(@edit[:ae_class_id]))
+    @ae_class  = MiqAeClass.find(from_cid(@edit[:ae_class_id]))
     @ae_values = @ae_class.ae_fields.sort_by { |a| a.priority.to_i }.collect do |fld|
       MiqAeValue.find_or_initialize_by(:field_id => fld.id.to_s, :instance_id => @ae_inst.id.to_s)
     end
@@ -2147,6 +2196,11 @@ class MiqAeClassController < ApplicationController
     miqaemethod.location = @edit[:new][:location]
     miqaemethod.language = @edit[:new][:language]
     miqaemethod.data = @edit[:new][:data]
+    miqaemethod.data = if @edit[:new][:location] == 'expression'
+                         data_for_expression
+                       else
+                         @edit[:new][:data]
+                       end
     miqaemethod.class_id = from_cid(@edit[:ae_class_id])
   end
 
@@ -2165,21 +2219,19 @@ class MiqAeClassController < ApplicationController
       if fld["id"].nil?
         new_field = MiqAeField.new
         highest_priority += 1
-        new_field.priority  = highest_priority
+        new_field.priority = highest_priority
         if @ae_method
           new_field.method_id = @ae_method.id
         else
           new_field.class_id = @ae_class.id
         end
       else
-        new_field = parent.nil? ? MiqAeField.find_by_id(fld["id"]) : fields.detect { |f| f.id == fld["id"] }
+        new_field = parent.nil? ? MiqAeField.find(fld["id"]) : fields.detect { |f| f.id == fld["id"] }
       end
 
       field_attributes.each do |attr|
-        if attr == "substitute"
+        if attr == "substitute" || @edit[:new][:fields][i][attr]
           new_field.send("#{attr}=", @edit[:new][:fields][i][attr])
-        else
-          new_field.send("#{attr}=", @edit[:new][:fields][i][attr]) if @edit[:new][:fields][i][attr]
         end
       end
       if new_field.new_record? || parent.nil?
@@ -2223,8 +2275,8 @@ class MiqAeClassController < ApplicationController
       original = original_values.detect { |ov| ov.id == v.id } unless original_values.empty?
       if original
         v = original
-      else
-        ae_instance.ae_values << v if ae_instance
+      elsif ae_instance
+        ae_instance.ae_values << v
       end
       value_column_names.each do |attr|
         v.send("#{attr}=", @edit[:new][:ae_values][i][attr]) if @edit[:new][:ae_values][i][attr]
@@ -2236,7 +2288,7 @@ class MiqAeClassController < ApplicationController
     @edit = {}
     @edit[:new] = {}
     @edit[:current] = {}
-    @ae_class = MiqAeClass.find_by_id(from_cid(id))
+    @ae_class = MiqAeClass.find_by(:id => from_cid(id))
     @edit[:rec_id] = @ae_class.try(:id)
     @edit[:ae_class_id] = @ae_class.id
     @edit[:new][:fields] = @ae_class.ae_fields.to_a.deep_clone
@@ -2252,9 +2304,12 @@ class MiqAeClassController < ApplicationController
   def move_selected_fields_up(available_fields, selected_fields, display_name)
     if no_items_selected?(selected_fields)
       add_flash(_("No %{name} were selected to move up") % {:name => display_name}, :error)
-      return
+      return false
     end
+
     consecutive, first_idx, last_idx = selected_consecutive?(available_fields, selected_fields)
+    @selected = selected_fields
+
     if consecutive
       if first_idx > 0
         available_fields[first_idx..last_idx].reverse_each do |field|
@@ -2262,35 +2317,40 @@ class MiqAeClassController < ApplicationController
           available_fields.insert(first_idx - 1, pulled)
         end
       end
-    else
-      add_flash(_("Select only one or consecutive %{name} to move up") % {:name => display_name}, :error)
+      return true
     end
-    @selected = selected_fields
+
+    add_flash(_("Select only one or consecutive %{name} to move up") % {:name => display_name}, :error)
+    false
   end
 
   def move_selected_fields_down(available_fields, selected_fields, display_name)
     if no_items_selected?(selected_fields)
       add_flash(_("No %{name} were selected to move down") % {:name => display_name}, :error)
-      return
+      return false
     end
+
     consecutive, first_idx, last_idx = selected_consecutive?(available_fields, selected_fields)
+    @selected = selected_fields
+
     if consecutive
       if last_idx < available_fields.length - 1
-        insert_idx = last_idx + 1   # Insert before the element after the last one
+        insert_idx = last_idx + 1 # Insert before the element after the last one
         insert_idx = -1 if last_idx == available_fields.length - 2 # Insert at end if 1 away from end
         available_fields[first_idx..last_idx].each do |field|
           pulled = available_fields.delete(field)
           available_fields.insert(insert_idx, pulled)
         end
       end
-    else
-      add_flash(_("Select only one or consecutive %{name} to move down") % {:name => display_name}, :error)
+      return true
     end
-    @selected = selected_fields
+
+    add_flash(_("Select only one or consecutive %{name} to move down") % {:name => display_name}, :error)
+    false
   end
 
   def no_items_selected?(field_name)
-    !field_name || field_name.length == 0 || field_name[0] == ""
+    !field_name || field_name.empty? || field_name[0] == ""
   end
 
   def selected_consecutive?(available_fields, selected_fields)
@@ -2316,7 +2376,7 @@ class MiqAeClassController < ApplicationController
     @ae_ns = find_record_with_rbac(typ, from_cid(obj[0].split('-')[1]))
     if @ae_ns.domain? && !@ae_ns.editable_properties?
       add_flash(_("Read Only %{model} \"%{name}\" cannot be edited") %
-                  {:model => ui_lookup(:model => "MiqAeDomain"), :name  => @ae_ns.name},
+                  {:model => ui_lookup(:model => "MiqAeDomain"), :name => get_record_display_name(@ae_ns)},
                 :error)
     else
       ns_set_form_vars
@@ -2358,7 +2418,7 @@ class MiqAeClassController < ApplicationController
       :ns_description => @ae_ns.description
     }
     # set these field for a new domain or when existing record is a domain
-    @edit[:new].merge!(:enabled => @ae_ns.enabled) if @ae_ns.domain?
+    @edit[:new][:enabled] = @ae_ns.enabled if @ae_ns.domain?
     @edit[:current] = @edit[:new].dup
     @right_cell_text = ns_right_cell_text
     session[:edit] = @edit
@@ -2369,7 +2429,7 @@ class MiqAeClassController < ApplicationController
     name_for_msg = if @edit[:rec_id].nil?
                      _("Adding a new %{model}") % {:model => model}
                    else
-                     _("Editing %{model} \"%{name}\"") % {:model => model, :name  => @ae_ns.name}
+                     _("Editing %{model} \"%{name}\"") % {:model => model, :name => @ae_ns.name}
                    end
     name_for_msg
   end
@@ -2388,31 +2448,18 @@ class MiqAeClassController < ApplicationController
     session[:edit]  = @edit
   end
 
-  def priority_get_form_vars
-    @in_a_form = true
-    if params[:button] == "up"
-      move_selected_fields_up(@edit[:new][:domain_order], params[:seq_fields], _("Domains"))
-    end
-    if params[:button] == "down"
-      move_selected_fields_down(@edit[:new][:domain_order], params[:seq_fields], _("Domains"))
-    end
-    unless @flash_array
-      @refresh_div     = "domains_list"
-      @refresh_partial = "domains_priority_form"
-    end
-  end
-
   def domain_toggle(locked)
     assert_privileges("miq_ae_domain_#{locked ? 'lock' : 'unlock'}")
     action = locked ? _("Locked") : _("Unlocked")
     if params[:id].nil?
-      add_flash(_("No %{model} were selected to be marked as %{action}") % {:model  => ui_lookup(:model => "MiqAeDomain"), :action => action},
+      add_flash(_("No %{model} were selected to be marked as %{action}") % {:model => ui_lookup(:model => "MiqAeDomain"), :action => action},
                 :error)
       javascript_flash
     end
     domain_toggle_lock(params[:id], locked)
-    add_flash(_("The selected %{model} were marked as %{action}") % {:model  => ui_lookup(:model => "MiqAeDomain"), :action => action},
-              :info, true) unless flash_errors?
+    unless flash_errors?
+      add_flash(_("The selected %{model} were marked as %{action}") % {:model => ui_lookup(:model => "MiqAeDomain"), :action => action}, :info, true)
+    end
     replace_right_cell(:replace_trees => [:ae])
   end
 
@@ -2482,44 +2529,53 @@ class MiqAeClassController < ApplicationController
   end
 
   def get_instance_node_info(id)
-    @record = MiqAeInstance.find_by_id(from_cid(id[1]))
-    if @record.nil?
+    begin
+      @record = MiqAeInstance.find(from_cid(id[1]))
+    rescue ActiveRecord::RecordNotFound
       set_root_node
-    else
-      @ae_class             = @record.ae_class
-      @sb[:active_tab]      = "instances"
-      domain_overrides
-      set_right_cell_text(x_node, @record)
+      return
     end
+
+    @ae_class = @record.ae_class
+    @sb[:active_tab] = "instances"
+    domain_overrides
+    set_right_cell_text(x_node, @record)
   end
 
   def get_method_node_info(id)
-    @record = @ae_method = MiqAeMethod.find_by_id(from_cid(id[1]))
-    if @record.nil?
+    begin
+      @record = @ae_method = MiqAeMethod.find(from_cid(id[1]))
+    rescue ActiveRecord::RecordNotFound
       set_root_node
-    else
-      @ae_class = @record.ae_class
-      inputs = @record.inputs
-      @sb[:squash_state] = true
-      @sb[:active_tab] = "methods"
-      domain_overrides
-      set_right_cell_text(x_node, @record)
+      return
     end
+
+    @ae_class = @record.ae_class
+    @sb[:squash_state] = true
+    @sb[:active_tab] = "methods"
+    if @record.location == 'expression'
+      hash = YAML.load(@record.data)
+      @expression = hash[:expression] ? MiqExpression.new(hash[:expression]).to_human : ""
+    end
+    domain_overrides
+    set_right_cell_text(x_node, @record)
   end
 
   def get_class_node_info(id)
     @sb[:active_tab] = "instances" if !@in_a_form && !params[:button] && !params[:pressed]
-    @record = @ae_class = MiqAeClass.find_by_id(from_cid(id[1]))
-    if @record.nil?
+    begin
+      @record = @ae_class = MiqAeClass.find(from_cid(id[1]))
+    rescue ActiveRecord::RecordNotFound
       set_root_node
-    else
-      @combo_xml = build_type_options
-      # passing fields because that's how many combo boxes we need
-      @dtype_combo_xml = build_dtype_options
-      @grid_methods_list_xml = build_details_grid(@record.ae_methods)
-      domain_overrides
-      set_right_cell_text(x_node, @record)
+      return
     end
+
+    @combo_xml = build_type_options
+    # passing fields because that's how many combo boxes we need
+    @dtype_combo_xml = build_dtype_options
+    @grid_methods_list_xml = build_details_grid(@record.ae_methods)
+    domain_overrides
+    set_right_cell_text(x_node, @record)
   end
 
   def domain_overrides

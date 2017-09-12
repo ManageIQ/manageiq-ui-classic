@@ -7,7 +7,7 @@ class TreeState
 
   def add_tree(tree_params)
     name = tree_params[:tree]
-    return false if @sb.has_key_path?(:trees, name)
+    tree_params = @sb[:trees][name].reverse_merge(tree_params) if @sb.has_key_path?(:trees, name)
     @sb.store_path(:trees, name, tree_params)
   end
 

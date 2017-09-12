@@ -32,6 +32,10 @@ class ApplicationHelper::Toolbar::Basic
   end
 
   def generic_button(type, id, icon, title, text, keys)
+    if text.kind_of?(Hash)
+      keys = text
+      text = title
+    end
     {
       :type  => type,
       :id    => id.to_s,

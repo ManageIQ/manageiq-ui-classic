@@ -6,7 +6,7 @@ describe('reportDataController', function () {
   var report_data = getJSONFixture('report_data_response.json');
 
   var initObject = {
-    modelName: 'manageiq%2Fproviders%2Finfra_manager%2Fvms',
+    modelName: 'manageiq/providers/infra_manager/vms',
     activeTree: 'vandt_tree',
     gtlType: 'grid',
     currId: '',
@@ -27,10 +27,10 @@ describe('reportDataController', function () {
     beforeEach(function() {
       $controller.MiQEndpointsService.rootPoint = '/mock_root';
       $httpBackend
-        .whenGET("/mock_root/report_data?active_tree=vandt_tree&model=manageiq%252Fproviders%252Finfra_manager%252Fvms")
-        .respond(report_data);
-      $httpBackend
-        .whenGET("/mock_root/report_data?active_tree=vandt_tree&model=manageiq%2Fproviders%2Finfra_manager%2Fvms")
+        .whenPOST('/mock_root/report_data', {
+          active_tree: 'vandt_tree',
+          model: 'manageiq/providers/infra_manager/vms',
+        })
         .respond(report_data);
     });
 
@@ -40,7 +40,6 @@ describe('reportDataController', function () {
       expect($controller.settings.isLoading).toBeTruthy();
       expect(angular.equals($controller.initObject, initObject)).toBeTruthy();
     });
-
 
     it('should get data', function(done) {
       var settings = {isLoading: true};
@@ -77,10 +76,10 @@ describe('reportDataController', function () {
     beforeEach(function(done) {
       $controller.MiQEndpointsService.rootPoint = '/mock_root';
       $httpBackend
-        .whenGET("/mock_root/report_data?active_tree=vandt_tree&model=manageiq%2Fproviders%2Finfra_manager%2Fvms")
-        .respond(report_data);
-      $httpBackend
-        .whenGET("/mock_root/report_data?active_tree=vandt_tree&explorer=true&model=manageiq%2Fproviders%2Finfra_manager%2Fvms")
+        .whenPOST('/mock_root/report_data', {
+          active_tree: 'vandt_tree',
+          model: 'manageiq/providers/infra_manager/vms',
+        })
         .respond(report_data);
       $controller.initController(initObject).then(function() {
         done();

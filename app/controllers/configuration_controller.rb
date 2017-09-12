@@ -7,6 +7,8 @@ class ConfigurationController < ApplicationController
   Dir.mkdir logo_dir unless File.exist?(logo_dir)
   @@logo_file = File.join(logo_dir, "custom_logo.png")
 
+  VIEW_RESOURCES = DEFAULT_SETTINGS[:views].keys.each_with_object({}) { |value, acc| acc[value.to_s] = value }.freeze
+
   before_action :check_privileges
   before_action :get_session_data
   after_action :cleanup_action
@@ -89,7 +91,7 @@ class ConfigurationController < ApplicationController
   def filters_field_changed
     return unless load_edit("config_edit__ui3", "configuration")
     id = params[:id].split('-').last.to_i
-    @edit[:new].find { |x| x[:id] == id }[:search_key] = params[:check] == 'true' ? nil : '_hidden_'
+    @edit[:new].find { |x| x[:id] == id }[:search_key] = params[:check] == '1' ? nil : '_hidden_'
     @edit[:current].each_with_index do |arr, i|          # needed to compare each array element's attributes to find out if something has changed
       if @edit[:new][i][:search_key] != arr[:search_key]
         @changed = true
@@ -130,31 +132,6 @@ class ConfigurationController < ApplicationController
     end
   end
 
-  # AJAX driven routine for nav style selection
-  def nav_style_changed
-    @edit = session[:edit]
-    @edit[:new][:display][:nav_style] = params[:nav_style]    # Capture the new setting
-    session[:changed] = (@edit[:new] != @edit[:current])
-    @changed = session[:changed]
-    render :update do |page|
-      page << javascript_prologue
-      page.replace 'tab_div', :partial => "ui_1"
-    end
-  end
-
-  # AJAX driven routine for background color selection
-  def bg_color_changed
-    # ui1 bgcolor changed
-    @edit = session[:edit]
-    @edit[:new][:display][:bg_color] = params[:bg_color]      # Capture the new setting
-    session[:changed] = (@edit[:new] != @edit[:current])
-    @changed = session[:changed]
-    render :update do |page|
-      page << javascript_prologue
-      page.replace 'tab_div', :partial => "ui_1"
-    end
-  end
-
   def update
     if params["save"]
       get_form_vars if @tabform != "ui_3"
@@ -166,14 +143,6 @@ class ConfigurationController < ApplicationController
           user_settings = merge_settings(current_user.settings, @settings)
           current_user.update_attributes(:settings => user_settings)
 
-          # Now copying ALL display settings into the :css hash so we can easily add new settings
-          @settings[:css] ||= {}
-          @settings[:css].merge!(settings(:display))
-          @settings[:css].merge!(THEME_CSS_SETTINGS[settings(:display, :theme)])
-
-          @css ||= {}
-          @css.merge!(settings(:display))
-          @css.merge!(THEME_CSS_SETTINGS[settings(:display, :theme)])
           set_user_time_zone
           add_flash(_("User Interface settings saved for User %{name}") % {:name => current_user.name})
         else
@@ -578,6 +547,7 @@ class ConfigurationController < ApplicationController
     when "ui_1"                                               # Visual Settings tab
       @edit[:new][:quadicons][:ems] = params[:quadicons_ems] == "true" if params[:quadicons_ems]
       @edit[:new][:quadicons][:ems_cloud] = params[:quadicons_ems_cloud] == "true" if params[:quadicons_ems_cloud]
+      @edit[:new][:quadicons][:ems_container] = params[:quadicons_ems_container] == "true" if params[:quadicons_ems_container]
       @edit[:new][:quadicons][:host] = params[:quadicons_host] == "true" if params[:quadicons_host]
       @edit[:new][:quadicons][:vm] = params[:quadicons_vm] == "true" if params[:quadicons_vm]
       @edit[:new][:quadicons][:physical_server] = params[:quadicons_physical_server] == "true" if params[:quadicons_physical_server]

@@ -155,7 +155,7 @@ module QuadiconHelper
   def quadicon_builder_factory(item, options)
     case quadicon_builder_name_from(item)
     when 'service', 'service_template', 'service_ansible_tower', 'service_template_ansible_tower'
-      render_service_quadicon(item, options)
+      render_service_quadicon(item, options.merge!(:url => "/service/explorer/s-#{item.id}"))
     when 'resource_pool'         then render_resource_pool_quadicon(item, options)
     when 'host'                  then render_host_quadicon(item, options)
     when 'ext_management_system' then render_ext_management_system_quadicon(item, options)
@@ -217,6 +217,12 @@ module QuadiconHelper
     end
   end
 
+  def img_tag_reflection
+    content_tag(:div, :class => 'flobj') do
+      tag(:img, :src => ActionController::Base.helpers.image_path("layout/reflection.png"), :border => 0)
+    end
+  end
+
   # Renders a quadicon for PhysicalServer
   #
   def render_physical_server_quadicon(item, options)
@@ -236,9 +242,7 @@ module QuadiconHelper
 
     if options[:typ] == :listnav
       # Listnav, no href needed
-      output << content_tag(:div, :class => 'flobj') do
-        tag(:img, :src => ActionController::Base.helpers.image_path("layout/reflection.png"), :border => 0)
-      end
+      output << img_tag_reflection
     else
       href = if quadicon_show_links?
                if quadicon_edit_key?(:hostitems)
@@ -441,9 +445,9 @@ module QuadiconHelper
     flobj_img_simple(image, cls, 64)
   end
 
-  def flobj_p_simple(cls, text)
+  def flobj_p_simple(cls, text, test_style = nil)
     content_tag(:div, :class => "flobj #{cls}") do
-      content_tag(:p, text)
+      content_tag(:p, text, :style => test_style)
     end
   end
 
@@ -457,7 +461,7 @@ module QuadiconHelper
     link_opts = {}
 
     if quadicon_show_links?
-      url = quadicon_url_to_xshow_from_cid(item)
+      url = options[:url] || quadicon_url_to_xshow_from_cid(item, options)
       link_opts = {:sparkle => true, :remote => true}
     end
 
@@ -520,9 +524,7 @@ module QuadiconHelper
 
     if options[:typ] == :listnav
       # Listnav, no href needed
-      output << content_tag(:div, :class => 'flobj') do
-        tag(:img, :src => ActionController::Base.helpers.image_path("layout/reflection.png"), :border => 0)
-      end
+      output << img_tag_reflection
     else
       href = if quadicon_show_links?
                quadicon_edit_key?(:hostitems) ? "/host/edit/?selected_host=#{item.id}" : url_for_record(item)
@@ -558,11 +560,14 @@ module QuadiconHelper
       item_count = case item
                    when EmsPhysicalInfra then item.physical_servers.size
                    when EmsCloud         then item.total_vms
+                   when ::ManageIQ::Providers::ContainerManager then item.container_nodes.size
                    else
                      item.hosts.size
                    end
-      output << flobj_p_simple("a72", item_count)
+      # reduce font-size of the item_count so it will fit in its quadrant
+      output << flobj_p_simple("a72", item_count, item_count.to_s.size > 2 ? "font-size: 12px;" : "")
       output << flobj_p_simple("b72", item.total_miq_templates) if item.kind_of?(EmsCloud)
+      output << currentstate_icon(item.enabled? ? "on" : "paused") if item.kind_of?(::ManageIQ::Providers::ContainerManager)
       output << flobj_img_simple("svg/vendor-#{h(item.image_name)}.svg", "c72")
       output << flobj_img_simple(img_for_auth_status(item), "d72")
       output << flobj_img_simple('100/shield.png', "g72") unless item.get_policies.empty?
@@ -901,34 +906,19 @@ module QuadiconHelper
 
   def vm_cloud_explorer_accords_attributes(record)
     if role_allows?(:feature => 'instances_accord') || role_allows?(:feature => 'instances_filter_accord')
-      attributes = {}
-      attributes[:link] = true
-      attributes[:controller] = 'vm_cloud'
-      attributes[:action] = 'show'
-      attributes[:id] = record.id
+      {:link => true, :controller => 'vm_cloud', :action => 'show', :id => record.id}
     end
-    attributes
   end
 
   def vm_infra_explorer_accords_attributes(record)
     if role_allows?(:feature => 'vandt_accord') || role_allows?(:feature => 'vms_filter_accord')
-      attributes = {}
-      attributes[:link] = true
-      attributes[:controller] = 'vm_infra'
-      attributes[:action] = 'show'
-      attributes[:id] = record.id
+      {:link => true, :controller => 'vm_infra', :action => 'show', :id => record.id}
     end
-    attributes
   end
 
   def service_workload_attributes(record)
-    attributes = {}
     if role_allows?(:feature => 'vms_instances_filter_accord')
-      attributes[:link] = true
-      attributes[:controller] = 'vm_or_template'
-      attributes[:action] = 'explorer'
-      attributes[:id] = "v-#{record.id}"
+      {:link => true, :controller => 'vm_or_template', :action => 'explorer', :id => "v-#{record.id}"}
     end
-    attributes
   end
 end

@@ -251,7 +251,7 @@ module ReportFormatter
 
     def keep_and_show_other
       # Show other sum value by default
-      mri.graph.kind_of?(Hash) ? [mri.graph[:count].to_i, mri.graph[:other]] : [GRAPH_MAX_COUNT, true]
+      mri.graph.kind_of?(Hash) ? [mri.graph[:count].to_i, mri.graph[:other]] : [ReportController::Reports::Editor::GRAPH_MAX_COUNT, true]
     end
 
     def build_reporting_chart_dim2
@@ -439,6 +439,7 @@ module ReportFormatter
       selected_groups = sorted_sums.reverse.take(keep)
 
       cathegory_texts = selected_groups.collect do |key, _|
+        label = key
         label = _('no value') if label.blank?
         label
       end
@@ -466,7 +467,7 @@ module ReportFormatter
 
         series.push(:value   => other[val2],
                     :tooltip => "Other / #{val2}: #{other[val2]}") if show_other
-
+        label = val2 if val2.kind_of?(String)
         label = label.to_s.gsub(/\\/, ' \ ')
         label = _('no value') if label.blank?
         add_series(label, series)

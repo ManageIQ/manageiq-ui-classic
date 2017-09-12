@@ -3,7 +3,7 @@ class TreeBuilderNetwork < TreeBuilder
   has_kids_for Switch, [:x_get_tree_switch_kids]
 
   def override(node, _object, _pid, _options)
-    node[:cfmeNoClick] = true if node[:image].nil? || !node[:image].include?('svg/currentstate-')
+    node[:selectable] = false if node[:image].nil? || !node[:image].include?('svg/currentstate-')
   end
 
   def initialize(name, type, sandbox, build = true, root = nil)
@@ -29,10 +29,10 @@ class TreeBuilderNetwork < TreeBuilder
 
   def root_options
     {
-      :text        => @root.name,
-      :tooltip     => _("Host: %{name}") % {:name => @root.name},
-      :icon        => 'pficon pficon-screen',
-      :cfmeNoClick => true
+      :text       => @root.name,
+      :tooltip    => _("Host: %{name}") % {:name => @root.name},
+      :icon       => 'pficon pficon-screen',
+      :selectable => false
     }
   end
 

@@ -70,35 +70,35 @@ module ContainerHelper::TextualSummary
   end
 
   def textual_command
-    {:label => _("Command"), :value => @record.container_definition.command} if @record.container_definition.command
+    {:label => _("Command"), :value => @record.command} if @record.command
   end
 
   def textual_capabilities_add
-    if @record.container_definition.capabilities_add.present?
+    if @record.capabilities_add.present?
       {
         :label => _("Add Capabilities"),
-        :value => @record.container_definition.capabilities_add
+        :value => @record.capabilities_add
       }
     end
   end
 
   def textual_capabilities_drop
-    if @record.container_definition.capabilities_drop.present?
+    if @record.capabilities_drop.present?
       {
         :label => _("Drop Capabilities"),
-        :value => @record.container_definition.capabilities_drop
+        :value => @record.capabilities_drop
       }
     end
   end
 
   def textual_privileged
     {:label => _("Privileged"),
-     :value => @record.container_definition.privileged} unless @record.container_definition.privileged.nil?
+     :value => @record.privileged} unless @record.privileged.nil?
   end
 
   def textual_run_as_user
     {:label => _("Run As User"),
-     :value => @record.container_definition.run_as_user} if @record.container_definition.run_as_user
+     :value => @record.run_as_user} if @record.run_as_user
   end
 
   def textual_se_linux_user
@@ -123,7 +123,7 @@ module ContainerHelper::TextualSummary
 
   def textual_run_as_non_root
     {:label => _("Run As Non Root"),
-     :value => @record.container_definition.run_as_non_root} unless @record.container_definition.run_as_non_root.nil?
+     :value => @record.run_as_non_root} unless @record.run_as_non_root.nil?
   end
 
   def textual_group_env
@@ -136,8 +136,18 @@ module ContainerHelper::TextualSummary
   end
 
   def collect_env_variables
-    @record.container_definition.container_env_vars.collect do |var|
+    @record.container_env_vars.collect do |var|
       [var.name, var.value, var.field_path]
     end
+  end
+
+  def textual_group_limits
+    TextualMultilabel.new(
+      _("Request and Limits"),
+      :labels => [_("Resource"), _("Value")],
+      :values => [[_("Limit CPU cores"), @record.limit_cpu_cores],
+                  [_("Limit Memory bytes"), @record.limit_memory_bytes],
+                  [_("Request CPU cores"), @record.request_cpu_cores],
+                  [_("Request Memory bytes"), @record.request_memory_bytes]])
   end
 end

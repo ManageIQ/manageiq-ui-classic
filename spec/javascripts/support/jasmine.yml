@@ -17,6 +17,7 @@ src_files:
   - assets/jasmine-jquery
   - assets/angular-mocks
   - __spec__/helpers/fixtures-fix.js
+  - packs/manageiq-ui-classic/application-common.js
 
 # stylesheets
 #

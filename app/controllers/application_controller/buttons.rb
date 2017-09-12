@@ -92,25 +92,16 @@ module ApplicationController::Buttons
       if params[:readonly]
         @edit[:new][:readonly] = (params[:readonly] != "1")
       end
-      @edit[:new][:instance_name] = params[:instance_name] if params[:instance_name]
-      @edit[:new][:other_name] = params[:other_name] if params[:other_name]
-      @edit[:new][:object_message] = params[:object_message] if params[:object_message]
-      @edit[:new][:object_request] = params[:object_request] if params[:object_request]
-      AE_MAX_RESOLUTION_FIELDS.times do |i|
+      copy_params_if_set(@edit[:new], params, %i(instance_name other_name object_message object_request))
+      ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
         f = ("attribute_" + (i + 1).to_s)
         v = ("value_" + (i + 1).to_s)
         @edit[:new][:attrs][i][0] = params[f] if params[f.to_sym]
         @edit[:new][:attrs][i][1] = params[v] if params[v.to_sym]
       end
-      @edit[:new][:target_attr_name] = params[:target_attr_name] if params[:target_attr_name]
-      @edit[:new][:name] = params[:name] if params[:name]
       @edit[:new][:display] = params[:display] == "1" if params[:display]
       @edit[:new][:open_url] = params[:open_url] == "1" if params[:open_url]
-      @edit[:new][:display_for] = params[:display_for] if params[:display_for]
-      @edit[:new][:submit_how] = params[:submit_how] if params[:submit_how]
-      @edit[:new][:description] = params[:description] if params[:description]
-      @edit[:new][:button_image] = params[:button_image].to_i if params[:button_image]
-      @edit[:new][:dialog_id] = params[:dialog_id] if params[:dialog_id]
+      copy_params_if_set(@edit[:new], params, %i(name target_attr_name display_for submit_how description button_icon button_color dialog_id disabled_text))
       visibility_box_edit
     end
 
@@ -123,7 +114,7 @@ module ApplicationController::Buttons
         page.replace("form_role_visibility", :partial => "layouts/role_visibility", :locals => {:rec_id => (@custom_button.id || "new").to_s, :action => "automate_button_field_changed"})
       end
       unless params[:target_class]
-        @changed = (@edit[:new] != @edit[:current])
+        @changed = session[:changed] = (@edit[:new] != @edit[:current])
         page << javascript_for_miq_button_visibility(@changed)
       end
       page << "miqSparkle(false);"
@@ -243,7 +234,11 @@ module ApplicationController::Buttons
   private
 
   BASE_MODEL_EXPLORER_CLASSES = [Vm, MiqTemplate, Service].freeze
-  APPLIES_TO_CLASS_BASE_MODELS = %w(CloudTenant EmsCluster ExtManagementSystem Host MiqTemplate Service ServiceTemplate Storage Vm).freeze
+  APPLIES_TO_CLASS_BASE_MODELS = %w(AvailabilityZone CloudNetwork CloudObjectStoreContainer CloudSubnet CloudTenant
+                                    CloudVolume ContainerGroup ContainerImage ContainerProject ContainerTemplate
+                                    ContainerVolume EmsCluster ExtManagementSystem Host LoadBalancer MiqTemplate
+                                    NetworkRouter OrchestrationStack SecurityGroup Service ServiceTemplate Storage
+                                    Switch Vm).freeze
   def applies_to_class_model(applies_to_class)
     # TODO: Give a better name for this concept, including ServiceTemplate using Service
     # This should probably live in the model once this concept is defined.
@@ -353,7 +348,7 @@ module ApplicationController::Buttons
       render_flash(_("Description is required"), :error)
       return
     end
-    if @edit[:new][:button_image].blank? || @edit[:new][:button_image] == 0
+    if @edit[:new][:button_icon].blank?
       render_flash(_("Button Image must be selected"), :error)
       return
     end
@@ -450,7 +445,7 @@ module ApplicationController::Buttons
 
   def button_create_update(typ)
     @edit = session[:edit]
-    @custom_button = @edit[:custom_button]
+    @record = @custom_button = @edit[:custom_button]
     @changed = (@edit[:new] != @edit[:current])
 
     case params[:button]
@@ -458,7 +453,17 @@ module ApplicationController::Buttons
     when 'add'    then ab_button_add
     when 'save'   then ab_button_save
     when 'reset'  then ab_button_reset
+    when 'enablement_expression', 'visibility_expression' then ab_expression
     end
+  end
+
+  def ab_expression
+    @changed = session[:changed] = (@edit[:new] != @edit[:current])
+    @expkey = params[:button].to_sym
+    @edit[:visibility_expression_table] = exp_build_table_or_nil(@edit[:new][:visibility_expression])
+    @edit[:enablement_expression_table] = exp_build_table_or_nil(@edit[:new][:enablement_expression])
+    @in_a_form = true
+    replace_right_cell(:nodetype => x_node)
   end
 
   def ab_button_cancel(typ)
@@ -562,6 +567,7 @@ module ApplicationController::Buttons
       add_flash(_("Custom Button \"%{name}\" was saved") % {:name => @edit[:new][:description]})
       @edit = session[:edit] = nil
       ab_get_node_info(x_node) if x_active_tree == :ab_tree
+      build_filter_exp_table
       replace_right_cell(:nodetype => x_node, :replace_trees => x_active_tree == :ab_tree ? [:ab] : [:sandt])
     else
       @custom_button.errors.each do |field, msg|
@@ -577,7 +583,6 @@ module ApplicationController::Buttons
   end
 
   def ab_button_reset
-    ab_button_reset
     button_set_form_vars
     @changed = session[:changed] = false
     add_flash(_("All changes have been reset"), :warning)
@@ -631,6 +636,11 @@ module ApplicationController::Buttons
       return
     end
     group_set_form_vars
+    @right_cell_text = if typ == "new"
+                         _("Adding a new Button Group")
+                       else
+                         _("Editing Button Group \"%{name}\"") % {:name => @custom_button_set.name.split('|').first}
+                       end
     @in_a_form = true
     @lastaction = "automate_button"
     @layout = "miq_ae_automate_button"
@@ -651,14 +661,13 @@ module ApplicationController::Buttons
         CustomButton.find(from_cid(params[:id]))
     button_set_form_vars
     @in_a_form = true
-    session[:changed] = false
+    @changed = session[:changed] = false
     @breadcrumbs = []
-    title = if typ == "new"
-              _("Add Button")
-            else
-              _("Edit of '%{description}' Button") % {:description => @custom_button.description}
-            end
-    drop_breadcrumb(:name => title, :url => "/miq_ae_customization/button_new")
+    @right_cell_text = if typ == "new"
+                         _("Adding a new Button")
+                       else
+                         _("Editing Button \"%{name}\"") % {:name => @custom_button.name}
+                       end
     @lastaction = "automate_button"
     @layout = "miq_ae_automate_button"
     @sb[:buttons] = nil
@@ -689,9 +698,9 @@ module ApplicationController::Buttons
     @edit[:new][:name] = @custom_button_set[:name].split("|").first unless @custom_button_set[:name].blank?
     @edit[:new][:applies_to_class] = @custom_button_set[:set_data] && @custom_button_set[:set_data][:applies_to_class] ? @custom_button_set[:set_data][:applies_to_class] : @sb[:applies_to_class]
     @edit[:new][:description] = @custom_button_set.description
-    @edit[:new][:button_image] = @custom_button_set[:set_data] && @custom_button_set[:set_data][:button_image] ? @custom_button_set[:set_data][:button_image] : ""
+    @edit[:new][:button_icon] = @custom_button_set[:set_data] && @custom_button_set[:set_data][:button_icon] ? @custom_button_set[:set_data][:button_icon] : ""
+    @edit[:new][:button_color] = @custom_button_set[:set_data] && @custom_button_set[:set_data][:button_color] ? @custom_button_set[:set_data][:button_color] : ""
     @edit[:new][:display] = @custom_button_set[:set_data] && @custom_button_set[:set_data].key?(:display) ? @custom_button_set[:set_data][:display] : true
-    @edit[:new][:button_images] = build_button_image_options
     @edit[:new][:fields] = []
     button_order = @custom_button_set[:set_data] && @custom_button_set[:set_data][:button_order] ? @custom_button_set[:set_data][:button_order] : nil
     if button_order     # show assigned buttons in order they were saved
@@ -723,11 +732,7 @@ module ApplicationController::Buttons
       move_cols_top if params[:button] == "top"
       move_cols_bottom if params[:button] == "bottom"
     else
-      @edit[:new][:name] = params[:name] if params[:name]
-      @edit[:new][:description] = params[:description] if params[:description]
-      @edit[:new][:display] = params[:display] == "1" if params[:display]
-      @edit[:new][:button_image] = params[:button_image].to_i if params[:button_image]
-      @edit[:new][:button_images] = build_button_image_options
+      copy_params_if_set(@edit[:new], params, %i(name description display button_icon button_color))
     end
   end
 
@@ -788,7 +793,7 @@ module ApplicationController::Buttons
   def button_valid?(button_hash = @edit[:new])
     add_flash(_("Button Text is required"), :error) if button_hash[:name].strip.blank?
 
-    if button_hash[:button_image].blank? || button_hash[:button_image].to_i.zero?
+    if button_hash[:button_icon].blank?
       add_flash(_("Button Image must be selected"), :error)
     end
 
@@ -822,13 +827,12 @@ module ApplicationController::Buttons
     button.userid = session[:userid]
     button.uri = @edit[:uri]
     button[:options] = {}
+    button.disabled_text = @edit[:new][:disabled_text]
     #   button[:options][:target_attr_name] = @edit[:new][:target_attr_name]
     button.uri_path, button.uri_attributes, button.uri_message = CustomButton.parse_uri(@edit[:uri])
     button.uri_attributes["request"] = @edit[:new][:object_request]
-    if !@edit[:new][:button_image].blank? && @edit[:new][:button_image] != ""
-      button[:options][:button_image] ||= {}
-      button[:options][:button_image] = @edit[:new][:button_image]
-    end
+    button.options[:button_icon] = @edit[:new][:button_icon] unless @edit[:new][:button_icon].blank?
+    button.options[:button_color] = @edit[:new][:button_color] unless @edit[:new][:button_color].blank?
 
     %i(display open_url display_for submit_how).each do |key|
       button[:options][key] = @edit[:new][key]
@@ -845,7 +849,37 @@ module ApplicationController::Buttons
       button.visibility[:roles] = ["_ALL_"]
     end
     button_set_resource_action(button)
-    # @custom_button.resource_action = @edit[:new][:dialog_id] ? Dialog.find_by_id(@edit[:new][:dialog_id]) : nil
+    button_set_expressions_record(button)
+  end
+
+  def button_set_expressions_record(button)
+    exp_remove_tokens(@edit[:new][:visibility_expression])
+    exp_remove_tokens(@edit[:new][:enablement_expression])
+    button.visibility_expression = @edit[:new][:visibility_expression]["???"] ? nil : MiqExpression.new(@edit[:new][:visibility_expression])
+    button.enablement_expression = @edit[:new][:enablement_expression]["???"] ? nil : MiqExpression.new(@edit[:new][:enablement_expression])
+  end
+
+  def field_expression_model
+    @custom_button.applies_to_class ||= (x_active_tree == :ab_tree ? @sb[:target_classes][@resolve[:target_class]] : "ServiceTemplate")
+  end
+
+  def button_set_expression_vars(field_expression, field_expression_table)
+    @edit[:new][field_expression] = @custom_button[field_expression].kind_of?(MiqExpression) ? @custom_button[field_expression].exp : nil
+    # Populate exp editor fields for the expression column
+    @edit[field_expression] ||= ApplicationController::Filter::Expression.new
+    @edit[field_expression][:expression] = [] # Store exps in an array
+    if @edit[:new][field_expression].blank?
+      @edit[field_expression][:expression] = {"???" => "???"} # Set as new exp element
+      @edit[:new][field_expression] = copy_hash(@edit[field_expression][:expression]) # Copy to new exp
+    else
+      @edit[field_expression][:expression] = copy_hash(@edit[:new][field_expression])
+    end
+    @edit[field_expression_table] = exp_build_table_or_nil(@edit[field_expression][:expression])
+
+    @expkey = field_expression # Set expression key to expression
+    @edit[field_expression].history.reset(@edit[field_expression][:expression])
+    @edit[field_expression][:exp_table] = exp_build_table(@edit[field_expression][:expression])
+    @edit[field_expression][:exp_model] = field_expression_model # Set model for the exp editor
   end
 
   def button_set_resource_action(button)
@@ -859,10 +893,6 @@ module ApplicationController::Buttons
       attrs = {:dialog => d}
       button.resource_action.build(attrs)
     end
-  end
-
-  def build_button_image_options
-    (1..15).collect { |i| ["Button Image #{i}", i, {"data-icon" => "miq-custom-button-#{i}"}] }
   end
 
   # Set form variables for button add/edit
@@ -907,9 +937,9 @@ module ApplicationController::Buttons
         end
       end
     end
-    # AE_MAX_RESOLUTION_FIELDS.times{@edit[:new][:attrs].push(Array.new)} if @edit[:new][:attrs].empty?
-    # num = AE_MAX_RESOLUTION_FIELDS - @edit[:new][:attrs].length
-    (AE_MAX_RESOLUTION_FIELDS - @edit[:new][:attrs].length).times { @edit[:new][:attrs].push([]) }
+    # ApplicationController::AE_MAX_RESOLUTION_FIELDS.times{@edit[:new][:attrs].push(Array.new)} if @edit[:new][:attrs].empty?
+    # num = ApplicationController::AE_MAX_RESOLUTION_FIELDS - @edit[:new][:attrs].length
+    (ApplicationController::AE_MAX_RESOLUTION_FIELDS - @edit[:new][:attrs].length).times { @edit[:new][:attrs].push([]) }
     @edit[:new][:starting_object] ||= "SYSTEM/PROCESS"
     @edit[:new][:instance_name] ||= "Request"
 
@@ -917,16 +947,19 @@ module ApplicationController::Buttons
       :target_class   => @resolve[:target_class],
       :name           => @custom_button.name,
       :description    => @custom_button.description,
-      :button_image   => @custom_button.options.try(:[], :button_image).to_s,
+      :button_icon    => @custom_button.options.try(:[], :button_icon),
+      :button_color   => @custom_button.options.try(:[], :button_color),
+      :disabled_text  => @custom_button.disabled_text,
       :display        => @custom_button.options.try(:[], :display).nil? ? true : @custom_button.options[:display],
       :open_url       => @custom_button.options.try(:[], :open_url) ? @custom_button.options[:open_url] : false,
       :display_for    => @custom_button.options.try(:[], :display_for) ? @custom_button.options[:display_for] : 'single',
       :submit_how     => @custom_button.options.try(:[], :submit_how) ? @custom_button.options[:submit_how] : 'one',
       :object_message => @custom_button.uri_message || "create",
     )
-    @edit[:current] = copy_hash(@edit[:new])
+    button_set_expression_vars(:enablement_expression, :enablement_expression_table)
+    button_set_expression_vars(:visibility_expression, :visibility_expression_table)
 
-    @edit[:new][:button_images] = @edit[:current][:button_images] = build_button_image_options
+    @edit[:current] = copy_hash(@edit[:new])
 
     @edit[:visibility_types] = [["<To All>", "all"], ["<By Role>", "role"]]
     # Visibility Box
@@ -952,6 +985,7 @@ module ApplicationController::Buttons
     get_available_dialogs
     @edit[:current] = copy_hash(@edit[:new])
     session[:edit] = @edit
+    @changed = session[:changed] = (@edit[:new] != @edit[:current])
   end
 
   # Set user record variables to new values
@@ -961,10 +995,8 @@ module ApplicationController::Buttons
     group.name = "#{@edit[:new][:name]}|#{@edit[:new][:applies_to_class]}|#{to_cid(applies_to_id)}" unless @edit[:new][:name].blank?
     group.set_data ||= {}
     group.set_data[:button_order] = @edit[:new][:fields].collect { |field| field[1] }
-    if !@edit[:new][:button_image].blank? && @edit[:new][:button_image] != ""
-      group.set_data[:button_image] ||= {}
-      group.set_data[:button_image] = @edit[:new][:button_image]
-    end
+    group.set_data[:button_icon] = @edit[:new][:button_icon] unless @edit[:new][:button_icon].blank?
+    group.set_data[:button_color] = @edit[:new][:button_color] unless @edit[:new][:button_color].blank?
     group.set_data[:display] = @edit[:new][:display]
     group.set_data[:applies_to_class] ||= {}
     group.set_data[:applies_to_class] = @edit[:new][:applies_to_class]
@@ -1002,7 +1034,8 @@ module ApplicationController::Buttons
               group[:id] = g.id
               group[:name] = g.name
               group[:description] = g.description
-              group[:button_image] = g.kind_of?(CustomButton) ? g.options[:button_image] : g.set_data[:button_image]
+              group[:button_icon] = g.kind_of?(CustomButton) ? g.options[:button_icon] : g.set_data[:button_icon]
+              group[:button_color] = g.kind_of?(CustomButton) ? g.options[:button_color] : g.set_data[:button_color]
               group[:typ] = g.kind_of?(CustomButton) ? "CustomButton" : "CustomButtonSet"
               @sb[:button_groups].push(group) unless @sb[:button_groups].include?(group)
             end
@@ -1025,7 +1058,8 @@ module ApplicationController::Buttons
               button[:name] = b.name
               button[:id] = b.id
               button[:description] = b.description
-              button[:button_image] = b.options[:button_image]
+              button[:button_icon] = b.options[:button_icon]
+              button[:button_color] = b.options[:button_color]
               @sb[:buttons].push(button) unless @sb[:buttons].include?(button)
             end
           end
@@ -1083,10 +1117,10 @@ module ApplicationController::Buttons
       @resolve[:target_classes] = Array(@resolve[:target_classes].invert).sort
       @resolve[:new][:attrs] ||= []
       if @resolve[:new][:attrs].empty?
-        AE_MAX_RESOLUTION_FIELDS.times { @resolve[:new][:attrs].push([]) }
+        ApplicationController::AE_MAX_RESOLUTION_FIELDS.times { @resolve[:new][:attrs].push([]) }
       else
-        # add empty array if @resolve[:new][:attrs] length is less than AE_MAX_RESOLUTION_FIELDS
-        AE_MAX_RESOLUTION_FIELDS.times { @resolve[:new][:attrs].push([]) if @resolve[:new][:attrs].length < AE_MAX_RESOLUTION_FIELDS }
+        # add empty array if @resolve[:new][:attrs] length is less than ApplicationController::AE_MAX_RESOLUTION_FIELDS
+        ApplicationController::AE_MAX_RESOLUTION_FIELDS.times { @resolve[:new][:attrs].push([]) if @resolve[:new][:attrs].length < ApplicationController::AE_MAX_RESOLUTION_FIELDS }
       end
       @resolve[:throw_ready] = ready_to_throw
     else
@@ -1149,5 +1183,11 @@ module ApplicationController::Buttons
     end
     is_consecutive = last_idx - first_idx + 1 <= params[:selected_fields].length
     [is_consecutive, first_idx, last_idx]
+  end
+
+  # Get information for a condition
+  def build_filter_exp_table
+    @visibility_expression_table = @custom_button.visibility_expression.kind_of?(MiqExpression) ? exp_build_table(@custom_button.visibility_expression.exp) : nil
+    @enablement_expression_table = @custom_button.enablement_expression.kind_of?(MiqExpression) ? exp_build_table(@custom_button.enablement_expression.exp) : nil
   end
 end

@@ -4,14 +4,13 @@
     = _("Display Names")
 
 .form-group
-  %button.btn.btn-default{'data-function'      => 'miqCallAngular',
-                          'data-function-data' => {:name => 'refresh',
-                                                   :args => []}.to_json}
+  %button.btn.btn-default{'data-function'      => 'sendDataWithRx',
+                          'data-function-data' => {:controller => 'cloudTopologyController',
+                                                   :name => 'refresh'}.to_json}
     %i.fa.fa-refresh.fa-lg
     = _("Refresh")
-
 %form.search-pf.topology-search{:role     => 'form',
-                                :onsubmit => 'miqCallAngular({ name: "searchNode", args: [] }); return false'}
+                                :onsubmit => 'sendDataWithRx({service: "topologyService", name: "searchNode", args: [] }); return false'}
   .form-group.has-clear
     .search-pf-input-group
       %label.sr-only{:for => 'search'}
@@ -23,18 +22,18 @@
       -# this hidden button is a workaround
       -# pressing enter in ^input triggers a *click* event on the next button
       -# without this, that button is resetSearch, which ..is undesirable :)
-      %button.hidden{'data-function'      => 'miqCallAngular',
-                     'data-function-data' => {:name => 'searchNode',
-                                              :args => []}.to_json}
+      %button.hidden{'data-function'      => 'sendDataWithRx',
+                     'data-function-data' => {:service => 'topologyService',
+                                              :name => 'searchNode'}.to_json}
 
       %button.clear{'aria-hidden'        => 'true',
-                    'data-function'      => 'miqCallAngular',
-                    'data-function-data' => {:name => 'resetSearch',
-                                             :args => []}.to_json}
+                    'data-function'      => 'sendDataWithRx',
+                    'data-function-data' => {:service => 'topologyService',
+                                             :name => 'resetSearch'}.to_json}
         %span.pficon.pficon-close
 
   .form-group.search-button
-    %button.btn.btn-default.search-topology-button{'data-function'      => 'miqCallAngular',
-                                                   'data-function-data' => {:name => 'searchNode',
-                                                                            :args => []}.to_json}
+    %button.btn.btn-default.search-topology-button{'data-function'      => 'sendDataWithRx',
+                                                   'data-function-data' => {:service => 'topologyService',
+                                                                            :name => 'searchNode'}.to_json}
       %span.fa.fa-search

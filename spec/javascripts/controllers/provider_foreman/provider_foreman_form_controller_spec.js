@@ -17,7 +17,7 @@ describe('providerForemanFormController', function() {
       url: '',
       zone: 'foo_zone',
       verify_ssl: 0,
-      log_userid: ''
+      default_userid: ''
     };
 
     $httpBackend = _$httpBackend_;
@@ -49,11 +49,11 @@ describe('providerForemanFormController', function() {
       it('sets the verify_ssl to blank', function () {
         expect(vm.providerForemanModel.verify_ssl).toBeFalsy();
       });
-      it('sets the log_userid to blank', function () {
-        expect(vm.providerForemanModel.log_userid).toEqual('');
+      it('sets the default_userid to blank', function () {
+        expect(vm.providerForemanModel.default_userid).toEqual('');
       });
-      it('sets the log_password to blank', function () {
-        expect(vm.providerForemanModel.log_password).toEqual('');
+      it('sets the default_password to blank', function () {
+        expect(vm.providerForemanModel.default_password).toEqual('');
       });
     });
 
@@ -63,7 +63,7 @@ describe('providerForemanFormController', function() {
         url: '10.10.10.10',
         zone: 'My Test Zone',
         verify_ssl: 1,
-        log_userid: 'admin'
+        default_userid: 'admin'
       };
 
       beforeEach(inject(function(_$controller_) {
@@ -89,11 +89,11 @@ describe('providerForemanFormController', function() {
       it('sets the verify_ssl to the value returned from http request', function () {
         expect(vm.providerForemanModel.verify_ssl).toBeTruthy();
       });
-      it('sets the log_userid to the value returned from http request', function () {
-        expect(vm.providerForemanModel.log_userid).toEqual('admin');
+      it('sets the default_userid to the value returned from http request', function () {
+        expect(vm.providerForemanModel.default_userid).toEqual('admin');
       });
-      it('sets the log_password to the value returned from http request', function () {
-        expect(vm.providerForemanModel.log_password).toEqual(miqService.storedPasswordPlaceholder);
+      it('sets the default_password to the value returned from http request', function () {
+        expect(vm.providerForemanModel.default_password).toEqual(miqService.storedPasswordPlaceholder);
       });
     });
   });
@@ -157,8 +157,8 @@ describe('providerForemanFormController', function() {
       var element = angular.element(
         '<form name="angularForm">' +
         '<input ng-model="vm.providerForemanModel.url" name="url" required text />' +
-        '<input ng-model="vm.providerForemanModel.log_userid" name="log_userid" required text />' +
-        '<input ng-model="vm.providerForemanModel.log_password" name="log_password" required text />' +
+        '<input ng-model="vm.providerForemanModel.default_userid" name="default_userid" required text />' +
+        '<input ng-model="vm.providerForemanModel.default_password" name="default_password" required text />' +
         '</form>'
       );
 
@@ -166,8 +166,8 @@ describe('providerForemanFormController', function() {
       $scope.$digest();
 
       $scope.angularForm.url.$setViewValue('foreman-url');
-      $scope.angularForm.log_userid.$setViewValue('admin');
-      $scope.angularForm.log_password.$setViewValue('password');
+      $scope.angularForm.default_userid.$setViewValue('admin');
+      $scope.angularForm.default_password.$setViewValue('password');
     }));
 
     it('returns true if all the Validation fields are filled in', function() {

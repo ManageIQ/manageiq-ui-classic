@@ -44,4 +44,6 @@ class EmsBlockStorageController < ApplicationController
   end
 
   menu_section :bst
+
+  has_custom_buttons
 end

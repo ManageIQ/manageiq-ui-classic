@@ -44,6 +44,11 @@
     line-height: 1.1;
 }
 
+.alerts-card .card-pf, .provider-card .card-pf {
+    min-height: 132px;
+    padding-left: 0px;
+}
+
 .provider-card {
     min-height: 140px;
     padding-left: 0px;
@@ -77,6 +82,25 @@
 
 .provider-card .providers .provider-icon:hover {
     opacity: 1;
+}
+
+.provider-status-card {
+  min-height: 132px;
+
+  .card-pf-title {
+    margin-top: 25px;
+  }
+
+  .provider-icon-small {
+    height: 24px;
+
+    &:last-of-type {
+      display: block;
+      margin-top: 35px;
+      text-align: center;
+      width: 100%;
+    }
+  }
 }
 
 .provider-card .provider-icon-large {

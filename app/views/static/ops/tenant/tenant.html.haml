@@ -14,7 +14,7 @@
                           "name"        => "name",
                           "ng-model"    => "vm.tenantModel.name",
                           "ng-disabled" => "vm.tenantModel.default && vm.tenantModel.use_config_for_attributes",
-                          "maxlength"   => "#{MAX_NAME_LEN}",
+                          "maxlength"   => ViewHelper::MAX_NAME_LEN,
                           "required"    => "",
                           "auto-focus"  => ""}
       %span.help-block{"ng-show" => "angularForm.name.$error.required"}

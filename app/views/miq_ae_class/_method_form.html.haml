@@ -4,64 +4,95 @@
   %h3
     = _('Main Info')
   .form-horizontal
-    .form-group
-      %label.col-md-2.control-label
-        = Dictionary.gettext('fqname', :type => :column, :notfound => :titleize)
-      .col-md-8
-        %p.form-control-static
-          = h(@sb[:namespace_path])
-    .form-group
-      %label.col-md-2.control-label
-        = _('Name')
-      .col-md-8
-        = text_field_tag("#{prefix}method_name",
-                        @edit[:new][:name],
-                        :maxlength         => ViewHelper::MAX_NAME_LEN,
-                        :class => "form-control",
-                        "data-miq_observe" => obs)
-    .form-group
-      %label.col-md-2.control-label
-        = _('Display Name')
-      .col-md-8
-        = text_field_tag("#{prefix}method_display_name",
-                        @edit[:new][:display_name],
-                        :maxlength         => ViewHelper::MAX_NAME_LEN,
-                        :class => "form-control",
-                        "data-miq_observe" => obs)
-    .form-group
-      %label.col-md-2.control-label
-        = _('Location')
-      .col-md-8
-        = select_tag("#{prefix}method_location",
-                      options_for_select(@edit[:new][:available_locations].sort,
-                      @edit[:new][:location]),
-                      :class    => "selectpicker",
-                      "data-miq_observe" => {:url => url}.to_json)
-        :javascript
-          miqInitSelectPicker();
-          miqSelectPickerEvent("#{prefix}method_location", "#{url}")
-    - if @ae_method.created_on
+    - unless @edit[:new][:location]
       .form-group
         %label.col-md-2.control-label
-          = _("Created On")
+          = _('Type')
         .col-md-8
-          = h(format_timezone(@ae_method.created_on, Time.zone, "gtl"))
-  %hr
-  %h3= (@edit[:new][:location] == 'builtin') ? _('Builtin name') : _("Data")
-  = render :partial => "method_data", :locals => {:field_name => "#{prefix}method"}
-  %hr
-  %h3= _("Input Parameters")
-  %table.table.table-bordered.table-striped
-    %thead
-      %tr
-        %th
-          - icon = @sb[:squash_state] ? "down" : "up"
-          - url2 = url_for_only_path(:action => 'expand_toggle', :id => "exp_collapse")
-          %button.btn.btn-default{:title => (@sb[:squash_state] ? _("Show Input Parameters") : _("Hide Input Parameters")),
-                  "data-miq_sparkle_on" => true,
-                  :remote               => true,
-                  "data-method"         => :post,
-                  :id                   => 'exp_collapse_img',
-                  'data-click_url'      => {:url => url2}.to_json}
-            %i{:class => "fa fa-angle-#{icon} fa-lg"}
-  = render :partial => "inputs"
+          = select_tag("#{prefix}method_location",
+                        options_for_select([[_("<Choose>"), nil]] + @edit[:new][:available_locations].sort,
+                        @edit[:new][:location]),
+                        :class    => "selectpicker",
+                        "data-miq_observe" => {:url => url}.to_json)
+          :javascript
+            miqInitSelectPicker();
+            miqSelectPickerEvent("#{prefix}method_location", "#{url}", {beforeSend: true})
+    - else
+      .form-group
+        %label.col-md-2.control-label
+          = _('Type')
+        .col-md-8
+          %p.form-control-static
+            = @edit[:new][:location]
+      .form-group
+        %label.col-md-2.control-label
+          = Dictionary.gettext('fqname', :type => :column, :notfound => :titleize)
+        .col-md-8
+          %p.form-control-static
+            = h(@sb[:namespace_path])
+      .form-group
+        %label.col-md-2.control-label
+          = _('Name')
+        .col-md-8
+          = text_field_tag("#{prefix}method_name",
+                          @edit[:new][:name],
+                          :maxlength         => ViewHelper::MAX_NAME_LEN,
+                          :class => "form-control",
+                          "data-miq_observe" => obs)
+      .form-group
+        %label.col-md-2.control-label
+          = _('Display Name')
+        .col-md-8
+          = text_field_tag("#{prefix}method_display_name",
+                          @edit[:new][:display_name],
+                          :maxlength         => ViewHelper::MAX_NAME_LEN,
+                          :class => "form-control",
+                          "data-miq_observe" => obs)
+
+      - if @ae_method.created_on
+        .form-group
+          %label.col-md-2.control-label
+            = _("Created On")
+          .col-md-8
+            = h(format_timezone(@ae_method.created_on, Time.zone, "gtl"))
+      - if @edit[:new][:location]
+        - if @edit[:new][:location] == 'expression'
+          .form-group
+            %label.col-md-2.control-label
+              = _('Expression Object')
+            .col-md-8
+              = select_tag("#{prefix}exp_object",
+                            options_for_select(@edit[:new][:available_expression_objects],
+                            @edit[:new][:exp_object]),
+                            :class    => "selectpicker",
+                            "data-miq_observe" => {:url => url}.to_json)
+              :javascript
+                miqInitSelectPicker();
+                miqSelectPickerEvent("#{prefix}exp_object", "#{url}",  {beforeSend: true})
+        - else
+          %hr
+          %h3= @edit[:new][:location] == 'builtin' ? _('Builtin name') : _("Data")
+          = render :partial => "method_data", :locals => {:field_name => "#{prefix}method"}
+          %hr
+    - if @edit[:new][:location] == 'expression'
+      .div
+        %h3= _("Expression (Choose an element of the expression to edit)")
+        = render :partial => 'layouts/exp_editor'
+
+    - if @edit[:new][:location]
+      %h3= _("Input Parameters")
+      %table.table.table-bordered.table-striped
+        %thead
+          %tr
+            %th
+              - icon = @sb[:squash_state] ? "down" : "up"
+              - url2 = url_for_only_path(:action => 'expand_toggle', :id => "exp_collapse")
+              %button.btn.btn-default{:title => (@sb[:squash_state] ? _("Show Input Parameters") : _("Hide Input Parameters")),
+                      "data-miq_sparkle_on" => true,
+                      :remote               => true,
+                      "data-method"         => :post,
+                      :id                   => 'exp_collapse_img',
+                      'data-click_url'      => {:url => url2}.to_json}
+                %i{:class => "fa fa-angle-#{icon} fa-lg"}
+
+      = render :partial => "inputs"

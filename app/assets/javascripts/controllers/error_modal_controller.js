@@ -8,26 +8,49 @@ function ErrorModalController($timeout) {
   ManageIQ.angular.rxSubject.subscribe(function(event) {
     if ('serverError' in event) {
       $timeout(function() {
-        $ctrl.show(event.serverError);
+        $ctrl.show(event.serverError, event.source);
       });
     }
   });
 
-  $ctrl.show = function(err) {
+  function findError(data) {
+    // find the exception in our miq rails error screen
+    var m = data.match(/<h2>\s*Error text:\s*<\/h2>\s*<br>\s*<h3>\s*(.*?)\s*<\/h3>/);
+    if (m) {
+      return m[1];
+    }
+
+    // the same in JS-encoded form
+    m = data.match(/\\u003ch2\\u003e\\nError text:\\n\\u003c\/h2\\u003e\\n\\u003cbr\\u003e\\n\\u003ch3\\u003e\\n(.*?)\\n\\u003c\/h3\\u003e/);
+    if (m) {
+      return m[1];
+    }
+
+    // no luck
+    return data;
+  }
+
+  $ctrl.show = function(err, source) {
     if (!err || !_.isObject(err)) {
       return;
     }
 
-    $ctrl.data = err.data;
+    if (source === 'API') {
+      $ctrl.contentType = err.headers.get("content-type");
+      $ctrl.url = err.url;
+    } else if (source === '$http') {
+      $ctrl.contentType = err.headers('content-type');
+      $ctrl.url = err.config.url;
+    }
+
     $ctrl.error = err;
-    $ctrl.isHtml = err.headers && err.headers('content-type') && err.headers('content-type').match('text/html');
+    $ctrl.source = source;
+    $ctrl.data = err.data;
+    $ctrl.isHtml = ($ctrl.contentType || "").match('text/html');
 
     // special handling for our error screen
     if ($ctrl.isHtml && $ctrl.data) {
-      var m = $ctrl.data.match(/<h2>\s*Error text:\s*<\/h2>\s*<br>\s*<h3>\s*(.*?)\s*<\/h3>/);
-      if (m) {
-        $ctrl.data = m[1];
-      }
+      $ctrl.data = findError($ctrl.data);
     }
 
     $ctrl.status = (err.status !== -1) ? err.status + " " + err.statusText : "Server not responding";
@@ -54,7 +77,7 @@ angular.module('miq.error', [])
       '            </span>',
       '          </button>',
       '          <h4 class="modal-title">',
-      '            Server Error',
+      '            Server Error {{$ctrl.source && "(" + $ctrl.source + ")"}}',
       '          </h4>',
       '        </div>',
       '        <div class="modal-body">',
@@ -62,6 +85,12 @@ angular.module('miq.error', [])
       '            <i class="error-icon pficon-error-circle-o"></i>',
       '          </div>',
       '          <div class="col-xs-12 col-md-10">',
+      '            <p ng-if="$ctrl.url">',
+      '              <strong>',
+      '                URL',
+      '              </strong>',
+      '              {{$ctrl.url}}',
+      '            </p>',
       '            <p>',
       '              <strong>',
       '                Status',
@@ -72,7 +101,7 @@ angular.module('miq.error', [])
       '              <strong>',
       '                Content-Type',
       '              </strong>',
-      '              {{$ctrl.error.headers("content-type")}}',
+      '              {{$ctrl.contentType}}',
       '            </p>',
       '            <p>',
       '              <strong>',

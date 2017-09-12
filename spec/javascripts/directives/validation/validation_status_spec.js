@@ -1,13 +1,15 @@
 describe('validationStatus initialization', function() {
-  var $scope, form;
+  var $scope, $parentScope, form;
   beforeEach(module('ManageIQ'));
   beforeEach(inject(function($compile, $rootScope) {
-    $scope = $rootScope;
-    $scope.model = "emsCommonModel";
+    $scope = $rootScope.$new();
+    $parentScope = $rootScope.$new();
+    $scope.$parent = $parentScope;
+    $parentScope.model = "emsCommonModel";
     var element = angular.element(
       '<form name="angularForm">' +
       '<input type="text" error-on-tab="default"/>' +
-      '<input type="checkbox" validation-status="" prefix="default" ng-model="emsCommonModel.default_auth_status" name="default_auth_status"/>' +
+      '<input type="checkbox" main-scope="$parent" validation-status="" prefix="default" ng-model="emsCommonModel.default_auth_status" name="default_auth_status"/>' +
       '</form>'
     );
     $compile(element)($scope);
@@ -18,10 +20,10 @@ describe('validationStatus initialization', function() {
 
   describe('validation-status', function() {
     it('builds post Validation Model when validation status is valid', function() {
-      $scope.postValidationModelRegistry = function() {};
-      spyOn($scope, 'postValidationModelRegistry');
+      $parentScope.postValidationModelRegistry = function() {};
+      spyOn($parentScope, 'postValidationModelRegistry');
       angularForm.default_auth_status.$setViewValue(true);
-      expect($scope.postValidationModelRegistry).toHaveBeenCalled();
+      expect($parentScope.postValidationModelRegistry).toHaveBeenCalled();
     });
 
     it('sets error icon on html element when validation status is invalid', inject(function($rootScope, $timeout) {

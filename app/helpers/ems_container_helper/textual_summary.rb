@@ -2,6 +2,7 @@ module EmsContainerHelper::TextualSummary
   include TextualMixins::TextualRefreshStatus
   include TextualMixins::TextualAuthenticationsStatus
   include TextualMixins::TextualMetricsStatus
+  include TextualMixins::TextualDataCollectionState
   #
   # Groups
   #
@@ -23,7 +24,7 @@ module EmsContainerHelper::TextualSummary
   def textual_group_status
     TextualGroup.new(
       _("Status"),
-      textual_authentications_status + %i(authentications_status metrics_status refresh_status refresh_date)
+      textual_authentications_status + %i(authentications_status metrics_status refresh_status refresh_date data_collection_state)
     )
   end
 
@@ -106,11 +107,36 @@ module EmsContainerHelper::TextualSummary
     endpoints = @record.endpoints.where.not(:role => 'default')
     return if endpoints.nil?
 
+    endpoints_types = {
+      :hawkular          => {
+        :name => _("Metrics"),
+        :type => _("Hakular"),
+      },
+      :prometheus        => {
+        :name => _("Metrics"),
+        :type => _("prometheus"),
+      },
+      :prometheus_alerts => {
+        :name => _("Alerts"),
+        :type => _("prometheus"),
+      }
+    }
+
     endpoint_groups = endpoints.map do |e|
-      [
-        {:label => _("%{role} Host Name") % {:role => e.role.capitalize}, :value => e.hostname},
-        {:label => _("%{role} API Port") % {:role => e.role.capitalize}, :value => e.port}
-      ]
+      type = endpoints_types[e.role.to_sym]
+
+      if type
+        [
+          {:label => _("%{name} Host Name") % {:name => type[:name]}, :value => e.hostname},
+          {:label => _("%{name} API Port") % {:name => type[:name]}, :value => e.port},
+          {:label => _("%{name} Type") % {:name => type[:name]}, :value => type[:type]}
+        ]
+      else
+        [
+          {:label => _("%{name} Host Name") % {:name => e.role.capitalize}, :value => e.hostname},
+          {:label => _("%{name} API Port") % {:name => e.role.capitalize}, :value => e.port}
+        ]
+      end
     end
 
     TextualGroup.new(_("Endpoints"), endpoint_groups.flatten)
@@ -120,25 +146,9 @@ module EmsContainerHelper::TextualSummary
     TextualGroup.new(_("Custom Attributes"), textual_miq_custom_attributes)
   end
 
-  def redact_username_and_password(value)
-    begin
-      uri = URI.parse(value)
-      uri.password = '***' if uri.password
-      uri.user = '***' if uri.user
-      uri.to_s
-    rescue # dont reduct in case the value was malformed, to allow debugging it.
-      value
-    end
-  end
-
   def textual_miq_custom_attributes
     attrs = @record.custom_attributes
     return nil if attrs.blank?
-    attrs.sort_by(&:name).collect do |a|
-      {
-        :label => a.name.tr("_", " "),
-        :value => redact_username_and_password(a.value)
-      }
-    end
+    attrs.sort_by(&:name).collect { |a| {:label => a.name.tr("_", " "), :value => a.value} }
   end
 end

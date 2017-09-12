@@ -10,7 +10,7 @@ module ContainersExternalLoggingSupportMixin
                       'user_token'   => user_token,
                       'redirect'     => record.external_logging_path}
       url = URI::HTTPS.build(:host  => logging_route.host_name, :path => '/auth/sso-setup',
-                             :query => dict_params_to_query(query_params))
+                             :query => URI.encode_www_form(query_params))
       begin
         res = Net::HTTP.start(url.hostname, url.port,
                               :use_ssl     => true,
@@ -35,7 +35,7 @@ module ContainersExternalLoggingSupportMixin
         if res.code_type == Net::HTTPOK
           query_params.delete('access_token')
           url = URI::HTTPS.build(:host  => logging_route.host_name, :path => '/auth/sso-login',
-                                 :query => dict_params_to_query(query_params))
+                                 :query => URI.encode_www_form(query_params))
         else
           scheme = URI.parse(logging_route.host_name).scheme || "https"
           url = "#{scheme}://#{logging_route.host_name}#{record.external_logging_path}"
@@ -49,9 +49,5 @@ module ContainersExternalLoggingSupportMixin
                        :severity    => :error,
                        :spinner_off => true)
     end
-  end
-
-  def dict_params_to_query(params)
-    params.collect { |k, v| k + '=' + v }.join('&')
   end
 end

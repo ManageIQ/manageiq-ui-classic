@@ -129,8 +129,6 @@ class MiqAeCustomizationController < ApplicationController
 
     build_accordions_and_trees
 
-    @collapse_c_cell = true if (x_active_tree == :old_dialogs_tree &&
-        x_node == "root") || x_active_tree == :ab_tree
     @lastaction = "automate_button"
     @layout = "miq_ae_customization"
 
@@ -250,7 +248,7 @@ class MiqAeCustomizationController < ApplicationController
     @explorer = true
     presenter = ExplorerPresenter.new(:active_tree => x_active_tree)
 
-    replace_trees_by_presenter(presenter, trees)
+    reload_trees_by_presenter(presenter, trees)
     presenter[:osf_node] = x_node unless @in_a_form
 
     if ['dialog_edit', 'dialog_copy'].include?(params[:pressed])
@@ -332,7 +330,7 @@ class MiqAeCustomizationController < ApplicationController
       end
       presenter.show(:paging_div)
     else
-      presenter.hide(:paging_div)
+      presenter.hide(:paging_div).hide(:form_buttons_div)
     end
   end
 
@@ -409,29 +407,29 @@ class MiqAeCustomizationController < ApplicationController
     end
   end
 
+  def right_cell_text_for_node(record, model_name)
+    if record && record.id
+      _("Editing %{model} \"%{name}\"") % {:name  => record.name,
+                                           :model => ui_lookup(:model => model_name)}
+    else
+      _("Adding a new %{model}") % {:model => ui_lookup(:model => model_name)}
+    end
+  end
+
   def setup_presenter_for_ab_tree(nodetype, presenter)
     case nodetype
     when 'button_edit'
-      @right_cell_text = if @custom_button && @custom_button.id
-                           _("Editing %{model} \"%{name}\"") % {:name  => @custom_button.name,
-                                                                :model => ui_lookup(:model => "CustomButton")}
-                         else
-                           _("Adding a new %{model}") % {:model => ui_lookup(:model => "CustomButton")}
-                         end
+      @right_cell_text = right_cell_text_for_node(@custom_button, "CustomButton")
+      presenter.update(:main_div, render_proc[:partial => "shared/buttons/ab_form"])
     when 'group_edit'
-      @right_cell_text = if @custom_button_set && @custom_button_set.id
-                           _("Editing %{model} \"%{name}\"") % {:name  => @custom_button_set.name,
-                                                                :model => ui_lookup(:model => "CustomButtonSet")}
-                         else
-                           _("Adding a new %{model}") % {:model => ui_lookup(:model => "CustomButtonSet")}
-                         end
+      @right_cell_text = right_cell_text_for_node(@custom_button_set, "CustomButtonSet")
     when 'group_reorder'
       @right_cell_text = _("%{models} Group Reorder") % {:models => ui_lookup(:models => "CustomButton")}
     end
 
     # Replace right side with based on selected tree node type
     presenter.update(:main_div, render_proc[:partial => "shared/buttons/ab_list"])
-    presenter.lock_tree(:ab_tree, @edit)
+    presenter[:lock_sidebar] = @edit
   end
 
   def setup_presenter_for_dialog_edit_tree(presenter)

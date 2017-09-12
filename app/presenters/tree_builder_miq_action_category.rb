@@ -5,7 +5,7 @@ class TreeBuilderMiqActionCategory < TreeBuilder
 
   def override(node, object, _pid, _options)
     leaf = !object.category?
-    node[:cfmeNoClick] = !leaf
+    node[:selectable] = leaf
     node[:icon] = leaf ? nil : "fa fa-tag"
     node
   end
@@ -26,7 +26,7 @@ class TreeBuilderMiqActionCategory < TreeBuilder
     locals = super
     locals.merge!(
       :click_url => "/miq_policy/action_tag_pressed/",
-      :onclick   => "miqOnClickTagCat"
+      :onclick   => "miqOnClickGeneric"
     )
   end
 

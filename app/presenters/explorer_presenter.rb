@@ -34,9 +34,9 @@ class ExplorerPresenter
   #   open_accord                      -- accordion to open
   #   exp                              -- data for the expression editor
   #   active_tree                      -- x_active_tree view state from controller
+  #   lock_sidebar                     -- enable or disable the sidebar
   #
   # Following options are hashes:
-  #   lock_unlock_trees         -- trees to lock/unlock
   #   update_partials           -- partials to update contents
   #   replace_partials          -- partials to replace (also wrapping tag)
   #   element_updates           -- update DOM element content or title FIXME: content can be
@@ -63,12 +63,12 @@ class ExplorerPresenter
 
   def initialize(options = {})
     @options = {
-      :lock_unlock_trees    => {},
       :set_visible_elements => {},
       :update_partials      => {},
       :element_updates      => {},
       :replace_partials     => {},
       :reload_toolbars      => {},
+      :reload_trees         => {},
       :exp                  => {},
       :osf_node             => '',
       :show_miq_buttons     => false,
@@ -127,11 +127,6 @@ class ExplorerPresenter
     self
   end
 
-  def lock_tree(tree, lock = true)
-    @options[:lock_unlock_trees][tree] = !!lock
-    self
-  end
-
   def hide(*elements)
     set_visibility(false, *elements)
   end
@@ -145,6 +140,10 @@ class ExplorerPresenter
       @options[:reload_toolbars][div_name] = toolbar_data
     end
     self
+  end
+
+  def reload_tree(name, data)
+    @options[:reload_trees][name] = data
   end
 
   def replace(div_name, content)
@@ -252,6 +251,7 @@ class ExplorerPresenter
     data[:updatePartials] = @options[:update_partials] # Replace content of given DOM element (element stays).
     data[:updateElements] = @options[:element_updates] # Update element in the DOM with given options
     data[:replacePartials] = @options[:replace_partials] # Replace given DOM element (and it's children) (element goes away).
+    data[:reloadTrees] = @options[:reload_trees] # Replace the data attribute of the given TreeViewComponent
     data[:buildCalendar] = format_calendar_dates(@options[:build_calendar])
     data[:initDashboard] = !! @options[:init_dashboard]
     data[:ajaxUrl] = ajax_action_url(@options[:ajax_action]) if @options[:ajax_action]
@@ -276,7 +276,7 @@ class ExplorerPresenter
       }
     end
 
-    data[:lockTrees] = @options[:lock_unlock_trees]
+    data[:lockSidebar] = !!@options[:lock_sidebar]
     data[:chartData] = @options[:load_chart]
     data[:resetChanges] = !!@options[:reset_changes]
     data[:resetOneTrans] = !!@options[:reset_one_trans]

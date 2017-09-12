@@ -31,11 +31,18 @@ describe ApplicationHelper, "::ToolbarBuilder" do
     end
 
     shared_examples "with custom buttons" do
+      def add_button_to_set(button_set, button)
+        button_set.add_member(button)
+        button_set.set_data[:button_order] ||= []
+        button_set.set_data[:button_order].push(button.id)
+        button_set.save
+      end
+
       before do
-        @button_set = FactoryGirl.create(:custom_button_set, :set_data => {:applies_to_class => applies_to_class})
+        @button_set = FactoryGirl.create(:custom_button_set, :set_data => {:applies_to_class => applies_to_class, :button_icon => 'fa fa-cogs'})
         login_as user
-        @button1 = FactoryGirl.create(:custom_button, :applies_to_class => applies_to_class, :visibility => {:roles => ["_ALL_"]}, :options => {})
-        @button_set.add_member @button1
+        @button1 = FactoryGirl.create(:custom_button, :applies_to_class => applies_to_class, :visibility => {:roles => ["_ALL_"]}, :options => {:button_icon => 'fa fa-star'})
+        add_button_to_set(@button_set, @button1)
       end
 
       it "#get_custom_buttons" do
@@ -44,15 +51,19 @@ describe ApplicationHelper, "::ToolbarBuilder" do
           :class         => @button1.applies_to_class,
           :name          => @button1.name,
           :description   => @button1.description,
-          :image         => @button1.options[:button_image],
+          :image         => @button1.options[:button_icon],
+          :color         => nil,
           :text_display  => @button1.options.key?(:display) ? @button1.options[:display] : true,
+          :enabled       => true,
+          :disabled_text => nil,
           :target_object => subject.id
         }
         expected_button_set = {
           :id           => @button_set.id,
           :text         => @button_set.name,
           :description  => @button_set.description,
-          :image        => @button_set.set_data[:button_image],
+          :image        => @button_set.set_data[:button_icon],
+          :color        => nil,
           :text_display => @button_set.set_data.key?(:display) ? @button_set.set_data[:display] : true,
           :buttons      => [expected_button1]
         }
@@ -69,7 +80,8 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         button1 = {
           :id        => "custom__custom_#{@button1.id}",
           :type      => :button,
-          :icon      => "miq-custom-button-#{@button1.options[:button_image]} fa-lg",
+          :icon      => "#{@button1.options[:button_icon]} fa-lg",
+          :color     => nil,
           :title     => CGI.escapeHTML(@button1.description.to_s),
           :text      => escaped_button1_text,
           :enabled   => true,
@@ -81,7 +93,8 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         button_set_item1 = {
           :id      => "custom_#{@button_set.id}",
           :type    => :buttonSelect,
-          :icon    => "miq-custom-button-#{@button_set.set_data[:button_image]} fa-lg",
+          :icon    => "#{@button_set.set_data[:button_icon]} fa-lg",
+          :color   => nil,
           :title   => @button_set.description,
           :text    => @button_set.name,
           :enabled => true,
@@ -98,7 +111,8 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         button1 = {
           :id        => "custom__custom_#{@button1.id}",
           :type      => :button,
-          :icon      => "miq-custom-button-#{@button1.options[:button_image]} fa-lg",
+          :icon      => "#{@button1.options[:button_icon]} fa-lg",
+          :color     => nil,
           :title     => CGI.escapeHTML(@button1.description.to_s),
           :text      => escaped_button1_text,
           :enabled   => true,
@@ -110,7 +124,8 @@ describe ApplicationHelper, "::ToolbarBuilder" do
         button_set_item1 = {
           :id      => "custom_#{@button_set.id}",
           :type    => :buttonSelect,
-          :icon    => "miq-custom-button-#{@button_set.set_data[:button_image]} fa-lg",
+          :icon    => "#{@button_set.set_data[:button_icon]} fa-lg",
+          :color   => nil,
           :title   => @button_set.description,
           :text    => @button_set.name,
           :enabled => true,
@@ -423,6 +438,7 @@ describe ApplicationHelper, "::ToolbarBuilder" do
                      :imgdis    => "download_pdf.png",
                      :img_url   => ActionController::Base.helpers.image_path("toolbars/download_pdf.png"),
                      :icon      => "fa fa-file-pdf-o fa-lg",
+                     :color     => nil,
                      :text      => "Download as PDF",
                      :title     => "Download this report in PDF format",
                      :name      => "download_choice__download_pdf",

@@ -81,7 +81,7 @@ describe TreeBuilderDefaultFilters do
       kids.each do |kid|
         expect(kid[:icon]).to eq('pficon pficon-folder-close')
         expect(kid[:hideCheckbox]).to eq(true)
-        expect(kid[:cfmeNoClick]).to eq(true)
+        expect(kid[:selectable]).to eq(false)
       end
     end
 
@@ -98,7 +98,7 @@ describe TreeBuilderDefaultFilters do
             kids.each do |kid|
               expect(kid[:icon]).to eq('pficon pficon-folder-close')
               expect(kid[:hideCheckbox]).to eq(true)
-              expect(kid[:cfmeNoClick]).to eq(true)
+              expect(kid[:selectable]).to eq(false)
               grandkids = @default_filters_tree.send(:x_get_tree_hash_kids, kid, false)
               grandkids.each_with_index do |grandkid, index|
                 expect(grandkid[:icon]).to eq('fa fa-filter')

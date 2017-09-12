@@ -4,7 +4,6 @@
 - select_node                 ||= false
 - checkboxes                  ||= false
 - three_checks                ||= false
-- tree_state                  ||= false
 - onclick                     ||= false
 - onselect                    ||= false
 - oncheck                     ||= false
@@ -12,22 +11,16 @@
 - allow_reselect              ||= false
 - highlight_changes           ||= false
 - post_check                  ||= false
-- reselect_node               ||= @reselect_node
 - bs_tree                     ||= '{}'
-- min_expand_level            ||= 1
 - tree_id                     ||= "tree_div"
 - tree_name                   ||= "tree"
-- add_node_key                = Hash.new(@add_nodes).fetch(x_active_tree, {}).fetch(:key, nil)
-- children                    = Hash.new(@add_nodes).fetch(x_active_tree, {}).fetch(:children, nil)
 
 - options = {:tree_id            => tree_id,
              :tree_name          => tree_name,
              :group_changed      => session[:group_changed],
              :cookie_id          => "#{cookie_prefix}#{tree_name}",
-             :min_expand_level   => min_expand_level ? min_expand_level : 1,
              :checkboxes         => checkboxes,
              :hierarchical_check => three_checks,
-             :tree_state         => tree_state,
              :onclick            => onclick,
              :oncheck            => oncheck,
              :click_url          => click_url,
@@ -39,13 +32,8 @@
              :controller         => j(request.parameters[:controller]),
              :silent_activate    => @explorer && tree_name == x_active_tree.to_s,
              :select_node        => select_node,
-             :reselect_node      => reselect_node,
              :highlight_changes  => highlight_changes,
-             :expand_parent_nodes=> @expand_parent_nodes,
-             :add_nodes          => add_node_key && children && tree_name == x_active_tree.to_s,
-             :active_tree        => x_active_tree,
-             :add_node_key       => add_node_key,
-             :children           => children}
+             :active_tree        => x_active_tree}
 
 :javascript
   miqInitTree(#{options.to_json.html_safe}, #{bs_tree.html_safe})

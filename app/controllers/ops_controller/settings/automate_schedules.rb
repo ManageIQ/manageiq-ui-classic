@@ -18,14 +18,15 @@ module OpsController::Settings::AutomateSchedules
   end
 
   def fetch_target_ids
-    targets = Rbac.filtered(params[:target_class]).select(:id, :name)
-    unless targets.nil?
-      targets = targets.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
-      target_id = ""
+    if params[:target_class] && params[:target_class] != 'null'
+      targets = Rbac.filtered(params[:target_class]).select(:id, :name)
+      unless targets.nil?
+        targets = targets.sort_by { |t| t.name.downcase }.collect { |t| [t.name, t.id.to_s] }
+      end
     end
 
     render :json => {
-      :target_id => target_id,
+      :target_id => '',
       :targets   => targets
     }
   end
@@ -54,11 +55,11 @@ module OpsController::Settings::AutomateSchedules
     automate_request[:ui_attrs]       = filter[:ui][:ui_attrs] || []
 
     if automate_request[:ui_attrs].empty?
-      AE_MAX_RESOLUTION_FIELDS.times { automate_request[:ui_attrs].push([]) }
+      ApplicationController::AE_MAX_RESOLUTION_FIELDS.times { automate_request[:ui_attrs].push([]) }
     else
-      # add empty array if @resolve[:new][:attrs] length is less than AE_MAX_RESOLUTION_FIELDS
+      # add empty array if @resolve[:new][:attrs] length is less than ApplicationController::AE_MAX_RESOLUTION_FIELDS
       len = automate_request[:ui_attrs].length
-      AE_MAX_RESOLUTION_FIELDS.times { automate_request[:ui_attrs].push([]) if len < AE_MAX_RESOLUTION_FIELDS }
+      ApplicationController::AE_MAX_RESOLUTION_FIELDS.times { automate_request[:ui_attrs].push([]) if len < ApplicationController::AE_MAX_RESOLUTION_FIELDS }
     end
     automate_request
   end

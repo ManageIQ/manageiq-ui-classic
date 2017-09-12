@@ -269,9 +269,11 @@ module OpsController::Settings::RHN
     # rhn_fire_available_organizations is async, if wait_for_task is completed, render the results
     if params[:task_id]
       render :update do |page|
+        @changed = (@edit[:new] != @edit[:current])
         page << javascript_prologue
         if 'rhn_satellite6' == @edit[:new][:register_to]
           page.replace_html('settings_rhn', :partial => 'settings_rhn_edit_tab')
+          page << javascript_for_miq_button_visibility(@changed) unless flash_errors?
         else
           page.replace("flash_msg_div", :partial => "layouts/flash_msg")
         end
@@ -350,6 +352,12 @@ module OpsController::Settings::RHN
   end
 
   private
+
+  def rhn_save_enabled?
+    return @changed if @edit[:new][:register_to] != 'rhn_satellite6'
+    # @edit[:organizations] gets set when validate button is pressed
+    @edit[:new][:register_to] == 'rhn_satellite6' && @edit[:organizations]
+  end
 
   def reset_repo_name_from_default
     MiqDatabase.registration_default_value_for_update_repo_name

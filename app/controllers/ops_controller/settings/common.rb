@@ -32,6 +32,7 @@ module OpsController::Settings::Common
       else
         @refresh_div = nil
       end
+      @changed = false unless rhn_save_enabled?
     when 'settings_workers'
       @changed = (@edit[:new].config != @edit[:current].config)
       if @edit[:new].config[:workers][:worker_base][:ui_worker][:count] != @edit[:current].config[:workers][:worker_base][:ui_worker][:count]
@@ -903,7 +904,7 @@ module OpsController::Settings::Common
       @sb[:new_to] = nil
       @sb[:newrole] = false
       session[:server_zones] = []
-      zones = Zone.all
+      zones = Zone.in_my_region
       zones.each do |zone|
         session[:server_zones].push(zone.name)
       end

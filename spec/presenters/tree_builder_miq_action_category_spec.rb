@@ -34,17 +34,17 @@ describe TreeBuilderMiqActionCategory do
     it 'set locals for render correctly' do
       locals = subject.send(:set_locals_for_render)
       expect(locals[:click_url]).to eq("/miq_policy/action_tag_pressed/")
-      expect(locals[:onclick]).to eq("miqOnClickTagCat")
+      expect(locals[:onclick]).to eq("miqOnClickGeneric")
     end
   end
 
   describe '#override' do
     it 'set node' do
       node = subject.send(:override, {}, tag1, nil, nil)
-      expect(node[:cfmeNoClick]).to eq(false)
+      expect(node[:selectable]).to eq(true)
 
       node = subject.send(:override, {}, folder1, nil, nil)
-      expect(node[:cfmeNoClick]).to eq(true)
+      expect(node[:selectable]).to eq(false)
     end
   end
 

@@ -7,7 +7,7 @@ class ApplicationHelper::Toolbar::EmsObjectStoragesCenter < ApplicationHelper::T
                    t,
                    :items => [
                      button(
-                       :ems_storage_refresh,
+                       :ems_object_storage_refresh,
                        'fa fa-refresh fa-lg',
                        N_('Refresh relationships and power states for all items related to the selected Object Storage Managers'),
                        N_('Refresh Relationships and Power States'),
@@ -17,7 +17,7 @@ class ApplicationHelper::Toolbar::EmsObjectStoragesCenter < ApplicationHelper::T
                        :onwhen    => "1+"),
                      separator,
                      button(
-                       :ems_storage_delete,
+                       :ems_object_storage_delete,
                        'pficon pficon-delete fa-lg',
                        N_('Remove selected Object Storage Managers from Inventory'),
                        N_('Remove Object Storage Managers from Inventory'),

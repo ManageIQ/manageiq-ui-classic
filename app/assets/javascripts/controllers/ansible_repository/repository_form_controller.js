@@ -1,6 +1,6 @@
 /* global miqFlashLater */
 
-ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'repositoryId', 'miqService', 'API', function($scope, repositoryId,  miqService, API) {
+ManageIQ.angular.app.controller('repositoryFormController', ['repositoryId', 'miqService', 'API', function(repositoryId, miqService, API) {
   var vm = this;
 
   var init = function() {
@@ -18,12 +18,13 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
       scm_update_on_launch: false,
     };
 
-    vm.attributes = ['name', 'description', 'scm_type', 'scm_url', 'authentication_id', 'scm_branch:', 'scm_clean', 'scm_delete_on_update', 'scm_update_on_launch'];
+    vm.attributes = ['name', 'description', 'scm_type', 'scm_url', 'authentication_id', 'scm_branch', 'scm_clean', 'scm_delete_on_update', 'scm_update_on_launch'];
     vm.model = 'repositoryModel';
 
     ManageIQ.angular.scope = vm;
 
-    $scope.newRecord = repositoryId === 'new';
+    vm.saveable = miqService.saveable;
+    vm.newRecord = repositoryId === 'new';
 
     vm.scm_credentials = [{name: __('Select credentials'), value: null}];
     API.get('/api/authentications?collection_class=ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ScmCredential&expand=resources&sort_by=name&sort_order=ascending')
@@ -41,9 +42,9 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
     }
   };
 
-  $scope.cancelClicked = function() {
+  vm.cancelClicked = function() {
     miqService.sparkleOn();
-    var message = $scope.newRecord ? __('Add of Repository cancelled by user.') : sprintf(__('Edit of Repository \"%s\" cancelled by user.'), vm.repositoryModel.name);
+    var message = vm.newRecord ? __('Add of Repository cancelled by user.') : sprintf(__('Edit of Repository \"%s\" cancelled by user.'), vm.repositoryModel.name);
     var url = '/ansible_repository/show_list';
     miqFlashLater({
       message: message,
@@ -52,20 +53,20 @@ ManageIQ.angular.app.controller('repositoryFormController', ['$scope', 'reposito
     window.location.href = url;
   };
 
-  $scope.resetClicked = function() {
+  vm.resetClicked = function(angularForm) {
     vm.repositoryModel = angular.copy( vm.modelCopy );
-    $scope.angularForm.$setPristine(true);
+    angularForm.$setPristine(true);
     miqService.miqFlash('warn', __('All changes have been reset'));
   };
 
-  $scope.saveClicked = function() {
+  vm.saveClicked = function() {
     miqService.sparkleOn();
     API.put('/api/configuration_script_sources/' + repositoryId, vm.repositoryModel)
       .then(vm.getBack)
       .catch(miqService.handleFailure);
   };
 
-  $scope.addClicked = function() {
+  vm.addClicked = function() {
     miqService.sparkleOn();
     API.post('/api/configuration_script_sources/', vm.repositoryModel)
       .then(vm.getBack)

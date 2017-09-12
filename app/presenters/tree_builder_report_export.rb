@@ -24,7 +24,7 @@ class TreeBuilderReportExport < TreeBuilder
 
   # Get root nodes count/array for explorer tree
   def x_get_tree_roots(count_only, _options)
-    export_children = [
+    nodes = [
       {:id    => 'exportcustomreports',
        :text  => _('Custom Reports'),
        :icon  => 'fa fa-file-text-o'},
@@ -32,6 +32,6 @@ class TreeBuilderReportExport < TreeBuilder
        :text  => _('Widgets'),
        :icon  => 'fa fa-file-text-o'}
     ]
-    count_only_or_objects(count_only, export_children)
+    count_only_or_objects(count_only, nodes)
   end
 end

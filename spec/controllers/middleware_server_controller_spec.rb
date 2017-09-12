@@ -47,6 +47,7 @@ describe MiddlewareServerController do
         is_expected.to render_template(:partial => 'middleware_server/_deploy')
         is_expected.to render_template(:partial => 'middleware_server/_add_jdbc_driver')
         is_expected.to render_template(:partial => 'middleware_server/_add_datasource')
+        is_expected.to render_template(:partial => 'middleware_server/_dr_reports_list')
       end
     end
 
@@ -99,6 +100,59 @@ describe MiddlewareServerController do
       post :tagging_edit, :params => { :button => 'save', :format => :js, :id => server.id }
       expect(assigns(:flash_array).first[:message]).to include('Tag edits were successfully saved')
       expect(assigns(:edit)).to be_nil
+    end
+  end
+
+  describe "Diagnostic report:" do
+    let!(:mw_server) { FactoryGirl.create(:hawkular_middleware_server) }
+    let!(:mw_dr) do
+      report = FactoryGirl.build(:hawkular_jdr_report, :middleware_server => mw_server)
+      report.status = report.class::STATUS_READY
+      report.binary_blob = BinaryBlob.create(:name => 'diagnostic_report.zip', :data_type => 'tzip')
+      report.binary_blob.binary = 'Report content'
+      report.save!
+      report
+    end
+    let!(:mw_dr_erred) do
+      report = FactoryGirl.build(:hawkular_jdr_report, :middleware_server => mw_server)
+      report.status = report.class::STATUS_ERROR
+      report.save!
+      report
+    end
+
+    it 'should stream diagnostic report file to client for download' do
+      get :dr_download, :params => {:id => mw_server.compressed_id, :key => mw_dr.compressed_id }
+
+      expect(response.headers['Content-Disposition']).to eq('attachment; filename=diagnostic_report.zip')
+      expect(response.headers['Content-Length']).to eq(mw_dr.binary_blob.size)
+      expect(response.body).to eq('Report content')
+    end
+
+    it 'should delete one report if requested' do
+      action = post :dr_delete, :params => { :id => mw_server.compressed_id, :mw_dr_selected => mw_dr.compressed_id }
+
+      expect { mw_dr.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect(mw_dr_erred.reload).to be_truthy
+      expect(action).to redirect_to(
+        :action    => 'show',
+        :id        => mw_server.compressed_id,
+        :flash_msg => _('Deletion of one JDR report succeeded.')
+      )
+    end
+
+    it 'should delete more than one report if requested' do
+      action = post :dr_delete, :params => {
+        :id             => mw_server.compressed_id,
+        :mw_dr_selected => [mw_dr.compressed_id, mw_dr_erred.compressed_id]
+      }
+
+      expect { mw_dr.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { mw_dr_erred.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect(action).to redirect_to(
+        :action    => 'show',
+        :id        => mw_server.compressed_id,
+        :flash_msg => _('Deletion of 2 JDR reports succeeded.')
+      )
     end
   end
 end

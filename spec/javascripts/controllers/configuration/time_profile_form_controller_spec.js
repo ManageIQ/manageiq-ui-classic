@@ -135,7 +135,7 @@ describe('timeProfileFormController', function() {
       $scope.angularForm = {
         $setPristine: function (value){}
       };
-      $scope.saveClicked();
+      $scope.vm.saveClicked();
     });
 
     it('turns the spinner on via the miqService', function() {
@@ -153,7 +153,7 @@ describe('timeProfileFormController', function() {
       $scope.angularForm = {
         $setPristine: function (value){}
       };
-      $scope.cancelClicked();
+      $scope.vm.cancelClicked();
     });
 
     it('turns the spinner on via the miqService', function() {

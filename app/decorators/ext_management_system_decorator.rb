@@ -1,5 +1,9 @@
 class ExtManagementSystemDecorator < MiqDecorator
   def self.fonticon
+    'pficon pficon-server'
+  end
+
+  def fonticon
     nil
   end
 

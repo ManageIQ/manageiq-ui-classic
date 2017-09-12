@@ -8,8 +8,15 @@ module ApplicationHelper
   include StiRoutingHelper
   include ToolbarHelper
   include TextualSummaryHelper
+  include PlanningHelper
   include NumberHelper
+  include PlanningHelper
   include Title
+
+  VALID_PERF_PARENTS = {
+    "EmsCluster" => :ems_cluster,
+    "Host"       => :host
+  }
 
   # Need to generate paths w/o hostname by default to make proxying work.
   #
@@ -49,7 +56,7 @@ module ApplicationHelper
 
   def valid_html_id(id)
     id = id.to_s.gsub("::", "__")
-    raise "HTML ID is not valid" if /[^\w_]/.match(id)
+    raise "HTML ID is not valid" if id =~ /[^\w]/
     id
   end
 
@@ -285,6 +292,8 @@ module ApplicationHelper
             "ansible_credential"
           elsif record.kind_of?(ManageIQ::Providers::EmbeddedAutomationManager::ConfigurationScriptSource)
             "ansible_repository"
+          elsif record.kind_of?(ManageIQ::Providers::Foreman::ConfigurationManager)
+            "provider_foreman"
           elsif record.class.respond_to?(:db_name)
             record.class.db_name
           else
@@ -378,10 +387,8 @@ module ApplicationHelper
                  ManageIQ::Providers::AnsibleTower::AutomationManager::ConfigurationScript
                  MiqReportResult).include?(view.db) &&
               %w(report automation_manager).include?(request.parameters[:controller])
-          suffix = ""
-          if params[:tab_id] == "saved_reports"
-            suffix = x_node
-          end
+          suffix = ''
+          suffix = x_node if params[:tab_id] == "saved_reports"
           return "/" + request.parameters[:controller] + "/tree_select/?id=" + suffix
         elsif %w(User MiqGroup MiqUserRole Tenant).include?(view.db) &&
               %w(ops).include?(request.parameters[:controller])
@@ -671,7 +678,7 @@ module ApplicationHelper
     if model
       if model.ends_with?("Performance", "MetricsRollup")
         return :performance
-      elsif model == UiConstants::TREND_MODEL
+      elsif model == ApplicationController::TREND_MODEL
         return :trend
       elsif model.starts_with?("Chargeback")
         return model.downcase.to_sym
@@ -701,10 +708,6 @@ module ApplicationHelper
       miq_ae_class
       miq_ae_export
       miq_ae_tools
-      miq_capacity_bottlenecks
-      miq_capacity_planning
-      miq_capacity_utilization
-      miq_capacity_waste
       miq_policy
       miq_policy_export
       miq_policy_rsop
@@ -877,6 +880,7 @@ module ApplicationHelper
        ems_storage
        flavor
        floating_ip
+       generic_object_definition
        host
        host_aggregate
        load_balancer
@@ -912,6 +916,7 @@ module ApplicationHelper
   QS_VALID_USER_INPUT_OPERATORS = ["=", "!=", ">", ">=", "<", "<=", "INCLUDES", "STARTS WITH", "ENDS WITH", "CONTAINS"]
   QS_VALID_FIELD_TYPES = [:string, :boolean, :integer, :float, :percent, :bytes, :megabytes]
   def qs_show_user_input_checkbox?
+    return true if @edit[:expression_method]
     return false unless @edit[:adv_search_open]  # Only allow user input for advanced searches
     return false unless QS_VALID_USER_INPUT_OPERATORS.include?(@edit[@expkey][:exp_key])
     val = (@edit[@expkey][:exp_typ] == "field" && # Field atoms with certain field types return true
@@ -976,8 +981,10 @@ module ApplicationHelper
     end
   end
 
-  def vm_model_from_active_tree(tree)
+  def model_from_active_tree(tree)
     case tree
+    when :configuration_manager_cs_filter_tree, :automation_manager_cs_filter_tree
+      "ConfiguredSystem"
     when :instances_filter_tree
       "ManageIQ::Providers::CloudManager::Vm"
     when :images_filter_tree
@@ -1110,6 +1117,11 @@ module ApplicationHelper
     link_to(link_text, link_params, tag_args)
   end
 
+  # FIXME: The 'active' below is an active section not an item. That is wrong.
+  # What works is the "legacy" part that compares @layout to item.id.
+  # This assumes that these matches -- @layout and item.id. Moving forward we
+  # need to remove that assumption. However to do that we need figure some way
+  # to identify the active menu item here.
   def item_nav_class(item)
     active = controller.menu_section_id(controller.params) || @layout.to_sym
 
@@ -1118,7 +1130,18 @@ module ApplicationHelper
       item.id.to_sym == @layout.to_sym ? 'active' : nil
   end
 
+  # special handling for custom menu sections and items
+  def section_nav_class_iframe(section)
+    if params[:sid].present?
+      section.id.to_s == params[:sid] ? 'active' : nil
+    elsif params[:id].present?
+      section.contains_item_id?(params[:id]) ? 'active' : nil
+    end
+  end
+
   def section_nav_class(section)
+    return section_nav_class_iframe(section) if params[:action] == 'iframe'
+
     active = controller.menu_section_id(controller.params) || @layout.to_sym
 
     if section.parent.nil?
@@ -1147,9 +1170,7 @@ module ApplicationHelper
   # FIXME: params[:type] is used in multiple contexts, we should rename it to
   # :gtl_type or remove it as we move to the Angular GTL component
   def pagination_or_gtl_request?
-    params[:ppsetting] || params[:searchtag] || params[:entry] ||
-      params[:sortby] || params[:sort_choice] ||
-      params[:type] || params[:page]
+    %i(ppsetting searchtag entry sortby sort_choice type page).find { |k| params[k] }
   end
 
   def update_gtl_div(action_url = 'explorer', button_div = 'center_tb')
@@ -1303,6 +1324,7 @@ module ApplicationHelper
                         event
                         flavor
                         floating_ip
+                        generic_object_definition
                         host
                         host_aggregate
                         load_balancer
@@ -1371,6 +1393,7 @@ module ApplicationHelper
   end
 
   def render_listnav_filename
+    return controller.listnav_filename if controller.respond_to?(:listnav_filename, true)
     if @lastaction == "show_list" && !session[:menu_click] &&
        %w(auth_key_pair_cloud
           availability_zone
@@ -1405,6 +1428,7 @@ module ApplicationHelper
           ems_storage
           flavor
           floating_ip
+          generic_object_definition
           host
           load_balancer
           middleware_datasource
@@ -1475,6 +1499,7 @@ module ApplicationHelper
              ems_storage
              flavor
              floating_ip
+             generic_object_definition
              host
              host_aggregate
              load_balancer
@@ -1581,24 +1606,6 @@ module ApplicationHelper
       content_tag(:i, nil, :class => icon)
     else
       image_tag(ActionController::Base.helpers.image_path(image), :alt => nil)
-    end
-  end
-
-  def listicon_glyphicon_tag(item)
-    item = db.constantize.find(row["id"])
-    glyphicon, glyphicon2 = listicon_glyphicon(item)
-
-    content_tag(:i, nil, :class => glyphicon) do
-      content_tag(:i, nil, :class => glyphicon2) if glyphicon2
-    end
-  end
-
-  def listicon_tag(db, row)
-    item = db.constantize.find(row["id"])
-    if %w(MiqReportResult MiqSchedule MiqUserRole MiqWidget).include?(db)
-      listicon_glyphicon_tag(item)
-    else
-      fileicon_tag(item)
     end
   end
 

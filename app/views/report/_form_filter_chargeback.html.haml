@@ -12,6 +12,17 @@
                         :data => {:on_text => _('Yes'), :off_text => _('No')})
       :javascript
         miqInitBootstrapSwitch('cb_include_metrics', "#{url}")
+
+    .form-group
+      %label.control-label.col-md-2
+        = _('Method for allocated metrics')
+      .col-md-8
+        - opts = chargeback_allocated_methods.invert.to_a
+        = select_tag("method_for_allocated_metrics",
+          options_for_select(opts, @edit[:new][:method_for_allocated_metrics]), :class => "selectpicker")
+        :javascript
+          miqInitSelectPicker();
+          miqSelectPickerEvent('method_for_allocated_metrics', '#{url}', {beforeSend: true, complete: true});
 %h3
   = _('Chargeback Filters')
 .form-horizontal
@@ -98,7 +109,7 @@
           :javascript
              miqInitSelectPicker();
              miqSelectPickerEvent('cb_provider_id', '#{url}', {beforeSend: true, complete: true});
-      - if @edit[:new][:cb_provider_id].present?
+      - if @edit[:new][:cb_provider_id].present? && @edit[:new][:cb_provider_id].try(:to_sym) != :all
         .form-group
           %label.control-label.col-md-2
             = ui_lookup(:model => @edit[:new][:cb_model])
@@ -193,7 +204,7 @@
       = _('Time Zone')
     .col-md-8
       = select_tag('chosen_tz',
-        options_for_select(ALL_TIMEZONES, @edit[:new][:tz]),
+        options_for_select(ViewHelper::ALL_TIMEZONES, @edit[:new][:tz]),
         :class => "selectpicker")
       :javascript
         miqInitSelectPicker();

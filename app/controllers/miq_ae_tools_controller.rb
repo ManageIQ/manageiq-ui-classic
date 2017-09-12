@@ -407,7 +407,7 @@ Methods updated/added: %{method_stats}") % stat_options)
       add_flash(_("Starting Process is required"), :error)
     end
     add_flash(_("Request is required"), :error) if @resolve[:new][:object_request].blank?
-    AE_MAX_RESOLUTION_FIELDS.times do |i|
+    ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
       f = ("attribute_" + (i + 1).to_s)
       v = ("value_" + (i + 1).to_s)
       add_flash(_("%{val} missing for %{field}") % {:val => f.titleize, :field => v.titleize}, :error) if @resolve[:new][:attrs][i][0].blank? && !@resolve[:new][:attrs][i][1].blank?
@@ -428,7 +428,7 @@ Methods updated/added: %{method_stats}") % stat_options)
     @resolve[:new][:other_name] = params[:other_name] if params.key?(:other_name)
     @resolve[:new][:object_message] = params[:object_message] if params.key?(:object_message)
     @resolve[:new][:object_request] = params[:object_request] if params.key?(:object_request)
-    AE_MAX_RESOLUTION_FIELDS.times do |i|
+    ApplicationController::AE_MAX_RESOLUTION_FIELDS.times do |i|
       f = ("attribute_" + (i + 1).to_s)
       v = ("value_" + (i + 1).to_s)
       @resolve[:new][:attrs][i][0] = params[f] if params[f.to_sym]

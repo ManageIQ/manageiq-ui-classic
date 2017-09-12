@@ -3,7 +3,7 @@ class TreeBuilderComplianceHistory < TreeBuilder
   has_kids_for ComplianceDetail, [:x_get_compliance_detail_kids, :parents]
 
   def override(node, _object, _pid, _options)
-    node[:cfmeNoClick] = true
+    node[:selectable] = false
   end
 
   def initialize(name, type, sandbox, build = true, root = nil)
@@ -35,11 +35,11 @@ class TreeBuilderComplianceHistory < TreeBuilder
   def x_get_compliance_kids(parent, count_only)
     kids = []
     if parent.compliance_details.empty?
-      kid = {:id          => "#{parent.id}-nopol",
-             :text        => _("No Compliance Policies Found"),
-             :icon        => "fa fa-ban",
-             :tip         => nil,
-             :cfmeNoClick => true}
+      kid = {:id         => "#{parent.id}-nopol",
+             :text       => _("No Compliance Policies Found"),
+             :icon       => "fa fa-ban",
+             :tip        => nil,
+             :selectable => false}
       kids.push(kid)
     else
       # node must be unique
@@ -51,11 +51,11 @@ class TreeBuilderComplianceHistory < TreeBuilder
   end
 
   def get_policy_elm(parent, node)
-    {:id          => "#{parent.id}-p_#{node.miq_policy_id}",
-     :text        => prefixed_title(_('Condition'), node.condition_desc),
-     :icon        => node.condition_result ? "pficon pficon-ok" : "pficon pficon-error-circle-o",
-     :tip         => nil,
-     :cfmeNoClick => true}
+    {:id         => "#{parent.id}-p_#{node.miq_policy_id}",
+     :text       => prefixed_title(_('Condition'), node.condition_desc),
+     :icon       => node.condition_result ? "pficon pficon-ok" : "pficon pficon-error-circle-o",
+     :tip        => nil,
+     :selectable => false}
   end
 
   def x_get_compliance_detail_kids(parent, count_only, parents)

@@ -2,12 +2,6 @@
 module StorageController::StoragePod
   extend ActiveSupport::Concern
 
-  def storage_pod_tree_select
-    @lastaction = "explorer"
-    _typ, id = params[:id].split("_")
-    @record = Storage.find(from_cid(id))
-  end
-
   def storage_pod_list
     @lastaction = "storage_pod_list"
     @force_no_grid_xml   = true
@@ -41,7 +35,7 @@ module StorageController::StoragePod
       nodes = treenodeid.split("-")
       if nodes[0] == "ds"
         @right_cell_div = "storage_details"
-        @record = @storage = Storage.find_by_id(from_cid(nodes[1]))
+        @record = Storage.find_by_id(from_cid(nodes[1]))
         @right_cell_text = _("%{model} \"%{name}\"") % {:name => @record.name, :model => ui_lookup(:model => "Storage")}
       else
         storage_pod_list

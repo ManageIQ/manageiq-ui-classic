@@ -5,6 +5,8 @@ module Mixins
       return unless init_show
       @center_toolbar = self.class.toolbar_singular if self.class.toolbar_singular
 
+      self.class.populate_display_methods(@record) if self.class.respond_to?(:populate_display_methods)
+
       case @display
       # these methods are defined right in GenericShowMixin
       when "summary_only"

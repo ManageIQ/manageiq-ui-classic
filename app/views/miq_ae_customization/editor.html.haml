@@ -1,26 +1,37 @@
-.col-md-12.ss-details-wrapper{'ng-controller' => 'dialogEditorController as vm'}
-  .row{'ng-if' => 'vm.dialog'}
-    .col-md-6
-      %h2= _("Dialog Content")
-      %dialog-editor-tabs
-      %dialog-editor-boxes
-    .col-md-6
-      %h2= _("General")
-      %form.form-horizontal
-        %div{"pf-form-group" => "", "pf-label" => "Name", :required => ""}
-          %input#name{:name => "name", "ng-model" => "vm.dialog.content[0].label", :required => "", :type => "text"}/
-        %div{"pf-form-group" => "", "pf-input-class" => "col-sm-9", "pf-label" => "Description"}
-          %textarea#description{:name => "description", "ng-model" => "vm.dialog.content[0].description"}
-            :preserve
-                            {{ vm.dialog.content[0].description }}
-      %h2= _("Toolbox")
-      .draggable
-        %dialog-editor-field-static
-  .pull-right
-    %button.btn.btn-default{"ng-click" => "vm.dismissChanges()", :type => "button"}= _("Cancel")
-    %button.btn.btn-primary{"ng-click" => "vm.saveDialogDetails()", "ng-disabled" => "vm.dialogUnchanged()", :type => "button"}= _("Save")
-  = render :partial => "layouts/x_edit_buttons"
+#dialog-editor{"ng-controller" => "dialogEditorController as vm"}
+  %div{"ng-if" => "vm.dialog"}
+    .row
+      .col-md-12
+        %h2= _("General")
+    .row
+      .col-md-12
+        %form.form-horizontal
+          %div{"pf-form-group" => "", "pf-label" => _("Dialog's name")}
+            %input#name{"ng-model" => "vm.dialog.content[0].label",
+              :type => "text",
+              :required => "",
+              :title => _("Dialog's name")}
+          %div{"pf-form-group" => "", "pf-label" => _("Dialog's description")}
+            %textarea#description{"ng-model" => "vm.dialog.content[0].description",
+              :title => _("Dialog's description")}
+              {{ vm.dialog.content[0].description }}
+    .dialog-designer-container
+      .toolbox-container
+        #toolbox.static-field-container
+          .draggable
+            %dialog-editor-field-static
+        .editable-fields-container
+          %dialog-editor-tabs
+          %dialog-editor-boxes
+
+    .pull-right
+      %button.btn.btn-default{"ng-click" => "vm.dismissChanges()",
+                              :type => "button"}= _("Cancel")
+      %button.btn.btn-primary{"ng-click" => "vm.saveDialogDetails()",
+                              "ng-disabled" => "!vm.DialogValidation.dialogIsValid(vm.DialogEditor.data.content)",
+                              "ng-attr-title" => "{{vm.DialogValidation.invalid.message}}",
+                              :type => "button"}= _("Save")
 
 :javascript
   ManageIQ.angular.app.value('dialogId', '#{ @record.id || "new" }');
-  miq_bootstrap('.ss-details-wrapper');
+  miq_bootstrap('#dialog-editor');

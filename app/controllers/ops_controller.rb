@@ -125,7 +125,6 @@ class OpsController < ApplicationController
     # setting active record object here again, since they are no longer there due to redirect
     @ldap_group = @edit[:ldap_group] if params[:cls_id] && params[:cls_id].split('_')[0] == "lg"
     @x_edit_buttons_locals = set_form_locals if @in_a_form
-    @collapse_c_cell = @in_a_form || @pages ? false : true
     edit_changed? if @edit && !%w(settings_import settings_import_tags).include?(@sb[:active_tab])
     render :layout => "application"
   end
@@ -775,7 +774,7 @@ class OpsController < ApplicationController
       trees[:diagnostics] = diagnostics_build_tree  if replace_trees.include?(:diagnostics)
       trees[:vmdb]        = db_build_tree           if replace_trees.include?(:vmdb)
     end
-    replace_trees_by_presenter(presenter, trees)
+    reload_trees_by_presenter(presenter, trees)
   end
 
   # Build the audit object when a profile is saved

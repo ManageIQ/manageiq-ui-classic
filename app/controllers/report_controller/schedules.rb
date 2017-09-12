@@ -267,7 +267,6 @@ module ReportController::Schedules
       end
       schedule_set_form_vars
       schedule_build_edit_screen
-      @lock_tree = true
       replace_right_cell
     end
   end

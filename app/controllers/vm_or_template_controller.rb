@@ -37,7 +37,7 @@ class VmOrTemplateController < ApplicationController
 
     # Position in tree that matches selected record
     if role_allows?(:feature => "#{prefix}_filter_accord")
-      set_active_elements_authorized_user("#{prefix}_filter_tree", "#{prefix}_filter", false, nil, nil)
+      set_active_elements_authorized_user("#{prefix}_filter_tree", "#{prefix}_filter", nil, nil)
     else
       redirect_to(:controller => 'dashboard', :action => "auth_error")
       return true

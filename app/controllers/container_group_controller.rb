@@ -7,7 +7,7 @@ class ContainerGroupController < ApplicationController
   after_action :set_session_data
 
   def show_list
-    process_show_list(:where_clause => 'container_groups.deleted_on IS NULL')
+    process_show_list(:named_scope => :active)
   end
 
   private
@@ -25,4 +25,6 @@ class ContainerGroupController < ApplicationController
   end
 
   menu_section :cnt
+
+  has_custom_buttons
 end

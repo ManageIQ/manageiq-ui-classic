@@ -90,8 +90,8 @@ module MiqPolicyController::Conditions
     when "expression", "applies_to_exp"
       session[:changed] = (@edit[:new] != @edit[:current])
       @expkey = params[:button].to_sym
-      @edit[:expression_table] = @edit[:new][:expression] == {"???" => "???"} ? nil : exp_build_table(@edit[:new][:expression])
-      @edit[:scope_table] = @edit[:new][:applies_to_exp] == {"???" => "???"} ? nil : exp_build_table(@edit[:new][:applies_to_exp])
+      @edit[:expression_table] = exp_build_table_or_nil(@edit[:new][:expression])
+      @edit[:scope_table] = exp_build_table_or_nil(@edit[:new][:applies_to_exp])
       replace_right_cell(:nodetype => "co")
     end
   end
@@ -188,7 +188,7 @@ module MiqPolicyController::Conditions
     else
       @edit[:expression][:expression] = copy_hash(@edit[:new][:expression])
     end
-    @edit[:expression_table] = @edit[:expression][:expression] == {"???" => "???"} ? nil : exp_build_table(@edit[:expression][:expression])
+    @edit[:expression_table] = exp_build_table_or_nil(@edit[:expression][:expression])
 
     @expkey = :expression                                               # Set expression key to expression
     @edit[@expkey].history.reset(@edit[:expression][:expression])
@@ -204,7 +204,7 @@ module MiqPolicyController::Conditions
     else
       @edit[:applies_to_exp][:expression] = copy_hash(@edit[:new][:applies_to_exp])
     end
-    @edit[:scope_table] = @edit[:applies_to_exp][:expression] == {"???" => "???"} ? nil : exp_build_table(@edit[:applies_to_exp][:expression])
+    @edit[:scope_table] = exp_build_table_or_nil(@edit[:applies_to_exp][:expression])
 
     @expkey = :applies_to_exp                                             # Set temporarily while building applies_to_exp exp editor vars
     @edit[@expkey].history.reset(@edit[:applies_to_exp][:expression])

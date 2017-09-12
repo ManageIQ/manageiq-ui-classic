@@ -27,7 +27,7 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
       :post_check   => true
     }
 
-    locals[:oncheck] = "miqOnCheckHandler" if @editable
+    locals[:oncheck] = "miqOnCheckGeneric" if @editable
 
     super.merge!(locals)
   end
@@ -79,14 +79,14 @@ class TreeBuilderOpsRbacFeatures < TreeBuilder
 
   def root_options
     {
-      :key         => "#{node_id_prefix}__#{root_feature}",
-      :icon        => "pficon pficon-folder-close",
-      :text        => _(root_details[:name]),
-      :tooltip     => _(root_details[:description]) || _(root_details[:name]),
-      :expand      => true,
-      :cfmeNoClick => true,
-      :select      => root_select_state,
-      :checkable   => @editable
+      :key        => "#{node_id_prefix}__#{root_feature}",
+      :icon       => "pficon pficon-folder-close",
+      :text       => _(root_details[:name]),
+      :tooltip    => _(root_details[:description]) || _(root_details[:name]),
+      :expand     => true,
+      :selectable => false,
+      :select     => root_select_state,
+      :checkable  => @editable
     }
   end
 

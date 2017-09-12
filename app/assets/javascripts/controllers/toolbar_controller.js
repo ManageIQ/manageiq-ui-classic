@@ -22,7 +22,7 @@
       } else if (event.update) {
         this.onUpdateItem(event);
       } else if (typeof event.setCount !== 'undefined') {
-         this.onSetCount(event.setCount);
+        this.onSetCount(event.setCount);
       }
 
       // sync changes
@@ -64,14 +64,14 @@
     this.$location = $location;
     initEndpoints(this.MiQEndpointsService);
     this.isList = _.contains(location.pathname, 'show_list');
-  }
+  };
 
   /**
   * Public method which is executed after row in gtl is selected.
   */
   ToolbarController.prototype.onRowSelect = function(data) {
     this.MiQToolbarSettingsService.checkboxClicked(data.checked);
-  }
+  };
 
   /**
   * Public method for setting up url of data views, based on last path param (e.g. /show_list).
@@ -80,10 +80,10 @@
     this.dataViews.forEach(function(item) {
       if (item.url === "") {
         var lastSlash = location.pathname.lastIndexOf('/');
-        item.url = (lastSlash !== -1) ? location.pathname.substring(lastSlash): "";
+        item.url = (lastSlash !== -1) ? location.pathname.substring(lastSlash) : '';
       }
     });
-  }
+  };
 
   /**
   * Method which will retrieves toolbar settings from server.
@@ -102,30 +102,29 @@
 
   ToolbarController.prototype.onSetCount = function(count) {
     this.MiQToolbarSettingsService.setCount(count);
-    if(!this.$scope.$$phase) {
+    if (! this.$scope.$$phase) {
       this.$scope.$digest();
     }
   };
 
   ToolbarController.prototype.setClickHandler = function() {
-    var buttons = _
-      .chain(this.toolbarItems)
-      .flatten()
-      .map(function(item) {
-        return (item && item.hasOwnProperty('items')) ? item.items : item;
-      })
-      .flatten()
-      .filter(function(item) {
-        return item.type &&
-          (isButton(item) || isButtonTwoState(item))
-      })
-      .each(function(item) {
-        item.eventFunction = function($event) {
-          sendDataWithRx({tollbarEvent: 'itemClicked'});
-          miqToolbarOnClick.bind($event.delegateTarget)($event);
-        }
-      })
-      .value();
+    _.chain(this.toolbarItems)
+     .flatten()
+     .map(function(item) {
+       return (item && item.hasOwnProperty('items')) ? item.items : item;
+     })
+     .flatten()
+     .filter(function(item) {
+       return item.type &&
+         (isButton(item) || isButtonTwoState(item));
+     })
+     .each(function(item) {
+       item.eventFunction = function($event) {
+         sendDataWithRx({toolbarEvent: 'itemClicked'});
+         miqToolbarOnClick.bind($event.delegateTarget)($event);
+       };
+     })
+     .value();
   };
 
   /**
@@ -168,12 +167,14 @@
   };
 
   ToolbarController.prototype.anyToolbarVisible = function() {
-    if (! this.toolbarItems || ! this.toolbarItems.length)
+    if (! this.toolbarItems || ! this.toolbarItems.length) {
       return false;
+    }
 
     var nonEmpty = this.toolbarItems.filter(function(ary) {
-      if (! ary || ! ary.length)
+      if (! ary || ! ary.length) {
         return false;
+      }
 
       return _.some(ary, function(item) {
         return ! item.hidden;

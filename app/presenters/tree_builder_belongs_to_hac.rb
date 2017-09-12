@@ -7,10 +7,14 @@ class TreeBuilderBelongsToHac < TreeBuilder
 
   def override(node, object, _pid, options)
     if [ExtManagementSystem, EmsCluster, Datacenter, EmsFolder, ResourcePool].any? { |klass| object.kind_of?(klass) }
-      node[:select] = options.key?(:selected) && options[:selected].include?("#{object.class.name}_#{object[:id]}")
+      node[:select] = if @assign_to
+                        options.key?(:selected) && options[:selected].include?("ResourcePool_#{object[:id]}")
+                      else
+                        options.key?(:selected) && options[:selected].include?("#{object.class.name}_#{object[:id]}")
+                      end
     end
     node[:hideCheckbox] = true if object.kind_of?(Host) && object.ems_cluster_id.present?
-    node[:cfmeNoClick] = true
+    node[:selectable] = false
     node[:checkable] = options[:checkable_checkboxes] if options.key?(:checkable_checkboxes)
   end
 
@@ -18,6 +22,7 @@ class TreeBuilderBelongsToHac < TreeBuilder
     @edit = params[:edit]
     @group = params[:group]
     @selected = params[:selected]
+    @assign_to = params[:assign_to]
     # need to remove tree info
     TreeState.new(sandbox).remove_tree(name)
     super(name, type, sandbox, build)
@@ -29,16 +34,25 @@ class TreeBuilderBelongsToHac < TreeBuilder
     {:full_ids             => true,
      :add_root             => false,
      :lazy                 => false,
-     :checkable_checkboxes => @edit.present?,
+     :checkable_checkboxes => @edit.present? || @assign_to.present?,
      :selected             => @selected}
   end
 
   def set_locals_for_render
     locals = super
-    locals.merge!(:check_url         => "/ops/rbac_group_field_changed/#{group_id}___",
-                  :oncheck           => @edit ? "miqOnCheckUserFilters" : nil,
+
+    oncheck, check_url = if @assign_to
+                           ["miqOnCheckGeneric", "/miq_policy/alert_profile_assign_changed/"]
+                         elsif @edit
+                           ["miqOnCheckUserFilters", "/ops/rbac_group_field_changed/#{group_id}___"]
+                         else
+                           [nil, "/ops/rbac_group_field_changed/#{group_id}___"]
+                         end
+
+    locals.merge!(:oncheck           => oncheck,
+                  :check_url         => check_url,
+                  :highlight_changes => @assign_to ? false : true,
                   :checkboxes        => true,
-                  :highlight_changes => true,
                   :onclick           => false)
   end
 

@@ -70,7 +70,7 @@ module Menu
           Menu::Item.new('resource_pool',    N_('Resource Pools'),   'resource_pool',              {:feature => 'resource_pool_show_list'},         '/resource_pool'),
           Menu::Item.new('storage',          N_('Datastores'),       'storage',                    {:feature => 'storage_show_list'},               '/storage/explorer'),
           Menu::Item.new('pxe',              N_('PXE'),              'pxe',                        {:feature => 'pxe', :any => true},               '/pxe/explorer'),
-          Menu::Item.new('infra_networking', N_('Networking'),       'infra_networking',           {:feature => 'infra_networking', :any => true},  '/infra_networking/explorer'),
+          Menu::Item.new('switch',           N_('Networking'),       'infra_networking',           {:feature => 'infra_networking', :any => true},  '/infra_networking/explorer'),
           Menu::Item.new('miq_request_host', N_('Requests'),         nil,                          {:feature => 'miq_request_show_list'},           '/miq_request?typ=host'),
           Menu::Item.new('infra_topology',   N_('Topology'), 'infra_topology',                     {:feature => 'infra_topology', :any => true},    '/infra_topology')
         ])
@@ -236,16 +236,11 @@ module Menu
       end
 
       def automate_menu_section
-        generic_object_item = if ::Settings.product.generic_object == true
-          Menu::Item.new('generic_object',       N_('Generic Objects'), 'generic_object_explorer',       {:feature => 'generic_object_explorer'},       '/generic_object/explorer')
-        else
-          nil
-        end
         Menu::Section.new(:automate, N_("Automate"), 'fa fa-recycle', [
           Menu::Item.new('miq_ae_class',         N_('Explorer'),        'miq_ae_class_explorer',         {:feature => 'miq_ae_domain_view'},            '/miq_ae_class/explorer'),
           Menu::Item.new('miq_ae_tools',         N_('Simulation'),      'miq_ae_class_simulation',       {:feature => 'miq_ae_class_simulation'},       '/miq_ae_tools/resolve'),
           Menu::Item.new('miq_ae_customization', N_('Customization'),   'miq_ae_customization_explorer', {:feature => 'miq_ae_customization_explorer'}, '/miq_ae_customization/explorer'),
-          generic_object_item,
+          Menu::Item.new('generic_object_definitions', N_('Generic Objects'), 'generic_object_definitions', {:feature => 'generic_object_definition'}, '/generic_object_definition'),
           Menu::Item.new('miq_ae_export',        N_('Import / Export'), 'miq_ae_class_import_export',    {:feature => 'miq_ae_class_import_export'},    '/miq_ae_tools/import_export'),
           Menu::Item.new('miq_ae_logs',          N_('Log'),             'miq_ae_class_log',              {:feature => 'miq_ae_class_log'},              '/miq_ae_tools/log'),
           Menu::Item.new('miq_request_ae',       N_('Requests'),        nil,                             {:feature => 'miq_request_show_list'},         "/miq_request?typ=ae")
@@ -254,9 +249,9 @@ module Menu
 
       def optimize_menu_section
         Menu::Section.new(:opt, N_("Optimize"), 'fa fa-lightbulb-o', [
-          Menu::Item.new('miq_capacity_utilization', N_('Utilization'), 'utilization', {:feature => 'utilization'}, '/miq_capacity'),
-          Menu::Item.new('miq_capacity_planning',    N_('Planning'),    'planning',    {:feature => 'planning'},    '/miq_capacity/planning'),
-          Menu::Item.new('miq_capacity_bottlenecks', N_('Bottlenecks'), 'bottlenecks', {:feature => 'bottlenecks'}, '/miq_capacity/bottlenecks')
+          Menu::Item.new('miq_capacity_utilization', N_('Utilization'), 'utilization', {:feature => 'utilization'}, '/utilization'),
+          Menu::Item.new('miq_capacity_planning',    N_('Planning'),    'planning',    {:feature => 'planning'},    '/planning'),
+          Menu::Item.new('miq_capacity_bottlenecks', N_('Bottlenecks'), 'bottlenecks', {:feature => 'bottlenecks'}, '/bottlenecks')
         ])
       end
 
@@ -269,9 +264,7 @@ module Menu
       end
 
       def monitor_menu_section
-        if ::Settings.prototype.monitoring
-          Menu::Section.new(:monitor, N_("Monitor"), 'fa fa-heartbeat fa-2x', [alerts_menu_section])
-        end
+        Menu::Section.new(:monitor, N_("Monitor"), 'fa fa-heartbeat fa-2x', [alerts_menu_section])
       end
 
       def settings_menu_section

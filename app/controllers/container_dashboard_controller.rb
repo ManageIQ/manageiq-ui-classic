@@ -27,6 +27,10 @@ class ContainerDashboardController < ApplicationController
     render :json => collect_live_data(params[:id], params[:query])
   end
 
+  def project_data
+    render :json => {:data => collect_project_data(params[:id]) }
+  end
+
   def title
     _("Container Dashboard")
   end
@@ -46,7 +50,17 @@ class ContainerDashboardController < ApplicationController
   end
 
   def collect_live_data(provider_id, query)
-    HawkularProxyService.new(provider_id, self).data(query)
+    ems = ExtManagementSystem.find(provider_id)
+
+    if ems && ems.connection_configurations.prometheus.try(:endpoint)
+      PrometheusProxyService.new(provider_id, self).data(query)
+    else
+      HawkularProxyService.new(provider_id, self).data(query)
+    end
+  end
+
+  def collect_project_data(project_id)
+    ContainerProjectDashboardService.new(project_id, self).all_data
   end
 
   menu_section :cnt

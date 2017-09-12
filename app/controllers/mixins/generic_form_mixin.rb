@@ -15,5 +15,9 @@ module Mixins
         render_flash unless @flash_array.nil? || performed?
       end
     end
+
+    def render_flash_json(msg, level = :success)
+      render :json => {:message => msg, :level => level}
+    end
   end
 end

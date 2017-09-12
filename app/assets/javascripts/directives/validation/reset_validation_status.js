@@ -3,11 +3,11 @@ ManageIQ.angular.app.directive('resetValidationStatus', ['$rootScope', function(
     require: 'ngModel',
     link: function (scope, elem, attrs, ctrl) {
       scope.$watch(attrs.ngModel, function() {
-        adjustValidationStatus(ctrl.$modelValue, scope, ctrl, attrs, $rootScope);
+        adjustValidationStatus(ctrl.$modelValue, _.get(scope, attrs.mainScope) || scope, ctrl, attrs, $rootScope);
       });
 
       ctrl.$parsers.push(function(value) {
-        adjustValidationStatus(value, scope, ctrl, attrs, $rootScope);
+        adjustValidationStatus(value, _.get(scope, attrs.mainScope) || scope, ctrl, attrs, $rootScope);
         return value;
       });
     }

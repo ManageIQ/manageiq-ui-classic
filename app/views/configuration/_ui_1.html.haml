@@ -15,6 +15,7 @@
           -# Host Item is commented (condition set as false) until we have host item quads
           - [[role_allows?(:feature => "ems_infra_show_list"), ui_lookup(:table => "ems_infra"),          "ems"],
              [role_allows?(:feature => "ems_cloud_show_list"), ui_lookup(:table => "ems_cloud"),          "ems_cloud"],
+             [role_allows?(:feature => "ems_container_show_list"), ui_lookup(:table => "ems_container"),  "ems_container"],
              [role_allows?(:feature => "host_show_list"),      _("Host"),                                 "host"],
              [role_allows?(:feature => "storage_show_list"),   ui_lookup(:table => "storages"),           "storage"],
              [true,                                           _("VM"),                                   "vm"],
@@ -92,7 +93,7 @@
           %h3
             = _('Display Settings')
           - [[_("Chart Theme"), "display_reporttheme", Charting.chart_themes_for_select, :reporttheme, false],
-             [_("Time Zone"),   "display_timezone",    ALL_TIMEZONES,                    :timezone, true],
+             [_("Time Zone"), "display_timezone", ViewHelper::ALL_TIMEZONES, :timezone, true],
              [_("Locale"), "display_locale",      [[_("Global Default"), "default"]] + FastGettext.human_available_locales, :locale, false]].each do |display_settings|
             .form-group
               %label.col-md-3.control-label

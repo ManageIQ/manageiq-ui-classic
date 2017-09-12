@@ -141,13 +141,13 @@ module ReportFormatter
       if ems && ems_cloud
         # Change labels to be cloud specific
         vm_name_idx = mri.col_order.index("vm_name")
-        mri.headers[vm_name_idx] = "Source Instance"
+        mri.headers[vm_name_idx] = "Source Instance" if vm_name_idx
         vm_location_idx = mri.col_order.index("vm_location")
-        mri.headers[vm_location_idx] = "Source Instance Location"
+        mri.headers[vm_location_idx] = "Source Instance Location" if vm_location_idx
         dest_vm_name_idx = mri.col_order.index("dest_vm_name")
-        mri.headers[dest_vm_name_idx] = "Destination Instance"
+        mri.headers[dest_vm_name_idx] = "Destination Instance" if dest_vm_name_idx
         dest_vm_location_idx = mri.col_order.index("dest_vm_location")
-        mri.headers[dest_vm_location_idx] = "Destination Instance Location"
+        mri.headers[dest_vm_location_idx] = "Destination Instance Location" if dest_vm_location_idx
       else
         mri.col_order.delete("availability_zone.name")
         mri.headers.delete("Availability Zone")

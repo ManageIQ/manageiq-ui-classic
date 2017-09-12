@@ -59,7 +59,7 @@ class TreeBuilderInfraNetworking < TreeBuilder
                                     "name")
     objects.each do |item|
       item[:load_children => true]
-      item[:cfmeNoClick => true]
+      item[:selectable => false]
     end
   end
 end

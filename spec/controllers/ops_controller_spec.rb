@@ -78,12 +78,11 @@ describe OpsController do
           :name     => 'test7',
           :userid   => 'test7',
           :email    => 'test7@foo.bar',
-          :group    => group.id,
+          :group    => group.id.to_s,
           :password => 'test7',
           :verify   => 'test7',
         }
       }
-
       expect(controller).to receive(:replace_right_cell)
       get :rbac_user_edit, :params => { :button => 'add' }
     end
@@ -95,7 +94,7 @@ describe OpsController do
           :name     => 'test7',
           :userid   => 'test7',
           :email    => 'test7@foo.bar',
-          :group    => group.id,
+          :group    => group.id.to_s,
           :password => 'test7',
           :verify   => 'test8',
         }

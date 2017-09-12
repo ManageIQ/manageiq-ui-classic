@@ -203,7 +203,7 @@ module ApplicationController::CiProcessing
       bc_name = breadcrumb_name(model)
       bc_name += " - " + session["#{self.class.session_key_prefix}_type".to_sym].titleize if session["#{self.class.session_key_prefix}_type".to_sym]
       bc_name += " (filtered)" if @filters && (!@filters[:tags].blank? || !@filters[:cats].blank?)
-      action = %w(service vm_cloud vm_infra vm_or_template storage).include?(self.class.table_name) ? "explorer" : "show_list"
+      action = %w(service vm_cloud vm_infra vm_or_template storage service_template).include?(self.class.table_name) ? "explorer" : "show_list"
       @breadcrumbs.clear
       drop_breadcrumb(:name => bc_name, :url => "/#{controller_name}/#{action}")
     end
@@ -235,6 +235,14 @@ module ApplicationController::CiProcessing
     true
   end
 
+  def check_reset_requirements(selected_items)
+    if VmOrTemplate.find(selected_items).any? { |vm| !vm.supports_reset? }
+      javascript_flash(:text => _("Reset does not apply to at least one of the selected items"), :severity => :error, :scroll_top => true)
+      return false
+    end
+    true
+  end
+
   def check_non_empty(items, display_name)
     if items.blank?
       add_flash(_("No items were selected for %{task}") % {:task => display_name}, :error)
@@ -246,6 +254,7 @@ module ApplicationController::CiProcessing
   def vm_button_operation_internal(items, task, display_name)
     return false if task == 'retire_now' && !check_retire_requirements(items)
     return false if task == 'scan' && !check_scan_requirements(items)
+    return false if task == 'reset' && !check_reset_requirements(items)
     return false unless check_non_empty(items, display_name)
 
     process_objects(items, task, display_name)
@@ -978,18 +987,40 @@ module ApplicationController::CiProcessing
     delete_elements(ResourcePool, :process_resourcepools)
   end
 
-  def pfx_for_vm_button_pressed(_button_pressed)
-    if params[:pressed].starts_with?("image_")
-      return "image"
-    elsif params[:pressed].starts_with?("instance_")
-      return "instance"
-    elsif params[:pressed].starts_with?("miq_template_")
-      return "miq_template"
-    elsif params[:pressed].starts_with?("orchestration_stack_")
-      return "orchestration_stack"
-    else
-      return "vm"
+  # FIXME: need to unify pfx_for_vm_button_pressed and vm_style_button?
+  def pfx_for_vm_button_pressed(pressed)
+    if pressed.starts_with?("image_")
+      "image"
+    elsif pressed.starts_with?("instance_")
+      "instance"
+    elsif pressed.starts_with?("vm_")
+      "vm"
+    elsif pressed.starts_with?("miq_template_")
+      "miq_template"
+    elsif pressed.starts_with?("orchestration_stack_")
+      "orchestration_stack" # orchestration_stack does not belong here, added in 060dfb36
+    else # need to get rid of the 'else' branch
+      "vm"
     end
+  end
+
+  # These VM-type buttons flash (in case of error) or redirect
+  def vm_button_redirected?(pfx, pressed)
+    ["#{pfx}_policy_sim", "#{pfx}_compare", "#{pfx}_tag",
+     "#{pfx}_retire", "#{pfx}_protect", "#{pfx}_ownership",
+     "#{pfx}_refresh", "#{pfx}_right_size",
+     "#{pfx}_reconfigure",
+     "#{pfx}_resize", "#{pfx}_live_migrate", "#{pfx}_evacuate"
+      ].include?(pressed) &&
+      @flash_array.nil?
+  end
+
+  def vm_style_button?(pressed)
+    pressed.starts_with?("image_",
+                         "instance_",
+                         "vm_",
+                         "miq_template_",
+                         "guest_") # guest_ seems to be a non-sense
   end
 
   def process_vm_buttons(pfx)

@@ -97,7 +97,7 @@ describe MiqAeClassController do
                                        :trees       => {:ae_tree => {:active_node => node}})
       controller.instance_variable_set(:@_params, :button => "reset", :id => cls1.id)
       allow(controller).to receive(:open_parent_nodes)
-      expect(controller).to_not receive(:replace_trees_by_presenter)
+      expect(controller).to_not receive(:reload_trees_by_presenter)
       expect(controller).to receive(:render)
       controller.send(:copy_objects)
       expect(controller.send(:flash_errors?)).not_to be_truthy
@@ -315,7 +315,7 @@ describe MiqAeClassController do
 
       context "when the record exists" do
         before do
-          allow(MiqAeInstance).to receive(:find_by_id).with(123).and_return(miq_ae_instance)
+          allow(MiqAeInstance).to receive(:find).with(123).and_return(miq_ae_instance)
           allow(miq_ae_instance).to receive(:ae_class).and_return(miq_ae_class)
           allow(MiqAeInstance).to receive(:get_homonymic_across_domains)
             .with(@user, "fqname").and_return([override, override2])
@@ -348,7 +348,7 @@ describe MiqAeClassController do
 
       context "when the record exists" do
         before do
-          allow(MiqAeClass).to receive(:find_by_id).with(1).and_return(miq_ae_class)
+          allow(MiqAeClass).to receive(:find).with(1).and_return(miq_ae_class)
           allow(MiqAeClass).to receive(:get_homonymic_across_domains)
             .with(@user, "cls_fqname").and_return([override, override2])
         end
@@ -380,7 +380,8 @@ describe MiqAeClassController do
 
       context "when the record exists" do
         before do
-          allow(MiqAeMethod).to receive(:find_by_id).with(123).and_return(miq_ae_method)
+          allow(MiqAeMethod).to receive(:find).with(123).and_return(miq_ae_method)
+          allow(miq_ae_method).to receive(:location).with(no_args).and_return("inline")
           allow(miq_ae_method).to receive(:ae_class).and_return(miq_ae_class)
           allow(MiqAeMethod).to receive(:get_homonymic_across_domains)
             .with(@user, "fqname").and_return([override, override2])
@@ -708,6 +709,59 @@ describe MiqAeClassController do
       controller.send(:delete_namespaces_or_classes)
       flash_messages = assigns(:flash_array)
       expect(flash_messages.first[:message]).to include("Automate Namespace \"foo_namespace\": Delete successful")
+    end
+
+    it "Should use description in flash message when available" do
+      controller.instance_variable_set(:@_params,
+                                       :miq_grid_checks => "aen-#{@namespace.id}",
+                                       :id              => @namespace.id)
+      @namespace.update_column(:description, "foo_description")
+      @namespace.reload
+      controller.send(:delete_namespaces_or_classes)
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first[:message]).to include("Automate Namespace \"foo_description\": Delete successful")
+    end
+  end
+
+  context "#update_ns" do
+    before do
+      stub_user(:features => :all)
+      domain = FactoryGirl.create(:miq_ae_domain, :tenant => Tenant.seed)
+      @namespace = FactoryGirl.create(:miq_ae_namespace,
+                                      :name        => "foo_namespace",
+                                      :description => "foo_description",
+                                      :parent      => domain)
+      session[:edit] = {
+        :ae_ns_id => @namespace.id,
+        :typ      => "MiqAeNamespace",
+        :key      => "aens_edit__#{@namespace.id}",
+        :rec_id   => @namespace.id,
+        :new      => {
+          :ns_name        => "test1",
+          :ns_description => "desc",
+          :enabled        => true
+        },
+        :current  => {
+          :ns_name        => "test",
+          :ns_description => "desc",
+          :enabled        => true
+        }
+      }
+      controller.instance_variable_set(:@sb,
+                                       :trees       => {},
+                                       :active_tree => :ae_tree)
+      allow(controller).to receive(:replace_right_cell)
+      controller.x_node = "aen-#{@namespace.compressed_id}"
+      allow(controller).to receive(:find_records_with_rbac).and_return([@namespace])
+    end
+
+    it "Should use description in flash message when editing a domain" do
+      controller.instance_variable_set(:@_params,
+                                       :button => "save",
+                                       :id     => @namespace.id)
+      controller.send(:update_ns)
+      flash_messages = assigns(:flash_array)
+      expect(flash_messages.first[:message]).to include("Automate Namespace \"desc\" was saved")
     end
   end
 

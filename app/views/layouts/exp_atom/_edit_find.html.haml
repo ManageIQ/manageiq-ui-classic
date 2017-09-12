@@ -60,8 +60,8 @@
               "data-miq_sparkle_on"  => true,
               "data-miq_sparkle_off" => true)
         - else
-          - opts = (@edit[@expkey][:val1][:type] == :datetime ? FROM_HOURS : [])
-          - opts += FROM_DAYS + FROM_WEEKS + FROM_MONTHS + FROM_QUARTERS + FROM_YEARS
+          - opts = (@edit[@expkey][:val1][:type] == :datetime ? ViewHelper::FROM_HOURS : [])
+          - opts += ViewHelper::FROM_DAYS + ViewHelper::FROM_WEEKS + ViewHelper::FROM_MONTHS + ViewHelper::FROM_QUARTERS + ViewHelper::FROM_YEARS
           = select_tag('chosen_from_1',
             options_for_select(Hash[opts.map{|x| [_(x), x]}], @edit[@expkey][:exp_value][0]),
             :multiple              => false,
@@ -69,7 +69,7 @@
             "data-miq_sparkle_on"  => true,
             "data-miq_sparkle_off" => true)
 
-        - if @edit[@expkey][:exp_skey] == EXP_FROM && @edit[@expkey][:exp_value][0]
+        - if @edit[@expkey][:exp_skey] == ApplicationController::Filter::EXP_FROM && @edit[@expkey][:exp_value][0]
           = ('THROUGH')
           - if @edit[@expkey][:val1][:date_format] == 's'
             = datepicker_input_tag("miq_date_1_1",
@@ -175,8 +175,8 @@
                   "data-miq_sparkle_on"  => true,
                   "data-miq_sparkle_off" => true)
             - else
-              - opts = (@edit[@expkey][:val2][:type] == :datetime ? FROM_HOURS : [])
-              - opts += FROM_DAYS + FROM_WEEKS + FROM_MONTHS + FROM_QUARTERS + FROM_YEARS
+              - opts = (@edit[@expkey][:val2][:type] == :datetime ? ViewHelper::FROM_HOURS : [])
+              - opts += ViewHelper::FROM_DAYS + ViewHelper::FROM_WEEKS + ViewHelper::FROM_MONTHS + ViewHelper::FROM_QUARTERS + ViewHelper::FROM_YEARS
               = select_tag('chosen_from_2',
                 options_for_select(Hash[opts.map {|x| [_(x), x]}], @edit[@expkey][:exp_cvalue][0]),
                 :multiple              => false,
@@ -184,7 +184,7 @@
                 "data-miq_sparkle_on"  => true,
                 "data-miq_sparkle_off" => true)
 
-            - if @edit[@expkey][:exp_ckey] == EXP_FROM && @edit[@expkey][:exp_cvalue][0]
+            - if @edit[@expkey][:exp_ckey] == ApplicationController::Filter::EXP_FROM && @edit[@expkey][:exp_cvalue][0]
               = _('THROUGH')
               - if @edit[@expkey][:val2][:date_format] == 's'
                 - val = @edit[@expkey][:exp_cvalue][1] ? @edit[@expkey][:exp_cvalue][1].split(" ").first : ""

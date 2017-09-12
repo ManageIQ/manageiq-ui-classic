@@ -1,13 +1,10 @@
 ManageIQ.angular.app.controller('mwServerController', MwServerController);
 ManageIQ.angular.app.controller('mwServerGroupController', MwServerGroupController);
 
-MwServerController.$inject = ['$scope', 'miqService', 'mwAddDatasourceService'];
-MwServerGroupController.$inject = ['$scope', 'miqService' ];
-
 /**
  * MwServerController - since there can be only one controller per page due to:
  * 'ManageIQ.angular.scope = $scope;'
- * We are now using Rx.js Observables instead of miqCallAngular, for sending configurable
+ * We are now using Rx.js Observables, for sending configurable
  * data from miq buttons.
  * This is the parent controller for the page that is bootstrapped,
  * interacting with the page via $scope and then 'sendDataWithRx' events down to the sub
@@ -26,23 +23,26 @@ MwServerGroupController.$inject = ['$scope', 'miqService' ];
  * @param {scope} $scope  - angular $scope object
  * @param {MiqService} miqService - MiqServices
  * @param {MwAddDatasourceService} mwAddDatasourceService - Datasource services
+ * @param {document} $document - angular $document object
  * @constructor
  */
-function MwServerController($scope, miqService, mwAddDatasourceService) {
-  return MwServerControllerFactory($scope, miqService, mwAddDatasourceService, false);
+MwServerController.$inject = ['$scope', 'miqService', 'mwAddDatasourceService', '$timeout', '$document'];
+function MwServerController($scope, miqService, mwAddDatasourceService, $timeout, $document) {
+  return MwServerControllerFactory($scope, miqService, mwAddDatasourceService, false, $timeout, $document);
 }
 
-function MwServerGroupController($scope, miqService, mwAddDatasourceService) {
-  return MwServerControllerFactory($scope, miqService, mwAddDatasourceService, true);
+MwServerGroupController.$inject = ['$scope', 'miqService', 'mwAddDatasourceService', '$timeout', '$document'];
+function MwServerGroupController($scope, miqService, mwAddDatasourceService, $timeout, $document) {
+  return MwServerControllerFactory($scope, miqService, mwAddDatasourceService, true, $timeout, $document);
 }
 
-function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, isGroupDeployment) {
+function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, isGroupDeployment, $timeout, $document) {
   ManageIQ.angular.scope = $scope;
 
   ManageIQ.angular.rxSubject.subscribe(function(event) {
     var eventType = event.type;
-    var  operation = event.operation;
-    var  timeout = event.timeout;
+    var operation = event.operation;
+    var timeout = event.timeout;
 
     $scope.paramsModel = $scope.paramsModel || {};
     if (eventType === 'mwServerOps'  && operation) {
@@ -57,6 +57,20 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
     if (eventType === 'mwReloadDeployDialog') {
       $scope.warnMsg = event.msg;
       $scope.$apply();
+    }
+
+    if (event.controller === 'middlewareServerController') {
+      $timeout(function() {
+        if (event.name === 'showDeployListener') {
+          $scope.showDeployListener();
+        }
+        if (event.name === 'showDatasourceListener') {
+          $scope.showDatasourceListener();
+        }
+        if (event.name === 'showJdbcDriverListener') {
+          $scope.showJdbcDriverListener();
+        }
+      });
     }
   });
 
@@ -154,6 +168,25 @@ function MwServerControllerFactory($scope, miqService, mwAddDatasourceService, i
   $scope.addJdbcDriver = function() {
     miqService.sparkleOn();
     $scope.$broadcast('mwAddJdbcDriverEvent', $scope.jdbcDriverModel);
+  };
+
+  // //////////////////////////////////////////////////////////////////////
+  // JDR
+  // //////////////////////////////////////////////////////////////////////
+
+  $scope.deleteSelectedDr = function() {
+    $document.find('#mw_dr_reports').submit();
+  };
+
+  $scope.drChecked = function() {
+    var checkedCount = $document.find('#mw_dr_reports input[type=checkbox]:checked').length;
+    $document.find('#dr_btn_delete').prop('disabled', checkedCount === 0);
+  };
+
+  $scope.toggleShowDiagnosticReports = function() {
+    $document.find('#mw_dr_section').toggle('slow');
+    $document.find('#mw_dr_header span').toggleClass('fa-angle-down');
+    $document.find('#mw_dr_header span').toggleClass('fa-angle-right');
   };
 }
 

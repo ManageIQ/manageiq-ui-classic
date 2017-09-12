@@ -1,5 +1,12 @@
 module Mixins
   module ManagerControllerMixin
+    extend ActiveSupport::Concern
+
+    included do
+      include Mixins::GenericFormMixin
+      include Mixins::FindRecord
+    end
+
     def index
       redirect_to :action => 'explorer'
     end
@@ -25,11 +32,11 @@ module Mixins
     end
 
     def build_credentials
-      return {} unless params[:log_userid]
+      return {} unless params[:default_userid]
       {
         :default => {
-          :userid   => params[:log_userid],
-          :password => params[:log_password] || @provider.authentication_password
+          :userid   => params[:default_userid],
+          :password => params[:default_password] || @provider.authentication_password
         }
       }
     end
@@ -78,10 +85,13 @@ module Mixins
       begin
         @provider.verify_credentials(params[:type])
       rescue => error
-        render_flash(_("Credential validation was not successful: %{details}") % {:details => error}, :error)
+        msg = _("Credential validation was not successful: %{details}") % {:details => error}
+        level = :error
       else
-        render_flash(_("Credential validation was successful"))
+        msg = _("Credential validation was successful")
       end
+
+      render_flash_json(msg, level)
     end
 
     def explorer
@@ -108,13 +118,6 @@ module Mixins
       session.delete(:exp_parms)
       @in_a_form = false
 
-      if params[:id] # If a tree node id came in, show in one of the trees
-        nodetype, id = params[:id].split("-")
-        # treebuilder initializes x_node to root first time in locals_for_render,
-        # need to set this here to force & activate node when link is clicked outside of explorer.
-        @reselect_node = self.x_node = "#{nodetype}-#{to_cid(id)}"
-        get_node_info(x_node)
-      end
       render :layout => "application"
     end
 
@@ -276,11 +279,12 @@ module Mixins
       manager = find_record(concrete_model, params[:id])
       provider = manager.provider
 
-      render :json => {:name       => provider.name,
-                       :zone       => provider.zone.name,
-                       :url        => provider.url,
-                       :verify_ssl => provider.verify_ssl,
-                       :log_userid => provider.authentications.first.userid}
+      render :json => {:name                => provider.name,
+                       :zone                => provider.zone.name,
+                       :url                 => provider.url,
+                       :verify_ssl          => provider.verify_ssl,
+                       :default_userid      => provider.authentications.first.userid,
+                       :default_auth_status => provider.authentication_status_ok?}
     end
 
     private
@@ -306,7 +310,7 @@ module Mixins
       update_partials(record_showing, presenter)
       replace_search_box(presenter)
       handle_bottom_cell(presenter)
-      replace_trees_by_presenter(presenter, trees)
+      reload_trees_by_presenter(presenter, trees)
       rebuild_toolbars(record_showing, presenter)
       presenter[:right_cell_text] = @right_cell_text
       presenter[:osf_node] = x_node # Open, select, and focus on this node
@@ -328,7 +332,7 @@ module Mixins
     def sync_form_to_instance
       @provider.name       = params[:name]
       @provider.url        = params[:url]
-      @provider.verify_ssl = params[:verify_ssl].eql?("on")
+      @provider.verify_ssl = params[:verify_ssl].eql?("on") || params[:verify_ssl].eql?("true")
       @provider.zone       = Zone.find_by(:name => params[:zone].to_s)
     end
 
@@ -477,7 +481,7 @@ module Mixins
       presenter.hide(:quicksearchbox)
       presenter[:hide_modal] = true
 
-      presenter.lock_tree(x_active_tree, @in_a_form)
+      presenter[:lock_sidebar] = @in_a_form
     end
 
     def construct_edit_for_audit
@@ -500,20 +504,6 @@ module Mixins
 
     def valid_configured_system_record?(configured_system_record)
       configured_system_record.try(:id)
-    end
-
-    def find_record(model, id)
-      raise _("Invalid input") unless is_integer?(from_cid(id))
-      begin
-        record = Rbac.filtered(model.where(:id => from_cid(id))).first
-      rescue ActiveRecord::RecordNotFound, StandardError => ex
-        if @explorer
-          self.x_node = "root"
-          add_flash(ex.message, :error, true)
-          session[:flash_msgs] = @flash_array.dup
-        end
-      end
-      record
     end
 
     def title

@@ -13,17 +13,7 @@ describe TreeBuilderTimelines do
   describe '#tree_init_options' do
     it 'sets init options correctly' do
       tree_options = subject.send(:tree_init_options, :timelines)
-      expect(tree_options).to eq(:full_ids => true, :lazy => false, :add_root => false)
-    end
-  end
-
-  describe '#set_locals_for_render' do
-    it 'set locals correctly' do
-      locals = subject.send(:set_locals_for_render)
-      expect(locals).to include(:id_prefix  => 'timelines_',
-                                :onclick    => "miqOnClickTimelineSelection",
-                                :click_url  => "/dashboard/show_timeline/",
-                                :tree_state => true)
+      expect(tree_options).to eq(:lazy => false, :add_root => false)
     end
   end
 
@@ -40,7 +30,7 @@ describe TreeBuilderTimelines do
       expect(first_level_node[:text]).to eq('First')
       expect(first_level_node[:icon]).to eq('pficon pficon-folder-close')
       expect(first_level_node[:tip]).to eq('First')
-      expect(first_level_node[:cfmeNoClick]).to be true
+      expect(first_level_node[:selectable]).to be false
       expect(first_level_node[:expand]).to be true
     end
   end
@@ -55,7 +45,7 @@ describe TreeBuilderTimelines do
         expect(second_level_node[:icon]).to eq('pficon pficon-folder-close')
         expect(second_level_node[:tip]).to eq('Group: Second')
         expect(second_level_node[:expand]).to be false
-        expect(second_level_node[:cfmeNoClick]).to be true
+        expect(second_level_node[:selectable]).to be false
       end
     end
 

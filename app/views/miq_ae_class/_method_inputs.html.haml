@@ -1,9 +1,14 @@
 #method_inputs_div
   - if !@in_a_form && @ae_method
-    = render :partial => "layouts/flash_msg"
     %h3
       = _('Main Info')
     .form-horizontal.static
+      .form-group
+        %label.col-md-2.control-label
+          = _('Type')
+        .col-md-8
+          %p.form-control-static
+            = @ae_method.location
       .form-group
         %label.col-md-2.control-label
           = Dictionary.gettext('fqname', :type => :column, :notfound => :titleize)
@@ -22,12 +27,6 @@
         .col-md-8
           %p.form-control-static
             = @ae_method.display_name
-      .form-group
-        %label.col-md-2.control-label
-          = _('Location')
-        .col-md-8
-          %p.form-control-static
-            = @ae_method.location
       .form-group
         %label.col-md-2.control-label
           = _('Created On')
@@ -49,6 +48,8 @@
           :mode                    => "ruby",
           :line_numbers            => true,
           :read_only               => true}
+    - elsif @ae_method.location == 'expression'
+      = @expression
     - else
       = @ae_method.data
     -# show inputs parameters grid if there are any inputs
@@ -73,6 +74,5 @@
               %td= record.datatype.blank? ? 'string' : record.datatype
   - else
     #method_form_div
-      = render :partial => "layouts/flash_msg"
       = render :partial => "method_form", :locals  => {:prefix => ""}
   %br

@@ -1,7 +1,7 @@
 %div{:id => "#{chart_set}_charts_div", :onmousedown => "if (typeof miqMenu != 'undefined') miqMenu.hideContextMenu();"}
   - if @charts || @perf_options[:chart_type] != :performance
     - perf_options ||= @perf_options
-    - detailed_view = !!perf_options[:index]
+    - single_chart_view = !!perf_options[:index] || chart_data.count == 1
     - charts ||= @charts
     - if chart_data
       - if !perf_parent?
@@ -15,7 +15,7 @@
                                                      :chart_set   => chart_set,
                                                      :chart_index => c})
 
-                - if detailed_view
+                - if single_chart_view
                   .col-md-12
                     = chart_render
                 - else

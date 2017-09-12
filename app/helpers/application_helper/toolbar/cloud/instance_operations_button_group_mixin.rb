@@ -114,6 +114,15 @@ module ApplicationHelper::Toolbar::Cloud::InstanceOperationsButtonGroupMixin
             N_('VM Console'),
             :url   => "html5_console",
             :klass => ApplicationHelper::Button::VmVncConsole),
+          included_class.button(
+            :cockpit_console,
+            'pficon pficon-screen fa-lg',
+            N_('Open a new browser window with Cockpit for this VM.  This requires that Cockpit is pre-configured on the VM.'),
+            N_('Web Console'),
+            # :image   => "cockpit",
+            :url   => "launch_cockpit",
+            :klass => ApplicationHelper::Button::CockpitConsole
+          ),
         ]
       ),
     ])

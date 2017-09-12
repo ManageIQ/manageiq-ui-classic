@@ -47,9 +47,9 @@ class VmInfraController < ApplicationController
 
     # Position in tree that matches selected record
     if role_allows?(:feature => "vandt_accord")
-      set_active_elements_authorized_user('vandt_tree', 'vandt', true, VmOrTemplate, id)
+      set_active_elements_authorized_user('vandt_tree', 'vandt', VmOrTemplate, id)
     elsif role_allows?(:feature => "#{prefix}_filter_accord")
-      set_active_elements_authorized_user("#{prefix}_filter_tree", "#{prefix}_filter", false, nil, id)
+      set_active_elements_authorized_user("#{prefix}_filter_tree", "#{prefix}_filter", nil, id)
     else
       if (prefix == "vms" && role_allows?(:feature => "vms_instances_filter_accord")) ||
          (prefix == "templates" && role_allows?(:feature => "templates_images_filter_accord"))

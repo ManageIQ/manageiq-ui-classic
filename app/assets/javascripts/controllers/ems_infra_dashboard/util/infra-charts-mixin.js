@@ -1,11 +1,11 @@
 angular.module('miq.util').factory('infraChartsMixin', ['pfUtils', function(pfUtils) {
   'use strict';
 
-  var dailyTimeTooltip = function (data) {
+  var dailyTimeTooltip = function(data) {
     var theMoment = moment(data[0].x);
     return _.template('<div class="tooltip-inner"><%- col1 %>  <%- col2 %></div>')({
       col1: theMoment.format('MM/DD/YYYY'),
-      col2: data[0].value + ' ' + data[0].name
+      col2: data[0].value + ' ' + data[0].name,
     });
   };
 
@@ -39,7 +39,7 @@ angular.module('miq.util').factory('infraChartsMixin', ['pfUtils', function(pfUt
       usageDataName: __('Used'),
       legendLeftText: __('Last 30 Days'),
       legendRightText: '',
-      numDays: 30
+      numDays: 30,
     },
     memoryUsageConfig: {
       chartId: 'memoryUsageChart',
@@ -48,7 +48,7 @@ angular.module('miq.util').factory('infraChartsMixin', ['pfUtils', function(pfUt
       usageDataName: __('Used'),
       legendLeftText: __('Last 30 Days'),
       legendRightText: '',
-      numDays: 30
+      numDays: 30,
     },
     recentHostsConfig: {
       chartId     : 'recentHostsChart',
@@ -61,7 +61,7 @@ angular.module('miq.util').factory('infraChartsMixin', ['pfUtils', function(pfUt
       point       : {r: 1},
       size        : {height: 145},
       grid        : {y: {show: false}},
-      setAreaChart: true
+      setAreaChart: true,
     },
     recentVmsConfig: {
       chartId     : 'recentVmsChart',
@@ -74,7 +74,7 @@ angular.module('miq.util').factory('infraChartsMixin', ['pfUtils', function(pfUt
       point       : {r: 1},
       size        : {height: 145},
       grid        : {y: {show: false}},
-      setAreaChart: true
+      setAreaChart: true,
     },
   };
 
@@ -82,27 +82,27 @@ angular.module('miq.util').factory('infraChartsMixin', ['pfUtils', function(pfUt
     if (data) {
       var heatmapsStructData = data.map(function(d) {
         var percent = -1;
-        var tooltip = __("Cluster: ") + d.node + "<br>" + __("Provider: ") + d.provider
+        var tooltip = __('Cluster: ') + d.node + '<br>' + __('Provider: ') + d.provider;
         if (d.percent === null || d.total === null) {
-          tooltip += "<br> " + __("Usage: Unknown");
+          tooltip += '<br> ' + __('Usage: Unknown');
         } else {
-          percent = d.percent
-          tooltip += "<br>" + __("Usage: ") + sprintf(__("%d%% in use of %d %s total"), (percent * 100).toFixed(0), d.total, d.unit);
+          percent = d.percent;
+          tooltip += '<br>' + __('Usage: ') + sprintf(__('%d%% in use of %d %s total'), (percent * 100).toFixed(0), d.total, d.unit);
         }
 
         return {
-          "id": d.id,
-          "tooltip": tooltip,
-          "value": percent
+          'id': d.id,
+          'tooltip': tooltip,
+          'value': percent,
         };
-      })
-      heatmapsStruct.data = _.sortBy(heatmapsStructData, 'value').reverse()
+      });
+      heatmapsStruct.data = _.sortBy(heatmapsStructData, 'value').reverse();
     } else  {
       heatmapsStruct.data = [];
-      heatmapsStruct.dataAvailable = false
+      heatmapsStruct.dataAvailable = false;
     }
 
-    return heatmapsStruct
+    return heatmapsStruct;
   };
 
   var processUtilizationData = function(data, xDataLabel, yDataLabel) {
@@ -118,8 +118,8 @@ angular.module('miq.util').factory('infraChartsMixin', ['pfUtils', function(pfUt
   };
 
   var processData = function(data, xDataLabel, yDataLabel) {
-    if (!data) {
-      return { dataAvailable: false }
+    if (! data) {
+      return { dataAvailable: false };
     }
 
     data.xData.unshift(xDataLabel);
@@ -135,6 +135,6 @@ angular.module('miq.util').factory('infraChartsMixin', ['pfUtils', function(pfUt
     processUtilizationData: processUtilizationData,
     processRecentHostsData: processRecentHostsData,
     processRecentVmsData: processRecentVmsData,
-    dailyTimeTooltip: dailyTimeTooltip
+    dailyTimeTooltip: dailyTimeTooltip,
   };
 }]);

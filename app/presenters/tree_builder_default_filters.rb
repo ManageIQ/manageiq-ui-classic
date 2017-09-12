@@ -40,7 +40,7 @@ class TreeBuilderDefaultFilters < TreeBuilder
   def set_locals_for_render
     locals = super
     locals.merge!(:check_url         => "/configuration/filters_field_changed/",
-                  :onselect          => "miqOnCheckSections",
+                  :oncheck           => "miqOnCheckGeneric",
                   :checkboxes        => true,
                   :highlight_changes => true)
   end
@@ -55,7 +55,7 @@ class TreeBuilderDefaultFilters < TreeBuilder
        :text         => folder,
        :icon         => "pficon pficon-folder-close",
        :tip          => folder,
-       :cfmeNoClick  => true,
+       :selectable   => false,
        :hideCheckbox => true}
     end
     count_only_or_objects(count_only, roots)
@@ -72,17 +72,17 @@ class TreeBuilderDefaultFilters < TreeBuilder
                    :text         => folder,
                    :icon         => "pficon pficon-folder-close",
                    :tip          => folder,
-                   :cfmeNoClick  => true,
+                   :selectable   => false,
                    :hideCheckbox => true}
                 end
               else
                 kids.map do |kid|
-                  {:id          => kid[:id],
-                   :text        => kid[:description],
-                   :icon        => 'fa fa-filter',
-                   :tip         => kid[:description],
-                   :cfmeNoClick => true,
-                   :select      => kid[:search_key] != "_hidden_"}
+                  {:id         => kid[:id],
+                   :text       => kid[:description],
+                   :icon       => 'fa fa-filter',
+                   :tip        => kid[:description],
+                   :selectable => false,
+                   :select     => kid[:search_key] != "_hidden_"}
                 end
               end
     end

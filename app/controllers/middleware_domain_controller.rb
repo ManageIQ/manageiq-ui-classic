@@ -9,6 +9,13 @@ class MiddlewareDomainController < ApplicationController
   after_action :cleanup_action
   after_action :set_session_data
 
+  OPERATIONS = {
+    :middleware_domain_stop => {:op   => :stop_middleware_server,
+                                :skip => true,
+                                :hawk => N_('stopping'),
+                                :msg  => N_('Stopping selected domain(s)')}
+  }.freeze
+
   def self.display_methods
     %w(middleware_server_groups)
   end
@@ -17,7 +24,11 @@ class MiddlewareDomainController < ApplicationController
     "#{model.name.underscore}/show"
   end
 
-  menu_section :cnt
+  def self.operations
+    OPERATIONS
+  end
+
+  menu_section :mdl
 
   private
 

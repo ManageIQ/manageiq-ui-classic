@@ -1,4 +1,7 @@
-%form#form_div{:name => "angularForm", 'ng-controller' => "networkRouterFormController", :novalidate => true}
+%form#form_div{:name           => "angularForm",
+               'ng-controller' => "networkRouterFormController as vm",
+               :novalidate     => true,
+               'ng-cloak'      => '',}
   = render :partial => "layouts/flash_msg"
   %h3
     = _('Remove Interface from Router')
@@ -9,13 +12,12 @@
       .col-md-8
         = select_tag("cloud_subnet_id",
           options_for_select([["<#{_('Choose')}>", nil]] + @subnet_choices.sort),
-                      "ng-model"                    => "networkRouterModel.cloud_subnet_id",
+                      "ng-model"                    => "vm.networkRouterModel.cloud_subnet_id",
                       "required"                    => "",
-                      :checkchange                  => true,
                       "selectpicker-for-select-tag" => "")
-  = render :partial => "layouts/angular/x_custom_form_buttons_angular",
+  = render :partial => "layouts/angular/custom_form_buttons_controller_as",
            :locals  => {:button_label           => _("Remove"),
-                        :button_click           => "removeInterfaceClicked()"}
+                        :button_click           => "vm.removeInterfaceClicked()"}
 
 :javascript
   ManageIQ.angular.app.value('networkRouterFormId', '#{@router.id}');

@@ -97,7 +97,7 @@ class ProviderForemanController < ApplicationController
           self.x_node = params[:id]
           quick_search_show
         end
-      elsif x_active_tree == :configuration_manager_cs_filter_tree && params[:button] != 'saveit'
+      elsif x_active_tree == :configuration_manager_cs_filter_tree && params[:button].present? && params[:button] != 'saveit'
         listnav_search_selected(from_cid(id))
       end
     end
@@ -186,6 +186,10 @@ class ProviderForemanController < ApplicationController
                     when :configuration_manager_providers
                       "provider_foreman_#{rec_cls}"
                     end
+  end
+
+  def validate_before_save?
+    true
   end
 
   private

@@ -30,10 +30,6 @@ class EmsMiddlewareController < ApplicationController
     new_ems_middleware_path
   end
 
-  def fileicon(item, _view)
-    icon = item.decorate.try(:fileicon)
-  end
-
   def restful?
     true
   end

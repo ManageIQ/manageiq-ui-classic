@@ -384,7 +384,7 @@ module PxeController::PxeServers
     end
 
     creds = {}
-    creds[:default] = {:userid => @edit[:new][:log_userid], :password => @edit[:new][:log_password]}        unless @edit[:new][:log_userid].blank?
+    creds[:default] = {:userid => @edit[:new][:log_userid], :password => @edit[:new][:log_password]} unless @edit[:new][:log_userid].blank?
     pxe.update_authentication(creds, :save => (mode != :validate))
     true
   end
@@ -392,13 +392,9 @@ module PxeController::PxeServers
   # Get variables from edit form
   def pxe_server_get_form_vars
     @ps = @edit[:pxe_id] ? PxeServer.find_by_id(@edit[:pxe_id]) : PxeServer.new
-    @edit[:new][:name] = params[:name] if params[:name]
+    copy_params_if_set(@edit[:new], params, %i(name access_url uri pxe_directory windows_images_directory
+                                               customization_directory log_userid log_password log_verify))
     @edit[:new][:protocol] = params[:log_protocol] if params[:log_protocol]
-    @edit[:new][:access_url] = params[:access_url] if params[:access_url]
-    @edit[:new][:uri] = params[:uri] if params[:uri]
-    @edit[:new][:pxe_directory] = params[:pxe_directory] if params[:pxe_directory]
-    @edit[:new][:windows_images_directory] = params[:windows_images_directory] if params[:windows_images_directory]
-    @edit[:new][:customization_directory] = params[:customization_directory] if params[:customization_directory]
     params.each do |var, val|
       vars = var.to_s.split("_")
       if vars[0] == "pxemenu"
@@ -407,9 +403,6 @@ module PxeController::PxeServers
     end
     # @edit[:new][:pxe_menus][0] = params[:pxe_menu_0] if params[:pxe_menu_0]
     @edit[:new][:uri_prefix] = @edit[:protocols_hash].invert[@edit[:new][:protocol]]
-    @edit[:new][:log_userid] = params[:log_userid] if params[:log_userid]
-    @edit[:new][:log_password] = params[:log_password] if params[:log_password]
-    @edit[:new][:log_verify] = params[:log_verify] if params[:log_verify]
     restore_password if params[:restore_password]
   end
 

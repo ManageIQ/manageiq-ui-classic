@@ -1,6 +1,37 @@
 module ReportController::Widgets
   extend ActiveSupport::Concern
 
+  # RSS Feeds
+  RSS_FEEDS = {
+    "Microsoft Security"         => "http://www.microsoft.com/protect/rss/rssfeed.aspx",
+    "CNN Top Stories"            => "http://rss.cnn.com/rss/cnn_topstories.rss",
+    "Gartner Latest Research"    => "http://www.gartner.com/it/rss/leaders/latest_research_itoperations.jsp#",
+    "Google News"                => "http://news.google.com/?output=rss",
+    "SlashDot"                   => "http://slashdot.org/index.rdf",
+    "VM Etc."                    => "http://feeds.feedburner.com/vmetc?format=xml",
+    "Virtualization Pro"         => "http://itknowledgeexchange.techtarget.com/virtualization-pro/feed/",
+    "Virtualization Information" => "http://virtualizationinformation.com/?feed=rss2",
+    "Vmware Tips & Tricks"       => "http://rss.techtarget.com/840.xml",
+    "DABCC - News & Support"     => "http://feeds.dabcc.com/AllArticles",
+    "VmwareWolf"                 => "http://feeds.feedburner.com/vmwarewolf",
+    "Vmware RSS Feeds"           => "http://vmware.simplefeed.net/rss?f=995b0290-01dc-11dc-3032-0019bbc54f6f"
+  }.freeze
+
+  SINGULAR_WIDGET_TYPES = {
+    "r"  => N_('Report'),
+    "c"  => N_('Chart'),
+    "rf" => N_('RSS Feed'),
+    "m"  => N_('Menu')
+  }.freeze
+
+  # Need this for mapping with MiqWidget record content_type field
+  WIDGET_CONTENT_TYPE = {
+    "r"  => "report",
+    "c"  => "chart",
+    "rf" => "rss",
+    "m"  => "menu"
+  }.freeze
+
   def widget_refresh
     assert_privileges("widget_refresh")
     replace_right_cell
@@ -30,7 +61,6 @@ module ReportController::Widgets
 
     widget_set_form_vars
     session[:changed] = false
-    @lock_tree = true
     replace_right_cell
   end
 
@@ -85,7 +115,6 @@ module ReportController::Widgets
       widget_set_form_vars
       session[:changed] = false
       @in_a_form = true
-      @lock_tree = true
       replace_right_cell
     end
   end
@@ -420,7 +449,7 @@ module ReportController::Widgets
       end
       @edit[:new][:feed_type] = @widget.options && @widget.options[:url] ? "external" : "internal"
       if @widget.options && @widget.options[:url]
-        RSS_FEEDS.each do |r|
+        self.class::RSS_FEEDS.each do |r|
           if r[1] == @widget.options[:url]
             @edit[:new][:url] = @widget.options[:url]
           end
@@ -488,10 +517,9 @@ module ReportController::Widgets
   def widget_get_form_vars
     @widget = @edit[:widget_id] ? MiqWidget.find_by_id(@edit[:widget_id]) : MiqWidget.new
 
-    @edit[:new][:title]       = params[:title]            if params[:title]
-    @edit[:new][:description] = params[:description]      if params[:description]
-    @edit[:new][:enabled]     = (params[:enabled] == "1") if params[:enabled]
-    @edit[:new][:filter]      = params[:filter_typ]       if params[:filter_typ]
+    copy_params_if_set(@edit[:new], params, %i(title description))
+    @edit[:new][:filter]  = params[:filter_typ]       if params[:filter_typ]
+    @edit[:new][:enabled] = (params[:enabled] == "1") if params[:enabled]
 
     # report/chart/menu options box
     @edit[:new][:row_count] = @widget.row_count(params[:row_count]) if params[:row_count]
@@ -571,15 +599,6 @@ module ReportController::Widgets
     widget.enabled     = @edit[:new][:enabled]
     widget.options ||= {}
     widget.options[:row_count] = widget.row_count(@edit[:new][:row_count]) if %w(r rf).include?(@sb[:wtype])
-    #    if @sb[:wtype] == "m"
-    #      widget.miq_shortcuts = @edit[:new][:shortcuts].keys.collect{|s| MiqShortcut.find_by_id(s)}
-    #      ws = Array.new  # Create an array of widget shortcuts
-    #      @edit[:new][:shortcuts].keys.each_with_index do |s_id, s_idx|
-    #        sc = MiqShortcut.find_by_id(s_id)
-    #        ws.push(MiqWidgetShortcut.new(:sequence=>s_idx, :description=>@edit[:new][:shortcuts][s_id], :miq_shortcut=>sc))
-    #      end
-    #      widget.miq_widget_shortcuts = ws
-    #    end
     if @sb[:wtype] == "rf"
       widget.set_rss_properties(@edit[:new][:feed_type], @edit[:new][:rss_feed_id], @edit[:new][:url])
     else
@@ -587,10 +606,10 @@ module ReportController::Widgets
     end
     widget.options[:col_order] = [] if @edit[:new][:pivot]
     @edit[:new][:pivot] ||= ReportController::PivotOptions.new
-    widget.options[:col_order].push(@edit[:new][:pivot].by1) if !@edit[:new][:pivot].by1.blank? && @edit[:new][:pivot].by1 != NOTHING_STRING
-    widget.options[:col_order].push(@edit[:new][:pivot].by2) if !@edit[:new][:pivot].by2.blank? && @edit[:new][:pivot].by2 != NOTHING_STRING
-    widget.options[:col_order].push(@edit[:new][:pivot].by3) if !@edit[:new][:pivot].by3.blank? && @edit[:new][:pivot].by3 != NOTHING_STRING
-    widget.options[:col_order].push(@edit[:new][:pivot].by4) if !@edit[:new][:pivot].by4.blank? && @edit[:new][:pivot].by4 != NOTHING_STRING
+    widget.options[:col_order].push(@edit[:new][:pivot].by1) if !@edit[:new][:pivot].by1.blank? && @edit[:new][:pivot].by1 != ReportHelper::NOTHING_STRING
+    widget.options[:col_order].push(@edit[:new][:pivot].by2) if !@edit[:new][:pivot].by2.blank? && @edit[:new][:pivot].by2 != ReportHelper::NOTHING_STRING
+    widget.options[:col_order].push(@edit[:new][:pivot].by3) if !@edit[:new][:pivot].by3.blank? && @edit[:new][:pivot].by3 != ReportHelper::NOTHING_STRING
+    widget.options[:col_order].push(@edit[:new][:pivot].by4) if !@edit[:new][:pivot].by4.blank? && @edit[:new][:pivot].by4 != ReportHelper::NOTHING_STRING
     widget.content_type = WIDGET_CONTENT_TYPE[@sb[:wtype]]
     widget.visibility ||= {}
     if @edit[:new][:visibility_typ] == "group"
@@ -635,7 +654,7 @@ module ReportController::Widgets
         add_flash(_("A %{type} must be selected") % {:type => typ.titleize}, :error)
       end
     end
-    if @sb[:wtype] == "r" && @edit[:new][:pivot].by1 == NOTHING_STRING
+    if @sb[:wtype] == "r" && @edit[:new][:pivot].by1 == ReportHelper::NOTHING_STRING
       add_flash(_("At least one Column must be selected"), :error)
     end
     if @sb[:wtype] == "m"

@@ -43,15 +43,13 @@
             - tree_id = x_node
             - if obj[:typ] == "CustomButton"
               - typ = "cb"
-              - img = obj[:button_image]
               - rec_type = "Button"
             - else
               - typ = "cbg"
-              - img = obj[:button_image]
               - rec_type = "Group"
             %tr{:title => _("Click to view details"), :onclick => "miqTreeActivateNode('#{tree_box}', '#{tree_id}_#{typ}-#{to_cid(obj[:id])}')"}
               %td.table-view-pf-select
-                %i{:class => "miq-custom-button-#{img}"}
+                %i{:class => obj[:button_icon], :style => obj.key?(:button_color) ? "color: #{obj[:button_color]};" : nil}
               %td
                 = obj[:name].split("|").first
               - if x_active_tree == :sandt_tree
@@ -69,7 +67,7 @@
     .form-horizontal.static
       .form-group
         %label.control-label.col-md-2
-          = _('Button Group Text')
+          = _('Text')
         .col-md-8
           = @record.name.split('|').first
           - display = @record.set_data.key?(:display) ? @record.set_data[:display] : true
@@ -81,14 +79,14 @@
 
       .form-group
         %label.control-label.col-md-2
-          = _('Button Hover Group Text')
+          = _('Hover Text')
         .col-md-8
           = @record.description
       .form-group
         %label.control-label.col-md-2
           = _('Image')
         .col-md-8
-          %span{:class => "miq-custom-button-#{@record.set_data[:button_image]}"}
+          %span{:class => @record.set_data[:button_icon], :style => @record.set_data.key?(:button_color) ? "color: #{@record.set_data[:button_color]};" : nil}
   - if @sb[:buttons].blank?
     %hr
     = render :partial => 'layouts/info_msg', :locals => {:message => _("No Buttons found.")}
@@ -107,7 +105,7 @@
           - id = @nodetype[0].split('-')[1] == "ub" ? "#{@nodetype[0]}_cb-#{to_cid(obj[:id])}" : "#{x_node}_cb-#{to_cid(obj[:id])}"
           %tr{:title => _("Click to view details"), :onclick => "miqTreeActivateNode('#{tree_box}', '#{id}')"}
             %td.table-view-pf-select
-              %i{:class => "miq-custom-button-#{obj[:button_image]}"}
+              %i{:class => obj[:button_icon], :style => obj.key?(:button_color) ? "color: #{obj[:button_color]};" : nil}
             %td
               = obj[:name]
             %td
@@ -119,4 +117,7 @@
 - elsif params[:pressed] == "ab_group_reorder" || (params[:button] == "reset" && params[:action] == "ab_group_reorder")
   = render :partial => 'shared/buttons/group_order_form'
 - elsif @custom_button
-  = render :partial => 'shared/buttons/ab_show'
+  - if params[:action] == 'button_update' && (params[:button] == 'visibility_expression' || params[:button] == 'enablement_expression')
+    = render :partial => 'shared/buttons/ab_form'
+  - else
+    = render :partial => 'shared/buttons/ab_show'

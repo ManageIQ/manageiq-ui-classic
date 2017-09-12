@@ -18,7 +18,7 @@ describe MiqTaskController do
                  :running      => true,
                  :state_choice => "all",
                  :time_period  => 0,
-                 :states       => UiConstants::TASK_STATES}
+                 :states       => MiqTaskController::TASK_STATES}
       end
 
       it "all defaults" do
@@ -225,7 +225,7 @@ describe MiqTaskController do
                  :running      => true,
                  :state_choice => "all",
                  :time_period  => 0,
-                 :states       => UiConstants::TASK_STATES}
+                 :states       => MiqTaskController::TASK_STATES}
       end
 
       it "all defaults" do
@@ -455,7 +455,7 @@ describe MiqTaskController do
                  :zone         => "<all>",
                  :user_choice  => "all",
                  :time_period  => 0,
-                 :states       => UiConstants::TASK_STATES}
+                 :states       => MiqTaskController::TASK_STATES}
       end
 
       it "all defaults" do
@@ -649,7 +649,7 @@ describe MiqTaskController do
                  :state_choice => "all",
                  :user_choice  => "all",
                  :time_period  => 0,
-                 :states       => UiConstants::TASK_STATES}
+                 :states       => MiqTaskController::TASK_STATES}
       end
 
       it "all defaults" do

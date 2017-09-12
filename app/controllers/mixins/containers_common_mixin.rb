@@ -7,6 +7,11 @@ module ContainersCommonMixin
     params[:display] = @display if ["#{params[:controller]}s"].include?(@display)  # displaying container_*
     params[:page] = @current_page if @current_page.nil?   # Save current page for list refresh
 
+    if params[:pressed] == "custom_button"
+      custom_buttons
+      return
+    end
+
     # Handle Toolbar Policy Tag Button
     @refresh_div = "main_div" # Default div for button.rjs to refresh
     model = self.class.model

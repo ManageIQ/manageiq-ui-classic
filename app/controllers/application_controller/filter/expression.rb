@@ -1,4 +1,8 @@
 module ApplicationController::Filter
+  EXP_TODAY = "Today".freeze
+  EXP_FROM = "FROM".freeze
+  EXP_IS = "IS".freeze
+
   Expression = Struct.new(
     :alias,
     :expression,
@@ -564,18 +568,18 @@ module ApplicationController::Filter
     end
 
     def self.through_choices(from_choice) # Return the through_choices pulldown array for FROM datetime/date operators
-      tc = if FROM_HOURS.include?(from_choice)
-             FROM_HOURS
-           elsif FROM_DAYS.include?(from_choice)
-             FROM_DAYS
-           elsif FROM_WEEKS.include?(from_choice)
-             FROM_WEEKS
-           elsif FROM_MONTHS.include?(from_choice)
-             FROM_MONTHS
-           elsif FROM_QUARTERS.include?(from_choice)
-             FROM_QUARTERS
-           elsif FROM_YEARS.include?(from_choice)
-             FROM_YEARS
+      tc = if ViewHelper::FROM_HOURS.include?(from_choice)
+             ViewHelper::FROM_HOURS
+           elsif ViewHelper::FROM_DAYS.include?(from_choice)
+             ViewHelper::FROM_DAYS
+           elsif ViewHelper::FROM_WEEKS.include?(from_choice)
+             ViewHelper::FROM_WEEKS
+           elsif ViewHelper::FROM_MONTHS.include?(from_choice)
+             ViewHelper::FROM_MONTHS
+           elsif ViewHelper::FROM_QUARTERS.include?(from_choice)
+             ViewHelper::FROM_QUARTERS
+           elsif ViewHelper::FROM_YEARS.include?(from_choice)
+             ViewHelper::FROM_YEARS
            end
       # Return the THROUGH choices based on the FROM choice
       tc[0..tc.index(from_choice)]

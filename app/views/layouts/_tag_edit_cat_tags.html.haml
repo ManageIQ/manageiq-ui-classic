@@ -5,6 +5,7 @@
   = select_tag("tag_add",
     options_for_select(options, "select"),
     "data-miq_observe" => {:url => url}.to_json,
+    "data-live-search" => "true",
     "class"            => "selectpicker")
   :javascript
     miqInitSelectPicker();
