@@ -23,6 +23,7 @@
     "@angular/platform-browser": "~4.0.3",
     "@angular/platform-browser-dynamic": "~4.0.3",
     "core-js": "~2.4.1",
+    "ng-redux": "^3.5.2",
     "redux": "^3.7.2",
     "reselect": "^3.0.1",
     "rxjs": "~5.3.0",

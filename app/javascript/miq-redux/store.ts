@@ -11,9 +11,17 @@ export function configureStore(initialState?: AppState): Store<AppState> {
     applyMiddleware(...middlewares),
   );
 
-  return createStore<AppState>(
-    rootReducer,
-    initialState!,
-    enhancer,
-  );
+  let reduxStore;
+  if (ManageIQ.angular.app) {
+    ManageIQ.angular.app.config(['$ngReduxProvider', ($ngReduxProvider) => {
+      $ngReduxProvider.createStoreWith(rootReducer, middlewares, [enhancer], initialState);
+    }])
+    .run(['$ngRedux', ($ngRedux) => {
+      ManageIQ.redux.store = ManageIQ.redux.store || $ngRedux;
+    }]);
+  } else {
+    return reduxStore = createStore<AppState>(rootReducer,
+      initialState!,
+      enhancer);
+  }
 }

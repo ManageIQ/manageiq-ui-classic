@@ -84,3 +84,4 @@
 //= require rx-angular/dist/rx.angular
 //= require patternfly-timeline/dist/timeline
 //= require ui-select/dist/select
+//= require ng-redux/dist/ng-redux
