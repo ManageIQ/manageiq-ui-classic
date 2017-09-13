@@ -9,6 +9,7 @@ import {
   addComponent
 } from '../../extensible-components/lib';
 import { ExtensibleComponent } from '../../extensible-components';
+import * as FormActions from './formActions';
 
 export default class NewProviderForm implements ng.IComponentOptions {
   public templateUrl: string = '/static/middleware/new-provider.html.haml';
@@ -42,18 +43,20 @@ class NewProviderController extends DefaultFormController implements IFormContro
 
   public static $inject = ['$element', '$scope', '$timeout'];
 
-  constructor(private $element: Element, private $scope: ng.IScope, private $timeout: ng.ITimeoutService) {
-    super(reducers);
+  constructor(private $element: Element,
+              private $scope: ng.IScope,
+              private $timeout: ng.ITimeoutService) {
+    super(reducers, FormActions);
     this.extensibleComponent = addComponent('new-provider-hawkular', this.apiCallbacks(), this.renderCallbacks());
   }
 
-  public updateFormObject() {
-    const currState: any = this.reduxStore.getState();
-    this.formObject = { ...currState.providers.middleware.hawkular.newProvider };
-    this.refreshItems();
+  public mapStateToThis(state) {
+    return {
+      formObject: state.providers.middleware.hawkular.newProvider
+    }
   }
 
-  public refreshItems() {
+  public refreshForm() {
     this.$timeout(() => {
       this.$scope.$apply();
       (<any>angular.element(this.selects)).selectpicker('refresh');
@@ -61,8 +64,8 @@ class NewProviderController extends DefaultFormController implements IFormContro
   }
 
   public $onInit() {
-    super.$onInit();
     this.selects = this.$element.querySelectorAll('select');
+    this.refreshForm();
   }
 
   public $onDestroy() {

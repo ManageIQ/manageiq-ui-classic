@@ -7,33 +7,42 @@ export interface IUnbindReduxReducers {
 }
 
 export interface IFormController {
-  updateFormObject: () => void;
+  mapStateToThis: (state: AppState) => any;
 }
 
 export abstract class DefaultFormController {
   protected unbind: IUnbindReduxReducers = {};
-  protected reduxStore: MiqStore;
+  protected reduxStore: any;
   public formObject: any;
 
   /**
    * Constructor which will get reduxStore and subscribes to it.
    * @param reducersHash optional, hash of reducers which will be added to rootReducer.
    */
-  constructor(reducersHash?: IMiqReducerHash) {
+  constructor(reducersHash?: IMiqReducerHash, protected Actions?) {
     if (reducersHash) {
       this.unbind.reducer = addReducer(
         (state: AppState, action: Action) => applyReducerHash(reducersHash, state, action)
       );
     }
     this.reduxStore = getStore();
-    this.unbind.redux = this.reduxStore.subscribe(() => this.updateFormObject());
+    this.initForm();
+    this.unbind.redux = this.reduxStore.connect(this.mapStateToThis, Actions)(this);
+    this.reduxStore.subscribe(() => this.refreshForm());
   }
 
-  /**
-   * Method for updating form object with current store.
-   */
-  protected updateFormObject(): void {
-    throw new Error('Controller should implement updateStore method');
+  protected refreshForm() {}
+
+  protected mapStateToThis(state: AppState): any {
+    throw new Error('Controller should implement mapStateToThis method');
+  }
+
+  public updateForm(payload) {
+    throw new Error('Controller should implement updateForm method, did you forget to import it?');
+  }
+
+  public initForm() {
+    this.reduxStore.dispatch({type: INIT_FORM});
   }
 
   /**
@@ -53,13 +62,6 @@ export abstract class DefaultFormController {
    * It will pass formObject as payload to it.
    */
   public onChangeForm(): void {
-    this.reduxStore.dispatch({ type: UPDATE_FORM, payload: this.formObject });
-  }
-  
-  /**
-   * Method which is fired on form init, it will fire action `INIT_FORM` for defining default values in form.
-   */
-  protected $onInit(): void {
-    this.reduxStore.dispatch({ type: INIT_FORM });
+    this.updateForm(this.formObject);
   }
 }
