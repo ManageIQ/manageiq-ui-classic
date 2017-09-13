@@ -562,7 +562,7 @@ module QuadiconHelper
                    when EmsCloud         then item.total_vms
                    when ::ManageIQ::Providers::ContainerManager then item.container_nodes.size
                    else
-                     item.hosts.size
+                     item.hosts ? item.hosts.size : 0
                    end
       # reduce font-size of the item_count so it will fit in its quadrant
       output << flobj_p_simple("a72", item_count, item_count.to_s.size > 2 ? "font-size: 12px;" : "")
