@@ -203,14 +203,6 @@ module ContainerServiceMixin
     end
   end
 
-  def realtime_metrics
-    current_user = @controller.current_user
-    tp = TimeProfile.profile_for_user_tz(current_user.id, current_user.get_timezone) || TimeProfile.default_time_profile
-    Metric::Helper.find_for_interval_name('realtime', tp)
-                  .where(:resource => @resource)
-                  .where('timestamp > ?', REALTIME_TIME_RANGE.minutes.ago.utc).order('timestamp')
-  end
-
   def hourly_metrics
     MetricRollup.with_interval_and_time_range("hourly", (1.day.ago.beginning_of_hour.utc)..(Time.now.utc))
                 .where(:resource => @resource)

@@ -243,4 +243,13 @@ class ContainerDashboardService
   def image_metrics
     daily_image_metrics || hourly_image_metrics
   end
+
+  # ems has no realtime metrics but its nodes do.
+  def realtime_metrics
+    current_user = @controller.current_user
+    tp = TimeProfile.profile_for_user_tz(current_user.id, current_user.get_timezone) || TimeProfile.default_time_profile
+    Metric::Helper.find_for_interval_name('realtime', tp)
+                  .where(:resource => @ems.try(:all_container_nodes) || ContainerNode.all)
+                  .where('timestamp > ?', REALTIME_TIME_RANGE.minutes.ago.utc).order('timestamp')
+  end
 end
