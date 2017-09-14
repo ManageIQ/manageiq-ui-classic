@@ -101,7 +101,7 @@ class ContainerDashboardService
   def alerts
     provider_ids = ManageIQ::Providers::ContainerManager.all.pluck(:id)
     relation = @ems ? @ems.miq_alert_statuses : MiqAlertStatus.where(:ems_id => provider_ids)
-    alerts_status = relation.present? ? relation.group(:severity).count.values_at('error', 'warning') : [nil, nil]
+    alerts_status = relation.present? ? relation.where(:resolved => [false, nil]).group(:severity).count.values_at('error', 'warning') : [nil, nil]
 
     errors = alerts_status[0] || 0
     warnings = alerts_status[1] || 0
