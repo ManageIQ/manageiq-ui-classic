@@ -42,7 +42,8 @@
                         - date_val = field.value ? field.value.split(" ") : ["#{t.month}/#{t.day}/#{t.year}"]
                         = datepicker_input_tag("miq_date_1", h(date_val[0]),
                           :class    => "css1",
-                          :readonly => "true")
+                          :readonly => "true",
+                          :data_date_start => field.show_past_dates ? "" : Time.zone.now.strftime("%Y, %m, %d"))
                         - if field.type == "DialogFieldDateTimeControl"
                           &nbsp;
                           = _('at')

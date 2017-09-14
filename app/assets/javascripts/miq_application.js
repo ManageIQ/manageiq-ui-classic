@@ -832,7 +832,10 @@ function miqBuildCalendar() {
       element.datepicker();
     }
 
-    if (ManageIQ.calendar.calDateFrom) {
+    var startDate = element.attr('data_date_start');
+    if (startDate) {
+      element.datepicker('setStartDate', new Date(startDate));
+    } else if (ManageIQ.calendar.calDateFrom) {
       element.datepicker('setStartDate', ManageIQ.calendar.calDateFrom);
     }
 
