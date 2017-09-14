@@ -10,13 +10,16 @@
                             "name"        => "{{vm.keyType}}{{$index}}",
                             "ng-required" => "vm.valueOptions && vm.values[$index] || {{vm.requiredRule}}",
                             "ng-model"    => "vm.keys[$index]",
-                            "ng-change"   => "vm.tableCellValueChanged()",
+                            "ng-change"   => "vm.tableCellValueChanged(vm.angularForm[vm.keyType+$index])",
                             "ng-pattern"  => "/^[a-z][a-zA-Z_0-9]*[!?]?$/",
                             "title"       => "{{vm.angularForm[vm.keyType+$index].$error.pattern ? vm.invalidKeyName : ''}}",
                             "maxlength"   => "#{ViewHelper::MAX_NAME_LEN}",}
           %span.help-block{"ng-if" => "vm.angularForm[vm.keyType+$index].$error.pattern"}
             %i.fa.fa-exclamation-circle{:style => "color:#cc0000"}
               {{vm.invalidKeyName}}
+          %span.help-block{"ng-if" => "vm.angularForm[vm.keyType+$index].$error.duplicateProperty"}
+            %i.fa.fa-exclamation-circle{:style => "color:#cc0000"}
+              {{vm.dupicatePropertyError[vm.keyType+$index]}}
       %td.form-group{"ng-if" => "vm.valueOptions", :style => "width: 50px", "ng-class" => "{'has-error': vm.angularForm['Value_{{vm.keyType}}{{$index}}'].$invalid}"}
         %select{"name"                        => "Value_{{vm.keyType}}{{$index}}",
                 "ng-required"                 => "vm.keys[$index] !== '' || {{vm.requiredRule}}",

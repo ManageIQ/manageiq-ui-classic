@@ -133,6 +133,27 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
     return bArrayEmpty;
   };
 
+  vm.uniqueProperty = function(keyType) {
+    var primaryArray;
+    var secondaryArrays = [];
+    if (keyType === "Attributes") {
+      primaryArray = vm.genericObjectDefinitionModel.attribute_names;
+      secondaryArrays.push(vm.genericObjectDefinitionModel.association_names);
+      secondaryArrays.push(vm.genericObjectDefinitionModel.method_names);
+    }
+    if (keyType === "Associations") {
+      primaryArray = vm.genericObjectDefinitionModel.association_names;
+      secondaryArrays.push(vm.genericObjectDefinitionModel.attribute_names);
+      secondaryArrays.push(vm.genericObjectDefinitionModel.method_names);
+    }
+    if (keyType === "Methods") {
+      primaryArray = vm.genericObjectDefinitionModel.method_names;
+      secondaryArrays.push(vm.genericObjectDefinitionModel.attribute_names);
+      secondaryArrays.push(vm.genericObjectDefinitionModel.association_names);
+    }
+    return getCurrentUniqueOrCommonProperties(primaryArray, secondaryArrays);
+  };
+
   // private functions
   function getGenericObjectDefinitionFormData(response) {
     Object.assign(vm.genericObjectDefinitionModel, response);
@@ -181,6 +202,12 @@ function genericObjectDefinitionFormController(API, miqService, $q) {
       });
     }
     return _.size(keyArray);
+  }
+
+  function getCurrentUniqueOrCommonProperties(primaryArray, secondaryArrays) {
+    return _.union(
+      _.intersection(primaryArray, secondaryArrays[0]),
+      _.intersection(primaryArray, secondaryArrays[1]));
   }
 
   function getGenericObjectDefinitionOptions(response) {

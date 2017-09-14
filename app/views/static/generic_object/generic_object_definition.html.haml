@@ -44,6 +44,7 @@
                                       "new-record"       => "vm.newRecord",
                                       "no-of-rows"       => "vm.genericObjectDefinitionModel.noOfAttributeRows",
                                       "table-rendered"   => "vm.tableRendered",
+                                      "unique-property"  => "vm.uniqueProperty('Attributes')",
                                       "angular-form"     => "angularForm",
                                       "value-options"    => "vm.types"}
   .form-group
@@ -60,6 +61,7 @@
                                       "new-record"       => "vm.newRecord",
                                       "no-of-rows"       => "vm.genericObjectDefinitionModel.noOfAssociationRows",
                                       "table-rendered"   => "vm.tableRendered",
+                                      "unique-property"  => "vm.uniqueProperty('Associations')",
                                       "angular-form"     => "angularForm",
                                       "value-options"    => "vm.classes"}
   .form-group{"ng-class" => "{'has-error': vm.methodsArrayEmpty()}"}
@@ -75,6 +77,7 @@
                                       "new-record"       => "vm.newRecord",
                                       "no-of-rows"       => "vm.genericObjectDefinitionModel.noOfMethodRows",
                                       "table-rendered"   => "vm.tableRendered",
+                                      "unique-property"  => "vm.uniqueProperty('Methods')",
                                       "angular-form"     => "angularForm"}
       %span.help-block{"ng-show" => "vm.methodsArrayEmpty()"}
         = _("At least one Method name is required")

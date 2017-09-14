@@ -11,6 +11,7 @@ ManageIQ.angular.app.component('genericObjectTableComponent', {
     tableChanged: '=',
     requiredRule: '@?',
     tableRendered: '=',
+    uniqueProperty: '&',
     angularForm: '=',
   },
   controllerAs: 'vm',
@@ -26,6 +27,7 @@ function genericObjectTableController($timeout) {
   vm.$onInit = function() {
     vm.tableHeaders.push('', '');
 
+    vm.dupicatePropertyError = [];
     vm.invalidKeyName = __("Invalid name");
     vm.tableRendered = true;
 
@@ -52,20 +54,75 @@ function genericObjectTableController($timeout) {
       _.pullAt(vm.values, [currentRow]);
     }
     vm.noOfRows = _.size(vm.keys);
+    recalibrateDupes();
 
     if (vm.noOfRows === 0) {
       vm.addRow(0, vm.keyType + '0', true);
     }
-    vm.tableCellValueChanged();
+    checkIfTableChanged();
   };
 
-  vm.tableCellValueChanged = function() {
-    if (vm.values && ! angular.equals(_.zipObject(vm.keys, vm.values), vm.origKeysValues)) {
-      vm.tableChanged = true;
-    } else if (! vm.values && _.difference(vm.keys, vm.origKeysValues, _.isEqual).length > 0) {
+  vm.tableCellValueChanged = function(element) {
+    checkIfTableChanged();
+
+    if (element) {
+      setDuplicateKeyError(element);
+    }
+  };
+
+  // private functions
+
+  function recalibrateDupes() {
+    if (vm.noOfRows === 0) {
+      vm.angularForm[vm.keyType + '0'].$setValidity("duplicateProperty", true);
+    } else {
+      _.times(vm.noOfRows, function(index) {
+        setDuplicateKeyError(undefined, index);
+      });
+    }
+  }
+
+  function setDuplicateKeyError(element, index) {
+    var possibleDupeKey;
+    var dupeErrorIndex;
+    var cellElement;
+    if (angular.isDefined(index)) {
+      possibleDupeKey = vm.keys[index];
+      dupeErrorIndex = vm.keyType + index;
+      cellElement = vm.angularForm[vm.keyType + index];
+    } else {
+      possibleDupeKey = element.$viewValue;
+      dupeErrorIndex = element.$name;
+      cellElement = element;
+    }
+
+    if (_.includes(vm.uniqueProperty(), possibleDupeKey)
+      || _.includes(getCurrentUniqueArrayValues(possibleDupeKey), possibleDupeKey)) {
+      vm.dupicatePropertyError[dupeErrorIndex] = __(sprintf('Property Name "%s" is not unique', possibleDupeKey));
+      cellElement.$setValidity("duplicateProperty", false);
+    } else {
+      cellElement.$setValidity("duplicateProperty", true);
+    }
+  }
+
+  function getCurrentUniqueArrayValues(currentKey) {
+    var uniqueArr = Object.assign([], vm.keys);
+    _.forEach(uniqueArr, function(key, index) {
+      if (key === currentKey) {
+        _.pullAt(uniqueArr, [index]);
+        return false;
+      }
+      return true;
+    });
+    return uniqueArr;
+  }
+
+  function checkIfTableChanged() {
+    if (vm.values && ! angular.equals(_.zipObject(vm.keys, vm.values), vm.origKeysValues)
+      || ! vm.values && _.difference(vm.keys, vm.origKeysValues, _.isEqual).length > 0) {
       vm.tableChanged = true;
     } else {
       vm.tableChanged = false;
     }
-  };
+  }
 }
