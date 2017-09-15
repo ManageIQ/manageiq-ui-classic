@@ -19,6 +19,7 @@
         = format_form_group(_('Display Name'), @ae_method.display_name)
       .form-group
         = format_form_group(_('Created On'), format_timezone(@ae_method.created_on, Time.zone, "gtl"))
+    = render :partial => "embedded_methods"
     = render :partial => "domain_overrides", :locals => {:node_prefix => "aem", :model => "Method"}
     %h3= (@ae_method.location == 'builtin') ? _('Builtin name') : _('Data')
     - if @ae_method.location == "inline"

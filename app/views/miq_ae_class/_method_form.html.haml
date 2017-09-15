@@ -55,6 +55,7 @@
             = _("Created On")
           .col-md-8
             = h(format_timezone(@ae_method.created_on, Time.zone, "gtl"))
+      = render :partial => "embedded_methods"
       - if @edit[:new][:location]
         - if @edit[:new][:location] == 'expression'
           .form-group
