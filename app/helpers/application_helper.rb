@@ -220,6 +220,7 @@ module ApplicationHelper
   MODEL_STRING = {
     "all_vms"                                => VmOrTemplate,
     "all_miq_templates"                      => MiqTemplate,
+    "based_volumes"                          => CloudVolume,
     "instances"                              => Vm,
     "images"                                 => MiqTemplate,
     "groups"                                 => Account,
@@ -236,7 +237,8 @@ module ApplicationHelper
     "users"          => "users",
     "event_logs"     => "event_logs",
     "OsProcess"      => "processes",
-    "scan_histories" => "scan_histories"
+    "scan_histories" => "scan_histories",
+    "based_volumes"  => "based_volumes"
   }.freeze
 
   def model_to_report_data
