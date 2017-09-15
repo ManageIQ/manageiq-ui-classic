@@ -192,6 +192,17 @@ class ProviderForemanController < ApplicationController
     true
   end
 
+  def download_summary_pdf
+    nodetype, id = parse_nodetype_and_id(valid_active_node(x_node))
+    klass = TreeBuilder.get_model_for_prefix(nodetype)
+    klass = TreeBuilder.get_model_for_prefix(id) if klass == "Hash"
+
+    super do
+      @flash_array = []
+      @record = identify_record(params[:id], klass.constantize)
+    end
+  end
+
   private
 
   def textual_group_list
