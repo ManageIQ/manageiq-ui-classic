@@ -123,7 +123,7 @@
               %th= _('Rate')
           %tbody
             - @edit[:cb_assign][:cis].invert.sort_by { |a| a.first.downcase }.each do |ci, id|
-              %tr#new_tr
+              %tr
                 %td
                   = h(ci)
                 %td

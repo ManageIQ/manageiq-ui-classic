@@ -11,7 +11,7 @@
       %th.action-cell= _("Actions")
   %tbody
     - if (!params[:add] && session[:reg_data].empty?) || params[:edit_entry]
-      %tr#new_tr{:title => _("Click to add a new entry"),
+      %tr{:title => _("Click to add a new entry"),
         :onclick => remote_function(:url => {:action => 'ap_ce_select', :add => 'new', :item1 => "registry", :id => "#{@scan.id || "new"}"})}
         %td= _("<New Entry>")
         %td= _("<New Entry>")
@@ -20,7 +20,7 @@
           %button.btn.btn-default.btn-block.btn-sm
             = _("Add")
     - else
-      %tr#new_tr
+      %tr
         %td
           = _("HKLM")
         %td

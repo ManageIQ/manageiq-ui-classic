@@ -1,7 +1,7 @@
 - if edit
   - url = url_for_only_path(:action => "ce_accept", :id => "accept")
   - if entry == "new"
-    %tr#new_tr{:class => cycle('row0', 'row1')}
+    %tr{:class => cycle('row0', 'row1')}
       %td
         = text_field("entry", "name", :maxlength => ViewHelper::MAX_NAME_LEN, :style => "width: 100%;")
       %td
@@ -36,7 +36,7 @@
           = _("Save")
 - else
   - if entry == "new"
-    %tr#new_tr{:class => cycle('row0', 'row1'), :onclick => remote_function(:url => {:action => 'ce_select', :id => 'new'}), :title => _("Click to add a new entry")}
+    %tr{:class => cycle('row0', 'row1'), :onclick => remote_function(:url => {:action => 'ce_select', :id => 'new'}), :title => _("Click to add a new entry")}
       %td
         = _("<New Entry>")
       %td= _("<Click on this row to create a new entry>")
