@@ -98,6 +98,7 @@
     .form-group{"ng-class" => "{'has-error': angularForm.#{prefix}_inventory.$invalid}"}
       %label.col-md-3.control-label
         = _("Hosts")
+        {{vm.aeMethodModel.provisioning_become_enabled}}
       .col-md-9
         %input.form-control{:type         => "text",
                             'ng-model'    => "#{ng_model}.#{prefix}_inventory",
@@ -119,8 +120,7 @@
                             "checkchange" => true}
         %span{"style"=>"color:red", "ng-show" => "angularForm.#{prefix}_execution_ttl.$invalid"}
           = _("Max TTL value must be numeric")
-
-    #escalate_privilege{"ng-if" => "vm.retirement_playbook_selected('#{prefix}')"}
+    #escalate_privilege{"ng-if" => "(#{ng_model}.#{prefix}_become_enabled!=='undefined' || vm.retirement_playbook_selected('#{prefix}'))"}
       .form-group
         %label.col-md-3.control-label
           = _("Escalate Privilege")

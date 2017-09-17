@@ -25,6 +25,7 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
       provisioning_inputs: [],
       provisioning_verbosity: '0',
       provisioning_editMode: false,
+      provisioning_become_enabled: false,
     };
     vm.verbosity_types = playbookReusableCodeMixin.getVerbosityTypes();
     vm.provisioning_cloud_type = '';
@@ -69,6 +70,7 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
     vm.aeMethodModel.provisioning_network_credential_id = configData.network_credential_id;
     vm.aeMethodModel.provisioning_cloud_credential_id = playbookReusableCodeMixin.setIfDefined(configData.cloud_credential_id);
     vm.aeMethodModel.provisioning_inventory = configData.hosts ? configData.hosts : 'localhost';
+    vm.aeMethodModel.provisioning_become_enabled = configData.become_enabled === 'true' ? true : false;
     vm.aeMethodModel.provisioning_key = '';
     vm.aeMethodModel.provisioning_value = '';
 
@@ -134,6 +136,7 @@ ManageIQ.angular.app.controller('aeMethodFormController', ['$http', '$scope', 'a
       credential_id: configData.provisioning_machine_credential_id,
       hosts: configData.provisioning_inventory,
       verbosity: configData.provisioning_verbosity,
+      become_enabled: configData.provisioning_become_enabled,
       extra_vars: configData.provisioning_inputs,
     };
     if (configData.provisioning_network_credential_id !== '') {

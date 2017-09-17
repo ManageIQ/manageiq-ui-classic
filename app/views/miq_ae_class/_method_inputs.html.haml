@@ -79,6 +79,11 @@
             = h(@playbook_details[:hosts])
         .form-group
           %label.col-md-2.control-label
+            = _('Escalate Privilege')
+          .col-md-8
+            = h(@playbook_details[:become_enabled])
+        .form-group
+          %label.col-md-2.control-label
             = _('Verbosity')
           .col-md-8
             = h(verbosity_display(@playbook_details[:verbosity]))

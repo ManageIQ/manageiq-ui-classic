@@ -976,7 +976,6 @@ class MiqAeClassController < ApplicationController
   def method_form_fields
     method = params[:id] == "new" ? MiqAeMethod.new : MiqAeMethod.find_by(:id => params[:id])
     data = method.data ? JSON.parse(method.data) : {}
-    p "XXXXX #{data['cloud_credential_id']}"
     method_hash = {
       :name                => method.name,
       :display_name        => method.display_name,
@@ -994,6 +993,7 @@ class MiqAeClassController < ApplicationController
         :cloud_credential_id   => data['cloud_credential_id'] || '',
         :hosts                 => data['hosts'],
         :verbosity             => data['verbosity'],
+        :become_enabled        => data['become_enabled'] || false,
         :extra_vars            => method.inputs
       }
     }
@@ -1199,11 +1199,12 @@ class MiqAeClassController < ApplicationController
 
   def set_playbook_data
     data = {
-      :repository_id => params['repository_id'],
-      :playbook_id   => params['playbook_id'],
-      :credential_id => params['credential_id'],
-      :hosts         => params['hosts'],
-      :verbosity     => params['verbosity'],
+      :repository_id  => params['repository_id'],
+      :playbook_id    => params['playbook_id'],
+      :credential_id  => params['credential_id'],
+      :hosts          => params['hosts'],
+      :become_enabled => params['become_enabled'],
+      :verbosity      => params['verbosity'],
     }
     data[:network_credential_id] = params['network_credential_id'] if params['network_credential_id']
     data[:cloud_credential_id] = params['cloud_credential_id'] if params['cloud_credential_id']
@@ -2679,6 +2680,7 @@ class MiqAeClassController < ApplicationController
     @playbook_details[:network_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential, data['network_credential_id']) if data['network_credential_id']
     @playbook_details[:cloud_credential] = fetch_name_from_object(ManageIQ::Providers::EmbeddedAnsible::AutomationManager::CloudCredential, data['cloud_credential_id']) if data['cloud_credential_id']
     @playbook_details[:verbosity] = data['verbosity']
+    @playbook_details[:become_enabled] = data['become_enabled'] == 'true' ? _("Yes") : _("No")
     @playbook_details[:hosts] = data['hosts']
     @playbook_details
   end
