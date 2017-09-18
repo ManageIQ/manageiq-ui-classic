@@ -1,19 +1,22 @@
 - if @accords
-  #accordion.panel-group{'ng-controller' => 'treeViewController as vm'}
-    -# Set the first accordion as selected if there is no active_accord in the sandbox
-    - selected = @accords.find(-> { @accords.first }) { |accord| accord[:name].to_sym == @sb[:active_accord] }
-    - @accords.each do |accord|
-      = miq_accordion_panel(accord[:title], selected == accord, accord[:container]) do
-        -# Set the first tree to be rendered if there is a mismatch with the name/type
-        - tree = @trees.find(-> { @trees.first }) { |t| t.type == accord[:name].to_sym  }
-        %miq-tree-view{:name       => tree.name,
-                       :data       => "vm.data['#{tree.name}']",
-                       :reselect   => tree.locals_for_render[:allow_reselect],
-                       "ng-init"   => "vm.initData('#{tree.name}', '#{tree.locals_for_render[:bs_tree]}', '#{tree.locals_for_render[:select_node]}')",
-                       'on-select' => "vm.nodeSelect(node, '/#{request.parameters[:controller]}/tree_select')",
-                       'selected'  => "vm.selectedNodes['#{tree.name}']",
-                       'persist'   => 'key',
-                       'lazy-load' => "(vm.lazyLoad(node, '#{tree.name}', '/#{request.parameters[:controller]}/tree_autoload'))"}
+  #accordion{'ng-controller' => 'explorerListnavController as vm'}
+    %uib-accordion{'pf-fixed-accordion' => '', 'ng-init' => "vm.setUrlPrefix('/#{controller_name}/accordion_select');"}
+      -# Set the first accordion as selected if there is no active_accord in the sandbox
+      - selected = @accords.find(-> { @accords.first }) { |accord| accord[:name].to_sym == @sb[:active_accord] }
+      - @accords.each do |accord|
+        %div{:heading              => accord[:title],
+             :id                   => accord[:container],
+             'is-open'             => "vm.isOpen.#{accord[:container]}",
+             'ng-init'             => "vm.initAccord('#{accord[:container]}', #{selected == accord})",
+             'uib-accordion-group' => ''}
+          - tree = @trees.find(-> { @trees.first }) { |t| t.type == accord[:name].to_sym  }
+          %miq-tree-view{:name       => tree.name,
+                         :data       => "vm.data['#{tree.name}']",
+                         :reselect   => tree.locals_for_render[:allow_reselect],
+                         "ng-init"   => "vm.initTree('#{tree.name}', '#{tree.locals_for_render[:bs_tree]}', '#{tree.locals_for_render[:select_node]}')",
+                         'on-select' => "vm.nodeSelect(node, '/#{request.parameters[:controller]}/tree_select')",
+                         'selected'  => "vm.selectedNodes['#{tree.name}']",
+                         'persist'   => 'key',
+                         'lazy-load' => "(vm.lazyLoad(node, '#{tree.name}', '/#{request.parameters[:controller]}/tree_autoload'))"}
   :javascript
-    miq_bootstrap('#accordion', 'ManageIQ.treeView');
-    $('#accordion').on('show.bs.collapse', miqAccordSelect);
+    miq_bootstrap('#accordion', 'ManageIQ.explorerListnav');

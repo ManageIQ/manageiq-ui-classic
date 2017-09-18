@@ -1,4 +1,4 @@
 /* global miqHttpInject */
 miqHttpInject(
-  angular.module('ManageIQ.treeView', ['miqStaticAssets.treeView'])
+  angular.module('ManageIQ.explorerListnav', ['miqStaticAssets.treeView', 'ui.bootstrap', 'patternfly.utils'])
 );

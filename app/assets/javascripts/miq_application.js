@@ -1254,22 +1254,6 @@ function miqSelectPickerEvent(element, url, options) {
   }, 700, {leading: true, trailing: true}));
 }
 
-function miqAccordSelect(e) {
-  if (ManageIQ.noCollapseEvent) { // implicitly return true when the noCollapseEvent is set
-    return true;
-  }
-  if (! miqCheckForChanges()) {
-    return false;
-  }
-
-  // No need to load anything if only a single accordion is present
-  if ($('#accordion > .panel').length > 1) {
-    var url = '/' + $('body').data('controller') + '/accordion_select?id=' + $(e.target).attr('id');
-    miqJqueryRequest(url, {beforeSend: true, complete: true});
-  }
-  return true;
-}
-
 function miqInitBootstrapSwitch(element, url, options) {
   $('[name=' + element + ']').bootstrapSwitch();
 
