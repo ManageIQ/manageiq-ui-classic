@@ -10,9 +10,9 @@ class EmsInfraDashboardService
 
   def all_data
     {
-      :providers_link  => get_url_to_entity(:ems_infra),
-      :status          => status,
-      :providers       => providers
+      :providers_link => get_url_to_entity(:ems_infra),
+      :status         => status,
+      :providers      => providers
     }.compact
   end
 
@@ -117,7 +117,7 @@ class EmsInfraDashboardService
     # Get latest hourly rollup for each node.
     cluster_ids = @ems.ems_clusters if @ems.present?
     metrics = MetricRollup.latest_rollups(EmsCluster.name, cluster_ids)
-    metrics = metrics.where('timestamp > ?', 3000.day.ago.utc).includes(:resource)
+    metrics = metrics.where('timestamp > ?', 30.days.ago.utc).includes(:resource)
     metrics = metrics.includes(:resource => [:ext_management_system]) unless @ems.present?
 
     cluster_cpu_usage = []
@@ -163,9 +163,9 @@ class EmsInfraDashboardService
       :dataAvailable => true,
       :xData         => all_hosts.keys,
       :yData         => all_hosts.values.map,
-      :config => {
-        :title         => openstack? ? _('Recent Nodes') : _('Recent Hosts'),
-        :label         => openstack? ? _('Nodes') : _('Hosts'),
+      :config        => {
+        :title => openstack? ? _('Recent Nodes') : _('Recent Hosts'),
+        :label => openstack? ? _('Nodes') : _('Hosts'),
       }
     }
   end
@@ -178,9 +178,9 @@ class EmsInfraDashboardService
       :dataAvailable => true,
       :xData         => all_vms.keys,
       :yData         => all_vms.values.map,
-      :config => {
-        :title         => _('Recent VMs'),
-        :label         => _('VMs'),
+      :config        => {
+        :title => _('Recent VMs'),
+        :label => _('VMs'),
       }
     }
   end
@@ -223,7 +223,7 @@ class EmsInfraDashboardService
           :total => (total_mem.values.last / 1024.0).round,
           :xData => used_mem.keys,
           :yData => used_mem.values.map { |m| (m / 1024.0).round }
-      }
+        }
       }
     else
       {
