@@ -27,13 +27,10 @@
     }
   }
   .list-view-pf-view {
-    margin-top: -1px;
+    margin-top: 0;
   }
   .list-view-container, .row-tile-pf {
-    height: calc(100vh - 196px);
-    overflow-y: auto;
-    position: static;
-    top: 98px;
+    padding: 0;
   }
   .list-view-pf {
     .list-view-pf-body > .row {
@@ -52,10 +49,8 @@
     }
   }
   .list-group-item.list-view-pf-expand-active {
+    margin-top: -1px;
     padding-bottom: 0;
-    .list-group-item-header {
-      padding-bottom: 7px;
-    }
     .list-group-item-container {
       margin-right: -14px;
       margin-top: 5px;
@@ -108,7 +103,6 @@
   .list-group-item {
     &.alert {
       padding-left: 15px;
-      margin-bottom: -1px;
       &.alert-danger {
         background-color: $alert-danger-bg;
       }

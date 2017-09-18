@@ -11,7 +11,7 @@
             = _("All Alerts")
     .row.init-hidden{"ng-class" => "{'initialized': vm.loadingDone}"}
       %div{"pf-toolbar" => "", "config" => "vm.toolbarConfig"}
-      = render :partial => "shared/views/alerts_list"
+    = render :partial => "shared/views/alerts_list"
 
 :javascript
   miq_bootstrap('.miq-alerts-center', 'alertsCenter');
