@@ -29,7 +29,7 @@ describe('configurationManagerController', function() {
       $scope: $scope,
       configurationManagerFormId: 'new',
       miqService: miqService,
-      modelName: 'automationManagerModel',
+      modelName: 'configurationManagerModel',
       url: '/automation_manager',
     });
 
@@ -44,7 +44,6 @@ describe('configurationManagerController', function() {
   describe('initialization', function() {
     describe('when the configurationManagerFormId is new', function() {
       it('sets the name to blank', function() {
-        console.log('vm: ', vm, 'sakdsakdsak');
         expect(vm.configurationManagerModel.name).toEqual('');
       });
 
@@ -85,7 +84,7 @@ describe('configurationManagerController', function() {
           $scope: $scope,
           configurationManagerFormId: '12345',
           miqService: miqService,
-          modelName: 'automationManagerModel',
+          modelName: 'configurationManagerModel',
           url: '/automation_manager',
         });
 

@@ -1,7 +1,7 @@
 ManageIQ.angular.app.component('authCredentials', {
   bindings: {
     modelCopy: '<',
-    model: '<',
+    formModel: '<',
     enableValidButton: '<',
     validate: '<',
     prefix: '@',
@@ -11,14 +11,17 @@ ManageIQ.angular.app.component('authCredentials', {
     hideUser: '<?',
     hidePassword: '<?',
     newRecord: '<?',
-    authenticationRequired: '<?',
     postValidationModelRegistry: '<?',
+    postValidationModel: '<?',
+    checkAuthentication: '<?',
   },
   controllerAs: 'vm',
   controller: ['$scope', function($scope) {
     $scope.__ = __;
+    $scope.controllerName = 'vm';
 
     var vm = this;
+    vm.model = 'formModel';
 
     this.$onInit = function() {
       this.bChangeStoredPassword = this.newRecord;
@@ -43,7 +46,7 @@ ManageIQ.angular.app.component('authCredentials', {
 
     this.changeStoredPassword = function() {
       vm.bChangeStoredPassword = true;
-      vm.model[vm.prefix + '_password'] = '';
+      vm.formModel[vm.prefix + '_password'] = '';
       vm.bCancelPasswordChange = false;
     };
     this.cancelPasswordChange = function() {
@@ -51,7 +54,7 @@ ManageIQ.angular.app.component('authCredentials', {
         vm.bCancelPasswordChange = true;
         var tmp = {};
         tmp[vm.prefix  + '_password'] = vm.modelCopy[vm.prefix + '_password'];
-        Object.assign(vm.model, tmp);
+        Object.assign(vm.formModel, tmp);
         vm.bChangeStoredPassword = false;
       }
     };

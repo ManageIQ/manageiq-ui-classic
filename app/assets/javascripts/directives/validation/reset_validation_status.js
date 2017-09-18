@@ -3,16 +3,20 @@ ManageIQ.angular.app.directive('resetValidationStatus', ['$rootScope', function(
     require: 'ngModel',
     link: function(scope, elem, attrs, ctrl) {
       scope.$watch(attrs.ngModel, function() {
-        adjustValidationStatus(ctrl.$modelValue, _.get(scope, attrs.mainScope) || scope, ctrl, attrs, $rootScope);
+        adjustValidationStatus(ctrl.$modelValue, _.get(getScopeOrController(scope), attrs.mainScope) || getScopeOrController(scope), ctrl, attrs, $rootScope);
       });
 
       ctrl.$parsers.push(function(value) {
-        adjustValidationStatus(value, _.get(scope, attrs.mainScope) || scope, ctrl, attrs, $rootScope);
+        adjustValidationStatus(value, _.get(getScopeOrController(scope), attrs.mainScope) || getScopeOrController(scope), ctrl, attrs, $rootScope);
         return value;
       });
     }
   }
 }]);
+
+function getScopeOrController(scope) {
+  return scope.controllerName ? scope[scope.controllerName] : scope;
+}
 
 var adjustValidationStatus = function(value, scope, ctrl, attrs, rootScope) {
   if (scope.checkAuthentication === true &&
