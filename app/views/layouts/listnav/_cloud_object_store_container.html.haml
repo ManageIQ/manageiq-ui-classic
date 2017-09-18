@@ -15,17 +15,15 @@
             = single_relationship_link(@record, :ems_storage, "ext_management_system")
         - if role_allows?(:feature => "cloud_tenant_show") && @record.cloud_tenant
           %li
-            = link_to(_("%{table}: %{name}") % {:table => ui_lookup(:table => "cloud_tenant"), :name => @record.cloud_tenant.name},
+            = link_to(_("Cloud Tenant: %{name}") % {:name => @record.cloud_tenant.name},
               {:action => 'show', :id => @record.cloud_tenant.id, :controller => 'cloud_tenant'},
-              :title => _("Show this Cloud Object Store's parent %{parent}") % {:parent => ui_lookup(:table => "cloud_tenant")})
+              :title => _("Show this Cloud Object Store's parent Cloud Tenant"))
         - if role_allows?(:feature => "cloud_object_store_object_show_list")
           - if @record.number_of(:cloud_object_store_objects) == 0
             %li.disabled
-              = link_to(_("%{table} (%{count})") % {:table => ui_lookup(:tables => 'cloud_objects'),
-                  :count => @record.number_of(:cloud_object_store_objects)}, "#")
+              = link_to(_("Cloud Objects (%{count})") % {:count => @record.number_of(:cloud_object_store_objects)}, "#")
           - else
             %li
-              = link_to(_("%{table} (%{count})") % {:table => ui_lookup(:tables => 'cloud_objects'),
-                  :count => @record.number_of(:cloud_object_store_objects)},
+              = link_to(_("Cloud Objects (%{count})") % {:count => @record.number_of(:cloud_object_store_objects)},
                 {:action => 'show', :id => @record, :display => 'cloud_object_store_objects'},
-                :title => _("Show this Cloud Object Store's child %{children}'") % {:children => ui_lookup(:tables => 'cloud_objects')})
+                :title => _("Show this Cloud Object Store's child Cloud Objects'"))

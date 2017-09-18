@@ -154,7 +154,7 @@
     - else
       %ul.nav.nav-tabs
         = miq_tab_header("diagnostics_zones", @sb[:active_tab]) do
-          = ui_lookup(:models => 'Zone')
+          = _("Zones")
         - if super_admin_user?
           = miq_tab_header("diagnostics_roles_servers", @sb[:active_tab]) do
             = _("Roles by Servers")
