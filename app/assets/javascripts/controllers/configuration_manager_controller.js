@@ -4,7 +4,7 @@ ManageIQ.angular.app.controller('configurationManagerController', ['$http', '$sc
   vm.configurationManagerModel = angular.copy(configurationManagerService.managerModel);
   vm.postValidationModel = {};
   vm.formId = configurationManagerFormId;
-  vm.model = modelName;
+  vm.model = 'configurationManagerModel';
   vm.afterGet = false;
   vm.saveable = miqService.saveable;
   vm.modelCopy = angular.copy(vm.configurationManagerModel);
