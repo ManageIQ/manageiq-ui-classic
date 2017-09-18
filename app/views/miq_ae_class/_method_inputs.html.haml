@@ -1,5 +1,11 @@
 #method_inputs_div
-  - if !@in_a_form && @ae_method
+  - if @in_a_form || @angular_form
+    #method_form_div
+      - if @ae_method.location == "playbook"
+        = render :partial => "angular_method_form", :locals  => {:prefix => ""}
+      - else
+        = render :partial => "method_form", :locals  => {:prefix => ""}
+  - else
     %h3
       = _('Main Info')
     .form-horizontal.static
@@ -109,10 +115,3 @@
                 - else
                   = record.default_value
               %td= record.datatype.blank? ? 'string' : record.datatype
-  - else
-    #method_form_div
-      - if @record.location == "playbook"
-        = render :partial => "angular_method_form", :locals  => {:prefix => ""}
-      - else
-        = render :partial => "method_form", :locals  => {:prefix => ""}
-  %br

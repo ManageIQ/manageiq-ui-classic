@@ -2304,7 +2304,7 @@ class ApplicationController < ActionController::Base
   public :validate_before_save?
 
   def determine_record_id_for_presenter
-    if @in_a_form
+    if @in_a_form && !@angular_form
       @edit && @edit[:rec_id]
     else
       @record.try!(:id)

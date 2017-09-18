@@ -1,5 +1,5 @@
 #class_methods_div
-  - if !@in_a_form
+  - if !@in_a_form && !@angular_form
     %h3= _('Methods')
     - if @record.ae_methods.present?
       %table#class_methods_grid.table.table-striped.table-bordered.table-hover.table-clickable.table-checkable
@@ -26,6 +26,7 @@
     - else
       = render :partial => "layouts/info_msg",
                :locals  => {:message => _("No methods found")}
-  - elsif @edit[:new][:fields]
+  - elsif @angular_form || @edit[:new][:fields]
     .form_div
-      = render :partial => "method_form", :locals  => {:prefix => "cls_"}
+      - partial_name = @angular_form ? 'angular_method_form' : 'method_form'
+      = render :partial => partial_name, :locals  => {:prefix => "cls_"}

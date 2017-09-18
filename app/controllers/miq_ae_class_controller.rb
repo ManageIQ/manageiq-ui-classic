@@ -270,7 +270,7 @@ class MiqAeClassController < ApplicationController
                                                                  (%w(save add).include?(params[:button]) && replace_trees)
     add_nodes = open_parent_nodes(@record) if params[:button] == "copy" ||
                                               params[:action] == "x_show"
-    get_node_info(x_node) if !@in_a_form && @button != "reset"
+    get_node_info(x_node) if !@in_a_form && !@angular_form && @button != "reset"
 
     c_tb = build_toolbar(center_toolbar_filename) unless @in_a_form
     h_tb = build_toolbar("x_history_tb")
@@ -325,7 +325,7 @@ class MiqAeClassController < ApplicationController
 
     presenter[:lock_sidebar] = @in_a_form && @edit
 
-    if @record.kind_of?(MiqAeMethod) && !@in_a_form
+    if @record.kind_of?(MiqAeMethod) && !@in_a_form && !@angular_form
       presenter.set_visibility(!@record.inputs.blank?, :params_div)
     end
 
@@ -496,10 +496,13 @@ class MiqAeClassController < ApplicationController
     else
       id = x_node.split('-')
     end
-    @record = @ae_method = find_record_with_rbac(MiqAeMethod, from_cid(id[1]))
-    @current_region = MiqRegion.my_region.region
-    set_method_form_vars unless @ae_method.location == "playbook"
-    @in_a_form = @angular_form = true
+    @ae_method = find_record_with_rbac(MiqAeMethod, from_cid(id[1]))
+    if @ae_method.location == "playbook"
+      angular_form_specific_data
+    else
+      set_method_form_vars
+      @in_a_form = true
+    end
     session[:changed] = @changed = false
     replace_right_cell
   end
@@ -904,8 +907,7 @@ class MiqAeClassController < ApplicationController
         page << javascript_prologue
         page.replace_html('form_div', :partial => 'method_form', :locals => {:prefix => ""}) if @edit[:new][:location] == 'expression'
         if @edit[:new][:location] == "playbook"
-          @record = @ae_method
-          @current_region = MiqRegion.my_region.region
+          angular_form_specific_data
           page.replace_html(@refresh_div, :partial => 'angular_method_form')
           page << javascript_hide("form_buttons_div")
         elsif @refresh_div && (params[:cls_method_location] || params[:exp_object] || params[:cls_exp_object])
@@ -1736,6 +1738,14 @@ class MiqAeClassController < ApplicationController
   end
 
   private
+
+  def angular_form_specific_data
+    @record = @ae_method
+    @ae_class = ae_class_for_instance_or_method(@ae_method)
+    @current_region = MiqRegion.my_region.region
+    @angular_form = true
+  end
+  helper_method :angular_form_specific_data
 
   def validate_expression(task)
     if @edit[@expkey][:expression]["???"] == "???"
