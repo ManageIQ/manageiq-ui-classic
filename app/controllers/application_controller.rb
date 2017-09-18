@@ -433,20 +433,30 @@ class ApplicationController < ActionController::Base
   #     String value of model's ID to be filtered with.
   def process_params_options(params)
     options = {}
-    @explorer = params[:explorer] == "true" if params[:explorer]
+    if params[:explorer]
+      params[:action] = "explorer"
+      @explorer = params[:explorer] == "true"
+    end
 
     if params[:active_tree] && defined? get_node_info
       node_info = get_node_info(x_node, false)
       options.merge!(node_info) if node_info.kind_of?(Hash)
     end
-    if params[:model] && %w(miq_requests).include?(params[:model])
-      options = page_params
-    end
-    if params[:model] && %w(miq_tasks).include?(params[:model])
-      options = jobs_info
-    end
-    if params[:model] && %w(cloud_networks).include?(params[:model])
-      options = rbac_params
+
+    # handle exceptions
+    if params[:model]
+      options = case params[:model]
+                when 'miq_requests'
+                  page_params
+                when 'miq_tasks'
+                  jobs_info
+                when 'cloud_networks'
+                  rbac_params
+                when 'physical_servers_with_host'
+                  options.merge!(generate_options)
+                else
+                  options
+                end
     end
 
     if params[:model_id] && !params[:active_tree]
@@ -456,9 +466,6 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    if params[:model] == "physical_servers_with_host"
-      options.merge!(generate_options)
-    end
     options[:parent] = options[:parent] || @parent
     options[:association] = HAS_ASSOCATION[params[:model]] if HAS_ASSOCATION.include?(params[:model])
     options[:selected_ids] = params[:records]
@@ -516,9 +523,6 @@ class ApplicationController < ActionController::Base
   # Then this method will return JSON object with settings and data.
   def report_data
     @in_report_data = true
-    if params[:explorer]
-      params[:action] = "explorer"
-    end
     options = process_params_options(params)
     if options.nil? || options[:view].nil?
       model_view = process_params_model_view(params, options)
