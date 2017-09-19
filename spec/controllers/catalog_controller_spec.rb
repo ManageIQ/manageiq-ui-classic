@@ -254,7 +254,7 @@ describe CatalogController do
     end
 
     it "Orchestration Template name and description are edited" do
-      ot = FactoryGirl.create(:orchestration_template_cfn)
+      ot = FactoryGirl.create(:orchestration_template_amazon)
       controller.instance_variable_set(:@record, ot)
       controller.params.merge!(:id => ot.id, :template_content => @new_content)
       session[:edit][:key] = "ot_edit__#{ot.id}"
@@ -290,7 +290,7 @@ describe CatalogController do
     end
 
     it "Read-only Orchestration Template content cannot be edited" do
-      ot = FactoryGirl.create(:orchestration_template_cfn_with_stacks)
+      ot = FactoryGirl.create(:orchestration_template_amazon_with_stacks)
       original_content = ot.content
       controller.params.merge!(:id => ot.id, :template_content => @new_content)
       session[:edit][:key] = "ot_edit__#{ot.id}"
@@ -339,7 +339,7 @@ describe CatalogController do
       controller.instance_variable_set(:@sb, {})
       controller.instance_variable_set(:@_params, :button => "add")
       controller.instance_variable_set(:@_response, ActionDispatch::TestResponse.new)
-      ot = FactoryGirl.create(:orchestration_template_cfn)
+      ot = FactoryGirl.create(:orchestration_template_amazon)
       controller.x_node = "xx-otcfn_ot-#{ot.id}"
       @new_name = "New Name"
       new_description = "New Description"
@@ -410,7 +410,7 @@ describe CatalogController do
     before(:each) do
       @new_name = "New Name"
       new_description = "New Description"
-      new_type = "OrchestrationTemplateCfn"
+      new_type = "ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate"
       @new_content = '{"AWSTemplateFormatVersion" : "2010-09-09"}'
       edit = {
         :new => {
@@ -523,7 +523,7 @@ describe CatalogController do
 
   context "#service_dialog_create_from_ot" do
     before(:each) do
-      @ot = FactoryGirl.create(:orchestration_template_cfn_with_content)
+      @ot = FactoryGirl.create(:orchestration_template_amazon_in_json)
       @dialog_label = "New Dialog 01"
       session[:edit] = {
         :new    => {:dialog_name => @dialog_label},
@@ -562,9 +562,9 @@ describe CatalogController do
         }
       }
 
-      FactoryGirl.create(:orchestration_template_cfn_with_content)
-      FactoryGirl.create(:orchestration_template_hot_with_content)
-      FactoryGirl.create(:orchestration_template_azure_with_content)
+      FactoryGirl.create(:orchestration_template_amazon_in_json)
+      FactoryGirl.create(:orchestration_template_openstack_in_yaml)
+      FactoryGirl.create(:orchestration_template_azure_in_json)
     end
 
     after(:each) do
@@ -578,7 +578,7 @@ describe CatalogController do
       expect(controller).to receive(:get_view_calculate_gtl_type).with(:orchestrationtemplate) do
         expect(controller.instance_variable_get(:@settings)).to include(:views => {:orchestrationtemplate => "tile"})
       end
-      controller.send(:get_view, "OrchestrationTemplateCfn", {:gtl_dbname => :orchestrationtemplate})
+      controller.send(:get_view, "ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate", {:gtl_dbname => :orchestrationtemplate})
     end
 
     it "Renders list of orchestration templates using correct GTL type" do
@@ -589,7 +589,7 @@ describe CatalogController do
     end
 
     it "Renders an orchestration template textual summary" do
-      ot = FactoryGirl.create(:orchestration_template_cfn)
+      ot = FactoryGirl.create(:orchestration_template_amazon)
       seed_session_trees('catalog', :ot_tree, "xx-otcfn_ot-#{controller.to_cid(ot.id)}")
       post :explorer
 

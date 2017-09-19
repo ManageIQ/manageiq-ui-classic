@@ -51,10 +51,10 @@ class TreeBuilderOrchestrationTemplates < TreeBuilder
 
   def x_get_tree_custom_kids(object, count_only, _options)
     classes = {
-      "otcfn" => OrchestrationTemplateCfn,
-      "othot" => OrchestrationTemplateHot,
-      "otazu" => OrchestrationTemplateAzure,
-      "otvnf" => OrchestrationTemplateVnfd,
+      "otcfn" => ManageIQ::Providers::Amazon::CloudManager::OrchestrationTemplate,
+      "othot" => ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate,
+      "otazu" => ManageIQ::Providers::Azure::CloudManager::OrchestrationTemplate,
+      "otvnf" => ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate,
       "otvap" => ManageIQ::Providers::Vmware::CloudManager::OrchestrationTemplate
     }
     count_only_or_objects_filtered(count_only, classes[object[:id]].where(:orderable => true), "name")
