@@ -173,7 +173,7 @@ class ServiceController < ApplicationController
     if @record.type == "ServiceAnsiblePlaybook"
       [%i(properties), %i(lifecycle tags)]
     else
-      [%i(properties lifecycle relationships miq_custom_attributes), %i(vm_totals tags)]
+      [%i(properties lifecycle relationships generic_objects miq_custom_attributes), %i(vm_totals tags)]
     end
   end
   helper_method :textual_group_list

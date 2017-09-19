@@ -73,6 +73,10 @@ module ServiceHelper::TextualSummary
     TextualGroup.new(_("Custom Attributes"), textual_miq_custom_attributes)
   end
 
+  def textual_group_generic_objects
+    TextualGroup.new(_("Generic Object"), %i(generic_object_instances))
+  end
+
   #
   # Items
   #
@@ -241,6 +245,16 @@ module ServiceHelper::TextualSummary
      :value => credential.name,
      :title => _('VMware Credential'),
      :link  => url_for_only_path(:action => 'show', :id => credential.id, :controller => 'ansible_credential')}
+  end
+
+  def textual_generic_object_instances
+    num = @record.number_of(:generic_objects)
+    h = {:label => _("Instances"), :value => num}
+    if role_allows?(:feature => "generic_object_view") && num > 0
+      h.update(:link  => url_for_only_path(:action => 'show', :id => @record, :display => 'generic_objects'),
+               :title => _('Show Generic Object Instances for this Service'))
+    end
+    h
   end
 
   def credential(credential, label)
