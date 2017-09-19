@@ -32,7 +32,7 @@ class ServiceController < ApplicationController
 
   # Service show selected, redirect to proper controller
   def show
-    @record = Service.find_by_id(from_cid(params[:id]))
+    @record = Service.find(from_cid(params[:id]))
     @display = params[:display]
     if @display
       display_nested_list(@display)
@@ -46,7 +46,7 @@ class ServiceController < ApplicationController
                   :id         => tree_node_id
       return
     end
-    redirect_to :action => 'show', :controller => @record.class.base_model.to_s.underscore, :id => @record.id
+    redirect_to(:action => 'show', :controller => @record.class.base_model.to_s.underscore, :id => @record.id)
   end
 
   def show_list
