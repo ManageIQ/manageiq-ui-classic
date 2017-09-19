@@ -537,6 +537,7 @@ module Mixins
 
       if ems.kind_of?(ManageIQ::Providers::Nuage::NetworkManager)
         default_endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
+        amqp_endpoint = {:role => :amqp, :hostname => amqp_hostname, :port => amqp_port, :security_protocol => amqp_security_protocol}
       end
 
       if ems.kind_of?(ManageIQ::Providers::Lenovo::PhysicalInfraManager)

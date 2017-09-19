@@ -482,7 +482,7 @@ module EmsCommon
   end
 
   def retrieve_nuage_api_versions
-    [['Version 3.2', 'v3_2'], ['Version 4.0', 'v4_0']]
+    [['Version 3.2', 'v3_2'], ['Version 4.0', 'v4_0'], ['Version 5.0', 'v5.0']]
   end
 
   def retrieve_security_protocols
