@@ -10,3 +10,5 @@ app/views/miq_ae_customization/editor.html.haml   @romanblanco
 # toolbar buttons
 app/helpers/application_helper/button/            @romanblanco
 app/helpers/application_helper/toolbar_builder.rb @romanblanco
+# rbac
+app/controllers/mixins/checked_id_mixin.rb        @romanblanco
