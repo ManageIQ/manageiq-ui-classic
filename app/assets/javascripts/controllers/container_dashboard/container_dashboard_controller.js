@@ -1,6 +1,6 @@
 /* global miqHttpInject */
 
-  ManageIQ.angular.app.controller('containerDashboardController', ['$scope', 'dashboardUtilsFactory', 'chartsMixin', 'dashboardService',
+  ManageIQ.angular.app.controller('containerDashboardController', ['$scope', 'dashboardUtilsFactory', 'containerChartsMixin', 'dashboardService',
     function($scope, dashboardUtilsFactory, chartsMixin, dashboardService) {
       document.getElementById('center_div').className += ' miq-body';
 
