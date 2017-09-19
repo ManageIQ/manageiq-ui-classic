@@ -1,4 +1,12 @@
-app/presenters/tree_node/     @skateman
-app/presenters/tree_builder_* @skateman
-app/assets/stylesheets/       @epwinchell
-app/assets/images/            @epwinchell
+# trees
+app/presenters/tree_node/                         @skateman
+app/presenters/tree_builder_*                     @skateman
+# styling and images
+app/assets/stylesheets/                           @epwinchell
+app/assets/images/                                @epwinchell
+# dialog editor
+app/assets/javascripts/controllers/dialog_editor  @romanblanco
+app/views/miq_ae_customization/editor.html.haml   @romanblanco
+# toolbar buttons
+app/helpers/application_helper/button/            @romanblanco
+app/helpers/application_helper/toolbar_builder.rb @romanblanco
