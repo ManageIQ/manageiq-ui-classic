@@ -903,11 +903,11 @@ class MiqAeClassController < ApplicationController
                            end
       @changed = (@edit[:new] != @edit[:current])
       @edit[:default_verify_status] = @edit[:new][:location] == "inline" && @edit[:new][:data] && @edit[:new][:data] != ""
+      angular_form_specific_data if @edit[:new][:location] == "playbook"
       render :update do |page|
         page << javascript_prologue
         page.replace_html('form_div', :partial => 'method_form', :locals => {:prefix => ""}) if @edit[:new][:location] == 'expression'
         if @edit[:new][:location] == "playbook"
-          angular_form_specific_data
           page.replace_html(@refresh_div, :partial => 'angular_method_form')
           page << javascript_hide("form_buttons_div")
         elsif @refresh_div && (params[:cls_method_location] || params[:exp_object] || params[:cls_exp_object])
@@ -1745,7 +1745,6 @@ class MiqAeClassController < ApplicationController
     @current_region = MiqRegion.my_region.region
     @angular_form = true
   end
-  helper_method :angular_form_specific_data
 
   def validate_expression(task)
     if @edit[@expkey][:expression]["???"] == "???"
